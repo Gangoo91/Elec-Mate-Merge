@@ -214,12 +214,14 @@ export function VehicleToolsSheet({
                 {/* Search & Filter */}
                 <div className="flex gap-2 mb-4">
                   <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    {!search && (
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                    )}
                     <Input
                       placeholder="Search tools..."
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className="pl-9 h-11 touch-manipulation text-base"
+                      className={cn("h-11 touch-manipulation text-base", !search && "pl-9")}
                     />
                   </div>
                   <Select value={filterCategory} onValueChange={setFilterCategory}>

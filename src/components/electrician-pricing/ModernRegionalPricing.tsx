@@ -370,12 +370,14 @@ const ModernRegionalPricing = () => {
                 {/* Location Search */}
                 <div className="relative">
                   <div className="relative">
-                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                    {!searchLocation && (
+                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+                    )}
                     <Input
                       value={searchLocation}
                       onChange={(e) => setSearchLocation(e.target.value)}
                       placeholder="Enter UK postcode or location (e.g., M1, Birmingham, London)..."
-                      className="pl-12 h-14 text-lg bg-background/50 border-muted/40 focus:border-primary/60"
+                      className={cn("h-14 text-lg bg-background/50 border-muted/40 focus:border-primary/60", !searchLocation && "pl-12")}
                       onFocus={() => {
                         if (searchSuggestions.length > 0) {
                           setShowSuggestions(true);

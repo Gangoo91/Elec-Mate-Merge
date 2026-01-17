@@ -5,11 +5,11 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Search, 
-  Clock, 
-  Star, 
-  Plus, 
+import {
+  Search,
+  Clock,
+  Star,
+  Plus,
   Filter,
   BookOpen,
   Users,
@@ -20,6 +20,7 @@ import {
   Leaf,
   Smartphone
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { CPD_ACTIVITY_TEMPLATES, QUICK_ACTIVITY_TEMPLATES } from '@/data/cpd-templates';
 import { useEnhancedCPD } from '@/hooks/cpd/useEnhancedCPD';
 
@@ -73,12 +74,14 @@ const ActivityTemplates = () => {
       {/* Search and Filter */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+          {!searchTerm && (
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 pointer-events-none" />
+          )}
           <Input
             placeholder="Search activity templates..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
+            className={cn(!searchTerm && "pl-10")}
           />
         </div>
         

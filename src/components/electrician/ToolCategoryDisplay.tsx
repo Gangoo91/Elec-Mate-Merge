@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToolsData, type ToolItem } from "@/hooks/useToolsData";
+import { cn } from "@/lib/utils";
 
 interface ToolCategoryDisplayProps {
   categoryName: string;
@@ -110,12 +111,14 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
       </header>
 
       <div className="relative max-w-md">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        {!searchTerm && (
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+        )}
         <Input
           placeholder={`Search ${categoryName.toLowerCase()}...`}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 bg-elec-gray border-elec-yellow/20"
+          className={cn("bg-elec-gray border-elec-yellow/20", !searchTerm && "pl-10")}
         />
       </div>
 

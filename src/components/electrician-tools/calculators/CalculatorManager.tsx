@@ -22,6 +22,7 @@ import {
   ChevronRight
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 interface CalculatorItem {
   id: string;
@@ -246,12 +247,14 @@ const CalculatorManager: React.FC<CalculatorManagerProps> = ({
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                {!searchTerm && (
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                )}
                 <Input
                   placeholder="Search calculators..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-elec-dark border-elec-yellow/20"
+                  className={cn("bg-elec-dark border-elec-yellow/20", !searchTerm && "pl-10")}
                 />
               </div>
             </div>

@@ -237,14 +237,19 @@ const SmartSearchSheet = ({
         <div className="flex-1 overflow-hidden flex flex-col p-4">
           {/* Search Input */}
           <div className="relative mb-4">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            {!searchTerm && (
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+            )}
             <Input
               ref={inputRef}
               placeholder="Search courses, providers..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              className="pl-12 pr-12 h-14 text-base rounded-2xl bg-white/5 border-white/10 focus:border-purple-500/50"
+              className={cn(
+                "pr-12 h-14 text-base rounded-2xl bg-white/5 border-white/10 focus:border-purple-500/50",
+                !searchTerm && "pl-12"
+              )}
             />
             <button
               className="absolute right-4 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"

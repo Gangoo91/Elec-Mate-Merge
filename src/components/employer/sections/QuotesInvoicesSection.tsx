@@ -267,12 +267,14 @@ export function QuotesInvoicesSection() {
       {/* Sticky Search Header */}
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm pb-3 -mx-4 px-4 md:mx-0 md:px-0 pt-1">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {!searchQuery && (
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          )}
           <Input
             placeholder="Search quotes & invoices..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 h-11 bg-elec-gray border-border"
+            className={cn("h-11 bg-elec-gray border-border", !searchQuery && "pl-10")}
           />
         </div>
       </div>

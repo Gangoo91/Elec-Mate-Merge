@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Calculator, Zap, Shield, AlertTriangle, Search, BookOpen, Clock, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 const QuickReferenceTools = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -94,13 +95,15 @@ const QuickReferenceTools = () => {
       {/* Search */}
       <div className="max-w-md mx-auto">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          {!searchQuery && (
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+          )}
           <Input
             type="text"
             placeholder="Search tools..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-muted border-border text-foreground placeholder-gray-400"
+            className={cn("bg-muted border-border text-foreground placeholder-gray-400", !searchQuery && "pl-10")}
           />
         </div>
       </div>

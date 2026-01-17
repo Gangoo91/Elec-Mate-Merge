@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Search, ChevronDown } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface SymbolLibraryProps {
   onSymbolSelect: (symbolId: string) => void;
@@ -72,13 +73,15 @@ export const SymbolLibrary = ({ onSymbolSelect, selectedSymbolId, isMobile = fal
       <div className="p-4 border-b border-elec-yellow/20">
         <h2 className="text-lg font-semibold text-elec-light mb-3">Symbol Library</h2>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-elec-light/40" />
+          {!searchTerm && (
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-elec-light/40 pointer-events-none" />
+          )}
           <Input
             type="text"
             placeholder="Search symbols..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-9 bg-elec-dark border-elec-yellow/20 text-elec-light"
+            className={cn("bg-elec-dark border-elec-yellow/20 text-elec-light", !searchTerm && "pl-9")}
           />
         </div>
       </div>

@@ -9,6 +9,7 @@ import { toast } from "@/hooks/use-toast";
 import { Search, MapPin } from "lucide-react";
 import { JobListing } from "@/pages/electrician/JobVacancies";
 import SearchError from "@/components/mental-health/crisis/components/SearchError";
+import { cn } from "@/lib/utils";
 
 interface ReedJobsViewProps {
   handleApply: (jobId: string, url: string) => void;
@@ -104,24 +105,28 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
       <div className="bg-elec-gray p-4 rounded-lg shadow-sm">
         <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            {!keywords && (
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            )}
             <Input
               type="text"
               placeholder="Job keywords (e.g., Electrician, Engineer, Technician)"
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
-              className="pl-10"
+              className={cn(!keywords && "pl-10")}
               aria-label="Search keywords"
             />
           </div>
           <div className="flex-1 relative">
-            <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            {!location && (
+              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            )}
             <Input
               type="text"
               placeholder="Location (e.g., London, Manchester)"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="pl-10"
+              className={cn(!location && "pl-10")}
               aria-label="Search location"
             />
           </div>

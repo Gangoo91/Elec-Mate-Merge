@@ -23,13 +23,15 @@ export default function AdminSearchInput({
 }: AdminSearchInputProps) {
   return (
     <div className={cn("relative", className)}>
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      {!value && (
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+      )}
       <Input
         type="text"
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="pl-10 pr-10 h-12 touch-manipulation text-base rounded-xl"
+        className={cn("pr-10 h-12 touch-manipulation text-base rounded-xl", !value && "pl-10")}
         autoFocus={autoFocus}
       />
       {value && (

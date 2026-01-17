@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, Filter, MapPin, Clock, Zap, Building2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const MaterialSearchWidget = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -60,10 +61,12 @@ const MaterialSearchWidget = () => {
         {/* Main Search Bar */}
         <div className="flex gap-2">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input 
-              placeholder="Search by product name, code, brand, or description..." 
-              className="pl-10 bg-elec-dark/50 border-elec-yellow/30"
+            {!searchQuery && (
+              <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground pointer-events-none" />
+            )}
+            <Input
+              placeholder="Search by product name, code, brand, or description..."
+              className={cn("bg-elec-dark/50 border-elec-yellow/30", !searchQuery && "pl-10")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

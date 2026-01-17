@@ -18,6 +18,7 @@ import {
   Clock,
   AlertTriangle
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Link, useSearchParams } from "react-router-dom";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
@@ -79,7 +80,9 @@ const EnhancedSearchBox = ({
   return (
     <div className="relative">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-elec-yellow/60" />
+        {!value && (
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-elec-yellow/60 pointer-events-none" />
+        )}
         <Input
           value={value}
           onChange={(e) => onChange(e.target.value)}
@@ -87,7 +90,7 @@ const EnhancedSearchBox = ({
           onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
           onKeyPress={(e) => e.key === 'Enter' && onSearch()}
           placeholder={placeholder}
-          className="pl-10 bg-elec-gray border-elec-yellow/30 text-white placeholder:text-elec-yellow/60 focus:border-elec-yellow h-12 text-base"
+          className={cn("bg-elec-gray border-elec-yellow/30 text-white placeholder:text-elec-yellow/60 focus:border-elec-yellow h-12 text-base", !value && "pl-10")}
         />
         <Button 
           onClick={onSearch}

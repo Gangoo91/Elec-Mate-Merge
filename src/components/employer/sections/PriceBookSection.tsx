@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 import { SectionHeader } from "../SectionHeader";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -250,12 +251,14 @@ export function PriceBookSection() {
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+        {!search && (
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+        )}
         <Input
           placeholder="Search materials, SKUs..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="pl-10 h-12 text-base"
+          className={cn("h-12 text-base", !search && "pl-10")}
         />
       </div>
 

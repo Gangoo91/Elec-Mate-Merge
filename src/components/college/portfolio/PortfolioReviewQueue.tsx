@@ -31,6 +31,7 @@ import {
   RefreshCw,
   Loader2
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { useSubmissionQueue, SubmissionQueueItem } from '@/hooks/college/usePortfolioSubmissions';
 
 interface PortfolioReviewQueueProps {
@@ -174,12 +175,14 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
             </div>
             <div className="flex items-center gap-2">
               <div className="relative flex-1 sm:w-64">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white/40" />
+                {!searchTerm && (
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white/40 pointer-events-none" />
+                )}
                 <Input
                   placeholder="Search student or category..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8 bg-white/5 border-elec-gray/40"
+                  className={cn("bg-white/5 border-elec-gray/40", !searchTerm && "pl-8")}
                 />
               </div>
               <DropdownMenu>

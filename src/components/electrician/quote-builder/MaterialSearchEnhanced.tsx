@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { enhancedMaterials, materialCombinations, EnhancedMaterialItem } from "@/data/electrician/enhancedPricingData";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 
 interface MaterialSearchEnhancedProps {
@@ -121,12 +122,14 @@ export const MaterialSearchEnhanced = ({ onAddMaterial, currentQuoteItems = [] }
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-elec-light/60" />
+            {!searchTerm && (
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-elec-light/60 pointer-events-none" />
+            )}
             <Input
               placeholder="Search materials, codes, or brands..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className={cn(!searchTerm && "pl-10")}
             />
           </div>
           <Button

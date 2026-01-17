@@ -2,11 +2,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  Cable, 
-  Shield, 
-  FileText, 
-  Search, 
+import {
+  Cable,
+  Shield,
+  FileText,
+  Search,
   Wrench,
   TestTube,
   BookOpen,
@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 const CommercialReferenceGuide = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -133,12 +134,14 @@ const CommercialReferenceGuide = () => {
       <Card className="border-elec-yellow/30 bg-white/5">
         <CardContent className="p-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-300 h-4 w-4" />
+            {!searchTerm && (
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-300 h-4 w-4 pointer-events-none" />
+            )}
             <Input
               placeholder="Search commercial cables, emergency systems, or standards..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className={cn(!searchTerm && "pl-10")}
             />
           </div>
         </CardContent>

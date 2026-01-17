@@ -36,6 +36,7 @@ import { Quote } from "@/types/quote";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
+import { cn } from "@/lib/utils";
 import { InvoiceDecisionDialog } from "@/components/electrician/invoice-builder/InvoiceDecisionDialog";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { toast } from "sonner";
@@ -299,12 +300,14 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
             {/* Filters */}
             <div className="flex flex-col md:flex-row gap-3">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                {!searchQuery && (
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                )}
                 <Input
                   placeholder="Search by client name or quote number..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className={cn(!searchQuery && "pl-10")}
                 />
               </div>
               <Select value={statusFilter} onValueChange={setStatusFilter}>

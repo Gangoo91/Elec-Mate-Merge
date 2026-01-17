@@ -3,12 +3,13 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { 
-  FileText, 
-  Zap, 
-  Gauge, 
-  Car, 
-  TestTube, 
+import { cn } from "@/lib/utils";
+import {
+  FileText,
+  Zap,
+  Gauge,
+  Car,
+  TestTube,
   Search,
   Star,
   Clock,
@@ -140,12 +141,14 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
         <div className="mt-6 flex flex-col sm:flex-row gap-3">
           {/* Search Input */}
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            {!searchTerm && (
+              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
+            )}
             <Input
               placeholder="Search templates..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-elec-dark border border-primary/30 text-foreground"
+              className={cn("bg-elec-dark border border-primary/30 text-foreground", !searchTerm && "pl-10")}
             />
           </div>
 

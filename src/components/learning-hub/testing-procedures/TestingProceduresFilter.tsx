@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { Search, FileText, Zap, Calculator, ShieldCheck } from 'lucide-react';
 import { testingProceduresData } from './TestingProcedureData';
+import { cn } from '@/lib/utils';
 
 interface TestingProceduresFilterProps {
   searchTerm: string;
@@ -37,12 +38,14 @@ const TestingProceduresFilter = ({
   return (
     <div className="flex flex-col md:flex-row gap-4 mb-8">
       <div className="flex-1 relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/80" />
+        {!searchTerm && (
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/80 pointer-events-none" />
+        )}
         <Input
           placeholder="Search procedures..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 bg-card border-border text-foreground"
+          className={cn("bg-card border-border text-foreground", !searchTerm && "pl-10")}
         />
       </div>
       

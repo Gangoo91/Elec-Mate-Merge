@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BookOpen, Users, Star, TrendingUp, Calculator, RefreshCw, Search } from "lucide-react";
 import type { CourseAnalytics } from "@/components/apprentice/career/courses/enhancedCoursesData";
+import { cn } from "@/lib/utils";
 
 interface ModernCoursesHeroProps {
   analytics: CourseAnalytics | null;
@@ -88,13 +89,18 @@ const ModernCoursesHero = ({
         {/* Search Bar */}
         <div className="mt-5">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
+            {!searchQuery && (
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50 pointer-events-none" />
+            )}
             <Input
               type="text"
               placeholder="Search courses, providers, or topics..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/50 focus:border-blue-500/50 focus:ring-blue-500/20"
+              className={cn(
+                "bg-white/5 border-white/10 text-white placeholder:text-white/50 focus:border-blue-500/50 focus:ring-blue-500/20",
+                !searchQuery && "pl-10"
+              )}
             />
           </div>
         </div>

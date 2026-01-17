@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
 import { Shield, Search, Plus, AlertTriangle } from 'lucide-react';
 import { useRAMS } from '../rams/RAMSContext';
 import { toast } from '@/hooks/use-toast';
@@ -108,12 +109,14 @@ const HazardSelector: React.FC<HazardSelectorProps> = ({
           {/* Search and Filter */}
           <div className="space-y-3">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              {!searchTerm && (
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 placeholder="Search hazards..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className={cn(!searchTerm && "pl-10")}
               />
             </div>
             

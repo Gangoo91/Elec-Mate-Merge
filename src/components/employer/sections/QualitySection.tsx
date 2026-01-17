@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -381,10 +382,12 @@ export const QualitySection = () => {
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        {!searchQuery && (
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+        )}
         <Input
           placeholder="Search snags by title, job, or description..."
-          className="pl-10 h-11 touch-manipulation"
+          className={cn("h-11 touch-manipulation", !searchQuery && "pl-10")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />

@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Search, SlidersHorizontal, X, ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface CourseSearchFilters {
   searchTerm: string;
@@ -74,12 +75,17 @@ const CourseSearchForm = ({ onSearch, onReset }: CourseSearchFormProps) => {
       <CardContent className="p-6 space-y-4">
         {/* Search Bar */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground/60 h-4 w-4" />
+          {!filters.searchTerm && (
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground/60 h-4 w-4 pointer-events-none" />
+          )}
           <Input
             placeholder="Search courses, providers, or keywords..."
             value={filters.searchTerm}
             onChange={(e) => handleFilterChange('searchTerm', e.target.value)}
-            className="pl-10 bg-background/50 border-elec-yellow/20 text-foreground placeholder-white/60"
+            className={cn(
+              "bg-background/50 border-elec-yellow/20 text-foreground placeholder-white/60",
+              !filters.searchTerm && "pl-10"
+            )}
           />
         </div>
 

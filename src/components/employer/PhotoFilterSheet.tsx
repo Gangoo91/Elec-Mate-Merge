@@ -214,12 +214,14 @@ export function PhotoFilterSheet({
               
               {jobOptions.length > 5 && (
                 <div className="relative mb-3">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  {!jobSearch && (
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                  )}
                   <Input
                     placeholder="Search jobs..."
                     value={jobSearch}
                     onChange={(e) => setJobSearch(e.target.value)}
-                    className="pl-9 h-10 bg-muted/30 border-border/50"
+                    className={cn("h-10 bg-muted/30 border-border/50", !jobSearch && "pl-9")}
                   />
                 </div>
               )}

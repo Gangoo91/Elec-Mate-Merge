@@ -273,12 +273,14 @@ export function ProgressLogsSection() {
 
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/50" />
+            {!searchQuery && (
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/50 pointer-events-none" />
+            )}
             <Input
               placeholder="Search logs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 w-full bg-elec-gray h-12 text-foreground"
+              className={cn("w-full bg-elec-gray h-12 text-foreground", !searchQuery && "pl-9")}
             />
           </div>
 

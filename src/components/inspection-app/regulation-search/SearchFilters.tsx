@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Badge } from '@/components/ui/badge';
 import { Search, Filter, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface SearchFiltersProps {
   searchTerm: string;
@@ -48,13 +49,15 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
     <div className="space-y-4">
       {/* Main Search */}
       <div className="relative w-full">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
+        {!searchTerm && (
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none" />
+        )}
         <Input
           type="text"
           placeholder="Search regulations, keywords, or numbers..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 bg-muted border-border text-foreground placeholder-white/70"
+          className={cn("bg-muted border-border text-foreground placeholder-white/70", !searchTerm && "pl-10")}
         />
         {searchTerm && (
           <Button

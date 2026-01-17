@@ -104,12 +104,14 @@ export function PhotoGalleryHeader({
       {/* Search + Filter Bar */}
       <div className="flex items-center gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {!searchQuery && (
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          )}
           <Input
             placeholder="Search photos..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-9 bg-elec-gray/80 h-11 border-border/50"
+            className={cn("bg-elec-gray/80 h-11 border-border/50", !searchQuery && "pl-9")}
           />
         </div>
         

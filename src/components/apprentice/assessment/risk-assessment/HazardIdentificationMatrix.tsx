@@ -6,6 +6,7 @@ import { MobileInput } from "@/components/ui/mobile-input";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, Search, Plus } from "lucide-react";
 import { hazardCategories, type HazardCategory } from "@/data/hazards";
+import { cn } from "@/lib/utils";
 
 interface HazardIdentificationMatrixProps {
   onHazardSelected: (hazard: string) => void;
@@ -52,13 +53,15 @@ const HazardIdentificationMatrix = ({ onHazardSelected }: HazardIdentificationMa
           <div className="space-y-6">
             {/* Search Input */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70" />
+              {!searchTerm && (
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none" />
+              )}
               <MobileInput
                 label=""
                 placeholder="Search hazards..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className={cn(!searchTerm && "pl-10")}
               />
             </div>
 

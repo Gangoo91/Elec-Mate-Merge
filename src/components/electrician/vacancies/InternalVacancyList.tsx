@@ -25,6 +25,7 @@ import {
   RefreshCw,
   X,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { InternalVacancyCard, type InternalVacancy } from "./InternalVacancyCard";
 import { useInternalVacancies, type VacancyFilters } from "@/hooks/useInternalVacancies";
 
@@ -81,12 +82,14 @@ export function InternalVacancyList({
       <div className="flex gap-2">
         <form onSubmit={handleSearch} className="flex-1">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            {!searchQuery && (
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            )}
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search jobs, companies..."
-              className="pl-9 pr-4"
+              className={cn("pr-4", !searchQuery && "pl-9")}
             />
           </div>
         </form>

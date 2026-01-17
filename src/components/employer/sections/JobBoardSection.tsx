@@ -322,12 +322,14 @@ export function JobBoardSection() {
         
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            {!searchQuery && (
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            )}
             <Input
               placeholder="Search jobs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 w-full bg-elec-gray"
+              className={cn("w-full bg-elec-gray", !searchQuery && "pl-9")}
             />
           </div>
           <div className="flex gap-2 flex-wrap">

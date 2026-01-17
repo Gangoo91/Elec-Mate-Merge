@@ -208,12 +208,14 @@ export function QualificationTracker() {
       {/* Search and Filters */}
       <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {!searchQuery && (
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          )}
           <Input
             placeholder="Search qualifications..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-11"
+            className={cn("h-11", !searchQuery && "pl-9")}
           />
         </div>
         <Select value={filterType} onValueChange={setFilterType}>

@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, MapPin } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { cn } from "@/lib/utils";
 
 interface SearchFormValues {
   location: string;
@@ -45,11 +46,16 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
               render={({ field }) => (
                 <FormItem className="flex-1">
                   <div className="relative">
-                    <Search className="absolute left-3 top-3 h-4 w-4 text-white/40" />
+                    {!field.value && (
+                      <Search className="absolute left-3 top-3 h-4 w-4 text-white/40 pointer-events-none" />
+                    )}
                     <FormControl>
                       <Input
                         placeholder="Search courses or centers..."
-                        className="pl-10 h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
+                        className={cn(
+                          "h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40",
+                          !field.value && "pl-10"
+                        )}
                         {...field}
                       />
                     </FormControl>

@@ -4,13 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { 
-  BookOpen, 
-  Clock, 
-  AlertTriangle, 
-  Lightbulb, 
-  CheckCircle, 
-  ArrowRight, 
+import {
+  BookOpen,
+  Clock,
+  AlertTriangle,
+  Lightbulb,
+  CheckCircle,
+  ArrowRight,
   Search,
   Filter,
   Zap,
@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import InteractiveTestingGuide from "./InteractiveTestingGuide";
 import { allBS7671Tests, BS7671Test } from "@/data/bs7671-testing/allBS7671Tests";
+import { cn } from "@/lib/utils";
 
 const RunThroughStepsTab = () => {
   const [selectedTest, setSelectedTest] = useState<BS7671Test | null>(null);
@@ -149,12 +150,14 @@ const RunThroughStepsTab = () => {
           {/* Search and Filter Controls */}
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70" />
+              {!searchTerm && (
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none" />
+              )}
               <Input
                 placeholder="Search tests..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-11 bg-white/10 border-white/10 text-white placeholder:text-white/70 focus:border-cyan-500/50"
+                className={cn("h-11 bg-white/10 border-white/10 text-white placeholder:text-white/70 focus:border-cyan-500/50", !searchTerm && "pl-10")}
               />
             </div>
             <div className="flex items-center gap-2">

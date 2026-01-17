@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Search, MapPin, Filter, X } from "lucide-react";
 import { educationCategories, studyModes } from "./enhancedEducationData";
+import { cn } from "@/lib/utils";
 
 interface EducationSearchFormProps {
   onSearch: (filters: SearchFilters) => void;
@@ -64,12 +65,14 @@ const EducationSearchForm = ({ onSearch, onReset }: EducationSearchFormProps) =>
         <div className="space-y-4">
           {/* Search Bar */}
           <div className="relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-white" />
+            {!filters.searchTerm && (
+              <Search className="absolute left-3 top-3 h-4 w-4 text-white pointer-events-none" />
+            )}
             <Input
               placeholder="Search courses, institutions, or qualifications..."
               value={filters.searchTerm}
               onChange={(e) => handleFilterChange("searchTerm", e.target.value)}
-              className="pl-10"
+              className={cn(!filters.searchTerm && "pl-10")}
             />
           </div>
 

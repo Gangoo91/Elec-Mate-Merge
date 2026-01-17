@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { CollegeSectionHeader } from "@/components/college/CollegeSectionHeader";
 import { useCollege } from "@/contexts/CollegeContext";
+import { cn } from "@/lib/utils";
 import {
   Search,
   Upload,
@@ -109,12 +110,14 @@ export function TeachingResourcesSection() {
       {/* Search and Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {!searchQuery && (
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          )}
           <Input
             placeholder="Search resources..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
+            className={cn("", !searchQuery && "pl-9")}
           />
         </div>
         <Select value={filterType} onValueChange={setFilterType}>

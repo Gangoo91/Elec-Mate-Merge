@@ -8,6 +8,7 @@ import { JobTemplate } from "@/types/quote";
 import { useState, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
 import JobPagination from "@/components/job-vacancies/JobPagination";
+import { cn } from "@/lib/utils";
 
 interface JobTemplatesProps {
   onSelectTemplate: (template: JobTemplate) => void;
@@ -111,12 +112,14 @@ export const JobTemplates = ({ onSelectTemplate }: JobTemplatesProps) => {
         
         <div className="space-y-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            {!searchQuery && (
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            )}
             <Input
               placeholder="Search templates..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-10"
+              className={cn("pr-10", !searchQuery && "pl-10")}
             />
             {searchQuery && (
               <Button

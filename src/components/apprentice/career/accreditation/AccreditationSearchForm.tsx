@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Search, Filter, RotateCcw, X } from "lucide-react";
 import { accreditationCategories, accreditationLevels } from "./enhancedAccreditationData";
+import { cn } from "@/lib/utils";
 
 export interface AccreditationSearchFilters {
   searchTerm: string;
@@ -113,12 +114,14 @@ const AccreditationSearchForm = ({ onSearch, onReset, resultsCount }: Accreditat
         {/* Search Bar */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40" />
+            {!filters.searchTerm && (
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+            )}
             <Input
               placeholder="Search accreditations, providers, or specialities..."
               value={filters.searchTerm}
               onChange={(e) => setFilters(prev => ({ ...prev, searchTerm: e.target.value }))}
-              className="pl-10 h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50"
+              className={cn("h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50", !filters.searchTerm && "pl-10")}
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             />
           </div>

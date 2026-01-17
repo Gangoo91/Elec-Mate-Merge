@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CollegeSectionHeader } from "@/components/college/CollegeSectionHeader";
+import { cn } from "@/lib/utils";
 import {
   BookOpen,
   Plus,
@@ -201,10 +202,12 @@ export function TutorNotebookSection() {
 
         {/* Search */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {!searchQuery && (
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          )}
           <Input
             placeholder="Search notebooks..."
-            className="pl-10 bg-elec-gray border-elec-yellow/20"
+            className={cn("bg-elec-gray border-elec-yellow/20", !searchQuery && "pl-10")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

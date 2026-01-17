@@ -67,12 +67,14 @@ export const SyncFilters = ({ filters, onFiltersChange, className }: SyncFilters
     <div className={cn('space-y-3', className)}>
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        {!filters.searchQuery && (
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+        )}
         <Input
           placeholder="Search by Report ID or type..."
           value={filters.searchQuery}
           onChange={(e) => updateFilter('searchQuery', e.target.value)}
-          className="pl-10 pr-10"
+          className={cn("pr-10", !filters.searchQuery && "pl-10")}
         />
         {filters.searchQuery && (
           <button

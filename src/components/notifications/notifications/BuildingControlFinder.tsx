@@ -104,14 +104,16 @@ export const BuildingControlFinder = ({
           {/* Search Input */}
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              {!searchQuery && (
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 placeholder="Enter postcode or address (e.g., CA25 5EL)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 style={{ textAlign: 'left' }}
-                className="pl-10 min-h-[48px] text-left placeholder:text-left"
+                className={cn("min-h-[48px] text-left placeholder:text-left", !searchQuery && "pl-10")}
               />
             </div>
             <Button 

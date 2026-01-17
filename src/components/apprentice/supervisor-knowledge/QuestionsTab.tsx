@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Search, ChevronDown, ChevronUp, HelpCircle, AlertTriangle, Zap, Wrench, BookOpen, Users, Clock, Shield } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Question {
   id: string;
@@ -354,12 +355,17 @@ const QuestionsTab = () => {
         <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <CardContent className="p-5 relative space-y-4">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70" />
+            {!searchTerm && (
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none" />
+            )}
             <Input
               placeholder="Search questions, answers, or tags..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-11 h-12 bg-white/10 border-white/10 text-white placeholder:text-white/70 focus:border-elec-yellow/50 rounded-xl"
+              className={cn(
+                "h-12 bg-white/10 border-white/10 text-white placeholder:text-white/70 focus:border-elec-yellow/50 rounded-xl",
+                !searchTerm && "pl-11"
+              )}
             />
           </div>
 

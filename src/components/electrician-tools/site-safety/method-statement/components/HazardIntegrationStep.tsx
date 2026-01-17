@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import { Shield, Search, Plus, AlertTriangle, X } from 'lucide-react';
 import { useHazardDatabase } from '../../hooks/useHazardDatabase';
 import { MethodStatementData } from '@/types/method-statement';
@@ -107,12 +108,14 @@ const HazardIntegrationStep: React.FC<HazardIntegrationStepProps> = ({
           {/* Search and Filter */}
           <div className="space-y-3">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              {!searchTerm && (
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 placeholder="Search hazards..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-elec-dark/50 border-elec-yellow/20 text-foreground"
+                className={cn("bg-elec-dark/50 border-elec-yellow/20 text-foreground", !searchTerm && "pl-10")}
               />
             </div>
             

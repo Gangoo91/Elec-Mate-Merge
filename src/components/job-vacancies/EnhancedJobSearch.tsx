@@ -4,11 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Search, 
-  MapPin, 
-  Filter, 
-  Brain, 
+import {
+  Search,
+  MapPin,
+  Filter,
+  Brain,
   Sliders,
   X,
   Sparkles,
@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 interface SearchFilters {
   keywords: string;
@@ -121,25 +122,29 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
           {/* Main Search Row */}
           <div className="flex flex-col md:flex-row gap-3">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              {!filters.keywords && (
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 type="text"
                 placeholder="Job keywords (e.g., Electrician, Engineer, Technician)"
                 value={filters.keywords}
                 onChange={(e) => setFilters(prev => ({ ...prev, keywords: e.target.value }))}
-                className="pl-10"
+                className={cn(!filters.keywords && "pl-10")}
                 aria-label="Search keywords"
               />
             </div>
-            
+
             <div className="flex-1 relative">
-              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              {!filters.location && (
+                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 type="text"
                 placeholder="Location (e.g., London, Manchester, Birmingham)"
                 value={filters.location}
                 onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
-                className="pl-10"
+                className={cn(!filters.location && "pl-10")}
                 aria-label="Search location"
               />
             </div>

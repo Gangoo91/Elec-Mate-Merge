@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Filter, X } from "lucide-react";
 import { DocumentTemplate } from "@/services/documentTemplateService";
+import { cn } from "@/lib/utils";
 
 interface TemplateSearchProps {
   onSearch: (query: string) => void;
@@ -62,12 +63,14 @@ const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }:
     <div className="space-y-4">
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+        {!searchQuery && (
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 pointer-events-none" />
+        )}
         <Input
           placeholder="Search templates by name, description, or category..."
           value={searchQuery}
           onChange={(e) => handleSearchChange(e.target.value)}
-          className="pl-10 pr-20"
+          className={cn("pr-20", !searchQuery && "pl-10")}
         />
         <Button
           variant="outline"

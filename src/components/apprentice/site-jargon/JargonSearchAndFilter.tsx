@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, Filter, X } from "lucide-react";
 import { siteJargonCategories } from "@/data/apprentice/siteJargonData";
+import { cn } from "@/lib/utils";
 
 interface SearchAndFilterProps {
   searchTerm: string;
@@ -57,12 +58,14 @@ const JargonSearchAndFilter = ({
     <div className="space-y-4">
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
+        {!searchTerm && (
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+        )}
         <Input
           placeholder="Search terms, definitions, or usage examples..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="pl-10 pr-12"
+          className={cn("pr-12", !searchTerm && "pl-10")}
         />
         {searchTerm && (
           <Button

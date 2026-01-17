@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { Search, Filter, Users, Plus, X, CheckSquare, Square, MessageSquare, Briefcase } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { PullToRefresh } from "@/components/ui/pull-to-refresh";
 import { Badge } from "@/components/ui/badge";
@@ -237,12 +238,14 @@ export function EmployeesSection() {
       {/* Search + Filter Row */}
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {!searchQuery && (
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          )}
           <Input
             placeholder="Search team..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 h-11"
+            className={cn("h-11", !searchQuery && "pl-10")}
           />
         </div>
         

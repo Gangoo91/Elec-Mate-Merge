@@ -110,12 +110,14 @@ const UserLocationInput: React.FC<UserLocationInputProps> = ({
     <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
       <div className="flex items-center space-x-2">
         <div className="relative flex-grow">
-          <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {!inputValue && (
+            <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          )}
           <Input
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Enter your location (city or postcode)"
-            className="pl-9 bg-background border-elec-yellow/20"
+            className={cn("bg-background border-elec-yellow/20", !inputValue && "pl-9")}
           />
         </div>
         <Button

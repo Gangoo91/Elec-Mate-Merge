@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
+import { cn } from "@/lib/utils";
 import { Search, Filter, Plus, Receipt, Download } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -281,12 +282,14 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
           {/* Search and Filter Bar */}
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              {!searchQuery && (
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 placeholder="Search expenses..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 h-10 bg-card border-border"
+                className={cn("h-10 bg-card border-border", !searchQuery && "pl-9")}
               />
             </div>
             <Button

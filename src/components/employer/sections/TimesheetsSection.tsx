@@ -930,10 +930,12 @@ export const TimesheetsSection = () => {
           {/* Filters */}
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              {!searchQuery && (
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 placeholder="Search..."
-                className="pl-10 bg-surface h-10"
+                className={cn("bg-surface h-10", !searchQuery && "pl-10")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />

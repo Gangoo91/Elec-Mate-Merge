@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface RegulationSearchBarProps {
   searchTerm: string;
@@ -16,13 +17,15 @@ const RegulationSearchBar = ({ searchTerm, onSearchChange }: RegulationSearchBar
       <CardContent className="p-6">
         <div className="flex gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-            <Input 
-              type="text" 
+            {!searchTerm && (
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
+            )}
+            <Input
+              type="text"
               placeholder="Search regulations, test values, or requirements..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="pl-12 bg-muted border-border text-foreground placeholder-gray-400 h-14 text-lg"
+              className={cn("bg-muted border-border text-foreground placeholder-gray-400 h-14 text-lg", !searchTerm && "pl-12")}
             />
           </div>
           <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-14 px-8 text-lg font-semibold">

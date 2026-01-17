@@ -11,6 +11,7 @@ import {
   SortOption,
   MarketplaceProduct,
 } from '@/hooks/useMarketplaceSearch';
+import { cn } from '@/lib/utils';
 
 /**
  * Format last updated time as relative string
@@ -189,13 +190,15 @@ export default function MaterialsMarketplace() {
           {/* Search Bar */}
           <form onSubmit={handleSearch} className="flex gap-2 max-w-2xl">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              {!searchInput && (
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 type="search"
                 placeholder="Search cables, MCBs, sockets..."
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                className="h-11 pl-10 bg-card border-border focus:border-yellow-500 focus:ring-yellow-500/20"
+                className={cn("h-11 bg-card border-border focus:border-yellow-500 focus:ring-yellow-500/20", !searchInput && "pl-10")}
               />
             </div>
             <Button type="submit" className="h-11 px-6 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">

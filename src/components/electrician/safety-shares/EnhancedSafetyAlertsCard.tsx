@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertTriangle, Clock, MapPin, ExternalLink, Bell, Search, Filter, Bookmark, Star, Eye, ThumbsUp } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface SafetyAlert {
   id: string;
@@ -137,12 +138,14 @@ const EnhancedSafetyAlertsCard = () => {
         <CardContent className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+              {!searchQuery && (
+                <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 placeholder="Search alerts..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-elec-dark/50 border-elec-yellow/30"
+                className={cn("bg-elec-dark/50 border-elec-yellow/30", !searchQuery && "pl-10")}
               />
             </div>
             <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>

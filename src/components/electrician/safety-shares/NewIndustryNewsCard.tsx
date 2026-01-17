@@ -23,6 +23,7 @@ import NewsPagination from "./NewsPagination";
 import NewsFeaturedCarousel from "./NewsFeaturedCarousel";
 import { PullToRefresh } from "@/components/ui/pull-to-refresh";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -226,13 +227,18 @@ const NewIndustryNewsCard = () => {
             {/* Search bar - elegant, integrated */}
             <div className="relative">
               <div className="relative group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 group-focus-within:text-elec-yellow transition-colors" />
+                {!searchTerm && (
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 group-focus-within:text-elec-yellow transition-colors pointer-events-none" />
+                )}
                 <Input
                   type="text"
                   placeholder="Search articles..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full h-12 pl-11 pr-4 bg-white/[0.03] border-white/[0.08] rounded-xl text-white placeholder:text-white/30 focus:bg-white/[0.05] focus:border-elec-yellow/30 focus:ring-1 focus:ring-elec-yellow/20 transition-all"
+                  className={cn(
+                    "w-full h-12 pr-4 bg-white/[0.03] border-white/[0.08] rounded-xl text-white placeholder:text-white/30 focus:bg-white/[0.05] focus:border-elec-yellow/30 focus:ring-1 focus:ring-elec-yellow/20 transition-all",
+                    !searchTerm && "pl-11"
+                  )}
                 />
                 {searchTerm && (
                   <Button

@@ -8,6 +8,7 @@ import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 const COMMON_PRODUCTS = [
   "Twin & Earth Cable 2.5mm", "Twin & Earth Cable 1.5mm", "SWA Cable 4mm", "SWA Cable 2.5mm",
@@ -128,15 +129,17 @@ export const SearchInterface = ({
               </div>
             ) : (
               <div className="relative">
+                {!searchQuery && (
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+                )}
                 <Input
                   ref={searchInputRef}
                   placeholder="Search materials (e.g., Twin & Earth Cable 2.5mm, MCB 32A...)"
                   value={searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  className="pl-10 h-12"
+                  className={cn("h-12", !searchQuery && "pl-10")}
                 />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               </div>
             )}
 

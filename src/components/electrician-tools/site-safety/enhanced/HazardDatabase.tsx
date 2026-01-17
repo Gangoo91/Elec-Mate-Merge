@@ -7,14 +7,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Search, 
-  Plus, 
-  Zap, 
-  HardHat, 
-  AlertTriangle, 
-  Hammer, 
-  FlameKindling, 
+import { cn } from '@/lib/utils';
+import {
+  Search,
+  Plus,
+  Zap,
+  HardHat,
+  AlertTriangle,
+  Hammer,
+  FlameKindling,
   Wind,
   Building2,
   Users,
@@ -231,12 +232,14 @@ const HazardDatabase: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                {!searchTerm && (
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                )}
                 <Input
                   placeholder="Search hazards..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className={cn(!searchTerm && "pl-10")}
                 />
               </div>
             </div>

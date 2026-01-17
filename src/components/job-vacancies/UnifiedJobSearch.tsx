@@ -269,13 +269,15 @@ const UnifiedJobSearch = () => {
             <div className="space-y-2 relative">
               <label className="text-sm font-medium text-elec-yellow">Location</label>
               <div className="relative">
-                <MapPin className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
+                {!location && (
+                  <MapPin className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow pointer-events-none" />
+                )}
                 <Input
                   placeholder="Location (UK)"
                   value={location}
                   onChange={(e) => handleLocationChange(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="h-11 sm:h-12 pl-10 sm:pl-12 bg-elec-gray border-elec-yellow/30 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow transition-colors"
+                  className={cn("h-11 sm:h-12 bg-elec-gray border-elec-yellow/30 text-elec-light placeholder:text-muted-foreground focus:border-elec-yellow transition-colors", !location && "pl-10 sm:pl-12")}
                 />
               </div>
               

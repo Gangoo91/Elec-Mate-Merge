@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Edit, Trash2, UserCheck, UserX } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface User {
   id: string;
@@ -94,10 +95,12 @@ const AdminUsers = () => {
         <div className="p-4">
           <div className="flex items-center justify-between mb-4">
             <div className="relative w-64">
-              <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
+              {!searchTerm && (
+                <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400 pointer-events-none" />
+              )}
               <Input
                 placeholder="Search users..."
-                className="pl-8"
+                className={cn(!searchTerm && "pl-8")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />

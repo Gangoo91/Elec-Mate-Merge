@@ -12,11 +12,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Task } from '@/types/enhanced-rams';
 import { useEnhancedRAMS } from '@/hooks/useEnhancedRAMS';
-import { 
-  Search, 
-  Link, 
-  X, 
-  AlertTriangle, 
+import { cn } from '@/lib/utils';
+import {
+  Search,
+  Link,
+  X,
+  AlertTriangle,
   CheckCircle,
   Star,
   TrendingUp
@@ -245,12 +246,14 @@ const HazardLinkingPanel: React.FC<HazardLinkingPanelProps> = ({ task, open, onO
                 <div className="flex gap-4">
                   <div className="flex-1">
                     <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      {!searchTerm && (
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                      )}
                       <Input
                         placeholder="Search hazards..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10"
+                        className={cn(!searchTerm && "pl-10")}
                       />
                     </div>
                   </div>

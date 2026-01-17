@@ -222,10 +222,12 @@ export const JobPacksSection = () => {
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        {!searchQuery && (
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+        )}
         <Input
           placeholder="Search job packs..."
-          className="pl-10 h-12 text-base"
+          className={cn("h-12 text-base", !searchQuery && "pl-10")}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />

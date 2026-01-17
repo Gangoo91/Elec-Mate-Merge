@@ -96,8 +96,42 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         setAgentMessage(event?.agent_response || '');
       }
     },
-    // CLIENT TOOLS - 3 simple tools for EICR, EIC, Minor Works
+    // CLIENT TOOLS - Schedule of Tests tools for EICR/EIC certificates
     clientTools: {
+      // PRIMARY TOOL: Fill schedule of tests (EICR/EIC)
+      fill_schedule_of_tests: async (params: {
+        action: string;
+        circuit_type?: string;
+        circuit_number?: number;
+        field?: string;
+        value?: string;
+        description?: string;
+        fields?: Record<string, string>;
+      }) => {
+        console.log('[InlineVoice] fill_schedule_of_tests called:', params);
+        // Resolve field name if update_field action
+        if ((params.action === 'update_field' || params.action === 'update_multiple_fields') && params.field) {
+          const resolvedField = resolveFieldName(params.field);
+          if (resolvedField) {
+            params = { ...params, field: resolvedField };
+          }
+        }
+        return handleToolCall('fill_schedule_of_tests', params);
+      },
+
+      // BULK TOOL: Set field on all circuits
+      bulk_fill_circuits: async (params: {
+        field: string;
+        value: string;
+        board?: string;
+        only_empty?: boolean;
+      }) => {
+        console.log('[InlineVoice] bulk_fill_circuits called:', params);
+        const resolvedField = resolveFieldName(params.field);
+        return handleToolCall('bulk_fill_circuits', { ...params, field: resolvedField || params.field });
+      },
+
+      // LEGACY: Keep fill_eicr for backward compatibility
       fill_eicr: async (params: {
         action: string;
         circuit_type?: string;
@@ -106,7 +140,7 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         value?: string;
         description?: string;
       }) => {
-        console.log('[InlineVoice] fill_eicr called:', params);
+        console.log('[InlineVoice] fill_eicr called (legacy):', params);
         // Resolve field name if update_field action
         if (params.action === 'update_field' && params.field) {
           const resolvedField = resolveFieldName(params.field);
@@ -114,7 +148,8 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
             params = { ...params, field: resolvedField };
           }
         }
-        return handleToolCall('fill_eicr', params);
+        // Route to fill_schedule_of_tests for consistency
+        return handleToolCall('fill_schedule_of_tests', params);
       },
 
       fill_eic: async (params: {
@@ -152,11 +187,11 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         return handleToolCall('fill_minor_works', params);
       },
 
-      // BULK CIRCUIT TOOLS
+      // LEGACY BULK TOOLS - route to bulk_fill_circuits
       set_field_all_circuits: async (params: { field: string; value: string }) => {
-        console.log('[InlineVoice] set_field_all_circuits called:', params);
+        console.log('[InlineVoice] set_field_all_circuits called (legacy):', params);
         const resolvedField = resolveFieldName(params.field);
-        return handleToolCall('set_field_all_circuits', { ...params, field: resolvedField || params.field });
+        return handleToolCall('bulk_fill_circuits', { ...params, field: resolvedField || params.field });
       },
 
       set_circuit_field: async (params: { circuit_number: number; field: string; value: string }) => {

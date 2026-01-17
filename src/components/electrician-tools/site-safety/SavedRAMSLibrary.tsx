@@ -479,13 +479,15 @@ export const SavedRAMSLibrary = () => {
 
             {/* Search bar */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+              {!searchTerm && (
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+              )}
               <Input
                 type="text"
                 placeholder="Search documents..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-10 h-11 bg-white/[0.05] border-white/[0.08] rounded-xl text-white placeholder:text-white/40"
+                className={cn("pr-10 h-11 bg-white/[0.05] border-white/[0.08] rounded-xl text-white placeholder:text-white/40", !searchTerm && "pl-10")}
               />
               {searchTerm && (
                 <Button
@@ -651,13 +653,15 @@ export const SavedRAMSLibrary = () => {
           <CardContent className="pt-6">
             <div className="space-y-4">
               <div className="relative flex-1 max-w-xl">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                {!searchTerm && (
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                )}
                 <Input
                   type="text"
                   placeholder="Search by project, location, or assessor..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-10 h-11 bg-background border-border touch-manipulation"
+                  className={cn("pr-10 h-11 bg-background border-border touch-manipulation", !searchTerm && "pl-10")}
                 />
                 {searchTerm && (
                   <Button

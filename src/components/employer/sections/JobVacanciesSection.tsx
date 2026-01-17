@@ -401,15 +401,18 @@ export function JobVacanciesSection() {
                 {/* Search and additional filters */}
                 <div className="flex gap-2">
                   <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                    {!searchQuery && (
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+                    )}
                     <Input
                       placeholder="Search candidates..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className={cn(
-                        "h-11 pl-10 bg-white/5 border-white/10 rounded-xl",
+                        "h-11 bg-white/5 border-white/10 rounded-xl",
                         "text-white placeholder:text-white/40",
-                        "focus:border-elec-yellow/60"
+                        "focus:border-elec-yellow/60",
+                        !searchQuery && "pl-10"
                       )}
                     />
                   </div>

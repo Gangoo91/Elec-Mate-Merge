@@ -32,6 +32,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { cn } from '@/lib/utils';
 
 const sortOptions: { value: SortField; label: string }[] = [
   { value: 'name', label: 'Name' },
@@ -127,12 +128,14 @@ export default function CustomersPage() {
         {/* Search and Actions */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            {!searchTerm && (
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            )}
             <Input
               placeholder="Search customers..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-9 h-11 touch-manipulation"
+              className={cn("h-11 touch-manipulation", !searchTerm && "pl-9")}
             />
           </div>
           <div className="flex gap-2">

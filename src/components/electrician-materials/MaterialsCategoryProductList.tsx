@@ -9,6 +9,7 @@ import { ArrowLeft, Search, Filter, ExternalLink, Star, Package, Loader2, Users,
 import { useCategoryMaterials } from "@/hooks/useCategoryMaterials";
 import { useMaterialsComparison } from "@/hooks/useMaterialsComparison";
 import MaterialCard from "./MaterialCard";
+import { cn } from "@/lib/utils";
 
 const MaterialsCategoryProductList = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
@@ -132,12 +133,14 @@ const MaterialsCategoryProductList = () => {
               <div>
                 <label className="text-sm font-medium text-foreground mb-2 block">Search Products</label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  {!searchTerm && (
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                  )}
                   <Input
                     placeholder="Search by name or description..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 bg-elec-dark border-elec-yellow/30"
+                    className={cn("bg-elec-dark border-elec-yellow/30", !searchTerm && "pl-10")}
                   />
                 </div>
               </div>

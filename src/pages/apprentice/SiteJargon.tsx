@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, MessageSquare, MapPin, Lightbulb, Volume2, Star, Filter } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 const SiteJargon = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -256,12 +257,14 @@ const SiteJargon = () => {
           {/* Search and Filters */}
           <div className="flex flex-col md:flex-row gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 h-4 w-4" />
+              {!searchTerm && (
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 h-4 w-4 pointer-events-none" />
+              )}
               <Input
                 placeholder="Search electrical terms..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className={cn(!searchTerm && "pl-10")}
               />
             </div>
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>

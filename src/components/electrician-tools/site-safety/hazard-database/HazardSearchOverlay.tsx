@@ -123,16 +123,19 @@ export const HazardSearchOverlay: React.FC<HazardSearchOverlayProps> = ({
       <div className="sticky top-0 bg-elec-dark/95 backdrop-blur-md px-4 pt-4 pb-2 border-b border-white/[0.06] safe-area-inset-top">
         <div className="flex items-center gap-3">
           <div className="flex-1 relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
+            {!query && (
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40 pointer-events-none" />
+            )}
             <input
               ref={inputRef}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search hazards, controls, PPE..."
               className={cn(
-                "w-full h-12 bg-white/[0.05] rounded-2xl pl-12 pr-10 text-white",
+                "w-full h-12 bg-white/[0.05] rounded-2xl pr-10 text-white",
                 "placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50",
-                "border border-white/[0.08]"
+                "border border-white/[0.08]",
+                !query && "pl-12"
               )}
               autoComplete="off"
             />

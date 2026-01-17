@@ -7,14 +7,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  CheckCircle, 
-  Clock, 
-  AlertTriangle, 
-  Link, 
+import { cn } from '@/lib/utils';
+import {
+  Plus,
+  Search,
+  Filter,
+  CheckCircle,
+  Clock,
+  AlertTriangle,
+  Link,
   MoreVertical,
   Trash2,
   Edit3
@@ -296,7 +297,9 @@ const TaskManager: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                {!searchTerm && (
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                )}
                 <Input
                   ref={searchInputRef}
                   key="task-search-input"
@@ -305,7 +308,7 @@ const TaskManager: React.FC = () => {
                   onChange={handleSearchChange}
                   onBlur={(e) => e.preventDefault()}
                   onFocus={(e) => e.stopPropagation()}
-                  className="pl-10"
+                  className={cn(!searchTerm && "pl-10")}
                   autoComplete="off"
                 />
               </div>

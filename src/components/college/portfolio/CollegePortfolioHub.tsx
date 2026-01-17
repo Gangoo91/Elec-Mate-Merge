@@ -24,6 +24,7 @@ import {
   LayoutGrid,
   List
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { useCollegePortfolios, useStudentPortfolioDetail } from '@/hooks/college/useCollegePortfolios';
 import StudentPortfolioCard from './StudentPortfolioCard';
 import CoverageMatrixView from './CoverageMatrixView';
@@ -280,12 +281,14 @@ const CollegePortfolioHub: React.FC = () => {
           {/* Filters */}
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white/40" />
+              {!searchTerm && (
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white/40 pointer-events-none" />
+              )}
               <Input
                 placeholder="Search students..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-8 bg-white/5 border-elec-gray/40"
+                className={cn("bg-white/5 border-elec-gray/40", !searchTerm && "pl-8")}
               />
             </div>
             <Select value={statusFilter || 'all'} onValueChange={(v) => setStatusFilter(v === 'all' ? null : v)}>

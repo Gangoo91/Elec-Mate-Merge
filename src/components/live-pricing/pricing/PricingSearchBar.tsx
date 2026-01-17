@@ -104,7 +104,9 @@ const PricingSearchBar = ({
         )}>
           {/* Input container */}
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-yellow-400 z-10 pointer-events-none" />
+            {!postcode && (
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-yellow-400 z-10 pointer-events-none" />
+            )}
             <input
               value={postcode}
               onChange={(e) => setPostcode(e.target.value.toUpperCase())}
@@ -112,11 +114,12 @@ const PricingSearchBar = ({
               onBlur={() => setIsFocused(false)}
               placeholder="Enter postcode..."
               className={cn(
-                "w-full h-14 pl-12 pr-12 rounded-xl",
+                "w-full h-14 pr-12 rounded-xl",
                 "bg-neutral-800/80 border-0",
                 "text-lg font-medium text-white placeholder:text-white/40",
                 "focus:outline-none focus:ring-0",
-                "transition-all duration-200"
+                "transition-all duration-200",
+                !postcode && "pl-12"
               )}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             />

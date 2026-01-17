@@ -82,14 +82,16 @@ export function MobileSearchSheet({
           {/* Search Header */}
           <div className="flex items-center gap-2 p-3 border-b border-border bg-elec-gray pt-safe">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              {!query && (
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 ref={inputRef}
                 type="search"
                 placeholder={placeholder}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="pl-10 pr-10 h-12 text-base bg-background border-border"
+                className={cn("pr-10 h-12 text-base bg-background border-border", !query && "pl-10")}
                 autoComplete="off"
                 autoCorrect="off"
                 autoCapitalize="off"

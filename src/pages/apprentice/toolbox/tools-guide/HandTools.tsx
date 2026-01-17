@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, SlidersHorizontal, Wrench, Star, Shield, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useToolsData } from "@/hooks/useToolsData";
 import { SmartBackButton } from "@/components/ui/smart-back-button";
 import ToolsFeaturedCarousel from "@/components/electrician-tools/ToolsFeaturedCarousel";
@@ -121,12 +122,14 @@ const HandTools = () => {
       <Card className="border-white/10 bg-white/5 backdrop-blur-sm">
         <CardContent className="p-4 space-y-4">
           <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/60" />
+            {!searchTerm && (
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+            )}
             <Input
               placeholder="Search hand tools..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-white/60 focus:border-elec-yellow/50"
+              className={cn("bg-white/5 border-white/20 text-white placeholder:text-white/60 focus:border-elec-yellow/50", !searchTerm && "pl-10")}
             />
           </div>
 

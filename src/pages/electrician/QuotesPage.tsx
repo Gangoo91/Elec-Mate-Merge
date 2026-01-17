@@ -133,13 +133,15 @@ const QuotesPage = () => {
           /* Search Mode - Full width search input */
           <div className="flex items-center h-14 px-4 gap-2">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              {!searchQuery && (
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 type="text"
                 placeholder="Search by name, quote #..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-11 pl-9 pr-9 text-base touch-manipulation bg-elec-gray/50 border-elec-gray focus:border-elec-yellow"
+                className={cn("h-11 pr-9 text-base touch-manipulation bg-elec-gray/50 border-elec-gray focus:border-elec-yellow", !searchQuery && "pl-9")}
                 autoFocus
               />
               {searchQuery && (

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 import { Zap, Clock, Star, Search, Filter, SkipForward, ArrowRight, CheckCircle, Eye, GitCompare, Bookmark, Heart, Info } from 'lucide-react';
 import { MethodTemplate } from '@/types/method-statement';
 import { methodTemplates, getTemplatesByCategory } from '@/data/method-statement-templates';
@@ -169,13 +170,15 @@ const TemplateSelectionStep = ({ onTemplateSelect, onSkipTemplate }: TemplateSel
           <div className="w-full space-y-3 sm:space-y-4">
             {/* Search Input - Contained within parent */}
             <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground flex-shrink-0 z-10" />
+              {!searchTerm && (
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground flex-shrink-0 z-10 pointer-events-none" />
+              )}
               <Input
                 ref={searchInputRef}
                 placeholder="Search templates by name or description..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 h-12 text-base border-2 border-elec-yellow/20 bg-background focus:border-elec-yellow/60 focus:bg-background transition-all duration-200 touch-manipulation focus:ring-2 focus:ring-elec-yellow/20"
+                className={cn("w-full pr-4 h-12 text-base border-2 border-elec-yellow/20 bg-background focus:border-elec-yellow/60 focus:bg-background transition-all duration-200 touch-manipulation focus:ring-2 focus:ring-elec-yellow/20", !searchTerm && "pl-10")}
                 autoComplete="off"
                 autoCapitalize="none"
                 aria-label="Search method statement templates"

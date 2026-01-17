@@ -6,6 +6,7 @@ import { ModuleCard } from "@/components/shared/ModuleCard";
 import { Search, Zap, BookOpen, Cpu, Lightbulb, Network, Home, Sun, BatteryCharging, Settings, Shield, Wrench, Activity, Wifi, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export default function UpskillingHome() {
   const navigate = useNavigate();
@@ -185,13 +186,15 @@ export default function UpskillingHome() {
           {/* Search Bar */}
           <div className="mb-8">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40" />
+              {!searchQuery && (
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+              )}
               <Input
                 type="text"
                 placeholder="Search courses..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-elec-yellow/50"
+                className={cn("h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-elec-yellow/50", !searchQuery && "pl-10")}
               />
             </div>
           </div>

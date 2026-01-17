@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import PremiumMaterialCategoryCard from "@/components/electrician-materials/PremiumMaterialCategoryCard";
 import { getMaterialCategoryStyle, MATERIAL_CATEGORY_META } from "@/components/electrician-materials/materialCategoryStyleUtils";
+import { cn } from "@/lib/utils";
 
 const ElectricalMaterials = () => {
   const navigate = useNavigate();
@@ -189,14 +190,17 @@ const ElectricalMaterials = () => {
 
       {/* Search Bar */}
       <div className="relative max-w-xl">
-        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+        {!searchTerm && (
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+        )}
         <Input
           placeholder="Search material categories..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-12 h-12 text-base bg-white/5 border-white/10 rounded-xl
-                     focus:border-primary/40 focus:ring-2 focus:ring-primary/20
-                     placeholder:text-white/40"
+          className={cn(
+            "h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-primary/40 focus:ring-2 focus:ring-primary/20 placeholder:text-white/40",
+            !searchTerm && "pl-12"
+          )}
         />
       </div>
 

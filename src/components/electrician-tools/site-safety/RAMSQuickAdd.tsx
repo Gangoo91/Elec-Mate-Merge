@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ramsTemplates, RAMSTemplate } from '@/data/site-safety/ramsTemplates';
+import { cn } from '@/lib/utils';
 import { Plus, Zap, ChevronDown, ChevronUp, Search } from 'lucide-react';
 import * as Icons from 'lucide-react';
 import { useRAMS } from './rams/RAMSContext';
@@ -82,12 +83,14 @@ export const RAMSQuickAdd: React.FC = () => {
         
         {/* Search Input */}
         <div className="relative mt-3">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground/50" />
+          {!searchTerm && (
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-foreground/50 pointer-events-none" />
+          )}
           <Input
             placeholder="Search hazards, activities, or controls..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-green-500/10 border-white/20 text-foreground placeholder:text-foreground/50 focus:border-green-500/50 h-10"
+            className={cn("bg-green-500/10 border-white/20 text-foreground placeholder:text-foreground/50 focus:border-green-500/50 h-10", !searchTerm && "pl-10")}
           />
         </div>
         

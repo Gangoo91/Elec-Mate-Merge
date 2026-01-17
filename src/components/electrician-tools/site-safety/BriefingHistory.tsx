@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { cn } from "@/lib/utils";
 import { FileText, Search, Calendar, MapPin, User, Sparkles, Camera, Clock, CheckCircle2, FileEdit, Wrench, ClipboardList } from "lucide-react";
 import { BriefingPDFActions } from "./BriefingPDFActions";
 import { BriefingActionsMenu } from "./BriefingActionsMenu";
@@ -118,12 +119,14 @@ export const BriefingHistory = ({ onEdit, onDuplicate, onStatusChange }: Briefin
       <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm pb-3 space-y-3">
         {/* Search */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {!searchTerm && (
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          )}
           <Input
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search briefings..."
-            className="pl-10 h-11 bg-card/50 border-elec-yellow/20"
+            className={cn("h-11 bg-card/50 border-elec-yellow/20", !searchTerm && "pl-10")}
           />
         </div>
 

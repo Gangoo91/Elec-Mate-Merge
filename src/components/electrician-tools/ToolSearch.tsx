@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 const ToolSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,10 +32,12 @@ const ToolSearch = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input 
-                  placeholder="Search tools, brands, model numbers..." 
-                  className="pl-10 h-12 text-base"
+                {!searchQuery && (
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground pointer-events-none" />
+                )}
+                <Input
+                  placeholder="Search tools, brands, model numbers..."
+                  className={cn("h-12 text-base", !searchQuery && "pl-10")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />

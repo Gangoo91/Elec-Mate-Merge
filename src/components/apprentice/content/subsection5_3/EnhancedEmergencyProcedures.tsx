@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { 
-  AlertTriangle, 
-  Phone, 
-  MapPin, 
-  Download, 
-  Search, 
-  Zap, 
-  Flame, 
-  Users, 
-  Shield, 
+import {
+  AlertTriangle,
+  Phone,
+  MapPin,
+  Download,
+  Search,
+  Zap,
+  Flame,
+  Users,
+  Shield,
   Clock,
   CheckCircle,
   FileText,
@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { emergencyContacts, emergencyProcedures, EmergencyContact, EmergencyProcedure } from "./EmergencyContactsData";
+import { cn } from "@/lib/utils";
 
 const EnhancedEmergencyProcedures = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -178,12 +179,14 @@ const EnhancedEmergencyProcedures = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-2 flex-1">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
+                {!searchTerm && (
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+                )}
                 <Input
                   placeholder="Search procedures..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-white/5 border-elec-yellow/20"
+                  className={cn("bg-white/5 border-elec-yellow/20", !searchTerm && "pl-10")}
                 />
               </div>
               <div className="flex gap-1 overflow-x-auto">

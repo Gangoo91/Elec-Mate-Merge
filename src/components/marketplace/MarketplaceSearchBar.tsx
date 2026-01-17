@@ -114,7 +114,9 @@ export function MarketplaceSearchBar({
     <div className={cn('relative w-full', className)}>
       {/* Search Input */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+        {!query && (
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+        )}
         <Input
           ref={inputRef}
           type="text"
@@ -123,7 +125,7 @@ export function MarketplaceSearchBar({
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder="Search tools across all suppliers..."
-          className="h-12 sm:h-14 pl-12 pr-12 text-base sm:text-lg bg-background border-2 border-elec-yellow/30 focus:border-elec-yellow focus:ring-elec-yellow rounded-xl touch-manipulation"
+          className={cn("h-12 sm:h-14 pr-12 text-base sm:text-lg bg-background border-2 border-elec-yellow/30 focus:border-elec-yellow focus:ring-elec-yellow rounded-xl touch-manipulation", !query && "pl-12")}
           autoFocus={autoFocus}
         />
         {query && (

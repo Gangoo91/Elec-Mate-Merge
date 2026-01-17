@@ -21,6 +21,7 @@ import {
 import { Circuit } from "./types";
 import CircuitControls from "./CircuitControls";
 import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
+import { cn } from "@/lib/utils";
 
 interface EnhancedMultiCircuitEditorProps {
   circuits: Circuit[];
@@ -151,12 +152,14 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
       {/* Search and Filter Controls */}
       <div className="space-y-4">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {!searchTerm && (
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          )}
           <MobileInput
             placeholder="Search circuits..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
+            className={cn(!searchTerm && "pl-10")}
             inputMode="search"
           />
         </div>

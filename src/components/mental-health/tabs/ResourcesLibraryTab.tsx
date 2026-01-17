@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useMentalHealth } from "@/contexts/MentalHealthContext";
+import { cn } from "@/lib/utils";
 
 const ResourcesLibraryTab = () => {
   const { favoriteResources, toggleFavoriteResource } = useMentalHealth();
@@ -172,12 +173,14 @@ const ResourcesLibraryTab = () => {
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+        {!searchTerm && (
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+        )}
         <Input
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search resources..."
-          className="pl-10 h-11"
+          className={cn("h-11", !searchTerm && "pl-10")}
         />
       </div>
 

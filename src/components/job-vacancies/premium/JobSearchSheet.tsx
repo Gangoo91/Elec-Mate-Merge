@@ -224,20 +224,24 @@ const JobSearchSheet = ({
           <div className="px-6 pb-4 space-y-3">
             {/* Job Search Input */}
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
+              {!query && (
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40 pointer-events-none" />
+              )}
               <Input
                 ref={queryInputRef}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 placeholder="Job title, skill, or company"
-                className="h-12 pl-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white/40 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
+                className={cn("h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white/40 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20", !query && "pl-12")}
               />
             </div>
 
             {/* Location Input */}
             <div className="relative">
-              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
+              {!location && (
+                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40 pointer-events-none" />
+              )}
               <Input
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
@@ -245,7 +249,7 @@ const JobSearchSheet = ({
                 onBlur={() => setTimeout(() => setShowLocationSuggestions(false), 200)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 placeholder="Location (city, postcode, or remote)"
-                className="h-12 pl-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white/40 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
+                className={cn("h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white/40 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20", !location && "pl-12")}
               />
 
               {/* Location Suggestions Dropdown */}

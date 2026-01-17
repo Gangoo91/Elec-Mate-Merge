@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { Circuit } from "./types";
 import { CIRCUIT_TEMPLATES, getAvailableTemplatesForInstallationType } from "./CircuitDefaults";
+import { cn } from "@/lib/utils";
 
 interface CircuitTypeSelectorProps {
   onAddCircuit: (circuitType: string) => void;
@@ -200,12 +201,14 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
       {/* Search and Filter */}
       <div className="space-y-4">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {!searchTerm && (
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          )}
           <Input
             placeholder="Search circuit types..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-elec-dark border-elec-yellow/30"
+            className={cn("bg-elec-dark border-elec-yellow/30", !searchTerm && "pl-10")}
           />
         </div>
 

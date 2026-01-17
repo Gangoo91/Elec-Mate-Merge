@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Search, Filter, Download, Eye, FileText, Loader2, Clock, CheckCircle } from "lucide-react";
 import { useUnifiedCPD } from "@/hooks/cpd/useUnifiedCPD";
 import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const CPDHistory = () => {
   const { entries, loading, deleteEntry, updateEntry } = useUnifiedCPD();
@@ -84,12 +85,17 @@ const CPDHistory = () => {
         <CardContent className="relative">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="relative md:col-span-2">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40" />
+              {!searchTerm && (
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+              )}
               <Input
                 placeholder="Search activities..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50"
+                className={cn(
+                  "h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50",
+                  !searchTerm && "pl-10"
+                )}
               />
             </div>
 

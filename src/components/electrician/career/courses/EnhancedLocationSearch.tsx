@@ -3,10 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { 
-  MapPin, Search, Loader2, Navigation, X 
+import {
+  MapPin, Search, Loader2, Navigation, X
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 interface EnhancedLocationSearchProps {
   onLocationSelect: (location: string, coordinates?: google.maps.LatLngLiteral) => void;
@@ -209,14 +210,16 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
         <div className="space-y-3">
           <div className="flex gap-2">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              {!searchInput && (
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              )}
               <Input
                 ref={inputRef}
                 placeholder="Enter your city or postcode..."
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleManualSearch()}
-                className="pl-10 pr-10"
+                className={cn("pr-10", !searchInput && "pl-10")}
               />
               {searchInput && (
                 <Button

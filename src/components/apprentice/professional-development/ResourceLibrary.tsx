@@ -3,18 +3,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { 
-  BookOpen, 
-  FileText, 
-  Video, 
-  Download, 
-  ExternalLink, 
+import {
+  BookOpen,
+  FileText,
+  Video,
+  Download,
+  ExternalLink,
   Search,
   Filter,
   Star,
   Clock
 } from "lucide-react";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 const ResourceLibrary = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -175,12 +176,14 @@ const ResourceLibrary = () => {
         <CardContent>
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
+              {!searchTerm && (
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+              )}
               <Input
                 placeholder="Search resources..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className={cn(!searchTerm && "pl-10")}
               />
             </div>
             <div className="flex gap-2 overflow-x-auto">

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { MaterialItem } from "@/data/electrician/productData";
+import { cn } from "@/lib/utils";
 
 const SUPPLIERS = [
   { slug: "screwfix", name: "Screwfix" },
@@ -70,10 +71,12 @@ const MaterialSearch = ({ supplierSlug, onResults }: MaterialSearchProps) => {
     <div className="border p-4 rounded-lg bg-elec-gray border-elec-yellow/20 flex flex-col sm:flex-row items-center gap-4">
       <div className="flex-1 w-full flex gap-2 items-center">
         <div className="relative flex-1">
-          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder={`Search ${supplierName}…`} 
-            className="pl-8"
+          {!searchQuery && (
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground pointer-events-none" />
+          )}
+          <Input
+            placeholder={`Search ${supplierName}…`}
+            className={cn(!searchQuery && "pl-8")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             aria-label="Search materials"

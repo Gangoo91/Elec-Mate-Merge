@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Search, Lightbulb, Zap, Shield } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface CommonFault {
   symptom: string;
@@ -234,13 +235,15 @@ const CommonFaultsList = () => {
       {/* Search */}
       <div className="max-w-md mx-auto mb-6 sm:mb-8">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          {!searchTerm && (
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+          )}
           <Input
             type="text"
             placeholder="Search symptoms or faults..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-muted border-border text-foreground placeholder-gray-400 min-h-[44px]"
+            className={cn("bg-muted border-border text-foreground placeholder-gray-400 min-h-[44px]", !searchTerm && "pl-10")}
           />
         </div>
       </div>

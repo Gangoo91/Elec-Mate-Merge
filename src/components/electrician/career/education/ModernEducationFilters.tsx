@@ -16,6 +16,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import type { LiveEducationData } from "@/hooks/useLiveEducationData";
+import { cn } from "@/lib/utils";
 
 export interface EducationFilters {
   searchTerm: string;
@@ -90,12 +91,17 @@ const ModernEducationFilters = ({ programmes, onFiltersChange, onReset, resultCo
     <div className="space-y-4">
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground/60 h-4 w-4" />
+        {!filters.searchTerm && (
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground/60 h-4 w-4 pointer-events-none" />
+        )}
         <Input
           placeholder="Search programmes, institutions, or topics..."
           value={filters.searchTerm}
           onChange={(e) => handleFilterChange("searchTerm", e.target.value)}
-          className="pl-10 bg-white/10 border-white/20 text-foreground placeholder:text-foreground/60 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
+          className={cn(
+            "bg-white/10 border-white/20 text-foreground placeholder:text-foreground/60 focus:border-elec-yellow/50 focus:ring-elec-yellow/20",
+            !filters.searchTerm && "pl-10"
+          )}
         />
         {filters.searchTerm && (
           <Button
