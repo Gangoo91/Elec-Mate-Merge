@@ -126,8 +126,8 @@ export function useDashboardData(): DashboardData {
       q.status === 'sent' && q.acceptance_status === 'pending'
     ) || [];
 
-    // Calculate total quote value
-    const quoteValue = activeQuotes.reduce((sum, q) => sum + (q.total || 0), 0);
+    // Calculate total pipeline value (ALL quotes - matches QuotesPage)
+    const quoteValue = savedQuotes?.reduce((sum, q) => sum + (q.total || 0), 0) || 0;
     const formattedQuoteValue = quoteValue >= 1000
       ? `£${(quoteValue / 1000).toFixed(1)}k`
       : `£${quoteValue.toLocaleString()}`;
