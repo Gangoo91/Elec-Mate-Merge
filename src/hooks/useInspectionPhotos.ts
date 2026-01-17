@@ -331,8 +331,12 @@ export const useInspectionPhotos = ({ reportId, reportType, itemId, observationI
       });
 
       return aiAnalysis;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error scanning photo:', error);
+      // Try to get more details from the error
+      if (error?.context?.json) {
+        console.error('Error details:', await error.context.json());
+      }
       toast({
         title: 'AI scan failed',
         description: error instanceof Error ? error.message : 'Failed to analyze photo',

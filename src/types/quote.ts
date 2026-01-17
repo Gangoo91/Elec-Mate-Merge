@@ -91,6 +91,13 @@ export interface Quote {
   updatedAt: Date;
   expiryDate: Date;
   notes?: string;
+  // Email tracking fields
+  first_sent_at?: Date;
+  reminder_count?: number;
+  auto_followup_enabled?: boolean;
+  expiry_notification_sent?: boolean;
+  email_opened_at?: Date;
+  email_open_count?: number;
   acceptance_status?: 'pending' | 'accepted' | 'rejected';
   acceptance_method?: 'in_app_signature' | 'docusign';
   accepted_at?: Date;

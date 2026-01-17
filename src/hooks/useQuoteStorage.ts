@@ -36,6 +36,14 @@ export const useQuoteStorage = () => {
     public_token: row.public_token,
     invoice_raised: row.invoice_raised,
     work_completion_date: row.work_completion_date ? new Date(row.work_completion_date) : undefined,
+    // Email tracking fields
+    first_sent_at: row.first_sent_at ? new Date(row.first_sent_at) : undefined,
+    reminder_count: row.reminder_count || 0,
+    auto_followup_enabled: row.auto_followup_enabled !== false, // Default true
+    expiry_notification_sent: row.expiry_notification_sent || false,
+    // Email view tracking (from join with quote_views if available)
+    email_opened_at: row.email_opened_at ? new Date(row.email_opened_at) : undefined,
+    email_open_count: row.email_open_count || 0,
   }), []);
 
   // Load quotes from Supabase on mount
@@ -49,9 +57,19 @@ export const useQuoteStorage = () => {
           return;
         }
 
+        // Fetch quotes with email tracking data from quote_views
         const { data, error } = await supabase
           .from('quotes')
-          .select('*')
+          .select(`
+            *,
+            quote_views!left (
+              email_opened_at,
+              email_open_count,
+              email_sent_at,
+              last_viewed_at,
+              view_count
+            )
+          `)
           .eq('invoice_raised', false)
           .order('created_at', { ascending: false });
 
@@ -60,7 +78,15 @@ export const useQuoteStorage = () => {
           return;
         }
 
-        const quotes = data?.map(convertDbRowToQuote) || [];
+        // Flatten quote_views data into the quote object
+        const quotes = data?.map((row: any) => {
+          const quoteView = row.quote_views?.[0] || {};
+          return convertDbRowToQuote({
+            ...row,
+            email_opened_at: quoteView.email_opened_at,
+            email_open_count: quoteView.email_open_count || 0,
+          });
+        }) || [];
         setSavedQuotes(quotes);
         console.log('Quotes loaded from Supabase:', quotes.length);
       } catch (error) {
@@ -337,9 +363,19 @@ export const useQuoteStorage = () => {
         return;
       }
 
+      // Fetch quotes with email tracking data from quote_views
       const { data, error } = await supabase
         .from('quotes')
-        .select('*')
+        .select(`
+          *,
+          quote_views!left (
+            email_opened_at,
+            email_open_count,
+            email_sent_at,
+            last_viewed_at,
+            view_count
+          )
+        `)
         .eq('invoice_raised', false)
         .order('created_at', { ascending: false });
 
@@ -348,7 +384,15 @@ export const useQuoteStorage = () => {
         return;
       }
 
-      const quotes = data?.map(convertDbRowToQuote) || [];
+      // Flatten quote_views data into the quote object
+      const quotes = data?.map((row: any) => {
+        const quoteView = row.quote_views?.[0] || {};
+        return convertDbRowToQuote({
+          ...row,
+          email_opened_at: quoteView.email_opened_at,
+          email_open_count: quoteView.email_open_count || 0,
+        });
+      }) || [];
       setSavedQuotes(quotes);
       console.log('Quotes refreshed:', quotes.length);
     } catch (error) {
@@ -461,12 +505,103 @@ export const useQuoteStorage = () => {
     }
   };
 
+  // Send a quote follow-up reminder (for quotes awaiting acceptance)
+  const sendQuoteReminder = async (quoteId: string, reminderType: 'gentle' | 'firm' | 'urgent' = 'gentle'): Promise<boolean> => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.error('No session found');
+        return false;
+      }
+
+      const { data, error } = await supabase.functions.invoke('send-quote-reminder', {
+        body: { quoteId, reminderType },
+        headers: { Authorization: `Bearer ${session.access_token}` }
+      });
+
+      if (error) {
+        console.error('Error sending quote reminder:', error);
+        toast({
+          title: "Failed to send reminder",
+          description: error.message || "Please try again",
+          variant: "destructive",
+        });
+        return false;
+      }
+
+      // Update local state
+      setSavedQuotes(prev => prev.map(quote =>
+        quote.id === quoteId
+          ? {
+              ...quote,
+              reminder_count: (quote.reminder_count || 0) + 1,
+              lastReminderSentAt: new Date(),
+            }
+          : quote
+      ));
+
+      toast({
+        title: "Reminder Sent",
+        description: data?.message || "Follow-up reminder sent to client",
+      });
+
+      return true;
+    } catch (error) {
+      console.error('Error sending quote reminder:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send reminder",
+        variant: "destructive",
+      });
+      return false;
+    }
+  };
+
+  // Toggle auto follow-up for a quote
+  const toggleAutoFollowup = async (quoteId: string, enabled: boolean): Promise<boolean> => {
+    try {
+      const { error } = await supabase
+        .from('quotes')
+        .update({
+          auto_followup_enabled: enabled,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', quoteId);
+
+      if (error) {
+        console.error('Error toggling auto follow-up:', error);
+        return false;
+      }
+
+      // Update local state
+      setSavedQuotes(prev => prev.map(quote =>
+        quote.id === quoteId
+          ? { ...quote, auto_followup_enabled: enabled }
+          : quote
+      ));
+
+      toast({
+        title: enabled ? "Auto Follow-ups Enabled" : "Auto Follow-ups Disabled",
+        description: enabled
+          ? "We'll automatically send reminders for this quote"
+          : "No automatic reminders will be sent",
+      });
+
+      return true;
+    } catch (error) {
+      console.error('Error toggling auto follow-up:', error);
+      return false;
+    }
+  };
+
   return {
     savedQuotes,
     saveQuote,
     deleteQuote,
     updateQuoteStatus,
     sendPaymentReminder,
+    sendQuoteReminder,
+    toggleAutoFollowup,
     getQuoteStats,
     loading,
     refreshQuotes,

@@ -125,6 +125,10 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     
     // Earthing & Bonding
     earthElectrodeResistance: '',
+    mainEarthingConductorType: '',
+    mainEarthingConductorSize: '',
+    mainEarthingConductorSizeCustom: '',
+    mainBondingConductorType: '',
     mainBondingSize: '',
     mainBondingSizeCustom: '',
     mainBondingLocations: '',

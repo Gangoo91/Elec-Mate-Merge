@@ -254,7 +254,7 @@ const BatteryStorageCalculator = () => {
   return (
     <div className="space-y-4">
       <CalculatorCard
-        category="ev_storage"
+        category="ev-storage"
         title="Battery Storage Calculator"
         description="Design battery storage systems with 2025 technology data"
         badge="2025 Data"
@@ -360,7 +360,7 @@ const BatteryStorageCalculator = () => {
         </div>
 
         <CalculatorActions
-          category="ev_storage"
+          category="ev-storage"
           onCalculate={calculateBatteryStorage}
           onReset={reset}
           isDisabled={!hasValidInputs()}
@@ -371,7 +371,7 @@ const BatteryStorageCalculator = () => {
       {result && (
         <div className="space-y-4 animate-fade-in">
           {/* Main Results */}
-          <CalculatorResult category="ev_storage">
+          <CalculatorResult category="ev-storage">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-sm text-white/60">Battery Storage Analysis</span>
               <Badge variant="outline" className={cn(
@@ -399,24 +399,24 @@ const BatteryStorageCalculator = () => {
             </div>
 
             <ResultsGrid columns={2}>
-              <ResultValue label="Bank Capacity" value={result.batteryBankCapacityKwh.toFixed(1)} unit="kWh" category="ev_storage" size="sm" />
-              <ResultValue label="Backup Duration" value={result.backupDurationHours.toFixed(1)} unit="hours" category="ev_storage" size="sm" />
-              <ResultValue label="Inverter Size" value={result.inverterSizeKw.toFixed(1)} unit="kW" category="ev_storage" size="sm" />
-              <ResultValue label="Charging Time" value={result.chargingTimeHours.toFixed(1)} unit="hours" category="ev_storage" size="sm" />
+              <ResultValue label="Bank Capacity" value={result.batteryBankCapacityKwh.toFixed(1)} unit="kWh" category="ev-storage" size="sm" />
+              <ResultValue label="Backup Duration" value={result.backupDurationHours.toFixed(1)} unit="hours" category="ev-storage" size="sm" />
+              <ResultValue label="Inverter Size" value={result.inverterSizeKw.toFixed(1)} unit="kW" category="ev-storage" size="sm" />
+              <ResultValue label="Charging Time" value={result.chargingTimeHours.toFixed(1)} unit="hours" category="ev-storage" size="sm" />
             </ResultsGrid>
           </CalculatorResult>
 
           {/* Financial Summary */}
-          <CalculatorResult category="ev_storage">
+          <CalculatorResult category="ev-storage">
             <div className="flex items-center gap-2 pb-3 border-b border-white/10">
               <PoundSterling className="h-4 w-4 text-blue-400" />
               <span className="text-sm font-medium text-white">Financial Summary</span>
             </div>
             <ResultsGrid columns={2}>
-              <ResultValue label="Battery Cost" value={`£${Math.round(result.batteryCost / 1000)}k`} category="ev_storage" size="sm" />
-              <ResultValue label="System Cost" value={`£${Math.round(result.systemCost / 1000)}k`} category="ev_storage" size="sm" />
-              <ResultValue label="Cost/kWh Stored" value={`£${result.costPerKwhStored.toFixed(0)}`} category="ev_storage" size="sm" />
-              <ResultValue label="Expected Life" value={`${result.warrantyYears}+ years`} category="ev_storage" size="sm" />
+              <ResultValue label="Battery Cost" value={`£${Math.round(result.batteryCost / 1000)}k`} category="ev-storage" size="sm" />
+              <ResultValue label="System Cost" value={`£${Math.round(result.systemCost / 1000)}k`} category="ev-storage" size="sm" />
+              <ResultValue label="Cost/kWh Stored" value={`£${result.costPerKwhStored.toFixed(0)}`} category="ev-storage" size="sm" />
+              <ResultValue label="Expected Life" value={`${result.warrantyYears}+ years`} category="ev-storage" size="sm" />
             </ResultsGrid>
           </CalculatorResult>
 

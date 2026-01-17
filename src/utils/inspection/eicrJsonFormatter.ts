@@ -64,9 +64,10 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     
     return parsed.map((item: any) => ({
       id: item.id || "",
-      item_number: item.itemNumber || "",
+      item_number: item.itemNumber || item.number || "",
       description: item.item || item.description || "",
       outcome: item.outcome || "",
+      clause: item.clause || "",
       notes: item.notes || ""
     }));
   };
@@ -211,6 +212,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         defect_code: defect.defectCode || "",
         description: defect.description || "",
         recommendation: defect.recommendation || "",
+        regulation: defect.regulation || defect.clause || "",
         rectified: defect.rectified || false,
         photo_evidence: photoUrls,
         photo_count: photoUrls.length
@@ -229,7 +231,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
   // NESTED, GROUPED structure for improved organization
   return {
     metadata: {
-      certificate_number: get('certificateNumber'),
+      certificate_number: get('reportReference') || get('certificateNumber'),
       form_version: '1.0',
       export_timestamp: new Date().toISOString()
     },
@@ -308,7 +310,23 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     earthing_bonding: {
       earth_electrode_type: get('earthElectrodeType'),
       earth_electrode_resistance: get('earthElectrodeResistance'),
-      main_bonding_conductor: get('mainBondingConductor'),
+      main_earthing_conductor_type: get('mainEarthingConductorType'),
+      main_earthing_conductor_size: get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize'),
+      main_earthing_conductor: (() => {
+        const size = get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize');
+        const type = get('mainEarthingConductorType');
+        if (size && type) return `${size}mm² ${type}`;
+        if (size) return size;
+        return '';
+      })(),
+      main_bonding_conductor_type: get('mainBondingConductorType'),
+      main_bonding_conductor: (() => {
+        const size = get('mainBondingSizeCustom') || get('mainBondingSize');
+        const type = get('mainBondingConductorType');
+        if (size && type) return `${size}mm² ${type}`;
+        if (size) return size;
+        return '';
+      })(),
       main_bonding_size: get('mainBondingSizeCustom') || get('mainBondingSize'),
       main_bonding_size_custom: get('mainBondingSizeCustom'),
       main_bonding_locations: get('mainBondingLocations'),

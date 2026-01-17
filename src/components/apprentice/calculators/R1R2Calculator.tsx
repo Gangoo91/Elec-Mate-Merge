@@ -220,19 +220,22 @@ const R1R2Calculator = () => {
                   label="Conductor Material"
                   value={conductorMaterial}
                   onChange={setConductorMaterial}
-                  options={[{ value: "", label: "Select material" }, ...materialOptions]}
+                  options={materialOptions}
+                  placeholder="Select material"
                 />
                 <CalculatorSelect
                   label="Line Conductor CSA"
                   value={lineConductorCSA}
                   onChange={setLineConductorCSA}
-                  options={[{ value: "", label: "Select CSA" }, ...csaOptions]}
+                  options={csaOptions}
+                  placeholder="Select CSA"
                 />
                 <CalculatorSelect
                   label="CPC Conductor CSA"
                   value={cpcConductorCSA}
                   onChange={setCpcConductorCSA}
-                  options={[{ value: "", label: "Select CSA" }, ...csaOptions]}
+                  options={csaOptions}
+                  placeholder="Select CSA"
                 />
                 <CalculatorInput
                   label="Operating Temperature"

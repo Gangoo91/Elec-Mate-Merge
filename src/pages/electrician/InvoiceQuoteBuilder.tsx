@@ -172,6 +172,8 @@ export default function InvoiceQuoteBuilder() {
               })) as InvoiceItem[],
               settings: {
                 ...quote.settings,
+                overheadPercentage: 0,  // Already baked into item prices
+                profitMargin: 0,        // Already baked into item prices
                 paymentTerms: '30 days',
                 dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
               } as InvoiceSettings,

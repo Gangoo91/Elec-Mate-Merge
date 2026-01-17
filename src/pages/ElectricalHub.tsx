@@ -243,36 +243,38 @@ function ElectricalStatsBar() {
                 'transition-all duration-200',
                 'group-hover:shadow-lg group-hover:shadow-elec-yellow/5'
               )}>
-                <div className="flex items-start justify-between gap-2">
-                  <div className={cn(
-                    'p-2 rounded-lg transition-colors',
-                    isSuccess ? 'bg-green-500/10 group-hover:bg-green-500/20' : isDanger ? 'bg-red-500/10 group-hover:bg-red-500/20' : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
-                  )}>
-                    <Icon className={cn(
-                      'h-4 w-4',
-                      isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                    )} />
-                  </div>
-                  <div className="text-right flex-1">
-                    <div className="flex items-baseline justify-end">
-                      {stat.formatAsCurrency ? (
-                        <span className="text-xl font-bold text-elec-yellow">
-                          {business.formattedQuoteValue}
-                        </span>
-                      ) : (
-                        <AnimatedCounter
-                          value={stat.value}
-                          prefix={stat.prefix}
-                          className={cn(
-                            'text-xl font-bold',
-                            isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                          )}
-                        />
-                      )}
+                <div className="flex flex-col h-full">
+                  {/* Icon row */}
+                  <div className="flex items-center justify-between">
+                    <div className={cn(
+                      'p-2 rounded-lg transition-colors',
+                      isSuccess ? 'bg-green-500/10 group-hover:bg-green-500/20' : isDanger ? 'bg-red-500/10 group-hover:bg-red-500/20' : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
+                    )}>
+                      <Icon className={cn(
+                        'h-4 w-4',
+                        isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
+                      )} />
                     </div>
-                    <p className="text-xs text-white/70 mt-0.5 flex items-center justify-end gap-1">
+                    <ChevronRight className="h-3 w-3 text-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  {/* Value and label - left aligned */}
+                  <div className="flex-1 flex flex-col justify-end">
+                    {stat.formatAsCurrency ? (
+                      <span className="text-xl sm:text-2xl font-bold text-elec-yellow">
+                        {business.formattedQuoteValue}
+                      </span>
+                    ) : (
+                      <AnimatedCounter
+                        value={stat.value}
+                        prefix={stat.prefix}
+                        className={cn(
+                          'text-xl sm:text-2xl font-bold',
+                          isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
+                        )}
+                      />
+                    )}
+                    <p className="text-xs text-white/70 mt-0.5">
                       {stat.label}
-                      <ChevronRight className="h-3 w-3 text-white/30 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </p>
                   </div>
                 </div>

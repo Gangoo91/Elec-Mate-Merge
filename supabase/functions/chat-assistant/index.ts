@@ -7,7 +7,34 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Extract keywords from query for RAG searches
+// Electrical domain query expansions for better RAG retrieval
+const queryExpansions: Record<string, string[]> = {
+  'test': ['testing', 'initial verification', 'periodic inspection', 'inspection', 'verify'],
+  'testing': ['test', 'initial verification', 'periodic inspection', 'inspection', 'verify'],
+  'sequence': ['procedure', 'order', 'steps', 'method', 'process'],
+  'order': ['sequence', 'procedure', 'steps'],
+  'rcd': ['residual current device', 'rcbo', 'trip', '30ma', 'protective device'],
+  'circuit': ['wiring', 'installation', 'ring', 'radial', 'final circuit'],
+  'continuity': ['r1r2', 'ring', 'cpc', 'protective conductor'],
+  'insulation': ['ir', 'resistance', 'megger', 'insulation resistance'],
+  'earth': ['earthing', 'cpc', 'ze', 'zs', 'electrode', 'tncs', 'tns', 'tt'],
+  'fault': ['loop', 'impedance', 'zs', 'prospective', 'pfc', 'pscc'],
+  'polarity': ['phase', 'neutral', 'live', 'correct'],
+  'isolation': ['safe isolation', 'lock off', 'prove dead', 'isolate'],
+  'safe': ['safety', 'isolation', 'procedure', 'secure'],
+  'cable': ['wiring', 'conductor', 'size', 'csa', 'current carrying'],
+  'voltage': ['drop', 'supply', '230v', '400v', 'nominal'],
+  'consumer': ['unit', 'board', 'distribution', 'fuseboard', 'db'],
+  'protection': ['mcb', 'rcbo', 'rcd', 'fuse', 'overcurrent', 'protective device'],
+  'regulation': ['bs7671', 'regs', 'amendment', 'requirement', 'compliance'],
+  'certificate': ['eicr', 'eic', 'minor works', 'condition report'],
+  'domestic': ['house', 'dwelling', 'home', 'residential'],
+  'commercial': ['shop', 'office', 'retail', 'business'],
+  'industrial': ['factory', 'plant', 'manufacturing', 'heavy'],
+  'special': ['location', 'bathroom', 'zone', 'swimming', 'agricultural'],
+};
+
+// Extract keywords with domain expansion for better RAG
 const extractKeywords = (query: string): string[] => {
   const stopWords = new Set([
     'the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
@@ -19,26 +46,46 @@ const extractKeywords = (query: string): string[] => {
     'for', 'to', 'of', 'in', 'on', 'at', 'by', 'with', 'from', 'about', 'into',
     'and', 'or', 'but', 'if', 'then', 'so', 'as', 'than',
     'have', 'has', 'had', 'need', 'want', 'tell', 'explain', 'help', 'please',
+    'correct', 'right', 'proper', 'best', 'good',
   ]);
 
-  return query
+  // Extract base keywords
+  const baseKeywords = query
     .toLowerCase()
-    .replace(/[^\w\s]/g, '')
+    .replace(/[^\w\s]/g, ' ')
     .split(/\s+/)
-    .filter(word => word.length > 2 && !stopWords.has(word))
-    .slice(0, 6);
+    .filter(word => word.length > 2 && !stopWords.has(word));
+
+  // Expand with domain-specific terms
+  const expanded = new Set<string>();
+  baseKeywords.forEach(keyword => {
+    expanded.add(keyword);
+    const expansions = queryExpansions[keyword];
+    if (expansions) {
+      expansions.forEach(exp => expanded.add(exp));
+    }
+  });
+
+  // Return up to 15 keywords (base + expanded)
+  return Array.from(expanded).slice(0, 15);
 };
 
-// Search regulations intelligence
+// Search regulations intelligence with improved matching
 const searchRegulations = async (supabase: any, keywords: string[]): Promise<any[]> => {
   if (keywords.length === 0) return [];
 
   try {
+    // Search in both content and title for better matching
+    const orConditions = keywords.flatMap(k => [
+      `content.ilike.%${k}%`,
+      `title.ilike.%${k}%`
+    ]);
+
     const { data, error } = await supabase
       .from('regulations_intelligence')
       .select('regulation_number, title, content, category')
-      .or(keywords.map(k => `content.ilike.%${k}%`).join(','))
-      .limit(5);
+      .or(orConditions.join(','))
+      .limit(15); // Increased from 5 to 15
 
     if (error) {
       console.error('Regulations search error:', error);
@@ -51,16 +98,22 @@ const searchRegulations = async (supabase: any, keywords: string[]): Promise<any
   }
 };
 
-// Search practical work intelligence
+// Search practical work intelligence with improved matching
 const searchPractical = async (supabase: any, keywords: string[]): Promise<any[]> => {
   if (keywords.length === 0) return [];
 
   try {
+    // Search in both content and title for better matching
+    const orConditions = keywords.flatMap(k => [
+      `content.ilike.%${k}%`,
+      `title.ilike.%${k}%`
+    ]);
+
     const { data, error } = await supabase
       .from('practical_work_intelligence')
       .select('title, content, category')
-      .or(keywords.map(k => `content.ilike.%${k}%`).join(','))
-      .limit(5);
+      .or(orConditions.join(','))
+      .limit(15); // Increased from 5 to 15
 
     if (error) {
       console.error('Practical search error:', error);
@@ -73,33 +126,36 @@ const searchPractical = async (supabase: any, keywords: string[]): Promise<any[]
   }
 };
 
-// Build context from RAG results
+// Build context from RAG results - prioritise regulations for compliance
 const buildContext = (regulations: any[], practical: any[]): string => {
   if (regulations.length === 0 && practical.length === 0) return '';
 
-  let context = '\n\n--- RELEVANT KNOWLEDGE FROM YOUR TRAINING MATERIALS ---\n';
+  let context = '\n\n';
 
+  // Prioritise regulations - these are authoritative
   if (regulations.length > 0) {
-    context += '\nBS 7671 Regulations:\n';
-    regulations.forEach(r => {
-      context += `- ${r.regulation_number || 'Reg'}: ${r.title || ''}\n`;
+    context += '📖 BS 7671 REGULATIONS (Authoritative):\n\n';
+    // Take top 10 most relevant regulations, with more content
+    regulations.slice(0, 10).forEach(r => {
+      context += `REGULATION ${r.regulation_number || 'N/A'}: ${r.title || ''}\n`;
       if (r.content) {
-        context += `  ${r.content.slice(0, 200)}${r.content.length > 200 ? '...' : ''}\n`;
+        // Include up to 400 chars for better context
+        context += `${r.content.slice(0, 400)}${r.content.length > 400 ? '...' : ''}\n\n`;
       }
     });
   }
 
   if (practical.length > 0) {
-    context += '\nPractical Guidance:\n';
-    practical.forEach(p => {
-      context += `- ${p.title || 'Guidance'}: `;
+    context += '\n🔧 PRACTICAL GUIDANCE (Field-tested procedures):\n\n';
+    // Take top 8 practical guides with more content
+    practical.slice(0, 8).forEach(p => {
+      context += `${p.title || 'Procedure'}:\n`;
       if (p.content) {
-        context += `${p.content.slice(0, 150)}${p.content.length > 150 ? '...' : ''}\n`;
+        // Include up to 350 chars for better context
+        context += `${p.content.slice(0, 350)}${p.content.length > 350 ? '...' : ''}\n\n`;
       }
     });
   }
-
-  context += '\nUse this information to give specific, accurate answers. Reference regulation numbers where relevant.\n';
 
   return context;
 };
@@ -135,7 +191,17 @@ serve(async (req) => {
     // Build context from RAG results
     const ragContext = buildContext(regulations, practical);
 
-    const systemPrompt = `You are Dave, a master electrician with 20 years of experience in the UK electrical industry. You've seen it all - from small domestic jobs to major commercial installations, industrial plants, and everything in between. You've trained dozens of apprentices over the years, many of whom have gone on to run their own successful businesses.
+    // Build system prompt with RAG context at the TOP for priority
+    const ragSection = ragContext ? `
+=== CRITICAL: USE THIS TECHNICAL REFERENCE ===
+The following information comes from official BS 7671 regulations and verified practical guidance.
+You MUST base your answer on this documentation. Quote regulation numbers where relevant.
+${ragContext}
+=== END TECHNICAL REFERENCE ===
+
+` : '';
+
+    const systemPrompt = `${ragSection}You are Dave, a master electrician with 20 years of experience in the UK electrical industry. You've seen it all - from small domestic jobs to major commercial installations, industrial plants, and everything in between. You've trained dozens of apprentices over the years, many of whom have gone on to run their own successful businesses.
 
 YOUR BACKGROUND & EXPERTISE:
 - Started as an apprentice in 2004, qualified in 2008
@@ -223,7 +289,9 @@ WHEN THEY SEND YOU A PHOTO:
 
 Remember: You're not just answering questions - you're training the next generation of electricians. Every answer should make them a better, safer electrician.
 
-Context: ${context || 'general electrical apprenticeship support'}${ragContext}`;
+When answering questions about testing, procedures, or regulations, ALWAYS check the technical reference provided above and cite specific regulation numbers (e.g., "According to Regulation 613.2...").
+
+Current topic context: ${context || 'general electrical apprenticeship support'}`;
 
     // Build messages array with conversation history
     const conversationHistory = Array.isArray(history)

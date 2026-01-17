@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, Info, Zap, BookOpen } from "lucide-react";
+import { ChevronDown, Info, BookOpen } from "lucide-react";
 import {
   CalculatorCard,
   CalculatorInput,
@@ -223,16 +223,16 @@ const StarDeltaCalculator = () => {
 
   return (
     <CalculatorCard
+      category="power"
       title="Star-Delta Conversion Calculator"
       description="Convert between star (Y) and delta (Δ) impedance configurations"
-      icon={Zap}
     >
       <div className="space-y-4 sm:space-y-5">
         {/* Conversion Mode */}
         <CalculatorSelect
           label="Conversion Direction"
           value={mode}
-          onValueChange={(val) => {
+          onChange={(val) => {
             setMode(val as ConversionMode);
             setResult(null);
           }}
@@ -244,7 +244,7 @@ const StarDeltaCalculator = () => {
         <CalculatorSelect
           label="Impedance Configuration"
           value={impedanceType}
-          onValueChange={(val) => {
+          onChange={(val) => {
             setImpedanceType(val as ImpedanceType);
             setResult(null);
           }}
@@ -259,7 +259,7 @@ const StarDeltaCalculator = () => {
           onChange={setVoltage}
           placeholder="400"
           unit="V"
-          helperText="UK standard 3-phase: 400V"
+          hint="UK standard 3-phase: 400V"
         />
 
         {/* Impedance Inputs */}
@@ -270,7 +270,7 @@ const StarDeltaCalculator = () => {
             onChange={setImpedance}
             placeholder="e.g., 10"
             unit="Ω"
-            helperText="All three impedances are equal"
+            hint="All three impedances are equal"
           />
         ) : (
           <div className="space-y-3">
@@ -300,9 +300,10 @@ const StarDeltaCalculator = () => {
 
         {/* Actions */}
         <CalculatorActions
+          category="power"
           onCalculate={calculate}
           onReset={reset}
-          calculateDisabled={
+          isDisabled={
             impedanceType === "equal"
               ? !impedance || parseFloat(impedance) <= 0
               : !za || !zb || !zc || parseFloat(za) <= 0 || parseFloat(zb) <= 0 || parseFloat(zc) <= 0
@@ -312,39 +313,39 @@ const StarDeltaCalculator = () => {
         {/* Results */}
         {result && (
           <CalculatorResult
-            title={result.mode === "star-to-delta" ? "Delta Configuration" : "Star Configuration"}
+            category="power"
           >
             {impedanceType === "equal" ? (
               <ResultsGrid columns={2}>
                 <ResultValue
                   label={result.mode === "star-to-delta" ? "Input (Star)" : "Input (Delta)"}
                   value={`${result.inputZ?.toFixed(2)} Ω`}
-                  color="blue"
+                  category="power"
                 />
                 <ResultValue
                   label={result.mode === "star-to-delta" ? "Output (Delta)" : "Output (Star)"}
                   value={`${result.outputZ?.toFixed(2)} Ω`}
-                  color="yellow"
+                  category="power"
                 />
                 <ResultValue
                   label="Line Voltage"
                   value={`${result.lineVoltage} V`}
-                  color="gray"
+                  category="power"
                 />
                 <ResultValue
                   label="Line Current"
                   value={`${result.lineCurrent?.toFixed(2)} A`}
-                  color="green"
+                  category="power"
                 />
                 <ResultValue
                   label="Phase Voltage (Input)"
                   value={`${result.phaseVoltageIn?.toFixed(1)} V`}
-                  color="cyan"
+                  category="power"
                 />
                 <ResultValue
                   label="Phase Voltage (Output)"
                   value={`${result.phaseVoltageOut?.toFixed(1)} V`}
-                  color="cyan"
+                  category="power"
                 />
               </ResultsGrid>
             ) : (
@@ -352,32 +353,32 @@ const StarDeltaCalculator = () => {
                 <ResultValue
                   label={result.mode === "star-to-delta" ? "Za (Star)" : "Zab (Delta)"}
                   value={`${result.inputZa?.toFixed(2)} Ω`}
-                  color="blue"
+                  category="power"
                 />
                 <ResultValue
                   label={result.mode === "star-to-delta" ? "Zab (Delta)" : "Za (Star)"}
                   value={`${result.outputZab?.toFixed(2)} Ω`}
-                  color="yellow"
+                  category="power"
                 />
                 <ResultValue
                   label={result.mode === "star-to-delta" ? "Zb (Star)" : "Zbc (Delta)"}
                   value={`${result.inputZb?.toFixed(2)} Ω`}
-                  color="blue"
+                  category="power"
                 />
                 <ResultValue
                   label={result.mode === "star-to-delta" ? "Zbc (Delta)" : "Zb (Star)"}
                   value={`${result.outputZbc?.toFixed(2)} Ω`}
-                  color="yellow"
+                  category="power"
                 />
                 <ResultValue
                   label={result.mode === "star-to-delta" ? "Zc (Star)" : "Zca (Delta)"}
                   value={`${result.inputZc?.toFixed(2)} Ω`}
-                  color="blue"
+                  category="power"
                 />
                 <ResultValue
                   label={result.mode === "star-to-delta" ? "Zca (Delta)" : "Zc (Star)"}
                   value={`${result.outputZca?.toFixed(2)} Ω`}
-                  color="yellow"
+                  category="power"
                 />
               </ResultsGrid>
             )}

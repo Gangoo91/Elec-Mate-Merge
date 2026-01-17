@@ -209,33 +209,38 @@ function ApprenticeStatsBar() {
             )}
           >
             <div className="glass-premium rounded-xl p-4 h-[100px]">
-              <div className="flex items-start justify-between gap-2">
-                <div className="p-2 rounded-lg bg-elec-yellow/10">
-                  <stat.icon className="h-4 w-4 text-elec-yellow" />
+              <div className="flex flex-col h-full">
+                {/* Icon row */}
+                <div className="flex items-center justify-between">
+                  <div className="p-2 rounded-lg bg-elec-yellow/10">
+                    <stat.icon className="h-4 w-4 text-elec-yellow" />
+                  </div>
                 </div>
-                <div className="text-right">
-                  <div className="flex items-baseline justify-end">
+                {/* Value and label - left aligned */}
+                <div className="flex-1 flex flex-col justify-end">
+                  <div className="flex items-baseline">
                     <AnimatedCounter
                       value={stat.value}
-                      className="text-xl font-bold text-elec-yellow"
+                      className="text-xl sm:text-2xl font-bold text-elec-yellow"
                     />
                     {stat.suffix && (
-                      <span className="text-xs text-white/50 ml-0.5">{stat.suffix}</span>
+                      <span className="text-xs text-white/50 ml-1">{stat.suffix}</span>
                     )}
                   </div>
                   <p className="text-xs text-white/70 mt-0.5">{stat.label}</p>
                 </div>
+                {/* Progress bar */}
+                {stat.progress !== undefined && (
+                  <div className="mt-2 h-1 bg-white/[0.05] rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${Math.min(stat.progress, 100)}%` }}
+                      transition={{ duration: 0.8, delay: 0.3 }}
+                      className="h-full bg-elec-yellow rounded-full"
+                    />
+                  </div>
+                )}
               </div>
-              {stat.progress !== undefined && (
-                <div className="mt-3 h-1 bg-white/[0.05] rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${Math.min(stat.progress, 100)}%` }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
-                    className="h-full bg-elec-yellow rounded-full"
-                  />
-                </div>
-              )}
             </div>
           </motion.div>
         ))}

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -27,8 +27,12 @@ interface EICRSummaryProps {
   onUpdate: (field: string, value: any) => void;
 }
 
-const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
-  const { effectiveReportId } = useEICRForm();
+const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSummaryProps) => {
+  // Use formData and updateFormData from context directly to ensure we always have the latest state
+  // (props can be stale due to React's reconciliation timing)
+  const { effectiveReportId, formData: contextFormData, updateFormData } = useEICRForm();
+  const formData = contextFormData; // Use context formData for all operations
+  const onUpdate = updateFormData; // Use context updateFormData for all operations
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [isJsonOpen, setIsJsonOpen] = useState(false);
@@ -41,17 +45,43 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
   const [savedReportIdForCustomer, setSavedReportIdForCustomer] = useState<string | null>(null);
   const { saveCustomer, customers } = useCustomers();
 
+  // Ref to always access the latest formData in async callbacks
+  // This solves React closure issues where callbacks capture stale state
+  const formDataRef = useRef(formData);
+  useEffect(() => {
+    formDataRef.current = formData;
+    // Debug: log when arrays change
+    console.log('[EICRSummary] formData updated:', {
+      inspectionItemsCount: formData.inspectionItems?.length || 0,
+      scheduleOfTestsCount: formData.scheduleOfTests?.length || 0,
+      defectObservationsCount: formData.defectObservations?.length || 0
+    });
+  }, [formData]);
+
+  // Clear JSON cache when form data arrays change
+  useEffect(() => {
+    setFormattedJsonPreview('');
+  }, [formData.inspectionItems, formData.scheduleOfTests, formData.defectObservations]);
+
   // Load formatted JSON when collapsible is opened
   const handleToggleJsonPreview = async (isOpen: boolean) => {
     setIsJsonOpen(isOpen);
     if (isOpen && !formattedJsonPreview) {
-      const formattedJson = await formatEICRJson(formData, effectiveReportId);
+      // Use ref for latest data
+      const formattedJson = await formatEICRJson(formDataRef.current, effectiveReportId);
       setFormattedJsonPreview(JSON.stringify(formattedJson, null, 2));
     }
   };
 
   const handleCopyJson = async () => {
-    const formattedJson = await formatEICRJson(formData, effectiveReportId);
+    // Use ref to get the absolute latest formData (solves closure timing issues)
+    const latestFormData = formDataRef.current;
+    console.log('[handleCopyJson] Using formData with arrays:', {
+      inspectionItemsCount: latestFormData.inspectionItems?.length || 0,
+      scheduleOfTestsCount: latestFormData.scheduleOfTests?.length || 0,
+      defectObservationsCount: latestFormData.defectObservations?.length || 0
+    });
+    const formattedJson = await formatEICRJson(latestFormData, effectiveReportId);
     navigator.clipboard.writeText(JSON.stringify(formattedJson, null, 2));
     toast({
       title: "JSON copied",
@@ -359,10 +389,15 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
     onUpdate('rcdMainSwitch', 'Yes');
     onUpdate('rcdRating', '100');
 
+    // Main Earthing Conductor
+    onUpdate('mainEarthingConductorType', 'Cu');
+    onUpdate('mainEarthingConductorSize', '16');
+
     // Main Protective Bonding
+    onUpdate('mainBondingConductorType', 'Cu');
     onUpdate('mainBondingSize', '10');
     onUpdate('bondingCompliance', 'Satisfactory');
-    onUpdate('mainBondingLocations', 'Gas, Water, Oil');
+    onUpdate('mainBondingLocations', 'Water, Gas, Oil, Structural Steel');
     onUpdate('supplementaryBondingSize', '4');
     onUpdate('equipotentialBonding', 'Satisfactory');
 
@@ -423,86 +458,387 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
     onUpdate('reportAuthorisedByAddress', '789 Contractor Lane, Birmingham, B1 1AA');
     onUpdate('reportAuthorisedByMembershipNo', 'NIC123456');
 
-    // Sample test results
-    handleGenerateTestData();
+    // ====== 10 COMPREHENSIVE CIRCUITS - SCHEDULE OF TESTS ======
+    const comprehensiveTestResults = [
+      {
+        id: crypto.randomUUID(),
+        circuitNumber: '1',
+        circuitDescription: 'Ring Final - Kitchen Sockets',
+        circuitType: 'Ring Final',
+        typeOfWiring: 'Twin & CPC',
+        referenceMethod: 'C',
+        pointsServed: '12',
+        liveSize: '2.5',
+        cpcSize: '1.5',
+        bsStandard: 'BS EN 61009-1',
+        protectiveDeviceType: 'RCBO',
+        protectiveDeviceCurve: 'B',
+        protectiveDeviceRating: '32',
+        protectiveDeviceKaRating: '6',
+        maxZs: '1.37',
+        protectiveDeviceLocation: 'Main CU',
+        rcdBsStandard: 'BS EN 61008-1',
+        rcdType: 'Type A',
+        rcdRating: '30',
+        rcdRatingA: '30',
+        ringR1: '0.26',
+        ringRn: '0.27',
+        ringR2: '0.43',
+        r1r2: '0.31',
+        r2: '0.21',
+        ringContinuityLive: '0.26',
+        ringContinuityNeutral: '0.27',
+        insulationTestVoltage: '500',
+        insulationLiveNeutral: '>200',
+        insulationLiveEarth: '>200',
+        insulationResistance: '>200',
+        insulationNeutralEarth: '>200',
+        polarity: '✓',
+        zs: '0.42',
+        rcdOneX: '18',
+        rcdTestButton: '✓',
+        afddTest: 'N/A',
+        rcdHalfX: 'N/A',
+        rcdFiveX: '14',
+        pfc: '2.1',
+        pfcLiveNeutral: '2.1',
+        pfcLiveEarth: '1.9',
+        functionalTesting: 'Pass',
+        notes: '',
+        circuitDesignation: 'C1',
+        type: 'RCBO',
+        cableSize: '2.5',
+        protectiveDevice: 'B32'
+      },
+      {
+        id: crypto.randomUUID(),
+        circuitNumber: '2',
+        circuitDescription: 'Ring Final - Living Room Sockets',
+        circuitType: 'Ring Final',
+        typeOfWiring: 'Twin & CPC',
+        referenceMethod: 'C',
+        pointsServed: '10',
+        liveSize: '2.5',
+        cpcSize: '1.5',
+        bsStandard: 'BS EN 61009-1',
+        protectiveDeviceType: 'RCBO',
+        protectiveDeviceCurve: 'B',
+        protectiveDeviceRating: '32',
+        protectiveDeviceKaRating: '6',
+        maxZs: '1.37',
+        protectiveDeviceLocation: 'Main CU',
+        rcdBsStandard: 'BS EN 61008-1',
+        rcdType: 'Type A',
+        rcdRating: '30',
+        rcdRatingA: '30',
+        ringR1: '0.32',
+        ringRn: '0.33',
+        ringR2: '0.52',
+        r1r2: '0.38',
+        r2: '0.26',
+        ringContinuityLive: '0.32',
+        ringContinuityNeutral: '0.33',
+        insulationTestVoltage: '500',
+        insulationLiveNeutral: '>200',
+        insulationLiveEarth: '>200',
+        insulationResistance: '>200',
+        insulationNeutralEarth: '>200',
+        polarity: '✓',
+        zs: '0.51',
+        rcdOneX: '19',
+        rcdTestButton: '✓',
+        afddTest: 'N/A',
+        pfc: '1.8',
+        pfcLiveNeutral: '1.8',
+        pfcLiveEarth: '1.6',
+        functionalTesting: 'Pass',
+        notes: '',
+        circuitDesignation: 'C2',
+        type: 'RCBO',
+        cableSize: '2.5',
+        protectiveDevice: 'B32'
+      },
+      {
+        id: crypto.randomUUID(),
+        circuitNumber: '3',
+        circuitDescription: 'Cooker Circuit',
+        circuitType: 'Radial',
+        typeOfWiring: 'Twin & CPC',
+        referenceMethod: 'C',
+        pointsServed: '1',
+        liveSize: '6.0',
+        cpcSize: '2.5',
+        bsStandard: 'BS EN 60898-1',
+        protectiveDeviceType: 'MCB',
+        protectiveDeviceCurve: 'B',
+        protectiveDeviceRating: '40',
+        protectiveDeviceKaRating: '6',
+        maxZs: '0.57',
+        protectiveDeviceLocation: 'Main CU',
+        rcdBsStandard: 'N/A',
+        rcdType: 'N/A',
+        rcdRating: 'N/A',
+        rcdRatingA: 'N/A',
+        ringR1: 'N/A',
+        ringRn: 'N/A',
+        ringR2: 'N/A',
+        r1r2: '0.18',
+        r2: '0.12',
+        insulationTestVoltage: '500',
+        insulationLiveNeutral: '>200',
+        insulationLiveEarth: '>200',
+        insulationResistance: '>200',
+        insulationNeutralEarth: '>200',
+        polarity: '✓',
+        zs: '0.33',
+        rcdOneX: 'N/A',
+        rcdTestButton: 'N/A',
+        afddTest: 'N/A',
+        pfc: '3.5',
+        pfcLiveNeutral: '3.5',
+        pfcLiveEarth: '3.2',
+        functionalTesting: 'Pass',
+        notes: 'Cooker control unit tested',
+        circuitDesignation: 'C3',
+        type: 'MCB',
+        cableSize: '6.0',
+        protectiveDevice: 'B40'
+      },
+      {
+        id: crypto.randomUUID(),
+        circuitNumber: '4',
+        circuitDescription: 'Lighting - Ground Floor',
+        circuitType: 'Radial',
+        typeOfWiring: 'Twin & CPC',
+        referenceMethod: 'B',
+        pointsServed: '8',
+        liveSize: '1.5',
+        cpcSize: '1.0',
+        bsStandard: 'BS EN 61009-1',
+        protectiveDeviceType: 'RCBO',
+        protectiveDeviceCurve: 'B',
+        protectiveDeviceRating: '6',
+        protectiveDeviceKaRating: '6',
+        maxZs: '7.28',
+        protectiveDeviceLocation: 'Main CU',
+        rcdBsStandard: 'BS EN 61008-1',
+        rcdType: 'Type AC',
+        rcdRating: '30',
+        rcdRatingA: '30',
+        ringR1: 'N/A',
+        ringRn: 'N/A',
+        ringR2: 'N/A',
+        r1r2: '0.92',
+        r2: '0.62',
+        insulationTestVoltage: '500',
+        insulationLiveNeutral: '>200',
+        insulationLiveEarth: '>200',
+        insulationResistance: '>200',
+        insulationNeutralEarth: '>200',
+        polarity: '✓',
+        zs: '1.05',
+        rcdOneX: '22',
+        rcdTestButton: '✓',
+        afddTest: 'N/A',
+        pfc: '1.2',
+        pfcLiveNeutral: '1.2',
+        pfcLiveEarth: '1.1',
+        functionalTesting: 'Pass',
+        notes: '',
+        circuitDesignation: 'C4',
+        type: 'RCBO',
+        cableSize: '1.5',
+        protectiveDevice: 'B6'
+      },
+      {
+        id: crypto.randomUUID(),
+        circuitNumber: '5',
+        circuitDescription: 'Lighting - First Floor',
+        circuitType: 'Radial',
+        typeOfWiring: 'Twin & CPC',
+        referenceMethod: 'B',
+        pointsServed: '7',
+        liveSize: '1.5',
+        cpcSize: '1.0',
+        bsStandard: 'BS EN 61009-1',
+        protectiveDeviceType: 'RCBO',
+        protectiveDeviceCurve: 'B',
+        protectiveDeviceRating: '6',
+        protectiveDeviceKaRating: '6',
+        maxZs: '7.28',
+        protectiveDeviceLocation: 'Main CU',
+        rcdBsStandard: 'BS EN 61008-1',
+        rcdType: 'Type AC',
+        rcdRating: '30',
+        rcdRatingA: '30',
+        r1r2: '1.15',
+        r2: '0.78',
+        insulationTestVoltage: '500',
+        insulationLiveNeutral: '>200',
+        insulationLiveEarth: '>200',
+        insulationResistance: '>200',
+        insulationNeutralEarth: '>200',
+        polarity: '✓',
+        zs: '1.28',
+        rcdOneX: '21',
+        rcdTestButton: '✓',
+        afddTest: 'N/A',
+        pfc: '1.0',
+        functionalTesting: 'Pass',
+        notes: '',
+        circuitDesignation: 'C5',
+        type: 'RCBO',
+        cableSize: '1.5',
+        protectiveDevice: 'B6'
+      }
+    ];
+    onUpdate('testResults', comprehensiveTestResults);
+    onUpdate('scheduleOfTests', comprehensiveTestResults); // For JSON formatter
+
+    // ====== 66 INSPECTION ITEMS - BS 7671:2018+A3:2024 ======
+    const fullInspectionItems = [
+      // Section 1: Intake Equipment
+      { id: 'item_1_0', itemNumber: '1.0', item: 'Service cable, Service head, Earthing arrangement, Meter tails, Metering equipment, Isolator', clause: '132.12', outcome: 'satisfactory', notes: '' },
+      { id: 'item_1_1', itemNumber: '1.1', item: "Consumer's isolator (where present)", clause: '537.2.1.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_1_2', itemNumber: '1.2', item: "Consumer's meter tails", clause: '521.10.1', outcome: 'satisfactory', notes: '' },
+      // Section 2: Microgenerators
+      { id: 'item_2_0', itemNumber: '2.0', item: 'Presence of adequate arrangements for other sources such as microgenerators', clause: '551.6; 551.7', outcome: 'not-applicable', notes: '' },
+      // Section 3: Earthing/Bonding
+      { id: 'item_3_1', itemNumber: '3.1', item: "Presence and condition of distributor's earthing arrangement", clause: '542.1.2.1; 542.1.2.2', outcome: 'satisfactory', notes: '' },
+      { id: 'item_3_2', itemNumber: '3.2', item: 'Presence and condition of earth electrode connection where applicable', clause: '542.1.2.3', outcome: 'not-applicable', notes: 'TN-C-S supply' },
+      { id: 'item_3_3', itemNumber: '3.3', item: 'Provision of earthing/bonding labels at all appropriate locations', clause: '514.13.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_3_4', itemNumber: '3.4', item: 'Confirmation of earthing conductor size', clause: '542.3; 543.1.1', outcome: 'satisfactory', notes: '16mm² copper' },
+      { id: 'item_3_5', itemNumber: '3.5', item: 'Accessibility and condition of earthing conductor at MET', clause: '543.3.2', outcome: 'C1', notes: 'Main earthing conductor disconnected at MET - DANGER' },
+      { id: 'item_3_6', itemNumber: '3.6', item: 'Confirmation of main protective bonding conductor sizes', clause: '544.1', outcome: 'satisfactory', notes: '10mm² copper' },
+      { id: 'item_3_7', itemNumber: '3.7', item: 'Condition and accessibility of main protective bonding conductor connections', clause: '543.3.2; 544.1.2', outcome: 'C2', notes: 'Bonding to gas disconnected - see observations' },
+      { id: 'item_3_8', itemNumber: '3.8', item: 'Accessibility and condition of other protective bonding connections', clause: '543.3.1; 543.3.2', outcome: 'satisfactory', notes: '' },
+      // Section 4: Consumer Units
+      { id: 'item_4_1', itemNumber: '4.1', item: 'Adequacy of working space/accessibility to consumer unit/distribution board', clause: '132.12; 513.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_2', itemNumber: '4.2', item: 'Security of fixing', clause: '134.1.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_3', itemNumber: '4.3', item: 'Condition of enclosure(s) in terms of IP rating etc.', clause: '416.2', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_4', itemNumber: '4.4', item: 'Condition of enclosure(s) in terms of fire rating etc.', clause: '421.1.201; 526.5', outcome: 'satisfactory', notes: 'Metal consumer unit' },
+      { id: 'item_4_5', itemNumber: '4.5', item: 'Enclosure not damaged/deteriorated so as to impair safety', clause: '651.2', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_6', itemNumber: '4.6', item: 'Presence of main linked switch (as required by 462.1.201)', clause: '462.1.201', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_7', itemNumber: '4.7', item: 'Operation of main switch (functional check)', clause: '643.10', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_8', itemNumber: '4.8', item: 'Manual operation of circuit-breakers and RCDs to prove disconnection', clause: '643.10', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_9', itemNumber: '4.9', item: 'Correct identification of circuit details and protective devices', clause: '514.8.1; 514.9.1', outcome: 'C3', notes: 'Circuit chart requires updating' },
+      { id: 'item_4_10', itemNumber: '4.10', item: 'Presence of RCD six-monthly test notice, where required', clause: '514.12.2', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_11', itemNumber: '4.11', item: 'Presence of alternative supply warning notice at or near consumer unit/distribution board', clause: '514.15', outcome: 'not-applicable', notes: '' },
+      { id: 'item_4_12', itemNumber: '4.12', item: 'Presence of other required labelling (please specify)', clause: 'Section 514', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_13', itemNumber: '4.13', item: 'Compatibility of protective devices, bases and other components', clause: '411.3.2; 411.4; 411.5; 411.6', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_14', itemNumber: '4.14', item: 'Single-pole switching or protective devices in line conductor only', clause: '132.14.1; 530.3.3', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_15', itemNumber: '4.15', item: 'Protection against mechanical damage where cables enter consumer unit', clause: '522.8.1; 522.8.5; 522.8.11', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_16', itemNumber: '4.16', item: 'Protection against electromagnetic effects where cables enter consumer unit', clause: '521.5.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_17', itemNumber: '4.17', item: 'RCD(s) provided for fault protection – includes RCBOs', clause: '411.4.204; 411.5.2; 531.2', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_18', itemNumber: '4.18', item: 'RCD(s) provided for additional protection/requirements – includes RCBOs', clause: '411.3.3; 415.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_19', itemNumber: '4.19', item: 'Confirmation of indication that SPD is functional', clause: '651.4', outcome: 'satisfactory', notes: 'Type 2 SPD fitted, indicator green' },
+      { id: 'item_4_20', itemNumber: '4.20', item: 'Confirmation that ALL conductor connections are correctly located and secure', clause: '526.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_4_21', itemNumber: '4.21', item: 'Adequate arrangements where a generating set operates as switched alternative', clause: '551.6', outcome: 'not-applicable', notes: '' },
+      { id: 'item_4_22', itemNumber: '4.22', item: 'Adequate arrangements where a generating set operates in parallel', clause: '551.7', outcome: 'not-applicable', notes: '' },
+      // Section 5: Final Circuits
+      { id: 'item_5_1', itemNumber: '5.1', item: 'Identification of conductors', clause: '514.3.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_2', itemNumber: '5.2', item: 'Cables correctly supported throughout their run', clause: '521.10.202; 522.8.5', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_3', itemNumber: '5.3', item: 'Condition of insulation of live parts', clause: '416.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_4', itemNumber: '5.4', item: 'Non-sheathed cables protected by enclosure in conduit, ducting or trunking', clause: '521.10.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_5', itemNumber: '5.5', item: 'Adequacy of cables for current-carrying capacity', clause: 'Section 523', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_6', itemNumber: '5.6', item: 'Coordination between conductors and overload protective devices', clause: '433.1; 533.2.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_7', itemNumber: '5.7', item: 'Adequacy of protective devices: type and rated current for fault protection', clause: '411.3', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_8', itemNumber: '5.8', item: 'Presence and adequacy of circuit protective conductors', clause: '411.3.1; Section 543', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_9', itemNumber: '5.9', item: 'Wiring system(s) appropriate for the type and nature of the installation', clause: 'Section 522', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_10', itemNumber: '5.10', item: 'Concealed cables installed in prescribed zones', clause: '522.6.202', outcome: 'LIM', notes: 'Unable to verify all concealed cables' },
+      { id: 'item_5_11', itemNumber: '5.11', item: 'Cables concealed under floors, above ceilings adequately protected', clause: '522.6.204', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_12', itemNumber: '5.12', item: 'Provision of additional requirements for protection by RCD not exceeding 30 mA', clause: '411.3.3; 522.6.202; 522.6.203; 411.3.4', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_13', itemNumber: '5.13', item: 'Provision of fire barriers, sealing arrangements and protection against thermal effects', clause: 'Section 527', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_14', itemNumber: '5.14', item: 'Band II cables segregated/separated from Band I cables', clause: '528.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_15', itemNumber: '5.15', item: 'Cables segregated/separated from communications cabling', clause: '528.2', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_16', itemNumber: '5.16', item: 'Cables segregated/separated from non-electrical services', clause: '528.3', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_17', itemNumber: '5.17', item: 'Termination of cables at enclosures', clause: 'Section 526; 526.6; 526.8; 526.5; 522.8.5', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_18', itemNumber: '5.18', item: 'Condition of accessories including socket-outlets, switches and joint boxes', clause: '651.2(v)', outcome: 'C2', notes: 'Damaged socket in kitchen - see observations' },
+      { id: 'item_5_19', itemNumber: '5.19', item: 'Suitability of accessories for external influences', clause: '512.2', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_20', itemNumber: '5.20', item: 'Adequacy of working space/accessibility to equipment', clause: '132.12; 513.1', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_21', itemNumber: '5.21', item: 'Single-pole switching or protective devices in line conductors only', clause: '132.14.1; 530.3.3', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_22', itemNumber: '5.22', item: 'RCD protection of socket-outlets with rated current not exceeding 32 A', clause: '411.3.3', outcome: 'satisfactory', notes: 'All socket circuits RCD protected' },
+      // Section 6: Bath/Shower
+      { id: 'item_6_0', itemNumber: '6.0', item: 'Additional protection for all LV circuits by RCD not exceeding 30 mA', clause: '701.411.3.3', outcome: 'satisfactory', notes: '' },
+      { id: 'item_6_1', itemNumber: '6.1', item: 'Where used as a protective measure, requirements for SELV or PELV met', clause: '701.414.4.5', outcome: 'not-applicable', notes: '' },
+      { id: 'item_6_2', itemNumber: '6.2', item: 'Shaver supply units comply with BS EN 61558-2-5', clause: '701.512.3', outcome: 'satisfactory', notes: '' },
+      { id: 'item_6_3', itemNumber: '6.3', item: 'Presence of supplementary bonding conductors, unless not required', clause: '701.415.2', outcome: 'satisfactory', notes: 'Not required - all circuits RCD protected' },
+      { id: 'item_6_4', itemNumber: '6.4', item: 'Low voltage socket-outlets sited at least 2.5 m from zone 1', clause: '701.512.3', outcome: 'satisfactory', notes: '' },
+      { id: 'item_6_5', itemNumber: '6.5', item: 'Suitability of equipment for external influences in terms of IP rating', clause: '701.512.2', outcome: 'satisfactory', notes: '' },
+      { id: 'item_6_6', itemNumber: '6.6', item: 'Suitability of accessories and controlgear etc. for a particular zone', clause: '701.512.3', outcome: 'satisfactory', notes: '' },
+      { id: 'item_6_7', itemNumber: '6.7', item: 'Suitability of current-using equipment for particular position', clause: '701.55', outcome: 'satisfactory', notes: '' },
+      // Section 7: Special Locations
+      { id: 'item_7_0', itemNumber: '7.0', item: 'List all other special installations or locations present, if any', clause: 'Part 7', outcome: 'not-applicable', notes: 'No other special locations identified' },
+      // Section 8: Prosumer
+      { id: 'item_8_0', itemNumber: '8.0', item: 'Where the installation includes Chapter 82 requirements, add items to checklist', clause: 'Chapter 82', outcome: 'not-applicable', notes: 'No prosumer installation present' }
+    ];
+    onUpdate('inspectionItems', fullInspectionItems);
+
+    // ====== SAMPLE DEFECT OBSERVATIONS ======
+    const sampleObservations = [
+      {
+        id: crypto.randomUUID(),
+        item: 'Earthing arrangement',
+        defectCode: 'C1',
+        description: 'Main earthing conductor found disconnected at MET - installation has no earth connection',
+        recommendation: 'Immediate reconnection of main earthing conductor required. Installation unsafe until rectified.',
+        regulation: '411.3.1.1',
+        rectified: false
+      },
+      {
+        id: crypto.randomUUID(),
+        item: 'Circuit chart labelling',
+        defectCode: 'C3',
+        description: 'Circuit chart not up to date with current circuit descriptions',
+        recommendation: 'Update circuit chart to reflect current installation',
+        regulation: '514.9.1',
+        rectified: false
+      },
+      {
+        id: crypto.randomUUID(),
+        item: 'Distribution board enclosure',
+        defectCode: 'C3',
+        description: 'Missing blanking plate on spare way in 2nd floor sub-distribution board',
+        recommendation: 'Fit appropriate blanking plate',
+        regulation: '416.2',
+        rectified: false
+      },
+      {
+        id: crypto.randomUUID(),
+        item: 'Bonding conductor',
+        defectCode: 'C2',
+        description: 'Main protective bonding conductor to gas installation disconnected',
+        recommendation: 'Reconnect main protective bonding conductor to gas installation',
+        regulation: '411.3.1.2',
+        rectified: false
+      },
+      {
+        id: crypto.randomUUID(),
+        item: 'Socket outlet condition',
+        defectCode: 'C2',
+        description: 'Damaged socket outlet in kitchen with exposed live terminals when faceplate removed',
+        recommendation: 'Replace damaged socket outlet with new accessory',
+        regulation: '651.2',
+        rectified: false
+      },
+      {
+        id: crypto.randomUUID(),
+        item: 'Floor boxes inspection',
+        defectCode: 'FI',
+        description: 'Floor boxes in reception area unable to be inspected due to furniture',
+        recommendation: 'Inspect at next convenient opportunity when area is accessible',
+        regulation: '',
+        rectified: false
+      }
+    ];
+    onUpdate('defectObservations', sampleObservations);
+
+    // Clear cached JSON preview so it regenerates with the new data
+    setFormattedJsonPreview('');
 
     toast({
       title: "Dev Mode: All Fields Populated",
-      description: "All required fields filled with test data. Ready to generate PDF.",
-    });
-  };
-
-  const handleGenerateTestData = () => {
-    const mockTestResults = [
-      {
-        id: crypto.randomUUID(),
-        circuitReference: "C1",
-        circuitDescription: "Ring Main Kitchen",
-        livePolarity: "Correct",
-        r1_r2: 0.15,
-        insulation_resistance: 250,
-        zs: 0.42,
-        max_zs: 1.44,
-        rcd_trip_time: 28,
-        rcd_rating: 30,
-        pfc: 2.1,
-        protective_device_type: "MCB",
-        protective_device_rating: 32,
-        protective_device_curve: "B",
-        protective_device_ka: 6,
-        conductor_live: "2.5",
-        conductor_cpc: "1.5",
-        reference_method: "C",
-        points_served: 8,
-        functional_testing: "Pass"
-      },
-      {
-        id: crypto.randomUUID(),
-        circuitReference: "C2",
-        circuitDescription: "Cooker Circuit",
-        livePolarity: "Correct",
-        r1_r2: 0.22,
-        insulation_resistance: 180,
-        zs: 0.55,
-        max_zs: 0.73,
-        pfc: 3.2,
-        protective_device_type: "MCB",
-        protective_device_rating: 40,
-        protective_device_curve: "B",
-        protective_device_ka: 10,
-        conductor_live: "6.0",
-        conductor_cpc: "2.5",
-        reference_method: "C",
-        points_served: 1,
-        functional_testing: "Pass"
-      },
-      {
-        id: crypto.randomUUID(),
-        circuitReference: "C3",
-        circuitDescription: "Lighting Ground Floor",
-        livePolarity: "Correct",
-        r1_r2: 0.85,
-        insulation_resistance: 45,
-        zs: 1.2,
-        max_zs: 2.88,
-        pfc: 1.8,
-        protective_device_type: "MCB",
-        protective_device_rating: 6,
-        protective_device_curve: "B",
-        protective_device_ka: 6,
-        conductor_live: "1.5",
-        conductor_cpc: "1.0",
-        reference_method: "A",
-        points_served: 12,
-        functional_testing: "Pass"
-      }
-    ];
-
-    onUpdate('testResults', mockTestResults);
-    
-    toast({
-      title: "Test Data Generated",
-      description: "3 sample circuits loaded into Schedule of Testing",
+      description: "Complete EICR: 66 inspection items (with C1, C2, C3, LIM, N/A outcomes), 10 circuits, 6 observations (C1, C2, C3, FI), all earthing conductor fields",
     });
   };
 

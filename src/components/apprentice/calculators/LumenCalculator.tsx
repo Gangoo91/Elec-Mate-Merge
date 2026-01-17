@@ -303,7 +303,8 @@ const LumenCalculator = () => {
               label="Room Type (Optional)"
               value={selectedRoom}
               onChange={handleRoomPreset}
-              options={[{ value: "", label: "Select room type..." }, ...roomPresetOptions]}
+              options={roomPresetOptions}
+              placeholder="Select room type..."
             />
             {selectedRoom && (
               <p className="text-xs text-white/80 pl-1">

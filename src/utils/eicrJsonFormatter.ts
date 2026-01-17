@@ -67,6 +67,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       item_number: item.itemNumber || item.number || "",  // Support both itemNumber and number fields
       description: item.item || item.description || "",
       outcome: item.outcome || "",
+      clause: item.clause || "",
       notes: item.notes || ""
     }));
   };
@@ -97,6 +98,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       }
       sectionMap[sectionName].items.push({
         id: item.id || "",
+        item_number: item.itemNumber || item.number || "",
         item: item.item || item.description || "",
         clause: item.clause || "",
         outcome: item.outcome || "",
@@ -220,27 +222,33 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         .from('reports')
         .select('id')
         .eq('report_id', reportId)
-        .eq('deleted_at', null)
+        .is('deleted_at', null)
         .single();
-      
+
       if (report?.id) {
         reportUuid = report.id;
         console.log('[formatDefects] Resolved UUID:', reportUuid);
       } else {
-        console.error('[formatDefects] Could not resolve report UUID for:', reportId);
+        console.warn('[formatDefects] Could not resolve report UUID for:', reportId, '- photos will not be loaded');
       }
     }
-    
-    // Fetch all photos for this report using the UUID
-    const { data: photos, error } = await supabase
-      .from('inspection_photos')
-      .select('*')
-      .eq('report_id', reportUuid);
-    
-    if (error) {
-      console.error('[formatDefects] Error fetching photos:', error);
+
+    // Fetch all photos for this report using the UUID (only if we have a valid UUID)
+    let photos: any[] = [];
+    if (uuidRegex.test(reportUuid)) {
+      const { data, error } = await supabase
+        .from('inspection_photos')
+        .select('*')
+        .eq('report_id', reportUuid);
+
+      if (error) {
+        console.error('[formatDefects] Error fetching photos:', error);
+      } else {
+        photos = data || [];
+        console.log('[formatDefects] Found', photos.length, 'photos for report UUID:', reportUuid);
+      }
     } else {
-      console.log('[formatDefects] Found', photos?.length || 0, 'photos for report UUID:', reportUuid);
+      console.log('[formatDefects] Skipping photo fetch - no valid UUID');
     }
     
     return defects.map((defect: any) => {
@@ -264,6 +272,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         defect_code: defect.defectCode || "",
         description: defect.description || "",
         recommendation: defect.recommendation || "",
+        regulation: defect.regulation || defect.clause || "",
         rectified: defect.rectified || false,
         photo_evidence: photoUrls,
         photo_count: photoUrls.length
@@ -282,7 +291,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
   // NESTED, GROUPED structure for improved organization
   return {
     metadata: {
-      certificate_number: get('certificateNumber'),
+      certificate_number: get('reportReference') || get('certificateNumber'),
       form_version: '1.0',
       export_timestamp: new Date().toISOString()
     },
@@ -328,7 +337,10 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       earthing_arrangement: get('earthingArrangement'),
       supply_type: get('supplyType'),
       supply_pme: get('supplyPME'),
-      dno_name: get('dnoName')
+      dno_name: get('dnoName'),
+      mpan: get('mpan'),
+      cutout_location: get('cutoutLocation'),
+      service_entry: get('serviceEntry')
     },
     
     main_protective_device: {
@@ -363,8 +375,23 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     earthing_bonding: {
       earth_electrode_type: get('earthElectrodeType'),
       earth_electrode_resistance: get('earthElectrodeResistance'),
-      main_earthing_conductor: get('mainEarthingConductor'),
-      main_bonding_conductor: get('mainBondingConductor'),
+      main_earthing_conductor_type: get('mainEarthingConductorType'),
+      main_earthing_conductor_size: get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize'),
+      main_earthing_conductor: (() => {
+        const size = get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize');
+        const type = get('mainEarthingConductorType');
+        if (size && type) return `${size}mm² ${type}`;
+        if (size) return `${size}mm²`;
+        return '';
+      })(),
+      main_bonding_conductor_type: get('mainBondingConductorType'),
+      main_bonding_conductor: (() => {
+        const size = get('mainBondingSizeCustom') || get('mainBondingSize');
+        const type = get('mainBondingConductorType');
+        if (size && type) return `${size}mm² ${type}`;
+        if (size) return `${size}mm²`;
+        return '';
+      })(),
       main_bonding_size: get('mainBondingSizeCustom') || get('mainBondingSize'),
       main_bonding_size_custom: get('mainBondingSizeCustom'),
       main_bonding_locations: get('mainBondingLocations'),

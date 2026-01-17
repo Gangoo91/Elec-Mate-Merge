@@ -22,6 +22,7 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
 
   const showCustomMainBonding = formData.mainBondingSize === 'custom';
   const showCustomSupplementaryBonding = formData.supplementaryBondingSize === 'custom';
+  const showCustomMainEarthing = formData.mainEarthingConductorSize === 'custom';
 
   // Parse existing main bonding locations into checkboxes
   const parseMainBondingLocations = (value: string = ''): Set<string> => {
@@ -138,6 +139,73 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
 
             {showEarthElectrodeResistance && <Separator className="my-6" />}
 
+            {/* Main Earthing Conductor */}
+            <div className="space-y-4">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
+                Main Earthing Conductor
+              </h3>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="mainEarthingConductorType">
+                      Conductor Material *
+                    </Label>
+                    <MobileSelectPicker
+                      value={formData.mainEarthingConductorType || ''}
+                      onValueChange={(value) => onUpdate('mainEarthingConductorType', value)}
+                      options={[
+                        { value: 'Cu', label: 'Copper (Cu)' },
+                        { value: 'Al', label: 'Aluminium (Al)' },
+                        { value: 'other', label: 'Other' },
+                      ]}
+                      placeholder="Select material"
+                      title="Conductor Material"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="mainEarthingConductorSize">
+                      Conductor Size *
+                    </Label>
+                    <MobileSelectPicker
+                      value={formData.mainEarthingConductorSize || ''}
+                      onValueChange={(value) => onUpdate('mainEarthingConductorSize', value)}
+                      options={[
+                        { value: '6', label: '6mm²' },
+                        { value: '10', label: '10mm²' },
+                        { value: '16', label: '16mm²' },
+                        { value: '25', label: '25mm²' },
+                        { value: '35', label: '35mm²' },
+                        { value: 'custom', label: 'Other/Custom' },
+                      ]}
+                      placeholder="Select size"
+                      title="Conductor Size"
+                    />
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Material and size of the main earthing conductor connecting to the MET
+                </p>
+
+                {showCustomMainEarthing && (
+                  <div className="space-y-2">
+                    <Label htmlFor="mainEarthingConductorSizeCustom">
+                      Custom Main Earthing Conductor Size
+                    </Label>
+                    <Input
+                      id="mainEarthingConductorSizeCustom"
+                      value={formData.mainEarthingConductorSizeCustom || ''}
+                      onChange={(e) => onUpdate('mainEarthingConductorSizeCustom', e.target.value)}
+                      placeholder="e.g., 50mm²"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <Separator className="my-6" />
+
             {/* Main Protective Bonding */}
             <div className="space-y-4">
               <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
@@ -145,27 +213,45 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                 Main Protective Bonding
               </h3>
               <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="mainBondingSize">
-                    Main Bonding Conductor Size *
-                  </Label>
-                  <MobileSelectPicker
-                    value={formData.mainBondingSize || ''}
-                    onValueChange={(value) => onUpdate('mainBondingSize', value)}
-                    options={[
-                      { value: '6mm', label: '6mm²' },
-                      { value: '10mm', label: '10mm²' },
-                      { value: '16mm', label: '16mm²' },
-                      { value: '25mm', label: '25mm²' },
-                      { value: 'custom', label: 'Other/Custom' },
-                    ]}
-                    placeholder="Select conductor size"
-                    title="Main Bonding Conductor Size"
-                  />
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Typical sizes: 10mm² for most domestic installations
-                  </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="mainBondingConductorType">
+                      Conductor Material *
+                    </Label>
+                    <MobileSelectPicker
+                      value={formData.mainBondingConductorType || ''}
+                      onValueChange={(value) => onUpdate('mainBondingConductorType', value)}
+                      options={[
+                        { value: 'Cu', label: 'Copper (Cu)' },
+                        { value: 'Al', label: 'Aluminium (Al)' },
+                        { value: 'other', label: 'Other' },
+                      ]}
+                      placeholder="Select material"
+                      title="Conductor Material"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="mainBondingSize">
+                      Conductor Size *
+                    </Label>
+                    <MobileSelectPicker
+                      value={formData.mainBondingSize || ''}
+                      onValueChange={(value) => onUpdate('mainBondingSize', value)}
+                      options={[
+                        { value: '6', label: '6mm²' },
+                        { value: '10', label: '10mm²' },
+                        { value: '16', label: '16mm²' },
+                        { value: '25', label: '25mm²' },
+                        { value: 'custom', label: 'Other/Custom' },
+                      ]}
+                      placeholder="Select size"
+                      title="Conductor Size"
+                    />
+                  </div>
                 </div>
+                <p className="text-xs text-muted-foreground">
+                  Typical sizes: 10mm² copper for most domestic installations
+                </p>
 
                 {showCustomMainBonding && (
                   <div className="space-y-2">
@@ -306,10 +392,10 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                     value={formData.supplementaryBondingSize || ''}
                     onValueChange={(value) => onUpdate('supplementaryBondingSize', value)}
                     options={[
-                      { value: '2.5mm', label: '2.5mm²' },
-                      { value: '4mm', label: '4mm²' },
-                      { value: '6mm', label: '6mm²' },
-                      { value: '10mm', label: '10mm²' },
+                      { value: '2.5', label: '2.5mm²' },
+                      { value: '4', label: '4mm²' },
+                      { value: '6', label: '6mm²' },
+                      { value: '10', label: '10mm²' },
                       { value: 'not-required', label: 'Not Required' },
                       { value: 'custom', label: 'Other/Custom' },
                     ]}

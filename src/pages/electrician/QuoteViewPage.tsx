@@ -4,7 +4,7 @@ import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Edit, Trash2, Download, ArrowLeft, CheckCircle, Clock, FileText, Send, Receipt, User, MapPin, Calendar, Phone, Mail, AlertTriangle, XCircle } from 'lucide-react';
+import { Loader2, Edit, Trash2, Download, ArrowLeft, CheckCircle, Clock, FileText, Send, Receipt, User, MapPin, Calendar, Phone, Mail, AlertTriangle, XCircle, Bell, MailOpen, Eye } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { Helmet } from 'react-helmet';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
@@ -31,6 +31,13 @@ const QuoteViewPage = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
+  const [isSendingReminder, setIsSendingReminder] = useState(false);
+  const [emailTracking, setEmailTracking] = useState<{
+    email_opened_at?: string;
+    email_open_count?: number;
+    first_sent_at?: string;
+    reminder_count?: number;
+  } | null>(null);
   const { companyProfile } = useCompanyProfile();
 
   const formatCurrency = (amount: number | undefined | null) => {
@@ -91,6 +98,27 @@ const QuoteViewPage = () => {
           };
 
           setQuote(transformedQuote);
+
+          // Load email tracking data
+          setEmailTracking({
+            first_sent_at: data.first_sent_at,
+            reminder_count: data.reminder_count || 0,
+          });
+
+          // Load email view tracking from quote_views
+          const { data: viewData } = await supabase
+            .from('quote_views')
+            .select('email_opened_at, email_open_count')
+            .eq('quote_id', data.id)
+            .single();
+
+          if (viewData) {
+            setEmailTracking(prev => ({
+              ...prev,
+              email_opened_at: viewData.email_opened_at,
+              email_open_count: viewData.email_open_count || 0,
+            }));
+          }
         }
       } catch (err) {
         console.error('Error loading quote:', err);
@@ -228,6 +256,52 @@ const QuoteViewPage = () => {
       });
     } finally {
       setIsConverting(false);
+    }
+  };
+
+  const handleSendReminder = async () => {
+    if (!quote) return;
+
+    setIsSendingReminder(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({
+          title: "Not authenticated",
+          description: "Please log in to send reminders",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const { data, error } = await supabase.functions.invoke('send-quote-reminder', {
+        body: { quoteId: quote.id, reminderType: 'gentle' },
+        headers: { Authorization: `Bearer ${session.access_token}` }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      // Update local tracking state
+      setEmailTracking(prev => ({
+        ...prev,
+        reminder_count: (prev?.reminder_count || 0) + 1,
+      }));
+
+      toast({
+        title: "Reminder Sent",
+        description: data?.message || "Follow-up reminder sent to client",
+      });
+    } catch (err: any) {
+      console.error('Error sending reminder:', err);
+      toast({
+        title: "Failed to send reminder",
+        description: err.message || "Please try again",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSendingReminder(false);
     }
   };
 
@@ -443,6 +517,90 @@ const QuoteViewPage = () => {
                 <p className="text-sm text-muted-foreground">Invoice #{quote.invoice_number}</p>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Email Tracking - Show for sent quotes awaiting response */}
+      {quote.status === 'sent' && quote.acceptance_status === 'pending' && emailTracking?.first_sent_at && (
+        <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
+          <h3 className="text-sm font-semibold text-muted-foreground mb-3 flex items-center gap-2">
+            <Mail className="h-4 w-4" />
+            Email Tracking
+            {emailTracking.email_opened_at && (
+              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 ml-2">
+                <MailOpen className="h-3 w-3 mr-1" />
+                Viewed
+              </Badge>
+            )}
+          </h3>
+
+          <div className="grid grid-cols-2 gap-3 text-sm mb-4">
+            <div className="p-3 rounded-xl bg-muted/30">
+              <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
+                <Send className="h-3 w-3" />
+                Sent
+              </div>
+              <p className="font-medium">
+                {format(new Date(emailTracking.first_sent_at), 'dd MMM yyyy')}
+              </p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-muted/30">
+              <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
+                <Eye className="h-3 w-3" />
+                Email Opens
+              </div>
+              <p className={`font-medium ${emailTracking.email_opened_at ? 'text-blue-400' : 'text-muted-foreground'}`}>
+                {emailTracking.email_opened_at ? (emailTracking.email_open_count || 1) : 'Not opened'}
+              </p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-muted/30">
+              <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
+                <Bell className="h-3 w-3" />
+                Reminders Sent
+              </div>
+              <p className={`font-medium ${(emailTracking.reminder_count || 0) > 0 ? 'text-purple-400' : ''}`}>
+                {emailTracking.reminder_count || 0} of 2
+              </p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-muted/30">
+              <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
+                <Clock className="h-3 w-3" />
+                Expires
+              </div>
+              <p className={`font-medium ${isExpired ? 'text-destructive' : daysUntilExpiry !== null && daysUntilExpiry <= 3 ? 'text-amber-400' : ''}`}>
+                {isExpired ? 'Expired' : daysUntilExpiry === 0 ? 'Today' : `${daysUntilExpiry} days`}
+              </p>
+            </div>
+          </div>
+
+          {/* Send Reminder Button */}
+          {!isExpired && (emailTracking.reminder_count || 0) < 2 && (
+            <Button
+              onClick={handleSendReminder}
+              disabled={isSendingReminder}
+              variant="outline"
+              className="w-full h-12 rounded-xl touch-manipulation"
+            >
+              {isSendingReminder ? (
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+              ) : (
+                <Bell className="h-4 w-4 mr-2" />
+              )}
+              Send Reminder to Client
+            </Button>
+          )}
+
+          {/* Status Message */}
+          <div className="mt-3 text-xs text-muted-foreground">
+            {emailTracking.email_opened_at ? (
+              <span className="text-blue-400">Client has viewed your quote - awaiting their decision</span>
+            ) : (
+              <span>Automated reminders sent at 3 days and 7 days if no response</span>
+            )}
           </div>
         </div>
       )}

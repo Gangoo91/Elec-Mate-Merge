@@ -219,7 +219,8 @@ const MaximumDemandCalculator = () => {
             onChange={(value) => {
               if (value) addLoad(value);
             }}
-            options={[{ value: "", label: "Select load type to add..." }, ...loadTypeOptions]}
+            options={loadTypeOptions}
+            placeholder="Select load type to add..."
           />
         </div>
 

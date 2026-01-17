@@ -177,63 +177,6 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
             </div>
           </div>
 
-          {/* DNO / Supply Authority Details */}
-          <div className="space-y-3 sm:space-y-4 mt-6">
-            <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
-              Supply Authority / DNO Details
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="dnoName">DNO (Distribution Network Operator)</Label>
-                <MobileSelectPicker
-                  value={formData.dnoName || ''}
-                  onValueChange={(value) => onUpdate('dnoName', value)}
-                  options={[
-                    { value: 'electricity-north-west', label: 'Electricity North West' },
-                    { value: 'northern-powergrid', label: 'Northern Powergrid' },
-                    { value: 'sp-energy-networks', label: 'SP Energy Networks' },
-                    { value: 'sse-networks', label: 'SSE Networks' },
-                    { value: 'uk-power-networks', label: 'UK Power Networks' },
-                    { value: 'western-power-distribution', label: 'Western Power Distribution' },
-                    { value: 'other', label: 'Other' },
-                  ]}
-                  placeholder="Select DNO"
-                  title="DNO"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="mpan">MPAN (Meter Point Administration Number)</Label>
-                <Input
-                  id="mpan"
-                  value={formData.mpan || ''}
-                  onChange={(e) => onUpdate('mpan', e.target.value)}
-                  placeholder="Enter MPAN number"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="cutoutLocation">Cutout Location</Label>
-                <Input
-                  id="cutoutLocation"
-                  value={formData.cutoutLocation || ''}
-                  onChange={(e) => onUpdate('cutoutLocation', e.target.value)}
-                  placeholder="Location of cutout/service head"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="serviceEntry">Service Entry Point</Label>
-                <Input
-                  id="serviceEntry"
-                  value={formData.serviceEntry || ''}
-                  onChange={(e) => onUpdate('serviceEntry', e.target.value)}
-                  placeholder="Where supply enters premises"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                />
-              </div>
-            </div>
-          </div>
         </div>
 
         <Separator className="my-6" />

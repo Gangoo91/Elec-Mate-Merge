@@ -13,6 +13,11 @@ import AdiabaticCalculator from "@/components/apprentice/calculators/AdiabaticCa
 import ZsValuesCalculator from "@/components/apprentice/calculators/ZsValuesCalculator";
 import ThreePhasePowerCalculator from "@/components/apprentice/calculators/ThreePhasePowerCalculator";
 import ConduitFillCalculator from "@/components/apprentice/calculators/ConduitFillCalculator";
+import ConduitBendingCalculator from "@/components/apprentice/calculators/ConduitBendingCalculator";
+import StarDeltaCalculator from "@/components/apprentice/calculators/StarDeltaCalculator";
+import PowerFactorCorrectionCalculator from "@/components/apprentice/calculators/PowerFactorCorrectionCalculator";
+import EarthElectrodeCalculator from "@/components/apprentice/calculators/EarthElectrodeCalculator";
+import GeneratorSizingCalculator from "@/components/apprentice/calculators/GeneratorSizingCalculator";
 import EnergyCostCalculator from "@/components/apprentice/calculators/EnergyCostCalculator";
 
 // Import all other calculator components
@@ -76,6 +81,8 @@ const Calculations = () => {
         return <PowerFactorCalculator />;
       case "three-phase-power":
         return <ThreePhasePowerCalculator />;
+      case "star-delta":
+        return <StarDeltaCalculator />;
       
       // Design & Installation
       case "voltage-drop":
@@ -90,10 +97,14 @@ const Calculations = () => {
         return <CableDeratingCalculator />;
       case "conduit-fill":
         return <ConduitFillCalculator />;
+      case "conduit-bending":
+        return <ConduitBendingCalculator />;
       case "diversity-factor":
         return <DiversityFactorCalculator />;
       case "maximum-demand":
         return <MaximumDemandCalculator />;
+      case "power-factor-correction":
+        return <PowerFactorCorrectionCalculator />;
       
       // Testing & Inspection
       case "zs-values":
@@ -118,7 +129,9 @@ const Calculations = () => {
         return <RCDTripTimeCalculator />;
       case "rcd-discrimination":
         return <RCDDiscriminationCalculator />;
-      
+      case "earth-electrode":
+        return <EarthElectrodeCalculator />;
+
       // Lighting & Power Systems
       case "lumen":
         return <LumenCalculator />;
@@ -180,7 +193,9 @@ const Calculations = () => {
       // Specialized Applications
       case "data-centre":
         return <DataCentreCalculator />;
-      
+      case "generator-sizing":
+        return <GeneratorSizingCalculator />;
+
       // Specialist Locations
       case "marine-electrical":
         return <MarineElectricalCalculator />;

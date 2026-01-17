@@ -112,7 +112,7 @@ const EVSELoadCalculator = () => {
   return (
     <div className="space-y-4">
       <CalculatorCard
-        category="ev_storage"
+        category="ev-storage"
         title="EVSE Load Calculator"
         description="Calculate electrical load and infrastructure requirements"
         badge="BS 7671"
@@ -233,7 +233,7 @@ const EVSELoadCalculator = () => {
         </div>
 
         <CalculatorActions
-          category="ev_storage"
+          category="ev-storage"
           onCalculate={handleCalculate}
           onReset={reset}
           isDisabled={chargingPoints.length === 0}
@@ -244,7 +244,7 @@ const EVSELoadCalculator = () => {
       {result && (
         <div className="space-y-4 animate-fade-in">
           {/* Main Results */}
-          <CalculatorResult category="ev_storage">
+          <CalculatorResult category="ev-storage">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-sm text-white/60">EVSE Load Analysis</span>
               <Badge variant="outline" className={cn(
@@ -272,10 +272,10 @@ const EVSELoadCalculator = () => {
             </div>
 
             <ResultsGrid columns={2}>
-              <ResultValue label="Nominal Load" value={result.totalNominalPower.toFixed(0)} unit="kW" category="ev_storage" size="sm" />
-              <ResultValue label="Voltage Drop" value={result.voltageDropPercent.toFixed(1)} unit="%" category="ev_storage" size="sm" />
-              <ResultValue label="Cable Size" value={result.selectedCable || "TBD"} category="ev_storage" size="sm" />
-              <ResultValue label="Protection" value={result.selectedProtection || "TBD"} category="ev_storage" size="sm" />
+              <ResultValue label="Nominal Load" value={result.totalNominalPower.toFixed(0)} unit="kW" category="ev-storage" size="sm" />
+              <ResultValue label="Voltage Drop" value={result.voltageDropPercent.toFixed(1)} unit="%" category="ev-storage" size="sm" />
+              <ResultValue label="Cable Size" value={result.selectedCable || "TBD"} category="ev-storage" size="sm" />
+              <ResultValue label="Protection" value={result.selectedProtection || "TBD"} category="ev-storage" size="sm" />
             </ResultsGrid>
 
             <div className="mt-4 p-3 rounded-lg bg-white/5">

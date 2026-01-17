@@ -211,8 +211,10 @@ serve(async (req) => {
           .from('quotes')
           .update({
             invoice_status: 'paid',
+            invoice_paid_at: new Date().toISOString(),
+            invoice_payment_method: 'card',
+            invoice_payment_reference: session.payment_intent as string,
             stripe_payment_intent_id: session.payment_intent as string,
-            paid_at: new Date().toISOString(),
           })
           .eq('id', invoiceId);
 
@@ -247,11 +249,19 @@ serve(async (req) => {
         // Send thank-you email to client
         try {
           // Fetch invoice details for client info
-          const { data: invoice } = await supabase
+          console.log(`📋 Fetching invoice ${invoiceId} for email lookup...`);
+
+          const { data: invoice, error: invoiceFetchError } = await supabase
             .from('quotes')
             .select('client_data')
             .eq('id', invoiceId)
             .single();
+
+          if (invoiceFetchError) {
+            console.error(`❌ Error fetching invoice for email:`, invoiceFetchError);
+          }
+
+          console.log(`📋 Invoice client_data:`, JSON.stringify(invoice?.client_data || 'NULL'));
 
           if (invoice?.client_data) {
             const clientData = typeof invoice.client_data === 'string'
@@ -260,6 +270,8 @@ serve(async (req) => {
 
             const clientEmail = clientData?.email?.trim();
             const clientName = clientData?.name || 'Valued Customer';
+
+            console.log(`📧 Client email extracted: "${clientEmail || 'EMPTY'}", Client name: "${clientName}"`);
 
             if (clientEmail) {
               // Fetch company profile for sender info

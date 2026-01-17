@@ -138,6 +138,73 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
 
             {showEarthElectrodeResistance && <Separator className="bg-border/30" />}
 
+            {/* Main Earthing Conductor */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
+                <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
+                Main Earthing Conductor
+              </h3>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="mainEarthingConductorType">
+                      Conductor Material <span className="text-elec-yellow">*</span>
+                    </Label>
+                    <Select
+                      value={formData.mainEarthingConductorType || ''}
+                      onValueChange={(value) => onUpdate('mainEarthingConductorType', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select material" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Cu">Copper (Cu)</SelectItem>
+                        <SelectItem value="Al">Aluminium (Al)</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="mainEarthingConductorSize">
+                      Conductor Size <span className="text-elec-yellow">*</span>
+                    </Label>
+                    <Select
+                      value={formData.mainEarthingConductorSize || ''}
+                      onValueChange={(value) => onUpdate('mainEarthingConductorSize', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select size" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="6">6mm²</SelectItem>
+                        <SelectItem value="10">10mm²</SelectItem>
+                        <SelectItem value="16">16mm²</SelectItem>
+                        <SelectItem value="25">25mm²</SelectItem>
+                        <SelectItem value="35">35mm²</SelectItem>
+                        <SelectItem value="custom">Other/Custom</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Material and size of the main earthing conductor connecting to the MET
+                </p>
+                {formData.mainEarthingConductorSize === 'custom' && (
+                  <div className="space-y-1.5">
+                    <Label htmlFor="mainEarthingConductorSizeCustom">Custom Size</Label>
+                    <Input
+                      id="mainEarthingConductorSizeCustom"
+                      value={formData.mainEarthingConductorSizeCustom || ''}
+                      onChange={(e) => onUpdate('mainEarthingConductorSizeCustom', e.target.value)}
+                      placeholder="e.g., 50mm²"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <Separator className="bg-border/30" />
+
             {/* Main Protective Bonding */}
             <div className="space-y-4">
               <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
@@ -145,29 +212,49 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                 Main Protective Bonding
               </h3>
               <div className="space-y-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="mainBondingSize">
-                    Main Bonding Conductor Size <span className="text-elec-yellow">*</span>
-                  </Label>
-                  <Select
-                    value={formData.mainBondingSize || ''}
-                    onValueChange={(value) => onUpdate('mainBondingSize', value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select conductor size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="6mm">6mm²</SelectItem>
-                      <SelectItem value="10mm">10mm²</SelectItem>
-                      <SelectItem value="16mm">16mm²</SelectItem>
-                      <SelectItem value="25mm">25mm²</SelectItem>
-                      <SelectItem value="custom">Other/Custom</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-muted-foreground">
-                    Typical sizes: 10mm² for most domestic installations
-                  </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="mainBondingConductorType">
+                      Conductor Material <span className="text-elec-yellow">*</span>
+                    </Label>
+                    <Select
+                      value={formData.mainBondingConductorType || ''}
+                      onValueChange={(value) => onUpdate('mainBondingConductorType', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select material" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Cu">Copper (Cu)</SelectItem>
+                        <SelectItem value="Al">Aluminium (Al)</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="mainBondingSize">
+                      Conductor Size <span className="text-elec-yellow">*</span>
+                    </Label>
+                    <Select
+                      value={formData.mainBondingSize || ''}
+                      onValueChange={(value) => onUpdate('mainBondingSize', value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select size" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="6">6mm²</SelectItem>
+                        <SelectItem value="10">10mm²</SelectItem>
+                        <SelectItem value="16">16mm²</SelectItem>
+                        <SelectItem value="25">25mm²</SelectItem>
+                        <SelectItem value="custom">Other/Custom</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
+                <p className="text-xs text-muted-foreground">
+                  Typical sizes: 10mm² copper for most domestic installations
+                </p>
 
                 {showCustomMainBonding && (
                   <div className="space-y-1.5">
@@ -289,10 +376,10 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                       <SelectValue placeholder="Select conductor size" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="2.5mm">2.5mm²</SelectItem>
-                      <SelectItem value="4mm">4mm²</SelectItem>
-                      <SelectItem value="6mm">6mm²</SelectItem>
-                      <SelectItem value="10mm">10mm²</SelectItem>
+                      <SelectItem value="2.5">2.5mm²</SelectItem>
+                      <SelectItem value="4">4mm²</SelectItem>
+                      <SelectItem value="6">6mm²</SelectItem>
+                      <SelectItem value="10">10mm²</SelectItem>
                       <SelectItem value="not-required">Not Required</SelectItem>
                       <SelectItem value="custom">Other/Custom</SelectItem>
                     </SelectContent>

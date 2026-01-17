@@ -18,6 +18,11 @@ import {
   XCircle,
   AlertCircle,
   CalendarX,
+  MailOpen,
+  Send,
+  Bell,
+  AlertTriangle,
+  Eye,
 } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -68,6 +73,24 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
 
   const isExpired = quote.expiryDate && new Date(quote.expiryDate) < new Date();
   const categories = ["labour", "materials", "equipment", "manual"];
+
+  // Email tracking data
+  const hasBeenViewed = !!quote.email_opened_at;
+  const viewCount = quote.email_open_count || 0;
+  const reminderCount = quote.reminder_count || 0;
+  const firstSentAt = quote.first_sent_at;
+  const lastReminderAt = quote.lastReminderSentAt;
+
+  // Calculate days since sent
+  const daysSinceSent = firstSentAt
+    ? Math.floor((new Date().getTime() - new Date(firstSentAt).getTime()) / (1000 * 60 * 60 * 24))
+    : null;
+
+  // Calculate days until expiry
+  const daysUntilExpiry = quote.expiryDate
+    ? Math.ceil((new Date(quote.expiryDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+    : null;
+  const isExpiringSoon = daysUntilExpiry !== null && daysUntilExpiry <= 3 && daysUntilExpiry > 0;
 
   return (
     <div className="space-y-6">
@@ -136,6 +159,143 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
           </div>
         </div>
       </Card>
+
+      {/* Email Tracking Card - Only show for sent quotes awaiting response */}
+      {quote.status === 'sent' && quote.acceptance_status === 'pending' && firstSentAt && (
+        <Card className="glass-premium p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Mail className="h-5 w-5 text-elec-yellow" />
+            <h2 className="text-xl font-semibold text-white">Email Tracking</h2>
+            {hasBeenViewed && (
+              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 ml-2">
+                <MailOpen className="h-3 w-3 mr-1" />
+                Viewed
+              </Badge>
+            )}
+            {isExpiringSoon && (
+              <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30 ml-2">
+                <AlertTriangle className="h-3 w-3 mr-1" />
+                Expiring Soon
+              </Badge>
+            )}
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {/* Sent Date */}
+            <div className="bg-white/[0.02] rounded-lg p-3 border border-white/[0.06]">
+              <div className="flex items-center gap-2 text-white/50 text-xs mb-1">
+                <Send className="h-3 w-3" />
+                <span>Sent</span>
+              </div>
+              <p className="text-white font-medium text-sm">
+                {format(new Date(firstSentAt), 'dd MMM yyyy')}
+              </p>
+              {daysSinceSent !== null && daysSinceSent > 0 && (
+                <p className="text-white/40 text-xs">
+                  {daysSinceSent} day{daysSinceSent !== 1 ? 's' : ''} ago
+                </p>
+              )}
+            </div>
+
+            {/* Email Views */}
+            <div className="bg-white/[0.02] rounded-lg p-3 border border-white/[0.06]">
+              <div className="flex items-center gap-2 text-white/50 text-xs mb-1">
+                <Eye className="h-3 w-3" />
+                <span>Email Opens</span>
+              </div>
+              <p className={cn(
+                "font-medium text-sm",
+                hasBeenViewed ? "text-blue-400" : "text-white/40"
+              )}>
+                {hasBeenViewed ? viewCount : 'Not opened yet'}
+              </p>
+              {quote.email_opened_at && (
+                <p className="text-white/40 text-xs">
+                  First: {format(new Date(quote.email_opened_at), 'dd MMM, HH:mm')}
+                </p>
+              )}
+            </div>
+
+            {/* Reminders Sent */}
+            <div className="bg-white/[0.02] rounded-lg p-3 border border-white/[0.06]">
+              <div className="flex items-center gap-2 text-white/50 text-xs mb-1">
+                <Bell className="h-3 w-3" />
+                <span>Reminders</span>
+              </div>
+              <p className={cn(
+                "font-medium text-sm",
+                reminderCount > 0 ? "text-purple-400" : "text-white"
+              )}>
+                {reminderCount} of 3 sent
+              </p>
+              {lastReminderAt && (
+                <p className="text-white/40 text-xs">
+                  Last: {format(new Date(lastReminderAt), 'dd MMM')}
+                </p>
+              )}
+            </div>
+
+            {/* Expiry Countdown */}
+            <div className="bg-white/[0.02] rounded-lg p-3 border border-white/[0.06]">
+              <div className="flex items-center gap-2 text-white/50 text-xs mb-1">
+                <Clock className="h-3 w-3" />
+                <span>Expires In</span>
+              </div>
+              <p className={cn(
+                "font-medium text-sm",
+                isExpired ? "text-red-400" :
+                isExpiringSoon ? "text-orange-400" :
+                "text-white"
+              )}>
+                {isExpired
+                  ? 'Expired'
+                  : daysUntilExpiry === 0
+                    ? 'Today'
+                    : daysUntilExpiry === 1
+                      ? 'Tomorrow'
+                      : `${daysUntilExpiry} days`
+                }
+              </p>
+              <p className="text-white/40 text-xs">
+                {format(new Date(quote.expiryDate), 'dd MMM yyyy')}
+              </p>
+            </div>
+          </div>
+
+          {/* Engagement Status Message */}
+          <div className="mt-4 pt-4 border-t border-white/10">
+            {hasBeenViewed && !isExpired ? (
+              <div className="flex items-center gap-2 text-blue-400">
+                <CheckCircle className="h-4 w-4" />
+                <span className="text-sm">
+                  Client has viewed your quote {viewCount > 1 ? `${viewCount} times` : ''} - awaiting their decision
+                </span>
+              </div>
+            ) : !hasBeenViewed && daysSinceSent && daysSinceSent > 2 ? (
+              <div className="flex items-center gap-2 text-amber-400">
+                <AlertCircle className="h-4 w-4" />
+                <span className="text-sm">
+                  Client hasn't opened the email yet - automated reminders will be sent
+                </span>
+              </div>
+            ) : isExpired ? (
+              <div className="flex items-center gap-2 text-red-400">
+                <XCircle className="h-4 w-4" />
+                <span className="text-sm">
+                  This quote has expired - consider sending a new quote
+                </span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 text-white/50">
+                <Clock className="h-4 w-4" />
+                <span className="text-sm">
+                  Waiting for client to open the email
+                </span>
+              </div>
+            )}
+          </div>
+        </Card>
+      )}
 
       {/* Client Information Card */}
       <Card className="glass-premium p-6">

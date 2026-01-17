@@ -12,6 +12,7 @@ import { useEICRForm } from './eicr/EICRFormProvider';
 
 interface InspectionItem {
   id: string;
+  number?: string;  // Item number for PDF mapping (e.g., "1.0", "3.1")
   section: string;
   item: string;
   clause: string;

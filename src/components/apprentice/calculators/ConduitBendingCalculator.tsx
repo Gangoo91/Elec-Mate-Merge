@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, RotateCcw, Info, Ruler, BookOpen, CheckCircle, AlertTriangle } from "lucide-react";
+import { ChevronDown, Info, BookOpen, CheckCircle, AlertTriangle } from "lucide-react";
 import {
   CalculatorCard,
+  CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
@@ -10,6 +11,7 @@ import {
   ResultValue,
   ResultsGrid,
 } from "@/components/calculators/shared";
+import { cn } from "@/lib/utils";
 
 // Bend multipliers for different angles
 const BEND_MULTIPLIERS = {
@@ -80,7 +82,7 @@ const ConduitBendingCalculator = () => {
   // Get bender take-up based on conduit size (approximate values)
   const getTakeUp = (size: string): number => {
     const takeUpValues: Record<string, number> = {
-      "20": 100, // 100mm take-up for 20mm conduit
+      "20": 100,
       "25": 125,
       "32": 150,
       "40": 200,
@@ -92,7 +94,7 @@ const ConduitBendingCalculator = () => {
   // Get minimum bend radius based on conduit size (BS 7671 Table 4F1)
   const getMinBendRadius = (size: string): number => {
     const radii: Record<string, number> = {
-      "20": 100, // Internal bend radius in mm
+      "20": 100,
       "25": 125,
       "32": 160,
       "40": 200,
@@ -114,7 +116,6 @@ const ConduitBendingCalculator = () => {
 
     switch (bendType) {
       case "offset": {
-        // Offset bend calculation
         const shrinkAmount = riseVal * multipliers.shrink;
         const distanceBetweenBends = riseVal * multipliers.distance;
         const minRadius = getMinBendRadius(conduitSize);
@@ -129,7 +130,7 @@ const ConduitBendingCalculator = () => {
           secondBendMark: distanceVal - shrinkAmount + distanceBetweenBends,
           takeUp,
           minBendRadius: minRadius,
-          isCompliant: true, // Offset bends inherently comply if using standard bender
+          isCompliant: true,
           notes: [
             `Using ${bendAngle}° offset angle`,
             `Shrink multiplier: ${multipliers.shrink}`,
@@ -141,13 +142,12 @@ const ConduitBendingCalculator = () => {
       }
 
       case "saddle-3": {
-        // 3-point saddle (45-45 configuration)
         const centreAngle = 45;
         const sideAngle = 22.5;
         const saddleMultiplier = BEND_MULTIPLIERS["45"];
         const minRadius = getMinBendRadius(conduitSize);
-        const shrinkAmount = heightVal * saddleMultiplier.shrink * 2.5; // Approximate for saddle
-        const distanceBetweenBends = heightVal * 2.5; // Centre to outer bend spacing
+        const shrinkAmount = heightVal * saddleMultiplier.shrink * 2.5;
+        const distanceBetweenBends = heightVal * 2.5;
 
         calculationResult = {
           bendType: "3-Point Saddle",
@@ -155,7 +155,7 @@ const ConduitBendingCalculator = () => {
           distanceBetweenBends,
           developedLength: heightVal * 3,
           firstBendMark: distanceVal - distanceBetweenBends / 2 - shrinkAmount / 2,
-          secondBendMark: distanceVal - shrinkAmount / 2, // Centre mark
+          secondBendMark: distanceVal - shrinkAmount / 2,
           thirdBendMark: distanceVal + distanceBetweenBends / 2 - shrinkAmount / 2,
           takeUp,
           minBendRadius: minRadius,
@@ -171,11 +171,10 @@ const ConduitBendingCalculator = () => {
       }
 
       case "saddle-4": {
-        // 4-point saddle (22.5° bends)
         const minRadius = getMinBendRadius(conduitSize);
-        const shrinkAmount = heightVal * 0.2; // Approximate shrink for 4-point
-        const outerSpacing = heightVal * 2.6; // Spacing for outer bends
-        const innerSpacing = heightVal * 1.4; // Spacing for inner bends
+        const shrinkAmount = heightVal * 0.2;
+        const outerSpacing = heightVal * 2.6;
+        const innerSpacing = heightVal * 1.4;
 
         calculationResult = {
           bendType: "4-Point Saddle",
@@ -200,7 +199,6 @@ const ConduitBendingCalculator = () => {
       }
 
       case "90-stub": {
-        // 90° stub-up
         const minRadius = getMinBendRadius(conduitSize);
         calculationResult = {
           bendType: "90° Stub-Up",
@@ -223,10 +221,9 @@ const ConduitBendingCalculator = () => {
       }
 
       case "90-back": {
-        // 90° back-to-back
         const minRadius = getMinBendRadius(conduitSize);
-        const backToBackDistance = stubVal; // Using stubLength as overall length
-        const secondStubVal = parseFloat(distanceToObstacle) || stubVal; // Re-using field for second stub
+        const backToBackDistance = stubVal;
+        const secondStubVal = parseFloat(distanceToObstacle) || stubVal;
 
         calculationResult = {
           bendType: "90° Back-to-Back",
@@ -249,8 +246,7 @@ const ConduitBendingCalculator = () => {
       }
 
       case "kick": {
-        // Kick (dog-leg) bend - usually 10° or 22.5°
-        const kickAngle = "10"; // Most kicks are 10°
+        const kickAngle = "10";
         const kickMultiplier = BEND_MULTIPLIERS[kickAngle];
         const minRadius = getMinBendRadius(conduitSize);
         const shrinkAmount = kickVal * kickMultiplier.shrink;
@@ -294,16 +290,23 @@ const ConduitBendingCalculator = () => {
     setResult(null);
   };
 
+  const isCalculateDisabled =
+    (bendType === "offset" && (!rise || !distanceToObstacle)) ||
+    ((bendType === "saddle-3" || bendType === "saddle-4") && (!obstacleHeight || !distanceToObstacle)) ||
+    (bendType === "90-stub" && !stubLength) ||
+    (bendType === "90-back" && (!stubLength || !distanceToObstacle)) ||
+    (bendType === "kick" && (!kickOffset || !distanceToObstacle));
+
   // Render different input fields based on bend type
   const renderInputs = () => {
     switch (bendType) {
       case "offset":
         return (
-          <>
+          <CalculatorInputGrid columns={1}>
             <CalculatorSelect
               label="Bend Angle"
               value={bendAngle}
-              onValueChange={setBendAngle}
+              onChange={setBendAngle}
               options={BEND_ANGLES}
               placeholder="Select angle"
             />
@@ -313,7 +316,7 @@ const ConduitBendingCalculator = () => {
               onChange={setRise}
               placeholder="e.g., 50"
               unit="mm"
-              helperText="Vertical distance to offset"
+              hint="Vertical distance to offset"
             />
             <CalculatorInput
               label="Distance to Obstacle"
@@ -321,22 +324,22 @@ const ConduitBendingCalculator = () => {
               onChange={setDistanceToObstacle}
               placeholder="e.g., 500"
               unit="mm"
-              helperText="From conduit end to centre of offset"
+              hint="From conduit end to centre of offset"
             />
-          </>
+          </CalculatorInputGrid>
         );
 
       case "saddle-3":
       case "saddle-4":
         return (
-          <>
+          <CalculatorInputGrid columns={1}>
             <CalculatorInput
               label="Obstacle Height"
               value={obstacleHeight}
               onChange={setObstacleHeight}
               placeholder="e.g., 40"
               unit="mm"
-              helperText="Height of obstacle to clear"
+              hint="Height of obstacle to clear"
             />
             <CalculatorInput
               label="Distance to Obstacle Centre"
@@ -344,9 +347,9 @@ const ConduitBendingCalculator = () => {
               onChange={setDistanceToObstacle}
               placeholder="e.g., 600"
               unit="mm"
-              helperText="From conduit end to obstacle centre"
+              hint="From conduit end to obstacle centre"
             />
-          </>
+          </CalculatorInputGrid>
         );
 
       case "90-stub":
@@ -357,20 +360,20 @@ const ConduitBendingCalculator = () => {
             onChange={setStubLength}
             placeholder="e.g., 200"
             unit="mm"
-            helperText="Vertical stub height from floor/wall"
+            hint="Vertical stub height from floor/wall"
           />
         );
 
       case "90-back":
         return (
-          <>
+          <CalculatorInputGrid columns={1}>
             <CalculatorInput
               label="First Stub Length"
               value={stubLength}
               onChange={setStubLength}
               placeholder="e.g., 200"
               unit="mm"
-              helperText="Height of first 90° stub"
+              hint="Height of first 90° stub"
             />
             <CalculatorInput
               label="Second Stub Length"
@@ -378,21 +381,21 @@ const ConduitBendingCalculator = () => {
               onChange={setDistanceToObstacle}
               placeholder="e.g., 200"
               unit="mm"
-              helperText="Height of second 90° stub"
+              hint="Height of second 90° stub"
             />
-          </>
+          </CalculatorInputGrid>
         );
 
       case "kick":
         return (
-          <>
+          <CalculatorInputGrid columns={1}>
             <CalculatorInput
               label="Kick Offset"
               value={kickOffset}
               onChange={setKickOffset}
               placeholder="e.g., 25"
               unit="mm"
-              helperText="Horizontal offset needed"
+              hint="Horizontal offset needed"
             />
             <CalculatorInput
               label="Distance from End"
@@ -400,9 +403,9 @@ const ConduitBendingCalculator = () => {
               onChange={setDistanceToObstacle}
               placeholder="e.g., 300"
               unit="mm"
-              helperText="Where to place the kick"
+              hint="Where to place the kick"
             />
-          </>
+          </CalculatorInputGrid>
         );
 
       default:
@@ -411,52 +414,51 @@ const ConduitBendingCalculator = () => {
   };
 
   return (
-    <CalculatorCard
-      title="Conduit Bending Calculator"
-      description="Calculate bend marks, shrink, and spacing for conduit bending"
-      icon={Ruler}
-    >
-      <div className="space-y-4 sm:space-y-5">
-        {/* Bend Type Selection */}
-        <CalculatorSelect
-          label="Bend Type"
-          value={bendType}
-          onValueChange={(val) => {
-            setBendType(val);
-            setResult(null);
-          }}
-          options={BEND_TYPES}
-          placeholder="Select bend type"
-        />
+    <div className="space-y-4">
+      <CalculatorCard
+        category="cable"
+        title="Conduit Bending Calculator"
+        description="Calculate bend marks, shrink, and spacing for conduit bending"
+      >
+        <div className="space-y-4 sm:space-y-5">
+          {/* Bend Type Selection */}
+          <CalculatorSelect
+            label="Bend Type"
+            value={bendType}
+            onChange={(val) => {
+              setBendType(val);
+              setResult(null);
+            }}
+            options={BEND_TYPES}
+            placeholder="Select bend type"
+          />
 
-        {/* Conduit Size */}
-        <CalculatorSelect
-          label="Conduit Size"
-          value={conduitSize}
-          onValueChange={setConduitSize}
-          options={CONDUIT_SIZES}
-          placeholder="Select size"
-        />
+          {/* Conduit Size */}
+          <CalculatorSelect
+            label="Conduit Size"
+            value={conduitSize}
+            onChange={setConduitSize}
+            options={CONDUIT_SIZES}
+            placeholder="Select size"
+          />
 
-        {/* Dynamic Inputs Based on Bend Type */}
-        {renderInputs()}
+          {/* Dynamic Inputs Based on Bend Type */}
+          {renderInputs()}
 
-        {/* Actions */}
-        <CalculatorActions
-          onCalculate={calculate}
-          onReset={reset}
-          calculateDisabled={
-            (bendType === "offset" && (!rise || !distanceToObstacle)) ||
-            ((bendType === "saddle-3" || bendType === "saddle-4") && (!obstacleHeight || !distanceToObstacle)) ||
-            (bendType === "90-stub" && !stubLength) ||
-            (bendType === "90-back" && (!stubLength || !distanceToObstacle)) ||
-            (bendType === "kick" && (!kickOffset || !distanceToObstacle))
-          }
-        />
+          {/* Actions */}
+          <CalculatorActions
+            category="cable"
+            onCalculate={calculate}
+            onReset={reset}
+            isDisabled={isCalculateDisabled}
+          />
+        </div>
+      </CalculatorCard>
 
-        {/* Results */}
-        {result && (
-          <CalculatorResult title={`${result.bendType} Results`}>
+      {/* Results */}
+      {result && (
+        <div className="space-y-4 animate-fade-in">
+          <CalculatorResult category="cable">
             {/* Compliance Status */}
             <div className={`flex items-center gap-2 p-3 rounded-lg mb-4 ${result.isCompliant ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'}`}>
               {result.isCompliant ? (
@@ -474,51 +476,65 @@ const ConduitBendingCalculator = () => {
               </div>
             </div>
 
+            <div className="text-center pb-4 border-b border-white/10 mb-4">
+              <p className="text-sm text-white/60 mb-1">{result.bendType}</p>
+              <div className="text-3xl font-bold text-emerald-400">
+                First Mark: {result.firstBendMark.toFixed(1)} mm
+              </div>
+            </div>
+
             <ResultsGrid columns={2}>
-              <ResultValue
-                label="First Bend Mark"
-                value={`${result.firstBendMark.toFixed(1)} mm`}
-                color="yellow"
-              />
               {result.secondBendMark > 0 && (
                 <ResultValue
                   label="Second Bend Mark"
-                  value={`${result.secondBendMark.toFixed(1)} mm`}
-                  color="blue"
+                  value={result.secondBendMark.toFixed(1)}
+                  unit="mm"
+                  category="cable"
+                  size="sm"
                 />
               )}
               {result.thirdBendMark && (
                 <ResultValue
                   label="Third Bend Mark"
-                  value={`${result.thirdBendMark.toFixed(1)} mm`}
-                  color="green"
+                  value={result.thirdBendMark.toFixed(1)}
+                  unit="mm"
+                  category="cable"
+                  size="sm"
                 />
               )}
               {result.fourthBendMark && (
                 <ResultValue
                   label="Fourth Bend Mark"
-                  value={`${result.fourthBendMark.toFixed(1)} mm`}
-                  color="purple"
+                  value={result.fourthBendMark.toFixed(1)}
+                  unit="mm"
+                  category="cable"
+                  size="sm"
                 />
               )}
               {result.shrinkAmount > 0 && (
                 <ResultValue
                   label="Shrink Amount"
-                  value={`${result.shrinkAmount.toFixed(1)} mm`}
-                  color="orange"
+                  value={result.shrinkAmount.toFixed(1)}
+                  unit="mm"
+                  category="cable"
+                  size="sm"
                 />
               )}
               {result.distanceBetweenBends > 0 && (
                 <ResultValue
                   label="Distance Between Bends"
-                  value={`${result.distanceBetweenBends.toFixed(1)} mm`}
-                  color="cyan"
+                  value={result.distanceBetweenBends.toFixed(1)}
+                  unit="mm"
+                  category="cable"
+                  size="sm"
                 />
               )}
               <ResultValue
                 label="Take-Up (90°)"
-                value={`${result.takeUp} mm`}
-                color="gray"
+                value={result.takeUp}
+                unit="mm"
+                category="cable"
+                size="sm"
               />
             </ResultsGrid>
 
@@ -541,9 +557,7 @@ const ConduitBendingCalculator = () => {
             <div className="mt-4 p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="text-sm font-medium text-white/80 mb-3">Marking Guide</h4>
               <div className="relative h-16 bg-gradient-to-r from-gray-700 to-gray-600 rounded-full overflow-hidden">
-                {/* Conduit visualization */}
                 <div className="absolute inset-y-2 left-4 right-4 bg-gray-500 rounded-full flex items-center">
-                  {/* First mark */}
                   <div
                     className="absolute w-0.5 h-full bg-yellow-400"
                     style={{ left: `${Math.min(90, Math.max(10, (result.firstBendMark / 1000) * 100))}%` }}
@@ -569,147 +583,87 @@ const ConduitBendingCalculator = () => {
               </div>
             </div>
           </CalculatorResult>
-        )}
 
-        {/* Guidance Section */}
-        <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-          <CollapsibleTrigger className="flex items-center justify-between w-full p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors touch-manipulation">
-            <div className="flex items-center gap-2">
-              <Info className="w-4 h-4 text-blue-400" />
-              <span className="text-sm font-medium text-white/90">Bending Reference Guide</span>
-            </div>
-            <ChevronDown className={`w-4 h-4 text-white/60 transition-transform ${showGuidance ? 'rotate-180' : ''}`} />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-2 p-4 bg-white/5 rounded-lg border border-white/10">
-            <div className="space-y-4 text-sm text-white/70">
-              <div>
-                <h4 className="font-medium text-white/90 mb-2">Offset Bend Multipliers</h4>
-                <div className="grid grid-cols-3 gap-2 text-xs">
-                  <div className="p-2 bg-white/5 rounded">
-                    <span className="text-yellow-400">10°:</span> ×6.0 distance, ×0.015 shrink
+          {/* Guidance Section */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors touch-manipulation">
+              <div className="flex items-center gap-2">
+                <Info className="w-4 h-4 text-blue-400" />
+                <span className="text-sm font-medium text-white/90">Bending Reference Guide</span>
+              </div>
+              <ChevronDown className={`w-4 h-4 text-white/60 transition-transform ${showGuidance ? 'rotate-180' : ''}`} />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2 p-4 bg-white/5 rounded-lg border border-white/10">
+              <div className="space-y-4 text-sm text-white/70">
+                <div>
+                  <h4 className="font-medium text-white/90 mb-2">Offset Bend Multipliers</h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                    <div className="p-2 bg-white/5 rounded">
+                      <span className="text-yellow-400">10°:</span> ×6.0 distance
+                    </div>
+                    <div className="p-2 bg-white/5 rounded">
+                      <span className="text-yellow-400">22.5°:</span> ×2.6 distance
+                    </div>
+                    <div className="p-2 bg-white/5 rounded">
+                      <span className="text-yellow-400">30°:</span> ×2.0 distance
+                    </div>
+                    <div className="p-2 bg-white/5 rounded">
+                      <span className="text-yellow-400">45°:</span> ×1.414 distance
+                    </div>
+                    <div className="p-2 bg-white/5 rounded">
+                      <span className="text-yellow-400">60°:</span> ×1.155 distance
+                    </div>
                   </div>
-                  <div className="p-2 bg-white/5 rounded">
-                    <span className="text-yellow-400">22.5°:</span> ×2.6 distance, ×0.076 shrink
-                  </div>
-                  <div className="p-2 bg-white/5 rounded">
-                    <span className="text-yellow-400">30°:</span> ×2.0 distance, ×0.134 shrink
-                  </div>
-                  <div className="p-2 bg-white/5 rounded">
-                    <span className="text-yellow-400">45°:</span> ×1.414 distance, ×0.414 shrink
-                  </div>
-                  <div className="p-2 bg-white/5 rounded">
-                    <span className="text-yellow-400">60°:</span> ×1.155 distance, ×0.577 shrink
+                </div>
+
+                <div>
+                  <h4 className="font-medium text-white/90 mb-2">Take-Up Values (Typical)</h4>
+                  <div className="flex flex-wrap gap-2 text-xs">
+                    <span className="px-2 py-1 bg-white/10 rounded">20mm: 100mm</span>
+                    <span className="px-2 py-1 bg-white/10 rounded">25mm: 125mm</span>
+                    <span className="px-2 py-1 bg-white/10 rounded">32mm: 150mm</span>
+                    <span className="px-2 py-1 bg-white/10 rounded">40mm: 200mm</span>
+                    <span className="px-2 py-1 bg-white/10 rounded">50mm: 250mm</span>
                   </div>
                 </div>
               </div>
+            </CollapsibleContent>
+          </Collapsible>
 
-              <div>
-                <h4 className="font-medium text-white/90 mb-2">Take-Up Values (Typical)</h4>
-                <p className="text-xs mb-2">Distance from back of bend to where conduit meets floor/wall:</p>
-                <div className="flex flex-wrap gap-2 text-xs">
-                  <span className="px-2 py-1 bg-white/10 rounded">20mm: 100mm</span>
-                  <span className="px-2 py-1 bg-white/10 rounded">25mm: 125mm</span>
-                  <span className="px-2 py-1 bg-white/10 rounded">32mm: 150mm</span>
-                  <span className="px-2 py-1 bg-white/10 rounded">40mm: 200mm</span>
-                  <span className="px-2 py-1 bg-white/10 rounded">50mm: 250mm</span>
-                </div>
+          {/* BS 7671 Reference Section */}
+          <Collapsible open={showBS7671} onOpenChange={setShowBS7671}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors touch-manipulation">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-amber-400" />
+                <span className="text-sm font-medium text-white/90">BS 7671 Reference</span>
               </div>
-
-              <div>
-                <h4 className="font-medium text-white/90 mb-2">Key Tips</h4>
-                <ul className="space-y-1 text-xs">
-                  <li>• Always verify take-up with your specific bender - values vary by manufacturer</li>
-                  <li>• Use a conduit level to ensure accurate horizontal and vertical</li>
-                  <li>• For offsets, 30° is most common as it provides good clearance with manageable shrink</li>
-                  <li>• BS 7671 requires minimum bend radii - don't over-bend</li>
-                  <li>• Cut conduit slightly longer to allow for measurement adjustments</li>
-                </ul>
-              </div>
-
-              <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
-                <h4 className="font-medium text-yellow-400 mb-1">Safety Note</h4>
-                <p className="text-xs">
-                  Always wear appropriate PPE when bending conduit. Secure the conduit properly in the bender
-                  and apply steady, controlled pressure. Never exceed the minimum bend radius for the conduit size.
-                </p>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-
-        {/* BS 7671 Reference Section */}
-        <Collapsible open={showBS7671} onOpenChange={setShowBS7671}>
-          <CollapsibleTrigger className="flex items-center justify-between w-full p-3 bg-white/5 hover:bg-white/10 rounded-lg transition-colors touch-manipulation">
-            <div className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-amber-400" />
-              <span className="text-sm font-medium text-white/90">BS 7671 Reference</span>
-            </div>
-            <ChevronDown className={`w-4 h-4 text-white/60 transition-transform ${showBS7671 ? 'rotate-180' : ''}`} />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="mt-2 p-4 bg-white/5 rounded-lg border border-white/10">
-            <div className="space-y-4 text-sm text-white/70">
-              <div>
-                <h4 className="font-medium text-amber-400 mb-2">Regulation 522.8 - Bends in Wiring Systems</h4>
-                <p className="text-xs mb-2">
-                  The internal radius of every bend in a wiring system shall be such that conductors
-                  or cables do not suffer damage, and terminals are not stressed.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="font-medium text-amber-400 mb-2">Table 4F1 - Minimum Internal Bend Radii</h4>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="p-2 bg-amber-500/10 rounded">
-                    <span className="text-amber-300">20mm conduit:</span> 100mm min radius
-                  </div>
-                  <div className="p-2 bg-amber-500/10 rounded">
-                    <span className="text-amber-300">25mm conduit:</span> 125mm min radius
-                  </div>
-                  <div className="p-2 bg-amber-500/10 rounded">
-                    <span className="text-amber-300">32mm conduit:</span> 160mm min radius
-                  </div>
-                  <div className="p-2 bg-amber-500/10 rounded">
-                    <span className="text-amber-300">40mm conduit:</span> 200mm min radius
-                  </div>
-                  <div className="p-2 bg-amber-500/10 rounded col-span-2">
-                    <span className="text-amber-300">50mm conduit:</span> 250mm min radius
+              <ChevronDown className={`w-4 h-4 text-white/60 transition-transform ${showBS7671 ? 'rotate-180' : ''}`} />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2 p-4 bg-white/5 rounded-lg border border-white/10">
+              <div className="space-y-4 text-sm text-white/70">
+                <div>
+                  <h4 className="font-medium text-amber-400 mb-2">Table 4F1 - Minimum Internal Bend Radii</h4>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="p-2 bg-amber-500/10 rounded">
+                      <span className="text-amber-300">20mm:</span> 100mm min
+                    </div>
+                    <div className="p-2 bg-amber-500/10 rounded">
+                      <span className="text-amber-300">25mm:</span> 125mm min
+                    </div>
+                    <div className="p-2 bg-amber-500/10 rounded">
+                      <span className="text-amber-300">32mm:</span> 160mm min
+                    </div>
+                    <div className="p-2 bg-amber-500/10 rounded">
+                      <span className="text-amber-300">40mm:</span> 200mm min
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <div>
-                <h4 className="font-medium text-amber-400 mb-2">Why Minimum Bend Radius Matters</h4>
-                <ul className="space-y-1 text-xs">
-                  <li>• <strong>Cable damage prevention:</strong> Exceeding minimum radius can crack insulation or damage conductors</li>
-                  <li>• <strong>Pulling cables:</strong> Tight bends create excessive friction, making cable pulling difficult</li>
-                  <li>• <strong>Future maintenance:</strong> Cables may need replacing - sharp bends make this impossible</li>
-                  <li>• <strong>Heat dissipation:</strong> Kinked cables have reduced heat dissipation capacity</li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-medium text-amber-400 mb-2">Why 30° Is the Standard Offset Angle</h4>
-                <ul className="space-y-1 text-xs">
-                  <li>• <strong>Best balance:</strong> Good clearance with manageable shrink (×0.134)</li>
-                  <li>• <strong>Easy calculation:</strong> Distance between bends = 2× rise (simple mental maths)</li>
-                  <li>• <strong>Visual appeal:</strong> Creates professional-looking, gradual offsets</li>
-                  <li>• <strong>Cable friendly:</strong> Gentle angle reduces stress on cables when pulling</li>
-                </ul>
-              </div>
-
-              <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <h4 className="font-medium text-amber-400 mb-1">Key Regulation</h4>
-                <p className="text-xs">
-                  <strong>Regulation 522.8.1:</strong> Standard conduit benders are designed to meet Table 4F1
-                  requirements automatically. However, manual bending or non-standard equipment may exceed
-                  these limits - always check your results.
-                </p>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
-    </CalculatorCard>
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+      )}
+    </div>
   );
 };
 

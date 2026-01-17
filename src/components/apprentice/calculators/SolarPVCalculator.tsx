@@ -290,7 +290,8 @@ const SolarPVCalculator = () => {
               label="Location"
               value={location}
               onChange={setLocation}
-              options={[{ value: "", label: "Select location" }, ...locationOptions]}
+              options={locationOptions}
+              placeholder="Select location"
             />
             <CalculatorSelect
               label="Roof Orientation"

@@ -228,7 +228,7 @@ export function useAIAnalysis({
         pfcLiveNeutral: circuit.tests?.pfc_live_neutral?.value || '',
         pfcLiveEarth: circuit.tests?.pfc_live_earth?.value || '',
         functionalTesting: circuit.tests?.functional_testing || '',
-        notes: `AI detected from test results (${circuit.confidence} confidence) - Please verify. ${circuit.notes || ''}`.trim(),
+        notes: circuit.notes || '',
         autoFilled: true,
         typeOfWiring: '',
       } as TestResult;
@@ -305,7 +305,7 @@ export function useAIAnalysis({
           pointsServed: calculatePointsServed(circuitDesc, circuitType, normalisedCircuit.protectiveDeviceType),
           rcdRating: requiresRCD ? '30mA' : '',
           functionalTesting: 'Satisfactory',
-          notes: `AI detected (${circuit.confidence || 'unknown'} confidence) - Please verify all values`,
+          notes: '',
           autoFilled: true,
         };
       } else {
@@ -377,7 +377,7 @@ export function useAIAnalysis({
         pfcLiveNeutral: '',
         pfcLiveEarth: '',
         functionalTesting: 'Satisfactory',
-        notes: `AI detected (${circuit.confidence || 'unknown'} confidence) - Please verify all values`,
+        notes: '',
         autoFilled: true,
         typeOfWiring: '',
         rcdBsStandard: '',

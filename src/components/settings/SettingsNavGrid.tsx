@@ -6,7 +6,6 @@ import {
   IdCard,
   Bell,
   Shield,
-  Building2,
   CreditCard,
   Palette,
   HelpCircle,
@@ -118,14 +117,6 @@ const SETTINGS_SECTIONS: SettingsSection[] = [
   {
     title: "Business",
     items: [
-      {
-        id: "company",
-        label: "Company",
-        description: "Business details",
-        icon: Building2,
-        iconBg: "bg-purple-500/15",
-        iconColor: "text-purple-400",
-      },
       {
         id: "billing",
         label: "Billing",

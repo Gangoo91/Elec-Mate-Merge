@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -24,8 +24,12 @@ interface EICRSummaryProps {
   onUpdate: (field: string, value: any) => void;
 }
 
-const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
-  const { effectiveReportId } = useEICRForm();
+const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSummaryProps) => {
+  // Use formData and updateFormData from context directly to ensure we always have the latest state
+  // (props can be stale due to React's reconciliation timing)
+  const { effectiveReportId, formData: contextFormData, updateFormData } = useEICRForm();
+  const formData = contextFormData; // Use context formData for all operations
+  const onUpdate = updateFormData; // Use context updateFormData for all operations
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [isJsonOpen, setIsJsonOpen] = useState(false);
@@ -35,17 +39,47 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
   const [generationError, setGenerationError] = useState<string | null>(null);
   const [formattedJsonPreview, setFormattedJsonPreview] = useState<string>('');
 
+  // Ref to always access the latest formData in async callbacks
+  // This solves React closure issues where callbacks capture stale state
+  const formDataRef = useRef(formData);
+  useEffect(() => {
+    formDataRef.current = formData;
+    // Debug: log when arrays change
+    console.log('[EICRSummary] formData updated:', {
+      inspectionItemsCount: formData.inspectionItems?.length || 0,
+      scheduleOfTestsCount: formData.scheduleOfTests?.length || 0,
+      defectObservationsCount: formData.defectObservations?.length || 0
+    });
+  }, [formData]);
+
+  // Clear JSON cache when form data arrays change (handles dev fill and normal form entry)
+  useEffect(() => {
+    setFormattedJsonPreview('');
+  }, [
+    formData.inspectionItems,
+    formData.scheduleOfTests,
+    formData.defectObservations
+  ]);
+
   // Load formatted JSON when collapsible is opened
   const handleToggleJsonPreview = async (isOpen: boolean) => {
     setIsJsonOpen(isOpen);
     if (isOpen && !formattedJsonPreview) {
-      const formattedJson = await formatEICRJson(formData, effectiveReportId);
+      // Use ref for latest data
+      const formattedJson = await formatEICRJson(formDataRef.current, effectiveReportId);
       setFormattedJsonPreview(JSON.stringify(formattedJson, null, 2));
     }
   };
 
   const handleCopyJson = async () => {
-    const formattedJson = await formatEICRJson(formData, effectiveReportId);
+    // Use ref to get the absolute latest formData (solves closure timing issues)
+    const latestFormData = formDataRef.current;
+    console.log('[handleCopyJson] Using formData with arrays:', {
+      inspectionItemsCount: latestFormData.inspectionItems?.length || 0,
+      scheduleOfTestsCount: latestFormData.scheduleOfTests?.length || 0,
+      defectObservationsCount: latestFormData.defectObservations?.length || 0
+    });
+    const formattedJson = await formatEICRJson(latestFormData, effectiveReportId);
     navigator.clipboard.writeText(JSON.stringify(formattedJson, null, 2));
     toast({
       title: "JSON copied",
@@ -282,9 +316,6 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
     onUpdate('estimatedAge', '15-20 years');
     onUpdate('evidenceOfAlterations', 'Yes - evident additions to distribution board');
     onUpdate('alterationsDetails', 'Additional circuits added to main DB, new sub-distribution board installed on 2nd floor circa 2019');
-    onUpdate('occupancy', 'occupied');
-    onUpdate('installationOccupier', 'ABC Business Solutions Ltd');
-    onUpdate('numberOfFloors', '4');
     onUpdate('previousInspectionDate', '2019-06-15');
 
     // ====== INSPECTION DETAILS ======
@@ -310,6 +341,9 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
     // ====== EARTHING & BONDING ======
     onUpdate('earthElectrodeType', 'TN-C-S supplier earth terminal');
     onUpdate('earthElectrodeResistance', 'N/A');
+    onUpdate('mainEarthingConductorType', 'Cu');
+    onUpdate('mainEarthingConductorSize', '16');
+    onUpdate('mainBondingConductorType', 'Cu');
     onUpdate('mainBondingSize', '10');
     onUpdate('bondingCompliance', 'satisfactory');
     onUpdate('mainProtectiveConductorSize', '16');
@@ -321,6 +355,8 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
     onUpdate('structuralSteelBonded', 'yes');
     onUpdate('lightningProtectionBonded', 'n/a');
     onUpdate('otherServicesBonded', 'HVAC pipework');
+    onUpdate('supplementaryBondingSize', '4');
+    onUpdate('mainBondingLocations', 'Water, Gas, Oil, Structural Steel');
 
     // ====== CONSUMER UNIT / DISTRIBUTION BOARD ======
     onUpdate('cuLocation', 'Basement plant room, west wall');
@@ -857,7 +893,7 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
     onUpdate('testResults', comprehensiveTestResults);
     onUpdate('scheduleOfTests', comprehensiveTestResults); // For JSON formatter
 
-    // ====== 60 INSPECTION ITEMS - BS 7671:2018+A2:2022 ======
+    // ====== 66 INSPECTION ITEMS - BS 7671:2018+A3:2024 ======
     const fullInspectionItems = [
       // Section 1: Intake Equipment
       { id: 'item_1_0', itemNumber: '1.0', item: 'Service cable, Service head, Earthing arrangement, Meter tails, Metering equipment, Isolator', clause: '132.12', outcome: 'satisfactory', notes: '' },
@@ -870,9 +906,9 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
       { id: 'item_3_2', itemNumber: '3.2', item: 'Presence and condition of earth electrode connection where applicable', clause: '542.1.2.3', outcome: 'not-applicable', notes: 'TN-C-S supply' },
       { id: 'item_3_3', itemNumber: '3.3', item: 'Provision of earthing/bonding labels at all appropriate locations', clause: '514.13.1', outcome: 'satisfactory', notes: '' },
       { id: 'item_3_4', itemNumber: '3.4', item: 'Confirmation of earthing conductor size', clause: '542.3; 543.1.1', outcome: 'satisfactory', notes: '16mm² copper' },
-      { id: 'item_3_5', itemNumber: '3.5', item: 'Accessibility and condition of earthing conductor at MET', clause: '543.3.2', outcome: 'satisfactory', notes: '' },
+      { id: 'item_3_5', itemNumber: '3.5', item: 'Accessibility and condition of earthing conductor at MET', clause: '543.3.2', outcome: 'C1', notes: 'Main earthing conductor disconnected at MET - DANGER' },
       { id: 'item_3_6', itemNumber: '3.6', item: 'Confirmation of main protective bonding conductor sizes', clause: '544.1', outcome: 'satisfactory', notes: '10mm² copper' },
-      { id: 'item_3_7', itemNumber: '3.7', item: 'Condition and accessibility of main protective bonding conductor connections', clause: '543.3.2; 544.1.2', outcome: 'satisfactory', notes: '' },
+      { id: 'item_3_7', itemNumber: '3.7', item: 'Condition and accessibility of main protective bonding conductor connections', clause: '543.3.2; 544.1.2', outcome: 'C2', notes: 'Bonding to gas disconnected - see observations' },
       { id: 'item_3_8', itemNumber: '3.8', item: 'Accessibility and condition of other protective bonding connections', clause: '543.3.1; 543.3.2', outcome: 'satisfactory', notes: '' },
       // Section 4: Consumer Units
       { id: 'item_4_1', itemNumber: '4.1', item: 'Adequacy of working space/accessibility to consumer unit/distribution board', clause: '132.12; 513.1', outcome: 'satisfactory', notes: '' },
@@ -915,10 +951,11 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
       { id: 'item_5_15', itemNumber: '5.15', item: 'Cables segregated/separated from communications cabling', clause: '528.2', outcome: 'satisfactory', notes: '' },
       { id: 'item_5_16', itemNumber: '5.16', item: 'Cables segregated/separated from non-electrical services', clause: '528.3', outcome: 'satisfactory', notes: '' },
       { id: 'item_5_17', itemNumber: '5.17', item: 'Termination of cables at enclosures', clause: 'Section 526; 526.6; 526.8; 526.5; 522.8.5', outcome: 'satisfactory', notes: '' },
-      { id: 'item_5_18', itemNumber: '5.18', item: 'Condition of accessories including socket-outlets, switches and joint boxes', clause: '651.2(v)', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_18', itemNumber: '5.18', item: 'Condition of accessories including socket-outlets, switches and joint boxes', clause: '651.2(v)', outcome: 'C2', notes: 'Damaged socket in kitchen - see observations' },
       { id: 'item_5_19', itemNumber: '5.19', item: 'Suitability of accessories for external influences', clause: '512.2', outcome: 'satisfactory', notes: '' },
       { id: 'item_5_20', itemNumber: '5.20', item: 'Adequacy of working space/accessibility to equipment', clause: '132.12; 513.1', outcome: 'satisfactory', notes: '' },
       { id: 'item_5_21', itemNumber: '5.21', item: 'Single-pole switching or protective devices in line conductors only', clause: '132.14.1; 530.3.3', outcome: 'satisfactory', notes: '' },
+      { id: 'item_5_22', itemNumber: '5.22', item: 'RCD protection of socket-outlets with rated current not exceeding 32 A', clause: '411.3.3', outcome: 'satisfactory', notes: 'All socket circuits RCD protected' },
       // Section 6: Bath/Shower
       { id: 'item_6_0', itemNumber: '6.0', item: 'Additional protection for all LV circuits by RCD not exceeding 30 mA', clause: '701.411.3.3', outcome: 'satisfactory', notes: '' },
       { id: 'item_6_1', itemNumber: '6.1', item: 'Where used as a protective measure, requirements for SELV or PELV met', clause: '701.414.4.5', outcome: 'not-applicable', notes: '' },
@@ -939,27 +976,57 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
     const sampleObservations = [
       {
         id: crypto.randomUUID(),
-        code: 'C3',
-        location: 'Main distribution board - basement',
+        item: 'Earthing arrangement',
+        defectCode: 'C1',
+        description: 'Main earthing conductor found disconnected at MET - installation has no earth connection',
+        recommendation: 'Immediate reconnection of main earthing conductor required. Installation unsafe until rectified.',
+        regulation: '411.3.1.1',
+        rectified: false
+      },
+      {
+        id: crypto.randomUUID(),
+        item: 'Circuit chart labelling',
+        defectCode: 'C3',
         description: 'Circuit chart not up to date with current circuit descriptions',
         recommendation: 'Update circuit chart to reflect current installation',
-        itemNumber: '1'
+        regulation: '514.9.1',
+        rectified: false
       },
       {
         id: crypto.randomUUID(),
-        code: 'C3',
-        location: '2nd floor sub-distribution board',
-        description: 'Missing blanking plate on spare way',
+        item: 'Distribution board enclosure',
+        defectCode: 'C3',
+        description: 'Missing blanking plate on spare way in 2nd floor sub-distribution board',
         recommendation: 'Fit appropriate blanking plate',
-        itemNumber: '2'
+        regulation: '416.2',
+        rectified: false
       },
       {
         id: crypto.randomUUID(),
-        code: 'FI',
-        location: 'Reception area',
-        description: 'Floor boxes unable to be inspected due to furniture',
+        item: 'Bonding conductor',
+        defectCode: 'C2',
+        description: 'Main protective bonding conductor to gas installation disconnected',
+        recommendation: 'Reconnect main protective bonding conductor to gas installation',
+        regulation: '411.3.1.2',
+        rectified: false
+      },
+      {
+        id: crypto.randomUUID(),
+        item: 'Socket outlet condition',
+        defectCode: 'C2',
+        description: 'Damaged socket outlet in kitchen with exposed live terminals when faceplate removed',
+        recommendation: 'Replace damaged socket outlet with new accessory',
+        regulation: '651.2',
+        rectified: false
+      },
+      {
+        id: crypto.randomUUID(),
+        item: 'Floor boxes inspection',
+        defectCode: 'FI',
+        description: 'Floor boxes in reception area unable to be inspected due to furniture',
         recommendation: 'Inspect at next convenient opportunity when area is accessible',
-        itemNumber: '3'
+        regulation: '',
+        rectified: false
       }
     ];
     onUpdate('defectObservations', sampleObservations);
@@ -969,7 +1036,7 @@ const EICRSummary = ({ formData, onUpdate }: EICRSummaryProps) => {
 
     toast({
       title: "Dev Mode: All Fields Populated",
-      description: "Complete EICR: 60 inspection items, 10 circuits (30+ columns each), 3 observations, all form fields",
+      description: "Complete EICR: 66 inspection items (with C1, C2, C3, LIM, N/A outcomes), 10 circuits, 6 observations (C1, C2, C3, FI), all earthing conductor fields",
     });
   };
 

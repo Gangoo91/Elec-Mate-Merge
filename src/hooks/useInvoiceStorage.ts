@@ -128,9 +128,14 @@ export const useInvoiceStorage = () => {
           ? await generateStandaloneInvoiceNumber()
           : await generateSequentialInvoiceNumber();
         
-        console.log('📝 Generated invoice number:', finalInvoiceNumber, 
+        console.log('📝 Generated invoice number:', finalInvoiceNumber,
                     isStandaloneInvoice ? '(standalone)' : '(quote-based)',
                     retryCount > 0 ? `(retry ${retryCount})` : '');
+      }
+
+      // Warn if client email is missing - thank-you email won't be sent
+      if (!invoice.client?.email?.trim()) {
+        console.warn('⚠️ Invoice being saved without client email - thank-you email will not be sent');
       }
 
       // Merge additional invoice items into the main items array

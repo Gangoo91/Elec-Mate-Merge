@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { User, Trash2, FileEdit, Send, CheckCircle, XCircle, Clock, Eye, Edit, Calendar } from 'lucide-react';
+import { User, Trash2, FileEdit, Send, CheckCircle, XCircle, Clock, Eye, Edit, Calendar, MailOpen, AlertTriangle, Bell } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -82,6 +82,18 @@ export function SwipeableQuoteCard({
 
   const StatusIcon = finalStatus.icon;
 
+  // Calculate expiry status
+  const now = new Date();
+  const expiryDate = quote.expiryDate ? new Date(quote.expiryDate) : null;
+  const daysUntilExpiry = expiryDate ? Math.ceil((expiryDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)) : null;
+  const isExpiringSoon = daysUntilExpiry !== null && daysUntilExpiry <= 3 && daysUntilExpiry > 0;
+  const isExpired = daysUntilExpiry !== null && daysUntilExpiry <= 0;
+
+  // Email tracking
+  const hasBeenViewed = !!quote.email_opened_at;
+  const viewCount = quote.email_open_count || 0;
+  const reminderCount = quote.reminder_count || 0;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -131,6 +143,34 @@ export function SwipeableQuoteCard({
                 <StatusIcon className="h-3 w-3 mr-1" />
                 {finalStatus.label}
               </Badge>
+              {/* Viewed indicator - only show for sent quotes that haven't been accepted/rejected */}
+              {quote.status === 'sent' && quote.acceptance_status === 'pending' && hasBeenViewed && (
+                <Badge className="text-xs bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border-blue-200 dark:border-blue-800">
+                  <MailOpen className="h-3 w-3 mr-1" />
+                  Viewed{viewCount > 1 ? ` (${viewCount})` : ''}
+                </Badge>
+              )}
+              {/* Expiry warning */}
+              {quote.status === 'sent' && quote.acceptance_status === 'pending' && isExpiringSoon && (
+                <Badge className="text-xs bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-300 border-orange-200 dark:border-orange-800">
+                  <AlertTriangle className="h-3 w-3 mr-1" />
+                  {daysUntilExpiry === 1 ? 'Expires Tomorrow' : `${daysUntilExpiry} Days Left`}
+                </Badge>
+              )}
+              {/* Expired indicator */}
+              {isExpired && quote.acceptance_status === 'pending' && (
+                <Badge className="text-xs bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200 dark:border-red-800">
+                  <XCircle className="h-3 w-3 mr-1" />
+                  Expired
+                </Badge>
+              )}
+              {/* Reminder sent indicator */}
+              {reminderCount > 0 && quote.acceptance_status === 'pending' && (
+                <Badge className="text-xs bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border-purple-200 dark:border-purple-800">
+                  <Bell className="h-3 w-3 mr-1" />
+                  {reminderCount} {reminderCount === 1 ? 'Reminder' : 'Reminders'}
+                </Badge>
+              )}
             </div>
             {quote.jobDetails?.title && (
               <div className="text-xs text-muted-foreground">

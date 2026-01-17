@@ -130,7 +130,7 @@ const EVChargingCalculator = () => {
   return (
     <div className="space-y-4">
       <CalculatorCard
-        category="ev_storage"
+        category="ev-storage"
         title="EV Charging Calculator"
         description="Design compliant EV charging installations per BS 7671"
         badge="Section 722"
@@ -244,7 +244,7 @@ const EVChargingCalculator = () => {
         </div>
 
         <CalculatorActions
-          category="ev_storage"
+          category="ev-storage"
           onCalculate={calculateEVChargingResults}
           onReset={resetCalculator}
           isDisabled={!hasValidInputs()}
@@ -255,7 +255,7 @@ const EVChargingCalculator = () => {
       {results && (
         <div className="space-y-4 animate-fade-in">
           {/* Main Results */}
-          <CalculatorResult category="ev_storage">
+          <CalculatorResult category="ev-storage">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-sm text-white/60">EV Charging Analysis</span>
               <Badge variant="outline" className={cn(
@@ -283,24 +283,24 @@ const EVChargingCalculator = () => {
             </div>
 
             <ResultsGrid columns={2}>
-              <ResultValue label="Charging Cost" value={formatCurrency(results.cost)} category="ev_storage" size="sm" />
-              <ResultValue label="Peak Demand" value={results.peakDemand.toFixed(1)} unit="kW" category="ev_storage" size="sm" />
+              <ResultValue label="Charging Cost" value={formatCurrency(results.cost)} category="ev-storage" size="sm" />
+              <ResultValue label="Peak Demand" value={results.peakDemand.toFixed(1)} unit="kW" category="ev-storage" size="sm" />
             </ResultsGrid>
           </CalculatorResult>
 
           {/* Technical Results */}
-          <CalculatorResult category="ev_storage">
+          <CalculatorResult category="ev-storage">
             <div className="flex items-center gap-2 pb-3 border-b border-white/10">
               <Zap className="h-4 w-4 text-blue-400" />
               <span className="text-sm font-medium text-white">Technical Specifications</span>
             </div>
             <ResultsGrid columns={2}>
-              <ResultValue label="Circuit Current" value={results.circuitCurrent.toFixed(1)} unit="A" category="ev_storage" size="sm" />
-              <ResultValue label="Design Current" value={results.designCurrent.toFixed(1)} unit="A" category="ev_storage" size="sm" />
-              <ResultValue label="Cable Size" value={results.recommendedCable} category="ev_storage" size="sm" />
-              <ResultValue label="Voltage Drop" value={`${results.voltageDrop.toFixed(1)}V (${((results.voltageDrop / 230) * 100).toFixed(1)}%)`} category="ev_storage" size="sm" />
-              <ResultValue label="Earth Fault (Zs)" value={results.actualZs.toFixed(2)} unit="Ω" category="ev_storage" size="sm" />
-              <ResultValue label="Max Zs" value={results.maxZs} unit="Ω" category="ev_storage" size="sm" />
+              <ResultValue label="Circuit Current" value={results.circuitCurrent.toFixed(1)} unit="A" category="ev-storage" size="sm" />
+              <ResultValue label="Design Current" value={results.designCurrent.toFixed(1)} unit="A" category="ev-storage" size="sm" />
+              <ResultValue label="Cable Size" value={results.recommendedCable} category="ev-storage" size="sm" />
+              <ResultValue label="Voltage Drop" value={`${results.voltageDrop.toFixed(1)}V (${((results.voltageDrop / 230) * 100).toFixed(1)}%)`} category="ev-storage" size="sm" />
+              <ResultValue label="Earth Fault (Zs)" value={results.actualZs.toFixed(2)} unit="Ω" category="ev-storage" size="sm" />
+              <ResultValue label="Max Zs" value={results.maxZs} unit="Ω" category="ev-storage" size="sm" />
             </ResultsGrid>
             <div className="mt-3 p-2 rounded-lg bg-white/5">
               <p className="text-sm text-white/80"><strong>Protection:</strong> {results.protectionRequired}</p>

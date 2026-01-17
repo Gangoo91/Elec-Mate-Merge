@@ -5,8 +5,6 @@ import {
   ArrowLeft,
   ArrowRight,
   User,
-  FileText,
-  Settings,
   Check,
   Loader2,
   Send,
@@ -38,7 +36,6 @@ interface InvoiceWizardProps {
 }
 
 export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated }: InvoiceWizardProps) => {
-  const isStandaloneMode = !sourceQuote && !existingInvoice;
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -80,10 +77,8 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
   const canProceed = () => {
     switch (currentStep) {
       case 0:
-        if (isStandaloneMode) {
-          return invoiceBuilder.invoice.client?.name && invoiceBuilder.invoice.client?.email;
-        }
-        return true; // Quote review or existing invoice
+        // Always require client name and email for thank-you emails to work
+        return !!(invoiceBuilder.invoice.client?.name && invoiceBuilder.invoice.client?.email);
       case 1:
         const items = invoiceBuilder.invoice.items || [];
         const additionalItems = invoiceBuilder.invoice.additional_invoice_items || [];
@@ -98,19 +93,16 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        // Client step - standalone mode shows client form, quote mode shows quote review
-        if (isStandaloneMode) {
-          return (
-            <InvoiceClientDetailsStep
-              initialData={{
-                client: invoiceBuilder.invoice.client,
-                jobDetails: invoiceBuilder.invoice.jobDetails,
-              }}
-              onUpdate={handleClientUpdate}
-            />
-          );
-        }
-        return <InvoiceReviewStep invoice={invoiceBuilder.invoice} showSummaryOnly />;
+        // Client step - always show editable form to ensure email is captured
+        return (
+          <InvoiceClientDetailsStep
+            initialData={{
+              client: invoiceBuilder.invoice.client,
+              jobDetails: invoiceBuilder.invoice.jobDetails,
+            }}
+            onUpdate={handleClientUpdate}
+          />
+        );
 
       case 1:
         // Items step

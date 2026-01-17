@@ -126,9 +126,26 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
   const { data: companyProfile } = useCompanyProfileForInvoice();
 
   const [invoice, setInvoice] = useState<Partial<Invoice>>(() => {
-    // If editing an existing invoice, preserve it
+    // If editing an existing invoice, recalculate totals to ensure consistency
     if (existingInvoice) {
-      return existingInvoice;
+      const allItems = [...(existingInvoice.items || []), ...(existingInvoice.additional_invoice_items || [])];
+      const subtotal = calculateSafeSubtotal(allItems);
+      const settings = existingInvoice.settings!;
+      const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
+      const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
+      const vatAmount = settings.vatRegistered
+        ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
+        : 0;
+      const total = subtotal + overhead + profit + vatAmount;
+
+      return {
+        ...existingInvoice,
+        subtotal,
+        overhead,
+        profit,
+        vatAmount,
+        total,
+      };
     }
     // Otherwise create from quote
     if (sourceQuote) {

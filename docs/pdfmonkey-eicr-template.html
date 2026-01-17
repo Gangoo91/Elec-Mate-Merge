@@ -184,6 +184,16 @@
             background: #fff;
         }
 
+        .form-value input,
+        .form-value select {
+            border: none;
+            background: transparent;
+            font-size: 8.5px;
+            color: #1e293b;
+            width: 100%;
+            font-family: inherit;
+        }
+
         /* Inline form layout */
         .inline-form {
             display: flex;
@@ -239,6 +249,15 @@
             display: flex;
             align-items: center;
             gap: 4px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 11px;
+            height: 11px;
+            accent-color: #0f172a;
+        }
+
+        .checkbox-item label {
             font-size: 7.5px;
             color: #334155;
         }
@@ -403,8 +422,27 @@
             color: #334155;
         }
 
+        .inspection-table tbody td.item-desc .item-reg {
+            font-size: 6.5px;
+            color: #64748b;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .inspection-table tbody td.item-clause {
+            text-align: center;
+            font-size: 6.5px;
+            color: #64748b;
+            width: 70px;
+        }
+
         .inspection-table tbody td.outcome {
             width: 28px;
+        }
+
+        .inspection-table tbody td.outcome input[type="checkbox"] {
+            width: 10px;
+            height: 10px;
         }
 
         .inspection-table tbody td.outcome-text {
@@ -754,6 +792,26 @@
             border-color: #86efac;
         }
 
+        .photo-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .photo-item {
+            width: calc(33.333% - 4px);
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
         /* =============================================
            GUIDANCE SECTION
            ============================================= */
@@ -836,6 +894,11 @@
             gap: 6px;
         }
 
+        .assessment-option input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+        }
+
         .assessment-option label {
             font-size: 9px;
             font-weight: 700;
@@ -889,6 +952,11 @@
             border-width: 3px;
         }
 
+        .final-assessment-option input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+        }
+
         .final-assessment-option .option-label {
             font-size: 12px;
             font-weight: 700;
@@ -932,6 +1000,16 @@
             page-break-inside: avoid;
         }
 
+        /* Add spacing after page break for continued sections */
+        .page-break + .doc-header + .section,
+        .page-break + .section {
+            margin-top: 8px;
+        }
+
+        .doc-header + .section {
+            margin-top: 8px;
+        }
+
         /* =============================================
            UTILITIES
            ============================================= */
@@ -962,6 +1040,11 @@
      ============================================= -->
 <div class="doc-header">
     <div class="doc-header-content">
+        {% if company_details.company_logo %}
+        <div class="company-logo">
+            <img src="{{ company_details.company_logo }}" alt="Company Logo" />
+        </div>
+        {% endif %}
         <div class="doc-title-section">
             <div class="doc-title">ELECTRICAL INSTALLATION CONDITION REPORT</div>
             <div class="doc-subtitle">Condition report for an existing electrical installation in accordance with BS 7671 (IET Wiring Regulations 18th Edition + Amendment 3:2024)</div>
@@ -1016,22 +1099,26 @@
             <span class="inline-label">Type:</span>
             <div class="checkbox-row">
                 <div class="checkbox-item">
-                    <span class="checkbox-box {% if installation_details.installation_type == 'domestic' %}checked{% endif %}">{% if installation_details.installation_type == 'domestic' %}✓{% endif %}</span>
+                    <span class="checkbox-box {% if installation_details.installation_type == 'domestic' or installation_details.description == 'domestic' %}checked{% endif %}">{% if installation_details.installation_type == 'domestic' or installation_details.description == 'domestic' %}✓{% endif %}</span>
                     <label>Domestic</label>
                 </div>
                 <div class="checkbox-item">
-                    <span class="checkbox-box {% if installation_details.installation_type == 'commercial' %}checked{% endif %}">{% if installation_details.installation_type == 'commercial' %}✓{% endif %}</span>
+                    <span class="checkbox-box {% if installation_details.installation_type == 'commercial' or installation_details.description == 'commercial' %}checked{% endif %}">{% if installation_details.installation_type == 'commercial' or installation_details.description == 'commercial' %}✓{% endif %}</span>
                     <label>Commercial</label>
                 </div>
                 <div class="checkbox-item">
-                    <span class="checkbox-box {% if installation_details.installation_type == 'industrial' %}checked{% endif %}">{% if installation_details.installation_type == 'industrial' %}✓{% endif %}</span>
+                    <span class="checkbox-box {% if installation_details.installation_type == 'industrial' or installation_details.description == 'industrial' %}checked{% endif %}">{% if installation_details.installation_type == 'industrial' or installation_details.description == 'industrial' %}✓{% endif %}</span>
                     <label>Industrial</label>
                 </div>
                 <div class="checkbox-item">
-                    <span class="checkbox-box {% if installation_details.installation_type == 'other' %}checked{% endif %}">{% if installation_details.installation_type == 'other' %}✓{% endif %}</span>
+                    <span class="checkbox-box {% if installation_details.installation_type == 'other' or installation_details.description == 'other' %}checked{% endif %}">{% if installation_details.installation_type == 'other' or installation_details.description == 'other' %}✓{% endif %}</span>
                     <label>Other</label>
                 </div>
             </div>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Description:</span>
+            <span class="inline-value">{{ installation_details.description }}</span>
         </div>
         <div class="inline-group">
             <span class="inline-label">Est. Age:</span>
@@ -1088,7 +1175,7 @@
     <div class="inline-form">
         <div class="inline-group" style="flex: 1;">
             <span class="inline-label">Purpose:</span>
-            <span class="inline-value wide">{{ installation_details.purpose_of_inspection }}</span>
+            <span class="inline-value wide">{{ installation_details.purpose_of_inspection }}{% if installation_details.other_purpose %} - {{ installation_details.other_purpose }}{% endif %}</span>
         </div>
     </div>
     <div class="inline-form" style="margin-top: 4px;">
@@ -1181,6 +1268,10 @@
                         </div>
                     </div>
                     <div class="data-field">
+                        <div class="data-field-label">Supply Type</div>
+                        <div class="data-field-value">{{ supply_characteristics.supply_type }}</div>
+                    </div>
+                    <div class="data-field">
                         <div class="data-field-label">Supply PME</div>
                         <div class="data-field-value">{{ supply_characteristics.supply_pme }}</div>
                     </div>
@@ -1189,8 +1280,24 @@
                         <div class="data-field-value">{{ earthing_bonding.earth_electrode_type }}</div>
                     </div>
                     <div class="data-field">
+                        <div class="data-field-label">Earth Electrode Resistance (Ω)</div>
+                        <div class="data-field-value">{{ earthing_bonding.earth_electrode_resistance }}</div>
+                    </div>
+                    <div class="data-field">
                         <div class="data-field-label">DNO (Distribution Network Operator)</div>
                         <div class="data-field-value">{{ supply_characteristics.dno_name }}</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">MPAN</div>
+                        <div class="data-field-value">{{ supply_characteristics.mpan }}</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Cutout Location</div>
+                        <div class="data-field-value">{{ supply_characteristics.cutout_location }}</div>
+                    </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Service Entry</div>
+                        <div class="data-field-value">{{ supply_characteristics.service_entry }}</div>
                     </div>
                 </td>
                 <td>
@@ -1218,6 +1325,10 @@
                         <div class="data-field-label">Breaking Capacity</div>
                         <div class="data-field-value">{{ main_protective_device.breaking_capacity }} kA</div>
                     </div>
+                    <div class="data-field">
+                        <div class="data-field-label">Main Switch Location</div>
+                        <div class="data-field-value">{{ main_protective_device.main_switch_location }}</div>
+                    </div>
                 </td>
             </tr>
         </tbody>
@@ -1229,22 +1340,42 @@
     <div class="section-title">Section G: Main Protective Bonding Conductors</div>
     <div class="inline-form">
         <div class="inline-group">
-            <span class="inline-label">Main Bonding Size (mm²):</span>
-            <span class="inline-value">{{ earthing_bonding.main_bonding_size }}mm²</span>
+            <span class="inline-label">Main Earthing Conductor:</span>
+            <span class="inline-value">{{ earthing_bonding.main_earthing_conductor }}</span>
         </div>
+        <div class="inline-group">
+            <span class="inline-label">Main Bonding Conductor:</span>
+            <span class="inline-value">{{ earthing_bonding.main_bonding_conductor }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Main Bonding Size:</span>
+            <span class="inline-value">{% if earthing_bonding.main_bonding_size %}{{ earthing_bonding.main_bonding_size }}mm²{% endif %}</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
         <div class="inline-group">
             <span class="inline-label">Compliance:</span>
             <span class="inline-value">{{ earthing_bonding.bonding_compliance }}</span>
         </div>
         <div class="inline-group">
-            <span class="inline-label">Supplementary Bonding (mm²):</span>
-            <span class="inline-value">{{ earthing_bonding.supplementary_bonding_size }}mm²</span>
+            <span class="inline-label">Supplementary Bonding:</span>
+            <span class="inline-value">{{ earthing_bonding.supplementary_bonding }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Supplementary Bonding Size:</span>
+            <span class="inline-value">{% if earthing_bonding.supplementary_bonding_size and earthing_bonding.supplementary_bonding_size != 'not-required' %}{{ earthing_bonding.supplementary_bonding_size }}mm²{% elsif earthing_bonding.supplementary_bonding_size == 'not-required' %}Not Required{% endif %}</span>
         </div>
     </div>
     <div class="inline-form" style="margin-top: 4px;">
         <div class="inline-group" style="flex: 1;">
             <span class="inline-label">Main Bonding Locations:</span>
             <span class="inline-value wide">{{ earthing_bonding.main_bonding_locations }}</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Equipotential Bonding:</span>
+            <span class="inline-value wide">{{ earthing_bonding.equipotential_bonding }}</span>
         </div>
     </div>
 </div>
@@ -1275,7 +1406,7 @@
                 </div>
                 <div class="inline-group">
                     <span class="inline-label">Ways:</span>
-                    <span class="inline-value">{{ distribution_board.board_size }}</span>
+                    <span class="inline-value">{{ distribution_board.board_size }}{% if distribution_board.board_ways %} / {{ distribution_board.board_ways }}{% endif %}</span>
                 </div>
             </div>
             <div class="inline-form" style="border: none; padding: 0; background: transparent; margin-top: 4px;">
@@ -1295,7 +1426,13 @@
                 </div>
                 <div class="inline-group">
                     <div class="checkbox-item">
-                        <span class="checkbox-box {% if distribution_board_verification.spd_operational_status %}checked{% endif %}">{% if distribution_board_verification.spd_operational_status %}✓{% endif %}</span>
+                        <span class="checkbox-box {% if distribution_board_verification.confirmed_phase_sequence %}checked{% endif %}">{% if distribution_board_verification.confirmed_phase_sequence %}✓{% endif %}</span>
+                        <label>Phase Sequence</label>
+                    </div>
+                </div>
+                <div class="inline-group">
+                    <div class="checkbox-item">
+                        <span class="checkbox-box {% if distribution_board_verification.spd_operational_status %}checked{% endif %}">{% if distribution_board_verification.spd_operational_status %}✓{% elsif distribution_board_verification.spd_na %}N/A{% endif %}</span>
                         <label>SPD Operational</label>
                     </div>
                 </div>
@@ -1303,20 +1440,81 @@
         </div>
     </div>
 
+    <!-- Additional Boards -->
+    {% for board in additional_boards %}
+    <div class="board-card">
+        <div class="board-card-header">
+            <span class="board-card-title">{{ board.designation }}</span>
+            <span class="board-card-badge">DB{{ forloop.index | plus: 1 }}</span>
+        </div>
+        <div class="board-card-body">
+            <div class="inline-form" style="border: none; padding: 0; background: transparent;">
+                <div class="inline-group">
+                    <span class="inline-label">Location:</span>
+                    <span class="inline-value">{{ board.location }}</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">Manufacturer:</span>
+                    <span class="inline-value">{{ board.manufacturer }}</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">Type:</span>
+                    <span class="inline-value">{{ board.board_type }}</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">Ways:</span>
+                    <span class="inline-value">{{ board.ways }}</span>
+                </div>
+            </div>
+            <div class="inline-form" style="border: none; padding: 0; background: transparent; margin-top: 4px;">
+                <div class="inline-group">
+                    <span class="inline-label">Zdb (Ω):</span>
+                    <span class="inline-value">{{ board.zdb }}</span>
+                </div>
+                <div class="inline-group">
+                    <span class="inline-label">Ipf (kA):</span>
+                    <span class="inline-value">{{ board.ipf }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- RCD Details -->
+    <div class="section-subtitle">RCD Details</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">RCD Main Switch:</span>
+            <span class="inline-value">{{ rcd_details.rcd_main_switch }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">RCD Rating (mA):</span>
+            <span class="inline-value">{{ rcd_details.rcd_rating }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">RCD Type:</span>
+            <span class="inline-value">{{ rcd_details.rcd_type }}</span>
+        </div>
+    </div>
+
     <!-- Cables -->
     <div class="section-subtitle">Meter & Cable Details</div>
     <div class="inline-form">
         <div class="inline-group">
+            <span class="inline-label">Intake Cable Size:</span>
+            <span class="inline-value">{{ cables.intake_cable_size }}mm²</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Intake Cable Type:</span>
+            <span class="inline-value">{{ cables.intake_cable_type }}</span>
+        </div>
+        <div class="inline-group">
             <span class="inline-label">Meter Tails Size:</span>
-            <span class="inline-value">{{ cables.tails_size }}mm² {{ cables.intake_cable_type }}</span>
+            <span class="inline-value">{{ cables.tails_size }}mm²</span>
         </div>
         <div class="inline-group">
             <span class="inline-label">Tails Length (m):</span>
             <span class="inline-value">{{ cables.tails_length }}</span>
-        </div>
-        <div class="inline-group">
-            <span class="inline-label">Main Earth Conductor:</span>
-            <span class="inline-value">{{ earthing_bonding.main_earthing_conductor }}</span>
         </div>
     </div>
 </div>
@@ -1331,7 +1529,7 @@
         </div>
         {% for obs in observations %}
         <div class="observations-row">
-            <div class="observations-text">{{ obs.description }}</div>
+            <div class="observations-text">{{ obs.item }} - {{ obs.description }}</div>
             <div class="observations-code {% if obs.defect_code == 'C1' %}code-c1{% elsif obs.defect_code == 'C2' %}code-c2{% elsif obs.defect_code == 'C3' %}code-c3{% elsif obs.defect_code == 'FI' %}code-fi{% endif %}">{{ obs.defect_code }}</div>
         </div>
         {% endfor %}
@@ -1393,6 +1591,27 @@
     </div>
 </div>
 
+<!-- Test Information -->
+{% if test_information.test_method or test_information.test_voltage %}
+<div class="section">
+    <div class="section-subtitle">Additional Test Information</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Test Method:</span>
+            <span class="inline-value">{{ test_information.test_method }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Test Voltage:</span>
+            <span class="inline-value">{{ test_information.test_voltage }}</span>
+        </div>
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Notes:</span>
+            <span class="inline-value wide">{{ test_information.test_notes }}</span>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <!-- Inspection Checklist -->
 <div class="section">
     <table class="inspection-table">
@@ -1400,7 +1619,7 @@
             <tr>
                 <th style="width: 35px;">Item</th>
                 <th class="desc-header" style="width: auto;">Description</th>
-                <th style="width: 28px;">✓</th>
+                <th style="width: 30px;">Acc</th>
                 <th style="width: 28px;">N/A</th>
                 <th style="width: 35px;">C1/C2</th>
                 <th style="width: 28px;">C3</th>
@@ -1412,9 +1631,9 @@
             {% for item in inspection_checklist %}
             <tr>
                 <td class="item-num">{{ item.item_number }}</td>
-                <td class="item-desc">{{ item.description }}</td>
+                <td class="item-desc">{{ item.description }}{% if item.clause %} <span class="item-reg">({{ item.clause }})</span>{% endif %}</td>
                 <td class="outcome">{% if item.outcome == 'satisfactory' %}✓{% endif %}</td>
-                <td class="outcome">{% if item.outcome == 'not-applicable' %}✓{% endif %}</td>
+                <td class="outcome">{% if item.outcome == 'not-applicable' or item.outcome == 'N/A' %}✓{% endif %}</td>
                 <td class="outcome-text">{% if item.outcome == 'C1' or item.outcome == 'C2' %}{{ item.outcome }}{% endif %}</td>
                 <td class="outcome">{% if item.outcome == 'C3' %}✓{% endif %}</td>
                 <td class="outcome">{% if item.outcome == 'N/V' or item.outcome == 'not-verified' %}✓{% endif %}</td>
@@ -1522,7 +1741,7 @@
             <th><span class="rotate">R1+R2</span></th>
             <th><span class="rotate">R2</span></th>
             <th><span class="rotate">Test V</span></th>
-            <th><span class="rotate">L-L</span></th>
+            <th><span class="rotate">L-L/L-N</span></th>
             <th><span class="rotate">L-E</span></th>
             <th><span class="rotate">Pol</span></th>
             <th><span class="rotate">Meas Ω</span></th>
@@ -1590,6 +1809,33 @@
     </div>
 </div>
 
+<!-- Standards Compliance -->
+<div class="section">
+    <div class="section-subtitle">Standards Compliance</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Design Standard:</span>
+            <span class="inline-value">{{ standards_compliance.design_standard }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Part P Compliance:</span>
+            <span class="inline-value">{{ standards_compliance.part_p_compliance }}</span>
+        </div>
+        <div class="inline-group">
+            <div class="checkbox-item">
+                <span class="checkbox-box {% if declarations.bs7671_compliance %}checked{% endif %}">{% if declarations.bs7671_compliance %}✓{% endif %}</span>
+                <label>BS 7671 Compliant</label>
+            </div>
+        </div>
+        <div class="inline-group">
+            <div class="checkbox-item">
+                <span class="checkbox-box {% if declarations.building_regs_compliance %}checked{% endif %}">{% if declarations.building_regs_compliance %}✓{% endif %}</span>
+                <label>Building Regs Compliant</label>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Inspector Details -->
 <div class="section">
     <div class="section-title">Inspector Declaration</div>
@@ -1611,7 +1857,7 @@
     <div class="inline-form" style="margin-top: 4px;">
         <div class="inline-group" style="flex: 1;">
             <span class="inline-label">Company:</span>
-            <span class="inline-value wide">{{ company_details.company_name }}</span>
+            <span class="inline-value wide">{{ inspector.company }}</span>
         </div>
         <div class="inline-group">
             <span class="inline-label">Date:</span>
@@ -1723,6 +1969,71 @@
     </div>
 </div>
 
+<!-- Company Details Footer -->
+<div class="section" style="margin-top: 12px;">
+    <div class="section-subtitle">Company Details</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Company:</span>
+            <span class="inline-value wide">{{ company_details.company_name }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Phone:</span>
+            <span class="inline-value">{{ company_details.company_phone }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Email:</span>
+            <span class="inline-value">{{ company_details.company_email }}</span>
+        </div>
+        {% if company_details.company_website %}
+        <div class="inline-group">
+            <span class="inline-label">Website:</span>
+            <span class="inline-value">{{ company_details.company_website }}</span>
+        </div>
+        {% endif %}
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Address:</span>
+            <span class="inline-value wide">{{ company_details.company_address }}</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group">
+            <span class="inline-label">Registration Scheme:</span>
+            <span class="inline-value">{{ company_details.registration_scheme }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Registration No:</span>
+            <span class="inline-value">{{ company_details.registration_number }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Expiry:</span>
+            <span class="inline-value">{{ company_details.registration_expiry }}</span>
+        </div>
+    </div>
+    {% if company_details.insurance_provider %}
+    <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group">
+            <span class="inline-label">Insurance:</span>
+            <span class="inline-value">{{ company_details.insurance_provider }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Policy No:</span>
+            <span class="inline-value">{{ company_details.insurance_policy_number }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Coverage:</span>
+            <span class="inline-value">{{ company_details.insurance_coverage }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Expiry:</span>
+            <span class="inline-value">{{ company_details.insurance_expiry }}</span>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
 <!-- Guidance for Recipients -->
 <div class="section" style="margin-top: 12px;">
     <div class="section-title">Guidance for Recipients</div>
@@ -1760,7 +2071,7 @@
     <div class="doc-header-content">
         <div class="doc-title-section">
             <div class="doc-title">OBSERVATION DETAILS</div>
-            <div class="doc-subtitle">Detailed descriptions with recommendations</div>
+            <div class="doc-subtitle">Detailed descriptions with photographic evidence and recommendations</div>
         </div>
         <div class="doc-meta">
             <div class="cert-number">{{ metadata.certificate_number }}</div>
@@ -1780,6 +2091,9 @@
             <span class="classification-badge {% if obs.defect_code == 'C1' %}c1{% elsif obs.defect_code == 'C2' %}c2{% elsif obs.defect_code == 'C3' %}c3{% elsif obs.defect_code == 'FI' %}fi{% endif %}">
                 {% if obs.defect_code == 'C1' %}C1 - DANGER PRESENT{% elsif obs.defect_code == 'C2' %}C2 - POTENTIALLY DANGEROUS{% elsif obs.defect_code == 'C3' %}C3 - IMPROVEMENT RECOMMENDED{% elsif obs.defect_code == 'FI' %}FI - FURTHER INVESTIGATION{% else %}{{ obs.defect_code }}{% endif %}
             </span>
+            {% if obs.rectified %}
+            <span style="margin-left: 10px; padding: 3px 8px; background: #d1fae5; color: #047857; border-radius: 3px; font-size: 8px; font-weight: 600;">RECTIFIED</span>
+            {% endif %}
         </div>
 
         <div class="observation-section">
@@ -1796,6 +2110,26 @@
             <div class="observation-section-title">Recommendation</div>
             <div class="observation-section-content recommendation">{{ obs.recommendation }}</div>
         </div>
+
+        {% if obs.regulation %}
+        <div class="observation-section">
+            <div class="observation-section-title">BS 7671 Regulation</div>
+            <div class="observation-section-content">{{ obs.regulation }}</div>
+        </div>
+        {% endif %}
+
+        {% if obs.photo_count > 0 %}
+        <div class="observation-section">
+            <div class="observation-section-title">Photographic Evidence ({{ obs.photo_count }} photos)</div>
+            <div class="photo-grid">
+                {% for photo_url in obs.photo_evidence %}
+                <div class="photo-item">
+                    <img src="{{ photo_url }}" alt="Evidence photo {{ forloop.index }}" />
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endfor %}

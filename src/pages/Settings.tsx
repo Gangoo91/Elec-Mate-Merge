@@ -8,7 +8,6 @@ import {
   IdCard,
   Bell,
   Shield,
-  Building2,
   CreditCard,
   Palette,
   HelpCircle,
@@ -21,13 +20,11 @@ import {
   ArrowLeft,
   Mic,
   Lock,
-  Settings as SettingsIcon,
 } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 // Import all tab components
@@ -35,7 +32,6 @@ import AccountTab from "@/components/settings/AccountTab";
 import ElecIdTab from "@/components/settings/ElecIdTab";
 import NotificationsTab from "@/components/settings/NotificationsTab";
 import SecurityTab from "@/components/settings/SecurityTab";
-import { CompanyProfileSettings } from "@/components/settings/CompanyProfileSettings";
 import BillingTab from "@/components/settings/BillingTab";
 import AppearanceTab from "@/components/settings/AppearanceTab";
 import HelpTab from "@/components/settings/HelpSupportTab";
@@ -45,12 +41,12 @@ import PrivacyTab from "@/components/settings/PrivacyTab";
 import SettingsNavGrid from "@/components/settings/SettingsNavGrid";
 
 // Tab configuration
+// Note: Company settings have been moved to the Profile page for a unified business identity experience
 const ALL_TABS = [
   { id: "elec-id", label: "Elec-ID", icon: IdCard, component: ElecIdTab },
   { id: "account", label: "Account", icon: User, component: AccountTab },
   { id: "notifications", label: "Notifications", icon: Bell, component: NotificationsTab },
   { id: "security", label: "Security", icon: Shield, component: SecurityTab },
-  { id: "company", label: "Company", icon: Building2, component: CompanyProfileSettings },
   { id: "voice", label: "Voice", icon: Mic, component: VoiceSettingsTab },
   { id: "billing", label: "Billing", icon: CreditCard, component: BillingTab },
   { id: "appearance", label: "Appearance", icon: Palette, component: AppearanceTab },
@@ -88,25 +84,6 @@ const SettingsPage = () => {
     }
   }, [searchParams, setSearchParams, queryClient]);
 
-  // Check company profile completeness for red dot indicators
-  const { data: companyStatus } = useQuery({
-    queryKey: ['company-profile-completeness'],
-    queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return null;
-
-      const { data } = await supabase
-        .from('company_profiles')
-        .select('company_name, bank_details, company_email')
-        .eq('user_id', user.id)
-        .single();
-
-      return {
-        companyIncomplete: !data?.company_name || !data?.company_email,
-        bankDetailsIncomplete: !data?.bank_details?.accountNumber,
-      };
-    },
-  });
 
   // Get tab from URL - null means show grid on mobile
   const tabParam = searchParams.get("tab");
@@ -282,9 +259,6 @@ const SettingsPage = () => {
                 <SettingsNavGrid
                   onSelect={handleMobileTabSelect}
                   isSubscribed={isSubscribed}
-                  incompleteItems={{
-                    company: companyStatus?.companyIncomplete || companyStatus?.bankDetailsIncomplete || false,
-                  }}
                 />
               </div>
             </motion.div>
@@ -413,7 +387,6 @@ const SettingsPage = () => {
             {ALL_TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeDesktopTab === tab.id;
-              const hasIncompleteData = tab.id === 'company' && (companyStatus?.companyIncomplete || companyStatus?.bankDetailsIncomplete);
               return (
                 <button
                   key={tab.id}
@@ -428,9 +401,6 @@ const SettingsPage = () => {
                 >
                   <Icon className={cn("h-4 w-4", isActive ? "text-elec-yellow" : "")} />
                   <span>{tab.label}</span>
-                  {hasIncompleteData && (
-                    <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full animate-pulse" />
-                  )}
                 </button>
               );
             })}

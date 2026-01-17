@@ -145,7 +145,7 @@ const BatteryBackupCalculator = () => {
   return (
     <div className="space-y-4">
       <CalculatorCard
-        category="ev_storage"
+        category="ev-storage"
         title="Battery Backup Calculator"
         description="Calculate runtime for battery backup systems with chemistry modelling"
         badge="Peukert's"
@@ -330,7 +330,7 @@ const BatteryBackupCalculator = () => {
         )}
 
         <CalculatorActions
-          category="ev_storage"
+          category="ev-storage"
           onCalculate={calculateBackup}
           onReset={reset}
           isDisabled={!capacityAh || loads.length === 0}
@@ -341,7 +341,7 @@ const BatteryBackupCalculator = () => {
       {results && (
         <div className="space-y-4 animate-fade-in">
           {/* Main Results */}
-          <CalculatorResult category="ev_storage">
+          <CalculatorResult category="ev-storage">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <span className="text-sm text-white/60">{mode === 'runtime' ? 'Runtime Analysis' : 'Battery Sizing'}</span>
               <Badge variant="outline" className="text-blue-400 border-blue-400/50">
@@ -357,10 +357,10 @@ const BatteryBackupCalculator = () => {
             </div>
 
             <ResultsGrid columns={2}>
-              <ResultValue label="Usable Energy" value={results.usableEnergyWh.toFixed(0)} unit="Wh" category="ev_storage" size="sm" />
-              <ResultValue label="DC Current" value={results.dcCurrent.toFixed(1)} unit="A" category="ev_storage" size="sm" />
-              <ResultValue label="C-Rate" value={results.cRate.toFixed(2)} unit="C" category="ev_storage" size="sm" />
-              <ResultValue label="Max C-Rate" value={selectedChemistry.maxCRate.toFixed(1)} unit="C" category="ev_storage" size="sm" />
+              <ResultValue label="Usable Energy" value={results.usableEnergyWh.toFixed(0)} unit="Wh" category="ev-storage" size="sm" />
+              <ResultValue label="DC Current" value={results.dcCurrent.toFixed(1)} unit="A" category="ev-storage" size="sm" />
+              <ResultValue label="C-Rate" value={results.cRate.toFixed(2)} unit="C" category="ev-storage" size="sm" />
+              <ResultValue label="Max C-Rate" value={selectedChemistry.maxCRate.toFixed(1)} unit="C" category="ev-storage" size="sm" />
             </ResultsGrid>
           </CalculatorResult>
 

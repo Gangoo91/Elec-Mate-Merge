@@ -500,6 +500,9 @@ const handler = async (req: Request): Promise<Response> => {
     </tr>
   </table>
 
+  <!-- Email tracking pixel - invisible 1x1 image to track opens -->
+  <img src="${supabaseUrl}/functions/v1/quote-email-tracking?t=${publicToken}&q=${quoteId}" width="1" height="1" style="display:none;visibility:hidden;width:1px;height:1px;opacity:0;" alt="" />
+
 </body>
 </html>
     `;
@@ -548,15 +551,53 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('✅ Email sent:', emailData?.id);
 
     // ========================================================================
-    // STEP 12: Update quote status
+    // STEP 12: Update quote status and track first send
     // ========================================================================
+
+    // Check if this is the first send (for follow-up tracking)
+    const isFirstSend = quote.status !== 'sent' || !quote.first_sent_at;
+
+    const quoteUpdateData: any = {
+      status: 'sent',
+      updated_at: new Date().toISOString()
+    };
+
+    // Set first_sent_at only on first send (for automated follow-up tracking)
+    if (isFirstSend) {
+      quoteUpdateData.first_sent_at = new Date().toISOString();
+      console.log('📅 First send - setting first_sent_at for follow-up tracking');
+    }
+
     await supabaseClient
       .from('quotes')
-      .update({
-        status: 'sent',
-        updated_at: new Date().toISOString()
-      })
+      .update(quoteUpdateData)
       .eq('id', quoteId);
+
+    // Update quote_views with email_sent_at for tracking
+    await supabaseClient
+      .from('quote_views')
+      .update({
+        email_sent_at: new Date().toISOString()
+      })
+      .eq('quote_id', quoteId)
+      .eq('public_token', publicToken);
+
+    // Record email sent event for analytics
+    try {
+      await supabaseClient
+        .from('quote_email_events')
+        .insert({
+          quote_id: quoteId,
+          event_type: 'sent',
+          event_data: {
+            type: 'initial',
+            pdf_attached: pdfAttachmentSuccess,
+            email_id: emailData?.id,
+          },
+        });
+    } catch (eventError) {
+      console.warn('⚠️ Failed to record email event (non-blocking):', eventError);
+    }
 
     const duration = Date.now() - startTime;
     console.log(`✅ Complete in ${duration}ms`);
