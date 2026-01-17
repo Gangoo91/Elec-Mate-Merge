@@ -443,6 +443,14 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
           const dueDate = new Date();
           dueDate.setDate(dueDate.getDate() + 30);
 
+          // Merge existing settings with invoice settings
+          const existingSettings = typeof quote.settings === 'object' ? quote.settings : {};
+          const updatedSettings = {
+            ...existingSettings,
+            paymentTerms: '30 days',
+            dueDate: dueDate.toISOString(),
+          };
+
           const { error } = await supabase
             .from('quotes')
             .update({
@@ -452,6 +460,8 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
               invoice_due_date: dueDate.toISOString(),
               invoice_status: 'draft',
               status: 'accepted',
+              settings: updatedSettings,
+              updated_at: new Date().toISOString(),
             })
             .eq('id', quote.id);
 
@@ -459,7 +469,7 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
 
           triggerRefresh();
           const clientName = typeof quote.client_data === 'object' ? quote.client_data?.name : 'the client';
-          return `Quote ${quote.quote_number} converted to invoice ${invoiceNumber} for ${clientName}`;
+          return `Quote ${quote.quote_number} converted to invoice ${invoiceNumber} for ${clientName}. It's saved as a draft - say "send invoice to ${clientName}" to email it.`;
         } catch (err) {
           console.error('[QuoteInvoiceVoice] convert_quote_to_invoice error:', err);
           return `Error: ${err instanceof Error ? err.message : 'Failed to convert quote'}`;
@@ -632,6 +642,20 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
               const dueDate = new Date();
               dueDate.setDate(dueDate.getDate() + (params.paymentDays || 30));
 
+              // Merge existing settings with invoice settings
+              const existingSettings = typeof quote.settings === 'object' ? quote.settings : {};
+              const updatedSettings = {
+                ...existingSettings,
+                paymentTerms: params.paymentTerms || `Due within ${params.paymentDays || 30} days`,
+                dueDate: dueDate.toISOString(),
+                bankDetails: params.bankName ? {
+                  bankName: params.bankName,
+                  accountName: params.bankAccountName,
+                  accountNumber: params.bankAccountNumber,
+                  sortCode: params.bankSortCode,
+                } : existingSettings?.bankDetails,
+              };
+
               const { error: updateError } = await supabase
                 .from('quotes')
                 .update({
@@ -642,16 +666,8 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
                   invoice_status: 'draft',
                   status: 'accepted',
                   invoice_notes: params.invoiceNotes || '',
-                  settings: {
-                    ...quote.settings,
-                    paymentTerms: params.paymentTerms || `Due within ${params.paymentDays || 30} days`,
-                    bankDetails: params.bankName ? {
-                      bankName: params.bankName,
-                      accountName: params.bankAccountName,
-                      accountNumber: params.bankAccountNumber,
-                      sortCode: params.bankSortCode,
-                    } : quote.settings?.bankDetails,
-                  },
+                  settings: updatedSettings,
+                  updated_at: new Date().toISOString(),
                 })
                 .eq('id', quote.id);
 
