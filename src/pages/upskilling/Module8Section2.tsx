@@ -41,7 +41,7 @@ const Module8Section2 = () => {
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-8 sm:pb-12">
-        <Link to="../module-8">
+        <Link to="/study-centre/upskilling/inspection-testing-module-8">
           <Button
             variant="ghost"
             className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md min-h-[48px]"
@@ -112,7 +112,7 @@ const Module8Section2 = () => {
           </div>
 
           <div className="flex justify-between mt-8">
-            <Link to="../module-8/section-1">
+            <Link to="/study-centre/upskilling/inspection-testing-module-8-section-1">
               <Button variant="outline" className="border-gray-600 text-white hover:bg-card min-h-[48px]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous Section

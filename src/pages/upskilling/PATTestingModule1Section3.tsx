@@ -272,7 +272,7 @@ const PATTestingModule1Section3 = () => {
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a] space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-8 pt-8 pb-12">
-        <Link to="../pat-testing-module-1">
+        <Link to="/study-centre/upskilling/pat-testing-module-1">
           <Button
             variant="ghost"
             className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"

@@ -224,7 +224,7 @@ const PATTestingModule1Section2 = () => {
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a] space-y-4 sm:space-y-6 animate-fade-in">
       <div className="px-8 pt-8 pb-12">
-        <Link to="../pat-testing-module-1">
+        <Link to="/study-centre/upskilling/pat-testing-module-1">
           <Button
             variant="ghost"
             className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
@@ -802,14 +802,14 @@ const PATTestingModule1Section2 = () => {
 
           {/* Navigation */}
           <div className="flex justify-between">
-            <Link to="../pat-testing-module-1-section-1">
+            <Link to="/study-centre/upskilling/pat-testing-module-1-section-1">
               <Button variant="outline" className="border-gray-600 text-white hover:bg-card">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous: What is PAT Testing
               </Button>
             </Link>
             
-            <Link to="../pat-testing-module-1-section-3">
+            <Link to="/study-centre/upskilling/pat-testing-module-1-section-3">
               <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
                 Next: Equipment Classification
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />

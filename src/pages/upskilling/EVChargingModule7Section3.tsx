@@ -80,7 +80,7 @@ const EVChargingModule7Section3 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../ev-charging-module-7">
+            <Link to="/study-centre/upskilling/ev-charging-module-7">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 7
             </Link>
@@ -362,7 +362,7 @@ const EVChargingModule7Section3 = () => {
             className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../ev-charging-module-7-section-2">
+            <Link to="/study-centre/upskilling/ev-charging-module-7-section-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
@@ -372,7 +372,7 @@ const EVChargingModule7Section3 = () => {
             className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../ev-charging-module-7-section-4">
+            <Link to="/study-centre/upskilling/ev-charging-module-7-section-4">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

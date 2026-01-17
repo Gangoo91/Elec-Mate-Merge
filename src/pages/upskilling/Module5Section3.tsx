@@ -12,7 +12,7 @@ const Module5Section3 = () => {
     <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
-        <Link to="../module-5">
+        <Link to="/study-centre/upskilling/inspection-testing-module-5">
           <Button
             variant="ghost"
             className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
@@ -50,7 +50,7 @@ const Module5Section3 = () => {
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
         <div>
           <div className="flex justify-between items-center">
-            <Link to="../module-5/section-2">
+            <Link to="/study-centre/upskilling/inspection-testing-module-5-section-2">
               <Button
                 variant="outline"
                 className="bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200 min-h-[48px]"
@@ -60,7 +60,7 @@ const Module5Section3 = () => {
               </Button>
             </Link>
 
-            <Link to="../module-5/section-4">
+            <Link to="/study-centre/upskilling/inspection-testing-module-5-section-4">
               <Button
                 className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 min-h-[48px]"
               >

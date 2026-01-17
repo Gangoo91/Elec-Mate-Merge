@@ -62,7 +62,7 @@ const PATTestingModule4Section5 = () => {
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       <div className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="../pat-testing-module-4">
+          <Link to="/study-centre/upskilling/pat-testing-module-4">
             <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]">
               <ArrowLeft className="h-4 w-4" />
               <span className="hidden sm:inline">Back to Module 4</span>
@@ -313,12 +313,12 @@ const PATTestingModule4Section5 = () => {
         </section>
 
         <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-white/10">
-          <Link to="../pat-testing-module-4-section-4" className="flex-1">
+          <Link to="/study-centre/upskilling/pat-testing-module-4-section-4" className="flex-1">
             <Button variant="outline" className="w-full min-h-[48px] border-white/20 text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]">
               <ChevronLeft className="h-4 w-4" /> Previous: Touch Current
             </Button>
           </Link>
-          <Link to="../pat-testing-module-4-section-6" className="flex-1">
+          <Link to="/study-centre/upskilling/pat-testing-module-4-section-6" className="flex-1">
             <Button className="w-full min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-2 touch-manipulation active:scale-[0.98]">
               Next: Interpreting Results <ChevronRight className="h-4 w-4" />
             </Button>

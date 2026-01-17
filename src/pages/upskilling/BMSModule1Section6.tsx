@@ -93,7 +93,7 @@ const BMSModule1Section6 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../bms-module-1">
+            <Link to="/study-centre/upskilling/bms-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -708,7 +708,7 @@ const BMSModule1Section6 = () => {
             className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../bms-module-1-section-5">
+            <Link to="/study-centre/upskilling/bms-module-1-section-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
@@ -718,7 +718,7 @@ const BMSModule1Section6 = () => {
             className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../bms-module-2">
+            <Link to="/study-centre/upskilling/bms-module-2">
               Next Module
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

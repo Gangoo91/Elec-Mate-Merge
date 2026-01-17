@@ -169,7 +169,7 @@ const FireAlarmModule1Section4 = () => {
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
           <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
-            <Link to="../module-1">
+            <Link to="/study-centre/upskilling/fire-alarm-module-1">
               <ArrowLeft className="h-5 w-5" />
               <span className="hidden sm:inline">Module 1</span>
             </Link>
@@ -605,13 +605,13 @@ const FireAlarmModule1Section4 = () => {
       <section className="px-4 pb-safe max-w-3xl mx-auto">
         <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
           <Button variant="ios-secondary" asChild className="flex-1">
-            <Link to="../module-1/section-3">
+            <Link to="/study-centre/upskilling/fire-alarm-module-1-section-3">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous Section
             </Link>
           </Button>
           <Button variant="ios-primary" asChild className="flex-1">
-            <Link to="../module-2">
+            <Link to="/study-centre/upskilling/fire-alarm-module-2">
               Next Module
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

@@ -35,7 +35,7 @@ const SmartHomeModule3Section5 = () => {
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
       <div className="px-8 pt-8 pb-12 bg-[#1a1a1a]/95">
-        <RouterLink to="../smart-home-module-3">
+        <RouterLink to="/study-centre/upskilling/smart-home-module-3">
           <Button
             variant="ghost"
             className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
@@ -76,13 +76,13 @@ const SmartHomeModule3Section5 = () => {
           <SmartHomeModule3Section5Quiz />
 
           <div className="flex justify-between mt-8">
-            <RouterLink to="../smart-home-module-3-section-4">
+            <RouterLink to="/study-centre/upskilling/smart-home-module-3-section-4">
               <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card/80 hover:text-white touch-manipulation active:scale-[0.98]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous Section
               </Button>
             </RouterLink>
-            <RouterLink to="../smart-home-module-3-section-6">
+            <RouterLink to="/study-centre/upskilling/smart-home-module-3-section-6">
               <Button className="bg-yellow-400 text-black hover:bg-yellow-600 touch-manipulation active:scale-[0.98]">
                 Next Section
                 <ArrowRight className="ml-2 h-4 w-4" />

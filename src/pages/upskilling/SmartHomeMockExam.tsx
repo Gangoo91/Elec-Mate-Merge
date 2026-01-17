@@ -106,7 +106,7 @@ const SmartHomeMockExam = () => {
       <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
         {/* Header */}
         <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
-          <Link to="../smart-home-course">
+          <Link to="/study-centre/upskilling/smart-home-course">
             <Button
               variant="ghost"
               className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
@@ -228,7 +228,7 @@ const SmartHomeMockExam = () => {
       <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
         {/* Header */}
         <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
-          <Link to="../smart-home-course">
+          <Link to="/study-centre/upskilling/smart-home-course">
             <Button
               variant="ghost"
               className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
@@ -344,7 +344,7 @@ const SmartHomeMockExam = () => {
                 <RotateCcw className="mr-2 h-5 w-5" />
                 Take Again
               </Button>
-              <Link to="../smart-home-course">
+              <Link to="/study-centre/upskilling/smart-home-course">
                 <Button
                   variant="outline"
                   className="border-gray-600 text-white hover:bg-gray-700 transition-all duration-200 px-8 py-3 text-lg font-semibold w-full sm:w-auto touch-manipulation active:scale-[0.98]"
@@ -367,7 +367,7 @@ const SmartHomeMockExam = () => {
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6 bg-[#1a1a1a]/95">
         <div className="flex justify-between items-center mb-4">
-          <Link to="../smart-home-course">
+          <Link to="/study-centre/upskilling/smart-home-course">
             <Button
               variant="ghost"
               className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"

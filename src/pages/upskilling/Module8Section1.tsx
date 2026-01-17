@@ -7,7 +7,7 @@ const Module8Section1 = () => {
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <div>
-        <Link to="../module-8">
+        <Link to="/study-centre/upskilling/inspection-testing-module-8">
           <Button
             variant="ghost"
             className="bg-card text-white hover:bg-card/80 hover:text-yellow-400 transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"

@@ -142,7 +142,7 @@ const InspectionTestingModule1Section3 = () => {
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
           <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
-            <Link to="../module1">
+            <Link to="/study-centre/upskilling/inspection-testing-module-1">
               <ArrowLeft className="h-5 w-5" />
               <span className="hidden sm:inline">Module 1</span>
             </Link>
@@ -636,13 +636,13 @@ const InspectionTestingModule1Section3 = () => {
       <footer className="px-4 pb-safe pt-6 max-w-3xl mx-auto border-t border-white/10">
         <div className="flex gap-3">
           <Button variant="ios-secondary" size="ios-default" className="flex-1" asChild>
-            <Link to="../section2">
+            <Link to="/study-centre/upskilling/inspection-testing-module-1-section-2">
               <ChevronLeft className="h-5 w-5 mr-1" />
               Previous
             </Link>
           </Button>
           <Button variant="ios-primary" size="ios-default" className="flex-1" asChild>
-            <Link to="../section4">
+            <Link to="/study-centre/upskilling/inspection-testing-module-1-section-4">
               Next
               <ChevronRight className="h-5 w-5 ml-1" />
             </Link>

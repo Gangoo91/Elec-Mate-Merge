@@ -11,7 +11,7 @@ const Module7Section2 = () => {
   return (
     <div className="min-h-screen bg-[#1a1a1a]">
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
-        <Link to="../module-7">
+        <Link to="/study-centre/upskilling/inspection-testing-module-7">
           <Button variant="ghost" className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 7
@@ -40,14 +40,14 @@ const Module7Section2 = () => {
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
         <div>
           <div className="flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center">
-            <Link to="../module-7/section-1" className="order-2 sm:order-1 w-full sm:w-auto">
+            <Link to="/study-centre/upskilling/inspection-testing-module-7-section-1" className="order-2 sm:order-1 w-full sm:w-auto">
               <Button variant="outline" className="bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200 w-full sm:w-auto min-h-[48px] text-sm sm:text-base">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 <span className="hidden sm:inline">Previous: Purpose of Certification</span>
                 <span className="sm:hidden">Previous: Purpose</span>
               </Button>
             </Link>
-            <Link to="../module-7/section-3" className="order-1 sm:order-2 w-full sm:w-auto">
+            <Link to="/study-centre/upskilling/inspection-testing-module-7-section-3" className="order-1 sm:order-2 w-full sm:w-auto">
               <Button className="bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 w-full sm:w-auto min-h-[48px] text-sm sm:text-base">
                 <span className="hidden sm:inline">Next: Minor Works Certificate</span>
                 <span className="sm:hidden">Next: Minor Works</span>

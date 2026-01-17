@@ -18,7 +18,7 @@ const BMSModule6Section6 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../bms-module-6">
+            <Link to="/study-centre/upskilling/bms-module-6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 6
             </Link>
@@ -655,7 +655,7 @@ const BMSModule6Section6 = () => {
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
         <div>
           <div className="flex flex-col sm:flex-row gap-4 sm:justify-between items-stretch sm:items-center">
-            <Link to="../bms-module-6-section-5" className="flex-1 sm:flex-initial">
+            <Link to="/study-centre/upskilling/bms-module-6-section-5" className="flex-1 sm:flex-initial">
               <Button 
                 variant="outline" 
                 className="w-full sm:w-auto bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
@@ -664,7 +664,7 @@ const BMSModule6Section6 = () => {
                 <span className="truncate">Previous: Energy Monitoring & Control</span>
               </Button>
             </Link>
-            <Link to="../bms-module-7" className="flex-1 sm:flex-initial">
+            <Link to="/study-centre/upskilling/bms-module-7" className="flex-1 sm:flex-initial">
               <Button 
                 className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
               >

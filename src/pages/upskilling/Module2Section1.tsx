@@ -193,7 +193,7 @@ const Module2Section1 = () => {
     <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <Link to="../module-2">
+        <Link to="/study-centre/upskilling/inspection-testing-module-2">
           <Button
             variant="ghost"
             className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"
@@ -1161,7 +1161,7 @@ const Module2Section1 = () => {
       {/* Footer Navigation */}
       <div className="px-4 sm:px-6 lg:px-8 pb-8">
         <div className="max-w-4xl mx-auto flex justify-center">
-          <Link to="../module-2/section-2">
+          <Link to="/study-centre/upskilling/inspection-testing-module-2-section-2">
             <Button className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-3 text-lg min-h-[48px]">
               Next Section: RAMS →
             </Button>

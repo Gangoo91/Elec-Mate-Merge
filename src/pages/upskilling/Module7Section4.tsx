@@ -11,7 +11,7 @@ const Module7Section4 = () => {
   return (
     <div className="min-h-screen bg-[#1a1a1a]">
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
-        <Link to="../module-7">
+        <Link to="/study-centre/upskilling/inspection-testing-module-7">
           <Button variant="ghost" className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 7
@@ -40,7 +40,7 @@ const Module7Section4 = () => {
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
         <div>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <Link to="../module-7/section-3" className="w-full sm:w-auto">
+            <Link to="/study-centre/upskilling/inspection-testing-module-7-section-3" className="w-full sm:w-auto">
               <Button
                 variant="outline"
                 className="w-full sm:w-auto bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200 min-h-[48px]"
@@ -49,7 +49,7 @@ const Module7Section4 = () => {
                 <span className="text-sm sm:text-base">Previous: Minor Works Certificate</span>
               </Button>
             </Link>
-            <Link to="../module-7/section-5" className="w-full sm:w-auto">
+            <Link to="/study-centre/upskilling/inspection-testing-module-7-section-5" className="w-full sm:w-auto">
               <Button className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 min-h-[48px]">
                 <span className="text-sm sm:text-base">Next: Observation Codes</span>
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />

@@ -48,7 +48,7 @@ const InstrumentationModule2 = () => {
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
       <div className="px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-12">
-        <Link to="../instrumentation-course">
+        <Link to="/study-centre/upskilling/instrumentation-course">
           <Button
             variant="ghost"
             className="text-white hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-6 sm:mb-8 px-3 py-2 rounded-md text-sm sm:text-base min-h-[48px] touch-manipulation active:scale-[0.98]"

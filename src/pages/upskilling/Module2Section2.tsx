@@ -175,7 +175,7 @@ const Module2Section2 = () => {
     <div className="min-h-screen bg-[#1a1a1a]">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8">
-        <Link to="../module-2">
+        <Link to="/study-centre/upskilling/inspection-testing-module-2">
           <Button
             variant="ghost"
             className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]"

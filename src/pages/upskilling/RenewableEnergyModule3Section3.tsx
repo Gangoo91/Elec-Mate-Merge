@@ -72,7 +72,7 @@ const RenewableEnergyModule3Section3 = () => {
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
       <div className="px-4 md:px-8 pt-8 pb-12">
-        <Link to="../renewable-energy-module-3">
+        <Link to="/study-centre/upskilling/renewable-energy-module-3">
           <Button
             variant="ghost"
             className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
@@ -400,13 +400,13 @@ const RenewableEnergyModule3Section3 = () => {
           />
 
           <div className="flex justify-between mt-8">
-            <Link to="../renewable-energy-module-3-section-2">
+            <Link to="/study-centre/upskilling/renewable-energy-module-3-section-2">
               <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous Section
               </Button>
             </Link>
-            <Link to="../renewable-energy-module-3-section-4">
+            <Link to="/study-centre/upskilling/renewable-energy-module-3-section-4">
               <Button className="bg-yellow-400 text-black hover:bg-yellow-600 touch-manipulation active:scale-[0.98]">
                 Next Section
                 <ArrowRight className="ml-2 h-4 w-4" />

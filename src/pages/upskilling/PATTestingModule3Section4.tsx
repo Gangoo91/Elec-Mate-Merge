@@ -185,7 +185,7 @@ const PATTestingModule3Section4 = () => {
       {/* Sticky Header */}
       <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-md border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="../pat-testing-module-3">
+          <Link to="/study-centre/upskilling/pat-testing-module-3">
             <Button
               variant="ghost"
               size="sm"
@@ -849,7 +849,7 @@ const PATTestingModule3Section4 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-6 border-t border-white/10">
-          <Link to="../pat-testing-module-3-section-3" className="w-full sm:w-auto">
+          <Link to="/study-centre/upskilling/pat-testing-module-3-section-3" className="w-full sm:w-auto">
             <Button
               variant="outline"
               className="w-full sm:w-auto gap-2 border-white/20 text-white hover:bg-white/5 hover:text-elec-yellow min-h-[48px] touch-manipulation active:scale-[0.98]"
@@ -858,7 +858,7 @@ const PATTestingModule3Section4 = () => {
               <span>Previous: Section 3</span>
             </Button>
           </Link>
-          <Link to="../pat-testing-module-3-section-5" className="w-full sm:w-auto">
+          <Link to="/study-centre/upskilling/pat-testing-module-3-section-5" className="w-full sm:w-auto">
             <Button
               className="w-full sm:w-auto gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold min-h-[48px] touch-manipulation active:scale-[0.98]"
             >

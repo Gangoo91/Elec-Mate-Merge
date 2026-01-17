@@ -56,7 +56,7 @@ const FireAlarmModule4 = () => {
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
         <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
           <Button variant="ios-ghost" size="ios-small" asChild className="gap-1 text-white min-h-[48px]">
-            <Link to="../fire-alarm-course">
+            <Link to="/study-centre/upskilling/fire-alarm-course">
               <ArrowLeft className="h-5 w-5" />
               <span className="hidden sm:inline">Course</span>
             </Link>

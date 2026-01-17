@@ -11,7 +11,7 @@ const Module6Section3 = () => {
   return (
     <div className="min-h-screen bg-[#1a1a1a]">
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6">
-        <Link to="../module-6">
+        <Link to="/study-centre/upskilling/inspection-testing-module-6">
           <Button variant="ghost" className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md min-h-[48px]">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Module 6
@@ -40,7 +40,7 @@ const Module6Section3 = () => {
       <footer className="px-4 sm:px-6 lg:px-8 pb-8">
         <div>
           <div className="flex flex-col sm:flex-row gap-4 sm:justify-between items-stretch sm:items-center">
-            <Link to="../module-6/section-2" className="flex-1 sm:flex-initial">
+            <Link to="/study-centre/upskilling/inspection-testing-module-6-section-2" className="flex-1 sm:flex-initial">
               <Button
                 variant="outline"
                 className="w-full sm:w-auto bg-transparent border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
@@ -49,7 +49,7 @@ const Module6Section3 = () => {
                 <span className="truncate">Previous: RCD Types</span>
               </Button>
             </Link>
-            <Link to="../module-6/section-4" className="flex-1 sm:flex-initial">
+            <Link to="/study-centre/upskilling/inspection-testing-module-6-section-4" className="flex-1 sm:flex-initial">
               <Button
                 className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow transition-all duration-200 min-h-[48px] px-4 py-3 text-sm sm:text-base"
               >

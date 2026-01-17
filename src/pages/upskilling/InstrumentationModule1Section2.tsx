@@ -73,7 +73,7 @@ const InstrumentationModule1Section2 = () => {
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
       <div>
-        <Link to="../instrumentation-module-1">
+        <Link to="/study-centre/upskilling/instrumentation-module-1">
           <Button
             variant="ghost"
             className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
@@ -599,13 +599,13 @@ const InstrumentationModule1Section2 = () => {
 
           {/* Navigation */}
           <div className="flex justify-between items-center pt-8">
-            <Link to="../instrumentation-module-1-section-1">
+            <Link to="/study-centre/upskilling/instrumentation-module-1-section-1">
               <Button variant="outline" className="border-gray-600 text-gray-300 hover:border-yellow-400 hover:text-yellow-400 touch-manipulation active:scale-[0.98]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Previous Section
               </Button>
             </Link>
-            <Link to="../instrumentation-module-1-section-3">
+            <Link to="/study-centre/upskilling/instrumentation-module-1-section-3">
               <Button className="bg-yellow-400 text-black hover:bg-yellow-400/10 touch-manipulation active:scale-[0.98]">
                 Next Section
                 <ArrowRight className="ml-2 h-4 w-4" />

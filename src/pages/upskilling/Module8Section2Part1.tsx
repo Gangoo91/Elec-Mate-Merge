@@ -360,13 +360,13 @@ const Module8Section2Part1 = () => {
           </Card>
 
           <div className="flex justify-between">
-            <Link to="../module-8/section-2">
+            <Link to="/study-centre/upskilling/inspection-testing-module-8-section-2">
               <Button variant="outline" className="border-gray-600 text-white hover:bg-card min-h-[48px]">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Overview
               </Button>
             </Link>
-            <Link to="../module-8/section-2/part-2">
+            <Link to="/study-centre/upskilling/inspection-testing-module-8-section-2-part-2">
               <Button className="bg-yellow-400 text-black hover:bg-yellow-600 min-h-[48px]">
                 Next: Common Mistakes
                 <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
