@@ -191,9 +191,26 @@ const PublicQuoteView = () => {
         }
       }
 
+      // Send confirmation email to client (non-blocking)
+      if (clientEmail) {
+        try {
+          await supabase.functions.invoke("quote-acceptance-confirmation", {
+            body: {
+              quoteId: quote.id,
+              quoteNumber: quote.quoteNumber,
+              clientEmail: clientEmail,
+              clientName: clientName,
+              total: quote.total
+            }
+          });
+        } catch (clientEmailError) {
+          console.warn("Could not send client confirmation email:", clientEmailError);
+        }
+      }
+
       toast({
         title: "Quote Accepted!",
-        description: "The electrician has been notified and will be in touch soon.",
+        description: "We've sent you a confirmation email. We'll be in touch soon to schedule the work.",
         variant: "success"
       });
 
