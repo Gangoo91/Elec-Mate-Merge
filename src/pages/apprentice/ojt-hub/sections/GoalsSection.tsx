@@ -393,7 +393,7 @@ export function GoalsSection() {
           <SheetHeader>
             <SheetTitle>Add Goal</SheetTitle>
           </SheetHeader>
-          <div className="space-y-4 mt-4 overflow-y-auto pb-safe">
+          <div className="space-y-4 mt-4 overflow-y-auto ">
             {/* Smart Suggestions */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm font-medium">

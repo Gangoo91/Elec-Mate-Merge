@@ -135,7 +135,7 @@ export function TeamChatList({
             channels.map((channel) => (
               <Card
                 key={channel.id}
-                className="cursor-pointer hover:bg-muted/50 transition-colors"
+                className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
                 onClick={() => onSelectChannel(channel)}
               >
                 <CardContent className="p-3">
@@ -193,7 +193,7 @@ export function TeamChatList({
               return (
                 <Card
                   key={dm.id}
-                  className="cursor-pointer hover:bg-muted/50 transition-colors"
+                  className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
                   onClick={() => onSelectDM(dm)}
                 >
                   <CardContent className="p-3">

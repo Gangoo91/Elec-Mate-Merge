@@ -120,7 +120,7 @@ const InvoicePaymentSuccess = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <div className="bg-background flex items-center justify-center p-4">
         <div className="animate-pulse flex flex-col items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-green-500/20" />
           <div className="h-6 w-48 bg-muted rounded" />
@@ -130,7 +130,7 @@ const InvoicePaymentSuccess = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 overflow-hidden">
+    <div className="bg-background flex items-center justify-center p-4 overflow-hidden">
       <Confetti active={showConfetti} duration={4000} particleCount={60} />
 
       <motion.div

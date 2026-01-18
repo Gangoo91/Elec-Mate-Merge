@@ -49,7 +49,7 @@ const Level3Module2Section3 = () => {
   );
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">

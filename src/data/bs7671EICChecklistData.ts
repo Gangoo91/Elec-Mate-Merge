@@ -1,7 +1,7 @@
 /**
  * BS 7671 EIC Schedule of Inspections Data
  * Based on IET Model Forms for BS 7671:2018+A2:2022
- * For residential and similar premises with up to 100 A supply
+ * Official EIC Schedule of Inspections (14 items)
  */
 
 export interface EICInspectionItem {
@@ -14,100 +14,100 @@ export interface EICInspectionItem {
 
 export const bs7671EICInspectionItems: EICInspectionItem[] = [
   {
-    id: 'eic_1_0',
-    itemNumber: '1.0',
+    id: 'eic_1',
+    itemNumber: '1',
     description: "Condition of consumer's intake equipment (Visual inspection only)",
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_2_0',
-    itemNumber: '2.0',
+    id: 'eic_2',
+    itemNumber: '2',
     description: 'Parallel or switched alternative sources of supply',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_3_0',
-    itemNumber: '3.0',
-    description: 'Presence of adequate arrangements for other sources such as microgenerators',
+    id: 'eic_3',
+    itemNumber: '3',
+    description: 'Protective measure: Automatic Disconnection of Supply (ADS)',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_4_0',
-    itemNumber: '4.0',
-    description: 'Presence and condition of earthing and bonding arrangements',
+    id: 'eic_4',
+    itemNumber: '4',
+    description: 'Basic protection',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_5_0',
-    itemNumber: '5.0',
-    description: 'Compatibility of protective devices, bases and other components with the circuit protective conductors',
+    id: 'eic_5',
+    itemNumber: '5',
+    description: 'Protective measures other than ADS',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_6_0',
-    itemNumber: '6.0',
-    description: 'Provision of RCDs for fault protection and/or additional protection',
+    id: 'eic_6',
+    itemNumber: '6',
+    description: 'Additional protection',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_7_0',
-    itemNumber: '7.0',
-    description: 'Confirmation of indication that SPD is functional',
+    id: 'eic_7',
+    itemNumber: '7',
+    description: 'Distribution equipment',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_8_0',
-    itemNumber: '8.0',
-    description: 'Presence of fire barriers, sealing arrangements and protection against thermal effects',
+    id: 'eic_8',
+    itemNumber: '8',
+    description: 'Circuits (Distribution and Final)',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_9_0',
-    itemNumber: '9.0',
-    description: 'Cables correctly supported and not subject to premature collapse in the event of a fire',
+    id: 'eic_9',
+    itemNumber: '9',
+    description: 'Isolation and switching',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_10_0',
-    itemNumber: '10.0',
-    description: 'Verification of electrical separation',
+    id: 'eic_10',
+    itemNumber: '10',
+    description: 'Current-using equipment (permanently connected)',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_11_0',
-    itemNumber: '11.0',
-    description: 'Connection of single-pole devices in line conductors only',
+    id: 'eic_11',
+    itemNumber: '11',
+    description: 'Identification and notices',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_12_0',
-    itemNumber: '12.0',
-    description: 'Adequacy of accessories, switches, and isolators for the intended use',
+    id: 'eic_12',
+    itemNumber: '12',
+    description: 'Location(s) containing a bath or shower',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_13_0',
-    itemNumber: '13.0',
-    description: 'Suitability of equipment and protective measures for external influences',
+    id: 'eic_13',
+    itemNumber: '13',
+    description: 'Other special installations or locations',
     outcome: '',
     notes: ''
   },
   {
-    id: 'eic_14_0',
-    itemNumber: '14.0',
-    description: 'Particular protective measures for special installations and locations',
+    id: 'eic_14',
+    itemNumber: '14',
+    description: "Prosumer's low voltage electrical installation(s)",
     outcome: '',
     notes: ''
   }

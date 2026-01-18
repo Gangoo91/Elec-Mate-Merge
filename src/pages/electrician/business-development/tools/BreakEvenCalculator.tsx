@@ -120,7 +120,7 @@ const BreakEvenCalculator: React.FC = () => {
   const isValid = overheadsNum > 0 && hoursNum > 0 && labourNum > 0;
 
   return (
-    <div className="min-h-screen px-4 py-8 pt-safe pb-safe">
+    <div className="px-4 py-8  ">
       <Helmet>
         <title>Break-even & Margin Guard | Electrician UK</title>
         <meta

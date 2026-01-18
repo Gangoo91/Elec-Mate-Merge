@@ -353,7 +353,7 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
                 </div>
                 <div className="flex-1">
                   <label className="block">
-                    <div className="flex items-center justify-center gap-2 p-4 rounded-xl bg-white/[0.06] border border-dashed border-white/20 cursor-pointer active:bg-white/[0.1] transition-colors touch-manipulation">
+                    <div className="flex items-center justify-center gap-2 p-4 rounded-xl bg-white/[0.06] border border-dashed border-white/20 cursor-pointer hover:bg-white/[0.08] active:bg-white/[0.1] transition-all touch-manipulation">
                       <Upload className="h-5 w-5 text-white/50" />
                       <span className="text-[15px] text-white/50">Upload Logo</span>
                     </div>

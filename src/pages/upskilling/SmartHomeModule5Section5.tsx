@@ -124,7 +124,7 @@ const SmartHomeModule5Section5 = () => {
   });
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 h-14 flex items-center justify-between">

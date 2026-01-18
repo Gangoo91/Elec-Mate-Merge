@@ -112,7 +112,7 @@ const UserProfileDropdown = () => {
           {hasUnread && totalUnread > 0 && (
             <span className="absolute -top-1 -right-1 flex items-center justify-center">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-50" />
-              <span className="relative flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-bold text-white">
+              <span className="relative flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
                 {totalUnread > 9 ? '9+' : totalUnread}
               </span>
             </span>

@@ -11,7 +11,7 @@ const Module2Section2_Intro: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
+    <div className="bg-[#1a1a1a] overflow-x-hidden">
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]" asChild>

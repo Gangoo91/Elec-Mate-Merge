@@ -288,9 +288,9 @@ const MoodInsights = () => {
                       <span className="text-base sm:text-lg block mb-0.5 sm:mb-1">
                         {mood ? mood.emoji : "—"}
                       </span>
-                      <span className="text-[9px] sm:text-[10px] text-white block">{day}</span>
+                      <span className="text-[10px] sm:text-xs text-white block">{day}</span>
                       {avg > 0 && (
-                        <span className="text-[9px] sm:text-[10px] text-foreground/50 hidden sm:block">{avg.toFixed(1)}</span>
+                        <span className="text-[10px] sm:text-xs text-foreground/50 hidden sm:block">{avg.toFixed(1)}</span>
                       )}
                     </div>
                   );

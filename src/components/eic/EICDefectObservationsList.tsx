@@ -1,7 +1,11 @@
+/**
+ * EIC Defect Observations List
+ *
+ * Renders the list of observation cards with animations.
+ */
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import EICDefectObservationCard from './EICDefectObservationCard';
 import { EICObservation } from '@/hooks/useEICObservations';
 
@@ -17,36 +21,36 @@ interface EICDefectObservationsListProps {
 const EICDefectObservationsList: React.FC<EICDefectObservationsListProps> = ({
   observations,
   reportId,
-  onAddObservation,
   onUpdateObservation,
   onRemoveObservation,
   onSyncToInspectionItem
 }) => {
   if (observations.length === 0) {
-    return (
-      <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-lg">
-        <p className="text-gray-500 mb-4">No observations recorded yet</p>
-        <Button onClick={onAddObservation} variant="outline">
-          <Plus className="h-4 w-4 mr-2" />
-          Add First Observation
-        </Button>
-      </div>
-    );
+    return null;
   }
 
   return (
-    <div className="space-y-4">
-      {observations.map((observation, index) => (
-        <EICDefectObservationCard
-          key={observation.id}
-          observation={observation}
-          reportId={reportId}
-          index={index}
-          onUpdate={onUpdateObservation}
-          onRemove={onRemoveObservation}
-          onSyncToInspectionItem={onSyncToInspectionItem}
-        />
-      ))}
+    <div className="space-y-2">
+      <AnimatePresence mode="popLayout">
+        {observations.map((observation, index) => (
+          <motion.div
+            key={observation.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.2 }}
+          >
+            <EICDefectObservationCard
+              observation={observation}
+              reportId={reportId}
+              index={index}
+              onUpdate={onUpdateObservation}
+              onRemove={onRemoveObservation}
+              onSyncToInspectionItem={onSyncToInspectionItem}
+            />
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   );
 };

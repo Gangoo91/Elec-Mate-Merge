@@ -120,7 +120,7 @@ const FiberOpticsModule3Section3 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-background text-white">
+    <div className="bg-background text-white">
       {/* Sticky Header */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="container max-w-3xl mx-auto px-4 h-14 flex items-center">

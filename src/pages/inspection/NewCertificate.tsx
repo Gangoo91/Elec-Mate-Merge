@@ -40,13 +40,13 @@ export default function NewCertificate() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Header */}
       <div className="bg-card border-b border-border sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-foreground p-0 mb-4"
+            className="text-muted-foreground hover:text-foreground p-0 mb-4 h-11 touch-manipulation active:scale-[0.98]"
             onClick={() => navigate("/electrician/inspection-testing")}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -65,7 +65,7 @@ export default function NewCertificate() {
           {certificateTypes.map((cert) => (
             <Card
               key={cert.id}
-              className={`cursor-pointer transition-all duration-200 hover:shadow-lg border-2 ${cert.borderColor}`}
+              className={`cursor-pointer transition-all duration-200 hover:shadow-lg active:scale-[0.98] border-2 touch-manipulation ${cert.borderColor}`}
               onClick={() => navigate(`/electrician/inspection-testing/${cert.id}/new`)}
             >
               <CardHeader className="text-center pb-2">

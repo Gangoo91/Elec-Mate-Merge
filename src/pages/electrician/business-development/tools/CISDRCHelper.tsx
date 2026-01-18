@@ -100,7 +100,7 @@ const CISDRCHelper = () => {
   const warnings = getConditionalWarnings();
 
   return (
-    <div className="min-h-screen bg-background pt-safe pb-safe">
+    <div className="bg-background  ">
       <div className="space-y-4 px-4 py-6 animate-fade-in">
         {/* Educational Content */}
       <div className="space-y-2">

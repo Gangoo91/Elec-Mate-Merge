@@ -181,7 +181,7 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
                       <StatPill 
                         label="PSCC" 
                         value={`${pscc}kA`}
-                        className="bg-orange-500/10 border-orange-500/20"
+                        className="bg-amber-500/10 border-amber-500/20"
                       />
                     </div>
 
@@ -231,7 +231,7 @@ interface StatPillProps {
 
 const StatPill = ({ label, value, className = '' }: StatPillProps) => (
   <div className={`rounded-lg p-2 border ${className}`}>
-    <p className="text-[9px] text-foreground/60 uppercase tracking-wide truncate">{label}</p>
+    <p className="text-[10px] text-foreground/60 uppercase tracking-wide truncate">{label}</p>
     <p className="text-sm font-bold text-foreground truncate mt-0.5">{value}</p>
   </div>
 );

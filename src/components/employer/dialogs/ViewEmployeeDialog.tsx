@@ -200,7 +200,7 @@ export function ViewEmployeeDialog({
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button key={star} onClick={() => { setEmployeeRating(employee.id, star); toast({ title: "Rating Updated" }); }}>
-                        <Star className={`h-6 w-6 cursor-pointer transition-colors ${star <= employee.rating ? 'text-warning fill-warning' : 'text-muted-foreground hover:text-warning/50'}`} />
+                        <Star className={`h-6 w-6 cursor-pointer transition-all touch-manipulation ${star <= employee.rating ? 'text-warning fill-warning' : 'text-muted-foreground hover:text-warning/50'}`} />
                       </button>
                     ))}
                     <span className="text-sm text-muted-foreground ml-2">{employee.rating} / 5</span>

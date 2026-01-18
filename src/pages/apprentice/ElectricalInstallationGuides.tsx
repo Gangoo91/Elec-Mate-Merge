@@ -108,7 +108,7 @@ const ElectricalInstallationGuides = () => {
                         <div className="flex-1">
                           <CardTitle className="text-elec-yellow text-lg flex items-center gap-2 group-hover:gap-3 transition-all">
                             {installation.title}
-                            <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <ArrowRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
                           </CardTitle>
                           <div className="flex items-center gap-2 mt-2">
                             <Badge variant="outline" className={`text-xs ${
@@ -163,7 +163,7 @@ const ElectricalInstallationGuides = () => {
                         <div className="flex-1">
                           <CardTitle className="text-elec-yellow text-lg flex items-center gap-2 group-hover:gap-3 transition-all">
                             {guide.title}
-                            <ArrowRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <ArrowRight className="h-4 w-4 opacity-50 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
                           </CardTitle>
                           <div className="flex items-center gap-1 text-xs text-white/70 mt-2">
                             <Clock className="h-3 w-3" />

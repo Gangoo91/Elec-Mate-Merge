@@ -129,7 +129,7 @@ export const CustomerListRow = ({
             variant="ghost"
             size="icon"
             onClick={handleCall}
-            className="h-9 w-9 text-muted-foreground hover:text-green-400"
+            className="h-9 w-9 text-muted-foreground hover:text-green-400 active:text-green-500 active:scale-95 transition-all touch-manipulation"
             title="Call"
           >
             <Phone className="h-4 w-4" />
@@ -140,7 +140,7 @@ export const CustomerListRow = ({
             variant="ghost"
             size="icon"
             onClick={handleEmail}
-            className="h-9 w-9 text-muted-foreground hover:text-blue-400"
+            className="h-9 w-9 text-muted-foreground hover:text-blue-400 active:text-blue-500 active:scale-95 transition-all touch-manipulation"
             title="Email"
           >
             <Mail className="h-4 w-4" />
@@ -153,7 +153,7 @@ export const CustomerListRow = ({
             e.stopPropagation();
             onStartCertificate(customer);
           }}
-          className="h-9 w-9 text-muted-foreground hover:text-elec-yellow"
+          className="h-9 w-9 text-muted-foreground hover:text-elec-yellow active:text-elec-yellow active:scale-95 transition-all touch-manipulation"
           title="New Certificate"
         >
           <Plus className="h-4 w-4" />

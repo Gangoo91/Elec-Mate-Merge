@@ -160,7 +160,7 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
                   {CATEGORIES.map((cat) => (
                     <Card
                       key={cat.value}
-                      className={`cursor-pointer touch-feedback transition-colors ${
+                      className={`cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
                         category === cat.value 
                           ? 'bg-elec-yellow/20 border-elec-yellow' 
                           : 'bg-elec-gray hover:bg-muted'

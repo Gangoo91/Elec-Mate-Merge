@@ -103,7 +103,7 @@ const DownloadResources = () => {
             {resources.map((resource) => (
               <div 
                 key={resource.id} 
-                className="flex items-start p-3 border border-elec-yellow/10 rounded-md bg-white/10 hover:bg-white/10 cursor-pointer transition-colors"
+                className="flex items-start p-3 border border-elec-yellow/10 rounded-md bg-white/10 hover:bg-white/20 active:bg-white/30 cursor-pointer transition-all touch-manipulation"
                 onClick={() => setSelectedResource(resource)}
               >
                 <div className="p-2 rounded bg-elec-yellow/10 mr-3">

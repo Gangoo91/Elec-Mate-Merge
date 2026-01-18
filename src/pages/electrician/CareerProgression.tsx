@@ -79,7 +79,7 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
       {/* Coming Soon Ribbon */}
       {comingSoon && (
         <div className="absolute top-0 right-0 overflow-hidden w-28 h-28 pointer-events-none z-10">
-          <div className="absolute top-5 right-[-28px] w-36 bg-gradient-to-br from-amber-500 to-yellow-600 text-black text-[10px] font-bold py-1 text-center transform rotate-45 shadow-lg">
+          <div className="absolute top-5 right-[-28px] w-36 bg-gradient-to-br from-amber-500 to-yellow-600 text-black text-xs font-bold py-1 text-center transform rotate-45 shadow-lg">
             Coming Soon
           </div>
         </div>
@@ -89,7 +89,7 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
       {badge && !comingSoon && (
         <div className="absolute top-3 right-3 z-10">
           <span className={cn(
-            "px-2 py-0.5 rounded-full text-[10px] font-medium",
+            "px-2 py-0.5 rounded-full text-xs font-medium",
             color === "purple" && "bg-purple-500/20 text-purple-300",
             color === "blue" && "bg-blue-500/20 text-blue-300",
             color === "green" && "bg-green-500/20 text-green-300",
@@ -104,11 +104,11 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
       <div className="p-5 flex flex-col h-full">
         <div className={cn(
           "p-2.5 rounded-lg w-fit mb-4 transition-colors",
-          color === "purple" && "bg-purple-500/10 group-hover:bg-purple-500/20",
-          color === "blue" && "bg-blue-500/10 group-hover:bg-blue-500/20",
-          color === "green" && "bg-green-500/10 group-hover:bg-green-500/20",
-          color === "yellow" && "bg-elec-yellow/10 group-hover:bg-elec-yellow/20",
-          color === "orange" && "bg-orange-500/10 group-hover:bg-orange-500/20",
+          color === "purple" && "bg-purple-500/10 group-hover:bg-purple-500/20 group-active:bg-purple-500/25",
+          color === "blue" && "bg-blue-500/10 group-hover:bg-blue-500/20 group-active:bg-blue-500/25",
+          color === "green" && "bg-green-500/10 group-hover:bg-green-500/20 group-active:bg-green-500/25",
+          color === "yellow" && "bg-elec-yellow/10 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25",
+          color === "orange" && "bg-orange-500/10 group-hover:bg-orange-500/20 group-active:bg-orange-500/25",
         )}>
           <Icon className={cn(
             "h-6 w-6",
@@ -122,11 +122,11 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
 
         <h3 className={cn(
           "text-base font-semibold text-white mb-2 transition-colors",
-          !comingSoon && color === "purple" && "group-hover:text-purple-400",
-          !comingSoon && color === "blue" && "group-hover:text-blue-400",
-          !comingSoon && color === "green" && "group-hover:text-green-400",
-          !comingSoon && color === "yellow" && "group-hover:text-elec-yellow",
-          !comingSoon && color === "orange" && "group-hover:text-orange-400",
+          !comingSoon && color === "purple" && "group-hover:text-purple-400 group-active:text-purple-400",
+          !comingSoon && color === "blue" && "group-hover:text-blue-400 group-active:text-blue-400",
+          !comingSoon && color === "green" && "group-hover:text-green-400 group-active:text-green-400",
+          !comingSoon && color === "yellow" && "group-hover:text-elec-yellow group-active:text-elec-yellow",
+          !comingSoon && color === "orange" && "group-hover:text-orange-400 group-active:text-orange-400",
         )}>
           {title}
         </h3>
@@ -135,9 +135,9 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
         </p>
 
         {!comingSoon && (
-          <div className="flex items-center gap-1 mt-3 text-white/40 group-hover:text-white/70 transition-colors">
+          <div className="flex items-center gap-1 mt-3 text-white/40 group-hover:text-white/70 group-active:text-white/80 transition-colors">
             <span className="text-xs font-medium">Explore</span>
-            <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            <ChevronRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
           </div>
         )}
       </div>
@@ -404,14 +404,14 @@ const CareerProgression = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 pt-safe pb-safe">
+    <div className="bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95  ">
       <Helmet>
         <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
         <meta name="description" content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant." />
         <link rel="canonical" href="/electrician/career-progression" />
       </Helmet>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pt-safe pb-safe">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8  ">
         {/* Back Button Header */}
         <div className="flex items-center justify-between">
           {!activeSection ? (

@@ -278,7 +278,7 @@ const InstallPlanner = () => {
 
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="bg-background overflow-x-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-6xl">
         <div className="space-y-6 sm:space-y-8 animate-fade-in">
           {/* Header Section - Optimized for mobile */}

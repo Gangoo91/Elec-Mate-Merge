@@ -88,7 +88,7 @@ const InputField = ({
         placeholder={placeholder}
         autoComplete={type === "email" ? "email" : type === "password" ? "new-password" : "off"}
         className={cn(
-          "w-full h-14 pl-12 pr-12 rounded-2xl",
+          "w-full h-14 pl-14 pr-12 rounded-2xl",
           "bg-white/[0.06] border-2 text-white placeholder:text-white/30",
           "text-[16px] outline-none transition-all duration-200",
           focusedField === field
@@ -100,7 +100,7 @@ const InputField = ({
         <button
           type="button"
           onClick={onToggle}
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors p-1"
+          className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
         >
           {isVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
         </button>
@@ -202,11 +202,16 @@ const SignUp = () => {
         return;
       }
 
+      // Store onboarding data for later sync
       localStorage.setItem('elec-mate-onboarding', JSON.stringify({
         ...profile,
         consent: { ...consent, timestamp: new Date().toISOString() },
         completedAt: new Date().toISOString()
       }));
+
+      // Store email and name for the check-email page
+      localStorage.setItem('elec-mate-pending-email', email);
+      localStorage.setItem('elec-mate-pending-name', fullName);
 
       await storeConsent({
         email,
@@ -218,23 +223,27 @@ const SignUp = () => {
         consent_timestamp: new Date().toISOString()
       });
 
+      // Store Elec-ID preference for later (after email confirmation)
       if (profile.createElecId && data?.user?.id) {
-        try {
-          const { data: elecIdData } = await supabase.functions.invoke('generate-elec-id', {
-            body: { user_id: data.user.id, ecs_card_type: profile.ecsCardType || null }
-          });
-          if (elecIdData?.elec_id_number) setGeneratedElecId(elecIdData.elec_id_number);
-        } catch {
-          localStorage.setItem('elec-mate-pending-elecid', JSON.stringify({ createElecId: true, ecsCardType: profile.ecsCardType }));
-        }
+        localStorage.setItem('elec-mate-pending-elecid', JSON.stringify({
+          createElecId: true,
+          ecsCardType: profile.ecsCardType,
+          userId: data.user.id
+        }));
       }
 
-      if (data?.session) {
-        setShowSuccess(true);
-        setTimeout(() => navigate('/dashboard'), 800);
-        return;
+      // Send branded confirmation email via Resend
+      try {
+        await supabase.functions.invoke('send-confirmation-email', {
+          body: { email, fullName },
+        });
+        console.log('Confirmation email sent');
+      } catch (emailErr) {
+        console.warn('Confirmation email failed (non-critical):', emailErr);
       }
-      setStep('complete');
+
+      // Redirect to check-email page instead of dashboard
+      navigate('/auth/check-email');
     } catch (err: any) {
       setError(err.message || 'An error occurred');
     } finally {
@@ -285,7 +294,7 @@ const SignUp = () => {
   // Completion screen
   if (step === 'complete') {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex items-center justify-center p-6">
+      <div className="bg-gradient-to-b from-zinc-900 via-black to-black flex items-center justify-center p-6">
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
           <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">
             <CheckCircle2 className="h-10 w-10 text-green-400" />
@@ -305,7 +314,7 @@ const SignUp = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col safe-top safe-bottom overflow-hidden">
+    <div className="bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col safe-top safe-bottom overflow-hidden">
       <SuccessOverlay />
 
       {/* Animated background */}

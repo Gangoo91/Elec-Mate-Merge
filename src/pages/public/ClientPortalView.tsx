@@ -65,7 +65,7 @@ export default function ClientPortalView() {
   // Loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="bg-background flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="h-12 w-12 animate-spin text-blue-500 mx-auto mb-4" />
           <p className="text-muted-foreground">Loading your project portal...</p>
@@ -77,7 +77,7 @@ export default function ClientPortalView() {
   // Error or not found state
   if (error || !portal) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <div className="bg-background flex items-center justify-center p-4">
         <div className="text-center max-w-md">
           <div className="p-4 rounded-full bg-red-500/10 w-fit mx-auto mb-4">
             <AlertCircle className="h-12 w-12 text-red-500" />
@@ -124,7 +124,7 @@ export default function ClientPortalView() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Header */}
       <header className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
         <div className="max-w-2xl mx-auto px-4 py-6">

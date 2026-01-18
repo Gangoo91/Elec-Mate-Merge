@@ -172,7 +172,7 @@ const JobVacancies = () => {
   };
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white">
+    <div className="bg-elec-dark text-white">
       <Helmet>
         <title>Job Vacancies - AI-Enhanced Job Search</title>
         <meta name="description" content="Find electrical jobs with AI-powered matching and personalised recommendations" />

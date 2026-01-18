@@ -14,8 +14,6 @@ import {
   Loader2,
   ChevronLeft,
   ChevronRight,
-  Camera,
-  Shield,
 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import ElecIdOverview from "./elec-id/ElecIdOverview";
@@ -239,7 +237,7 @@ const ElecIdTab = () => {
                 onClick={() => navigateTab('prev')}
                 disabled={activeIndex === 0}
                 className={cn(
-                  "p-2 rounded-xl transition-all active:scale-95",
+                  "h-11 w-11 flex items-center justify-center rounded-xl transition-all active:scale-95 touch-manipulation",
                   activeIndex === 0
                     ? "opacity-30"
                     : "bg-white/5 active:bg-white/10"
@@ -270,7 +268,7 @@ const ElecIdTab = () => {
                 onClick={() => navigateTab('next')}
                 disabled={activeIndex === ELEC_ID_TABS.length - 1}
                 className={cn(
-                  "p-2 rounded-xl transition-all active:scale-95",
+                  "h-11 w-11 flex items-center justify-center rounded-xl transition-all active:scale-95 touch-manipulation",
                   activeIndex === ELEC_ID_TABS.length - 1
                     ? "opacity-30"
                     : "bg-white/5 active:bg-white/10"
@@ -331,7 +329,7 @@ const ElecIdTab = () => {
 
             {/* Segmented Progress Bar */}
             <div className="px-4 pb-3">
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1 min-h-[44px]">
                 {ELEC_ID_TABS.map((tab, index) => (
                   <button
                     key={tab.id}
@@ -340,7 +338,7 @@ const ElecIdTab = () => {
                       scrollToTab(index);
                     }}
                     className={cn(
-                      "flex-1 h-1 rounded-full transition-all duration-300",
+                      "flex-1 h-2 rounded-full transition-all duration-300 touch-manipulation",
                       index <= activeIndex
                         ? "bg-elec-yellow"
                         : "bg-white/10"
@@ -350,10 +348,10 @@ const ElecIdTab = () => {
                 ))}
               </div>
               <div className="flex justify-between mt-1.5">
-                <span className="text-[10px] text-muted-foreground">
+                <span className="text-xs text-muted-foreground">
                   {activeIndex + 1} of {ELEC_ID_TABS.length}
                 </span>
-                <span className="text-[10px] text-elec-yellow font-medium">
+                <span className="text-xs text-elec-yellow font-medium">
                   {Math.round(((activeIndex + 1) / ELEC_ID_TABS.length) * 100)}% Complete
                 </span>
               </div>
@@ -399,7 +397,7 @@ const ElecIdTab = () => {
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.2}
         onDragEnd={handleDragEnd}
-        className="touch-pan-y pb-20 sm:pb-4"
+        className="touch-pan-y pb-4"
       >
         <SubTabComponent onNavigate={(tabId: string) => {
           setActiveSubTab(tabId);
@@ -407,88 +405,6 @@ const ElecIdTab = () => {
           if (index >= 0) scrollToTab(index);
         }} />
       </motion.div>
-
-      {/* Mobile Quick Actions Bar - Native App Style */}
-      {isMobile && (
-        <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-black/90 backdrop-blur-xl border-t border-white/[0.08] px-6 pt-3 pb-6 z-50">
-          <div className="flex justify-around items-end max-w-sm mx-auto">
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={() => {
-                setActiveSubTab("documents");
-                scrollToTab(ELEC_ID_TABS.findIndex(t => t.id === "documents"));
-              }}
-              className={cn(
-                "flex flex-col items-center gap-1.5 py-2 px-4 rounded-2xl transition-all touch-manipulation",
-                activeSubTab === "documents" ? "bg-elec-yellow/10" : ""
-              )}
-            >
-              <div className={cn(
-                "w-12 h-12 rounded-2xl flex items-center justify-center transition-all",
-                activeSubTab === "documents"
-                  ? "bg-elec-yellow shadow-lg shadow-elec-yellow/30"
-                  : "bg-white/[0.08] border border-white/[0.1]"
-              )}>
-                <Camera className={cn("h-5 w-5", activeSubTab === "documents" ? "text-elec-dark" : "text-elec-yellow")} />
-              </div>
-              <span className={cn(
-                "text-[11px] font-medium",
-                activeSubTab === "documents" ? "text-elec-yellow" : "text-white/50"
-              )}>Scan</span>
-            </motion.button>
-
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={() => {
-                setActiveSubTab("share");
-                scrollToTab(ELEC_ID_TABS.findIndex(t => t.id === "share"));
-              }}
-              className={cn(
-                "flex flex-col items-center gap-1.5 py-2 px-4 rounded-2xl transition-all touch-manipulation",
-                activeSubTab === "share" ? "bg-blue-500/10" : ""
-              )}
-            >
-              <div className={cn(
-                "w-12 h-12 rounded-2xl flex items-center justify-center transition-all",
-                activeSubTab === "share"
-                  ? "bg-blue-500 shadow-lg shadow-blue-500/30"
-                  : "bg-white/[0.08] border border-white/[0.1]"
-              )}>
-                <Share2 className={cn("h-5 w-5", activeSubTab === "share" ? "text-white" : "text-blue-400")} />
-              </div>
-              <span className={cn(
-                "text-[11px] font-medium",
-                activeSubTab === "share" ? "text-blue-400" : "text-white/50"
-              )}>Share</span>
-            </motion.button>
-
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={() => {
-                setActiveSubTab("compliance");
-                scrollToTab(ELEC_ID_TABS.findIndex(t => t.id === "compliance"));
-              }}
-              className={cn(
-                "flex flex-col items-center gap-1.5 py-2 px-4 rounded-2xl transition-all touch-manipulation",
-                activeSubTab === "compliance" ? "bg-green-500/10" : ""
-              )}
-            >
-              <div className={cn(
-                "w-12 h-12 rounded-2xl flex items-center justify-center transition-all",
-                activeSubTab === "compliance"
-                  ? "bg-green-500 shadow-lg shadow-green-500/30"
-                  : "bg-white/[0.08] border border-white/[0.1]"
-              )}>
-                <Shield className={cn("h-5 w-5", activeSubTab === "compliance" ? "text-white" : "text-green-400")} />
-              </div>
-              <span className={cn(
-                "text-[11px] font-medium",
-                activeSubTab === "compliance" ? "text-green-400" : "text-white/50"
-              )}>Status</span>
-            </motion.button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

@@ -592,10 +592,10 @@ Please provide exhaustive detail for materials - include everything from the sma
                         </p>
                       </div>
                     
-                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-orange-500/10 overflow-hidden">
+                      <div className="p-3 sm:p-4 bg-elec-dark/30 rounded-xl border border-elec-yellow/10 overflow-hidden">
                         <div className="flex items-center gap-3 mb-3">
-                          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-orange-500/30 to-orange-600/20 rounded-xl flex items-center justify-center border border-orange-500/40 flex-shrink-0">
-                            <Lightbulb className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400" />
+                          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-elec-yellow/30 to-amber-500/20 rounded-xl flex items-center justify-center border border-elec-yellow/40 flex-shrink-0">
+                            <Lightbulb className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
                           </div>
                           <h3 className="font-semibold text-foreground text-sm sm:text-base break-words min-w-0">Expert Recommendations</h3>
                         </div>

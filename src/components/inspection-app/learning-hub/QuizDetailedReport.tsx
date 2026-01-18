@@ -37,24 +37,25 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={onBack}
-            className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
+            className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black min-h-[44px] text-sm touch-manipulation active:scale-[0.98]"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Analytics
+            <span className="hidden sm:inline">Back to Analytics</span>
+            <span className="sm:hidden">Back</span>
           </Button>
         </div>
       </div>
 
       <div>
-        <h1 className="text-3xl font-bold text-foreground mb-2">Detailed Performance Report</h1>
-        <p className="text-white/80">Comprehensive analysis of your quiz performance</p>
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 sm:mb-2">Detailed Performance Report</h1>
+        <p className="text-white/80 text-xs sm:text-sm md:text-base">Comprehensive analysis of your quiz performance</p>
       </div>
 
       {/* Overall Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
         <Card className="bg-card border-border">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">

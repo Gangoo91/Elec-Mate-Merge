@@ -6,19 +6,19 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
-  UserCheck,
   Award,
   Shield,
   User,
   FileText,
-  Download,
-  Save,
-  Mail,
   CheckCircle,
   AlertTriangle,
-  Loader2
+  Building2,
+  PenTool,
+  Calendar,
+  BadgeCheck,
+  ClipboardCheck,
+  FileWarning
 } from 'lucide-react';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useToast } from '@/hooks/use-toast';
@@ -34,6 +34,36 @@ interface EICCertificateTabProps {
   canGenerateCertificate: boolean;
 }
 
+// Reusable glass card component
+const GlassCard = ({ children, className, color = 'white' }: { children: React.ReactNode; className?: string; color?: string }) => {
+  const borderColors: Record<string, string> = {
+    white: 'border-white/[0.08]',
+    amber: 'border-amber-500/20',
+    green: 'border-green-500/20',
+    purple: 'border-purple-500/20',
+  };
+
+  return (
+    <div className={cn(
+      "rounded-xl bg-white/[0.02] backdrop-blur-sm border p-5",
+      borderColors[color] || borderColors.white,
+      className
+    )}>
+      {children}
+    </div>
+  );
+};
+
+// Sub-section header component
+const SubSectionHeader = ({ icon: Icon, title, color }: { icon: any; title: string; color: string }) => (
+  <div className="flex items-center gap-2.5 mb-4">
+    <div className={cn("p-1.5 rounded-lg", `bg-${color}/10`)}>
+      <Icon className={cn("h-4 w-4", `text-${color}`)} />
+    </div>
+    <h4 className={cn("text-sm font-semibold", `text-${color}`)}>{title}</h4>
+  </div>
+);
+
 const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   formData,
   onUpdate,
@@ -44,7 +74,6 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
 }) => {
   const { toast } = useToast();
   const [openSections, setOpenSections] = useState({
-    inspectedBy: true,
     reportAuthorised: true,
     compliance: true
   });
@@ -54,17 +83,12 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   };
 
   // Completion checks
-  const isInspectedByComplete = formData.inspectedByName && formData.inspectedBySignature;
   const isReportAuthorisedComplete = formData.reportAuthorisedByName && formData.reportAuthorisedBySignature && formData.reportAuthorisedByDate;
   const isComplianceComplete = formData.bs7671Compliance;
+  const allComplete = isReportAuthorisedComplete && isComplianceComplete;
 
   const getCompletionPercentage = (section: string) => {
     switch (section) {
-      case 'inspectedBy': {
-        const fields = ['inspectedByName', 'inspectedBySignature'];
-        const filled = fields.filter(f => formData[f]).length;
-        return Math.round((filled / fields.length) * 100);
-      }
       case 'reportAuthorised': {
         const fields = ['reportAuthorisedByName', 'reportAuthorisedBySignature', 'reportAuthorisedByDate'];
         const filled = fields.filter(f => formData[f]).length;
@@ -79,139 +103,28 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
 
   // Copy from inspector declaration
   const copyFromInspector = () => {
-    onUpdate('inspectedByName', formData.inspectorName);
-    onUpdate('inspectedBySignature', formData.inspectorSignature);
-    onUpdate('inspectedByForOnBehalfOf', formData.inspectorCompany);
-    onUpdate('inspectedByPosition', 'Inspector & Tester');
-    onUpdate('inspectedByAddress', formData.inspectorCompany);
-    onUpdate('inspectedByCpScheme', formData.inspectorQualifications?.split(',')[0] || '');
+    onUpdate('reportAuthorisedByName', formData.inspectorName?.toUpperCase() || '');
+    onUpdate('reportAuthorisedBySignature', formData.inspectorSignature);
+    onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
+    onUpdate('reportAuthorisedByForOnBehalfOf', formData.inspectorCompany);
+    onUpdate('reportAuthorisedByPosition', 'Inspector & Tester');
+    onUpdate('reportAuthorisedByAddress', formData.inspectorAddress);
+    onUpdate('reportAuthorisedByPostcode', formData.inspectorPostcode);
+    onUpdate('reportAuthorisedByPhone', formData.inspectorPhone);
     toast({
-      title: "Details copied",
-      description: "Inspector details copied to 'Inspected By' authorisation"
+      title: "Details Copied",
+      description: "Inspector details copied to authorisation section"
     });
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      {/* Section 1: Inspected By */}
-      <div className="eicr-section-card">
-        <Collapsible open={openSections.inspectedBy} onOpenChange={() => toggleSection('inspectedBy')}>
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Inspected By"
-              icon={UserCheck}
-              isOpen={openSections.inspectedBy}
-              color="purple-500"
-              completionPercentage={getCompletionPercentage('inspectedBy')}
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
-              {/* Copy from Inspector Button */}
-              {formData.inspectorName && (
-                <Button
-                  onClick={copyFromInspector}
-                  variant="outline"
-                  className="w-full h-11 touch-manipulation border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300"
-                >
-                  <User className="h-4 w-4 mr-2" />
-                  Copy from Inspector Declaration
-                </Button>
-              )}
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="inspectedByName">Name (Capitals) *</Label>
-                  <Input
-                    id="inspectedByName"
-                    value={formData.inspectedByName || ''}
-                    onChange={(e) => onUpdate('inspectedByName', e.target.value.toUpperCase())}
-                    placeholder="FULL NAME IN CAPITALS"
-                    className="uppercase h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="inspectedByPosition">Position</Label>
-                  <Input
-                    id="inspectedByPosition"
-                    value={formData.inspectedByPosition || ''}
-                    onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
-                    placeholder="e.g., Inspector & Tester"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="inspectedByForOnBehalfOf">For/on behalf of</Label>
-                  <Input
-                    id="inspectedByForOnBehalfOf"
-                    value={formData.inspectedByForOnBehalfOf || ''}
-                    onChange={(e) => onUpdate('inspectedByForOnBehalfOf', e.target.value)}
-                    placeholder="Company or organisation name"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="inspectedByCpScheme">CP Scheme</Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      id="inspectedByCpScheme"
-                      value={formData.inspectedByCpScheme || ''}
-                      onChange={(e) => onUpdate('inspectedByCpScheme', e.target.value)}
-                      placeholder="Competent Person Scheme"
-                      disabled={formData.inspectedByCpSchemeNA}
-                      className={cn("h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500", formData.inspectedByCpSchemeNA && 'opacity-50')}
-                    />
-                    <div className="flex items-center gap-2 whitespace-nowrap">
-                      <Checkbox
-                        id="inspectedByCpSchemeNA"
-                        checked={formData.inspectedByCpSchemeNA || false}
-                        onCheckedChange={(checked) => {
-                          onUpdate('inspectedByCpSchemeNA', checked);
-                          if (checked) onUpdate('inspectedByCpScheme', '');
-                        }}
-                        className="border-white/40 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
-                      />
-                      <Label htmlFor="inspectedByCpSchemeNA" className="cursor-pointer text-sm">N/A</Label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="inspectedByAddress">Address</Label>
-                <Textarea
-                  id="inspectedByAddress"
-                  rows={2}
-                  value={formData.inspectedByAddress || ''}
-                  onChange={(e) => onUpdate('inspectedByAddress', e.target.value)}
-                  placeholder="Full business address"
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-purple-500 focus:ring-purple-500"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>Signature *</Label>
-                <SignatureInput
-                  value={formData.inspectedBySignature || ''}
-                  onChange={(value) => onUpdate('inspectedBySignature', value || '')}
-                  placeholder="Signature of inspector"
-                  required={true}
-                />
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
-
-      {/* Section 2: Report Authorised For Issue By */}
+    <div className="space-y-5">
+      {/* Report Authorised For Issue By */}
       <div className="eicr-section-card">
         <Collapsible open={openSections.reportAuthorised} onOpenChange={() => toggleSection('reportAuthorised')}>
           <CollapsibleTrigger className="w-full">
             <SectionHeader
-              title="Report Authorised For Issue"
+              title="Report Authorisation"
               icon={Award}
               isOpen={openSections.reportAuthorised}
               color="amber-500"
@@ -219,120 +132,143 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
             />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
-              {/* Same as Inspected By Checkbox */}
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
-                <Checkbox
-                  id="eicSameAsInspectedBy"
-                  checked={formData.eicSameAsInspectedBy || false}
-                  onCheckedChange={(checked) => {
-                    onUpdate('eicSameAsInspectedBy', checked);
-                    if (checked) {
-                      onUpdate('reportAuthorisedByName', formData.inspectedByName);
-                      onUpdate('reportAuthorisedBySignature', formData.inspectedBySignature);
-                      onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
-                      onUpdate('reportAuthorisedByForOnBehalfOf', formData.inspectedByForOnBehalfOf);
-                      onUpdate('reportAuthorisedByPosition', formData.inspectedByPosition);
-                      onUpdate('reportAuthorisedByAddress', formData.inspectedByAddress);
-                      onUpdate('reportAuthorisedByMembershipNo', formData.inspectedByCpScheme);
-                      toast({
-                        title: "Details copied",
-                        description: "Copied from 'Inspected By' section"
-                      });
-                    }
-                  }}
-                  className="border-amber-500/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 mt-0.5"
-                />
-                <Label htmlFor="eicSameAsInspectedBy" className="text-sm font-medium cursor-pointer leading-relaxed text-amber-200">
-                  Same person as Inspected By (auto-populate fields)
-                </Label>
-              </div>
+            <div className="p-4 sm:p-5 space-y-5">
+              {/* Quick Copy Button */}
+              {formData.inspectorName && (
+                <Button
+                  onClick={copyFromInspector}
+                  className="w-full h-12 touch-manipulation bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-200 font-medium rounded-xl active:scale-[0.98] transition-transform"
+                  variant="outline"
+                >
+                  <User className="h-5 w-5 mr-2" />
+                  Copy from Inspector Declaration
+                </Button>
+              )}
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="reportAuthorisedByName">Name (Capitals) *</Label>
-                  <Input
-                    id="reportAuthorisedByName"
-                    value={formData.reportAuthorisedByName || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())}
-                    placeholder="FULL NAME IN CAPITALS"
-                    className="uppercase h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="reportAuthorisedByDate">Date *</Label>
-                  <Input
-                    id="reportAuthorisedByDate"
-                    type="date"
-                    value={formData.reportAuthorisedByDate || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
-                  />
-                </div>
-              </div>
+              {/* Signatory Details Card */}
+              <GlassCard color="amber">
+                <SubSectionHeader icon={User} title="Authorising Person" color="amber-400" />
+                <div className="space-y-5">
+                  {/* Name & Date Row */}
+                  <div className="grid grid-cols-1 gap-5">
+                    <div className="space-y-2.5">
+                      <Label className="text-sm text-white">Name (Capitals) *</Label>
+                      <Input
+                        id="reportAuthorisedByName"
+                        value={formData.reportAuthorisedByName || ''}
+                        onChange={(e) => onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())}
+                        placeholder="FULL NAME IN CAPITALS"
+                        className={cn(
+                          "uppercase h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl",
+                          !formData.reportAuthorisedByName && 'border-red-500/30'
+                        )}
+                      />
+                    </div>
+                    <div className="space-y-2.5">
+                      <Label className="text-sm text-white">Company / For and on behalf of</Label>
+                      <Input
+                        id="reportAuthorisedByForOnBehalfOf"
+                        value={formData.reportAuthorisedByForOnBehalfOf || ''}
+                        onChange={(e) => onUpdate('reportAuthorisedByForOnBehalfOf', e.target.value)}
+                        placeholder="Company or organisation"
+                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                      />
+                    </div>
+                  </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="reportAuthorisedByForOnBehalfOf">For/on behalf of</Label>
-                  <Input
-                    id="reportAuthorisedByForOnBehalfOf"
-                    value={formData.reportAuthorisedByForOnBehalfOf || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByForOnBehalfOf', e.target.value)}
-                    placeholder="Company or organisation name"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="reportAuthorisedByPosition">Position</Label>
-                  <Input
-                    id="reportAuthorisedByPosition"
-                    value={formData.reportAuthorisedByPosition || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByPosition', e.target.value)}
-                    placeholder="Job title or position"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
-                  />
-                </div>
-              </div>
+                  {/* Position */}
+                  <div className="space-y-2.5">
+                    <Label className="text-sm text-white">Position</Label>
+                    <Input
+                      id="reportAuthorisedByPosition"
+                      value={formData.reportAuthorisedByPosition || ''}
+                      onChange={(e) => onUpdate('reportAuthorisedByPosition', e.target.value)}
+                      placeholder="Job title or position"
+                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                    />
+                  </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="reportAuthorisedByAddress">Address</Label>
-                  <Textarea
-                    id="reportAuthorisedByAddress"
-                    rows={2}
-                    value={formData.reportAuthorisedByAddress || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByAddress', e.target.value)}
-                    placeholder="Full business address"
-                    className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-amber-500 focus:ring-amber-500"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="reportAuthorisedByMembershipNo">Membership No</Label>
-                  <Input
-                    id="reportAuthorisedByMembershipNo"
-                    value={formData.reportAuthorisedByMembershipNo || ''}
-                    onChange={(e) => onUpdate('reportAuthorisedByMembershipNo', e.target.value)}
-                    placeholder="Membership or registration number"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
-                  />
-                </div>
-              </div>
+                  {/* Address */}
+                  <div className="space-y-2.5">
+                    <Label className="text-sm text-white">Address</Label>
+                    <Textarea
+                      id="reportAuthorisedByAddress"
+                      rows={2}
+                      value={formData.reportAuthorisedByAddress || ''}
+                      onChange={(e) => onUpdate('reportAuthorisedByAddress', e.target.value)}
+                      placeholder="Full business address"
+                      className="text-base touch-manipulation min-h-[70px] bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                    />
+                  </div>
 
-              <div className="space-y-2">
-                <Label>Signature *</Label>
+                  {/* Postcode, Tel, Date Row */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="space-y-2.5">
+                      <Label className="text-sm text-white">Postcode</Label>
+                      <Input
+                        id="reportAuthorisedByPostcode"
+                        value={formData.reportAuthorisedByPostcode || ''}
+                        onChange={(e) => onUpdate('reportAuthorisedByPostcode', e.target.value)}
+                        placeholder="AB1 2CD"
+                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                      />
+                    </div>
+                    <div className="space-y-2.5">
+                      <Label className="text-sm text-white">Tel No</Label>
+                      <Input
+                        id="reportAuthorisedByPhone"
+                        type="tel"
+                        value={formData.reportAuthorisedByPhone || ''}
+                        onChange={(e) => onUpdate('reportAuthorisedByPhone', e.target.value)}
+                        placeholder="Phone"
+                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                      />
+                    </div>
+                    <div className="space-y-2.5">
+                      <Label className="text-sm text-white">Date *</Label>
+                      <Input
+                        id="reportAuthorisedByDate"
+                        type="date"
+                        value={formData.reportAuthorisedByDate || ''}
+                        onChange={(e) => onUpdate('reportAuthorisedByDate', e.target.value)}
+                        className={cn(
+                          "h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl",
+                          !formData.reportAuthorisedByDate && 'border-red-500/30'
+                        )}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Membership No */}
+                  <div className="space-y-2.5">
+                    <Label className="text-sm text-white">CP Scheme / Membership No</Label>
+                    <Input
+                      id="reportAuthorisedByMembershipNo"
+                      value={formData.reportAuthorisedByMembershipNo || ''}
+                      onChange={(e) => onUpdate('reportAuthorisedByMembershipNo', e.target.value)}
+                      placeholder="Membership or registration number"
+                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                    />
+                  </div>
+                </div>
+              </GlassCard>
+
+              {/* Signature Card */}
+              <GlassCard color="amber">
+                <SubSectionHeader icon={PenTool} title="Authorising Signature *" color="amber-400" />
                 <SignatureInput
                   value={formData.reportAuthorisedBySignature || ''}
                   onChange={(value) => onUpdate('reportAuthorisedBySignature', value || '')}
                   placeholder="Signature of authorising person"
                   required={true}
                 />
-              </div>
+              </GlassCard>
             </div>
           </CollapsibleContent>
         </Collapsible>
       </div>
 
-      {/* Section 3: Compliance Declarations */}
+      {/* Compliance Declarations */}
       <div className="eicr-section-card">
         <Collapsible open={openSections.compliance} onOpenChange={() => toggleSection('compliance')}>
           <CollapsibleTrigger className="w-full">
@@ -345,103 +281,136 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
             />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
-              <div className="space-y-4">
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-green-500/10 border border-green-500/30">
-                  <Checkbox
-                    id="bs7671Compliance"
-                    checked={formData.bs7671Compliance || false}
-                    onCheckedChange={(checked) => onUpdate('bs7671Compliance', checked)}
-                    className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 mt-0.5"
-                  />
-                  <div className="space-y-1">
-                    <Label htmlFor="bs7671Compliance" className="cursor-pointer font-medium text-green-200">
-                      BS 7671 Compliance *
-                    </Label>
-                    <p className="text-xs text-white/60">
-                      Installation complies with BS 7671:2018 (18th Edition) and Amendment 2
-                    </p>
-                  </div>
-                </div>
+            <div className="p-4 sm:p-5 space-y-5">
+              {/* Compliance Checkboxes */}
+              <GlassCard color="green">
+                <SubSectionHeader icon={BadgeCheck} title="Compliance Confirmations" color="green-400" />
+                <div className="space-y-4">
+                  {/* BS 7671 Compliance - Required */}
+                  <label className={cn(
+                    "flex items-start gap-4 p-4 rounded-xl cursor-pointer touch-manipulation active:scale-[0.99] transition-transform",
+                    formData.bs7671Compliance
+                      ? "bg-green-500/15 border border-green-500/40"
+                      : "bg-white/[0.03] border border-white/10"
+                  )}>
+                    <Checkbox
+                      id="bs7671Compliance"
+                      checked={formData.bs7671Compliance || false}
+                      onCheckedChange={(checked) => onUpdate('bs7671Compliance', checked)}
+                      className="h-6 w-6 mt-0.5 border-green-500/50 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+                    />
+                    <div className="space-y-1 flex-1">
+                      <span className="text-sm font-medium text-white block">BS 7671 Compliance *</span>
+                      <span className="text-xs text-white/70 block leading-relaxed">
+                        Installation complies with BS 7671:2018 (18th Edition) and Amendment 2
+                      </span>
+                    </div>
+                  </label>
 
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-                  <Checkbox
-                    id="buildingRegsCompliance"
-                    checked={formData.buildingRegsCompliance || false}
-                    onCheckedChange={(checked) => onUpdate('buildingRegsCompliance', checked)}
-                    className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black mt-0.5"
-                  />
-                  <div className="space-y-1">
-                    <Label htmlFor="buildingRegsCompliance" className="cursor-pointer font-medium">
-                      Building Regulations Compliance
-                    </Label>
-                    <p className="text-xs text-white/60">
-                      Installation complies with relevant Building Regulations (Part P where applicable)
-                    </p>
-                  </div>
-                </div>
+                  {/* Building Regs Compliance - Optional */}
+                  <label className={cn(
+                    "flex items-start gap-4 p-4 rounded-xl cursor-pointer touch-manipulation active:scale-[0.99] transition-transform",
+                    formData.buildingRegsCompliance
+                      ? "bg-elec-yellow/10 border border-elec-yellow/30"
+                      : "bg-white/[0.03] border border-white/10"
+                  )}>
+                    <Checkbox
+                      id="buildingRegsCompliance"
+                      checked={formData.buildingRegsCompliance || false}
+                      onCheckedChange={(checked) => onUpdate('buildingRegsCompliance', checked)}
+                      className="h-6 w-6 mt-0.5 border-elec-yellow/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                    />
+                    <div className="space-y-1 flex-1">
+                      <span className="text-sm font-medium text-white block">Building Regulations Compliance</span>
+                      <span className="text-xs text-white/70 block leading-relaxed">
+                        Installation complies with Building Regulations (Part P where applicable)
+                      </span>
+                    </div>
+                  </label>
 
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
-                  <Checkbox
-                    id="competentPersonScheme"
-                    checked={formData.competentPersonScheme || false}
-                    onCheckedChange={(checked) => onUpdate('competentPersonScheme', checked)}
-                    className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black mt-0.5"
-                  />
-                  <div className="space-y-1">
-                    <Label htmlFor="competentPersonScheme" className="cursor-pointer font-medium">
-                      Competent Person Scheme
-                    </Label>
-                    <p className="text-xs text-white/60">
-                      Work carried out under a registered Competent Person Scheme (self-certification)
-                    </p>
-                  </div>
+                  {/* Competent Person Scheme - Optional */}
+                  <label className={cn(
+                    "flex items-start gap-4 p-4 rounded-xl cursor-pointer touch-manipulation active:scale-[0.99] transition-transform",
+                    formData.competentPersonScheme
+                      ? "bg-elec-yellow/10 border border-elec-yellow/30"
+                      : "bg-white/[0.03] border border-white/10"
+                  )}>
+                    <Checkbox
+                      id="competentPersonScheme"
+                      checked={formData.competentPersonScheme || false}
+                      onCheckedChange={(checked) => onUpdate('competentPersonScheme', checked)}
+                      className="h-6 w-6 mt-0.5 border-elec-yellow/50 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                    />
+                    <div className="space-y-1 flex-1">
+                      <span className="text-sm font-medium text-white block">Competent Person Scheme</span>
+                      <span className="text-xs text-white/70 block leading-relaxed">
+                        Work carried out under a registered Competent Person Scheme
+                      </span>
+                    </div>
+                  </label>
                 </div>
-              </div>
+              </GlassCard>
 
-              {/* Additional Notes */}
-              <div className="space-y-2 pt-4 border-t border-white/10">
-                <Label htmlFor="additionalNotes">Additional Notes & Comments</Label>
-                <Textarea
-                  id="additionalNotes"
-                  placeholder="Include any relevant information about the installation, design decisions, special considerations, or limitations..."
-                  value={formData.additionalNotes || ''}
-                  onChange={(e) => onUpdate('additionalNotes', e.target.value)}
-                  rows={3}
-                  className="text-base touch-manipulation min-h-[100px] border-white/30 focus:border-green-500 focus:ring-green-500"
-                />
-              </div>
+              {/* Additional Notes Card */}
+              <GlassCard color="white">
+                <SubSectionHeader icon={FileText} title="Additional Notes" color="white" />
+                <div className="space-y-2.5">
+                  <Label className="text-sm text-white">Comments & Observations</Label>
+                  <Textarea
+                    id="additionalNotes"
+                    placeholder="Any relevant information about the installation, design decisions, or special considerations..."
+                    value={formData.additionalNotes || ''}
+                    onChange={(e) => onUpdate('additionalNotes', e.target.value)}
+                    rows={3}
+                    className="text-base touch-manipulation min-h-[100px] bg-white/[0.03] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-xl"
+                  />
+                </div>
+              </GlassCard>
             </div>
           </CollapsibleContent>
         </Collapsible>
       </div>
 
       {/* Validation Summary */}
-      {isInspectedByComplete && isReportAuthorisedComplete && isComplianceComplete ? (
-        <Alert className="border-green-500/30 bg-green-500/10">
-          <CheckCircle className="h-4 w-4 text-green-400" />
-          <AlertDescription className="text-green-200">
-            <strong>Certificate Ready.</strong> All authorisation sections are complete. You can now generate the EIC.
-          </AlertDescription>
-        </Alert>
+      {allComplete ? (
+        <GlassCard className="border-green-500/30 bg-green-500/10">
+          <div className="flex gap-3">
+            <div className="p-2 rounded-lg bg-green-500/20 h-fit">
+              <CheckCircle className="h-5 w-5 text-green-400" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-green-300 mb-1">Certificate Ready</p>
+              <p className="text-xs text-white/70">
+                All sections complete. You can now generate the EIC.
+              </p>
+            </div>
+          </div>
+        </GlassCard>
       ) : (
-        <Alert className="border-amber-500/30 bg-amber-500/10">
-          <AlertTriangle className="h-4 w-4 text-amber-400" />
-          <AlertDescription className="text-amber-200">
-            <strong>Incomplete sections:</strong>
-            <ul className="mt-2 list-disc list-inside space-y-1 text-sm">
-              {!isInspectedByComplete && (
-                <li>Complete 'Inspected By' section with name and signature</li>
-              )}
-              {!isReportAuthorisedComplete && (
-                <li>Complete 'Report Authorised For Issue' with name, date, and signature</li>
-              )}
-              {!isComplianceComplete && (
-                <li>Confirm BS 7671 compliance declaration</li>
-              )}
-            </ul>
-          </AlertDescription>
-        </Alert>
+        <GlassCard className="border-amber-500/30 bg-amber-500/10">
+          <div className="flex gap-3">
+            <div className="p-2 rounded-lg bg-amber-500/20 h-fit">
+              <AlertTriangle className="h-5 w-5 text-amber-400" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-amber-300 mb-2">Incomplete Sections</p>
+              <ul className="space-y-1.5">
+                {!isReportAuthorisedComplete && (
+                  <li className="text-xs text-white/70 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    Complete authorisation with name, date, and signature
+                  </li>
+                )}
+                {!isComplianceComplete && (
+                  <li className="text-xs text-white/70 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    Confirm BS 7671 compliance declaration
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
+        </GlassCard>
       )}
 
       {/* Certificate Actions */}
@@ -450,6 +419,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
         reportId={reportId}
         onGenerateCertificate={onGenerateCertificate}
         onSaveDraft={onSaveDraft}
+        onUpdate={onUpdate}
       />
     </div>
   );

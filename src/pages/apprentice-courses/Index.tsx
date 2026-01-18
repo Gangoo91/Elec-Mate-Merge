@@ -47,7 +47,7 @@ const courses = [
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Header - full width */}
       <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 pt-3 sm:pt-4 md:pt-6 pb-4 sm:pb-6">
         <Link to="/study-centre">

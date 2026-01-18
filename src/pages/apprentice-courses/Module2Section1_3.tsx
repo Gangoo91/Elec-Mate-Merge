@@ -168,7 +168,7 @@ const Module2Section1_3 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
+    <div className="bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
@@ -553,7 +553,7 @@ const Module2Section1_3 = () => {
           <div className="space-y-1 border border-white/10 rounded-lg overflow-hidden">
             {faqs.map((faq, index) => (
               <details key={index} className="group">
-                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-white/5 transition-colors touch-manipulation">
+                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-white/5 active:bg-white/10 transition-all touch-manipulation">
                   <span className="font-medium text-white">{faq.question}</span>
                   <span className="ml-2 transform transition-transform group-open:rotate-180">▼</span>
                 </summary>

@@ -84,35 +84,35 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
   ];
 
   return (
-    <div className="space-y-6 sm:space-y-8 md:space-y-10">
-      {/* Header Section */}
-      <div className="max-w-4xl mx-auto text-center space-y-4 px-3 sm:px-4">
+    <div className="space-y-5 sm:space-y-6 md:space-y-8">
+      {/* Header Section - compact on mobile */}
+      <div className="max-w-4xl mx-auto text-center space-y-3 sm:space-y-4 px-3 sm:px-4">
         {/* Amendment Badge */}
-        <div className="flex justify-center gap-2 mb-2">
-          <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
+        <div className="flex justify-center gap-1.5 sm:gap-2 flex-wrap">
+          <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-[10px] sm:text-xs">
             <CheckCircle2 className="h-3 w-3 mr-1" />
             BS 7671:2018+A3:2024
           </Badge>
-          <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+          <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-[10px] sm:text-xs">
             <Calendar className="h-3 w-3 mr-1" />
-            Updated January 2026
+            Updated Jan 2026
           </Badge>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-          <div className="p-3 sm:p-4 bg-elec-yellow/10 rounded-2xl border border-elec-yellow/20">
-            <Zap className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-4">
+          <div className="p-2.5 sm:p-4 bg-elec-yellow/10 rounded-xl sm:rounded-2xl border border-elec-yellow/20">
+            <Zap className="h-7 w-7 sm:h-10 sm:w-10 text-elec-yellow" />
           </div>
           <div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">
               Inspection & Testing Hub
             </h1>
-            <p className="text-sm sm:text-base text-white/80 mt-1">
-              18th Edition Amendment 3 Compliant Resources
+            <p className="text-xs sm:text-sm md:text-base text-white/80 mt-0.5 sm:mt-1">
+              18th Edition Amendment 3 Resources
             </p>
           </div>
         </div>
-        <p className="text-sm sm:text-base text-white max-w-2xl mx-auto">
+        <p className="text-xs sm:text-sm md:text-base text-white max-w-2xl mx-auto hidden sm:block">
           Comprehensive learning modules aligned with the latest BS 7671:2018 Amendment 3:2024 requirements
         </p>
       </div>
@@ -132,40 +132,40 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
           return (
             <Card
               key={module.id}
-              className={`relative overflow-hidden bg-elec-gray ${module.borderColor} rounded-xl sm:rounded-2xl hover:scale-[1.02] transition-all duration-300 group cursor-pointer touch-manipulation`}
+              className={`relative overflow-hidden bg-elec-gray ${module.borderColor} rounded-xl sm:rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group cursor-pointer touch-manipulation`}
               onClick={handleClick}
             >
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${module.gradient} opacity-50 group-hover:opacity-70 transition-opacity duration-300`} />
 
-              <div className="relative p-5 sm:p-6">
+              <div className="relative p-4 sm:p-5 md:p-6">
                 {/* Top Row: Icon and Stats */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className={`p-3 sm:p-4 ${module.iconBg} rounded-xl sm:rounded-2xl group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className={`h-7 w-7 sm:h-8 sm:w-8 ${module.iconColor}`} />
+                <div className="flex items-start justify-between mb-3 sm:mb-4">
+                  <div className={`p-2.5 sm:p-3 md:p-4 ${module.iconBg} rounded-lg sm:rounded-xl md:rounded-2xl group-hover:scale-110 transition-transform duration-300`}>
+                    <IconComponent className={`h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 ${module.iconColor}`} />
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-white/60">
+                  <div className="flex items-center gap-1.5 sm:gap-2 text-xs text-white/60">
                     <Clock className="h-3.5 w-3.5" />
                     <span>{module.stats.duration}</span>
                   </div>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-1.5 sm:mb-2">
                   {module.title}
                 </h3>
 
-                {/* Description */}
-                <p className="text-sm text-white/80 leading-relaxed mb-4">
+                {/* Description - compact on mobile */}
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed mb-3 sm:mb-4 line-clamp-2 sm:line-clamp-none">
                   {module.description}
                 </p>
 
-                {/* Feature Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
+                {/* Feature Tags - horizontal scroll on mobile */}
+                <div className="flex gap-1.5 sm:gap-2 mb-3 sm:mb-4 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-1">
                   {module.features.map((feature, idx) => (
                     <span
                       key={idx}
-                      className="text-xs px-2 py-1 rounded-full bg-white/10 text-white border border-white/10"
+                      className="text-xs px-2 py-0.5 sm:py-1 rounded-full bg-white/10 text-white border border-white/10 whitespace-nowrap flex-shrink-0"
                     >
                       {feature}
                     </span>
@@ -185,17 +185,17 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
 
       {/* GN3 Quick Reference Section */}
       <div className="max-w-6xl mx-auto px-3 sm:px-4">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-2 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
-            <Gauge className="h-5 w-5 text-elec-yellow" />
+        <div className="flex items-center gap-2.5 sm:gap-3 mb-3 sm:mb-4">
+          <div className="p-1.5 sm:p-2 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
+            <Gauge className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">Quick Reference</h2>
-            <p className="text-sm text-white/70">Essential GN3 values & test your knowledge</p>
+            <h2 className="text-lg sm:text-xl font-bold text-white">Quick Reference</h2>
+            <p className="text-xs sm:text-sm text-white/70">Essential GN3 values & quiz</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
           {/* Acceptance Limits */}
           <GN3AcceptanceLimits />
 
@@ -207,16 +207,15 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
       {/* Amendment 3 Info Section */}
       <div className="max-w-6xl mx-auto px-3 sm:px-4">
         <Card className="bg-gradient-to-r from-blue-500/10 to-elec-yellow/10 border-blue-500/20 rounded-xl">
-          <div className="p-4 sm:p-5">
-            <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-blue-500/20 flex-shrink-0">
-                <BookOpen className="h-5 w-5 text-blue-400" />
+          <div className="p-3 sm:p-4 md:p-5">
+            <div className="flex items-start gap-2.5 sm:gap-3">
+              <div className="p-1.5 sm:p-2 rounded-lg bg-blue-500/20 flex-shrink-0">
+                <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
               </div>
-              <div>
-                <h4 className="font-semibold text-white mb-1">Amendment 3:2024 Now In Force</h4>
-                <p className="text-sm text-white/80">
-                  All content has been updated to reflect BS 7671:2018 Amendment 3:2024 requirements including new guidance on
-                  EV charging installations, energy storage systems, prosumer installations and arc fault detection devices (AFDDs).
+              <div className="min-w-0">
+                <h4 className="font-semibold text-white text-sm sm:text-base mb-0.5 sm:mb-1">Amendment 3:2024 In Force</h4>
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                  Content updated for A3:2024 including EV charging, energy storage, prosumer installations and AFDDs.
                 </p>
               </div>
             </div>
@@ -227,17 +226,15 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
       {/* Safety Section */}
       <div className="max-w-6xl mx-auto px-3 sm:px-4">
         <Card className="bg-elec-gray/50 border-red-500/20 rounded-xl">
-          <div className="p-4 sm:p-5">
-            <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-red-500/20 flex-shrink-0">
-                <Shield className="h-5 w-5 text-red-400" />
+          <div className="p-3 sm:p-4 md:p-5">
+            <div className="flex items-start gap-2.5 sm:gap-3">
+              <div className="p-1.5 sm:p-2 rounded-lg bg-red-500/20 flex-shrink-0">
+                <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
               </div>
-              <div>
-                <h4 className="font-semibold text-white mb-1">Safety First</h4>
-                <p className="text-sm text-white/80">
-                  Always follow safe isolation procedures before conducting any electrical tests.
-                  These learning materials supplement your practical training but do not replace
-                  hands-on supervision from a qualified electrician.
+              <div className="min-w-0">
+                <h4 className="font-semibold text-white text-sm sm:text-base mb-0.5 sm:mb-1">Safety First</h4>
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                  Follow safe isolation procedures before testing. These materials supplement practical training.
                 </p>
               </div>
             </div>

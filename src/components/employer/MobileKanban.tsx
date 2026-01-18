@@ -263,7 +263,7 @@ export function MobileKanban({
                       onTouchEnd={(e) => handleTouchEnd(item, e)}
                       onTouchMove={handleTouchMove}
                       className={cn(
-                        "bg-elec-gray border-border shadow-sm cursor-pointer",
+                        "bg-elec-gray border-border shadow-sm cursor-pointer touch-manipulation",
                         "active:scale-[0.98] transition-transform select-none"
                       )}
                     >
@@ -331,14 +331,14 @@ export function MobileKanban({
                                       className="w-6 h-6 rounded-full bg-elec-yellow/20 border-2 border-card flex items-center justify-center"
                                       title={worker.name}
                                     >
-                                      <span className="text-[9px] font-medium text-elec-yellow">
+                                      <span className="text-[10px] font-medium text-elec-yellow">
                                         {worker.initials}
                                       </span>
                                     </div>
                                   ))}
                                   {item.assignedWorkers.length > 3 && (
                                     <div className="w-6 h-6 rounded-full bg-muted border-2 border-card flex items-center justify-center">
-                                      <span className="text-[9px] font-medium text-muted-foreground">
+                                      <span className="text-[10px] font-medium text-muted-foreground">
                                         +{item.assignedWorkers.length - 3}
                                       </span>
                                     </div>
@@ -414,7 +414,7 @@ export function MobileKanban({
       </div>
 
       {/* Swipe indicator dots */}
-      <div className="flex justify-center gap-1.5 mt-4">
+      <div className="flex justify-center gap-1.5 mt-4 min-h-[44px] items-center">
         {stages.map((stage, index) => (
           <button
             key={stage.id}
@@ -423,11 +423,12 @@ export function MobileKanban({
               scrollToStage(index);
             }}
             className={cn(
-              "w-2 h-2 rounded-full transition-all",
-              index === activeStageIndex 
-                ? "bg-elec-yellow w-4" 
+              "w-3 h-3 rounded-full transition-all touch-manipulation p-2 -m-2",
+              index === activeStageIndex
+                ? "bg-elec-yellow w-5"
                 : "bg-muted-foreground/30"
             )}
+            aria-label={`Go to ${stage.label}`}
           />
         ))}
       </div>

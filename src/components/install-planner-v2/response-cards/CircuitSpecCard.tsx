@@ -203,13 +203,13 @@ export const CircuitSpecCard = ({ data, planData, onSpecChange, citations }: Cir
             </div>
             <div className="flex items-center gap-1 flex-wrap">
               {localData.voltageDrop?.compliant && (
-                <Badge variant="outline" className="text-[9px] sm:text-[10px] bg-green-500/10 border-green-500/30 text-green-400">
+                <Badge variant="outline" className="text-[10px] sm:text-[10px] bg-green-500/10 border-green-500/30 text-green-400">
                   <BookOpen className="h-2 w-2 sm:h-2.5 sm:w-2.5 mr-0.5 sm:mr-1" />
                   525.1 ✓
                 </Badge>
               )}
               {localData.earthFault?.maxZs && (
-                <Badge variant="outline" className="text-[9px] sm:text-[10px] bg-blue-500/10 border-blue-500/30 text-blue-400">
+                <Badge variant="outline" className="text-[10px] sm:text-[10px] bg-blue-500/10 border-blue-500/30 text-blue-400">
                   <BookOpen className="h-2 w-2 sm:h-2.5 sm:w-2.5 mr-0.5 sm:mr-1" />
                   411.4 ✓
                 </Badge>

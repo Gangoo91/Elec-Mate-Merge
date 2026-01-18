@@ -15,7 +15,7 @@ const CityGuildsCourses = () => {
   const cityGuildsCourses = awardingBodies?.['City & Guilds'] || [];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="bg-background text-foreground">
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 space-y-4 sm:space-y-6 animate-fade-in">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 mb-2 sm:mb-4">
           <div>

@@ -168,7 +168,7 @@ export const CompanyProfileSettings = () => {
               <div className="flex-1">
                 <Label
                   htmlFor="logo-upload"
-                  className="flex items-center justify-center gap-2 p-4 rounded-lg bg-white/5 border border-dashed border-white/20 cursor-pointer hover:bg-white/10 transition-colors"
+                  className="flex items-center justify-center gap-2 p-4 rounded-lg bg-white/5 border border-dashed border-white/20 cursor-pointer hover:bg-white/10 active:bg-white/15 transition-all touch-manipulation"
                 >
                   <Upload className="h-5 w-5 text-muted-foreground" />
                   <span className="text-sm text-muted-foreground">Click to upload logo</span>

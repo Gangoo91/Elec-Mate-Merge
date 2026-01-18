@@ -32,7 +32,7 @@ const ToolsGuide = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white">
+    <div className="bg-elec-dark text-white">
       <Helmet>
         <title>Tools Guide - Elec-Mate</title>
         <meta name="description" content="Essential tools and equipment for electrical work" />

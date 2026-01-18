@@ -37,7 +37,7 @@ const NotFound = () => {
       : `/electrician${location.pathname.replace(/^\/electrical-hub/, '')}`
   ) : "";
   return (
-    <div className="min-h-screen flex items-center justify-center bg-elec-dark">
+    <div className="flex items-center justify-center bg-elec-dark">
       <div className="text-center p-6 max-w-md">
         <div className="inline-block p-6 rounded-full bg-elec-gray mb-6">
           <div className="text-6xl font-bold text-elec-yellow">404</div>

@@ -356,7 +356,7 @@ const InvoicesPage = () => {
   const canonical = `${window.location.origin}/electrician/invoices`;
 
   return (
-    <div className="min-h-screen bg-background pb-safe pt-safe animate-fade-in">
+    <div className="bg-background animate-fade-in">
         <Helmet>
           <title>Invoices | Elec-Mate</title>
           <meta name="description" content="Manage all your electrical invoices. Track drafts, sent invoices, payments and overdue invoices." />
@@ -490,7 +490,7 @@ const InvoicesPage = () => {
                     key={filter.id}
                     onClick={() => handleFilterChange(filter.id)}
                     className={cn(
-                      "shrink-0 h-10 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation flex items-center gap-2",
+                      "shrink-0 h-11 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation flex items-center gap-2",
                       activeFilter === filter.id
                         ? "bg-emerald-500 text-white"
                         : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"
@@ -574,7 +574,7 @@ const InvoicesPage = () => {
                       {stats.overdue}
                     </div>
                   </div>
-                  <div className="absolute inset-0 bg-red-400/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-red-400/5 rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
                 </button>
 
                 <button
@@ -591,7 +591,7 @@ const InvoicesPage = () => {
                       {stats.sent}
                     </div>
                   </div>
-                  <div className="absolute inset-0 bg-blue-400/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-blue-400/5 rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
                 </button>
 
                 <button
@@ -608,7 +608,7 @@ const InvoicesPage = () => {
                       {stats.paid}
                     </div>
                   </div>
-                  <div className="absolute inset-0 bg-emerald-400/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-emerald-400/5 rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
                 </button>
               </div>
             </div>

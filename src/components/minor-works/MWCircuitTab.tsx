@@ -111,7 +111,22 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm">BS (EN) Standard</Label>
+                  <Select value={formData.overcurrentDeviceBsEn || ''} onValueChange={(v) => onUpdate('overcurrentDeviceBsEn', v)}>
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-red-500 focus:ring-red-500">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                      <SelectItem value="BS EN 60898">BS EN 60898</SelectItem>
+                      <SelectItem value="BS EN 61009">BS EN 61009</SelectItem>
+                      <SelectItem value="BS 3036">BS 3036</SelectItem>
+                      <SelectItem value="BS 1361">BS 1361</SelectItem>
+                      <SelectItem value="BS 88">BS 88</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Device Type *</Label>
                   <Select value={formData.protectiveDeviceType || ''} onValueChange={(v) => onUpdate('protectiveDeviceType', v)}>
@@ -174,18 +189,152 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     { id: 'protectionAfdd', label: 'AFDD' },
                     { id: 'protectionSpd', label: 'SPD' }
                   ].map((item) => (
-                    <div key={item.id} className="flex items-center gap-2">
+                    <div key={item.id} className="flex items-center gap-2 p-3 min-h-[44px] rounded-lg bg-card/50">
                       <Checkbox
                         id={item.id}
                         checked={formData[item.id] || false}
                         onCheckedChange={(c) => onUpdate(item.id, c)}
-                        className="border-white/40 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                        className="h-5 w-5 border-white/40 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500 touch-manipulation"
                       />
                       <Label htmlFor={item.id} className="text-sm cursor-pointer">{item.label}</Label>
                     </div>
                   ))}
                 </div>
               </div>
+
+              {/* RCD Details - IET Required */}
+              {(formData.protectionRcd || formData.protectionRcbo) && (
+                <div className="p-4 bg-blue-50/30 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg space-y-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <Label className="text-sm font-medium">RCD Details (IET Required)</Label>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm">BS (EN) Standard</Label>
+                      <Select value={formData.rcdBsEn || ''} onValueChange={(v) => onUpdate('rcdBsEn', v)}>
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                          <SelectItem value="BS EN 61008">BS EN 61008</SelectItem>
+                          <SelectItem value="BS EN 61009">BS EN 61009</SelectItem>
+                          <SelectItem value="BS EN 62423">BS EN 62423</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Type</Label>
+                      <Select value={formData.rcdType || ''} onValueChange={(v) => onUpdate('rcdType', v)}>
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                          <SelectItem value="AC">Type AC</SelectItem>
+                          <SelectItem value="A">Type A</SelectItem>
+                          <SelectItem value="F">Type F</SelectItem>
+                          <SelectItem value="B">Type B</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Rating (A)</Label>
+                      <Input
+                        type="number"
+                        value={formData.rcdRatingAmps || ''}
+                        onChange={(e) => onUpdate('rcdRatingAmps', e.target.value)}
+                        placeholder="e.g., 63"
+                        className="h-11 text-base touch-manipulation border-white/30"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">IΔn (mA)</Label>
+                      <Select value={formData.rcdIdn || ''} onValueChange={(v) => onUpdate('rcdIdn', v)}>
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                          <SelectItem value="10">10mA</SelectItem>
+                          <SelectItem value="30">30mA</SelectItem>
+                          <SelectItem value="100">100mA</SelectItem>
+                          <SelectItem value="300">300mA</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* AFDD Details - IET Required */}
+              {formData.protectionAfdd && (
+                <div className="p-4 bg-purple-50/30 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800 rounded-lg space-y-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                    <Label className="text-sm font-medium">AFDD Details (IET Required)</Label>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm">BS (EN) Standard</Label>
+                      <Select value={formData.afddBsEn || ''} onValueChange={(v) => onUpdate('afddBsEn', v)}>
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                          <SelectItem value="BS EN 62606">BS EN 62606</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Rating (A)</Label>
+                      <Input
+                        type="number"
+                        value={formData.afddRating || ''}
+                        onChange={(e) => onUpdate('afddRating', e.target.value)}
+                        placeholder="e.g., 16"
+                        className="h-11 text-base touch-manipulation border-white/30"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SPD Details - IET Required */}
+              {formData.protectionSpd && (
+                <div className="p-4 bg-green-50/30 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg space-y-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <Label className="text-sm font-medium">SPD Details (IET Required)</Label>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm">BS (EN) Standard</Label>
+                      <Select value={formData.spdBsEn || ''} onValueChange={(v) => onUpdate('spdBsEn', v)}>
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                          <SelectItem value="BS EN 61643-11">BS EN 61643-11</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm">Type</Label>
+                      <Select value={formData.spdType || ''} onValueChange={(v) => onUpdate('spdType', v)}>
+                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
+                          <SelectValue placeholder="Select" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                          <SelectItem value="1">Type 1</SelectItem>
+                          <SelectItem value="2">Type 2</SelectItem>
+                          <SelectItem value="3">Type 3</SelectItem>
+                          <SelectItem value="1+2">Type 1+2</SelectItem>
+                          <SelectItem value="2+3">Type 2+3</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </CollapsibleContent>
         </Collapsible>

@@ -430,7 +430,7 @@ export function PhotoGallerySection() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
                     <span className="text-sm font-medium text-foreground truncate">{photo.jobTitle}</span>
-                    <Badge variant="outline" className={cn("text-[9px] px-1.5 py-0", categoryColors[photo.category])}>
+                    <Badge variant="outline" className={cn("text-[10px] px-1.5 py-0", categoryColors[photo.category])}>
                       {photo.category}
                     </Badge>
                   </div>

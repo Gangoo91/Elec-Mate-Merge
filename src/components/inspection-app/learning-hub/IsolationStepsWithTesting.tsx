@@ -120,9 +120,9 @@ const IsolationStepsWithTesting = ({
             </p>
           </div>
 
-          <Button 
+          <Button
             onClick={onProceed}
-            className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 mt-4"
+            className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 mt-4 min-h-[44px] text-sm sm:text-base touch-manipulation active:scale-[0.98]"
             disabled={!canProceed}
           >
             Generate Isolation Certificate

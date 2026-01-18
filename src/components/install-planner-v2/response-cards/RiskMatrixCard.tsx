@@ -100,7 +100,7 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
               <p className="text-[10px] sm:text-xs text-foreground/70 mb-1.5 sm:mb-2">Required PPE</p>
               <div className="flex flex-wrap gap-1 sm:gap-2">
                 {data.requiredPPE.map((ppe, idx) => (
-                  <Badge key={idx} variant="outline" className="text-[9px] sm:text-[10px] bg-background/50 break-words">
+                  <Badge key={idx} variant="outline" className="text-[10px] sm:text-[10px] bg-background/50 break-words">
                     {ppe}
                   </Badge>
                 ))}
@@ -137,10 +137,10 @@ export const RiskMatrixCard = ({ data }: RiskMatrixCardProps) => {
                           {hazard.hazard}
                         </p>
                         <div className="flex gap-1 sm:gap-2 flex-wrap">
-                          <Badge className={`${hazardColor.bg} ${hazardColor.text} border-none text-[9px] sm:text-[10px]`}>
+                          <Badge className={`${hazardColor.bg} ${hazardColor.text} border-none text-[10px] sm:text-[10px]`}>
                             Initial: {hazard.riskRating}
                           </Badge>
-                          <Badge className={`${residualColor.bg} ${residualColor.text} border-none text-[9px] sm:text-[10px]`}>
+                          <Badge className={`${residualColor.bg} ${residualColor.text} border-none text-[10px] sm:text-[10px]`}>
                             Residual: {hazard.residualRisk}
                           </Badge>
                         </div>

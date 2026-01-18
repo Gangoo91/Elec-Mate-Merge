@@ -173,7 +173,7 @@ const Level2Module8MockExam5 = () => {
   // Before exam starts
   if (!examStarted) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <div className="bg-background flex items-center justify-center p-4">
         <Card className="w-full max-w-2xl bg-card border-elec-yellow/30">
           <CardContent className="p-8">
             <div className="text-center space-y-6">
@@ -222,7 +222,7 @@ const Level2Module8MockExam5 = () => {
       const filteredQuestions = getFilteredQuestions();
       
       return (
-        <div className="min-h-screen bg-background p-2 sm:p-4">
+        <div className="bg-background p-2 sm:p-4">
           <div className="max-w-6xl mx-auto">
             {/* Review Header */}
             <div className="mb-4">
@@ -244,8 +244,8 @@ const Level2Module8MockExam5 = () => {
               
               {/* Summary Stats - Clickable Filters */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-4">
-                <Card 
-                  className={`bg-card border-green-500/20 cursor-pointer hover:bg-card transition-colors ${
+                <Card
+                  className={`bg-card border-green-500/20 cursor-pointer hover:bg-card active:scale-[0.98] transition-all touch-manipulation ${
                     reviewFilter === "correct" ? "ring-2 ring-green-500/50" : ""
                   }`}
                   onClick={() => setReviewFilter(reviewFilter === "correct" ? "all" : "correct")}
@@ -255,8 +255,8 @@ const Level2Module8MockExam5 = () => {
                     <div className="text-xs text-white/80">Correct</div>
                   </CardContent>
                 </Card>
-                <Card 
-                  className={`bg-card border-red-500/20 cursor-pointer hover:bg-card transition-colors ${
+                <Card
+                  className={`bg-card border-red-500/20 cursor-pointer hover:bg-card active:scale-[0.98] transition-all touch-manipulation ${
                     reviewFilter === "incorrect" ? "ring-2 ring-red-500/50" : ""
                   }`}
                   onClick={() => setReviewFilter(reviewFilter === "incorrect" ? "all" : "incorrect")}
@@ -266,8 +266,8 @@ const Level2Module8MockExam5 = () => {
                     <div className="text-xs text-white/80">Incorrect</div>
                   </CardContent>
                 </Card>
-                <Card 
-                  className={`bg-card border-muted/20 cursor-pointer hover:bg-muted/10 transition-colors ${
+                <Card
+                  className={`bg-card border-muted/20 cursor-pointer hover:bg-muted/10 active:scale-[0.98] transition-all touch-manipulation ${
                     reviewFilter === "unanswered" ? "ring-2 ring-muted/50" : ""
                   }`}
                   onClick={() => setReviewFilter(reviewFilter === "unanswered" ? "all" : "unanswered")}
@@ -277,8 +277,8 @@ const Level2Module8MockExam5 = () => {
                     <div className="text-xs text-white/80">Unanswered</div>
                   </CardContent>
                 </Card>
-                <Card 
-                  className={`bg-card border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 transition-colors ${
+                <Card
+                  className={`bg-card border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 active:scale-[0.98] transition-all touch-manipulation ${
                     reviewFilter === "flagged" ? "ring-2 ring-elec-yellow/50" : ""
                   }`}
                   onClick={() => setReviewFilter(reviewFilter === "flagged" ? "all" : "flagged")}
@@ -397,7 +397,7 @@ const Level2Module8MockExam5 = () => {
 
     // Main results screen
     return (
-      <div className="min-h-screen bg-background p-2 sm:p-4">
+      <div className="bg-background p-2 sm:p-4">
         <div>
           <Card className="border-elec-yellow/30 bg-card">
             <CardContent className="p-6">
@@ -481,7 +481,7 @@ const Level2Module8MockExam5 = () => {
   const stats = getSummaryStats();
 
   return (
-    <div className="min-h-screen bg-background p-2 sm:p-4">
+    <div className="bg-background p-2 sm:p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">

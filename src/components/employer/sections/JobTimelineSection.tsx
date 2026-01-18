@@ -449,7 +449,7 @@ export function JobTimelineSection() {
             return (
               <div 
                 key={job.id} 
-                className="grid grid-cols-8 min-h-[80px] hover:bg-muted/30 cursor-pointer transition-colors"
+                className="grid grid-cols-8 min-h-[80px] hover:bg-muted/30 cursor-pointer active:bg-muted/40 transition-all touch-manipulation"
                 onClick={() => handleJobClick(job)}
               >
                 {/* Job Info */}

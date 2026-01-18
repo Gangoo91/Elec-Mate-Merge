@@ -67,20 +67,20 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
           <div className="flex flex-col items-center justify-center p-2 md:p-4 bg-elec-gray-dark rounded-lg border border-elec-gray-light min-h-[60px] md:min-h-[100px]">
             <Award className="w-4 h-4 md:w-6 md:h-6 text-elec-yellow mb-0.5 md:mb-2" />
             <span className="text-lg md:text-2xl font-bold text-foreground">{profile.qualifications.length}</span>
-            <span className="text-[9px] md:text-xs text-gray-400 mt-0.5 md:mt-1 leading-tight">Quals</span>
+            <span className="text-[10px] md:text-xs text-gray-400 mt-0.5 md:mt-1 leading-tight">Quals</span>
           </div>
           
           {hasRegistration ? (
             <div className="flex flex-col items-center justify-center p-2 md:p-4 bg-elec-gray-dark rounded-lg border border-elec-gray-light min-h-[60px] md:min-h-[100px]">
               <FileCheck className="w-4 h-4 md:w-6 md:h-6 text-green-400 mb-0.5 md:mb-2" />
               <span className="text-lg md:text-2xl font-bold text-foreground">✓</span>
-              <span className="text-[9px] md:text-xs text-gray-400 mt-0.5 md:mt-1 leading-tight">Registered</span>
+              <span className="text-[10px] md:text-xs text-gray-400 mt-0.5 md:mt-1 leading-tight">Registered</span>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center p-2 md:p-4 bg-elec-gray-dark/50 rounded-lg border border-elec-gray-light/50 min-h-[60px] md:min-h-[100px] opacity-50">
               <FileCheck className="w-4 h-4 md:w-6 md:h-6 text-gray-500 mb-0.5 md:mb-2" />
               <span className="text-lg md:text-2xl font-bold text-gray-500">—</span>
-              <span className="text-[9px] md:text-xs text-gray-500 mt-0.5 md:mt-1 leading-tight">Not Registered</span>
+              <span className="text-[10px] md:text-xs text-gray-500 mt-0.5 md:mt-1 leading-tight">Not Registered</span>
             </div>
           )}
           
@@ -88,13 +88,13 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
             <div className="flex flex-col items-center justify-center p-2 md:p-4 bg-elec-gray-dark rounded-lg border border-elec-gray-light min-h-[60px] md:min-h-[100px]">
               <Shield className="w-4 h-4 md:w-6 md:h-6 text-blue-400 mb-0.5 md:mb-2" />
               <span className="text-lg md:text-2xl font-bold text-foreground">✓</span>
-              <span className="text-[9px] md:text-xs text-gray-400 mt-0.5 md:mt-1 leading-tight">Insured</span>
+              <span className="text-[10px] md:text-xs text-gray-400 mt-0.5 md:mt-1 leading-tight">Insured</span>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center p-2 md:p-4 bg-elec-gray-dark/50 rounded-lg border border-elec-gray-light/50 min-h-[60px] md:min-h-[100px] opacity-50">
               <Shield className="w-4 h-4 md:w-6 md:h-6 text-gray-500 mb-0.5 md:mb-2" />
               <span className="text-lg md:text-2xl font-bold text-gray-500">—</span>
-              <span className="text-[9px] md:text-xs text-gray-500 mt-0.5 md:mt-1 leading-tight">Not Insured</span>
+              <span className="text-[10px] md:text-xs text-gray-500 mt-0.5 md:mt-1 leading-tight">Not Insured</span>
             </div>
           )}
 
@@ -102,13 +102,13 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
             <div className="flex flex-col items-center justify-center p-2 md:p-4 bg-elec-gray-dark rounded-lg border border-elec-gray-light min-h-[60px] md:min-h-[100px]">
               <PenTool className="w-4 h-4 md:w-6 md:h-6 text-purple-400 mb-0.5 md:mb-2" />
               <span className="text-lg md:text-2xl font-bold text-foreground">✓</span>
-              <span className="text-[9px] md:text-xs text-gray-400 mt-0.5 md:mt-1 leading-tight">Signature</span>
+              <span className="text-[10px] md:text-xs text-gray-400 mt-0.5 md:mt-1 leading-tight">Signature</span>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center p-2 md:p-4 bg-elec-gray-dark/50 rounded-lg border border-elec-gray-light/50 min-h-[60px] md:min-h-[100px] opacity-50">
               <PenTool className="w-4 h-4 md:w-6 md:h-6 text-gray-500 mb-0.5 md:mb-2" />
               <span className="text-lg md:text-2xl font-bold text-gray-500">—</span>
-              <span className="text-[9px] md:text-xs text-gray-500 mt-0.5 md:mt-1 leading-tight">No Signature</span>
+              <span className="text-[10px] md:text-xs text-gray-500 mt-0.5 md:mt-1 leading-tight">No Signature</span>
             </div>
           )}
         </div>
@@ -156,7 +156,7 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
               </h3>
               <p className="text-sm md:text-base font-semibold text-foreground uppercase">{profile.registrationScheme}</p>
               {profile.registrationNumber && (
-                <p className="text-[9px] md:text-xs text-gray-400 mt-0.5 md:mt-1">#{profile.registrationNumber}</p>
+                <p className="text-[10px] md:text-xs text-gray-400 mt-0.5 md:mt-1">#{profile.registrationNumber}</p>
               )}
             </div>
           )}
@@ -170,7 +170,7 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
               </h3>
               <p className="text-sm md:text-base font-semibold text-foreground uppercase">{profile.insuranceProvider}</p>
               {profile.insuranceCoverage && (
-                <p className="text-[9px] md:text-xs text-gray-400 mt-0.5 md:mt-1">{profile.insuranceCoverage}</p>
+                <p className="text-[10px] md:text-xs text-gray-400 mt-0.5 md:mt-1">{profile.insuranceCoverage}</p>
               )}
             </div>
           )}

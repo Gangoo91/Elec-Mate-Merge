@@ -130,7 +130,7 @@ const SupplierMaterials = () => {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in pt-safe pb-safe">
+    <div className="space-y-6 animate-fade-in  ">
       <Helmet>
         <title>{`${supplier} Deals | ElecMate Electrical Materials`}</title>
         <meta name="description" content={`Latest ${supplier} electrical materials and deals. BS 7671 18th Edition aware recommendations for UK electricians.`} />

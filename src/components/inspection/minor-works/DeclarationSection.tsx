@@ -92,9 +92,23 @@ const DeclarationSection = ({
                   placeholder="Full name of qualified electrician"
                   value={formData.electricianName || ''}
                   onChange={(e) => onUpdate('electricianName', e.target.value)}
+                  className="h-11 touch-manipulation text-base"
                 />
               </div>
-              
+
+              <div>
+                <Label htmlFor="forAndOnBehalfOf" className="text-sm font-medium">
+                  For and on behalf of (Company)
+                </Label>
+                <Input
+                  id="forAndOnBehalfOf"
+                  placeholder="Company or trading name"
+                  value={formData.forAndOnBehalfOf || ''}
+                  onChange={(e) => onUpdate('forAndOnBehalfOf', e.target.value)}
+                  className="h-11 touch-manipulation text-base"
+                />
+              </div>
+
               <div>
                 <Label htmlFor="electricianPosition" className="text-sm font-medium">
                   Position/Role *
@@ -104,9 +118,10 @@ const DeclarationSection = ({
                   placeholder="e.g., Qualified Electrician, Electrical Contractor"
                   value={formData.electricianPosition || ''}
                   onChange={(e) => onUpdate('electricianPosition', e.target.value)}
+                  className="h-11 touch-manipulation text-base"
                 />
               </div>
-              
+
               <div>
                 <Label htmlFor="qualificationLevel" className="text-sm font-medium">
                   Qualification Level
@@ -115,7 +130,7 @@ const DeclarationSection = ({
                   value={formData.qualificationLevel || ''}
                   onValueChange={(value) => onUpdate('qualificationLevel', value)}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select qualification level" />
                   </SelectTrigger>
                   <SelectContent>

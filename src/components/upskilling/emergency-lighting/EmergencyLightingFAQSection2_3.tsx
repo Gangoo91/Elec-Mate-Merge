@@ -91,7 +91,7 @@ export const EmergencyLightingFAQSection2_3 = () => {
         {faqs.map((faq, index) => (
           <Collapsible key={index} open={openItems.includes(index)} onOpenChange={() => toggleItem(index)}>
             <CollapsibleTrigger asChild>
-              <div className="bg-elec-gray/40 rounded-lg p-4 cursor-pointer hover:bg-elec-gray/60 transition-colors border border-gray-600/30 hover:border-elec-yellow/30">
+              <div className="bg-elec-gray/40 rounded-lg p-4 cursor-pointer hover:bg-elec-gray/60 active:bg-elec-gray/70 transition-all touch-manipulation border border-gray-600/30 hover:border-elec-yellow/30">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">

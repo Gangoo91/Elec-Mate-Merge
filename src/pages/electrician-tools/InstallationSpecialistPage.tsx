@@ -45,9 +45,9 @@ const InstallationSpecialistPage = () => {
   }, [location]);
 
   return (
-    <div className="min-h-screen bg-background pb-safe">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10 pt-safe">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10 ">
         <div className="px-4 py-2">
           <button
             onClick={() => navigate(fromAgentSelector ? "/electrician/agent-selector" : "/electrician")}

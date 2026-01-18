@@ -760,7 +760,7 @@ const SpecialistInstallations = () => {
                     <SelectItem
                       key={tab.value}
                       value={tab.value}
-                      className="text-white hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 focus:text-white cursor-pointer transition-colors"
+                      className="text-white hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 focus:text-white cursor-pointer active:bg-elec-yellow/30 transition-all touch-manipulation"
                     >
                       <div className="flex items-center gap-3">
                         <IconComponent className="h-5 w-5 text-elec-yellow" />

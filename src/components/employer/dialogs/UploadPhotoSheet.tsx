@@ -164,7 +164,7 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
               </div>
             ) : (
               <div
-                className="border-2 border-dashed border-muted-foreground/30 rounded-xl p-8 text-center cursor-pointer hover:border-elec-yellow/50 transition-colors"
+                className="border-2 border-dashed border-muted-foreground/30 rounded-xl p-8 text-center cursor-pointer hover:border-elec-yellow/50 active:bg-muted/30 transition-all touch-manipulation"
                 onClick={() => fileInputRef.current?.click()}
               >
                 <ImageIcon className="h-12 w-12 text-muted-foreground/40 mx-auto mb-3" />

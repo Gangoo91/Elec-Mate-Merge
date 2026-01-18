@@ -237,7 +237,7 @@ const CompanyBrandingSection = ({ formData, onUpdate }: CompanyBrandingSectionPr
                     type="color"
                     value={formData.brandingAccentColor || '#FCD34D'}
                     onChange={(e) => onUpdate('brandingAccentColor', e.target.value)}
-                    className="w-12 h-9 p-1 rounded-md cursor-pointer border-2 border-gray-300/50 hover:border-yellow-400/50 transition-colors duration-200"
+                    className="w-12 h-9 p-1 rounded-md cursor-pointer border-2 border-gray-300/50 hover:border-yellow-400/50 transition-all duration-200 touch-manipulation"
                   />
                   <Input
                     value={formData.brandingAccentColor || '#FCD34D'}

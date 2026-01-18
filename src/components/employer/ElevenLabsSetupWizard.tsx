@@ -337,7 +337,7 @@ export function ElevenLabsSetupWizard({
                               <Badge
                                 key={value}
                                 variant="outline"
-                                className="text-xs cursor-pointer hover:bg-elec-yellow/20 transition-colors"
+                                className="text-xs cursor-pointer hover:bg-elec-yellow/20 active:bg-elec-yellow/30 transition-all touch-manipulation"
                                 onClick={() => copyToClipboard(value, `enum-${value}`)}
                               >
                                 {value}

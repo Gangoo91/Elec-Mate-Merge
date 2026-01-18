@@ -41,6 +41,7 @@ import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
 import { ElecAiBanner } from '@/components/elec-ai/ElecAiBanner';
 import { SetupWizard } from '@/components/onboarding/SetupWizard';
 import { SetupIncompleteBanner } from '@/components/onboarding/SetupIncompleteBanner';
+import { LatestJobsWidget } from '@/components/job-vacancies/LatestJobsWidget';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -84,11 +85,11 @@ function ElectricalHero() {
       {/* Decorative blob */}
       <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
-      <div className="relative z-10 p-5 sm:p-6">
-        <div className="flex items-start gap-4">
+      <div className="relative z-10 p-4 sm:p-5">
+        <div className="flex items-start gap-3">
           {/* Icon */}
-          <div className="flex-shrink-0 p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-            <Zap className="h-8 w-8 text-elec-yellow" />
+          <div className="flex-shrink-0 p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+            <Zap className="h-6 w-6 text-elec-yellow" />
           </div>
 
           {/* Content */}
@@ -100,17 +101,16 @@ function ElectricalHero() {
               </span>
             </div>
 
-            <h1 className="text-xl sm:text-2xl font-semibold text-white leading-tight">
-              <span className="hidden sm:inline">{getGreeting()}, </span>
+            <h1 className="text-lg sm:text-xl font-semibold text-white leading-tight">
               <span className="text-elec-yellow">{firstName}</span>
             </h1>
 
-            <p className="text-sm text-white/70 mt-1">
+            <p className="text-xs text-white/70 mt-0.5">
               Professional tools for qualified electricians
             </p>
 
             {/* Status badges */}
-            <div className="flex items-center gap-2 mt-3 flex-wrap">
+            <div className="flex items-center gap-2 mt-2 flex-wrap">
               {business.activeQuotes > 0 && (
                 <Badge
                   variant="outline"
@@ -188,7 +188,7 @@ function ElectricalStatsBar() {
   const handleScroll = () => {
     const el = scrollRef.current;
     if (!el) return;
-    const cardWidth = 140 + 12;
+    const cardWidth = 130 + 12;
     const newIndex = Math.round(el.scrollLeft / cardWidth);
     setActiveIndex(Math.max(0, Math.min(newIndex, statItems.length - 1)));
   };
@@ -198,7 +198,7 @@ function ElectricalStatsBar() {
       <div className="px-4 sm:px-0">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-[100px] rounded-xl glass-premium animate-pulse" />
+            <div key={i} className="h-[85px] rounded-xl glass-premium animate-pulse" />
           ))}
         </div>
       </div>
@@ -232,14 +232,14 @@ function ElectricalStatsBar() {
               whileTap={{ scale: 0.96 }}
               transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               className={cn(
-                'flex-shrink-0 w-[140px] snap-start touch-manipulation cursor-pointer group',
+                'flex-shrink-0 w-[130px] snap-start touch-manipulation cursor-pointer group',
                 index === statItems.length - 1 && 'mr-4 sm:mr-0',
                 'sm:w-full'
               )}
               aria-label={`View ${stat.label}`}
             >
               <div className={cn(
-                'glass-premium rounded-xl p-4 h-[100px]',
+                'glass-premium rounded-xl p-3 h-[85px]',
                 'group-hover:bg-white/[0.04] group-active:bg-white/[0.02]',
                 'transition-all duration-200',
                 'group-hover:shadow-lg group-hover:shadow-elec-yellow/5'
@@ -248,20 +248,20 @@ function ElectricalStatsBar() {
                   {/* Icon row */}
                   <div className="flex items-center justify-between">
                     <div className={cn(
-                      'p-2 rounded-lg transition-colors',
+                      'p-1.5 rounded-lg transition-colors',
                       isSuccess ? 'bg-green-500/10 group-hover:bg-green-500/20' : isDanger ? 'bg-red-500/10 group-hover:bg-red-500/20' : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
                     )}>
                       <Icon className={cn(
-                        'h-4 w-4',
+                        'h-3.5 w-3.5',
                         isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
                       )} />
                     </div>
-                    <ChevronRight className="h-3 w-3 text-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ChevronRight className="h-3 w-3 text-white/20 opacity-50 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
                   </div>
                   {/* Value and label - left aligned */}
                   <div className="flex-1 flex flex-col justify-end">
                     {stat.formatAsCurrency ? (
-                      <span className="text-xl sm:text-2xl font-bold text-elec-yellow">
+                      <span className="text-lg sm:text-xl font-bold text-elec-yellow">
                         {business.formattedQuoteValue}
                       </span>
                     ) : (
@@ -269,12 +269,12 @@ function ElectricalStatsBar() {
                         value={stat.value}
                         prefix={stat.prefix}
                         className={cn(
-                          'text-xl sm:text-2xl font-bold',
+                          'text-lg sm:text-xl font-bold',
                           isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
                         )}
                       />
                     )}
-                    <p className="text-xs text-white/70 mt-0.5">
+                    <p className="text-[11px] text-white/70">
                       {stat.label}
                     </p>
                   </div>
@@ -286,14 +286,14 @@ function ElectricalStatsBar() {
       </motion.div>
 
       {/* Pagination dots - mobile only */}
-      <div className="flex justify-center gap-0.5 mt-3 sm:hidden">
+      <div className="flex justify-center gap-0.5 mt-2 sm:hidden">
         {statItems.map((_, i) => (
           <button
             key={i}
             onClick={() => {
               const el = scrollRef.current;
               if (el) {
-                const cardWidth = 140 + 12;
+                const cardWidth = 130 + 12;
                 el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
               }
             }}
@@ -552,14 +552,13 @@ const ElectricalHub = () => {
   }, [profile]);
 
   return (
-    <div className="min-h-screen bg-[hsl(240,5.9%,10%)] flex flex-col safe-area-inset-top">
-      <div className="flex-1 overflow-y-auto momentum-scroll-y overscroll-contain">
-        <div className="mx-auto max-w-6xl pt-safe py-4 md:py-6 lg:py-8 pb-safe">
+    <div className="bg-[hsl(240,5.9%,10%)]">
+      <div className="mx-auto max-w-6xl">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="space-y-6 sm:space-y-8"
+            className="space-y-4 sm:space-y-6"
           >
             {/* Back Button - Larger touch target */}
             <motion.div variants={itemVariants} className="px-4 sm:px-0">
@@ -640,10 +639,15 @@ const ElectricalHub = () => {
               </div>
             </motion.section>
 
+            {/* Latest Jobs */}
+            <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+              <SectionHeader title="Career Opportunities" />
+              <LatestJobsWidget />
+            </motion.section>
+
             {/* Footer spacing for mobile nav */}
             <div className="h-6 sm:h-8" />
           </motion.div>
-        </div>
       </div>
 
       {/* Setup Wizard */}

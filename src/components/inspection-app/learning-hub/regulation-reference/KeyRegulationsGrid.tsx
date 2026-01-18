@@ -98,7 +98,7 @@ const KeyRegulationsGrid = () => {
           return (
             <Card 
               key={index} 
-              className={`bg-card border-2 ${reg.color} hover:scale-105 transition-all duration-300 cursor-pointer group`}
+              className={`bg-card border-2 ${reg.color} hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer group touch-manipulation rounded-xl`}
               onClick={() => handleCardClick(reg.route)}
             >
               <CardHeader>

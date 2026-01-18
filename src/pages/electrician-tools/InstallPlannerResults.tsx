@@ -146,7 +146,7 @@ const InstallPlannerResults = () => {
   // Show loading state while fetching
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-elec-dark flex items-center justify-center">
+      <div className="bg-elec-dark flex items-center justify-center">
         <div className="text-center">
           <Loader className="h-8 w-8 animate-spin mx-auto mb-4 text-elec-yellow" />
           <p className="text-muted-foreground">Loading results...</p>
@@ -316,7 +316,7 @@ const InstallPlannerResults = () => {
     projectDetails.designEngineer;
 
   return (
-    <div className="min-h-screen bg-elec-dark">
+    <div className="bg-elec-dark">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-6">
         <div className="space-y-6 animate-fade-in">
           {/* Header */}

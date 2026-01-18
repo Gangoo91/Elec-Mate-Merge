@@ -577,7 +577,7 @@ const JobProfitabilityCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen px-4 py-8 pt-safe pb-safe">
+    <div className="px-4 py-8  ">
       <Helmet>
         <title>Job Profitability Calculator - Electrical Cost Analysis | ElecMate</title>
         <meta

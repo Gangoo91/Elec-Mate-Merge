@@ -244,7 +244,7 @@ export function TenderSection() {
       />
 
       <div
-        className="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center cursor-pointer hover:border-elec-yellow/50 transition-colors"
+        className="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center cursor-pointer hover:border-elec-yellow/50 active:bg-muted/30 transition-all touch-manipulation"
         onClick={() => fileInputRef.current?.click()}
       >
         <Brain className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground mx-auto mb-3" />

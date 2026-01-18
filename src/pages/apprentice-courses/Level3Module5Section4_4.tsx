@@ -242,7 +242,7 @@ const Level3Module5Section4_4 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
 
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">

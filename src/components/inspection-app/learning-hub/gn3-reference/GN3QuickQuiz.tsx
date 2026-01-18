@@ -122,7 +122,7 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     id: "rcd-2",
-    question: "Is the 5×IΔn RCD test mandatory per BS 7671:2018+A2:2022?",
+    question: "Is the 5×IΔn RCD test mandatory per BS 7671:2018+A3:2024?",
     options: [
       "Yes, always required",
       "No, it's optional (fault-finding only)",
@@ -130,7 +130,7 @@ const quizQuestions: QuizQuestion[] = [
       "Only for TT systems"
     ],
     correctIndex: 1,
-    explanation: "The 5×IΔn test is OPTIONAL per BS 7671:2018+A2:2022 and is intended for fault-finding purposes only.",
+    explanation: "The 5×IΔn test is OPTIONAL per BS 7671:2018+A3:2024 and is intended for fault-finding purposes only.",
     category: "rcd",
     difficulty: "hard",
     reference: "GN3 Table 2.17 Note 7",
@@ -279,23 +279,23 @@ export const GN3QuickQuiz = ({ questionCount = 5, onComplete }: GN3QuickQuizProp
 
     return (
       <Card className="bg-white/5 border border-white/10">
-        <CardContent className="pt-6 text-center">
+        <CardContent className="p-4 sm:pt-6 text-center">
           <div className={cn(
-            "w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center",
+            "w-14 h-14 sm:w-20 sm:h-20 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center",
             isPassing ? "bg-green-500/20" : "bg-amber-500/20"
           )}>
             <Trophy className={cn(
-              "h-10 w-10",
+              "h-7 w-7 sm:h-10 sm:w-10",
               isPassing ? "text-green-400" : "text-amber-400"
             )} />
           </div>
-          <h3 className="text-2xl font-bold text-white mb-2">
+          <h3 className="text-lg sm:text-2xl font-bold text-white mb-1.5 sm:mb-2">
             {isPassing ? "Great Work!" : "Keep Practicing!"}
           </h3>
-          <p className="text-white/60 mb-4">
+          <p className="text-white/60 text-sm sm:text-base mb-3 sm:mb-4">
             You scored {score} out of {questions.length} ({percentage}%)
           </p>
-          <div className="w-full bg-white/10 rounded-full h-3 mb-6">
+          <div className="w-full bg-white/10 rounded-full h-2 sm:h-3 mb-4 sm:mb-6">
             <div
               className={cn(
                 "h-full rounded-full transition-all",
@@ -304,8 +304,8 @@ export const GN3QuickQuiz = ({ questionCount = 5, onComplete }: GN3QuickQuizProp
               style={{ width: `${percentage}%` }}
             />
           </div>
-          <Button onClick={handleRestart} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-            <RefreshCw className="h-4 w-4 mr-2" />
+          <Button onClick={handleRestart} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-[0.98] min-h-[44px] text-xs sm:text-sm touch-manipulation">
+            <RefreshCw className="h-4 w-4 mr-1.5 sm:mr-2" />
             Try Again
           </Button>
         </CardContent>
@@ -315,33 +315,34 @@ export const GN3QuickQuiz = ({ questionCount = 5, onComplete }: GN3QuickQuizProp
 
   return (
     <Card className="bg-white/5 border border-white/10">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-elec-yellow/10">
-              <Brain className="h-5 w-5 text-elec-yellow" />
+      <CardHeader className="p-3 sm:p-6 pb-2 sm:pb-3">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="p-1.5 sm:p-2 rounded-lg bg-elec-yellow/10">
+              <Brain className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
             </div>
             <div>
-              <CardTitle className="text-lg text-white">GN3 Quick Quiz</CardTitle>
-              <p className="text-sm text-white/60">Test your knowledge</p>
+              <CardTitle className="text-sm sm:text-lg text-white">GN3 Quick Quiz</CardTitle>
+              <p className="text-[10px] sm:text-sm text-white/60">Test your knowledge</p>
             </div>
           </div>
-          <Badge variant="outline" className="text-white/60 border-white/20">
+          <Badge variant="outline" className="text-white/60 border-white/20 text-[10px] sm:text-xs">
             {currentQuestionIndex + 1} / {questions.length}
           </Badge>
         </div>
-        <Progress value={progress} className="mt-3 h-1.5 bg-white/10" />
+        <Progress value={progress} className="mt-2 sm:mt-3 h-1 sm:h-1.5 bg-white/10" />
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="p-3 sm:p-6 pt-0">
         {/* Category & Difficulty */}
-        <div className="flex items-center gap-2 mb-4">
-          <Badge variant="outline" className={getCategoryColor(currentQuestion.category)}>
+        <div className="flex items-center gap-1.5 sm:gap-2 mb-3 sm:mb-4">
+          <Badge variant="outline" className={cn(getCategoryColor(currentQuestion.category), "text-[10px] sm:text-xs")}>
             {getCategoryLabel(currentQuestion.category)}
           </Badge>
           <Badge
             variant="outline"
             className={cn(
+              "text-[10px] sm:text-xs",
               currentQuestion.difficulty === "easy" && "bg-green-500/10 text-green-400 border-green-500/20",
               currentQuestion.difficulty === "medium" && "bg-amber-500/10 text-amber-400 border-amber-500/20",
               currentQuestion.difficulty === "hard" && "bg-red-500/10 text-red-400 border-red-500/20"
@@ -352,10 +353,10 @@ export const GN3QuickQuiz = ({ questionCount = 5, onComplete }: GN3QuickQuizProp
         </div>
 
         {/* Question */}
-        <p className="text-white text-lg mb-6">{currentQuestion.question}</p>
+        <p className="text-white text-sm sm:text-base md:text-lg mb-4 sm:mb-6">{currentQuestion.question}</p>
 
         {/* Options */}
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           {currentQuestion.options.map((option, index) => {
             const isSelected = selectedAnswer === index;
             const isCorrect = index === currentQuestion.correctIndex;
@@ -367,7 +368,7 @@ export const GN3QuickQuiz = ({ questionCount = 5, onComplete }: GN3QuickQuizProp
                 onClick={() => handleSelectAnswer(index)}
                 disabled={showResult}
                 className={cn(
-                  "w-full p-4 rounded-lg border text-left transition-all flex items-center justify-between",
+                  "w-full p-3 sm:p-4 rounded-lg border text-left transition-all flex items-center justify-between gap-2 touch-manipulation active:scale-[0.98] min-h-[44px]",
                   !showResult && "hover:bg-white/10 hover:border-white/30",
                   !showResult && isSelected && "bg-white/10 border-white/30",
                   !showResult && !isSelected && "bg-white/5 border-white/10",
@@ -377,7 +378,7 @@ export const GN3QuickQuiz = ({ questionCount = 5, onComplete }: GN3QuickQuizProp
                 )}
               >
                 <span className={cn(
-                  "text-sm",
+                  "text-xs sm:text-sm",
                   showCorrectness && isCorrect && "text-green-400",
                   showCorrectness && isSelected && !isCorrect && "text-red-400",
                   !showCorrectness && "text-white/80"
@@ -385,10 +386,10 @@ export const GN3QuickQuiz = ({ questionCount = 5, onComplete }: GN3QuickQuizProp
                   {option}
                 </span>
                 {showCorrectness && isCorrect && (
-                  <CheckCircle className="h-5 w-5 text-green-400" />
+                  <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400 shrink-0" />
                 )}
                 {showCorrectness && isSelected && !isCorrect && (
-                  <XCircle className="h-5 w-5 text-red-400" />
+                  <XCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400 shrink-0" />
                 )}
               </button>
             );
@@ -397,12 +398,12 @@ export const GN3QuickQuiz = ({ questionCount = 5, onComplete }: GN3QuickQuizProp
 
         {/* Explanation */}
         {showResult && (
-          <div className="mt-4 p-4 bg-white/5 border border-white/10 rounded-lg">
+          <div className="mt-3 sm:mt-4 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-lg">
             <div className="flex items-start gap-2">
-              <Lightbulb className="h-5 w-5 text-elec-yellow mt-0.5" />
+              <Lightbulb className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mt-0.5 shrink-0" />
               <div>
-                <p className="text-white/80 text-sm">{currentQuestion.explanation}</p>
-                <p className="text-white/50 text-xs mt-2">Ref: {currentQuestion.reference}</p>
+                <p className="text-white/80 text-xs sm:text-sm">{currentQuestion.explanation}</p>
+                <p className="text-white/50 text-[10px] sm:text-xs mt-1.5 sm:mt-2">Ref: {currentQuestion.reference}</p>
               </div>
             </div>
           </div>
@@ -412,12 +413,12 @@ export const GN3QuickQuiz = ({ questionCount = 5, onComplete }: GN3QuickQuizProp
         {showResult && (
           <Button
             onClick={handleNext}
-            className="w-full mt-4 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+            className="w-full mt-3 sm:mt-4 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:scale-[0.98] min-h-[44px] text-xs sm:text-sm touch-manipulation"
           >
             {currentQuestionIndex < questions.length - 1 ? (
-              <>Next Question <ChevronRight className="h-4 w-4 ml-2" /></>
+              <>Next Question <ChevronRight className="h-4 w-4 ml-1 sm:ml-2" /></>
             ) : (
-              <>See Results <Trophy className="h-4 w-4 ml-2" /></>
+              <>See Results <Trophy className="h-4 w-4 ml-1 sm:ml-2" /></>
             )}
           </Button>
         )}

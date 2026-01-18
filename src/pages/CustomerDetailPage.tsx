@@ -63,7 +63,7 @@ export default function CustomerDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="bg-background flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
       </div>
     );
@@ -71,7 +71,7 @@ export default function CustomerDetailPage() {
 
   if (!customer) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="bg-background">
         <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/95 backdrop-blur">
           <div className="flex items-center gap-3 px-4 h-14">
             <Button
@@ -100,7 +100,7 @@ export default function CustomerDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/95 backdrop-blur">
         <div className="flex items-center justify-between px-4 h-14">

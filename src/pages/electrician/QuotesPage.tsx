@@ -117,7 +117,7 @@ const QuotesPage = () => {
   const canonical = `${window.location.origin}/electrician/quotes`;
 
   return (
-    <div className="min-h-screen bg-background pt-safe pb-safe animate-fade-in">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background animate-fade-in">
         <Helmet>
         <title>All Quotes | Professional Quote Management for Electricians</title>
         <meta
@@ -314,7 +314,7 @@ const QuotesPage = () => {
                     £{(stats.approvedValue / 1000).toFixed(0)}k
                   </div>
                 </div>
-                <div className="absolute inset-0 bg-green-400/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-green-400/5 rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
               </button>
 
               <button
@@ -328,7 +328,7 @@ const QuotesPage = () => {
                     {stats.counts.sent}
                   </div>
                 </div>
-                <div className="absolute inset-0 bg-blue-400/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-blue-400/5 rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
               </button>
 
               <button
@@ -342,7 +342,7 @@ const QuotesPage = () => {
                     {stats.counts.draft}
                   </div>
                 </div>
-                <div className="absolute inset-0 bg-white/[0.02] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-white/[0.02] rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
               </button>
             </div>
           </div>

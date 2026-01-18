@@ -146,12 +146,12 @@ const EnhancedInspectionSectionCard = ({
                         <h3 className="font-bold text-sm sm:text-base text-foreground flex items-center gap-1.5 sm:gap-2 flex-nowrap min-w-0">
                           <span className="truncate">{section.sectionNumber}: {section.title}</span>
                           {sectionPriority === 'critical' && (
-                            <Badge variant="destructive" className="text-[9px] sm:text-[10px] px-1 sm:px-1.5 py-0 font-bold uppercase">
+                            <Badge variant="destructive" className="text-[10px] sm:text-xs px-1 sm:px-1.5 py-0 font-bold uppercase">
                               Critical
                             </Badge>
                           )}
                           {sectionPriority === 'important' && (
-                            <Badge className="text-[9px] sm:text-[10px] px-1 sm:px-1.5 py-0 font-bold uppercase bg-blue-500/20 text-blue-400 border-blue-500/40">
+                            <Badge className="text-[10px] sm:text-xs px-1 sm:px-1.5 py-0 font-bold uppercase bg-blue-500/20 text-blue-400 border-blue-500/40">
                               Important
                             </Badge>
                           )}

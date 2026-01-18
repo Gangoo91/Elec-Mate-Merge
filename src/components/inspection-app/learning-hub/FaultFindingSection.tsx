@@ -45,7 +45,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
       case 'appliance_fault': return <Wrench className="h-4 w-4 text-orange-400" />;
       case 'complex': return <Target className="h-4 w-4 text-indigo-400" />;
       case 'heating': return <Activity className="h-4 w-4 text-cyan-400" />;
-      default: return <Target className="h-4 w-4 text-white/80" />;
+      default: return <Target className="h-4 w-4 text-white" />;
     }
   };
 
@@ -337,11 +337,11 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                   <ChevronDown className="h-5 w-5 shrink-0 transition-transform group-data-[state=open]:rotate-180" />
                 </div>
                 
-                <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-white/80">
+                <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-white">
                   <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>{step.estimatedTime}</span>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80 leading-relaxed mt-2">
+                <p className="text-xs sm:text-sm text-white leading-relaxed mt-2">
                   {step.description}
                 </p>
               </CardHeader>
@@ -355,7 +355,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                   <ul className="space-y-2 text-xs sm:text-sm">
                     {step.keyPoints.map((point, index) => (
                       <li key={index} className="flex items-start gap-2 sm:gap-3 leading-relaxed">
-                        <span className="text-white/80 shrink-0">•</span>
+                        <span className="text-white shrink-0">•</span>
                         <span className="flex-1">{point}</span>
                       </li>
                     ))}
@@ -420,7 +420,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
   const TestEquipmentContent = () => (
     <div className="space-y-4 sm:space-y-5 md:space-y-6">
       {testEquipment.map((equipment, index) => (
-        <Card key={index} className="border-l-4 border-l-purple-500 hover:bg-card hover:border-border transition-all touch-manipulation">
+        <Card key={index} className="border-l-4 border-l-purple-500 hover:bg-card hover:border-border transition-all touch-manipulation active:scale-[0.99]">
           <CardHeader className="p-4 sm:p-5 md:p-6">
             <CardTitle className="text-purple-300 flex items-center gap-2 sm:gap-3 text-base sm:text-lg md:text-xl">
               <Wrench className="h-5 w-5 sm:h-6 sm:w-6 shrink-0" />
@@ -735,11 +735,11 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                     <ChevronDown className="h-5 w-5 shrink-0 transition-transform group-data-[state=open]:rotate-180" />
                   </div>
                   
-                  <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-white/80">
+                  <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-white">
                     <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
                     <span>{topic.estimatedTime}</span>
                   </div>
-                  <p className="text-left text-sm text-white/80">
+                  <p className="text-left text-sm text-white">
                     {topic.description}
                   </p>
                 </CardHeader>
@@ -753,7 +753,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                     <ul className="space-y-2 text-xs sm:text-sm">
                       {topic.keyPoints.map((point, index) => (
                         <li key={index} className="flex items-start gap-2 sm:gap-3 leading-relaxed">
-                          <span className="text-white/80 shrink-0">•</span>
+                          <span className="text-white shrink-0">•</span>
                           <span className="flex-1">{point}</span>
                         </li>
                       ))}
@@ -1369,7 +1369,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
         case 'critical': return 'border-red-500/30 bg-red-500/10';
         case 'high': return 'border-orange-500/30 bg-orange-500/10';
         case 'medium': return 'border-yellow-500/30 bg-yellow-500/10';
-        default: return 'border-muted/20 bg-muted/5';
+        default: return 'border-white/10 bg-muted/5';
       }
     };
 
@@ -1379,7 +1379,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
         high: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
         medium: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
       };
-      return colors[severity as keyof typeof colors] || 'bg-muted/20 text-white/80 border-muted/30';
+      return colors[severity as keyof typeof colors] || 'bg-white/10 text-white border-white/20';
     };
 
     return (
@@ -1388,7 +1388,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
           <Collapsible key={scenario.id}>
             <Card className={`transition-all duration-200 ${getStepColor(scenario.category)} hover:shadow-md`}>
               <CollapsibleTrigger className="w-full">
-                <CardHeader className="cursor-pointer hover:bg-black/10 transition-colors">
+                <CardHeader className="cursor-pointer hover:bg-black/10 active:bg-black/15 transition-all touch-manipulation">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-2">
@@ -1403,7 +1403,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                     </div>
                     <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                   </div>
-                  <p className="text-left text-sm text-white/80">
+                  <p className="text-left text-sm text-white">
                     {scenario.description}
                   </p>
                 </CardHeader>
@@ -1429,10 +1429,10 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                         
                         {/* Test measurement section */}
                         <div className="bg-background/50 rounded-lg p-3 border">
-                          <h5 className="font-medium text-xs text-white/80 mb-2 uppercase tracking-wide">
+                          <h5 className="font-medium text-xs text-white mb-2 uppercase tracking-wide">
                             Test Measurement
                           </h5>
-                          <p className="text-sm font-mono text-foreground">
+                          <p className="text-sm font-mono text-white">
                             {diagnostic.measurement}
                           </p>
                         </div>
@@ -1442,7 +1442,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                           <h5 className="font-medium text-xs text-yellow-400 mb-2 uppercase tracking-wide">
                             Technical Interpretation
                           </h5>
-                          <p className="text-sm text-white/80">
+                          <p className="text-sm text-white">
                             {diagnostic.interpretation}
                           </p>
                         </div>
@@ -1456,7 +1456,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                             {diagnostic.possibleCauses.map((cause, causeIndex) => (
                               <div key={causeIndex} className="flex items-start gap-2 text-sm">
                                 <span className="text-orange-400 mt-1">•</span>
-                                <span className="text-white/80">{cause}</span>
+                                <span className="text-white">{cause}</span>
                               </div>
                             ))}
                           </div>
@@ -1473,7 +1473,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                                 <Badge variant="outline" className="text-xs min-w-[28px] h-6 flex items-center justify-center bg-blue-500/10 border-blue-500/30 text-blue-400">
                                   {stepIndex + 1}
                                 </Badge>
-                                <span className="text-sm text-white/80 flex-1">{step}</span>
+                                <span className="text-sm text-white flex-1">{step}</span>
                               </div>
                             ))}
                           </div>
@@ -1488,7 +1488,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                             {diagnostic.rectificationMethods.map((method, methodIndex) => (
                               <div key={methodIndex} className="flex items-start gap-3">
                                 <CheckCircle2 className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                                <span className="text-sm text-white/80 flex-1">{method}</span>
+                                <span className="text-sm text-white flex-1">{method}</span>
                               </div>
                             ))}
                           </div>
@@ -1919,8 +1919,8 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
             <Target className="h-5 w-5" />
             Real-World Fault Cases
           </h3>
-          <p className="text-sm text-blue-300">
-            Detailed case studies from actual fault-finding scenarios, including symptoms, diagnosis methods, 
+          <p className="text-sm text-white">
+            Detailed case studies from actual fault-finding scenarios, including symptoms, diagnosis methods,
             solutions, and prevention strategies drawn from real installations.
           </p>
         </div>
@@ -1929,7 +1929,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
           <Collapsible key={category.id}>
             <Card className={`transition-all duration-200 ${getStepColor(category.category)} hover:shadow-md`}>
               <CollapsibleTrigger className="w-full">
-                <CardHeader className="cursor-pointer hover:bg-black/10 transition-colors">
+                <CardHeader className="cursor-pointer hover:bg-black/10 active:bg-black/15 transition-all touch-manipulation">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-2">
@@ -1944,7 +1944,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                     </div>
                     <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                   </div>
-                  <p className="text-left text-sm text-white/80">
+                  <p className="text-left text-sm text-white">
                     {category.description}
                   </p>
                 </CardHeader>
@@ -1953,7 +1953,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
               <CollapsibleContent>
                 <CardContent className="space-y-6">
                   {category.examples.map((example, exampleIndex) => (
-                    <div key={exampleIndex} className="bg-background/50 border border-muted/20 rounded-lg p-4 space-y-4">
+                    <div key={exampleIndex} className="bg-background/50 border border-white/10 rounded-xl p-4 space-y-4 active:scale-[0.99] touch-manipulation transition-all">
                       <div className="flex items-center justify-between">
                         <h4 className="font-semibold text-base text-primary">
                           Case {exampleIndex + 1}: {example.scenario}
@@ -1967,20 +1967,20 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                         <div className="space-y-3">
                           <div>
                             <h5 className="font-medium text-sm text-orange-400 mb-1">Symptoms Reported</h5>
-                            <p className="text-sm text-white/80">{example.symptoms}</p>
+                            <p className="text-sm text-white">{example.symptoms}</p>
                           </div>
                           <div>
                             <h5 className="font-medium text-sm text-blue-400 mb-1">Diagnosis Method</h5>
-                            <p className="text-sm text-white/80">{example.diagnosis}</p>
+                            <p className="text-sm text-white">{example.diagnosis}</p>
                           </div>
                           <div>
                             <h5 className="font-medium text-sm text-green-400 mb-1">Solution Applied</h5>
-                            <p className="text-sm text-white/80">{example.solution}</p>
+                            <p className="text-sm text-white">{example.solution}</p>
                           </div>
                           {example.rectification && (
                             <div>
                               <h5 className="font-medium text-sm text-emerald-400 mb-1">Rectification Steps</h5>
-                              <p className="text-sm text-white/80 whitespace-pre-line">{example.rectification}</p>
+                              <p className="text-sm text-white whitespace-pre-line">{example.rectification}</p>
                             </div>
                           )}
                         </div>
@@ -1988,11 +1988,11 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                         <div className="space-y-3">
                           <div>
                             <h5 className="font-medium text-sm text-purple-400 mb-1">Location</h5>
-                            <p className="text-sm text-white/80">{example.location}</p>
+                            <p className="text-sm text-white">{example.location}</p>
                           </div>
                           <div>
                             <h5 className="font-medium text-sm text-cyan-400 mb-1">Prevention Strategy</h5>
-                            <p className="text-sm text-white/80">{example.prevention}</p>
+                            <p className="text-sm text-white">{example.prevention}</p>
                           </div>
                         </div>
                       </div>
@@ -2185,7 +2185,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
           <Collapsible key={category.id}>
             <Card className={`transition-all duration-200 ${getStepColor(category.category)} hover:shadow-md`}>
               <CollapsibleTrigger className="w-full">
-                <CardHeader className="cursor-pointer hover:bg-black/10 transition-colors">
+                <CardHeader className="cursor-pointer hover:bg-black/10 active:bg-black/15 transition-all touch-manipulation">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-2">
@@ -2202,7 +2202,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                       <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                     </div>
                   </div>
-                  <p className="text-left text-sm text-white/80">
+                  <p className="text-left text-sm text-white">
                     {category.description}
                   </p>
                 </CardHeader>
@@ -2216,7 +2216,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                       <Lightbulb className="h-4 w-4" />
                       Theory & Background
                     </h4>
-                    <p className="text-sm text-blue-300">{category.theory}</p>
+                    <p className="text-sm text-white">{category.theory}</p>
                   </div>
 
                   {/* Detection Methods */}
@@ -2246,7 +2246,7 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
                     <ul className="space-y-1 text-sm">
                       {category.commonSymptoms.map((symptom, symptomIndex) => (
                         <li key={symptomIndex} className="flex items-start gap-2">
-                          <span className="text-white/80">•</span>
+                          <span className="text-white">•</span>
                           <span>{symptom}</span>
                         </li>
                       ))}
@@ -2344,37 +2344,37 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
           </Button>
         </div>
 
-        <div className="text-center space-y-3 sm:space-y-4 mb-4 sm:mb-6 md:mb-8 px-2 sm:px-4">
+        <div className="space-y-2.5 sm:space-y-4 mb-3 sm:mb-6 md:mb-8 px-2 sm:px-4">
           {/* Amendment Badges */}
-          <div className="flex justify-center gap-2 flex-wrap">
-            <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
-              <CheckCircle2 className="h-3 w-3 mr-1" />
+          <div className="flex gap-1.5 sm:gap-2 flex-wrap">
+            <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-[10px] sm:text-xs">
+              <CheckCircle2 className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-1" />
               BS 7671:2018+A3:2024
             </Badge>
-            <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-              <Calendar className="h-3 w-3 mr-1" />
+            <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-[10px] sm:text-xs">
+              <Calendar className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-1" />
               Updated January 2026
             </Badge>
-            <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-xs">
-              <AlertTriangle className="h-3 w-3 mr-1" />
+            <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-[10px] sm:text-xs hidden sm:flex">
+              <AlertTriangle className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-1" />
               Diagnostic Techniques
             </Badge>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-            <div className="p-3 sm:p-4 bg-red-500/10 rounded-2xl border border-red-500/20">
-              <Wrench className="h-8 w-8 sm:h-10 sm:w-10 text-red-400" />
+          <div className="flex items-center gap-2.5 sm:gap-4">
+            <div className="p-2.5 sm:p-4 bg-red-500/10 rounded-xl sm:rounded-2xl border border-red-500/20 shrink-0">
+              <Wrench className="h-7 w-7 sm:h-10 sm:w-10 text-red-400" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+              <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white text-left">
                 Fault Finding
               </h1>
-              <p className="text-sm sm:text-base text-white/80 mt-1">
+              <p className="text-xs sm:text-base text-white mt-0.5 sm:mt-1 text-left">
                 Systematic Diagnostic Procedures
               </p>
             </div>
           </div>
-          <p className="text-sm sm:text-base text-white max-w-3xl mx-auto">
+          <p className="text-xs sm:text-sm md:text-base text-white max-w-3xl hidden sm:block text-left">
             Learn systematic approaches to electrical fault diagnosis and resolution aligned with
             BS 7671:2018 Amendment 3:2024. Master the methodical process from initial symptoms to successful repair.
           </p>
@@ -2389,27 +2389,27 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
 
         {/* Quick Reference */}
         <Card className="border-l-4 border-l-elec-yellow hover:bg-card transition-all">
-          <CardHeader className="p-4 sm:p-5 md:p-6">
-            <CardTitle className="text-elec-yellow text-lg sm:text-xl md:text-2xl font-bold">
+          <CardHeader className="p-3 sm:p-4 md:p-5">
+            <CardTitle className="text-elec-yellow text-sm sm:text-lg md:text-xl font-bold">
               Quick Reference: Fault Finding Principles
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-4 sm:p-5 md:p-6 pt-0">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-              <div className="text-center p-4 sm:p-5 bg-black/20 rounded-lg border border-elec-yellow/20 touch-manipulation active:scale-[0.99] transition-transform">
-                <Search className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow mx-auto mb-3" />
-                <h4 className="font-bold text-elec-yellow mb-2 text-base sm:text-lg">Systematic Approach</h4>
-                <p className="text-white text-xs sm:text-sm leading-relaxed">Follow logical sequence from information gathering to final testing</p>
+          <CardContent className="p-3 sm:p-4 md:p-5 pt-0">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-5">
+              <div className="text-center p-2.5 sm:p-4 bg-black/20 rounded-lg border border-elec-yellow/20 touch-manipulation active:scale-[0.99] transition-transform">
+                <Search className="h-6 w-6 sm:h-10 sm:w-10 md:h-12 md:w-12 text-elec-yellow mx-auto mb-1.5 sm:mb-3" />
+                <h4 className="font-bold text-elec-yellow mb-1 sm:mb-2 text-[10px] sm:text-sm md:text-base">Systematic</h4>
+                <p className="text-white text-[9px] sm:text-xs leading-relaxed hidden sm:block">Follow logical sequence from information gathering to final testing</p>
               </div>
-              <div className="text-center p-4 sm:p-5 bg-black/20 rounded-lg border border-red-500/20 touch-manipulation active:scale-[0.99] transition-transform">
-                <Target className="h-10 w-10 sm:h-12 sm:w-12 text-red-400 mx-auto mb-3" />
-                <h4 className="font-bold text-red-400 mb-2 text-base sm:text-lg">Safety First</h4>
-                <p className="text-white text-xs sm:text-sm leading-relaxed">Always ensure safe isolation before commencing fault location work</p>
+              <div className="text-center p-2.5 sm:p-4 bg-black/20 rounded-lg border border-red-500/20 touch-manipulation active:scale-[0.99] transition-transform">
+                <Target className="h-6 w-6 sm:h-10 sm:w-10 md:h-12 md:w-12 text-red-400 mx-auto mb-1.5 sm:mb-3" />
+                <h4 className="font-bold text-red-400 mb-1 sm:mb-2 text-[10px] sm:text-sm md:text-base">Safety First</h4>
+                <p className="text-white text-[9px] sm:text-xs leading-relaxed hidden sm:block">Always ensure safe isolation before commencing fault location work</p>
               </div>
-              <div className="text-center p-4 sm:p-5 bg-black/20 rounded-lg border border-green-500/20 touch-manipulation active:scale-[0.99] transition-transform">
-                <CheckCircle className="h-10 w-10 sm:h-12 sm:w-12 text-green-400 mx-auto mb-3" />
-                <h4 className="font-bold text-green-400 mb-2 text-base sm:text-lg">Verify Repair</h4>
-                <p className="text-white text-xs sm:text-sm leading-relaxed">Always test thoroughly after repair to confirm fault has been resolved</p>
+              <div className="text-center p-2.5 sm:p-4 bg-black/20 rounded-lg border border-green-500/20 touch-manipulation active:scale-[0.99] transition-transform">
+                <CheckCircle className="h-6 w-6 sm:h-10 sm:w-10 md:h-12 md:w-12 text-green-400 mx-auto mb-1.5 sm:mb-3" />
+                <h4 className="font-bold text-green-400 mb-1 sm:mb-2 text-[10px] sm:text-sm md:text-base">Verify</h4>
+                <p className="text-white text-[9px] sm:text-xs leading-relaxed hidden sm:block">Always test thoroughly after repair to confirm fault has been resolved</p>
               </div>
             </div>
           </CardContent>

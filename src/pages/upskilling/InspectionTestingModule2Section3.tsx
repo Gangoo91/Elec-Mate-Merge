@@ -112,7 +112,7 @@ const InspectionTestingModule2Section3 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="bg-background text-foreground">
       {/* Minimal Header */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
         <div className="flex items-center justify-between px-4 h-14">

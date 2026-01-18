@@ -13,8 +13,12 @@ export const FieldTooltip: React.FC<FieldTooltipProps> = ({ content, regulation,
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <button type="button" className="inline-flex items-center justify-centre ml-1">
-            <Info className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground transition-colours" />
+          <button
+            type="button"
+            className="inline-flex items-center justify-center ml-1 min-h-[44px] min-w-[44px] -my-3 touch-manipulation active:scale-95 transition-all"
+            aria-label="More information"
+          >
+            <Info className="h-4 w-4 text-muted-foreground hover:text-foreground active:text-elec-yellow transition-colors" />
           </button>
         </TooltipTrigger>
         <TooltipContent side="right" className="max-w-xs">

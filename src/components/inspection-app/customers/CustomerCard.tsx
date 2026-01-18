@@ -63,7 +63,7 @@ export const CustomerCard = ({ customer, onView, onEdit, onDelete }: CustomerCar
           <Button
             variant="ghost"
             size="icon"
-            className="text-neutral-400 hover:text-foreground min-h-[44px] min-w-[44px] sm:h-10 sm:w-10 flex-shrink-0"
+            className="text-neutral-400 hover:text-foreground active:text-foreground active:scale-95 min-h-[44px] min-w-[44px] sm:h-10 sm:w-10 flex-shrink-0 transition-all touch-manipulation"
             onClick={() => onEdit(customer)}
           >
             <Pencil className="h-4 w-4" />
@@ -71,7 +71,7 @@ export const CustomerCard = ({ customer, onView, onEdit, onDelete }: CustomerCar
           <Button
             variant="ghost"
             size="icon"
-            className="text-neutral-400 hover:text-red-400 min-h-[44px] min-w-[44px] sm:h-10 sm:w-10 flex-shrink-0"
+            className="text-neutral-400 hover:text-red-400 active:text-red-500 active:scale-95 min-h-[44px] min-w-[44px] sm:h-10 sm:w-10 flex-shrink-0 transition-all touch-manipulation"
             onClick={() => onDelete(customer.id)}
           >
             <Trash2 className="h-4 w-4" />

@@ -416,7 +416,7 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
       <Collapsible open={isAssessmentOpen} onOpenChange={setIsAssessmentOpen}>
         <div className="eicr-section-card overflow-hidden">
           <CollapsibleTrigger asChild>
-            <div className="cursor-pointer hover:bg-white/5 transition-colors p-4 flex items-center justify-between">
+            <div className="cursor-pointer hover:bg-white/5 active:bg-white/10 transition-all touch-manipulation p-4 flex items-center justify-between">
               <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
                 {formData.overallAssessment ? (
                   <CheckCircle className="h-5 w-5 text-green-400" />
@@ -483,7 +483,7 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
       <Collapsible open={isSignaturesOpen} onOpenChange={setIsSignaturesOpen}>
         <div className="eicr-section-card overflow-hidden">
           <CollapsibleTrigger asChild>
-            <div className="cursor-pointer hover:bg-white/5 transition-colors p-4 flex items-center justify-between">
+            <div className="cursor-pointer hover:bg-white/5 active:bg-white/10 transition-all touch-manipulation p-4 flex items-center justify-between">
               <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
                 {completionData.signaturesComplete ? (
                   <CheckCircle className="h-5 w-5 text-green-400" />

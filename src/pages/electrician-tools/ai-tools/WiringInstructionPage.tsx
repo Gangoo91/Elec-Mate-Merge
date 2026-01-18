@@ -264,9 +264,9 @@ const WiringInstructionPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-safe">
+    <div className="bg-background ">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30 pt-safe">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30 ">
         <div className="px-4 py-2">
           <button onClick={() => navigate('/electrician-tools/ai-tooling')} className="flex items-center gap-2 text-foreground h-11 touch-manipulation active:scale-[0.98] transition-all -ml-2 px-2 rounded-lg">
             <ArrowLeft className="h-5 w-5" />

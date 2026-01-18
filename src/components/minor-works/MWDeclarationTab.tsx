@@ -75,14 +75,24 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-sm">Position *</Label>
+                  <Label className="text-sm">For and on behalf of (Company)</Label>
                   <Input
-                    value={formData.position || ''}
-                    onChange={(e) => onUpdate('position', e.target.value)}
-                    placeholder="e.g., Qualified Electrician"
-                    className={cn("h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500", !formData.position && "border-red-500/50")}
+                    value={formData.forAndOnBehalfOf || ''}
+                    onChange={(e) => onUpdate('forAndOnBehalfOf', e.target.value)}
+                    placeholder="Company or trading name"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm">Position *</Label>
+                <Input
+                  value={formData.position || ''}
+                  onChange={(e) => onUpdate('position', e.target.value)}
+                  placeholder="e.g., Qualified Electrician"
+                  className={cn("h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500", !formData.position && "border-red-500/50")}
+                />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

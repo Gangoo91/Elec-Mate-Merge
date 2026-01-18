@@ -73,7 +73,7 @@ const InspectionTesting = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Hero Header */}
       <div className="relative overflow-hidden">
         {/* Background gradient effect */}

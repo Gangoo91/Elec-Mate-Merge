@@ -436,7 +436,7 @@ export function ProgressLogsSection() {
               <CardContent className="p-0">
                 {/* Header Row */}
                 <div
-                  className="p-4 cursor-pointer active:bg-muted/50 transition-colors touch-feedback"
+                  className="p-4 cursor-pointer active:bg-muted/50 transition-all touch-manipulation"
                   onClick={() => setExpandedLog(isExpanded ? null : log.id)}
                 >
                   <div className="flex items-start gap-4">

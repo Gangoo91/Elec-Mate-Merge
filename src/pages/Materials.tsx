@@ -94,7 +94,7 @@ const Materials = () => {
   };
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white">
+    <div className="bg-elec-dark text-white">
       <Helmet>
         <title>Electrical Materials - Elec-Mate</title>
         <meta name="description" content="Browse and source electrical materials from multiple suppliers. Compare prices on cables, components, protection equipment and more." />

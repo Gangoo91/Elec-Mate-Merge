@@ -10,7 +10,7 @@ export default function EICRCertificate() {
   const isNew = id === "new";
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Header */}
       <div className="bg-card border-b border-border sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4 sm:px-6 lg:px-8">

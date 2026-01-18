@@ -232,7 +232,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                     key={type}
                     variant={filters.jobTypes.includes(type) ? "default" : "outline"}
                     className={cn(
-                      "cursor-pointer transition-colors",
+                      "cursor-pointer active:scale-[0.98] transition-all touch-manipulation",
                       filters.jobTypes.includes(type) 
                         ? "bg-elec-yellow text-elec-dark" 
                         : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
@@ -280,7 +280,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                     key={level}
                     variant={filters.experience.includes(level) ? "default" : "outline"}
                     className={cn(
-                      "cursor-pointer transition-colors",
+                      "cursor-pointer active:scale-[0.98] transition-all touch-manipulation",
                       filters.experience.includes(level) 
                         ? "bg-elec-yellow text-elec-dark" 
                         : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
@@ -306,7 +306,7 @@ const AdvancedFilters: React.FC<AdvancedFiltersProps> = ({
                       key={company}
                       variant={filters.companies.includes(company) ? "default" : "outline"}
                       className={cn(
-                        "cursor-pointer transition-colors",
+                        "cursor-pointer active:scale-[0.98] transition-all touch-manipulation",
                         filters.companies.includes(company) 
                           ? "bg-elec-yellow text-elec-dark" 
                           : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"

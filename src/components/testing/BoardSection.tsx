@@ -256,9 +256,10 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               </label>
 
               <label className={cn(
-                "flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all",
-                "hover:bg-white/5",
-                board.spdNA && "bg-white/5 border border-white/10",
+                "flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all touch-manipulation",
+                "hover:bg-white/5 active:scale-[0.98]",
+                board.spdNA && "bg-amber-500/10 border border-amber-500/30",
+                !board.spdNA && "border border-transparent",
                 isMobile && "px-2 py-1.5 text-xs"
               )}>
                 <Checkbox
@@ -267,9 +268,9 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     onUpdateBoard(board.id, 'spdNA', checked === true);
                     if (checked) onUpdateBoard(board.id, 'spdOperationalStatus', false);
                   }}
-                  className="data-[state=checked]:bg-white/50 data-[state=checked]:border-white/50"
+                  className="h-5 w-5 border-elec-yellow/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
                 />
-                <span className={cn("text-sm text-white/60", isMobile && "text-xs")}>SPD N/A</span>
+                <span className={cn("text-sm text-white", isMobile && "text-xs")}>SPD N/A</span>
               </label>
             </div>
 

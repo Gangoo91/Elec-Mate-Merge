@@ -266,7 +266,7 @@ export default function EICCertificate() {
       const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-eic-pdf', {
         body: {
           formData: pdfData,
-          templateId: '3D25AF58-5256-49B1-8E4E-811602303B89'
+          templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947'
         }
       });
 
@@ -315,7 +315,7 @@ export default function EICCertificate() {
   // Loading state for design
   if (designId && isLoadingDesign) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="bg-background">
         <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <Card className="border-elec-yellow/20">
             <CardContent className="py-12">
@@ -338,7 +338,7 @@ export default function EICCertificate() {
   // Error state for design
   if (designId && designError) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="bg-background">
         <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <Alert className="bg-red-500/10 border-red-500/30">
             <AlertCircle className="h-4 w-4 text-red-400" />
@@ -360,7 +360,7 @@ export default function EICCertificate() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Header */}
       <div className="bg-card border-b border-border sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-3 sm:px-6 lg:px-8">

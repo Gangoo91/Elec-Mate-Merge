@@ -128,7 +128,7 @@ const Module6Section3_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
@@ -641,7 +641,7 @@ const Module6Section3_4 = () => {
             <div className="space-y-3">
               {faqs.map((faq, index) => (
                 <details key={index} className="group">
-                  <summary className="font-medium text-white cursor-pointer list-none flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                  <summary className="font-medium text-white cursor-pointer list-none flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all touch-manipulation">
                     <span>{faq.question}</span>
                     <span className="transition-transform group-open:rotate-180 text-white/40">▼</span>
                   </summary>

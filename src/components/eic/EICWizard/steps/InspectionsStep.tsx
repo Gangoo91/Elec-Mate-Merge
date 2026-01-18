@@ -240,7 +240,7 @@ const InspectionSectionCard: React.FC<{
       )}>
         <CollapsibleTrigger asChild>
           <CardHeader
-            className="py-4 cursor-pointer hover:bg-muted/30 transition-colors"
+            className="py-4 cursor-pointer hover:bg-muted/30 active:bg-muted/50 transition-all touch-manipulation"
             onClick={handleToggle}
           >
             <div className="flex items-center gap-3">

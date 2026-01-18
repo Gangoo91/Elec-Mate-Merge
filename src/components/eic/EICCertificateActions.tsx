@@ -4,18 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  FileText, 
-  Download, 
-  Save, 
-  Mail, 
-  AlertTriangle, 
-  CheckCircle, 
+import {
+  FileText,
+  Download,
+  Save,
+  Mail,
+  AlertTriangle,
+  CheckCircle,
   Clock,
   Shield,
   Printer,
-  Copy,
-  Code,
   Loader2
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -29,19 +27,20 @@ interface EICCertificateActionsProps {
   reportId: string;
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;
+  onUpdate?: (field: string, value: any) => void;
 }
 
 const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   formData,
   reportId,
   onGenerateCertificate,
-  onSaveDraft
+  onSaveDraft,
+  onUpdate
 }) => {
   const { toast } = useToast();
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
   const [exportStatus, setExportStatus] = useState<'preparing' | 'generating' | 'complete' | 'error'>('preparing');
-  const [jsonPreview, setJsonPreview] = useState<string>('{}');
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [emailRecipient, setEmailRecipient] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
@@ -73,19 +72,18 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
     try {
       setExportProgress(10);
-      console.log('Attempting EIC PDF generation via PDF Monkey...');
       
       // Prepare form data in the format expected by PDF Monkey template
       const pdfData = await generateTestJSON(reportId);
       
       setExportProgress(30);
       setExportStatus('generating');
-      
+
       // Call edge function to generate PDF via PDF Monkey
       const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-eic-pdf', {
-        body: { 
+        body: {
           formData: pdfData,
-          templateId: '3D25AF58-5256-49B1-8E4E-811602303B89'
+          templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947'
         }
       });
       
@@ -190,22 +188,18 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
     try {
       // First generate the PDF
-      console.log('Generating PDF for email...');
       const pdfData = await generateTestJSON(reportId);
       
       const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-eic-pdf', {
         body: { 
           formData: pdfData,
-          templateId: '3D25AF58-5256-49B1-8E4E-811602303B89'
+          templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947'
         }
       });
       
       if (pdfError || !pdfResult?.success || !pdfResult?.pdfUrl) {
         throw new Error(pdfError?.message || 'Failed to generate PDF');
       }
-
-      // Email functionality removed - PDF generation successful
-      console.log('PDF generated successfully:', pdfResult.pdfUrl);
 
       toast({
         title: "Certificate Generated Successfully",
@@ -229,7 +223,40 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
   const generateTestJSON = async (reportId: string) => {
     // Always include all keys with empty values as defaults
+    // These field names MUST match the PDF Monkey template exactly
+
+    // Build FLAT inspection keys at ROOT level dynamically from form data
+    const flatInspectionKeys: Record<string, string> = {};
+
+    // Get inspection items from formData (can be array or object)
+    const inspectionItems = formData.inspectionItems || Object.values(formData.inspections || {});
+
+    // Create flat keys for all 14 EIC inspection items
+    for (let i = 1; i <= 14; i++) {
+      // Find the matching item by itemNumber or id
+      const item = inspectionItems.find((it: any) =>
+        it?.itemNumber === String(i) ||
+        it?.itemNumber === i ||
+        it?.id === `eic_${i}` ||
+        it?.id === String(i)
+      );
+
+      const outcome = item?.outcome || '';
+
+      // Convert outcome to display value for PDF
+      if (outcome === 'satisfactory' || outcome === 'acceptable' || outcome === 'Acceptable') {
+        flatInspectionKeys[`insp_${i}`] = 'Acceptable';
+      } else if (outcome === 'na' || outcome === 'not-applicable' || outcome === 'N/A') {
+        flatInspectionKeys[`insp_${i}`] = 'N/A';
+      } else {
+        flatInspectionKeys[`insp_${i}`] = ''; // Empty if not set
+      }
+    }
+
     const json: any = {
+      // SPREAD flat inspection keys at ROOT level (like EICR pattern)
+      ...flatInspectionKeys,
+
       metadata: {
         certificate_number: formData.certificateNumber || ''
       },
@@ -243,7 +270,9 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         address: formData.installationAddress || '',
         same_as_client_address: formData.sameAsClientAddress === 'true',
         installation_type: formData.installationType || '',
+        work_type: formData.workType || formData.installationType || '',
         description: formData.description || '',
+        extent_of_installation: formData.extentOfInstallation || '',
         installation_date: formData.installationDate || '',
         test_date: formData.testDate || '',
         construction_date: formData.constructionDate || ''
@@ -253,23 +282,45 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         part_p_compliance: formData.partPCompliance || ''
       },
       supply_characteristics: {
-        supply_voltage: formData.supplyVoltage || '',
-        supply_frequency: formData.supplyFrequency || '',
+        supply_voltage: formData.supplyVoltage || formData.nominalVoltage || '',
+        supply_frequency: formData.supplyFrequency || formData.nominalFrequency || '',
         phases: formData.phases || '',
         earthing_arrangement: formData.earthingArrangement || '',
         supply_type: formData.supplyType || '',
-        supply_pme: formData.supplyPME || ''
+        supply_pme: formData.supplyPME || '',
+        // DC supply options
+        dc_supply_type: formData.dcSupplyType || '',
+        // Fields used by PDF template
+        prospective_fault_current: formData.prospectiveFaultCurrent || '',
+        external_ze: formData.externalEarthFaultLoopImpedance || formData.externalZe || '',
+        supply_polarity_confirmed: formData.supplyPolarityConfirmed ?? false,
+        other_sources_of_supply: formData.otherSourcesOfSupply ?? false
+      },
+      // Supply Protective Device (DNO fuse details)
+      supply_protective_device: {
+        bs_en: formData.supplyProtectiveDeviceBsEn || '',
+        type: formData.supplyProtectiveDeviceType || '',
+        rated_current: formData.supplyProtectiveDeviceRating || ''
       },
       main_protective_device: {
         device_type: formData.mainProtectiveDevice || formData.mainProtectiveDeviceType || '',
-        main_switch_rating: formData.mainSwitchRating || '',
+        main_switch_rating: formData.mainSwitchRating || formData.mainSwitchCurrentRating || '',
         main_switch_location: formData.mainSwitchLocation || '',
-        breaking_capacity: formData.breakingCapacity || ''
+        breaking_capacity: formData.breakingCapacity || '',
+        // Additional fields for PDF template
+        bs_en: formData.mainSwitchBsEn || '',
+        poles: formData.mainSwitchPoles || '',
+        fuse_setting: formData.mainSwitchFuseRating || '',
+        voltage_rating: formData.mainSwitchVoltageRating || ''
       },
       rcd_details: {
         rcd_main_switch: formData.rcdMainSwitch || '',
-        rcd_rating: formData.rcdRating || '',
-        rcd_type: formData.rcdType || ''
+        rcd_rating: formData.rcdRating || formData.mainSwitchRcdRating || '',
+        rcd_type: formData.rcdType || formData.mainSwitchRcdType || '',
+        rcd_operating_time: formData.rcdOperatingTime || formData.mainSwitchRcdOperatingTime || '',
+        // IET Model Form fields
+        rcd_rated_time_delay: formData.rcdTimeDelay || formData.rcdRatedTimeDelay || '',
+        rcd_measured_operating_time: formData.rcdMeasuredTime || formData.rcdMeasuredOperatingTime || ''
       },
       distribution_board: {
         board_size: formData.boardSize || '',
@@ -283,11 +334,34 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         tails_length: formData.tailsLength || ''
       },
       earthing_bonding: {
+        // Means of earthing
+        means_of_earthing: formData.meansOfEarthing || '',
+        // Earth electrode details
         earth_electrode_type: formData.earthElectrodeType || '',
+        earth_electrode_location: formData.earthElectrodeLocation || '',
         earth_electrode_resistance: formData.earthElectrodeResistance || '',
+        // Earthing conductor
+        earthing_conductor_material: formData.earthingConductorMaterial || '',
+        earthing_conductor_csa: formData.earthingConductorCsa || '',
+        earthing_conductor_verified: formData.earthingConductorVerified ?? false,
+        // Main bonding conductor
         main_bonding_conductor: formData.mainBondingConductor || '',
-        main_bonding_size: formData.mainBondingSize || '',
+        main_bonding_material: formData.mainBondingMaterial || '',
+        main_bonding_size: formData.mainBondingSize || formData.mainBondingCsa || '',
         main_bonding_size_custom: formData.mainBondingSizeCustom || '',
+        main_bonding_verified: formData.mainBondingVerified ?? false,
+        // Maximum demand
+        maximum_demand: formData.maximumDemand || '',
+        maximum_demand_unit: formData.maximumDemandUnit || 'A',
+        // Bonding connections
+        bonding_water: formData.bondingToWater ?? formData.bondingWater ?? false,
+        bonding_gas: formData.bondingToGas ?? formData.bondingGas ?? false,
+        bonding_oil: formData.bondingToOil ?? formData.bondingOil ?? false,
+        bonding_structural_steel: formData.bondingToStructuralSteel ?? formData.bondingStructuralSteel ?? false,
+        bonding_lightning_protection: formData.bondingToLightningProtection ?? formData.bondingLightningProtection ?? false,
+        bonding_other: formData.bondingToOther ?? formData.bondingOther ?? false,
+        bonding_other_specify: formData.bondingOtherSpecify || formData.bondingToOtherSpecify || '',
+        // Supplementary bonding
         bonding_compliance: formData.bondingCompliance || '',
         supplementary_bonding: formData.supplementaryBonding || '',
         supplementary_bonding_size: formData.supplementaryBondingSize || '',
@@ -377,26 +451,48 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         name: formData.designerName || '',
         qualifications: formData.designerQualifications || '',
         company: formData.designerCompany || '',
+        address: formData.designerAddress || '',
+        postcode: formData.designerPostcode || '',
+        phone: formData.designerPhone || '',
         date: formData.designerDate || '',
-        signature: formData.designerSignature || ''
+        signature: formData.designerSignature || '',
+        bs7671_amendment_date: formData.designerBs7671Date || '',
+        departures: formData.designerDepartures || '',
+        permitted_exceptions: formData.permittedExceptions || '',
+        risk_assessment_attached: formData.riskAssessmentAttached ?? false
       },
       constructor: {
         name: formData.constructorName || '',
         qualifications: formData.constructorQualifications || '',
         company: formData.constructorCompany || '',
+        address: formData.constructorAddress || '',
+        postcode: formData.constructorPostcode || '',
+        phone: formData.constructorPhone || '',
         date: formData.constructorDate || '',
-        signature: formData.constructorSignature || ''
+        signature: formData.constructorSignature || '',
+        bs7671_amendment_date: formData.constructorBs7671Date || '',
+        departures: formData.constructorDepartures || '',
+        same_as_designer: formData.sameAsDesigner ?? false
       },
       inspector: {
         name: formData.inspectorName || '',
         qualifications: formData.inspectorQualifications || '',
         company: formData.inspectorCompany || '',
+        address: formData.inspectorAddress || '',
+        postcode: formData.inspectorPostcode || '',
+        phone: formData.inspectorPhone || '',
         date: formData.inspectorDate || '',
-        signature: formData.inspectorSignature || ''
+        signature: formData.inspectorSignature || '',
+        bs7671_amendment_date: formData.inspectorBs7671Date || '',
+        departures: formData.inspectorDepartures || '',
+        same_as_constructor: formData.sameAsConstructor ?? false
       },
+      next_inspection: {
+        interval_months: formData.nextInspectionInterval || '',
+        recommended_date: formData.nextInspectionDate || ''
+      },
+      existing_installation_comments: formData.existingInstallationComments || '',
       declarations: {
-        same_as_designer: formData.sameAsDesigner ?? false,
-        same_as_constructor: formData.sameAsConstructor ?? false,
         additional_notes: formData.additionalNotes || '',
         inspected_by: {
           name: formData.inspectedByName || '',
@@ -405,7 +501,8 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
           position: formData.inspectedByPosition || '',
           address: formData.inspectedByAddress || '',
           cp_scheme: formData.inspectedByCpScheme || '',
-          cp_scheme_na: formData.inspectedByCpSchemeNA ?? false
+          cp_scheme_na: formData.inspectedByCpSchemeNA ?? false,
+          same_as_inspector: formData.eicSameAsInspectedBy ?? false
         },
         report_authorised_by: {
           name: formData.reportAuthorisedByName || '',
@@ -414,6 +511,8 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
           for_on_behalf_of: formData.reportAuthorisedByForOnBehalfOf || '',
           position: formData.reportAuthorisedByPosition || '',
           address: formData.reportAuthorisedByAddress || '',
+          postcode: formData.reportAuthorisedByPostcode || '',
+          phone: formData.reportAuthorisedByPhone || '',
           membership_no: formData.reportAuthorisedByMembershipNo || ''
         },
         bs7671_compliance: formData.bs7671Compliance ?? false,
@@ -453,21 +552,6 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         photo_count: photoUrls.length
       };
     });
-  };
-
-  const handleCopyJSON = async () => {
-    const jsonData = JSON.stringify(await generateTestJSON(reportId), null, 2);
-    navigator.clipboard.writeText(jsonData);
-    setJsonPreview(jsonData);
-    toast({
-      title: "JSON Copied",
-      description: "Test JSON data has been copied to clipboard.",
-    });
-  };
-
-  const handleLoadJSONPreview = async () => {
-    const jsonData = JSON.stringify(await generateTestJSON(reportId), null, 2);
-    setJsonPreview(jsonData);
   };
 
   const getCompletionBadge = () => {
@@ -610,39 +694,6 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
               <Printer className="h-4 w-4 mr-2" />
               Print Preview
             </Button>
-          </div>
-
-          {/* JSON Test Data */}
-          <div className="pt-4 border-t space-y-3">
-            <div className="flex items-center justify-between">
-              <h4 className="font-medium text-sm flex items-center gap-2">
-                <Code className="h-4 w-4 text-elec-yellow" />
-                Test JSON Data
-              </h4>
-              <div className="flex gap-2">
-                <Button
-                  onClick={handleLoadJSONPreview}
-                  variant="outline"
-                  size="sm"
-                >
-                  <Code className="h-3 w-3 mr-2" />
-                  Load Preview
-                </Button>
-                <Button
-                  onClick={handleCopyJSON}
-                  variant="outline"
-                  size="sm"
-                >
-                  <Copy className="h-3 w-3 mr-2" />
-                  Copy JSON
-                </Button>
-              </div>
-            </div>
-            <div className="bg-muted rounded-md p-3 max-h-96 overflow-auto">
-              <pre className="text-xs">
-                {jsonPreview}
-              </pre>
-            </div>
           </div>
 
           {/* Certificate Information */}

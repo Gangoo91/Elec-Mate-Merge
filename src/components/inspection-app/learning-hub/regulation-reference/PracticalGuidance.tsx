@@ -195,9 +195,9 @@ const PracticalGuidance = () => {
         {Object.entries(practicalScenarios).map(([key, scenario]) => (
           <Card 
             key={key}
-            className={`cursor-pointer transition-all hover:scale-105 ${
-              selectedScenario === key 
-                ? 'bg-elec-yellow/10 border-elec-yellow' 
+            className={`cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98] touch-manipulation rounded-xl ${
+              selectedScenario === key
+                ? 'bg-elec-yellow/10 border-elec-yellow'
                 : 'bg-card border-border hover:border-elec-yellow/50'
             }`}
             onClick={() => setSelectedScenario(key)}

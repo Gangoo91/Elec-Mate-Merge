@@ -42,7 +42,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex flex-col">
+    <div className="bg-black flex flex-col pt-safe pb-safe">
       {/* Background gradient */}
       <div className="fixed inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent pointer-events-none" />
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-card rounded-full blur-[120px] opacity-30 pointer-events-none" />

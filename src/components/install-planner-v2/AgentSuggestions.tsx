@@ -51,14 +51,14 @@ export const AgentSuggestions = ({ suggestions, onSelectAgent }: AgentSuggestion
   const getPriorityBadge = (priority?: string) => {
     if (priority === 'high') {
       return (
-        <span className="text-[9px] px-2 py-0.5 rounded bg-elec-yellow/20 text-elec-yellow font-medium whitespace-nowrap">
+        <span className="text-[10px] px-2 py-0.5 rounded bg-elec-yellow/20 text-elec-yellow font-medium whitespace-nowrap">
           Recommended
         </span>
       );
     }
     if (priority === 'low') {
       return (
-        <span className="text-[9px] px-2 py-0.5 rounded bg-muted/20 text-muted-foreground font-medium whitespace-nowrap">
+        <span className="text-[10px] px-2 py-0.5 rounded bg-muted/20 text-muted-foreground font-medium whitespace-nowrap">
           Optional
         </span>
       );

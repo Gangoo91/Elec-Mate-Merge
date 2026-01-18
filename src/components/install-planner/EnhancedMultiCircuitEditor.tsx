@@ -191,7 +191,7 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
               onOpenChange={(open) => setExpandedCircuit(open ? circuit.id : null)}
             >
               <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-black/20 transition-colors">
+                <CardHeader className="cursor-pointer hover:bg-black/20 active:bg-black/30 transition-all touch-manipulation">
                   <div className="flex flex-col gap-4">
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">

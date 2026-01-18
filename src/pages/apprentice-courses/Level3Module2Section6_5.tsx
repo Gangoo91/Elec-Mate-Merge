@@ -272,7 +272,7 @@ const Level3Module2Section6_5 = () => {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="sticky top-0 z-10 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-[#333333]">
         <div className="flex items-center gap-2 p-3 md:p-4 text-xs md:text-sm text-[#a1a1a1]">

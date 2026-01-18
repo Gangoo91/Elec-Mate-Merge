@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useNotifications } from '@/components/notifications/NotificationProvider';
+import { usePushNotifications } from '@/hooks/usePushNotifications';
 import {
   Bell,
+  BellRing,
   Mail,
   MessageSquare,
   GraduationCap,
@@ -15,6 +17,7 @@ import {
   Volume2,
   VolumeX,
   Loader2,
+  Smartphone,
 } from "lucide-react";
 
 interface NotificationSetting {
@@ -36,6 +39,41 @@ const NotificationsTab = () => {
   const { addNotification } = useNotifications();
   const [isSaving, setIsSaving] = useState(false);
   const [allMuted, setAllMuted] = useState(false);
+
+  // Push notifications
+  const {
+    isSupported: isPushSupported,
+    isSubscribed: isPushSubscribed,
+    isLoading: isPushLoading,
+    subscribe: subscribeToPush,
+    unsubscribe: unsubscribeFromPush
+  } = usePushNotifications();
+
+  const handlePushToggle = async () => {
+    try {
+      if (isPushSubscribed) {
+        await unsubscribeFromPush();
+        addNotification({
+          title: 'Push Notifications Disabled',
+          message: "You won't receive notifications when the app is closed",
+          type: 'info'
+        });
+      } else {
+        await subscribeToPush();
+        addNotification({
+          title: 'Push Notifications Enabled',
+          message: "You'll now receive notifications even when the app is closed",
+          type: 'success'
+        });
+      }
+    } catch {
+      addNotification({
+        title: 'Error',
+        message: 'Failed to update push notification settings',
+        type: 'error'
+      });
+    }
+  };
 
   const [categories, setCategories] = useState<NotificationCategory[]>([
     {
@@ -226,6 +264,51 @@ const NotificationsTab = () => {
           </div>
         </div>
       </div>
+
+      {/* Push Notifications - Primary CTA */}
+      {isPushSupported && (
+        <div className="rounded-xl bg-gradient-to-br from-elec-yellow/10 to-purple-500/10 border border-elec-yellow/20 overflow-hidden">
+          <div className="p-4 md:p-6">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                  isPushSubscribed
+                    ? 'bg-green-500/20 ring-2 ring-green-500/30'
+                    : 'bg-elec-yellow/20'
+                }`}>
+                  {isPushLoading ? (
+                    <Loader2 className="h-6 w-6 text-elec-yellow animate-spin" />
+                  ) : isPushSubscribed ? (
+                    <BellRing className="h-6 w-6 text-green-400" />
+                  ) : (
+                    <Smartphone className="h-6 w-6 text-elec-yellow" />
+                  )}
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-base font-semibold text-foreground">Push Notifications</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {isPushSubscribed
+                      ? "You'll receive notifications even when the app is closed"
+                      : "Get notified about messages, quotes and important updates"
+                    }
+                  </p>
+                </div>
+              </div>
+              <Switch
+                checked={isPushSubscribed}
+                onCheckedChange={handlePushToggle}
+                disabled={isPushLoading}
+                className="data-[state=checked]:bg-green-500"
+              />
+            </div>
+            {!isPushSubscribed && (
+              <p className="mt-3 text-xs text-muted-foreground bg-white/5 rounded-lg px-3 py-2">
+                💡 Enable push notifications to never miss a message from clients or Mental Health Mates
+              </p>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Notification Categories */}
       {categories.map((category, categoryIndex) => (

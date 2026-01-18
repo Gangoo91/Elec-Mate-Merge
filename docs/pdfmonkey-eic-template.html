@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  /* ============================================
+     ELECTRICAL INSTALLATION CERTIFICATE
+     BS 7671:2018+A3:2024 Compliant Template
+     ============================================ */
+
+  @page {
+    size: A4 portrait;
+    margin: 5mm 6mm 6mm 6mm;
+  }
+
+  @page landscape {
+    size: A4 landscape;
+    margin: 6mm 8mm 8mm 8mm;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 8.5pt;
+    line-height: 1.35;
+    color: #1a1a2e;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Page Container */
+  .page {
+    width: 100%;
+    min-height: 100%;
+    page-break-after: always;
+    position: relative;
+  }
+
+  .page:last-child {
+    page-break-after: auto;
+  }
+
+  .page-landscape {
+    page: landscape;
+    page-break-before: always;
+    page-break-after: always;
+  }
+
+  /* ============================================
+     HEADER STYLES
+     ============================================ */
+
+  .certificate-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #fff;
+    padding: 10px 16px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0;
+  }
+
+  .certificate-header h1 {
+    font-size: 16pt;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin: 0;
+  }
+
+  .certificate-header .subtitle {
+    font-size: 8pt;
+    opacity: 0.85;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  .cert-number-box {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-align: right;
+  }
+
+  .cert-number-box .label {
+    font-size: 7pt;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .cert-number-box .number {
+    font-size: 12pt;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+  }
+
+  /* ============================================
+     SECTION STYLES
+     ============================================ */
+
+  .section {
+    margin-bottom: 8px;
+  }
+
+  .section-header {
+    background: linear-gradient(90deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    padding: 5px 12px;
+    font-size: 9pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+    border-left: 4px solid #f4a634;
+  }
+
+  .section-header.amber {
+    border-left-color: #f4a634;
+  }
+
+  .section-header.blue {
+    border-left-color: #3b82f6;
+  }
+
+  .section-header.green {
+    border-left-color: #22c55e;
+  }
+
+  .section-header.purple {
+    border-left-color: #a855f7;
+  }
+
+  .sub-header {
+    background: #f8fafc;
+    border-left: 3px solid #3b82f6;
+    padding: 4px 10px;
+    font-size: 8pt;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin: 6px 0 4px 0;
+  }
+
+  /* ============================================
+     FORM FIELD STYLES
+     ============================================ */
+
+  .form-grid {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .form-row {
+    display: table-row;
+  }
+
+  .form-cell {
+    display: table-cell;
+    padding: 4px 6px;
+    vertical-align: top;
+  }
+
+  .field-group {
+    margin-bottom: 4px;
+  }
+
+  .field-label {
+    font-size: 7pt;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+    display: block;
+  }
+
+  .field-value {
+    font-size: 9pt;
+    color: #1a1a2e;
+    padding: 4px 8px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    min-height: 24px;
+  }
+
+  .field-value.multi-line {
+    min-height: 36px;
+    white-space: pre-wrap;
+  }
+
+  /* Grid Layouts - align-items: end ensures all boxes are level */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: end; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; align-items: end; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; align-items: end; }
+  .grid-5 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 4px; align-items: end; }
+
+  /* Field group with label - ensures consistent structure */
+  .field-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ============================================
+     CHECKBOX STYLES
+     ============================================ */
+
+  .checkbox-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .checkbox-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 8pt;
+    color: #374151;
+  }
+
+  .checkbox-box {
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid #94a3b8;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+  }
+
+  .checkbox-box.checked {
+    background: #1a1a2e;
+    border-color: #1a1a2e;
+  }
+
+  .checkbox-box.checked::after {
+    content: "✓";
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+  }
+
+  /* ============================================
+     TABLE STYLES
+     ============================================ */
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8pt;
+  }
+
+  th, td {
+    border: 1px solid #cbd5e1;
+    padding: 4px 6px;
+    text-align: left;
+  }
+
+  th {
+    background: #1a1a2e;
+    color: #fff;
+    font-weight: 600;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  td {
+    background: #fff;
+  }
+
+  tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  /* Inspection Table */
+  .inspection-table th {
+    background: #334155;
+    padding: 8px 10px;
+  }
+
+  .inspection-table td {
+    padding: 7px 10px;
+  }
+
+  .inspection-table .item-no {
+    text-align: center;
+    font-weight: 600;
+    width: 50px;
+    color: #1a1a2e;
+  }
+
+  .inspection-table .outcome {
+    text-align: center;
+    width: 80px;
+    font-weight: 600;
+  }
+
+  .outcome-tick {
+    color: #22c55e;
+    font-weight: bold;
+  }
+
+  .outcome-na {
+    color: #94a3b8;
+  }
+
+  /* ============================================
+     CIRCUIT SCHEDULE TABLE (Landscape)
+     ============================================ */
+
+  .circuit-table-container {
+    overflow-x: visible;
+    width: 100%;
+  }
+
+  .circuit-table {
+    font-size: 6pt;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  .circuit-table th {
+    padding: 3px 2px;
+    font-size: 5.5pt;
+    text-align: center;
+    vertical-align: bottom;
+    background: #1a1a2e;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .circuit-table td {
+    padding: 3px 2px;
+    text-align: center;
+    font-size: 6pt;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Column widths - total should fit A4 landscape (~277mm printable) */
+  .circuit-table .col-cct { width: 22px; }
+  .circuit-table .col-desc { width: 90px; text-align: left; padding-left: 4px; }
+  .circuit-table .col-wiring { width: 32px; }
+  .circuit-table .col-ref { width: 22px; }
+  .circuit-table .col-sm { width: 20px; }  /* Small columns like Pts, Live, CPC, etc */
+  .circuit-table .col-med { width: 26px; } /* Medium columns */
+  .circuit-table .col-zs { width: 32px; }
+  .circuit-table .col-remarks { width: 45px; text-align: left; font-size: 5pt; }
+
+  .circuit-table .group-header {
+    background: #0f3460;
+    font-size: 6pt;
+    padding: 4px 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .circuit-table .sub-header-row th {
+    background: #334155;
+    font-size: 5pt;
+    padding: 2px 1px;
+  }
+
+  /* ============================================
+     DECLARATION STYLES
+     ============================================ */
+
+  .declaration-box {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #3b82f6;
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    font-size: 8pt;
+    line-height: 1.5;
+    color: #475569;
+    margin-bottom: 12px;
+  }
+
+  .declaration-box strong {
+    color: #1a1a2e;
+  }
+
+  /* ============================================
+     SIGNATURE STYLES
+     ============================================ */
+
+  .signature-section {
+    margin-top: 12px;
+  }
+
+  .signature-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 10px;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+
+  .signature-label {
+    font-size: 7.5pt;
+    font-weight: 600;
+    color: #64748b;
+  }
+
+  .signature-box {
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 8px 12px;
+    min-height: 45px;
+    background: #fafafa;
+  }
+
+  .signature-box img {
+    max-height: 40px;
+  }
+
+  .signature-box .sig-text {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 18pt;
+    color: #1a1a2e;
+  }
+
+  /* ============================================
+     AUTHORISATION HEADER
+     ============================================ */
+
+  .auth-header {
+    background: linear-gradient(135deg, #f4a634 0%, #e67e22 100%);
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 11pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    margin: 15px 0 12px 0;
+  }
+
+  /* ============================================
+     COMPLIANCE BOX
+     ============================================ */
+
+  .compliance-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+
+  .compliance-item.checked {
+    background: #f0fdf4;
+    border-color: #86efac;
+  }
+
+  .compliance-text {
+    font-size: 8pt;
+    color: #374151;
+    line-height: 1.4;
+  }
+
+  /* ============================================
+     GUIDANCE SECTION
+     ============================================ */
+
+  .guidance-section {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 15px;
+  }
+
+  .guidance-title {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #f4a634;
+  }
+
+  .guidance-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    font-size: 7.5pt;
+    line-height: 1.5;
+    color: #475569;
+  }
+
+  .guidance-item {
+    margin-bottom: 8px;
+  }
+
+  .guidance-item strong {
+    color: #1a1a2e;
+  }
+
+  /* ============================================
+     OBSERVATION STYLES
+     ============================================ */
+
+  .observation-summary-table th {
+    background: #dc2626;
+  }
+
+  .observation-code {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 8pt;
+  }
+
+  .code-c1 { background: #fecaca; color: #991b1b; }
+  .code-c2 { background: #fed7aa; color: #9a3412; }
+  .code-c3 { background: #fef3c7; color: #92400e; }
+  .code-fi { background: #dbeafe; color: #1e40af; }
+
+  /* ============================================
+     PAGE BREAK CONTROLS
+     ============================================ */
+
+  .page-break-before {
+    page-break-before: always;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+
+  .page-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 15px;
+    font-size: 7pt;
+    color: #94a3b8;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ============================================
+     UTILITY CLASSES
+     ============================================ */
+
+  .text-center { text-align: center; }
+  .text-right { text-align: right; }
+  .font-bold { font-weight: 700; }
+  .text-sm { font-size: 7.5pt; }
+  .text-xs { font-size: 6.5pt; }
+  .mt-2 { margin-top: 8px; }
+  .mt-3 { margin-top: 12px; }
+  .mb-2 { margin-bottom: 8px; }
+  .mb-3 { margin-bottom: 12px; }
+
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     PAGE 1: CERTIFICATE FRONT PAGE
+     ============================================ -->
+<div class="page">
+
+  <!-- Certificate Header -->
+  <div class="certificate-header">
+    <div>
+      <h1>ELECTRICAL INSTALLATION CERTIFICATE</h1>
+      <div class="subtitle">Requirements for Electrical Installations - BS 7671:2018+A3:2024</div>
+    </div>
+    <div class="cert-number-box">
+      <div class="label">Certificate No.</div>
+      <div class="number">{{metadata.certificate_number}}</div>
+    </div>
+  </div>
+
+  <!-- Details of the Client -->
+  <div class="section">
+    <div class="section-header amber">Details of the Client</div>
+    <div class="grid-2">
+      <div class="field-group">
+        <span class="field-label">Client Name</span>
+        <div class="field-value">{{client_details.client_name}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Contact Number</span>
+        <div class="field-value">{{client_details.client_phone}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Installation Address -->
+  <div class="section">
+    <div class="section-header blue">Installation Address</div>
+    <div class="field-group">
+      <div class="field-value multi-line">{{installation_details.address}}</div>
+    </div>
+  </div>
+
+  <!-- Description and Extent of the Installation -->
+  <div class="section">
+    <div class="section-header green">Description and Extent of the Installation</div>
+    <div class="grid-2 mb-2">
+      <div class="field-group">
+        <span class="field-label">Description of Installation</span>
+        <div class="field-value multi-line">{{installation_details.description}}</div>
+      </div>
+      <div>
+        <span class="field-label">Type of Installation</span>
+        <div class="checkbox-grid mt-2">
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if installation_details.work_type == 'new' %}checked{% endif %}"></span>
+            <span>New installation</span>
+          </div>
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if installation_details.work_type == 'addition' %}checked{% endif %}"></span>
+            <span>Addition to existing</span>
+          </div>
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if installation_details.work_type == 'alteration' %}checked{% endif %}"></span>
+            <span>Alteration to existing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="field-group">
+      <span class="field-label">Extent of Installation Covered by this Certificate</span>
+      <div class="field-value multi-line">{{installation_details.extent_of_installation}}</div>
+    </div>
+  </div>
+
+  <!-- FOR DESIGN -->
+  <div class="section avoid-break">
+    <div class="section-header purple">For Design</div>
+    <div class="declaration-box">
+      I/We, being the person(s) responsible for the design of the electrical installation, having exercised reasonable skill and care when carrying out the design, hereby CERTIFY that the design work for which I/we have been responsible is to the best of my/our knowledge and belief in accordance with <strong>BS 7671:2018</strong>, amended to <strong>{{designer.bs7671_amendment_date}}</strong> except for the departures, if any, detailed below.
+    </div>
+    <div class="grid-2 mb-2">
+      <div class="field-group">
+        <span class="field-label">Details of Departures from BS 7671 (Regulations 120.3, 133.1.3 and 133.5)</span>
+        <div class="field-value">{{designer.departures}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Details of Permitted Exceptions (Regulation 411.3.3)</span>
+        <div class="field-value">{{designer.permitted_exceptions}}</div>
+      </div>
+    </div>
+    <div class="checkbox-item mb-2">
+      <span class="checkbox-box {% if designer.risk_assessment_attached %}checked{% endif %}"></span>
+      <span>Risk assessment attached</span>
+    </div>
+    <div class="grid-3">
+      <div class="field-group">
+        <span class="field-label">Name (IN BLOCK CAPITALS)</span>
+        <div class="field-value" style="text-transform: uppercase;">{{designer.name}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Signature</span>
+        <div class="signature-box">
+          {% if designer.signature contains "data:" %}
+          <img src="{{designer.signature}}" />
+          {% else %}
+          <span class="sig-text">{{designer.signature}}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Date</span>
+        <div class="field-value">{{designer.date}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOR CONSTRUCTION -->
+  <div class="section avoid-break">
+    <div class="section-header purple">For Construction</div>
+    <div class="declaration-box">
+      I, being the person responsible for the construction of the electrical installation, having exercised reasonable skill and care when carrying out the construction, hereby CERTIFY that the construction work for which I have been responsible is to the best of my knowledge and belief in accordance with <strong>BS 7671:2018</strong>, amended to <strong>{{constructor.bs7671_amendment_date}}</strong> except for the departures, if any, detailed below.
+    </div>
+    <div class="field-group mb-2">
+      <span class="field-label">Details of Departures from BS 7671 (Regulations 120.3 and 133.5)</span>
+      <div class="field-value">{{constructor.departures}}</div>
+    </div>
+    <div class="grid-3">
+      <div class="field-group">
+        <span class="field-label">Name (IN BLOCK CAPITALS)</span>
+        <div class="field-value" style="text-transform: uppercase;">{{constructor.name}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Signature</span>
+        <div class="signature-box">
+          {% if constructor.signature contains "data:" %}
+          <img src="{{constructor.signature}}" />
+          {% else %}
+          <span class="sig-text">{{constructor.signature}}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Date</span>
+        <div class="field-value">{{constructor.date}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOR INSPECTION AND TESTING -->
+  <div class="section avoid-break">
+    <div class="section-header purple">For Inspection and Testing</div>
+    <div class="declaration-box">
+      I, being the person responsible for the inspection & testing of the electrical installation, having exercised reasonable skill and care when carrying out the inspection & testing, hereby CERTIFY that the work for which I have been responsible is to the best of my knowledge and belief in accordance with <strong>BS 7671:2018</strong>, amended to <strong>{{inspector.bs7671_amendment_date}}</strong> except for the departures, if any, detailed below.
+    </div>
+    <div class="field-group mb-2">
+      <span class="field-label">Details of Departures from BS 7671 (Regulations 120.3 and 133.5)</span>
+      <div class="field-value">{{inspector.departures}}</div>
+    </div>
+    <div class="grid-3">
+      <div class="field-group">
+        <span class="field-label">Name (IN BLOCK CAPITALS)</span>
+        <div class="field-value" style="text-transform: uppercase;">{{inspector.name}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Signature</span>
+        <div class="signature-box">
+          {% if inspector.signature contains "data:" %}
+          <img src="{{inspector.signature}}" />
+          {% else %}
+          <span class="sig-text">{{inspector.signature}}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Date</span>
+        <div class="field-value">{{inspector.date}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEXT INSPECTION -->
+  <div class="section avoid-break">
+    <div class="sub-header">Next Inspection</div>
+    <div class="grid-2">
+      <div class="field-group">
+        <span class="field-label">Recommended interval (months)</span>
+        <div class="field-value">{{next_inspection.interval_months}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Recommended next inspection date</span>
+        <div class="field-value">{{next_inspection.recommended_date}}</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================
+     PAGE 2: PARTICULARS OF SIGNATORIES & SUPPLY
+     ============================================ -->
+<div class="page page-break-before">
+
+  <!-- Particulars of Signatories -->
+  <div class="section">
+    <div class="section-header amber">Particulars of Signatories to the Electrical Installation Certificate</div>
+
+    <!-- Designer -->
+    <div class="sub-header">Designer (No 1)</div>
+    <div class="grid-2 mb-2">
+      <div class="field-group">
+        <span class="field-label">Name</span>
+        <div class="field-value">{{designer.name}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Company</span>
+        <div class="field-value">{{designer.company}}</div>
+      </div>
+    </div>
+    <div class="field-group mb-2">
+      <span class="field-label">Address</span>
+      <div class="field-value">{{designer.address}}</div>
+    </div>
+    <div class="grid-3">
+      <div class="field-group">
+        <span class="field-label">Postcode</span>
+        <div class="field-value">{{designer.postcode}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Tel No</span>
+        <div class="field-value">{{designer.phone}}</div>
+      </div>
+    </div>
+
+    <!-- Constructor -->
+    <div class="sub-header">Constructor</div>
+    <div class="grid-2 mb-2">
+      <div class="field-group">
+        <span class="field-label">Name</span>
+        <div class="field-value">{{constructor.name}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Company</span>
+        <div class="field-value">{{constructor.company}}</div>
+      </div>
+    </div>
+    <div class="field-group mb-2">
+      <span class="field-label">Address</span>
+      <div class="field-value">{{constructor.address}}</div>
+    </div>
+    <div class="grid-3">
+      <div class="field-group">
+        <span class="field-label">Postcode</span>
+        <div class="field-value">{{constructor.postcode}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Tel No</span>
+        <div class="field-value">{{constructor.phone}}</div>
+      </div>
+    </div>
+
+    <!-- Inspector -->
+    <div class="sub-header">Inspector</div>
+    <div class="grid-2 mb-2">
+      <div class="field-group">
+        <span class="field-label">Name</span>
+        <div class="field-value">{{inspector.name}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Company</span>
+        <div class="field-value">{{inspector.company}}</div>
+      </div>
+    </div>
+    <div class="field-group mb-2">
+      <span class="field-label">Address</span>
+      <div class="field-value">{{inspector.address}}</div>
+    </div>
+    <div class="grid-3">
+      <div class="field-group">
+        <span class="field-label">Postcode</span>
+        <div class="field-value">{{inspector.postcode}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Tel No</span>
+        <div class="field-value">{{inspector.phone}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supply Characteristics and Earthing Arrangements -->
+  <div class="section">
+    <div class="section-header blue">Supply Characteristics and Earthing Arrangements</div>
+
+    <div class="grid-3 mb-1" style="align-items: start;">
+      <!-- Earthing Arrangements -->
+      <div>
+        <span class="field-label">Earthing Arrangements</span>
+        <div class="checkbox-grid mt-1" style="flex-direction: column; gap: 2px;">
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if supply_characteristics.earthing_arrangement == 'tnc' %}checked{% endif %}"></span>
+            <span>TN-C</span>
+          </div>
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if supply_characteristics.earthing_arrangement == 'tns' %}checked{% endif %}"></span>
+            <span>TN-S</span>
+          </div>
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if supply_characteristics.earthing_arrangement == 'tncs' %}checked{% endif %}"></span>
+            <span>TN-C-S</span>
+          </div>
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if supply_characteristics.earthing_arrangement == 'tt' %}checked{% endif %}"></span>
+            <span>TT</span>
+          </div>
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if supply_characteristics.earthing_arrangement == 'it' %}checked{% endif %}"></span>
+            <span>IT</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Number and Type of Live Conductors -->
+      <div>
+        <span class="field-label">Number and Type of Live Conductors</span>
+        <div style="margin-top: 4px;">
+          <div class="text-xs font-bold mb-1">AC</div>
+          <div class="checkbox-grid" style="flex-direction: column; gap: 2px;">
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if supply_characteristics.phases == '1-phase-2-wire' %}checked{% endif %}"></span>
+              <span>1-phase, 2-wire</span>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if supply_characteristics.phases == '2-phase-3-wire' %}checked{% endif %}"></span>
+              <span>2-phase, 3-wire</span>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if supply_characteristics.phases == '3-phase-3-wire' %}checked{% endif %}"></span>
+              <span>3-phase, 3-wire</span>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if supply_characteristics.phases == '3-phase-4-wire' %}checked{% endif %}"></span>
+              <span>3-phase, 4-wire</span>
+            </div>
+          </div>
+          <div class="text-xs font-bold mb-1 mt-2">DC</div>
+          <div class="checkbox-grid" style="flex-direction: column; gap: 2px;">
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if supply_characteristics.dc_supply_type == '2-wire' %}checked{% endif %}"></span>
+              <span>2-wire</span>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if supply_characteristics.dc_supply_type == '3-wire' %}checked{% endif %}"></span>
+              <span>3-wire</span>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if supply_characteristics.dc_supply_type == 'other' %}checked{% endif %}"></span>
+              <span>Other</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nature of Supply Parameters -->
+      <div>
+        <span class="field-label">Nature of Supply Parameters</span>
+        <div class="mt-1">
+          <div class="grid-2" style="gap: 4px;">
+            <div class="field-group">
+              <span class="field-label text-xs">Nominal voltage U/U₀ (V)</span>
+              <div class="field-value">{{supply_characteristics.supply_voltage}}</div>
+            </div>
+            <div class="field-group">
+              <span class="field-label text-xs">Nominal frequency f (Hz)</span>
+              <div class="field-value">{{supply_characteristics.supply_frequency}}</div>
+            </div>
+            <div class="field-group">
+              <span class="field-label text-xs">Prospective fault current Ipf (kA)</span>
+              <div class="field-value">{{supply_characteristics.prospective_fault_current}}</div>
+            </div>
+            <div class="field-group">
+              <span class="field-label text-xs">External earth fault loop impedance Ze (Ω)</span>
+              <div class="field-value">{{supply_characteristics.external_ze}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Supply Protective Device -->
+    <div class="sub-header" style="margin-top: 4px; margin-bottom: 4px;">Supply Protective Device</div>
+    <div class="grid-3 mb-1">
+      <div class="field-group">
+        <span class="field-label">BS (EN)</span>
+        <div class="field-value">{{supply_protective_device.bs_en}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Type</span>
+        <div class="field-value">{{supply_protective_device.type}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Rated Current (A)</span>
+        <div class="field-value">{{supply_protective_device.rated_current}}</div>
+      </div>
+    </div>
+    <div class="checkbox-grid">
+      <div class="checkbox-item">
+        <span class="checkbox-box {% if supply_characteristics.supply_polarity_confirmed %}checked{% endif %}"></span>
+        <span>Confirmation of supply polarity</span>
+      </div>
+      <div class="checkbox-item">
+        <span class="checkbox-box {% if supply_characteristics.other_sources_of_supply %}checked{% endif %}"></span>
+        <span>Other sources of supply (as detailed on attached schedule)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Particulars of Installation -->
+  <div class="section" style="page-break-before: always;">
+    <div class="section-header green">Particulars of Installation Referred to in the Certificate</div>
+
+    <!-- Means of Earthing -->
+    <div class="grid-2 mb-2">
+      <div>
+        <span class="field-label">Means of Earthing</span>
+        <div class="checkbox-grid mt-2">
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if earthing_bonding.means_of_earthing == 'distributor' %}checked{% endif %}"></span>
+            <span>Distributor's facility</span>
+          </div>
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if earthing_bonding.means_of_earthing == 'electrode' %}checked{% endif %}"></span>
+            <span>Installation earth electrode</span>
+          </div>
+        </div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Maximum Demand (load)</span>
+        <div class="field-value">{{earthing_bonding.maximum_demand}} {{earthing_bonding.maximum_demand_unit}}</div>
+      </div>
+    </div>
+
+    <!-- Earth Electrode Details -->
+    <div class="sub-header">Details of Installation Earth Electrode (where applicable)</div>
+    <div class="grid-3 mb-2">
+      <div class="field-group">
+        <span class="field-label">Type (e.g. rod(s), tape etc)</span>
+        <div class="field-value">{{earthing_bonding.earth_electrode_type}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Location</span>
+        <div class="field-value">{{earthing_bonding.earth_electrode_location}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Electrode resistance to Earth (Ω)</span>
+        <div class="field-value">{{earthing_bonding.earth_electrode_resistance}}</div>
+      </div>
+    </div>
+
+    <!-- Main Protective Conductors -->
+    <div class="sub-header">Main Protective Conductors</div>
+    <div class="grid-4 mb-2">
+      <div class="field-group">
+        <span class="field-label">Earthing conductor Material</span>
+        <div class="field-value">{{earthing_bonding.earthing_conductor_material}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">csa (mm²)</span>
+        <div class="field-value">{{earthing_bonding.earthing_conductor_csa}}</div>
+      </div>
+      <div class="checkbox-item">
+        <span class="checkbox-box {% if earthing_bonding.earthing_conductor_verified %}checked{% endif %}"></span>
+        <span>Connection/continuity verified</span>
+      </div>
+    </div>
+    <div class="grid-4 mb-2">
+      <div class="field-group">
+        <span class="field-label">Main protective bonding conductors Material</span>
+        <div class="field-value">{{earthing_bonding.main_bonding_material}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">csa (mm²)</span>
+        <div class="field-value">{{earthing_bonding.main_bonding_size}}</div>
+      </div>
+      <div class="checkbox-item">
+        <span class="checkbox-box {% if earthing_bonding.main_bonding_verified %}checked{% endif %}"></span>
+        <span>Connection/continuity verified</span>
+      </div>
+    </div>
+
+    <!-- Bonding Connections -->
+    <div class="checkbox-grid mb-2">
+      <div class="checkbox-item">
+        <span class="checkbox-box {% if earthing_bonding.bonding_water %}checked{% endif %}"></span>
+        <span>To water installation pipes</span>
+      </div>
+      <div class="checkbox-item">
+        <span class="checkbox-box {% if earthing_bonding.bonding_gas %}checked{% endif %}"></span>
+        <span>To gas installation pipes</span>
+      </div>
+      <div class="checkbox-item">
+        <span class="checkbox-box {% if earthing_bonding.bonding_oil %}checked{% endif %}"></span>
+        <span>To oil installation pipes</span>
+      </div>
+      <div class="checkbox-item">
+        <span class="checkbox-box {% if earthing_bonding.bonding_structural_steel %}checked{% endif %}"></span>
+        <span>To structural steel</span>
+      </div>
+      <div class="checkbox-item">
+        <span class="checkbox-box {% if earthing_bonding.bonding_lightning_protection %}checked{% endif %}"></span>
+        <span>To lightning protection</span>
+      </div>
+      <div class="checkbox-item">
+        <span class="checkbox-box {% if earthing_bonding.bonding_other %}checked{% endif %}"></span>
+        <span>To other</span>
+      </div>
+    </div>
+    {% if earthing_bonding.bonding_other %}
+    <div class="field-group mb-3">
+      <span class="field-label">To other - Specify</span>
+      <div class="field-value">{{earthing_bonding.bonding_other_specify}}</div>
+    </div>
+    {% endif %}
+
+    <!-- Main Switch -->
+    <div class="sub-header">Main Switch / Switch-fuse / Circuit-breaker / RCD</div>
+    <div class="grid-4 mb-2">
+      <div class="field-group">
+        <span class="field-label">Location</span>
+        <div class="field-value">{{main_protective_device.main_switch_location}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">BS (EN)</span>
+        <div class="field-value">{{main_protective_device.bs_en}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">No of poles</span>
+        <div class="field-value">{{main_protective_device.poles}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Current rating (A)</span>
+        <div class="field-value">{{main_protective_device.main_switch_rating}}</div>
+      </div>
+    </div>
+    <div class="grid-5 mb-2">
+      <div class="field-group">
+        <span class="field-label">Fuse/device rating or setting (A)</span>
+        <div class="field-value">{{main_protective_device.fuse_setting}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Voltage rating (V)</span>
+        <div class="field-value">{{main_protective_device.voltage_rating}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Breaking capacity (kA)</span>
+        <div class="field-value">{{main_protective_device.breaking_capacity}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">RCD Type</span>
+        <div class="field-value">{{rcd_details.rcd_type}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Rated residual operating current IΔn (mA)</span>
+        <div class="field-value">{{rcd_details.rcd_rating}}</div>
+      </div>
+    </div>
+    <div class="grid-3">
+      <div class="field-group">
+        <span class="field-label">Rated time delay (ms)</span>
+        <div class="field-value">{{rcd_details.rcd_rated_time_delay}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Measured operating time @ IΔn (ms)</span>
+        <div class="field-value">{{rcd_details.rcd_measured_operating_time}}</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================
+     PAGE 3: SCHEDULE OF INSPECTIONS
+     ============================================ -->
+<div class="page page-break-before">
+
+  <div class="section">
+    <div class="section-header amber">Schedule of Inspections</div>
+
+    <table class="inspection-table">
+      <thead>
+        <tr>
+          <th style="width: 60px;">Item No.</th>
+          <th>Description</th>
+          <th style="width: 100px;">Outcome</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="item-no">1</td>
+          <td>Condition of consumer's intake equipment (Visual inspection only)</td>
+          <td class="outcome">{{insp_1}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">2</td>
+          <td>Parallel or switched alternative sources of supply</td>
+          <td class="outcome">{{insp_2}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">3</td>
+          <td>Presence of adequate arrangements for other sources such as microgenerators</td>
+          <td class="outcome">{{insp_3}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">4</td>
+          <td>Presence and condition of earthing and bonding arrangements</td>
+          <td class="outcome">{{insp_4}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">5</td>
+          <td>Compatibility of protective devices, bases and other components with the circuit protective conductors</td>
+          <td class="outcome">{{insp_5}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">6</td>
+          <td>Provision of RCDs for fault protection and/or additional protection</td>
+          <td class="outcome">{{insp_6}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">7</td>
+          <td>Confirmation of indication that SPD is functional</td>
+          <td class="outcome">{{insp_7}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">8</td>
+          <td>Presence of fire barriers, sealing arrangements and protection against thermal effects</td>
+          <td class="outcome">{{insp_8}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">9</td>
+          <td>Cables correctly supported and not subject to premature collapse in the event of a fire</td>
+          <td class="outcome">{{insp_9}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">10</td>
+          <td>Verification of electrical separation</td>
+          <td class="outcome">{{insp_10}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">11</td>
+          <td>Connection of single-pole devices in line conductors only</td>
+          <td class="outcome">{{insp_11}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">12</td>
+          <td>Adequacy of accessories, switches, and isolators for the intended use</td>
+          <td class="outcome">{{insp_12}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">13</td>
+          <td>Suitability of equipment and protective measures for external influences</td>
+          <td class="outcome">{{insp_13}}</td>
+        </tr>
+        <tr>
+          <td class="item-no">14</td>
+          <td>Particular protective measures for special installations and locations</td>
+          <td class="outcome">{{insp_14}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Comments on Existing Installation -->
+  <div class="section mt-3">
+    <div class="sub-header">Comments on Existing Installation (in the case of an addition or alteration see Regulation 644.1.2)</div>
+    <div class="field-value multi-line" style="min-height: 80px;">{{existing_installation_comments}}</div>
+  </div>
+
+  <!-- Distribution Board Verification -->
+  <div class="section mt-3">
+    <div class="sub-header">Distribution Board Verification</div>
+    <div class="grid-4 mb-2">
+      <div class="field-group">
+        <span class="field-label">DB Reference</span>
+        <div class="field-value">{{distribution_board_verification.db_reference}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Zdb (Ω)</span>
+        <div class="field-value">{{distribution_board_verification.zdb}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Ipf (kA)</span>
+        <div class="field-value">{{distribution_board_verification.ipf}}</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <span class="field-label">Confirmed:</span>
+        <div class="checkbox-grid mt-2">
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if distribution_board_verification.confirmed_correct_polarity %}checked{% endif %}"></span>
+            <span>Correct polarity</span>
+          </div>
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if distribution_board_verification.confirmed_phase_sequence %}checked{% endif %}"></span>
+            <span>Phase sequence</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="field-label">SPD:</span>
+        <div class="checkbox-grid mt-2">
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if distribution_board_verification.spd_operational_status %}checked{% endif %}"></span>
+            <span>Operational status confirmed</span>
+          </div>
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if distribution_board_verification.spd_na %}checked{% endif %}"></span>
+            <span>N/A</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Instruments -->
+  <div class="section mt-3">
+    <div class="sub-header">Details of Test Instruments Used</div>
+    <div class="grid-3">
+      <div class="field-group">
+        <span class="field-label">Make / Model</span>
+        <div class="field-value">{{test_instrument_details.make_model}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Serial Number</span>
+        <div class="field-value">{{test_instrument_details.serial_number}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Calibration Date</span>
+        <div class="field-value">{{test_instrument_details.calibration_date}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Schedules Note -->
+  <div class="section mt-3 avoid-break">
+    <div style="background: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px; padding: 12px 16px;">
+      <p style="font-size: 8.5pt; color: #92400e; margin: 0;">
+        <strong>SCHEDULES:</strong> This Certificate is valid only when the Schedule of Circuit Details and Schedule of Test Results are attached. (See following pages)
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================
+     PAGE 4: SCHEDULE OF TEST RESULTS (LANDSCAPE)
+     ============================================ -->
+<div class="page page-landscape">
+
+  <div style="margin-bottom: 10px;">
+    <div class="section-header amber" style="margin-bottom: 0;">Generic Schedule of Circuit Details and Test Results</div>
+    <div class="grid-4 mt-2" style="font-size: 7.5pt;">
+      <div><strong>DB Reference:</strong> {{distribution_board_verification.db_reference}}</div>
+      <div><strong>Location:</strong> {{main_protective_device.main_switch_location}}</div>
+      <div><strong>Zdb:</strong> {{distribution_board_verification.zdb}} Ω</div>
+      <div><strong>Ipf:</strong> {{distribution_board_verification.ipf}} kA</div>
+    </div>
+  </div>
+
+  <div class="circuit-table-container">
+    <table class="circuit-table">
+      <colgroup>
+        <!-- Circuit Details: Cct, Desc, Wiring, Ref -->
+        <col style="width: 28px;">
+        <col style="width: 115px;">
+        <col style="width: 42px;">
+        <col style="width: 28px;">
+        <!-- Conductor: Pts, Live, CPC -->
+        <col style="width: 26px;">
+        <col style="width: 30px;">
+        <col style="width: 30px;">
+        <!-- Overcurrent: BS, Type, In, Zs max -->
+        <col style="width: 34px;">
+        <col style="width: 32px;">
+        <col style="width: 28px;">
+        <col style="width: 38px;">
+        <!-- RCD: BS, Type, IΔn, In -->
+        <col style="width: 34px;">
+        <col style="width: 32px;">
+        <col style="width: 30px;">
+        <col style="width: 28px;">
+        <!-- Continuity: r1, rn, r2, R1+R2, R2 -->
+        <col style="width: 28px;">
+        <col style="width: 28px;">
+        <col style="width: 28px;">
+        <col style="width: 38px;">
+        <col style="width: 28px;">
+        <!-- Insulation: V, L-L, L-E -->
+        <col style="width: 26px;">
+        <col style="width: 34px;">
+        <col style="width: 34px;">
+        <!-- Polarity -->
+        <col style="width: 24px;">
+        <!-- Zs -->
+        <col style="width: 34px;">
+        <!-- RCD Test: ms, TB -->
+        <col style="width: 30px;">
+        <col style="width: 28px;">
+        <!-- AFDD -->
+        <col style="width: 28px;">
+        <!-- Remarks -->
+        <col style="width: 60px;">
+      </colgroup>
+      <thead>
+        <tr>
+          <th colspan="4" class="group-header">Circuit Details</th>
+          <th colspan="4" class="group-header">Conductor</th>
+          <th colspan="4" class="group-header">Overcurrent Device</th>
+          <th colspan="4" class="group-header">RCD</th>
+          <th colspan="5" class="group-header">Continuity (Ω)</th>
+          <th colspan="3" class="group-header">Insulation (MΩ)</th>
+          <th class="group-header">Pol</th>
+          <th class="group-header">Zs</th>
+          <th colspan="2" class="group-header">RCD Test</th>
+          <th class="group-header">AFDD</th>
+          <th class="group-header">Remarks</th>
+        </tr>
+        <tr class="sub-header-row">
+          <th>Cct</th>
+          <th>Description</th>
+          <th>Wiring</th>
+          <th>Ref</th>
+          <th>Pts</th>
+          <th>Live</th>
+          <th>CPC</th>
+          <th>BS</th>
+          <th>Type</th>
+          <th>In</th>
+          <th>Zs max</th>
+          <th>BS</th>
+          <th>Type</th>
+          <th>IΔn</th>
+          <th>In</th>
+          <th>r₁</th>
+          <th>rₙ</th>
+          <th>r₂</th>
+          <th>R₁+R₂</th>
+          <th>R₂</th>
+          <th>V</th>
+          <th>L-L</th>
+          <th>L-E</th>
+          <th>✓</th>
+          <th>Ω</th>
+          <th>ms</th>
+          <th>TB</th>
+          <th>✓</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for circuit in schedule_of_tests %}
+        <tr>
+          <td>{{circuit.circuit_number}}</td>
+          <td class="col-desc">{{circuit.circuit_description}}</td>
+          <td>{{circuit.type_of_wiring}}</td>
+          <td>{{circuit.reference_method}}</td>
+          <td>{{circuit.points_served}}</td>
+          <td>{{circuit.live_size}}</td>
+          <td>{{circuit.cpc_size}}</td>
+          <td>{{circuit.bs_standard}}</td>
+          <td>{{circuit.protective_device_curve}}</td>
+          <td>{{circuit.protective_device_rating}}</td>
+          <td>{{circuit.max_zs}}</td>
+          <td>{{circuit.rcd_bs_standard}}</td>
+          <td>{{circuit.rcd_type}}</td>
+          <td>{{circuit.rcd_rating}}</td>
+          <td>{{circuit.rcd_rating_a}}</td>
+          <td>{{circuit.ring_r1}}</td>
+          <td>{{circuit.ring_rn}}</td>
+          <td>{{circuit.ring_r2}}</td>
+          <td>{{circuit.r1r2}}</td>
+          <td>{{circuit.r2}}</td>
+          <td>{{circuit.insulation_test_voltage}}</td>
+          <td>{{circuit.insulation_live_neutral}}</td>
+          <td>{{circuit.insulation_live_earth}}</td>
+          <td>{% if circuit.polarity == 'pass' %}✓{% else %}{{circuit.polarity}}{% endif %}</td>
+          <td>{{circuit.zs}}</td>
+          <td>{{circuit.rcd_one_x}}</td>
+          <td>{{circuit.rcd_test_button}}</td>
+          <td>{{circuit.afdd_test}}</td>
+          <td class="col-remarks">{{circuit.notes}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-3" style="font-size: 7pt; color: #64748b;">
+    <strong>Tested by:</strong> {{inspector.name}} &nbsp;&nbsp;|&nbsp;&nbsp;
+    <strong>Signature:</strong> __________________ &nbsp;&nbsp;|&nbsp;&nbsp;
+    <strong>Date:</strong> {{inspector.date}}
+  </div>
+
+</div>
+
+<!-- ============================================
+     PAGE 5: AUTHORISATION & COMPLIANCE
+     ============================================ -->
+<div class="page page-break-before">
+
+  <!-- Inspected By -->
+  <div class="auth-header">Inspected By</div>
+
+  <div class="section mb-3">
+    <div class="grid-2 mb-2">
+      <div class="field-group">
+        <span class="field-label">Name (IN BLOCK CAPITALS)</span>
+        <div class="field-value" style="text-transform: uppercase;">{{declarations.inspected_by.name}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Position</span>
+        <div class="field-value">{{declarations.inspected_by.position}}</div>
+      </div>
+    </div>
+    <div class="field-group mb-2">
+      <span class="field-label">For and on behalf of</span>
+      <div class="field-value">{{declarations.inspected_by.for_on_behalf_of}}</div>
+    </div>
+    <div class="field-group mb-2">
+      <span class="field-label">Address</span>
+      <div class="field-value">{{declarations.inspected_by.address}}</div>
+    </div>
+    <div class="grid-2 mb-2">
+      <div class="field-group">
+        <span class="field-label">Competent Person Scheme</span>
+        <div class="field-value">
+          {% if declarations.inspected_by.cp_scheme_na %}
+          N/A
+          {% else %}
+          {{declarations.inspected_by.cp_scheme}}
+          {% endif %}
+        </div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Signature</span>
+        <div class="signature-box" style="min-height: 50px;">
+          {% if declarations.inspected_by.signature contains "data:" %}
+          <img src="{{declarations.inspected_by.signature}}" style="max-height: 45px;" />
+          {% else %}
+          <span class="sig-text">{{declarations.inspected_by.signature}}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Authorisation -->
+  <div class="auth-header">Report Authorised for Issue</div>
+
+  <div class="section">
+    <div class="grid-2 mb-2">
+      <div class="field-group">
+        <span class="field-label">Name (IN BLOCK CAPITALS)</span>
+        <div class="field-value" style="text-transform: uppercase;">{{declarations.report_authorised_by.name}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Date</span>
+        <div class="field-value">{{declarations.report_authorised_by.date}}</div>
+      </div>
+    </div>
+    <div class="field-group mb-2">
+      <span class="field-label">For and on behalf of</span>
+      <div class="field-value">{{declarations.report_authorised_by.for_on_behalf_of}}</div>
+    </div>
+    <div class="field-group mb-2">
+      <span class="field-label">Position</span>
+      <div class="field-value">{{declarations.report_authorised_by.position}}</div>
+    </div>
+    <div class="field-group mb-2">
+      <span class="field-label">Address</span>
+      <div class="field-value">{{declarations.report_authorised_by.address}}</div>
+    </div>
+    <div class="grid-3 mb-2">
+      <div class="field-group">
+        <span class="field-label">Postcode</span>
+        <div class="field-value">{{declarations.report_authorised_by.postcode}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">Tel No</span>
+        <div class="field-value">{{declarations.report_authorised_by.phone}}</div>
+      </div>
+      <div class="field-group">
+        <span class="field-label">CP Scheme / Membership No</span>
+        <div class="field-value">{{declarations.report_authorised_by.membership_no}}</div>
+      </div>
+    </div>
+    <div class="field-group">
+      <span class="field-label">Signature</span>
+      <div class="signature-box" style="min-height: 60px;">
+        {% if declarations.report_authorised_by.signature contains "data:" %}
+        <img src="{{declarations.report_authorised_by.signature}}" style="max-height: 50px;" />
+        {% else %}
+        <span class="sig-text">{{declarations.report_authorised_by.signature}}</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Compliance Declarations -->
+  <div class="section mt-3">
+    <div class="section-header green">Compliance Declarations</div>
+
+    <div class="compliance-item {% if declarations.bs7671_compliance %}checked{% endif %}">
+      <span class="checkbox-box {% if declarations.bs7671_compliance %}checked{% endif %}"></span>
+      <div class="compliance-text">
+        <strong>BS 7671 Compliance</strong><br>
+        Installation complies with BS 7671:2018 (18th Edition) and Amendment 2
+      </div>
+    </div>
+
+    <div class="compliance-item {% if declarations.building_regs_compliance %}checked{% endif %}">
+      <span class="checkbox-box {% if declarations.building_regs_compliance %}checked{% endif %}"></span>
+      <div class="compliance-text">
+        <strong>Building Regulations Compliance</strong><br>
+        Installation complies with relevant Building Regulations (Part P where applicable)
+      </div>
+    </div>
+
+    <div class="compliance-item {% if declarations.competent_person_scheme %}checked{% endif %}">
+      <span class="checkbox-box {% if declarations.competent_person_scheme %}checked{% endif %}"></span>
+      <div class="compliance-text">
+        <strong>Competent Person Scheme</strong><br>
+        Work carried out under a registered Competent Person Scheme
+      </div>
+    </div>
+  </div>
+
+  <!-- Additional Notes -->
+  {% if declarations.additional_notes %}
+  <div class="section mt-3">
+    <div class="sub-header">Additional Notes & Comments</div>
+    <div class="field-value multi-line" style="min-height: 60px;">{{declarations.additional_notes}}</div>
+  </div>
+  {% endif %}
+
+  <!-- Guidance Section -->
+  <div class="guidance-section mt-3">
+    <div class="guidance-title">Guidance for Recipients</div>
+    <p style="font-size: 8pt; font-weight: 600; color: #1a1a2e; margin-bottom: 12px;">
+      This Certificate is an important and valuable document which should be retained for future reference.
+    </p>
+    <div class="guidance-columns">
+      <div>
+        <div class="guidance-item"><strong>1.</strong> This Electrical Installation Certificate has been issued to confirm that the electrical installation work to which it relates has been designed, constructed, inspected and tested in accordance with British Standard 7671 (IET Wiring Regulations).</div>
+        <div class="guidance-item"><strong>2.</strong> You should have received an original Certificate and the person that issued the Certificate should have retained a duplicate. If you were the person ordering the work, but not the owner of the installation, you should pass this Certificate, or a full copy of it including the schedules, immediately to the owner.</div>
+        <div class="guidance-item"><strong>3.</strong> The original Certificate should be retained in a safe place and be shown to any person inspecting or undertaking further work on the electrical installation in the future.</div>
+        <div class="guidance-item"><strong>4.</strong> For safety reasons, the electrical installation will need to be inspected at appropriate intervals by a competent person. The recommended interval is stated under 'Next Inspection'.</div>
+      </div>
+      <div>
+        <div class="guidance-item"><strong>5.</strong> This Certificate is only valid if the Schedule of Inspections has been completed and is accompanied by the Schedule of Circuit Details and Test Results.</div>
+        <div class="guidance-item"><strong>6.</strong> Where the installation includes a residual current device (RCD) it should be tested six-monthly by pressing the button marked 'T' or 'Test'. The device should switch off the supply and should then be switched on to restore supply. If the device does not switch off the supply when the button is pressed, seek expert advice.</div>
+        <div class="guidance-item"><strong>7.</strong> Where the installation includes a surge protective device (SPD) the status indicator should be checked to confirm it is in operational condition. If not operational, seek expert advice.</div>
+        <div class="guidance-item"><strong>8.</strong> Where the installation includes alternative or additional sources of supply, warning notices should be found at the origin or meter position, at the consumer unit or distribution board, and at all points of isolation.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================
+     PAGE 6: OBSERVATIONS (if any)
+     ============================================ -->
+{% if observations.size > 0 %}
+<div class="page page-break-before">
+
+  <div class="section">
+    <div class="section-header" style="background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%); border-left-color: #fca5a5;">
+      Observations Requiring Attention
+    </div>
+
+    <table class="observation-summary-table">
+      <thead>
+        <tr>
+          <th style="width: 50px;">#</th>
+          <th>Observation (include schedule reference)</th>
+          <th style="width: 80px;">Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for observation in observations %}
+        <tr>
+          <td class="text-center font-bold">{{forloop.index}}</td>
+          <td>{{observation.description}}</td>
+          <td class="text-center">
+            <span class="observation-code {% if observation.defect_code == 'C1' %}code-c1{% elsif observation.defect_code == 'C2' %}code-c2{% elsif observation.defect_code == 'C3' %}code-c3{% else %}code-fi{% endif %}">
+              {{observation.defect_code}}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; padding: 12px 16px; margin-top: 15px;">
+      <p style="font-size: 8pt; font-weight: 700; color: #991b1b; margin-bottom: 8px;">Classification Codes:</p>
+      <div style="font-size: 7.5pt; color: #7f1d1d; line-height: 1.6;">
+        <strong>C1</strong> - Danger present. Risk of injury. Immediate remedial action required.<br>
+        <strong>C2</strong> - Potentially dangerous. Urgent remedial action required.<br>
+        <strong>C3</strong> - Improvement recommended.<br>
+        <strong>FI</strong> - Further investigation required without delay.
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endif %}
+
+</body>
+</html>

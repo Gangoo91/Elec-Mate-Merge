@@ -417,25 +417,48 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                   </div>
                 </div>
               ) : (
-                // Radial Circuit Tests
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <Label htmlFor="continuityResult" className="text-sm font-medium">
-                      Continuity of Protective Conductors (Ω) *
-                    </Label>
-                    {getValidationBadge(validateTestResult('continuity', formData.continuityResult || ''))}
+                // Radial Circuit Tests - IET requires either R1+R2 OR R2
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <Label htmlFor="r1r2Continuity" className="text-sm font-medium">
+                        (R1+R2) Continuity (Ω)
+                      </Label>
+                      {getValidationBadge(validateTestResult('continuity', formData.r1r2Continuity || ''))}
+                    </div>
+                    <Input
+                      id="r1r2Continuity"
+                      type="number"
+                      step="0.01"
+                      placeholder="R1+R2 value"
+                      value={formData.r1r2Continuity || ''}
+                      onChange={(e) => onUpdate('r1r2Continuity', e.target.value)}
+                      className="h-11 touch-manipulation text-base"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Combined line and cpc resistance
+                    </p>
                   </div>
-                  <Input
-                    id="continuityResult"
-                    type="number"
-                    step="0.01"
-                    placeholder="R1+R2 or R2 value"
-                    value={formData.continuityResult || ''}
-                    onChange={(e) => onUpdate('continuityResult', e.target.value)}
-                  />
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Record R1+R2 or R2 value as applicable for radial circuits
-                  </p>
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <Label htmlFor="r2Continuity" className="text-sm font-medium">
+                        <span className="font-semibold">or</span> R2 Continuity (Ω)
+                      </Label>
+                      {getValidationBadge(validateTestResult('continuity', formData.r2Continuity || ''))}
+                    </div>
+                    <Input
+                      id="r2Continuity"
+                      type="number"
+                      step="0.01"
+                      placeholder="R2 value only"
+                      value={formData.r2Continuity || ''}
+                      onChange={(e) => onUpdate('r2Continuity', e.target.value)}
+                      className="h-11 touch-manipulation text-base"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      CPC resistance only (alternative)
+                    </p>
+                  </div>
                 </div>
               )}
             </div>
@@ -443,16 +466,16 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
             {/* Insulation Resistance Tests - Full Width */}
             <div className="space-y-4 mb-6">
               <h4 className="font-semibold text-sm text-muted-foreground">Insulation Resistance Tests</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 <div>
                   <Label htmlFor="insulationTestVoltage" className="text-sm font-medium">
                     Test Voltage *
                   </Label>
-                  <Select 
-                    value={formData.insulationTestVoltage || ''} 
+                  <Select
+                    value={formData.insulationTestVoltage || ''}
                     onValueChange={(value) => onUpdate('insulationTestVoltage', value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent className="bg-popover border shadow-lg z-[60]">
@@ -462,7 +485,25 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                     </SelectContent>
                   </Select>
                 </div>
-                
+
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <Label htmlFor="insulationLiveLive" className="text-sm font-medium">
+                      Live-Live (MΩ)
+                    </Label>
+                    {getValidationBadge(validateTestResult('insulationResistance', formData.insulationLiveLive || ''))}
+                  </div>
+                  <Input
+                    id="insulationLiveLive"
+                    type="number"
+                    step="0.1"
+                    placeholder="Min 1.0"
+                    value={formData.insulationLiveLive || ''}
+                    onChange={(e) => onUpdate('insulationLiveLive', e.target.value)}
+                    className="h-11 touch-manipulation text-base"
+                  />
+                </div>
+
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <Label htmlFor="insulationLiveNeutral" className="text-sm font-medium">
@@ -477,9 +518,10 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                     placeholder="Min 1.0"
                     value={formData.insulationLiveNeutral || ''}
                     onChange={(e) => onUpdate('insulationLiveNeutral', e.target.value)}
+                    className="h-11 touch-manipulation text-base"
                   />
                 </div>
-                
+
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <Label htmlFor="insulationLiveEarth" className="text-sm font-medium">
@@ -494,9 +536,10 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                     placeholder="Min 1.0"
                     value={formData.insulationLiveEarth || ''}
                     onChange={(e) => onUpdate('insulationLiveEarth', e.target.value)}
+                    className="h-11 touch-manipulation text-base"
                   />
                 </div>
-                
+
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <Label htmlFor="insulationNeutralEarth" className="text-sm font-medium">
@@ -511,6 +554,7 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                     placeholder="Min 1.0"
                     value={formData.insulationNeutralEarth || ''}
                     onChange={(e) => onUpdate('insulationNeutralEarth', e.target.value)}
+                    className="h-11 touch-manipulation text-base"
                   />
                 </div>
               </div>

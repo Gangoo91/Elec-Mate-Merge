@@ -368,8 +368,8 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                 {providers.map(provider => (
                   <div
                     key={provider.id}
-                    className={`p-3 rounded-md cursor-pointer transition-colors ${
-                      selectedProvider?.id === provider.id ? "bg-elec-yellow/20" : "hover:bg-white/10"
+                    className={`p-3 rounded-md cursor-pointer transition-all touch-manipulation ${
+                      selectedProvider?.id === provider.id ? "bg-elec-yellow/20" : "hover:bg-white/10 active:bg-white/20"
                     }`}
                     onClick={() => handleProviderClick(provider)}
                   >

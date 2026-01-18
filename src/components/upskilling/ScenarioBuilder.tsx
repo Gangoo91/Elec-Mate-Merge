@@ -292,7 +292,7 @@ export const ScenarioBuilder = () => {
               {scenarios.map((scenario) => (
                 <div key={scenario.id} 
                      onClick={() => setSelectedScenario(scenario.id)}
-                     className="bg-elec-dark p-4 rounded-lg cursor-pointer hover:bg-gray-600 transition-colors">
+                     className="bg-elec-dark p-4 rounded-lg cursor-pointer hover:bg-gray-600 active:scale-[0.98] transition-all touch-manipulation">
                   <div className="flex justify-between items-start mb-2">
                     <h4 className="text-foreground font-medium">{scenario.title}</h4>
                     <Badge variant={

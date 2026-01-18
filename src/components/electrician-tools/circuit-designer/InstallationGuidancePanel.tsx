@@ -49,7 +49,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
       <Collapsible open={openSections.safety} onOpenChange={() => toggleSection('safety')}>
         <Card>
           <CollapsibleTrigger asChild>
-            <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[48px] touch-manipulation">
+            <CardHeader className="cursor-pointer hover:bg-accent/5 active:bg-accent/10 transition-all min-h-[48px] touch-manipulation">
               <CardTitle className="flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <AlertTriangle className="h-5 w-5 text-red-500" />
@@ -67,7 +67,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                   className={cn(
                     "rounded-lg p-4 text-left border-l-4",
                     safety.priority === 'critical' && "border-l-red-500 bg-red-500/10",
-                    safety.priority === 'high' && "border-l-orange-500 bg-orange-500/10",
+                    safety.priority === 'high' && "border-l-amber-500 bg-amber-500/10",
                     safety.priority === 'medium' && "border-l-yellow-500 bg-yellow-500/10"
                   )}
                 >
@@ -76,7 +76,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                       className={cn(
                         "h-5 w-5 shrink-0 mt-0.5",
                         safety.priority === 'critical' && "text-red-500",
-                        safety.priority === 'high' && "text-orange-500",
+                        safety.priority === 'high' && "text-amber-500",
                         safety.priority === 'medium' && "text-yellow-500"
                       )}
                     />
@@ -107,7 +107,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
       <Collapsible open={openSections.materials} onOpenChange={() => toggleSection('materials')}>
         <Card>
           <CollapsibleTrigger asChild>
-            <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[48px] touch-manipulation">
+            <CardHeader className="cursor-pointer hover:bg-accent/5 active:bg-accent/10 transition-all min-h-[48px] touch-manipulation">
               <CardTitle className="flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <Package className="h-5 w-5 text-blue-500" />
@@ -152,7 +152,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
       <Collapsible open={openSections.tools} onOpenChange={() => toggleSection('tools')}>
         <Card>
           <CollapsibleTrigger asChild>
-            <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[48px] touch-manipulation">
+            <CardHeader className="cursor-pointer hover:bg-accent/5 active:bg-accent/10 transition-all min-h-[48px] touch-manipulation">
               <CardTitle className="flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <Wrench className="h-5 w-5 text-purple-500" />
@@ -190,7 +190,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
       <Collapsible open={openSections.procedure} onOpenChange={() => toggleSection('procedure')}>
         <Card>
           <CollapsibleTrigger asChild>
-            <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[48px] touch-manipulation">
+            <CardHeader className="cursor-pointer hover:bg-accent/5 active:bg-accent/10 transition-all min-h-[48px] touch-manipulation">
               <CardTitle className="flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-green-500" />
@@ -253,7 +253,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
       <Collapsible open={openSections.testing} onOpenChange={() => toggleSection('testing')}>
         <Card>
           <CollapsibleTrigger asChild>
-            <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[48px] touch-manipulation">
+            <CardHeader className="cursor-pointer hover:bg-accent/5 active:bg-accent/10 transition-all min-h-[48px] touch-manipulation">
               <CardTitle className="flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <TestTube2 className="h-5 w-5 text-teal-500" />

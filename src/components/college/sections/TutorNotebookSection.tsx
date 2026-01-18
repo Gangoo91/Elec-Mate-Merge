@@ -393,7 +393,7 @@ export function TutorNotebookSection() {
               {sources.map((source) => (
                 <div
                   key={source.id}
-                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-background/50 cursor-pointer transition-colors group"
+                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-background/50 cursor-pointer active:bg-background/70 transition-all touch-manipulation group"
                 >
                   <div className="h-8 w-8 rounded bg-elec-yellow/10 flex items-center justify-center text-elec-yellow">
                     {getSourceIcon(source.type)}

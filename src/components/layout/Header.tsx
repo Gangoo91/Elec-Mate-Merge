@@ -18,8 +18,28 @@ const LiveClock = ({ className }: { className?: string }) => {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(timer);
+    let timer: NodeJS.Timeout;
+
+    const startTimer = () => {
+      timer = setInterval(() => setTime(new Date()), 1000);
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        clearInterval(timer);
+      } else {
+        setTime(new Date());
+        startTimer();
+      }
+    };
+
+    startTimer();
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
   }, []);
 
   const hours = format(time, 'h');
@@ -92,7 +112,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
         isScrolled
           ? "border-white/15 shadow-xl shadow-black/40"
           : "border-white/5",
-        "safe-area-inset-top"
+        "pt-safe"
       )}
     >
       {/* Mobile: Compact 52px | Desktop: 64px */}
@@ -106,9 +126,9 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
                 size="icon"
                 onClick={toggleSidebar}
                 className={cn(
-                  "h-9 w-9 min-w-[36px] min-h-[36px]",
+                  "h-11 w-11 min-w-[44px] min-h-[44px]",
                   "hover:bg-white/10 active:bg-white/20",
-                  "touch-manipulation rounded-lg",
+                  "touch-manipulation rounded-xl",
                   "transition-all duration-150"
                 )}
                 aria-label="Toggle navigation menu"

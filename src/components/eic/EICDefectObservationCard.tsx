@@ -1,16 +1,21 @@
-import React from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+/**
+ * EIC Defect Observation Card
+ *
+ * Premium glass morphism card for individual observations.
+ * Native mobile app feel with touch-optimized controls.
+ */
+
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { AlertTriangle, FileText, Trash2, Minus, Info } from 'lucide-react';
+import { AlertTriangle, Trash2, Info, ChevronDown, ChevronUp, Camera, MapPin } from 'lucide-react';
 import { EICObservation } from '@/hooks/useEICObservations';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
 import InspectionPhotoGallery from '@/components/inspection/InspectionPhotoGallery';
+import { cn } from '@/lib/utils';
 
 interface EICDefectObservationCardProps {
   observation: EICObservation;
@@ -21,16 +26,17 @@ interface EICDefectObservationCardProps {
   onSyncToInspectionItem?: (inspectionItemId: string, newOutcome: string) => void;
 }
 
-const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({ 
+const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
   observation,
   reportId,
-  index, 
-  onUpdate, 
+  index,
+  onUpdate,
   onRemove,
   onSyncToInspectionItem
 }) => {
+  const [isExpanded, setIsExpanded] = useState(true);
 
-  // Initialize photo management with observation context for AI
+  // Initialize photo management
   const {
     photos,
     isUploading,
@@ -52,166 +58,231 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
   });
 
   const defectCodes = [
-    { code: 'unsatisfactory', description: 'Does not comply with BS 7671', severity: 'high' },
-    { code: 'limitation', description: 'Limitation noted during inspection', severity: 'limitation' },
-    { code: 'not-applicable', description: 'Not applicable to this installation', severity: 'neutral' }
+    { code: 'unsatisfactory', label: 'Unsatisfactory', description: 'Does not comply with BS 7671', color: 'red' },
+    { code: 'limitation', label: 'Limitation', description: 'Limitation noted during inspection', color: 'purple' },
+    { code: 'not-applicable', label: 'N/A', description: 'Not applicable to this installation', color: 'neutral' }
   ];
 
-  const getSeverityIcon = (severity: string) => {
-    switch (severity) {
-      case 'high': return <AlertTriangle className="h-4 w-4 text-red-500" />;
-      case 'limitation': return <Info className="h-4 w-4 text-purple-500" />;
-      case 'neutral': return <Minus className="h-4 w-4 text-gray-500" />;
-      default: return <FileText className="h-4 w-4 text-elec-yellow" />;
+  const currentCode = defectCodes.find(c => c.code === observation.defectCode) || defectCodes[0];
+
+  const getBorderColor = () => {
+    switch (currentCode.color) {
+      case 'red': return 'border-l-red-500';
+      case 'purple': return 'border-l-purple-500';
+      case 'neutral': return 'border-l-neutral-500';
+      default: return 'border-l-orange-500';
     }
   };
 
-  const getBorderColor = (severity: string) => {
-    switch (severity) {
-      case 'high': return 'border-l-red-500';
-      case 'limitation': return 'border-l-purple-500';
-      case 'neutral': return 'border-l-gray-500';
-      default: return 'border-l-elec-yellow';
+  const getBadgeStyles = () => {
+    switch (currentCode.color) {
+      case 'red': return 'bg-red-500/15 text-red-400';
+      case 'purple': return 'bg-purple-500/15 text-purple-400';
+      case 'neutral': return 'bg-neutral-500/15 text-neutral-400';
+      default: return 'bg-orange-500/15 text-orange-400';
     }
   };
-
-  const currentDefectCode = defectCodes.find(c => c.code === observation.defectCode);
-  const borderColor = getBorderColor(currentDefectCode?.severity || 'high');
 
   return (
-    <Card className={`p-4 sm:p-6 border border-border border-l-4 ${borderColor}`}>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-        <h4 className="font-semibold flex items-center gap-2 text-base">
-          {getSeverityIcon(currentDefectCode?.severity || 'high')}
-          Observation {index + 1} - {observation.defectCode.toUpperCase()}
-        </h4>
-        <div className="flex items-center gap-3">
-          {(observation.defectCode === 'C1' || observation.defectCode === 'C2' || observation.defectCode === 'C3') && (
-            <div className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
-              <Checkbox
-                checked={observation.rectified}
-                onCheckedChange={(checked) => onUpdate(observation.id, 'rectified', checked)}
-              />
-              <Label className="text-base cursor-pointer leading-relaxed">Rectified</Label>
-            </div>
-          )}
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onRemove(observation.id)}
-            className="text-red-500 hover:text-red-700 h-9 w-9 p-0"
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
-      <div className="space-y-4">
-        <div>
-          <Label className="text-sm font-medium mb-1.5 block">Item/Location</Label>
-          <Input
-            placeholder="e.g., Consumer unit, Kitchen socket"
-            value={observation.item}
-            onChange={(e) => onUpdate(observation.id, 'item', e.target.value)}
-            className="h-10"
-          />
-        </div>
-        <div>
-          <Label className="text-sm font-medium mb-1.5 block">Classification</Label>
-          <Select
-            value={observation.defectCode}
-            onValueChange={(value: 'unsatisfactory' | 'limitation' | 'not-applicable') => {
-              // Update observation locally
-              onUpdate(observation.id, 'defectCode', value);
-              
-              // Sync back to inspection item if linked
-              if (observation.inspectionItemId && onSyncToInspectionItem) {
-                onSyncToInspectionItem(observation.inspectionItemId, value);
-              }
-            }}
-          >
-            <SelectTrigger className="h-10">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {defectCodes.map((code) => (
-                <SelectItem key={code.code} value={code.code}>
-                  {code.code.toUpperCase()} - {code.description}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label className="text-sm font-medium mb-1.5 block">
-            {observation.defectCode === 'not-applicable' ? 'Reason for Not Applicable' : 
-             observation.defectCode === 'limitation' ? 'Description of Limitation' : 
-             'Description'}
-          </Label>
-          <Textarea
-            placeholder={
-              observation.defectCode === 'not-applicable' ? 'Explain why this item is not applicable...' :
-              observation.defectCode === 'limitation' ? 'Describe the limitation encountered...' :
-              'Detailed description of the non-compliance...'
-            }
-            value={observation.description}
-            onChange={(e) => onUpdate(observation.id, 'description', e.target.value)}
-            rows={4}
-            className="resize-none"
-          />
-        </div>
-        {observation.defectCode !== 'not-applicable' && (
-          <div>
-            <Label className="text-sm font-medium mb-1.5 block">
-              {observation.defectCode === 'limitation' ? 'Further Action Required' : 'Recommendation'}
-            </Label>
-            <Textarea
-              placeholder={
-                observation.defectCode === 'limitation' ? 'What action is needed to overcome this limitation...' :
-                'Recommended remedial action to achieve compliance...'
-              }
-              value={observation.recommendation}
-              onChange={(e) => onUpdate(observation.id, 'recommendation', e.target.value)}
-              rows={3}
-              className="resize-none"
-            />
+    <div
+      className={cn(
+        "relative overflow-hidden rounded-xl",
+        "bg-white/[0.03] backdrop-blur-sm",
+        "border border-white/[0.06]",
+        "border-l-4",
+        getBorderColor()
+      )}
+    >
+      {/* Header - Always Visible */}
+      <div
+        className="flex items-center justify-between p-4 cursor-pointer touch-manipulation"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          {/* Number Badge */}
+          <div className={cn(
+            "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center",
+            "text-sm font-bold",
+            getBadgeStyles()
+          )}>
+            {index + 1}
           </div>
-        )}
 
-        {/* Photo Evidence Section */}
-        <div className="space-y-3 pt-4 border-t border-border">
-          <div className="flex items-center justify-between">
-            <Label className="text-sm font-medium">Photo Evidence</Label>
-            <span className="text-xs text-muted-foreground">
-              {photos.length} photo{photos.length !== 1 ? 's' : ''}
-            </span>
+          {/* Title & Location */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              {currentCode.color === 'red' && <AlertTriangle className="w-4 h-4 text-red-400" />}
+              {currentCode.color === 'purple' && <Info className="w-4 h-4 text-purple-400" />}
+              <span className={cn(
+                "text-sm font-medium",
+                currentCode.color === 'red' && "text-red-400",
+                currentCode.color === 'purple' && "text-purple-400",
+                currentCode.color === 'neutral' && "text-neutral-400"
+              )}>
+                {currentCode.label}
+              </span>
+            </div>
+            {observation.item && (
+              <p className="text-xs text-foreground/50 truncate mt-0.5">
+                {observation.item}
+              </p>
+            )}
           </div>
-          
-          <InspectionPhotoUpload
-            onPhotoCapture={async (file) => {
-              await uploadPhoto(
-                file,
-                observation.defectCode,
-                observation.description
-              );
+        </div>
+
+        {/* Actions */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove(observation.id);
             }}
-            isUploading={isUploading}
-          />
-          
-          <InspectionPhotoGallery
-            photos={photos}
-            onDeletePhoto={deletePhoto}
-            onScanPhoto={scanPhotoWithAI}
-            isScanning={isScanning}
-            inspectorContext={{
-              classification: observation.defectCode.toUpperCase(),
-              itemLocation: observation.item || 'Not specified',
-              description: observation.description || 'No description provided',
-              recommendation: observation.recommendation,
-            }}
-          />
+            className="h-8 w-8 flex items-center justify-center rounded-lg text-red-400/70 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+          <div className="h-8 w-8 flex items-center justify-center text-foreground/40">
+            {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          </div>
         </div>
       </div>
-    </Card>
+
+      {/* Expandable Content */}
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden"
+          >
+            <div className="px-4 pb-4 space-y-4 border-t border-white/[0.06] pt-4">
+              {/* Location Field */}
+              <div>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <MapPin className="w-3.5 h-3.5 text-foreground/50" />
+                  <span className="text-xs text-foreground/50">Item/Location</span>
+                </div>
+                <Input
+                  placeholder="e.g., Consumer unit, Kitchen socket"
+                  value={observation.item}
+                  onChange={(e) => onUpdate(observation.id, 'item', e.target.value)}
+                  className="h-11 text-sm bg-white/[0.03] border-white/[0.08] focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50"
+                />
+              </div>
+
+              {/* Classification */}
+              <div>
+                <span className="text-xs text-foreground/50 mb-2 block">Classification</span>
+                <div className="flex gap-2">
+                  {defectCodes.map((code) => (
+                    <button
+                      key={code.code}
+                      onClick={() => {
+                        onUpdate(observation.id, 'defectCode', code.code);
+                        if (observation.inspectionItemId && onSyncToInspectionItem) {
+                          onSyncToInspectionItem(observation.inspectionItemId, code.code);
+                        }
+                      }}
+                      className={cn(
+                        "flex-1 h-10 rounded-lg text-sm font-medium transition-all duration-200",
+                        "touch-manipulation active:scale-[0.97]",
+                        observation.defectCode === code.code
+                          ? code.color === 'red'
+                            ? "bg-red-600 text-white"
+                            : code.color === 'purple'
+                            ? "bg-purple-600 text-white"
+                            : "bg-neutral-600 text-white"
+                          : "bg-white/[0.05] text-foreground/70 border border-white/[0.08]"
+                      )}
+                    >
+                      {code.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Description */}
+              <div>
+                <span className="text-xs text-foreground/50 mb-2 block">
+                  {observation.defectCode === 'not-applicable' ? 'Reason' :
+                   observation.defectCode === 'limitation' ? 'Limitation Details' :
+                   'Description'}
+                </span>
+                <Textarea
+                  placeholder={
+                    observation.defectCode === 'not-applicable' ? 'Explain why this item is not applicable...' :
+                    observation.defectCode === 'limitation' ? 'Describe the limitation encountered...' :
+                    'Detailed description of the non-compliance...'
+                  }
+                  value={observation.description}
+                  onChange={(e) => onUpdate(observation.id, 'description', e.target.value)}
+                  className="min-h-[80px] text-sm bg-white/[0.03] border-white/[0.08] resize-none focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50"
+                />
+              </div>
+
+              {/* Recommendation */}
+              {observation.defectCode !== 'not-applicable' && (
+                <div>
+                  <span className="text-xs text-foreground/50 mb-2 block">
+                    {observation.defectCode === 'limitation' ? 'Further Action Required' : 'Recommendation'}
+                  </span>
+                  <Textarea
+                    placeholder={
+                      observation.defectCode === 'limitation' ? 'What action is needed to overcome this limitation...' :
+                      'Recommended remedial action to achieve compliance...'
+                    }
+                    value={observation.recommendation}
+                    onChange={(e) => onUpdate(observation.id, 'recommendation', e.target.value)}
+                    className="min-h-[60px] text-sm bg-white/[0.03] border-white/[0.08] resize-none focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50"
+                  />
+                </div>
+              )}
+
+              {/* Photo Evidence */}
+              <div className="pt-3 border-t border-white/[0.06]">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-1.5">
+                    <Camera className="w-3.5 h-3.5 text-foreground/50" />
+                    <span className="text-xs text-foreground/50">Photo Evidence</span>
+                  </div>
+                  {photos.length > 0 && (
+                    <span className="text-xs text-foreground/40">
+                      {photos.length} photo{photos.length !== 1 ? 's' : ''}
+                    </span>
+                  )}
+                </div>
+
+                <InspectionPhotoUpload
+                  onPhotoCapture={async (file) => {
+                    await uploadPhoto(file, observation.defectCode, observation.description);
+                  }}
+                  isUploading={isUploading}
+                />
+
+                {photos.length > 0 && (
+                  <div className="mt-3">
+                    <InspectionPhotoGallery
+                      photos={photos}
+                      onDeletePhoto={deletePhoto}
+                      onScanPhoto={scanPhotoWithAI}
+                      isScanning={isScanning}
+                      inspectorContext={{
+                        classification: observation.defectCode.toUpperCase(),
+                        itemLocation: observation.item || 'Not specified',
+                        description: observation.description || 'No description provided',
+                        recommendation: observation.recommendation,
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 

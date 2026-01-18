@@ -72,7 +72,7 @@ export function BrandingStep({ formData, onChange }: StepProps) {
               </Button>
             </div>
           ) : (
-            <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/30 transition-colors touch-manipulation">
+            <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/30 active:bg-muted/40 transition-all touch-manipulation">
               <div className="flex flex-col items-center gap-2">
                 <Upload className="h-8 w-8 text-muted-foreground" />
                 <span className="text-sm font-medium">Click to upload logo</span>

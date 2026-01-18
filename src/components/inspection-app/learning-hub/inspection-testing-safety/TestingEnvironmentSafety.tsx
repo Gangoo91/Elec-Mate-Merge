@@ -94,14 +94,15 @@ const TestingEnvironmentSafety = ({ onBack }: TestingEnvironmentSafetyProps) => 
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4 mb-8">
-        <Button 
-          variant="outline" 
+      <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8 px-3 sm:px-4">
+        <Button
+          variant="outline"
           onClick={onBack}
-          className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
+          className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black min-h-[44px] text-sm touch-manipulation active:scale-[0.98]"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Safety Modules
+          <span className="hidden sm:inline">Back to Safety Modules</span>
+          <span className="sm:hidden">Back</span>
         </Button>
       </div>
 
@@ -193,26 +194,25 @@ const TestingEnvironmentSafety = ({ onBack }: TestingEnvironmentSafetyProps) => 
                       {safetyChecklist
                         .filter(item => item.category === category)
                         .map((item) => (
-                          <div key={item.id} className="flex items-center gap-3">
+                          <div key={item.id} className="flex items-center gap-3 min-h-[44px]">
                             <Button
                               variant="ghost"
-                              size="sm"
                               onClick={() => toggleCheck(item.id)}
-                              className={`p-2 h-auto ${
+                              className={`min-h-[44px] min-w-[44px] p-3 touch-manipulation active:scale-[0.95] ${
                                 completedChecks.includes(item.id)
                                   ? 'text-green-400 hover:text-green-300'
                                   : 'text-white/80 hover:text-white'
                               }`}
                             >
                               <CheckCircle
-                                className={`h-4 w-4 ${
+                                className={`h-5 w-5 ${
                                   completedChecks.includes(item.id) ? 'fill-current' : ''
                                 }`}
                               />
                             </Button>
-                            <span className={`text-sm ${
-                              completedChecks.includes(item.id) 
-                                ? 'text-green-300 line-through' 
+                            <span className={`text-sm flex-1 ${
+                              completedChecks.includes(item.id)
+                                ? 'text-green-300 line-through'
                                 : 'text-white'
                             }`}>
                               {item.task}

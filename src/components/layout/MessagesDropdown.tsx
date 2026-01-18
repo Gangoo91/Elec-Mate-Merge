@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MessageSquare, ArrowLeft, Lock, Building2, Briefcase, Heart, Users, Hash, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -190,6 +190,8 @@ export function MessagesDropdown() {
   const [selectedTeamDM, setSelectedTeamDM] = useState<TeamDirectMessage | null>(null);
   const [selectedCollegeConversation, setSelectedCollegeConversation] = useState<CollegeConversation | null>(null);
   const isMobile = useIsMobile();
+  const [isSending, setIsSending] = useState(false);
+  const peerMessagesEndRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
 
   // Determine context based on path
@@ -296,6 +298,13 @@ export function MessagesDropdown() {
       markPeerAsRead.mutate(selectedPeerConversation.id);
     }
   }, [selectedPeerConversation?.id]);
+
+  // Auto-scroll to latest peer message
+  useEffect(() => {
+    if (peerMessagesEndRef.current && peerMessages.length > 0) {
+      peerMessagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [peerMessages, selectedPeerConversation?.id]);
 
   const handleSelectJobConversation = (conversation: ActiveConversation) => {
     setSelectedConversation(conversation);
@@ -731,6 +740,8 @@ export function MessagesDropdown() {
                     </div>
                   </div>
                 )}
+                {/* Scroll anchor */}
+                <div ref={peerMessagesEndRef} />
               </div>
 
               <div className="shrink-0 pb-safe">

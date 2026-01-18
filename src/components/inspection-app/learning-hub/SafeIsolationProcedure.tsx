@@ -265,23 +265,24 @@ const SafeIsolationProcedure = ({ onBack }: SafeIsolationProcedureProps) => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4 mb-8">
-        <Button 
-          variant="outline" 
+      <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8 px-3 sm:px-4">
+        <Button
+          variant="outline"
           onClick={onBack}
-          className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
+          className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black min-h-[44px] text-sm touch-manipulation active:scale-[0.98]"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Testing Procedures
+          <span className="hidden sm:inline">Back to Testing Procedures</span>
+          <span className="sm:hidden">Back</span>
         </Button>
       </div>
 
-      <div className="text-center space-y-4 mb-12">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <Shield className="h-8 w-8 text-elec-yellow" />
-          <h1 className="text-3xl font-bold text-foreground">Enhanced Safe Isolation Procedure</h1>
+      <div className="text-center space-y-3 sm:space-y-4 mb-6 sm:mb-8 md:mb-12 px-3 sm:px-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <Shield className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-elec-yellow" />
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground text-center">Enhanced Safe Isolation Procedure</h1>
         </div>
-        <p className="text-lg text-white max-w-3xl mx-auto">
+        <p className="text-sm sm:text-base md:text-lg text-white max-w-3xl mx-auto">
           Comprehensive BS 7671 compliant safe isolation with GS38 equipment guidance and enhanced 3-phase testing capabilities.
         </p>
       </div>
@@ -349,9 +350,9 @@ const SafeIsolationProcedure = ({ onBack }: SafeIsolationProcedureProps) => {
                 </p>
               </div>
 
-              <Button 
+              <Button
                 onClick={() => setCurrentPhase('completion')}
-                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 mt-4"
+                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 mt-4 min-h-[44px] text-sm sm:text-base touch-manipulation active:scale-[0.98]"
                 disabled={!canComplete}
               >
                 Generate Enhanced Isolation Certificate

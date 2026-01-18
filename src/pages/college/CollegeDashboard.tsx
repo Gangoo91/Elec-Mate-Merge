@@ -350,7 +350,7 @@ const CollegeDashboard = () => {
 
   return (
     <CollegeProvider>
-      <div className="min-h-screen mobile-safe-area">
+      <div className="mobile-safe-area">
         <div className="space-y-4 sm:space-y-6 md:space-y-8 animate-fade-in px-4 sm:px-6 py-4 md:py-6 pb-20 sm:pb-12">
           {/* Header - Native App Style (non-sticky) */}
           <div className="relative w-full">

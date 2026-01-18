@@ -107,14 +107,14 @@ const BusinessCalculators = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark pt-safe">
+    <div className="bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark ">
       <Helmet>
         <title>Electrician Business Calculators UK | Pricing, ROI, Tax</title>
         <meta name="description" content="UK electrician calculators: hourly rate, pricing, ROI, cash flow, capacity and tax. Mobile-first, fast and accurate." />
         <link rel="canonical" href="/electrician/business-development/tools" />
       </Helmet>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8 pt-safe pb-safe">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8  ">
         {/* Header */}
         <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">

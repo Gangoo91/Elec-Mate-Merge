@@ -289,7 +289,7 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
               <Badge
                 key={radius}
                 variant={searchRadius === radius ? "default" : "outline"}
-                className={`cursor-pointer transition-colors ${
+                className={`cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
                   searchRadius === radius 
                     ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
                     : "border-elec-yellow/30 hover:bg-elec-yellow/10 text-elec-yellow"

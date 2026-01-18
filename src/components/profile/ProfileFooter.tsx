@@ -24,7 +24,7 @@ const ProfileFooter: React.FC<ProfileFooterProps> = ({
       ready: hasInspectorProfile,
       iconBg: 'bg-blue-500/15',
       iconColor: 'text-blue-400',
-      route: '/inspection',
+      route: '/electrician/inspection-testing',
     },
     {
       icon: FileText,

@@ -202,7 +202,7 @@ const EligibilityChecker = () => {
                         />
                         <label
                           htmlFor={criterion.id}
-                          className="text-sm text-white/80 leading-none cursor-pointer hover:text-white transition-colors"
+                          className="text-sm text-white/80 leading-none cursor-pointer hover:text-white active:text-elec-yellow transition-all touch-manipulation"
                         >
                           {criterion.label}
                         </label>

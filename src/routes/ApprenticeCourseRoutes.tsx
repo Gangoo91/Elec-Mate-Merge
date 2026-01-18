@@ -1,6 +1,7 @@
-import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
 import { withTimeout, trackImport } from "@/lib/lazy";
+import { useLastStudyLocation } from "@/hooks/useLastStudyLocation";
 
 // Import Level2Routes for nested routing
 const Level2Routes = lazy(() => import("@/routes/Level2Routes"));
@@ -14,6 +15,29 @@ const LoadingFallback = () => (
     </div>
   </div>
 );
+
+// Study location tracker component - tracks all apprentice course page visits
+function ApprenticeCoursesTracker() {
+  const location = useLocation();
+  const { updateLastLocation } = useLastStudyLocation();
+
+  useEffect(() => {
+    // Don't track the index page itself
+    if (location.pathname === '/study-centre/apprentice' || location.pathname === '/study-centre/apprentice/') {
+      return;
+    }
+
+    // Get title from document after a short delay (to let page set title)
+    const timer = setTimeout(() => {
+      const title = document.title?.split('|')[0]?.trim() || 'Apprentice Course';
+      updateLastLocation(location.pathname, title);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [location.pathname, updateLastLocation]);
+
+  return null;
+}
 
 const AM2 = lazy(() => withTimeout(() => trackImport('AM2', () => import('@/pages/apprentice-courses/AM2'))));
 const AM2Module1 = lazy(() => withTimeout(() => trackImport('AM2Module1', () => import('@/pages/apprentice-courses/AM2Module1'))));
@@ -815,6 +839,7 @@ const subsection9 = lazy(() => withTimeout(() => trackImport('subsection9', () =
 export default function ApprenticeCourseRoutes() {
   return (
     <Suspense fallback={<LoadingFallback />}>
+      <ApprenticeCoursesTracker />
       <Routes>
         <Route path="am2" element={<AM2 />} />
         {/* AM2 Module 1 */}

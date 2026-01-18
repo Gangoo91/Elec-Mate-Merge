@@ -64,7 +64,7 @@ export const useUnifiedJobSearch = () => {
         query = query.ilike('location', `%${location}%`);
       }
 
-      const { data, error } = await query.limit(50);
+      const { data, error } = await query.limit(200);
 
       if (error) throw error;
 
@@ -195,49 +195,39 @@ export const useUnifiedJobSearch = () => {
     setError(null);
     setJobs([]);
     setCurrentPage(1);
-    
-    // Initialize search progress
-    const initialSources: JobSourceStatus[] = [
-      { source: 'Reed', status: 'pending', jobCount: 0 },
-      { source: 'Indeed', status: 'pending', jobCount: 0 },
-      { source: 'TotalJobs', status: 'pending', jobCount: 0 },
-      { source: 'CV Library', status: 'pending', jobCount: 0 },
-      { source: 'Jobs.co.uk', status: 'pending', jobCount: 0 }
-    ];
-    
+
+    // Show quick progress indicator
     setSearchProgress({
-      sources: initialSources,
+      sources: [{ source: 'Database', status: 'loading', jobCount: 0 }],
       totalJobsFound: 0,
       completedSources: 0,
-      totalSources: initialSources.length,
+      totalSources: 1,
       isSearching: true
     });
 
     try {
-      // Search all job sources live via aggregator with progress tracking
-      const { jobs: liveJobs, summary, sourceResults } = await searchLiveJobsWithProgress(keywords, location);
+      // Use fast database search instead of slow live aggregator
+      const dbJobs = await searchDatabaseJobs(keywords || 'electrician', location);
 
       // Sort by posted date (newest first)
-      liveJobs.sort((a, b) => {
+      dbJobs.sort((a, b) => {
         return new Date(b.posted_date).getTime() - new Date(a.posted_date).getTime();
       });
 
-      setJobs(liveJobs);
+      setJobs(dbJobs);
 
-      // Final progress update
-      const completedSources = sourceResults?.filter(s => s.success).length || 0;
-      setSearchProgress(prev => ({
-        ...prev,
-        completedSources: prev.totalSources,
+      // Update progress
+      setSearchProgress({
+        sources: [{ source: 'Database', status: 'completed', jobCount: dbJobs.length }],
+        totalJobsFound: dbJobs.length,
+        completedSources: 1,
+        totalSources: 1,
         isSearching: false
-      }));
-
-      const successfulSources = sourceResults?.filter(s => s.success).length || 0;
-      const totalSources = sourceResults?.length || 0;
+      });
 
       toast({
         title: "Search Complete",
-        description: `Found ${liveJobs.length} jobs from ${successfulSources}/${totalSources} sources`
+        description: `Found ${dbJobs.length} jobs matching your search`
       });
 
     } catch (error) {

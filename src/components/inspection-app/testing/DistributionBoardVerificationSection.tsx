@@ -130,13 +130,14 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
               <span className="text-sm text-muted-foreground">Operational status confirmed</span>
             </label>
 
-            <label className="flex items-center gap-2 cursor-pointer">
+            <label className="flex items-center gap-2 cursor-pointer touch-manipulation">
               <Checkbox
-                id="spd-na"
+                id="spd-na-checkbox"
                 checked={data.spdNA}
                 onCheckedChange={(checked) => onUpdate('spdNA', checked === true)}
+                className="h-5 w-5 border-elec-yellow/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
               />
-              <span className="text-sm text-muted-foreground">N/A</span>
+              <span className="text-sm text-foreground">SPD N/A</span>
             </label>
           </div>
         </div>

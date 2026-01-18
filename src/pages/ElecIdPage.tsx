@@ -7,7 +7,7 @@ const ElecIdPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur">
         <div className="max-w-4xl mx-auto px-4">

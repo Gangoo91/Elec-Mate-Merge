@@ -259,7 +259,7 @@ const Level3Module1Section3_1 = () => {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
 
       {/* ========================================
           STICKY HEADER

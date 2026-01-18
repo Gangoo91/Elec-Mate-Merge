@@ -479,10 +479,10 @@ const ApprenticeHub = () => {
   }, [refetch]);
 
   return (
-    <div className="min-h-screen bg-[hsl(240,5.9%,10%)] flex flex-col">
+    <div className="bg-[hsl(240,5.9%,10%)] flex flex-col">
       <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefetching}>
       <div className="flex-1 overflow-y-auto momentum-scroll-y">
-        <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8 pb-safe">
+        <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8 ">
           <motion.div
             variants={containerVariants}
             initial="hidden"

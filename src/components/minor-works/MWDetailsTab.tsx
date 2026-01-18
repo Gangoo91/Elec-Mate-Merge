@@ -205,13 +205,47 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm">Departures from BS 7671</Label>
+                <Label className="text-sm">Departures from BS 7671 (Reg 120.3, 133.1.3, 133.5)</Label>
                 <Textarea
                   value={formData.departuresFromBS7671 || ''}
                   onChange={(e) => onUpdate('departuresFromBS7671', e.target.value)}
-                  placeholder="Detail any departures from the standard and reasons..."
+                  placeholder="Detail any departures from the standard and reasons, or enter 'None'..."
                   rows={2}
                   className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm">Permitted Exceptions (Reg 411.3.3)</Label>
+                <Textarea
+                  value={formData.permittedExceptions || ''}
+                  onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
+                  placeholder="Detail any permitted exceptions under Regulation 411.3.3, or enter 'None'..."
+                  rows={2}
+                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="flex items-center space-x-3 p-4 min-h-[48px] rounded-lg bg-muted/30">
+                <Checkbox
+                  id="riskAssessmentAttached"
+                  checked={formData.riskAssessmentAttached || false}
+                  onCheckedChange={(checked) => onUpdate('riskAssessmentAttached', checked)}
+                  className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
+                />
+                <Label htmlFor="riskAssessmentAttached" className="text-base font-medium cursor-pointer">
+                  Risk assessment attached
+                </Label>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm">Comments on Existing Installation (Reg 644.1.2)</Label>
+                <Textarea
+                  value={formData.commentsOnExistingInstallation || ''}
+                  onChange={(e) => onUpdate('commentsOnExistingInstallation', e.target.value)}
+                  placeholder="Enter any comments regarding the condition of the existing installation that may affect the safety of the new work..."
+                  rows={3}
+                  className="text-base touch-manipulation min-h-[100px] border-white/30 focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
             </div>
@@ -269,19 +303,44 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm">Earthing Arrangement *</Label>
-                <Select value={formData.earthingArrangement || ''} onValueChange={(v) => onUpdate('earthingArrangement', v)}>
-                  <SelectTrigger className={cn("h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500", !formData.earthingArrangement && "border-red-500/50")}>
-                    <SelectValue placeholder="Select earthing type" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                    <SelectItem value="TN-C-S">TN-C-S (PME)</SelectItem>
-                    <SelectItem value="TN-S">TN-S</SelectItem>
-                    <SelectItem value="TT">TT</SelectItem>
-                    <SelectItem value="IT">IT</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm">Earthing Arrangement *</Label>
+                  <Select value={formData.earthingArrangement || ''} onValueChange={(v) => onUpdate('earthingArrangement', v)}>
+                    <SelectTrigger className={cn("h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500", !formData.earthingArrangement && "border-red-500/50")}>
+                      <SelectValue placeholder="Select earthing type" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                      <SelectItem value="TN-C-S">TN-C-S (PME)</SelectItem>
+                      <SelectItem value="TN-S">TN-S</SelectItem>
+                      <SelectItem value="TT">TT</SelectItem>
+                      <SelectItem value="IT">IT</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm">Zdb - Earth fault loop at DB (Ω)</Label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    value={formData.zdb || ''}
+                    onChange={(e) => onUpdate('zdb', e.target.value)}
+                    placeholder="e.g., 0.35"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-green-500 focus:ring-green-500"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-3 p-4 min-h-[48px] rounded-lg bg-muted/30">
+                <Checkbox
+                  id="earthingConductorPresent"
+                  checked={formData.earthingConductorPresent || false}
+                  onCheckedChange={(checked) => onUpdate('earthingConductorPresent', checked)}
+                  className="h-5 w-5 border-gray-500 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation"
+                />
+                <Label htmlFor="earthingConductorPresent" className="text-base font-medium cursor-pointer">
+                  Earthing conductor present
+                </Label>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -14,7 +14,7 @@ import AssessmentToolsTab from "@/components/apprentice/safety-cases/AssessmentT
 
 const OnJobSafetyCases = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-dark/98 to-elec-dark/95">
+    <div className="bg-gradient-to-br from-elec-dark via-elec-dark/98 to-elec-dark/95">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8 animate-fade-in">
 
         {/* Hero Header */}

@@ -248,7 +248,7 @@ const CashFlowPlanner = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-safe pb-safe animate-fade-in">
+    <div className="bg-background   animate-fade-in">
       <Helmet>
         <title>Cash Flow Planner UK for Electricians | Forecast & Scenarios</title>
         <meta

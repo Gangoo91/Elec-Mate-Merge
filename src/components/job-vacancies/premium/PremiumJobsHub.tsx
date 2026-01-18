@@ -33,6 +33,7 @@ import JobSearchSheet from "./JobSearchSheet";
 import SavedJobsTab from "./SavedJobsTab";
 import JobCardSkeleton from "./JobCardSkeleton";
 import QuickCVSheet from "./QuickCVSheet";
+import JobMarketInsights from "./JobMarketInsights";
 
 // Hooks
 import { useSavedJobs } from "./hooks/useSavedJobs";
@@ -642,13 +643,7 @@ const PremiumJobsHub = () => {
               exit={{ opacity: 0, x: -20 }}
               className="p-4"
             >
-              <div className="text-center py-16">
-                <BarChart3 className="h-12 w-12 mx-auto text-white/20 mb-4" />
-                <h3 className="text-lg font-bold text-white mb-2">Market Insights</h3>
-                <p className="text-sm text-white/60 max-w-xs mx-auto">
-                  Salary trends, demand hotspots, and career analytics coming soon
-                </p>
-              </div>
+              <JobMarketInsights />
             </motion.div>
           )}
         </AnimatePresence>

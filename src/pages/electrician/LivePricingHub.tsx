@@ -123,12 +123,12 @@ const LivePricingHub = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-900 flex flex-col pt-safe pb-safe animate-fade-in">
+    <div className="bg-neutral-900 flex flex-col   animate-fade-in">
       {/* Offline Indicator */}
       <OfflineIndicator />
 
       {/* Header - Sticky Premium */}
-      <header className="sticky top-0 z-40 bg-neutral-900/95 backdrop-blur-xl border-b border-white/10 pt-safe">
+      <header className="sticky top-0 z-40 bg-neutral-900/95 backdrop-blur-xl border-b border-white/10 ">
         <div className="flex items-center justify-between px-4 h-14">
           <Button
             variant="ghost"

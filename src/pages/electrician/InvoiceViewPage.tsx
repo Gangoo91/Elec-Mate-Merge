@@ -266,7 +266,7 @@ const InvoiceViewPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-background">
+      <div className="flex items-center justify-center bg-background">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
@@ -274,7 +274,7 @@ const InvoiceViewPage = () => {
 
   if (!invoice) {
     return (
-      <div className="min-h-screen bg-background p-4">
+      <div className="bg-background p-4">
         <Button
           variant="ghost"
           size="sm"
@@ -303,7 +303,7 @@ const InvoiceViewPage = () => {
   const daysOverdue = getDaysOverdue();
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="bg-background pb-24">
       <Helmet>
         <title>Invoice {invoice.invoice_number} | ElecMate</title>
       </Helmet>

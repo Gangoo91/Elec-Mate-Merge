@@ -353,7 +353,7 @@ const QuoteViewPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-background">
+      <div className="flex items-center justify-center bg-background">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
@@ -361,7 +361,7 @@ const QuoteViewPage = () => {
 
   if (error || !quote) {
     return (
-      <div className="min-h-screen bg-background p-4">
+      <div className="bg-background p-4">
         <Button
           variant="ghost"
           size="sm"
@@ -390,7 +390,7 @@ const QuoteViewPage = () => {
   const daysUntilExpiry = quote.expiryDate ? differenceInDays(new Date(quote.expiryDate), new Date()) : null;
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="bg-background pb-24">
       <Helmet>
         <title>View Quote {quote.quoteNumber} | Professional Electrical Quote</title>
         <meta

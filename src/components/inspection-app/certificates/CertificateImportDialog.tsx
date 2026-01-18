@@ -142,7 +142,7 @@ export const CertificateImportDialog = ({
             />
             <label
               htmlFor="certificate-file-input"
-              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-border rounded-lg cursor-pointer hover:border-primary/50 hover:bg-accent/50 transition-colors"
+              className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-border rounded-lg cursor-pointer hover:border-primary/50 hover:bg-accent/50 active:bg-accent/70 transition-all touch-manipulation"
             >
               <Upload className="h-8 w-8 text-muted-foreground mb-2" />
               <p className="text-sm font-medium">

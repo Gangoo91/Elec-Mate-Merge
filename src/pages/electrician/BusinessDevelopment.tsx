@@ -78,7 +78,7 @@ const BusinessDevelopment = () => {
   const canonical = `${window.location.origin}/electrician/business-development`;
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] pb-safe animate-fade-in">
+    <div className="bg-[#1a1a1a]  animate-fade-in">
       <Helmet>
         <title>Business Development for Electricians | Elec-Mate</title>
         <meta
@@ -89,7 +89,7 @@ const BusinessDevelopment = () => {
       </Helmet>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 pt-safe">
+      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 ">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <div className="flex items-center h-14 sm:h-16">
             <Button
@@ -127,7 +127,7 @@ const BusinessDevelopment = () => {
       </section>
 
       {/* Cards Grid */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 pb-safe">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 ">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {businessSections.map((section) => (
             <BusinessCard

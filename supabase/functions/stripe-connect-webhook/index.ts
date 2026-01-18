@@ -227,6 +227,8 @@ serve(async (req) => {
 
         // Create notification for electrician
         if (electricianUserId) {
+          const paymentAmount = session.amount_total ? session.amount_total / 100 : 0;
+
           await supabase
             .from('notifications')
             .insert({
@@ -237,13 +239,33 @@ serve(async (req) => {
               data: {
                 invoice_id: invoiceId,
                 invoice_number: invoiceNumber,
-                amount: session.amount_total ? session.amount_total / 100 : null,
+                amount: paymentAmount,
                 payment_method: 'card',
               },
               read: false,
             });
 
           console.log(`🔔 Notification created for user ${electricianUserId}`);
+
+          // Send push notification
+          try {
+            await supabase.functions.invoke('send-push-notification', {
+              body: {
+                userId: electricianUserId,
+                title: '💰 Payment Received!',
+                body: `Invoice ${invoiceNumber} paid - ${formatCurrency(paymentAmount)}`,
+                type: 'invoice',
+                data: {
+                  invoiceId: invoiceId,
+                  invoiceNumber: invoiceNumber,
+                  amount: paymentAmount
+                }
+              }
+            });
+            console.log(`📱 Push notification sent for payment`);
+          } catch (pushError) {
+            console.error('Push notification error (non-critical):', pushError);
+          }
         }
 
         // Send thank-you email to client

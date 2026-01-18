@@ -22,7 +22,8 @@ function generateToken(): string {
 // Generate founder invite email HTML
 function generateInviteEmailHTML(email: string, inviteToken: string): string {
   const siteUrl = Deno.env.get("SITE_URL") || "https://elec-mate.com";
-  const claimUrl = `${siteUrl}/founder/claim?token=${inviteToken}`;
+  // Direct to signup page instead of claim page
+  const claimUrl = `${siteUrl}/founder/signup?token=${inviteToken}`;
   const logoUrl = "https://elec-mate.com/logo.jpg";
 
   return `
@@ -31,100 +32,121 @@ function generateInviteEmailHTML(email: string, inviteToken: string): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="supported-color-schemes" content="dark">
   <title>Your Founder Subscription is Ready</title>
-  <style>
-    @media only screen and (max-width: 480px) {
-      .main-container { padding: 16px !important; }
-      .content-padding { padding: 24px 20px !important; }
-      .cta-button { padding: 16px 24px !important; }
-    }
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td { font-family: Arial, sans-serif !important; }
   </style>
+  <![endif]-->
 </head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; background-color: #0a0a0a; -webkit-font-smoothing: antialiased;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0a0a0a;">
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0f172a; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0f172a;">
     <tr>
-      <td class="main-container" style="padding: 32px 16px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 480px; margin: 0 auto; background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%); border-radius: 24px; overflow: hidden; border: 1px solid #2a2a2a;">
+      <td style="padding: 24px 12px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 420px; margin: 0 auto; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; border: 1px solid rgba(251, 191, 36, 0.2);">
 
-          <!-- Header with Logo -->
+          <!-- Header with Crown Emoji -->
           <tr>
-            <td class="content-padding" style="padding: 32px 24px 24px; text-align: center;">
-              <img src="${logoUrl}" alt="Elec-Mate" width="80" height="80" style="display: block; margin: 0 auto 20px; border-radius: 16px; box-shadow: 0 8px 24px rgba(251, 191, 36, 0.15);" />
-              <div style="display: inline-block; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0a0a0a; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px;">
+            <td style="padding: 40px 24px 24px; text-align: center;">
+              <div style="font-size: 56px; line-height: 1; margin-bottom: 16px;">👑</div>
+              <div style="display: inline-block; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; padding: 8px 20px; border-radius: 24px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;">
                 Founder Access
               </div>
-              <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">
-                Your Subscription is Ready
+              <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px; line-height: 1.2;">
+                Your Subscription<br/>is Ready
               </h1>
-              <p style="margin: 8px 0 0; font-size: 15px; color: #888888; line-height: 1.5;">
+              <p style="margin: 12px 0 0; font-size: 16px; color: #e2e8f0; line-height: 1.5;">
                 Thank you for being an early supporter
               </p>
             </td>
           </tr>
 
+          <!-- Price Card -->
+          <tr>
+            <td style="padding: 0 20px 24px;">
+              <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 20px; padding: 28px 24px; text-align: center;">
+                <p style="margin: 0; font-size: 14px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
+                  Founder Price
+                </p>
+                <p style="margin: 8px 0 4px; font-size: 48px; font-weight: 800; color: #22c55e; line-height: 1;">
+                  £3.99
+                </p>
+                <p style="margin: 0 0 16px; font-size: 16px; color: #94a3b8;">
+                  per month, forever
+                </p>
+                <p style="margin: 0; font-size: 14px; color: #cbd5e1; background: rgba(0,0,0,0.2); padding: 8px 16px; border-radius: 8px; display: inline-block;">
+                  <span style="text-decoration: line-through; color: #64748b;">£9.99</span>
+                  <span style="color: #22c55e; font-weight: 600; margin-left: 8px;">60% OFF</span>
+                </p>
+              </div>
+            </td>
+          </tr>
+
           <!-- Message -->
           <tr>
-            <td class="content-padding" style="padding: 0 24px 24px;">
-              <div style="background: linear-gradient(135deg, #1e1e1e 0%, #1a1a1a 100%); border-radius: 16px; padding: 24px; border: 1px solid #333333;">
-                <p style="margin: 0 0 16px; font-size: 15px; color: #a3a3a3; line-height: 1.6;">
-                  As a founding member, you're getting exclusive access to Elec-Mate at our special founder rate:
-                </p>
+            <td style="padding: 0 24px 24px;">
+              <p style="margin: 0; font-size: 16px; color: #e2e8f0; line-height: 1.7; text-align: center;">
+                As a founding member, you're getting exclusive lifetime access to all Elec-Mate features at our special founder rate.
+              </p>
+            </td>
+          </tr>
 
-                <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 12px; padding: 16px; margin-bottom: 20px; text-align: center;">
-                  <p style="margin: 0 0 4px; font-size: 32px; font-weight: 700; color: #22c55e;">
-                    £3.99<span style="font-size: 16px; color: #888888;">/month</span>
-                  </p>
-                  <p style="margin: 0; font-size: 13px; color: #666666;">
-                    Locked in forever - regular price £9.99/month
-                  </p>
-                </div>
-
-                <!-- CTA Button -->
-                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                  <tr>
-                    <td>
-                      <a href="${claimUrl}" class="cta-button" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0a0a0a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center; box-shadow: 0 4px 16px rgba(251, 191, 36, 0.3);">
-                        Claim Your Subscription
-                      </a>
-                    </td>
-                  </tr>
-                </table>
-              </div>
+          <!-- CTA Button -->
+          <tr>
+            <td style="padding: 0 20px 32px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td>
+                    <a href="${claimUrl}" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0f172a; text-decoration: none; font-size: 18px; font-weight: 700; border-radius: 14px; text-align: center; box-shadow: 0 8px 24px rgba(251, 191, 36, 0.35);">
+                      🚀 Claim Your Subscription
+                    </a>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 
           <!-- What's Included -->
           <tr>
-            <td class="content-padding" style="padding: 0 24px 24px;">
-              <p style="margin: 0 0 16px; font-size: 12px; font-weight: 600; color: #666666; text-transform: uppercase; letter-spacing: 0.5px;">
+            <td style="padding: 0 20px 28px;">
+              <p style="margin: 0 0 16px; font-size: 13px; font-weight: 700; color: #fbbf24; text-transform: uppercase; letter-spacing: 1px; text-align: center;">
                 What's included
               </p>
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
-                  <td style="padding: 10px 16px; background-color: #1a1a1a; border-radius: 10px; margin-bottom: 6px;">
-                    <span style="color: #22c55e; margin-right: 10px;">✓</span>
-                    <span style="color: #ffffff; font-size: 14px;">All AI tools & calculators</span>
+                  <td style="padding: 12px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
+                    <span style="color: #22c55e; font-size: 16px; margin-right: 12px;">✓</span>
+                    <span style="color: #ffffff; font-size: 15px;">All AI tools & calculators</span>
                   </td>
                 </tr>
-                <tr><td style="height: 6px;"></td></tr>
+                <tr><td style="height: 8px;"></td></tr>
                 <tr>
-                  <td style="padding: 10px 16px; background-color: #1a1a1a; border-radius: 10px;">
-                    <span style="color: #22c55e; margin-right: 10px;">✓</span>
-                    <span style="color: #ffffff; font-size: 14px;">BS7671 AI Assistant</span>
+                  <td style="padding: 12px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
+                    <span style="color: #22c55e; font-size: 16px; margin-right: 12px;">✓</span>
+                    <span style="color: #ffffff; font-size: 15px;">BS7671 AI Assistant</span>
                   </td>
                 </tr>
-                <tr><td style="height: 6px;"></td></tr>
+                <tr><td style="height: 8px;"></td></tr>
                 <tr>
-                  <td style="padding: 10px 16px; background-color: #1a1a1a; border-radius: 10px;">
-                    <span style="color: #22c55e; margin-right: 10px;">✓</span>
-                    <span style="color: #ffffff; font-size: 14px;">Quote & invoice builder</span>
+                  <td style="padding: 12px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
+                    <span style="color: #22c55e; font-size: 16px; margin-right: 12px;">✓</span>
+                    <span style="color: #ffffff; font-size: 15px;">Quote & invoice builder</span>
                   </td>
                 </tr>
-                <tr><td style="height: 6px;"></td></tr>
+                <tr><td style="height: 8px;"></td></tr>
                 <tr>
-                  <td style="padding: 10px 16px; background-color: #1a1a1a; border-radius: 10px;">
-                    <span style="color: #22c55e; margin-right: 10px;">✓</span>
-                    <span style="color: #ffffff; font-size: 14px;">Priority support & updates</span>
+                  <td style="padding: 12px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
+                    <span style="color: #22c55e; font-size: 16px; margin-right: 12px;">✓</span>
+                    <span style="color: #ffffff; font-size: 15px;">EICR & certificate generation</span>
+                  </td>
+                </tr>
+                <tr><td style="height: 8px;"></td></tr>
+                <tr>
+                  <td style="padding: 12px 16px; background-color: rgba(30, 41, 59, 0.8); border-radius: 12px;">
+                    <span style="color: #22c55e; font-size: 16px; margin-right: 12px;">✓</span>
+                    <span style="color: #ffffff; font-size: 15px;">Priority support & all future updates</span>
                   </td>
                 </tr>
               </table>
@@ -133,9 +155,9 @@ function generateInviteEmailHTML(email: string, inviteToken: string): string {
 
           <!-- Expiry Notice -->
           <tr>
-            <td class="content-padding" style="padding: 0 24px 24px;">
-              <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 10px; padding: 12px 16px;">
-                <p style="margin: 0; font-size: 13px; color: #fbbf24; text-align: center;">
+            <td style="padding: 0 20px 28px;">
+              <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.25); border-radius: 12px; padding: 14px 20px; text-align: center;">
+                <p style="margin: 0; font-size: 14px; color: #fbbf24; font-weight: 600;">
                   ⏰ This invite expires in 30 days
                 </p>
               </div>
@@ -144,11 +166,11 @@ function generateInviteEmailHTML(email: string, inviteToken: string): string {
 
           <!-- Help Section -->
           <tr>
-            <td class="content-padding" style="padding: 24px; background-color: #111111; border-top: 1px solid #222222;">
-              <p style="margin: 0 0 4px; font-size: 13px; color: #666666;">
-                Questions? Reply to this email or contact
+            <td style="padding: 24px; background-color: rgba(15, 23, 42, 0.8); border-top: 1px solid rgba(148, 163, 184, 0.1); text-align: center;">
+              <p style="margin: 0 0 8px; font-size: 14px; color: #cbd5e1;">
+                Questions? Just reply to this email
               </p>
-              <a href="mailto:founder@elec-mate.com" style="font-size: 14px; color: #fbbf24; text-decoration: none; font-weight: 500;">
+              <a href="mailto:founder@elec-mate.com" style="font-size: 15px; color: #fbbf24; text-decoration: none; font-weight: 600;">
                 founder@elec-mate.com
               </a>
             </td>
@@ -156,9 +178,9 @@ function generateInviteEmailHTML(email: string, inviteToken: string): string {
 
           <!-- Footer -->
           <tr>
-            <td style="padding: 20px 24px; text-align: center; background-color: #0a0a0a;">
-              <p style="margin: 0; font-size: 12px; color: #525252;">
-                © ${new Date().getFullYear()} Elec-Mate · Made in the UK
+            <td style="padding: 20px 24px; text-align: center; background-color: #0f172a;">
+              <p style="margin: 0; font-size: 13px; color: #64748b;">
+                © ${new Date().getFullYear()} Elec-Mate · Made in the UK 🇬🇧
               </p>
             </td>
           </tr>

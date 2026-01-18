@@ -20,7 +20,7 @@ const QuizQuestion = ({ question, selectedAnswer, onAnswerSelect, isFlagged, onT
         {onToggleFlag && (
           <button
             onClick={onToggleFlag}
-            className="absolute top-6 right-6 transition-colors"
+            className="absolute top-6 right-6 h-11 w-11 flex items-center justify-center rounded-lg transition-colors touch-manipulation active:scale-95"
             aria-label={isFlagged ? "Unflag question" : "Flag question for review"}
           >
             <svg
@@ -46,10 +46,10 @@ const QuizQuestion = ({ question, selectedAnswer, onAnswerSelect, isFlagged, onT
           <button
             key={index}
             onClick={() => onAnswerSelect(index)}
-            className={`w-full text-left p-4 rounded-lg border transition-all duration-200 ${
+            className={`w-full text-left p-4 min-h-[52px] rounded-lg border transition-all duration-200 touch-manipulation active:scale-[0.98] ${
               selectedAnswer === index
                 ? 'border-elec-yellow bg-yellow-600/20 text-foreground'
-                : 'border-white/30 bg-elec-gray text-foreground hover:border-gray-500 hover:bg-[#323232]'
+                : 'border-white/30 bg-elec-gray text-foreground hover:border-gray-500 hover:bg-[#323232] active:border-elec-yellow/50'
             }`}
           >
             <div className="flex items-center gap-3">

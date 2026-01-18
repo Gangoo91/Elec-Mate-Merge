@@ -199,7 +199,7 @@ export const CustomerOverviewTab = ({
                 <div
                   key={report.id}
                   onClick={() => handleViewCertificate(report.id, report.report_type)}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-card/50 border border-border hover:border-elec-yellow/30 cursor-pointer transition-colors"
+                  className="flex items-center gap-3 p-3 rounded-lg bg-card/50 border border-border hover:border-elec-yellow/30 active:bg-elec-yellow/10 cursor-pointer transition-all touch-manipulation"
                 >
                   <FileText className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                   <div className="flex-1 min-w-0">

@@ -202,7 +202,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
             <div
               onDrop={handleDrop}
               onDragOver={(e) => e.preventDefault()}
-              className="border-2 border-dashed border-border rounded-xl p-8 text-center cursor-pointer hover:border-elec-yellow/50 hover:bg-muted/50 transition-colors"
+              className="border-2 border-dashed border-border rounded-xl p-8 text-center cursor-pointer hover:border-elec-yellow/50 hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
               onClick={() => document.getElementById('file-input')?.click()}
             >
               <input

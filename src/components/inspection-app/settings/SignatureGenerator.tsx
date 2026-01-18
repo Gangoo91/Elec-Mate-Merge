@@ -91,7 +91,7 @@ export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorP
               />
               <label
                 htmlFor={font.id}
-                className="flex flex-col items-center justify-center rounded-lg border-2 border-elec-gray-light bg-elec-gray-dark p-4 min-h-[52px] hover:border-elec-yellow/50 peer-data-[state=checked]:border-elec-yellow cursor-pointer transition-colors"
+                className="flex flex-col items-center justify-center rounded-lg border-2 border-elec-gray-light bg-elec-gray-dark p-4 min-h-[52px] hover:border-elec-yellow/50 peer-data-[state=checked]:border-elec-yellow cursor-pointer active:scale-[0.98] transition-all touch-manipulation"
               >
                 <span className="text-xs text-white/70 mb-1">{font.name}</span>
                 <span 

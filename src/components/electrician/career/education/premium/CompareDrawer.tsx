@@ -87,7 +87,7 @@ const MiniCompareCard = ({
         exit="exit"
         onClick={onClick}
         className={cn(
-          "w-[180px] bg-white/5 rounded-xl border overflow-hidden cursor-pointer transition-colors",
+          "w-[180px] bg-white/5 rounded-xl border overflow-hidden cursor-pointer active:scale-[0.98] transition-all touch-manipulation",
           colorClasses[color]
         )}
       >

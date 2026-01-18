@@ -24,7 +24,7 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
           className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black min-h-[44px] touch-manipulation"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          <span className="hidden sm:inline">Back to Apprentice Hub</span>
+          <span className="hidden sm:inline">Back to Learning Hub</span>
           <span className="sm:hidden">Back</span>
         </Button>
       </div>

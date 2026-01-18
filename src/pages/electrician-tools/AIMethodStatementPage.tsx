@@ -8,7 +8,7 @@ const AIMethodStatementPage = () => {
   const fromAgentSelector = location.state?.fromAgentSelector;
 
   return (
-    <div className="min-h-screen bg-elec-dark pt-safe pb-safe">
+    <div className="bg-elec-dark  ">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-4 sm:py-6">
         <div className="space-y-4 sm:space-y-6 animate-fade-in">
           {/* Back Button */}

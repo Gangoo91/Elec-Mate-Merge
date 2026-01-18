@@ -34,7 +34,7 @@ const IsolationSafetyQuickCheck = () => {
         
         <div className="space-y-2">
           {options.map((option) => (
-            <label key={option.id} className="flex items-start gap-3 p-3 bg-[#1a1a1a] rounded-lg cursor-pointer hover:bg-[#252525] transition-colors">
+            <label key={option.id} className="flex items-start gap-3 p-3 bg-[#1a1a1a] rounded-lg cursor-pointer hover:bg-[#252525] active:bg-[#303030] transition-all touch-manipulation">
               <input
                 type="radio"
                 name="isolation-safety"

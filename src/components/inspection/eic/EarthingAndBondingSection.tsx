@@ -147,56 +147,276 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="mainBondingSize" className="font-medium text-sm">Main Bonding Conductor Size</Label>
-            <Select
-              value={formData.mainBondingSize || ''}
-              onValueChange={(value) => onUpdate('mainBondingSize', value)}
+        {/* Means of Earthing (IET Form) */}
+        <div className="space-y-3">
+          <Label className="font-medium text-sm">Means of Earthing</Label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div
+              className={`flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation ${
+                formData.meansOfEarthing === 'distributor'
+                  ? "bg-green-500/15 border-green-500/50"
+                  : "bg-white/[0.03] border-white/[0.08]"
+              }`}
+              onClick={() => onUpdate('meansOfEarthing', formData.meansOfEarthing === 'distributor' ? '' : 'distributor')}
             >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select conductor size" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="6mm">6mm²</SelectItem>
-                <SelectItem value="10mm">10mm²</SelectItem>
-                <SelectItem value="16mm">16mm²</SelectItem>
-                <SelectItem value="25mm">25mm²</SelectItem>
-                <SelectItem value="35mm">35mm²</SelectItem>
-                <SelectItem value="custom">Other/Custom</SelectItem>
-              </SelectContent>
-            </Select>
-            {formData.mainBondingSize === 'custom' && (
-              <Input
-                placeholder="Enter custom size (mm²)"
-                value={formData.mainBondingSizeCustom || ''}
-                onChange={(e) => onUpdate('mainBondingSizeCustom', e.target.value)}
-                className="mt-2 touch-manipulation"
-                inputMode="numeric"
+              <Checkbox
+                id="meansEarthingDistributor"
+                checked={formData.meansOfEarthing === 'distributor'}
+                onCheckedChange={(checked) => onUpdate('meansOfEarthing', checked ? 'distributor' : '')}
+                className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
               />
-            )}
+              <Label htmlFor="meansEarthingDistributor" className="text-sm font-medium cursor-pointer">
+                Distributor's facility
+              </Label>
+            </div>
+            <div
+              className={`flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation ${
+                formData.meansOfEarthing === 'electrode'
+                  ? "bg-blue-500/15 border-blue-500/50"
+                  : "bg-white/[0.03] border-white/[0.08]"
+              }`}
+              onClick={() => onUpdate('meansOfEarthing', formData.meansOfEarthing === 'electrode' ? '' : 'electrode')}
+            >
+              <Checkbox
+                id="meansEarthingElectrode"
+                checked={formData.meansOfEarthing === 'electrode'}
+                onCheckedChange={(checked) => onUpdate('meansOfEarthing', checked ? 'electrode' : '')}
+                className="border-blue-500/40 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
+              />
+              <Label htmlFor="meansEarthingElectrode" className="text-sm font-medium cursor-pointer">
+                Installation earth electrode
+              </Label>
+            </div>
           </div>
+        </div>
 
-          <div>
-            <Label htmlFor="bondingCompliance" className="font-medium text-sm">Bonding Compliance</Label>
+        {/* Maximum Demand (IET Form) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="maximumDemand" className="font-medium text-sm">Maximum Demand (Load)</Label>
+            <Input
+              id="maximumDemand"
+              type="number"
+              step="0.1"
+              value={formData.maximumDemand || ''}
+              onChange={(e) => onUpdate('maximumDemand', e.target.value)}
+              placeholder="e.g., 60"
+              className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="maximumDemandUnit" className="font-medium text-sm">Unit</Label>
             <Select
-              value={formData.bondingCompliance || ''}
-              onValueChange={(value) => onUpdate('bondingCompliance', value)}
+              value={formData.maximumDemandUnit || 'amps'}
+              onValueChange={(value) => onUpdate('maximumDemandUnit', value)}
             >
               <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
-                <SelectValue placeholder="Select compliance" />
+                <SelectValue placeholder="Select unit" />
               </SelectTrigger>
               <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                <SelectItem value="satisfactory">Satisfactory</SelectItem>
-                <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-                <SelectItem value="not-applicable">Not Applicable</SelectItem>
+                <SelectItem value="kva">kVA</SelectItem>
+                <SelectItem value="amps">Amps</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
 
+        {/* Earth Electrode Location (IET Form) */}
+        {!isPMESelected && (
+          <div className="space-y-2">
+            <Label htmlFor="earthElectrodeLocation" className="font-medium text-sm">Earth Electrode Location</Label>
+            <Input
+              id="earthElectrodeLocation"
+              value={formData.earthElectrodeLocation || ''}
+              onChange={(e) => onUpdate('earthElectrodeLocation', e.target.value)}
+              placeholder="e.g., Garden adjacent to main building"
+              className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+            />
+          </div>
+        )}
+
+        {/* Main Protective Conductors (IET Form) */}
+        <div className="space-y-4">
+          <h4 className="text-sm font-semibold text-purple-400 border-b border-white/10 pb-2 flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
+            Main Protective Conductors
+          </h4>
+
+          {/* Earthing Conductor */}
+          <div className="space-y-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+            <Label className="font-medium text-sm text-purple-300">Earthing Conductor</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="earthingConductorMaterial" className="text-xs text-white/60">Material</Label>
+                <Select
+                  value={formData.earthingConductorMaterial || ''}
+                  onValueChange={(value) => onUpdate('earthingConductorMaterial', value)}
+                >
+                  <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-purple-500 focus:ring-purple-500 h-11">
+                    <SelectValue placeholder="Select material" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                    <SelectItem value="copper">Copper</SelectItem>
+                    <SelectItem value="aluminium">Aluminium</SelectItem>
+                    <SelectItem value="steel">Steel</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="earthingConductorCsa" className="text-xs text-white/60">csa (mm²)</Label>
+                <Input
+                  id="earthingConductorCsa"
+                  type="number"
+                  step="0.5"
+                  value={formData.earthingConductorCsa || ''}
+                  onChange={(e) => onUpdate('earthingConductorCsa', e.target.value)}
+                  placeholder="e.g., 16"
+                  className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                />
+              </div>
+              <div className="flex items-end">
+                <div className="flex items-center gap-2 p-2 rounded-lg bg-green-500/10 border border-green-500/30 w-full h-11">
+                  <Checkbox
+                    id="earthingConductorVerified"
+                    checked={formData.earthingConductorVerified === true}
+                    onCheckedChange={(checked) => onUpdate('earthingConductorVerified', checked)}
+                    className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+                  />
+                  <Label htmlFor="earthingConductorVerified" className="text-xs cursor-pointer">
+                    Verified
+                  </Label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Main Protective Bonding Conductors */}
+          <div className="space-y-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+            <Label className="font-medium text-sm text-purple-300">Main Protective Bonding Conductors</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="mainBondingMaterial" className="text-xs text-white/60">Material</Label>
+                <Select
+                  value={formData.mainBondingMaterial || ''}
+                  onValueChange={(value) => onUpdate('mainBondingMaterial', value)}
+                >
+                  <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-purple-500 focus:ring-purple-500 h-11">
+                    <SelectValue placeholder="Select material" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                    <SelectItem value="copper">Copper</SelectItem>
+                    <SelectItem value="aluminium">Aluminium</SelectItem>
+                    <SelectItem value="steel">Steel</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="mainBondingCsa" className="text-xs text-white/60">csa (mm²)</Label>
+                <Select
+                  value={formData.mainBondingSize || ''}
+                  onValueChange={(value) => onUpdate('mainBondingSize', value)}
+                >
+                  <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-purple-500 focus:ring-purple-500 h-11">
+                    <SelectValue placeholder="Select size" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                    <SelectItem value="6mm">6mm²</SelectItem>
+                    <SelectItem value="10mm">10mm²</SelectItem>
+                    <SelectItem value="16mm">16mm²</SelectItem>
+                    <SelectItem value="25mm">25mm²</SelectItem>
+                    <SelectItem value="35mm">35mm²</SelectItem>
+                    <SelectItem value="custom">Other/Custom</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex items-end">
+                <div className="flex items-center gap-2 p-2 rounded-lg bg-green-500/10 border border-green-500/30 w-full h-11">
+                  <Checkbox
+                    id="mainBondingVerified"
+                    checked={formData.mainBondingVerified === true}
+                    onCheckedChange={(checked) => onUpdate('mainBondingVerified', checked)}
+                    className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+                  />
+                  <Label htmlFor="mainBondingVerified" className="text-xs cursor-pointer">
+                    Verified
+                  </Label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bonding Connections (IET Form) */}
         <div className="space-y-3">
-          <Label className="font-medium text-sm">Main Bonding Locations</Label>
+          <Label className="font-medium text-sm">Bonding Connections To:</Label>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="bondingToWater"
+                checked={formData.bondingToWater === true}
+                onCheckedChange={(checked) => onUpdate('bondingToWater', checked)}
+              />
+              <label htmlFor="bondingToWater" className="text-sm cursor-pointer">Water pipes</label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="bondingToGas"
+                checked={formData.bondingToGas === true}
+                onCheckedChange={(checked) => onUpdate('bondingToGas', checked)}
+              />
+              <label htmlFor="bondingToGas" className="text-sm cursor-pointer">Gas pipes</label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="bondingToOil"
+                checked={formData.bondingToOil === true}
+                onCheckedChange={(checked) => onUpdate('bondingToOil', checked)}
+              />
+              <label htmlFor="bondingToOil" className="text-sm cursor-pointer">Oil pipes</label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="bondingToStructuralSteel"
+                checked={formData.bondingToStructuralSteel === true}
+                onCheckedChange={(checked) => onUpdate('bondingToStructuralSteel', checked)}
+              />
+              <label htmlFor="bondingToStructuralSteel" className="text-sm cursor-pointer">Structural steel</label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="bondingToLightningProtection"
+                checked={formData.bondingToLightningProtection === true}
+                onCheckedChange={(checked) => onUpdate('bondingToLightningProtection', checked)}
+              />
+              <label htmlFor="bondingToLightningProtection" className="text-sm cursor-pointer">Lightning protection</label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="bondingToOther"
+                checked={formData.bondingToOther === true}
+                onCheckedChange={(checked) => onUpdate('bondingToOther', checked)}
+              />
+              <label htmlFor="bondingToOther" className="text-sm cursor-pointer">Other</label>
+            </div>
+          </div>
+          {formData.bondingToOther && (
+            <div className="space-y-2 mt-3">
+              <Label htmlFor="bondingOtherSpecify" className="text-sm font-normal">Specify Other</Label>
+              <Input
+                id="bondingOtherSpecify"
+                value={formData.bondingOtherSpecify || ''}
+                onChange={(e) => onUpdate('bondingOtherSpecify', e.target.value)}
+                placeholder="e.g., Metal pipework, Central heating"
+                className="touch-manipulation h-11"
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="space-y-3">
+          <Label className="font-medium text-sm">Legacy Bonding Locations</Label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="flex items-center space-x-2">
               <Checkbox

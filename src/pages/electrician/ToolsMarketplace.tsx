@@ -132,7 +132,7 @@ export default function ToolsMarketplace() {
   ];
 
   return (
-    <div className="min-h-screen bg-background pb-20 sm:pb-8">
+    <div className="bg-background pb-20 sm:pb-8">
       {/* Header */}
       <div className="bg-gradient-to-b from-orange-500/10 to-transparent border-b border-white/10">
         <div className="container mx-auto px-4 py-4 sm:py-6">
@@ -203,7 +203,7 @@ export default function ToolsMarketplace() {
                   href={product.product_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group bg-card border border-border rounded-xl p-3 hover:border-orange-500/50 transition-all"
+                  className="group bg-card border border-border rounded-xl p-3 hover:border-orange-500/50 active:border-orange-500/70 transition-all touch-manipulation active:scale-[0.98]"
                 >
                   {/* Discount Badge */}
                   {product.discount_percentage && (
@@ -242,7 +242,7 @@ export default function ToolsMarketplace() {
                     )}
                   </div>
                   {/* Supplier */}
-                  <p className="text-[10px] text-muted-foreground mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     {product.supplier_name}
                   </p>
                 </a>
@@ -259,10 +259,10 @@ export default function ToolsMarketplace() {
               <button
                 key={cat.name}
                 onClick={() => handleCategoryFilter(cat.slug)}
-                className={`h-9 px-4 rounded-full border text-sm font-medium whitespace-nowrap touch-manipulation active:scale-95 transition-all ${
+                className={`h-11 px-4 rounded-full border text-sm font-medium whitespace-nowrap touch-manipulation active:scale-[0.97] transition-all ${
                   filters.category === cat.slug || (!filters.category && cat.slug === undefined)
                     ? 'bg-orange-500 text-white border-orange-500'
-                    : 'bg-card border-border hover:border-orange-500/50'
+                    : 'bg-card border-border hover:border-orange-500/50 active:border-orange-500/70'
                 }`}
               >
                 {cat.name}
@@ -272,10 +272,10 @@ export default function ToolsMarketplace() {
             {/* Deals Filter */}
             <button
               onClick={handleDealsToggle}
-              className={`h-9 px-4 rounded-full border text-sm font-medium whitespace-nowrap touch-manipulation active:scale-95 transition-all flex items-center gap-1.5 ${
+              className={`h-11 px-4 rounded-full border text-sm font-medium whitespace-nowrap touch-manipulation active:scale-[0.97] transition-all flex items-center gap-1.5 ${
                 filters.dealsOnly
                   ? 'bg-red-500 text-white border-red-500'
-                  : 'bg-card border-border hover:border-red-500/50'
+                  : 'bg-card border-border hover:border-red-500/50 active:border-red-500/70'
               }`}
             >
               <Flame className="h-3.5 w-3.5" />

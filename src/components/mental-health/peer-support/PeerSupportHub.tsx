@@ -38,6 +38,7 @@ import { calculateStatus } from '@/services/presenceService';
 import AvailableSupporters from './AvailableSupporters';
 import SupporterDashboard from './SupporterDashboard';
 import BecomeSupporter from './BecomeSupporter';
+import PushNotificationPrompt from '@/components/notifications/PushNotificationPrompt';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -228,6 +229,15 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
             <span className="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse" />
             Available
           </Badge>
+        </div>
+
+        {/* Push Notification Prompt - appears once after 3s if not enabled */}
+        <div className="px-4 pt-4">
+          <PushNotificationPrompt
+            compact
+            context="Get notified when your Mental Health Mate replies"
+            delay={3000}
+          />
         </div>
 
         <CardContent className="p-0">

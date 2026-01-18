@@ -361,7 +361,7 @@ export default function InterviewGuidance() {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-safe pb-safe">
+    <div className="bg-background  ">
       <div className="space-y-6 px-4 py-6 animate-fade-in">
         <div className="flex items-center gap-2">
           <SmartBackButton />

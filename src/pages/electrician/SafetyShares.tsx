@@ -48,7 +48,7 @@ const SafetyShares = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white pt-safe pb-safe">
+    <div className="bg-elec-dark text-white  ">
       <Helmet>
         <title>Safety Shares - Elec-Mate</title>
         <meta name="description" content="Share safety knowledge, learn from experience, and stay updated with the latest electrical industry safety information" />
@@ -90,13 +90,13 @@ const SafetyShares = () => {
                 <CardContent className="pt-0">
                   <div className="flex gap-2">
                     <Link to={category.link} className="flex-1">
-                      <button className="w-full py-2 px-3 text-sm bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 rounded transition-colors">
+                      <button className="w-full min-h-[44px] py-2 px-3 text-sm bg-elec-yellow/10 hover:bg-elec-yellow/20 active:bg-elec-yellow/30 text-elec-yellow border border-elec-yellow/30 rounded-lg transition-all touch-manipulation active:scale-[0.98]">
                         View Standard
                       </button>
                     </Link>
                     {category.enhancedLink && (
                       <Link to={category.enhancedLink} className="flex-1">
-                        <button className="w-full py-2 px-3 text-sm bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 rounded transition-colors font-medium">
+                        <button className="w-full min-h-[44px] py-2 px-3 text-sm bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 active:bg-elec-yellow/80 rounded-lg transition-all touch-manipulation active:scale-[0.98] font-medium">
                           Enhanced ✨
                         </button>
                       </Link>

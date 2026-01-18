@@ -154,7 +154,7 @@ export const CustomerImportDialog = ({
               <Button
                 variant="link"
                 onClick={downloadSampleCSV}
-                className="text-xs sm:text-sm text-elec-yellow hover:text-elec-yellow/80 p-0 h-auto font-normal"
+                className="text-xs sm:text-sm text-elec-yellow hover:text-elec-yellow/80 active:text-elec-yellow/60 p-0 h-auto font-normal touch-manipulation transition-all"
               >
                 Download sample CSV template
               </Button>

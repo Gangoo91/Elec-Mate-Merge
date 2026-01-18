@@ -33,7 +33,7 @@ const OfflineBanner: React.FC<OfflineBannerProps> = ({ queuedChanges, isOnline, 
   // User is online but has queued changes
   return (
     <Alert 
-      className="border-blue-500/50 bg-blue-500/10 cursor-pointer hover:bg-blue-500/20 transition-colors"
+      className="border-blue-500/50 bg-blue-500/10 cursor-pointer hover:bg-blue-500/20 active:bg-blue-500/30 transition-all touch-manipulation"
       onClick={() => navigate('/sync-status')}
     >
       <Cloud className="h-4 w-4 text-blue-500 animate-pulse" />

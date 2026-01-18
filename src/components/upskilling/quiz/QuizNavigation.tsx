@@ -24,16 +24,16 @@ const QuizNavigation = ({
         onClick={onPrevious}
         disabled={currentQuestion === 0}
         variant="outline"
-        className="border-white/30 text-foreground hover:bg-[#323232] hover:text-foreground disabled:opacity-50 w-full sm:w-auto"
+        className="border-white/30 text-foreground hover:bg-[#323232] hover:text-foreground disabled:opacity-50 w-full sm:w-auto min-h-[48px] touch-manipulation active:scale-[0.98]"
       >
         <span className="hidden sm:inline">Previous</span>
         <span className="sm:hidden">Prev</span>
       </Button>
-      
+
       <Button
         onClick={onNext}
         disabled={selectedAnswer === undefined}
-        className="bg-elec-yellow text-black hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
+        className="bg-elec-yellow text-black hover:bg-yellow-400 active:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto min-h-[48px] touch-manipulation active:scale-[0.98]"
       >
         <span className="hidden sm:inline">{isLastQuestion ? 'Finish Quiz' : 'Next'}</span>
         <span className="sm:hidden">{isLastQuestion ? 'Finish' : 'Next'}</span>

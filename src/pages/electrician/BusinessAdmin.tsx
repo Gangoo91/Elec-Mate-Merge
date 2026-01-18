@@ -54,7 +54,7 @@ const BusinessAdmin = () => {
   const canonical = `${window.location.origin}/electrician/business-admin`;
 
   return (
-    <div className="min-h-screen bg-background pb-safe pt-safe space-y-6 md:space-y-8 animate-fade-in px-4 md:px-0">
+    <div className="bg-background   space-y-6 md:space-y-8 animate-fade-in px-4 md:px-0">
       <Helmet>
         <title>Business Admin Tools for Electricians | Management Hub</title>
         <meta

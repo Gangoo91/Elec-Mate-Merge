@@ -158,7 +158,7 @@ const Level3Module1Section1_7 = () => {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* STICKY HEADER */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
@@ -664,7 +664,7 @@ const Level3Module1Section1_7 = () => {
             <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
             <div className="space-y-4">
               <details className="group">
-                <summary className="cursor-pointer font-medium text-white hover:text-elec-yellow transition-colors flex items-center justify-between">
+                <summary className="cursor-pointer font-medium text-white hover:text-elec-yellow active:text-elec-yellow transition-all touch-manipulation flex items-center justify-between">
                   <span>Can I refuse to work if I believe it's unsafe?</span>
                   <span className="text-elec-yellow group-open:rotate-180 transition-transform">+</span>
                 </summary>
@@ -673,7 +673,7 @@ const Level3Module1Section1_7 = () => {
                 </p>
               </details>
               <details className="group">
-                <summary className="cursor-pointer font-medium text-white hover:text-elec-yellow transition-colors flex items-center justify-between">
+                <summary className="cursor-pointer font-medium text-white hover:text-elec-yellow active:text-elec-yellow transition-all touch-manipulation flex items-center justify-between">
                   <span>Who is responsible if I'm injured due to a faulty tool?</span>
                   <span className="text-elec-yellow group-open:rotate-180 transition-transform">+</span>
                 </summary>
@@ -682,7 +682,7 @@ const Level3Module1Section1_7 = () => {
                 </p>
               </details>
               <details className="group">
-                <summary className="cursor-pointer font-medium text-white hover:text-elec-yellow transition-colors flex items-center justify-between">
+                <summary className="cursor-pointer font-medium text-white hover:text-elec-yellow active:text-elec-yellow transition-all touch-manipulation flex items-center justify-between">
                   <span>What if my employer doesn't provide adequate PPE?</span>
                   <span className="text-elec-yellow group-open:rotate-180 transition-transform">+</span>
                 </summary>
@@ -691,7 +691,7 @@ const Level3Module1Section1_7 = () => {
                 </p>
               </details>
               <details className="group">
-                <summary className="cursor-pointer font-medium text-white hover:text-elec-yellow transition-colors flex items-center justify-between">
+                <summary className="cursor-pointer font-medium text-white hover:text-elec-yellow active:text-elec-yellow transition-all touch-manipulation flex items-center justify-between">
                   <span>Can I be sacked for raising safety concerns?</span>
                   <span className="text-elec-yellow group-open:rotate-180 transition-transform">+</span>
                 </summary>
@@ -700,7 +700,7 @@ const Level3Module1Section1_7 = () => {
                 </p>
               </details>
               <details className="group">
-                <summary className="cursor-pointer font-medium text-white hover:text-elec-yellow transition-colors flex items-center justify-between">
+                <summary className="cursor-pointer font-medium text-white hover:text-elec-yellow active:text-elec-yellow transition-all touch-manipulation flex items-center justify-between">
                   <span>What's the difference between an Improvement Notice and Prohibition Notice?</span>
                   <span className="text-elec-yellow group-open:rotate-180 transition-transform">+</span>
                 </summary>

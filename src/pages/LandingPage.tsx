@@ -17,7 +17,7 @@ const LandingPage = () => {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="bg-black text-white">
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-5xl mx-auto px-5 h-14 flex items-center justify-between">

@@ -54,13 +54,13 @@ export function FeatureTile({
               <div className="flex items-center gap-2">
                 <p className="font-medium text-foreground text-xs sm:text-sm leading-tight group-hover:text-elec-yellow transition-colors truncate">{title}</p>
                 {badge && (
-                  <Badge className={cn(badgeColors[badgeVariant], "text-[9px] sm:text-[10px] px-1.5 py-0 h-4 sm:h-5 border shrink-0")}>
+                  <Badge className={cn(badgeColors[badgeVariant], "text-[10px] sm:text-xs px-1.5 py-0 h-4 sm:h-5 border shrink-0")}>
                     {badge}
                   </Badge>
                 )}
               </div>
               {description && (
-                <p className="text-[10px] sm:text-xs text-muted-foreground truncate mt-0.5">{description}</p>
+                <p className="text-xs text-muted-foreground truncate mt-0.5">{description}</p>
               )}
             </div>
             {showArrow && (

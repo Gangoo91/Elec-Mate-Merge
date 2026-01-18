@@ -124,6 +124,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
             reportId={observationsProps.reportId}
             onGenerateCertificate={onGenerateCertificate}
             onSaveDraft={onSaveDraft}
+            onUpdate={onUpdate}
           />
         </div>
       )

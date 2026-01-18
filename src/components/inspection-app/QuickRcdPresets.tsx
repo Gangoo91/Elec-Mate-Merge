@@ -110,7 +110,7 @@ const QuickRcdPresets: React.FC<QuickRcdPresetsProps> = ({ testResults, onApplyT
   return (
     <Card className="border-2 border-primary/20 bg-gradient-to-br from-card to-primary/5">
       <CardHeader 
-        className="cursor-pointer hover:bg-accent/5 transition-colors"
+        className="cursor-pointer hover:bg-accent/5 active:bg-accent/10 transition-all touch-manipulation"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center justify-between">

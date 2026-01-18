@@ -439,7 +439,7 @@ export function EvidenceSection() {
           <SheetHeader>
             <SheetTitle>Add Evidence</SheetTitle>
           </SheetHeader>
-          <div className="space-y-4 mt-4 overflow-y-auto pb-safe">
+          <div className="space-y-4 mt-4 overflow-y-auto ">
             {/* Preview */}
             {newEvidence.file && (
               <div className="relative">

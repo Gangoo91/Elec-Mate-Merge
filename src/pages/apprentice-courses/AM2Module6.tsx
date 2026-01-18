@@ -46,7 +46,7 @@ const AM2Module6 = () => {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Header */}
       <div className="border-b border-white/10 backdrop-blur-md bg-black/20 sticky top-0 z-50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">

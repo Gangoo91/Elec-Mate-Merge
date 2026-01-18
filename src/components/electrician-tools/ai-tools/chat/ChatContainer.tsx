@@ -116,18 +116,19 @@ interface ChatInputAreaProps {
 }
 
 /**
- * ChatInputArea - Premium Sticky Input Container
+ * ChatInputArea - Fixed Bottom Input Container (ChatGPT-style)
  */
 export function ChatInputArea({ children, className }: ChatInputAreaProps) {
   return (
     <div
       className={cn(
-        "sticky bottom-0 z-20",
+        // Fixed at bottom, not sticky
+        "shrink-0 z-20",
         // Premium gradient backdrop
-        "bg-gradient-to-t from-background via-background/98 to-transparent",
+        "bg-gradient-to-t from-background via-background to-background/95",
         "backdrop-blur-xl",
         // Safe area padding for mobile
-        "pb-safe pt-2 px-4 md:px-6",
+        "pb-safe pt-2",
         className
       )}
     >

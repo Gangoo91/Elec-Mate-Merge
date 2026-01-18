@@ -111,20 +111,20 @@ const AdminUserCardComponent: React.FC<AdminUserCardProps> = ({
               <div className="flex items-center gap-1.5 mt-1">
                 <Badge
                   variant="outline"
-                  className={`text-[9px] px-1.5 py-0 h-4 ${roleStyle.bg} ${roleStyle.text} ${roleStyle.border}`}
+                  className={`text-[10px] px-1.5 py-0 h-4 ${roleStyle.bg} ${roleStyle.text} ${roleStyle.border}`}
                 >
                   {user.role || "visitor"}
                 </Badge>
                 {user.elec_id_enabled && (
                   <Badge
                     variant="outline"
-                    className="text-[9px] px-1.5 py-0 h-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/30"
+                    className="text-[10px] px-1.5 py-0 h-4 bg-cyan-500/10 text-cyan-400 border-cyan-500/30"
                   >
                     ID
                   </Badge>
                 )}
                 {user.admin_role && (
-                  <Badge className="text-[9px] px-1.5 py-0 h-4 bg-red-500/20 text-red-400 border-red-500/30">
+                  <Badge className="text-[10px] px-1.5 py-0 h-4 bg-red-500/20 text-red-400 border-red-500/30">
                     {user.admin_role === "super_admin" ? "Super" : "Admin"}
                   </Badge>
                 )}

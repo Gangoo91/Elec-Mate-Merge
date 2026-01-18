@@ -2,9 +2,11 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Zap, AlertCircle } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Zap, AlertCircle, Shield, Plug } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SectionHeader from '@/components/ui/section-header';
+import { cn } from '@/lib/utils';
 
 interface EICSupplyCharacteristicsSectionProps {
   formData: any;
@@ -38,7 +40,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
 
   // Calculate completion percentage
   const getCompletionPercentage = () => {
-    const requiredFields = ['supplyVoltage', 'phases', 'earthingArrangement'];
+    const requiredFields = ['supplyVoltage', 'phases', 'earthingArrangement', 'liveCondutorType', 'prospectiveFaultCurrent', 'externalZe'];
     const filled = requiredFields.filter(f => formData[f]).length;
     return Math.round((filled / requiredFields.length) * 100);
   };
@@ -152,6 +154,163 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                       TN-C-S systems typically have PME
                     </p>
                   )}
+                </div>
+              </div>
+            </div>
+
+            {/* Number and Type of Live Conductors (IET Form) */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-blue-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+                Number and Type of Live Conductors
+              </h4>
+              <div className="space-y-2">
+                <Label className="text-sm">Live Conductor Configuration *</Label>
+                <Select
+                  value={formData.liveCondutorType || ''}
+                  onValueChange={(value) => onUpdate('liveCondutorType', value)}
+                >
+                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-blue-500 data-[state=open]:ring-2">
+                    <SelectValue placeholder="Select configuration" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                    <SelectItem value="ac-1ph-2w">AC: 1-phase, 2-wire</SelectItem>
+                    <SelectItem value="ac-2ph-3w">AC: 2-phase, 3-wire</SelectItem>
+                    <SelectItem value="ac-3ph-3w">AC: 3-phase, 3-wire</SelectItem>
+                    <SelectItem value="ac-3ph-4w">AC: 3-phase, 4-wire</SelectItem>
+                    <SelectItem value="dc-2w">DC: 2-wire</SelectItem>
+                    <SelectItem value="dc-3w">DC: 3-wire</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Nature of Supply Parameters (IET Form) */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-purple-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-purple-400"></div>
+                Nature of Supply Parameters
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="prospectiveFaultCurrent" className="text-sm">
+                    Prospective Fault Current I<sub>pf</sub> (kA) *
+                  </Label>
+                  <Input
+                    id="prospectiveFaultCurrent"
+                    type="number"
+                    step="0.1"
+                    value={formData.prospectiveFaultCurrent || ''}
+                    onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
+                    placeholder="e.g., 16"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                  />
+                  <p className="text-xs text-white/50">By enquiry or measurement</p>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="externalZe" className="text-sm">
+                    External Earth Fault Loop Impedance Z<sub>e</sub> (Ω) *
+                  </Label>
+                  <Input
+                    id="externalZe"
+                    type="number"
+                    step="0.01"
+                    value={formData.externalZe || ''}
+                    onChange={(e) => onUpdate('externalZe', e.target.value)}
+                    placeholder="e.g., 0.35"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                  />
+                  <p className="text-xs text-white/50">By enquiry or measurement</p>
+                </div>
+              </div>
+
+              {/* Supply Polarity Confirmation */}
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-green-500/10 border border-green-500/30">
+                <Checkbox
+                  id="supplyPolarityConfirmed"
+                  checked={formData.supplyPolarityConfirmed === true}
+                  onCheckedChange={(checked) => onUpdate('supplyPolarityConfirmed', checked)}
+                  className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 mt-0.5"
+                />
+                <Label htmlFor="supplyPolarityConfirmed" className="text-sm font-medium cursor-pointer leading-relaxed">
+                  Confirmation of supply polarity
+                </Label>
+              </div>
+
+              {/* Other Sources of Supply */}
+              <div className="space-y-3">
+                <div className="flex items-start gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
+                  <Checkbox
+                    id="otherSourcesOfSupply"
+                    checked={formData.otherSourcesOfSupply === true}
+                    onCheckedChange={(checked) => onUpdate('otherSourcesOfSupply', checked)}
+                    className="border-amber-500/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 mt-0.5"
+                  />
+                  <Label htmlFor="otherSourcesOfSupply" className="text-sm font-medium cursor-pointer leading-relaxed">
+                    Other sources of supply present (as detailed on attached schedule)
+                  </Label>
+                </div>
+                {formData.otherSourcesOfSupply && (
+                  <div className="space-y-2 ml-6">
+                    <Label htmlFor="otherSourcesDetails" className="text-sm">Details of Other Sources</Label>
+                    <Input
+                      id="otherSourcesDetails"
+                      value={formData.otherSourcesDetails || ''}
+                      onChange={(e) => onUpdate('otherSourcesDetails', e.target.value)}
+                      placeholder="e.g., Solar PV system, Generator backup"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Supply Protective Device (IET Form) */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-orange-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                <Shield className="h-4 w-4" />
+                Supply Protective Device
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="supplyDeviceBsEn" className="text-sm">BS (EN)</Label>
+                  <Input
+                    id="supplyDeviceBsEn"
+                    value={formData.supplyDeviceBsEn || ''}
+                    onChange={(e) => onUpdate('supplyDeviceBsEn', e.target.value)}
+                    placeholder="e.g., BS EN 60898"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="supplyDeviceType" className="text-sm">Type</Label>
+                  <Select
+                    value={formData.supplyDeviceType || ''}
+                    onValueChange={(value) => onUpdate('supplyDeviceType', value)}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-orange-500 focus:ring-orange-500 data-[state=open]:border-orange-500 data-[state=open]:ring-2">
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                      <SelectItem value="B">Type B</SelectItem>
+                      <SelectItem value="C">Type C</SelectItem>
+                      <SelectItem value="D">Type D</SelectItem>
+                      <SelectItem value="gG">gG Fuse</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="supplyDeviceRating" className="text-sm">Rated Current (A)</Label>
+                  <Input
+                    id="supplyDeviceRating"
+                    type="number"
+                    value={formData.supplyDeviceRating || ''}
+                    onChange={(e) => onUpdate('supplyDeviceRating', e.target.value)}
+                    placeholder="e.g., 100"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500"
+                  />
                 </div>
               </div>
             </div>

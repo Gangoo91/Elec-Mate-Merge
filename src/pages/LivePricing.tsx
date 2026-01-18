@@ -131,7 +131,7 @@ const LivePricing = () => {
   };
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white">
+    <div className="bg-elec-dark text-white">
       <Helmet>
         <title>Live Pricing - Elec-Mate</title>
         <meta name="description" content="Real-time pricing updates for materials and services across all electrical job types" />

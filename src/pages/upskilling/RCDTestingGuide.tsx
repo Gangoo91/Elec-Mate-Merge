@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const RCDTestingGuide = () => {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-[#1a1a1a]/95 backdrop-blur-sm px-4 sm:px-6 lg:px-8 pt-8 pb-4">
         <Link to="module-8/section-3">

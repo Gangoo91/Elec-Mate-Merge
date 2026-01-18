@@ -119,7 +119,7 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
                             <span className="text-sm font-bold text-elec-yellow leading-none">
                               {deal.salePrice}
                             </span>
-                            <span className="text-[9px] text-muted-foreground line-through">
+                            <span className="text-[10px] text-muted-foreground line-through">
                               {deal.price}
                             </span>
                           </>
@@ -128,7 +128,7 @@ const MaterialTopDiscounts = ({ deals }: MaterialTopDiscountsProps) => {
                             {deal.price}
                           </span>
                         )}
-                        <span className="text-[9px] text-muted-foreground">inc. VAT</span>
+                        <span className="text-[10px] text-muted-foreground">inc. VAT</span>
                       </div>
                     </div>
 

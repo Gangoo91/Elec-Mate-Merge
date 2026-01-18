@@ -374,7 +374,7 @@ const CollegePortfolioHub: React.FC = () => {
                   {filteredPortfolios.map(portfolio => (
                     <div
                       key={portfolio.id}
-                      className="p-4 flex items-center justify-between hover:bg-white/5 cursor-pointer transition-colors"
+                      className="p-4 flex items-center justify-between hover:bg-white/5 cursor-pointer active:bg-white/10 transition-all touch-manipulation"
                       onClick={() => handleViewDetails(portfolio.studentId, portfolio.qualificationId)}
                     >
                       <div className="flex items-center gap-4">

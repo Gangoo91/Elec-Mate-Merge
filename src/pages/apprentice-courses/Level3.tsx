@@ -65,7 +65,7 @@ const modules = [
 
 const Level3 = () => {
   return (
-    <div className="min-h-screen pb-24 bg-elec-dark">
+    <div className="pb-24 bg-elec-dark">
       {/* Premium Hero Section */}
       <div className="relative overflow-hidden">
         {/* Dark gradient background matching sidebar */}

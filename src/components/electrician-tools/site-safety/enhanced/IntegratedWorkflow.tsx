@@ -194,7 +194,7 @@ const IntegratedWorkflow: React.FC = () => {
             {workflowSteps.map((step, index) => (
               <div
                 key={step.id}
-                className={`flex flex-col items-center cursor-pointer p-2 rounded transition-colors ${
+                className={`flex flex-col items-center cursor-pointer p-2 rounded active:scale-[0.98] transition-all touch-manipulation ${
                   index === currentStep 
                     ? 'bg-primary/10 text-primary' 
                     : step.completed 

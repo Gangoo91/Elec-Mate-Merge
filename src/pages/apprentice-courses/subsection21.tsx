@@ -181,7 +181,7 @@ const Section5_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Top header bar */}
       <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
@@ -448,7 +448,7 @@ const Section5_4 = () => {
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <details key={index} className="group border border-border/20 rounded-lg">
-                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 transition-colors">
+                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation">
                   <span className="font-medium text-foreground">{faq.question}</span>
                   <HelpCircle className="w-5 h-5 text-white/80 group-open:rotate-180 transition-transform" />
                 </summary>

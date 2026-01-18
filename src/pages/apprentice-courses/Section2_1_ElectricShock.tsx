@@ -189,7 +189,7 @@ const Section2_1_ElectricShock = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Top header bar */}
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">

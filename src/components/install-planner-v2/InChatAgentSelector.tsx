@@ -58,7 +58,7 @@ export const InChatAgentSelector = ({
             return (
               <div key={agentId} className="flex items-center flex-shrink-0">
                 <div className={cn(
-                  "flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] transition-all",
+                  "flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] sm:text-xs transition-all",
                   isComplete ? "bg-green-500/10 text-green-400" : "bg-white/5 text-foreground/30"
                 )}>
                   <Icon className="h-2.5 w-2.5 sm:h-3 sm:w-3" />

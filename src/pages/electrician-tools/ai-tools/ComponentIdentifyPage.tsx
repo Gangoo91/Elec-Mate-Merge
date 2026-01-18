@@ -201,9 +201,9 @@ const ComponentIdentifyPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-safe">
+    <div className="bg-background ">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30 pt-safe">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30 ">
         <div className="px-4 py-2">
           <button
             onClick={() => navigate('/electrician-tools/ai-tooling')}

@@ -1,8 +1,9 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 
 interface Breadcrumb {
   label: string;
@@ -14,19 +15,35 @@ interface AM2SectionLayoutProps {
   breadcrumbs: (string | Breadcrumb)[];
   children: React.ReactNode;
   className?: string;
+  /** Optional title for tracking - defaults to last breadcrumb */
+  trackingTitle?: string;
 }
 
 /**
  * AM2SectionLayout - Master wrapper component for AM2 content pages
  * Features sticky header with back navigation, breadcrumbs, safe area padding,
- * and stagger animation container for children.
+ * stagger animation container for children, and automatic study location tracking.
  */
 export const AM2SectionLayout = memo(function AM2SectionLayout({
   backHref,
   breadcrumbs,
   children,
   className,
+  trackingTitle,
 }: AM2SectionLayoutProps) {
+  const location = useLocation();
+  const { updateLastLocation } = useLastStudyLocation();
+
+  // Track study location when page loads
+  useEffect(() => {
+    // Get title from trackingTitle prop or last breadcrumb
+    const lastBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
+    const title = trackingTitle || (typeof lastBreadcrumb === 'string' ? lastBreadcrumb : lastBreadcrumb?.label) || 'Learning';
+
+    // Update the last study location
+    updateLastLocation(location.pathname, title);
+  }, [location.pathname, breadcrumbs, trackingTitle, updateLastLocation]);
+
   return (
     <div className={cn('min-h-screen overflow-x-hidden bg-[#1a1a1a]', className)}>
       {/* Sticky Header */}

@@ -170,7 +170,7 @@ const SettingsPage = () => {
   // Mobile View
   if (isMobile) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 momentum-scroll-y">
+      <div className="bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 momentum-scroll-y">
         <AnimatePresence mode="wait" initial={false}>
           {selectedTab === null ? (
             // Mobile Grid View (List)
@@ -307,7 +307,7 @@ const SettingsPage = () => {
 
   // Desktop View
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 animate-fade-in">
+    <div className="bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 animate-fade-in">
       {/* Desktop Header */}
       <div className="border-b border-white/[0.06] bg-elec-dark/50 backdrop-blur-sm sticky top-0 z-20">
         <div className="px-4 md:px-6 lg:px-8 py-4 max-w-[1600px] mx-auto">
@@ -431,7 +431,7 @@ const SettingsPage = () => {
             <Button
               onClick={() => navigate("/subscriptions")}
               size="sm"
-              className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold h-7 text-xs"
+              className="bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/80 text-elec-dark font-semibold h-11 text-sm touch-manipulation"
             >
               Upgrade
             </Button>

@@ -209,7 +209,7 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
           >
             <Card className={`${colors.border} ${colors.bg}`}>
               <CollapsibleTrigger className="w-full text-left">
-                <CardHeader className="pb-3 cursor-pointer hover:bg-white/5 transition-colors rounded-t-lg">
+                <CardHeader className="pb-3 cursor-pointer hover:bg-white/5 active:bg-white/10 transition-all touch-manipulation rounded-t-lg">
                   <CardTitle className="flex items-center gap-2 text-base text-foreground justify-between">
                     <div className="flex items-center gap-2">
                       <Icon className={`h-5 w-5 ${colors.icon}`} />

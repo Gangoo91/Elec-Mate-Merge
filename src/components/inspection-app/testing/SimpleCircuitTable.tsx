@@ -422,7 +422,7 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
                         {isThreePhase && circuit.phases ? (
                           <div className="flex flex-col">
                             <span className="text-xs font-semibold">Way {circuit.position}</span>
-                            <span className="text-[9px] text-muted-foreground">
+                            <span className="text-[10px] text-muted-foreground">
                               ({circuit.phases.L1?.position}, {circuit.phases.L2?.position}, {circuit.phases.L3?.position})
                             </span>
                           </div>

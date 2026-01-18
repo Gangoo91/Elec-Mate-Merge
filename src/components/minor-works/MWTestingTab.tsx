@@ -72,24 +72,38 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              {/* Continuity */}
+              {/* Continuity - IET allows R1+R2 OR R2 */}
               <div className="space-y-4">
                 <h4 className="text-sm font-semibold text-orange-400 flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
-                  Continuity
+                  Continuity (R1+R2 or R2)
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label className="text-sm">R1+R2 (Continuity) * </Label>
+                    <Label className="text-sm">(R1+R2) Continuity (Ω)</Label>
                     <div className="relative">
                       <Input
                         value={formData.continuityR1R2 || ''}
                         onChange={(e) => onUpdate('continuityR1R2', e.target.value)}
                         placeholder="e.g., 0.45"
-                        className={cn("h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500 pr-10", !formData.continuityR1R2 && "border-red-500/50")}
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500 pr-10"
                       />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">m</span>
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">Ω</span>
                     </div>
+                    <p className="text-xs text-muted-foreground">Combined line and cpc</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm"><span className="font-semibold">or</span> R2 Continuity (Ω)</Label>
+                    <div className="relative">
+                      <Input
+                        value={formData.r2Continuity || ''}
+                        onChange={(e) => onUpdate('r2Continuity', e.target.value)}
+                        placeholder="e.g., 0.25"
+                        className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500 pr-10"
+                      />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">Ω</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">CPC only (alternative)</p>
                   </div>
                   <div className="space-y-2">
                     <Label className="text-sm">Polarity *</Label>
@@ -127,31 +141,40 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                     </Select>
                   </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   <div className="space-y-2">
-                    <Label className="text-sm">Live-Neutral (M)</Label>
+                    <Label className="text-sm">Live-Live (MΩ)</Label>
+                    <Input
+                      value={formData.insulationLiveLive || ''}
+                      onChange={(e) => onUpdate('insulationLiveLive', e.target.value)}
+                      placeholder="≥1MΩ"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm">Live-Neutral (MΩ)</Label>
                     <Input
                       value={formData.insulationLiveNeutral || ''}
                       onChange={(e) => onUpdate('insulationLiveNeutral', e.target.value)}
-                      placeholder="&gt;1M"
+                      placeholder="≥1MΩ"
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-sm">Live-Earth (M)</Label>
+                    <Label className="text-sm">Live-Earth (MΩ)</Label>
                     <Input
                       value={formData.insulationLiveEarth || ''}
                       onChange={(e) => onUpdate('insulationLiveEarth', e.target.value)}
-                      placeholder="&gt;1M"
+                      placeholder="≥1MΩ"
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-sm">Neutral-Earth (M)</Label>
+                    <Label className="text-sm">Neutral-Earth (MΩ)</Label>
                     <Input
                       value={formData.insulationNeutralEarth || ''}
                       onChange={(e) => onUpdate('insulationNeutralEarth', e.target.value)}
-                      placeholder="&gt;1M"
+                      placeholder="≥1MΩ"
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500"
                     />
                   </div>

@@ -115,7 +115,7 @@ const QuickReferenceTools = () => {
           return (
             <Card 
               key={index} 
-              className="bg-card border-border hover:border-elec-yellow/50 transition-all duration-300 cursor-pointer group hover:scale-105"
+              className="bg-card border-border hover:border-elec-yellow/50 transition-all duration-300 cursor-pointer group hover:scale-[1.02] active:scale-[0.98] touch-manipulation rounded-xl"
               onClick={() => handleToolClick(tool.route)}
             >
               <CardHeader className="pb-4">

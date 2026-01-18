@@ -164,6 +164,26 @@ const handler = async (req: Request): Promise<Response> => {
         is_read: false
       });
 
+    // Send push notification to electrician
+    try {
+      await supabase.functions.invoke('send-push-notification', {
+        body: {
+          userId: quote.user_id,
+          title: notificationTitle,
+          body: notificationMessage,
+          type: 'quote',
+          data: {
+            quoteId: quote.id,
+            quoteNumber: quote.quote_number,
+            action: action,
+            clientName: clientName
+          }
+        }
+      });
+    } catch (pushError) {
+      console.error('Push notification error (non-critical):', pushError);
+    }
+
     console.log(`✅ Quote ${quote.quote_number} ${action}ed by ${clientName}`);
 
     // Send email notification to electrician

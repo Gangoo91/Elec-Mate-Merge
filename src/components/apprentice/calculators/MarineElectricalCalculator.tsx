@@ -189,7 +189,7 @@ const MarineElectricalCalculator = () => {
               {quickPresets.map((preset, index) => (
                 <Card 
                   key={index} 
-                  className="cursor-pointer hover:border-elec-yellow/40 transition-colors p-3 bg-elec-card"
+                  className="cursor-pointer hover:border-elec-yellow/40 active:scale-[0.98] transition-all touch-manipulation p-3 bg-elec-card"
                   onClick={() => applyPreset(preset)}
                 >
                   <h4 className="font-medium text-sm text-elec-yellow">{preset.name}</h4>

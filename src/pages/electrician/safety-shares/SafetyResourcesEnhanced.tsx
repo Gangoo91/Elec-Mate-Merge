@@ -6,13 +6,13 @@ import { SmartBackButton } from "@/components/ui/smart-back-button";
 
 const SafetyResourcesEnhanced = () => {
   return (
-    <div className="min-h-screen bg-elec-dark text-white pb-safe">
+    <div className="bg-elec-dark text-white ">
       <Helmet>
         <title>Enhanced Safety Resources - Elec-Mate</title>
         <meta name="description" content="Enhanced electrical safety resources with user interactions and download tracking" />
       </Helmet>
 
-      <div className="space-y-6 animate-fade-in px-4 py-4 pt-safe max-w-7xl mx-auto">
+      <div className="space-y-6 animate-fade-in px-4 py-4  max-w-7xl mx-auto">
         <div className="flex items-center gap-4">
           <SmartBackButton />
           <div className="flex items-center gap-3">

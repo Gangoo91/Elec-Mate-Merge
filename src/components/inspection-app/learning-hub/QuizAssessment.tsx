@@ -39,43 +39,42 @@ const QuizAssessment = () => {
   };
 
   return (
-    <Card className="bg-card border-border lg:col-span-2">
-      <CardHeader>
-        <CardTitle className="text-elec-yellow flex items-center gap-2">
-          <GraduationCap className="h-5 w-5" />
+    <Card className="bg-card border-border lg:col-span-2 rounded-xl sm:rounded-2xl">
+      <CardHeader className="p-4 sm:p-6">
+        <CardTitle className="text-elec-yellow flex items-center gap-2 text-base sm:text-lg md:text-xl">
+          <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6" />
           Quiz & Assessment
         </CardTitle>
-        <CardDescription className="text-white">
+        <CardDescription className="text-white text-xs sm:text-sm">
           Test your knowledge and track your progress
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid gap-4">
+      <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6 pt-0">
+        <div className="grid gap-3 sm:gap-4">
           {assessments.map((assessment, index) => (
-            <div key={index} className="p-4 bg-muted rounded-lg">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="font-medium text-foreground">{assessment.title}</h4>
+            <div key={index} className="p-3 sm:p-4 bg-muted rounded-lg sm:rounded-xl">
+              <div className="flex items-center justify-between mb-2 sm:mb-3">
+                <h4 className="font-medium text-foreground text-sm sm:text-base">{assessment.title}</h4>
                 {assessment.score && (
                   <div className="flex items-center gap-1">
                     <Star className="h-4 w-4 text-elec-yellow" />
-                    <span className="text-sm font-medium text-elec-yellow">{assessment.score}%</span>
+                    <span className="text-xs sm:text-sm font-medium text-elec-yellow">{assessment.score}%</span>
                   </div>
                 )}
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm text-white/80">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
+                <div className="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm text-white/80 flex-wrap">
                   <span>{assessment.questions} questions</span>
                   <div className="flex items-center gap-1">
                     <Clock className="h-3 w-3" />
                     <span>{assessment.duration}</span>
                   </div>
-                  <span className={`px-2 py-1 rounded text-xs ${getDifficultyColor(assessment.difficulty)}`}>
+                  <span className={`px-2 py-1 rounded text-[10px] sm:text-xs ${getDifficultyColor(assessment.difficulty)}`}>
                     {assessment.difficulty}
                   </span>
                 </div>
-                <Button 
-                  size="sm" 
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                <Button
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] text-xs sm:text-sm touch-manipulation active:scale-[0.98] w-full sm:w-auto"
                 >
                   {assessment.score ? 'Retake' : 'Start'}
                 </Button>
@@ -83,12 +82,12 @@ const QuizAssessment = () => {
             </div>
           ))}
         </div>
-        <div className="flex gap-3 pt-4 border-t border-border">
-          <Button className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-border">
+          <Button className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] text-sm touch-manipulation active:scale-[0.98]">
             <Trophy className="h-4 w-4 mr-2" />
             View Progress
           </Button>
-          <Button variant="outline" className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black">
+          <Button variant="outline" className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black min-h-[44px] text-sm touch-manipulation active:scale-[0.98]">
             Create Custom Quiz
           </Button>
         </div>

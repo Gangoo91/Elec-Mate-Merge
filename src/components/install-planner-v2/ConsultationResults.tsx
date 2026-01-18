@@ -192,7 +192,7 @@ export const ConsultationResults = () => {
                 <Card key={result.id} className={`bg-elec-card border ${agentInfo?.color || 'border-elec-border'}`}>
                   <Collapsible open={isExpanded} onOpenChange={() => toggleAgent(result.agent_type)}>
                     <CollapsibleTrigger asChild>
-                      <CardHeader className="cursor-pointer hover:bg-white/5 transition-colors">
+                      <CardHeader className="cursor-pointer hover:bg-white/5 active:bg-white/10 transition-all touch-manipulation">
                         <div className="flex items-center justify-between">
                           <CardTitle className="flex items-center gap-3">
                             <span className="text-2xl">{agentInfo?.emoji}</span>

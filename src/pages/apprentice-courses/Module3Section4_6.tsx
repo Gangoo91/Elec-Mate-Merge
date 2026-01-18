@@ -162,7 +162,7 @@ export default function Module3Section4_6() {
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
+    <div className="bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">

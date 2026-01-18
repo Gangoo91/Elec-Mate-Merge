@@ -29,7 +29,7 @@ export const CitationBadge = ({ citation }: CitationBadgeProps) => {
       <PopoverTrigger asChild>
         <Badge 
           variant="outline" 
-          className={`text-xs cursor-pointer transition-colors ${
+          className={`text-xs cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
             isRegulation 
               ? 'bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20' 
               : 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20'

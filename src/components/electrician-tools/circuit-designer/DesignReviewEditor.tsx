@@ -1971,7 +1971,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   return (
                     <tr 
                       key={idx} 
-                      className={`border-b border-border/50 hover:bg-muted/50 cursor-pointer transition-colors ${selectedCircuit === idx ? 'bg-primary/10' : ''}`}
+                      className={`border-b border-border/50 hover:bg-muted/50 active:bg-muted/70 cursor-pointer transition-all touch-manipulation ${selectedCircuit === idx ? 'bg-primary/10' : ''}`}
                       onClick={() => setSelectedCircuit(idx)}
                     >
                       <td className="py-3 px-2 text-left">

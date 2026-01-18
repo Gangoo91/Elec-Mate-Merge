@@ -13,13 +13,22 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   onUpdate
 }) => {
   const getInspectionItems = (): EICInspectionItem[] => {
+    // Check if we have valid inspection items in formData
     if (formData.inspectionItems && Array.isArray(formData.inspectionItems) && formData.inspectionItems.length > 0) {
-      return formData.inspectionItems;
+      // Validate that items have descriptions (not corrupted data)
+      const hasValidDescriptions = formData.inspectionItems.some((item: any) => item.description && item.description.length > 0);
+      if (hasValidDescriptions) {
+        return formData.inspectionItems;
+      }
     }
+    // Always return the default items if formData is invalid
     return bs7671EICInspectionItems;
   };
 
   const inspectionItems = getInspectionItems();
+
+  // Debug log to verify items are loaded
+  console.log('[EIC Inspections] Loaded items:', inspectionItems.length, inspectionItems[0]?.description?.substring(0, 30));
 
   const updateInspectionItem = (id: string, field: keyof EICInspectionItem, value: any) => {
     const updatedItems = inspectionItems.map(item =>
@@ -29,21 +38,21 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   };
 
   useEffect(() => {
-    if (!formData.inspectionItems || !Array.isArray(formData.inspectionItems) || formData.inspectionItems.length === 0) {
-      console.log('[EIC Inspections] Initializing with default items:', bs7671EICInspectionItems.length);
+    // Initialize or reset if data is missing or corrupted
+    const needsInit = !formData.inspectionItems ||
+      !Array.isArray(formData.inspectionItems) ||
+      formData.inspectionItems.length === 0 ||
+      !formData.inspectionItems.some((item: any) => item.description && item.description.length > 0);
+
+    if (needsInit) {
+      console.log('[EIC Inspections] Initializing with default items');
       onUpdate('inspectionItems', [...bs7671EICInspectionItems]);
-    } else {
-      console.log('[EIC Inspections] Items already loaded:', formData.inspectionItems.length);
     }
   }, []);
 
   return (
-    <div className="space-y-4">
-      {process.env.NODE_ENV === 'development' && (
-        <div className="text-xs text-yellow-500 p-2 bg-card rounded">
-          Debug: {inspectionItems.length} inspection items loaded
-        </div>
-      )}
+    <div className="space-y-2">
+      {/* Stats and Cards are now combined in EICInspectionChecklistCard */}
       <EICInspectionStatsSummary inspectionItems={inspectionItems} />
       <EICInspectionChecklistCard
         inspectionItems={inspectionItems}

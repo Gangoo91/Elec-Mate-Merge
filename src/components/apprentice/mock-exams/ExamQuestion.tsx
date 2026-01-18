@@ -36,17 +36,18 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({
           
           <div className="space-y-3">
             {question.options.map((option, index) => (
-              <div
+              <button
                 key={index}
-                className={`p-3 rounded-md border cursor-pointer transition-colors ${
+                type="button"
+                className={`w-full text-left p-4 min-h-[52px] rounded-lg border cursor-pointer transition-all touch-manipulation active:scale-[0.98] ${
                   selectedAnswer === index
                     ? 'bg-elec-yellow/20 border-elec-yellow'
-                    : 'border-elec-gray-border hover:border-elec-yellow/50 bg-white/10'
+                    : 'border-elec-gray-border hover:border-elec-yellow/50 active:border-elec-yellow/70 bg-white/10'
                 }`}
                 onClick={() => onSelectAnswer(question.id, index)}
               >
                 {option}
-              </div>
+              </button>
             ))}
           </div>
         </div>

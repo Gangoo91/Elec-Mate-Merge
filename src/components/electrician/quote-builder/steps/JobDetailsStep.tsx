@@ -96,7 +96,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
 
       {/* Optional fields in collapsible */}
       <details className="group">
-        <summary className="flex items-center gap-2 cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors py-2">
+        <summary className="flex items-center gap-2 cursor-pointer text-sm text-muted-foreground hover:text-foreground active:text-foreground transition-all touch-manipulation py-2">
           <ChevronRight className="h-4 w-4 group-open:rotate-90 transition-transform" />
           Additional Details (optional)
         </summary>

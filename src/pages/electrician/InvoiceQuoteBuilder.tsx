@@ -131,7 +131,7 @@ export default function InvoiceQuoteBuilder() {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-safe pb-safe">
+    <div className="bg-background  ">
       <Helmet>
         <title>Adjust Invoice Costs - Electrical Hub</title>
         <meta name="description" content="Adjust costs and items before generating your invoice" />

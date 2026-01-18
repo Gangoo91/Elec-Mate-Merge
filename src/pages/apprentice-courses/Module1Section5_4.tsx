@@ -198,7 +198,7 @@ const Module1Section5_4 = () => {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
@@ -518,7 +518,7 @@ const Module1Section5_4 = () => {
             <div className="space-y-3">
               {faqs.map((faq, index) => (
                 <details key={index} className="group border border-white/10 rounded-lg">
-                  <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-white/5 transition-colors min-h-[44px] touch-manipulation">
+                  <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-white/5 active:bg-white/10 transition-all min-h-[44px] touch-manipulation">
                     <span className="font-medium text-white pr-4">{faq.question}</span>
                     <AlertTriangle className="w-5 h-5 text-white/70 group-open:rotate-180 transition-transform flex-shrink-0" />
                   </summary>

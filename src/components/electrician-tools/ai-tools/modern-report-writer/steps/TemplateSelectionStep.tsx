@@ -185,7 +185,7 @@ const TemplateSelectionStep: React.FC<TemplateStepProps> = ({
                   <DropdownMenuItem
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className={`cursor-pointer transition-colors ${
+                    className={`cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
                       isSelected 
                         ? 'bg-elec-yellow/10 text-elec-yellow focus:bg-elec-yellow/20 focus:text-elec-yellow' 
                         : 'text-foreground hover:bg-elec-yellow/5 hover:text-foreground focus:bg-elec-yellow/5 focus:text-foreground'

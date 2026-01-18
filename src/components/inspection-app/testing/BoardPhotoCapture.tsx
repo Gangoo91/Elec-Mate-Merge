@@ -562,7 +562,7 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
             <Camera className="h-4 w-4 md:h-5 md:w-5 text-elec-blue" />
             Scan Electrical Board
           </h3>
-          <Button variant="ghost" size="icon" onClick={onClose} className="h-8 w-8 md:h-9 md:w-9">
+          <Button variant="ghost" size="icon" onClick={onClose} className="min-h-[44px] min-w-[44px] md:h-9 md:w-9 active:scale-95 transition-all touch-manipulation">
             <X className="h-4 w-4 md:h-5 md:w-5" />
           </Button>
         </div>

@@ -84,21 +84,21 @@ const BulkInfillDialog: React.FC<BulkInfillDialogProps> = ({
           <div className="space-y-2">
             <Label className="text-sm font-medium">Select Value</Label>
             <RadioGroup value={selectedValue} onValueChange={setSelectedValue}>
-              <div className="flex items-center space-x-2 rounded border border-border p-2 hover:bg-accent/50 cursor-pointer transition-colors">
+              <div className="flex items-center space-x-2 rounded border border-border p-2 hover:bg-accent/50 cursor-pointer active:bg-accent/70 transition-all touch-manipulation">
                 <RadioGroupItem value="N/A" id="value-na" />
                 <Label htmlFor="value-na" className="flex-1 cursor-pointer text-sm">
                   <span className="font-medium">N/A</span>
                   <span className="text-muted-foreground ml-2">· Not Applicable</span>
                 </Label>
               </div>
-              <div className="flex items-center space-x-2 rounded border border-border p-2 hover:bg-accent/50 cursor-pointer transition-colors">
+              <div className="flex items-center space-x-2 rounded border border-border p-2 hover:bg-accent/50 cursor-pointer active:bg-accent/70 transition-all touch-manipulation">
                 <RadioGroupItem value="LIM" id="value-lim" />
                 <Label htmlFor="value-lim" className="flex-1 cursor-pointer text-sm">
                   <span className="font-medium">LIM</span>
                   <span className="text-muted-foreground ml-2">· Limitation</span>
                 </Label>
               </div>
-              <div className="flex items-center space-x-2 rounded border border-border p-2 hover:bg-accent/50 cursor-pointer transition-colors">
+              <div className="flex items-center space-x-2 rounded border border-border p-2 hover:bg-accent/50 cursor-pointer active:bg-accent/70 transition-all touch-manipulation">
                 <RadioGroupItem value="--" id="value-dash" />
                 <Label htmlFor="value-dash" className="flex-1 cursor-pointer text-sm">
                   <span className="font-medium">--</span>
@@ -112,14 +112,14 @@ const BulkInfillDialog: React.FC<BulkInfillDialogProps> = ({
           <div className="space-y-2">
             <Label className="text-sm font-medium">Fill Mode</Label>
             <RadioGroup value={selectedMode} onValueChange={(v) => setSelectedMode(v as 'all' | 'empty')}>
-              <div className="flex items-center space-x-2 rounded border border-border p-2 hover:bg-accent/50 cursor-pointer transition-colors">
+              <div className="flex items-center space-x-2 rounded border border-border p-2 hover:bg-accent/50 cursor-pointer active:bg-accent/70 transition-all touch-manipulation">
                 <RadioGroupItem value="all" id="mode-all" />
                 <Label htmlFor="mode-all" className="flex-1 cursor-pointer text-sm">
                   <span className="font-medium">Fill All Fields</span>
                   <span className="text-muted-foreground ml-2">· Overwrite existing</span>
                 </Label>
               </div>
-              <div className="flex items-center space-x-2 rounded border border-border p-2 hover:bg-accent/50 cursor-pointer transition-colors">
+              <div className="flex items-center space-x-2 rounded border border-border p-2 hover:bg-accent/50 cursor-pointer active:bg-accent/70 transition-all touch-manipulation">
                 <RadioGroupItem value="empty" id="mode-empty" />
                 <Label htmlFor="mode-empty" className="flex-1 cursor-pointer text-sm">
                   <span className="font-medium">Fill Empty Only</span>

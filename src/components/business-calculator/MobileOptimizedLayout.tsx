@@ -58,7 +58,7 @@ const MobileOptimizedLayout: React.FC<MobileOptimizedLayoutProps> = ({
             onOpenChange={() => toggleSection(section.id)}
           >
             <CollapsibleTrigger asChild>
-              <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+              <CardHeader className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation">
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-3 text-lg">
                     <div className="text-elec-yellow">{section.icon}</div>

@@ -66,7 +66,7 @@ const CollapsibleRecentSessions = ({ onAddToPortfolio }: CollapsibleRecentSessio
     <Card className="bg-white/5 border-elec-yellow/20">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
-          <CardHeader className="pb-3 cursor-pointer hover:bg-elec-yellow/5 transition-colors">
+          <CardHeader className="pb-3 cursor-pointer hover:bg-elec-yellow/5 active:bg-elec-yellow/10 transition-all touch-manipulation">
             <CardTitle className="text-elec-light flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Clock className="h-5 w-5 text-elec-yellow" />

@@ -212,7 +212,7 @@ export function usePeerMessages(conversationId: string | undefined) {
 }
 
 /**
- * Hook to send a peer message with optimistic updates
+ * Hook to send a peer message with optimistic updates and push notification
  */
 export function useSendPeerMessage() {
   const queryClient = useQueryClient();
@@ -247,7 +247,7 @@ export function useSendPeerMessage() {
 
       return { queryKey, previousMessages };
     },
-    onSuccess: (data, variables, context) => {
+    onSuccess: async (data, variables, context) => {
       // Replace optimistic message with real one
       if (context?.queryKey) {
         queryClient.setQueryData<PeerMessage[]>(context.queryKey, (old) => {
@@ -264,6 +264,40 @@ export function useSendPeerMessage() {
       }
       // Update conversations list (for last_message_at ordering)
       queryClient.invalidateQueries({ queryKey: PEER_CONVERSATIONS_KEY });
+
+      // Send push notification to recipient
+      try {
+        const conversations = queryClient.getQueryData<PeerConversation[]>(PEER_CONVERSATIONS_KEY);
+        const conversation = conversations?.find(c => c.id === variables.conversationId);
+        if (conversation && user) {
+          // Determine recipient (the other person in the conversation)
+          const isSupporter = conversation.supporter?.user_id === user.id;
+          const recipientId = isSupporter
+            ? (conversation as any).seeker_id // User is supporter, recipient is seeker
+            : conversation.supporter?.user_id; // User is seeker, recipient is supporter
+
+          if (recipientId) {
+            // Get sender's display name
+            const profile = queryClient.getQueryData<PeerSupporter>(PEER_PROFILE_KEY);
+            const senderName = profile?.display_name || 'Mental Health Mate';
+
+            // Fire and forget - don't block on push notification
+            supabase.functions.invoke('send-push-notification', {
+              body: {
+                userId: recipientId,
+                title: senderName,
+                body: data.content.length > 100 ? data.content.slice(0, 97) + '...' : data.content,
+                type: 'peer',
+                data: { conversationId: variables.conversationId }
+              }
+            }).catch(() => {
+              // Silently fail - push notifications are best effort
+            });
+          }
+        }
+      } catch {
+        // Silently fail - push notifications are best effort
+      }
     },
     onError: (err, variables, context) => {
       // Rollback on error
@@ -282,13 +316,23 @@ export function useMarkPeerMessagesAsRead() {
 
   return useMutation({
     mutationFn: (conversationId: string) => peerMessageService.markAsRead(conversationId),
+    onMutate: async (conversationId) => {
+      // Cancel any outgoing refetches
+      await queryClient.cancelQueries({ queryKey: PEER_CONVERSATIONS_KEY });
+
+      // Optimistically update unread_count to 0 for instant badge clearing
+      queryClient.setQueryData<PeerConversation[]>(
+        PEER_CONVERSATIONS_KEY,
+        (old) => old?.map(c => c.id === conversationId ? { ...c, unread_count: 0 } : c)
+      );
+    },
     onSuccess: (_, conversationId) => {
       // Update local cache to mark messages as read
       queryClient.setQueryData<PeerMessage[]>(
         [...PEER_MESSAGES_KEY, conversationId],
         (old) => old?.map(m => ({ ...m, is_read: true }))
       );
-      // Invalidate conversations to refresh unread counts/badges
+      // Invalidate conversations to refresh unread counts/badges from server
       queryClient.invalidateQueries({ queryKey: PEER_CONVERSATIONS_KEY });
     },
   });

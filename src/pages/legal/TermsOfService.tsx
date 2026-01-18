@@ -7,7 +7,7 @@ const TermsOfService = () => {
   const lastUpdated = "5 January 2026";
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="bg-black text-white">
       {/* Header */}
       <header className="w-full px-4 pt-6 pb-4 sm:pt-8 border-b border-white/10">
         <div className="max-w-4xl mx-auto flex items-center justify-between">

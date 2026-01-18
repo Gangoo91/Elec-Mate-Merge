@@ -1,10 +1,16 @@
+/**
+ * EIC Observations Section
+ *
+ * Premium glass morphism section for recording observations and limitations.
+ * Native mobile app feel with touch-optimized controls.
+ */
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { AlertTriangle, Plus } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { AlertTriangle, Plus, FileWarning, Info } from 'lucide-react';
 import EICDefectObservationsList from './EICDefectObservationsList';
 import { EICObservation } from '@/hooks/useEICObservations';
+import { cn } from '@/lib/utils';
 
 interface EICObservationsSectionProps {
   observations: EICObservation[];
@@ -25,57 +31,73 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
   onSyncToInspectionItem,
   className
 }) => {
-  const criticalCount = observations.filter(obs => obs.defectCode === 'C1' || obs.defectCode === 'C2' || obs.defectCode === 'C3').length;
+  const unsatisfactoryCount = observations.filter(obs => obs.defectCode === 'unsatisfactory').length;
   const limitationsCount = observations.filter(obs => obs.defectCode === 'limitation').length;
 
   return (
-    <div className={className} id="eic-observations-section">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
-            Observations and Limitations
-            {criticalCount > 0 && (
-              <span className="ml-2 px-2 py-1 bg-red-500/10 text-red-400 border border-red-500/20 text-xs font-medium rounded-full">
-                {criticalCount} defects
-              </span>
-            )}
-            {limitationsCount > 0 && (
-              <span className="ml-2 px-2 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs font-medium rounded-full">
-                {limitationsCount} limitation{limitationsCount !== 1 ? 's' : ''}
-              </span>
-            )}
-          </CardTitle>
-          <p className="text-sm text-muted-foreground">
-            Record any unsatisfactory items, limitations, or observations identified during the inspection
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <p className="text-sm text-muted-foreground">
-                {observations.length === 0 
-                  ? "No observations recorded" 
-                  : `${observations.length} observation${observations.length !== 1 ? 's' : ''} recorded`
-                }
-              </p>
-              <Button onClick={onAddObservation} variant="outline" size="default" className="h-10 touch-manipulation">
-                <Plus className="h-4 w-4 mr-2" />
-                Add Observation
-              </Button>
-            </div>
-            
-            <EICDefectObservationsList
-              observations={observations}
-              reportId={reportId}
-              onAddObservation={onAddObservation}
-              onUpdateObservation={onUpdateObservation}
-              onRemoveObservation={onRemoveObservation}
-              onSyncToInspectionItem={onSyncToInspectionItem}
-            />
-          </div>
-        </CardContent>
-      </Card>
+    <div className={cn("space-y-3", className)} id="eic-observations-section">
+      {/* Section Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-orange-500" />
+          <h3 className="font-semibold text-foreground text-sm sm:text-base">
+            Observations & Limitations
+          </h3>
+        </div>
+
+        {/* Badges */}
+        <div className="flex items-center gap-2">
+          {unsatisfactoryCount > 0 && (
+            <span className="flex items-center gap-1 px-2 py-1 bg-red-500/15 text-red-400 text-xs font-medium rounded-full">
+              <AlertTriangle className="w-3 h-3" />
+              {unsatisfactoryCount}
+            </span>
+          )}
+          {limitationsCount > 0 && (
+            <span className="flex items-center gap-1 px-2 py-1 bg-purple-500/15 text-purple-400 text-xs font-medium rounded-full">
+              <Info className="w-3 h-3" />
+              {limitationsCount}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Add Observation Button - Always Visible */}
+      <motion.button
+        onClick={onAddObservation}
+        whileTap={{ scale: 0.98 }}
+        className={cn(
+          "w-full h-12 rounded-xl font-medium text-sm",
+          "bg-orange-500/10 text-orange-400 border border-orange-500/20",
+          "hover:bg-orange-500/15 transition-colors duration-200",
+          "flex items-center justify-center gap-2",
+          "touch-manipulation"
+        )}
+      >
+        <Plus className="w-4 h-4" />
+        Add Observation
+      </motion.button>
+
+      {/* Observations List */}
+      {observations.length > 0 && (
+        <EICDefectObservationsList
+          observations={observations}
+          reportId={reportId}
+          onAddObservation={onAddObservation}
+          onUpdateObservation={onUpdateObservation}
+          onRemoveObservation={onRemoveObservation}
+          onSyncToInspectionItem={onSyncToInspectionItem}
+        />
+      )}
+
+      {/* Empty State */}
+      {observations.length === 0 && (
+        <div className="text-center py-6 text-muted-foreground/60">
+          <FileWarning className="w-8 h-8 mx-auto mb-2 opacity-40" />
+          <p className="text-sm">No observations recorded</p>
+          <p className="text-xs mt-1">Tap above to add any defects or limitations</p>
+        </div>
+      )}
     </div>
   );
 };

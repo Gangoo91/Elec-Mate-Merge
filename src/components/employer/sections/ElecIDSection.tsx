@@ -995,7 +995,7 @@ export const ElecIDSection = () => {
                     {employeesWithoutElecId.map((emp) => (
                       <Card 
                         key={emp.id}
-                        className="cursor-pointer hover:border-elec-yellow/50 transition-colors"
+                        className="cursor-pointer hover:border-elec-yellow/50 active:scale-[0.98] transition-all touch-manipulation"
                         onClick={() => {
                           setSelectedEmployeeForElecId({ id: emp.id, name: emp.name });
                           setCreateElecIdSheetOpen(false);

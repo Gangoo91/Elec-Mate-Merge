@@ -27,6 +27,7 @@ const TIER_NAMES: Record<string, string> = {
   'employer_yearly': 'Employer (Annual)',
   'college': 'College',
   'college_yearly': 'College (Annual)',
+  'Founder': 'Founder',
 };
 
 /**
@@ -177,8 +178,8 @@ const PRICE_TO_TIER: Record<string, string> = {
   'price_1SlyAT2RKw5t5RAmUmTRGimH': 'employer', // £29.99/month (current)
   'price_1SlyB82RKw5t5RAmN447YJUW': 'employer_yearly', // £299.99/year (current)
 
-  // Founders Offer - £3.99/month (gets Electrician Pro access)
-  'price_1SPK8c2RKw5t5RAmRGJxXfjc': 'electrician', // £3.99/month founders offer
+  // Founders Offer - £3.99/month (Founder tier)
+  'price_1SPK8c2RKw5t5RAmRGJxXfjc': 'Founder', // £3.99/month founders offer
 
   // Legacy prices (for existing subscribers)
   'price_1RhtdT2RKw5t5RAmv6b2xE6p': 'apprentice', // £6.99/month (legacy)
@@ -325,6 +326,39 @@ serve(async (req) => {
           : null;
 
         await updateSubscriptionStatus(userId, isActive, customerId, tier, periodEnd);
+
+        // Handle founder invite completion (mark as claimed)
+        if (event.type === 'customer.subscription.created' && isActive && tier === 'Founder') {
+          try {
+            // Get the checkout session to find founder invite ID
+            const sessions = await stripe.checkout.sessions.list({
+              subscription: subscription.id,
+              limit: 1,
+            });
+
+            const session = sessions.data[0];
+            const inviteId = session?.metadata?.invite_id;
+
+            if (inviteId) {
+              const { error: inviteError } = await supabase
+                .from('founder_invites')
+                .update({
+                  status: 'claimed',
+                  claimed_at: new Date().toISOString(),
+                  user_id: userId,
+                })
+                .eq('id', inviteId);
+
+              if (inviteError) {
+                console.error('⚠️ Failed to mark founder invite as claimed:', inviteError);
+              } else {
+                console.log(`✅ Founder invite ${inviteId} marked as claimed`);
+              }
+            }
+          } catch (inviteErr) {
+            console.error('⚠️ Error processing founder invite (non-fatal):', inviteErr);
+          }
+        }
 
         // Send welcome email for NEW subscriptions only
         if (event.type === 'customer.subscription.created' && isActive && tier) {

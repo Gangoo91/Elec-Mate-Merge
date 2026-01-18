@@ -334,7 +334,7 @@ export function DataCentreGuidance({ results }: DataCentreGuidanceProps) {
       {/* Advanced Details */}
       <Collapsible open={detailsOpen} onOpenChange={setDetailsOpen}>
         <CollapsibleTrigger asChild>
-          <ResultCard className="cursor-pointer hover:border-elec-yellow/30 transition-colors">
+          <ResultCard className="cursor-pointer hover:border-elec-yellow/30 active:bg-muted/30 transition-all touch-manipulation">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Thermometer className="h-5 w-5 text-elec-yellow" />

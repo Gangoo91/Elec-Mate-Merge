@@ -28,18 +28,18 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground active:bg-accent/80",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-        accent: "bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold shadow-sm",
-        "accent-outline": "border-2 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/60 font-medium",
-        "accent-ghost": "text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow/90 font-medium",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 active:bg-secondary/70",
+        ghost: "hover:bg-accent hover:text-accent-foreground active:bg-accent/80",
+        link: "text-primary underline-offset-4 hover:underline active:opacity-70",
+        accent: "bg-elec-yellow text-black hover:bg-elec-yellow/90 active:bg-elec-yellow/80 font-semibold shadow-sm",
+        "accent-outline": "border-2 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/60 active:bg-elec-yellow/20 font-medium",
+        "accent-ghost": "text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow/90 active:bg-elec-yellow/20 font-medium",
         // iOS-Native variants
         "ios-primary": "bg-elec-yellow text-black font-semibold rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.12)] transition-all duration-ios-fast ease-ios-ease active:scale-[0.97] active:shadow-[0_1px_4px_rgba(0,0,0,0.1)]",
         "ios-secondary": "bg-white/10 text-white font-medium rounded-xl border border-white/20 transition-all duration-ios-fast ease-ios-ease active:scale-[0.97] active:bg-white/15",

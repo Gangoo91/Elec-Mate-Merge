@@ -4,17 +4,55 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 import {
   Sparkles,
-  Check,
   AlertTriangle,
   Loader2,
-  Zap,
   Calculator,
   FileText,
   MessageSquare,
   Crown,
+  Lock,
+  Shield,
+  CreditCard,
+  ArrowRight,
+  Zap,
+  ClipboardCheck,
 } from "lucide-react";
+
+const features = [
+  {
+    icon: Calculator,
+    title: "AI Calculators",
+    desc: "Cable sizing, voltage drop & more",
+    color: "text-green-400",
+  },
+  {
+    icon: MessageSquare,
+    title: "BS7671 AI",
+    desc: "Instant regulation answers",
+    color: "text-blue-400",
+  },
+  {
+    icon: FileText,
+    title: "Quote Builder",
+    desc: "Professional docs in seconds",
+    color: "text-purple-400",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "EICR Generator",
+    desc: "Certificates made easy",
+    color: "text-amber-400",
+  },
+  {
+    icon: Zap,
+    title: "Priority Support",
+    desc: "Direct founder access",
+    color: "text-yellow-400",
+  },
+];
 
 export default function FounderClaim() {
   const [searchParams] = useSearchParams();
@@ -81,10 +119,14 @@ export default function FounderClaim() {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-yellow-400 mx-auto mb-4" />
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+        >
+          <Loader2 className="h-10 w-10 animate-spin text-yellow-400 mx-auto mb-4" />
           <p className="text-muted-foreground">Validating your invite...</p>
-        </div>
+        </motion.div>
       </div>
     );
   }
@@ -92,149 +134,185 @@ export default function FounderClaim() {
   if (error || !valid) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <Card className="max-w-md w-full">
-          <CardContent className="pt-8 pb-8 text-center">
-            <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
-              <AlertTriangle className="h-8 w-8 text-red-400" />
-            </div>
-            <h1 className="text-xl font-bold mb-2">Invalid Invite</h1>
-            <p className="text-muted-foreground mb-6">{error}</p>
-            <Button
-              variant="outline"
-              className="h-11 touch-manipulation"
-              onClick={() => navigate("/")}
-            >
-              Go to Homepage
-            </Button>
-          </CardContent>
-        </Card>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <Card className="max-w-sm w-full border-red-500/30">
+            <CardContent className="pt-8 pb-8 text-center">
+              <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
+                <AlertTriangle className="h-8 w-8 text-red-400" />
+              </div>
+              <h1 className="text-xl font-bold mb-2">Invalid Invite</h1>
+              <p className="text-muted-foreground mb-6">{error}</p>
+              <Button
+                variant="outline"
+                className="h-11 touch-manipulation"
+                onClick={() => navigate("/")}
+              >
+                Go to Homepage
+              </Button>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-b from-yellow-500/10 to-transparent pt-12 pb-8 px-4">
-        <div className="max-w-md mx-auto text-center">
-          <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30 mb-4">
-            <Crown className="h-3 w-3 mr-1" />
-            Founder Access
+    <div className="min-h-screen flex flex-col bg-background">
+      {/* Hero Section with Animated Crown */}
+      <motion.div
+        className="relative pt-12 pb-6 px-4 bg-gradient-to-b from-yellow-500/20 via-yellow-500/10 to-transparent"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.div
+          className="w-20 h-20 mx-auto mb-4"
+          animate={{
+            scale: [1, 1.05, 1],
+            rotate: [0, 3, -3, 0],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 3,
+            ease: "easeInOut",
+          }}
+        >
+          <Crown className="w-full h-full text-yellow-400 drop-shadow-lg" />
+        </motion.div>
+
+        <motion.div
+          className="flex justify-center mb-3"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30 px-4 py-1.5">
+            <Sparkles className="h-3 w-3 mr-1.5" />
+            Founder Exclusive
           </Badge>
-          <h1 className="text-3xl font-bold mb-2">Welcome, Founder</h1>
-          <p className="text-muted-foreground">
-            Thank you for being an early supporter of Elec-Mate
-          </p>
+        </motion.div>
+
+        <motion.h1
+          className="text-2xl font-bold text-center text-white"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          Welcome, Founder
+        </motion.h1>
+      </motion.div>
+
+      {/* Price Card - The Hero */}
+      <motion.div
+        className="px-4 -mt-2"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        <Card className="border-2 border-yellow-500/40 bg-gradient-to-br from-yellow-500/10 to-amber-600/5">
+          <CardContent className="py-6 text-center">
+            {/* Price Lock Badge - Prominent */}
+            <motion.div
+              className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 rounded-full px-4 py-1.5 mb-4"
+              animate={{ scale: [1, 1.02, 1] }}
+              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            >
+              <Lock className="h-3.5 w-3.5 text-green-400" />
+              <span className="text-sm font-semibold text-green-400">LOCKED FOREVER</span>
+            </motion.div>
+
+            {/* Price Display */}
+            <div className="mb-2">
+              <span className="text-5xl sm:text-6xl font-black text-white">£3.99</span>
+              <span className="text-lg text-muted-foreground">/mo</span>
+            </div>
+
+            <div className="flex items-center justify-center gap-3 text-sm mb-4">
+              <span className="line-through text-muted-foreground">£9.99/mo</span>
+              <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                SAVE 60%
+              </Badge>
+            </div>
+
+            <p className="text-xs text-muted-foreground">
+              This price will <strong className="text-yellow-400">never increase</strong> while you stay subscribed
+            </p>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Features - Horizontal Scroll */}
+      <div className="py-5 overflow-hidden">
+        <motion.p
+          className="text-sm font-medium text-muted-foreground px-4 mb-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          Everything included:
+        </motion.p>
+
+        <div className="flex gap-3 px-4 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide">
+          {features.map((feature, i) => (
+            <motion.div
+              key={feature.title}
+              className="snap-start shrink-0 w-36 p-3 rounded-2xl bg-muted/50 border border-white/10"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 + i * 0.08 }}
+            >
+              <feature.icon className={`h-7 w-7 ${feature.color} mb-2`} />
+              <p className="font-medium text-sm text-white">{feature.title}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{feature.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-4 pb-8">
-        {/* Price Card */}
-        <Card className="mb-6 border-yellow-500/30 bg-gradient-to-br from-yellow-500/5 to-transparent">
-          <CardContent className="pt-6 pb-6">
-            <div className="text-center mb-4">
-              <p className="text-sm text-muted-foreground mb-1">Your exclusive founder price</p>
-              <div className="flex items-baseline justify-center gap-1">
-                <span className="text-4xl font-bold text-green-400">£3.99</span>
-                <span className="text-muted-foreground">/month</span>
-              </div>
-              <p className="text-sm text-muted-foreground mt-1">
-                <span className="line-through">£9.99/month</span>
-                <span className="text-green-400 ml-2">Save 60%</span>
-              </p>
-            </div>
+      {/* Spacer */}
+      <div className="flex-1 min-h-4" />
 
-            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3 text-center">
-              <Sparkles className="h-4 w-4 text-yellow-400 inline mr-2" />
-              <span className="text-sm text-yellow-400">
-                Locked in forever - price will never increase
-              </span>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Features */}
-        <Card className="mb-6">
-          <CardContent className="pt-6 pb-6">
-            <h2 className="font-semibold mb-4 flex items-center gap-2">
-              <Zap className="h-4 w-4 text-yellow-400" />
-              What's Included
-            </h2>
-
-            <div className="space-y-3">
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
-                  <Calculator className="h-4 w-4 text-green-400" />
-                </div>
-                <div>
-                  <p className="font-medium text-sm">All AI Tools & Calculators</p>
-                  <p className="text-xs text-muted-foreground">Cable sizing, voltage drop, and more</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center shrink-0">
-                  <MessageSquare className="h-4 w-4 text-blue-400" />
-                </div>
-                <div>
-                  <p className="font-medium text-sm">BS7671 AI Assistant</p>
-                  <p className="text-xs text-muted-foreground">Instant regulation answers</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center shrink-0">
-                  <FileText className="h-4 w-4 text-purple-400" />
-                </div>
-                <div>
-                  <p className="font-medium text-sm">Quote & Invoice Builder</p>
-                  <p className="text-xs text-muted-foreground">Professional documents in seconds</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                <div className="w-8 h-8 rounded-lg bg-yellow-500/10 flex items-center justify-center shrink-0">
-                  <Crown className="h-4 w-4 text-yellow-400" />
-                </div>
-                <div>
-                  <p className="font-medium text-sm">Priority Support</p>
-                  <p className="text-xs text-muted-foreground">Direct access to the founder</p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Email confirmation */}
+      {/* Sticky Bottom CTA */}
+      <motion.div
+        className="sticky bottom-0 p-4 pb-6 bg-background/95 backdrop-blur-sm border-t border-white/10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7 }}
+      >
         {email && (
-          <p className="text-sm text-center text-muted-foreground mb-4">
-            Subscription will be linked to: <span className="text-foreground">{email}</span>
+          <p className="text-xs text-center text-muted-foreground mb-3">
+            Subscription for: <span className="text-foreground font-medium">{email}</span>
           </p>
         )}
 
-        {/* CTA Button */}
         <Button
-          className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black touch-manipulation"
+          className="w-full h-14 text-lg font-bold bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black rounded-2xl shadow-lg shadow-yellow-500/25 touch-manipulation"
           onClick={handleClaim}
           disabled={checkoutLoading}
         >
           {checkoutLoading ? (
-            <>
-              <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-              Setting up checkout...
-            </>
+            <Loader2 className="h-5 w-5 animate-spin" />
           ) : (
             <>
-              <Check className="h-5 w-5 mr-2" />
               Claim My Subscription
+              <ArrowRight className="h-5 w-5 ml-2" />
             </>
           )}
         </Button>
 
-        <p className="text-xs text-center text-muted-foreground mt-4">
-          Secure payment via Stripe. Cancel anytime.
-        </p>
-      </div>
+        <div className="flex items-center justify-center gap-4 mt-3 text-xs text-muted-foreground">
+          <span className="flex items-center gap-1">
+            <Shield className="h-3 w-3" /> Secure
+          </span>
+          <span className="flex items-center gap-1">
+            <CreditCard className="h-3 w-3" /> Via Stripe
+          </span>
+          <span>Cancel anytime</span>
+        </div>
+      </motion.div>
     </div>
   );
 }

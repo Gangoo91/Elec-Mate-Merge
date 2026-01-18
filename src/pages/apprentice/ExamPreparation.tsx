@@ -140,7 +140,7 @@ const ExamPreparation = () => {
               <p className="font-medium text-foreground mb-1.5 text-[10px] sm:text-xs">Key Topics:</p>
               <div className="flex flex-wrap gap-1">
                 {exam.topics.map((topic, topicIndex) => (
-                  <span key={topicIndex} className="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded bg-primary/10 text-primary">
+                  <span key={topicIndex} className="text-[10px] sm:text-xs px-1.5 py-0.5 rounded bg-primary/10 text-primary">
                     {topic}
                   </span>
                 ))}
@@ -158,7 +158,7 @@ const ExamPreparation = () => {
             </div>
 
             <Link to={exam.link}>
-              <Button className="w-full text-xs sm:text-sm h-8 sm:h-9">
+              <Button className="w-full text-sm h-11 touch-manipulation">
                 Start Preparation
               </Button>
             </Link>

@@ -271,7 +271,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
                     <div
                       key={notification.id}
                       className={cn(
-                        "p-3 hover:bg-muted/50 cursor-pointer transition-colors",
+                        "p-3 hover:bg-muted/50 cursor-pointer active:bg-muted/70 transition-all touch-manipulation",
                         !notification.isRead && "bg-elec-yellow/5"
                       )}
                       onClick={() => handleNotificationClick(notification)}

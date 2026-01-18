@@ -173,7 +173,7 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
                 {[1, 2, 3, 4, 5].map((star) => (
                   <Star
                     key={star}
-                    className={`h-4 w-4 cursor-pointer transition-colors ${
+                    className={`h-4 w-4 cursor-pointer transition-all touch-manipulation ${
                       star <= userRating
                         ? "text-yellow-400 fill-current"
                         : "text-gray-600 hover:text-yellow-400"

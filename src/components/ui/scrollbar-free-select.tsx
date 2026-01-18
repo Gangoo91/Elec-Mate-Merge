@@ -57,7 +57,7 @@ const ScrollbarFreeSelectScrollUpButton = React.forwardRef<
   <SelectPrimitive.ScrollUpButton
     ref={ref}
     className={cn(
-      "flex cursor-pointer items-center justify-center py-2 border-b border-elec-gray/20 bg-elec-card hover:bg-elec-yellow/20 transition-colors",
+      "flex cursor-pointer items-center justify-center py-2 border-b border-elec-gray/20 bg-elec-card hover:bg-elec-yellow/20 active:bg-elec-yellow/30 transition-all touch-manipulation",
       className
     )}
     {...props}
@@ -74,7 +74,7 @@ const ScrollbarFreeSelectScrollDownButton = React.forwardRef<
   <SelectPrimitive.ScrollDownButton
     ref={ref}
     className={cn(
-      "flex cursor-pointer items-center justify-center py-2 border-t border-elec-gray/20 bg-elec-card hover:bg-elec-yellow/20 transition-colors",
+      "flex cursor-pointer items-center justify-center py-2 border-t border-elec-gray/20 bg-elec-card hover:bg-elec-yellow/20 active:bg-elec-yellow/30 transition-all touch-manipulation",
       className
     )}
     {...props}

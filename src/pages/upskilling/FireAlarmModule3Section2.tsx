@@ -117,7 +117,7 @@ const FireAlarmModule3Section2 = () => {
   });
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="bg-slate-950">
       {/* Header */}
       <header className="border-b border-white/10 bg-slate-950/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 h-14 flex items-center">

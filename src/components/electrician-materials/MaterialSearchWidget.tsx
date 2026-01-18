@@ -90,7 +90,7 @@ const MaterialSearchWidget = () => {
               <Badge 
                 key={search}
                 variant="outline" 
-                className="cursor-pointer hover:bg-elec-yellow/20 border-elec-yellow/30 text-foreground hover:text-elec-yellow transition-colors"
+                className="cursor-pointer hover:bg-elec-yellow/20 border-elec-yellow/30 text-foreground hover:text-elec-yellow active:scale-[0.98] transition-all touch-manipulation"
                 onClick={() => setSearchQuery(search)}
               >
                 {search}
@@ -135,7 +135,7 @@ const MaterialSearchWidget = () => {
               <Badge 
                 key={location}
                 variant={selectedLocation === location ? "default" : "outline"}
-                className={`cursor-pointer transition-colors ${
+                className={`cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
                   selectedLocation === location
                     ? "bg-elec-yellow text-black"
                     : "hover:bg-elec-yellow/20 border-elec-yellow/30 text-foreground hover:text-elec-yellow"

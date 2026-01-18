@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Assessment } from '@/types/quiz';
 import ModernQuizCard from './quiz/ModernQuizCard';
 
@@ -9,14 +9,18 @@ interface QuizAssessmentCardProps {
 
 const QuizAssessmentCard = ({ assessment }: QuizAssessmentCardProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleStartQuiz = () => {
-    navigate(`/quiz/${assessment.id}`);
+    // Pass the current location as state so we can navigate back properly
+    navigate(`/quiz/${assessment.id}`, {
+      state: { from: location.pathname }
+    });
   };
 
   return (
-    <ModernQuizCard 
-      assessment={assessment} 
+    <ModernQuizCard
+      assessment={assessment}
       onStart={handleStartQuiz}
     />
   );

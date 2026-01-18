@@ -253,7 +253,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
     <Card>
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
-          <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+          <CardHeader className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation">
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <History className="h-5 w-5" />

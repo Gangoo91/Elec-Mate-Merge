@@ -16,6 +16,7 @@ export { default as JobDetailSheet } from "./JobDetailSheet";
 export { default as EmployerJobDetailSheet } from "./EmployerJobDetailSheet";
 export { default as JobSearchSheet } from "./JobSearchSheet";
 export { default as SavedJobsTab } from "./SavedJobsTab";
+export { default as JobMarketInsights } from "./JobMarketInsights";
 
 // Hooks
 export { useSavedJobs } from "./hooks/useSavedJobs";

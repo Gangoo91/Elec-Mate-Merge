@@ -339,7 +339,7 @@ const MobileOptimizedFaultsList = () => {
                 className="w-full"
                 onClick={() => toggleExpanded(fault.id)}
               >
-                <CardHeader className="cursor-pointer hover:bg-black/10 transition-colors">
+                <CardHeader className="cursor-pointer hover:bg-black/10 active:bg-black/15 transition-all touch-manipulation">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       {getUrgencyIcon(fault.urgency)}

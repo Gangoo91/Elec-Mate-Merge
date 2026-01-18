@@ -89,7 +89,7 @@ export function ElevenLabsToolCard({
     <Card className={`border-2 ${isConfigured ? 'border-green-500/50 bg-green-500/5' : 'border-border'} ${index % 2 === 0 ? 'bg-elec-gray' : 'bg-muted/20'}`}>
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
-          <div className="flex items-center justify-between p-3 sm:p-4 cursor-pointer hover:bg-muted/50 transition-colors">
+          <div className="flex items-center justify-between p-3 sm:p-4 cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation">
             <div className="flex items-center gap-2 sm:gap-3">
               <Checkbox
                 checked={isConfigured}

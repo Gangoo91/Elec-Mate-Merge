@@ -237,7 +237,7 @@ const Level3Module1Section5_4 = () => {
   );
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Section Header */}
       <div className="sticky top-0 z-30 w-full bg-elec-yellow shadow-md">
         <div className="max-w-4xl mx-auto flex items-center gap-3 px-4 sm:px-6 py-3">

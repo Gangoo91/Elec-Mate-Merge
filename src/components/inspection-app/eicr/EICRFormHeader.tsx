@@ -91,7 +91,7 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="h-9 w-9 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition-colors ios-pressable">
+                <button className="min-h-[44px] min-w-[44px] sm:h-9 sm:w-9 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/30 active:scale-95 transition-all touch-manipulation ios-pressable">
                   <MoreHorizontal className="h-5 w-5 text-white/80" />
                 </button>
               </DropdownMenuTrigger>

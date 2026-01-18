@@ -249,7 +249,7 @@ const BriefingSignOff = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-elec-navy flex items-center justify-center">
+      <div className="bg-elec-navy flex items-center justify-center">
         <div className="text-center text-elec-light">
           <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-elec-yellow" />
           <p>Loading briefing...</p>
@@ -260,7 +260,7 @@ const BriefingSignOff = () => {
 
   if (!briefing) {
     return (
-      <div className="min-h-screen bg-elec-navy flex items-center justify-center p-4">
+      <div className="bg-elec-navy flex items-center justify-center p-4">
         <Card className="max-w-md w-full bg-elec-gray border-elec-gray">
           <CardContent className="pt-6 text-center">
             <AlertTriangle className="h-16 w-16 text-destructive mx-auto mb-4" />
@@ -290,7 +290,7 @@ const BriefingSignOff = () => {
 
   if (showSuccess) {
     return (
-      <div className="min-h-screen bg-elec-navy flex items-center justify-center p-4">
+      <div className="bg-elec-navy flex items-center justify-center p-4">
         <Card className="max-w-md w-full bg-elec-gray border-green-500/30">
           <CardContent className="pt-8 text-center">
             <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
@@ -311,7 +311,7 @@ const BriefingSignOff = () => {
   }
 
   return (
-    <div className="min-h-screen bg-elec-navy">
+    <div className="bg-elec-navy">
       <div className="container mx-auto px-4 py-6 max-w-lg">
         <div className="bg-elec-gray/95 backdrop-blur-sm rounded-2xl overflow-hidden">
           {/* Header */}

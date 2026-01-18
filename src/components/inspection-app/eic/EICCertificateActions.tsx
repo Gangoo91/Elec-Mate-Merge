@@ -4,19 +4,20 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  FileText, 
-  Download, 
-  Save, 
-  Mail, 
-  AlertTriangle, 
-  CheckCircle, 
+import {
+  FileText,
+  Download,
+  Save,
+  Mail,
+  AlertTriangle,
+  CheckCircle,
   Clock,
   Shield,
   Printer,
   Copy,
   Code,
-  Loader2
+  Loader2,
+  Wand2
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -29,13 +30,15 @@ interface EICCertificateActionsProps {
   reportId: string;
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;
+  onUpdate?: (field: string, value: any) => void;
 }
 
 const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   formData,
   reportId,
   onGenerateCertificate,
-  onSaveDraft
+  onSaveDraft,
+  onUpdate
 }) => {
   const { toast } = useToast();
   const [isExporting, setIsExporting] = useState(false);
@@ -56,6 +59,410 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
   const canGenerateCertificate = hasRequiredInstallationDetails && hasRequiredDeclarations;
   const isFullyComplete = canGenerateCertificate && hasCompletedInspections && hasTestResults;
+
+  // Dev fill function with comprehensive IET-compliant sample data
+  const handleDevFill = () => {
+    if (!onUpdate) {
+      toast({
+        title: "Dev Fill Unavailable",
+        description: "onUpdate handler not provided",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Generate a realistic certificate number
+    const certNo = `EIC-${new Date().getFullYear()}-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
+    const today = new Date().toISOString().split('T')[0];
+    const nextInspectionDate = new Date(Date.now() + 5 * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+    const sampleData: Record<string, any> = {
+      // Client Details
+      certificateNumber: certNo,
+      clientName: 'Mr John Smith',
+      clientAddress: '45 Victoria Street, Manchester, M1 2AB',
+      clientPhone: '0161 234 5678',
+      clientEmail: 'john.smith@example.com',
+
+      // Installation Details
+      installationAddress: '45 Victoria Street, Manchester, M1 2AB',
+      sameAsClientAddress: 'true',
+      installationType: 'new',
+      workType: 'new',
+      description: 'New domestic electrical installation - Full house rewire including consumer unit upgrade to dual RCD split-load board',
+      installationDate: today,
+      testDate: today,
+      constructionDate: today,
+
+      // Extent of Installation
+      extentOfInstallation: 'Complete rewire of 3-bedroom semi-detached house including: 10 lighting circuits, 8 socket outlets circuits, cooker circuit, shower circuit, and EV charging point',
+
+      // Supply Characteristics (IET Model Form Page 3)
+      supplyVoltage: '230',
+      supplyFrequency: '50',
+      phases: '1-phase-2-wire',
+      earthingArrangement: 'tncs',
+      supplyType: 'DNO',
+      supplyPME: 'yes',
+      nominalVoltage: '230',
+      nominalFrequency: '50',
+      prospectiveFaultCurrent: '4.5',
+      externalEarthFaultLoopImpedance: '0.35',
+      externalZe: '0.35',
+      supplyPolarityConfirmed: true,
+      otherSourcesOfSupply: false,
+
+      // Supply Protective Device (DNO fuse)
+      supplyProtectiveDeviceBsEn: 'BS 88-3',
+      supplyProtectiveDeviceType: 'HRC Fuse',
+      supplyProtectiveDeviceRating: '100',
+
+      // Means of Earthing
+      meansOfEarthing: 'distributor',
+
+      // Earth Electrode (if TT)
+      earthElectrodeType: '',
+      earthElectrodeLocation: '',
+      earthElectrodeResistance: '',
+
+      // Earthing Conductor
+      earthingConductorMaterial: 'copper',
+      earthingConductorCsa: '16',
+      earthingConductorVerified: true,
+
+      // Main Bonding Conductor
+      mainBondingMaterial: 'copper',
+      mainBondingCsa: '10',
+      mainBondingSize: '10',
+      mainBondingVerified: true,
+
+      // Maximum Demand
+      maximumDemand: '100',
+      maximumDemandUnit: 'A',
+
+      // Bonding Connections
+      bondingToWater: true,
+      bondingToGas: true,
+      bondingToOil: false,
+      bondingToStructuralSteel: false,
+      bondingToLightningProtection: false,
+      bondingToOther: false,
+
+      // Main Switch Details
+      mainSwitchLocation: 'Under stairs cupboard',
+      mainSwitchBsEn: 'BS EN 61009-1',
+      mainSwitchPoles: '2',
+      mainSwitchCurrentRating: '100',
+      mainSwitchRating: '100',
+      mainSwitchFuseRating: '100',
+      mainSwitchVoltageRating: '230',
+      breakingCapacity: '6',
+      mainSwitchRcdType: 'Type A',
+      mainSwitchRcdRating: '100',
+      mainSwitchRcdOperatingTime: '18',
+      rcdType: 'Type A',
+      rcdRating: '100',
+      // RCD Time Fields (IET Model Form)
+      rcdTimeDelay: '0',
+      rcdMeasuredTime: '18',
+
+      // Distribution Board Verification
+      dbReference: 'DB1',
+      zdb: '0.38',
+      ipf: '4.2',
+      confirmedCorrectPolarity: true,
+      confirmedPhaseSequence: true,
+      spdOperationalStatus: true,
+      spdNA: false,
+
+      // Designer Declaration (IET Model Form Page 2)
+      designerName: 'JAMES WILSON',
+      designerCompany: 'Spark Electrical Services Ltd',
+      designerAddress: '12 Industrial Estate, Stockport, SK4 1AA',
+      designerPostcode: 'SK4 1AA',
+      designerPhone: '0161 456 7890',
+      designerDate: today,
+      designerBs7671Date: '2022',
+      designerDepartures: 'None',
+      permittedExceptions: 'None',
+      riskAssessmentAttached: false,
+      designerSignature: 'J. Wilson',
+
+      // Constructor Declaration
+      constructorName: 'JAMES WILSON',
+      constructorCompany: 'Spark Electrical Services Ltd',
+      constructorAddress: '12 Industrial Estate, Stockport, SK4 1AA',
+      constructorPostcode: 'SK4 1AA',
+      constructorPhone: '0161 456 7890',
+      constructorDate: today,
+      constructorBs7671Date: '2022',
+      constructorDepartures: 'None',
+      constructorSignature: 'J. Wilson',
+      sameAsDesigner: true,
+
+      // Inspector Declaration
+      inspectorName: 'JAMES WILSON',
+      inspectorCompany: 'Spark Electrical Services Ltd',
+      inspectorAddress: '12 Industrial Estate, Stockport, SK4 1AA',
+      inspectorPostcode: 'SK4 1AA',
+      inspectorPhone: '0161 456 7890',
+      inspectorDate: today,
+      inspectorBs7671Date: '2022',
+      inspectorDepartures: 'None',
+      inspectorSignature: 'J. Wilson',
+      sameAsConstructor: true,
+
+      // Next Inspection
+      nextInspectionInterval: '60',
+      nextInspectionDate: nextInspectionDate,
+
+      // Existing Installation Comments
+      existingInstallationComments: 'N/A - New installation',
+
+      // Report Authorised By
+      reportAuthorisedByName: 'JAMES WILSON',
+      reportAuthorisedByForOnBehalfOf: 'Spark Electrical Services Ltd',
+      reportAuthorisedByPosition: 'Director',
+      reportAuthorisedByAddress: '12 Industrial Estate, Stockport, SK4 1AA',
+      reportAuthorisedByPostcode: 'SK4 1AA',
+      reportAuthorisedByPhone: '0161 456 7890',
+      reportAuthorisedByDate: today,
+      reportAuthorisedByMembershipNo: 'NICEIC/12345',
+      reportAuthorisedBySignature: 'J. Wilson',
+
+      // Compliance Declarations
+      bs7671Compliance: true,
+      buildingRegsCompliance: true,
+      competentPersonScheme: true,
+
+      // Test Instruments
+      testInstrumentMake: 'Megger MFT1741',
+      testInstrumentSerial: 'SN-2024-78901',
+      calibrationDate: today,
+
+      // Schedule of Inspections - flat fields for PDF
+      inspection_1_outcome: 'satisfactory',
+      inspection_2_outcome: 'na',
+      inspection_3_outcome: 'satisfactory',
+      inspection_4_outcome: 'satisfactory',
+      inspection_5_outcome: 'na',
+      inspection_6_outcome: 'satisfactory',
+      inspection_7_outcome: 'satisfactory',
+      inspection_8_outcome: 'satisfactory',
+      inspection_9_outcome: 'satisfactory',
+      inspection_10_outcome: 'satisfactory',
+      inspection_11_outcome: 'satisfactory',
+      inspection_12_outcome: 'satisfactory',
+      inspection_13_outcome: 'na',
+      inspection_14_outcome: 'na',
+
+      // Schedule of Inspections (all 14 items from BS 7671 EIC) - for UI
+      inspectionItems: [
+        { id: 'eic_1', itemNumber: '1', description: "Condition of consumer's intake equipment (Visual inspection only)", outcome: 'satisfactory', notes: '' },
+        { id: 'eic_2', itemNumber: '2', description: 'Parallel or switched alternative sources of supply', outcome: 'na', notes: 'No alternative sources' },
+        { id: 'eic_3', itemNumber: '3', description: 'Protective measure: Automatic Disconnection of Supply (ADS)', outcome: 'satisfactory', notes: '' },
+        { id: 'eic_4', itemNumber: '4', description: 'Basic protection', outcome: 'satisfactory', notes: '' },
+        { id: 'eic_5', itemNumber: '5', description: 'Protective measures other than ADS', outcome: 'na', notes: 'ADS used throughout' },
+        { id: 'eic_6', itemNumber: '6', description: 'Additional protection', outcome: 'satisfactory', notes: '30mA RCDs fitted' },
+        { id: 'eic_7', itemNumber: '7', description: 'Distribution equipment', outcome: 'satisfactory', notes: '' },
+        { id: 'eic_8', itemNumber: '8', description: 'Circuits (Distribution and Final)', outcome: 'satisfactory', notes: '' },
+        { id: 'eic_9', itemNumber: '9', description: 'Isolation and switching', outcome: 'satisfactory', notes: '' },
+        { id: 'eic_10', itemNumber: '10', description: 'Current-using equipment (permanently connected)', outcome: 'satisfactory', notes: '' },
+        { id: 'eic_11', itemNumber: '11', description: 'Identification and notices', outcome: 'satisfactory', notes: '' },
+        { id: 'eic_12', itemNumber: '12', description: 'Location(s) containing a bath or shower', outcome: 'satisfactory', notes: 'Bathroom circuits compliant' },
+        { id: 'eic_13', itemNumber: '13', description: 'Other special installations or locations', outcome: 'na', notes: 'No special locations' },
+        { id: 'eic_14', itemNumber: '14', description: "Prosumer's low voltage electrical installation(s)", outcome: 'na', notes: 'No prosumer installations' }
+      ],
+
+      // Schedule of Test Results (sample circuits)
+      scheduleOfTests: [
+        {
+          id: '1',
+          circuitNumber: '1',
+          circuitDescription: 'Lighting - Ground Floor',
+          circuitType: 'B6',
+          conductorSize: '1.5',
+          conductorType: 'copper',
+          cpcSize: '1.0',
+          maxZs: '7.28',
+          referenceMethod: 'C',
+          length: '15',
+          overcurrentDevice: 'MCB',
+          ocDeviceRating: '6',
+          ocDeviceBsEn: 'BS EN 60898',
+          rcdType: 'Type A',
+          rcdRating: '30',
+          rcdOpTime: '18',
+          r1: '0.52',
+          rn: '0.48',
+          r2: '0.78',
+          r1r2: '1.30',
+          zs: '1.65',
+          ipf: '139',
+          insulationResistanceLiveEarth: '>200',
+          insulationResistanceLiveNeutral: '>200',
+          polarityOk: true,
+          rcdTested: true,
+          testVoltage: '500'
+        },
+        {
+          id: '2',
+          circuitNumber: '2',
+          circuitDescription: 'Lighting - First Floor',
+          circuitType: 'B6',
+          conductorSize: '1.5',
+          conductorType: 'copper',
+          cpcSize: '1.0',
+          maxZs: '7.28',
+          referenceMethod: 'C',
+          length: '18',
+          overcurrentDevice: 'MCB',
+          ocDeviceRating: '6',
+          ocDeviceBsEn: 'BS EN 60898',
+          rcdType: 'Type A',
+          rcdRating: '30',
+          rcdOpTime: '19',
+          r1: '0.58',
+          rn: '0.54',
+          r2: '0.87',
+          r1r2: '1.45',
+          zs: '1.80',
+          ipf: '128',
+          insulationResistanceLiveEarth: '>200',
+          insulationResistanceLiveNeutral: '>200',
+          polarityOk: true,
+          rcdTested: true,
+          testVoltage: '500'
+        },
+        {
+          id: '3',
+          circuitNumber: '3',
+          circuitDescription: 'Ring Final - Ground Floor',
+          circuitType: 'B32',
+          conductorSize: '2.5',
+          conductorType: 'copper',
+          cpcSize: '1.5',
+          maxZs: '1.37',
+          referenceMethod: 'C',
+          length: '42',
+          overcurrentDevice: 'MCB',
+          ocDeviceRating: '32',
+          ocDeviceBsEn: 'BS EN 60898',
+          rcdType: 'Type A',
+          rcdRating: '30',
+          rcdOpTime: '16',
+          r1: '0.31',
+          rn: '0.29',
+          r2: '0.52',
+          r1r2: '0.83',
+          zs: '1.18',
+          ipf: '195',
+          insulationResistanceLiveEarth: '>200',
+          insulationResistanceLiveNeutral: '>200',
+          polarityOk: true,
+          rcdTested: true,
+          testVoltage: '500'
+        },
+        {
+          id: '4',
+          circuitNumber: '4',
+          circuitDescription: 'Ring Final - First Floor',
+          circuitType: 'B32',
+          conductorSize: '2.5',
+          conductorType: 'copper',
+          cpcSize: '1.5',
+          maxZs: '1.37',
+          referenceMethod: 'C',
+          length: '38',
+          overcurrentDevice: 'MCB',
+          ocDeviceRating: '32',
+          ocDeviceBsEn: 'BS EN 60898',
+          rcdType: 'Type A',
+          rcdRating: '30',
+          rcdOpTime: '17',
+          r1: '0.28',
+          rn: '0.26',
+          r2: '0.47',
+          r1r2: '0.75',
+          zs: '1.10',
+          ipf: '209',
+          insulationResistanceLiveEarth: '>200',
+          insulationResistanceLiveNeutral: '>200',
+          polarityOk: true,
+          rcdTested: true,
+          testVoltage: '500'
+        },
+        {
+          id: '5',
+          circuitNumber: '5',
+          circuitDescription: 'Cooker',
+          circuitType: 'B32',
+          conductorSize: '6.0',
+          conductorType: 'copper',
+          cpcSize: '2.5',
+          maxZs: '1.37',
+          referenceMethod: 'C',
+          length: '12',
+          overcurrentDevice: 'MCB',
+          ocDeviceRating: '32',
+          ocDeviceBsEn: 'BS EN 60898',
+          rcdType: '',
+          rcdRating: '',
+          rcdOpTime: '',
+          r1: '0.04',
+          rn: '0.04',
+          r2: '0.09',
+          r1r2: '0.13',
+          zs: '0.48',
+          ipf: '479',
+          insulationResistanceLiveEarth: '>200',
+          insulationResistanceLiveNeutral: '>200',
+          polarityOk: true,
+          rcdTested: false,
+          testVoltage: '500'
+        },
+        {
+          id: '6',
+          circuitNumber: '6',
+          circuitDescription: 'Electric Shower',
+          circuitType: 'B40',
+          conductorSize: '10.0',
+          conductorType: 'copper',
+          cpcSize: '4.0',
+          maxZs: '1.09',
+          referenceMethod: 'C',
+          length: '15',
+          overcurrentDevice: 'MCB',
+          ocDeviceRating: '40',
+          ocDeviceBsEn: 'BS EN 60898',
+          rcdType: 'Type A',
+          rcdRating: '30',
+          rcdOpTime: '15',
+          r1: '0.03',
+          rn: '0.03',
+          r2: '0.07',
+          r1r2: '0.10',
+          zs: '0.45',
+          ipf: '511',
+          insulationResistanceLiveEarth: '>200',
+          insulationResistanceLiveNeutral: '>200',
+          polarityOk: true,
+          rcdTested: true,
+          testVoltage: '500'
+        }
+      ]
+    };
+
+    // Apply all sample data via onUpdate
+    Object.entries(sampleData).forEach(([key, value]) => {
+      onUpdate(key, value);
+    });
+
+    toast({
+      title: "Dev Fill Complete",
+      description: "All EIC form fields populated with IET-compliant sample data.",
+    });
+  };
 
   const handleGeneratePDF = async () => {
     if (!canGenerateCertificate) {
@@ -79,12 +486,21 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       
       setExportProgress(30);
       setExportStatus('generating');
-      
+
+      // DEBUG: Log EXACTLY what we're sending BEFORE the edge function call
+      console.log('=== EIC PDF DEBUG: CLIENT SIDE ===');
+      console.log('pdfData keys at root:', Object.keys(pdfData).filter(k => k.startsWith('insp_')));
+      console.log('insp_1 =', pdfData.insp_1);
+      console.log('insp_2 =', pdfData.insp_2);
+      console.log('insp_3 =', pdfData.insp_3);
+      console.log('Full pdfData being sent:', JSON.stringify(pdfData, null, 2).substring(0, 2000));
+      console.log('=================================');
+
       // Call edge function to generate PDF via PDF Monkey
       const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-eic-pdf', {
-        body: { 
+        body: {
           formData: pdfData,
-          templateId: '3D25AF58-5256-49B1-8E4E-811602303B89'
+          templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947'
         }
       });
       
@@ -93,7 +509,13 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       if (functionError) {
         throw new Error(functionError.message || 'Failed to generate PDF');
       }
-      
+
+      // DEBUG: Log what the edge function received
+      console.log('[EIC PDF DEBUG] Edge function response:', functionData);
+      console.log('[EIC PDF DEBUG] Flat keys received:', functionData?.debug_flat_keys);
+      console.log('[EIC PDF DEBUG] insp_1 value:', functionData?.debug_insp_1);
+      console.log('[EIC PDF DEBUG] insp_2 value:', functionData?.debug_insp_2);
+
       if (!functionData?.success || !functionData?.pdfUrl) {
         throw new Error(functionData?.error || 'No PDF URL returned');
       }
@@ -192,7 +614,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-eic-pdf', {
         body: { 
           formData: pdfData,
-          templateId: '3D25AF58-5256-49B1-8E4E-811602303B89'
+          templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947'
         }
       });
       
@@ -222,8 +644,25 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   };
 
   const generateTestJSON = async (reportId: string) => {
+    // HARDCODED flat inspection keys for testing - directly at root level
     // Always include all keys with empty values as defaults
     const json: any = {
+      // HARDCODED inspection outcomes at ROOT level
+      insp_1: 'Acceptable',
+      insp_2: 'N/A',
+      insp_3: 'Acceptable',
+      insp_4: 'Acceptable',
+      insp_5: 'N/A',
+      insp_6: 'Acceptable',
+      insp_7: 'Acceptable',
+      insp_8: 'Acceptable',
+      insp_9: 'Acceptable',
+      insp_10: 'Acceptable',
+      insp_11: 'Acceptable',
+      insp_12: 'Acceptable',
+      insp_13: 'N/A',
+      insp_14: 'N/A',
+
       metadata: {
         certificate_number: formData.certificateNumber || ''
       },
@@ -288,13 +727,8 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         supplementary_bonding_size_custom: formData.supplementaryBondingSizeCustom || '',
         equipotential_bonding: formData.equipotentialBonding || ''
       },
-      inspection_checklist: (formData.inspectionItems || Object.values(formData.inspections || {}))?.map((item: any) => ({
-        id: item.id || '',
-        item_number: item.itemNumber || '',
-        description: item.description || '',
-        outcome: item.outcome || '',
-        notes: item.notes || ''
-      })) || [],
+      // NOTE: Inspection outcomes are now at ROOT level as flat keys (insp_1, insp_2, etc.)
+      // This follows the EICR pattern that works with PDFMonkey
       schedule_of_tests: formData.scheduleOfTests?.map((test: any) => ({
         id: test.id || 'N/A',
         circuit_number: test.circuitNumber || 'N/A',
@@ -614,6 +1048,17 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
                 Test JSON Data
               </h4>
               <div className="flex gap-2">
+                {onUpdate && (
+                  <Button
+                    onClick={handleDevFill}
+                    variant="outline"
+                    size="sm"
+                    className="bg-purple-500/10 border-purple-500/30 text-purple-300 hover:bg-purple-500/20"
+                  >
+                    <Wand2 className="h-3 w-3 mr-2" />
+                    Dev Fill
+                  </Button>
+                )}
                 <Button
                   onClick={handleLoadJSONPreview}
                   variant="outline"

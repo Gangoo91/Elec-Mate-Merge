@@ -82,9 +82,9 @@ const ReportCard = ({
   };
 
   return (
-    <Card 
-      className={`transition-all duration-200 ${
-        isBulkMode ? 'cursor-pointer' : 'hover:shadow-md hover:border-elec-yellow/30 hover:scale-[1.01]'
+    <Card
+      className={`transition-all duration-200 touch-manipulation ${
+        isBulkMode ? 'cursor-pointer active:scale-[0.99]' : 'hover:shadow-md hover:border-elec-yellow/30 hover:scale-[1.01] active:scale-[0.99]'
       } ${
         isSelected ? 'border-elec-yellow border-2 bg-elec-yellow/5' : ''
       }`}

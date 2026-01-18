@@ -109,25 +109,13 @@ export function useAuthentication() {
         return { error };
       }
 
-      // Send branded welcome email in background (fire and forget - non-blocking)
-      if (data?.user) {
-        supabase.functions.invoke('send-welcome-email', {
-          body: {
-            userId: data.user.id,
-            email: email,
-            fullName: fullName,
-          },
-        }).then(() => {
-          console.log('Welcome email sent');
-        }).catch((emailErr) => {
-          console.warn('Welcome email failed (non-critical):', emailErr);
-        });
-      }
+      // Note: Welcome email is now sent after email confirmation
+      // The confirmation email is sent from SignUp.tsx via send-confirmation-email edge function
 
-      // Success toast - instant access!
+      // Success toast - ask user to check email
       toast({
-        title: 'Welcome to Elec-Mate!',
-        description: 'Your account is ready. Enjoy your 7-day free trial!',
+        title: 'Almost there!',
+        description: 'Please check your email to confirm your account.',
       });
 
       return { error: null, user: data?.user };
@@ -151,32 +139,31 @@ export function useAuthentication() {
 
   const resetPassword = async (email: string) => {
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/reset-password`,
+      // Call our custom edge function that sends branded emails via Resend
+      const { error } = await supabase.functions.invoke('send-password-reset', {
+        body: { email },
       });
 
       if (error) {
-        toast({
-          title: 'Reset Failed',
-          description: error.message,
-          variant: 'destructive',
-        });
-        return { error };
+        // Don't reveal if email exists or not - always show success message
+        console.error('Password reset error:', error);
       }
 
+      // Always show success to prevent user enumeration
       toast({
         title: 'Check Your Email',
-        description: 'We\'ve sent you a password reset link.',
+        description: 'If an account exists, we\'ve sent you a password reset link.',
       });
 
       return { error: null };
     } catch (error: any) {
+      // Even on error, show success message to prevent enumeration
+      console.error('Password reset exception:', error);
       toast({
-        title: 'Reset Error',
-        description: error.message || 'An unexpected error occurred',
-        variant: 'destructive',
+        title: 'Check Your Email',
+        description: 'If an account exists, we\'ve sent you a password reset link.',
       });
-      return { error };
+      return { error: null };
     }
   };
 

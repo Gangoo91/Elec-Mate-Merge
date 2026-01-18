@@ -27,13 +27,13 @@ const PracticalIsolationStepCard = ({ step, onToggle }: PracticalIsolationStepCa
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Card className={`border-2 ${step.critical ? 'border-red-500/30 bg-red-500/5' : 'border-border bg-card'}`}>
-      <CardContent className="p-4">
+    <Card className={`border-2 ${step.critical ? 'border-red-500/30 bg-red-500/5' : 'border-border bg-card'} rounded-xl`}>
+      <CardContent className="p-3 sm:p-4">
         <div className="flex items-start gap-3">
           <Checkbox
             checked={step.completed}
             onCheckedChange={() => onToggle(step.id)}
-            className="mt-1"
+            className="mt-1 h-5 w-5 touch-manipulation"
           />
           <div className="flex-grow">
             <div className="flex items-center gap-2 mb-1">
@@ -55,19 +55,20 @@ const PracticalIsolationStepCard = ({ step, onToggle }: PracticalIsolationStepCa
             
             <Button
               variant="ghost"
-              size="sm"
               onClick={() => setIsExpanded(!isExpanded)}
-              className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 p-0 h-auto"
+              className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 min-h-[44px] px-3 py-2 touch-manipulation active:scale-[0.98] text-sm"
             >
               {isExpanded ? (
                 <>
-                  <ChevronUp className="h-4 w-4 mr-1" />
-                  Hide Practical Guidance
+                  <ChevronUp className="h-4 w-4 mr-1.5" />
+                  <span className="hidden sm:inline">Hide Practical Guidance</span>
+                  <span className="sm:hidden">Hide</span>
                 </>
               ) : (
                 <>
-                  <ChevronDown className="h-4 w-4 mr-1" />
-                  Show Practical Guidance
+                  <ChevronDown className="h-4 w-4 mr-1.5" />
+                  <span className="hidden sm:inline">Show Practical Guidance</span>
+                  <span className="sm:hidden">Show</span>
                 </>
               )}
             </Button>

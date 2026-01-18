@@ -209,7 +209,7 @@ const EquipmentROICalculator = () => {
   const roiStatus = getROIStatus();
 
   return (
-    <div className="min-h-screen bg-background pt-safe pb-safe">
+    <div className="bg-background  ">
       <div className="space-y-4 px-4 py-6 animate-fade-in">
         <Helmet>
         <title>Equipment ROI Calculator UK | Electrician Tools</title>

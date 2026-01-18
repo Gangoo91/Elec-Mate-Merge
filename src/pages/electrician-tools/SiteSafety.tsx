@@ -148,13 +148,13 @@ const SiteSafety = () => {
   if (activeView) {
     return (
       <RAMSProvider>
-        <div className="min-h-screen bg-elec-dark animate-fade-in pt-safe pb-safe">
+        <div className="bg-elec-dark animate-fade-in  ">
           <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6">
             <div className="mb-4 sm:mb-6">
               <Button
                 onClick={() => setActiveView(null)}
                 variant="outline"
-                className="h-11 border-white/10 hover:border-elec-yellow/30 text-white/60 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+                className="h-11 border-white/10 hover:border-elec-yellow/30 text-white/60 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98] touch-manipulation"
               >
                 <ArrowRight className="h-5 w-5 mr-2 rotate-180" />
                 Back to Site Safety
@@ -171,7 +171,7 @@ const SiteSafety = () => {
 
   return (
     <RAMSProvider>
-      <div className="min-h-screen bg-elec-dark pt-safe pb-safe">
+      <div className="bg-elec-dark  ">
         {/* Hero Section */}
         <div className="border-b border-white/5">
           <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
@@ -207,7 +207,7 @@ const SiteSafety = () => {
                 return (
                   <Card
                     key={tool.id}
-                    className="group bg-[#1e1e1e] border border-white/10 hover:border-elec-yellow/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98]"
+                    className="group bg-[#1e1e1e] border border-white/10 hover:border-elec-yellow/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98] touch-manipulation"
                     onClick={() => setActiveView(tool.id)}
                   >
                     <CardHeader className="p-4 sm:p-5">
@@ -252,7 +252,7 @@ const SiteSafety = () => {
                 return (
                   <Card
                     key={tool.id}
-                    className="group bg-[#1e1e1e] border border-white/10 hover:border-elec-yellow/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98]"
+                    className="group bg-[#1e1e1e] border border-white/10 hover:border-elec-yellow/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98] touch-manipulation"
                     onClick={() => setActiveView(tool.id)}
                   >
                     <CardHeader className="p-4 text-center">
@@ -290,7 +290,7 @@ const SiteSafety = () => {
                 return (
                   <Card
                     key={tool.id}
-                    className="group bg-[#1e1e1e] border border-white/10 hover:border-elec-yellow/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98]"
+                    className="group bg-[#1e1e1e] border border-white/10 hover:border-elec-yellow/30 rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 active:scale-[0.98] touch-manipulation"
                     onClick={() => setActiveView(tool.id)}
                   >
                     <CardHeader className="p-4 sm:p-5">

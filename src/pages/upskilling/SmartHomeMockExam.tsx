@@ -103,7 +103,7 @@ const SmartHomeMockExam = () => {
   // Start Screen
   if (examState === 'start') {
     return (
-      <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
+      <div className="bg-[#1a1a1a] overflow-x-hidden">
         {/* Header */}
         <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
           <Link to="/study-centre/upskilling/smart-home-course">
@@ -225,7 +225,7 @@ const SmartHomeMockExam = () => {
     const timeTaken = formatTime(Math.min(timeElapsed, EXAM_DURATION));
 
     return (
-      <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
+      <div className="bg-[#1a1a1a] overflow-x-hidden">
         {/* Header */}
         <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
           <Link to="/study-centre/upskilling/smart-home-course">
@@ -363,7 +363,7 @@ const SmartHomeMockExam = () => {
   const question = questions[currentQuestion];
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
+    <div className="bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-6 bg-[#1a1a1a]/95">
         <div className="flex justify-between items-center mb-4">

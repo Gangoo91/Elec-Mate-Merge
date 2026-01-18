@@ -30,6 +30,7 @@ import { twinAndEarthCpcFor, normaliseCableSize } from '@/utils/twinAndEarth';
 import { getTableViewPreference, setTableViewPreference } from '@/utils/mobileTableUtils';
 import { resolveDropdownValue } from '@/utils/voiceDropdownResolver';
 import { resolveFieldName } from '@/utils/voiceFieldAliases';
+import { validateField, validateFieldUpdate, logVoiceToolCall, VALID_TEST_RESULT_FIELDS } from '@/utils/voiceToolValidation';
 import { calculatePointsServed } from '@/types/autoFillTypes';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
@@ -132,73 +133,94 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
         }
 
         case 'update_field': {
+          const spokenField = params.field as string;
+          const spokenValue = params.value as string;
           const circuitNum = params.circuit_number as number | undefined;
-          const field = resolveFieldName(params.field as string) || params.field as string;
-          const value = resolveDropdownValue(field, params.value as string);
 
           const targetIndex = circuitNum !== undefined
             ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
             : selectedCircuitIndex;
 
-          if (targetIndex >= 0 && targetIndex < testResults.length) {
-            const circuit = testResults[targetIndex];
-            let warning = '';
-
-            // Check for high/low readings and flag warnings
-            if (field === 'zs' && value) {
-              const zsValue = parseFloat(value);
-              const maxZs = parseFloat(circuit.maxZs || '0');
-              if (maxZs > 0 && zsValue > maxZs) {
-                warning = ` WARNING: Zs ${zsValue}Ω EXCEEDS max ${maxZs}Ω!`;
-                toast.error(`Zs ${zsValue}Ω exceeds maximum ${maxZs}Ω - circuit may not disconnect in time!`);
-              }
-            }
-
-            if ((field === 'insulationLiveEarth' || field === 'insulationLiveNeutral' || field === 'insulationResistance') && value) {
-              const irValue = parseFloat(value.replace('>', '').replace('<', ''));
-              if (!isNaN(irValue) && irValue < 1) {
-                warning = ` WARNING: Insulation ${irValue}MΩ BELOW minimum 1MΩ - FAIL!`;
-                toast.error(`Insulation resistance ${irValue}MΩ is below minimum 1MΩ - FAIL!`);
-              } else if (!isNaN(irValue) && irValue < 2) {
-                warning = ` Note: Insulation ${irValue}MΩ is low (min 1MΩ)`;
-                toast.warning(`Insulation resistance ${irValue}MΩ is acceptable but low`);
-              }
-            }
-
-            if (field === 'rcdOneX' && value) {
-              const tripTime = parseFloat(value);
-              if (!isNaN(tripTime) && tripTime > 300) {
-                warning = ` WARNING: RCD trip ${tripTime}ms EXCEEDS 300ms - FAIL!`;
-                toast.error(`RCD trip time ${tripTime}ms exceeds 300ms limit - FAIL!`);
-              } else if (!isNaN(tripTime) && tripTime > 200) {
-                warning = ` Note: RCD trip ${tripTime}ms is high (typical <40ms)`;
-                toast.warning(`RCD trip time ${tripTime}ms is high but within limits`);
-              }
-            }
-
-            if (field === 'r1r2' && value) {
-              const r1r2Value = parseFloat(value);
-              if (!isNaN(r1r2Value) && r1r2Value > 1.5) {
-                warning = ` WARNING: R1+R2 ${r1r2Value}Ω is very high - check connections!`;
-                toast.warning(`R1+R2 ${r1r2Value}Ω is high - verify connections`);
-              }
-            }
-
-            if (field === 'pfc' && value) {
-              const pfcValue = parseFloat(value);
-              if (!isNaN(pfcValue) && pfcValue < 1) {
-                warning = ` Note: PFC ${pfcValue}kA is low - check supply`;
-                toast.info(`PFC ${pfcValue}kA - verify adequate for protective devices`);
-              }
-            }
-
-            setTestResults(prev => prev.map((circuit, idx) =>
-              idx === targetIndex ? { ...circuit, [field]: value } : circuit
-            ));
-            toast.success(`Set ${field} to ${value} on circuit ${circuitNum || selectedCircuitIndex + 1}`);
-            return `Set ${field} to ${value}${warning}`;
+          if (targetIndex < 0 || targetIndex >= testResults.length) {
+            const errorMsg = circuitNum !== undefined
+              ? `Circuit ${circuitNum} not found`
+              : 'No circuit selected - add a circuit first';
+            logVoiceToolCall('fill_schedule_of_tests', params, errorMsg, false);
+            return errorMsg;
           }
-          return 'Circuit not found';
+
+          const circuit = testResults[targetIndex];
+
+          // Validate field and resolve value
+          const validation = validateFieldUpdate(spokenField, spokenValue, circuit);
+
+          if (!validation.valid || !validation.resolvedField) {
+            const errorMsg = validation.error || `Unknown field "${spokenField}"`;
+            logVoiceToolCall('fill_schedule_of_tests', params, errorMsg, false);
+            toast.error(errorMsg);
+            return errorMsg;
+          }
+
+          const field = validation.resolvedField;
+          const value = validation.resolvedValue;
+          let warning = '';
+
+          // Check for high/low readings and flag warnings
+          if (field === 'zs' && value) {
+            const zsValue = parseFloat(value);
+            const maxZs = parseFloat(circuit.maxZs || '0');
+            if (maxZs > 0 && zsValue > maxZs) {
+              warning = ` WARNING: Zs ${zsValue}Ω EXCEEDS max ${maxZs}Ω!`;
+              toast.error(`Zs ${zsValue}Ω exceeds maximum ${maxZs}Ω - circuit may not disconnect in time!`);
+            }
+          }
+
+          if ((field === 'insulationLiveEarth' || field === 'insulationLiveNeutral' || field === 'insulationResistance') && value) {
+            const irValue = parseFloat(value.replace('>', '').replace('<', ''));
+            if (!isNaN(irValue) && irValue < 1) {
+              warning = ` WARNING: Insulation ${irValue}MΩ BELOW minimum 1MΩ - FAIL!`;
+              toast.error(`Insulation resistance ${irValue}MΩ is below minimum 1MΩ - FAIL!`);
+            } else if (!isNaN(irValue) && irValue < 2) {
+              warning = ` Note: Insulation ${irValue}MΩ is low (min 1MΩ)`;
+              toast.warning(`Insulation resistance ${irValue}MΩ is acceptable but low`);
+            }
+          }
+
+          if (field === 'rcdOneX' && value) {
+            const tripTime = parseFloat(value);
+            if (!isNaN(tripTime) && tripTime > 300) {
+              warning = ` WARNING: RCD trip ${tripTime}ms EXCEEDS 300ms - FAIL!`;
+              toast.error(`RCD trip time ${tripTime}ms exceeds 300ms limit - FAIL!`);
+            } else if (!isNaN(tripTime) && tripTime > 200) {
+              warning = ` Note: RCD trip ${tripTime}ms is high (typical <40ms)`;
+              toast.warning(`RCD trip time ${tripTime}ms is high but within limits`);
+            }
+          }
+
+          if (field === 'r1r2' && value) {
+            const r1r2Value = parseFloat(value);
+            if (!isNaN(r1r2Value) && r1r2Value > 1.5) {
+              warning = ` WARNING: R1+R2 ${r1r2Value}Ω is very high - check connections!`;
+              toast.warning(`R1+R2 ${r1r2Value}Ω is high - verify connections`);
+            }
+          }
+
+          if (field === 'pfc' && value) {
+            const pfcValue = parseFloat(value);
+            if (!isNaN(pfcValue) && pfcValue < 1) {
+              warning = ` Note: PFC ${pfcValue}kA is low - check supply`;
+              toast.info(`PFC ${pfcValue}kA - verify adequate for protective devices`);
+            }
+          }
+
+          setTestResults(prev => prev.map((c, idx) =>
+            idx === targetIndex ? { ...c, [field]: value } : c
+          ));
+
+          const result = `Set ${field} to ${value} on circuit ${targetIndex + 1}${warning}`;
+          logVoiceToolCall('fill_schedule_of_tests', params, result, true);
+          toast.success(`Set ${field} to ${value}`);
+          return result;
         }
 
         case 'update_multiple_fields': {
@@ -209,20 +231,45 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
             ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
             : selectedCircuitIndex;
 
-          if (targetIndex >= 0 && targetIndex < testResults.length && fields) {
-            const resolvedFields: Partial<TestResult> = {};
-            Object.entries(fields).forEach(([key, val]) => {
-              const resolvedKey = resolveFieldName(key) || key;
-              resolvedFields[resolvedKey as keyof TestResult] = resolveDropdownValue(resolvedKey, val);
-            });
-
-            setTestResults(prev => prev.map((circuit, idx) =>
-              idx === targetIndex ? { ...circuit, ...resolvedFields } : circuit
-            ));
-            toast.success(`Updated ${Object.keys(fields).length} fields on circuit ${circuitNum || selectedCircuitIndex + 1}`);
-            return `Updated ${Object.keys(fields).length} fields`;
+          if (targetIndex < 0 || targetIndex >= testResults.length) {
+            const errorMsg = circuitNum !== undefined
+              ? `Circuit ${circuitNum} not found`
+              : 'No circuit selected - add a circuit first';
+            logVoiceToolCall('fill_schedule_of_tests', params, errorMsg, false);
+            return errorMsg;
           }
-          return 'Circuit not found or no fields provided';
+
+          if (!fields || Object.keys(fields).length === 0) {
+            const errorMsg = 'No fields provided';
+            logVoiceToolCall('fill_schedule_of_tests', params, errorMsg, false);
+            return errorMsg;
+          }
+
+          const circuit = testResults[targetIndex];
+          const resolvedFields: Partial<TestResult> = {};
+          const errors: string[] = [];
+
+          Object.entries(fields).forEach(([key, val]) => {
+            const validation = validateFieldUpdate(key, val, circuit);
+            if (validation.valid && validation.resolvedField) {
+              resolvedFields[validation.resolvedField as keyof TestResult] = validation.resolvedValue;
+            } else {
+              errors.push(validation.error || `Unknown field "${key}"`);
+            }
+          });
+
+          if (Object.keys(resolvedFields).length > 0) {
+            setTestResults(prev => prev.map((c, idx) =>
+              idx === targetIndex ? { ...c, ...resolvedFields } : c
+            ));
+          }
+
+          const successCount = Object.keys(resolvedFields).length;
+          const errorMsg = errors.length > 0 ? `. Errors: ${errors.join(', ')}` : '';
+          const result = `Updated ${successCount} fields on circuit ${targetIndex + 1}${errorMsg}`;
+          logVoiceToolCall('fill_schedule_of_tests', params, result, errors.length === 0);
+          toast.success(`Updated ${successCount} fields`);
+          return result;
         }
 
         case 'next_circuit': {
@@ -291,10 +338,22 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
     }
 
     if (toolName === 'bulk_fill_circuits') {
-      const field = resolveFieldName(params.field as string) || params.field as string;
-      const value = resolveDropdownValue(field, params.value as string);
+      const spokenField = params.field as string;
+      const spokenValue = params.value as string;
       const onlyEmpty = params.only_empty as boolean;
       const board = params.board as string | undefined;
+
+      // Validate field name
+      const fieldValidation = validateField(spokenField);
+      if (!fieldValidation.valid || !fieldValidation.resolvedField) {
+        const errorMsg = fieldValidation.error || `Unknown field "${spokenField}"`;
+        logVoiceToolCall(toolName, params, errorMsg, false);
+        toast.error(errorMsg);
+        return errorMsg;
+      }
+
+      const field = fieldValidation.resolvedField;
+      const value = resolveDropdownValue(field, spokenValue);
 
       let count = 0;
       setTestResults(prev => prev.map(circuit => {
@@ -311,8 +370,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
         return { ...circuit, [field]: value };
       }));
 
-      toast.success(`Set ${field} to ${value} on ${count} circuits`);
-      return `Set ${field} to ${value} on ${count} circuits`;
+      const result = `Set ${field} to ${value} on ${count} circuits`;
+      logVoiceToolCall(toolName, params, result, true);
+      toast.success(result);
+      return result;
     }
 
     return 'Unknown tool';

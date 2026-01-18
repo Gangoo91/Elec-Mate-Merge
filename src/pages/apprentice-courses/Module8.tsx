@@ -21,7 +21,7 @@ const sections = [
 
 const Module8 = () => {
   return (
-    <div className="min-h-screen bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
+    <div className="bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-4 mb-8">
           <Link 

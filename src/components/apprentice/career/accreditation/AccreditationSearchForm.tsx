@@ -183,7 +183,7 @@ const AccreditationSearchForm = ({ onSearch, onReset, resultsCount }: Accreditat
 
         {/* Online Filter & Actions */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
-          <label className="flex items-center gap-3 text-sm text-white cursor-pointer p-2 rounded-lg hover:bg-white/5 transition-colors">
+          <label className="flex items-center gap-3 text-sm text-white cursor-pointer p-2 rounded-lg hover:bg-white/5 active:bg-white/10 transition-all touch-manipulation">
             <input
               type="checkbox"
               checked={filters.onlineOnly}

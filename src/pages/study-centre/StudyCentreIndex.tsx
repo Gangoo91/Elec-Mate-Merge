@@ -20,7 +20,7 @@ export default function StudyCentreIndex() {
     : 0;
 
   return (
-    <div className="min-h-screen pb-24 overflow-y-auto momentum-scroll-y">
+    <div className="pb-24 overflow-y-auto momentum-scroll-y">
       {/* Premium Hero Section */}
       <div className="relative overflow-hidden">
         {/* Animated background gradient */}
@@ -91,7 +91,7 @@ export default function StudyCentreIndex() {
                     <stat.icon className="h-3.5 w-3.5 text-white" />
                   </div>
                   <span className="text-lg font-bold text-white">{stat.value}</span>
-                  <span className="text-[9px] text-white/40 uppercase tracking-wider font-medium">{stat.label}</span>
+                  <span className="text-[10px] text-white/50 uppercase tracking-wider font-medium">{stat.label}</span>
                 </div>
               </motion.div>
             ))}

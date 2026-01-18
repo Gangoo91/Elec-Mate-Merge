@@ -87,30 +87,96 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   yPosition += 5;
   doc.setFont('helvetica', 'bold');
   yPosition = addText('PART 2: DESCRIPTION OF WORK', margin, yPosition) + 5;
-  
+
   addSection('Type of Work:', '', formData.workType);
   addSection('Description of Work:', '', formData.workDescription);
 
-  // Part 3: Supply & Earthing
+  // IET Required Fields
+  if (formData.departuresFromBs7671) {
+    addSection('Departures from BS 7671 (Reg 120.3, 133.1.3, 133.5):', '', formData.departuresFromBs7671);
+  }
+  if (formData.permittedExceptions) {
+    addSection('Permitted Exceptions (Reg 411.3.3):', '', formData.permittedExceptions);
+  }
+  if (formData.riskAssessmentAttached) {
+    addSection('Risk Assessment:', '', 'Attached');
+  }
+  if (formData.commentsOnExistingInstallation) {
+    addSection('Comments on Existing Installation (Reg 644.1.2):', '', formData.commentsOnExistingInstallation);
+  }
+
+  // Part 3: Supply & Earthing (Reg 132.16)
   yPosition += 5;
   doc.setFont('helvetica', 'bold');
-  yPosition = addText('PART 3: SUPPLY CHARACTERISTICS & EARTHING', margin, yPosition) + 5;
-  
+  yPosition = addText('PART 3: SUPPLY CHARACTERISTICS & EARTHING (Reg 132.16)', margin, yPosition) + 5;
+
   addSection('Supply Voltage:', '', formData.supplyVoltage);
   addSection('Earthing Arrangement:', '', formData.earthingArrangement);
-  addSection('Main Earthing Conductor:', '', formData.mainEarthingConductorSize ? `${formData.mainEarthingConductorSize}mm2` : '');
-  addSection('Main Bonding Conductor:', '', formData.mainBondingConductorSize ? `${formData.mainBondingConductorSize}mm2` : '');
+  if (formData.zdb) {
+    addSection('Zdb (Earth fault loop impedance at DB):', '', `${formData.zdb} Ω`);
+  }
+  addSection('Earthing Conductor Present:', '', formData.earthingConductorPresent ? 'Yes' : 'No');
+  addSection('Main Earthing Conductor:', '', formData.mainEarthingConductorSize ? `${formData.mainEarthingConductorSize}mm²` : '');
+  addSection('Main Bonding Conductor:', '', formData.mainBondingConductorSize ? `${formData.mainBondingConductorSize}mm²` : '');
+
+  // Bonding Conductors to:
+  const bondingTo: string[] = [];
+  if (formData.bondingWater) bondingTo.push('Water');
+  if (formData.bondingGas) bondingTo.push('Gas');
+  if (formData.bondingOil) bondingTo.push('Oil');
+  if (formData.bondingSteel) bondingTo.push('Structural Steel');
+  if (formData.bondingOther) bondingTo.push('Other');
+  if (bondingTo.length > 0) {
+    addSection('Main Protective Bonding to:', '', bondingTo.join(', '));
+  }
 
   // Part 4: Circuit Details
   yPosition += 5;
   doc.setFont('helvetica', 'bold');
   yPosition = addText('PART 4: CIRCUIT DETAILS & PROTECTION', margin, yPosition) + 5;
-  
+
   addSection('Circuit Designation:', '', formData.circuitDesignation);
   addSection('Circuit Description:', '', formData.circuitDescription);
-  addSection('Protective Device:', '', `${formData.protectiveDeviceType} ${formData.protectiveDeviceRating}A`);
-  addSection('Live Conductor Size:', '', formData.liveConductorSize ? `${formData.liveConductorSize}mm2` : '');
-  addSection('CPC Size:', '', formData.cpcSize ? `${formData.cpcSize}mm2` : '');
+
+  // Protective Device with BS EN standard
+  const protectiveDeviceInfo = [
+    formData.overcurrentDeviceBsEn,
+    formData.protectiveDeviceType,
+    formData.protectiveDeviceRating ? `${formData.protectiveDeviceRating}A` : ''
+  ].filter(Boolean).join(' - ');
+  addSection('Overcurrent Protective Device:', '', protectiveDeviceInfo);
+
+  // RCD Details with IET required fields
+  if (formData.protectionRcd || formData.protectionRcbo) {
+    const rcdInfo = [
+      formData.rcdBsEn,
+      formData.rcdType ? `Type ${formData.rcdType}` : '',
+      formData.rcdRatingAmps ? `${formData.rcdRatingAmps}A` : '',
+      formData.rcdIdn ? `IΔn ${formData.rcdIdn}mA` : ''
+    ].filter(Boolean).join(' - ');
+    addSection('RCD:', '', rcdInfo || 'Yes');
+  }
+
+  // AFDD Details
+  if (formData.protectionAfdd) {
+    const afddInfo = [
+      formData.afddBsEn,
+      formData.afddRating ? `${formData.afddRating}A` : ''
+    ].filter(Boolean).join(' - ');
+    addSection('AFDD:', '', afddInfo || 'Yes');
+  }
+
+  // SPD Details
+  if (formData.protectionSpd) {
+    const spdInfo = [
+      formData.spdBsEn,
+      formData.spdType ? `Type ${formData.spdType}` : ''
+    ].filter(Boolean).join(' - ');
+    addSection('SPD:', '', spdInfo || 'Yes');
+  }
+
+  addSection('Live Conductor Size:', '', formData.liveConductorSize ? `${formData.liveConductorSize}mm²` : '');
+  addSection('CPC Size:', '', formData.cpcSize ? `${formData.cpcSize}mm²` : '');
 
   // Check if we need a new page
   if (yPosition > 220) {
@@ -122,22 +188,34 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
   yPosition += 5;
   doc.setFont('helvetica', 'bold');
   yPosition = addText('PART 5: TEST RESULTS', margin, yPosition) + 5;
-  
-  addSection('Continuity R1+R2:', '', formData.continuityR1R2 ? `${formData.continuityR1R2} Ohms` : '');
-  addSection('Insulation Resistance:', '', 'See detailed results below');
+
+  // Continuity - R1+R2 or R2 (IET allows either)
+  if (formData.r1r2Continuity || formData.continuityR1R2) {
+    addSection('Continuity (R1+R2):', '', `${formData.r1r2Continuity || formData.continuityR1R2} Ω`);
+  }
+  if (formData.r2Continuity) {
+    addSection('Continuity (R2 only):', '', `${formData.r2Continuity} Ω`);
+  }
+
+  // Insulation Resistance
+  addSection('Insulation Resistance:', '', `Test Voltage: ${formData.insulationTestVoltage || '500'}V DC`);
+  if (formData.insulationLiveLive) {
+    addSection('  Live-Live:', '', `${formData.insulationLiveLive} MΩ`);
+  }
   if (formData.insulationLiveNeutral) {
-    addSection('  Live-Neutral:', '', `${formData.insulationLiveNeutral} MOhms`);
+    addSection('  Live-Neutral:', '', `${formData.insulationLiveNeutral} MΩ`);
   }
   if (formData.insulationLiveEarth) {
-    addSection('  Live-Earth:', '', `${formData.insulationLiveEarth} MOhms`);
+    addSection('  Live-Earth:', '', `${formData.insulationLiveEarth} MΩ`);
   }
   if (formData.insulationNeutralEarth) {
-    addSection('  Neutral-Earth:', '', `${formData.insulationNeutralEarth} MOhms`);
+    addSection('  Neutral-Earth:', '', `${formData.insulationNeutralEarth} MΩ`);
   }
-  addSection('Polarity:', '', formData.polarity);
-  addSection('Earth Fault Loop Impedance (Zs):', '', formData.earthFaultLoopImpedance ? `${formData.earthFaultLoopImpedance} Ohms` : '');
-  addSection('Maximum Permitted Zs:', '', formData.maxPermittedZs ? `${formData.maxPermittedZs} Ohms` : '');
-  addSection('Prospective Fault Current:', '', formData.prospectiveFaultCurrent ? `${formData.prospectiveFaultCurrent}kA` : '');
+
+  addSection('Polarity:', '', formData.polarity || formData.polarityResult || '');
+  addSection('Earth Fault Loop Impedance (Zs):', '', formData.earthFaultLoopImpedance || formData.earthFaultLoopResult ? `${formData.earthFaultLoopImpedance || formData.earthFaultLoopResult} Ω` : '');
+  addSection('Maximum Permitted Zs:', '', formData.maxPermittedZs ? `${formData.maxPermittedZs} Ω` : '');
+  addSection('Prospective Fault Current:', '', formData.prospectiveFaultCurrent || formData.prospectiveFault ? `${formData.prospectiveFaultCurrent || formData.prospectiveFault}kA` : '');
 
   // RCD Testing (if applicable)
   if (formData.protectiveDeviceType === 'rcbo' && formData.rcdRating) {
@@ -205,7 +283,10 @@ export const generateMinorWorksPdf = (formData: MinorWorksFormData): void => {
 
   yPosition += 10;
   addSection('Name:', '', formData.electricianName);
-  addSection('Position:', '', formData.position);
+  if (formData.forAndOnBehalfOf) {
+    addSection('For and on behalf of:', '', formData.forAndOnBehalfOf);
+  }
+  addSection('Position:', '', formData.position || formData.electricianPosition);
   addSection('Signature Date:', '', formData.signatureDate ? new Date(formData.signatureDate).toLocaleDateString('en-GB') : '');
 
   if (formData.schemeProvider) {

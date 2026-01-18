@@ -85,7 +85,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       const { data: functionData, error: functionError } = await supabase.functions.invoke('generate-eic-pdf', {
         body: { 
           formData: pdfData,
-          templateId: '3D25AF58-5256-49B1-8E4E-811602303B89'
+          templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947'
         }
       });
       
@@ -196,7 +196,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-eic-pdf', {
         body: { 
           formData: pdfData,
-          templateId: '3D25AF58-5256-49B1-8E4E-811602303B89'
+          templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947'
         }
       });
       

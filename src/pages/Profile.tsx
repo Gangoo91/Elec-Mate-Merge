@@ -175,7 +175,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="bg-background flex flex-col">
       {/* Header */}
       <div className="sticky top-0 z-30 bg-background/90 backdrop-blur-xl border-b border-white/[0.06]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-4">

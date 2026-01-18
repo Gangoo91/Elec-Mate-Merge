@@ -36,13 +36,8 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   }, []);
 
   return (
-    <div className="space-y-4">
-      {process.env.NODE_ENV === 'development' && (
-        <div className="text-xs text-yellow-500 p-2 bg-card rounded">
-          Debug: {inspectionItems.length} inspection items loaded
-        </div>
-      )}
-      <EICInspectionStatsSummary inspectionItems={inspectionItems} />
+    <div className="space-y-2">
+      {/* Stats and Cards are now combined in EICInspectionChecklistCard */}
       <EICInspectionChecklistCard
         inspectionItems={inspectionItems}
         onUpdateItem={updateInspectionItem}

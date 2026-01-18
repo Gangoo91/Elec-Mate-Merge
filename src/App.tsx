@@ -1,4 +1,3 @@
-
 import './App.css';
 import AppRouter from './AppRouter';
 import { Toaster } from "@/components/ui/toaster";
@@ -14,6 +13,13 @@ import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
 import PostHogProvider from '@/components/analytics/PostHogProvider';
+import { useNativeApp } from '@/hooks/useNativeApp';
+
+// Initialize native app features (Capacitor)
+function NativeAppInit({ children }: { children: React.ReactNode }) {
+  useNativeApp();
+  return <>{children}</>;
+}
 
 function App() {
   return (
@@ -24,12 +30,14 @@ function App() {
           <PostHogProvider>
             <ThemeProvider defaultTheme="dark" storageKey="elec-ui-theme">
               <NotificationProvider>
-                <TrainingActivityMonitor />
-                <AppRouter />
-                <Toaster />
-                <PWAUpdatePrompt />
-                <SpeedInsights />
-                <Analytics />
+                <NativeAppInit>
+                  <TrainingActivityMonitor />
+                  <AppRouter />
+                  <Toaster />
+                  <PWAUpdatePrompt />
+                  <SpeedInsights />
+                  <Analytics />
+                </NativeAppInit>
               </NotificationProvider>
             </ThemeProvider>
           </PostHogProvider>

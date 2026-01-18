@@ -75,7 +75,7 @@ const InstrumentationModule3Section4 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">

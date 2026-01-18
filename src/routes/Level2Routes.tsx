@@ -1,5 +1,6 @@
-import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
+import { useLastStudyLocation } from "@/hooks/useLastStudyLocation";
 
 // Loading component
 const LoadingFallback = () => (
@@ -10,6 +11,24 @@ const LoadingFallback = () => (
     </div>
   </div>
 );
+
+// Study location tracker component - tracks all Level 2 page visits
+function Level2Tracker() {
+  const location = useLocation();
+  const { updateLastLocation } = useLastStudyLocation();
+
+  useEffect(() => {
+    // Get title from document after a short delay (to let page set title)
+    const timer = setTimeout(() => {
+      const title = document.title?.split('|')[0]?.trim() || 'Level 2 Course';
+      updateLastLocation(location.pathname, title);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [location.pathname, updateLastLocation]);
+
+  return null;
+}
 
 // Level 2 main page
 const Level2 = lazy(() => import('@/pages/apprentice-courses/Level2'));
@@ -359,6 +378,7 @@ const Level2Module8MockExam8 = lazy(() => import('@/pages/apprentice-courses/Lev
 export default function Level2Routes() {
   return (
     <Suspense fallback={<LoadingFallback />}>
+      <Level2Tracker />
       <Routes>
         {/* Level 2 main page */}
         <Route index element={<Level2 />} />

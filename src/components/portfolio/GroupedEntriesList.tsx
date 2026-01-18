@@ -113,7 +113,7 @@ const GroupedEntriesList: React.FC<GroupedEntriesListProps> = ({
               onOpenChange={() => toggleGroup(group.id)}
             >
               <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-muted/50 transition-colors">
+                <CardHeader className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <CardTitle className="text-lg">{group.name}</CardTitle>

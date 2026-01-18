@@ -175,7 +175,7 @@ export default function AdminDashboard() {
 
       {/* Revenue Hero Card */}
       <Card
-        className="bg-gradient-to-br from-emerald-500/20 to-green-600/10 border-emerald-500/30 touch-manipulation cursor-pointer hover:border-emerald-500/50 transition-colors"
+        className="bg-gradient-to-br from-emerald-500/20 to-green-600/10 border-emerald-500/30 touch-manipulation cursor-pointer hover:border-emerald-500/50 active:scale-[0.99] transition-all"
         onClick={() => navigate("/admin/revenue")}
       >
         <CardContent className="pt-5 pb-5">
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
           {/* Tier Breakdown */}
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-4">
             <div
-              className="bg-purple-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-purple-500/20 transition-colors active:scale-[0.98]"
+              className="bg-purple-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-purple-500/20 transition-all active:scale-[0.98] touch-manipulation"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=apprentice"); }}
             >
               <GraduationCap className="h-4 w-4 text-purple-400 mx-auto mb-1" />
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
               <p className="text-[10px] text-purple-400/70">{pricingTiers.apprentice.monthly}/mo</p>
             </div>
             <div
-              className="bg-yellow-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-yellow-500/20 transition-colors active:scale-[0.98]"
+              className="bg-yellow-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-yellow-500/20 transition-all active:scale-[0.98] touch-manipulation"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=electrician"); }}
             >
               <Zap className="h-4 w-4 text-yellow-400 mx-auto mb-1" />
@@ -214,7 +214,7 @@ export default function AdminDashboard() {
               <p className="text-[10px] text-yellow-400/70">{pricingTiers.electrician.monthly}/mo</p>
             </div>
             <div
-              className="bg-blue-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-blue-500/20 transition-colors active:scale-[0.98]"
+              className="bg-blue-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-blue-500/20 transition-all active:scale-[0.98] touch-manipulation"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=employer"); }}
             >
               <Building2 className="h-4 w-4 text-blue-400 mx-auto mb-1" />
@@ -223,7 +223,7 @@ export default function AdminDashboard() {
               <p className="text-[10px] text-blue-400/70">{pricingTiers.employer.monthly}/mo</p>
             </div>
             <div
-              className="bg-amber-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-amber-500/20 transition-colors active:scale-[0.98]"
+              className="bg-amber-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-amber-500/20 transition-all active:scale-[0.98] touch-manipulation"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/founders"); }}
             >
               <Crown className="h-4 w-4 text-amber-400 mx-auto mb-1" />
@@ -232,7 +232,7 @@ export default function AdminDashboard() {
               <p className="text-[10px] text-amber-400/70">{pricingTiers.founder.monthly}/mo</p>
             </div>
             <div
-              className="bg-emerald-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-emerald-500/20 transition-colors active:scale-[0.98]"
+              className="bg-emerald-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-emerald-500/20 transition-all active:scale-[0.98] touch-manipulation"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/users"); }}
             >
               <Gift className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
@@ -563,11 +563,11 @@ export default function AdminDashboard() {
                           )}
                           <div className="flex items-center justify-end gap-1 mt-0.5">
                             {isMobile ? (
-                              <Badge variant="outline" className="text-[9px] px-1.5 py-0 border-blue-500/30 text-blue-400">
+                              <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-blue-500/30 text-blue-400">
                                 Mobile
                               </Badge>
                             ) : (
-                              <Badge variant="outline" className="text-[9px] px-1.5 py-0 border-gray-500/30 text-gray-400">
+                              <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-gray-500/30 text-gray-400">
                                 Desktop
                               </Badge>
                             )}

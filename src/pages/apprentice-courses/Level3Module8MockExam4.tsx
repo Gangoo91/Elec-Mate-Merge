@@ -133,7 +133,7 @@ const Level3Module8MockExam4 = () => {
 
   if (!examStarted) {
     return (
-      <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
+      <div className="overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
         <div>
           <Card className="border-elec-yellow/30 bg-transparent">
             <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
@@ -195,7 +195,7 @@ const Level3Module8MockExam4 = () => {
       const filteredQuestions = getFilteredQuestions();
 
       return (
-        <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
+        <div className="overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
           <div className="max-w-6xl mx-auto">
             <div className="mb-4">
               <div className="flex items-center justify-between mb-4">
@@ -216,7 +216,7 @@ const Level3Module8MockExam4 = () => {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-4">
                 <Card
-                  className={`bg-transparent border-green-500/20 cursor-pointer hover:bg-transparent transition-colors ${reviewFilter === "correct" ? "ring-2 ring-green-500/50" : ""}`}
+                  className={`bg-transparent border-green-500/20 cursor-pointer hover:bg-transparent active:scale-[0.98] transition-all touch-manipulation ${reviewFilter === "correct" ? "ring-2 ring-green-500/50" : ""}`}
                   onClick={() => setReviewFilter(reviewFilter === "correct" ? "all" : "correct")}
                 >
                   <CardContent className="p-3 text-center">
@@ -225,7 +225,7 @@ const Level3Module8MockExam4 = () => {
                   </CardContent>
                 </Card>
                 <Card
-                  className={`bg-transparent border-red-500/20 cursor-pointer hover:bg-transparent transition-colors ${reviewFilter === "incorrect" ? "ring-2 ring-red-500/50" : ""}`}
+                  className={`bg-transparent border-red-500/20 cursor-pointer hover:bg-transparent active:scale-[0.98] transition-all touch-manipulation ${reviewFilter === "incorrect" ? "ring-2 ring-red-500/50" : ""}`}
                   onClick={() => setReviewFilter(reviewFilter === "incorrect" ? "all" : "incorrect")}
                 >
                   <CardContent className="p-3 text-center">
@@ -234,7 +234,7 @@ const Level3Module8MockExam4 = () => {
                   </CardContent>
                 </Card>
                 <Card
-                  className={`bg-transparent border-muted/20 cursor-pointer hover:bg-muted/10 transition-colors ${reviewFilter === "unanswered" ? "ring-2 ring-muted/50" : ""}`}
+                  className={`bg-transparent border-muted/20 cursor-pointer hover:bg-muted/10 active:scale-[0.98] transition-all touch-manipulation ${reviewFilter === "unanswered" ? "ring-2 ring-muted/50" : ""}`}
                   onClick={() => setReviewFilter(reviewFilter === "unanswered" ? "all" : "unanswered")}
                 >
                   <CardContent className="p-3 text-center">
@@ -243,7 +243,7 @@ const Level3Module8MockExam4 = () => {
                   </CardContent>
                 </Card>
                 <Card
-                  className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 transition-colors ${reviewFilter === "flagged" ? "ring-2 ring-elec-yellow/50" : ""}`}
+                  className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 active:scale-[0.98] transition-all touch-manipulation ${reviewFilter === "flagged" ? "ring-2 ring-elec-yellow/50" : ""}`}
                   onClick={() => setReviewFilter(reviewFilter === "flagged" ? "all" : "flagged")}
                 >
                   <CardContent className="p-3 text-center">
@@ -330,7 +330,7 @@ const Level3Module8MockExam4 = () => {
     }
 
     return (
-      <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
+      <div className="overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
         <div>
           <Card className="border-elec-yellow/30 bg-transparent">
             <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
@@ -404,7 +404,7 @@ const Level3Module8MockExam4 = () => {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+    <div className="overflow-x-hidden bg-[#1a1a1a]">
       <div className="border-b border-muted/20 bg-transparent/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">

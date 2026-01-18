@@ -166,7 +166,7 @@ const AM2Module8 = () => {
   // Before exam starts
   if (!examStarted) {
     return (
-      <div className="min-h-screen bg-[#1a1a1a] p-2 sm:p-4">
+      <div className="bg-[#1a1a1a] p-2 sm:p-4">
         <div>
           <Card className="border-elec-yellow/30 ">
             <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
@@ -226,7 +226,7 @@ const AM2Module8 = () => {
   // Results screen
   if (showResults && !showReview) {
     return (
-      <div className="min-h-screen bg-[#1a1a1a] p-2 sm:p-4">
+      <div className="bg-[#1a1a1a] p-2 sm:p-4">
         <div>
           <Card className="border-elec-yellow/30 ">
             <CardHeader className="text-center pb-4 px-4 sm:px-6">
@@ -304,7 +304,7 @@ const AM2Module8 = () => {
     const filteredQuestions = getFilteredQuestions();
     
     return (
-      <div className="min-h-screen bg-[#1a1a1a] p-2 sm:p-4">
+      <div className="bg-[#1a1a1a] p-2 sm:p-4">
         <div className="max-w-3xl mx-auto">
           {/* Review Header */}
           <div className="mb-4">
@@ -326,8 +326,8 @@ const AM2Module8 = () => {
             
             {/* Summary Stats - Clickable Filters */}
             <div className="grid grid-cols-1 gap-4 mb-4">
-              <Card 
-                className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 transition-colors ${
+              <Card
+                className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 active:scale-[0.98] transition-all touch-manipulation ${
                   reviewFilter === "all" ? "ring-2 ring-elec-yellow/50" : ""
                 }`}
                 onClick={() => setReviewFilter(reviewFilter === "all" ? "all" : "all")}
@@ -337,8 +337,8 @@ const AM2Module8 = () => {
                   <div className="text-xs text-white">All</div>
                 </CardContent>
               </Card>
-              <Card 
-                className={`bg-transparent border-green-500/20 cursor-pointer hover:bg-transparent transition-colors ${
+              <Card
+                className={`bg-transparent border-green-500/20 cursor-pointer hover:bg-transparent active:scale-[0.98] transition-all touch-manipulation ${
                   reviewFilter === "correct" ? "ring-2 ring-green-500/50" : ""
                 }`}
                 onClick={() => setReviewFilter(reviewFilter === "correct" ? "all" : "correct")}
@@ -348,8 +348,8 @@ const AM2Module8 = () => {
                   <div className="text-xs text-white">Correct</div>
                 </CardContent>
               </Card>
-              <Card 
-                className={`bg-transparent border-red-500/20 cursor-pointer hover:bg-transparent transition-colors ${
+              <Card
+                className={`bg-transparent border-red-500/20 cursor-pointer hover:bg-transparent active:scale-[0.98] transition-all touch-manipulation ${
                   reviewFilter === "incorrect" ? "ring-2 ring-red-500/50" : ""
                 }`}
                 onClick={() => setReviewFilter(reviewFilter === "incorrect" ? "all" : "incorrect")}
@@ -359,8 +359,8 @@ const AM2Module8 = () => {
                   <div className="text-xs text-white">Incorrect</div>
                 </CardContent>
               </Card>
-              <Card 
-                className={`bg-transparent border-muted/20 cursor-pointer hover:bg-muted/10 transition-colors ${
+              <Card
+                className={`bg-transparent border-muted/20 cursor-pointer hover:bg-muted/10 active:scale-[0.98] transition-all touch-manipulation ${
                   reviewFilter === "unanswered" ? "ring-2 ring-muted/50" : ""
                 }`}
                 onClick={() => setReviewFilter(reviewFilter === "unanswered" ? "all" : "unanswered")}
@@ -370,8 +370,8 @@ const AM2Module8 = () => {
                   <div className="text-xs text-white">Unanswered</div>
                 </CardContent>
               </Card>
-              <Card 
-                className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 transition-colors ${
+              <Card
+                className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 active:scale-[0.98] transition-all touch-manipulation ${
                   reviewFilter === "flagged" ? "ring-2 ring-elec-yellow/50" : ""
                 }`}
                 onClick={() => setReviewFilter(reviewFilter === "flagged" ? "all" : "flagged")}
@@ -502,7 +502,7 @@ const AM2Module8 = () => {
   };
   
   return (
-    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
+    <div className="bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="sticky top-0 z-50 backdrop-blur-sm bg-[#1a1a1a]/80 border-b border-elec-yellow/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">

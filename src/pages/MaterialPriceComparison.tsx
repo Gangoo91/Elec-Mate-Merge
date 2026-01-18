@@ -8,7 +8,7 @@ const MaterialPriceComparisonPage = () => {
   const initialQuery = searchParams.get('q') || '';
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white">
+    <div className="bg-elec-dark text-white">
       <Helmet>
         <title>Material Price Comparison - Elec-Mate</title>
         <meta name="description" content="Compare electrical material prices across multiple UK suppliers. Find the best deals on cables, components, and electrical equipment." />

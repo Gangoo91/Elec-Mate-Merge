@@ -220,7 +220,7 @@ export function JobFinancialsSection() {
               <CardContent className="p-0">
                 {/* Header Row */}
                 <div
-                  className="p-3 md:p-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                  className="p-3 md:p-4 cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
                   onClick={() => setExpandedJob(isExpanded ? null : fin.id)}
                 >
                   <div className="flex flex-col gap-3">
@@ -367,7 +367,7 @@ export function JobFinancialsSection() {
                           {fin.variation_orders.map((vo) => (
                             <div
                               key={vo.id}
-                              className="flex items-center justify-between p-2 bg-elec-gray rounded-lg text-xs cursor-pointer hover:bg-muted/50 transition-colors"
+                              className="flex items-center justify-between p-2 bg-elec-gray rounded-lg text-xs cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
                               onClick={() => setShowVariationSheet({ vo, jobTitle: fin.job?.title || 'Untitled Job' })}
                             >
                               <div className="min-w-0">

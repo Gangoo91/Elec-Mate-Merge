@@ -608,7 +608,7 @@ const EnergyCostCalculator = () => {
         </div>
 
         {/* Dual Rate Toggle */}
-        <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+        <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 active:bg-white/15 transition-all touch-manipulation">
           <input
             type="checkbox"
             checked={useDualRate}

@@ -127,7 +127,7 @@ const ElectricalMaterials = () => {
   );
 
   return (
-    <div className="space-y-8 animate-fade-in p-0 pt-safe pb-safe">
+    <div className="space-y-8 animate-fade-in p-0  ">
       {/* Premium Header */}
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         <div className="flex items-center gap-4">

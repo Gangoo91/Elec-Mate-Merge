@@ -114,7 +114,7 @@ export function CollegeChatList({
         return (
           <Card
             key={conv.id}
-            className="cursor-pointer hover:bg-muted/50 transition-colors"
+            className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
             onClick={() => onSelectConversation(conv)}
           >
             <CardContent className="p-3">

@@ -250,7 +250,7 @@ const EmergencyLightingCalculator = () => {
 
             {/* Boolean Options */}
             <div className="grid grid-cols-2 gap-3">
-              <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 active:bg-white/15 transition-all touch-manipulation">
                 <input
                   type="checkbox"
                   checked={hasHighRiskTasks}
@@ -260,7 +260,7 @@ const EmergencyLightingCalculator = () => {
                 <span className="text-sm text-white/80">High Risk Tasks</span>
               </label>
 
-              <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+              <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 active:bg-white/15 transition-all touch-manipulation">
                 <input
                   type="checkbox"
                   checked={hasDisabledAccess}
@@ -270,7 +270,7 @@ const EmergencyLightingCalculator = () => {
                 <span className="text-sm text-white/80">Disabled Access</span>
               </label>
 
-              <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors col-span-2">
+              <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 active:bg-white/15 transition-all touch-manipulation col-span-2">
                 <input
                   type="checkbox"
                   checked={complexLayout}

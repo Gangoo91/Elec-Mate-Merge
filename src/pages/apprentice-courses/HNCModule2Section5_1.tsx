@@ -10,7 +10,7 @@ const HNCModule2Section5_1 = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       <div className="border-b border-border/20 bg-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button variant="ghost" className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1" asChild>

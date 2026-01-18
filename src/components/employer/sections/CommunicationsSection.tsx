@@ -1238,7 +1238,7 @@ export const CommunicationsSection = () => {
                   {tab.label}
                 </span>
                 {tab.count && (
-                  <div className="absolute -top-0.5 right-1 min-w-[16px] h-[16px] rounded-full bg-destructive text-destructive-foreground text-[9px] font-bold flex items-center justify-center px-1">
+                  <div className="absolute -top-0.5 right-1 min-w-[16px] h-[16px] rounded-full bg-destructive text-destructive-foreground text-[10px] font-bold flex items-center justify-center px-1">
                     {tab.count}
                   </div>
                 )}

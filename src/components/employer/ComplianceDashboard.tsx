@@ -154,7 +154,7 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {/* Employee Qualifications */}
         <Card
-          className="cursor-pointer hover:bg-muted/50 transition-colors"
+          className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
           onClick={() => onCategoryClick?.("qualifications")}
         >
           <CardContent className="p-4">
@@ -180,7 +180,7 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
 
         {/* Insurance */}
         <Card
-          className="cursor-pointer hover:bg-muted/50 transition-colors"
+          className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
           onClick={() => onCategoryClick?.("Insurance")}
         >
           <CardContent className="p-4">
@@ -201,7 +201,7 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
 
         {/* Memberships */}
         <Card
-          className="cursor-pointer hover:bg-muted/50 transition-colors"
+          className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
           onClick={() => onCategoryClick?.("Memberships")}
         >
           <CardContent className="p-4">
@@ -222,7 +222,7 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
 
         {/* Vehicles */}
         <Card
-          className="cursor-pointer hover:bg-muted/50 transition-colors"
+          className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
           onClick={() => onCategoryClick?.("Vehicles")}
         >
           <CardContent className="p-4">

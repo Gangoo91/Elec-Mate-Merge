@@ -121,7 +121,7 @@ const InspectionTestingModule2Section6 = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="bg-background text-foreground">
       {/* Minimal Header */}
       <header className="px-4 py-3 flex items-center justify-between border-b border-border">
         <Link to="/study-centre/upskilling/inspection-testing/module-2">

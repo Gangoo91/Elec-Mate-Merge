@@ -95,15 +95,27 @@ export default function AdminFounders() {
     },
   });
 
-  // Bulk create mutation
+  // Bulk create mutation - creates invites AND sends them immediately
   const bulkCreateMutation = useMutation({
     mutationFn: async (emails: string[]) => {
+      // First create the invites
       const { data, error } = await supabase.functions.invoke("send-founder-invite", {
         body: { action: "bulk_create", emails },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-      return data;
+
+      // Immediately send all pending invites
+      const { data: sendData, error: sendError } = await supabase.functions.invoke("send-founder-invite", {
+        body: { action: "send_all_pending" },
+      });
+      if (sendError) console.error("Failed to auto-send:", sendError);
+
+      return {
+        ...data,
+        sent: sendData?.sent || 0,
+        sendErrors: sendData?.errors || []
+      };
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["admin-founder-invites"] });
@@ -111,8 +123,8 @@ export default function AdminFounders() {
       setShowUpload(false);
       setEmailInput("");
       toast({
-        title: "Invites created",
-        description: `Created ${data.created} invites${data.skipped > 0 ? `, ${data.skipped} skipped (already exist)` : ""}`,
+        title: "Invites created & sent",
+        description: `Created ${data.created} invites, sent ${data.sent} emails${data.skipped > 0 ? `, ${data.skipped} skipped (already exist)` : ""}`,
       });
     },
     onError: (error: any) => {
@@ -388,8 +400,17 @@ export default function AdminFounders() {
                 onClick={handleBulkUpload}
                 disabled={bulkCreateMutation.isPending}
               >
-                <Upload className="h-4 w-4" />
-                {bulkCreateMutation.isPending ? "Creating..." : "Create Invites"}
+                {bulkCreateMutation.isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Creating & Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-4 w-4" />
+                    Create & Send Invites
+                  </>
+                )}
               </Button>
             </SheetFooter>
           </div>

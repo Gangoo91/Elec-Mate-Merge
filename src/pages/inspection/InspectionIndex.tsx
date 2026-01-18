@@ -14,7 +14,7 @@ const LearningHub = lazy(() => import('@/components/LearningHub'));
 
 // Loading spinner for lazy components
 const SectionLoader = () => (
-  <div className="flex items-center justify-center py-20 min-h-screen bg-background">
+  <div className="flex items-center justify-center py-20 bg-background">
     <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
   </div>
 );
@@ -111,7 +111,7 @@ const InspectionIndex = () => {
     switch (currentSection) {
       case 'eicr':
         return (
-          <div className="min-h-screen bg-background text-foreground">
+          <div className="bg-background text-foreground">
             <ErrorBoundary>
               <EICRForm
                 onBack={() => handleNavigate('dashboard')}
@@ -122,7 +122,7 @@ const InspectionIndex = () => {
         );
       case 'eic':
         return (
-          <div className="min-h-screen bg-background text-foreground">
+          <div className="bg-background text-foreground">
             <ErrorBoundary>
               <EICForm
                 onBack={() => handleNavigate('dashboard')}
@@ -134,7 +134,7 @@ const InspectionIndex = () => {
         );
       case 'minor-works':
         return (
-          <div className="min-h-screen bg-background text-foreground">
+          <div className="bg-background text-foreground">
             <ErrorBoundary>
               <MinorWorksForm onBack={() => handleNavigate('dashboard')} initialReportId={currentReportId} />
             </ErrorBoundary>
@@ -152,7 +152,7 @@ const InspectionIndex = () => {
         return <LearningHub onBack={() => handleNavigate('dashboard')} />;
       case 'notifications':
         return (
-          <div className="min-h-screen bg-background text-foreground">
+          <div className="bg-background text-foreground">
             <div className="sticky top-0 z-50 w-full border-b border-border/50 bg-sidebar/95 backdrop-blur supports-[backdrop-filter]:bg-sidebar/80">
               <div className="px-3 sm:px-4">
                 <div className="flex h-12 items-center justify-between">
@@ -178,7 +178,7 @@ const InspectionIndex = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       <Suspense fallback={<SectionLoader />}>
         {renderCurrentSection()}
       </Suspense>

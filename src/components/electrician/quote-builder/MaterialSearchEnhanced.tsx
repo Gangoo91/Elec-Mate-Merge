@@ -188,7 +188,7 @@ export const MaterialSearchEnhanced = ({ onAddMaterial, currentQuoteItems = [] }
                   return (
                     <Card
                       key={material.id}
-                      className={`bg-card/50 cursor-pointer transition-colors ${
+                      className={`bg-card/50 cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
                         alreadyInQuote 
                           ? 'border-slate-600 dark:border-slate-400 border-2 opacity-75' 
                           : 'border-elec-yellow/20 hover:border-elec-yellow/40'

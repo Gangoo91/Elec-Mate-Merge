@@ -146,7 +146,7 @@ export const ResultsSuccessAnimation = ({
     '#4ADE80', // green
     '#60A5FA', // blue
     '#A78BFA', // purple
-    '#FB923C', // orange
+    '#FACC15', // amber/yellow
   ];
 
   // Generate confetti particles

@@ -160,14 +160,15 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         value?: string;
         description?: string;
       }) => {
-        console.log('[InlineVoice] fill_eic called:', params);
+        console.log('[InlineVoice] fill_eic called (routing to fill_schedule_of_tests):', params);
         if (params.action === 'update_field' && params.field) {
           const resolvedField = resolveFieldName(params.field);
           if (resolvedField) {
             params = { ...params, field: resolvedField };
           }
         }
-        return handleToolCall('fill_eic', params);
+        // Route to fill_schedule_of_tests for consistency
+        return handleToolCall('fill_schedule_of_tests', params);
       },
 
       fill_minor_works: async (params: {

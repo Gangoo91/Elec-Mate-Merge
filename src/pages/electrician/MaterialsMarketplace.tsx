@@ -153,7 +153,7 @@ export default function MaterialsMarketplace() {
   ];
 
   return (
-    <div className="min-h-screen bg-background pb-20 sm:pb-8">
+    <div className="bg-background pb-20 sm:pb-8">
       {/* Header */}
       <div className="bg-gradient-to-b from-yellow-500/10 to-transparent border-b border-white/10">
         <div className="container mx-auto px-4 py-4 sm:py-6">
@@ -272,7 +272,7 @@ export default function MaterialsMarketplace() {
                     )}
                   </div>
                   {/* Supplier */}
-                  <p className="text-[10px] text-muted-foreground mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     {product.supplier_name}
                   </p>
                 </a>
@@ -289,7 +289,7 @@ export default function MaterialsMarketplace() {
               <button
                 key={cat.name}
                 onClick={() => handleCategoryFilter(cat.slug)}
-                className={`h-9 px-4 rounded-full border text-sm font-medium whitespace-nowrap touch-manipulation active:scale-95 transition-all ${
+                className={`h-11 px-4 rounded-full border text-sm font-medium whitespace-nowrap touch-manipulation active:scale-[0.97] transition-all ${
                   filters.category === cat.slug || (!filters.category && cat.slug === undefined)
                     ? 'bg-yellow-500 text-black border-yellow-500'
                     : 'bg-card border-border hover:border-yellow-500/50'

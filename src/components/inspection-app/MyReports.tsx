@@ -756,28 +756,28 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               {/* Status Filters */}
               <Badge 
                 variant={statusFilter === 'all' ? 'default' : 'outline'}
-                className="cursor-pointer transition-colors px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
+                className="cursor-pointer active:scale-[0.98] transition-all touch-manipulation px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
                 onClick={() => { navigator.vibrate?.(10); setStatusFilter('all'); }}
               >
                 All {statusCounts.all}
               </Badge>
               <Badge 
                 variant={statusFilter === 'draft' ? 'default' : 'outline'}
-                className="cursor-pointer transition-colors px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
+                className="cursor-pointer active:scale-[0.98] transition-all touch-manipulation px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
                 onClick={() => { navigator.vibrate?.(10); setStatusFilter('draft'); }}
               >
                 Drafts {statusCounts.draft}
               </Badge>
               <Badge 
                 variant={statusFilter === 'in-progress' ? 'default' : 'outline'}
-                className="cursor-pointer transition-colors px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
+                className="cursor-pointer active:scale-[0.98] transition-all touch-manipulation px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
                 onClick={() => { navigator.vibrate?.(10); setStatusFilter('in-progress'); }}
               >
                 Progress {statusCounts['in-progress']}
               </Badge>
               <Badge 
                 variant={statusFilter === 'completed' ? 'default' : 'outline'}
-                className="cursor-pointer transition-colors px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
+                className="cursor-pointer active:scale-[0.98] transition-all touch-manipulation px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
                 onClick={() => { navigator.vibrate?.(10); setStatusFilter('completed'); }}
               >
                 Done {statusCounts.completed}
@@ -788,28 +788,28 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               {/* Type Filters */}
               <Badge 
                 variant={typeFilter === 'all' ? 'default' : 'outline'}
-                className="cursor-pointer transition-colors px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
+                className="cursor-pointer active:scale-[0.98] transition-all touch-manipulation px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
                 onClick={() => { navigator.vibrate?.(10); setTypeFilter('all'); }}
               >
                 All Types
               </Badge>
               <Badge 
                 variant={typeFilter === 'eicr' ? 'default' : 'outline'}
-                className="cursor-pointer transition-colors px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
+                className="cursor-pointer active:scale-[0.98] transition-all touch-manipulation px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
                 onClick={() => { navigator.vibrate?.(10); setTypeFilter('eicr'); }}
               >
                 EICR
               </Badge>
               <Badge 
                 variant={typeFilter === 'eic' ? 'default' : 'outline'}
-                className="cursor-pointer transition-colors px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
+                className="cursor-pointer active:scale-[0.98] transition-all touch-manipulation px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
                 onClick={() => { navigator.vibrate?.(10); setTypeFilter('eic'); }}
               >
                 EIC
               </Badge>
               <Badge 
                 variant={typeFilter === 'minor-works' ? 'default' : 'outline'}
-                className="cursor-pointer transition-colors px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
+                className="cursor-pointer active:scale-[0.98] transition-all touch-manipulation px-3 py-2 text-sm min-h-[36px] min-w-[80px] justify-center"
                 onClick={() => { navigator.vibrate?.(10); setTypeFilter('minor-works'); }}
               >
                 Minor Works

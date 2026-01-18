@@ -391,7 +391,7 @@ export default function AdminSystem() {
               {healthChecks?.map((check, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between p-4 touch-manipulation active:bg-muted/50 cursor-pointer transition-colors"
+                  className="flex items-center justify-between p-4 touch-manipulation active:bg-muted/50 cursor-pointer transition-all"
                   onClick={() => setSelectedCheck(check)}
                 >
                   <div className="flex items-center gap-3">

@@ -15,6 +15,8 @@ const SignIn = lazy(() => import("@/pages/auth/SignIn"));
 const SignUp = lazy(() => import("@/pages/auth/SignUp"));
 const ForgotPassword = lazy(() => import("@/pages/auth/ForgotPassword"));
 const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
+const ConfirmEmail = lazy(() => import("@/pages/auth/ConfirmEmail"));
+const CheckEmail = lazy(() => import("@/pages/auth/CheckEmail"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const Profile = lazy(() => import("@/pages/Profile"));
 const Settings = lazy(() => import("@/pages/Settings"));
@@ -64,6 +66,7 @@ const AdminPricingModeration = lazy(() => import("@/pages/Admin/AdminPricingMode
 const AdminDocumentReview = lazy(() => import("@/pages/Admin/AdminDocumentReview"));
 const AdminFounders = lazy(() => import("@/pages/Admin/AdminFounders"));
 const FounderClaim = lazy(() => import("@/pages/founder/FounderClaim"));
+const FounderSignup = lazy(() => import("@/pages/founder/FounderSignup"));
 const FounderSuccess = lazy(() => import("@/pages/founder/FounderSuccess"));
 const CustomersPage = lazy(() => import("@/pages/CustomersPage"));
 const CustomerDetailPage = lazy(() => import("@/pages/CustomerDetailPage"));
@@ -73,6 +76,8 @@ const CollegeDashboard = lazy(() => import("@/pages/college/CollegeDashboard"));
 const ElecIdPage = lazy(() => import("@/pages/ElecIdPage"));
 const PrivacyPolicy = lazy(() => import("@/pages/legal/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("@/pages/legal/TermsOfService"));
+const RegulationSearchPage = lazy(() => import("@/pages/tools/RegulationSearchPage"));
+const QuizPage = lazy(() => import("@/pages/QuizPage"));
 
 // Lazy-loaded route modules
 const ApprenticeRoutes = lazy(() => import("@/routes/ApprenticeRoutes"));
@@ -103,6 +108,8 @@ const AppRouter = () => {
       <Route path="/auth/signup" element={<LazyRoute><SignUp /></LazyRoute>} />
       <Route path="/auth/forgot-password" element={<LazyRoute><ForgotPassword /></LazyRoute>} />
       <Route path="/auth/reset-password" element={<LazyRoute><ResetPassword /></LazyRoute>} />
+      <Route path="/auth/confirm-email" element={<LazyRoute><ConfirmEmail /></LazyRoute>} />
+      <Route path="/auth/check-email" element={<LazyRoute><CheckEmail /></LazyRoute>} />
       <Route path="/privacy" element={<LazyRoute><PrivacyPolicy /></LazyRoute>} />
       <Route path="/terms" element={<LazyRoute><TermsOfService /></LazyRoute>} />
       <Route path="/quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
@@ -112,6 +119,7 @@ const AppRouter = () => {
       <Route path="/portal/:token" element={<LazyRoute><ClientPortalView /></LazyRoute>} />
       <Route path="/pdf-generator" element={<LazyRoute><LaTeXPDFGeneratorPage /></LazyRoute>} />
       <Route path="/founder/claim" element={<LazyRoute><FounderClaim /></LazyRoute>} />
+      <Route path="/founder/signup" element={<LazyRoute><FounderSignup /></LazyRoute>} />
       <Route path="/founder/success" element={<LazyRoute><FounderSuccess /></LazyRoute>} />
       <Route path="/invoice-payment-success" element={<LazyRoute><InvoicePaymentSuccess /></LazyRoute>} />
 
@@ -166,6 +174,12 @@ const AppRouter = () => {
 
         {/* Top level routes for shared features */}
         <Route path="mental-health" element={<LazyRoute><ApprenticeMentalHealth /></LazyRoute>} />
+
+        {/* Tools Routes */}
+        <Route path="tools/regulation-search" element={<LazyRoute><RegulationSearchPage /></LazyRoute>} />
+
+        {/* Quiz Route */}
+        <Route path="quiz/:id" element={<LazyRoute><QuizPage /></LazyRoute>} />
 
         {/* Electrician Tools Routes */}
         <Route path="electrician-tools" element={<Navigate to="/electrician" replace />} />

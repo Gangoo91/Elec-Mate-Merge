@@ -99,7 +99,7 @@ export default function LearningHub() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Header */}
       <div className="bg-card border-b border-border sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
@@ -161,7 +161,7 @@ export default function LearningHub() {
           {learningModules.map((module) => (
             <Card
               key={module.id}
-              className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-primary/30"
+              className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:border-primary/30 active:scale-[0.98] touch-manipulation"
             >
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">

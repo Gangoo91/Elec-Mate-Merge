@@ -87,7 +87,7 @@ class SafetyCasesErrorBoundary extends Component<Props, State> {
                   </p>
                   {process.env.NODE_ENV === 'development' && (
                     <details className="text-xs">
-                      <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80 transition-colors">
+                      <summary className="cursor-pointer text-elec-yellow hover:text-elec-yellow/80 active:text-elec-yellow transition-all touch-manipulation">
                         Show Stack Trace
                       </summary>
                       <pre className="mt-3 p-3 rounded-lg bg-white/10 whitespace-pre-wrap text-white/80 overflow-x-auto">

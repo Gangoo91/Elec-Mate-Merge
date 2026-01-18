@@ -132,7 +132,7 @@ const ActionCard = forwardRef<HTMLDivElement, { action: DashboardActionItem }>(
               onClick={() => navigate(action.path)}
               className={cn(
                 // Mobile: full width below text
-                'mt-2 w-full h-10 text-xs font-medium',
+                'mt-2 w-full h-11 text-sm font-medium',
                 // Tablet+: absolute positioned right
                 'sm:absolute sm:right-3 sm:top-1/2 sm:-translate-y-1/2',
                 'sm:w-auto sm:mt-0 sm:px-3',

@@ -163,7 +163,7 @@ const BulkToolPricingCalculator: React.FC<BulkToolPricingCalculatorProps> = ({
                 <div
                   key={tool.id}
                   onClick={() => setSelectedTool(tool)}
-                  className={`p-3 rounded-lg border cursor-pointer transition-colors ${
+                  className={`p-3 rounded-lg border cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
                     selectedTool?.id === tool.id 
                       ? 'border-elec-yellow bg-elec-yellow/10' 
                       : 'border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40'

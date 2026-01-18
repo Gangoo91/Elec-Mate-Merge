@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Sheet,
   SheetContent,
@@ -71,14 +72,30 @@ interface PricingSubmission {
   profiles?: { full_name: string; username: string; role: string };
 }
 
+// Quick-select rejection reasons
+const REJECTION_REASONS = [
+  { id: 'unrealistic', label: 'Price seems unrealistic' },
+  { id: 'spam', label: 'Spam or test submission' },
+  { id: 'incomplete', label: 'Missing required details' },
+  { id: 'duplicate', label: 'Duplicate submission' },
+  { id: 'other', label: 'Other' },
+] as const;
+
 export default function AdminPricingModeration() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("pending");
   const [selectedSubmission, setSelectedSubmission] = useState<PricingSubmission | null>(null);
-  const [rejectReason, setRejectReason] = useState("");
+  const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
+  const [otherReason, setOtherReason] = useState("");
   const [showRejectDialog, setShowRejectDialog] = useState(false);
+
+  const toggleReason = (reasonId: string, checked: boolean) => {
+    setSelectedReasons(prev =>
+      checked ? [...prev, reasonId] : prev.filter(id => id !== reasonId)
+    );
+  };
 
   // Fetch pricing submissions
   const { data: submissions, isLoading, refetch, isFetching } = useQuery({
@@ -184,35 +201,33 @@ export default function AdminPricingModeration() {
     },
   });
 
-  // Reject mutation
+  // Reject mutation - DELETES the submission (keeps DB clean)
   const rejectMutation = useMutation({
-    mutationFn: async ({ id, reason }: { id: string; reason: string }) => {
-      const { error } = await supabase
-        .from("community_pricing_submissions")
-        .update({
-          verification_status: "rejected",
-          verified_by: profile?.id,
-          verified_at: new Date().toISOString(),
-          complexity_notes: reason, // Using this field to store rejection reason
-        })
-        .eq("id", id);
-      if (error) throw error;
-
+    mutationFn: async ({ id, reasons, otherText }: { id: string; reasons: string[]; otherText?: string }) => {
+      // Log the deletion before removing
       await supabase.from("admin_audit_logs").insert({
         user_id: profile?.id,
-        action: "pricing_rejected",
+        action: "pricing_deleted",
         entity_type: "community_pricing_submissions",
         entity_id: id,
-        new_values: { reason },
+        new_values: { reasons, otherText },
       });
+
+      // Delete the submission permanently
+      const { error } = await supabase
+        .from("community_pricing_submissions")
+        .delete()
+        .eq("id", id);
+      if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-pricing-submissions"] });
       queryClient.invalidateQueries({ queryKey: ["admin-pricing-stats"] });
       setSelectedSubmission(null);
       setShowRejectDialog(false);
-      setRejectReason("");
-      toast({ title: "Price rejected" });
+      setSelectedReasons([]);
+      setOtherReason("");
+      toast({ title: "Submission deleted" });
     },
   });
 
@@ -647,37 +662,67 @@ export default function AdminPricingModeration() {
         </SheetContent>
       </Sheet>
 
-      {/* Reject Dialog */}
-      <AlertDialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>
+      {/* Reject & Delete Dialog */}
+      <AlertDialog open={showRejectDialog} onOpenChange={(open) => {
+        setShowRejectDialog(open);
+        if (!open) {
+          setSelectedReasons([]);
+          setOtherReason("");
+        }
+      }}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Reject Pricing?</AlertDialogTitle>
+            <AlertDialogTitle>Reject & Delete</AlertDialogTitle>
             <AlertDialogDescription>
-              Please provide a reason for rejection (e.g., unrealistic price, spam, etc.)
+              Select reason(s) for rejection. This will permanently delete the submission.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <Textarea
-            value={rejectReason}
-            onChange={(e) => setRejectReason(e.target.value)}
-            placeholder="Enter rejection reason..."
-            className="min-h-[100px]"
-          />
+
+          <div className="space-y-2 py-2">
+            {REJECTION_REASONS.map((reason) => (
+              <label
+                key={reason.id}
+                className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 cursor-pointer hover:bg-muted/70 active:bg-muted/80 transition-all touch-manipulation"
+              >
+                <Checkbox
+                  checked={selectedReasons.includes(reason.id)}
+                  onCheckedChange={(checked) => toggleReason(reason.id, !!checked)}
+                  className="border-white/40 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                />
+                <span className="text-sm">{reason.label}</span>
+              </label>
+            ))}
+          </div>
+
+          {selectedReasons.includes('other') && (
+            <Textarea
+              value={otherReason}
+              onChange={(e) => setOtherReason(e.target.value)}
+              placeholder="Additional notes..."
+              className="min-h-[80px] text-sm"
+            />
+          )}
+
           <AlertDialogFooter>
             <AlertDialogCancel className="h-11 touch-manipulation" disabled={rejectMutation.isPending}>
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
               className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
-              onClick={() => selectedSubmission && rejectMutation.mutate({ id: selectedSubmission.id, reason: rejectReason })}
-              disabled={!rejectReason.trim() || rejectMutation.isPending}
+              onClick={() => selectedSubmission && rejectMutation.mutate({
+                id: selectedSubmission.id,
+                reasons: selectedReasons,
+                otherText: selectedReasons.includes('other') ? otherReason : undefined
+              })}
+              disabled={selectedReasons.length === 0 || rejectMutation.isPending}
             >
               {rejectMutation.isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Rejecting...
+                  Deleting...
                 </>
               ) : (
-                "Reject"
+                "Delete"
               )}
             </AlertDialogAction>
           </AlertDialogFooter>

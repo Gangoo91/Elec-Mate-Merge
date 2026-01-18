@@ -76,7 +76,7 @@ const SubscriptionStatus = () => {
               variant="ghost"
               size="sm"
               disabled={isLoading}
-              className="h-7 px-2.5 text-xs text-white/70 hover:text-white hover:bg-green-500/20"
+              className="h-10 px-3 text-sm text-white/70 hover:text-white hover:bg-green-500/20 active:bg-green-500/30 touch-manipulation"
             >
               {isLoading ? (
                 <Loader2 className="h-3 w-3 animate-spin" />
@@ -93,7 +93,7 @@ const SubscriptionStatus = () => {
               variant="ghost"
               size="sm"
               disabled={isCanceling}
-              className="h-7 px-2 text-xs text-white/40 hover:text-red-400 hover:bg-red-500/10"
+              className="h-10 w-10 px-0 text-white/40 hover:text-red-400 hover:bg-red-500/10 active:bg-red-500/20 touch-manipulation"
             >
               {isCanceling ? (
                 <Loader2 className="h-3 w-3 animate-spin" />

@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SectionHeader from '@/components/ui/section-header';
-import { Users, Calendar, FileText } from 'lucide-react';
+import { Users, Calendar, FileText, ClipboardList } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface EICClientDetailsSectionProps {
@@ -26,9 +26,18 @@ const EICClientDetailsSection = ({ formData, onUpdate, isOpen, onToggle }: EICCl
 
   // Calculate completion percentage
   const getCompletionPercentage = () => {
-    const requiredFields = ['clientName', 'clientAddress', 'installationAddress', 'description', 'installationDate'];
+    const requiredFields = ['clientName', 'clientAddress', 'installationAddress', 'description', 'installationDate', 'workType'];
     const filled = requiredFields.filter(f => formData[f]).length;
     return Math.round((filled / requiredFields.length) * 100);
+  };
+
+  // Handle work type checkbox changes (IET form requires: New / Addition / Alteration)
+  const handleWorkTypeChange = (type: string, checked: boolean) => {
+    if (checked) {
+      onUpdate('workType', type);
+    } else if (formData.workType === type) {
+      onUpdate('workType', '');
+    }
   };
 
   return (
@@ -191,6 +200,96 @@ const EICClientDetailsSection = ({ formData, onUpdate, isOpen, onToggle }: EICCl
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
+            </div>
+
+            {/* Description and Extent of Installation (IET Form Section) */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-semibold text-blue-400 border-b border-white/10 pb-2 flex items-center gap-2">
+                <ClipboardList className="h-4 w-4" />
+                Description and Extent of Installation
+              </h4>
+
+              {/* Work Type - IET Form checkboxes */}
+              <div className="space-y-2">
+                <Label className="text-sm">Type of Work *</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div
+                    className={cn(
+                      "flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation",
+                      formData.workType === 'new'
+                        ? "bg-green-500/15 border-green-500/50"
+                        : "bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]"
+                    )}
+                    onClick={() => handleWorkTypeChange('new', formData.workType !== 'new')}
+                  >
+                    <Checkbox
+                      id="workTypeNew"
+                      checked={formData.workType === 'new'}
+                      onCheckedChange={(checked) => handleWorkTypeChange('new', checked as boolean)}
+                      className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+                    />
+                    <Label htmlFor="workTypeNew" className="text-sm font-medium cursor-pointer">
+                      New installation
+                    </Label>
+                  </div>
+                  <div
+                    className={cn(
+                      "flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation",
+                      formData.workType === 'addition'
+                        ? "bg-blue-500/15 border-blue-500/50"
+                        : "bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]"
+                    )}
+                    onClick={() => handleWorkTypeChange('addition', formData.workType !== 'addition')}
+                  >
+                    <Checkbox
+                      id="workTypeAddition"
+                      checked={formData.workType === 'addition'}
+                      onCheckedChange={(checked) => handleWorkTypeChange('addition', checked as boolean)}
+                      className="border-blue-500/40 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
+                    />
+                    <Label htmlFor="workTypeAddition" className="text-sm font-medium cursor-pointer">
+                      Addition to existing
+                    </Label>
+                  </div>
+                  <div
+                    className={cn(
+                      "flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation",
+                      formData.workType === 'alteration'
+                        ? "bg-amber-500/15 border-amber-500/50"
+                        : "bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]"
+                    )}
+                    onClick={() => handleWorkTypeChange('alteration', formData.workType !== 'alteration')}
+                  >
+                    <Checkbox
+                      id="workTypeAlteration"
+                      checked={formData.workType === 'alteration'}
+                      onCheckedChange={(checked) => handleWorkTypeChange('alteration', checked as boolean)}
+                      className="border-amber-500/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                    />
+                    <Label htmlFor="workTypeAlteration" className="text-sm font-medium cursor-pointer">
+                      Alteration to existing
+                    </Label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Extent of Installation */}
+              <div className="space-y-2">
+                <Label htmlFor="extentOfInstallation" className="text-sm">
+                  Extent of Installation Covered by this Certificate
+                </Label>
+                <Textarea
+                  id="extentOfInstallation"
+                  value={formData.extentOfInstallation || ''}
+                  onChange={(e) => onUpdate('extentOfInstallation', e.target.value)}
+                  placeholder="Describe the extent of installation covered by this certificate (e.g., 'Complete rewire of ground floor' or 'New consumer unit and all circuits')"
+                  rows={3}
+                  className="text-base touch-manipulation min-h-[100px] border-white/30 focus:border-blue-500 focus:ring-blue-500"
+                />
+                <p className="text-xs text-white/50">
+                  Specify what parts of the installation are covered by this certificate
+                </p>
               </div>
             </div>
 

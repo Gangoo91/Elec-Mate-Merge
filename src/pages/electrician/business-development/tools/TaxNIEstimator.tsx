@@ -304,7 +304,7 @@ const TaxNIEstimator = () => {
   };
 
   return (
-    <div className="min-h-screen px-4 py-8 pt-safe pb-safe">
+    <div className="px-4 py-8  ">
       <Helmet>
         <title>UK Tax & NI Estimator for Electricians | 2025/26</title>
         <meta
@@ -512,7 +512,7 @@ const TaxNIEstimator = () => {
               </div>
 
               <div className="pt-3 border-t border-white/10">
-                <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                <label className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 active:bg-white/15 transition-all touch-manipulation">
                   <input
                     type="checkbox"
                     checked={inputs.marriageAllowanceTransfer}

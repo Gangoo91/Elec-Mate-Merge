@@ -144,7 +144,7 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
             <div className="flex justify-center py-1 border-b border-elec-gray/20 bg-elec-card">
               <button
                 onClick={scrollUp}
-                className="flex items-center justify-center w-full py-1 hover:bg-elec-yellow/20 transition-colors"
+                className="flex items-center justify-center w-full py-1 hover:bg-elec-yellow/20 active:bg-elec-yellow/30 transition-all touch-manipulation"
               >
                 <ChevronUp className="h-4 w-4 text-elec-yellow" />
               </button>
@@ -157,7 +157,7 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
             onScroll={handleScroll}
           >
             <div
-              className="p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer border-b border-elec-gray/20 transition-colors"
+              className="p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer border-b border-elec-gray/20 active:bg-elec-yellow/30 transition-all touch-manipulation"
               onClick={() => handleItemSelect("N/A")}
             >
               <div className="flex items-center">
@@ -171,7 +171,7 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
             {options.map((option, index) => (
               <div
                 key={option.value}
-                className="p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer transition-colors"
+                className="p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer active:bg-elec-yellow/30 transition-all touch-manipulation"
                 onClick={() => handleItemSelect(option.value)}
               >
                 <div className="flex items-start">
@@ -188,7 +188,7 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
             <div className="flex justify-center py-1 border-t border-elec-gray/20 bg-elec-card">
               <button
                 onClick={scrollDown}
-                className="flex items-center justify-center w-full py-1 hover:bg-elec-yellow/20 transition-colors"
+                className="flex items-center justify-center w-full py-1 hover:bg-elec-yellow/20 active:bg-elec-yellow/30 transition-all touch-manipulation"
               >
                 <ChevronDown className="h-4 w-4 text-elec-yellow" />
               </button>

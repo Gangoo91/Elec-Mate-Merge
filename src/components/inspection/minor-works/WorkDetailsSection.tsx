@@ -5,7 +5,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, MapPin, User, FileText, AlertTriangle } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Calendar, MapPin, User, FileText, AlertTriangle, Shield, Zap } from 'lucide-react';
 
 interface WorkDetailsSectionProps {
   formData: any;
@@ -198,6 +199,68 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
         </CardContent>
       </Card>
 
+      {/* BS 7671 Compliance Details - IET Required */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Shield className="h-5 w-5 text-primary" />
+            BS 7671 Compliance Details
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <Label htmlFor="departuresFromBs7671" className="text-sm font-medium">
+              Details of any departures from BS 7671:2018 (Reg 120.3, 133.1.3 and 133.5)
+            </Label>
+            <Textarea
+              id="departuresFromBs7671"
+              placeholder="Enter details of any departures from BS 7671, or state 'None' if not applicable..."
+              value={formData.departuresFromBs7671 || ''}
+              onChange={(e) => onUpdate('departuresFromBs7671', e.target.value)}
+              className="min-h-[100px] touch-manipulation text-base"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="permittedExceptions" className="text-sm font-medium">
+              Details of permitted exceptions (Regulation 411.3.3)
+            </Label>
+            <Textarea
+              id="permittedExceptions"
+              placeholder="Enter details of any permitted exceptions under Reg 411.3.3, or state 'None' if not applicable..."
+              value={formData.permittedExceptions || ''}
+              onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
+              className="min-h-[100px] touch-manipulation text-base"
+            />
+          </div>
+
+          <div className="flex items-center space-x-3 p-4 min-h-[48px] rounded-lg bg-muted/30">
+            <Checkbox
+              id="riskAssessmentAttached"
+              checked={formData.riskAssessmentAttached || false}
+              onCheckedChange={(checked) => onUpdate('riskAssessmentAttached', checked)}
+              className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
+            />
+            <Label htmlFor="riskAssessmentAttached" className="text-base font-medium cursor-pointer">
+              Risk assessment attached
+            </Label>
+          </div>
+
+          <div>
+            <Label htmlFor="commentsOnExistingInstallation" className="text-sm font-medium">
+              Comments on existing installation (Regulation 644.1.2)
+            </Label>
+            <Textarea
+              id="commentsOnExistingInstallation"
+              placeholder="Enter any comments regarding the condition of the existing installation that may affect the safety of the new work..."
+              value={formData.commentsOnExistingInstallation || ''}
+              onChange={(e) => onUpdate('commentsOnExistingInstallation', e.target.value)}
+              className="min-h-[120px] touch-manipulation text-base"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Circuit Information */}
       <Card>
         <CardHeader>
@@ -257,11 +320,11 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
               <Label htmlFor="earthingArrangement" className="text-sm font-medium">
                 Earthing Arrangement *
               </Label>
-              <Select 
-                value={formData.earthingArrangement || ''} 
+              <Select
+                value={formData.earthingArrangement || ''}
                 onValueChange={(value) => onUpdate('earthingArrangement', value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select earthing system" />
                 </SelectTrigger>
                 <SelectContent>
@@ -272,7 +335,7 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 </SelectContent>
               </Select>
             </div>
-            
+
             <div>
               <Label htmlFor="supplyCharacteristics" className="text-sm font-medium">
                 Supply Characteristics
@@ -282,7 +345,106 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                 placeholder="e.g., AC, 50Hz, 230/400V"
                 value={formData.supplyCharacteristics || ''}
                 onChange={(e) => onUpdate('supplyCharacteristics', e.target.value)}
+                className="h-11 touch-manipulation text-base"
               />
+            </div>
+          </div>
+
+          {/* Earthing & Bonding - IET Part 2 */}
+          <div className="border-t pt-4 mt-4">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <h4 className="font-semibold text-sm">Earthing & Bonding (Reg 132.16)</h4>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="zdb" className="text-sm font-medium">
+                  Zdb - Earth fault loop impedance at DB (Ω)
+                </Label>
+                <Input
+                  id="zdb"
+                  type="number"
+                  step="0.01"
+                  placeholder="e.g., 0.35"
+                  value={formData.zdb || ''}
+                  onChange={(e) => onUpdate('zdb', e.target.value)}
+                  className="h-11 touch-manipulation text-base"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Earth fault loop impedance measured at the distribution board
+                </p>
+              </div>
+
+              <div className="flex items-center space-x-3 p-4 min-h-[48px] rounded-lg bg-muted/30 self-start">
+                <Checkbox
+                  id="earthingConductorPresent"
+                  checked={formData.earthingConductorPresent || false}
+                  onCheckedChange={(checked) => onUpdate('earthingConductorPresent', checked)}
+                  className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
+                />
+                <Label htmlFor="earthingConductorPresent" className="text-base font-medium cursor-pointer">
+                  Earthing conductor present
+                </Label>
+              </div>
+            </div>
+
+            {/* Main Protective Bonding */}
+            <div className="mt-4">
+              <Label className="text-sm font-medium mb-2 block">
+                Main protective bonding conductor(s) to:
+              </Label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                <div className="flex items-center space-x-2 p-3 min-h-[44px] rounded-lg bg-muted/30">
+                  <Checkbox
+                    id="bondingWater"
+                    checked={formData.bondingWater || false}
+                    onCheckedChange={(checked) => onUpdate('bondingWater', checked)}
+                    className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
+                  />
+                  <Label htmlFor="bondingWater" className="text-sm font-medium cursor-pointer">Water</Label>
+                </div>
+
+                <div className="flex items-center space-x-2 p-3 min-h-[44px] rounded-lg bg-muted/30">
+                  <Checkbox
+                    id="bondingGas"
+                    checked={formData.bondingGas || false}
+                    onCheckedChange={(checked) => onUpdate('bondingGas', checked)}
+                    className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
+                  />
+                  <Label htmlFor="bondingGas" className="text-sm font-medium cursor-pointer">Gas</Label>
+                </div>
+
+                <div className="flex items-center space-x-2 p-3 min-h-[44px] rounded-lg bg-muted/30">
+                  <Checkbox
+                    id="bondingOil"
+                    checked={formData.bondingOil || false}
+                    onCheckedChange={(checked) => onUpdate('bondingOil', checked)}
+                    className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
+                  />
+                  <Label htmlFor="bondingOil" className="text-sm font-medium cursor-pointer">Oil</Label>
+                </div>
+
+                <div className="flex items-center space-x-2 p-3 min-h-[44px] rounded-lg bg-muted/30">
+                  <Checkbox
+                    id="bondingSteel"
+                    checked={formData.bondingSteel || false}
+                    onCheckedChange={(checked) => onUpdate('bondingSteel', checked)}
+                    className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
+                  />
+                  <Label htmlFor="bondingSteel" className="text-sm font-medium cursor-pointer">Steel</Label>
+                </div>
+
+                <div className="flex items-center space-x-2 p-3 min-h-[44px] rounded-lg bg-muted/30">
+                  <Checkbox
+                    id="bondingOther"
+                    checked={formData.bondingOther || false}
+                    onCheckedChange={(checked) => onUpdate('bondingOther', checked)}
+                    className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
+                  />
+                  <Label htmlFor="bondingOther" className="text-sm font-medium cursor-pointer">Other</Label>
+                </div>
+              </div>
             </div>
           </div>
         </CardContent>

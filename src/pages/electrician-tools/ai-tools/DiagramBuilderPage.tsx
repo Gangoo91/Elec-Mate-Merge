@@ -147,7 +147,7 @@ const DiagramBuilderPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark flex flex-col">
+    <div className="bg-gradient-to-b from-elec-dark via-elec-grey to-elec-dark flex flex-col">
       {/* First Visit Banner */}
       {isFirstVisit && (
         <div className="bg-elec-yellow/20 border-b border-elec-yellow/40 px-4 py-2 flex items-center justify-between">

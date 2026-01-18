@@ -358,7 +358,7 @@ export function ViewProgressLogSheet({
                           )}
                           <Badge 
                             className={cn(
-                              "absolute -top-1.5 -right-1.5 text-[9px] px-1.5 py-0.5",
+                              "absolute -top-1.5 -right-1.5 text-[10px] px-1.5 py-0.5",
                               categoryColors[photo.category]
                             )}
                           >

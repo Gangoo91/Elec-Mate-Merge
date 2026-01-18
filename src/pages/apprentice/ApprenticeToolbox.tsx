@@ -360,12 +360,12 @@ const ApprenticeToolbox = () => {
                 return (
                   <Link to={item.link} key={item.id} className="focus:outline-none">
                     <Card
-                      className={`group relative ${colors.border} ${colors.bg} h-full transition-all duration-300 cursor-pointer overflow-hidden hover:shadow-lg ${colors.glow} hover:-translate-y-1`}
+                      className={`group relative ${colors.border} ${colors.bg} h-full transition-all duration-300 cursor-pointer overflow-hidden hover:shadow-lg ${colors.glow} hover:-translate-y-1 active:translate-y-0 active:scale-[0.98] touch-manipulation`}
                     >
                       {/* Badge */}
                       {item.badge && (
                         <div className="absolute top-3 right-3 z-10">
-                          <Badge variant="outline" className={`${colors.badge} text-[10px] font-medium`}>
+                          <Badge variant="outline" className={`${colors.badge} text-xs font-medium`}>
                             {item.badge}
                           </Badge>
                         </div>
@@ -373,7 +373,7 @@ const ApprenticeToolbox = () => {
 
                       <CardHeader className="flex flex-row items-start gap-3 pb-2">
                         {/* Icon Container */}
-                        <div className={`relative p-3 rounded-xl ${colors.iconBg} border border-white/5 group-hover:scale-110 transition-transform duration-300 flex-shrink-0`}>
+                        <div className={`relative p-3 rounded-xl ${colors.iconBg} border border-white/5 group-hover:scale-110 group-active:scale-100 transition-transform duration-300 flex-shrink-0`}>
                           <IconComponent className={`h-6 w-6 ${colors.icon}`} />
                         </div>
 
@@ -394,23 +394,23 @@ const ApprenticeToolbox = () => {
                             {item.stats.map((stat, index) => (
                               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-2 text-center">
                                 <div className={`text-sm font-bold ${colors.icon}`}>{stat.value}</div>
-                                <div className="text-[10px] text-white/60">{stat.label}</div>
+                                <div className="text-xs text-white/60">{stat.label}</div>
                               </div>
                             ))}
                           </div>
                         )}
                       </CardContent>
 
-                      {/* Explore indicator */}
-                      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {/* Explore indicator - visible on mobile, enhanced on hover */}
+                      <div className="absolute bottom-3 right-3 opacity-70 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300">
                         <div className={`flex items-center gap-1 text-xs ${colors.icon}`}>
                           <span>Open</span>
                           <ChevronRight className="h-3 w-3" />
                         </div>
                       </div>
 
-                      {/* Bottom accent line */}
-                      <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-current to-transparent ${colors.icon} opacity-0 group-hover:opacity-50 transition-opacity duration-300`} />
+                      {/* Bottom accent line - visible on mobile */}
+                      <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-current to-transparent ${colors.icon} opacity-30 group-hover:opacity-50 group-active:opacity-50 transition-opacity duration-300`} />
                     </Card>
                   </Link>
                 );
@@ -435,8 +435,7 @@ const ApprenticeToolbox = () => {
               <Link to="/apprentice/mental-health" className="flex-1 sm:flex-initial">
                 <Button
                   variant="outline"
-                  size="sm"
-                  className="w-full border-elec-yellow/30 hover:border-elec-yellow/50"
+                  className="w-full h-11 border-elec-yellow/30 hover:border-elec-yellow/50 active:border-elec-yellow/70 touch-manipulation"
                 >
                   Mental Health
                   <ChevronRight className="h-4 w-4 ml-1" />
@@ -445,8 +444,7 @@ const ApprenticeToolbox = () => {
               <Link to="/apprentice/career-progression" className="flex-1 sm:flex-initial">
                 <Button
                   variant="accent"
-                  size="sm"
-                  className="w-full"
+                  className="w-full h-11 touch-manipulation"
                 >
                   Career Paths
                   <ChevronRight className="h-4 w-4 ml-1" />

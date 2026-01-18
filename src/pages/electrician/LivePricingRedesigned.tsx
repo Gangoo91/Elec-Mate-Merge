@@ -165,7 +165,7 @@ const LivePricingRedesigned = () => {
   };
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white pt-safe pb-safe">
+    <div className="bg-elec-dark text-white  ">
       <Helmet>
         <title>Live Pricing Hub - Elec-Mate</title>
         <meta name="description" content="Real-time material pricing, regional job rates, and market insights for UK electricians. Compare prices, track trends, and stay competitive." />

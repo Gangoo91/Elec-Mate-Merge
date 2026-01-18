@@ -207,7 +207,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                   {categoryTemplates?.map((template) => (
                     <Card
                       key={template.id}
-                      className="cursor-pointer hover:bg-muted/50 transition-colors"
+                      className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
                       onClick={() => setPreviewTemplate(template)}
                     >
                       <CardContent className="p-3 md:p-4">

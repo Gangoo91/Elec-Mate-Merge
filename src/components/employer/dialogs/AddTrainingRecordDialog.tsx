@@ -563,14 +563,14 @@ export const AddTrainingRecordDialog = ({
                                       <span>{course.name}</span>
                                       <div className="flex items-center gap-1">
                                         {course.mandatory && (
-                                          <Badge variant="destructive" className="text-[9px] px-1 py-0">Required</Badge>
+                                          <Badge variant="destructive" className="text-[10px] px-1 py-0">Required</Badge>
                                         )}
                                         {course.expiryYears !== null ? (
-                                          <Badge variant="outline" className="text-[9px] px-1 py-0">
+                                          <Badge variant="outline" className="text-[10px] px-1 py-0">
                                             {course.expiryYears}yr
                                           </Badge>
                                         ) : (
-                                          <Badge variant="secondary" className="text-[9px] px-1 py-0">No expiry</Badge>
+                                          <Badge variant="secondary" className="text-[10px] px-1 py-0">No expiry</Badge>
                                         )}
                                       </div>
                                     </div>

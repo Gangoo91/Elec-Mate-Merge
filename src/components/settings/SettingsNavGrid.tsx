@@ -226,7 +226,7 @@ const SettingsNavGrid = ({ onSelect, incompleteItems = {} }: SettingsNavGridProp
                       {item.badge && (
                         <span
                           className={cn(
-                            "px-1.5 py-0.5 rounded text-[9px] font-semibold",
+                            "px-1.5 py-0.5 rounded text-[10px] font-semibold",
                             item.badgeColor
                           )}
                         >

@@ -166,7 +166,7 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
                   <Badge 
                     key={idx}
                     variant="outline" 
-                    className="cursor-pointer hover:bg-muted transition-colors text-xs"
+                    className="cursor-pointer hover:bg-muted active:bg-muted/80 transition-all touch-manipulation text-xs"
                     onClick={() => handleQuickMessage(quickMsg)}
                   >
                     {quickMsg.length > 30 ? quickMsg.substring(0, 30) + '...' : quickMsg}

@@ -478,7 +478,7 @@ const QuickValueTile: React.FC<QuickValueTileProps> = ({
       )}>
         {value}
       </span>
-      {unit && <span className="text-[9px] text-muted-foreground">{unit}</span>}
+      {unit && <span className="text-[10px] text-muted-foreground">{unit}</span>}
     </button>
   );
 };

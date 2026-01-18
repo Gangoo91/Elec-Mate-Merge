@@ -35,7 +35,7 @@ function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
           {title}
         </span>
         {badge && (
-          <span className="ml-auto px-1.5 py-0.5 text-[9px] sm:text-[10px] font-semibold bg-elec-yellow/20 text-elec-yellow rounded-full flex-shrink-0">
+          <span className="ml-auto px-1.5 py-0.5 text-[10px] sm:text-xs font-semibold bg-elec-yellow/20 text-elec-yellow rounded-full flex-shrink-0">
             {badge}
           </span>
         )}

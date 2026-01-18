@@ -104,7 +104,7 @@ export function ExpenseTable({
 
   const SortableHeader = ({ field, children }: { field: string; children: React.ReactNode }) => (
     <TableHead
-      className={cn("cursor-pointer hover:bg-muted/50 transition-colors", onSort && "select-none")}
+      className={cn("cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation", onSort && "select-none")}
       onClick={() => onSort?.(field)}
     >
       <div className="flex items-center gap-1">
@@ -159,7 +159,7 @@ export function ExpenseTable({
                 <TableRow
                   key={expense.id}
                   className={cn(
-                    "cursor-pointer hover:bg-muted/50 transition-colors",
+                    "cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation",
                     isSelected && "bg-elec-yellow/5"
                   )}
                   onClick={() => onView(expense)}

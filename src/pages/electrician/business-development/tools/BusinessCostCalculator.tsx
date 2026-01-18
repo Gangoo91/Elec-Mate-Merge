@@ -200,7 +200,7 @@ const BusinessCostCalculator = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background pt-safe pb-safe">
+    <div className="bg-background  ">
       <div className="container mx-auto px-4 py-8 max-w-7xl animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">

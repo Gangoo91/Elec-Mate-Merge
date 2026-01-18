@@ -142,19 +142,22 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
             </label>
 
             <label
-              htmlFor="spd-na"
+              htmlFor="spd-na-checkbox"
               className={cn(
-                "flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all",
+                "flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all touch-manipulation",
                 "hover:bg-white/5 active:scale-[0.98]",
-                data.spdNA && "bg-white/5 border border-white/10"
+                data.spdNA
+                  ? "bg-amber-500/10 border border-amber-500/30"
+                  : "border border-transparent"
               )}
             >
               <Checkbox
-                id="spd-na"
+                id="spd-na-checkbox"
                 checked={data.spdNA}
                 onCheckedChange={(checked) => onUpdate('spdNA', checked === true)}
+                className="h-5 w-5 border-elec-yellow/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
               />
-              <span className="text-sm text-white/80">N/A</span>
+              <span className="text-sm text-white">SPD N/A</span>
             </label>
           </div>
         </div>

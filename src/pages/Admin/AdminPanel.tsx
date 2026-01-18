@@ -142,7 +142,7 @@ export default function AdminPanel() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       {/* Admin Header */}
       <div className="border-b border-border bg-card/50 backdrop-blur-xl sticky top-0 z-40">
         <div className="px-4 py-3">

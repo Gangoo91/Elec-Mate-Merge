@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Loader2, AlertTriangle, Zap, Mail, Lock, ArrowRight, CheckCircle2, ChevronLeft, Sparkles, Eye, EyeOff } from 'lucide-react';
@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 const SignIn = () => {
+  const [searchParams] = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +19,14 @@ const SignIn = () => {
 
   const { signIn } = useAuth();
   const navigate = useNavigate();
+
+  // Pre-fill email from URL param (used by founder signup flow)
+  useEffect(() => {
+    const emailParam = searchParams.get('email');
+    if (emailParam && !email) {
+      setEmail(emailParam);
+    }
+  }, [searchParams]);
 
   // Email validation
   useEffect(() => {
@@ -55,7 +64,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col safe-top safe-bottom overflow-hidden">
+    <div className="bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col safe-top safe-bottom overflow-hidden">
       {/* Animated background */}
       <div className="fixed inset-0 pointer-events-none">
         <motion.div
@@ -265,7 +274,7 @@ const SignIn = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors p-1"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -276,7 +285,7 @@ const SignIn = () => {
             <div className="flex justify-end">
               <Link
                 to="/auth/forgot-password"
-                className="text-[13px] text-elec-yellow font-medium hover:text-elec-yellow/80 transition-colors py-1 px-2 -mr-2 rounded-lg"
+                className="text-sm text-elec-yellow font-medium hover:text-elec-yellow/80 active:text-elec-yellow/70 transition-colors py-2 px-3 -mr-2 rounded-xl touch-manipulation min-h-[44px] flex items-center"
               >
                 Forgot password?
               </Link>
