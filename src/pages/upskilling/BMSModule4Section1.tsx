@@ -88,7 +88,7 @@ const BMSModule4Section1 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-4">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -96,7 +96,7 @@ const BMSModule4Section1 = () => {
         </div>
       </div>
 
-      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
         {/* Page Title Header */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -106,7 +106,7 @@ const BMSModule4Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Integration with DALI, 1-10V, and Smart Lighting
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Intelligent lighting control protocols and BMS integration methods
           </p>
         </header>
@@ -314,15 +314,15 @@ const BMSModule4Section1 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Office Buildings</p>
-                <p className="text-white/90 text-xs">DALI + Smart hybrid</p>
+                <p className="text-white text-xs">DALI + Smart hybrid</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Industrial</p>
-                <p className="text-white/90 text-xs">1-10V for reliability</p>
+                <p className="text-white text-xs">1-10V for reliability</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Retail</p>
-                <p className="text-white/90 text-xs">Smart for flexibility</p>
+                <p className="text-white text-xs">Smart for flexibility</p>
               </div>
             </div>
 
@@ -370,7 +370,7 @@ const BMSModule4Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -418,7 +418,7 @@ const BMSModule4Section1 = () => {
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-4">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
             </Link>

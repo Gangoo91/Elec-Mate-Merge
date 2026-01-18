@@ -23,12 +23,10 @@ export function SetupIncompleteBanner() {
         .eq('id', user.id)
         .single();
 
-      // Check company profile
-      const { data: companyProfile } = await supabase
-        .from('company_profiles')
-        .select('company_name, bank_details, company_email')
-        .eq('user_id', user.id)
-        .single();
+      // Check company profile - use RPC to bypass 406 error
+      const { data: companyProfiles } = await supabase
+        .rpc('get_my_company_profile');
+      const companyProfile = Array.isArray(companyProfiles) ? companyProfiles[0] : companyProfiles;
 
       return {
         onboardingComplete: profile?.onboarding_completed,

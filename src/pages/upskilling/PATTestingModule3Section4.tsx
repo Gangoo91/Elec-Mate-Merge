@@ -152,28 +152,28 @@ const quizQuestions = [
 
 const faqs = [
   {
-    q: "How do I determine the correct IP rating for a specific environment?",
-    a: "Consider the specific hazards present: For dry offices, IP20 is sufficient. For kitchens and bathrooms, IP44 minimum. For outdoor use, IP44-IP65 depending on exposure. For jet washing or immersion risk, IP65-IP68. Always check manufacturer specifications and relevant regulations for specific applications."
+    question: "How do I determine the correct IP rating for a specific environment?",
+    answer: "Consider the specific hazards present: For dry offices, IP20 is sufficient. For kitchens and bathrooms, IP44 minimum. For outdoor use, IP44-IP65 depending on exposure. For jet washing or immersion risk, IP65-IP68. Always check manufacturer specifications and relevant regulations for specific applications."
   },
   {
-    q: "Can I use standard office equipment on a construction site?",
-    a: "Generally no. Construction sites require 110V equipment for safety, appropriate IP ratings for the conditions, and more robust construction to withstand the environment. Standard 230V office equipment would also require more frequent testing and may not meet site safety requirements. Always check site-specific rules."
+    question: "Can I use standard office equipment on a construction site?",
+    answer: "Generally no. Construction sites require 110V equipment for safety, appropriate IP ratings for the conditions, and more robust construction to withstand the environment. Standard 230V office equipment would also require more frequent testing and may not meet site safety requirements. Always check site-specific rules."
   },
   {
-    q: "What about equipment used in different environments at different times?",
-    a: "The testing frequency should be based on the most demanding environment in which the equipment is used. For example, if a drill is occasionally used outdoors but mainly in a workshop, it should be tested at the frequency appropriate for outdoor/construction use. Document all environments where equipment is used."
+    question: "What about equipment used in different environments at different times?",
+    answer: "The testing frequency should be based on the most demanding environment in which the equipment is used. For example, if a drill is occasionally used outdoors but mainly in a workshop, it should be tested at the frequency appropriate for outdoor/construction use. Document all environments where equipment is used."
   },
   {
-    q: "How does temperature affect PAT testing requirements?",
-    a: "Extreme temperatures affect insulation and cable flexibility. In cold environments, cables become brittle and prone to cracking. In hot environments, insulation may degrade faster. Equipment in extreme temperatures may need more frequent visual inspection. Some test equipment may also require temperature compensation for accurate readings."
+    question: "How does temperature affect PAT testing requirements?",
+    answer: "Extreme temperatures affect insulation and cable flexibility. In cold environments, cables become brittle and prone to cracking. In hot environments, insulation may degrade faster. Equipment in extreme temperatures may need more frequent visual inspection. Some test equipment may also require temperature compensation for accurate readings."
   },
   {
-    q: "Are there specific requirements for equipment in food preparation areas?",
-    a: "Yes. Equipment must be suitable for wash-down where applicable (appropriate IP rating), resistant to cleaning chemicals, and designed for food safety. More frequent inspection is needed due to water and chemical exposure. Cables may deteriorate faster due to cleaning regimes. Check food hygiene regulations as well as electrical safety requirements."
+    question: "Are there specific requirements for equipment in food preparation areas?",
+    answer: "Yes. Equipment must be suitable for wash-down where applicable (appropriate IP rating), resistant to cleaning chemicals, and designed for food safety. More frequent inspection is needed due to water and chemical exposure. Cables may deteriorate faster due to cleaning regimes. Check food hygiene regulations as well as electrical safety requirements."
   },
   {
-    q: "What about equipment in zones with explosive atmospheres (ATEX)?",
-    a: "Explosive atmosphere zones require specially certified equipment meeting ATEX/IECEx standards. Standard PAT testing is not sufficient - specialist inspection by trained personnel is required. Never use non-ATEX equipment in these zones. This is beyond the scope of standard PAT testing and requires specialist knowledge."
+    question: "What about equipment in zones with explosive atmospheres (ATEX)?",
+    answer: "Explosive atmosphere zones require specially certified equipment meeting ATEX/IECEx standards. Standard PAT testing is not sufficient - specialist inspection by trained personnel is required. Never use non-ATEX equipment in these zones. This is beyond the scope of standard PAT testing and requires specialist knowledge."
   }
 ];
 
@@ -185,7 +185,7 @@ const PATTestingModule3Section4 = () => {
       {/* Sticky Header */}
       <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-md border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="/study-centre/upskilling/pat-testing-module-3">
+          <Link to="..">
             <Button
               variant="ghost"
               size="sm"
@@ -803,11 +803,11 @@ const PATTestingModule3Section4 = () => {
             {faqs.map((faq, idx) => (
               <details key={idx} className="group bg-white/5 rounded-xl">
                 <summary className="flex items-center justify-between p-4 cursor-pointer list-none touch-manipulation">
-                  <span className="text-white font-medium text-sm sm:text-base pr-4">{faq.q}</span>
+                  <span className="text-white font-medium text-sm sm:text-base pr-4">{faq.question}</span>
                   <ChevronRight className="w-5 h-5 text-white/40 group-open:rotate-90 transition-transform flex-shrink-0" />
                 </summary>
                 <div className="px-4 pb-4">
-                  <p className="text-white/70 text-sm leading-relaxed">{faq.a}</p>
+                  <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               </details>
             ))}
@@ -849,7 +849,7 @@ const PATTestingModule3Section4 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-6 border-t border-white/10">
-          <Link to="/study-centre/upskilling/pat-testing-module-3-section-3" className="w-full sm:w-auto">
+          <Link to="../section-3" className="w-full sm:w-auto">
             <Button
               variant="outline"
               className="w-full sm:w-auto gap-2 border-white/20 text-white hover:bg-white/5 hover:text-elec-yellow min-h-[48px] touch-manipulation active:scale-[0.98]"
@@ -858,7 +858,7 @@ const PATTestingModule3Section4 = () => {
               <span>Previous: Section 3</span>
             </Button>
           </Link>
-          <Link to="/study-centre/upskilling/pat-testing-module-3-section-5" className="w-full sm:w-auto">
+          <Link to="../section-5" className="w-full sm:w-auto">
             <Button
               className="w-full sm:w-auto gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold min-h-[48px] touch-manipulation active:scale-[0.98]"
             >

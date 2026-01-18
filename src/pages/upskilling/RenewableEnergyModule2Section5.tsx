@@ -1,393 +1,449 @@
-import { ArrowLeft, Zap, Shield, FileText, Cable, Lightbulb } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import { section5Questions } from '@/data/upskilling/renewableEnergyModule2QuizData';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
 
 const RenewableEnergyModule2Section5 = () => {
-  const quizQuestions = section5Questions.map(q => ({
-    id: q.id,
-    question: q.question,
-    options: q.options,
-    correct: q.correctAnswer,
-    explanation: q.explanation
-  }));
+  useSEO({
+    title: "PV System Layouts: DC Side, AC Side & Isolation | Solar PV",
+    description: "Understanding DC and AC system layouts with isolation requirements for safe operation."
+  });
+
+  const quizQuestions = [
+    {
+      question: "What component combines multiple string outputs?",
+      options: ["Inverter", "Combiner box", "DC isolator", "Surge protector"],
+      correctAnswer: 1,
+      explanation: "Combiner boxes combine multiple string outputs into a single connection to the inverter."
+    },
+    {
+      question: "Where should DC isolators be located?",
+      options: ["Inside the building only", "Near the PV array, accessible and visible", "At the distribution board", "Underground"],
+      correctAnswer: 1,
+      explanation: "DC isolators should be located near the PV array and be accessible and visible for safety."
+    },
+    {
+      question: "What is the purpose of anti-islanding protection?",
+      options: ["Prevent over-voltage", "Stop grid export", "Prevent generation during grid outage", "Limit current"],
+      correctAnswer: 2,
+      explanation: "Anti-islanding protection prevents the system from generating power during grid outages to protect utility workers."
+    },
+    {
+      question: "What colour is used for DC positive cables?",
+      options: ["Black", "Blue", "Red", "Green"],
+      correctAnswer: 2,
+      explanation: "DC positive cables are coloured red, while DC negative cables are black."
+    },
+    {
+      question: "What does rapid shutdown achieve?",
+      options: ["Faster inverter startup", "Voltage reduction to less than 80V within 10 seconds", "Higher system efficiency", "Better monitoring"],
+      correctAnswer: 1,
+      explanation: "Rapid shutdown systems reduce voltage to less than 80V within 10 seconds for firefighter safety."
+    },
+    {
+      question: "Which architecture offers panel-level MPPT?",
+      options: ["Centralised", "Distributed", "Module-level with microinverters", "Single string"],
+      correctAnswer: 2,
+      explanation: "Module-level architecture with microinverters or optimisers provides panel-level MPPT and monitoring."
+    },
+    {
+      question: "What is the advantage of AC coupling for battery storage?",
+      options: ["Higher efficiency", "Lower cost", "Works with any existing inverter", "Simpler installation"],
+      correctAnswer: 2,
+      explanation: "AC coupling allows battery storage to work with any existing inverter, making retrofits easier."
+    },
+    {
+      question: "What standard covers grid-connected PV safety?",
+      options: ["BS 7671 only", "IEC 60364", "IEC 61730 only", "BS 5839"],
+      correctAnswer: 1,
+      explanation: "IEC 60364 is the international standard for electrical installations including grid-connected PV systems."
+    },
+    {
+      question: "What communication protocol is standard for PV monitoring?",
+      options: ["Bluetooth only", "Modbus RTU/TCP", "WiFi only", "Zigbee"],
+      correctAnswer: 1,
+      explanation: "Modbus RTU/TCP is the industrial standard protocol for PV system monitoring and integration."
+    },
+    {
+      question: "What must isolation devices be capable of?",
+      options: ["Remote operation only", "Automatic reset", "Being locked in open position", "Wireless control"],
+      correctAnswer: 2,
+      explanation: "Isolation devices must be lockable in the open position to ensure safe working conditions during maintenance."
+    }
+  ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-4 md:px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/renewable-energy-module-2">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 2
+    <div className="min-h-screen bg-[#1a1a1a]">
+      {/* Minimal Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center">
+          <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10 -ml-2" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-4xl font-bold text-white mb-4">
-              PV System Layouts: DC Side, AC Side, and Isolation
-            </h1>
-            <p className="text-xl text-gray-400 mb-6">
-              Understanding DC and AC system layouts with isolation requirements for safe operation
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Section 5
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                System Layouts
-              </Badge>
+        </div>
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 py-8 pb-24">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/10 mb-4">
+            <Zap className="w-6 h-6 text-elec-yellow" />
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            PV System Layouts: DC Side, AC Side &amp; Isolation
+          </h1>
+          <p className="text-white/60 text-sm sm:text-base">
+            Safety &amp; System Architecture
+          </p>
+        </div>
+
+        {/* Quick Summary */}
+        <div className="grid grid-cols-2 gap-3 mb-8">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <div className="text-elec-yellow text-xs font-medium uppercase tracking-wide mb-1">DC Cable</div>
+            <div className="text-white font-semibold">Red (+) / Black (-)</div>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <div className="text-elec-yellow text-xs font-medium uppercase tracking-wide mb-1">Rapid Shutdown</div>
+            <div className="text-white font-semibold">&lt; 80V in 10s</div>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <div className="mb-8 p-4 rounded-lg bg-white/5 border border-white/10">
+          <h2 className="text-white font-semibold mb-3">Learning Outcomes</h2>
+          <div className="space-y-2">
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <span className="text-white/80 text-sm">Differentiate between DC and AC system layouts and components</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <span className="text-white/80 text-sm">Understand isolation requirements and safety procedures</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <span className="text-white/80 text-sm">Plan for safe maintenance access and system operation</span>
             </div>
           </div>
+        </div>
 
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <ul className="text-gray-300 space-y-2">
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Differentiate between DC and AC system layouts and components
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Understand isolation requirements and safety procedures
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Plan for safe maintenance access and system operation
-                </li>
+        {/* Section 01 */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            DC Side Layout &amp; Components
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Layout planning is about safety and performance. A clear, well-labelled system is easier to operate, maintain, and inspect - and legally compliant.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">DC Wiring Components</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">String cables:</strong> DC panel connections</li>
+                  <li>• <strong className="text-white">Combiner boxes:</strong> Multiple strings</li>
+                  <li>• <strong className="text-white">DC isolators:</strong> Safety isolation</li>
+                  <li>• <strong className="text-white">Surge protection:</strong> DC SPDs</li>
+                  <li>• <strong className="text-white">Monitoring:</strong> Current/voltage</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">DC System Layout</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Panel strings:</strong> Series-connected</li>
+                  <li>• <strong className="text-white">String routing:</strong> Array to inverter</li>
+                  <li>• <strong className="text-white">Polarity:</strong> Separate DC+/DC-</li>
+                  <li>• <strong className="text-white">Grounding:</strong> EGC conductor</li>
+                  <li>• <strong className="text-white">Labelling:</strong> Clear circuit ID</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <InlineCheck
+          question="Where should DC isolators be located?"
+          options={["Inside the building only", "Near the PV array, accessible and visible", "At the distribution board"]}
+          correctIndex={1}
+          explanation="DC isolators must be located near the PV array and be accessible and visible for safety."
+        />
+
+        {/* Section 02 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            AC Side Layout &amp; Components
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              The AC side handles the converted power from inverters to building loads and grid export.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">AC Output Components</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Inverters:</strong> DC to AC conversion</li>
+                  <li>• <strong className="text-white">AC isolators:</strong> Load-break switches</li>
+                  <li>• <strong className="text-white">Generation meters:</strong> PV output</li>
+                  <li>• <strong className="text-white">Distribution boards:</strong> Protection</li>
+                  <li>• <strong className="text-white">Grid connection:</strong> Export meter</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">AC System Flow</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Inverter output:</strong> Single/three-phase</li>
+                  <li>• <strong className="text-white">AC isolation:</strong> Switching/protection</li>
+                  <li>• <strong className="text-white">Metering:</strong> Generation/consumption</li>
+                  <li>• <strong className="text-white">Distribution:</strong> Loads and export</li>
+                  <li>• <strong className="text-white">Protection:</strong> RCD and OCPD</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <InlineCheck
+          question="What colour is used for DC positive cables?"
+          options={["Black", "Blue", "Red"]}
+          correctIndex={2}
+          explanation="DC positive cables are coloured red, while DC negative cables are black."
+        />
+
+        {/* Section 03 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            System Architectures
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Modern PV systems employ various architectural approaches to optimise performance and reliability.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Centralised</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Multiple strings to one inverter</li>
+                  <li>• Lower cost, fewer components</li>
+                  <li>• Single point of failure</li>
+                  <li>• Utility-scale applications</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Distributed</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Multiple string inverters</li>
+                  <li>• Redundancy, flexible</li>
+                  <li>• Higher initial cost</li>
+                  <li>• Commercial installations</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Module-Level</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Microinverters/optimisers</li>
+                  <li>• Panel-level MPPT</li>
+                  <li>• Highest cost, complexity</li>
+                  <li>• Residential, complex shading</li>
+                </ul>
+              </div>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">Hybrid System Considerations:</h4>
+              <ul className="text-sm space-y-1">
+                <li>• <strong className="text-white">AC coupling:</strong> Battery on AC side - works with any inverter</li>
+                <li>• <strong className="text-white">DC coupling:</strong> Direct DC connection - higher efficiency</li>
+                <li>• <strong className="text-white">Critical loads:</strong> Backup power circuit design</li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </div>
 
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed">
-                Layout planning is about safety and performance. This section breaks down how energy moves through your system — and how to isolate it safely. A clear, well-labelled system is easier to operate, maintain, and inspect — and legally compliant.
-              </p>
-            </CardContent>
-          </Card>
+        <InlineCheck
+          question="Which architecture offers panel-level MPPT?"
+          options={["Centralised", "Distributed", "Module-level with microinverters"]}
+          correctIndex={2}
+          explanation="Module-level architecture with microinverters or optimisers provides panel-level MPPT and monitoring."
+        />
 
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-6 w-6 text-yellow-400" />
-                DC Side Layout and Components
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-blue-900/20 p-4 rounded-lg border border-yellow-400/30">
-                  <h4 className="text-yellow-400 font-semibold mb-3">DC Wiring Components:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>String cables:</strong> DC cables connecting panels in series</li>
-                    <li>• <strong>Combiner boxes:</strong> Combine multiple string outputs</li>
-                    <li>• <strong>DC isolators:</strong> Safety isolation devices</li>
-                    <li>• <strong>Surge protection:</strong> DC SPDs protect against overvoltage</li>
-                    <li>• <strong>Monitoring:</strong> Current and voltage measurement devices</li>
-                  </ul>
-                </div>
-                <div className="bg-blue-900/20 p-4 rounded-lg border border-yellow-400/30">
-                  <h4 className="text-yellow-400 font-semibold mb-3">DC System Layout:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Panel strings:</strong> Series-connected panels</li>
-                    <li>• <strong>String routing:</strong> Cables from array to combiner/inverter</li>
-                    <li>• <strong>Positive/negative:</strong> Separate DC+ and DC- conductors</li>
-                    <li>• <strong>Grounding:</strong> Equipment grounding conductor</li>
-                    <li>• <strong>Labelling:</strong> Clear identification of DC circuits</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Section 04 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Isolation Requirements &amp; Safety
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Proper isolation is critical for safe maintenance and emergency response.
+            </p>
+            <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+              <h4 className="text-red-400 font-medium mb-3">Essential Isolation Points:</h4>
+              <ul className="text-sm space-y-1">
+                <li>• <strong className="text-white">DC isolators:</strong> Near PV array, accessible and visible</li>
+                <li>• <strong className="text-white">AC isolators:</strong> Before distribution board connection</li>
+                <li>• <strong className="text-white">Emergency isolation:</strong> Rapid shutdown capability</li>
+                <li>• <strong className="text-white">Maintenance isolation:</strong> Safe working procedures</li>
+                <li>• <strong className="text-white">Grid isolation:</strong> DNO-controlled main switch</li>
+              </ul>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">IEC 60364 Compliance:</h4>
+              <ul className="text-sm space-y-1">
+                <li>• Isolation devices must be lockable in the open position</li>
+                <li>• Clear labelling with purpose and operating instructions</li>
+                <li>• Accessible location for maintenance personnel</li>
+                <li>• Suitable for installed environment and current ratings</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Cable className="h-6 w-6 text-green-400" />
-                AC Side Layout and Components
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
-                  <h4 className="text-green-400 font-semibold mb-3">AC Output Components:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Inverters:</strong> DC to AC conversion equipment</li>
-                    <li>• <strong>AC isolators:</strong> Load-break switches for AC side</li>
-                    <li>• <strong>Generation meters:</strong> Measure PV system output</li>
-                    <li>• <strong>Distribution boards:</strong> AC circuit protection and distribution</li>
-                    <li>• <strong>Grid connection:</strong> Export meter and main supply</li>
-                  </ul>
-                </div>
-                <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
-                  <h4 className="text-green-400 font-semibold mb-3">AC System Flow:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Inverter output:</strong> Single or three-phase AC</li>
-                    <li>• <strong>AC isolation:</strong> Switching and protection</li>
-                    <li>• <strong>Metering:</strong> Generation and consumption measurement</li>
-                    <li>• <strong>Distribution:</strong> Building loads and grid export</li>
-                    <li>• <strong>Protection:</strong> RCD and overcurrent devices</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Advanced System Architectures */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Cable className="h-6 w-6 text-purple-400" />
-                Advanced System Architectures and Topologies
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Modern PV systems employ various architectural approaches to optimise performance and reliability.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
-                  <h4 className="text-purple-400 font-semibold mb-3">Centralised Architecture:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Configuration:</strong> Multiple strings to single inverter</li>
-                    <li>• <strong>Advantages:</strong> Lower cost, fewer components</li>
-                    <li>• <strong>Disadvantages:</strong> Single point of failure</li>
-                    <li>• <strong>Applications:</strong> Utility-scale installations</li>
-                    <li>• <strong>Monitoring:</strong> String-level visibility</li>
-                  </ul>
-                </div>
-                <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
-                  <h4 className="text-purple-400 font-semibold mb-3">Distributed Architecture:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Configuration:</strong> Multiple string inverters</li>
-                    <li>• <strong>Advantages:</strong> Redundancy, flexible design</li>
-                    <li>• <strong>Disadvantages:</strong> Higher initial cost</li>
-                    <li>• <strong>Applications:</strong> Commercial installations</li>
-                    <li>• <strong>Monitoring:</strong> Inverter-level granularity</li>
-                  </ul>
-                </div>
-                <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
-                  <h4 className="text-purple-400 font-semibold mb-3">Module-Level Architecture:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Configuration:</strong> Microinverters or optimizers</li>
-                    <li>• <strong>Advantages:</strong> Panel-level MPPT and monitoring</li>
-                    <li>• <strong>Disadvantages:</strong> Highest cost, complexity</li>
-                    <li>• <strong>Applications:</strong> Residential, complex shading</li>
-                    <li>• <strong>Monitoring:</strong> Individual panel performance</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-purple-400 font-semibold mb-2">Hybrid System Considerations:</h4>
-                <ul className="text-gray-300 text-sm space-y-1">
-                  <li>• <strong>AC coupling:</strong> Battery storage connected to AC side</li>
-                  <li>• <strong>DC coupling:</strong> Direct DC connection for higher efficiency</li>
-                  <li>• <strong>Critical loads:</strong> Backup power circuit design</li>
-                  <li>• <strong>Grid services:</strong> Frequency response and voltage support capabilities</li>
+        {/* Section 05 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Rapid Shutdown &amp; Arc Fault Protection
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Modern PV systems incorporate sophisticated safety mechanisms to protect against electrical hazards and fire risks.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Rapid Shutdown Systems</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Voltage reduction to &lt;80V in 10s</li>
+                  <li>• 1m boundary around array perimeter</li>
+                  <li>• Fire service accessible controls</li>
+                  <li>• Grid loss auto-triggers</li>
+                  <li>• Required for insurance/compliance</li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Smart Grid Integration */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-6 w-6 text-green-400" />
-                Smart Grid Integration and Vehicle-to-Grid (V2G)
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Next-generation PV systems integrate with smart grid technologies and electric vehicle charging infrastructure.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
-                  <h4 className="text-green-400 font-semibold mb-3">Smart Grid Features:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Dynamic pricing:</strong> Real-time tariff response</li>
-                    <li>• <strong>Load forecasting:</strong> AI-driven demand prediction</li>
-                    <li>• <strong>Grid support services:</strong> Frequency and voltage regulation</li>
-                    <li>• <strong>Peer-to-peer trading:</strong> Local energy markets</li>
-                    <li>• <strong>Demand response:</strong> Automated load management</li>
-                  </ul>
-                </div>
-                <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
-                  <h4 className="text-green-400 font-semibold mb-3">V2G Integration:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Bidirectional charging:</strong> EV battery as grid resource</li>
-                    <li>• <strong>Solar + EV synergy:</strong> Daytime charging optimisation</li>
-                    <li>• <strong>Grid stabilisation:</strong> Mobile energy storage</li>
-                    <li>• <strong>Emergency backup:</strong> Vehicle-to-home capability</li>
-                    <li>• <strong>Revenue streams:</strong> Grid services compensation</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-green-400 font-semibold mb-2">Communication Protocols:</h4>
-                <div className="text-gray-300 text-sm space-y-2">
-                  <p><strong>Modbus RTU/TCP:</strong> Industrial standard for system integration</p>
-                  <p><strong>SunSpec Alliance:</strong> Standardised monitoring and control interfaces</p>
-                  <p><strong>IEEE 2030.5:</strong> Smart grid interoperability standard</p>
-                  <p><strong>OpenADR:</strong> Automated demand response protocols</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Safety Systems Deep Dive */}
-          <Card className="bg-red-900/20 border-red-500/30">
-            <CardHeader>
-              <CardTitle className="text-red-400">Advanced Safety Systems and Arc Fault Protection</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed mb-4">
-                Modern PV systems incorporate sophisticated safety mechanisms to protect against electrical hazards and fire risks.
-              </p>
-              <div className="bg-card p-4 rounded-lg mb-4">
-                <h4 className="text-red-400 font-semibold mb-3">Arc Fault Detection and Mitigation:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <h5 className="text-white font-medium">Detection Methods:</h5>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• High-frequency signature analysis</li>
-                      <li>• Current waveform distortion monitoring</li>
-                      <li>• Temperature gradient sensing</li>
-                      <li>• Visual spectrum detection (UV cameras)</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-medium">Response Actions:</h5>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Immediate string isolation</li>
-                      <li>• Alarm notification systems</li>
-                      <li>• Location identification</li>
-                      <li>• Maintenance scheduling</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-red-400 font-semibold mb-2">Rapid Shutdown Systems (RSS):</h4>
-                <ul className="text-gray-300 text-sm space-y-1">
-                  <li>• <strong>Module-level shutdown:</strong> Voltage reduction to &lt;80V within 10 seconds</li>
-                  <li>• <strong>Controlled conductor area:</strong> 1m boundary around array perimeter</li>
-                  <li>• <strong>Emergency activation:</strong> Fire service accessible controls</li>
-                  <li>• <strong>Automatic triggers:</strong> Grid loss, system fault, or manual activation</li>
-                  <li>• <strong>Compliance:</strong> Required for many jurisdictions and insurance</li>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Arc Fault Detection</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• High-frequency signature analysis</li>
+                  <li>• Current waveform monitoring</li>
+                  <li>• Temperature gradient sensing</li>
+                  <li>• Immediate string isolation</li>
+                  <li>• Alarm notification systems</li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </div>
 
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-6 w-6 text-red-400" />
-                Isolation Requirements and Safety
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="bg-red-900/20 p-4 rounded-lg border border-red-500/30">
-                <h4 className="text-red-400 font-semibold mb-3">Essential Isolation Points:</h4>
-                <ul className="text-gray-300 text-sm space-y-2">
-                  <li>• <strong>DC isolators:</strong> Near PV array, accessible and visible</li>
-                  <li>• <strong>AC isolators:</strong> Before connection to distribution board</li>
-                  <li>• <strong>Emergency isolation:</strong> Rapid shutdown capability</li>
-                  <li>• <strong>Maintenance isolation:</strong> Safe working procedures</li>
-                  <li>• <strong>Grid isolation:</strong> DNO-controlled main switch</li>
+        {/* Section 06 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Labelling &amp; Signage
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Clear labelling ensures safe operation and maintenance throughout the system lifecycle.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Required Labels</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• PV installation present warning</li>
+                  <li>• Dual supply warning</li>
+                  <li>• DC isolation identification</li>
+                  <li>• Emergency shutdown procedures</li>
+                  <li>• System data and ratings</li>
                 </ul>
               </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-red-400 font-semibold mb-2">IEC 60364 Compliance Requirements:</h4>
-                <ul className="text-gray-300 text-sm space-y-1">
-                  <li>• Isolation devices must be lockable in the open position</li>
-                  <li>• Clear labelling indicating purpose and operating instructions</li>
-                  <li>• Accessible location for maintenance personnel</li>
-                  <li>• Suitable for the installed environment and current ratings</li>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Cable Identification</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">DC cables:</strong> Red (+), Black (-)</li>
+                  <li>• <strong className="text-white">AC cables:</strong> Standard coding</li>
+                  <li>• <strong className="text-white">Earth:</strong> Green/yellow</li>
+                  <li>• <strong className="text-white">Markers:</strong> Every 3m</li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </div>
 
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-6 w-6 text-purple-400" />
-                Labelling, Signage, and Compliance
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
-                  <h4 className="text-purple-400 font-semibold mb-3">Required Labels and Signs:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>PV installation present:</strong> Main DB warning label</li>
-                    <li>• <strong>Dual supply warning:</strong> Grid and PV supply notification</li>
-                    <li>• <strong>DC isolation:</strong> Clear identification of DC isolators</li>
-                    <li>• <strong>Emergency procedures:</strong> Shutdown instructions</li>
-                    <li>• <strong>System data:</strong> Installation details and ratings</li>
-                  </ul>
-                </div>
-                <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
-                  <h4 className="text-purple-400 font-semibold mb-3">Cable Identification:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>DC cables:</strong> Red (positive) and black (negative)</li>
-                    <li>• <strong>AC cables:</strong> Standard AC colour coding</li>
-                    <li>• <strong>Earth cables:</strong> Green/yellow identification</li>
-                    <li>• <strong>Cable markers:</strong> Circuit identification every 3m</li>
-                    <li>• <strong>Conduit labels:</strong> Contents identification</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Practical Guidance */}
+        <div className="mb-8 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+          <h3 className="text-white font-semibold mb-3">Practical Guidance</h3>
+          <div className="space-y-2 text-white/80 text-sm">
+            <p>
+              <strong className="text-white">Always verify isolation:</strong> Use a DC clamp meter to confirm zero current before working on any DC circuit - panels generate whenever there is light.
+            </p>
+            <p>
+              <strong className="text-white">Label everything:</strong> Future maintenance workers will thank you. Use durable labels that withstand UV and weather exposure.
+            </p>
+            <p>
+              <strong className="text-white">Document as-built:</strong> Keep accurate records of actual cable routes, component locations, and any deviations from design drawings.
+            </p>
+          </div>
+        </div>
 
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed mb-4">
-                A clear, well-labelled system is easier to operate, maintain, and inspect — and legally compliant. Proper separation of DC and AC sides, appropriate isolation devices, and comprehensive labelling ensure safe operation and maintenance throughout the system lifecycle.
-              </p>
-            </CardContent>
-          </Card>
+        {/* FAQs */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">Why are DC isolators required near the array?</h4>
+              <p className="text-white/70 text-sm">Panels generate DC voltage whenever exposed to light and cannot be completely turned off. A DC isolator near the array allows isolation before any internal building wiring for safe maintenance and emergency response.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">What is anti-islanding protection?</h4>
+              <p className="text-white/70 text-sm">Anti-islanding prevents the PV system from exporting power during a grid outage, protecting utility workers who may be repairing the network. Grid-tie inverters must detect loss of mains and disconnect within specified times.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">When should I choose AC coupling over DC coupling for batteries?</h4>
+              <p className="text-white/70 text-sm">AC coupling is ideal for retrofitting to existing systems as it works with any inverter. DC coupling is more efficient for new installations but requires a hybrid inverter. Consider existing equipment, efficiency needs, and budget.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">What communication protocols do monitoring systems use?</h4>
+              <p className="text-white/70 text-sm">Modbus RTU/TCP is the industrial standard. SunSpec Alliance provides standardised interfaces. Modern systems also use WiFi, cellular, and cloud platforms for remote monitoring and control.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">How does rapid shutdown improve safety?</h4>
+              <p className="text-white/70 text-sm">Rapid shutdown reduces array voltage to less than 80V within 10 seconds of activation, making it safer for firefighters to work near the array during emergencies without risk of electric shock.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">What labels are legally required at the consumer unit?</h4>
+              <p className="text-white/70 text-sm">BS 7671 requires warning labels indicating that the installation has a dual supply (grid and PV), location of DC isolator, and emergency switching instructions. These must be durable and clearly visible.</p>
+            </div>
+          </div>
+        </div>
 
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
-                Test Your Knowledge
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <SingleQuestionQuiz 
-                questions={quizQuestions}
-                title="PV System Layouts Quiz"
-              />
-            </CardContent>
-          </Card>
+        {/* Quiz */}
+        <div className="mb-8">
+          <Quiz
+            title="Section 5 Quiz: System Layouts"
+            questions={quizQuestions}
+            passingScore={70}
+          />
+        </div>
+
+        {/* Bottom Navigation */}
+        <div className="flex justify-between items-center pt-6 border-t border-white/10">
+          <Button variant="ghost" className="text-white/70 hover:text-white hover:bg-white/10" asChild>
+            <Link to="../section-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous
+            </Link>
+          </Button>
+          <Button size="lg" className="bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold" asChild>
+            <Link to="../section-6">
+              Next Section
+            </Link>
+          </Button>
         </div>
       </div>
     </div>

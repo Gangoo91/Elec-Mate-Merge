@@ -84,7 +84,7 @@ const BMSModule1Section2 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-1">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -177,7 +177,7 @@ const BMSModule1Section2 = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Practical Example</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   <strong>Meeting Room Scenario:</strong> If CO₂ levels rise in a meeting room, the BMS
                   automatically increases ventilation to bring in fresh outside air, maintaining healthy
                   indoor air quality without manual intervention.
@@ -214,7 +214,7 @@ const BMSModule1Section2 = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Benefits</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   <strong>Daylight Integration:</strong> Automatically dimming or switching off lights
                   when natural daylight is sufficient, reducing energy consumption by up to 40% in
                   perimeter areas.
@@ -250,7 +250,7 @@ const BMSModule1Section2 = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-red-400/80 mb-2">Fire Safety Integration</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   <strong>Emergency Response:</strong> Fire alarm integration allows the BMS to shut down
                   HVAC to prevent smoke spread and unlock doors automatically for safe evacuation.
                 </p>
@@ -434,7 +434,7 @@ const BMSModule1Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

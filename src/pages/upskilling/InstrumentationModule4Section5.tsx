@@ -1,654 +1,440 @@
-import { ArrowLeft, FileText, CheckCircle2, AlertTriangle, Eye, BarChart, Database, TrendingUp, Brain, XCircle, Users, Lightbulb } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { ArrowLeft, FileText, CheckCircle, HelpCircle, BarChart, TrendingUp, Database } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-
-interface QuizQuestion {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  explanation: string;
-}
+import { Button } from '@/components/ui/button';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule4Section5 = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
-  const [showResults, setShowResults] = useState(false);
-  const [quizStarted, setQuizStarted] = useState(false);
-
-  const quizQuestions: QuizQuestion[] = [
-    {
-      id: 1,
-      question: "What does a steady increase in current often indicate?",
-      options: [
-        "System is operating normally",
-        "Equipment degradation or failing component",
-        "Voltage is too high",
-        "Measurement error only"
-      ],
-      correctAnswer: 1,
-      explanation: "A steady increase in current often indicates equipment degradation, increased friction in motors, or other developing problems that increase load."
-    },
-    {
-      id: 2,
-      question: "Why is timestamping measurements important?",
-      options: [
-        "It's required by law",
-        "To track trends and correlate events over time",
-        "To calculate costs",
-        "It makes reports look professional"
-      ],
-      correctAnswer: 1,
-      explanation: "Timestamping allows correlation of measurements with events, tracking of trends over time, and proper sequence analysis for troubleshooting."
-    },
-    {
-      id: 3,
-      question: "What's the benefit of trending data over time?",
-      options: [
-        "Reduces measurement accuracy",
-        "Enables predictive maintenance and early fault detection",
-        "Makes equipment last longer automatically",
-        "Eliminates the need for manual testing"
-      ],
-      correctAnswer: 1,
-      explanation: "Trending reveals gradual changes that indicate developing problems, enabling predictive maintenance before failures occur."
-    },
-    {
-      id: 4,
-      question: "How can logging prevent unplanned downtime?",
-      options: [
-        "By making equipment more reliable",
-        "By identifying developing issues before they cause failures",
-        "By reducing power consumption",
-        "By eliminating operator errors"
-      ],
-      correctAnswer: 1,
-      explanation: "Systematic logging and analysis can identify developing problems early, allowing planned maintenance before unexpected failures occur."
-    },
-    {
-      id: 5,
-      question: "What tools assist with digital logging?",
-      options: [
-        "Only expensive industrial systems",
-        "Data loggers, SCADA systems, and mobile apps",
-        "Traditional paper logbooks only",
-        "Manual calculation methods"
-      ],
-      correctAnswer: 1,
-      explanation: "Modern digital logging uses various tools from simple data loggers to sophisticated SCADA systems and mobile applications for field data collection."
-  }
-  ];
-
-  function handleAnswerSelect(answerIndex: number) {
-    setSelectedAnswers(prev => ({
-      ...prev,
-      [currentQuestionIndex]: answerIndex
-    }));
-};
-
-  function handleNext() {
-    if (currentQuestionIndex < quizQuestions.length - 1) {
-      setCurrentQuestionIndex(prev => prev + 1);
-    } else {
-      setShowResults(true);
-  };
-};
-
-  function handlePrevious() {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(prev => prev - 1);
-  };
-};
-
-  function calculateScore() {
-    let correct = 0;
-    quizQuestions.forEach((question, index) => {
-      if (selectedAnswers[index] === question.correctAnswer) {
-        correct++;
-    };
-    });
-    return correct;
-};
-
-  function resetQuiz() {
-    setCurrentQuestionIndex(0);
-    setSelectedAnswers({});
-    setShowResults(false);
-    setQuizStarted(false);
-};
-
-  function startQuiz() {
-    setQuizStarted(true);
-    setCurrentQuestionIndex(0);
-    setSelectedAnswers({});
-    setShowResults(false);
-};
-
-  const currentQuestion = quizQuestions[currentQuestionIndex];
-  const score = calculateScore();
-  const percentage = Math.round((score / quizQuestions.length) * 100);
+  useSEO({
+    title: "Interpreting and Logging Readings | Instrumentation Module 4",
+    description: "Learn how to interpret measurement data and implement effective logging systems for real-world industrial applications."
+  });
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
-        <Link to="/study-centre/upskilling/instrumentation-module-4">
-          <Button
-            variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 4
-          </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <FileText className="h-8 w-8 text-elec-yellow" />
-            <Badge 
-              variant="secondary" 
-              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
-            >
-              Module 4 - Section 5
-            </Badge>
+    <div className="min-h-screen bg-background">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="px-4 py-3">
+          <Link to=".." className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            <span className="text-sm">Back to Module 4</span>
+          </Link>
+        </div>
+      </div>
+
+      <div className="px-4 py-6 max-w-4xl mx-auto">
+        {/* Title */}
+        <div className="mb-8 text-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/20 mb-4">
+            <FileText className="h-6 w-6 text-elec-yellow" />
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Interpreting and Logging Readings in Real-World Systems
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
-            Measurements mean little without interpretation. This section shows how to apply data to real scenarios and document effectively
+          <p className="text-white/70 max-w-2xl mx-auto">
+            Measurements mean little without interpretation. Learn how to apply data to real scenarios and document effectively for maintenance and compliance.
           </p>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
-          
-          {/* Quick Introduction */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Eye className="h-6 w-6 text-elec-yellow" />
-                <CardTitle className="text-white text-xl">Quick Introduction</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed">
-                Measurements mean little without interpretation. This section shows how to apply data to real scenarios and document effectively. Understanding how to analyse readings, identify trends, and maintain proper documentation is essential for effective maintenance and system optimization.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Outcomes */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl">Learning Outcomes</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 mb-4">By the end of this section, you'll be able to:</p>
-              <ul className="space-y-2 text-gray-300">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Analyse readings for system status and performance indicators</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Identify patterns, trends, and anomalies in measurement data</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Implement proper logging and reporting procedures</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Use measurement data for predictive maintenance strategies</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Build comprehensive diagnoses from multiple measurement sources</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* Data Analysis Fundamentals */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <BarChart className="h-5 w-5 text-elec-yellow" />
-                Comparing Readings to Baselines
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Establishing Baselines</h4>
-                  <p className="text-gray-300 mb-3">
-                    Baseline measurements provide reference points for comparison:
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
-                      <h5 className="text-blue-200 font-medium mb-2">Initial Commissioning Data</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Motor current at rated load</li>
-                        <li>• System operating temperatures</li>
-                        <li>• Voltage levels under normal conditions</li>
-                        <li>• Vibration and noise signatures</li>
-                      </ul>
-                    </div>
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                      <h5 className="text-green-200 font-medium mb-2">Performance Standards</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Manufacturer specifications</li>
-                        <li>• Industry standard values</li>
-                        <li>• Historical performance data</li>
-                        <li>• Regulatory compliance limits</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Variance Analysis</h4>
-                  <p className="text-gray-300 mb-3">
-                    Understanding when deviations are significant:
-                  </p>
-                  <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-yellow-200">±5% variation</span>
-                        <span className="text-green-300">Normal operating range</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-yellow-200">±10% variation</span>
-                        <span className="text-yellow-300">Investigation recommended</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-yellow-200">&gt;±15% variation</span>
-                        <span className="text-red-300">Action required</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Recognizing Anomalies */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <TrendingUp className="h-5 w-5 text-elec-yellow" />
-                Recognizing Anomalies and Patterns
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Common Anomaly Types</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
-                      <h5 className="text-red-200 font-medium mb-2">Voltage Dips</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Starting of large motors</li>
-                        <li>• Transformer overloading</li>
-                        <li>• Poor connections developing</li>
-                        <li>• Supply system problems</li>
-                      </ul>
-                    </div>
-                    <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
-                      <h5 className="text-orange-200 font-medium mb-2">Current Surges</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Motor bearing deterioration</li>
-                        <li>• Pump cavitation or blockage</li>
-                        <li>• Insulation breakdown starting</li>
-                        <li>• Mechanical binding or friction</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Trend Patterns</h4>
-                  <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                    <div className="space-y-3">
-                      <div>
-                        <h5 className="text-purple-200 font-medium mb-2">Gradual Increase</h5>
-                        <p className="text-gray-300 text-sm">Often indicates wear, dirt accumulation, or developing mechanical problems</p>
-                      </div>
-                      <div>
-                        <h5 className="text-purple-200 font-medium mb-2">Cyclic Variations</h5>
-                        <p className="text-gray-300 text-sm">May indicate temperature effects, load cycling, or seasonal influences</p>
-                      </div>
-                      <div>
-                        <h5 className="text-purple-200 font-medium mb-2">Sudden Changes</h5>
-                        <p className="text-gray-300 text-sm">Usually indicate specific events: repairs, adjustments, or component failures</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Documentation and Logging */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Database className="h-5 w-5 text-elec-yellow" />
-                Documentation and Logging Systems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Essential Documentation Elements</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                        <div>
-                          <span className="text-white font-medium">Timestamp</span>
-                          <p className="text-gray-300 text-sm">Date, time, and duration of measurement</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                        <div>
-                          <span className="text-white font-medium">Equipment ID</span>
-                          <p className="text-gray-300 text-sm">Clear identification and location</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                        <div>
-                          <span className="text-white font-medium">Operating Conditions</span>
-                          <p className="text-gray-300 text-sm">Load, temperature, environmental factors</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                        <div>
-                          <span className="text-white font-medium">Measurement Values</span>
-                          <p className="text-gray-300 text-sm">Actual readings with units and accuracy</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                        <div>
-                          <span className="text-white font-medium">Technician Details</span>
-                          <p className="text-gray-300 text-sm">Who performed the measurement</p>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                        <div>
-                          <span className="text-white font-medium">Observations</span>
-                          <p className="text-gray-300 text-sm">Unusual conditions or concerns noted</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Digital Logging Tools</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
-                      <h5 className="text-blue-200 font-medium mb-2">Data Loggers</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Automatic data collection</li>
-                        <li>• Long-term monitoring</li>
-                        <li>• Battery powered operation</li>
-                        <li>• Multiple sensor inputs</li>
-                      </ul>
-                    </div>
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                      <h5 className="text-green-200 font-medium mb-2">SCADA Systems</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Real-time monitoring</li>
-                        <li>• Centralized data collection</li>
-                        <li>• Alarm and notification systems</li>
-                        <li>• Historical data analysis</li>
-                      </ul>
-                    </div>
-                    <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                      <h5 className="text-purple-200 font-medium mb-2">Mobile Apps</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Field data entry</li>
-                        <li>• Photo documentation</li>
-                        <li>• Instant report generation</li>
-                        <li>• Cloud synchronization</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Data Analysis and Trending */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl">Building Comprehensive Diagnoses</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <h4 className="text-elec-yellow font-semibold mb-2">Multi-Parameter Analysis</h4>
-                <p className="text-gray-300 mb-3">
-                  Effective diagnosis requires correlation of multiple measurements:
-                </p>
-                <div className="bg-gray-700/50 rounded-lg p-4">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-white font-medium">Motor Current ↑</span>
-                      <span className="text-gray-300">+</span>
-                      <span className="text-white font-medium">Vibration ↑</span>
-                      <span className="text-gray-300">=</span>
-                      <span className="text-red-300">Bearing Problem</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-white font-medium">Voltage ↓</span>
-                      <span className="text-gray-300">+</span>
-                      <span className="text-white font-medium">Current ↑</span>
-                      <span className="text-gray-300">=</span>
-                      <span className="text-yellow-300">Supply Problem</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-white font-medium">Temperature ↑</span>
-                      <span className="text-gray-300">+</span>
-                      <span className="text-white font-medium">Resistance ↓</span>
-                      <span className="text-gray-300">=</span>
-                      <span className="text-orange-300">Insulation Issue</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real-World Scenario */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-elec-yellow" />
-                <CardTitle className="text-white">Real-World Scenario</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="bg-blue-900/20 border border-elec-yellow/30 rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-medium text-white mb-2">Power Substation Monitoring</h4>
-                    <p>
-                      In a power substation, engineers track current draw hourly. A gradual rise over three days signals a failing pump motor.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Key Takeaways */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-elec-yellow" />
-                <CardTitle className="text-white">Summary</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p>
-                Correct interpretation transforms raw numbers into action. Good logging supports predictive maintenance and regulatory compliance.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Interactive Quiz */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Brain className="h-5 w-5 text-elec-yellow" />
-                Knowledge Check Quiz
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {!quizStarted ? (
-                <div className="text-center space-y-4">
-                  <p className="text-gray-300">
-                    Test your understanding of data interpretation and logging principles.
-                  </p>
-                  <Button 
-                    onClick={startQuiz}
-                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
-                  >
-                    Start Quiz
-                  </Button>
-                </div>
-              ) : !showResults ? (
-                <div className="space-y-6">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-400">
-                      Question {currentQuestionIndex + 1} of {quizQuestions.length}
-                    </span>
-                    <div className="w-32 bg-gray-700 rounded-full h-2">
-                      <div 
-                        className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 className="text-white font-medium mb-4">{currentQuestion.question}</h3>
-                    <div className="space-y-2">
-                      {currentQuestion.options.map((option, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleAnswerSelect(index)}
-                          className={`w-full text-left p-3 rounded border transition-colors ${
-                            selectedAnswers[currentQuestionIndex] === index
-                              ? 'border-elec-yellow bg-elec-yellow/20 text-elec-yellow'
-                              : 'border-gray-600 bg-gray-800/50 text-gray-300 hover:border-gray-500'
-                          }`}
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between">
-                    <Button
-                      onClick={handlePrevious}
-                      disabled={currentQuestionIndex === 0}
-                      variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-transparent disabled:opacity-50"
-                    >
-                      Previous
-                    </Button>
-                    <Button
-                      onClick={handleNext}
-                      disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50"
-                    >
-                      {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish' : 'Next'}
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  <div className="text-center">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
-                      percentage >= 70 ? 'bg-green-600/20' : 'bg-red-600/20'
-                    }`}>
-                      {percentage >= 70 ? (
-                        <CheckCircle2 className="h-8 w-8 text-green-400" />
-                      ) : (
-                        <XCircle className="h-8 w-8 text-red-400" />
-                      )}
-                    </div>
-                    <h3 className="text-white text-xl font-semibold mb-2">Quiz Complete!</h3>
-                    <p className="text-gray-300 mb-4">
-                      You scored {score} out of {quizQuestions.length} ({percentage}%)
-                    </p>
-                    {percentage >= 70 ? (
-                      <p className="text-green-400">Excellent! You understand data interpretation and logging well.</p>
-                    ) : (
-                      <p className="text-red-400">Consider reviewing the material and trying again.</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-4">
-                    <h4 className="text-white font-medium">Review Your Answers:</h4>
-                    {quizQuestions.map((question, index) => (
-                      <div key={question.id} className="border border-gray-600 rounded-lg p-4">
-                        <div className="flex items-start gap-3">
-                          {selectedAnswers[index] === question.correctAnswer ? (
-                            <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          ) : (
-                            <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                          )}
-                          <div className="flex-1">
-                            <p className="text-white font-medium mb-2">{question.question}</p>
-                            <p className="text-gray-300 text-sm mb-2">
-                              <span className="font-medium">Your answer:</span> {question.options[selectedAnswers[index]]}
-                            </p>
-                            {selectedAnswers[index] !== question.correctAnswer && (
-                              <p className="text-gray-300 text-sm mb-2">
-                                <span className="font-medium">Correct answer:</span> {question.options[question.correctAnswer]}
-                              </p>
-                            )}
-                            <p className="text-gray-400 text-sm">{question.explanation}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="text-center">
-                    <Button 
-                      onClick={resetQuiz}
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
-                    >
-                      Retake Quiz
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
+        {/* Quick Summary */}
+        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 mb-8">
+          <h2 className="font-semibold text-white mb-2 flex items-center gap-2">
+            <CheckCircle className="h-4 w-4 text-elec-yellow" />
+            What You Will Learn
+          </h2>
+          <ul className="text-white/80 text-sm space-y-1">
+            <li>- Analysing readings for system status and performance indicators</li>
+            <li>- Identifying patterns, trends, and anomalies in measurement data</li>
+            <li>- Implementing proper logging and reporting procedures</li>
+            <li>- Using measurement data for predictive maintenance strategies</li>
+            <li>- Building comprehensive diagnoses from multiple measurement sources</li>
+          </ul>
         </div>
-      </main>
+
+        {/* Section 01: Comparing Readings to Baselines */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <h2 className="text-xl font-semibold text-white">Comparing Readings to Baselines</h2>
+          </div>
+
+          <div className="space-y-4 text-white/80">
+            <p>
+              Baseline measurements provide reference points for comparison. Without knowing what is normal, it is impossible to identify abnormal readings or developing problems.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+                <h3 className="text-blue-300 font-medium mb-3 flex items-center gap-2">
+                  <BarChart className="h-4 w-4" />
+                  Initial Commissioning Data
+                </h3>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>- Motor current at rated load</li>
+                  <li>- System operating temperatures</li>
+                  <li>- Voltage levels under normal conditions</li>
+                  <li>- Vibration and noise signatures</li>
+                </ul>
+              </div>
+              <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
+                <h3 className="text-green-300 font-medium mb-3">Performance Standards</h3>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>- Manufacturer specifications</li>
+                  <li>- Industry standard values</li>
+                  <li>- Historical performance data</li>
+                  <li>- Regulatory compliance limits</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
+              <h3 className="text-elec-yellow font-medium mb-3">Variance Analysis Guidelines</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between items-center py-1 border-b border-white/10">
+                  <span className="text-white">+/-5% variation</span>
+                  <span className="text-green-400">Normal operating range</span>
+                </div>
+                <div className="flex justify-between items-center py-1 border-b border-white/10">
+                  <span className="text-white">+/-10% variation</span>
+                  <span className="text-yellow-400">Investigation recommended</span>
+                </div>
+                <div className="flex justify-between items-center py-1">
+                  <span className="text-white">&gt;+/-15% variation</span>
+                  <span className="text-red-400">Action required</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <InlineCheck
+          question="Why is timestamping measurements important?"
+          answer="To track trends and correlate events over time"
+          explanation="Timestamping allows correlation of measurements with events, tracking of trends over time, and proper sequence analysis for troubleshooting."
+        />
+
+        {/* Section 02: Recognising Anomalies and Patterns */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <h2 className="text-xl font-semibold text-white">Recognising Anomalies and Patterns</h2>
+          </div>
+
+          <div className="space-y-4 text-white/80">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
+                <h3 className="text-red-300 font-medium mb-2">Voltage Dips</h3>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>- Starting of large motors</li>
+                  <li>- Transformer overloading</li>
+                  <li>- Poor connections developing</li>
+                  <li>- Supply system problems</li>
+                </ul>
+              </div>
+              <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
+                <h3 className="text-orange-300 font-medium mb-2">Current Surges</h3>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>- Motor bearing deterioration</li>
+                  <li>- Pump cavitation or blockage</li>
+                  <li>- Insulation breakdown starting</li>
+                  <li>- Mechanical binding or friction</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
+              <h3 className="text-purple-300 font-medium mb-3 flex items-center gap-2">
+                <TrendingUp className="h-4 w-4" />
+                Trend Patterns to Watch
+              </h3>
+              <div className="space-y-3">
+                <div>
+                  <h4 className="text-white text-sm font-medium">Gradual Increase</h4>
+                  <p className="text-white/60 text-sm">Often indicates wear, dirt accumulation, or developing mechanical problems</p>
+                </div>
+                <div>
+                  <h4 className="text-white text-sm font-medium">Cyclic Variations</h4>
+                  <p className="text-white/60 text-sm">May indicate temperature effects, load cycling, or seasonal influences</p>
+                </div>
+                <div>
+                  <h4 className="text-white text-sm font-medium">Sudden Changes</h4>
+                  <p className="text-white/60 text-sm">Usually indicate specific events: repairs, adjustments, or component failures</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <InlineCheck
+          question="What does a steady increase in motor current often indicate?"
+          answer="Equipment degradation or a failing component"
+          explanation="A steady increase in current often indicates equipment degradation, increased friction in motors, worn bearings, or other developing problems that increase mechanical load."
+        />
+
+        {/* Section 03: Documentation and Logging Systems */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <h2 className="text-xl font-semibold text-white">Documentation and Logging Systems</h2>
+          </div>
+
+          <div className="space-y-4 text-white/80">
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="text-white font-medium mb-3 flex items-center gap-2">
+                <Database className="h-4 w-4 text-elec-yellow" />
+                Essential Documentation Elements
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                <div className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <span className="text-white font-medium">Timestamp</span>
+                    <p className="text-white/60">Date, time, and duration of measurement</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <span className="text-white font-medium">Equipment ID</span>
+                    <p className="text-white/60">Clear identification and location</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <span className="text-white font-medium">Operating Conditions</span>
+                    <p className="text-white/60">Load, temperature, environmental factors</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <span className="text-white font-medium">Measurement Values</span>
+                    <p className="text-white/60">Actual readings with units and accuracy</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <span className="text-white font-medium">Technician Details</span>
+                    <p className="text-white/60">Who performed the measurement</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <span className="text-white font-medium">Observations</span>
+                    <p className="text-white/60">Unusual conditions or concerns noted</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+                <h3 className="text-blue-300 font-medium mb-2">Data Loggers</h3>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>- Automatic data collection</li>
+                  <li>- Long-term monitoring</li>
+                  <li>- Battery powered operation</li>
+                  <li>- Multiple sensor inputs</li>
+                </ul>
+              </div>
+              <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
+                <h3 className="text-green-300 font-medium mb-2">SCADA Systems</h3>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>- Real-time monitoring</li>
+                  <li>- Centralised data collection</li>
+                  <li>- Alarm and notification</li>
+                  <li>- Historical data analysis</li>
+                </ul>
+              </div>
+              <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
+                <h3 className="text-purple-300 font-medium mb-2">Mobile Apps</h3>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>- Field data entry</li>
+                  <li>- Photo documentation</li>
+                  <li>- Instant report generation</li>
+                  <li>- Cloud synchronisation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <InlineCheck
+          question="What tools assist with digital logging of measurement data?"
+          answer="Data loggers, SCADA systems, and mobile apps"
+          explanation="Modern digital logging uses various tools from simple data loggers for standalone monitoring, to sophisticated SCADA systems for centralised control, and mobile applications for convenient field data collection."
+        />
+
+        {/* Section 04: Building Comprehensive Diagnoses */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <h2 className="text-xl font-semibold text-white">Building Comprehensive Diagnoses</h2>
+          </div>
+
+          <div className="space-y-4 text-white/80">
+            <p>
+              Effective diagnosis requires correlation of multiple measurements. Individual readings only tell part of the story - patterns across multiple parameters reveal the true system condition.
+            </p>
+
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="text-white font-medium mb-3">Multi-Parameter Analysis Examples</h3>
+              <div className="space-y-3 text-sm">
+                <div className="flex items-center justify-between py-2 border-b border-white/10">
+                  <div className="flex items-center gap-2">
+                    <span className="text-white">Motor Current ↑</span>
+                    <span className="text-white/40">+</span>
+                    <span className="text-white">Vibration ↑</span>
+                  </div>
+                  <span className="text-red-400">=</span>
+                  <span className="text-red-400">Bearing Problem</span>
+                </div>
+                <div className="flex items-center justify-between py-2 border-b border-white/10">
+                  <div className="flex items-center gap-2">
+                    <span className="text-white">Voltage ↓</span>
+                    <span className="text-white/40">+</span>
+                    <span className="text-white">Current ↑</span>
+                  </div>
+                  <span className="text-yellow-400">=</span>
+                  <span className="text-yellow-400">Supply Problem</span>
+                </div>
+                <div className="flex items-center justify-between py-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-white">Temperature ↑</span>
+                    <span className="text-white/40">+</span>
+                    <span className="text-white">Resistance ↓</span>
+                  </div>
+                  <span className="text-orange-400">=</span>
+                  <span className="text-orange-400">Insulation Issue</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 05: Predictive Maintenance */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
+            <h2 className="text-xl font-semibold text-white">Predictive Maintenance Benefits</h2>
+          </div>
+
+          <div className="space-y-4 text-white/80">
+            <p>
+              Systematic logging and trend analysis enable predictive maintenance - identifying developing issues before they cause failures. This approach reduces unplanned downtime and extends equipment life.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-green-500/10 border-l-2 border-green-500/50 rounded-r-lg p-4">
+                <h3 className="text-green-300 font-medium mb-2">Benefits</h3>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>- Reduced unplanned downtime</li>
+                  <li>- Optimised maintenance scheduling</li>
+                  <li>- Extended equipment lifespan</li>
+                  <li>- Lower overall maintenance costs</li>
+                  <li>- Improved safety through early detection</li>
+                </ul>
+              </div>
+              <div className="bg-blue-500/10 border-l-2 border-blue-500/50 rounded-r-lg p-4">
+                <h3 className="text-blue-300 font-medium mb-2">Key Indicators</h3>
+                <ul className="text-white/70 text-sm space-y-1">
+                  <li>- Gradual current increases</li>
+                  <li>- Temperature rise trends</li>
+                  <li>- Vibration signature changes</li>
+                  <li>- Insulation resistance decline</li>
+                  <li>- Frequency or speed variations</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 06: Real-World Scenario */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">06</span>
+            <h2 className="text-xl font-semibold text-white">Real-World Application</h2>
+          </div>
+
+          <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
+            <h3 className="text-white font-medium mb-2">Power Substation Monitoring</h3>
+            <p className="text-white/70">
+              In a power substation, engineers track current draw hourly. A gradual rise over three days signals a failing pump motor. By analysing the trend data and correlating with vibration readings, they schedule maintenance during a planned outage rather than experiencing an unexpected failure. The systematic logging approach prevented costly emergency repairs and potential equipment damage.
+            </p>
+          </div>
+        </div>
+
+        {/* FAQs */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="text-white font-medium mb-2">How often should I log measurements?</h3>
+              <p className="text-white/70 text-sm">
+                It depends on the application. Critical equipment may need continuous monitoring. Routine maintenance logs are typically daily, weekly, or monthly. Establish frequency based on equipment criticality, failure history, and regulatory requirements.
+              </p>
+            </div>
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="text-white font-medium mb-2">What is the benefit of trending data over time?</h3>
+              <p className="text-white/70 text-sm">
+                Trending reveals gradual changes that indicate developing problems, enabling predictive maintenance before failures occur. Single snapshots cannot show whether a reading is stable, improving, or deteriorating.
+              </p>
+            </div>
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="text-white font-medium mb-2">How can logging prevent unplanned downtime?</h3>
+              <p className="text-white/70 text-sm">
+                By identifying developing issues early, logging allows planned maintenance before unexpected failures occur. This enables scheduling repairs during convenient times rather than emergency situations.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Summary */}
+        <div className="bg-white/5 rounded-lg p-4 mb-8">
+          <h2 className="text-white font-semibold mb-2">Summary</h2>
+          <p className="text-white/70">
+            Correct interpretation transforms raw numbers into action. Good logging supports predictive maintenance and regulatory compliance. By establishing baselines, recognising patterns, and maintaining comprehensive documentation, instrumentation professionals can ensure system reliability and prevent costly failures.
+          </p>
+        </div>
+
+        {/* Quiz */}
+        <SingleQuestionQuiz
+          moduleId="instrumentation-4"
+          sectionId="section-5"
+          question="How can systematic logging prevent unplanned downtime?"
+          options={[
+            "By making equipment more reliable",
+            "By identifying developing issues before they cause failures",
+            "By reducing power consumption",
+            "By eliminating operator errors"
+          ]}
+          correctAnswer={1}
+          explanation="Systematic logging and analysis can identify developing problems early through trend analysis, allowing planned maintenance before unexpected failures occur. This transforms reactive maintenance into proactive prevention."
+        />
+
+        {/* Navigation */}
+        <div className="flex justify-between items-center mt-8 pt-6 border-t border-white/10">
+          <Link to="../section-4">
+            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
+            </Button>
+          </Link>
+          <Link to="/study-centre/upskilling/instrumentation-module-5">
+            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              Next Module
+            </Button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

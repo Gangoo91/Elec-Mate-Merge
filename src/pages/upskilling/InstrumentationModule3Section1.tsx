@@ -1,822 +1,587 @@
-import { ArrowLeft, ArrowRight, Signal, AlertTriangle, CheckCircle, Zap, Lightbulb, Activity, TrendingUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
+
+const TITLE = "Signal Types - Instrumentation Module 3 Section 1";
+const DESCRIPTION = "Understanding voltage, current, resistance, and frequency signals in industrial instrumentation systems.";
+
+const quickCheckQuestions = [
+  {
+    id: "m3s1-q1",
+    question: "What is the main advantage of 4-20mA current signals over voltage signals?",
+    options: ["Lower cost", "Excellent noise immunity and live-zero detection", "Higher resolution", "Simpler wiring"],
+    correctIndex: 1,
+    explanation: "4-20mA current signals offer excellent noise immunity because current is less affected by electrical interference. The 4mA live-zero allows detection of broken wires or sensor failures."
+  },
+  {
+    id: "m3s1-q2",
+    question: "Which signal type is most commonly used with RTD temperature sensors?",
+    options: ["Voltage (0-10V)", "Current (4-20mA)", "Resistance (varying ohms)", "Frequency (Hz)"],
+    correctIndex: 2,
+    explanation: "RTDs inherently produce resistance changes with temperature variations. A Pt100 sensor's resistance typically changes from around 100Ω at 0°C to 138Ω at 100°C."
+  },
+  {
+    id: "m3s1-q3",
+    question: "Why are frequency signals ideal for flow totalisation?",
+    options: ["They are cheaper", "Pulses can be easily counted for totals", "They use less power", "They are more accurate"],
+    correctIndex: 1,
+    explanation: "Frequency signals are excellent for totalising applications because pulses can be easily counted. They also provide good noise immunity since noise rarely creates false pulses at the correct frequency."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What are the advantages of 4-20mA signals?",
+    options: [
+      "They are cheaper to implement than voltage signals",
+      "Excellent noise immunity and live-zero detection capability",
+      "They require less power than other signal types",
+      "They provide higher resolution than digital signals"
+    ],
+    correctAnswer: 1,
+    explanation: "4-20mA signals offer excellent noise immunity because current is less affected by electrical interference. The 4mA live-zero allows detection of broken wires or sensor failures."
+  },
+  {
+    id: 2,
+    question: "Which signal type is most common with RTDs?",
+    options: [
+      "Voltage signals (0-10V)",
+      "Current signals (4-20mA)",
+      "Resistance signals (varying ohms)",
+      "Frequency signals (Hz)"
+    ],
+    correctAnswer: 2,
+    explanation: "RTDs inherently produce resistance changes with temperature variations. The RTD's resistance typically changes from around 100Ω to 138Ω over a 0-100°C range for Pt100 sensors."
+  },
+  {
+    id: 3,
+    question: "What is a downside of voltage signals over long distances?",
+    options: [
+      "They consume too much power",
+      "Voltage drop and susceptibility to electrical noise interference",
+      "They require special cables",
+      "They cannot be digitally processed"
+    ],
+    correctAnswer: 1,
+    explanation: "Voltage signals suffer from voltage drop due to cable resistance over long distances, and they are more susceptible to electrical noise pickup."
+  },
+  {
+    id: 4,
+    question: "Why might a system use frequency output?",
+    options: [
+      "Frequency signals are always more accurate",
+      "They use less power than other signal types",
+      "Excellent for totalising applications and noise immunity",
+      "They are required by safety regulations"
+    ],
+    correctAnswer: 2,
+    explanation: "Frequency signals are excellent for totalising applications like flow measurement because pulses can be easily counted. They also provide good noise immunity."
+  },
+  {
+    id: 5,
+    question: "Which signal type is best for environments with electrical noise?",
+    options: [
+      "0-10V voltage signals",
+      "4-20mA current signals",
+      "Millivolt signals",
+      "Variable resistance signals"
+    ],
+    correctAnswer: 1,
+    explanation: "4-20mA current signals are best for noisy electrical environments because current loops are inherently less susceptible to electrical interference than voltage-based signals."
+  },
+  {
+    id: 6,
+    question: "What does a Pt100 RTD resistance of 100Ω indicate?",
+    options: [
+      "The sensor is faulty",
+      "The temperature is 0°C",
+      "The temperature is 100°C",
+      "Maximum measurement range"
+    ],
+    correctAnswer: 1,
+    explanation: "A Pt100 RTD has a resistance of 100Ω at 0°C. This is the reference point from which all temperature measurements are calculated."
+  },
+  {
+    id: 7,
+    question: "What is the typical maximum transmission distance for voltage signals?",
+    options: [
+      "Less than 50 metres",
+      "500 metres",
+      "1000 metres",
+      "Unlimited distance"
+    ],
+    correctAnswer: 0,
+    explanation: "Voltage signals are limited to short distances (typically less than 50m) due to voltage drop caused by cable resistance and increased susceptibility to noise pickup."
+  },
+  {
+    id: 8,
+    question: "Which measurement method provides the highest RTD accuracy?",
+    options: [
+      "2-wire measurement",
+      "3-wire measurement",
+      "4-wire measurement",
+      "All methods are equally accurate"
+    ],
+    correctAnswer: 2,
+    explanation: "4-wire measurement provides the highest accuracy by completely eliminating lead wire resistance effects, achieving errors as low as ±0.01°C."
+  },
+  {
+    id: 9,
+    question: "What is the temperature coefficient (α) for a standard Pt100 RTD?",
+    options: [
+      "0.00385Ω/Ω/°C",
+      "0.00500Ω/Ω/°C",
+      "0.00100Ω/Ω/°C",
+      "0.01000Ω/Ω/°C"
+    ],
+    correctAnswer: 0,
+    explanation: "The standard temperature coefficient for Pt100 RTDs is 0.00385Ω/Ω/°C (European standard IEC 60751)."
+  },
+  {
+    id: 10,
+    question: "What is the main advantage of NTC thermistors over RTDs?",
+    options: [
+      "Better accuracy",
+      "Higher sensitivity (large resistance change)",
+      "Linear response",
+      "Better stability"
+    ],
+    correctAnswer: 1,
+    explanation: "NTC thermistors have high sensitivity with large resistance changes per degree, making them useful for detecting small temperature changes, though their response is non-linear."
+  }
+];
+
+const faqs = [
+  {
+    question: "When should I use 4-20mA instead of 0-10V signals?",
+    answer: "Use 4-20mA for long distances (over 50m), noisy industrial environments, or when fault detection is critical. The live-zero feature means 0mA indicates a fault, not a valid zero reading. Voltage signals are suitable for short local connections in clean electrical environments."
+  },
+  {
+    question: "Why does a Pt100 RTD use 100Ω at 0°C as the reference?",
+    answer: "The Pt100 standard was established because 100Ω provides a good balance between sensitivity, power dissipation, and practical measurement. The platinum element's predictable, linear resistance change with temperature makes it ideal for precision temperature measurement."
+  },
+  {
+    question: "What is the difference between 2-wire, 3-wire, and 4-wire RTD connections?",
+    answer: "2-wire includes lead resistance in the measurement (±0.5°C error). 3-wire compensates for lead resistance using a balanced bridge (±0.1°C typical). 4-wire eliminates lead effects completely using separate current and voltage pairs (±0.01°C possible)."
+  },
+  {
+    question: "How do I calculate the current for a 4-20mA signal at a given percentage?",
+    answer: "Use the formula: Current (mA) = 4 + (16 × %Scale/100). For example, 50% scale = 4 + (16 × 0.5) = 12mA. To reverse: %Scale = (Current - 4) × 100/16."
+  },
+  {
+    question: "Why are frequency signals preferred for flow measurement?",
+    answer: "Frequency signals provide natural totalisation through pulse counting, excellent noise immunity (false pulses are rare), and high resolution limited only by counting time. Turbine and positive displacement meters typically output pulses per unit volume."
+  }
+];
 
 const InstrumentationModule3Section1 = () => {
-  const quizQuestions = [
-    {
-      id: 1,
-      question: "What are the advantages of 4–20mA signals?",
-      options: [
-        "They are cheaper to implement than voltage signals",
-        "Excellent noise immunity and live-zero detection capability",
-        "They require less power than other signal types",
-        "They provide higher resolution than digital signals"
-      ],
-      correct: 1,
-      explanation: "4-20mA signals offer excellent noise immunity because current is less affected by electrical interference than voltage. The 4mA live-zero allows detection of broken wires or sensor failures, as 0mA indicates a fault condition."
-    },
-    {
-      id: 2,
-      question: "Which signal type is most common with RTDs?",
-      options: [
-        "Voltage signals (0-10V)",
-        "Current signals (4-20mA)",
-        "Resistance signals (varying ohms)",
-        "Frequency signals (Hz)"
-      ],
-      correct: 2,
-      explanation: "RTDs (Resistance Temperature Detectors) inherently produce resistance changes with temperature variations. The RTD's resistance typically changes from around 100Ω to 138Ω over a 0-100°C range for Pt100 sensors."
-    },
-    {
-      id: 3,
-      question: "What's a downside of voltage signals over long distances?",
-      options: [
-        "They consume too much power",
-        "Voltage drop and susceptibility to electrical noise interference",
-        "They require special cables",
-        "They cannot be digitally processed"
-      ],
-      correct: 1,
-      explanation: "Voltage signals suffer from voltage drop due to cable resistance over long distances, and they are more susceptible to electrical noise pickup, which can cause measurement errors and signal degradation."
-    },
-    {
-      id: 4,
-      question: "Why might a system use frequency output?",
-      options: [
-        "Frequency signals are always more accurate",
-        "They use less power than other signal types",
-        "Excellent for totalising applications and noise immunity",
-        "They are required by safety regulations"
-      ],
-      correct: 2,
-      explanation: "Frequency signals are excellent for totalising applications (like flow measurement) because pulses can be easily counted. They also provide good noise immunity since noise rarely creates false pulses at the correct frequency."
-    },
-    {
-      id: 5,
-      question: "Which signal type is best for environments with electrical noise?",
-      options: [
-        "0-10V voltage signals",
-        "4-20mA current signals",
-        "Millivolt signals",
-        "Variable resistance signals"
-      ],
-      correct: 1,
-      explanation: "4-20mA current signals are best for noisy electrical environments because current loops are inherently less susceptible to electrical interference than voltage-based signals, providing more reliable measurements."
-  }  ];
+  useSEO({ title: TITLE, description: DESCRIPTION });
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-12">
-        <Link to="/study-centre/upskilling/instrumentation-module-3">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-6 sm:mb-8 px-3 py-2 rounded-md text-sm sm:text-base touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 3
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
-          {/* Header */}
-          <div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
-              <Signal className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-400 flex-shrink-0" />
-              <div className="min-w-0">
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
-                  Signal Types – Voltage, Current, Resistance, Frequency
-                </h1>
-                <p className="text-base sm:text-lg lg:text-xl text-gray-400 mt-1">
-                  Understanding the core electrical signal types used to carry measurement data
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 sm:gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black text-xs sm:text-sm">
-                Module 3.1
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300 text-xs sm:text-sm">
-                45 minutes
-              </Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Signal className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Instrumentation systems rely on accurate signal representation to convey measurement information from sensors to control systems. Understanding the fundamental electrical signal types—voltage, current, resistance, and frequency—is essential for designing robust measurement systems that perform reliably in industrial environments.
-              </p>
-              <Alert className="bg-yellow-400/10 border-blue-600/30">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription className="text-gray-300 text-sm sm:text-base">
-                  The choice of signal type significantly impacts system performance, noise immunity, and troubleshooting capabilities. Understanding each type's characteristics is crucial for optimal system design.
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          </Card>
-
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p className="text-sm sm:text-base">By the end of this section, you should be able to:</p>
-              <div className="grid grid-cols-1 gap-4">
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Identify the key electrical signal types used in instrumentation</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Understand the behaviour and application of each signal type</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Recognise how different sensors output different signal types</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Compare signal types for range, noise susceptibility, and distance performance</span>
-                  </li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Voltage Signals */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Voltage Signals
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Voltage signals represent measurement data as varying electrical potential between two points. They are commonly used in analogue sensors and provide direct interfacing with many measurement systems.
-              </p>
-
-              <div className="space-y-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Common Voltage Signal Ranges</h4>
-                  
-                  <div className="space-y-4">
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">0-10V DC</h5>
-                      <p className="text-xs sm:text-sm mb-2">Most common industrial voltage signal range, providing good resolution and simple interfacing.</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                        <div>
-                          <strong className="text-white">Advantages:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• Simple to interface</li>
-                            <li>• High input impedance</li>
-                            <li>• Good resolution capability</li>
-                            <li>• Direct ADC connection</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <strong className="text-white">Applications:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• PLC analogue inputs</li>
-                            <li>• Chart recorders</li>
-                            <li>• Local panel meters</li>
-                            <li>• Data acquisition systems</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">±10V Bipolar</h5>
-                      <p className="text-xs sm:text-sm mb-2">Allows representation of both positive and negative values around a zero reference.</p>
-                      <div className="text-xs sm:text-sm">
-                        <strong className="text-white">Applications:</strong> Position sensors, displacement measurements, differential measurements
-                      </div>
-                    </div>
-
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Millivolt Signals</h5>
-                      <p className="text-xs sm:text-sm mb-2">Low-level signals typically from thermocouples and strain gauges (0-100mV range).</p>
-                      <div className="text-xs sm:text-sm">
-                        <strong className="text-white">Considerations:</strong> Require amplification, very sensitive to noise, need careful shielding
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Voltage Signal Characteristics</h4>
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Advantages</h5>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Simple measurement circuits</li>
-                        <li>• High input impedance (minimal loading)</li>
-                        <li>• Direct digital conversion</li>
-                        <li>• Good dynamic range</li>
-                        <li>• Cost-effective implementation</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Disadvantages</h5>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Susceptible to electrical noise</li>
-                        <li>• Voltage drop over long cables</li>
-                        <li>• Ground loop problems</li>
-                        <li>• EMI interference pickup</li>
-                        <li>• Limited transmission distance</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Best Applications</h5>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Local measurements (&lt;50m)</li>
-                        <li>• Laboratory instruments</li>
-                        <li>• Control room panels</li>
-                        <li>• High-accuracy applications</li>
-                        <li>• Clean electrical environments</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Current Signals */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Current Signals
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Current signals, particularly the industry-standard 4-20mA, provide excellent noise immunity and are ideal for long-distance transmission in industrial environments.
-              </p>
-
-              <div className="space-y-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">4-20mA Current Loop Standard</h4>
-                  
-                  <div className="space-y-4">
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Why 4-20mA?</h5>
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-xs sm:text-sm mb-3">The 4mA offset provides "live zero" capability - allowing distinction between a true zero reading and a system fault.</p>
-                          <ul className="space-y-1 text-xs sm:text-sm">
-                            <li>• <strong>4mA = 0% scale (0°C, 0 bar, etc.)</strong></li>
-                            <li>• <strong>12mA = 50% scale</strong></li>
-                            <li>• <strong>20mA = 100% scale</strong></li>
-                            <li>• <strong>0mA = Fault condition</strong></li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h6 className="text-white font-medium mb-2 text-xs sm:text-sm">Signal Calculation:</h6>
-                          <div className="bg-card p-2 rounded text-xs">
-                            <p><strong>Current (mA) = 4 + (16 × %Scale/100)</strong></p>
-                            <p className="mt-1">Example: 50% scale = 4 + (16 × 0.5) = 12mA</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Current Loop Characteristics</h5>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                        <div>
-                          <strong className="text-white">Superior Performance:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• Excellent noise immunity</li>
-                            <li>• Long transmission distances (1000m+)</li>
-                            <li>• Two-wire operation possible</li>
-                            <li>• Fault detection capability</li>
-                            <li>• Consistent accuracy</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <strong className="text-white">Implementation:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• Requires precision resistor (250Ω)</li>
-                            <li>• Loop power supply needed</li>
-                            <li>• Higher complexity than voltage</li>
-                            <li>• Industry standard acceptance</li>
-                            <li>• HART communication compatible</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Current Signal Applications</h4>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Ideal Applications</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Process control transmitters</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Long-distance signal transmission</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Noisy industrial environments</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>SCADA and DCS systems</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Safety-critical measurements</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Common Devices</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Pressure transmitters</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Temperature transmitters</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Flow transmitters</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Level transmitters</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Analytical transmitters</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Resistance Signals */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Resistance Signals
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Resistance signals are the fundamental output of RTDs and thermistors, where the sensor's resistance changes proportionally to the measured parameter, typically temperature.
-              </p>
-
-              <div className="space-y-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">RTD Resistance Characteristics</h4>
-                  
-                  <div className="space-y-4">
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Pt100 RTD Example</h5>
-                      <p className="text-xs sm:text-sm mb-3">Most common RTD type with 100Ω resistance at 0°C</p>
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div>
-                          <h6 className="text-white font-medium mb-2 text-xs sm:text-sm">Temperature vs Resistance:</h6>
-                          <ul className="space-y-1 text-xs sm:text-sm">
-                            <li>• 0°C = 100.00Ω</li>
-                            <li>• 25°C = 109.73Ω</li>
-                            <li>• 50°C = 119.40Ω</li>
-                            <li>• 100°C = 138.51Ω</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h6 className="text-white font-medium mb-2 text-xs sm:text-sm">Key Parameters:</h6>
-                          <ul className="space-y-1 text-xs sm:text-sm">
-                            <li>• <strong>α = 0.00385Ω/Ω/°C</strong></li>
-                            <li>• Linear response</li>
-                            <li>• High accuracy (±0.1°C)</li>
-                            <li>• Excellent stability</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Measurement Methods</h5>
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 text-xs sm:text-sm">
-                        <div className="bg-card p-3 rounded">
-                          <h6 className="text-white font-medium mb-2">2-Wire</h6>
-                          <p className="mb-2">Simplest connection but includes lead wire resistance in measurement.</p>
-                          <p><strong>Error:</strong> ±0.5°C typical</p>
-                        </div>
-                        
-                        <div className="bg-card p-3 rounded">
-                          <h6 className="text-white font-medium mb-2">3-Wire</h6>
-                          <p className="mb-2">Compensates for lead resistance, most common industrial method.</p>
-                          <p><strong>Error:</strong> ±0.1°C typical</p>
-                        </div>
-                        
-                        <div className="bg-card p-3 rounded">
-                          <h6 className="text-white font-medium mb-2">4-Wire</h6>
-                          <p className="mb-2">Highest accuracy by eliminating lead wire effects completely.</p>
-                          <p><strong>Error:</strong> ±0.01°C possible</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Thermistor Characteristics</h4>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">NTC Thermistors</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Negative Temperature Coefficient</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>High sensitivity (large resistance change)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Non-linear response</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Lower cost than RTDs</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Applications</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>HVAC temperature sensing</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Automotive applications</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Consumer electronics</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Medical devices</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Frequency Signals */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Frequency Signals
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Frequency signals encode measurement data as varying pulse rates or frequencies, providing excellent noise immunity and natural totalising capability for flow and speed measurements.
-              </p>
-
-              <div className="space-y-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Frequency Signal Types</h4>
-                  
-                  <div className="space-y-4">
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Pulse Output Sensors</h5>
-                      <p className="text-xs sm:text-sm mb-2">Generate discrete pulses where frequency is proportional to the measured parameter.</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                        <div>
-                          <strong className="text-white">Typical Ranges:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• 0-1000 Hz</li>
-                            <li>• 0-10 kHz</li>
-                            <li>• Pulse per unit measurement</li>
-                            <li>• Square wave output</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <strong className="text-white">Applications:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• Turbine flow meters</li>
-                            <li>• Positive displacement meters</li>
-                            <li>• Speed sensors</li>
-                            <li>• Encoder feedback</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Advantages of Frequency Signals</h5>
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div>
-                          <ul className="space-y-2 text-xs sm:text-sm">
-                            <li className="flex items-start gap-2">
-                              <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                              <span><strong>Excellent Noise Immunity:</strong> Digital nature resists interference</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                              <span><strong>Natural Totalising:</strong> Easy pulse counting for totals</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                              <span><strong>Long Distance:</strong> Can transmit over long cables</span>
-                            </li>
-                          </ul>
-                        </div>
-                        <div>
-                          <ul className="space-y-2 text-xs sm:text-sm">
-                            <li className="flex items-start gap-2">
-                              <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                              <span><strong>High Resolution:</strong> Limited only by counting time</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                              <span><strong>Self-Powered:</strong> Many sensors are passive</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                              <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                              <span><strong>Simple Processing:</strong> Standard counter circuits</span>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Signal Processing Considerations</h4>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Frequency-to-Analogue Conversion</h5>
-                      <p className="text-xs sm:text-sm mb-2">Convert frequency signals to 4-20mA or 0-10V for standard control systems.</p>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• F/V converter circuits</li>
-                        <li>• PLC high-speed counter modules</li>
-                        <li>• Frequency transmitters</li>
-                        <li>• Software-based conversion</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Totalising Applications</h5>
-                      <p className="text-xs sm:text-sm mb-2">Direct pulse counting for accumulated measurements.</p>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Flow totalisation (litres, m³)</li>
-                        <li>• Energy measurement (kWh)</li>
-                        <li>• Production counting</li>
-                        <li>• Distance measurement</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Signal Comparison */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Signal Type Comparison
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Understanding the comparative strengths and weaknesses of each signal type enables optimal selection for specific applications and environments.
-              </p>
-
-              <div className="overflow-x-auto">
-                <table className="w-full border border-gray-600 rounded-lg">
-                  <thead>
-                    <tr className="bg-card">
-                      <th className="border border-gray-600 p-3 text-left text-xs sm:text-sm font-semibold text-yellow-400">Characteristic</th>
-                      <th className="border border-gray-600 p-3 text-left text-xs sm:text-sm font-semibold text-white">Voltage</th>
-                      <th className="border border-gray-600 p-3 text-left text-xs sm:text-sm font-semibold text-white">Current</th>
-                      <th className="border border-gray-600 p-3 text-left text-xs sm:text-sm font-semibold text-white">Resistance</th>
-                      <th className="border border-gray-600 p-3 text-left text-xs sm:text-sm font-semibold text-white">Frequency</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-xs sm:text-sm">
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Noise Immunity</td>
-                      <td className="border border-gray-600 p-3">Poor</td>
-                      <td className="border border-gray-600 p-3 text-green-400">Excellent</td>
-                      <td className="border border-gray-600 p-3">Moderate</td>
-                      <td className="border border-gray-600 p-3 text-green-400">Excellent</td>
-                    </tr>
-                    <tr className="bg-card">
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Distance Performance</td>
-                      <td className="border border-gray-600 p-3">Limited (&lt;50m)</td>
-                      <td className="border border-gray-600 p-3 text-green-400">Excellent (1000m+)</td>
-                      <td className="border border-gray-600 p-3">Limited (&lt;100m)</td>
-                      <td className="border border-gray-600 p-3 text-green-400">Excellent (1000m+)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Resolution</td>
-                      <td className="border border-gray-600 p-3 text-green-400">High</td>
-                      <td className="border border-gray-600 p-3 text-green-400">High</td>
-                      <td className="border border-gray-600 p-3 text-green-400">Very High</td>
-                      <td className="border border-gray-600 p-3">Variable</td>
-                    </tr>
-                    <tr className="bg-card">
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Implementation Cost</td>
-                      <td className="border border-gray-600 p-3 text-green-400">Low</td>
-                      <td className="border border-gray-600 p-3">Moderate</td>
-                      <td className="border border-gray-600 p-3">Moderate</td>
-                      <td className="border border-gray-600 p-3">Low-Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Fault Detection</td>
-                      <td className="border border-gray-600 p-3">Difficult</td>
-                      <td className="border border-gray-600 p-3 text-green-400">Built-in (4mA)</td>
-                      <td className="border border-gray-600 p-3">Moderate</td>
-                      <td className="border border-gray-600 p-3">Good</td>
-                    </tr>
-                    <tr className="bg-card">
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Processing Complexity</td>
-                      <td className="border border-gray-600 p-3 text-green-400">Simple</td>
-                      <td className="border border-gray-600 p-3">Simple</td>
-                      <td className="border border-gray-600 p-3">Moderate</td>
-                      <td className="border border-gray-600 p-3">Moderate</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <Alert className="bg-green-600/10 border-green-600/30">
-                <CheckCircle className="h-4 w-4" />
-                <AlertDescription className="text-gray-300 text-sm sm:text-base">
-                  <strong>Selection Guide:</strong> Choose current signals for industrial environments and long distances, voltage for laboratory/local applications, resistance for highest accuracy temperature measurement, and frequency for totalising applications.
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          </Card>
-
-          {/* Real-World Scenario */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Real-World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="bg-yellow-400/10 p-4 rounded-lg border border-blue-600/30">
-                <h4 className="text-white font-semibold mb-3 text-sm sm:text-base">Wind Turbine Monitoring System</h4>
-                <p className="text-xs sm:text-sm leading-relaxed mb-4">
-                  A wind turbine installation demonstrates the strategic use of different signal types to optimize performance monitoring and maintenance scheduling:
-                </p>
-                
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">Rotational Speed Monitoring (Frequency Signal)</h5>
-                      <p className="text-xs">Magnetic pickup sensor generates pulse output proportional to blade rotation (0-50 Hz range), enabling precise RPM calculation and vibration analysis.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">Temperature Monitoring (4-20mA Current)</h5>
-                      <p className="text-xs">Gearbox and generator temperature sensors use 4-20mA signals for reliable transmission to control room 500m away, immune to electrical noise from power systems.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">Signal Integration</h5>
-                      <p className="text-xs">SCADA system processes frequency signals for real-time speed display and integrates current signals for temperature trending and alarm management.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">4</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">Predictive Maintenance</h5>
-                      <p className="text-xs">Frequency analysis detects bearing wear patterns while temperature trends predict gearbox issues, enabling proactive maintenance scheduling.</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <Alert className="mt-4 bg-green-600/10 border-green-600/30">
-                  <CheckCircle className="h-4 w-4" />
-                  <AlertDescription className="text-gray-300 text-xs sm:text-sm">
-                    <strong>Results:</strong> The multi-signal approach achieved 98% uptime through early fault detection, with frequency signals providing precise speed control and current signals ensuring reliable temperature monitoring despite harsh electrical environment.
-                  </AlertDescription>
-                </Alert>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Understanding the properties of voltage, current, resistance, and frequency signals is crucial to designing robust measurement systems. Each signal type has distinct advantages that make it suitable for specific applications and environments.
-              </p>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-2 text-sm sm:text-base">Key Concepts</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                  <div>
-                    <strong className="text-white">Voltage Signals:</strong> Simple implementation but limited by noise and distance constraints
-                  </div>
-                  <div>
-                    <strong className="text-white">Current Signals:</strong> Excellent noise immunity and long-distance capability, industry standard
-                  </div>
-                  <div>
-                    <strong className="text-white">Resistance Signals:</strong> Direct sensor output requiring careful measurement techniques
-                  </div>
-                  <div>
-                    <strong className="text-white">Frequency Signals:</strong> Superior for totalising applications and digital noise immunity
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <SingleQuestionQuiz 
-            questions={quizQuestions}
-            title="Knowledge Check"
-          />
-
-          {/* Navigation */}
-          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-0 pt-6 sm:pt-8">
-            <Link to="/study-centre/upskilling/instrumentation-module-3" className="w-full sm:w-auto">
-              <Button variant="outline" className="w-full sm:w-auto border-gray-600 text-gray-300 hover:border-yellow-400 hover:text-yellow-400 touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Module 3
-              </Button>
-            </Link>
-            <Link to="/study-centre/upskilling/instrumentation-module-3-section-2" className="w-full sm:w-auto">
-              <Button className="w-full sm:w-auto bg-yellow-400 text-black hover:bg-yellow-400/10 touch-manipulation active:scale-[0.98]">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 3 Section 1</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Signal Types
+          </h1>
+          <p className="text-white/80">
+            Voltage, current, resistance, and frequency signals in instrumentation
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Voltage:</strong> Simple but noise-prone, short distance</li>
+              <li><strong>Current:</strong> 4-20mA industry standard, excellent noise immunity</li>
+              <li><strong>Resistance:</strong> RTDs and thermistors, high accuracy</li>
+              <li><strong>Frequency:</strong> Ideal for totalising, great noise immunity</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Check transmitter output type on label</li>
+              <li><strong>Use:</strong> Match signal type to distance and environment</li>
+              <li><strong>Remember:</strong> 4mA = 0%, 20mA = 100%, 0mA = fault</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Identify the key electrical signal types used in instrumentation",
+              "Understand the behaviour and application of each signal type",
+              "Recognise how different sensors output different signal types",
+              "Compare signal types for range, noise susceptibility, and distance",
+              "Calculate 4-20mA signal values from process measurements",
+              "Select the appropriate signal type for different applications"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 01 - Voltage Signals */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Voltage Signals
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Voltage signals represent measurement data as varying electrical potential between two points. They are commonly used in analogue sensors and provide direct interfacing with many measurement systems.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Common Voltage Signal Ranges:</p>
+              <ul className="text-sm text-white space-y-2 ml-4">
+                <li><strong>0-10V DC:</strong> Most common industrial voltage range, providing good resolution and simple interfacing with PLCs, chart recorders, and data acquisition systems</li>
+                <li><strong>±10V Bipolar:</strong> Allows representation of both positive and negative values, used for position sensors and differential measurements</li>
+                <li><strong>Millivolt Signals (0-100mV):</strong> Low-level signals from thermocouples and strain gauges, requiring amplification and careful shielding</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Voltage Signal Characteristics:</p>
+              <div className="grid sm:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-elec-yellow/80 mb-1">Advantages:</p>
+                  <ul className="text-white space-y-1 ml-4">
+                    <li>Simple measurement circuits</li>
+                    <li>High input impedance (minimal loading)</li>
+                    <li>Direct digital conversion</li>
+                    <li>Cost-effective implementation</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-elec-yellow/80 mb-1">Disadvantages:</p>
+                  <ul className="text-white space-y-1 ml-4">
+                    <li>Susceptible to electrical noise</li>
+                    <li>Voltage drop over long cables</li>
+                    <li>Ground loop problems</li>
+                    <li>Limited transmission distance (&lt;50m)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 02 - Current Signals */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Current Signals (4-20mA)
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Current signals, particularly the industry-standard 4-20mA, provide excellent noise immunity and are ideal for long-distance transmission in industrial environments. The 4mA offset provides "live zero" capability.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Why 4-20mA Became the Standard:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>4mA = 0% scale</strong> (0°C, 0 bar, etc.) - Live zero allows fault detection</li>
+                <li><strong>12mA = 50% scale</strong> - Midpoint of the measurement range</li>
+                <li><strong>20mA = 100% scale</strong> - Full scale measurement</li>
+                <li><strong>0mA = Fault condition</strong> - Broken wire or sensor failure</li>
+              </ul>
+            </div>
+
+            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm font-medium text-white mb-2">Signal Calculation Formula:</p>
+              <p className="text-white text-sm">Current (mA) = 4 + (Process Value / Full Scale) × 16</p>
+              <p className="text-white/80 text-sm mt-2">Example: 50% scale = 4 + (16 × 0.5) = 12mA</p>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">4-20mA Advantages:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Excellent noise immunity - current loops resist EMI</li>
+                <li>Long transmission distances (1000m+) without amplification</li>
+                <li>Two-wire operation - power and signal in same loop</li>
+                <li>HART communication compatible for smart transmitters</li>
+                <li>Easy troubleshooting with standard multimeter</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 03 - Resistance Signals */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Resistance Signals
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Resistance signals are the fundamental output of RTDs (Resistance Temperature Detectors) and thermistors, where the sensor's resistance changes proportionally to the measured parameter, typically temperature.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Pt100 RTD Characteristics:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>0°C = 100.00Ω</strong> - The reference point for Pt100</li>
+                <li><strong>25°C = 109.73Ω</strong> - Room temperature</li>
+                <li><strong>50°C = 119.40Ω</strong> - Moderate temperature</li>
+                <li><strong>100°C = 138.51Ω</strong> - Boiling point of water</li>
+                <li><strong>α = 0.00385Ω/Ω/°C</strong> - Temperature coefficient</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">RTD Measurement Methods:</p>
+              <div className="grid sm:grid-cols-3 gap-4 text-sm">
+                <div className="p-3 rounded bg-white/5">
+                  <p className="text-elec-yellow/80 font-medium mb-1">2-Wire</p>
+                  <p className="text-white">Simplest but includes lead wire resistance. Error: ±0.5°C typical</p>
+                </div>
+                <div className="p-3 rounded bg-white/5">
+                  <p className="text-elec-yellow/80 font-medium mb-1">3-Wire</p>
+                  <p className="text-white">Compensates for lead resistance. Most common industrial method. Error: ±0.1°C</p>
+                </div>
+                <div className="p-3 rounded bg-white/5">
+                  <p className="text-elec-yellow/80 font-medium mb-1">4-Wire</p>
+                  <p className="text-white">Highest accuracy by eliminating lead effects. Error: ±0.01°C possible</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">NTC Thermistors:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Negative Temperature Coefficient - resistance decreases as temperature increases</li>
+                <li>High sensitivity with large resistance changes per degree</li>
+                <li>Non-linear response requiring linearisation</li>
+                <li>Lower cost than RTDs, used in HVAC and consumer electronics</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 04 - Frequency Signals */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Frequency Signals
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Frequency signals encode measurement data as varying pulse rates or frequencies, providing excellent noise immunity and natural totalising capability for flow and speed measurements.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Frequency Signal Characteristics:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Typical ranges: 0-1000 Hz or 0-10 kHz</li>
+                <li>Square wave output (TTL/CMOS logic levels)</li>
+                <li>Frequency proportional to flow rate or speed</li>
+                <li>Pulse count provides running totals</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Advantages of Frequency Signals:</p>
+              <div className="grid sm:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <ul className="text-white space-y-1 ml-4">
+                    <li><strong>Excellent noise immunity:</strong> Digital nature resists interference</li>
+                    <li><strong>Natural totalising:</strong> Easy pulse counting for totals</li>
+                    <li><strong>Long distance:</strong> Can transmit over long cables</li>
+                  </ul>
+                </div>
+                <div>
+                  <ul className="text-white space-y-1 ml-4">
+                    <li><strong>High resolution:</strong> Limited only by counting time</li>
+                    <li><strong>Self-powered:</strong> Many sensors are passive</li>
+                    <li><strong>Simple processing:</strong> Standard counter circuits</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Common Applications:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Turbine flow meters - pulses per litre</li>
+                <li>Positive displacement meters - precise volume measurement</li>
+                <li>Speed sensors and encoders - RPM measurement</li>
+                <li>Energy meters - kWh pulse output</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 05 - Signal Type Comparison */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Signal Type Comparison
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Understanding the comparative strengths and weaknesses of each signal type enables optimal selection for specific applications and environments.
+            </p>
+
+            <div className="my-6 overflow-x-auto">
+              <table className="w-full text-sm border border-white/20 rounded">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="p-2 text-left text-elec-yellow/80 border-b border-white/20">Characteristic</th>
+                    <th className="p-2 text-left border-b border-white/20">Voltage</th>
+                    <th className="p-2 text-left border-b border-white/20">Current</th>
+                    <th className="p-2 text-left border-b border-white/20">Resistance</th>
+                    <th className="p-2 text-left border-b border-white/20">Frequency</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="p-2 text-elec-yellow/80 border-b border-white/10">Noise Immunity</td>
+                    <td className="p-2 border-b border-white/10">Poor</td>
+                    <td className="p-2 border-b border-white/10">Excellent</td>
+                    <td className="p-2 border-b border-white/10">Moderate</td>
+                    <td className="p-2 border-b border-white/10">Excellent</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 text-elec-yellow/80 border-b border-white/10">Distance</td>
+                    <td className="p-2 border-b border-white/10">&lt;50m</td>
+                    <td className="p-2 border-b border-white/10">1000m+</td>
+                    <td className="p-2 border-b border-white/10">&lt;100m</td>
+                    <td className="p-2 border-b border-white/10">1000m+</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 text-elec-yellow/80 border-b border-white/10">Fault Detection</td>
+                    <td className="p-2 border-b border-white/10">Difficult</td>
+                    <td className="p-2 border-b border-white/10">Built-in (4mA)</td>
+                    <td className="p-2 border-b border-white/10">Moderate</td>
+                    <td className="p-2 border-b border-white/10">Good</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 text-elec-yellow/80">Implementation Cost</td>
+                    <td className="p-2">Low</td>
+                    <td className="p-2">Moderate</td>
+                    <td className="p-2">Moderate</td>
+                    <td className="p-2">Low-Moderate</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Signal Selection Guidelines</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Choose current signals for industrial environments and long distances</li>
+                <li>Use voltage for laboratory/local applications with clean power</li>
+                <li>Select resistance for highest accuracy temperature measurement</li>
+                <li>Use frequency for totalising applications like flow measurement</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Troubleshooting</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>4-20mA: 0mA indicates broken wire, &lt;4mA indicates sensor fault</li>
+                <li>Voltage: Check for ground loops causing erratic readings</li>
+                <li>Resistance: Verify correct wire configuration (2/3/4-wire)</li>
+                <li>Frequency: Check for missing pulses or false triggering</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Using voltage signals over long distances</strong> — causes measurement errors from noise and voltage drop</li>
+                <li><strong>Ignoring 2-wire RTD lead resistance</strong> — can cause significant temperature reading errors</li>
+                <li><strong>Misinterpreting 0mA as zero reading</strong> — 0mA always indicates a fault in 4-20mA systems</li>
+                <li><strong>Not matching signal types to input modules</strong> — verify PLC/DCS input configuration</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-2">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

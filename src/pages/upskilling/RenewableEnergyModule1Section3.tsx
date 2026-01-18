@@ -1,501 +1,583 @@
-import { ArrowLeft, Battery, Zap, BarChart3, Clock, Grid3x3, Lightbulb, ArrowRight, FileText } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import { section3Questions } from '@/data/upskilling/renewableEnergyModule1QuizData';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
+
+const TITLE = "Renewable Generation vs Energy Storage - Renewable Energy Module 1 Section 3";
+const DESCRIPTION = "Understanding how storage technologies complement variable renewable generation to ensure grid reliability.";
+
+const quickCheckQuestions = [
+  {
+    id: "duck-curve",
+    question: "What causes the 'duck curve' pattern in electricity demand?",
+    options: [
+      "Industrial production cycles",
+      "Solar generation reducing midday net demand",
+      "Wind power fluctuations",
+      "Evening lighting demand"
+    ],
+    correctIndex: 1,
+    explanation: "The duck curve is caused by high solar generation during midday significantly reducing net demand, creating a steep evening ramp when solar output drops and demand rises."
+  },
+  {
+    id: "battery-response",
+    question: "What is the typical response time for lithium-ion battery storage systems?",
+    options: [
+      "Several minutes",
+      "Milliseconds",
+      "About 30 seconds",
+      "1-2 minutes"
+    ],
+    correctIndex: 1,
+    explanation: "Lithium-ion batteries can respond within milliseconds, making them excellent for fast-acting grid services like frequency response."
+  },
+  {
+    id: "storage-duration",
+    question: "What is a typical duration for lithium-ion grid storage systems?",
+    options: [
+      "15-30 minutes",
+      "1-4 hours",
+      "12-24 hours",
+      "Multiple days"
+    ],
+    correctIndex: 1,
+    explanation: "Most lithium-ion grid storage systems are designed for 1-4 hours of duration, suitable for daily peak shifting and frequency services."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "Why don't solar panels generate power when it's needed most in the evening?",
+    options: [
+      "They're designed for midday only",
+      "Solar irradiance peaks at midday while demand peaks in evening",
+      "Evening temperatures reduce efficiency",
+      "Grid operators limit evening output"
+    ],
+    correctAnswer: 1,
+    explanation: "Solar panels generate peak power at midday when sunlight is strongest, but electricity demand typically peaks in the evening when people return home."
+  },
+  {
+    id: 2,
+    question: "What is the round-trip efficiency of lithium-ion battery storage?",
+    options: [
+      "50-60%",
+      "70-80%",
+      "85-95%",
+      "98-99%"
+    ],
+    correctAnswer: 2,
+    explanation: "Lithium-ion batteries achieve 85-95% round-trip efficiency, meaning they retain most of the energy stored for later use."
+  },
+  {
+    id: 3,
+    question: "What is 'curtailment' in renewable energy?",
+    options: [
+      "Increasing output during peak demand",
+      "Wasting renewable energy when generation exceeds demand",
+      "Storing excess energy in batteries",
+      "Reducing installation costs"
+    ],
+    correctAnswer: 1,
+    explanation: "Curtailment occurs when renewable energy must be wasted because generation exceeds what the grid can accept or demand requires."
+  },
+  {
+    id: 4,
+    question: "What is the typical lifespan of pumped hydro storage facilities?",
+    options: [
+      "10-20 years",
+      "20-30 years",
+      "30-50 years",
+      "50-100 years"
+    ],
+    correctAnswer: 3,
+    explanation: "Pumped hydro storage facilities have very long lifespans of 50-100 years, making them excellent long-term grid assets."
+  },
+  {
+    id: 5,
+    question: "What is 'behind-the-meter' storage?",
+    options: [
+      "Storage hidden from view",
+      "Customer-side storage connected before the electricity meter",
+      "Utility-scale storage systems",
+      "Storage in power stations"
+    ],
+    correctAnswer: 1,
+    explanation: "Behind-the-meter storage is located on the customer's side of the electricity meter, used for self-consumption and backup power."
+  },
+  {
+    id: 6,
+    question: "What grid service involves batteries maintaining 50Hz frequency?",
+    options: [
+      "Energy arbitrage",
+      "Peak shaving",
+      "Frequency response",
+      "Capacity firming"
+    ],
+    correctAnswer: 2,
+    explanation: "Frequency response involves batteries quickly injecting or absorbing power to help maintain the grid frequency at 50Hz."
+  },
+  {
+    id: 7,
+    question: "What is 'value stacking' in energy storage?",
+    options: [
+      "Physically stacking battery modules",
+      "Combining multiple revenue streams from one storage system",
+      "Installing batteries in sequence",
+      "Increasing storage capacity over time"
+    ],
+    correctAnswer: 1,
+    explanation: "Value stacking involves operating a storage system to provide multiple services simultaneously, maximising its economic value."
+  },
+  {
+    id: 8,
+    question: "How does seasonal variation affect solar output in the UK?",
+    options: [
+      "No significant change",
+      "Winter is 20-30% of summer levels",
+      "Winter is higher than summer",
+      "Consistent throughout the year"
+    ],
+    correctAnswer: 1,
+    explanation: "UK solar output in winter is typically only 20-30% of summer levels due to shorter days and lower sun angles."
+  },
+  {
+    id: 9,
+    question: "What is the difference between power (MW) and energy (MWh) in storage?",
+    options: [
+      "They are the same thing",
+      "Power is how fast energy can be delivered; energy is total capacity",
+      "Energy is more important than power",
+      "Power is measured in hours"
+    ],
+    correctAnswer: 1,
+    explanation: "Power (MW) is how fast energy can be delivered or absorbed, while energy (MWh) is the total amount that can be stored."
+  },
+  {
+    id: 10,
+    question: "What is 'second life' battery storage?",
+    options: [
+      "Batteries designed to last twice as long",
+      "Using retired EV batteries for stationary storage",
+      "Backup batteries for primary storage",
+      "Storage systems that recharge themselves"
+    ],
+    correctAnswer: 1,
+    explanation: "Second life batteries are EV batteries that have 70-80% capacity remaining when retired from vehicles, repurposed for stationary storage applications."
+  }
+];
+
+const faqs = [
+  {
+    question: "Why do we need energy storage if renewable generation is free?",
+    answer: "While the 'fuel' is free, renewable energy is often generated when it's not needed and unavailable when it is. Storage allows capture of this free energy when abundant and release during peak demand periods."
+  },
+  {
+    question: "How much storage is needed for a fully renewable grid?",
+    answer: "Studies suggest 4-24 hours of storage capacity may be needed for 80-100% renewable penetration, depending on the renewable mix, demand flexibility, and grid interconnection."
+  },
+  {
+    question: "What's the difference between power and energy in storage systems?",
+    answer: "Power (MW) is how fast energy can be delivered or absorbed, while energy (MWh) is total capacity. A 10MW/40MWh battery can deliver 10MW for 4 hours, or 5MW for 8 hours."
+  },
+  {
+    question: "Are home batteries worth the investment?",
+    answer: "Home batteries can be economically justified when combined with solar PV, time-of-use tariffs, or backup power requirements. Payback periods are typically 8-12 years but improving as costs fall."
+  },
+  {
+    question: "How do storage systems provide frequency regulation?",
+    answer: "When grid frequency deviates from 50Hz, storage systems instantly inject or absorb power to restore balance. Their millisecond response makes them more effective than traditional generators."
+  },
+  {
+    question: "Can old EV batteries be used for grid storage?",
+    answer: "Yes! EV batteries retain 70-80% capacity when retired from vehicles and can have a second life in stationary storage where weight and space are less critical."
+  }
+];
 
 const RenewableEnergyModule1Section3 = () => {
-  // Transform quiz data to match SingleQuestionQuiz format
-  const quizQuestions = section3Questions.map(q => ({
-    id: q.id,
-    question: q.question,
-    options: q.options,
-    correct: q.correctAnswer,
-    explanation: q.explanation
-  }));
+  useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-4 md:px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/renewable-energy-module-1">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 1
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-4xl font-bold text-white mb-4">
-              Renewable Generation vs Energy Storage
-            </h1>
-            <p className="text-xl text-gray-400 mb-6">
-              Understanding how storage technologies complement variable renewable generation to ensure grid reliability
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Section 3
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                Generation & Storage
-              </Badge>
-            </div>
-          </div>
-
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Battery className="h-6 w-6 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <ul className="text-gray-300 space-y-2">
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Understand the mismatch between renewable generation and electricity demand
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Learn about key energy storage technologies and their characteristics
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Grasp how storage systems stabilise the grid and enable higher renewable penetration
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed">
-                Renewable energy systems don't always produce power when it's needed most. Solar panels generate peak power during midday when demand is often lower, while wind turbines produce variable output depending on weather conditions. This fundamental mismatch between when renewable energy is generated and when electricity is demanded creates both challenges and opportunities. Energy storage technologies bridge this gap, allowing renewable energy to be captured when available and released when needed, transforming intermittent renewables into reliable, dispatchable power sources.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Solar and Wind Variability */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Clock className="h-6 w-6 text-orange-400" />
-                Solar and Wind Variability Challenges
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                The variable nature of solar and wind resources creates significant challenges for grid operators and energy planners.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-orange-400 font-semibold mb-3">Solar Variability:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Daily cycles:</strong> Peak generation at midday, zero at night</li>
-                    <li>• <strong>Seasonal variation:</strong> Lower output in winter months</li>
-                    <li>• <strong>Weather impact:</strong> Clouds can reduce output by 70-90%</li>
-                    <li>• <strong>Geographic effects:</strong> Time zone differences affect peak timing</li>
-                    <li>• <strong>Predictability:</strong> Weather forecasting enables 1-2 day accuracy</li>
-                  </ul>
-                </div>
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-orange-400 font-semibold mb-3">Wind Variability:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Diurnal patterns:</strong> Often stronger at night</li>
-                    <li>• <strong>Seasonal trends:</strong> Higher in winter months (UK)</li>
-                    <li>• <strong>Weather systems:</strong> Associated with pressure changes</li>
-                    <li>• <strong>Offshore advantage:</strong> More consistent than onshore</li>
-                    <li>• <strong>Ramp rates:</strong> Can change rapidly during storms</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-orange-900/20 p-4 rounded-lg border border-orange-500/30">
-                <h4 className="text-orange-400 font-semibold mb-2">Impact on Grid Operations:</h4>
-                <div className="text-gray-300 text-sm space-y-2">
-                  <p><strong>Curtailment:</strong> Renewable energy wasted when generation exceeds demand and grid flexibility</p>
-                  <p><strong>Ramping Requirements:</strong> Conventional plants must rapidly adjust output to compensate for renewable variations</p>
-                  <p><strong>Reserve Margins:</strong> Additional backup capacity needed to maintain grid reliability</p>
-                  <p><strong>Economic Impacts:</strong> Price volatility and reduced capacity factors for conventional plants</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Peak Demand vs Peak Generation */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <BarChart3 className="h-6 w-6 text-purple-400" />
-                Peak Demand vs Peak Generation Mismatch
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                The timing mismatch between renewable energy generation and electricity demand is a fundamental challenge that storage helps address.
-              </p>
-              
-              <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
-                <h4 className="text-purple-400 font-semibold mb-3">Typical Daily Patterns (UK):</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <h5 className="text-white font-medium mb-2">Electricity Demand:</h5>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• <strong>Morning peak:</strong> 7-9 AM (breakfast, commute)</li>
-                      <li>• <strong>Evening peak:</strong> 5-7 PM (highest demand)</li>
-                      <li>• <strong>Midday dip:</strong> Lower industrial/office demand</li>
-                      <li>• <strong>Night minimum:</strong> 2-5 AM (lowest demand)</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-medium mb-2">Solar Generation:</h5>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• <strong>Peak generation:</strong> 12-2 PM (solar noon)</li>
-                      <li>• <strong>Morning ramp:</strong> 8-12 PM (increasing output)</li>
-                      <li>• <strong>Evening ramp:</strong> 2-7 PM (decreasing output)</li>
-                      <li>• <strong>Zero output:</strong> Night hours</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-purple-400 font-semibold mb-2">The "Duck Curve" Phenomenon:</h4>
-                <p className="text-gray-300 text-sm mb-3">
-                  High solar penetration creates a characteristic demand curve resembling a duck's silhouette:
-                </p>
-                <ul className="text-gray-300 text-sm space-y-1">
-                  <li>• <strong>Belly:</strong> Midday demand depression as solar meets daytime load</li>
-                  <li>• <strong>Neck:</strong> Steep evening ramp as solar output drops and demand rises</li>
-                  <li>• <strong>Head:</strong> Evening peak requiring rapid conventional generation ramp-up</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Storage Technologies */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Battery className="h-6 w-6 text-green-400" />
-                Energy Storage Technologies
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Various storage technologies address different timescales and applications, from seconds to seasons.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-green-400 font-semibold mb-3">Lithium-ion Batteries:</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• <strong>Duration:</strong> 1-4 hours typically</li>
-                    <li>• <strong>Efficiency:</strong> 85-95% round-trip</li>
-                    <li>• <strong>Response:</strong> Milliseconds</li>
-                    <li>• <strong>Applications:</strong> Grid services, residential</li>
-                    <li>• <strong>Costs:</strong> Declining rapidly</li>
-                    <li>• <strong>Lifespan:</strong> 10-20 years</li>
-                  </ul>
-                </div>
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-green-400 font-semibold mb-3">Pumped Hydro Storage:</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• <strong>Duration:</strong> 6-24+ hours</li>
-                    <li>• <strong>Efficiency:</strong> 70-85% round-trip</li>
-                    <li>• <strong>Response:</strong> Minutes to hours</li>
-                    <li>• <strong>Applications:</strong> Bulk energy storage</li>
-                    <li>• <strong>Costs:</strong> High capital, low operation</li>
-                    <li>• <strong>Lifespan:</strong> 50-100 years</li>
-                  </ul>
-                </div>
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-green-400 font-semibold mb-3">Thermal Storage:</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• <strong>Duration:</strong> Hours to days</li>
-                    <li>• <strong>Efficiency:</strong> 90-95% for heat</li>
-                    <li>• <strong>Response:</strong> Minutes to hours</li>
-                    <li>• <strong>Applications:</strong> Heating, industrial</li>
-                    <li>• <strong>Costs:</strong> Very low for sensible heat</li>
-                    <li>• <strong>Lifespan:</strong> 20-30 years</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
-                <h4 className="text-green-400 font-semibold mb-2">Emerging Technologies:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                  <div>
-                    <h5 className="text-white font-medium">Compressed Air Energy Storage (CAES)</h5>
-                    <p className="text-gray-300">Uses compressed air in underground caverns</p>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-medium">Liquid Air Energy Storage (LAES)</h5>
-                    <p className="text-gray-300">Stores energy by liquefying air</p>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-medium">Gravity Storage</h5>
-                    <p className="text-gray-300">Uses potential energy of elevated masses</p>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-medium">Power-to-X</h5>
-                    <p className="text-gray-300">Converts electricity to hydrogen or synthetic fuels</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Grid-scale vs Behind-the-meter */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Grid3x3 className="h-6 w-6 text-yellow-400" />
-                Grid-scale vs Behind-the-meter Storage
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Energy storage can be deployed at different scales and locations in the electricity system, each serving distinct purposes.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-blue-900/20 p-4 rounded-lg border border-yellow-400/30">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Grid-scale Storage:</h4>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <h5 className="text-white font-medium">Characteristics:</h5>
-                      <ul className="text-gray-300 space-y-1">
-                        <li>• Large capacity (10MW to 1GW+)</li>
-                        <li>• Connected to transmission network</li>
-                        <li>• Utility or merchant owned</li>
-                        <li>• Multiple revenue streams</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium">Applications:</h5>
-                      <ul className="text-gray-300 space-y-1">
-                        <li>• Energy arbitrage (buy low, sell high)</li>
-                        <li>• Grid balancing services</li>
-                        <li>• Renewable firming</li>
-                        <li>• Peak shaving</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
-                  <h4 className="text-green-400 font-semibold mb-3">Behind-the-meter Storage:</h4>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <h5 className="text-white font-medium">Characteristics:</h5>
-                      <ul className="text-gray-300 space-y-1">
-                        <li>• Smaller capacity (5kWh to 10MWh)</li>
-                        <li>• Customer-side of electricity meter</li>
-                        <li>• End-user owned or leased</li>
-                        <li>• Self-consumption focused</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium">Benefits:</h5>
-                      <ul className="text-gray-300 space-y-1">
-                        <li>• Reduced electricity bills</li>
-                        <li>• Backup power capability</li>
-                        <li>• Solar self-consumption increase</li>
-                        <li>• Demand charge reduction</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Frequency Regulation and Grid Services */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-6 w-6 text-yellow-400" />
-                Role in Frequency Regulation and Grid Services
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Beyond shifting energy in time, storage systems provide valuable grid services that help maintain power quality and system stability.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Frequency Services:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Primary response:</strong> Automatic response within seconds to frequency deviations</li>
-                    <li>• <strong>Secondary response:</strong> Sustained response for 30 minutes</li>
-                    <li>• <strong>Enhanced frequency response:</strong> Sub-second response for grid stability</li>
-                    <li>• <strong>Inertia services:</strong> Synthetic inertia from power electronics</li>
-                  </ul>
-                </div>
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Additional Grid Services:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Voltage support:</strong> Reactive power provision</li>
-                    <li>• <strong>Black start capability:</strong> Grid restoration after outages</li>
-                    <li>• <strong>Congestion management:</strong> Relieving transmission constraints</li>
-                    <li>• <strong>System security:</strong> Fast ramping to maintain stability</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-yellow-400 font-semibold mb-2">Value Stacking:</h4>
-                <p className="text-gray-300 text-sm mb-3">
-                  Modern storage systems can provide multiple services simultaneously, maximising economic value:
-                </p>
-                <ul className="text-gray-300 text-sm space-y-1">
-                  <li>• Energy arbitrage + frequency response</li>
-                  <li>• Peak shaving + backup power</li>
-                  <li>• Solar self-consumption + grid services</li>
-                  <li>• Multiple revenue streams improve project economics</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Example */}
-          <Card className="bg-blue-900/20 border-yellow-400/30">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">Real World Example: Solar + Storage Project</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed mb-4">
-                A 50MW solar farm in California installs 20MW/80MWh of battery storage to improve project economics and grid compatibility. The storage system captures excess midday solar generation when wholesale prices are low (often negative during spring months) and releases energy during the evening peak when prices are highest.
-              </p>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-2">Project Benefits:</h4>
-                <ul className="text-gray-300 text-sm space-y-1">
-                  <li>• <strong>Revenue increase:</strong> 30-40% higher project revenues compared to solar alone</li>
-                  <li>• <strong>Grid value:</strong> Transforms intermittent solar into dispatchable resource</li>
-                  <li>• <strong>Capacity factor:</strong> Effective solar capacity factor increases from 25% to 35%</li>
-                  <li>• <strong>Grid services:</strong> Additional revenue from frequency regulation markets</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed mb-4">
-                Generation and storage are two sides of the same coin in a renewable energy system. While renewable technologies provide clean, low-cost electricity, their variable nature requires storage solutions to ensure reliability and maximise value. Storage transforms intermittent renewables into dispatchable resources that can compete with traditional power plants.
-              </p>
-              <p className="text-yellow-400 font-medium">
-                As storage costs continue to decline and technologies mature, the combination of renewables and storage is becoming the lowest-cost option for new electricity supply in many markets.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* FAQ Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-6 w-6 text-cyan-400" />
-                Frequently Asked Questions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-4">
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-cyan-400 font-semibold mb-2">Why do we need energy storage if renewable generation is free?</h4>
-                  <p className="text-gray-300 text-sm">
-                    While the "fuel" is free, renewable energy is often generated when it's not needed and unavailable when it is needed. Storage allows us to capture this free energy when abundant and use it during peak demand periods, dramatically improving the economic and grid value of renewable generation.
-                  </p>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-cyan-400 font-semibold mb-2">How much storage is needed for a fully renewable grid?</h4>
-                  <p className="text-gray-300 text-sm">
-                    Studies suggest 4-24 hours of storage capacity may be needed for high renewable penetration (80-100%), depending on the renewable mix, demand flexibility, and grid interconnection. However, this is still an active area of research with results varying significantly by location and system design.
-                  </p>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-cyan-400 font-semibold mb-2">What's the difference between power and energy in storage systems?</h4>
-                  <p className="text-gray-300 text-sm">
-                    Power (MW) is how fast energy can be delivered or absorbed, while energy (MWh) is how much total energy can be stored. A 10MW/40MWh battery can deliver 10MW for 4 hours, or 5MW for 8 hours. The ratio determines whether the system is optimised for short, high-power applications or longer-duration energy shifting.
-                  </p>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-cyan-400 font-semibold mb-2">Are home batteries worth the investment?</h4>
-                  <p className="text-gray-300 text-sm">
-                    Home batteries can be economically justified when combined with solar PV, time-of-use tariffs, or backup power requirements. With current UK electricity prices and battery costs, payback periods are typically 8-12 years. However, battery costs continue to fall while electricity prices rise, improving the economics.
-                  </p>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-cyan-400 font-semibold mb-2">How do storage systems provide frequency regulation?</h4>
-                  <p className="text-gray-300 text-sm">
-                    When grid frequency deviates from 50Hz (indicating supply-demand imbalance), storage systems can instantly inject or absorb power to restore balance. Their millisecond response time makes them far more effective than traditional generators, which take minutes to respond to frequency signals.
-                  </p>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-cyan-400 font-semibold mb-2">What happens to old EV batteries - can they be used for grid storage?</h4>
-                  <p className="text-gray-300 text-sm">
-                    Yes! EV batteries retain 70-80% capacity when "retired" from vehicles and can have a second life in stationary storage applications where weight and space are less critical. This creates additional value for EV batteries and potentially lower-cost storage options for grid applications.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
-                Test Your Knowledge
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 mb-6">
-                Test your understanding of renewable generation and energy storage concepts.
-              </p>
-              <SingleQuestionQuiz 
-                questions={quizQuestions}
-                title="Generation vs Storage Quiz"
-              />
-            </CardContent>
-          </Card>
-
-          <div className="flex justify-between mt-8">
-            <Link to="/study-centre/upskilling/renewable-energy-module-1-section-2">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/study-centre/upskilling/renewable-energy-module-1-section-4">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 touch-manipulation active:scale-[0.98]">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+
+        {/* Centered Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 1 Section 3</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Renewable Generation vs Energy Storage
+          </h1>
+          <p className="text-white/80">
+            How storage enables higher renewable penetration
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Challenge:</strong> Generation and demand timing mismatch</li>
+              <li><strong>Solution:</strong> Storage bridges the gap</li>
+              <li><strong>Technologies:</strong> Batteries, pumped hydro, thermal</li>
+              <li><strong>Value:</strong> Grid stability, price arbitrage, backup</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Battery containers, pumped hydro plants</li>
+              <li><strong>Use:</strong> Sizing storage for solar/wind systems</li>
+              <li><strong>Apply:</strong> Maximising self-consumption for customers</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Understand the mismatch between renewable generation and demand",
+              "Learn about key energy storage technologies",
+              "Grasp how storage stabilises the grid",
+              "Compare grid-scale and behind-the-meter storage",
+              "Understand frequency regulation and grid services",
+              "Apply storage concepts to system design"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1: Solar and Wind Variability */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Solar and Wind Variability Challenges
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Renewable energy systems don't always produce power when it's needed most. Solar panels generate peak power during midday when demand is often lower, while wind turbines produce variable output depending on weather conditions.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Solar Variability</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Daily cycles:</strong> Peak at midday, zero at night</li>
+                  <li><strong>Seasonal:</strong> Lower output in winter months</li>
+                  <li><strong>Weather:</strong> Clouds reduce output by 70-90%</li>
+                  <li><strong>Winter performance:</strong> 20-30% of summer levels</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wind Variability</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Diurnal:</strong> Often stronger at night</li>
+                  <li><strong>Seasonal:</strong> Higher in winter (UK)</li>
+                  <li><strong>Offshore:</strong> More consistent than onshore</li>
+                  <li><strong>Ramp rates:</strong> Can change rapidly</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2: Peak Demand vs Generation */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Peak Demand vs Peak Generation
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              The timing mismatch between renewable energy generation and electricity demand is a fundamental challenge that storage helps address.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">UK Electricity Demand</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Morning peak:</strong> 7-9 AM</li>
+                  <li><strong>Evening peak:</strong> 5-7 PM (highest)</li>
+                  <li><strong>Midday dip:</strong> Lower demand</li>
+                  <li><strong>Night minimum:</strong> 2-5 AM</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Solar Generation</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Peak generation:</strong> 12-2 PM</li>
+                  <li><strong>Morning ramp:</strong> 8 AM-12 PM</li>
+                  <li><strong>Evening ramp:</strong> 2-7 PM (decreasing)</li>
+                  <li><strong>Zero output:</strong> Night hours</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 my-6">
+              <p className="text-elec-yellow text-sm font-medium mb-2">The Duck Curve:</p>
+              <p className="text-white text-sm">
+                High solar penetration creates a characteristic demand curve: the "belly" is midday demand depression as solar meets load, the "neck" is steep evening ramp as solar drops, and the "head" is evening peak requiring rapid generation ramp-up.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: Storage Technologies */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Energy Storage Technologies
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Various storage technologies address different timescales and applications, from seconds to seasons.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-4 my-6">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="text-elec-yellow text-sm font-medium mb-2">Lithium-ion Batteries</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Duration:</strong> 1-4 hours</li>
+                  <li><strong>Efficiency:</strong> 85-95%</li>
+                  <li><strong>Response:</strong> Milliseconds</li>
+                  <li><strong>Lifespan:</strong> 10-20 years</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="text-elec-yellow text-sm font-medium mb-2">Pumped Hydro</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Duration:</strong> 6-24+ hours</li>
+                  <li><strong>Efficiency:</strong> 70-85%</li>
+                  <li><strong>Response:</strong> Minutes</li>
+                  <li><strong>Lifespan:</strong> 50-100 years</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="text-elec-yellow text-sm font-medium mb-2">Thermal Storage</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Duration:</strong> Hours to days</li>
+                  <li><strong>Efficiency:</strong> 90-95%</li>
+                  <li><strong>Response:</strong> Minutes</li>
+                  <li><strong>Lifespan:</strong> 20-30 years</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 4: Grid-scale vs Behind-the-meter */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Grid-scale vs Behind-the-meter Storage
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Energy storage can be deployed at different scales and locations, each serving distinct purposes.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Grid-scale Storage</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Capacity:</strong> 10MW to 1GW+</li>
+                  <li><strong>Connection:</strong> Transmission network</li>
+                  <li><strong>Owner:</strong> Utility or merchant</li>
+                  <li><strong>Uses:</strong> Arbitrage, balancing, firming</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Behind-the-meter</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Capacity:</strong> 5kWh to 10MWh</li>
+                  <li><strong>Connection:</strong> Customer side of meter</li>
+                  <li><strong>Owner:</strong> End-user owned/leased</li>
+                  <li><strong>Uses:</strong> Self-consumption, backup</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 5: Grid Services */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Frequency Regulation and Grid Services
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Beyond shifting energy in time, storage systems provide valuable grid services that help maintain power quality and system stability.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Frequency Services</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Primary response:</strong> Within seconds to frequency deviations</li>
+                  <li><strong>Secondary response:</strong> Sustained for 30 minutes</li>
+                  <li><strong>Enhanced response:</strong> Sub-second for stability</li>
+                  <li><strong>Synthetic inertia:</strong> From power electronics</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Additional Services</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li><strong>Voltage support:</strong> Reactive power provision</li>
+                  <li><strong>Black start:</strong> Grid restoration after outages</li>
+                  <li><strong>Congestion relief:</strong> Transmission constraints</li>
+                  <li><strong>Fast ramping:</strong> Maintain stability</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Value Stacking:</p>
+              <p className="text-sm text-white">
+                Modern storage systems can provide multiple services simultaneously, maximising economic value: energy arbitrage + frequency response, peak shaving + backup power, solar self-consumption + grid services.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 6: Real World Example */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Real World Example: Solar + Storage
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              A 50MW solar farm installs 20MW/80MWh of battery storage to improve economics and grid compatibility. The storage captures excess midday solar when wholesale prices are low and releases energy during the evening peak when prices are highest.
+            </p>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 my-6">
+              <p className="text-elec-yellow text-sm font-medium mb-2">Project Benefits:</p>
+              <ul className="text-sm text-white space-y-1">
+                <li><strong>Revenue increase:</strong> 30-40% higher than solar alone</li>
+                <li><strong>Grid value:</strong> Transforms intermittent to dispatchable</li>
+                <li><strong>Capacity factor:</strong> Effective increase from 25% to 35%</li>
+                <li><strong>Additional revenue:</strong> Frequency regulation markets</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Sizing Storage Systems</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Match storage capacity to generation profile and demand patterns</li>
+                <li>Consider both power (kW) and energy (kWh) requirements</li>
+                <li>Factor in round-trip efficiency losses in calculations</li>
+                <li>Account for battery degradation over system lifetime</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Advising Customers</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Explain self-consumption benefits clearly</li>
+                <li>Discuss backup power capabilities and limitations</li>
+                <li>Consider time-of-use tariff opportunities</li>
+                <li>Be realistic about payback periods and ROI</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Oversizing storage</strong> - match to actual usage patterns</li>
+                <li><strong>Ignoring degradation</strong> - batteries lose capacity over time</li>
+                <li><strong>Forgetting efficiency losses</strong> - not all energy stored is recovered</li>
+                <li><strong>Unrealistic expectations</strong> - storage doesn't eliminate bills</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-4">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+
+      </article>
     </div>
   );
 };

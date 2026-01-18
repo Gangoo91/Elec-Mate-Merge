@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { ArrowLeft, Zap, CheckCircle, ChevronDown, Factory, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Zap, CheckCircle, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
@@ -185,17 +184,16 @@ const faqs = [
 
 const IndustrialElectricalModule1Section1 = () => {
   useSEO(TITLE, DESCRIPTION);
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
+      {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/industrial-electrical-module-1">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 1
+              Back
             </Link>
           </Button>
         </div>
@@ -207,8 +205,8 @@ const IndustrialElectricalModule1Section1 = () => {
         {/* Centered Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Factory className="h-4 w-4" />
-            <span>Module 1 - Section 1</span>
+            <Zap className="h-4 w-4" />
+            <span>Module 1 Section 1</span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Industrial vs Domestic Electrical Setup
@@ -297,9 +295,9 @@ const IndustrialElectricalModule1Section1 = () => {
               </div>
             </div>
 
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Why Three-Phase for Industrial?</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li><strong>Higher power delivery:</strong> Three-phase delivers 1.73x more power than single-phase at the same current</li>
                 <li><strong>Balanced loading:</strong> Load can be distributed across three phases, reducing neutral current</li>
                 <li><strong>Motor efficiency:</strong> Three-phase motors are simpler, more efficient, and self-starting</li>
@@ -326,48 +324,16 @@ const IndustrialElectricalModule1Section1 = () => {
               Industrial installations present fundamentally different load characteristics compared to domestic properties. Understanding these differences is crucial for proper design, cable sizing, and protection selection.
             </p>
 
-            <div className="overflow-x-auto my-6">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-white/20">
-                    <th className="text-left text-white py-2 pr-4">Characteristic</th>
-                    <th className="text-left text-white/70 py-2 pr-4">Domestic</th>
-                    <th className="text-left text-white/70 py-2">Industrial</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">Maximum Demand</td>
-                    <td className="py-2 pr-4 text-white/80">10-15kVA typical</td>
-                    <td className="py-2 text-white/80">50kVA to 10MVA+</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">Load Type</td>
-                    <td className="py-2 pr-4 text-white/80">Resistive, small motors</td>
-                    <td className="py-2 text-white/80">Large motors, drives, welders</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">Starting Current</td>
-                    <td className="py-2 pr-4 text-white/80">Low (appliances)</td>
-                    <td className="py-2 text-white/80">6-8x FLC for DOL motors</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">Power Factor</td>
-                    <td className="py-2 pr-4 text-white/80">~0.95 (mostly resistive)</td>
-                    <td className="py-2 text-white/80">0.7-0.9 (inductive loads)</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">Harmonics</td>
-                    <td className="py-2 pr-4 text-white/80">Minimal</td>
-                    <td className="py-2 text-white/80">Significant (VFDs, rectifiers)</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">Diversity</td>
-                    <td className="py-2 pr-4 text-white/80">High (0.4-0.6)</td>
-                    <td className="py-2 text-white/80">Lower (0.7-0.9 for production)</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Comparison of Load Characteristics:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Maximum Demand:</strong> Domestic 10-15kVA typical vs Industrial 50kVA to 10MVA+</li>
+                <li><strong>Load Type:</strong> Domestic resistive/small motors vs Industrial large motors, drives, welders</li>
+                <li><strong>Starting Current:</strong> Domestic low (appliances) vs Industrial 6-8x FLC for DOL motors</li>
+                <li><strong>Power Factor:</strong> Domestic ~0.95 (mostly resistive) vs Industrial 0.7-0.9 (inductive loads)</li>
+                <li><strong>Harmonics:</strong> Domestic minimal vs Industrial significant (VFDs, rectifiers)</li>
+                <li><strong>Diversity:</strong> Domestic high (0.4-0.6) vs Industrial lower (0.7-0.9 for production)</li>
+              </ul>
             </div>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">
@@ -429,12 +395,12 @@ const IndustrialElectricalModule1Section1 = () => {
               </div>
             </div>
 
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Discrimination (Selectivity) Explained</p>
               <p className="text-sm text-white/90 mb-3">
                 Discrimination ensures that during a fault, only the protective device nearest to the fault operates, leaving upstream devices closed and maintaining supply to healthy circuits.
               </p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li><strong>Time discrimination:</strong> Upstream device has longer time delay</li>
                 <li><strong>Current discrimination:</strong> Upstream device has higher setting</li>
                 <li><strong>Energy discrimination:</strong> Upstream device allows downstream to clear fault first (I2t)</li>
@@ -491,12 +457,12 @@ const IndustrialElectricalModule1Section1 = () => {
               </div>
             </div>
 
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Cable Segregation Requirements</p>
               <p className="text-sm text-white/90 mb-3">
                 BS 7671 and EMC requirements mandate segregation of different cable types to prevent electromagnetic interference and maintain circuit integrity.
               </p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li><strong>Band I:</strong> Extra-low voltage (ELV), fire alarm, data, telecoms</li>
                 <li><strong>Band II:</strong> Low voltage power and lighting circuits</li>
                 <li><strong>Separation distances:</strong> Per BS 7671 Table 52.2 for parallel runs in containment</li>
@@ -551,51 +517,19 @@ const IndustrialElectricalModule1Section1 = () => {
               </div>
             </div>
 
-            <div className="overflow-x-auto my-6">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-white/20">
-                    <th className="text-left text-white py-2 pr-4">Document</th>
-                    <th className="text-left text-white/70 py-2 pr-4">Purpose</th>
-                    <th className="text-left text-white/70 py-2">Standard</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">Design Specification</td>
-                    <td className="py-2 pr-4 text-white/80">Defines requirements and design basis</td>
-                    <td className="py-2 text-white/80">Project specific</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">Single-Line Diagram</td>
-                    <td className="py-2 pr-4 text-white/80">Shows power distribution architecture</td>
-                    <td className="py-2 text-white/80">IEC 60617</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">Cable Schedule</td>
-                    <td className="py-2 pr-4 text-white/80">Cable sizes, types, routes, lengths</td>
-                    <td className="py-2 text-white/80">BS 7671</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">Protection Study</td>
-                    <td className="py-2 pr-4 text-white/80">Discrimination and coordination analysis</td>
-                    <td className="py-2 text-white/80">BS 7671 / IEC 60909</td>
-                  </tr>
-                  <tr className="border-b border-white/5">
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">Switchgear DoC</td>
-                    <td className="py-2 pr-4 text-white/80">Assembly compliance declaration</td>
-                    <td className="py-2 text-white/80">BS EN 61439</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2 pr-4 font-medium text-elec-yellow/80">O&M Manual</td>
-                    <td className="py-2 pr-4 text-white/80">Operation and maintenance guidance</td>
-                    <td className="py-2 text-white/80">Project specific</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Key Industrial Documents:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Design Specification:</strong> Defines requirements and design basis (Project specific)</li>
+                <li><strong>Single-Line Diagram:</strong> Shows power distribution architecture (IEC 60617)</li>
+                <li><strong>Cable Schedule:</strong> Cable sizes, types, routes, lengths (BS 7671)</li>
+                <li><strong>Protection Study:</strong> Discrimination and coordination analysis (BS 7671 / IEC 60909)</li>
+                <li><strong>Switchgear DoC:</strong> Assembly compliance declaration (BS EN 61439)</li>
+                <li><strong>O&amp;M Manual:</strong> Operation and maintenance guidance (Project specific)</li>
+              </ul>
             </div>
 
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">BS EN 61439 Compliance</p>
               <p className="text-sm text-white/90">
                 Industrial switchgear and distribution boards must comply with BS EN 61439 (replacing the old BS EN 60439). This standard requires the original manufacturer or a competent assembler to verify design through one of three methods: verification by testing, verification by calculation, or verification by design rules. A Declaration of Conformity must be provided with every assembly.
@@ -666,8 +600,8 @@ const IndustrialElectricalModule1Section1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Additional Industrial Training</p>
                 <ul className="text-sm text-white space-y-1">
-                  <li>City & Guilds 2391 (Inspection and Testing)</li>
-                  <li>City & Guilds 2396 (Design of Electrical Systems)</li>
+                  <li>City &amp; Guilds 2391 (Inspection and Testing)</li>
+                  <li>City &amp; Guilds 2396 (Design of Electrical Systems)</li>
                   <li>CompEx (explosive atmospheres)</li>
                   <li>High voltage authorisation training</li>
                   <li>Manufacturer-specific equipment training</li>
@@ -690,17 +624,51 @@ const IndustrialElectricalModule1Section1 = () => {
         {/* Divider */}
         <hr className="border-white/5 my-12" />
 
-        {/* Quick Reference Card */}
+        {/* Practical Guidance */}
         <section className="mb-10">
-          <div className="p-5 rounded-lg bg-white/5 border border-white/10">
-            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-              <Zap className="h-5 w-5 text-elec-yellow" />
-              Quick Reference
-            </h3>
-            <div className="grid sm:grid-cols-3 gap-6 text-sm text-white">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Transitioning to Industrial Work</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always work under supervision until you are competent</li>
+                <li>Study three-phase theory and practice before working on live systems</li>
+                <li>Familiarise yourself with industrial protection devices and their settings</li>
+                <li>Learn to read single-line diagrams and protection coordination studies</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Working on Industrial Sites</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always follow permit-to-work procedures</li>
+                <li>Use appropriate PPE for the voltage and fault levels present</li>
+                <li>Verify isolation at the point of work, not just at the switchboard</li>
+                <li>Check prospective fault current before working on any circuit</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Underestimating fault levels</strong> - industrial systems can have very high prospective fault currents</li>
+                <li><strong>Ignoring phase rotation</strong> - motors can run backwards if phases are connected incorrectly</li>
+                <li><strong>Not verifying discrimination</strong> - changes to protection settings can affect coordination</li>
+                <li><strong>Poor cable segregation</strong> - mixing power and data cables causes EMI issues</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Quick Reference */}
+        <section className="mb-10">
+          <div className="mt-6 p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+            <div className="grid sm:grid-cols-3 gap-4 text-xs text-white">
               <div>
-                <p className="font-medium text-elec-yellow/80 mb-2">Voltage Standards</p>
-                <ul className="space-y-1 text-white/90">
+                <p className="font-medium text-white mb-1">Voltage Standards</p>
+                <ul className="space-y-0.5">
                   <li>Single-phase: 230V (216-253V)</li>
                   <li>Three-phase: 400V L-L</li>
                   <li>Reduced voltage: 110V CTE</li>
@@ -708,8 +676,8 @@ const IndustrialElectricalModule1Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-elec-yellow/80 mb-2">Key Standards</p>
-                <ul className="space-y-1 text-white/90">
+                <p className="font-medium text-white mb-1">Key Standards</p>
+                <ul className="space-y-0.5">
                   <li>BS 7671 - Wiring Regulations</li>
                   <li>BS EN 61439 - Switchgear</li>
                   <li>BS EN 60947 - LV Devices</li>
@@ -717,8 +685,8 @@ const IndustrialElectricalModule1Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-elec-yellow/80 mb-2">Earthing Systems</p>
-                <ul className="space-y-1 text-white/90">
+                <p className="font-medium text-white mb-1">Earthing Systems</p>
+                <ul className="space-y-0.5">
                   <li>TN-S: Separate earth conductor</li>
                   <li>TN-C-S: Combined PEN, split at origin</li>
                   <li>TT: Local earth electrode</li>
@@ -731,22 +699,12 @@ const IndustrialElectricalModule1Section1 = () => {
 
         {/* FAQs */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Frequently Asked Questions</h2>
-          <div className="space-y-2">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
-                <button
-                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                  className="w-full min-h-[44px] px-4 py-3 text-left flex items-center justify-between gap-3 hover:bg-white/5 transition-colors touch-manipulation"
-                >
-                  <span className="text-sm font-medium text-white">{faq.question}</span>
-                  <ChevronDown className={`h-4 w-4 text-white/60 flex-shrink-0 transition-transform ${expandedFaq === index ? 'rotate-180' : ''}`} />
-                </button>
-                {expandedFaq === index && (
-                  <div className="px-4 pb-4">
-                    <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
-                  </div>
-                )}
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -755,26 +713,25 @@ const IndustrialElectricalModule1Section1 = () => {
         {/* Divider */}
         <hr className="border-white/5 my-12" />
 
-        {/* Quiz Section */}
+        {/* Quiz */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
-          <p className="text-sm text-white/80 mb-6">
-            Complete this quiz to check your understanding of industrial vs domestic electrical systems.
-          </p>
-          <Quiz questions={quizQuestions} title="Section 1 Quiz" />
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
         </section>
 
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/industrial-electrical-module-1">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 1
+              Back
             </Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/industrial-electrical-module-1-section-2">
-              Next: HV/LV Separation
+            <Link to="../section-2">
+              Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>

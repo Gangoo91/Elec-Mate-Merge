@@ -4,12 +4,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { FileText, Download, Eye, Save, Wand2, Sparkles } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { FileText, Download, Eye, Save, Wand2, Sparkles, ChevronDown, FileCode, File } from "lucide-react";
 import { EnhancedCVForm } from "./EnhancedCVForm";
 import { CVPreview } from "./CVPreview";
 import { SmartCVWizard } from "./ai/SmartCVWizard";
-import { CVData, defaultCVData } from "./types";
-import { generateCVPDF } from "./pdfGenerator";
+import { CVData, CVFormat, defaultCVData } from "./types";
+import { generateCVPDFByFormat } from "./pdfGenerators";
+import { CVTemplateShowcase, CVTemplateId } from "./premium/CVTemplateShowcase";
 import { toast } from "@/hooks/use-toast";
 
 const CVBuilder = () => {
@@ -17,6 +25,7 @@ const CVBuilder = () => {
   const [activeTab, setActiveTab] = useState("edit");
   const [isGenerating, setIsGenerating] = useState(false);
   const [showWizard, setShowWizard] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<CVTemplateId>("classic");
 
   const handleSave = () => {
     localStorage.setItem('cvData', JSON.stringify(cvData));
@@ -43,13 +52,14 @@ const CVBuilder = () => {
     }
   };
 
-  const handleDownload = async () => {
+  const handleDownload = async (format: CVFormat = 'full') => {
     setIsGenerating(true);
     try {
-      await generateCVPDF(cvData);
+      await generateCVPDFByFormat(cvData, selectedTemplate, format);
+      const formatLabel = format === 'ats' ? 'ATS-Friendly' : format === 'summary' ? '1-Page Summary' : 'Full';
       toast({
         title: "CV Downloaded",
-        description: "Your CV has been generated and downloaded as PDF."
+        description: `Your ${formatLabel} CV has been generated and downloaded.`
       });
     } catch (error) {
       toast({
@@ -119,31 +129,54 @@ const CVBuilder = () => {
               >
                 Load
               </Button>
-              <Button
-                onClick={handleDownload}
-                disabled={isGenerating}
-                size="sm"
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs md:text-sm"
-              >
-                <Download className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-                {isGenerating ? "Generating..." : "PDF"}
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    disabled={isGenerating}
+                    size="sm"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs md:text-sm"
+                  >
+                    <Download className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
+                    {isGenerating ? "Generating..." : "Download"}
+                    <ChevronDown className="h-3 w-3 md:h-4 md:w-4 ml-1" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-elec-gray border-elec-gray text-foreground">
+                  <DropdownMenuItem onClick={() => handleDownload('full')} className="cursor-pointer">
+                    <FileText className="h-4 w-4 mr-2" />
+                    Full CV (Recommended)
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleDownload('summary')} className="cursor-pointer">
+                    <File className="h-4 w-4 mr-2" />
+                    1-Page Summary
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-white/10" />
+                  <DropdownMenuItem onClick={() => handleDownload('ats')} className="cursor-pointer">
+                    <FileCode className="h-4 w-4 mr-2" />
+                    ATS-Friendly (Plain Text)
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </CardHeader>
         <CardContent className="flex-1 flex flex-col px-4 md:px-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full flex-1 flex flex-col">
-            <TabsList className="grid w-full grid-cols-2 mb-4">
+            <TabsList className="grid w-full grid-cols-3 mb-4">
               <TabsTrigger value="edit" className="text-xs md:text-sm">
                 <Wand2 className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-                Edit CV
+                Edit
+              </TabsTrigger>
+              <TabsTrigger value="template" className="text-xs md:text-sm">
+                <Sparkles className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
+                Template
               </TabsTrigger>
               <TabsTrigger value="preview" className="text-xs md:text-sm">
                 <Eye className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
                 Preview
               </TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="edit" className="flex-1 mt-0">
               <div className="h-full overflow-y-auto space-y-4">
                 {!isEmptyCV() && (
@@ -162,7 +195,20 @@ const CVBuilder = () => {
                 <EnhancedCVForm cvData={cvData} onChange={setCVData} />
               </div>
             </TabsContent>
-            
+
+            <TabsContent value="template" className="flex-1 mt-0">
+              <div className="h-full overflow-y-auto space-y-4">
+                <div className="text-center mb-4">
+                  <h3 className="text-lg font-semibold text-foreground">Choose Your CV Template</h3>
+                  <p className="text-sm text-muted-foreground">Select a design that matches your style</p>
+                </div>
+                <CVTemplateShowcase
+                  selectedTemplate={selectedTemplate}
+                  onSelectTemplate={setSelectedTemplate}
+                />
+              </div>
+            </TabsContent>
+
             <TabsContent value="preview" className="flex-1 mt-0">
               <div className="h-full overflow-y-auto">
                 <CVPreview cvData={cvData} />

@@ -75,7 +75,7 @@ const BMSModule1Section1 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-1">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -271,30 +271,30 @@ const BMSModule1Section1 = () => {
                 <thead>
                   <tr className="border-b border-white/20">
                     <th className="text-left text-white py-2 pr-4">Aspect</th>
-                    <th className="text-left text-white/70 py-2 pr-4">Traditional</th>
-                    <th className="text-left text-white/70 py-2">Modern BMS</th>
+                    <th className="text-left text-white py-2 pr-4">Traditional</th>
+                    <th className="text-left text-white py-2">Modern BMS</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b border-white/5">
                     <td className="py-2 pr-4 font-medium text-elec-yellow/80">Control</td>
-                    <td className="py-2 pr-4 text-white/80">Manual switches</td>
-                    <td className="py-2 text-white/80">Automated, sensor-based</td>
+                    <td className="py-2 pr-4 text-white">Manual switches</td>
+                    <td className="py-2 text-white">Automated, sensor-based</td>
                   </tr>
                   <tr className="border-b border-white/5">
                     <td className="py-2 pr-4 font-medium text-elec-yellow/80">Integration</td>
-                    <td className="py-2 pr-4 text-white/80">Independent systems</td>
-                    <td className="py-2 text-white/80">Fully integrated platform</td>
+                    <td className="py-2 pr-4 text-white">Independent systems</td>
+                    <td className="py-2 text-white">Fully integrated platform</td>
                   </tr>
                   <tr className="border-b border-white/5">
                     <td className="py-2 pr-4 font-medium text-elec-yellow/80">Data</td>
-                    <td className="py-2 pr-4 text-white/80">Manual readings</td>
-                    <td className="py-2 text-white/80">Real-time monitoring</td>
+                    <td className="py-2 pr-4 text-white">Manual readings</td>
+                    <td className="py-2 text-white">Real-time monitoring</td>
                   </tr>
                   <tr>
                     <td className="py-2 pr-4 font-medium text-elec-yellow/80">Access</td>
-                    <td className="py-2 pr-4 text-white/80">Local only</td>
-                    <td className="py-2 text-white/80">Remote web/mobile</td>
+                    <td className="py-2 pr-4 text-white">Local only</td>
+                    <td className="py-2 text-white">Remote web/mobile</td>
                   </tr>
                 </tbody>
               </table>
@@ -442,7 +442,7 @@ const BMSModule1Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -488,7 +488,7 @@ const BMSModule1Section1 = () => {
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-1">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>

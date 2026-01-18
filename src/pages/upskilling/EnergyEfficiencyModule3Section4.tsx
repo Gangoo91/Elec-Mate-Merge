@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSEO } from '@/hooks/useSEO';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import useSEO from '@/hooks/useSEO';
 import { Button } from '@/components/ui/button';
 import Quiz from '@/components/apprentice-courses/Quiz';
 import InlineCheck from '@/components/apprentice-courses/InlineCheck';
 import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
+  ArrowLeft,
+  ArrowRight,
   Camera,
   Activity,
   Monitor,
@@ -29,9 +27,6 @@ import {
 } from 'lucide-react';
 
 const EnergyEfficiencyModule3Section4: React.FC = () => {
-  const navigate = useNavigate();
-  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
-
   useSEO({
     title: 'Tools and Software for Energy Audits | Energy Efficiency Module 3.4 | Elec-Mate',
     description: 'Master energy audit tools including thermal imaging cameras, power quality analysers, audit software platforms, and mobile apps. Build your professional audit toolkit with UK-specific recommendations.',
@@ -158,73 +153,77 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
-      {/* Header */}
-      <div className="bg-[#1a1a1a]/95 border-b border-elec-yellow/20">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-2 text-elec-yellow/70 text-sm mb-2">
-            <BookOpen size={16} />
-            <span>Module 3: Professional Energy Auditing</span>
+    <div className="min-h-screen bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5" />
+            </Link>
+          </Button>
+          <div className="flex-1 min-w-0">
+            <p className="text-elec-yellow text-sm font-medium">Module 3 • Section 4</p>
+            <h1 className="text-white font-semibold truncate">Tools and Software for Audits</h1>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-elec-yellow">
-            Section 4: Tools and Software for Audits
-          </h1>
-          <p className="text-gray-400 mt-2">
-            Master the equipment and software that enable professional energy audits
-          </p>
         </div>
       </div>
 
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-12">
-        {/* Introduction */}
-        <section className="prose prose-invert max-w-none">
-          <p className="text-lg text-gray-300 leading-relaxed">
-            Professional energy auditing requires the right tools to gather accurate data, identify
-            inefficiencies, and present findings convincingly. This section covers the essential
-            equipment and software platforms used in modern energy audits, with practical UK-specific
-            recommendations and pricing guidance to help you build your professional toolkit.
-          </p>
-        </section>
+        {/* Quick Summary */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li>• Thermal cameras detect electrical hot spots</li>
+              <li>• Power analysers measure energy quality</li>
+              <li>• Cloud software streamlines reporting</li>
+              <li>• Mobile apps enable field data capture</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-white/5 border-l-2 border-white/30">
+            <p className="text-white/80 text-sm font-medium mb-2">You Will Learn</p>
+            <ul className="text-sm text-white/70 space-y-1">
+              <li>• Select appropriate thermal imaging equipment</li>
+              <li>• Use power quality analysers effectively</li>
+              <li>• Choose audit software platforms</li>
+              <li>• Build a professional audit toolkit</li>
+            </ul>
+          </div>
+        </div>
 
         {/* Section 1: Thermal Imaging Cameras */}
         <section className="space-y-6">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-              <Camera className="text-elec-yellow" size={24} />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-elec-yellow">
-                1. Thermal Imaging Cameras for Electrical Audits
-              </h2>
-              <p className="text-gray-400 mt-1">
-                Detecting hot spots and thermal anomalies
-              </p>
-            </div>
-          </div>
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Thermal Imaging Cameras for Electrical Audits
+          </h2>
 
-          <div className="bg-[#242424] rounded-xl p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-              <Thermometer size={20} className="text-red-400" />
-              Understanding Thermal Imaging Technology
-            </h3>
-            <p className="text-gray-300">
-              Thermal cameras detect infrared radiation emitted by objects and convert it to visible
-              images showing temperature variations. For electrical audits, they reveal loose connections,
-              overloaded circuits, failing components, and imbalanced loads before they cause failures
-              or fires.
-            </p>
+          <div className="bg-white/5 rounded-lg p-6 space-y-4">
+            <div className="flex items-start gap-3">
+              <Thermometer className="w-6 h-6 text-red-400 mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-white mb-2">Understanding Thermal Imaging Technology</h3>
+                <p className="text-white">
+                  Thermal cameras detect infrared radiation emitted by objects and convert it to visible
+                  images showing temperature variations. For electrical audits, they reveal loose connections,
+                  overloaded circuits, failing components, and imbalanced loads before they cause failures
+                  or fires.
+                </p>
+              </div>
+            </div>
 
             <div className="grid md:grid-cols-2 gap-4 mt-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-elec-yellow mb-2">Key Specifications to Consider</h4>
-                <ul className="text-gray-300 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
                     <span><strong>Resolution:</strong> Minimum 320x240 pixels for professional work; 160x120 for basic surveys</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
-                    <span><strong>Thermal Sensitivity (NETD):</strong> ≤50mK for detecting subtle temperature differences</span>
+                    <span><strong>Thermal Sensitivity (NETD):</strong> 50mK or better for detecting subtle temperature differences</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
@@ -237,9 +236,9 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-elec-yellow mb-2">Recommended Models (UK Pricing)</h4>
-                <ul className="text-gray-300 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <PoundSterling size={16} className="text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span><strong>Entry (£500-£1,500):</strong> FLIR C5, FLIR ONE Pro, Seek Thermal Pro</span>
@@ -265,7 +264,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
                 <AlertTriangle size={18} />
                 Thermal Interpretation Guidelines
               </h4>
-              <div className="text-gray-300 text-sm space-y-2">
+              <div className="text-white text-sm space-y-2">
                 <p><strong>Temperature Rise Categories (above ambient or identical components):</strong></p>
                 <ul className="list-disc list-inside ml-2 space-y-1">
                   <li><span className="text-green-400">1-10°C:</span> Monitor - possible developing issue</li>
@@ -289,63 +288,56 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
         {/* Section 2: Power Quality Analysers */}
         <section className="space-y-6">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-              <Activity className="text-elec-yellow" size={24} />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-elec-yellow">
-                2. Power Quality Analysers and Data Loggers
-              </h2>
-              <p className="text-gray-400 mt-1">
-                Capturing electrical parameters over time
-              </p>
-            </div>
-          </div>
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Power Quality Analysers and Data Loggers
+          </h2>
 
-          <div className="bg-[#242424] rounded-xl p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-              <Zap size={20} className="text-elec-yellow" />
-              Power Quality Analysis Fundamentals
-            </h3>
-            <p className="text-gray-300">
-              Power quality analysers measure electrical parameters beyond basic voltage and current,
-              including harmonics, power factor, transients, sags, swells, and energy consumption patterns.
-              This data is essential for identifying waste, diagnosing equipment issues, and validating
-              improvement measures.
-            </p>
+          <div className="bg-white/5 rounded-lg p-6 space-y-4">
+            <div className="flex items-start gap-3">
+              <Zap className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-white mb-2">Power Quality Analysis Fundamentals</h3>
+                <p className="text-white">
+                  Power quality analysers measure electrical parameters beyond basic voltage and current,
+                  including harmonics, power factor, transients, sags, swells, and energy consumption patterns.
+                  This data is essential for identifying waste, diagnosing equipment issues, and validating
+                  improvement measures.
+                </p>
+              </div>
+            </div>
 
             <div className="overflow-x-auto mt-4">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-600">
+                  <tr className="border-b border-white/20">
                     <th className="text-left py-2 px-3 text-elec-yellow">Parameter</th>
                     <th className="text-left py-2 px-3 text-elec-yellow">What It Reveals</th>
                     <th className="text-left py-2 px-3 text-elec-yellow">Target Values</th>
                   </tr>
                 </thead>
-                <tbody className="text-gray-300">
-                  <tr className="border-b border-gray-700">
+                <tbody className="text-white">
+                  <tr className="border-b border-white/10">
                     <td className="py-2 px-3 font-medium">Voltage (V)</td>
                     <td className="py-2 px-3">Supply stability, sags/swells</td>
                     <td className="py-2 px-3">230V ±10% (UK standard)</td>
                   </tr>
-                  <tr className="border-b border-gray-700">
+                  <tr className="border-b border-white/10">
                     <td className="py-2 px-3 font-medium">Current (A)</td>
                     <td className="py-2 px-3">Load levels, imbalance</td>
                     <td className="py-2 px-3">Phase imbalance &lt;2%</td>
                   </tr>
-                  <tr className="border-b border-gray-700">
+                  <tr className="border-b border-white/10">
                     <td className="py-2 px-3 font-medium">Power Factor</td>
                     <td className="py-2 px-3">Reactive power waste</td>
                     <td className="py-2 px-3">&gt;0.95 (ideally &gt;0.98)</td>
                   </tr>
-                  <tr className="border-b border-gray-700">
+                  <tr className="border-b border-white/10">
                     <td className="py-2 px-3 font-medium">THD (Voltage)</td>
                     <td className="py-2 px-3">Harmonic distortion</td>
                     <td className="py-2 px-3">&lt;5% per EN 50160</td>
                   </tr>
-                  <tr className="border-b border-gray-700">
+                  <tr className="border-b border-white/10">
                     <td className="py-2 px-3 font-medium">THD (Current)</td>
                     <td className="py-2 px-3">Non-linear load effects</td>
                     <td className="py-2 px-3">&lt;8% recommended</td>
@@ -360,9 +352,9 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 mt-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-elec-yellow mb-2">Recommended Analysers</h4>
-                <ul className="text-gray-300 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li><strong>Fluke 1770 Series (£4,000-£8,000):</strong> Industry standard, comprehensive PQ analysis</li>
                   <li><strong>Hioki PW3198 (£3,500):</strong> Excellent value, good software</li>
                   <li><strong>Chauvin Arnoux C.A 8336 (£3,000):</strong> Compact, reliable</li>
@@ -370,9 +362,9 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-elec-yellow mb-2">Data Logger Options</h4>
-                <ul className="text-gray-300 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li><strong>Onset HOBO (£150-£500):</strong> Temperature, humidity, light</li>
                   <li><strong>Tinytag (UK made, £100-£300):</strong> Robust, simple deployment</li>
                   <li><strong>Efergy/OWL (£50-£150):</strong> Basic CT energy monitoring</li>
@@ -394,72 +386,65 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
         {/* Section 3: Energy Audit Software */}
         <section className="space-y-6">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-              <Monitor className="text-elec-yellow" size={24} />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-elec-yellow">
-                3. Energy Audit Software Platforms
-              </h2>
-              <p className="text-gray-400 mt-1">
-                Professional tools for analysis and reporting
-              </p>
-            </div>
-          </div>
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Energy Audit Software Platforms
+          </h2>
 
-          <div className="bg-[#242424] rounded-xl p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-              <Cloud size={20} className="text-blue-400" />
-              Cloud-Based vs Desktop Solutions
-            </h3>
-            <p className="text-gray-300">
-              Modern energy audit software streamlines data collection, analysis, and reporting.
-              Cloud platforms offer collaboration and automatic updates, while desktop software
-              provides offline capability and one-time purchase options.
-            </p>
+          <div className="bg-white/5 rounded-lg p-6 space-y-4">
+            <div className="flex items-start gap-3">
+              <Cloud className="w-6 h-6 text-blue-400 mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-white mb-2">Cloud-Based vs Desktop Solutions</h3>
+                <p className="text-white">
+                  Modern energy audit software streamlines data collection, analysis, and reporting.
+                  Cloud platforms offer collaboration and automatic updates, while desktop software
+                  provides offline capability and one-time purchase options.
+                </p>
+              </div>
+            </div>
 
             <div className="space-y-4 mt-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-green-400 mb-3">Professional Cloud Platforms (UK Market)</h4>
                 <div className="grid gap-4">
                   <div className="border-l-2 border-elec-yellow pl-3">
                     <p className="font-medium text-white">Energy Elephant</p>
-                    <p className="text-gray-400 text-sm">From £99/month - UK-developed, excellent for multi-site management, automatic utility bill analysis, carbon reporting, ISO 50001 compliance support.</p>
+                    <p className="text-white/70 text-sm">From £99/month - UK-developed, excellent for multi-site management, automatic utility bill analysis, carbon reporting, ISO 50001 compliance support.</p>
                   </div>
                   <div className="border-l-2 border-elec-yellow pl-3">
                     <p className="font-medium text-white">ECON Energy</p>
-                    <p className="text-gray-400 text-sm">From £150/month - Comprehensive energy management, real-time monitoring integration, targeting & reporting, widely used by UK local authorities.</p>
+                    <p className="text-white/70 text-sm">From £150/month - Comprehensive energy management, real-time monitoring integration, targeting & reporting, widely used by UK local authorities.</p>
                   </div>
                   <div className="border-l-2 border-elec-yellow pl-3">
                     <p className="font-medium text-white">Stark Group Platform</p>
-                    <p className="text-gray-400 text-sm">Custom pricing - Enterprise solution, bureau services available, utility procurement integration, suitable for large portfolios.</p>
+                    <p className="text-white/70 text-sm">Custom pricing - Enterprise solution, bureau services available, utility procurement integration, suitable for large portfolios.</p>
                   </div>
                   <div className="border-l-2 border-elec-yellow pl-3">
                     <p className="font-medium text-white">eSight Energy</p>
-                    <p className="text-gray-400 text-sm">From £200/month - Advanced analytics, M&V capabilities, automatic meter reading integration, used by major corporations.</p>
+                    <p className="text-white/70 text-sm">From £200/month - Advanced analytics, M&V capabilities, automatic meter reading integration, used by major corporations.</p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-blue-400 mb-3">Free and Low-Cost Options</h4>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="font-medium text-white">Carbon Trust Tools</p>
-                    <p className="text-gray-400 text-sm">Free calculators and benchmarking tools for UK businesses</p>
+                    <p className="text-white/70 text-sm">Free calculators and benchmarking tools for UK businesses</p>
                   </div>
                   <div>
                     <p className="font-medium text-white">CIBSE TM22</p>
-                    <p className="text-gray-400 text-sm">Energy assessment methodology spreadsheet (member access)</p>
+                    <p className="text-white/70 text-sm">Energy assessment methodology spreadsheet (member access)</p>
                   </div>
                   <div>
                     <p className="font-medium text-white">Energy Performance Calculator</p>
-                    <p className="text-gray-400 text-sm">Free Excel-based DEC calculation tools</p>
+                    <p className="text-white/70 text-sm">Free Excel-based DEC calculation tools</p>
                   </div>
                   <div>
                     <p className="font-medium text-white">BEIS Energy Tools</p>
-                    <p className="text-gray-400 text-sm">Government benchmarking data and calculators</p>
+                    <p className="text-white/70 text-sm">Government benchmarking data and calculators</p>
                   </div>
                 </div>
               </div>
@@ -469,74 +454,65 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
         {/* Section 4: Mobile Apps */}
         <section className="space-y-6">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-              <Smartphone className="text-elec-yellow" size={24} />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-elec-yellow">
-                4. Mobile Apps for Field Data Collection
-              </h2>
-              <p className="text-gray-400 mt-1">
-                Streamlining on-site survey work
-              </p>
-            </div>
-          </div>
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Mobile Apps for Field Data Collection
+          </h2>
 
-          <div className="bg-[#242424] rounded-xl p-6 space-y-4">
-            <p className="text-gray-300">
+          <div className="bg-white/5 rounded-lg p-6 space-y-4">
+            <p className="text-white">
               Mobile apps transform smartphones and tablets into powerful audit tools, enabling
               efficient data capture, photo documentation, and real-time calculations during
               site surveys.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">
-                  <Download size={18} className="inline mr-2" />
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
+                  <Download size={18} />
                   Recommended Apps
                 </h4>
-                <ul className="text-gray-300 text-sm space-y-3">
+                <ul className="text-white text-sm space-y-3">
                   <li>
                     <strong className="text-white">iAuditor (SafetyCulture)</strong>
-                    <p className="text-gray-400">Free tier available. Customisable checklists, photo annotation, automatic reports. Excellent for structured surveys.</p>
+                    <p className="text-white/70">Free tier available. Customisable checklists, photo annotation, automatic reports. Excellent for structured surveys.</p>
                   </li>
                   <li>
                     <strong className="text-white">Fulcrum</strong>
-                    <p className="text-gray-400">From £15/month. Powerful form builder, GPS tracking, offline capability. Great for custom audit workflows.</p>
+                    <p className="text-white/70">From £15/month. Powerful form builder, GPS tracking, offline capability. Great for custom audit workflows.</p>
                   </li>
                   <li>
                     <strong className="text-white">FLIR Tools Mobile</strong>
-                    <p className="text-gray-400">Free. Essential for FLIR camera users, image analysis, basic reporting.</p>
+                    <p className="text-white/70">Free. Essential for FLIR camera users, image analysis, basic reporting.</p>
                   </li>
                   <li>
                     <strong className="text-white">Fluke Connect</strong>
-                    <p className="text-gray-400">Free. Connects Fluke meters, trends data, team sharing. Useful for ongoing monitoring.</p>
+                    <p className="text-white/70">Free. Connects Fluke meters, trends data, team sharing. Useful for ongoing monitoring.</p>
                   </li>
                 </ul>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">
-                  <Wrench size={18} className="inline mr-2" />
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
+                  <Wrench size={18} />
                   Utility Apps for Auditors
                 </h4>
-                <ul className="text-gray-300 text-sm space-y-3">
+                <ul className="text-white text-sm space-y-3">
                   <li>
                     <strong className="text-white">CamScanner/Adobe Scan</strong>
-                    <p className="text-gray-400">Digitise utility bills, equipment labels, and documents on site.</p>
+                    <p className="text-white/70">Digitise utility bills, equipment labels, and documents on site.</p>
                   </li>
                   <li>
                     <strong className="text-white">Google Maps/What3Words</strong>
-                    <p className="text-gray-400">Location documentation, especially useful for external equipment surveys.</p>
+                    <p className="text-white/70">Location documentation, especially useful for external equipment surveys.</p>
                   </li>
                   <li>
                     <strong className="text-white">Lux Meter Apps</strong>
-                    <p className="text-gray-400">Phone sensor-based light measurement (indicative only, not calibrated).</p>
+                    <p className="text-white/70">Phone sensor-based light measurement (indicative only, not calibrated).</p>
                   </li>
                   <li>
                     <strong className="text-white">Voice Recorder</strong>
-                    <p className="text-gray-400">Capture observations quickly, transcribe later. Faster than typing.</p>
+                    <p className="text-white/70">Capture observations quickly, transcribe later. Faster than typing.</p>
                   </li>
                 </ul>
               </div>
@@ -544,7 +520,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="font-semibold text-elec-yellow mb-2">Pro Tip: Mobile Audit Workflow</h4>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white text-sm">
                 Create a consistent workflow: Start each room/area with a wide-angle photo, capture
                 equipment labels and nameplates, photograph meter readings with timestamps, record
                 thermal images with corresponding visual photos, and voice-record observations.
@@ -566,59 +542,52 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
         {/* Section 5: Excel Templates */}
         <section className="space-y-6">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-              <Table className="text-elec-yellow" size={24} />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-elec-yellow">
-                5. Excel Templates and Analysis Tools
-              </h2>
-              <p className="text-gray-400 mt-1">
-                Spreadsheet-based analysis techniques
-              </p>
-            </div>
-          </div>
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Excel Templates and Analysis Tools
+          </h2>
 
-          <div className="bg-[#242424] rounded-xl p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-              <FileSpreadsheet size={20} className="text-green-400" />
-              Essential Spreadsheet Skills for Auditors
-            </h3>
-            <p className="text-gray-300">
-              Microsoft Excel (or Google Sheets) remains the backbone of energy audit analysis.
-              Mastering key functions and building reusable templates significantly improves
-              audit efficiency and accuracy.
-            </p>
+          <div className="bg-white/5 rounded-lg p-6 space-y-4">
+            <div className="flex items-start gap-3">
+              <FileSpreadsheet className="w-6 h-6 text-green-400 mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-white mb-2">Essential Spreadsheet Skills for Auditors</h3>
+                <p className="text-white">
+                  Microsoft Excel (or Google Sheets) remains the backbone of energy audit analysis.
+                  Mastering key functions and building reusable templates significantly improves
+                  audit efficiency and accuracy.
+                </p>
+              </div>
+            </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-elec-yellow mb-3">Key Excel Functions for Energy Analysis</h4>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-600">
+                    <tr className="border-b border-white/20">
                       <th className="text-left py-2 px-3 text-white">Function</th>
                       <th className="text-left py-2 px-3 text-white">Application</th>
                     </tr>
                   </thead>
-                  <tbody className="text-gray-300 font-mono text-xs">
-                    <tr className="border-b border-gray-700">
+                  <tbody className="text-white font-mono text-xs">
+                    <tr className="border-b border-white/10">
                       <td className="py-2 px-3">SUMPRODUCT()</td>
                       <td className="py-2 px-3">Calculate costs with time-of-use tariffs</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2 px-3">AVERAGEIF()</td>
                       <td className="py-2 px-3">Average consumption by time period/condition</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2 px-3">PERCENTILE()</td>
                       <td className="py-2 px-3">Identify baseload (5th percentile) and peak demand</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2 px-3">VLOOKUP/INDEX-MATCH</td>
                       <td className="py-2 px-3">Link equipment data to tariff rates</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2 px-3">NPV() / IRR()</td>
                       <td className="py-2 px-3">Financial analysis of efficiency measures</td>
                     </tr>
@@ -632,9 +601,9 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-elec-yellow mb-2">Essential Templates to Build</h4>
-                <ul className="text-gray-300 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Equipment inventory with power ratings</li>
                   <li>• Utility bill tracker and analyser</li>
                   <li>• Half-hourly data profile analyser</li>
@@ -645,9 +614,9 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-elec-yellow mb-2">Chart Types for Reports</h4>
-                <ul className="text-gray-300 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Line charts: consumption trends over time</li>
                   <li>• Stacked bar: energy by end-use category</li>
                   <li>• Heatmaps: hourly/daily patterns</li>
@@ -660,13 +629,13 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-blue-400 mb-2">Half-Hourly Data Analysis Formula</h4>
-              <p className="text-gray-300 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 To calculate baseload from half-hourly data (identifies minimum overnight consumption):
               </p>
-              <code className="bg-[#1a1a1a] px-3 py-2 rounded text-green-400 text-sm block overflow-x-auto">
+              <code className="bg-white/5 px-3 py-2 rounded text-green-400 text-sm block overflow-x-auto">
                 =PERCENTILE(IF(HOUR(A:A)&gt;=23,B:B,IF(HOUR(A:A)&lt;=5,B:B,"")),0.1)
               </code>
-              <p className="text-gray-400 text-xs mt-2">
+              <p className="text-white/60 text-xs mt-2">
                 Array formula (Ctrl+Shift+Enter in older Excel) - finds 10th percentile of 23:00-05:00 readings
               </p>
             </div>
@@ -675,33 +644,24 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
         {/* Section 6: Professional Toolkit */}
         <section className="space-y-6">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-              <Briefcase className="text-elec-yellow" size={24} />
-            </div>
-            <div>
-              <h2 className="text-xl font-bold text-elec-yellow">
-                6. Creating Professional Audit Toolkits
-              </h2>
-              <p className="text-gray-400 mt-1">
-                Building your complete equipment setup
-              </p>
-            </div>
-          </div>
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Creating Professional Audit Toolkits
+          </h2>
 
-          <div className="bg-[#242424] rounded-xl p-6 space-y-4">
-            <p className="text-gray-300">
+          <div className="bg-white/5 rounded-lg p-6 space-y-4">
+            <p className="text-white">
               A well-organised, comprehensive toolkit demonstrates professionalism and ensures you
               can handle any audit situation. Invest progressively as your business grows.
             </p>
 
             <div className="space-y-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-green-400 mb-3 flex items-center gap-2">
                   <PoundSterling size={18} />
                   Starter Kit (£500-£1,500)
                 </h4>
-                <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-300">
+                <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
                   <ul className="space-y-1">
                     <li>• Clamp meter with logging (Fluke 376 FC)</li>
                     <li>• Smartphone thermal attachment (FLIR ONE Pro)</li>
@@ -717,12 +677,12 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
                   <PoundSterling size={18} />
                   Professional Kit (£3,000-£8,000)
                 </h4>
-                <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-300">
+                <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
                   <ul className="space-y-1">
                     <li>• Dedicated thermal camera (FLIR E54 or similar)</li>
                     <li>• Power quality analyser (Fluke 1732/1734)</li>
@@ -740,12 +700,12 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-semibold text-purple-400 mb-3 flex items-center gap-2">
                   <PoundSterling size={18} />
                   Enterprise Kit (£10,000+)
                 </h4>
-                <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-300">
+                <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
                   <ul className="space-y-1">
                     <li>• High-resolution thermal camera (640x480)</li>
                     <li>• Full power quality analyser (Fluke 1770 series)</li>
@@ -766,7 +726,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="font-semibold text-elec-yellow mb-2">Equipment Care Tips</h4>
-              <ul className="text-gray-300 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>• Maintain calibration records - recalibrate annually for critical instruments</li>
                 <li>• Store thermal cameras with lens caps on in padded cases</li>
                 <li>• Keep batteries charged and carry spares for all devices</li>
@@ -779,7 +739,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
         </section>
 
         {/* Quick Reference Card */}
-        <section className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-xl p-6 border border-elec-yellow/30">
+        <section className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-lg p-6 border border-elec-yellow/30">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center gap-2">
             <Star size={24} />
             Quick Reference: Audit Equipment Checklist
@@ -788,7 +748,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold text-white mb-2">Pre-Audit Equipment Check</h4>
-              <ul className="text-gray-300 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>□ Thermal camera - battery charged, lens clean</li>
                 <li>□ Power analyser - CT clamps, cables, leads</li>
                 <li>□ Data loggers - batteries, mounting materials</li>
@@ -801,7 +761,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
             <div>
               <h4 className="font-semibold text-white mb-2">Thermal Imaging Quick Reference</h4>
-              <ul className="text-gray-300 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>• Set emissivity: 0.95 for most electrical</li>
                 <li>• Capture at minimum 40% load conditions</li>
                 <li>• Take matching visual photo for each thermal</li>
@@ -813,7 +773,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
             <div>
               <h4 className="font-semibold text-white mb-2">Data Logging Deployment</h4>
-              <ul className="text-gray-300 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>• Verify time sync across all loggers</li>
                 <li>• Set 15-minute (or shorter) intervals</li>
                 <li>• Label all equipment clearly with contact info</li>
@@ -825,7 +785,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
 
             <div>
               <h4 className="font-semibold text-white mb-2">Software Essentials</h4>
-              <ul className="text-gray-300 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>• Thermal analysis: FLIR Tools / FLIR Ignite</li>
                 <li>• Power data: Manufacturer's software</li>
                 <li>• Analysis: Excel with custom templates</li>
@@ -855,46 +815,31 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="bg-[#242424] rounded-xl overflow-hidden"
+                className="bg-white/5 rounded-lg overflow-hidden"
               >
-                <button
-                  onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
-                  className="w-full px-6 py-4 text-left flex items-center justify-between min-h-[44px] touch-manipulation active:scale-[0.98]"
-                >
-                  <span className="font-medium text-white pr-4">{faq.question}</span>
-                  {expandedFAQ === index ? (
-                    <ChevronUp className="text-elec-yellow flex-shrink-0" size={20} />
-                  ) : (
-                    <ChevronDown className="text-elec-yellow flex-shrink-0" size={20} />
-                  )}
-                </button>
-                {expandedFAQ === index && (
-                  <div className="px-6 pb-4">
-                    <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
-                  </div>
-                )}
+                <div className="p-4">
+                  <h4 className="font-medium text-white mb-2">{faq.question}</h4>
+                  <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-8 border-t border-gray-700">
-          <Button
-            variant="outline"
-            onClick={() => navigate('/upskilling/energy-efficiency/module-3/section-3')}
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
-          >
-            <ChevronLeft size={20} className="mr-2" />
-            Previous: Analysis Techniques
+        <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-8 border-t border-white/10">
+          <Button asChild variant="outline" className="min-h-[44px] touch-manipulation border-white/20 hover:border-elec-yellow hover:text-elec-yellow bg-transparent text-white">
+            <Link to="../section-3" className="flex items-center gap-2">
+              <ArrowLeft size={20} />
+              Previous: Benchmarks and Tariffs
+            </Link>
           </Button>
 
-          <Button
-            onClick={() => navigate('/upskilling/energy-efficiency/module-3/section-5')}
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90"
-          >
-            Next: Presenting Audit Findings
-            <ChevronRight size={20} className="ml-2" />
+          <Button asChild className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
+            <Link to="../section-5" className="flex items-center gap-2">
+              Next: Audit Reports and Cost Breakdown
+              <ArrowRight size={20} />
+            </Link>
           </Button>
         </nav>
       </div>

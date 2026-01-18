@@ -37,6 +37,8 @@ export interface PeerConversation {
   // Joined data
   supporter?: PeerSupporter;
   seeker?: SeekerProfile;
+  // Computed
+  unread_count?: number;
 }
 
 export interface PeerMessage {
@@ -94,14 +96,11 @@ export const supportTopics = [
 export const peerSupporterService = {
   /**
    * Get all available supporters (for browsing)
+   * Uses RPC function to bypass PostgREST schema cache issues
    */
   async getAvailableSupporters(): Promise<PeerSupporter[]> {
     const { data, error } = await supabase
-      .from('mental_health_peer_supporters')
-      .select('*')
-      .eq('is_available', true)
-      .eq('is_active', true)
-      .order('last_active_at', { ascending: false });
+      .rpc('get_available_peer_supporters');
 
     if (error) throw error;
     return (data as unknown as PeerSupporter[]) || [];
@@ -109,13 +108,11 @@ export const peerSupporterService = {
 
   /**
    * Get a single supporter by ID
+   * Uses RPC function to bypass PostgREST schema cache issues
    */
   async getSupporter(id: string): Promise<PeerSupporter | null> {
     const { data, error } = await supabase
-      .from('mental_health_peer_supporters')
-      .select('*')
-      .eq('id', id)
-      .single();
+      .rpc('get_peer_supporter_by_id', { supporter_id: id });
 
     if (error && error.code !== 'PGRST116') throw error;
     return data as unknown as PeerSupporter | null;
@@ -123,19 +120,21 @@ export const peerSupporterService = {
 
   /**
    * Get current user's supporter profile
+   * Uses RPC function to bypass PostgREST schema cache issues
    */
   async getMyProfile(): Promise<PeerSupporter | null> {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return null;
 
+    // Use RPC function to bypass 406 error from direct table query
     const { data, error } = await supabase
-      .from('mental_health_peer_supporters')
-      .select('*')
-      .eq('user_id', user.id)
-      .single();
+      .rpc('get_my_peer_supporter_profile');
 
     if (error && error.code !== 'PGRST116') throw error;
-    return data as unknown as PeerSupporter | null;
+
+    // RPC returns an array, get first item
+    const profile = Array.isArray(data) ? data[0] : data;
+    return profile as unknown as PeerSupporter | null;
   },
 
   /**
@@ -292,25 +291,34 @@ export const peerConversationService = {
 
     // Map seeker profiles to conversations
     const profileMap = new Map(seekerProfiles?.map(p => [p.id, p]) || []);
-    const conversations = rawConversations.map(conv => ({
+    const conversationsWithProfiles = rawConversations.map(conv => ({
       ...conv,
       seeker: profileMap.get(conv.seeker_id) || { id: conv.seeker_id, full_name: null, avatar_url: null }
     })) as unknown as PeerConversation[];
 
     // Filter out conversations with blocked users
-    if (blockedUsers.length === 0) {
-      return conversations;
+    let conversations = conversationsWithProfiles;
+    if (blockedUsers.length > 0) {
+      conversations = conversationsWithProfiles.filter(conv => {
+        // Determine the other user in the conversation
+        const otherUserId = conv.seeker_id === user.id
+          ? conv.supporter?.user_id
+          : conv.seeker_id;
+
+        // Keep conversation if other user is not blocked
+        return !otherUserId || !blockedUsers.includes(otherUserId);
+      });
     }
 
-    return conversations.filter(conv => {
-      // Determine the other user in the conversation
-      const otherUserId = conv.seeker_id === user.id
-        ? conv.supporter?.user_id
-        : conv.seeker_id;
+    // Add unread counts to each conversation
+    const conversationsWithUnread = await Promise.all(
+      conversations.map(async (conv) => {
+        const unreadCount = await peerMessageService.getUnreadCount(conv.id);
+        return { ...conv, unread_count: unreadCount };
+      })
+    );
 
-      // Keep conversation if other user is not blocked
-      return !otherUserId || !blockedUsers.includes(otherUserId);
-    });
+    return conversationsWithUnread;
   },
 
   /**

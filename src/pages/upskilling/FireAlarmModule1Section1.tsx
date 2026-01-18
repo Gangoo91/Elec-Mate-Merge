@@ -1,594 +1,532 @@
-import { useState, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, Flame, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
-import useSEO from '@/hooks/useSEO';
-import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
-import type { QuizQuestion } from '@/types/quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
 
-const TITLE = "L Category Systems (Life Safety) - Fire Alarm Course";
+const TITLE = "L Category Systems (Life Safety) - Fire Alarm Module 1 Section 1";
 const DESCRIPTION = "Understand BS 5839-1 fire alarm L categories: L1-L5 with examples, coverage, and compliance requirements for life safety detection.";
 
+const quickCheckQuestions = [
+  {
+    id: "l-category-purpose",
+    question: "What is the primary purpose of L category systems under BS 5839-1?",
+    options: [
+      "Property protection and business continuity",
+      "Life safety through early warning for evacuation",
+      "Manual activation only via call points",
+      "Automatic fire suppression"
+    ],
+    correctIndex: 1,
+    explanation: "L category systems are designed for life safety, providing early detection and warning to enable safe evacuation of building occupants."
+  },
+  {
+    id: "l1-coverage",
+    question: "Which of the following best describes an L1 system?",
+    options: [
+      "Coverage limited to escape routes only",
+      "Automatic detection throughout all areas where a fire could start",
+      "Manual call points only",
+      "Detection in high-risk areas only"
+    ],
+    correctIndex: 1,
+    explanation: "L1 provides automatic detection throughout all areas of the building to maximise life safety protection."
+  },
+  {
+    id: "sleeping-risk",
+    question: "For sleeping risk premises, which is the minimum recommended L category?",
+    options: [
+      "L4",
+      "L5",
+      "L1 or L2 depending on layout",
+      "L3"
+    ],
+    correctIndex: 2,
+    explanation: "Sleeping risk premises typically require L1 for full coverage or L2 where justified by the fire strategy, due to the vulnerability of sleeping occupants."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What is the primary purpose of L category systems under BS 5839-1?",
+    options: [
+      "Property protection and business continuity",
+      "Life safety through early warning for evacuation",
+      "Manual activation only via call points",
+      "Automatic fire suppression"
+    ],
+    correctAnswer: 1,
+    explanation: "L category systems are designed for life safety, providing early detection and warning to enable safe evacuation."
+  },
+  {
+    id: 2,
+    question: "Which of the following best describes an L1 system?",
+    options: [
+      "Coverage limited to escape routes only",
+      "Automatic detection throughout all areas where a fire could start",
+      "Manual call points only",
+      "Detection in high-risk areas only"
+    ],
+    correctAnswer: 1,
+    explanation: "L1 provides automatic detection throughout all areas of the building to maximise life safety."
+  },
+  {
+    id: 3,
+    question: "An L2 system provides detection in which areas?",
+    options: [
+      "Escape routes only",
+      "Escape routes plus defined high-risk rooms",
+      "All areas of the building",
+      "Only plant rooms and stores"
+    ],
+    correctAnswer: 1,
+    explanation: "L2 provides detection in escape routes and specified high-risk rooms that open onto them."
+  },
+  {
+    id: 4,
+    question: "What is the key characteristic of an L5 system?",
+    options: [
+      "Detection throughout the entire building",
+      "Manual call points only",
+      "Localised detection in specific areas to satisfy a particular objective",
+      "Detection in escape routes and all adjoining rooms"
+    ],
+    correctAnswer: 2,
+    explanation: "L5 is a bespoke category providing localised protection engineered to meet a specific need or objective."
+  },
+  {
+    id: 5,
+    question: "Which building type would most likely require an L1 system?",
+    options: [
+      "Small single-storey office",
+      "Care home with sleeping accommodation",
+      "Retail unit with constant supervision",
+      "Industrial warehouse"
+    ],
+    correctAnswer: 1,
+    explanation: "Care homes and premises with sleeping risk typically require L1 for maximum early warning and life safety."
+  },
+  {
+    id: 6,
+    question: "An L4 system provides detection in which areas?",
+    options: [
+      "Throughout all areas of the building",
+      "Escape routes only",
+      "High-risk rooms only",
+      "Property protection areas only"
+    ],
+    correctAnswer: 1,
+    explanation: "L4 systems provide automatic detection on escape routes only, offering basic life safety coverage."
+  },
+  {
+    id: 7,
+    question: "Which statement about L3 systems is correct?",
+    options: [
+      "L3 includes detection in all high-risk rooms",
+      "L3 provides detection on escape routes and rooms opening directly onto them",
+      "L3 is suitable for property protection only",
+      "L3 requires manual call points to be omitted"
+    ],
+    correctAnswer: 1,
+    explanation: "L3 systems provide automatic detection on escape routes plus rooms that open directly onto those escape routes."
+  },
+  {
+    id: 8,
+    question: "For sleeping risk premises, which is the minimum recommended L category?",
+    options: [
+      "L4",
+      "L5",
+      "L1 or L2 depending on layout",
+      "L3"
+    ],
+    correctAnswer: 2,
+    explanation: "Sleeping risk premises typically require L1 for full coverage or L2 where justified by the fire strategy."
+  },
+  {
+    id: 9,
+    question: "What determines the specific coverage requirements for L5?",
+    options: [
+      "BS 5839-1 prescribes exact areas",
+      "The fire strategy and specific risk to be addressed",
+      "Insurance company requirements only",
+      "Building age"
+    ],
+    correctAnswer: 1,
+    explanation: "L5 coverage is determined by the fire strategy to address specific risks identified in the fire risk assessment."
+  },
+  {
+    id: 10,
+    question: "Which factor does NOT typically influence the choice between L1 and L2?",
+    options: [
+      "Presence of sleeping accommodation",
+      "Building complexity and layout",
+      "Cost of detector equipment",
+      "Fire strategy requirements"
+    ],
+    correctAnswer: 2,
+    explanation: "Category selection should be based on risk assessment and fire strategy, not primarily on cost considerations."
+  }
+];
+
+const faqs = [
+  {
+    question: "Can I combine L and P categories in the same building?",
+    answer: "Yes - it is common to specify L3 for life safety on escape routes plus P2 for property protection in high-value areas like server rooms."
+  },
+  {
+    question: "Does L1 always require detection in roof voids?",
+    answer: "Not always - BS 5839-1 provides guidance on when void detection is required based on void construction and fire risk."
+  },
+  {
+    question: "Is L5 a cheaper option than L4?",
+    answer: "No - L5 is a bespoke category for specific needs, not a reduced coverage option. Coverage is determined by the fire strategy objective."
+  },
+  {
+    question: "Who decides which L category is required?",
+    answer: "The fire risk assessment and fire strategy determine requirements. The designer specifies the category to meet those requirements."
+  },
+  {
+    question: "Can the category be changed after installation?",
+    answer: "Yes, but this requires a formal variation and update to certificates. Changes should be justified by updated risk assessment."
+  },
+  {
+    question: "What is the difference between L2 and L3?",
+    answer: "L2 targets specific high-risk rooms plus escape routes. L3 covers ALL rooms opening onto escape routes, regardless of individual risk level."
+  }
+];
+
 const FireAlarmModule1Section1 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
-
-  // Quiz Data
-  const questions: QuizQuestion[] = useMemo(() => [
-    {
-      id: 1,
-      question: 'What is the primary purpose of L category systems under BS 5839-1?',
-      options: [
-        'Property protection and business continuity',
-        'Life safety through early warning for evacuation',
-        'Manual activation only via call points',
-        'Automatic fire suppression'
-      ],
-      correctAnswer: 1,
-      explanation: 'L category systems are designed for life safety, providing early detection and warning to enable safe evacuation.'
-    },
-    {
-      id: 2,
-      question: 'Which of the following best describes an L1 system?',
-      options: [
-        'Coverage limited to escape routes only',
-        'Automatic detection throughout all areas where a fire could start',
-        'Manual call points only',
-        'Detection in high-risk areas only'
-      ],
-      correctAnswer: 1,
-      explanation: 'L1 provides automatic detection throughout all areas of the building to maximise life safety.'
-    },
-    {
-      id: 3,
-      question: 'An L2 system provides detection in which areas?',
-      options: [
-        'Escape routes only',
-        'Escape routes plus defined high-risk rooms',
-        'All areas of the building',
-        'Only plant rooms and stores'
-      ],
-      correctAnswer: 1,
-      explanation: 'L2 provides detection in escape routes and specified high-risk rooms that open onto them.'
-    },
-    {
-      id: 4,
-      question: 'What is the key characteristic of an L5 system?',
-      options: [
-        'Detection throughout the entire building',
-        'Manual call points only',
-        'Localised detection in specific areas to satisfy a particular objective',
-        'Detection in escape routes and all adjoining rooms'
-      ],
-      correctAnswer: 2,
-      explanation: 'L5 is a bespoke category providing localised protection engineered to meet a specific need or objective.'
-    },
-    {
-      id: 5,
-      question: 'Which building type would most likely require an L1 system?',
-      options: [
-        'Small single-storey office',
-        'Care home with sleeping accommodation',
-        'Retail unit with constant supervision',
-        'Industrial warehouse'
-      ],
-      correctAnswer: 1,
-      explanation: 'Care homes and premises with sleeping risk typically require L1 for maximum early warning and life safety.'
-    },
-    {
-      id: 6,
-      question: 'An L4 system provides detection in which areas?',
-      options: [
-        'Throughout all areas of the building',
-        'Escape routes only',
-        'High-risk rooms only',
-        'Property protection areas only'
-      ],
-      correctAnswer: 1,
-      explanation: 'L4 systems provide automatic detection on escape routes only, offering basic life safety coverage.'
-    },
-    {
-      id: 7,
-      question: 'Which statement about L3 systems is correct?',
-      options: [
-        'L3 includes detection in all high-risk rooms',
-        'L3 provides detection on escape routes and rooms opening directly onto them',
-        'L3 is suitable for property protection only',
-        'L3 requires manual call points to be omitted'
-      ],
-      correctAnswer: 1,
-      explanation: 'L3 systems provide automatic detection on escape routes plus rooms that open directly onto those escape routes.'
-    },
-    {
-      id: 8,
-      question: 'For sleeping risk premises, which is the minimum recommended L category?',
-      options: [
-        'L4',
-        'L5',
-        'L1 or L2 depending on layout',
-        'L3'
-      ],
-      correctAnswer: 2,
-      explanation: 'Sleeping risk premises typically require L1 for full coverage or L2 where justified by the fire strategy.'
-    },
-    {
-      id: 9,
-      question: 'What determines the specific coverage requirements for L5?',
-      options: [
-        'BS 5839-1 prescribes exact areas',
-        'The fire strategy and specific risk to be addressed',
-        'Insurance company requirements only',
-        'Building age'
-      ],
-      correctAnswer: 1,
-      explanation: 'L5 coverage is determined by the fire strategy to address specific risks identified in the fire risk assessment.'
-    },
-    {
-      id: 10,
-      question: 'Which factor does NOT typically influence the choice between L1 and L2?',
-      options: [
-        'Presence of sleeping accommodation',
-        'Building complexity and layout',
-        'Cost of detector equipment',
-        'Fire strategy requirements'
-      ],
-      correctAnswer: 2,
-      explanation: 'Category selection should be based on risk assessment and fire strategy, not primarily on cost considerations.'
-    }
-  ], []);
-
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(-1));
-  const [showResults, setShowResults] = useState(false);
-  const [showQuiz, setShowQuiz] = useState(false);
-
-  const handleAnswerSelect = (answerIndex: number) => {
-    const updated = [...selectedAnswers];
-    updated[currentQuestion] = answerIndex;
-    setSelectedAnswers(updated);
-  };
-
-  const handleNext = () => {
-    if (currentQuestion < questions.length - 1) setCurrentQuestion((q) => q + 1);
-    else setShowResults(true);
-  };
-
-  const handlePrevious = () => setCurrentQuestion((q) => Math.max(0, q - 1));
-
-  const resetQuiz = () => {
-    setCurrentQuestion(0);
-    setSelectedAnswers(Array(questions.length).fill(-1));
-    setShowResults(false);
-  };
-
-  const calculateScore = () =>
-    selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
+  useSEO(TITLE, DESCRIPTION);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-1">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Module 1</span>
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
             </Link>
           </Button>
-          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 1</span>
-          <div className="w-[60px]" />
         </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20">
-            <Flame className="h-7 w-7 text-blue-400" />
-          </div>
-          <span className="text-[11px] font-medium text-blue-400 uppercase tracking-wide">
-            Section 1 of 4
-          </span>
-        </div>
-        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
-          L Category Systems (Life Safety)
-        </h1>
-        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
-          Understanding BS 5839-1 L categories and their application for life safety detection in buildings.
-        </p>
-        <div className="flex items-center gap-4 text-[13px] text-white/50">
-          <span className="flex items-center gap-1">
-            <Target className="h-4 w-4" />
-            6 learning outcomes
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            25-30 mins
-          </span>
-        </div>
-      </section>
-
-      {/* In 30 Seconds Card */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-blue-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[15px] font-semibold text-blue-400 flex items-center gap-2">
-              <Lightbulb className="h-4 w-4" />
-              In 30 Seconds
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-[15px] text-white/80">
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-              <span><strong>L categories</strong> are designed for life safety, providing early warning for evacuation</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-              <span><strong>L1 = full coverage</strong>, L2/L3 = escape routes + risk areas, L4 = routes only, L5 = bespoke</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Sleeping risk</strong> premises typically require L1 or L2 for maximum early warning</span>
-            </p>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Learning Outcomes */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            "Define the purpose of L category fire alarm systems",
-            "Differentiate between L1, L2, L3, L4 and L5 coverage",
-            "Identify typical building applications for each L category",
-            "Explain the relationship between sleeping risk and L category selection",
-            "Reference BS 5839-1 requirements for life safety detection",
-            "Apply L category selection principles to scenarios"
-          ].map((outcome, i) => (
-            <Card key={i} variant="ios" className="p-3">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-[11px] font-bold text-blue-400">{i + 1}</span>
-                </div>
-                <p className="text-[13px] text-white/80">{outcome}</p>
-              </div>
-            </Card>
-          ))}
-        </div>
-      </section>
+      </div>
 
       {/* Main Content */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto space-y-6">
-        {/* Section 01 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">01</span>
-              <h3 className="text-[17px] font-semibold text-white">What Are L Categories?</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>L categories under BS 5839-1 are specifically designed to protect <strong className="text-white">life safety</strong>. The primary objective is to provide early warning of fire to enable safe evacuation of occupants before escape routes become impassable.</p>
-              <p>The "L" stands for "Life" protection. These systems prioritise detection speed and coverage to maximise warning time for building occupants.</p>
-            </div>
-          </CardContent>
-        </Card>
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
 
-        {/* Section 02 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">02</span>
-              <h3 className="text-[17px] font-semibold text-white">L1 - Full Coverage</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-blue-400">L1</strong> provides automatic fire detection throughout all areas of the building where a fire might start. This is the highest level of life safety protection.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">L1 Coverage Includes:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />All rooms including offices, stores, toilets</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />All circulation spaces (corridors, lobbies, stairs)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Roof voids and floor voids where required</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Plant rooms and technical spaces</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Typical applications: Care homes, hotels, hospitals, HMOs with sleeping risk, complex public buildings.</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Centred Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 1 Section 1</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            L Category Systems (Life Safety)
+          </h1>
+          <p className="text-white/80">
+            Understanding BS 5839-1 L categories for life safety detection
+          </p>
+        </header>
 
-        {/* Section 03 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">03</span>
-              <h3 className="text-[17px] font-semibold text-white">L2 - Escape Routes + High Risk</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-blue-400">L2</strong> provides detection in all escape routes, plus defined <strong className="text-white">high-risk rooms</strong> that could present a hazard or open onto escape routes.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">L2 High-Risk Rooms Typically Include:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Electrical intake rooms and switch rooms</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Plant rooms and boiler rooms</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Kitchens (with appropriate detector type)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Storage areas with high fire load</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Typical applications: Offices, schools, retail with back-of-house risks.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Inline Check 1 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A three-storey office building has a server room and electrical switch room. Which L category provides appropriate coverage?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> L2 would typically be appropriate - detection on escape routes plus targeted coverage in the server room and switch room as high-risk areas.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Section 04 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">04</span>
-              <h3 className="text-[17px] font-semibold text-white">L3 - Escape Routes + Adjoining Rooms</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-blue-400">L3</strong> provides detection in escape routes and in <strong className="text-white">all rooms that open onto them</strong>. This ensures early warning if fire develops in any room adjacent to an escape route.</p>
-              <p>L3 differs from L2 in that it doesn't specifically target high-risk rooms - instead, it provides detection in ALL rooms opening onto escape routes, regardless of their risk level.</p>
-              <p className="text-[13px] text-white/60 italic">Typical applications: Medium-risk premises where routes protection plus adjoining room coverage is justified.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Section 05 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">05</span>
-              <h3 className="text-[17px] font-semibold text-white">L4 - Escape Routes Only</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-blue-400">L4</strong> provides the <strong className="text-white">minimum life safety coverage</strong> - automatic detection on escape routes only (corridors, lobbies, stairways).</p>
-              <p>L4 relies on fire being detected once it has spread to, or developed in, the escape route. This provides less early warning than L1-L3.</p>
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-amber-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  L4 may be insufficient where rooms pose significant fire risk or where sleeping accommodation exists.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Section 06 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">06</span>
-              <h3 className="text-[17px] font-semibold text-white">L5 - Bespoke Coverage</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-blue-400">L5</strong> is a <strong className="text-white">bespoke category</strong> where detection is provided in specific areas to satisfy a particular fire safety objective identified in the fire risk assessment.</p>
-              <p>L5 is not a "lesser" category than L4 - it's a flexible option where coverage is engineered to meet a specific need that doesn't fit L1-L4 patterns.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">L5 Examples:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Detection in a specific high-risk process area only</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Coverage to satisfy a specific fire strategy requirement</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Localised protection for a defined evacuation zone</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Inline Check 2 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A care home with 24 beds requires maximum early warning. Which L category is most appropriate?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> L1 - Care homes with sleeping accommodation require full coverage throughout all areas to maximise early warning and enable safe evacuation of vulnerable occupants.</p>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Practical Guidance */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
-
-        <div className="space-y-3">
-          <Card variant="ios" className="border-green-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Always start with the fire risk assessment - let risk drive category selection, not cost
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  For sleeping risk, default to L1 unless the fire strategy specifically justifies L2
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Document the rationale for category selection in design documentation
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card variant="ios" className="border-red-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Selecting a lower category to reduce cost without proper risk justification
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Using L4 where sleeping risk exists - this is rarely appropriate
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Confusing L categories (life safety) with P categories (property protection)
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>L categories:</strong> Designed for life safety and evacuation</li>
+              <li><strong>L1:</strong> Full coverage throughout all areas</li>
+              <li><strong>L2-L4:</strong> Varying levels of escape route protection</li>
+              <li><strong>L5:</strong> Bespoke coverage for specific objectives</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Sleeping risk = L1 or L2 minimum</li>
+              <li><strong>Use:</strong> Fire strategy drives category selection</li>
+              <li><strong>Apply:</strong> Risk assessment determines coverage</li>
+            </ul>
+          </div>
         </div>
-      </section>
 
-      {/* FAQs */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
-        <div className="space-y-3">
-          {[
-            { q: "Can I combine L and P categories in the same building?", a: "Yes - it's common to specify L3 for life safety on escape routes plus P2 for property protection in high-value areas like server rooms." },
-            { q: "Does L1 always require detection in roof voids?", a: "Not always - BS 5839-1 provides guidance on when void detection is required based on void construction and fire risk." },
-            { q: "Is L5 a 'cheaper' option than L4?", a: "No - L5 is a bespoke category for specific needs, not a reduced coverage option. Coverage is determined by the fire strategy objective." },
-            { q: "Who decides which L category is required?", a: "The fire risk assessment and fire strategy determine requirements. The designer specifies the category to meet those requirements." },
-            { q: "Can the category be changed after installation?", a: "Yes, but this requires a formal variation and update to certificates. Changes should be justified by updated risk assessment." },
-            { q: "What's the difference between L2 and L3?", a: "L2 targets specific high-risk rooms plus escape routes. L3 covers ALL rooms opening onto escape routes, regardless of individual risk level." }
-          ].map((faq, i) => (
-            <Card key={i} variant="ios">
-              <CardContent className="p-4">
-                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-[13px] text-white/70">{faq.a}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Quiz Section */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-blue-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-blue-400" />
-              Knowledge Check
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {!showQuiz ? (
-              <div className="text-center py-6">
-                <p className="text-[15px] text-white/70 mb-4">Test your understanding of L category fire alarm systems with 10 questions.</p>
-                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
-                  Start Quiz
-                </Button>
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Define the purpose of L category fire alarm systems",
+              "Differentiate between L1, L2, L3, L4 and L5 coverage",
+              "Identify typical building applications for each L category",
+              "Explain the relationship between sleeping risk and L category selection",
+              "Reference BS 5839-1 requirements for life safety detection",
+              "Apply L category selection principles to scenarios"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
-            ) : showResults ? (
-              <div className="space-y-6">
-                <div className="text-center py-4">
-                  <p className="text-[34px] font-bold text-blue-400">{calculateScore()}/{questions.length}</p>
-                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
-                </div>
+            ))}
+          </div>
+        </section>
 
-                <div className="space-y-4">
-                  {questions.map((q, i) => {
-                    const correct = selectedAnswers[i] === q.correctAnswer;
-                    return (
-                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
-                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
-                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
-                        </p>
-                        {!correct && (
-                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
-                        )}
-                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
-                      </div>
-                    );
-                  })}
-                </div>
+        {/* Divider */}
+        <hr className="border-white/5 mb-12" />
 
-                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
-                  <RotateCcw className="h-4 w-4" />
-                  Restart Quiz
-                </Button>
+        {/* Section 01: What Are L Categories? */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            What Are L Categories?
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              L categories under BS 5839-1 are specifically designed to protect life safety. The primary objective is to provide early warning of fire to enable safe evacuation of occupants before escape routes become impassable.
+            </p>
+            <p>
+              The "L" stands for "Life" protection. These systems prioritise detection speed and coverage to maximise warning time for building occupants.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Key principles:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Early warning enables safe evacuation</li>
+                <li>Detection coverage matches occupant risk profile</li>
+                <li>Higher categories provide more comprehensive protection</li>
+                <li>Selection is driven by fire risk assessment</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 02: L1 - Full Coverage */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            L1 - Full Coverage
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              L1 provides automatic fire detection throughout all areas of the building where a fire might start. This is the highest level of life safety protection available.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">L1 Coverage Includes:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>All rooms including offices, stores, toilets</li>
+                <li>All circulation spaces (corridors, lobbies, stairs)</li>
+                <li>Roof voids and floor voids where required</li>
+                <li>Plant rooms and technical spaces</li>
+              </ul>
+            </div>
+
+            <p>
+              Typical applications include care homes, hotels, hospitals, HMOs with sleeping risk, and complex public buildings where maximum early warning is essential.
+            </p>
+          </div>
+        </section>
+
+        {/* Section 03: L2 - Escape Routes + High Risk */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            L2 - Escape Routes + High Risk
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              L2 provides detection in all escape routes, plus defined high-risk rooms that could present a hazard or open onto escape routes.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">L2 High-Risk Rooms Typically Include:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Electrical intake rooms and switch rooms</li>
+                <li>Plant rooms and boiler rooms</li>
+                <li>Kitchens (with appropriate detector type)</li>
+                <li>Storage areas with high fire load</li>
+              </ul>
+            </div>
+
+            <p>
+              Typical applications include offices, schools, and retail premises with back-of-house risks.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 04: L3 and L4 */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            L3 and L4 - Escape Route Protection
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">L3 - Routes + Adjoining Rooms</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Detection on escape routes</li>
+                  <li>All rooms opening onto escape routes</li>
+                  <li>Does not target specific high-risk rooms</li>
+                  <li>Covers all adjacent spaces regardless of risk</li>
+                </ul>
               </div>
-            ) : (
-              <div className="space-y-6">
-                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
-
-                <div>
-                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-                  <div className="space-y-2">
-                    {questions[currentQuestion].options.map((opt, idx) => {
-                      const selected = selectedAnswers[currentQuestion] === idx;
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => handleAnswerSelect(idx)}
-                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
-                            selected
-                              ? 'bg-blue-500/20 border-blue-500/50 text-white'
-                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
-                          }`}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between gap-3">
-                  <Button
-                    variant="ios-secondary"
-                    onClick={handlePrevious}
-                    disabled={currentQuestion === 0}
-                    className="flex-1"
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="ios-primary"
-                    onClick={handleNext}
-                    disabled={selectedAnswers[currentQuestion] === -1}
-                    className="flex-1"
-                  >
-                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">L4 - Escape Routes Only</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Minimum life safety coverage</li>
+                  <li>Corridors, lobbies, stairways only</li>
+                  <li>Relies on fire reaching escape route</li>
+                  <li>Less early warning than L1-L3</li>
+                </ul>
               </div>
-            )}
-          </CardContent>
-        </Card>
-      </section>
+            </div>
 
-      {/* Navigation Footer */}
-      <section className="px-4 pb-safe max-w-3xl mx-auto">
-        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
-          <Button variant="ios-secondary" asChild className="flex-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-1">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Module Overview
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>Warning:</strong> L4 may be insufficient where rooms pose significant fire risk or where sleeping accommodation exists.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 05: L5 - Bespoke Coverage */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            L5 - Bespoke Coverage
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              L5 is a bespoke category where detection is provided in specific areas to satisfy a particular fire safety objective identified in the fire risk assessment.
+            </p>
+            <p>
+              L5 is not a "lesser" category than L4 - it is a flexible option where coverage is engineered to meet a specific need that does not fit L1-L4 patterns.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">L5 Examples:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Detection in a specific high-risk process area only</li>
+                <li>Coverage to satisfy a specific fire strategy requirement</li>
+                <li>Localised protection for a defined evacuation zone</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Designing Systems</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always start with the fire risk assessment - let risk drive category selection, not cost</li>
+                <li>For sleeping risk, default to L1 unless the fire strategy specifically justifies L2</li>
+                <li>Document the rationale for category selection in design documentation</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Installing</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Verify detector coverage matches the specified category</li>
+                <li>Ensure all areas required by the category are protected</li>
+                <li>Check that void detection is provided where required</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Selecting a lower category to reduce cost</strong> - without proper risk justification</li>
+                <li><strong>Using L4 where sleeping risk exists</strong> - this is rarely appropriate</li>
+                <li><strong>Confusing L categories with P categories</strong> - L is life safety, P is property protection</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Quick Reference */}
+        <section className="mb-10">
+          <div className="p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">L Category Summary</p>
+                <ul className="space-y-0.5">
+                  <li>L1 = Full coverage throughout</li>
+                  <li>L2 = Routes + high-risk rooms</li>
+                  <li>L3 = Routes + adjoining rooms</li>
+                  <li>L4 = Escape routes only</li>
+                  <li>L5 = Bespoke coverage</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-white mb-1">Key Points</p>
+                <ul className="space-y-0.5">
+                  <li>L = Life safety focus</li>
+                  <li>Sleeping risk = L1 or L2</li>
+                  <li>Risk assessment drives selection</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Module
             </Link>
           </Button>
-          <Button variant="ios-primary" asChild className="flex-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-1-section-2">
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-2">
               Next Section
-              <ArrowRight className="h-4 w-4 ml-2" />
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
-        </div>
-      </section>
+        </nav>
+
+      </article>
     </div>
   );
 };

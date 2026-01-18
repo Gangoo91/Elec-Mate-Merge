@@ -152,28 +152,28 @@ const quizQuestions = [
 
 const faqs = [
   {
-    q: "How can I tell the difference between age-related discolouration and heat damage?",
-    a: "Heat damage is usually localised to specific areas - around terminals, fuse carriers, or connection points. It often appears as brown/yellow staining with distinct edges. Age-related yellowing tends to be uniform across the whole item and is caused by UV exposure. Heat damage may also show physical changes like bubbling, warping, or brittleness in the affected area."
+    question: "How can I tell the difference between age-related discolouration and heat damage?",
+    answer: "Heat damage is usually localised to specific areas - around terminals, fuse carriers, or connection points. It often appears as brown/yellow staining with distinct edges. Age-related yellowing tends to be uniform across the whole item and is caused by UV exposure. Heat damage may also show physical changes like bubbling, warping, or brittleness in the affected area."
   },
   {
-    q: "What if an appliance has been modified but appears to work safely?",
-    a: "Any modification that affects the original safety design should result in a fail, regardless of whether it 'appears' to work. Modifications may affect protection in ways not visible during inspection - for example, additional holes may compromise IP rating or insulation. Only properly documented repairs by competent persons using correct parts should be accepted."
+    question: "What if an appliance has been modified but appears to work safely?",
+    answer: "Any modification that affects the original safety design should result in a fail, regardless of whether it 'appears' to work. Modifications may affect protection in ways not visible during inspection - for example, additional holes may compromise IP rating or insulation. Only properly documented repairs by competent persons using correct parts should be accepted."
   },
   {
-    q: "Should I open appliances to check for internal overheating signs?",
-    a: "Standard PAT testing doesn't require opening appliance casings, and doing so may void warranties or damage seals. However, if external signs suggest internal problems (smell, visible damage, performance issues reported by users), the appliance should be failed and referred for inspection by someone competent to open and repair it."
+    question: "Should I open appliances to check for internal overheating signs?",
+    answer: "Standard PAT testing doesn't require opening appliance casings, and doing so may void warranties or damage seals. However, if external signs suggest internal problems (smell, visible damage, performance issues reported by users), the appliance should be failed and referred for inspection by someone competent to open and repair it."
   },
   {
-    q: "Can slight warmth during operation indicate a problem?",
-    a: "Some warmth is normal for many appliances, especially those with transformers, motors, or heating elements. Concern arises when heat is excessive, localised to unexpected areas (especially connections), or the appliance becomes too hot to touch comfortably. Compare to similar appliances or manufacturer specifications if unsure."
+    question: "Can slight warmth during operation indicate a problem?",
+    answer: "Some warmth is normal for many appliances, especially those with transformers, motors, or heating elements. Concern arises when heat is excessive, localised to unexpected areas (especially connections), or the appliance becomes too hot to touch comfortably. Compare to similar appliances or manufacturer specifications if unsure."
   },
   {
-    q: "What about appliances with burnt-out fuses found during testing?",
-    a: "A blown fuse itself isn't necessarily a fail - fuses do their job by blowing when needed. However, investigate why it blew: check for signs of overheating, correct fuse rating, and appliance condition. If there's evidence of repeated blowing, overheating, or underlying faults, fail the appliance for investigation."
+    question: "What about appliances with burnt-out fuses found during testing?",
+    answer: "A blown fuse itself isn't necessarily a fail - fuses do their job by blowing when needed. However, investigate why it blew: check for signs of overheating, correct fuse rating, and appliance condition. If there's evidence of repeated blowing, overheating, or underlying faults, fail the appliance for investigation."
   },
   {
-    q: "How do I handle user modifications to IT equipment?",
-    a: "IT equipment commonly has user modifications (RAM upgrades, hard drive replacements) which are generally acceptable if done properly. However, modifications to power supply units, cases that affect cooling, or removal of safety covers should result in a fail. Focus on whether the modification affects electrical safety rather than general functionality."
+    question: "How do I handle user modifications to IT equipment?",
+    answer: "IT equipment commonly has user modifications (RAM upgrades, hard drive replacements) which are generally acceptable if done properly. However, modifications to power supply units, cases that affect cooling, or removal of safety covers should result in a fail. Focus on whether the modification affects electrical safety rather than general functionality."
   }
 ];
 
@@ -185,7 +185,7 @@ const PATTestingModule3Section3 = () => {
       {/* Sticky Header */}
       <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-md border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="/study-centre/upskilling/pat-testing-module-3">
+          <Link to="..">
             <Button
               variant="ghost"
               size="sm"
@@ -802,11 +802,11 @@ const PATTestingModule3Section3 = () => {
             {faqs.map((faq, idx) => (
               <details key={idx} className="group bg-white/5 rounded-xl">
                 <summary className="flex items-center justify-between p-4 cursor-pointer list-none touch-manipulation">
-                  <span className="text-white font-medium text-sm sm:text-base pr-4">{faq.q}</span>
+                  <span className="text-white font-medium text-sm sm:text-base pr-4">{faq.question}</span>
                   <ChevronRight className="w-5 h-5 text-white/40 group-open:rotate-90 transition-transform flex-shrink-0" />
                 </summary>
                 <div className="px-4 pb-4">
-                  <p className="text-white/70 text-sm leading-relaxed">{faq.a}</p>
+                  <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               </details>
             ))}
@@ -848,7 +848,7 @@ const PATTestingModule3Section3 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-6 border-t border-white/10">
-          <Link to="/study-centre/upskilling/pat-testing-module-3-section-2" className="w-full sm:w-auto">
+          <Link to="../section-2" className="w-full sm:w-auto">
             <Button
               variant="outline"
               className="w-full sm:w-auto gap-2 border-white/20 text-white hover:bg-white/5 hover:text-elec-yellow min-h-[48px] touch-manipulation active:scale-[0.98]"
@@ -857,7 +857,7 @@ const PATTestingModule3Section3 = () => {
               <span>Previous: Section 2</span>
             </Button>
           </Link>
-          <Link to="/study-centre/upskilling/pat-testing-module-3-section-4" className="w-full sm:w-auto">
+          <Link to="../section-4" className="w-full sm:w-auto">
             <Button
               className="w-full sm:w-auto gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold min-h-[48px] touch-manipulation active:scale-[0.98]"
             >

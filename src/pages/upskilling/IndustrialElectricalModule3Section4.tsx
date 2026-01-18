@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { useSEO } from '@/hooks/useSEO';
+import useSEO from '@/hooks/useSEO';
 import {
+  ArrowLeft,
   ChevronLeft,
   ChevronRight,
-  ChevronDown,
-  ChevronUp,
   Thermometer,
   Wind,
   Shield,
@@ -24,8 +23,7 @@ import {
 } from 'lucide-react';
 
 const IndustrialElectricalModule3Section4: React.FC = () => {
-  const navigate = useNavigate();
-  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
+  const [showQuiz, setShowQuiz] = useState(false);
 
   useSEO({
     title: 'Panel Cooling and IP Ratings | Industrial Electrical Module 3 Section 4 | Elec-Mate',
@@ -94,7 +92,7 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
     {
       question: 'What IP rating is typically required for outdoor electrical enclosures in the UK?',
       options: ['IP44', 'IP54', 'IP65 or IP66', 'IP69K'],
-    correctAnswer: 'IP65 or IP66',
+      correctAnswer: 'IP65 or IP66',
     },
     {
       question:
@@ -183,7 +181,7 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
     },
   ];
 
-  const faqs = [
+  const faqItems = [
     {
       question: 'Can I drill ventilation holes in an IP65 enclosure for better cooling?',
       answer:
@@ -217,56 +215,66 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
     },
   ];
 
-  const toggleFAQ = (index: number) => {
-    setExpandedFAQ(expandedFAQ === index ? null : index);
-  };
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <div className="bg-[#1a1a1a]/95 border-b border-elec-yellow/20">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-2 text-elec-yellow/70 text-sm mb-2">
-            <BookOpen size={16} />
-            <span>Industrial Electrical • Module 3 • Section 4</span>
-          </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-elec-yellow">
-            Panel Cooling and IP Ratings
-          </h1>
-          <p className="text-gray-400 mt-2">
-            Understanding enclosure protection standards, thermal management systems, and environmental
-            considerations for industrial installations
-          </p>
+      <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-white/10">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+          <span className="text-sm text-muted-foreground">Module 3 &gt; Section 4</span>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
-        {/* Section 1: IP Rating System */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <Shield className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              1. IP Rating System Explained (IEC 60529)
-            </h2>
+      <div className="max-w-3xl mx-auto px-4 py-6 space-y-8">
+        {/* Title */}
+        <div className="text-center space-y-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10">
+            <Shield className="w-8 h-8 text-elec-yellow" />
           </div>
+          <h1 className="text-2xl font-bold text-foreground">Panel Cooling and IP Ratings</h1>
+          <p className="text-muted-foreground">Understanding enclosure protection standards, thermal management systems, and environmental considerations for industrial installations</p>
+        </div>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
+        {/* Section Overview */}
+        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+          <div className="flex items-start gap-3">
+            <Info className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+            <div>
+              <h2 className="font-semibold text-foreground mb-2">Section Overview</h2>
+              <p className="text-sm text-muted-foreground">
+                This section covers the critical aspects of enclosure protection and thermal management for industrial electrical installations. You will learn about IP ratings per IEC 60529, cooling methods including natural convection, filter fans, heat exchangers and air conditioning, thermal calculation methods, and environmental considerations including ATEX requirements for hazardous areas.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 1: IP Rating System */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            IP Rating System Explained (IEC 60529)
+          </h2>
+
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <p className="text-sm text-muted-foreground">
               The Ingress Protection (IP) rating system, defined by IEC 60529, provides a standardised
               method for classifying the degree of protection provided by electrical enclosures against
               solid objects and liquids. Understanding IP ratings is essential for selecting appropriate
               enclosures for different environments.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">IP Rating Structure: IP [First Digit] [Second Digit]</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">IP Rating Structure: IP [First Digit] [Second Digit]</h3>
 
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="text-elec-yellow font-medium mb-2">First Digit - Solid Object Protection</h4>
-                  <ul className="space-y-1 text-sm">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">First Digit - Solid Object Protection</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
                     <li><span className="text-elec-yellow">0:</span> No protection</li>
                     <li><span className="text-elec-yellow">1:</span> Objects &gt;50mm (back of hand)</li>
                     <li><span className="text-elec-yellow">2:</span> Objects &gt;12.5mm (finger)</li>
@@ -278,8 +286,8 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-elec-yellow font-medium mb-2">Second Digit - Water Protection</h4>
-                  <ul className="space-y-1 text-sm">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">Second Digit - Water Protection</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
                     <li><span className="text-elec-yellow">0:</span> No protection</li>
                     <li><span className="text-elec-yellow">1:</span> Vertical dripping water</li>
                     <li><span className="text-elec-yellow">2:</span> Dripping water (15° tilt)</li>
@@ -295,18 +303,18 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <div className="flex items-start gap-2">
-                <Info className="text-blue-400 mt-1 flex-shrink-0" size={18} />
+                <Info className="text-elec-yellow mt-1 flex-shrink-0 w-4 h-4" />
                 <div>
-                  <h4 className="text-blue-400 font-medium">Common Industrial IP Ratings</h4>
-                  <ul className="text-sm mt-2 space-y-1">
-                    <li><strong className="text-white">IP54:</strong> Indoor industrial - protection against dust and splashing</li>
-                    <li><strong className="text-white">IP55:</strong> Indoor with washdown - dust and low-pressure water jets</li>
-                    <li><strong className="text-white">IP65:</strong> Outdoor general - dust-tight, water jets from any direction</li>
-                    <li><strong className="text-white">IP66:</strong> Outdoor severe - dust-tight, powerful water jets</li>
-                    <li><strong className="text-white">IP67:</strong> Temporary submersion - water treatment, flood-prone areas</li>
-                    <li><strong className="text-white">IP69K:</strong> High-pressure washdown - food processing, pharmaceutical</li>
+                  <h4 className="text-elec-yellow font-medium text-sm">Common Industrial IP Ratings</h4>
+                  <ul className="text-sm mt-2 space-y-1 text-muted-foreground">
+                    <li><strong className="text-foreground">IP54:</strong> Indoor industrial - protection against dust and splashing</li>
+                    <li><strong className="text-foreground">IP55:</strong> Indoor with washdown - dust and low-pressure water jets</li>
+                    <li><strong className="text-foreground">IP65:</strong> Outdoor general - dust-tight, water jets from any direction</li>
+                    <li><strong className="text-foreground">IP66:</strong> Outdoor severe - dust-tight, powerful water jets</li>
+                    <li><strong className="text-foreground">IP67:</strong> Temporary submersion - water treatment, flood-prone areas</li>
+                    <li><strong className="text-foreground">IP69K:</strong> High-pressure washdown - food processing, pharmaceutical</li>
                   </ul>
                 </div>
               </div>
@@ -324,30 +332,26 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
         />
 
         {/* Section 2: Natural vs Forced Cooling */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <Wind className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              2. Natural Convection vs Forced Cooling
-            </h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Natural Convection vs Forced Cooling
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <p className="text-sm text-muted-foreground">
               Selecting the appropriate cooling method depends on heat load, ambient conditions, enclosure
               size, and environmental factors. Understanding the principles of each method ensures optimal
               thermal management.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
-                <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
                   <Thermometer size={18} className="text-orange-400" />
                   Natural Convection
                 </h3>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <CheckCircle size={14} className="text-green-400 mt-1 flex-shrink-0" />
                     <span>No moving parts - zero maintenance, silent operation</span>
@@ -361,25 +365,25 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
                     <span>No power consumption for cooling</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle size={14} className="text-yellow-400 mt-1 flex-shrink-0" />
+                    <AlertTriangle size={14} className="text-amber-400 mt-1 flex-shrink-0" />
                     <span>Limited capacity - typically 5-15W per m² surface</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle size={14} className="text-yellow-400 mt-1 flex-shrink-0" />
+                    <AlertTriangle size={14} className="text-amber-400 mt-1 flex-shrink-0" />
                     <span>Requires adequate clearance around enclosure</span>
                   </li>
                 </ul>
-                <p className="mt-3 text-xs text-gray-400">
+                <p className="mt-3 text-xs text-muted-foreground">
                   Best for: Low heat loads (&lt;200W), clean environments, critical reliability applications
                 </p>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
-                <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
                   <Fan size={18} className="text-blue-400" />
                   Forced Air Cooling
                 </h3>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <CheckCircle size={14} className="text-green-400 mt-1 flex-shrink-0" />
                     <span>5-10x greater cooling capacity than natural convection</span>
@@ -393,26 +397,26 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
                     <span>Even temperature distribution inside enclosure</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle size={14} className="text-yellow-400 mt-1 flex-shrink-0" />
+                    <AlertTriangle size={14} className="text-amber-400 mt-1 flex-shrink-0" />
                     <span>Reduces IP rating (typically to IP54/IP55)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle size={14} className="text-yellow-400 mt-1 flex-shrink-0" />
+                    <AlertTriangle size={14} className="text-amber-400 mt-1 flex-shrink-0" />
                     <span>Requires regular filter maintenance</span>
                   </li>
                 </ul>
-                <p className="mt-3 text-xs text-gray-400">
+                <p className="mt-3 text-xs text-muted-foreground">
                   Best for: Medium heat loads, clean/dry indoor environments, cost-sensitive installations
                 </p>
               </div>
             </div>
 
-            <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4">
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
               <div className="flex items-start gap-2">
-                <AlertTriangle className="text-yellow-400 mt-1 flex-shrink-0" size={18} />
+                <AlertTriangle className="text-amber-400 mt-1 flex-shrink-0 w-4 h-4" />
                 <div>
-                  <h4 className="text-yellow-400 font-medium">Critical Decision Factors</h4>
-                  <p className="text-sm mt-1">
+                  <h4 className="text-amber-400 font-medium text-sm">Critical Decision Factors</h4>
+                  <p className="text-sm mt-1 text-muted-foreground">
                     Always choose closed-loop cooling (heat exchangers or AC) when: ambient temperature may
                     exceed internal target temperature, environment contains oil mist/conductive dust/corrosive
                     gases, high IP rating must be maintained, or reliability is critical (fans are common
@@ -425,20 +429,16 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
         </section>
 
         {/* Section 3: Filter Fans and AC Units */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <Fan className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              3. Filter Fans and Air Conditioning Units
-            </h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Filter Fans and Air Conditioning Units
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Filter Fan Systems</h3>
-              <p className="mb-3">
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Filter Fan Systems</h3>
+              <p className="text-sm text-muted-foreground mb-3">
                 Filter fans provide economical forced-air cooling by drawing ambient air through a filter
                 mat into the enclosure. Warm air exits through outlet grilles positioned at the top.
               </p>
@@ -446,33 +446,33 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="text-elec-yellow text-sm font-medium mb-2">Installation Guidelines</h4>
-                  <ul className="space-y-1 text-sm">
-                    <li>• Mount inlet fan low on enclosure side</li>
-                    <li>• Position outlet grille at top (opposite side ideal)</li>
-                    <li>• Ensure outlet area ≥ inlet area</li>
-                    <li>• Maintain 100mm clearance from walls</li>
-                    <li>• Use fingersafe grilles (IP20) on outlet</li>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    <li>- Mount inlet fan low on enclosure side</li>
+                    <li>- Position outlet grille at top (opposite side ideal)</li>
+                    <li>- Ensure outlet area ≥ inlet area</li>
+                    <li>- Maintain 100mm clearance from walls</li>
+                    <li>- Use fingersafe grilles (IP20) on outlet</li>
                   </ul>
                 </div>
                 <div>
                   <h4 className="text-elec-yellow text-sm font-medium mb-2">Filter Maintenance</h4>
-                  <ul className="space-y-1 text-sm">
-                    <li>• Monthly visual inspection</li>
-                    <li>• Replace when ΔP exceeds 50% of clean value</li>
-                    <li>• Keep spare filters on site</li>
-                    <li>• Document replacement dates</li>
-                    <li>• Consider filter monitoring contacts</li>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    <li>- Monthly visual inspection</li>
+                    <li>- Replace when ΔP exceeds 50% of clean value</li>
+                    <li>- Keep spare filters on site</li>
+                    <li>- Document replacement dates</li>
+                    <li>- Consider filter monitoring contacts</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
                 <Snowflake size={18} className="text-cyan-400" />
                 Enclosure Air Conditioning
               </h3>
-              <p className="mb-3">
+              <p className="text-sm text-muted-foreground mb-3">
                 When ambient temperature approaches or exceeds the required internal temperature, or when
                 the environment is contaminated, enclosure-mounted air conditioning provides active cooling
                 in a closed loop.
@@ -480,12 +480,10 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
 
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="bg-cyan-500/20 p-1.5 rounded">
-                    <span className="text-cyan-400 text-xs font-bold">1</span>
-                  </div>
+                  <span className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-xs font-bold flex-shrink-0">1</span>
                   <div>
-                    <h4 className="text-white text-sm font-medium">Wall-Mounted Units</h4>
-                    <p className="text-sm text-gray-400">
+                    <h4 className="text-foreground text-sm font-medium">Wall-Mounted Units</h4>
+                    <p className="text-sm text-muted-foreground">
                       Mount directly on enclosure side panel. Capacity range 300W - 4kW. Requires cutout
                       and adequate external clearance for condenser airflow.
                     </p>
@@ -493,12 +491,10 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="bg-cyan-500/20 p-1.5 rounded">
-                    <span className="text-cyan-400 text-xs font-bold">2</span>
-                  </div>
+                  <span className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-xs font-bold flex-shrink-0">2</span>
                   <div>
-                    <h4 className="text-white text-sm font-medium">Roof-Mounted Units</h4>
-                    <p className="text-sm text-gray-400">
+                    <h4 className="text-foreground text-sm font-medium">Roof-Mounted Units</h4>
+                    <p className="text-sm text-muted-foreground">
                       Saves floor space, good air distribution. Ensure enclosure roof can support weight
                       (40-80kg typical). Protect condensate drain from freezing.
                     </p>
@@ -506,12 +502,10 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="bg-cyan-500/20 p-1.5 rounded">
-                    <span className="text-cyan-400 text-xs font-bold">3</span>
-                  </div>
+                  <span className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-xs font-bold flex-shrink-0">3</span>
                   <div>
-                    <h4 className="text-white text-sm font-medium">Key Specifications</h4>
-                    <p className="text-sm text-gray-400">
+                    <h4 className="text-foreground text-sm font-medium">Key Specifications</h4>
+                    <p className="text-sm text-muted-foreground">
                       L35/L35 rating (35°C ambient/35°C internal) is standard. Specify cooling capacity at
                       your actual ambient temperature - capacity decreases at higher ambients. Verify
                       refrigerant type complies with current F-Gas regulations.
@@ -533,26 +527,22 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
         />
 
         {/* Section 4: Heat Exchanger Systems */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <Zap className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              4. Heat Exchanger Systems
-            </h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Heat Exchanger Systems
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <p className="text-sm text-muted-foreground">
               Heat exchangers provide closed-loop cooling without reducing the enclosure's IP rating. They
               transfer heat from internal air to external air (or water) without mixing the two air streams.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
-                <h3 className="text-white font-semibold mb-3">Air-to-Air Heat Exchangers</h3>
-                <ul className="space-y-2 text-sm">
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3">Air-to-Air Heat Exchangers</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <CheckCircle size={14} className="text-green-400 mt-1 flex-shrink-0" />
                     <span>Maintains full IP rating (IP55/IP66)</span>
@@ -566,22 +556,22 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
                     <span>Works in contaminated environments</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle size={14} className="text-yellow-400 mt-1 flex-shrink-0" />
+                    <AlertTriangle size={14} className="text-amber-400 mt-1 flex-shrink-0" />
                     <span>Cannot cool below ambient temperature</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle size={14} className="text-yellow-400 mt-1 flex-shrink-0" />
+                    <AlertTriangle size={14} className="text-amber-400 mt-1 flex-shrink-0" />
                     <span>Requires ΔT of 10-15°C for effective operation</span>
                   </li>
                 </ul>
-                <p className="mt-3 text-xs text-gray-400">
+                <p className="mt-3 text-xs text-muted-foreground">
                   Capacity range: 20W/K to 200W/K (at specified ΔT)
                 </p>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
-                <h3 className="text-white font-semibold mb-3">Air-to-Water Heat Exchangers</h3>
-                <ul className="space-y-2 text-sm">
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3">Air-to-Water Heat Exchangers</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <CheckCircle size={14} className="text-green-400 mt-1 flex-shrink-0" />
                     <span>Very high cooling capacity possible</span>
@@ -595,56 +585,52 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
                     <span>Central chiller serves multiple enclosures</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle size={14} className="text-yellow-400 mt-1 flex-shrink-0" />
+                    <AlertTriangle size={14} className="text-amber-400 mt-1 flex-shrink-0" />
                     <span>Requires pipework installation</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <AlertTriangle size={14} className="text-yellow-400 mt-1 flex-shrink-0" />
+                    <AlertTriangle size={14} className="text-amber-400 mt-1 flex-shrink-0" />
                     <span>Leak risk near electrical equipment</span>
                   </li>
                 </ul>
-                <p className="mt-3 text-xs text-gray-400">
+                <p className="mt-3 text-xs text-muted-foreground">
                   Typical water: 6-12°C supply, 12-18°C return for process cooling
                 </p>
               </div>
             </div>
 
-            <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
-              <h4 className="text-green-400 font-medium mb-2">Selection Guide: When to Use Heat Exchangers</h4>
-              <ul className="text-sm space-y-1">
-                <li>• Environment too contaminated for filter fans but ambient is cool enough</li>
-                <li>• IP rating must be maintained but AC is not justified</li>
-                <li>• Very high reliability required (no refrigerant system to fail)</li>
-                <li>• Building has existing chilled water supply</li>
-                <li>• ATEX Zone 2/22 where non-sparking equipment is preferred</li>
+            <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+              <h4 className="text-green-400 font-medium mb-2 text-sm">Selection Guide: When to Use Heat Exchangers</h4>
+              <ul className="text-sm space-y-1 text-muted-foreground">
+                <li>- Environment too contaminated for filter fans but ambient is cool enough</li>
+                <li>- IP rating must be maintained but AC is not justified</li>
+                <li>- Very high reliability required (no refrigerant system to fail)</li>
+                <li>- Building has existing chilled water supply</li>
+                <li>- ATEX Zone 2/22 where non-sparking equipment is preferred</li>
               </ul>
             </div>
           </div>
         </section>
 
         {/* Section 5: Thermal Calculation Methods */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <Calculator className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              5. Thermal Calculation Methods
-            </h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Thermal Calculation Methods
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <p className="text-sm text-muted-foreground">
               Proper thermal calculations ensure enclosure temperature remains within component operating
               limits. The Rittal method is widely used and forms the basis for most manufacturer tools.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Basic Thermal Balance Equation</h3>
-              <div className="bg-[#2a2a2a] p-4 rounded font-mono text-sm mb-4">
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Basic Thermal Balance Equation</h3>
+              <div className="bg-background/70 p-4 rounded font-mono text-sm mb-4 border border-white/5">
                 <p className="text-elec-yellow">Q<sub>dissipated</sub> = k × A × ΔT</p>
-                <p className="mt-2 text-gray-400">Where:</p>
-                <ul className="text-gray-400 ml-4 mt-1">
+                <p className="mt-2 text-muted-foreground">Where:</p>
+                <ul className="text-muted-foreground ml-4 mt-1">
                   <li>Q = Heat dissipation capacity (Watts)</li>
                   <li>k = Heat transfer coefficient (W/m²K)</li>
                   <li>A = Effective enclosure surface area (m²)</li>
@@ -653,78 +639,78 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
               </div>
 
               <div className="grid md:grid-cols-3 gap-3 text-sm">
-                <div className="bg-[#2a2a2a] p-3 rounded">
+                <div className="bg-background/70 p-3 rounded border border-white/5">
                   <h4 className="text-elec-yellow font-medium">Painted Steel</h4>
-                  <p className="text-2xl font-bold text-white">5.5 W/m²K</p>
-                  <p className="text-gray-400 text-xs">Standard enclosures</p>
+                  <p className="text-2xl font-bold text-foreground">5.5 W/m²K</p>
+                  <p className="text-muted-foreground text-xs">Standard enclosures</p>
                 </div>
-                <div className="bg-[#2a2a2a] p-3 rounded">
+                <div className="bg-background/70 p-3 rounded border border-white/5">
                   <h4 className="text-elec-yellow font-medium">Stainless Steel</h4>
-                  <p className="text-2xl font-bold text-white">5.0 W/m²K</p>
-                  <p className="text-gray-400 text-xs">Unpainted/polished</p>
+                  <p className="text-2xl font-bold text-foreground">5.0 W/m²K</p>
+                  <p className="text-muted-foreground text-xs">Unpainted/polished</p>
                 </div>
-                <div className="bg-[#2a2a2a] p-3 rounded">
+                <div className="bg-background/70 p-3 rounded border border-white/5">
                   <h4 className="text-elec-yellow font-medium">GRP/Plastic</h4>
-                  <p className="text-2xl font-bold text-white">3.5 W/m²K</p>
-                  <p className="text-gray-400 text-xs">Insulating materials</p>
+                  <p className="text-2xl font-bold text-foreground">3.5 W/m²K</p>
+                  <p className="text-muted-foreground text-xs">Insulating materials</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Step-by-Step Calculation Example</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Step-by-Step Calculation Example</h3>
 
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">1</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow text-background flex items-center justify-center flex-shrink-0 font-bold text-sm">1</span>
                   <div>
-                    <p className="font-medium text-white">Sum Internal Heat Losses</p>
-                    <p className="text-gray-400">VFD (150W) + PLC (25W) + PSU (45W) + Contactors (30W) = <span className="text-elec-yellow">250W total</span></p>
+                    <p className="font-medium text-foreground">Sum Internal Heat Losses</p>
+                    <p className="text-muted-foreground">VFD (150W) + PLC (25W) + PSU (45W) + Contactors (30W) = <span className="text-elec-yellow">250W total</span></p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">2</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow text-background flex items-center justify-center flex-shrink-0 font-bold text-sm">2</span>
                   <div>
-                    <p className="font-medium text-white">Calculate Effective Surface Area</p>
-                    <p className="text-gray-400">Enclosure 600×600×1200mm. Only 3 sides + top exposed.</p>
-                    <p className="text-gray-400">A = (0.6×1.2)×2 + (0.6×0.6) + (0.6×0.6) = <span className="text-elec-yellow">2.16m²</span></p>
+                    <p className="font-medium text-foreground">Calculate Effective Surface Area</p>
+                    <p className="text-muted-foreground">Enclosure 600×600×1200mm. Only 3 sides + top exposed.</p>
+                    <p className="text-muted-foreground">A = (0.6×1.2)×2 + (0.6×0.6) + (0.6×0.6) = <span className="text-elec-yellow">2.16m²</span></p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">3</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow text-background flex items-center justify-center flex-shrink-0 font-bold text-sm">3</span>
                   <div>
-                    <p className="font-medium text-white">Determine Allowable ΔT</p>
-                    <p className="text-gray-400">Max internal: 35°C, Max ambient: 30°C → ΔT = <span className="text-elec-yellow">5K</span></p>
+                    <p className="font-medium text-foreground">Determine Allowable ΔT</p>
+                    <p className="text-muted-foreground">Max internal: 35°C, Max ambient: 30°C → ΔT = <span className="text-elec-yellow">5K</span></p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">4</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow text-background flex items-center justify-center flex-shrink-0 font-bold text-sm">4</span>
                   <div>
-                    <p className="font-medium text-white">Calculate Natural Dissipation Capacity</p>
-                    <p className="text-gray-400">Q = 5.5 × 2.16 × 5 = <span className="text-elec-yellow">59.4W</span></p>
+                    <p className="font-medium text-foreground">Calculate Natural Dissipation Capacity</p>
+                    <p className="text-muted-foreground">Q = 5.5 × 2.16 × 5 = <span className="text-elec-yellow">59.4W</span></p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">5</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow text-background flex items-center justify-center flex-shrink-0 font-bold text-sm">5</span>
                   <div>
-                    <p className="font-medium text-white">Determine Cooling Requirement</p>
-                    <p className="text-gray-400">Required: 250W - 59.4W = <span className="text-red-400">190.6W additional cooling needed</span></p>
-                    <p className="text-gray-400">With 25% safety margin: <span className="text-elec-yellow">238W cooling capacity</span></p>
+                    <p className="font-medium text-foreground">Determine Cooling Requirement</p>
+                    <p className="text-muted-foreground">Required: 250W - 59.4W = <span className="text-red-400">190.6W additional cooling needed</span></p>
+                    <p className="text-muted-foreground">With 25% safety margin: <span className="text-elec-yellow">238W cooling capacity</span></p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <div className="flex items-start gap-2">
-                <Info className="text-blue-400 mt-1 flex-shrink-0" size={18} />
+                <Info className="text-elec-yellow mt-1 flex-shrink-0 w-4 h-4" />
                 <div>
-                  <h4 className="text-blue-400 font-medium">Online Calculation Tools</h4>
-                  <p className="text-sm mt-1">
+                  <h4 className="text-elec-yellow font-medium text-sm">Online Calculation Tools</h4>
+                  <p className="text-sm mt-1 text-muted-foreground">
                     Rittal Therm software (free download) provides detailed calculations including solar
                     load, altitude correction, and component thermal derating. Schneider Electric, ABB, and
                     Phoenix Contact offer similar online tools. Always verify calculations with manufacturer
@@ -746,91 +732,87 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
         />
 
         {/* Section 6: Environmental Considerations */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <Droplets className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              6. Environmental Considerations
-            </h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Environmental Considerations
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
-                <AlertTriangle className="text-orange-400" size={18} />
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3 flex items-center gap-2">
+                <AlertTriangle className="text-orange-400 w-4 h-4" />
                 ATEX and Hazardous Area Requirements
               </h3>
 
-              <p className="mb-3 text-sm">
+              <p className="text-sm text-muted-foreground mb-3">
                 ATEX Directive 2014/34/EU and DSEAR regulations require special equipment in areas where
                 explosive atmospheres may occur. Enclosures must be certified for the specific zone.
               </p>
 
               <div className="grid md:grid-cols-3 gap-3 text-sm">
-                <div className="bg-red-900/20 border border-red-500/30 rounded p-3">
+                <div className="bg-red-500/10 border border-red-500/30 rounded p-3">
                   <h4 className="text-red-400 font-medium">Zone 0/20</h4>
-                  <p className="text-xs text-gray-400 mb-2">Explosive atmosphere continuously/frequently</p>
-                  <p className="text-white">Ex ia (intrinsic safety)</p>
-                  <p className="text-xs text-gray-400">Avoid electrical equipment if possible</p>
+                  <p className="text-xs text-muted-foreground mb-2">Explosive atmosphere continuously/frequently</p>
+                  <p className="text-foreground">Ex ia (intrinsic safety)</p>
+                  <p className="text-xs text-muted-foreground">Avoid electrical equipment if possible</p>
                 </div>
-                <div className="bg-orange-900/20 border border-orange-500/30 rounded p-3">
+                <div className="bg-orange-500/10 border border-orange-500/30 rounded p-3">
                   <h4 className="text-orange-400 font-medium">Zone 1/21</h4>
-                  <p className="text-xs text-gray-400 mb-2">Likely during normal operation</p>
-                  <p className="text-white">Ex d, Ex e, Ex p</p>
-                  <p className="text-xs text-gray-400">Flameproof, increased safety, pressurised</p>
+                  <p className="text-xs text-muted-foreground mb-2">Likely during normal operation</p>
+                  <p className="text-foreground">Ex d, Ex e, Ex p</p>
+                  <p className="text-xs text-muted-foreground">Flameproof, increased safety, pressurised</p>
                 </div>
-                <div className="bg-yellow-900/20 border border-yellow-500/30 rounded p-3">
-                  <h4 className="text-yellow-400 font-medium">Zone 2/22</h4>
-                  <p className="text-xs text-gray-400 mb-2">Unlikely, only in abnormal conditions</p>
-                  <p className="text-white">Ex n, Ex ec</p>
-                  <p className="text-xs text-gray-400">Non-sparking, some standard equipment</p>
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded p-3">
+                  <h4 className="text-amber-400 font-medium">Zone 2/22</h4>
+                  <p className="text-xs text-muted-foreground mb-2">Unlikely, only in abnormal conditions</p>
+                  <p className="text-foreground">Ex n, Ex ec</p>
+                  <p className="text-xs text-muted-foreground">Non-sparking, some standard equipment</p>
                 </div>
               </div>
 
-              <p className="mt-3 text-sm text-yellow-400">
-                ⚠️ ATEX-rated cooling equipment is available but expensive. Locate enclosures outside
+              <p className="mt-3 text-sm text-amber-400">
+                ATEX-rated cooling equipment is available but expensive. Locate enclosures outside
                 hazardous zones where possible, or use pressurisation (Ex p) with clean air supply.
               </p>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Corrosive and Aggressive Environments</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Corrosive and Aggressive Environments</h3>
 
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Chemical/Process Industries</h4>
-                  <ul className="space-y-1 text-gray-400">
-                    <li>• GRP (fibreglass) or 316L stainless enclosures</li>
-                    <li>• Closed-loop cooling only (no filter fans)</li>
-                    <li>• Positive pressure to prevent ingress</li>
-                    <li>• Corrosion-resistant cooling units</li>
-                    <li>• Specify chemical compatibility</li>
+                  <ul className="space-y-1 text-muted-foreground">
+                    <li>- GRP (fibreglass) or 316L stainless enclosures</li>
+                    <li>- Closed-loop cooling only (no filter fans)</li>
+                    <li>- Positive pressure to prevent ingress</li>
+                    <li>- Corrosion-resistant cooling units</li>
+                    <li>- Specify chemical compatibility</li>
                   </ul>
                 </div>
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Coastal/Marine Environments</h4>
-                  <ul className="space-y-1 text-gray-400">
-                    <li>• 316 stainless steel (not 304)</li>
-                    <li>• IP66 minimum, IP67 preferred</li>
-                    <li>• Salt-rated cooling equipment</li>
-                    <li>• Protective coatings on all surfaces</li>
-                    <li>• Anti-condensation heaters essential</li>
+                  <ul className="space-y-1 text-muted-foreground">
+                    <li>- 316 stainless steel (not 304)</li>
+                    <li>- IP66 minimum, IP67 preferred</li>
+                    <li>- Salt-rated cooling equipment</li>
+                    <li>- Protective coatings on all surfaces</li>
+                    <li>- Anti-condensation heaters essential</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">UK Climate-Specific Considerations</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">UK Climate-Specific Considerations</h3>
 
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-3">
-                  <Droplets className="text-blue-400 flex-shrink-0" size={18} />
+                  <Droplets className="text-blue-400 flex-shrink-0 w-4 h-4 mt-0.5" />
                   <div>
-                    <h4 className="text-white font-medium">Condensation Management</h4>
-                    <p className="text-gray-400">
+                    <h4 className="text-foreground font-medium">Condensation Management</h4>
+                    <p className="text-muted-foreground">
                       UK humidity typically 70-90%. Install anti-condensation heaters (50-100W) with
                       hygrostat control set at 70% RH. Essential for outdoor enclosures and those subject
                       to temperature cycling.
@@ -839,10 +821,10 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Thermometer className="text-orange-400 flex-shrink-0" size={18} />
+                  <Thermometer className="text-orange-400 flex-shrink-0 w-4 h-4 mt-0.5" />
                   <div>
-                    <h4 className="text-white font-medium">Temperature Extremes</h4>
-                    <p className="text-gray-400">
+                    <h4 className="text-foreground font-medium">Temperature Extremes</h4>
+                    <p className="text-muted-foreground">
                       Design for -10°C to +35°C ambient (extend to -20°C for Scottish Highlands/exposed
                       locations). Consider cold-start heating for VFDs and displays. Summer solar gain on
                       south-facing panels: add 200-400 W/m² to heat load or use sun shields.
@@ -851,10 +833,10 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Wind className="text-gray-400 flex-shrink-0" size={18} />
+                  <Wind className="text-gray-400 flex-shrink-0 w-4 h-4 mt-0.5" />
                   <div>
-                    <h4 className="text-white font-medium">Exposed Locations</h4>
-                    <p className="text-gray-400">
+                    <h4 className="text-foreground font-medium">Exposed Locations</h4>
+                    <p className="text-muted-foreground">
                       Wind-driven rain requires IP66 minimum. Consider double-door construction for cable
                       entry protection. Mounting should withstand wind loading to BS EN 1991-1-4 (typically
                       1.2 kN/m² in exposed UK locations).
@@ -867,153 +849,146 @@ const IndustrialElectricalModule3Section4: React.FC = () => {
         </section>
 
         {/* Quick Reference Card */}
-        <section className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-lg p-6 border border-elec-yellow/30">
-          <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-            <BookOpen size={20} />
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <BookOpen className="w-5 h-5 text-elec-yellow" />
             Quick Reference Card
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-[#1a1a1a]/80 rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">IP Rating Quick Guide</h3>
-              <table className="w-full text-sm">
-                <tbody className="text-gray-300">
-                  <tr className="border-b border-gray-700">
-                    <td className="py-1 text-elec-yellow font-medium">IP54</td>
-                    <td className="py-1">Indoor industrial, dust/splash</td>
-                  </tr>
-                  <tr className="border-b border-gray-700">
-                    <td className="py-1 text-elec-yellow font-medium">IP55</td>
-                    <td className="py-1">Indoor washdown areas</td>
-                  </tr>
-                  <tr className="border-b border-gray-700">
-                    <td className="py-1 text-elec-yellow font-medium">IP65</td>
-                    <td className="py-1">Outdoor general purpose</td>
-                  </tr>
-                  <tr className="border-b border-gray-700">
-                    <td className="py-1 text-elec-yellow font-medium">IP66</td>
-                    <td className="py-1">Outdoor severe/washdown</td>
-                  </tr>
-                  <tr className="border-b border-gray-700">
-                    <td className="py-1 text-elec-yellow font-medium">IP67</td>
-                    <td className="py-1">Temporary submersion</td>
-                  </tr>
-                  <tr>
-                    <td className="py-1 text-elec-yellow font-medium">IP69K</td>
-                    <td className="py-1">High-pressure steam clean</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3">IP Rating Quick Guide</h3>
+                <table className="w-full text-sm">
+                  <tbody className="text-muted-foreground">
+                    <tr className="border-b border-white/10">
+                      <td className="py-1 text-elec-yellow font-medium">IP54</td>
+                      <td className="py-1">Indoor industrial, dust/splash</td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-1 text-elec-yellow font-medium">IP55</td>
+                      <td className="py-1">Indoor washdown areas</td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-1 text-elec-yellow font-medium">IP65</td>
+                      <td className="py-1">Outdoor general purpose</td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-1 text-elec-yellow font-medium">IP66</td>
+                      <td className="py-1">Outdoor severe/washdown</td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-1 text-elec-yellow font-medium">IP67</td>
+                      <td className="py-1">Temporary submersion</td>
+                    </tr>
+                    <tr>
+                      <td className="py-1 text-elec-yellow font-medium">IP69K</td>
+                      <td className="py-1">High-pressure steam clean</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-            <div className="bg-[#1a1a1a]/80 rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Cooling Selection Matrix</h3>
-              <table className="w-full text-sm">
-                <tbody className="text-gray-300">
-                  <tr className="border-b border-gray-700">
-                    <td className="py-1 text-elec-yellow font-medium">Natural</td>
-                    <td className="py-1">&lt;200W, clean, critical</td>
-                  </tr>
-                  <tr className="border-b border-gray-700">
-                    <td className="py-1 text-elec-yellow font-medium">Filter Fan</td>
-                    <td className="py-1">200-1000W, clean indoor</td>
-                  </tr>
-                  <tr className="border-b border-gray-700">
-                    <td className="py-1 text-elec-yellow font-medium">Heat Exch.</td>
-                    <td className="py-1">Dirty env, IP required</td>
-                  </tr>
-                  <tr>
-                    <td className="py-1 text-elec-yellow font-medium">AC Unit</td>
-                    <td className="py-1">Amb ≥ internal temp</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3">Cooling Selection Matrix</h3>
+                <table className="w-full text-sm">
+                  <tbody className="text-muted-foreground">
+                    <tr className="border-b border-white/10">
+                      <td className="py-1 text-elec-yellow font-medium">Natural</td>
+                      <td className="py-1">&lt;200W, clean, critical</td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-1 text-elec-yellow font-medium">Filter Fan</td>
+                      <td className="py-1">200-1000W, clean indoor</td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-1 text-elec-yellow font-medium">Heat Exch.</td>
+                      <td className="py-1">Dirty env, IP required</td>
+                    </tr>
+                    <tr>
+                      <td className="py-1 text-elec-yellow font-medium">AC Unit</td>
+                      <td className="py-1">Amb ≥ internal temp</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-            <div className="bg-[#1a1a1a]/80 rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Thermal Formula</h3>
-              <div className="font-mono text-elec-yellow mb-2">Q = k × A × ΔT</div>
-              <ul className="text-sm text-gray-400 space-y-1">
-                <li>Steel k = 5.5 W/m²K</li>
-                <li>Stainless k = 5.0 W/m²K</li>
-                <li>GRP k = 3.5 W/m²K</li>
-                <li>Add 25% safety margin</li>
-              </ul>
-            </div>
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3">Thermal Formula</h3>
+                <div className="font-mono text-elec-yellow mb-2">Q = k × A × ΔT</div>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>Steel k = 5.5 W/m²K</li>
+                  <li>Stainless k = 5.0 W/m²K</li>
+                  <li>GRP k = 3.5 W/m²K</li>
+                  <li>Add 25% safety margin</li>
+                </ul>
+              </div>
 
-            <div className="bg-[#1a1a1a]/80 rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Maintenance Schedule</h3>
-              <ul className="text-sm text-gray-300 space-y-1">
-                <li><span className="text-elec-yellow">Monthly:</span> Filter inspection</li>
-                <li><span className="text-elec-yellow">Quarterly:</span> AC filter clean</li>
-                <li><span className="text-elec-yellow">6-Monthly:</span> Filter replacement</li>
-                <li><span className="text-elec-yellow">Annually:</span> Full system check</li>
-              </ul>
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3">Maintenance Schedule</h3>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li><span className="text-elec-yellow">Monthly:</span> Filter inspection</li>
+                  <li><span className="text-elec-yellow">Quarterly:</span> AC filter clean</li>
+                  <li><span className="text-elec-yellow">6-Monthly:</span> Filter replacement</li>
+                  <li><span className="text-elec-yellow">Annually:</span> Full system check</li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* FAQs */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <h2 className="text-xl font-semibold text-elec-yellow mb-4">
-            Frequently Asked Questions
-          </h2>
-
-          <div className="space-y-2">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border border-gray-700 rounded-lg overflow-hidden"
-              >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-4 text-left bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-colors min-h-[44px] touch-manipulation"
-                >
-                  <span className="text-white font-medium pr-4">{faq.question}</span>
-                  {expandedFAQ === index ? (
-                    <ChevronUp className="text-elec-yellow flex-shrink-0" size={20} />
-                  ) : (
-                    <ChevronDown className="text-elec-yellow flex-shrink-0" size={20} />
-                  )}
-                </button>
-                {expandedFAQ === index && (
-                  <div className="p-4 bg-[#1a1a1a]/50 border-t border-gray-700">
-                    <p className="text-gray-300 text-sm leading-relaxed">{faq.answer}</p>
-                  </div>
-                )}
+        {/* FAQ Section - Static bordered list */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {faqItems.map((faq, index) => (
+              <div key={index} className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
+                <p className="text-sm text-muted-foreground">{faq.answer}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Quiz Section */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <h2 className="text-xl font-semibold text-elec-yellow mb-4">
-            Section Quiz
-          </h2>
-          <p className="text-gray-400 mb-6">
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground">Section Quiz</h2>
+          <p className="text-sm text-muted-foreground">
             Test your knowledge of panel cooling and IP ratings. You need 70% to pass.
           </p>
-          <Quiz questions={quizQuestions} />
+          <Button
+            onClick={() => setShowQuiz(!showQuiz)}
+            className="bg-elec-yellow text-background hover:bg-elec-yellow/90"
+          >
+            {showQuiz ? 'Hide Quiz' : 'Start Quiz'}
+          </Button>
+          {showQuiz && (
+            <div className="mt-4">
+              <Quiz questions={quizQuestions} />
+            </div>
+          )}
         </section>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-4">
+        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
           <Button
-            onClick={() => navigate('/upskilling/industrial-electrical/module-3/section-3')}
             variant="outline"
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 text-white hover:bg-gray-700 flex items-center gap-2"
+            className="border-white/20 hover:bg-white/5"
+            asChild
           >
-            <ChevronLeft size={18} />
-            <span>Previous: Section 3</span>
+            <Link to="/study-centre/upskilling/industrial-electrical/module-3/section-3">
+              <ChevronLeft className="w-4 h-4 mr-2" />
+              Previous: Cable Termination
+            </Link>
           </Button>
-
           <Button
-            onClick={() => navigate('/upskilling/industrial-electrical/module-3/section-5')}
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
+            className="bg-elec-yellow text-background hover:bg-elec-yellow/90"
+            asChild
           >
-            <span>Next: Section 5</span>
-            <ChevronRight size={18} />
+            <Link to="/study-centre/upskilling/industrial-electrical/module-3/section-5">
+              Next: Functional Testing
+              <ChevronRight className="w-4 h-4 ml-2" />
+            </Link>
           </Button>
         </div>
       </div>

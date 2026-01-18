@@ -84,7 +84,7 @@ const BMSModule1Section5 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-1">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -216,19 +216,19 @@ const BMSModule1Section5 = () => {
             <div className="grid grid-cols-4 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-green-500/20 border border-green-500/30">
                 <p className="font-bold text-green-400 text-lg mb-1">A</p>
-                <p className="text-white/90 text-xs">High Performance</p>
+                <p className="text-white text-xs">High Performance</p>
               </div>
               <div className="p-3 rounded bg-elec-yellow/20 border border-elec-yellow/30">
                 <p className="font-bold text-elec-yellow text-lg mb-1">B</p>
-                <p className="text-white/90 text-xs">Advanced</p>
+                <p className="text-white text-xs">Advanced</p>
               </div>
               <div className="p-3 rounded bg-orange-500/20 border border-orange-500/30">
                 <p className="font-bold text-orange-400 text-lg mb-1">C</p>
-                <p className="text-white/90 text-xs">Standard</p>
+                <p className="text-white text-xs">Standard</p>
               </div>
               <div className="p-3 rounded bg-red-500/20 border border-red-500/30">
                 <p className="font-bold text-red-400 text-lg mb-1">D</p>
-                <p className="text-white/90 text-xs">Non-Automated</p>
+                <p className="text-white text-xs">Non-Automated</p>
               </div>
             </div>
 
@@ -404,7 +404,7 @@ const BMSModule1Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

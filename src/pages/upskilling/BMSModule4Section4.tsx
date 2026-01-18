@@ -88,7 +88,7 @@ const BMSModule4Section4 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-4">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -96,7 +96,7 @@ const BMSModule4Section4 = () => {
         </div>
       </div>
 
-      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
         {/* Page Title Header */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -106,7 +106,7 @@ const BMSModule4Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Shading, Blinds, and Façade Automation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Solar control and daylight management in intelligent building systems
           </p>
         </header>
@@ -264,15 +264,15 @@ const BMSModule4Section4 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Wind Sensor</p>
-                <p className="text-white/90 text-xs">Retract at 10-15 m/s</p>
+                <p className="text-white text-xs">Retract at 10-15 m/s</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Rain Sensor</p>
-                <p className="text-white/90 text-xs">Protect fabric blinds</p>
+                <p className="text-white text-xs">Protect fabric blinds</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Sun Sensor</p>
-                <p className="text-white/90 text-xs">Light level + direction</p>
+                <p className="text-white text-xs">Light level + direction</p>
               </div>
             </div>
 
@@ -367,7 +367,7 @@ const BMSModule4Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

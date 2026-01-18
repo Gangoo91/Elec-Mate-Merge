@@ -95,7 +95,7 @@ const BMSModule6Section2 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-6">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -114,7 +114,7 @@ const BMSModule6Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Trend Logging and Historical Data
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Recording and analysing BMS data for fault diagnosis and optimisation
           </p>
         </header>
@@ -172,17 +172,17 @@ const BMSModule6Section2 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm font-medium text-blue-300 mb-2">Continuous Logging</p>
-                <p className="text-sm text-white/90">Captures measurements at regular intervals - every 5 minutes, hourly, etc. Used for temperature, humidity, CO2 levels, and energy consumption.</p>
+                <p className="text-sm text-white">Captures measurements at regular intervals - every 5 minutes, hourly, etc. Used for temperature, humidity, CO2 levels, and energy consumption.</p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-300 mb-2">Event-Based Logging</p>
-                <p className="text-sm text-white/90">Only records when something changes or events occur. Pump on/off, alarms triggering, valve positions. Saves storage while capturing key behaviour.</p>
+                <p className="text-sm text-white">Only records when something changes or events occur. Pump on/off, alarms triggering, valve positions. Saves storage while capturing key behaviour.</p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
               <p className="text-sm font-medium text-purple-300 mb-2">Practical Example</p>
-              <p className="text-sm text-white/90">A chiller's flow temperature is logged every 10 minutes. When it trips on a fault, engineers can review the historical graph to see if low flow or high return temperature caused the problem - essential for root cause analysis.</p>
+              <p className="text-sm text-white">A chiller's flow temperature is logged every 10 minutes. When it trips on a fault, engineers can review the historical graph to see if low flow or high return temperature caused the problem - essential for root cause analysis.</p>
             </div>
           </div>
         </section>
@@ -203,21 +203,21 @@ const BMSModule6Section2 = () => {
             <div className="my-6 space-y-4">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-300 mb-2">Fault Diagnosis</p>
-                <p className="text-sm text-white/90">Trace back through logs to see exactly what conditions led to a problem. Was it gradual deterioration or sudden failure? Did other systems contribute?</p>
+                <p className="text-sm text-white">Trace back through logs to see exactly what conditions led to a problem. Was it gradual deterioration or sudden failure? Did other systems contribute?</p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-300 mb-2">Energy Optimisation</p>
-                <p className="text-sm text-white/90">Identify wasteful patterns: equipment running during unoccupied hours, heating and cooling simultaneously, inefficient schedules costing thousands annually.</p>
+                <p className="text-sm text-white">Identify wasteful patterns: equipment running during unoccupied hours, heating and cooling simultaneously, inefficient schedules costing thousands annually.</p>
               </div>
               <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
                 <p className="text-sm font-medium text-yellow-300 mb-2">Compliance Evidence</p>
-                <p className="text-sm text-white/90">Legionella prevention, energy reporting, safety system testing - all require documented proof. Historical data provides evidence automatically.</p>
+                <p className="text-sm text-white">Legionella prevention, energy reporting, safety system testing - all require documented proof. Historical data provides evidence automatically.</p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-green-300 mb-2">Real Success Story</p>
-              <p className="text-sm text-white/90">A school discovered through trend analysis that their boilers were running overnight due to incorrect scheduling. One simple correction saved £3,000 annually.</p>
+              <p className="text-sm text-white">A school discovered through trend analysis that their boilers were running overnight due to incorrect scheduling. One simple correction saved £3,000 annually.</p>
             </div>
           </div>
         </section>
@@ -258,7 +258,7 @@ const BMSModule6Section2 = () => {
 
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
               <p className="text-sm font-medium text-orange-300 mb-2">Critical Point</p>
-              <p className="text-sm text-white/90">If source signals are wrong, stored history becomes useless. A sensor wired to the wrong input type will give meaningless data that corrupts the entire historical record.</p>
+              <p className="text-sm text-white">If source signals are wrong, stored history becomes useless. A sensor wired to the wrong input type will give meaningless data that corrupts the entire historical record.</p>
             </div>
           </div>
         </section>
@@ -316,21 +316,21 @@ const BMSModule6Section2 = () => {
             <div className="my-6 space-y-4">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-red-300 mb-2">Flat Line Data</p>
-                <p className="text-sm text-white/90">Indicates sensor power issues, wiring problems, or sensor failures. Check power supply, wiring integrity, and sensor operation.</p>
+                <p className="text-sm text-white">Indicates sensor power issues, wiring problems, or sensor failures. Check power supply, wiring integrity, and sensor operation.</p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-orange-300 mb-2">Noisy/Erratic Data</p>
-                <p className="text-sm text-white/90">Points to interference, poor connections, or improper grounding. Analog signals are susceptible to noise from motors, VFDs, or switching equipment.</p>
+                <p className="text-sm text-white">Points to interference, poor connections, or improper grounding. Analog signals are susceptible to noise from motors, VFDs, or switching equipment.</p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-yellow-300 mb-2">Out-of-Range Readings</p>
-                <p className="text-sm text-white/90">Suggests calibration problems, incorrect sensor selection, or input configuration errors. A -40C reading in a heated building indicates issues.</p>
+                <p className="text-sm text-white">Suggests calibration problems, incorrect sensor selection, or input configuration errors. A -40C reading in a heated building indicates issues.</p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-elec-yellow mb-2">Troubleshooting Tip</p>
-              <p className="text-sm text-white/90">Always verify data quality during commissioning by comparing logged values with independent measurements. Use a separate thermometer, pressure gauge, or multimeter to confirm sensor readings match reality.</p>
+              <p className="text-sm text-white">Always verify data quality during commissioning by comparing logged values with independent measurements. Use a separate thermometer, pressure gauge, or multimeter to confirm sensor readings match reality.</p>
             </div>
           </div>
         </section>
@@ -341,15 +341,15 @@ const BMSModule6Section2 = () => {
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-300 mb-2">Problem</p>
-              <p className="text-sm text-white/90">An office building logged CO2 levels as constant 400 ppm for weeks, despite air quality complaints from occupants.</p>
+              <p className="text-sm text-white">An office building logged CO2 levels as constant 400 ppm for weeks, despite air quality complaints from occupants.</p>
             </div>
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
               <p className="text-sm font-medium text-orange-300 mb-2">Investigation</p>
-              <p className="text-sm text-white/90">The CO2 sensor was wired to the BMS but never powered - the system logged default values instead of actual readings.</p>
+              <p className="text-sm text-white">The CO2 sensor was wired to the BMS but never powered - the system logged default values instead of actual readings.</p>
             </div>
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-green-300 mb-2">Result</p>
-              <p className="text-sm text-white/90">Once powered and calibrated, logs showed peaks above 1500 ppm, triggering necessary ventilation improvements.</p>
+              <p className="text-sm text-white">Once powered and calibrated, logs showed peaks above 1500 ppm, triggering necessary ventilation improvements.</p>
             </div>
           </div>
         </section>
@@ -361,7 +361,7 @@ const BMSModule6Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

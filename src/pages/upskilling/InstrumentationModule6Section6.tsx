@@ -1,577 +1,749 @@
-import { ArrowLeft, ArrowRight, Settings, Book, CheckCircle2, Calculator, AlertTriangle, TrendingUp, Lightbulb, Target, Wrench, Brain } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, Settings, CheckCircle, HelpCircle, Calculator, AlertTriangle, TrendingUp, Target, Wrench, Brain, Lightbulb } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import InstrumentationQuiz from '@/components/upskilling/quiz/InstrumentationQuiz';
+import { Button } from '@/components/ui/button';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule6Section6 = () => {
+  useSEO({
+    title: "Advanced Calibration Topics and Best Practices | Instrumentation Module 6",
+    description: "Master advanced calibration techniques, measurement uncertainty calculations, troubleshooting methods, and future trends in calibration technology.",
+    keywords: ["measurement uncertainty", "calibration best practices", "calibration troubleshooting", "Type A uncertainty", "Type B uncertainty", "in-situ calibration"]
+  });
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/instrumentation-module-6">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 6
-          </Button>
-        </Link>
-        
-        <div className="space-y-8">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Settings className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-4xl font-bold text-white">
-                  Advanced Calibration Topics and Best Practices
-                </h1>
-                <p className="text-xl text-gray-400">
-                  Module 6, Section 6
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Section 6.6
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                20 minutes
-              </Badge>
-            </div>
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="px-4 py-3">
+          <Link to=".." className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            <span className="font-medium">Back to Module 6</span>
+          </Link>
+        </div>
+      </div>
+
+      <div className="px-4 py-6 max-w-4xl mx-auto">
+        {/* Title Section */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/20 mb-4">
+            <Settings className="h-8 w-8 text-elec-yellow" />
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            Advanced Calibration Topics and Best Practices
+          </h1>
+          <p className="text-white">
+            Module 6 · Section 6 · 20 min read
+          </p>
+        </div>
+
+        {/* Quick Summary Box */}
+        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 mb-8">
+          <h2 className="font-semibold text-white mb-2 flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-elec-yellow" />
+            What You Will Learn
+          </h2>
+          <ul className="space-y-1 text-white">
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow mt-1">•</span>
+              Measurement uncertainty types and budget calculations
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow mt-1">•</span>
+              Advanced calibration techniques (multi-point, in-situ, cross-calibration)
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow mt-1">•</span>
+              Troubleshooting common calibration problems
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow mt-1">•</span>
+              Future trends and emerging calibration technologies
+            </li>
+          </ul>
+        </div>
+
+        {/* Section 01 - Measurement Uncertainty */}
+        <section className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <h2 className="text-xl font-semibold text-white">Measurement Uncertainty and Budget Calculations</h2>
           </div>
 
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Book className="h-5 w-5 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Master advanced calibration techniques, uncertainty calculations, and optimization strategies 
-                for complex measurement systems. This section explores sophisticated calibration challenges 
-                and provides practical solutions for professional calibration management.
-              </p>
-              <p>
-                Learn how to handle difficult calibration scenarios, implement measurement uncertainty 
-                budgets, troubleshoot calibration problems, and stay ahead of emerging calibration 
-                technologies and industry trends.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="space-y-6">
+            <p className="text-white leading-relaxed">
+              Every measurement has uncertainty - a range within which the true value is expected to lie. Understanding and calculating measurement uncertainty is essential for professional calibration work and regulatory compliance.
+            </p>
 
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="space-y-2">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <Calculator className="h-5 w-5 text-blue-400" />
+                  Type A Uncertainty
+                </h3>
+                <p className="text-white text-sm mb-2 italic">Evaluated by statistical analysis</p>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    Based on repeated measurements
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    Calculated using standard deviation
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    Covers random effects (noise, environmental variation)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    Requires multiple readings to evaluate
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <Calculator className="h-5 w-5 text-green-400" />
+                  Type B Uncertainty
+                </h3>
+                <p className="text-white text-sm mb-2 italic">Evaluated by other means</p>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    Based on specifications and certificates
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    Scientific judgement and prior knowledge
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    Covers systematic effects and biases
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    Uses manufacturer data, handbooks, experience
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Uncertainty Budget Components */}
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-3">Uncertainty Budget Components</h3>
+              <div className="grid gap-4 sm:grid-cols-3">
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Reference Standard:</strong> Certificate uncertainty
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Environmental:</strong> Temperature, humidity
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Repeatability:</strong> Short-term precision
+                  </li>
+                </ul>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Reproducibility:</strong> Long-term stability
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Resolution:</strong> Display limitations
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Drift:</strong> Time-related changes
+                  </li>
+                </ul>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Hysteresis:</strong> Direction-dependent errors
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Loading Effects:</strong> Measurement influence
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Interpolation:</strong> Between calibration points
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Key Formula */}
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+              <h3 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
+                <Lightbulb className="h-4 w-4" />
+                Combined Uncertainty
+              </h3>
+              <p className="text-white text-sm">
+                The combined uncertainty (uc) is calculated by taking the square root of the sum of the squares of all individual uncertainty components (root sum of squares method). For reporting, this is typically multiplied by a coverage factor (k=2 for 95% confidence) to give expanded uncertainty (U).
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck
+          question="What is the difference between Type A and Type B measurement uncertainty?"
+          answer="Type A uncertainty is evaluated statistically from repeated measurements (e.g., calculating standard deviation from multiple readings). Type B uncertainty is evaluated from other sources such as manufacturer specifications, calibration certificates, scientific judgement, or prior knowledge. Both types are equally valid and are combined in uncertainty budgets."
+        />
+
+        {/* Section 02 - Advanced Techniques */}
+        <section className="mb-10 mt-10">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <h2 className="text-xl font-semibold text-white">Advanced Calibration Techniques</h2>
+          </div>
+
+          <div className="space-y-6">
+            <p className="text-white leading-relaxed">
+              Beyond basic calibration, advanced techniques address complex measurement challenges and optimise calibration efficiency. These methods are essential for sophisticated applications and cost-effective calibration programmes.
+            </p>
+
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Wrench className="h-5 w-5 text-blue-400" />
+                Multi-Point Calibration
+              </h3>
+              <p className="text-white text-sm mb-3">
+                Comprehensive calibration across the full measurement range with multiple reference points.
+              </p>
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Apply advanced calibration techniques and uncertainty calculations</span>
+                  <span className="text-blue-400">•</span>
+                  <strong>Linear Interpolation:</strong> Calculate values between calibrated points
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Troubleshoot complex calibration problems and implement solutions</span>
+                  <span className="text-blue-400">•</span>
+                  <strong>Curve Fitting:</strong> Mathematical models for non-linear responses
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Optimise calibration processes and implement best practices</span>
+                  <span className="text-blue-400">•</span>
+                  <strong>Range Coverage:</strong> Minimum 10-90% of full scale recommended
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Understand emerging calibration technologies and future trends</span>
+                  <span className="text-blue-400">•</span>
+                  <strong>Error Mapping:</strong> Creates detailed accuracy profile across range
                 </li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Measurement Uncertainty */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Calculator className="h-5 w-5 text-yellow-400" />
-                Measurement Uncertainty and Budget Calculations
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Understanding Measurement Uncertainty</h4>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Type A Uncertainty</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Statistical Analysis:</strong> Based on repeated measurements</li>
-                    <li>• <strong>Standard Deviation:</strong> Calculated from data series</li>
-                    <li>• <strong>Random Effects:</strong> Environmental variations, noise</li>
-                    <li>• <strong>Evaluation Method:</strong> Mathematical analysis of observations</li>
-                    <li>• <strong>Example:</strong> Multiple readings of the same value</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Type B Uncertainty</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Other Means:</strong> Manufacturer specifications, certificates</li>
-                    <li>• <strong>Systematic Effects:</strong> Known biases and limitations</li>
-                    <li>• <strong>Prior Knowledge:</strong> Previous calibrations, experience</li>
-                    <li>• <strong>Evaluation Method:</strong> Scientific judgement</li>
-                    <li>• <strong>Example:</strong> Instrument accuracy specifications</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <h5 className="text-white font-semibold mb-2">Uncertainty Budget Components</h5>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Reference Standard:</strong> Calibration certificate uncertainty</li>
-                    <li>• <strong>Environmental:</strong> Temperature, humidity effects</li>
-                    <li>• <strong>Repeatability:</strong> Short-term precision</li>
-                  </ul>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Reproducibility:</strong> Long-term stability</li>
-                    <li>• <strong>Resolution:</strong> Display or measurement resolution</li>
-                    <li>• <strong>Drift:</strong> Time-related changes</li>
-                  </ul>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Hysteresis:</strong> Direction-dependent errors</li>
-                    <li>• <strong>Loading Effects:</strong> Measurement influence</li>
-                    <li>• <strong>Interpolation:</strong> Between calibration points</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Advanced Techniques */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Wrench className="h-5 w-5 text-yellow-400" />
-                Advanced Calibration Techniques
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Specialised Calibration Methods</h4>
-              
-              <div className="space-y-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Multi-Point Calibration</h5>
-                  <p className="mb-2">
-                    Comprehensive calibration across full measurement range with multiple reference points.
-                  </p>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Linear Interpolation:</strong> Between calibrated points</li>
-                    <li>• <strong>Curve Fitting:</strong> Mathematical models for complex responses</li>
-                    <li>• <strong>Range Coverage:</strong> 10-90% of full scale minimum</li>
-                    <li>• <strong>Error Mapping:</strong> Detailed accuracy profile</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">In-Situ Calibration</h5>
-                  <p className="mb-2">
-                    Calibration performed with instrument installed in its operating location.
-                  </p>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Process Integration:</strong> No removal from service</li>
-                    <li>• <strong>Real Conditions:</strong> Actual operating environment</li>
-                    <li>• <strong>Portable Standards:</strong> Field-suitable reference equipment</li>
-                    <li>• <strong>Installation Effects:</strong> Mounting, wiring, interference</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Cross-Calibration</h5>
-                  <p className="mb-2">
-                    Using multiple instruments to verify consistency and identify problems.
-                  </p>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Redundancy Check:</strong> Multiple measurement paths</li>
-                    <li>• <strong>Consistency Verification:</strong> Agreement between instruments</li>
-                    <li>• <strong>Fault Detection:</strong> Identify drifting or failed units</li>
-                    <li>• <strong>Cost Optimisation:</strong> Reduced standard requirements</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Troubleshooting */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
-                Troubleshooting Calibration Problems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Common Calibration Issues and Solutions</h4>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="text-white font-semibold mb-1">Repeatability Problems</h5>
-                    <p className="text-xs text-gray-400 mb-1">Inconsistent readings during calibration</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Causes:</strong> Mechanical wear, electrical noise, temperature drift</li>
-                      <li>• <strong>Solutions:</strong> Stabilisation time, shielding, controlled environment</li>
-                      <li>• <strong>Prevention:</strong> Regular maintenance, environmental monitoring</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-1">Hysteresis Effects</h5>
-                    <p className="text-xs text-gray-400 mb-1">Different readings on ascending vs descending scale</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Causes:</strong> Mechanical backlash, magnetic materials, friction</li>
-                      <li>• <strong>Solutions:</strong> Approach from same direction, pre-loading</li>
-                      <li>• <strong>Prevention:</strong> Quality components, proper design</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-1">Linearity Errors</h5>
-                    <p className="text-xs text-gray-400 mb-1">Non-proportional response across range</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Causes:</strong> Component aging, design limitations, saturation</li>
-                      <li>• <strong>Solutions:</strong> Multi-point calibration, curve correction</li>
-                      <li>• <strong>Prevention:</strong> Proper component selection, regular calibration</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="text-white font-semibold mb-1">Environmental Sensitivity</h5>
-                    <p className="text-xs text-gray-400 mb-1">Readings affected by ambient conditions</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Causes:</strong> Temperature coefficients, humidity effects, vibration</li>
-                      <li>• <strong>Solutions:</strong> Compensation algorithms, controlled environment</li>
-                      <li>• <strong>Prevention:</strong> Environmental specifications, proper installation</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-1">Zero Drift</h5>
-                    <p className="text-xs text-gray-400 mb-1">Baseline measurement changes over time</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Causes:</strong> Electronic component aging, contamination</li>
-                      <li>• <strong>Solutions:</strong> Auto-zero function, baseline correction</li>
-                      <li>• <strong>Prevention:</strong> Regular zero checks, clean installation</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-1">Loading Effects</h5>
-                    <p className="text-xs text-gray-400 mb-1">Calibration equipment affects measurement</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Causes:</strong> Low impedance, capacitive loading, current draw</li>
-                      <li>• <strong>Solutions:</strong> High impedance instruments, buffering</li>
-                      <li>• <strong>Prevention:</strong> Proper impedance matching, isolation</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Best Practices */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-5 w-5 text-yellow-400" />
-                Calibration Best Practices and Optimisation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Professional Best Practices</h4>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Pre-Calibration Preparation</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Stabilisation:</strong> Allow thermal equilibration time</li>
-                      <li>• <strong>Environment:</strong> Control temperature and humidity</li>
-                      <li>• <strong>Documentation:</strong> Review previous calibration history</li>
-                      <li>• <strong>Standards:</strong> Verify reference equipment validity</li>
-                      <li>• <strong>Cleanliness:</strong> Clean contacts and connections</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">During Calibration</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Systematic Approach:</strong> Follow documented procedures</li>
-                      <li>• <strong>Multiple Readings:</strong> Take several measurements per point</li>
-                      <li>• <strong>Direction Consistency:</strong> Approach from same direction</li>
-                      <li>• <strong>Range Coverage:</strong> Test across full operating range</li>
-                      <li>• <strong>Real-Time Monitoring:</strong> Watch for unusual behaviour</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Post-Calibration</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Data Analysis:</strong> Review results for consistency</li>
-                      <li>• <strong>Trend Monitoring:</strong> Compare with historical data</li>
-                      <li>• <strong>Documentation:</strong> Complete calibration records</li>
-                      <li>• <strong>Labelling:</strong> Update calibration stickers</li>
-                      <li>• <strong>Return to Service:</strong> Verify proper installation</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Process Optimisation</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Batch Processing:</strong> Group similar instruments</li>
-                      <li>• <strong>Automated Systems:</strong> Reduce manual intervention</li>
-                      <li>• <strong>Risk-Based Scheduling:</strong> Optimise calibration intervals</li>
-                      <li>• <strong>Performance Monitoring:</strong> Track calibration effectiveness</li>
-                      <li>• <strong>Cost Analysis:</strong> Balance accuracy needs with costs</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Quality Assurance</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Competency Verification:</strong> Qualified technicians only</li>
-                      <li>• <strong>Procedure Validation:</strong> Verify methods effectiveness</li>
-                      <li>• <strong>Cross-Checks:</strong> Independent verification</li>
-                      <li>• <strong>Audit Trails:</strong> Maintain complete records</li>
-                      <li>• <strong>Continuous Improvement:</strong> Regular process review</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Technology Integration</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Software Systems:</strong> Calibration management software</li>
-                      <li>• <strong>Data Logging:</strong> Automated data capture</li>
-                      <li>• <strong>Mobile Technology:</strong> Field calibration apps</li>
-                      <li>• <strong>Cloud Storage:</strong> Centralised record keeping</li>
-                      <li>• <strong>Integration:</strong> Link with maintenance systems</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Future Trends */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-yellow-400" />
-                Future Trends in Calibration Technology
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Emerging Technologies and Trends</h4>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Digital Transformation</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Digital Certificates:</strong> Blockchain-secured calibration records</li>
-                      <li>• <strong>IoT Integration:</strong> Connected calibration equipment</li>
-                      <li>• <strong>Cloud Computing:</strong> Scalable calibration management</li>
-                      <li>• <strong>Mobile Solutions:</strong> Field calibration applications</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Artificial Intelligence</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Predictive Calibration:</strong> AI-driven interval optimization</li>
-                      <li>• <strong>Anomaly Detection:</strong> Automated fault identification</li>
-                      <li>• <strong>Pattern Recognition:</strong> Drift prediction algorithms</li>
-                      <li>• <strong>Decision Support:</strong> AI-assisted calibration planning</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Automation Advances</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Robotic Systems:</strong> Automated calibration cells</li>
-                      <li>• <strong>Self-Calibrating Instruments:</strong> Built-in reference standards</li>
-                      <li>• <strong>Remote Calibration:</strong> Network-based calibration</li>
-                      <li>• <strong>Continuous Monitoring:</strong> Real-time accuracy verification</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Regulatory Evolution</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Digital Standards:</strong> Electronic calibration procedures</li>
-                      <li>• <strong>Global Harmonisation:</strong> Unified international standards</li>
-                      <li>• <strong>Sustainability Focus:</strong> Environmental impact considerations</li>
-                      <li>• <strong>Risk-Based Approaches:</strong> Performance-based regulations</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Scenario */}
-          <Card className="bg-gradient-to-r from-elec-gray to-elec-dark border-yellow-400/30">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Brain className="h-5 w-5 text-yellow-400" />
-                Real World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p className="font-semibold text-yellow-400">
-                Pharmaceutical Company Implements Advanced Calibration Program
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Wrench className="h-5 w-5 text-green-400" />
+                In-Situ Calibration
+              </h3>
+              <p className="text-white text-sm mb-3">
+                Calibration performed with the instrument installed in its operating location.
               </p>
-              <p>
-                A pharmaceutical manufacturing facility needs to comply with FDA validation requirements 
-                whilst optimising calibration costs and minimising production disruptions. They have over 
-                500 critical measurement instruments across multiple production lines.
-              </p>
-              <div className="bg-card p-3 rounded border border-gray-600">
-                <h5 className="text-yellow-400 font-semibold text-sm mb-2">Challenges Faced:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Complex uncertainty budget calculations for validation</li>
-                  <li>• High-cost production downtime for calibration</li>
-                  <li>• Regulatory audit requirements for calibration data</li>
-                  <li>• Inconsistent calibration intervals across similar equipment</li>
-                  <li>• Manual documentation creating compliance risks</li>
-                </ul>
-              </div>
-              <div className="bg-green-900/20 p-3 rounded border border-green-600/30">
-                <h5 className="text-green-400 font-semibold text-sm mb-2">Advanced Solutions Implemented:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Automated uncertainty budget software with Monte Carlo analysis</li>
-                  <li>• Risk-based calibration intervals using historical performance data</li>
-                  <li>• In-situ calibration for critical process instruments</li>
-                  <li>• Digital calibration certificates with blockchain verification</li>
-                  <li>• AI-powered predictive calibration scheduling</li>
-                  <li>• Mobile calibration teams with real-time data upload</li>
-                </ul>
-              </div>
-              <p className="text-sm italic text-green-400">
-                Result: 40% reduction in calibration costs, 95% reduction in production downtime, 
-                and 100% audit compliance with automated regulatory reporting.
-              </p>
-            </CardContent>
-          </Card>
+              <ul className="space-y-2 text-white text-sm">
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <strong>Process Integration:</strong> No removal from service required
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <strong>Real Conditions:</strong> Accounts for actual operating environment
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <strong>Installation Effects:</strong> Includes mounting, wiring, interference factors
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">•</span>
+                  <strong>Reduced Downtime:</strong> Minimises production interruption
+                </li>
+              </ul>
+            </div>
 
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p>
-                Advanced calibration techniques combine sophisticated measurement science with practical 
-                implementation strategies. Mastering uncertainty calculations, troubleshooting methods, 
-                and emerging technologies ensures optimal calibration performance and regulatory compliance 
-                whilst minimising costs and maximising reliability.
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Wrench className="h-5 w-5 text-purple-400" />
+                Cross-Calibration
+              </h3>
+              <p className="text-white text-sm mb-3">
+                Using multiple instruments to verify consistency and identify problems.
               </p>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <InstrumentationQuiz 
-            questions={[
-              {
-                id: 1,
-                question: "What is the difference between Type A and Type B uncertainty?",
-                options: [
-                  "Type A is more important than Type B",
-                  "Type A is evaluated by statistical analysis of repeated measurements; Type B is evaluated by other means such as specifications or prior knowledge",
-                  "They are the same thing",
-                  "Type B is only used for electrical measurements"
-                ],
-                correctAnswer: 1,
-                explanation: "Type A uncertainty is statistically evaluated from repeated measurements, while Type B is evaluated from other sources like manufacturer specifications, certificates, or scientific judgement."
-              },
-              {
-                id: 2,
-                question: "What are the benefits of in-situ calibration?",
-                options: [
-                  "It's always cheaper",
-                  "No removal from service, calibration under actual operating conditions, includes installation effects, and reduced downtime costs",
-                  "It's faster than laboratory calibration",
-                  "It doesn't require calibration standards"
-                ],
-                correctAnswer: 1,
-                explanation: "In-situ calibration eliminates removal from service, accounts for actual operating conditions and installation effects, and significantly reduces production downtime costs."
-              },
-              {
-                id: 3,
-                question: "How do you troubleshoot repeatability problems in calibration?",
-                options: [
-                  "Replace the instrument immediately",
-                  "Allow proper stabilisation time, control environmental conditions, check for mechanical wear or electrical noise, and implement shielding if necessary",
-                  "Ignore the problem",
-                  "Use a different calibration standard"
-                ],
-                correctAnswer: 1,
-                explanation: "Repeatability problems require systematic troubleshooting including adequate stabilisation time, environmental control, checking for wear/noise sources, and implementing appropriate shielding or isolation."
-              },
-              {
-                id: 4,
-                question: "What emerging technologies are affecting modern calibration practices?",
-                options: [
-                  "Only traditional methods work",
-                  "AI for predictive calibration, IoT connectivity, blockchain certificates, automated calibration systems, and cloud-based management platforms",
-                  "Technology doesn't affect calibration",
-                  "Only mechanical improvements matter"
-                ],
-                correctAnswer: 1,
-                explanation: "Modern calibration is being transformed by AI-driven predictive maintenance, IoT connectivity, blockchain-secured certificates, automation, and cloud-based management systems."
-              },
-              {
-                id: 5,
-                question: "What are key calibration best practices for professional implementation?",
-                options: [
-                  "Speed is the only consideration",
-                  "Proper preparation and stabilisation, systematic approach following procedures, comprehensive documentation, trend monitoring, and continuous process improvement",
-                  "Minimal documentation is sufficient",
-                  "Only calibrate when equipment fails"
-                ],
-                correctAnswer: 1,
-                explanation: "Professional calibration requires thorough preparation, systematic procedures, comprehensive documentation, historical trend monitoring, and continuous improvement of processes and methods."
-            }
-            ]}
-            title="Section 6 Knowledge Check"
-          />
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Link to="/study-centre/upskilling/instrumentation-module-6-section-5">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/study-centre/upskilling/instrumentation-module-7">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 touch-manipulation active:scale-[0.98]">
-                Next Module
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+              <ul className="space-y-2 text-white text-sm">
+                <li className="flex items-start gap-2">
+                  <span className="text-purple-400">•</span>
+                  <strong>Redundancy Check:</strong> Multiple measurement paths confirm accuracy
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-purple-400">•</span>
+                  <strong>Consistency Verification:</strong> Ensures agreement between instruments
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-purple-400">•</span>
+                  <strong>Fault Detection:</strong> Identifies drifting or failed instruments
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-purple-400">•</span>
+                  <strong>Cost Optimisation:</strong> Reduces need for expensive reference standards
+                </li>
+              </ul>
+            </div>
           </div>
+        </section>
+
+        {/* Section 03 - Troubleshooting */}
+        <section className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <h2 className="text-xl font-semibold text-white">Troubleshooting Calibration Problems</h2>
+          </div>
+
+          <div className="space-y-6">
+            <p className="text-white leading-relaxed">
+              Calibration problems can be frustrating and time-consuming. Understanding common issues and their solutions helps resolve problems efficiently and prevent recurrence.
+            </p>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400" />
+                  Repeatability Problems
+                </h3>
+                <p className="text-white text-xs italic mb-2">Inconsistent readings during calibration</p>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    <strong>Causes:</strong> Mechanical wear, electrical noise, temperature drift
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    <strong>Solutions:</strong> Allow stabilisation time, add shielding, control environment
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-orange-400" />
+                  Hysteresis Effects
+                </h3>
+                <p className="text-white text-xs italic mb-2">Different readings ascending vs descending</p>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-400">•</span>
+                    <strong>Causes:</strong> Mechanical backlash, magnetic materials, friction
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-orange-400">•</span>
+                    <strong>Solutions:</strong> Approach from same direction, pre-load mechanism
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-yellow-400" />
+                  Linearity Errors
+                </h3>
+                <p className="text-white text-xs italic mb-2">Non-proportional response across range</p>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-400">•</span>
+                    <strong>Causes:</strong> Component ageing, design limitations, saturation
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-yellow-400">•</span>
+                    <strong>Solutions:</strong> Multi-point calibration, curve correction algorithms
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-blue-400" />
+                  Zero Drift
+                </h3>
+                <p className="text-white text-xs italic mb-2">Baseline measurement changes over time</p>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Causes:</strong> Electronic component ageing, contamination
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Solutions:</strong> Auto-zero function, regular baseline correction
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-green-400" />
+                  Environmental Sensitivity
+                </h3>
+                <p className="text-white text-xs italic mb-2">Readings affected by ambient conditions</p>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    <strong>Causes:</strong> Temperature coefficients, humidity effects, vibration
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    <strong>Solutions:</strong> Compensation algorithms, controlled environment
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-2 flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-purple-400" />
+                  Loading Effects
+                </h3>
+                <p className="text-white text-xs italic mb-2">Calibration equipment affects measurement</p>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400">•</span>
+                    <strong>Causes:</strong> Low impedance, capacitive loading, current draw
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400">•</span>
+                    <strong>Solutions:</strong> High impedance instruments, proper buffering
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck
+          question="What are the main benefits of in-situ calibration compared to laboratory calibration?"
+          answer="In-situ calibration provides: 1) No removal from service required - reduces downtime, 2) Calibration under actual operating conditions, 3) Includes installation effects (mounting, wiring, interference), 4) Detects problems that might not appear in a controlled laboratory environment. The trade-off is that field conditions may introduce additional uncertainty."
+        />
+
+        {/* Section 04 - Best Practices */}
+        <section className="mb-10 mt-10">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <h2 className="text-xl font-semibold text-white">Calibration Best Practices</h2>
+          </div>
+
+          <div className="space-y-6">
+            <p className="text-white leading-relaxed">
+              Following best practices ensures consistent, reliable calibration results. These practices apply whether you perform calibration in-house or manage external calibration services.
+            </p>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">Pre-Calibration</h3>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Allow thermal equilibration
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Control environment
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Review calibration history
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Verify standards are in-date
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Clean contacts and connections
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">During Calibration</h3>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Follow documented procedures
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Take multiple readings per point
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Approach from same direction
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Test full operating range
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Monitor for unusual behaviour
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">Post-Calibration</h3>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Review results for consistency
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Compare with historical data
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Complete all documentation
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Update calibration labels
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Verify proper installation
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 05 - Future Trends */}
+        <section className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
+            <h2 className="text-xl font-semibold text-white">Future Trends in Calibration Technology</h2>
+          </div>
+
+          <div className="space-y-6">
+            <p className="text-white leading-relaxed">
+              Calibration technology is evolving rapidly. Understanding emerging trends helps you prepare for future developments and make informed decisions about calibration investments.
+            </p>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-blue-400" />
+                  Digital Transformation
+                </h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Digital Certificates:</strong> Blockchain-secured records
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>IoT Integration:</strong> Connected calibration equipment
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Cloud Computing:</strong> Scalable management platforms
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Mobile Solutions:</strong> Field calibration apps
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <Brain className="h-5 w-5 text-purple-400" />
+                  Artificial Intelligence
+                </h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400">•</span>
+                    <strong>Predictive Calibration:</strong> AI-driven interval optimisation
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400">•</span>
+                    <strong>Anomaly Detection:</strong> Automated fault identification
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400">•</span>
+                    <strong>Pattern Recognition:</strong> Drift prediction algorithms
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400">•</span>
+                    <strong>Decision Support:</strong> AI-assisted planning
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <Target className="h-5 w-5 text-green-400" />
+                  Automation Advances
+                </h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    <strong>Robotic Systems:</strong> Automated calibration cells
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    <strong>Self-Calibrating:</strong> Built-in reference standards
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    <strong>Remote Calibration:</strong> Network-based verification
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    <strong>Continuous Monitoring:</strong> Real-time accuracy checks
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <Settings className="h-5 w-5 text-elec-yellow" />
+                  Regulatory Evolution
+                </h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Digital Standards:</strong> Electronic calibration procedures
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Global Harmonisation:</strong> Unified international standards
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Sustainability:</strong> Environmental considerations
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    <strong>Risk-Based:</strong> Performance-based regulations
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck
+          question="How might AI improve calibration practices in the future?"
+          answer="AI can: 1) Predict optimal calibration intervals based on historical drift patterns, 2) Detect anomalies that indicate instrument problems before failure, 3) Recognise patterns in calibration data to forecast maintenance needs, 4) Assist decision-making for calibration scheduling and resource allocation. This reduces costs while improving reliability."
+        />
+
+        {/* Real World Scenario */}
+        <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/30 rounded-lg p-4 mb-10 mt-10">
+          <h3 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
+            <CheckCircle className="h-5 w-5" />
+            Real World Scenario: Pharmaceutical Company Advanced Programme
+          </h3>
+          <p className="text-white text-sm leading-relaxed mb-3">
+            A pharmaceutical manufacturing facility with 500+ critical instruments needed to comply with FDA validation requirements whilst optimising costs and minimising production disruptions.
+          </p>
+          <div className="bg-card/50 rounded-lg p-3 border border-border mb-3">
+            <h4 className="font-medium text-elec-yellow text-sm mb-2">Advanced Solutions Implemented:</h4>
+            <ul className="text-white text-sm space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">1.</span>
+                Automated uncertainty budget software with Monte Carlo analysis
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">2.</span>
+                Risk-based calibration intervals using historical performance data
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">3.</span>
+                In-situ calibration for critical process instruments
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">4.</span>
+                Digital calibration certificates with blockchain verification
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">5.</span>
+                AI-powered predictive calibration scheduling
+              </li>
+            </ul>
+          </div>
+          <p className="text-green-400 text-sm italic">
+            Result: 40% reduction in calibration costs, 95% reduction in production downtime, and 100% audit compliance with automated regulatory reporting.
+          </p>
+        </div>
+
+        {/* FAQs Section */}
+        <section className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <HelpCircle className="h-6 w-6 text-elec-yellow" />
+            <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-2">How do I create an uncertainty budget?</h3>
+              <p className="text-white text-sm">
+                Start by identifying all sources of uncertainty in your measurement. For each source, determine whether it is Type A (statistically evaluated) or Type B (from other sources). Convert each uncertainty to a standard uncertainty (usually by dividing by appropriate factors), then combine using root sum of squares. Multiply by coverage factor (typically k=2) for expanded uncertainty.
+              </p>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-2">When should I use in-situ versus laboratory calibration?</h3>
+              <p className="text-white text-sm">
+                Use in-situ calibration when: removal is impractical, installation effects are significant, downtime is critical, or you need to verify performance under actual operating conditions. Use laboratory calibration when: highest accuracy is required, environmental conditions must be tightly controlled, or complex procedures are needed.
+              </p>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-2">What coverage factor should I use?</h3>
+              <p className="text-white text-sm">
+                For most industrial applications, k=2 is used, providing approximately 95% confidence that the true value lies within the stated uncertainty range. For higher confidence (99%), use k=3. Some regulated industries may specify required coverage factors in their standards.
+              </p>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-2">How can I reduce calibration costs without compromising quality?</h3>
+              <p className="text-white text-sm">
+                Implement risk-based calibration intervals based on historical performance data. Use trend analysis to identify instruments that can safely have extended intervals. Consider in-situ calibration to reduce downtime. Automate data capture and documentation. Group similar instruments for batch processing. Train technicians to perform routine calibrations in-house.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz Section */}
+        <section className="mb-10">
+          <SingleQuestionQuiz
+            question="What is the key difference between Type A and Type B measurement uncertainty evaluation?"
+            options={[
+              "Type A is more accurate than Type B",
+              "Type A is evaluated statistically from repeated measurements; Type B is evaluated from other sources like specifications",
+              "Type A is used for temperature; Type B is used for pressure",
+              "Type A is required for UKAS; Type B is not"
+            ]}
+            correctAnswer={1}
+            explanation="Type A uncertainty is evaluated by statistical analysis of repeated measurements (calculating standard deviation). Type B uncertainty is evaluated by other means such as manufacturer specifications, calibration certificates, prior knowledge, or scientific judgement. Both types are equally valid and are combined in uncertainty budgets using the root sum of squares method."
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-border">
+          <Link to="/study-centre/upskilling/instrumentation-module-6-section-5" className="w-full sm:w-auto">
+            <Button variant="outline" className="w-full h-11 touch-manipulation border-border hover:bg-card">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
+            </Button>
+          </Link>
+          <Link to="/study-centre/upskilling/instrumentation-module-7" className="w-full sm:w-auto">
+            <Button className="w-full h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              Next Module
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

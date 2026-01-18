@@ -54,7 +54,7 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
 
   const handleCreateCV = () => {
     // Navigate to CV builder
-    navigate("/electrician-hub/cv-builder");
+    navigate("/electrician/cv-builder");
   };
 
   const handleEditCV = (cv: UserCV) => {
@@ -63,7 +63,7 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
     localStorage.setItem("elecmate-cv-draft", JSON.stringify(cv.cv_data));
     localStorage.setItem("elecmate-cv-template", cv.template_id);
     localStorage.setItem("elecmate-cv-editing-id", cv.id);
-    navigate("/electrician-hub/cv-builder");
+    navigate("/electrician/cv-builder");
   };
 
   // Loading state

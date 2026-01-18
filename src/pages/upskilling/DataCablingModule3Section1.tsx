@@ -1,9 +1,12 @@
 import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import SingleQuestionQuiz from "@/components/upskilling/quiz/SingleQuestionQuiz";
 import useSEO from "@/hooks/useSEO";
+
+const TITLE = "Fibre Types: Singlemode vs Multimode | Data Cabling Module 3.1";
+const DESCRIPTION = "Learn singlemode and multimode fibre optic cable types, core sizes, OM/OS standards, and selection criteria for data transmission systems.";
 
 const quickCheckQuestions = [
   {
@@ -64,10 +67,7 @@ const quizQuestions = [
 ];
 
 const DataCablingModule3Section1 = () => {
-  useSEO({
-    title: "Fibre Types: Singlemode vs Multimode | Data Cabling Module 3.1",
-    description: "Learn singlemode and multimode fibre optic cable types, core sizes, OM/OS standards, and selection criteria for data transmission systems."
-  });
+  useSEO(TITLE, DESCRIPTION);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
@@ -80,9 +80,9 @@ const DataCablingModule3Section1 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/data-cabling-module-3">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 3
+              Back
             </Link>
           </Button>
         </div>
@@ -352,7 +352,7 @@ const DataCablingModule3Section1 = () => {
 
         {/* Quiz Section */}
         <section className="mb-10 mt-12">
-          <SingleQuestionQuiz
+          <Quiz
             title="Test Your Knowledge"
             questions={quizQuestions}
           />
@@ -366,7 +366,7 @@ const DataCablingModule3Section1 = () => {
             className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/data-cabling-module-2-section-5">
+            <Link to="../../module-2/section-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
@@ -376,7 +376,7 @@ const DataCablingModule3Section1 = () => {
             className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/data-cabling-module-3-section-2">
+            <Link to="../section-2">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

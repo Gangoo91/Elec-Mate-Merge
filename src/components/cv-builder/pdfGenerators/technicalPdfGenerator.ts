@@ -27,6 +27,11 @@ import {
   categoriseCertifications,
   getSkillProficiency,
   calculateExperienceYears,
+  addProfilePhoto,
+  addECSBadge,
+  addKeyProjectsSection,
+  addReferencesSection,
+  formatLinkedInUrl,
 } from './shared';
 
 const colors = TEMPLATE_COLORS.technical;
@@ -392,6 +397,55 @@ export const generateTechnicalPDF = async (cvData: CVData): Promise<void> => {
     });
 
     if (col !== 0) y += 7;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // KEY PROJECTS - Technical project showcase
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (cvData.keyProjects && cvData.keyProjects.length > 0) {
+    y = checkPageBreak(pdf, y, 50);
+    y += 10;
+
+    // Section header
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(12);
+    setColor(pdf, colors.primary);
+    pdf.text('KEY PROJECTS', margin, y);
+    drawRect(pdf, margin + 35, y - 2, 10, 1.5, colors.primary);
+    drawRect(pdf, margin + 47, y - 2, 5, 1.5, colors.secondary);
+    y += 12;
+
+    y = addKeyProjectsSection(pdf, cvData.keyProjects, y, {
+      margin,
+      contentWidth,
+      colors,
+      checkPageBreak: (currentY: number, needed: number) => checkPageBreak(pdf, currentY, needed),
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // REFERENCES - Professional references
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (cvData.references && cvData.references.length > 0) {
+    y = checkPageBreak(pdf, y, 45);
+    y += 10;
+
+    // Section header with technical styling
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(12);
+    setColor(pdf, colors.primary);
+    pdf.text('PROFESSIONAL REFERENCES', margin, y);
+    drawRect(pdf, margin + 55, y - 2, 10, 1.5, colors.primary);
+    y += 12;
+
+    y = addReferencesSection(pdf, cvData.references, y, {
+      margin,
+      contentWidth,
+      colors,
+      checkPageBreak: (currentY: number, needed: number) => checkPageBreak(pdf, currentY, needed),
+    });
   }
 
   // ═══════════════════════════════════════════════════════════════════════════

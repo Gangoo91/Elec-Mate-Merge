@@ -55,9 +55,39 @@ export function prefetchPeerSupportData(queryClient: QueryClient) {
 
 /**
  * Hook to get all peer support conversations for current user
+ * Includes real-time subscription for new messages to update unread badges
  */
 export function usePeerConversations() {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  // Subscribe to ALL new peer messages to update conversation list/badges in real-time
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const channel = supabase
+      .channel('peer-messages-global')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'mental_health_peer_messages',
+        },
+        (payload) => {
+          const newMessage = payload.new as { sender_id: string; conversation_id: string };
+          // If message is from someone else, refresh conversations to update unread badge
+          if (newMessage.sender_id !== user.id) {
+            queryClient.invalidateQueries({ queryKey: PEER_CONVERSATIONS_KEY });
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user?.id, queryClient]);
 
   return useQuery({
     queryKey: PEER_CONVERSATIONS_KEY,
@@ -144,6 +174,7 @@ export function useAvailableSupporters(excludeUserId?: string) {
  */
 export function usePeerMessages(conversationId: string | undefined) {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
 
   // Real-time subscription - updates React Query cache directly
   useEffect(() => {
@@ -161,11 +192,16 @@ export function usePeerMessages(conversationId: string | undefined) {
             return [...old, newMessage];
           }
         );
+
+        // If message is from someone else, refresh conversations to update unread badge
+        if (newMessage.sender_id !== user?.id) {
+          queryClient.invalidateQueries({ queryKey: PEER_CONVERSATIONS_KEY });
+        }
       }
     );
 
     return unsubscribe;
-  }, [conversationId, queryClient]);
+  }, [conversationId, queryClient, user?.id]);
 
   return useQuery({
     queryKey: [...PEER_MESSAGES_KEY, conversationId],
@@ -252,6 +288,8 @@ export function useMarkPeerMessagesAsRead() {
         [...PEER_MESSAGES_KEY, conversationId],
         (old) => old?.map(m => ({ ...m, is_read: true }))
       );
+      // Invalidate conversations to refresh unread counts/badges
+      queryClient.invalidateQueries({ queryKey: PEER_CONVERSATIONS_KEY });
     },
   });
 }

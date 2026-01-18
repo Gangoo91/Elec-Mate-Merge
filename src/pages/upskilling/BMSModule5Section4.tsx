@@ -78,7 +78,7 @@ const BMSModule5Section4 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-5">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
             </Link>
@@ -96,7 +96,7 @@ const BMSModule5Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             KNX Topology and Bus Devices
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding KNX bus system configuration and installation practices
           </p>
         </header>
@@ -183,7 +183,7 @@ const BMSModule5Section4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Practical Example:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A KNX wall switch can directly control a lighting actuator and a blind motor without requiring
                 a central controller. The switch sends a telegram on the bus, and any device programmed to
                 respond to that address will act accordingly.
@@ -263,15 +263,15 @@ const BMSModule5Section4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-green-400/80 mb-1">Line Topology</p>
-                <p className="text-white/90 text-xs">Devices in sequence along bus</p>
+                <p className="text-white text-xs">Devices in sequence along bus</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-blue-400/80 mb-1">Tree Topology</p>
-                <p className="text-white/90 text-xs">Main bus with branches</p>
+                <p className="text-white text-xs">Main bus with branches</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-purple-400/80 mb-1">Star Topology</p>
-                <p className="text-white/90 text-xs">Central junction box</p>
+                <p className="text-white text-xs">Central junction box</p>
               </div>
             </div>
 
@@ -360,15 +360,15 @@ const BMSModule5Section4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-green-400/80 mb-1">Low Current</p>
-                <p className="text-white/90 text-xs">2-10mA: buttons, sensors</p>
+                <p className="text-white text-xs">2-10mA: buttons, sensors</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow/80 mb-1">Medium Current</p>
-                <p className="text-white/90 text-xs">10-20mA: actuators</p>
+                <p className="text-white text-xs">10-20mA: actuators</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-red-400/80 mb-1">High Current</p>
-                <p className="text-white/90 text-xs">20mA+: couplers, gateways</p>
+                <p className="text-white text-xs">20mA+: couplers, gateways</p>
               </div>
             </div>
           </div>
@@ -451,7 +451,7 @@ const BMSModule5Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

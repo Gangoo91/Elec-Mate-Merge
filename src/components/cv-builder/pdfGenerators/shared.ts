@@ -4,7 +4,7 @@
 
 import jsPDF from 'jspdf';
 import { format } from 'date-fns';
-import { CVData, WorkExperience, Education } from '../types';
+import { CVData, WorkExperience, Education, KeyProject, Reference } from '../types';
 
 // PDF dimensions and constants
 export const PDF_CONFIG = {
@@ -398,4 +398,340 @@ export const categoriseCertifications = (certifications: string[]): {
   });
 
   return { essential, additional };
+};
+
+/**
+ * ECS Card type to badge colour mapping
+ */
+export const ECS_CARD_COLORS: Record<string, { bg: string; text: string; label: string }> = {
+  'Gold': { bg: '#D4AF37', text: '#000000', label: 'Approved Electrician' },
+  'Blue': { bg: '#2563eb', text: '#FFFFFF', label: 'Electrician' },
+  'White': { bg: '#F8F9FA', text: '#000000', label: 'Provisional' },
+  'Yellow': { bg: '#FFC107', text: '#000000', label: 'Trainee' },
+  'Green': { bg: '#10B981', text: '#FFFFFF', label: 'Apprentice' },
+  'Black': { bg: '#1F2937', text: '#FFFFFF', label: 'Manager/Senior' },
+};
+
+/**
+ * Add ECS card badge to PDF
+ */
+export const addECSBadge = (
+  pdf: jsPDF,
+  cardType: string,
+  expiry: string | undefined,
+  x: number,
+  y: number,
+  width: number = 50
+): number => {
+  if (!cardType) return y;
+
+  const cardConfig = ECS_CARD_COLORS[cardType] || ECS_CARD_COLORS['Blue'];
+  const height = 18;
+
+  // Badge background
+  setColor(pdf, cardConfig.bg, 'fill');
+  pdf.roundedRect(x, y, width, height, 2, 2, 'F');
+
+  // Badge text
+  setColor(pdf, cardConfig.text);
+  pdf.setFontSize(8);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('ECS', x + 3, y + 6);
+
+  pdf.setFontSize(9);
+  pdf.text(`${cardType} Card`, x + 3, y + 12);
+
+  if (expiry) {
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(7);
+    pdf.text(`Exp: ${formatDate(expiry)}`, x + 3, y + 16);
+  }
+
+  return y + height + 4;
+};
+
+/**
+ * Add professional cards section (ECS, CSCS, Licences)
+ */
+export const addProfessionalCardsSection = (
+  pdf: jsPDF,
+  cvData: CVData,
+  x: number,
+  y: number,
+  maxWidth: number,
+  colors: TemplateColorScheme
+): number => {
+  const { professionalCards } = cvData;
+
+  // Check if there's any card data
+  const hasECS = professionalCards.ecsCardType;
+  const hasCSCS = professionalCards.cscsCardType;
+  const hasLicences = professionalCards.drivingLicence.length > 0;
+
+  if (!hasECS && !hasCSCS && !hasLicences) return y;
+
+  let currentY = y;
+
+  // Section header
+  setColor(pdf, colors.primary);
+  pdf.setFontSize(11);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('PROFESSIONAL CARDS', x, currentY);
+  currentY += 6;
+
+  // ECS Card
+  if (hasECS) {
+    currentY = addECSBadge(pdf, professionalCards.ecsCardType || '', professionalCards.ecsExpiry, x, currentY);
+  }
+
+  // CSCS Card
+  if (hasCSCS) {
+    setColor(pdf, '#475569', 'fill');
+    pdf.roundedRect(x, currentY, 50, 14, 2, 2, 'F');
+    setColor(pdf, '#FFFFFF');
+    pdf.setFontSize(8);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('CSCS', x + 3, y + 6);
+    pdf.setFontSize(9);
+    pdf.text(professionalCards.cscsCardType || '', x + 3, currentY + 10);
+    currentY += 18;
+  }
+
+  // Driving Licences
+  if (hasLicences) {
+    setColor(pdf, colors.text);
+    pdf.setFontSize(9);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('Licences & Tickets:', x, currentY);
+    currentY += 4;
+
+    pdf.setFont('helvetica', 'normal');
+    const licenceText = professionalCards.drivingLicence.join(' • ');
+    currentY = addWrappedText(pdf, licenceText, x, currentY, maxWidth, 4);
+  }
+
+  return currentY + 4;
+};
+
+/**
+ * Add key projects section
+ */
+export const addKeyProjectsSection = (
+  pdf: jsPDF,
+  projects: KeyProject[],
+  x: number,
+  y: number,
+  maxWidth: number,
+  colors: TemplateColorScheme
+): number => {
+  if (projects.length === 0) return y;
+
+  let currentY = checkPageBreak(pdf, y, 40);
+
+  // Section header
+  setColor(pdf, colors.primary);
+  pdf.setFontSize(11);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('KEY PROJECTS', x, currentY);
+
+  drawLine(pdf, x, currentY + 2, maxWidth, colors.divider, 0.5);
+  currentY += 8;
+
+  projects.forEach((project, index) => {
+    currentY = checkPageBreak(pdf, currentY, 25);
+
+    // Project title
+    setColor(pdf, colors.text);
+    pdf.setFontSize(10);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text(project.title, x, currentY);
+
+    // Role and client on same line
+    const metaLine = [project.role, project.client].filter(Boolean).join(' | ');
+    if (metaLine) {
+      setColor(pdf, colors.muted);
+      pdf.setFontSize(9);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(metaLine, x, currentY + 4);
+      currentY += 4;
+    }
+
+    // Value if present
+    if (project.value) {
+      pdf.setFont('helvetica', 'bold');
+      setColor(pdf, colors.primary);
+      pdf.text(`Value: ${project.value}`, x + maxWidth - 30, currentY, { align: 'right' });
+    }
+
+    currentY += 5;
+
+    // Description
+    if (project.description) {
+      setColor(pdf, colors.text);
+      pdf.setFontSize(9);
+      pdf.setFont('helvetica', 'normal');
+      currentY = addWrappedText(pdf, project.description, x, currentY, maxWidth, 4);
+    }
+
+    currentY += index < projects.length - 1 ? 6 : 0;
+  });
+
+  return currentY + PDF_CONFIG.sectionGap;
+};
+
+/**
+ * Add references section
+ */
+export const addReferencesSection = (
+  pdf: jsPDF,
+  references: Reference[],
+  x: number,
+  y: number,
+  maxWidth: number,
+  colors: TemplateColorScheme,
+  showContactDetails: boolean = false
+): number => {
+  let currentY = checkPageBreak(pdf, y, 30);
+
+  // Section header
+  setColor(pdf, colors.primary);
+  pdf.setFontSize(11);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('REFERENCES', x, currentY);
+
+  drawLine(pdf, x, currentY + 2, maxWidth, colors.divider, 0.5);
+  currentY += 8;
+
+  if (references.length === 0) {
+    setColor(pdf, colors.muted);
+    pdf.setFontSize(9);
+    pdf.setFont('helvetica', 'italic');
+    pdf.text('Available on request', x, currentY);
+    return currentY + 10;
+  }
+
+  const refWidth = maxWidth / Math.min(references.length, 2);
+
+  references.slice(0, 2).forEach((ref, index) => {
+    const refX = x + (index * refWidth);
+
+    setColor(pdf, colors.text);
+    pdf.setFontSize(10);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text(ref.name, refX, currentY);
+
+    pdf.setFontSize(9);
+    pdf.setFont('helvetica', 'normal');
+    setColor(pdf, colors.muted);
+    pdf.text(`${ref.jobTitle}, ${ref.company}`, refX, currentY + 4);
+
+    if (ref.relationship) {
+      pdf.text(ref.relationship, refX, currentY + 8);
+    }
+
+    if (showContactDetails && (ref.email || ref.phone)) {
+      const contact = [ref.email, ref.phone].filter(Boolean).join(' | ');
+      pdf.text(contact, refX, currentY + 12);
+    }
+  });
+
+  return currentY + (showContactDetails ? 20 : 16);
+};
+
+/**
+ * Load image and add to PDF (async)
+ * Returns dimensions if successful, null if failed
+ */
+export const addProfilePhoto = async (
+  pdf: jsPDF,
+  photoUrl: string,
+  x: number,
+  y: number,
+  size: number = 30,
+  circular: boolean = false
+): Promise<{ width: number; height: number } | null> => {
+  if (!photoUrl) return null;
+
+  try {
+    // Fetch image and convert to base64
+    const response = await fetch(photoUrl);
+    const blob = await response.blob();
+
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const base64 = reader.result as string;
+
+          if (circular) {
+            // For circular, we'll clip to square and let visual circular be implied
+            pdf.addImage(base64, 'JPEG', x, y, size, size);
+          } else {
+            pdf.addImage(base64, 'JPEG', x, y, size, size);
+          }
+
+          resolve({ width: size, height: size });
+        } catch {
+          resolve(null);
+        }
+      };
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(blob);
+    });
+  } catch {
+    return null;
+  }
+};
+
+/**
+ * Format LinkedIn URL for display
+ */
+export const formatLinkedInUrl = (url: string): string => {
+  if (!url) return '';
+  // Remove https:// and www. for cleaner display
+  return url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+};
+
+/**
+ * Get CV completeness score
+ */
+export const getCVCompletenessScore = (cvData: CVData): number => {
+  let score = 0;
+  const maxScore = 100;
+
+  // Personal info (20 points)
+  if (cvData.personalInfo.fullName) score += 5;
+  if (cvData.personalInfo.email) score += 5;
+  if (cvData.personalInfo.phone) score += 5;
+  if (cvData.personalInfo.professionalSummary) score += 5;
+
+  // Photo (5 points)
+  if (cvData.personalInfo.photoUrl) score += 5;
+
+  // Professional cards (10 points)
+  if (cvData.professionalCards.ecsCardType) score += 5;
+  if (cvData.professionalCards.drivingLicence.length > 0) score += 5;
+
+  // Experience (25 points)
+  if (cvData.experience.length > 0) score += 15;
+  if (cvData.experience.length > 1) score += 5;
+  if (cvData.experience.some(e => e.description)) score += 5;
+
+  // Key projects (10 points)
+  if (cvData.keyProjects.length > 0) score += 10;
+
+  // Education (10 points)
+  if (cvData.education.length > 0) score += 10;
+
+  // Skills (10 points)
+  if (cvData.skills.length >= 3) score += 5;
+  if (cvData.skills.length >= 6) score += 5;
+
+  // Certifications (5 points)
+  if (cvData.certifications.length > 0) score += 5;
+
+  // References (5 points)
+  if (cvData.references.length > 0) score += 5;
+
+  return Math.min(score, maxScore);
 };

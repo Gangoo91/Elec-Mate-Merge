@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { ArrowLeft, Zap, CheckCircle, ChevronDown, Flame, Shield, AlertTriangle, FileText, BookOpen, ClipboardCheck } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import useSEO from "@/hooks/useSEO";
 
-const TITLE = "Firestop and Penetration Rules - Fiber Optics Technology";
+const TITLE = "Firestop and Penetration Rules | Fibre Optics Module 3";
 const DESCRIPTION = "Learn fire barrier penetration requirements, firestop systems, building regulations compliance, and proper sealing techniques for fibre optic cable installations.";
 
 const quickCheckQuestions = [
@@ -50,6 +49,7 @@ const quickCheckQuestions = [
 
 const quizQuestions = [
   {
+    id: 1,
     question: "What document provides guidance on fire stopping in the UK?",
     options: [
       "BS 7671",
@@ -57,9 +57,11 @@ const quizQuestions = [
       "ETSI standards",
       "ISO 9001"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Approved Document B of the Building Regulations provides fire safety guidance in England and Wales."
   },
   {
+    id: 2,
     question: "What is an intumescent material?",
     options: [
       "A flexible sealant",
@@ -67,9 +69,11 @@ const quizQuestions = [
       "A rigid fire block",
       "A cable coating"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Intumescent materials expand significantly when exposed to heat, sealing gaps and preventing fire passage."
   },
   {
+    id: 3,
     question: "What does 'E' rating indicate in fire testing?",
     options: [
       "Energy efficiency",
@@ -77,9 +81,11 @@ const quizQuestions = [
       "External rating",
       "Environmental protection"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "E rating indicates integrity - the ability to prevent flame and hot gas passage through the barrier."
   },
   {
+    id: 4,
     question: "What is the maximum fill ratio typically specified for fire-stopped cable penetrations?",
     options: [
       "100%",
@@ -87,9 +93,11 @@ const quizQuestions = [
       "60%",
       "40%"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Most firestop systems specify a maximum 60% fill ratio for cable penetrations."
   },
   {
+    id: 5,
     question: "What must be done when adding cables to an existing firestopped penetration?",
     options: [
       "Nothing - existing firestop is sufficient",
@@ -97,9 +105,11 @@ const quizQuestions = [
       "Add silicone sealant around new cables",
       "Follow manufacturer's re-entry procedures"
     ],
-    correctAnswer: 3
+    correctAnswer: 3,
+    explanation: "Re-enterable firestop systems have specific procedures that must be followed to maintain the fire rating."
   },
   {
+    id: 6,
     question: "What colour are intumescent plugs commonly marked?",
     options: [
       "Yellow",
@@ -107,9 +117,11 @@ const quizQuestions = [
       "Blue",
       "Green"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Intumescent materials are typically coloured red or orange for easy identification."
   },
   {
+    id: 7,
     question: "What does a transit device or frame provide?",
     options: [
       "Mechanical support only",
@@ -117,9 +129,11 @@ const quizQuestions = [
       "Electrical grounding",
       "Cable identification"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Transit frames provide organised cable entry points while maintaining the required fire rating."
   },
   {
+    id: 8,
     question: "Where must firestop documentation be retained?",
     options: [
       "With cable manufacturer",
@@ -127,9 +141,11 @@ const quizQuestions = [
       "At local council offices",
       "Online only"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Firestop documentation must be retained in the building's fire safety file and O&M manual."
   },
   {
+    id: 9,
     question: "What is cold smoke seal designed to prevent?",
     options: [
       "Fire spread",
@@ -137,9 +153,11 @@ const quizQuestions = [
       "Water ingress",
       "Cable damage"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Cold smoke seals prevent smoke migration at ambient temperature before fire conditions develop."
   },
   {
+    id: 10,
     question: "Which regulation covers fire safety in non-domestic buildings?",
     options: [
       "Building Regulations only",
@@ -147,14 +165,15 @@ const quizQuestions = [
       "Data Protection Act",
       "Health and Safety at Work Act only"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "The Regulatory Reform (Fire Safety) Order 2005 covers fire safety requirements in non-domestic buildings."
   }
 ];
 
 const faqs = [
   {
     question: "Do fibre optic cables require the same firestopping as copper cables?",
-    answer: "Yes. Although fibre cables don't conduct electricity, they create penetrations through fire barriers that must be sealed. Additionally, cable jackets are combustible and can propagate fire. The same firestopping principles apply to all cable types penetrating fire-rated barriers."
+    answer: "Yes. Although fibre cables do not conduct electricity, they create penetrations through fire barriers that must be sealed. Additionally, cable jackets are combustible and can propagate fire. The same firestopping principles apply to all cable types penetrating fire-rated barriers."
   },
   {
     question: "Can I use general-purpose sealant for fire stopping?",
@@ -170,7 +189,7 @@ const faqs = [
   },
   {
     question: "Who can install firestop systems?",
-    answer: "While regulations don't mandate specific qualifications, competent installation is essential. Many specify third-party certified installers through schemes like FIRAS, BRE, or IFC. For critical applications and compliance demonstration, certified installers with documented training are recommended."
+    answer: "While regulations do not mandate specific qualifications, competent installation is essential. Many specify third-party certified installers through schemes like FIRAS, BRE, or IFC. For critical applications and compliance demonstration, certified installers with documented training are recommended."
   },
   {
     question: "How do I handle existing penetrations with no firestopping?",
@@ -184,83 +203,61 @@ const FiberOpticsModule3Section5 = () => {
     description: DESCRIPTION,
   });
 
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
-      {/* Minimal Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-screen-2xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module3"
-            className="flex items-center gap-2 text-white/70 hover:text-white active:scale-[0.98] touch-manipulation min-h-[44px]"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="text-sm">Back to Module 3</span>
-          </Link>
-          <span className="text-xs text-white/40 hidden sm:block">Section 5 of 6</span>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="pt-20 pb-24 px-4 max-w-3xl mx-auto">
-        {/* Module Number Badge */}
-        <div className="flex justify-center mb-4">
-          <span className="inline-flex items-center gap-1.5 text-sm text-elec-yellow">
-            <Flame className="w-4 h-4" />
-            Module 3 · Section 5
-          </span>
-        </div>
-
-        {/* Title */}
-        <h1 className="text-2xl md:text-3xl font-bold text-center mb-8">
-          Firestop and Penetration Rules
-        </h1>
-
-        {/* Quick Summary Card */}
-        <div className="bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-2xl p-5 border border-red-500/30 mb-6">
-          <h2 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-elec-yellow" />
-            In 30 Seconds
-          </h2>
-          <p className="text-white/80 text-sm leading-relaxed">
-            Every cable penetration through a fire-rated wall or floor must be properly firestopped
-            to maintain compartmentation. Use tested and certified firestop systems that match the
-            barrier rating. Document all installations for fire safety records and ensure re-entry
-            procedures are followed when adding cables later.
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 3 Section 5</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Firestop and Penetration Rules
+          </h1>
+          <p className="text-white/80">
+            Fire barrier integrity, sealing systems, and compliance
           </p>
-        </div>
+        </header>
 
-        {/* Spot it / Use it Card */}
-        <div className="bg-gradient-to-br from-orange-500/10 to-red-500/10 rounded-2xl p-5 border border-orange-500/20 mb-8">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div>
-              <h3 className="text-sm font-semibold text-orange-400 mb-2">Spot it</h3>
-              <ul className="text-white/70 text-sm space-y-1">
-                <li>• Red/orange intumescent materials</li>
-                <li>• Cable transit frames in walls</li>
-                <li>• Firestop labels and markers</li>
-                <li>• Ablative coatings on cables</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-red-400 mb-2">Use it</h3>
-              <ul className="text-white/70 text-sm space-y-1">
-                <li>• Select products to match fire rating</li>
-                <li>• Follow manufacturer fill ratios</li>
-                <li>• Complete firestop certificates</li>
-                <li>• Photograph before and after</li>
-              </ul>
-            </div>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Purpose:</strong> Maintain fire compartmentation</li>
+              <li><strong>Match rating:</strong> Firestop must equal barrier rating</li>
+              <li><strong>Fill ratio:</strong> Maximum 60% cable fill typically</li>
+              <li><strong>Document:</strong> All installations in fire safety file</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Red/orange intumescent materials</li>
+              <li><strong>Spot:</strong> Transit frames in walls/floors</li>
+              <li><strong>Use:</strong> Tested and certified products only</li>
+              <li><strong>Use:</strong> Manufacturer-specified procedures</li>
+            </ul>
           </div>
         </div>
 
         {/* Learning Outcomes */}
-        <div className="bg-white/5 rounded-2xl p-5 border border-white/10 mb-8">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-green-400" />
-            What You'll Learn
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {[
               "Fire barrier penetration regulations",
               "Firestop system types and selection",
@@ -268,374 +265,267 @@ const FiberOpticsModule3Section5 = () => {
               "Documentation requirements",
               "Re-entry and modification procedures",
               "Compliance and certification"
-            ].map((outcome, index) => (
-              <div key={index} className="flex items-start gap-2">
-                <div className="w-5 h-5 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-xs font-bold text-elec-yellow">{index + 1}</span>
-                </div>
-                <span className="text-sm text-white/80">{outcome}</span>
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
-        </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
 
         {/* Section 1: Regulatory Framework */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-              <span className="text-lg font-bold">01</span>
-            </div>
-            <h2 className="text-xl font-bold">Regulatory Framework</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Regulatory Framework
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Fire safety in buildings is governed by multiple regulations that require proper
-              compartmentation to prevent fire spread. Understanding these requirements is essential
-              for compliant cable installations.
+              Fire safety in buildings is governed by multiple regulations that require proper compartmentation to prevent fire spread. Understanding these requirements is essential for compliant cable installations.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <FileText className="w-4 h-4 text-red-400" />
-                Key UK Regulations
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Building Regulations (England & Wales):</strong> Approved Document B covers fire safety requirements for new buildings and alterations</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Key UK Regulations:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Building Regulations (England and Wales):</strong> Approved Document B covers fire safety requirements for new buildings and alterations</li>
                 <li><strong>Regulatory Reform (Fire Safety) Order 2005:</strong> Requires fire risk assessments and maintenance of fire safety measures in occupied buildings</li>
                 <li><strong>BS 476 / BS EN 1366-3:</strong> Test standards for fire resistance of service penetrations</li>
                 <li><strong>BS 8519:</strong> Code of practice for fire stopping</li>
               </ul>
             </div>
 
-            <div className="bg-red-500/10 rounded-xl p-4 border border-red-500/30">
-              <h4 className="font-semibold text-red-300 mb-2">Critical Principle</h4>
-              <p className="text-sm">
-                Any penetration through a fire-resisting element (wall, floor, compartment barrier)
-                must be sealed to maintain the fire resistance of that element. The firestop system
-                must achieve the same fire rating as the barrier it penetrates.
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Critical Principle:</p>
+              <p className="text-sm text-white">
+                Any penetration through a fire-resisting element (wall, floor, compartment barrier) must be sealed to maintain the fire resistance of that element. The firestop system must achieve the same fire rating as the barrier it penetrates.
               </p>
             </div>
 
             <p>
-              Fire compartmentation works by containing fires within defined areas, allowing time
-              for evacuation and firefighting. Unsealed cable penetrations create paths for fire,
-              smoke, and toxic gases to spread rapidly throughout a building, potentially with
-              catastrophic consequences.
+              Fire compartmentation works by containing fires within defined areas, allowing time for evacuation and firefighting. Unsealed cable penetrations create paths for fire, smoke, and toxic gases to spread rapidly throughout a building, potentially with catastrophic consequences.
             </p>
 
-            <div className="bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-2">Fire Rating Requirements</h4>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-orange-300">Typical Ratings:</p>
-                  <ul className="text-white/70 mt-1 space-y-1">
-                    <li>• 30 minutes (FD30)</li>
-                    <li>• 60 minutes (FD60)</li>
-                    <li>• 90 minutes</li>
-                    <li>• 120 minutes (2-hour)</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-red-300">Rating Codes:</p>
-                  <ul className="text-white/70 mt-1 space-y-1">
-                    <li>• E = Integrity</li>
-                    <li>• I = Insulation</li>
-                    <li>• EI 60 = Both for 60 mins</li>
-                    <li>• S = Smoke sealing</li>
-                  </ul>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Fire Rating Requirements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>30 minutes (FD30):</strong> Standard internal doors and partitions</li>
+                <li><strong>60 minutes (FD60):</strong> Compartment walls, protected shafts</li>
+                <li><strong>90 minutes:</strong> High-risk occupancies</li>
+                <li><strong>120 minutes (2-hour):</strong> Fire walls, critical barriers</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Rating Codes:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>E = Integrity:</strong> Prevents flame and hot gas passage</li>
+                <li><strong>I = Insulation:</strong> Limits temperature rise on unexposed face</li>
+                <li><strong>EI 60:</strong> Both integrity and insulation for 60 minutes</li>
+                <li><strong>S = Smoke sealing:</strong> Prevents cold smoke migration</li>
+              </ul>
             </div>
           </div>
         </section>
 
         {/* Section 2: Firestop System Types */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-              <span className="text-lg font-bold">02</span>
-            </div>
-            <h2 className="text-xl font-bold">Firestop System Types</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Firestop System Types
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Various firestop systems exist for different applications. Selection depends on the
-              penetration type, cable density, fire rating required, and whether future re-entry
-              is needed.
+              Various firestop systems exist for different applications. Selection depends on the penetration type, cable density, fire rating required, and whether future re-entry is needed.
             </p>
 
-            <div className="grid gap-4">
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-orange-400 mb-2">Intumescent Materials</h4>
-                <p className="text-sm mb-2">
-                  Materials that expand significantly when exposed to heat, sealing gaps and
-                  preventing fire passage.
-                </p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• <strong>Intumescent sealants:</strong> Gun-applied, expands 3-5x volume</li>
-                  <li>• <strong>Intumescent wraps:</strong> Wrapped around cables, expands to crush</li>
-                  <li>• <strong>Intumescent collars:</strong> Fixed around penetrations</li>
-                  <li>• <strong>Intumescent pillows:</strong> Removable blocks for transit openings</li>
-                </ul>
-              </div>
-
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-red-400 mb-2">Ablative Materials</h4>
-                <p className="text-sm mb-2">
-                  Materials that absorb heat through chemical reaction, protecting cables and
-                  maintaining barrier integrity.
-                </p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• <strong>Ablative coatings:</strong> Applied to cables, chars to protect</li>
-                  <li>• <strong>Ablative batts:</strong> Mineral-based boards that resist fire</li>
-                  <li>• <strong>Composite systems:</strong> Multiple materials for enhanced protection</li>
-                </ul>
-              </div>
-
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-yellow-400 mb-2">Transit Systems (Cable Transits)</h4>
-                <p className="text-sm mb-2">
-                  Engineered frameworks that provide organised cable entry points while maintaining
-                  fire rating.
-                </p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• <strong>Modular frames:</strong> Pre-fabricated frames with removable modules</li>
-                  <li>• <strong>Block systems:</strong> Interlocking blocks around cables</li>
-                  <li>• <strong>Sleeve seals:</strong> Individual cable entry points</li>
-                  <li>• <strong>Multi-cable transits:</strong> High-density penetration management</li>
-                </ul>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Intumescent Materials:</p>
+              <p className="text-sm text-white mb-2">Materials that expand significantly when exposed to heat, sealing gaps and preventing fire passage.</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Intumescent sealants:</strong> Gun-applied, expands 3-5x volume</li>
+                <li><strong>Intumescent wraps:</strong> Wrapped around cables, expands to crush</li>
+                <li><strong>Intumescent collars:</strong> Fixed around penetrations</li>
+                <li><strong>Intumescent pillows:</strong> Removable blocks for transit openings</li>
+              </ul>
             </div>
 
-            <div className="bg-elec-yellow/10 rounded-xl p-4 border border-elec-yellow/30">
-              <h4 className="font-semibold text-elec-yellow mb-2">Selection Considerations</h4>
-              <ul className="text-sm space-y-1 text-white/80">
-                <li>• <strong>Fire rating required:</strong> Match to barrier specification</li>
-                <li>• <strong>Cable types:</strong> Data, power, fibre have different characteristics</li>
-                <li>• <strong>Fill ratio:</strong> Maximum cable area in opening (typically 60%)</li>
-                <li>• <strong>Re-entry needs:</strong> Will cables be added/removed later?</li>
-                <li>• <strong>Environment:</strong> Indoor, outdoor, vibration, movement</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Ablative Materials:</p>
+              <p className="text-sm text-white mb-2">Materials that absorb heat through chemical reaction, protecting cables and maintaining barrier integrity.</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Ablative coatings:</strong> Applied to cables, chars to protect</li>
+                <li><strong>Ablative batts:</strong> Mineral-based boards that resist fire</li>
+                <li><strong>Composite systems:</strong> Multiple materials for enhanced protection</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Transit Systems (Cable Transits):</p>
+              <p className="text-sm text-white mb-2">Engineered frameworks that provide organised cable entry points while maintaining fire rating.</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Modular frames:</strong> Pre-fabricated frames with removable modules</li>
+                <li><strong>Block systems:</strong> Interlocking blocks around cables</li>
+                <li><strong>Sleeve seals:</strong> Individual cable entry points</li>
+                <li><strong>Multi-cable transits:</strong> High-density penetration management</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Selection Considerations:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Fire rating required:</strong> Match to barrier specification</li>
+                <li><strong>Cable types:</strong> Data, power, fibre have different characteristics</li>
+                <li><strong>Fill ratio:</strong> Maximum cable area in opening (typically 60%)</li>
+                <li><strong>Re-entry needs:</strong> Will cables be added/removed later?</li>
+                <li><strong>Environment:</strong> Indoor, outdoor, vibration, movement</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 1 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[0].id}
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-        </div>
+        <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 3: Installation Procedures */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-              <span className="text-lg font-bold">03</span>
-            </div>
-            <h2 className="text-xl font-bold">Installation Procedures</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Installation Procedures
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Correct installation is critical for firestop effectiveness. Following manufacturer
-              procedures exactly ensures the tested performance is achieved.
+              Correct installation is critical for firestop effectiveness. Following manufacturer procedures exactly ensures the tested performance is achieved.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">General Installation Steps</h4>
-              <ol className="space-y-2 text-sm">
-                <li><strong>1. Assess the penetration:</strong> Identify barrier type, rating, and size</li>
-                <li><strong>2. Select appropriate system:</strong> Use manufacturer selection guides</li>
-                <li><strong>3. Prepare the opening:</strong> Clean, repair damage, ensure correct size</li>
-                <li><strong>4. Install backing material:</strong> If required by system specification</li>
-                <li><strong>5. Route cables:</strong> Maintain fill ratio, avoid overcrowding</li>
-                <li><strong>6. Apply firestop material:</strong> Follow exact manufacturer method</li>
-                <li><strong>7. Complete finishing:</strong> Labels, covers, surface treatment</li>
-                <li><strong>8. Document installation:</strong> Photographs, certificates, location</li>
-              </ol>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">General Installation Steps:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>1. Assess the penetration: Identify barrier type, rating, and size</li>
+                <li>2. Select appropriate system: Use manufacturer selection guides</li>
+                <li>3. Prepare the opening: Clean, repair damage, ensure correct size</li>
+                <li>4. Install backing material: If required by system specification</li>
+                <li>5. Route cables: Maintain fill ratio, avoid overcrowding</li>
+                <li>6. Apply firestop material: Follow exact manufacturer method</li>
+                <li>7. Complete finishing: Labels, covers, surface treatment</li>
+                <li>8. Document installation: Photographs, certificates, location</li>
+              </ul>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-green-500/10 rounded-xl p-4 border border-green-500/30">
-                <h4 className="font-semibold text-green-400 mb-2">Good Practice</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Clean and dry surfaces</li>
-                  <li>• Correct depth of fill</li>
-                  <li>• No gaps or voids</li>
-                  <li>• Labels clearly visible</li>
-                  <li>• Photographic evidence</li>
-                </ul>
-              </div>
-
-              <div className="bg-red-500/10 rounded-xl p-4 border border-red-500/30">
-                <h4 className="font-semibold text-red-400 mb-2">Common Errors</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Incorrect product selection</li>
-                  <li>• Exceeding fill ratios</li>
-                  <li>• Incomplete coverage</li>
-                  <li>• Missing documentation</li>
-                  <li>• Wrong depth of sealant</li>
-                </ul>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Good Practice:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Clean and dry surfaces</li>
+                <li>Correct depth of fill</li>
+                <li>No gaps or voids</li>
+                <li>Labels clearly visible</li>
+                <li>Photographic evidence</li>
+              </ul>
             </div>
 
-            <div className="bg-orange-500/10 rounded-xl p-4 border border-orange-500/30">
-              <h4 className="font-semibold text-orange-300 mb-2 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4" />
-                Critical: Manufacturer Instructions
-              </h4>
-              <p className="text-sm">
-                Firestop systems are only valid when installed exactly as tested and specified
-                by the manufacturer. Substituting materials, changing depths, or exceeding fill
-                ratios invalidates the fire rating and creates a non-compliant installation.
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">Common Errors:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Incorrect product selection</li>
+                <li>Exceeding fill ratios</li>
+                <li>Incomplete coverage</li>
+                <li>Missing documentation</li>
+                <li>Wrong depth of sealant</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Critical: Manufacturer Instructions</p>
+              <p className="text-sm text-white">
+                Firestop systems are only valid when installed exactly as tested and specified by the manufacturer. Substituting materials, changing depths, or exceeding fill ratios invalidates the fire rating and creates a non-compliant installation.
               </p>
             </div>
 
             <p>
-              For fibre optic cables specifically, ensure cables are not stressed or kinked within
-              the firestop. Use appropriate cable management to maintain bend radius before and
-              after the penetration. Some firestop systems provide dedicated modules for optical
-              cables that offer better protection and cable management.
+              For fibre optic cables specifically, ensure cables are not stressed or kinked within the firestop. Use appropriate cable management to maintain bend radius before and after the penetration. Some firestop systems provide dedicated modules for optical cables that offer better protection and cable management.
             </p>
           </div>
         </section>
 
         {/* Section 4: Penetration Types and Methods */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-              <span className="text-lg font-bold">04</span>
-            </div>
-            <h2 className="text-xl font-bold">Penetration Types and Methods</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Penetration Types and Methods
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different penetration scenarios require specific firestop approaches. Understanding
-              common configurations ensures correct product selection.
+              Different penetration scenarios require specific firestop approaches. Understanding common configurations ensures correct product selection.
             </p>
 
-            <div className="space-y-4">
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-red-400 mb-2">Wall Penetrations</h4>
-                <p className="text-sm mb-2">Cables passing through fire-rated walls:</p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• <strong>Sleeved:</strong> Metal or plastic sleeve with annular seal</li>
-                  <li>• <strong>Unsleeved:</strong> Direct through opening with firestop</li>
-                  <li>• <strong>Transit frame:</strong> Modular system in larger openings</li>
-                  <li>• <strong>Cable tray:</strong> Tray through wall with appropriate sealing</li>
-                </ul>
-              </div>
-
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-orange-400 mb-2">Floor Penetrations</h4>
-                <p className="text-sm mb-2">Vertical cable routes between floors:</p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• <strong>Risers:</strong> Dedicated vertical shafts requiring sealing</li>
-                  <li>• <strong>Core holes:</strong> Individual penetrations through slab</li>
-                  <li>• <strong>Raised floors:</strong> Seal at structural floor level</li>
-                  <li>• <strong>Cable openings:</strong> Maintain 60% fill maximum</li>
-                </ul>
-              </div>
-
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-yellow-400 mb-2">Special Situations</h4>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• <strong>Movement joints:</strong> Use flexible firestop systems</li>
-                  <li>• <strong>Mixed services:</strong> Separate cable and pipe penetrations</li>
-                  <li>• <strong>Cavity barriers:</strong> Seal within ceiling/floor voids</li>
-                  <li>• <strong>External walls:</strong> Consider weather and fire protection</li>
-                </ul>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Wall Penetrations:</p>
+              <p className="text-sm text-white mb-2">Cables passing through fire-rated walls:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Sleeved:</strong> Metal or plastic sleeve with annular seal</li>
+                <li><strong>Unsleeved:</strong> Direct through opening with firestop</li>
+                <li><strong>Transit frame:</strong> Modular system in larger openings</li>
+                <li><strong>Cable tray:</strong> Tray through wall with appropriate sealing</li>
+              </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">Sleeve Requirements</h4>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-orange-300 mb-1">Steel Sleeves:</p>
-                  <ul className="text-white/70 space-y-1">
-                    <li>• Non-combustible</li>
-                    <li>• Minimum 1.5mm thickness</li>
-                    <li>• Extend beyond barrier face</li>
-                    <li>• Seal annular gap</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-red-300 mb-1">Plastic Sleeves:</p>
-                  <ul className="text-white/70 space-y-1">
-                    <li>• Use intumescent collar</li>
-                    <li>• Collar crushes melting sleeve</li>
-                    <li>• Check tested combinations</li>
-                    <li>• Common for retrofit</li>
-                  </ul>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Floor Penetrations:</p>
+              <p className="text-sm text-white mb-2">Vertical cable routes between floors:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Risers:</strong> Dedicated vertical shafts requiring sealing</li>
+                <li><strong>Core holes:</strong> Individual penetrations through slab</li>
+                <li><strong>Raised floors:</strong> Seal at structural floor level</li>
+                <li><strong>Cable openings:</strong> Maintain 60% fill maximum</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Special Situations:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Movement joints:</strong> Use flexible firestop systems</li>
+                <li><strong>Mixed services:</strong> Separate cable and pipe penetrations</li>
+                <li><strong>Cavity barriers:</strong> Seal within ceiling/floor voids</li>
+                <li><strong>External walls:</strong> Consider weather and fire protection</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Sleeve Requirements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Steel sleeves:</strong> Non-combustible, minimum 1.5mm thickness, seal annular gap</li>
+                <li><strong>Plastic sleeves:</strong> Use intumescent collar, collar crushes melting sleeve</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 2 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[1].id}
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-        </div>
+        <InlineCheck {...quickCheckQuestions[1]} />
 
         {/* Section 5: Re-Entry and Modifications */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-              <span className="text-lg font-bold">05</span>
-            </div>
-            <h2 className="text-xl font-bold">Re-Entry and Modifications</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Re-Entry and Modifications
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Cable installations frequently require additions or changes. Re-enterable firestop
-              systems allow modifications while maintaining fire rating, but specific procedures
-              must be followed.
+              Cable installations frequently require additions or changes. Re-enterable firestop systems allow modifications while maintaining fire rating, but specific procedures must be followed.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Re-Entry Methods</h4>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-orange-400 font-medium">Modular Transit Systems</p>
-                  <p className="text-sm text-white/60">Remove specific modules, add cables, replace modules.
-                  System maintains rating throughout if procedures followed.</p>
-                </div>
-                <div>
-                  <p className="text-red-400 font-medium">Removable Pillows/Bags</p>
-                  <p className="text-sm text-white/60">Intumescent pillows can be removed and rearranged
-                  around new cables. Easy re-entry but requires sufficient space.</p>
-                </div>
-                <div>
-                  <p className="text-yellow-400 font-medium">Sealant Systems</p>
-                  <p className="text-sm text-white/60">Some sealants allow cutting, cable insertion, and
-                  resealing. Check manufacturer specifications for approved procedures.</p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Re-Entry Methods:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Modular transit systems:</strong> Remove specific modules, add cables, replace modules. System maintains rating throughout if procedures followed.</li>
+                <li><strong>Removable pillows/bags:</strong> Intumescent pillows can be removed and rearranged around new cables. Easy re-entry but requires sufficient space.</li>
+                <li><strong>Sealant systems:</strong> Some sealants allow cutting, cable insertion, and resealing. Check manufacturer specifications for approved procedures.</li>
+              </ul>
             </div>
 
-            <div className="bg-orange-500/10 rounded-xl p-4 border border-orange-500/30">
-              <h4 className="font-semibold text-orange-300 mb-2 flex items-center gap-2">
-                <Shield className="w-4 h-4" />
-                Re-Entry Procedure
-              </h4>
-              <ol className="text-sm space-y-1">
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Re-Entry Procedure:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>1. Document existing firestop system and condition</li>
                 <li>2. Check manufacturer's re-entry procedure</li>
                 <li>3. Verify remaining capacity (fill ratio)</li>
@@ -644,152 +534,120 @@ const FiberOpticsModule3Section5 = () => {
                 <li>6. Reinstall firestop following specifications</li>
                 <li>7. Document modification with photographs</li>
                 <li>8. Update fire safety records</li>
-              </ol>
+              </ul>
             </div>
 
-            <div className="bg-red-500/10 rounded-xl p-4 border border-red-500/30">
-              <h4 className="font-semibold text-red-400 mb-2">Warning: Complete Replacement</h4>
-              <p className="text-sm">
-                If a firestop system cannot be properly re-entered (damaged, no procedures,
-                wrong type), it must be completely removed and replaced. Partial repairs or
-                ad-hoc additions are not acceptable and invalidate the fire rating.
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">Warning: Complete Replacement</p>
+              <p className="text-sm text-white">
+                If a firestop system cannot be properly re-entered (damaged, no procedures, wrong type), it must be completely removed and replaced. Partial repairs or ad-hoc additions are not acceptable and invalidate the fire rating.
               </p>
             </div>
 
             <p>
-              Where frequent changes are anticipated (e.g., data centres, communications rooms),
-              specify re-enterable transit systems from the outset. The additional initial cost
-              is offset by easier future modifications and maintained compliance.
+              Where frequent changes are anticipated (e.g., data centres, communications rooms), specify re-enterable transit systems from the outset. The additional initial cost is offset by easier future modifications and maintained compliance.
             </p>
           </div>
         </section>
 
         {/* Section 6: Documentation and Certification */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-              <span className="text-lg font-bold">06</span>
-            </div>
-            <h2 className="text-xl font-bold">Documentation and Certification</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Documentation and Certification
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Proper documentation is essential for demonstrating compliance and maintaining
-              building fire safety records. This information is required for building control
-              sign-off and ongoing fire safety management.
+              Proper documentation is essential for demonstrating compliance and maintaining building fire safety records. This information is required for building control sign-off and ongoing fire safety management.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <ClipboardCheck className="w-4 h-4 text-green-400" />
-                Required Documentation
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li>• <strong>Firestop certificates:</strong> For each penetration or group</li>
-                <li>• <strong>Product data sheets:</strong> Specifications and test certificates</li>
-                <li>• <strong>Installation photographs:</strong> Before, during, and after</li>
-                <li>• <strong>Location drawings:</strong> All firestop positions marked</li>
-                <li>• <strong>Installer qualifications:</strong> Training certificates</li>
-                <li>• <strong>Test certificates:</strong> BS EN 1366-3 or equivalent</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Required Documentation:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Firestop certificates:</strong> For each penetration or group</li>
+                <li><strong>Product data sheets:</strong> Specifications and test certificates</li>
+                <li><strong>Installation photographs:</strong> Before, during, and after</li>
+                <li><strong>Location drawings:</strong> All firestop positions marked</li>
+                <li><strong>Installer qualifications:</strong> Training certificates</li>
+                <li><strong>Test certificates:</strong> BS EN 1366-3 or equivalent</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">Firestop Certificate Contents</h4>
-              <div className="grid sm:grid-cols-2 gap-3 text-sm">
-                <ul className="space-y-1 text-white/70">
-                  <li>• Unique reference number</li>
-                  <li>• Location/grid reference</li>
-                  <li>• Barrier type and rating</li>
-                  <li>• System manufacturer</li>
-                  <li>• Product references used</li>
-                </ul>
-                <ul className="space-y-1 text-white/70">
-                  <li>• Installation date</li>
-                  <li>• Installer name and company</li>
-                  <li>• Installer qualifications</li>
-                  <li>• Test certificate reference</li>
-                  <li>• Photograph reference</li>
-                </ul>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Firestop Certificate Contents:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Unique reference number</li>
+                <li>Location/grid reference</li>
+                <li>Barrier type and rating</li>
+                <li>System manufacturer</li>
+                <li>Product references used</li>
+                <li>Installation date</li>
+                <li>Installer name and company</li>
+                <li>Installer qualifications</li>
+                <li>Test certificate reference</li>
+                <li>Photograph reference</li>
+              </ul>
             </div>
 
-            <div className="bg-elec-yellow/10 rounded-xl p-4 border border-elec-yellow/30">
-              <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
-                <BookOpen className="w-4 h-4" />
-                Document Retention
-              </h4>
-              <p className="text-sm text-white/80">
-                Firestop documentation must be retained for the life of the building as part
-                of the fire safety file (new buildings) or O&M manual. Under the Fire Safety
-                Order, the responsible person must maintain this information. Electronic records
-                with photographs are increasingly standard.
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Document Retention:</p>
+              <p className="text-sm text-white">
+                Firestop documentation must be retained for the life of the building as part of the fire safety file (new buildings) or O&M manual. Under the Fire Safety Order, the responsible person must maintain this information. Electronic records with photographs are increasingly standard.
               </p>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Installer Certification Schemes</h4>
-              <ul className="space-y-2 text-sm">
-                <li>• <strong>FIRAS:</strong> Warrington Fire accredited installers</li>
-                <li>• <strong>IFC Certification:</strong> Third-party installer scheme</li>
-                <li>• <strong>BRE Global:</strong> LPCB certified contractors</li>
-                <li>• <strong>Manufacturer training:</strong> Product-specific certification</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Installer Certification Schemes:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>FIRAS:</strong> Warrington Fire accredited installers</li>
+                <li><strong>IFC Certification:</strong> Third-party installer scheme</li>
+                <li><strong>BRE Global:</strong> LPCB certified contractors</li>
+                <li><strong>Manufacturer training:</strong> Product-specific certification</li>
               </ul>
-              <p className="text-xs text-white/50 mt-2">
-                While not legally required, third-party certified installers provide independent
-                verification of competence and quality.
+              <p className="text-xs text-white mt-2">
+                While not legally required, third-party certified installers provide independent verification of competence and quality.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 3 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[2].id}
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-        </div>
+        <InlineCheck {...quickCheckQuestions[2]} />
 
         {/* Practical Guidance */}
         <section className="mb-10">
-          <h2 className="text-xl font-bold mb-4">Practical Guidance</h2>
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
 
-          <div className="space-y-4">
-            <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-xl p-4 border border-green-500/20">
-              <h4 className="font-semibold text-green-400 mb-2">Installation Tips</h4>
-              <ul className="text-sm text-white/70 space-y-2">
-                <li>• <strong>Plan penetrations early:</strong> Design fire barrier crossings as part of cable routing, not as afterthought</li>
-                <li>• <strong>Group cables logically:</strong> Separate data, power, and fibre where practical for easier firestopping</li>
-                <li>• <strong>Leave spare capacity:</strong> Allow for future cables within fill ratio limits</li>
-                <li>• <strong>Photograph everything:</strong> Before, during, and after - essential for records</li>
-                <li>• <strong>Label clearly:</strong> Firestop type, date, and reference on both sides of barrier</li>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Tips</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Plan penetrations early:</strong> Design fire barrier crossings as part of cable routing, not as afterthought</li>
+                <li><strong>Group cables logically:</strong> Separate data, power, and fibre where practical for easier firestopping</li>
+                <li><strong>Leave spare capacity:</strong> Allow for future cables within fill ratio limits</li>
+                <li><strong>Photograph everything:</strong> Before, during, and after - essential for records</li>
+                <li><strong>Label clearly:</strong> Firestop type, date, and reference on both sides of barrier</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-xl p-4 border border-red-500/20">
-              <h4 className="font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="text-sm text-white/70 space-y-2">
-                <li>• <strong>Wrong product:</strong> Using products not tested for the specific application</li>
-                <li>• <strong>Exceeded fill ratio:</strong> Overcrowding penetrations beyond 60% capacity</li>
-                <li>• <strong>Incomplete seal:</strong> Gaps, voids, or insufficient depth of material</li>
-                <li>• <strong>Mixed products:</strong> Combining materials from different manufacturers</li>
-                <li>• <strong>No documentation:</strong> Failing to complete certificates and photographs</li>
-                <li>• <strong>Improper re-entry:</strong> Ad-hoc modifications without proper procedures</li>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Wrong product</strong> - Using products not tested for the specific application</li>
+                <li><strong>Exceeded fill ratio</strong> - Overcrowding penetrations beyond 60% capacity</li>
+                <li><strong>Incomplete seal</strong> - Gaps, voids, or insufficient depth of material</li>
+                <li><strong>Mixed products</strong> - Combining materials from different manufacturers</li>
+                <li><strong>No documentation</strong> - Failing to complete certificates and photographs</li>
+                <li><strong>Improper re-entry</strong> - Ad-hoc modifications without proper procedures</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-orange-500/10 to-yellow-500/10 rounded-xl p-4 border border-orange-500/20">
-              <h4 className="font-semibold text-orange-400 mb-2">Fibre-Specific Considerations</h4>
-              <ul className="text-sm text-white/70 space-y-2">
-                <li>• <strong>Bend radius:</strong> Maintain minimum bend radius through and around firestop</li>
-                <li>• <strong>Cable protection:</strong> Use innerduct or protection where cables contact sealant</li>
-                <li>• <strong>Tight-buffer vs loose-tube:</strong> Loose-tube cables need careful handling in firestop</li>
-                <li>• <strong>Testing after:</strong> Verify optical performance not degraded by installation stress</li>
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Fibre-Specific Considerations</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Bend radius:</strong> Maintain minimum bend radius through and around firestop</li>
+                <li><strong>Cable protection:</strong> Use innerduct or protection where cables contact sealant</li>
+                <li><strong>Tight-buffer vs loose-tube:</strong> Loose-tube cables need careful handling in firestop</li>
+                <li><strong>Testing after:</strong> Verify optical performance not degraded by installation stress</li>
               </ul>
             </div>
           </div>
@@ -797,109 +655,73 @@ const FiberOpticsModule3Section5 = () => {
 
         {/* FAQs */}
         <section className="mb-10">
-          <h2 className="text-xl font-bold mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-3">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white/5 rounded-xl border border-white/10 overflow-hidden"
-              >
-                <button
-                  className="w-full px-4 py-3 flex items-center justify-between text-left min-h-[44px] touch-manipulation"
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                >
-                  <span className="text-sm font-medium text-white/90">{faq.question}</span>
-                  <ChevronDown
-                    className={`w-4 h-4 text-white/60 transition-transform ${
-                      openFaq === index ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {openFaq === index && (
-                  <div className="px-4 pb-3">
-                    <p className="text-sm text-white/70">{faq.answer}</p>
-                  </div>
-                )}
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Quick Reference Card */}
+        {/* Quick Reference */}
         <section className="mb-10">
-          <div className="bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-2xl p-5 border border-red-500/30">
-            <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-              <Flame className="w-5 h-5 text-orange-400" />
-              Quick Reference: Firestop Checklist
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+          <div className="mt-6 p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference: Firestop Checklist</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
               <div>
-                <h4 className="text-sm font-semibold text-red-300 mb-2">Before Installation</h4>
-                <ul className="text-xs text-white/70 space-y-1">
-                  <li>☐ Identify barrier type and rating</li>
-                  <li>☐ Select tested/certified system</li>
-                  <li>☐ Check fill ratio capacity</li>
-                  <li>☐ Verify installer competence</li>
-                  <li>☐ Prepare documentation forms</li>
+                <p className="font-medium text-white mb-1">Before Installation</p>
+                <ul className="space-y-0.5">
+                  <li>Identify barrier type and rating</li>
+                  <li>Select tested/certified system</li>
+                  <li>Check fill ratio capacity</li>
+                  <li>Verify installer competence</li>
+                  <li>Prepare documentation forms</li>
                 </ul>
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-orange-300 mb-2">After Installation</h4>
-                <ul className="text-xs text-white/70 space-y-1">
-                  <li>☐ Visual inspection complete</li>
-                  <li>☐ Photographs taken</li>
-                  <li>☐ Certificate completed</li>
-                  <li>☐ Labels applied both sides</li>
-                  <li>☐ Records filed in fire safety file</li>
+                <p className="font-medium text-white mb-1">After Installation</p>
+                <ul className="space-y-0.5">
+                  <li>Visual inspection complete</li>
+                  <li>Photographs taken</li>
+                  <li>Certificate completed</li>
+                  <li>Labels applied both sides</li>
+                  <li>Records filed in fire safety file</li>
                 </ul>
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-white/10">
-              <p className="text-xs text-white/50">
-                Key regulations: Building Regs Approved Doc B · Fire Safety Order 2005 · BS 8519 · BS EN 1366-3
-              </p>
-            </div>
+            <p className="text-xs text-white mt-4">
+              <strong>Key regulations:</strong> Building Regs Approved Doc B | Fire Safety Order 2005 | BS 8519 | BS EN 1366-3
+            </p>
           </div>
         </section>
 
-        {/* Quiz Section */}
+        {/* Quiz */}
         <section className="mb-10">
           <Quiz
-            title="Section Quiz"
+            title="Test Your Knowledge"
             questions={quizQuestions}
-            onComplete={(score, total) => {
-              console.log(`Quiz completed: ${score}/${total}`);
-            }}
           />
         </section>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-white/10">
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module3/section4"
-            className="w-full sm:w-auto"
-          >
-            <Button
-              variant="ghost"
-              className="w-full sm:w-auto gap-2 text-white/70 hover:text-white min-h-[44px] touch-manipulation"
-            >
-              <ArrowLeft className="w-4 h-4" />
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Splice Enclosure Mounting
-            </Button>
-          </Link>
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module3/section6"
-            className="w-full sm:w-auto"
-          >
-            <Button
-              className="w-full sm:w-auto gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation"
-            >
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-6">
               Next: Earthing and Segregation
-              <ArrowLeft className="w-4 h-4 rotate-180" />
-            </Button>
-          </Link>
-        </div>
-      </main>
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

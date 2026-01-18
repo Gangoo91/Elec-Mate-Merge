@@ -152,28 +152,28 @@ const quizQuestions = [
 
 const faqs = [
   {
-    q: "Can I rewire a plug myself as part of PAT testing?",
-    a: "Yes, a competent PAT tester can rewire plugs as part of the testing process when defects are found. However, this should be done to the correct standard with appropriate materials. If in doubt about competence, the appliance should be failed and referred for professional repair. Always record any repairs made."
+    question: "Can I rewire a plug myself as part of PAT testing?",
+    answer: "Yes, a competent PAT tester can rewire plugs as part of the testing process when defects are found. However, this should be done to the correct standard with appropriate materials. If in doubt about competence, the appliance should be failed and referred for professional repair. Always record any repairs made."
   },
   {
-    q: "What if the fuse keeps blowing during normal use?",
-    a: "A fuse that repeatedly blows indicates either: the fuse rating is too low for the appliance, the appliance has a fault drawing excessive current, or a defective (weak) fuse. Never replace with a higher rated fuse without verifying the appliance current. Investigate the cause - it could indicate a serious fault."
+    question: "What if the fuse keeps blowing during normal use?",
+    answer: "A fuse that repeatedly blows indicates either: the fuse rating is too low for the appliance, the appliance has a fault drawing excessive current, or a defective (weak) fuse. Never replace with a higher rated fuse without verifying the appliance current. Investigate the cause - it could indicate a serious fault."
   },
   {
-    q: "Are old colour codes (red/black/green) acceptable?",
-    a: "Old colour codes are acceptable if consistent throughout the cable and correctly connected. Red = Live, Black = Neutral, Green = Earth. The issue arises when old and new codes are mixed, suggesting partial rewiring. Old colour codes should prompt closer inspection as the appliance may be quite old."
+    question: "Are old colour codes (red/black/green) acceptable?",
+    answer: "Old colour codes are acceptable if consistent throughout the cable and correctly connected. Red = Live, Black = Neutral, Green = Earth. The issue arises when old and new codes are mixed, suggesting partial rewiring. Old colour codes should prompt closer inspection as the appliance may be quite old."
   },
   {
-    q: "What's the difference between BS 1362 and BS 646 fuses?",
-    a: "BS 1362 fuses are the standard cartridge fuses used in UK 13A plugs (available in 3A and 13A ratings typically). BS 646 fuses are the older round-pin type, no longer commonly used. Always use BS 1362 fuses in modern UK plugs - they have specific dimensions and characteristics for safety."
+    question: "What's the difference between BS 1362 and BS 646 fuses?",
+    answer: "BS 1362 fuses are the standard cartridge fuses used in UK 13A plugs (available in 3A and 13A ratings typically). BS 646 fuses are the older round-pin type, no longer commonly used. Always use BS 1362 fuses in modern UK plugs - they have specific dimensions and characteristics for safety."
   },
   {
-    q: "Can I use a 13A fuse in all appliances to avoid nuisance blowing?",
-    a: "No. Using a 13A fuse in a low-power appliance is dangerous. The fuse is sized to protect the cable - a thin cable on a lamp with a 13A fuse could overheat and cause fire before the fuse blows. Always use the correct fuse rating: 3A for appliances up to 700W, 13A for higher-powered items."
+    question: "Can I use a 13A fuse in all appliances to avoid nuisance blowing?",
+    answer: "No. Using a 13A fuse in a low-power appliance is dangerous. The fuse is sized to protect the cable - a thin cable on a lamp with a 13A fuse could overheat and cause fire before the fuse blows. Always use the correct fuse rating: 3A for appliances up to 700W, 13A for higher-powered items."
   },
   {
-    q: "What should I do if I find an appliance with no fuse fitted?",
-    a: "This is an immediate fail. The appliance should not be used until a correct BS 1362 fuse is fitted. Check if a fuse has been deliberately removed (e.g., wrapped in foil as a 'repair') which is extremely dangerous. Always verify the correct rating before fitting a new fuse."
+    question: "What should I do if I find an appliance with no fuse fitted?",
+    answer: "This is an immediate fail. The appliance should not be used until a correct BS 1362 fuse is fitted. Check if a fuse has been deliberately removed (e.g., wrapped in foil as a 'repair') which is extremely dangerous. Always verify the correct rating before fitting a new fuse."
   }
 ];
 
@@ -185,7 +185,7 @@ const PATTestingModule3Section2 = () => {
       {/* Sticky Header */}
       <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-md border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="/study-centre/upskilling/pat-testing-module-3">
+          <Link to="..">
             <Button
               variant="ghost"
               size="sm"
@@ -819,11 +819,11 @@ const PATTestingModule3Section2 = () => {
             {faqs.map((faq, idx) => (
               <details key={idx} className="group bg-white/5 rounded-xl">
                 <summary className="flex items-center justify-between p-4 cursor-pointer list-none touch-manipulation">
-                  <span className="text-white font-medium text-sm sm:text-base pr-4">{faq.q}</span>
+                  <span className="text-white font-medium text-sm sm:text-base pr-4">{faq.question}</span>
                   <ChevronRight className="w-5 h-5 text-white/40 group-open:rotate-90 transition-transform flex-shrink-0" />
                 </summary>
                 <div className="px-4 pb-4">
-                  <p className="text-white/70 text-sm leading-relaxed">{faq.a}</p>
+                  <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               </details>
             ))}
@@ -868,7 +868,7 @@ const PATTestingModule3Section2 = () => {
 
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-6 border-t border-white/10">
-          <Link to="/study-centre/upskilling/pat-testing-module-3-section-1" className="w-full sm:w-auto">
+          <Link to="../section-1" className="w-full sm:w-auto">
             <Button
               variant="outline"
               className="w-full sm:w-auto gap-2 border-white/20 text-white hover:bg-white/5 hover:text-elec-yellow min-h-[48px] touch-manipulation active:scale-[0.98]"
@@ -877,7 +877,7 @@ const PATTestingModule3Section2 = () => {
               <span>Previous: Section 1</span>
             </Button>
           </Link>
-          <Link to="/study-centre/upskilling/pat-testing-module-3-section-3" className="w-full sm:w-auto">
+          <Link to="../section-3" className="w-full sm:w-auto">
             <Button
               className="w-full sm:w-auto gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold min-h-[48px] touch-manipulation active:scale-[0.98]"
             >

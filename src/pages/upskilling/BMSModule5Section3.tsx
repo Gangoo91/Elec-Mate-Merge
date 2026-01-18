@@ -78,7 +78,7 @@ const BMSModule5Section3 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-5">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
             </Link>
@@ -96,7 +96,7 @@ const BMSModule5Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Modbus RTU and TCP/IP Use Cases
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding Modbus protocol implementation for building automation
           </p>
         </header>
@@ -172,7 +172,7 @@ const BMSModule5Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Master-Slave Architecture:</p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Master initiates all communication</li>
                 <li>Slaves respond only when polled</li>
                 <li>Simple request/response cycle</li>
@@ -266,7 +266,7 @@ const BMSModule5Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Typical Example:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A row of electricity submeters in a distribution board, all connected to a Modbus RTU bus,
                 reporting kWh readings back to the BMS every 30 seconds. Each meter has a unique address,
                 and the BMS polls them sequentially for energy data.
@@ -342,7 +342,7 @@ const BMSModule5Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Practical Example:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A modern chiller communicates over Modbus TCP/IP, providing detailed operating data
                 (temperatures, pressures, alarms, energy consumption) directly to the BMS without the
                 speed and distance limitations of RS-485 serial communication.
@@ -461,7 +461,7 @@ const BMSModule5Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

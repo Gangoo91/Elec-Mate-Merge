@@ -1,629 +1,561 @@
-import { useState, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, Thermometer, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
-import useSEO from '@/hooks/useSEO';
-import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
-import type { QuizQuestion } from '@/types/quiz';
+import { ArrowLeft, Thermometer, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
 
-const TITLE = "Heat Detectors - Fire Alarm Course Module 2";
+const TITLE = "Heat Detectors - Fire Alarm Module 2 Section 2";
 const DESCRIPTION = "Learn about fixed temperature and rate-of-rise heat detectors, BS 5839-1 classifications, siting requirements, and appropriate applications.";
 
+const quickCheckQuestions = [
+  {
+    id: "heat-detector-kitchen",
+    question: "A commercial kitchen requires fire detection but smoke detectors cause constant false alarms. What detector type should you specify?",
+    options: [
+      "Optical smoke detector with higher sensitivity setting",
+      "Rate-of-rise heat detector (A1R)",
+      "Ionisation smoke detector",
+      "Beam detector"
+    ],
+    correctIndex: 1,
+    explanation: "Rate-of-rise heat detectors (A1R) are ideal for kitchens - they respond to rapid temperature increases from fire but are unaffected by cooking fumes and steam."
+  },
+  {
+    id: "heat-detector-boiler",
+    question: "A boiler room has ambient temperatures up to 45 degrees Celsius. What detector type and rating would you specify?",
+    options: [
+      "Rate-of-rise heat detector (A1R) with standard rating",
+      "Optical smoke detector",
+      "Fixed temperature heat detector (A1S) with 78 degree rating",
+      "Any smoke detector"
+    ],
+    correctIndex: 2,
+    explanation: "Fixed temperature heat detector (A1S) with 78 degrees Celsius rating - at least 25 degrees above maximum ambient (45 + 25 = 70, so 78 degrees). Rate-of-rise could false alarm from normal boiler cycling."
+  },
+  {
+    id: "heat-detector-sleeping",
+    question: "Why should heat detectors NOT be used in sleeping accommodation?",
+    options: [
+      "They are too expensive",
+      "They respond too slowly to provide adequate warning time for sleeping occupants",
+      "They cause too many false alarms",
+      "BS 5839-1 prohibits their use anywhere"
+    ],
+    correctIndex: 1,
+    explanation: "Heat detectors respond later than smoke detectors because fire must be more developed to generate significant heat, potentially not providing enough warning time for sleeping occupants to evacuate safely."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "Where would you typically use a rate-of-rise heat detector?",
+    options: ["Office", "Kitchen", "Escape route", "Hotel bedroom"],
+    correctAnswer: 1,
+    explanation: "Rate-of-rise heat detectors suit kitchens and similar areas where smoke detection would cause false alarms from cooking fumes."
+  },
+  {
+    id: 2,
+    question: "Which detector classification indicates a rate-of-rise heat detector?",
+    options: ["A1S", "A1R", "CS", "BR"],
+    correctAnswer: 1,
+    explanation: "A1R indicates a Class A1 rate-of-rise heat detector. The R suffix denotes rate-of-rise functionality."
+  },
+  {
+    id: 3,
+    question: "What is the typical maximum coverage radius for a heat detector (Class A1)?",
+    options: ["3.0 m", "5.3 m", "7.5 m", "10.0 m"],
+    correctAnswer: 1,
+    explanation: "Class A1 heat detectors typically have a maximum coverage radius of 5.3 m under BS 5839-1, compared to 7.5 m for smoke detectors."
+  },
+  {
+    id: 4,
+    question: "What is the primary disadvantage of heat detectors compared to smoke detectors?",
+    options: [
+      "Higher cost",
+      "Slower response time - fire must be more developed",
+      "More prone to false alarms",
+      "Require more maintenance"
+    ],
+    correctAnswer: 1,
+    explanation: "Heat detectors only respond once significant heat is generated, meaning the fire must be more developed before detection occurs."
+  },
+  {
+    id: 5,
+    question: "At what temperature does a typical fixed temperature heat detector activate?",
+    options: ["47 degrees Celsius", "57 degrees Celsius", "67 degrees Celsius", "77 degrees Celsius"],
+    correctAnswer: 1,
+    explanation: "Most fixed temperature heat detectors activate at around 57 degrees Celsius, though higher ratings are available for warmer environments."
+  },
+  {
+    id: 6,
+    question: "Why should heat detectors NOT be used in sleeping accommodation?",
+    options: [
+      "They are too expensive",
+      "They respond too slowly to provide adequate warning time",
+      "They cause false alarms",
+      "BS 5839-1 prohibits their use"
+    ],
+    correctAnswer: 1,
+    explanation: "Heat detectors respond later than smoke detectors, potentially not providing enough warning time for sleeping occupants to evacuate safely."
+  },
+  {
+    id: 7,
+    question: "What does the S suffix indicate in heat detector classification (e.g., A1S)?",
+    options: [
+      "Special application",
+      "Static/fixed temperature only",
+      "High sensitivity",
+      "Standard rating"
+    ],
+    correctAnswer: 1,
+    explanation: "The S suffix indicates a static (fixed temperature) heat detector that activates at a set threshold temperature."
+  },
+  {
+    id: 8,
+    question: "Which heat detector type combines both fixed temperature and rate-of-rise sensing?",
+    options: [
+      "Class A1S",
+      "Class A1R",
+      "Combined A1S/A1R",
+      "Multisensor"
+    ],
+    correctAnswer: 2,
+    explanation: "Combined detectors (A1S/A1R) incorporate both sensing methods, providing both rate-of-rise and fixed maximum temperature activation."
+  },
+  {
+    id: 9,
+    question: "In which environment would a higher temperature rating heat detector be appropriate?",
+    options: [
+      "Office space",
+      "Boiler room",
+      "Corridor",
+      "Bedroom"
+    ],
+    correctAnswer: 1,
+    explanation: "Boiler rooms and similar hot environments require higher temperature rating detectors to avoid false alarms from normal ambient temperatures."
+  },
+  {
+    id: 10,
+    question: "What is a key advantage of heat detectors over smoke detectors?",
+    options: [
+      "Faster response time",
+      "Not affected by dust, steam, or fumes",
+      "Greater coverage area",
+      "Lower installation cost"
+    ],
+    correctAnswer: 1,
+    explanation: "Heat detectors are unaffected by dust, steam, aerosols, and fumes that would cause false alarms with smoke detectors."
+  }
+];
+
+const faqs = [
+  {
+    question: "Can I use heat detectors in escape routes?",
+    answer: "Generally no - smoke detectors are required on escape routes for early warning. Heat detectors may supplement but not replace smoke detection."
+  },
+  {
+    question: "What if a kitchen opens directly onto a corridor?",
+    answer: "Use heat detection in the kitchen and smoke detection in the corridor. Consider a multisensor at the transition point."
+  },
+  {
+    question: "How do I choose between A1 and A2 class?",
+    answer: "A1 is the fastest response and most commonly specified. A2 may be used where slightly slower response is acceptable."
+  },
+  {
+    question: "Can heat detectors be used with addressable systems?",
+    answer: "Yes - addressable heat detectors are available and recommended for larger installations to identify exact device locations."
+  },
+  {
+    question: "Do heat detectors require regular testing?",
+    answer: "Yes - weekly functional testing on rotation and annual servicing including thermal response testing per BS 5839-1."
+  },
+  {
+    question: "What is the maximum ceiling height for heat detectors?",
+    answer: "BS 5839-1 recommends Class A1/A2 heat detectors up to 9 m ceiling height. Above this, consider linear heat detection or other solutions."
+  }
+];
+
 const FireAlarmModule2Section2 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
-
-  // Quiz Data - 10 questions
-  const questions: QuizQuestion[] = useMemo(() => [
-    {
-      id: 1,
-      question: 'Where would you typically use a rate-of-rise heat detector?',
-      options: ['Office', 'Kitchen', 'Escape route', 'Hotel bedroom'],
-      correctAnswer: 1,
-      explanation: 'Rate-of-rise heat detectors suit kitchens and similar areas where smoke detection would cause false alarms from cooking fumes.'
-    },
-    {
-      id: 2,
-      question: 'Which detector classification indicates a rate-of-rise heat detector?',
-      options: ['A1S', 'A1R', 'CS', 'BR'],
-      correctAnswer: 1,
-      explanation: 'A1R indicates a Class A1 rate-of-rise heat detector. The "R" suffix denotes rate-of-rise functionality.'
-    },
-    {
-      id: 3,
-      question: 'What is the typical maximum coverage radius for a heat detector (Class A1)?',
-      options: ['3.0 m', '5.3 m', '7.5 m', '10.0 m'],
-      correctAnswer: 1,
-      explanation: 'Class A1 heat detectors typically have a maximum coverage radius of 5.3 m under BS 5839-1, compared to 7.5 m for smoke detectors.'
-    },
-    {
-      id: 4,
-      question: 'What is the primary disadvantage of heat detectors compared to smoke detectors?',
-      options: [
-        'Higher cost',
-        'Slower response time - fire must be more developed',
-        'More prone to false alarms',
-        'Require more maintenance'
-      ],
-      correctAnswer: 1,
-      explanation: 'Heat detectors only respond once significant heat is generated, meaning the fire must be more developed before detection occurs.'
-    },
-    {
-      id: 5,
-      question: 'At what temperature does a typical fixed temperature heat detector activate?',
-      options: ['47°C', '57°C', '67°C', '77°C'],
-      correctAnswer: 1,
-      explanation: 'Most fixed temperature heat detectors activate at around 57°C, though higher ratings are available for warmer environments.'
-    },
-    {
-      id: 6,
-      question: 'Why should heat detectors NOT be used in sleeping accommodation?',
-      options: [
-        'They are too expensive',
-        'They respond too slowly to provide adequate warning time',
-        'They cause false alarms',
-        'BS 5839-1 prohibits their use'
-      ],
-      correctAnswer: 1,
-      explanation: 'Heat detectors respond later than smoke detectors, potentially not providing enough warning time for sleeping occupants to evacuate safely.'
-    },
-    {
-      id: 7,
-      question: 'What does the "S" suffix indicate in heat detector classification (e.g., A1S)?',
-      options: [
-        'Special application',
-        'Static/fixed temperature only',
-        'High sensitivity',
-        'Standard rating'
-      ],
-      correctAnswer: 1,
-      explanation: 'The "S" suffix indicates a static (fixed temperature) heat detector that activates at a set threshold temperature.'
-    },
-    {
-      id: 8,
-      question: 'Which heat detector type combines both fixed temperature and rate-of-rise sensing?',
-      options: [
-        'Class A1S',
-        'Class A1R',
-        'Combined A1S/A1R',
-        'Multisensor'
-      ],
-      correctAnswer: 2,
-      explanation: 'Combined detectors (A1S/A1R) incorporate both sensing methods, providing both rate-of-rise and fixed maximum temperature activation.'
-    },
-    {
-      id: 9,
-      question: 'In which environment would a higher temperature rating heat detector be appropriate?',
-      options: [
-        'Office space',
-        'Boiler room',
-        'Corridor',
-        'Bedroom'
-      ],
-      correctAnswer: 1,
-      explanation: 'Boiler rooms and similar hot environments require higher temperature rating detectors to avoid false alarms from normal ambient temperatures.'
-    },
-    {
-      id: 10,
-      question: 'What is a key advantage of heat detectors over smoke detectors?',
-      options: [
-        'Faster response time',
-        'Not affected by dust, steam, or fumes',
-        'Greater coverage area',
-        'Lower installation cost'
-      ],
-      correctAnswer: 1,
-      explanation: 'Heat detectors are unaffected by dust, steam, aerosols, and fumes that would cause false alarms with smoke detectors.'
-    }
-  ], []);
-
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(-1));
-  const [showResults, setShowResults] = useState(false);
-  const [showQuiz, setShowQuiz] = useState(false);
-
-  const handleAnswerSelect = (answerIndex: number) => {
-    const updated = [...selectedAnswers];
-    updated[currentQuestion] = answerIndex;
-    setSelectedAnswers(updated);
-  };
-
-  const handleNext = () => {
-    if (currentQuestion < questions.length - 1) setCurrentQuestion((q) => q + 1);
-    else setShowResults(true);
-  };
-
-  const handlePrevious = () => setCurrentQuestion((q) => Math.max(0, q - 1));
-
-  const resetQuiz = () => {
-    setCurrentQuestion(0);
-    setSelectedAnswers(Array(questions.length).fill(-1));
-    setShowResults(false);
-  };
-
-  const calculateScore = () =>
-    selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
+  useSEO(TITLE, DESCRIPTION);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-2">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Module 2</span>
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
             </Link>
           </Button>
-          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 2</span>
-          <div className="w-[60px]" />
         </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 rounded-2xl bg-green-500/10 border border-green-500/20">
-            <Thermometer className="h-7 w-7 text-green-400" />
-          </div>
-          <span className="text-[11px] font-medium text-green-400 uppercase tracking-wide">
-            Section 2 of 5
-          </span>
-        </div>
-        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
-          Heat Detectors
-        </h1>
-        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
-          Understanding fixed temperature and rate-of-rise heat detector technologies, classifications, and correct application per BS 5839-1.
-        </p>
-        <div className="flex items-center gap-4 text-[13px] text-white/50">
-          <span className="flex items-center gap-1">
-            <Target className="h-4 w-4" />
-            6 learning outcomes
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            20-25 mins
-          </span>
-        </div>
-      </section>
-
-      {/* In 30 Seconds Card */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-green-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[15px] font-semibold text-green-400 flex items-center gap-2">
-              <Lightbulb className="h-4 w-4" />
-              In 30 Seconds
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-[15px] text-white/80">
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Fixed temperature (S)</strong> - activates at set threshold (typically 57°C)</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Rate-of-rise (R)</strong> - activates on rapid temperature increase (6-8°C/min)</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Best for kitchens, boiler rooms, dusty areas</strong> - immune to smoke/steam false alarms</span>
-            </p>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Learning Outcomes */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            "Explain how fixed temperature heat detectors work",
-            "Explain how rate-of-rise heat detectors work",
-            "Interpret BS 5839-1 heat detector classifications",
-            "Apply heat detector siting and spacing requirements",
-            "Select appropriate heat detector types for different environments",
-            "Understand limitations compared to smoke detection"
-          ].map((outcome, i) => (
-            <Card key={i} variant="ios" className="p-3">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-[11px] font-bold text-green-400">{i + 1}</span>
-                </div>
-                <p className="text-[13px] text-white/80">{outcome}</p>
-              </div>
-            </Card>
-          ))}
-        </div>
-      </section>
+      </div>
 
       {/* Main Content */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto space-y-6">
-        {/* Section 01 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">01</span>
-              <h3 className="text-[17px] font-semibold text-white">Introduction to Heat Detection</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Heat detectors respond to <strong className="text-white">elevated temperatures</strong> rather than smoke particles. They are ideal for environments where smoke detectors would cause false alarms, such as kitchens, boiler rooms, and dusty workshops.</p>
-              <p>The key trade-off is <strong className="text-white">response time</strong> - a fire must be more developed to generate sufficient heat, meaning heat detectors provide less early warning than smoke detectors.</p>
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-amber-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  Heat detectors should NOT be used as the primary detection in sleeping accommodation due to slower response.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
 
-        {/* Section 02 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">02</span>
-              <h3 className="text-[17px] font-semibold text-white">Fixed Temperature (Static) Detectors</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-green-400">Operating Principle:</strong> Activates when the surrounding air temperature reaches a predetermined threshold. The most common rating is <strong className="text-white">57°C</strong>, though higher ratings (e.g., 78°C, 90°C) are available for warmer environments.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Classification Suffix: S (Static)</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />A1S - Class A1 fixed temperature</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />A2S - Class A2 fixed temperature</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />BS, CS, DS - Other classes with varying response</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Typical applications: Boiler rooms, laundries, areas with normally elevated temperatures.</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Centred Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Thermometer className="h-4 w-4" />
+            <span>Module 2 Section 2</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Heat Detectors
+          </h1>
+          <p className="text-white">
+            Understanding fixed temperature and rate-of-rise heat detector technologies per BS 5839-1
+          </p>
+        </header>
 
-        {/* Section 03 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">03</span>
-              <h3 className="text-[17px] font-semibold text-white">Rate-of-Rise Detectors</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-green-400">Operating Principle:</strong> Activates when temperature increases rapidly - typically <strong className="text-white">6-8°C per minute</strong>. This responds faster than fixed temperature detection to developing fires.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Classification Suffix: R (Rate-of-rise)</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />A1R - Class A1 rate-of-rise</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />Responds to rapid temperature changes</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" />Faster response than fixed temperature in most fires</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Typical applications: Kitchens, garages, workshops - where temperature normally remains stable.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Inline Check 1 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A commercial kitchen requires fire detection but smoke detectors cause constant false alarms. What detector type should you specify?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Rate-of-rise heat detector (A1R) - responds to rapid temperature increases from fire but is unaffected by cooking fumes and steam.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Section 04 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">04</span>
-              <h3 className="text-[17px] font-semibold text-white">BS 5839-1 Classifications</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Heat detectors are classified by their response characteristics under BS EN 54-5.</p>
-              <div className="overflow-x-auto">
-                <table className="w-full text-[13px]">
-                  <thead>
-                    <tr className="border-b border-white/20">
-                      <th className="text-left py-2 pr-4 text-white">Class</th>
-                      <th className="text-left py-2 pr-4 text-white/70">Response Time</th>
-                      <th className="text-left py-2 text-white/70">Coverage Radius</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 text-green-400 font-medium">A1</td>
-                      <td className="py-2 pr-4">Fastest</td>
-                      <td className="py-2">5.3 m</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 text-green-400 font-medium">A2</td>
-                      <td className="py-2 pr-4">Very fast</td>
-                      <td className="py-2">5.3 m</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 text-green-400 font-medium">B</td>
-                      <td className="py-2 pr-4">Fast</td>
-                      <td className="py-2">5.3 m</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 text-green-400 font-medium">C</td>
-                      <td className="py-2 pr-4">Standard</td>
-                      <td className="py-2">5.3 m</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-4 text-green-400 font-medium">D, E, F, G</td>
-                      <td className="py-2 pr-4">Slower (special use)</td>
-                      <td className="py-2">Varies</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Note: Class A1 and A2 are most commonly specified for fire alarm systems.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Section 05 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">05</span>
-              <h3 className="text-[17px] font-semibold text-white">Siting and Spacing Requirements</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Heat detectors have smaller coverage areas than smoke detectors due to their sensing method.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Key Requirements (BS 5839-1):</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /><strong>Coverage radius:</strong> 5.3 m for Class A1/A2 (flat ceiling)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /><strong>Distance from walls:</strong> Minimum 500 mm</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /><strong>Ceiling mounting:</strong> 25-150 mm below apex for pitched roofs</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-green-400" /><strong>Temperature rating:</strong> Select appropriate for ambient conditions</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Choose detector temperature rating at least 25°C above maximum expected ambient temperature.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Section 06 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-green-400 bg-green-500/10 px-2 py-1 rounded">06</span>
-              <h3 className="text-[17px] font-semibold text-white">Application Guidelines</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Selecting between fixed temperature and rate-of-rise depends on the environment characteristics.</p>
-              <div className="grid sm:grid-cols-2 gap-3">
-                <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-                  <p className="text-[13px] font-semibold text-green-400 mb-2">Rate-of-Rise (A1R)</p>
-                  <ul className="space-y-1 text-[13px]">
-                    <li>Kitchens and cooking areas</li>
-                    <li>Garages and vehicle areas</li>
-                    <li>Workshops (stable temperature)</li>
-                    <li>Storage areas</li>
-                  </ul>
-                </div>
-                <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
-                  <p className="text-[13px] font-semibold text-orange-400 mb-2">Fixed Temperature (A1S)</p>
-                  <ul className="space-y-1 text-[13px]">
-                    <li>Boiler rooms</li>
-                    <li>Laundries</li>
-                    <li>Areas with fluctuating temperatures</li>
-                    <li>Hot process environments</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Inline Check 2 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A boiler room has ambient temperatures up to 45°C. What detector type and rating would you specify?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Fixed temperature heat detector (A1S) with 78°C rating - at least 25°C above maximum ambient. Rate-of-rise could false alarm from normal boiler cycling.</p>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Practical Guidance */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
-
-        <div className="space-y-3">
-          <Card variant="ios" className="border-green-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Combined detectors (A1S/A1R) provide both rate-of-rise response and fixed temperature backup
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Always document the rationale for heat detector selection over smoke detection
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Consider multisensor detectors as an alternative where both types might be appropriate
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card variant="ios" className="border-red-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Using heat detectors where fast detection is critical (sleeping accommodation)
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Selecting temperature rating too close to ambient - causes false alarms
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Using rate-of-rise in areas with rapid legitimate temperature changes
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Fixed temperature (S):</strong> Activates at set threshold (typically 57 degrees)</li>
+              <li><strong>Rate-of-rise (R):</strong> Activates on rapid temperature increase</li>
+              <li><strong>5.3 m coverage radius:</strong> Less than smoke detectors</li>
+              <li><strong>Best for:</strong> Kitchens, boiler rooms, dusty areas</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Kitchen = Rate-of-rise (A1R)</li>
+              <li><strong>Use:</strong> Boiler room = Fixed temp (A1S) higher rating</li>
+              <li><strong>Avoid:</strong> Sleeping areas - use smoke detection</li>
+            </ul>
+          </div>
         </div>
-      </section>
 
-      {/* FAQs */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
-        <div className="space-y-3">
-          {[
-            { q: "Can I use heat detectors in escape routes?", a: "Generally no - smoke detectors are required on escape routes for early warning. Heat detectors may supplement but not replace smoke detection." },
-            { q: "What if a kitchen opens directly onto a corridor?", a: "Use heat detection in the kitchen and smoke detection in the corridor. Consider a multisensor at the transition point." },
-            { q: "How do I choose between A1 and A2 class?", a: "A1 is the fastest response and most commonly specified. A2 may be used where slightly slower response is acceptable." },
-            { q: "Can heat detectors be used with addressable systems?", a: "Yes - addressable heat detectors are available and recommended for larger installations to identify exact device locations." },
-            { q: "Do heat detectors require regular testing?", a: "Yes - weekly functional testing on rotation and annual servicing including thermal response testing per BS 5839-1." },
-            { q: "What is the maximum ceiling height for heat detectors?", a: "BS 5839-1 recommends Class A1/A2 heat detectors up to 9 m ceiling height. Above this, consider linear heat detection or other solutions." }
-          ].map((faq, i) => (
-            <Card key={i} variant="ios">
-              <CardContent className="p-4">
-                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-[13px] text-white/70">{faq.a}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Quiz Section */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-green-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-green-400" />
-              Knowledge Check
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {!showQuiz ? (
-              <div className="text-center py-6">
-                <p className="text-[15px] text-white/70 mb-4">Test your understanding of heat detectors with 10 questions.</p>
-                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
-                  Start Quiz
-                </Button>
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Explain how fixed temperature heat detectors work",
+              "Explain how rate-of-rise heat detectors work",
+              "Interpret BS 5839-1 heat detector classifications",
+              "Apply heat detector siting and spacing requirements",
+              "Select appropriate heat detector types for different environments",
+              "Understand limitations compared to smoke detection"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
-            ) : showResults ? (
-              <div className="space-y-6">
-                <div className="text-center py-4">
-                  <p className="text-[34px] font-bold text-green-400">{calculateScore()}/{questions.length}</p>
-                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
-                </div>
+            ))}
+          </div>
+        </section>
 
-                <div className="space-y-4">
-                  {questions.map((q, i) => {
-                    const correct = selectedAnswers[i] === q.correctAnswer;
-                    return (
-                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
-                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
-                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
-                        </p>
-                        {!correct && (
-                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
-                        )}
-                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
-                      </div>
-                    );
-                  })}
-                </div>
+        {/* Divider */}
+        <hr className="border-white/5 mb-12" />
 
-                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
-                  <RotateCcw className="h-4 w-4" />
-                  Restart Quiz
-                </Button>
+        {/* Section 01: Introduction to Heat Detection */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow text-sm font-normal">01</span>
+            Introduction to Heat Detection
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Heat detectors respond to elevated temperatures rather than smoke particles. They are ideal for environments where smoke detectors would cause false alarms, such as kitchens, boiler rooms, and dusty workshops.
+            </p>
+            <p>
+              The key trade-off is response time - a fire must be more developed to generate sufficient heat, meaning heat detectors provide less early warning than smoke detectors.
+            </p>
+
+            <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-500/50">
+              <p className="text-sm text-white">
+                <strong>Important:</strong> Heat detectors should NOT be used as the primary detection in sleeping accommodation due to slower response times. Smoke detectors are essential for life safety in sleeping risk areas.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 02: Fixed Temperature (Static) Detectors */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow text-sm font-normal">02</span>
+            Fixed Temperature (Static) Detectors
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Activates when the surrounding air temperature reaches a predetermined threshold. The most common rating is 57 degrees Celsius, though higher ratings (78 degrees, 90 degrees) are available for warmer environments.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Classification Suffix: S (Static)</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>A1S:</strong> Class A1 fixed temperature - fastest response</li>
+                <li><strong>A2S:</strong> Class A2 fixed temperature</li>
+                <li><strong>BS, CS, DS:</strong> Other classes with varying response times</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>Typical Applications:</strong> Boiler rooms, laundries, areas with normally elevated temperatures, or environments with fluctuating temperatures where rate-of-rise would false alarm.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 03: Rate-of-Rise Detectors */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow text-sm font-normal">03</span>
+            Rate-of-Rise Detectors
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Activates when temperature increases rapidly - typically 6-8 degrees per minute. This responds faster than fixed temperature detection to developing fires where temperature rises quickly.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Classification Suffix: R (Rate-of-rise)</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>A1R:</strong> Class A1 rate-of-rise - fastest response</li>
+                <li>Responds to rapid temperature changes from fire</li>
+                <li>Faster response than fixed temperature in most fire scenarios</li>
+                <li>May include fixed temperature backup element</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>Typical Applications:</strong> Kitchens, garages, workshops - areas where temperature normally remains stable but smoke detection would cause false alarms from fumes or dust.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 04: BS 5839-1 Classifications */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow text-sm font-normal">04</span>
+            BS 5839-1 Classifications
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Heat detectors are classified by their response characteristics under BS EN 54-5. Understanding classifications helps specify the right detector for each application.
+            </p>
+
+            <div className="my-6 overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-white/20">
+                    <th className="text-left py-2 pr-4 text-white font-medium">Class</th>
+                    <th className="text-left py-2 pr-4 text-white font-medium">Response Time</th>
+                    <th className="text-left py-2 text-white font-medium">Coverage Radius</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 text-elec-yellow font-medium">A1</td>
+                    <td className="py-2 pr-4">Fastest</td>
+                    <td className="py-2">5.3 m</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 text-elec-yellow font-medium">A2</td>
+                    <td className="py-2 pr-4">Very fast</td>
+                    <td className="py-2">5.3 m</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 text-elec-yellow font-medium">B</td>
+                    <td className="py-2 pr-4">Fast</td>
+                    <td className="py-2">5.3 m</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 text-elec-yellow font-medium">C</td>
+                    <td className="py-2 pr-4">Standard</td>
+                    <td className="py-2">5.3 m</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 text-elec-yellow font-medium">D, E, F, G</td>
+                    <td className="py-2 pr-4">Slower (special use)</td>
+                    <td className="py-2">Varies</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p>
+              Class A1 and A2 are most commonly specified for fire alarm systems in the UK. Always specify at least Class A1 or A2 unless there is a specific reason for slower response.
+            </p>
+          </div>
+        </section>
+
+        {/* Section 05: Siting and Spacing Requirements */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow text-sm font-normal">05</span>
+            Siting and Spacing Requirements
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Heat detectors have smaller coverage areas than smoke detectors because heat dissipates more rapidly than smoke spreads.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Key Requirements (BS 5839-1):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Coverage radius:</strong> 5.3 m for Class A1/A2 (flat ceiling)</li>
+                <li><strong>Distance from walls:</strong> Minimum 500 mm</li>
+                <li><strong>Ceiling mounting:</strong> 25-150 mm below apex for pitched roofs</li>
+                <li><strong>Temperature rating:</strong> Select appropriate for ambient conditions</li>
+                <li><strong>Maximum ceiling height:</strong> 9 m for Class A1/A2</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>Temperature Rating Selection:</strong> Choose detector temperature rating at least 25 degrees above maximum expected ambient temperature to prevent false alarms.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 06: Application Guidelines */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow text-sm font-normal">06</span>
+            Application Guidelines
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Selecting between fixed temperature and rate-of-rise depends on the environment characteristics and how temperature normally varies.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-green-400 mb-2">Rate-of-Rise (A1R) Best For</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Kitchens and cooking areas</li>
+                  <li>Garages and vehicle areas</li>
+                  <li>Workshops (stable temperature)</li>
+                  <li>Storage areas</li>
+                </ul>
               </div>
-            ) : (
-              <div className="space-y-6">
-                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
-
-                <div>
-                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-                  <div className="space-y-2">
-                    {questions[currentQuestion].options.map((opt, idx) => {
-                      const selected = selectedAnswers[currentQuestion] === idx;
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => handleAnswerSelect(idx)}
-                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
-                            selected
-                              ? 'bg-green-500/20 border-green-500/50 text-white'
-                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
-                          }`}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between gap-3">
-                  <Button
-                    variant="ios-secondary"
-                    onClick={handlePrevious}
-                    disabled={currentQuestion === 0}
-                    className="flex-1"
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="ios-primary"
-                    onClick={handleNext}
-                    disabled={selectedAnswers[currentQuestion] === -1}
-                    className="flex-1"
-                  >
-                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
+              <div>
+                <p className="text-sm font-medium text-orange-400 mb-2">Fixed Temperature (A1S) Best For</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Boiler rooms</li>
+                  <li>Laundries</li>
+                  <li>Areas with fluctuating temperatures</li>
+                  <li>Hot process environments</li>
+                </ul>
               </div>
-            )}
-          </CardContent>
-        </Card>
-      </section>
+            </div>
+          </div>
+        </section>
 
-      {/* Navigation Footer */}
-      <section className="px-4 pb-safe max-w-3xl mx-auto">
-        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
-          <Button variant="ios-secondary" asChild className="flex-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-2-section-1">
-              <ArrowLeft className="h-4 w-4 mr-2" />
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow mb-2">Pro Tips</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Combined detectors (A1S/A1R) provide both rate-of-rise response and fixed temperature backup - consider these for versatility</li>
+                <li>Always document the rationale for heat detector selection over smoke detection in design documentation</li>
+                <li>Consider multisensor detectors as an alternative where both types might be appropriate</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Using heat detectors in sleeping accommodation:</strong> Smoke detectors are required for adequate warning time</li>
+                <li><strong>Temperature rating too close to ambient:</strong> Causes false alarms - allow 25 degree margin minimum</li>
+                <li><strong>Using rate-of-rise in areas with rapid legitimate temperature changes:</strong> Will cause false alarms when heating cycles</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Quick Reference */}
+        <section className="mb-10">
+          <div className="p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">Detector Type Selection</p>
+                <ul className="space-y-0.5">
+                  <li>A1R = Rate-of-rise (kitchens)</li>
+                  <li>A1S = Fixed temperature (boiler rooms)</li>
+                  <li>A1S/A1R = Combined (versatile)</li>
+                  <li>Higher temp rating = Hot environments</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-white mb-1">Key Measurements</p>
+                <ul className="space-y-0.5">
+                  <li>Coverage radius = 5.3 m (Class A1/A2)</li>
+                  <li>Wall clearance = 500 mm minimum</li>
+                  <li>Max ceiling height = 9 m</li>
+                  <li>Temp margin = 25 degrees above ambient</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button variant="ios-primary" asChild className="flex-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-2-section-3">
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-3">
               Next Section
-              <ArrowRight className="h-4 w-4 ml-2" />
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
-        </div>
-      </section>
+        </nav>
+
+      </article>
     </div>
   );
 };

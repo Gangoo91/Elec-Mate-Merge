@@ -124,7 +124,7 @@ const PATTestingModule5Section4 = () => {
       <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/60">
         <div className="container flex h-14 items-center px-4">
           <Link
-            to="/electrical-upskilling/pat-testing/module5"
+            to=".."
             className="flex items-center gap-2 text-gray-400 hover:text-elec-yellow transition-colors touch-manipulation min-h-[44px]"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -806,13 +806,13 @@ const PATTestingModule5Section4 = () => {
 
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-gray-800">
-          <Link to="/electrical-upskilling/pat-testing/module5/section3">
+          <Link to="../section-3">
             <Button variant="outline" className="w-full sm:w-auto border-gray-700 hover:bg-gray-800 touch-manipulation min-h-[44px]">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Previous: Asset Register
             </Button>
           </Link>
-          <Link to="/electrical-upskilling/pat-testing/module5/section5">
+          <Link to="../section-5">
             <Button className="w-full sm:w-auto bg-elec-yellow text-gray-900 hover:bg-elec-yellow/90 touch-manipulation min-h-[44px]">
               Next: Certification & Reporting
               <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />

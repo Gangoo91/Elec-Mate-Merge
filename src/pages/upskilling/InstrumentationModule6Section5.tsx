@@ -1,507 +1,776 @@
-import { ArrowLeft, ArrowRight, Calendar, Book, AlertTriangle, CheckCircle2, FileText, Shield, Clock, Target, Users, Settings } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { ArrowLeft, Calendar, CheckCircle, HelpCircle, Clock, FileText, Shield, Target, Settings, AlertTriangle, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule6Section5 = () => {
+  useSEO({
+    title: "Calibration Intervals, Certificates, and UKAS Traceability | Instrumentation Module 6",
+    description: "Learn about calibration scheduling approaches, certificate interpretation, UKAS traceability requirements, and building effective calibration programmes.",
+    keywords: ["calibration intervals", "UKAS traceability", "calibration certificates", "calibration scheduling", "NPL", "calibration programme"]
+  });
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/instrumentation-module-6">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 6
-          </Button>
-        </Link>
-        
-        <div className="space-y-8">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Calendar className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-4xl font-bold text-white">
-                  Calibration Intervals, Certificates, and UKAS Traceability
-                </h1>
-                <p className="text-xl text-gray-400">
-                  Module 6, Section 5
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Section 6.5
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                18 minutes
-              </Badge>
-            </div>
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="px-4 py-3">
+          <Link to=".." className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+            <ArrowLeft className="h-5 w-5 mr-2" />
+            <span className="font-medium">Back to Module 6</span>
+          </Link>
+        </div>
+      </div>
+
+      <div className="px-4 py-6 max-w-4xl mx-auto">
+        {/* Title Section */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/20 mb-4">
+            <Calendar className="h-8 w-8 text-elec-yellow" />
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            Calibration Intervals, Certificates, and UKAS Traceability
+          </h1>
+          <p className="text-white">
+            Module 6 · Section 5 · 18 min read
+          </p>
+        </div>
+
+        {/* Quick Summary Box */}
+        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 mb-8">
+          <h2 className="font-semibold text-white mb-2 flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-elec-yellow" />
+            What You Will Learn
+          </h2>
+          <ul className="space-y-1 text-white">
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow mt-1">•</span>
+              Different approaches to calibration scheduling (time-based, usage-based, risk-based)
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow mt-1">•</span>
+              How to interpret calibration certificates and their essential components
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow mt-1">•</span>
+              UKAS traceability requirements and their practical implications
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-elec-yellow mt-1">•</span>
+              Building an effective site-wide calibration programme
+            </li>
+          </ul>
+        </div>
+
+        {/* Section 01 - Calibration Intervals */}
+        <section className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <h2 className="text-xl font-semibold text-white">Calibration Interval Approaches</h2>
           </div>
 
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Book className="h-5 w-5 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Explore how often calibration should happen, how it's certified, and what 
-                traceability looks like in practice. Proper calibration scheduling and 
-                documentation are essential for maintaining measurement accuracy and regulatory compliance.
-              </p>
-              <p>
-                This section covers the strategic aspects of calibration management, including 
-                how to establish effective calibration intervals, interpret calibration certificates, 
-                and maintain UKAS traceability throughout your organisation.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="space-y-6">
+            <p className="text-white leading-relaxed">
+              Calibration intervals determine how often instruments are recalibrated. There is no single "correct" interval - the right approach depends on the instrument, its application, environmental conditions, and regulatory requirements.
+            </p>
 
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="space-y-2">
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-blue-400" />
+                  Time-Based
+                </h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    Fixed intervals: 6, 12, or 24 months
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    Predictable and easy to manage
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    May be too frequent or infrequent
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    Best for stable environments
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-green-400" />
+                  Usage-Based
+                </h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    Every 1000 operating hours
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    After 10,000 measurements
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    Matches actual wear and tear
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    Requires usage monitoring
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <Target className="h-5 w-5 text-purple-400" />
+                  Risk-Based
+                </h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400">•</span>
+                    Critical instruments: more frequent
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400">•</span>
+                    Based on drift patterns and history
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400">•</span>
+                    Considers consequence of error
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-purple-400">•</span>
+                    Optimised resource allocation
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Factors Affecting Frequency */}
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-3">Factors Affecting Calibration Frequency</h3>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <h4 className="font-medium text-elec-yellow mb-2 text-sm">Environmental Factors</h4>
+                  <ul className="space-y-1 text-white text-sm">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Temperature variations and cycling
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Humidity and moisture exposure
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Vibration and mechanical stress
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Electromagnetic interference
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Corrosive atmospheres
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-medium text-elec-yellow mb-2 text-sm">Operational Factors</h4>
+                  <ul className="space-y-1 text-white text-sm">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Frequency of use and duty cycle
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Handling and transportation
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Process stability requirements
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Regulatory compliance needs
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Cost of calibration vs. risk
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck
+          question="What approach should you use for a safety-critical pressure sensor that directly affects product quality?"
+          answer="Risk-based scheduling with more frequent calibration intervals. Safety-critical instruments require shorter intervals because the consequence of measurement error is high. You would also implement interim verification checks between calibrations."
+        />
+
+        {/* Section 02 - Calibration Certificate Interpretation */}
+        <section className="mb-10 mt-10">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <h2 className="text-xl font-semibold text-white">Calibration Certificate Interpretation</h2>
+          </div>
+
+          <div className="space-y-6">
+            <p className="text-white leading-relaxed">
+              Understanding how to read and interpret calibration certificates is essential for verifying that calibration was performed correctly and meets your requirements. A certificate is only useful if you know what to look for.
+            </p>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-blue-400" />
+                  Identification Information
+                </h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Unique Certificate ID:</strong> Traceable reference number
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Device Information:</strong> Make, model, serial number
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Calibration Date:</strong> When performed
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Issue Date:</strong> When certificate issued
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Recommended Recalibration:</strong> Suggested due date
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-green-400" />
+                  Technical Data
+                </h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    <strong>Measurement Results:</strong> Actual readings obtained
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    <strong>Measurement Uncertainty:</strong> ±values at each point
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    <strong>Environmental Conditions:</strong> Temperature, humidity
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    <strong>Standards Used:</strong> Reference equipment details
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    <strong>Traceability Statement:</strong> Link to national standards
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Key Things to Check */}
+            <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
+              <h3 className="font-semibold text-orange-400 mb-2 flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4" />
+                Key Things to Check on a Certificate
+              </h3>
+              <ul className="text-white text-sm space-y-1">
                 <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Define calibration intervals and understand different scheduling approaches</span>
+                  <span className="text-orange-400">1.</span>
+                  Does the serial number match your instrument?
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Interpret calibration certificates and understand their essential components</span>
+                  <span className="text-orange-400">2.</span>
+                  Is the laboratory UKAS accredited for this type of calibration?
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Understand UKAS traceability requirements and their practical implications</span>
+                  <span className="text-orange-400">3.</span>
+                  Is the measurement uncertainty acceptable for your application?
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-400">4.</span>
+                  Do the results show the instrument is within specification?
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-400">5.</span>
+                  Is the certificate properly signed and dated?
                 </li>
               </ul>
-            </CardContent>
-          </Card>
-
-          {/* Calibration Intervals */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Clock className="h-5 w-5 text-yellow-400" />
-                Calibration Intervals and Scheduling Approaches
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Types of Calibration Scheduling</h4>
-              
-              <div className="grid md:grid-cols-3 gap-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Time-Based Schedules</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Fixed Intervals:</strong> 6, 12, 24 months</li>
-                    <li>• <strong>Advantages:</strong> Predictable, easy to manage</li>
-                    <li>• <strong>Disadvantages:</strong> May be too frequent or infrequent</li>
-                    <li>• <strong>Best For:</strong> Stable environments, routine operations</li>
-                    <li>• <strong>Example:</strong> Office equipment, standard test meters</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Usage-Based Schedules</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Operating Hours:</strong> Every 1000 hours of use</li>
-                    <li>• <strong>Measurement Count:</strong> After 10,000 readings</li>
-                    <li>• <strong>Advantages:</strong> Matches actual wear and tear</li>
-                    <li>• <strong>Disadvantages:</strong> Requires usage monitoring</li>
-                    <li>• <strong>Example:</strong> Production line instruments</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Risk-Based Schedules</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Critical Instruments:</strong> More frequent calibration</li>
-                    <li>• <strong>Historical Data:</strong> Based on drift patterns</li>
-                    <li>• <strong>Process Impact:</strong> Consequence of measurement error</li>
-                    <li>• <strong>Advantages:</strong> Optimised resource allocation</li>
-                    <li>• <strong>Example:</strong> Safety-critical sensors</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <h4 className="text-yellow-400 font-semibold mb-3 mt-6">Factors Affecting Calibration Frequency</h4>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Environmental Factors</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• Temperature variations and cycling</li>
-                    <li>• Humidity and moisture exposure</li>
-                    <li>• Vibration and mechanical stress</li>
-                    <li>• Electromagnetic interference</li>
-                    <li>• Corrosive atmospheres</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Operational Factors</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• Frequency of use and duty cycle</li>
-                    <li>• Handling and transportation</li>
-                    <li>• Process stability requirements</li>
-                    <li>• Regulatory compliance needs</li>
-                    <li>• Cost of calibration vs. risk</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Calibration Certificates */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <FileText className="h-5 w-5 text-yellow-400" />
-                Calibration Certificate Contents and Interpretation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Essential Certificate Components</h4>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Identification Information</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Unique Certificate ID:</strong> Traceable reference number</li>
-                    <li>• <strong>Device Information:</strong> Make, model, serial number</li>
-                    <li>• <strong>Customer Details:</strong> Company name and address</li>
-                    <li>• <strong>Calibration Date:</strong> When calibration was performed</li>
-                    <li>• <strong>Issue Date:</strong> When certificate was issued</li>
-                    <li>• <strong>Validity Period:</strong> Recommended recalibration date</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Technical Data</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Measurement Results:</strong> Before and after readings</li>
-                    <li>• <strong>Measurement Uncertainty:</strong> ±uncertainty values</li>
-                    <li>• <strong>Environmental Conditions:</strong> Temperature, humidity</li>
-                    <li>• <strong>Standards Used:</strong> Reference equipment details</li>
-                    <li>• <strong>Traceability Chain:</strong> Link to national standards</li>
-                    <li>• <strong>Pass/Fail Status:</strong> Conformity assessment</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <h5 className="text-white font-semibold mb-2">Authorisation and Validity</h5>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Technician Signature:</strong> Qualified person who performed calibration</li>
-                    <li>• <strong>Supervisor Approval:</strong> Quality assurance signature</li>
-                    <li>• <strong>Laboratory Accreditation:</strong> UKAS or equivalent accreditation mark</li>
-                  </ul>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Scope of Accreditation:</strong> What measurements are covered</li>
-                    <li>• <strong>Limitations:</strong> Any restrictions on certificate use</li>
-                    <li>• <strong>Contact Information:</strong> Laboratory details for queries</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* UKAS Traceability */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-5 w-5 text-yellow-400" />
-                UKAS Traceability and National Standards
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Understanding UKAS Role</h4>
-              
-              <div className="space-y-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">What is UKAS?</h5>
-                  <p>
-                    The United Kingdom Accreditation Service (UKAS) is the national accreditation body 
-                    for the UK. It provides accreditation for testing, inspection, calibration, and 
-                    certification services to international standards.
-                  </p>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Traceability Chain</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>National Physical Laboratory (NPL):</strong> UK's national measurement institute</li>
-                    <li>• <strong>Primary Standards:</strong> Maintained by NPL, traceable to SI units</li>
-                    <li>• <strong>Secondary Standards:</strong> UKAS-accredited calibration laboratories</li>
-                    <li>• <strong>Working Standards:</strong> Used by laboratories for routine calibration</li>
-                    <li>• <strong>User Instruments:</strong> Field instruments calibrated by working standards</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Benefits of UKAS Accreditation</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>International Recognition:</strong> Mutual recognition agreements worldwide</li>
-                    <li>• <strong>Regulatory Acceptance:</strong> Accepted by UK and EU regulators</li>
-                    <li>• <strong>Quality Assurance:</strong> Regular assessment of laboratory competence</li>
-                    <li>• <strong>Technical Credibility:</strong> Demonstrates measurement capability</li>
-                    <li>• <strong>Risk Reduction:</strong> Reduces measurement-related risks</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* When to Recalibrate */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-5 w-5 text-yellow-400" />
-                When Recalibration is Required
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Immediate Recalibration Triggers</h4>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Physical Damage:</strong> Dropped, damaged, or exposed to extremes</li>
-                    <li>• <strong>Unusual Readings:</strong> Unexpected or inconsistent results</li>
-                    <li>• <strong>Failed Checks:</strong> Performance verification failures</li>
-                    <li>• <strong>Overrange Events:</strong> Measurements beyond specified limits</li>
-                    <li>• <strong>Repair or Modification:</strong> After any internal work</li>
-                    <li>• <strong>Suspected Contamination:</strong> Exposure to harmful substances</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="text-yellow-400 font-semibold mb-2">Regulatory and Compliance Triggers</h4>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Regulation Updates:</strong> New regulatory requirements</li>
-                    <li>• <strong>Audit Findings:</strong> Non-conformances identified</li>
-                    <li>• <strong>Standard Changes:</strong> Updated calibration procedures</li>
-                    <li>• <strong>Process Changes:</strong> New applications or requirements</li>
-                    <li>• <strong>Quality Issues:</strong> Product failures linked to measurements</li>
-                    <li>• <strong>Customer Requirements:</strong> Specific calibration demands</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Site-Wide Calibration Program */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 text-yellow-400" />
-                Creating a Site-Wide Calibration Program
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Program Development Steps</h4>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">1. Instrument Inventory</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Complete survey of all measuring equipment</li>
-                      <li>• Assign unique identification numbers</li>
-                      <li>• Document location and application</li>
-                      <li>• Record manufacturer specifications</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">2. Risk Assessment</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Identify critical measurement points</li>
-                      <li>• Assess impact of measurement errors</li>
-                      <li>• Determine required accuracy levels</li>
-                      <li>• Classify instruments by importance</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">3. Interval Determination</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Apply manufacturer recommendations</li>
-                      <li>• Consider operating conditions</li>
-                      <li>• Review historical performance data</li>
-                      <li>• Balance risk with cost considerations</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">4. Supplier Selection</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Verify UKAS accreditation</li>
-                      <li>• Check scope of accreditation coverage</li>
-                      <li>• Evaluate technical competence</li>
-                      <li>• Consider location and logistics</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">5. Documentation System</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Calibration database or software</li>
-                      <li>• Automated scheduling and reminders</li>
-                      <li>• Certificate storage and retrieval</li>
-                      <li>• Audit trail maintenance</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">6. Continuous Improvement</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• Monitor calibration results trends</li>
-                      <li>• Adjust intervals based on performance</li>
-                      <li>• Regular program review and updates</li>
-                      <li>• Cost-benefit analysis</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Scenario */}
-          <Card className="bg-gradient-to-r from-elec-gray to-elec-dark border-yellow-400/30">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
-                Real World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p className="font-semibold text-yellow-400">
-                Factory Uses Vibration-Prone Equipment
-              </p>
-              <p>
-                A manufacturing facility produces precision components using CNC machines that operate 
-                24/7 in a high-vibration environment. The quality control department uses various 
-                measuring instruments that are subject to mechanical stress and vibration.
-              </p>
-              <div className="bg-card p-3 rounded border border-gray-600">
-                <h5 className="text-yellow-400 font-semibold text-sm mb-2">Challenge Identified:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Standard 12-month calibration intervals proving insufficient</li>
-                  <li>• Dimensional measuring tools showing significant drift</li>
-                  <li>• Customer complaints about product tolerance variations</li>
-                  <li>• Quality audit findings highlighting measurement inconsistencies</li>
-                </ul>
-              </div>
-              <div className="bg-green-900/20 p-3 rounded border border-green-600/30">
-                <h5 className="text-green-400 font-semibold text-sm mb-2">Solution Implemented:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Reduced calibration intervals to 6 months for critical instruments</li>
-                  <li>• Implemented monthly performance verification checks</li>
-                  <li>• Added vibration isolation mounts for sensitive equipment</li>
-                  <li>• Established trend monitoring to track instrument stability</li>
-                  <li>• Created risk-based calibration matrix for different instrument types</li>
-                </ul>
-              </div>
-              <p className="text-sm italic text-green-400">
-                Result: 90% reduction in quality-related customer complaints and improved 
-                process capability indices across all critical dimensions.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Knowledge Check */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
-                Knowledge Check
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="space-y-4">
-                <div className="bg-card p-4 rounded-md border border-gray-600">
-                  <p className="font-semibold mb-2">1. What affects how often calibration is needed?</p>
-                  <p className="text-sm text-gray-400">
-                    Answer: Environmental conditions (temperature, vibration, humidity), usage frequency, 
-                    instrument stability, regulatory requirements, and the criticality of measurements.
-                  </p>
-                </div>
-                <div className="bg-card p-4 rounded-md border border-gray-600">
-                  <p className="font-semibold mb-2">2. What's included in a calibration certificate?</p>
-                  <p className="text-sm text-gray-400">
-                    Answer: Unique certificate ID, device identification, measurement results, 
-                    measurement uncertainty, traceability chain, environmental conditions, 
-                    and authorised signatures.
-                  </p>
-                </div>
-                <div className="bg-card p-4 rounded-md border border-gray-600">
-                  <p className="font-semibold mb-2">3. What does UKAS traceability ensure?</p>
-                  <p className="text-sm text-gray-400">
-                    Answer: An unbroken chain of measurements linking field instruments to 
-                    national standards maintained by NPL, ensuring measurement accuracy and 
-                    international recognition.
-                  </p>
-                </div>
-                <div className="bg-card p-4 rounded-md border border-gray-600">
-                  <p className="font-semibold mb-2">4. When should recalibration happen?</p>
-                  <p className="text-sm text-gray-400">
-                    Answer: After damage, unusual readings, failed checks, repairs, regulation 
-                    updates, audit findings, or when scheduled intervals are reached.
-                  </p>
-                </div>
-                <div className="bg-card p-4 rounded-md border border-gray-600">
-                  <p className="font-semibold mb-2">5. Why create a site-wide calibration program?</p>
-                  <p className="text-sm text-gray-400">
-                    Answer: To ensure consistent measurement quality, regulatory compliance, 
-                    optimised costs, reduced risks, and systematic management of all measuring equipment.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p>
-                Effective calibration programs ensure continuous reliability through proper scheduling, 
-                comprehensive documentation, and maintained traceability. Risk-based approaches optimise 
-                resources whilst maintaining measurement integrity and regulatory compliance.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Link to="/study-centre/upskilling/instrumentation-module-6-section-4">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/study-centre/upskilling/instrumentation-module-6-section-6">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 touch-manipulation active:scale-[0.98]">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+            </div>
           </div>
+        </section>
+
+        {/* Section 03 - UKAS Traceability */}
+        <section className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <h2 className="text-xl font-semibold text-white">UKAS Traceability and National Standards</h2>
+          </div>
+
+          <div className="space-y-6">
+            <p className="text-white leading-relaxed">
+              UKAS (United Kingdom Accreditation Service) is the UK's national accreditation body. UKAS accreditation demonstrates that a laboratory is competent to perform specific calibrations and that results are traceable to national standards.
+            </p>
+
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Shield className="h-5 w-5 text-elec-yellow" />
+                The Traceability Chain
+              </h3>
+              <div className="space-y-3">
+                <div className="bg-elec-yellow/20 border border-elec-yellow/40 rounded-lg p-3">
+                  <h4 className="font-semibold text-elec-yellow text-sm">National Physical Laboratory (NPL)</h4>
+                  <p className="text-white text-sm mt-1">
+                    UK's national measurement institute. Maintains primary standards directly linked to SI units (International System of Units).
+                  </p>
+                </div>
+
+                <div className="bg-purple-500/20 border border-purple-500/40 rounded-lg p-3 ml-4">
+                  <h4 className="font-semibold text-purple-400 text-sm">UKAS-Accredited Laboratories</h4>
+                  <p className="text-white text-sm mt-1">
+                    Secondary standards calibrated by NPL. Provide accredited calibration services with documented uncertainty and traceability.
+                  </p>
+                </div>
+
+                <div className="bg-blue-500/20 border border-blue-500/40 rounded-lg p-3 ml-8">
+                  <h4 className="font-semibold text-blue-400 text-sm">Working Standards</h4>
+                  <p className="text-white text-sm mt-1">
+                    Used by industry for day-to-day calibration. Calibrated against secondary standards from UKAS laboratories.
+                  </p>
+                </div>
+
+                <div className="bg-green-500/20 border border-green-500/40 rounded-lg p-3 ml-12">
+                  <h4 className="font-semibold text-green-400 text-sm">Your Instruments</h4>
+                  <p className="text-white text-sm mt-1">
+                    Field instruments calibrated against working standards. Complete the traceability chain back to SI units.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Benefits of UKAS */}
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3">Benefits of UKAS Accreditation</h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    International recognition through MRA agreements
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    Accepted by UK and international regulators
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    Regular assessment of laboratory competence
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    Demonstrates technical credibility
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-400">•</span>
+                    Reduces measurement-related risks
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3">When UKAS is Required</h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    Regulatory compliance requirements
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    ISO 9001/ISO 17025 audits
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    Customer contract specifications
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    Safety-critical applications
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    Legal or liability considerations
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck
+          question="What does UKAS accreditation guarantee about a calibration certificate?"
+          answer="UKAS accreditation guarantees that the laboratory has been independently assessed as competent to perform that specific type of calibration, that their results are traceable to national standards (NPL), and that they operate to ISO/IEC 17025 requirements. It does not guarantee the instrument is accurate - only that the calibration was performed competently."
+        />
+
+        {/* Section 04 - When to Recalibrate */}
+        <section className="mb-10 mt-10">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <h2 className="text-xl font-semibold text-white">When Recalibration is Required</h2>
+          </div>
+
+          <div className="space-y-6">
+            <p className="text-white leading-relaxed">
+              Beyond scheduled intervals, certain events should trigger immediate recalibration. Recognising these triggers prevents the use of potentially inaccurate instruments.
+            </p>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <AlertTriangle className="h-5 w-5 text-red-400" />
+                  Immediate Recalibration Triggers
+                </h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    <strong>Physical Damage:</strong> Dropped, impacted, or exposed to extremes
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    <strong>Unusual Readings:</strong> Unexpected or inconsistent results
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    <strong>Failed Verification:</strong> Performance check failures
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    <strong>Overrange Events:</strong> Measurements beyond limits
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    <strong>After Repair:</strong> Any internal modification or repair
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    <strong>Contamination:</strong> Exposure to harmful substances
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <Settings className="h-5 w-5 text-blue-400" />
+                  Compliance Triggers
+                </h3>
+                <ul className="space-y-2 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Regulation Updates:</strong> New regulatory requirements
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Audit Findings:</strong> Non-conformances identified
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Standard Changes:</strong> Updated calibration procedures
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Process Changes:</strong> New application requirements
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Quality Issues:</strong> Product failures linked to measurement
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-blue-400">•</span>
+                    <strong>Customer Requirements:</strong> Specific calibration demands
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 05 - Building a Calibration Programme */}
+        <section className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
+            <h2 className="text-xl font-semibold text-white">Building a Site-Wide Calibration Programme</h2>
+          </div>
+
+          <div className="space-y-6">
+            <p className="text-white leading-relaxed">
+              An effective calibration programme ensures all measuring equipment is properly managed, calibrated at appropriate intervals, and maintains traceability. Here are the key steps to develop one.
+            </p>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">1. Instrument Inventory</h3>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Complete survey of all measuring equipment
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Assign unique identification numbers
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Document location and application
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Record manufacturer specifications
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">2. Risk Assessment</h3>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Identify critical measurement points
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Assess impact of measurement errors
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Determine required accuracy levels
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Classify instruments by importance
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">3. Interval Determination</h3>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Apply manufacturer recommendations
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Consider operating conditions
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Review historical performance data
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Balance risk with cost
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">4. Supplier Selection</h3>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Verify UKAS accreditation
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Check scope of accreditation
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Evaluate technical competence
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Consider location and turnaround time
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">5. Documentation System</h3>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Calibration database or software
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Automated scheduling and reminders
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Certificate storage and retrieval
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Audit trail maintenance
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-card/50 rounded-lg p-4 border border-border">
+                <h3 className="font-semibold text-elec-yellow mb-2 text-sm">6. Continuous Improvement</h3>
+                <ul className="space-y-1 text-white text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Monitor calibration result trends
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Adjust intervals based on performance
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Regular programme review
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
+                    Cost-benefit analysis
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck
+          question="Why is a complete instrument inventory the first step in building a calibration programme?"
+          answer="You cannot manage what you do not know exists. A complete inventory ensures every measuring instrument is identified, tracked, and included in the calibration schedule. Missing instruments from the inventory leads to uncalibrated equipment being used, risking measurement errors and audit failures."
+        />
+
+        {/* Real World Scenario */}
+        <div className="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/30 rounded-lg p-4 mb-10 mt-10">
+          <h3 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
+            <CheckCircle className="h-5 w-5" />
+            Real World Scenario: High-Vibration Manufacturing Environment
+          </h3>
+          <p className="text-white text-sm leading-relaxed mb-3">
+            A precision component manufacturer operates CNC machines 24/7 in a high-vibration environment. Quality control instruments were showing significant drift at standard 12-month intervals, leading to customer complaints about tolerance variations.
+          </p>
+          <div className="bg-card/50 rounded-lg p-3 border border-border mb-3">
+            <h4 className="font-medium text-elec-yellow text-sm mb-2">Solution Implemented:</h4>
+            <ul className="text-white text-sm space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">1.</span>
+                Reduced intervals to 6 months for critical instruments
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">2.</span>
+                Implemented monthly performance verification checks
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">3.</span>
+                Added vibration isolation mounts for sensitive equipment
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">4.</span>
+                Established trend monitoring to track stability
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">5.</span>
+                Created risk-based calibration matrix by instrument type
+              </li>
+            </ul>
+          </div>
+          <p className="text-green-400 text-sm italic">
+            Result: 90% reduction in quality-related customer complaints and improved process capability indices across all critical dimensions.
+          </p>
+        </div>
+
+        {/* FAQs Section */}
+        <section className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <HelpCircle className="h-6 w-6 text-elec-yellow" />
+            <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-2">Can I extend calibration intervals to save money?</h3>
+              <p className="text-white text-sm">
+                Yes, but only with justification. You need historical data showing the instrument remains stable over the current interval. Track as-found readings over several calibration cycles - if consistently within tolerance, you may justify extending intervals. Document your rationale and get management approval.
+              </p>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-2">Is UKAS calibration always required?</h3>
+              <p className="text-white text-sm">
+                Not always. UKAS calibration is required when regulations mandate it, customers specify it, or for safety-critical applications. For non-critical measurements, calibration by a competent person using traceable standards may be acceptable. Check your specific regulatory and customer requirements.
+              </p>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-2">What if my instrument is out of calibration when due?</h3>
+              <p className="text-white text-sm">
+                An overdue instrument should not be used for measurements until recalibrated. Quarantine it with a clear label. Review any measurements made since it was due - you may need to assess the impact on product quality and potentially recall or re-test products measured during the overdue period.
+              </p>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4 border border-border">
+              <h3 className="font-semibold text-white mb-2">How do I verify my calibration supplier is competent?</h3>
+              <p className="text-white text-sm">
+                Check their UKAS accreditation schedule online at the UKAS website. Verify the specific measurements you need are within their scope of accreditation. Ask for sample certificates and check they include all required information. Consider performing a supplier audit if calibration is critical to your quality system.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz Section */}
+        <section className="mb-10">
+          <SingleQuestionQuiz
+            question="Which approach to calibration scheduling is most appropriate for a rarely-used but safety-critical instrument?"
+            options={[
+              "Usage-based - calibrate after every 1000 uses",
+              "Time-based - standard 12-month interval",
+              "Risk-based - more frequent calibration despite low usage due to safety criticality",
+              "No calibration needed if rarely used"
+            ]}
+            correctAnswer={2}
+            explanation="Risk-based scheduling is most appropriate. Even though usage is low, the safety-critical nature means the consequence of measurement error is high. Risk-based scheduling considers the impact of failure, not just usage, ensuring adequate calibration frequency to maintain safety regardless of how often the instrument is used."
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-border">
+          <Link to="/study-centre/upskilling/instrumentation-module-6-section-4" className="w-full sm:w-auto">
+            <Button variant="outline" className="w-full h-11 touch-manipulation border-border hover:bg-card">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
+            </Button>
+          </Link>
+          <Link to="/study-centre/upskilling/instrumentation-module-6-section-6" className="w-full sm:w-auto">
+            <Button className="w-full h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              Next Section
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

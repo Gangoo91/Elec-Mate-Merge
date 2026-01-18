@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { ArrowLeft, Zap, CheckCircle, Info, BookOpen, Lightbulb, AlertTriangle, HelpCircle, ChevronDown, ChevronUp, Route, Grid, CircleDot, Box } from "lucide-react";
+import { ArrowLeft, Route, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Grid, Box, CircleDot } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import { SingleQuestionQuiz } from "@/components/apprentice-courses/SingleQuestionQuiz";
 import useSEO from "@/hooks/useSEO";
 
 const TITLE = "Routing and Containment | Fibre Optics Module 3";
@@ -119,20 +119,22 @@ const FiberOpticsModule3Section3 = () => {
     description: DESCRIPTION
   });
 
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
+    <div className="min-h-screen bg-background text-white">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/60">
-        <div className="container flex h-14 max-w-screen-2xl items-center px-4">
-          <Link
-            to="/study-centre/apprentice/fibre-optics/module-3"
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors touch-manipulation min-h-[44px]"
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
+        <div className="container max-w-3xl mx-auto px-4 h-14 flex items-center">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Module 3</span>
-          </Link>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
       </header>
 
@@ -141,51 +143,37 @@ const FiberOpticsModule3Section3 = () => {
         <section className="text-center space-y-4">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm font-medium px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
             <Route className="h-4 w-4" />
-            Module 3 • Section 3
+            Module 3 - Section 3
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
             Routing and Containment
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Cable tray, conduit, basket, and duct systems for fibre installation
           </p>
         </section>
 
-        {/* Quick Summary Cards */}
+        {/* Quick Summary Boxes */}
         <section className="grid sm:grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-xl p-5 border border-elec-yellow/30">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-lg bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                <Zap className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">In 30 Seconds</h3>
-                <p className="text-sm text-white/80">
-                  Conduit fill: 40% max. Tray: maintain bend radius at fittings. Basket: great ventilation. Segregate from power (50mm min). Support vertical runs every 1-1.5m.
-                </p>
-              </div>
-            </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <h3 className="font-semibold text-white mb-2">In 30 Seconds</h3>
+            <p className="text-sm text-white">
+              Conduit fill: 40% max. Tray: maintain bend radius at fittings. Basket: great ventilation. Segregate from power (50mm min). Support vertical runs every 1-1.5m.
+            </p>
           </div>
-          <div className="bg-gradient-to-br from-blue-500/20 to-blue-500/5 rounded-xl p-5 border border-blue-500/30">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <Info className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Route It / Install It</h3>
-                <p className="text-sm text-white/80">
-                  Plan route before pulling. Check bend radius at all turns. Use appropriate fittings. Leave draw cord for future pulls. Label routes and containment.
-                </p>
-              </div>
-            </div>
+          <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
+            <h3 className="font-semibold text-white mb-2">Route It / Install It</h3>
+            <p className="text-sm text-white">
+              Plan route before pulling. Check bend radius at all turns. Use appropriate fittings. Leave draw cord for future pulls. Label routes and containment.
+            </p>
           </div>
         </section>
 
         {/* Learning Outcomes */}
         <section className="bg-white/5 rounded-xl p-6 border border-white/10">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-elec-yellow" />
-            What You'll Learn
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-white">
+            <CheckCircle className="h-5 w-5 text-green-400" />
+            What You Will Learn
           </h2>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
@@ -198,22 +186,22 @@ const FiberOpticsModule3Section3 = () => {
             ].map((outcome, index) => (
               <div key={index} className="flex items-start gap-2">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Section 1: Cable Tray Systems */}
+        {/* Section 01: Cable Tray Systems */}
         <section className="space-y-4">
           <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">01</span>
-            <h2 className="text-2xl font-bold">Cable Tray Systems</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-background font-bold text-sm">01</span>
+            <h2 className="text-2xl font-bold text-white">Cable Tray Systems</h2>
           </div>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
-              <strong>Cable tray</strong> provides a continuous support system for routing fibre cables across long horizontal and vertical distances. Available in various configurations, tray systems are widely used in commercial buildings, data centres, and industrial facilities.
+              Cable tray provides a continuous support system for routing fibre cables across long horizontal and vertical distances. Available in various configurations, tray systems are widely used in commercial buildings, data centres, and industrial facilities.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4">
@@ -222,12 +210,12 @@ const FiberOpticsModule3Section3 = () => {
                   <Grid className="h-4 w-4" />
                   Ladder Rack
                 </h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Side rails with cross rungs</li>
-                  <li>• Open bottom for ventilation</li>
-                  <li>• High load capacity</li>
-                  <li>• Data centre standard</li>
-                  <li>• Easy cable addition</li>
+                <ul className="text-sm space-y-1 text-white">
+                  <li>- Side rails with cross rungs</li>
+                  <li>- Open bottom for ventilation</li>
+                  <li>- High load capacity</li>
+                  <li>- Data centre standard</li>
+                  <li>- Easy cable addition</li>
                 </ul>
               </div>
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
@@ -235,19 +223,19 @@ const FiberOpticsModule3Section3 = () => {
                   <Box className="h-4 w-4" />
                   Solid/Perforated Tray
                 </h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Continuous bottom support</li>
-                  <li>• Prevents cable sag</li>
-                  <li>• Better for small cables</li>
-                  <li>• May meet fire requirements</li>
-                  <li>• Perforations aid ventilation</li>
+                <ul className="text-sm space-y-1 text-white">
+                  <li>- Continuous bottom support</li>
+                  <li>- Prevents cable sag</li>
+                  <li>- Better for small cables</li>
+                  <li>- May meet fire requirements</li>
+                  <li>- Perforations aid ventilation</li>
                 </ul>
               </div>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-elec-yellow mb-3">Tray Installation Requirements</h4>
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-sm text-white">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
                   <span><strong>Support spacing:</strong> Maximum 1.5-2m for horizontal runs</span>
@@ -271,12 +259,12 @@ const FiberOpticsModule3Section3 = () => {
               </div>
             </div>
 
-            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
+            <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
               <h4 className="font-semibold text-amber-400 mb-2 flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
                 Tray Bend Radius
               </h4>
-              <p className="text-sm">
+              <p className="text-sm text-white">
                 Factory-made tray bends come in standard radii (typically 150mm, 300mm, 450mm inside radius). Verify the bend radius of fittings exceeds the minimum bend radius for all cables that will be installed. A 90° bend with 150mm inner radius may be insufficient for larger fibre cables requiring 200mm minimum radius.
               </p>
             </div>
@@ -292,73 +280,70 @@ const FiberOpticsModule3Section3 = () => {
           explanation={quickCheckQuestions[1].explanation}
         />
 
-        {/* Section 2: Conduit Systems */}
+        {/* Section 02: Conduit Systems */}
         <section className="space-y-4">
           <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">02</span>
-            <h2 className="text-2xl font-bold">Conduit Systems</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-background font-bold text-sm">02</span>
+            <h2 className="text-2xl font-bold text-white">Conduit Systems</h2>
           </div>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
-              <strong>Conduit</strong> provides enclosed protection for fibre cables, particularly useful where cables must be concealed in walls, floors, or protected from damage. Proper sizing is critical to enable installation and future cable additions.
+              Conduit provides enclosed protection for fibre cables, particularly useful where cables must be concealed in walls, floors, or protected from damage. Proper sizing is critical to enable installation and future cable additions.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-elec-yellow mb-3">Conduit Types</h4>
-              <div className="space-y-3 text-sm">
+              <div className="space-y-3 text-sm text-white">
                 <div>
                   <h5 className="font-medium text-white">Steel Conduit</h5>
-                  <p className="text-white/70">Galvanised or stainless steel. High mechanical protection. Requires earthing. Used in industrial environments or where EMI shielding beneficial for any metallic cable elements.</p>
+                  <p>Galvanised or stainless steel. High mechanical protection. Requires earthing. Used in industrial environments or where EMI shielding beneficial for any metallic cable elements.</p>
                 </div>
                 <div>
                   <h5 className="font-medium text-white">PVC Conduit</h5>
-                  <p className="text-white/70">Rigid PVC for internal use. Round or oval profiles. Light, easy to install. Check fire rating for building requirements. Common for data cabling.</p>
+                  <p>Rigid PVC for internal use. Round or oval profiles. Light, easy to install. Check fire rating for building requirements. Common for data cabling.</p>
                 </div>
                 <div>
                   <h5 className="font-medium text-white">Flexible Conduit</h5>
-                  <p className="text-white/70">Metal or plastic corrugated tube. Allows routing around obstacles. Not for long runs due to increased friction. Useful for final connection to equipment.</p>
+                  <p>Metal or plastic corrugated tube. Allows routing around obstacles. Not for long runs due to increased friction. Useful for final connection to equipment.</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-              <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Info className="h-4 w-4" />
-                Conduit Fill Ratio
-              </h4>
-              <p className="text-sm mb-3">
+            <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
+              <h4 className="font-semibold text-blue-400 mb-2">Conduit Fill Ratio</h4>
+              <p className="text-sm mb-3 text-white">
                 Maximum fill ratio ensures cables can be pulled without damage and allows for expansion:
               </p>
-              <ul className="text-sm space-y-1">
-                <li>• <strong>Single cable:</strong> 53% maximum cross-sectional fill</li>
-                <li>• <strong>Two cables:</strong> 31% maximum</li>
-                <li>• <strong>Three or more:</strong> 40% maximum</li>
-                <li>• <strong>Best practice:</strong> Aim for 25-30% for future capacity</li>
+              <ul className="text-sm space-y-1 text-white">
+                <li>- <strong>Single cable:</strong> 53% maximum cross-sectional fill</li>
+                <li>- <strong>Two cables:</strong> 31% maximum</li>
+                <li>- <strong>Three or more:</strong> 40% maximum</li>
+                <li>- <strong>Best practice:</strong> Aim for 25-30% for future capacity</li>
               </ul>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-elec-yellow mb-3">Jam Ratio Calculation</h4>
-              <p className="text-sm text-white/70 mb-2">
+              <p className="text-sm text-white mb-2">
                 For multiple cables, the <strong>jam ratio</strong> predicts whether cables will jam during pulling:
               </p>
-              <div className="bg-white/5 rounded p-3 text-sm font-mono">
+              <div className="bg-white/5 rounded p-3 text-sm font-mono text-white">
                 Jam Ratio = Conduit ID ÷ Cable OD
               </div>
-              <ul className="text-sm space-y-1 mt-3">
-                <li>• <strong>Below 0.6:</strong> No jamming risk</li>
-                <li>• <strong>0.6 - 0.8:</strong> Acceptable, careful installation</li>
-                <li>• <strong>Above 0.8:</strong> High jam risk - use larger conduit</li>
+              <ul className="text-sm space-y-1 mt-3 text-white">
+                <li>- <strong>Below 0.6:</strong> No jamming risk</li>
+                <li>- <strong>0.6 - 0.8:</strong> Acceptable, careful installation</li>
+                <li>- <strong>Above 0.8:</strong> High jam risk - use larger conduit</li>
               </ul>
             </div>
 
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
+            <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
               <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
                 <Lightbulb className="h-4 w-4" />
                 Pull Boxes
               </h4>
-              <p className="text-sm">
+              <p className="text-sm text-white">
                 Install <strong>pull boxes</strong> to break up long conduit runs, change direction, or provide access points. Recommended at maximum 30m intervals for straight runs, and at direction changes exceeding 90° cumulative. Pull boxes make installation easier and enable future cable additions without full re-pulls.
               </p>
             </div>
@@ -374,16 +359,16 @@ const FiberOpticsModule3Section3 = () => {
           explanation={quickCheckQuestions[0].explanation}
         />
 
-        {/* Section 3: Wire Basket Systems */}
+        {/* Section 03: Wire Basket Systems */}
         <section className="space-y-4">
           <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">03</span>
-            <h2 className="text-2xl font-bold">Wire Basket Systems</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-background font-bold text-sm">03</span>
+            <h2 className="text-2xl font-bold text-white">Wire Basket Systems</h2>
           </div>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
-              <strong>Cable basket</strong> (wire mesh tray) has become popular for data and fibre cable installations due to its flexibility, ventilation, and ease of cable management. The open mesh design allows excellent airflow and simple cable additions.
+              Cable basket (wire mesh tray) has become popular for data and fibre cable installations due to its flexibility, ventilation, and ease of cable management. The open mesh design allows excellent airflow and simple cable additions.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
@@ -391,41 +376,38 @@ const FiberOpticsModule3Section3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <h5 className="font-medium text-white mb-2">Advantages</h5>
-                  <ul className="space-y-1 text-white/70">
-                    <li>• Excellent ventilation/cooling</li>
-                    <li>• Easy cable additions</li>
-                    <li>• Lightweight construction</li>
-                    <li>• Flexible routing</li>
-                    <li>• Quick installation</li>
-                    <li>• Visual cable inspection</li>
+                  <ul className="space-y-1 text-white">
+                    <li>- Excellent ventilation/cooling</li>
+                    <li>- Easy cable additions</li>
+                    <li>- Lightweight construction</li>
+                    <li>- Flexible routing</li>
+                    <li>- Quick installation</li>
+                    <li>- Visual cable inspection</li>
                   </ul>
                 </div>
                 <div>
                   <h5 className="font-medium text-white mb-2">Considerations</h5>
-                  <ul className="space-y-1 text-white/70">
-                    <li>• Limited mechanical protection</li>
-                    <li>• Not for exposed outdoor use</li>
-                    <li>• May not meet some fire codes</li>
-                    <li>• Cables visible (aesthetics)</li>
-                    <li>• Requires proper support</li>
+                  <ul className="space-y-1 text-white">
+                    <li>- Limited mechanical protection</li>
+                    <li>- Not for exposed outdoor use</li>
+                    <li>- May not meet some fire codes</li>
+                    <li>- Cables visible (aesthetics)</li>
+                    <li>- Requires proper support</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-              <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Info className="h-4 w-4" />
-                Data Centre Applications
-              </h4>
-              <p className="text-sm">
+            <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
+              <h4 className="font-semibold text-blue-400 mb-2">Data Centre Applications</h4>
+              <p className="text-sm text-white">
                 Wire basket is the preferred containment in many data centres. The open design allows hot exhaust air from equipment to dissipate rather than being trapped. Multiple tiers can run above cabinets—typically separating power, fibre, and copper runs. Standard colours (often yellow for fibre) aid identification.
               </p>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-elec-yellow mb-3">Installation Guidelines</h4>
-              <ul className="text-sm space-y-2">
+              <ul className="text-sm space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
                   <span><strong>Support:</strong> Maximum 1.5m centres, closer for heavy loads</span>
@@ -451,39 +433,39 @@ const FiberOpticsModule3Section3 = () => {
           </div>
         </section>
 
-        {/* Section 4: Underground Duct */}
+        {/* Section 04: Underground Duct Systems */}
         <section className="space-y-4">
           <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">04</span>
-            <h2 className="text-2xl font-bold">Underground Duct Systems</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-background font-bold text-sm">04</span>
+            <h2 className="text-2xl font-bold text-white">Underground Duct Systems</h2>
           </div>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Underground duct provides the primary route for external fibre cables between buildings, to street cabinets, and for campus/metropolitan networks. Proper duct installation is critical for long-term reliability and future cable capacity.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-elec-yellow mb-3">Duct Types</h4>
-              <div className="space-y-3 text-sm">
+              <div className="space-y-3 text-sm text-white">
                 <div>
                   <h5 className="font-medium text-white">HDPE Duct</h5>
-                  <p className="text-white/70">High-density polyethylene. Flexible, supplied in coils. Standard for direct-buried and pulled installations. Black or coloured for identification. 32mm-110mm typical sizes.</p>
+                  <p>High-density polyethylene. Flexible, supplied in coils. Standard for direct-buried and pulled installations. Black or coloured for identification. 32mm-110mm typical sizes.</p>
                 </div>
                 <div>
                   <h5 className="font-medium text-white">PVC Duct</h5>
-                  <p className="text-white/70">Rigid PVC in straight lengths. Used for building entries and shorter runs. Requires more joints than HDPE. 50mm-150mm typical sizes.</p>
+                  <p>Rigid PVC in straight lengths. Used for building entries and shorter runs. Requires more joints than HDPE. 50mm-150mm typical sizes.</p>
                 </div>
                 <div>
                   <h5 className="font-medium text-white">Micro-Duct</h5>
-                  <p className="text-white/70">Small bore (5-14mm) for fibre blowing. Multiple tubes in bundle or within larger duct. Enables incremental fibre deployment. FTTH and metro networks.</p>
+                  <p>Small bore (5-14mm) for fibre blowing. Multiple tubes in bundle or within larger duct. Enables incremental fibre deployment. FTTH and metro networks.</p>
                 </div>
               </div>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-elec-yellow mb-3">Duct Installation Requirements</h4>
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-sm text-white">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
                   <span><strong>Depth:</strong> Minimum 450mm in footways, 600mm in carriageways (NJUG guidance)</span>
@@ -507,12 +489,12 @@ const FiberOpticsModule3Section3 = () => {
               </div>
             </div>
 
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
+            <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
               <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
                 <CircleDot className="h-4 w-4" />
                 Chambers and Manholes
               </h4>
-              <p className="text-sm">
+              <p className="text-sm text-white">
                 Install <strong>access chambers</strong> at regular intervals (typically 200-300m maximum), at direction changes, and at junction points. Chambers allow pulling, jointing, and future maintenance access. Size chambers for the number of ducts and anticipated work. Include cable racks or saddles for proper cable management within chambers.
               </p>
             </div>
@@ -528,21 +510,21 @@ const FiberOpticsModule3Section3 = () => {
           explanation={quickCheckQuestions[2].explanation}
         />
 
-        {/* Section 5: Segregation Requirements */}
+        {/* Section 05: Segregation Requirements */}
         <section className="space-y-4">
           <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">05</span>
-            <h2 className="text-2xl font-bold">Segregation Requirements</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-background font-bold text-sm">05</span>
+            <h2 className="text-2xl font-bold text-white">Segregation Requirements</h2>
           </div>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               While fibre cables are immune to electromagnetic interference, <strong>segregation</strong> from power cables remains important for physical protection, heat management, and compliance with installation standards.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-elec-yellow mb-3">Segregation from Power Cables</h4>
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-sm text-white">
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5" />
                   <span><strong>Minimum separation:</strong> 50mm or physical barrier</span>
@@ -553,7 +535,7 @@ const FiberOpticsModule3Section3 = () => {
                 </div>
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5" />
-                  <span><strong>High voltage:</strong> Increase separation for >1kV systems</span>
+                  <span><strong>High voltage:</strong> Increase separation for &gt;1kV systems</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5" />
@@ -562,12 +544,9 @@ const FiberOpticsModule3Section3 = () => {
               </div>
             </div>
 
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-              <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Info className="h-4 w-4" />
-                Why Segregate If Fibre Is Immune to EMI?
-              </h4>
-              <p className="text-sm">
+            <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
+              <h4 className="font-semibold text-blue-400 mb-2">Why Segregate If Fibre Is Immune to EMI?</h4>
+              <p className="text-sm text-white">
                 Segregation protects against: <strong>physical damage</strong> during power cable maintenance, <strong>heat</strong> from high-current cables degrading fibre jacket, and <strong>induced voltage</strong> in any metallic elements (armour, strength members). Additionally, regulatory compliance (BS 6701, BS 7671) requires segregation regardless of cable type.
               </p>
             </div>
@@ -575,43 +554,43 @@ const FiberOpticsModule3Section3 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
                 <h4 className="font-semibold text-green-400 mb-2">Can Share With</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Copper data cables (Cat5/6/6A)</li>
-                  <li>• Telephone cables</li>
-                  <li>• Coaxial (CATV)</li>
-                  <li>• Security/alarm cables</li>
-                  <li>• Control cables (extra-low voltage)</li>
+                <ul className="text-sm space-y-1 text-white">
+                  <li>- Copper data cables (Cat5/6/6A)</li>
+                  <li>- Telephone cables</li>
+                  <li>- Coaxial (CATV)</li>
+                  <li>- Security/alarm cables</li>
+                  <li>- Control cables (extra-low voltage)</li>
                 </ul>
               </div>
               <div className="bg-red-500/10 rounded-lg p-4 border border-red-500/30">
                 <h4 className="font-semibold text-red-400 mb-2">Segregate From</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Mains power (230V/400V)</li>
-                  <li>• High voltage systems</li>
-                  <li>• Lightning protection</li>
-                  <li>• Generator feeds</li>
-                  <li>• Unscreened motor cables</li>
+                <ul className="text-sm space-y-1 text-white">
+                  <li>- Mains power (230V/400V)</li>
+                  <li>- High voltage systems</li>
+                  <li>- Lightning protection</li>
+                  <li>- Generator feeds</li>
+                  <li>- Unscreened motor cables</li>
                 </ul>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Section 6: Vertical Runs and Support */}
+        {/* Section 06: Vertical Runs and Support */}
         <section className="space-y-4">
           <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">06</span>
-            <h2 className="text-2xl font-bold">Vertical Runs and Support</h2>
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-background font-bold text-sm">06</span>
+            <h2 className="text-2xl font-bold text-white">Vertical Runs and Support</h2>
           </div>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Vertical cable runs in risers and shafts require special attention to <strong>support</strong> and <strong>strain relief</strong>. Cable weight accumulates over height, and without proper support, cables can stretch, stress connectors, or pull out of terminations.
             </p>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-elec-yellow mb-3">Vertical Support Requirements</h4>
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-sm text-white">
                 <div className="flex justify-between border-b border-white/10 pb-2">
                   <span>Indoor tight-buffer cables</span>
                   <span className="font-medium">1m maximum intervals</span>
@@ -631,28 +610,28 @@ const FiberOpticsModule3Section3 = () => {
               </div>
             </div>
 
-            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
+            <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
               <h4 className="font-semibold text-amber-400 mb-2 flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
                 Cable Weight Consideration
               </h4>
-              <p className="text-sm">
+              <p className="text-sm text-white">
                 For long vertical drops (multi-storey buildings), calculate cumulative cable weight. Standard fibre cable weighs 20-50kg per 100m. Over a 30m drop, that's 6-15kg pulling on the top termination. Use <strong>intermediate anchor points</strong> or cable clamps that grip without crushing to distribute weight.
               </p>
             </div>
 
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
+            <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
               <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
                 <Lightbulb className="h-4 w-4" />
                 Riser Best Practices
               </h4>
-              <ul className="text-sm space-y-1">
-                <li>• Use dedicated fibre risers where possible</li>
-                <li>• Install cable management brackets at each floor</li>
-                <li>• Provide service loops at floor entry points</li>
-                <li>• Label cables clearly at each accessible point</li>
-                <li>• Ensure firestop compliance at penetrations</li>
-                <li>• Install riser-rated cable (Cca minimum)</li>
+              <ul className="text-sm space-y-1 text-white">
+                <li>- Use dedicated fibre risers where possible</li>
+                <li>- Install cable management brackets at each floor</li>
+                <li>- Provide service loops at floor entry points</li>
+                <li>- Label cables clearly at each accessible point</li>
+                <li>- Ensure firestop compliance at penetrations</li>
+                <li>- Install riser-rated cable (Cca minimum)</li>
               </ul>
             </div>
           </div>
@@ -660,7 +639,7 @@ const FiberOpticsModule3Section3 = () => {
 
         {/* Practical Guidance */}
         <section className="bg-white/5 rounded-xl p-6 border border-white/10 space-y-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
+          <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
             <Route className="h-5 w-5 text-elec-yellow" />
             Practical Guidance
           </h2>
@@ -668,7 +647,7 @@ const FiberOpticsModule3Section3 = () => {
           <div className="space-y-4">
             <div>
               <h3 className="font-semibold text-white mb-2">Route Planning</h3>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Survey route completely before installation</span>
@@ -690,7 +669,7 @@ const FiberOpticsModule3Section3 = () => {
 
             <div>
               <h3 className="font-semibold text-white mb-2">Installation Tips</h3>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Always leave draw cord/rope for future pulls</span>
@@ -701,14 +680,14 @@ const FiberOpticsModule3Section3 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Secure cables properly—don't rely on friction alone</span>
+                  <span>Secure cables properly—do not rely on friction alone</span>
                 </li>
               </ul>
             </div>
 
             <div>
               <h3 className="font-semibold text-white mb-2">Common Mistakes to Avoid</h3>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                   <span>Overfilling conduit (exceeding 40% fill)</span>
@@ -730,47 +709,33 @@ const FiberOpticsModule3Section3 = () => {
           </div>
         </section>
 
-        {/* FAQs */}
+        {/* FAQs - Static Display */}
         <section className="space-y-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
+          <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             Frequently Asked Questions
           </h2>
 
-          <div className="space-y-2">
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-white/5 rounded-lg border border-white/10 overflow-hidden">
-                <button
-                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                  className="w-full px-4 py-3 text-left flex items-center justify-between gap-4 hover:bg-white/5 transition-colors touch-manipulation min-h-[44px]"
-                >
-                  <span className="font-medium text-white">{faq.question}</span>
-                  {expandedFaq === index ? (
-                    <ChevronUp className="h-5 w-5 text-white/60 flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-white/60 flex-shrink-0" />
-                  )}
-                </button>
-                {expandedFaq === index && (
-                  <div className="px-4 pb-4 text-white/70 text-sm">
-                    {faq.answer}
-                  </div>
-                )}
+              <div key={index} className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium text-white mb-2">{faq.question}</h4>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Quick Reference Card */}
-        <section className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-xl p-6 border border-elec-yellow/30">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+        <section className="p-6 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-white">
             <Route className="h-5 w-5 text-elec-yellow" />
             Quick Reference: Containment
           </h2>
           <div className="grid sm:grid-cols-2 gap-4 text-sm">
             <div className="space-y-2">
               <h4 className="font-semibold text-white">Fill Ratios</h4>
-              <div className="space-y-1 text-white/80">
+              <div className="space-y-1 text-white">
                 <p><strong>Conduit (multi-cable):</strong> 40% max</p>
                 <p><strong>Tray:</strong> 50% or below sides</p>
                 <p><strong>Jam ratio:</strong> Keep below 0.8</p>
@@ -778,14 +743,14 @@ const FiberOpticsModule3Section3 = () => {
             </div>
             <div className="space-y-2">
               <h4 className="font-semibold text-white">Segregation</h4>
-              <div className="space-y-1 text-white/80">
+              <div className="space-y-1 text-white">
                 <p><strong>From power:</strong> 50mm or barrier</p>
                 <p><strong>From data:</strong> Not required</p>
                 <p><strong>Crossings:</strong> Right angles</p>
               </div>
             </div>
           </div>
-          <div className="mt-4 pt-4 border-t border-elec-yellow/30 text-sm text-white/80">
+          <div className="mt-4 pt-4 border-t border-elec-yellow/30 text-sm text-white">
             <p><strong>Vertical support:</strong> 1-1.5m intervals | <strong>Tray support:</strong> 1.5-2m intervals</p>
           </div>
         </section>
@@ -802,14 +767,14 @@ const FiberOpticsModule3Section3 = () => {
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
           <Link
-            to="/study-centre/apprentice/fibre-optics/module-3/section-2"
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors touch-manipulation min-h-[44px] active:scale-[0.98]"
+            to="../section-2"
+            className="flex items-center gap-2 text-white hover:text-elec-yellow transition-colors touch-manipulation min-h-[44px] active:scale-[0.98]"
           >
             <ArrowLeft className="h-5 w-5" />
             <span>Previous: Bend Radius</span>
           </Link>
           <Link
-            to="/study-centre/apprentice/fibre-optics/module-3/section-4"
+            to="../section-4"
             className="flex items-center gap-2 text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation min-h-[44px] sm:flex-row-reverse active:scale-[0.98]"
           >
             <span>Next: Splice Enclosures</span>

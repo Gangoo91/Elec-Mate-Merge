@@ -14,35 +14,30 @@ interface AvailableSupportersProps {
   excludeUserId?: string;
 }
 
-// Skeleton card for loading state
+// Skeleton card for loading state - matches compact SupporterCard design
 const SupporterCardSkeleton = () => (
-  <div className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl rounded-2xl border border-purple-500/20 overflow-hidden p-5">
-    {/* Avatar skeleton */}
-    <div className="w-16 h-16 mx-auto mb-3">
-      <Skeleton className="w-16 h-16 rounded-2xl bg-white/10" />
+  <div className="bg-gradient-to-br from-white/[0.06] to-white/[0.02] rounded-xl border border-purple-500/20 p-3">
+    {/* Top section: Avatar + Info */}
+    <div className="flex gap-3">
+      <Skeleton className="w-11 h-11 rounded-xl bg-white/10 shrink-0" />
+      <div className="flex-1 space-y-1.5">
+        <Skeleton className="h-4 w-20 bg-white/10" />
+        <Skeleton className="h-3 w-28 bg-white/10" />
+      </div>
     </div>
-
-    {/* Name skeleton */}
-    <Skeleton className="h-6 w-32 mx-auto mb-2 bg-white/10" />
-
-    {/* Badge skeleton */}
-    <Skeleton className="h-5 w-24 mx-auto mb-2 bg-white/10" />
-
-    {/* Response time skeleton */}
-    <Skeleton className="h-4 w-40 mx-auto mb-3 bg-white/10" />
-
     {/* Bio skeleton */}
-    <Skeleton className="h-10 w-full mb-3 bg-white/10" />
-
+    <Skeleton className="h-8 w-full mt-2 bg-white/10" />
     {/* Topics skeleton */}
-    <div className="flex gap-2 justify-center mb-3">
-      <Skeleton className="h-6 w-16 rounded-full bg-white/10" />
-      <Skeleton className="h-6 w-20 rounded-full bg-white/10" />
-      <Skeleton className="h-6 w-14 rounded-full bg-white/10" />
+    <div className="flex gap-1 mt-2">
+      <Skeleton className="h-4 w-12 rounded-full bg-white/10" />
+      <Skeleton className="h-4 w-14 rounded-full bg-white/10" />
+      <Skeleton className="h-4 w-10 rounded-full bg-white/10" />
     </div>
-
-    {/* Button skeleton */}
-    <Skeleton className="h-12 w-full rounded-md bg-white/10" />
+    {/* Bottom: Stats + CTA */}
+    <div className="flex justify-between items-center mt-3 pt-2 border-t border-white/5">
+      <Skeleton className="h-3 w-14 bg-white/10" />
+      <Skeleton className="h-8 w-16 rounded-md bg-white/10" />
+    </div>
   </div>
 );
 
@@ -124,14 +119,14 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
         </div>
 
         {/* Skeleton cards */}
-        <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x hide-scrollbar md:grid md:grid-cols-2 md:overflow-visible">
-          <div className="min-w-[280px] snap-start md:min-w-0">
+        <div className="flex gap-4 overflow-x-auto pb-2 -mx-4 px-4 snap-x hide-scrollbar md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible">
+          <div className="min-w-[220px] snap-start md:min-w-0">
             <SupporterCardSkeleton />
           </div>
-          <div className="min-w-[280px] snap-start md:min-w-0">
+          <div className="min-w-[220px] snap-start md:min-w-0">
             <SupporterCardSkeleton />
           </div>
-          <div className="min-w-[280px] snap-start md:min-w-0 md:hidden">
+          <div className="min-w-[220px] snap-start md:min-w-0 md:hidden lg:block">
             <SupporterCardSkeleton />
           </div>
         </div>
@@ -202,9 +197,9 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
       </div>
 
       {/* Horizontal Scroll on Mobile, Grid on Desktop */}
-      <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x hide-scrollbar md:grid md:grid-cols-2 md:overflow-visible">
+      <div className="flex gap-4 overflow-x-auto pb-2 -mx-4 px-4 snap-x hide-scrollbar md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible">
         {supporters.map((supporter) => (
-          <div key={supporter.id} className="min-w-[280px] snap-start md:min-w-0">
+          <div key={supporter.id} className="min-w-[220px] snap-start md:min-w-0">
             <SupporterCard
               supporter={supporter}
               onConnect={onConnect}

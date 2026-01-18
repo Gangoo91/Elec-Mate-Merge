@@ -1,614 +1,559 @@
-import { useState, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, Shield, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
-import useSEO from '@/hooks/useSEO';
-import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
-import type { QuizQuestion } from '@/types/quiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
 
-const TITLE = "P Category Systems (Property Protection) - Fire Alarm Course";
+const TITLE = "P Category Systems (Property Protection) - Fire Alarm Module 1 Section 2";
 const DESCRIPTION = "Learn about BS 5839-1 P categories for property protection: P1 and P2 coverage, insurer requirements, and system selection.";
 
+const quickCheckQuestions = [
+  {
+    id: "p-category-purpose",
+    question: "What is the primary purpose of P category systems under BS 5839-1?",
+    options: [
+      "Life safety through early warning for evacuation",
+      "Property protection and minimising asset damage",
+      "Manual activation only via call points",
+      "Providing emergency lighting"
+    ],
+    correctIndex: 1,
+    explanation: "P category systems are designed for property protection, aiming to minimise damage to buildings and contents."
+  },
+  {
+    id: "p1-vs-p2",
+    question: "A distribution warehouse stores high-value goods. The insurer wants comprehensive fire protection. Which P category is appropriate?",
+    options: [
+      "No P category needed",
+      "P2 for targeted areas only",
+      "P1 for comprehensive detection throughout",
+      "M category only"
+    ],
+    correctIndex: 2,
+    explanation: "P1 provides comprehensive detection throughout all storage areas to detect any fire at the earliest stage and protect high-value stock."
+  },
+  {
+    id: "combining-categories",
+    question: "Can P and L categories be combined in the same building?",
+    options: [
+      "No, only one category can be specified",
+      "Yes, it is common to combine L3 for life safety with P2 for property protection",
+      "Only if required by Building Regulations",
+      "Only in industrial premises"
+    ],
+    correctIndex: 1,
+    explanation: "Combined categories are common - L categories address life safety while P categories address property protection objectives."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What is the primary purpose of P category systems under BS 5839-1?",
+    options: [
+      "Life safety through early warning for evacuation",
+      "Property protection and minimising asset damage",
+      "Manual activation only via call points",
+      "Providing emergency lighting"
+    ],
+    correctAnswer: 1,
+    explanation: "P category systems are designed for property protection, aiming to minimise damage to buildings and contents."
+  },
+  {
+    id: 2,
+    question: "Which of the following best describes a P1 system?",
+    options: [
+      "Detection in high-risk areas only",
+      "Automatic detection throughout all areas for maximum property protection",
+      "Manual call points only",
+      "Detection on escape routes only"
+    ],
+    correctAnswer: 1,
+    explanation: "P1 provides automatic detection throughout all areas to detect any fire at the earliest possible stage for property protection."
+  },
+  {
+    id: 3,
+    question: "A P2 system provides detection in which areas?",
+    options: [
+      "Escape routes only",
+      "All areas of the building",
+      "Defined high-value or high-risk areas only",
+      "Only plant rooms and stores"
+    ],
+    correctAnswer: 2,
+    explanation: "P2 provides targeted detection in defined high-value or high-risk areas where property protection is specifically required."
+  },
+  {
+    id: 4,
+    question: "Insurers typically require property protection to be provided by:",
+    options: [
+      "M category only",
+      "L4 systems",
+      "P1 or P2 depending on risk and coverage requirements",
+      "Manual call points only"
+    ],
+    correctAnswer: 2,
+    explanation: "Insurers commonly specify P1 for comprehensive coverage or P2 for targeted high-value area protection."
+  },
+  {
+    id: 5,
+    question: "Which building area would most likely require P2 protection?",
+    options: [
+      "General office space",
+      "Server room or data centre",
+      "Reception area",
+      "Toilet facilities"
+    ],
+    correctAnswer: 1,
+    explanation: "Server rooms and data centres contain high-value equipment requiring targeted property protection."
+  },
+  {
+    id: 6,
+    question: "Can P and L categories be combined in the same building?",
+    options: [
+      "No, only one category can be specified",
+      "Yes, it is common to combine L3 for life safety with P2 for property protection",
+      "Only if required by Building Regulations",
+      "Only in industrial premises"
+    ],
+    correctAnswer: 1,
+    explanation: "Combined categories are common - L categories address life safety while P categories address property protection objectives."
+  },
+  {
+    id: 7,
+    question: "What is a key difference between P1 and L1?",
+    options: [
+      "P1 covers more areas",
+      "L1 is for life safety, P1 is for property protection - coverage may be similar but objectives differ",
+      "P1 does not require automatic detection",
+      "L1 is cheaper to install"
+    ],
+    correctAnswer: 1,
+    explanation: "While coverage may be similar, L1 prioritises early warning for evacuation whereas P1 prioritises early detection for asset protection."
+  },
+  {
+    id: 8,
+    question: "Third-party certification for fire alarm contractors is often required by:",
+    options: [
+      "Building Regulations only",
+      "Insurers to ensure quality and competence",
+      "The fire brigade",
+      "Local planning authorities"
+    ],
+    correctAnswer: 1,
+    explanation: "Insurers frequently require third-party certified contractors (BAFE, LPCB) to ensure installation quality and reduce risk."
+  },
+  {
+    id: 9,
+    question: "For a warehouse storing high-value goods, which P category is most appropriate?",
+    options: [
+      "No P category needed",
+      "P1 for comprehensive protection throughout",
+      "P2 for targeted areas only",
+      "M category"
+    ],
+    correctAnswer: 1,
+    explanation: "Warehouses with high-value goods typically require P1 for comprehensive early detection throughout all storage areas."
+  },
+  {
+    id: 10,
+    question: "What documentation should specify the extent of P category coverage?",
+    options: [
+      "Weekly test records only",
+      "The fire strategy, risk assessment, and design documentation",
+      "Insurance policy only",
+      "User training manual"
+    ],
+    correctAnswer: 1,
+    explanation: "P category coverage should be defined in the fire strategy and design documentation, often informed by insurer requirements."
+  }
+];
+
+const faqs = [
+  {
+    question: "Do P categories meet life safety requirements?",
+    answer: "Not necessarily - P categories focus on property protection. Life safety should be addressed through appropriate L category coverage."
+  },
+  {
+    question: "What certification do insurers typically require?",
+    answer: "Third-party certification such as BAFE SP203-1 or LPCB LPS 1014 for fire detection and alarm installation companies."
+  },
+  {
+    question: "Can P2 be specified without any L category?",
+    answer: "Technically yes, but most buildings need some life safety provision. P2 alone would not address evacuation warning requirements."
+  },
+  {
+    question: "How do I know if an insurer requires P1 or P2?",
+    answer: "Contact the insurer or broker directly. Requirements depend on building use, value, and risk profile."
+  },
+  {
+    question: "Does P1 require monitoring to a remote centre?",
+    answer: "Not by default, but insurers often require Alarm Receiving Centre (ARC) connection for high-value premises."
+  },
+  {
+    question: "What happens if insurer requirements are not met?",
+    answer: "Insurance cover may be invalidated or claims may be reduced. Always confirm and document compliance."
+  }
+];
+
 const FireAlarmModule1Section2 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
-
-  const questions: QuizQuestion[] = useMemo(() => [
-    {
-      id: 1,
-      question: 'What is the primary purpose of P category systems under BS 5839-1?',
-      options: [
-        'Life safety through early warning for evacuation',
-        'Property protection and minimising asset damage',
-        'Manual activation only via call points',
-        'Providing emergency lighting'
-      ],
-      correctAnswer: 1,
-      explanation: 'P category systems are designed for property protection, aiming to minimise damage to buildings and contents.'
-    },
-    {
-      id: 2,
-      question: 'Which of the following best describes a P1 system?',
-      options: [
-        'Detection in high-risk areas only',
-        'Automatic detection throughout all areas for maximum property protection',
-        'Manual call points only',
-        'Detection on escape routes only'
-      ],
-      correctAnswer: 1,
-      explanation: 'P1 provides automatic detection throughout all areas to detect any fire at the earliest possible stage for property protection.'
-    },
-    {
-      id: 3,
-      question: 'A P2 system provides detection in which areas?',
-      options: [
-        'Escape routes only',
-        'All areas of the building',
-        'Defined high-value or high-risk areas only',
-        'Only plant rooms and stores'
-      ],
-      correctAnswer: 2,
-      explanation: 'P2 provides targeted detection in defined high-value or high-risk areas where property protection is specifically required.'
-    },
-    {
-      id: 4,
-      question: 'Insurers typically require property protection to be provided by:',
-      options: [
-        'M category only',
-        'L4 systems',
-        'P1 or P2 depending on risk and coverage requirements',
-        'Manual call points only'
-      ],
-      correctAnswer: 2,
-      explanation: 'Insurers commonly specify P1 for comprehensive coverage or P2 for targeted high-value area protection.'
-    },
-    {
-      id: 5,
-      question: 'Which building area would most likely require P2 protection?',
-      options: [
-        'General office space',
-        'Server room or data centre',
-        'Reception area',
-        'Toilet facilities'
-      ],
-      correctAnswer: 1,
-      explanation: 'Server rooms and data centres contain high-value equipment requiring targeted property protection.'
-    },
-    {
-      id: 6,
-      question: 'Can P and L categories be combined in the same building?',
-      options: [
-        'No, only one category can be specified',
-        'Yes, it is common to combine L3 for life safety with P2 for property protection',
-        'Only if required by Building Regulations',
-        'Only in industrial premises'
-      ],
-      correctAnswer: 1,
-      explanation: 'Combined categories are common - L categories address life safety while P categories address property protection objectives.'
-    },
-    {
-      id: 7,
-      question: 'What is a key difference between P1 and L1?',
-      options: [
-        'P1 covers more areas',
-        'L1 is for life safety, P1 is for property protection - coverage may be similar but objectives differ',
-        'P1 does not require automatic detection',
-        'L1 is cheaper to install'
-      ],
-      correctAnswer: 1,
-      explanation: 'While coverage may be similar, L1 prioritises early warning for evacuation whereas P1 prioritises early detection for asset protection.'
-    },
-    {
-      id: 8,
-      question: 'Third-party certification for fire alarm contractors is often required by:',
-      options: [
-        'Building Regulations only',
-        'Insurers to ensure quality and competence',
-        'The fire brigade',
-        'Local planning authorities'
-      ],
-      correctAnswer: 1,
-      explanation: 'Insurers frequently require third-party certified contractors (BAFE, LPCB) to ensure installation quality and reduce risk.'
-    },
-    {
-      id: 9,
-      question: 'For a warehouse storing high-value goods, which P category is most appropriate?',
-      options: [
-        'No P category needed',
-        'P1 for comprehensive protection throughout',
-        'P2 for targeted areas only',
-        'M category'
-      ],
-      correctAnswer: 1,
-      explanation: 'Warehouses with high-value goods typically require P1 for comprehensive early detection throughout all storage areas.'
-    },
-    {
-      id: 10,
-      question: 'What documentation should specify the extent of P category coverage?',
-      options: [
-        'Weekly test records only',
-        'The fire strategy, risk assessment, and design documentation',
-        'Insurance policy only',
-        'User training manual'
-      ],
-      correctAnswer: 1,
-      explanation: 'P category coverage should be defined in the fire strategy and design documentation, often informed by insurer requirements.'
-    }
-  ], []);
-
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>(Array(questions.length).fill(-1));
-  const [showResults, setShowResults] = useState(false);
-  const [showQuiz, setShowQuiz] = useState(false);
-
-  const handleAnswerSelect = (answerIndex: number) => {
-    const updated = [...selectedAnswers];
-    updated[currentQuestion] = answerIndex;
-    setSelectedAnswers(updated);
-  };
-
-  const handleNext = () => {
-    if (currentQuestion < questions.length - 1) setCurrentQuestion((q) => q + 1);
-    else setShowResults(true);
-  };
-
-  const handlePrevious = () => setCurrentQuestion((q) => Math.max(0, q - 1));
-
-  const resetQuiz = () => {
-    setCurrentQuestion(0);
-    setSelectedAnswers(Array(questions.length).fill(-1));
-    setShowResults(false);
-  };
-
-  const calculateScore = () =>
-    selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
+  useSEO(TITLE, DESCRIPTION);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-1">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Module 1</span>
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
             </Link>
           </Button>
-          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 2</span>
-          <div className="w-[60px]" />
         </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20">
-            <Shield className="h-7 w-7 text-blue-400" />
-          </div>
-          <span className="text-[11px] font-medium text-blue-400 uppercase tracking-wide">
-            Section 2 of 4
-          </span>
-        </div>
-        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
-          P Category Systems (Property)
-        </h1>
-        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
-          Understanding BS 5839-1 P categories for property protection, asset preservation, and insurer requirements.
-        </p>
-        <div className="flex items-center gap-4 text-[13px] text-white/50">
-          <span className="flex items-center gap-1">
-            <Target className="h-4 w-4" />
-            6 learning outcomes
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            20-25 mins
-          </span>
-        </div>
-      </section>
-
-      {/* In 30 Seconds Card */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-blue-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[15px] font-semibold text-blue-400 flex items-center gap-2">
-              <Lightbulb className="h-4 w-4" />
-              In 30 Seconds
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-[15px] text-white/80">
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-              <span><strong>P categories</strong> protect property and assets, not primarily life safety</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-              <span><strong>P1 = full coverage</strong> throughout, P2 = targeted high-value areas only</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Insurers</strong> commonly specify P categories to reduce loss and business interruption</span>
-            </p>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Learning Outcomes */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            "Define the purpose of P category fire alarm systems",
-            "Differentiate between P1 and P2 coverage requirements",
-            "Identify typical applications for property protection",
-            "Explain insurer requirements and third-party certification",
-            "Understand how to combine L and P categories",
-            "Apply P category selection principles to scenarios"
-          ].map((outcome, i) => (
-            <Card key={i} variant="ios" className="p-3">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-[11px] font-bold text-blue-400">{i + 1}</span>
-                </div>
-                <p className="text-[13px] text-white/80">{outcome}</p>
-              </div>
-            </Card>
-          ))}
-        </div>
-      </section>
+      </div>
 
       {/* Main Content */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto space-y-6">
-        {/* Section 01 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">01</span>
-              <h3 className="text-[17px] font-semibold text-white">What Are P Categories?</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>P categories under BS 5839-1 are designed to protect <strong className="text-white">property and assets</strong>. The primary objective is early detection to minimise damage to buildings, contents, and enable rapid response to protect business continuity.</p>
-              <p>The "P" stands for "Property" protection. These systems prioritise detection coverage to protect valuable assets and reduce financial loss from fire damage.</p>
-            </div>
-          </CardContent>
-        </Card>
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
 
-        {/* Section 02 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">02</span>
-              <h3 className="text-[17px] font-semibold text-white">P1 - Full Property Protection</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-blue-400">P1</strong> provides automatic fire detection throughout <strong className="text-white">all areas</strong> of the building. The aim is to detect any fire anywhere at the earliest possible stage.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">P1 Coverage Includes:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />All storage and production areas</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />All offices and ancillary spaces</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Plant rooms and service areas</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Roof and floor voids where fire could spread</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Typical applications: Warehouses with valuable stock, manufacturing, data centres requiring comprehensive protection.</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Centred Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 1 Section 2</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            P Category Systems (Property Protection)
+          </h1>
+          <p className="text-white/80">
+            Understanding BS 5839-1 P categories for property and asset protection
+          </p>
+        </header>
 
-        {/* Section 03 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">03</span>
-              <h3 className="text-[17px] font-semibold text-white">P2 - Targeted Property Protection</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-blue-400">P2</strong> provides detection in <strong className="text-white">defined high-value or high-risk areas</strong> only. This is a targeted approach where comprehensive coverage isn't justified.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">P2 Target Areas Typically Include:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Server rooms and IT infrastructure</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />High-value equipment areas</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Critical process areas</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Valuable stock storage locations</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Typical applications: Office buildings with server rooms, retail with high-value stockrooms.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Inline Check 1 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A distribution warehouse stores £2 million of goods. The insurer wants comprehensive fire protection. Which P category is appropriate?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> P1 - Comprehensive detection throughout all storage areas to detect any fire at the earliest stage and protect the high-value stock.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Section 04 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">04</span>
-              <h3 className="text-[17px] font-semibold text-white">Insurer Requirements</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Insurers commonly specify P category systems to <strong className="text-white">reduce their risk exposure</strong>. Requirements may include:</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <ul className="space-y-2 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />P1 or P2 coverage as appropriate to risk</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Third-party certified contractors (BAFE, LPCB)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />EN 54 compliant equipment</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Remote monitoring or ARC connection</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />Regular maintenance and testing records</li>
-                </ul>
-              </div>
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-amber-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  Failure to meet insurer requirements may invalidate cover or result in claim reduction.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Section 05 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">05</span>
-              <h3 className="text-[17px] font-semibold text-white">Combining L and P Categories</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>It's common to <strong className="text-white">combine L and P categories</strong> in the same building when both life safety and property protection objectives apply:</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Typical Combinations:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />L3 for escape routes + P2 for server rooms</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />L2 for life safety + P1 for warehouse areas</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-blue-400" />L1/P1 combined where both objectives require full coverage</li>
-                </ul>
-              </div>
-              <p>When categories are combined, specify clearly which areas fall under which category in the design documentation.</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Section 06 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-blue-400 bg-blue-500/10 px-2 py-1 rounded">06</span>
-              <h3 className="text-[17px] font-semibold text-white">P vs L: Key Differences</h3>
-            </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>While P1 and L1 may have similar coverage, their <strong className="text-white">objectives differ significantly</strong>:</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-[13px] font-semibold text-blue-400 mb-2">L Categories</p>
-                  <ul className="space-y-1 text-[13px]">
-                    <li>• Early warning for evacuation</li>
-                    <li>• Protect human life</li>
-                    <li>• Driven by fire risk assessment</li>
-                    <li>• Regulatory/moral obligation</li>
-                  </ul>
-                </div>
-                <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-[13px] font-semibold text-blue-400 mb-2">P Categories</p>
-                  <ul className="space-y-1 text-[13px]">
-                    <li>• Early detection for response</li>
-                    <li>• Protect property/assets</li>
-                    <li>• Driven by value/business need</li>
-                    <li>• Commercial/insurance obligation</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Inline Check 2 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">An office building has a critical server room requiring protection but the general office areas only need life safety coverage. How would you specify this?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> L3 (or L2) for life safety coverage on escape routes and high-risk rooms, plus P2 targeted at the server room for property protection.</p>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Practical Guidance */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
-        <div className="space-y-3">
-          <Card variant="ios" className="border-green-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Engage with insurers early in the design process to confirm their requirements
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Use third-party certified contractors to satisfy both insurer and quality requirements
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Document combined L/P categories clearly in design specifications
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          <Card variant="ios" className="border-red-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Assuming P categories provide life safety - they don't replace L categories
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Not confirming insurer requirements before specifying system category
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Using uncertified contractors for insurance-required installations
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>P categories:</strong> Protect property and assets, not life safety</li>
+              <li><strong>P1:</strong> Full coverage throughout for maximum protection</li>
+              <li><strong>P2:</strong> Targeted high-value areas only</li>
+              <li><strong>Insurers:</strong> Commonly specify P categories to reduce loss</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> High-value stock or equipment = P category</li>
+              <li><strong>Use:</strong> Engage insurers early in design</li>
+              <li><strong>Apply:</strong> Combine with L categories for full protection</li>
+            </ul>
+          </div>
         </div>
-      </section>
 
-      {/* FAQs */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
-        <div className="space-y-3">
-          {[
-            { q: "Do P categories meet life safety requirements?", a: "Not necessarily - P categories focus on property protection. Life safety should be addressed through appropriate L category coverage." },
-            { q: "What certification do insurers typically require?", a: "Third-party certification such as BAFE SP203-1 or LPCB LPS 1014 for fire detection and alarm installation companies." },
-            { q: "Can P2 be specified without any L category?", a: "Technically yes, but most buildings need some life safety provision. P2 alone wouldn't address evacuation warning requirements." },
-            { q: "How do I know if an insurer requires P1 or P2?", a: "Contact the insurer or broker directly. Requirements depend on building use, value, and risk profile." },
-            { q: "Does P1 require monitoring to a remote centre?", a: "Not by default, but insurers often require Alarm Receiving Centre (ARC) connection for high-value premises." },
-            { q: "What happens if insurer requirements aren't met?", a: "Insurance cover may be invalidated or claims may be reduced. Always confirm and document compliance." }
-          ].map((faq, i) => (
-            <Card key={i} variant="ios">
-              <CardContent className="p-4">
-                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-[13px] text-white/70">{faq.a}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Define the purpose of P category fire alarm systems",
+              "Differentiate between P1 and P2 coverage requirements",
+              "Identify typical applications for property protection",
+              "Explain insurer requirements and third-party certification",
+              "Understand how to combine L and P categories",
+              "Apply P category selection principles to scenarios"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
 
-      {/* Quiz Section */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-blue-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-blue-400" />
-              Knowledge Check
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {!showQuiz ? (
-              <div className="text-center py-6">
-                <p className="text-[15px] text-white/70 mb-4">Test your understanding of P category fire alarm systems with 10 questions.</p>
-                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
-                  Start Quiz
-                </Button>
-              </div>
-            ) : showResults ? (
-              <div className="space-y-6">
-                <div className="text-center py-4">
-                  <p className="text-[34px] font-bold text-blue-400">{calculateScore()}/{questions.length}</p>
-                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
-                </div>
-                <div className="space-y-4">
-                  {questions.map((q, i) => {
-                    const correct = selectedAnswers[i] === q.correctAnswer;
-                    return (
-                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
-                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
-                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
-                        </p>
-                        {!correct && (
-                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
-                        )}
-                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
-                  <RotateCcw className="h-4 w-4" />
-                  Restart Quiz
-                </Button>
-              </div>
-            ) : (
-              <div className="space-y-6">
-                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
-                <div>
-                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-                  <div className="space-y-2">
-                    {questions[currentQuestion].options.map((opt, idx) => {
-                      const selected = selectedAnswers[currentQuestion] === idx;
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => handleAnswerSelect(idx)}
-                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
-                            selected
-                              ? 'bg-blue-500/20 border-blue-500/50 text-white'
-                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
-                          }`}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <Button
-                    variant="ios-secondary"
-                    onClick={handlePrevious}
-                    disabled={currentQuestion === 0}
-                    className="flex-1"
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="ios-primary"
-                    onClick={handleNext}
-                    disabled={selectedAnswers[currentQuestion] === -1}
-                    className="flex-1"
-                  >
-                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </section>
+        {/* Divider */}
+        <hr className="border-white/5 mb-12" />
 
-      {/* Navigation Footer */}
-      <section className="px-4 pb-safe max-w-3xl mx-auto">
-        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
-          <Button variant="ios-secondary" asChild className="flex-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-1-section-1">
-              <ArrowLeft className="h-4 w-4 mr-2" />
+        {/* Section 01: What Are P Categories? */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            What Are P Categories?
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              P categories under BS 5839-1 are designed to protect property and assets. The primary objective is early detection to minimise damage to buildings, contents, and enable rapid response to protect business continuity.
+            </p>
+            <p>
+              The "P" stands for "Property" protection. These systems prioritise detection coverage to protect valuable assets and reduce financial loss from fire damage.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Key principles:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Early detection minimises property damage</li>
+                <li>Coverage protects high-value assets and business continuity</li>
+                <li>Often driven by insurance requirements</li>
+                <li>Can be combined with L categories for complete protection</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 02: P1 - Full Property Protection */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            P1 - Full Property Protection
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              P1 provides automatic fire detection throughout all areas of the building. The aim is to detect any fire anywhere at the earliest possible stage.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">P1 Coverage Includes:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>All storage and production areas</li>
+                <li>All offices and ancillary spaces</li>
+                <li>Plant rooms and service areas</li>
+                <li>Roof and floor voids where fire could spread</li>
+              </ul>
+            </div>
+
+            <p>
+              Typical applications include warehouses with valuable stock, manufacturing facilities, and data centres requiring comprehensive protection.
+            </p>
+          </div>
+        </section>
+
+        {/* Section 03: P2 - Targeted Property Protection */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            P2 - Targeted Property Protection
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              P2 provides detection in defined high-value or high-risk areas only. This is a targeted approach where comprehensive coverage is not justified.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">P2 Target Areas Typically Include:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Server rooms and IT infrastructure</li>
+                <li>High-value equipment areas</li>
+                <li>Critical process areas</li>
+                <li>Valuable stock storage locations</li>
+              </ul>
+            </div>
+
+            <p>
+              Typical applications include office buildings with server rooms, and retail premises with high-value stockrooms.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 04: Insurer Requirements */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Insurer Requirements
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Insurers commonly specify P category systems to reduce their risk exposure. Requirements may include:
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Insurer Requirements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>P1 or P2 coverage as appropriate to risk</li>
+                <li>Third-party certified contractors (BAFE, LPCB)</li>
+                <li>EN 54 compliant equipment</li>
+                <li>Remote monitoring or ARC connection</li>
+                <li>Regular maintenance and testing records</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>Warning:</strong> Failure to meet insurer requirements may invalidate cover or result in claim reduction.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 05: Combining L and P Categories */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Combining L and P Categories
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              It is common to combine L and P categories in the same building when both life safety and property protection objectives apply.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Combinations:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>L3 for escape routes + P2 for server rooms</li>
+                <li>L2 for life safety + P1 for warehouse areas</li>
+                <li>L1/P1 combined where both objectives require full coverage</li>
+              </ul>
+            </div>
+
+            <p>
+              When categories are combined, specify clearly which areas fall under which category in the design documentation.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 06: P vs L - Key Differences */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            P vs L - Key Differences
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              While P1 and L1 may have similar coverage, their objectives differ significantly.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">L Categories</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Early warning for evacuation</li>
+                  <li>Protect human life</li>
+                  <li>Driven by fire risk assessment</li>
+                  <li>Regulatory and moral obligation</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">P Categories</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Early detection for response</li>
+                  <li>Protect property and assets</li>
+                  <li>Driven by value and business need</li>
+                  <li>Commercial and insurance obligation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Designing Systems</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Engage with insurers early in the design process to confirm their requirements</li>
+                <li>Use third-party certified contractors to satisfy both insurer and quality requirements</li>
+                <li>Document combined L/P categories clearly in design specifications</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Installing</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Verify coverage matches insurer requirements</li>
+                <li>Ensure ARC connection is provided if required</li>
+                <li>Obtain and retain certification documentation</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Assuming P categories provide life safety</strong> - they do not replace L categories</li>
+                <li><strong>Not confirming insurer requirements</strong> - before specifying system category</li>
+                <li><strong>Using uncertified contractors</strong> - for insurance-required installations</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Quick Reference */}
+        <section className="mb-10">
+          <div className="p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">P Category Summary</p>
+                <ul className="space-y-0.5">
+                  <li>P1 = Full coverage throughout</li>
+                  <li>P2 = Targeted high-value areas</li>
+                  <li>P = Property protection focus</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-white mb-1">Key Points</p>
+                <ul className="space-y-0.5">
+                  <li>Insurer driven requirements</li>
+                  <li>Third-party certification often required</li>
+                  <li>Combine with L for full protection</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button variant="ios-primary" asChild className="flex-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-1-section-3">
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-3">
               Next Section
-              <ArrowRight className="h-4 w-4 ml-2" />
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
-        </div>
-      </section>
+        </nav>
+
+      </article>
     </div>
   );
 };

@@ -23,127 +23,119 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
     mhfa_certified: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
   };
 
-  // Estimate response time based on last active
+  // Shorter response time labels for compact display
   const getResponseTime = () => {
     if (!supporter.last_active_at) return null;
-    const lastActive = new Date(supporter.last_active_at);
-    const now = new Date();
-    const diffMins = Math.floor((now.getTime() - lastActive.getTime()) / 60000);
-
-    if (diffMins < 5) return 'Usually responds instantly';
-    if (diffMins < 30) return 'Usually responds in ~5 mins';
-    if (diffMins < 60) return 'Usually responds in ~30 mins';
-    return 'Usually responds within hours';
+    const diffMins = Math.floor((Date.now() - new Date(supporter.last_active_at).getTime()) / 60000);
+    if (diffMins < 5) return 'Instant';
+    if (diffMins < 30) return '~5 min';
+    if (diffMins < 60) return '~30 min';
+    return '~1 hr+';
   };
 
   const responseTime = getResponseTime();
+  const topics = supporter.topics_comfortable_with || [];
 
   return (
     <div
-      className="relative bg-gradient-to-br from-white/[0.08] to-white/[0.02] backdrop-blur-xl rounded-2xl border border-purple-500/20 overflow-hidden touch-manipulation active:scale-[0.98] transition-transform duration-150"
+      className="relative bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-xl rounded-xl border border-purple-500/20 overflow-hidden p-3 touch-manipulation active:scale-[0.98] transition-transform duration-150"
       onClick={() => onViewProfile?.(supporter)}
     >
-      {/* Subtle glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-pink-500/5 pointer-events-none" />
-
-      {/* Card content */}
-      <div className="relative p-5">
-        {/* Avatar with online indicator overlay */}
-        <div className="relative w-16 h-16 mx-auto mb-3">
+      {/* Top section: Avatar + Info - horizontal layout */}
+      <div className="flex gap-3">
+        {/* Avatar - compact */}
+        <div className="relative w-11 h-11 shrink-0">
           {supporter.avatar_url ? (
             <img
               src={supporter.avatar_url}
               alt={supporter.display_name}
-              className="w-16 h-16 rounded-2xl object-cover border-2 border-purple-500/30"
+              className="w-11 h-11 rounded-xl object-cover border border-purple-500/30"
             />
           ) : (
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/40 to-pink-500/40 border-2 border-purple-500/30 flex items-center justify-center">
-              <User className="w-8 h-8 text-purple-300" />
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-purple-500/40 to-pink-500/40 border border-purple-500/30 flex items-center justify-center">
+              <User className="w-5 h-5 text-purple-300" />
             </div>
           )}
+        </div>
 
-          {/* Online indicator - positioned on avatar */}
-          <div className="absolute -bottom-1 -right-1 flex items-center justify-center">
-            <span className="relative flex h-4 w-4">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-background"></span>
+        {/* Info column */}
+        <div className="flex-1 min-w-0">
+          {/* Name + Online indicator */}
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="font-semibold text-white text-sm truncate">
+              {supporter.display_name}
+            </h3>
+            <span className="relative flex h-2 w-2 shrink-0">
+              <span className="animate-ping absolute h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span className="relative rounded-full h-2 w-2 bg-green-500" />
             </span>
           </div>
-        </div>
 
-        {/* Name - centered */}
-        <h3 className="font-bold text-white text-lg text-center truncate px-2">
-          {supporter.display_name}
-        </h3>
-
-        {/* Training Badge - centered */}
-        <div className="flex justify-center mt-2">
-          <Badge
-            variant="outline"
-            className={`text-xs ${trainingBadgeColors[supporter.training_level] || trainingBadgeColors.peer}`}
-          >
-            <Award className="w-3 h-3 mr-1" />
-            {trainingLevelLabels[supporter.training_level]}
-          </Badge>
-        </div>
-
-        {/* Response time indicator */}
-        {responseTime && (
-          <p className="text-center text-xs text-green-400 mt-2 flex items-center justify-center gap-1">
-            <Zap className="w-3 h-3" />
-            {responseTime}
-          </p>
-        )}
-
-        {/* Bio */}
-        {supporter.bio && (
-          <p className="text-sm text-white/80 mt-3 text-center line-clamp-2 leading-relaxed italic">
-            "{supporter.bio}"
-          </p>
-        )}
-
-        {/* Topics - horizontal scroll */}
-        {supporter.topics_comfortable_with && supporter.topics_comfortable_with.length > 0 && (
-          <div className="flex gap-2 overflow-x-auto py-3 -mx-2 px-2 mt-2 snap-x scrollbar-hide">
-            {supporter.topics_comfortable_with.map((topic, idx) => (
-              <span
-                key={idx}
-                className="flex-shrink-0 text-xs px-3 py-1.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/20 snap-start"
-              >
-                {topic}
+          {/* Badge + Response time - compact row */}
+          <div className="flex items-center gap-2 mt-1 flex-wrap">
+            <Badge
+              variant="outline"
+              className={`text-[10px] px-1.5 py-0 h-4 ${trainingBadgeColors[supporter.training_level] || trainingBadgeColors.peer}`}
+            >
+              <Award className="w-2.5 h-2.5 mr-0.5" />
+              {trainingLevelLabels[supporter.training_level]}
+            </Badge>
+            {responseTime && (
+              <span className="text-[10px] text-green-400 flex items-center gap-0.5">
+                <Zap className="w-2.5 h-2.5" />
+                {responseTime}
               </span>
-            ))}
+            )}
           </div>
-        )}
-
-        {/* Stats row */}
-        <div className="flex items-center justify-center gap-4 mt-3 text-xs text-white/60">
-          <span className="flex items-center gap-1">
-            <MessageCircle className="w-3.5 h-3.5" />
-            {supporter.total_conversations} chats
-          </span>
         </div>
+      </div>
 
-        {/* Single CTA Button */}
+      {/* Bio - 2 lines max */}
+      {supporter.bio && (
+        <p className="text-xs text-white/70 mt-2 line-clamp-2 leading-relaxed">
+          "{supporter.bio}"
+        </p>
+      )}
+
+      {/* Topics - compact with +N overflow indicator */}
+      {topics.length > 0 && (
+        <div className="flex gap-1 mt-2 flex-wrap">
+          {topics.slice(0, 3).map((topic, idx) => (
+            <span
+              key={idx}
+              className="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/20"
+            >
+              {topic}
+            </span>
+          ))}
+          {topics.length > 3 && (
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-white/40">
+              +{topics.length - 3}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Bottom: Stats + Compact CTA */}
+      <div className="flex items-center justify-between mt-3 pt-2 border-t border-white/5">
+        <span className="text-[10px] text-white/50 flex items-center gap-1">
+          <MessageCircle className="w-3 h-3" />
+          {supporter.total_conversations} chats
+        </span>
         <Button
           onClick={(e) => {
             e.stopPropagation();
             onConnect(supporter.id);
           }}
           disabled={isConnecting}
-          className="w-full h-12 mt-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold gap-2 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 touch-manipulation active:scale-[0.97] transition-all duration-150"
+          className="h-8 px-3 text-xs bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium gap-1.5 shadow-lg shadow-purple-500/20 touch-manipulation active:scale-[0.97]"
         >
           {isConnecting ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Connecting...
-            </>
+            <Loader2 className="w-3 h-3 animate-spin" />
           ) : (
-            <>
-              <MessageCircle className="w-4 h-4" />
-              Start Chat
-            </>
+            <MessageCircle className="w-3 h-3" />
           )}
+          Chat
         </Button>
       </div>
     </div>

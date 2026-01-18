@@ -84,7 +84,7 @@ const BMSModule7Section2 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-7">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -103,7 +103,7 @@ const BMSModule7Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BMS Programming Methods
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Function blocks, Boolean logic, and PID control
           </p>
         </header>
@@ -161,7 +161,7 @@ const BMSModule7Section2 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm font-medium text-blue-300 mb-2">Logic Gates</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>AND gates: All inputs must be true</li>
                   <li>OR gates: Any input true gives output</li>
                   <li>NOT gates: Inverts input signal</li>
@@ -170,7 +170,7 @@ const BMSModule7Section2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-300 mb-2">Timing Functions</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>On-delay timers: Delay before activate</li>
                   <li>Off-delay timers: Delay before deactivate</li>
                   <li>Pulse timers: Generate timed pulses</li>
@@ -181,7 +181,7 @@ const BMSModule7Section2 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-elec-yellow mb-2">AHU Fan Control Example</p>
-              <ol className="text-sm text-white/90 space-y-1 ml-4">
+              <ol className="text-sm text-white space-y-1 ml-4">
                 <li>1. Comparator: Filter DP &lt; 500Pa → Filter OK</li>
                 <li>2. AND Block: (Enabled) AND (Fire Safe) AND (Filter OK) → Auto Run</li>
                 <li>3. OR Block: (Auto Run) OR (Manual Override) → Fan Command</li>
@@ -207,21 +207,21 @@ const BMSModule7Section2 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm font-medium text-blue-300 mb-2">AND Logic</p>
-                <p className="text-sm text-white/90">ALL conditions must be true for output to be true. Used for safety interlocks where every requirement must be met.</p>
+                <p className="text-sm text-white">ALL conditions must be true for output to be true. Used for safety interlocks where every requirement must be met.</p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-300 mb-2">OR Logic</p>
-                <p className="text-sm text-white/90">ANY one condition being true gives true output. Used for multiple triggers or alternative start conditions.</p>
+                <p className="text-sm text-white">ANY one condition being true gives true output. Used for multiple triggers or alternative start conditions.</p>
               </div>
               <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                 <p className="text-sm font-medium text-purple-300 mb-2">NOT Logic</p>
-                <p className="text-sm text-white/90">Inverts the input signal. True becomes False, False becomes True. Used for "if NOT fire alarm" conditions.</p>
+                <p className="text-sm text-white">Inverts the input signal. True becomes False, False becomes True. Used for "if NOT fire alarm" conditions.</p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-300 mb-2">Safety Interlock Example</p>
-              <p className="text-sm text-white/90">Fan runs ONLY when: (System Enabled) AND (NOT Fire Alarm) AND (Flow Switch OK). If any condition fails, the fan stops - this is why AND logic is critical for safety.</p>
+              <p className="text-sm text-white">Fan runs ONLY when: (System Enabled) AND (NOT Fire Alarm) AND (Flow Switch OK). If any condition fails, the fan stops - this is why AND logic is critical for safety.</p>
             </div>
           </div>
         </section>
@@ -242,21 +242,21 @@ const BMSModule7Section2 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm font-medium text-blue-300 mb-2">Proportional (P)</p>
-                <p className="text-sm text-white/90">Reacts to current error. Larger error = larger correction. Provides immediate response but can leave residual offset.</p>
+                <p className="text-sm text-white">Reacts to current error. Larger error = larger correction. Provides immediate response but can leave residual offset.</p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-300 mb-2">Integral (I)</p>
-                <p className="text-sm text-white/90">Accumulates error over time. Gradually increases output to eliminate steady-state offset. Corrects long-term drift.</p>
+                <p className="text-sm text-white">Accumulates error over time. Gradually increases output to eliminate steady-state offset. Corrects long-term drift.</p>
               </div>
               <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                 <p className="text-sm font-medium text-purple-300 mb-2">Derivative (D)</p>
-                <p className="text-sm text-white/90">Reacts to rate of change. Anticipates future error based on trend. Helps prevent overshoot and oscillation.</p>
+                <p className="text-sm text-white">Reacts to rate of change. Anticipates future error based on trend. Helps prevent overshoot and oscillation.</p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-elec-yellow mb-2">Temperature Control Example</p>
-              <p className="text-sm text-white/90">Setpoint: 21°C. Actual: 19°C (2°C error). P responds to the 2°C gap, I accumulates error if it persists, D predicts if temperature is rising or falling. Together they smoothly adjust the heating valve to reach and maintain 21°C.</p>
+              <p className="text-sm text-white">Setpoint: 21°C. Actual: 19°C (2°C error). P responds to the 2°C gap, I accumulates error if it persists, D predicts if temperature is rising or falling. Together they smoothly adjust the heating valve to reach and maintain 21°C.</p>
             </div>
           </div>
         </section>
@@ -303,15 +303,15 @@ const BMSModule7Section2 = () => {
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-300 mb-2">Problem</p>
-              <p className="text-sm text-white/90">During fire alarm testing, a supply fan continued running instead of stopping. This could spread smoke through the building in a real fire.</p>
+              <p className="text-sm text-white">During fire alarm testing, a supply fan continued running instead of stopping. This could spread smoke through the building in a real fire.</p>
             </div>
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
               <p className="text-sm font-medium text-orange-300 mb-2">Investigation</p>
-              <p className="text-sm text-white/90">The program used OR logic: (Enabled) OR (NOT Fire Alarm). This meant the fan would run if EITHER condition was true - including when fire alarm was active.</p>
+              <p className="text-sm text-white">The program used OR logic: (Enabled) OR (NOT Fire Alarm). This meant the fan would run if EITHER condition was true - including when fire alarm was active.</p>
             </div>
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-green-300 mb-2">Solution</p>
-              <p className="text-sm text-white/90">Changed to AND logic: (Enabled) AND (NOT Fire Alarm). Now the fan only runs when BOTH conditions are true - system enabled AND no fire alarm.</p>
+              <p className="text-sm text-white">Changed to AND logic: (Enabled) AND (NOT Fire Alarm). Now the fan only runs when BOTH conditions are true - system enabled AND no fire alarm.</p>
             </div>
           </div>
         </section>
@@ -323,7 +323,7 @@ const BMSModule7Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

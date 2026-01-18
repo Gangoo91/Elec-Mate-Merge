@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { useSEO } from '@/hooks/useSEO';
+import useSEO from '@/hooks/useSEO';
 import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
+  ArrowLeft,
   Gauge,
   Wifi,
   Clock,
@@ -22,13 +19,10 @@ import {
   Database,
   Settings,
   ClipboardList,
+  Lightbulb,
 } from 'lucide-react';
 
 const EnergyEfficiencyModule3Section2: React.FC = () => {
-  const navigate = useNavigate();
-  const [showQuiz, setShowQuiz] = useState(false);
-  const [expandedFAQs, setExpandedFAQs] = useState<number[]>([]);
-
   useSEO({
     title: 'Data Collection Methods - Energy Efficiency Module 3.2 | Elec-Mate',
     description:
@@ -49,7 +43,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
 
   const quickCheckQuestions = [
     {
-      id: 'qc1-data-collection',
+      id: 'qc1-m3s2',
       question:
         'What is the primary advantage of SMETS2 meters over SMETS1 meters in the UK?',
       options: [
@@ -63,7 +57,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
         'SMETS2 meters communicate via the Data Communications Company (DCC) network, allowing them to maintain smart functionality when switching energy suppliers, unlike SMETS1 meters which often went "dumb" after switching.',
     },
     {
-      id: 'qc2-data-collection',
+      id: 'qc2-m3s2',
       question:
         'Under P272, which business electricity meters require half-hourly settlement?',
       options: [
@@ -77,7 +71,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
         'P272 regulation mandates that Profile Classes 05-08 meters (those with maximum demand exceeding 100kW) must be settled on a half-hourly basis, requiring accurate HH data collection.',
     },
     {
-      id: 'qc3-data-collection',
+      id: 'qc3-m3s2',
       question:
         'What does a Consumer Access Device (CAD) connect to for real-time energy data?',
       options: [
@@ -236,40 +230,64 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
     },
   ];
 
-  const toggleFAQ = (index: number) => {
-    setExpandedFAQs((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
-    );
-  };
-
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
-      {/* Header */}
-      <div className="bg-[#1a1a1a]/95 border-b border-gray-700 px-4 py-6">
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
-            <BookOpen className="w-4 h-4" />
-            <span>Module 3: Energy Monitoring & Data Analysis</span>
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5" />
+            </Link>
+          </Button>
+          <div className="flex items-center gap-2 text-sm text-white/70">
+            <BookOpen className="h-4 w-4 text-elec-yellow" />
+            <span>Module 3 • Section 2</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-elec-yellow mb-2">
-            Section 2: Data Collection
-          </h1>
-          <p className="text-gray-300">
-            Manual, Smart Meters, and Building Management System Logs
-          </p>
         </div>
       </div>
 
+      {/* Main Content */}
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
+        {/* Page Title */}
+        <div className="text-center space-y-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-white">
+            Data Collection Methods
+          </h1>
+          <p className="text-white/80">
+            Manual, Smart Meters, and Building Management System Logs
+          </p>
+        </div>
+
+        {/* Quick Summary */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li>• Manual reading techniques</li>
+              <li>• Smart meter data access</li>
+              <li>• BMS data integration</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">You Will Learn</p>
+            <ul className="text-sm text-white space-y-1">
+              <li>• SMETS2 and DCC architecture</li>
+              <li>• Half-hourly data retrieval</li>
+              <li>• Sub-metering strategies</li>
+            </ul>
+          </div>
+        </div>
+
         {/* Introduction */}
-        <div className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
+        <div className="bg-white/5 rounded-lg p-6 border-l-4 border-elec-yellow">
           <div className="flex items-start gap-4">
             <Database className="w-8 h-8 text-elec-yellow flex-shrink-0 mt-1" />
             <div>
-              <h2 className="text-xl font-semibold text-elec-yellow mb-3">
+              <h2 className="text-xl font-semibold text-white mb-3">
                 Introduction to Energy Data Collection
               </h2>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-white/80 leading-relaxed">
                 Effective energy management begins with reliable data collection. This section
                 covers the practical methods for gathering energy consumption data in UK
                 buildings, from traditional manual readings to modern smart meter systems and
@@ -281,36 +299,30 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
           </div>
         </div>
 
-        {/* Section 1: Manual Meter Reading */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold">
-              1
-            </div>
-            <Gauge className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-xl font-semibold text-white">
-              Manual Meter Reading Techniques and Schedules
-            </h2>
-          </div>
+        {/* Section 1 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Manual Meter Reading Techniques and Schedules
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white">
             <p>
               Despite the rollout of smart meters, manual reading remains important for
               sub-meters, backup verification, and legacy installations. Accurate manual
               reading requires systematic approach and proper documentation.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-medium mb-3">
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Gauge className="w-4 h-4 text-elec-yellow" />
                 Best Practice Reading Procedure
               </h3>
-              <ol className="list-decimal list-inside space-y-2 text-sm">
+              <ol className="list-decimal list-inside space-y-2 text-sm text-white">
                 <li>Record the date and exact time of reading (to the minute)</li>
                 <li>Note the meter serial number (MPAN for electricity, MPRN for gas)</li>
                 <li>Read all register values, including reactive power if available</li>
-                <li>
-                  Photograph the meter display for verification and dispute resolution
-                </li>
+                <li>Photograph the meter display for verification and dispute resolution</li>
                 <li>Check for any error codes or warning indicators on the display</li>
                 <li>Note the meter multiplier (CT ratio) if applicable</li>
                 <li>Record ambient conditions if relevant (temperature for gas correction)</li>
@@ -318,59 +330,35 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h4 className="text-elec-yellow font-medium mb-2">
-                  Recommended Reading Schedules
-                </h4>
-                <ul className="text-sm space-y-1">
-                  <li>
-                    <span className="text-white">High consumption sites:</span> Weekly
-                  </li>
-                  <li>
-                    <span className="text-white">Medium sites:</span> Fortnightly
-                  </li>
-                  <li>
-                    <span className="text-white">Low consumption:</span> Monthly
-                  </li>
-                  <li>
-                    <span className="text-white">Sub-meters:</span> Match main meter frequency
-                  </li>
-                  <li>
-                    <span className="text-white">Consistency:</span> Same day/time each period
-                  </li>
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2">Recommended Reading Schedules</h4>
+                <ul className="text-sm text-white space-y-1">
+                  <li><span className="text-white/80">High consumption sites:</span> Weekly</li>
+                  <li><span className="text-white/80">Medium sites:</span> Fortnightly</li>
+                  <li><span className="text-white/80">Low consumption:</span> Monthly</li>
+                  <li><span className="text-white/80">Sub-meters:</span> Match main meter frequency</li>
+                  <li><span className="text-white/80">Consistency:</span> Same day/time each period</li>
                 </ul>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h4 className="text-elec-yellow font-medium mb-2">
-                  Common Reading Errors to Avoid
-                </h4>
-                <ul className="text-sm space-y-1">
-                  <li>
-                    <span className="text-red-400">✗</span> Transposing digits (1234 vs 1243)
-                  </li>
-                  <li>
-                    <span className="text-red-400">✗</span> Missing decimal places
-                  </li>
-                  <li>
-                    <span className="text-red-400">✗</span> Reading wrong register (day/night)
-                  </li>
-                  <li>
-                    <span className="text-red-400">✗</span> Forgetting CT multiplier
-                  </li>
-                  <li>
-                    <span className="text-red-400">✗</span> Inconsistent reading times
-                  </li>
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2">Common Reading Errors to Avoid</h4>
+                <ul className="text-sm text-white space-y-1">
+                  <li><span className="text-red-400">✗</span> Transposing digits (1234 vs 1243)</li>
+                  <li><span className="text-red-400">✗</span> Missing decimal places</li>
+                  <li><span className="text-red-400">✗</span> Reading wrong register (day/night)</li>
+                  <li><span className="text-red-400">✗</span> Forgetting CT multiplier</li>
+                  <li><span className="text-red-400">✗</span> Inconsistent reading times</li>
                 </ul>
               </div>
             </div>
 
-            <div className="bg-yellow-900/30 border border-yellow-600 rounded-lg p-4">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <div className="flex items-start gap-2">
-                <AlertTriangle className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-yellow-500 font-medium">CT-Connected Meters</h4>
-                  <p className="text-sm mt-1">
+                  <h4 className="text-elec-yellow font-medium">CT-Connected Meters</h4>
+                  <p className="text-sm text-white mt-1">
                     For meters using Current Transformers, always multiply the displayed
                     reading by the CT ratio. A meter showing 1,000 kWh with 200:5 CTs actually
                     represents 40,000 kWh (1,000 × 40).
@@ -381,30 +369,26 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
           </div>
         </section>
 
-        {/* Section 2: UK Smart Meter Data Access */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold">
-              2
-            </div>
-            <Wifi className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-xl font-semibold text-white">
-              UK Smart Meter Data Access (SMETS2, DCC, CAD)
-            </h2>
-          </div>
+        {/* Section 2 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            UK Smart Meter Data Access (SMETS2, DCC, CAD)
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white">
             <p>
               The UK's smart metering infrastructure provides multiple routes to access
               consumption data. Understanding these pathways is crucial for implementing
               effective energy monitoring systems.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-medium mb-3">
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Wifi className="w-4 h-4 text-elec-yellow" />
                 SMETS2 Architecture Overview
               </h3>
-              <div className="space-y-3 text-sm">
+              <div className="space-y-3 text-sm text-white">
                 <div className="flex items-start gap-3">
                   <div className="bg-blue-600 rounded px-2 py-1 text-xs font-medium">HAN</div>
                   <p>
@@ -430,15 +414,13 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h4 className="text-elec-yellow font-medium mb-2">
-                  Consumer Access Device (CAD)
-                </h4>
-                <p className="text-sm mb-2">
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2">Consumer Access Device (CAD)</h4>
+                <p className="text-sm text-white mb-2">
                   A CAD connects directly to your smart meter's HAN, providing real-time
                   consumption data without supplier involvement:
                 </p>
-                <ul className="text-sm space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Requires pairing with meter via supplier request</li>
                   <li>• Uses ZigBee Smart Energy Profile</li>
                   <li>• Updates every 10 seconds typically</li>
@@ -447,111 +429,84 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h4 className="text-elec-yellow font-medium mb-2">
-                  Data Access Routes
-                </h4>
-                <ul className="text-sm space-y-2">
-                  <li>
-                    <strong>Via Supplier:</strong> Request HH data (free, 10 working days)
-                  </li>
-                  <li>
-                    <strong>Smart Energy GB:</strong> Consumer data access portal
-                  </li>
-                  <li>
-                    <strong>CAD + Cloud:</strong> Real-time via device manufacturer's API
-                  </li>
-                  <li>
-                    <strong>DCC Access:</strong> For authorised parties (complex, licenced)
-                  </li>
-                  <li>
-                    <strong>Supplier Apps:</strong> Octopus, Bulb, OVO offer data downloads
-                  </li>
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2">Data Access Routes</h4>
+                <ul className="text-sm text-white space-y-2">
+                  <li><strong>Via Supplier:</strong> Request HH data (free, 10 working days)</li>
+                  <li><strong>Smart Energy GB:</strong> Consumer data access portal</li>
+                  <li><strong>CAD + Cloud:</strong> Real-time via device manufacturer's API</li>
+                  <li><strong>DCC Access:</strong> For authorised parties (complex, licenced)</li>
+                  <li><strong>Supplier Apps:</strong> Octopus, Bulb, OVO offer data downloads</li>
                 </ul>
               </div>
             </div>
-
-            <InlineCheck
-              id={quickCheckQuestions[0].id}
-              question={quickCheckQuestions[0].question}
-              options={quickCheckQuestions[0].options}
-              correctIndex={quickCheckQuestions[0].correctIndex}
-              explanation={quickCheckQuestions[0].explanation}
-            />
           </div>
         </section>
 
-        {/* Section 3: Half-Hourly Data */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold">
-              3
-            </div>
-            <Clock className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-xl font-semibold text-white">
-              Half-Hourly Data Retrieval and Analysis
-            </h2>
-          </div>
+        {/* Quick Check 1 */}
+        <InlineCheck
+          id={quickCheckQuestions[0].id}
+          question={quickCheckQuestions[0].question}
+          options={quickCheckQuestions[0].options}
+          correctIndex={quickCheckQuestions[0].correctIndex}
+          explanation={quickCheckQuestions[0].explanation}
+        />
 
-          <div className="space-y-4 text-gray-300">
+        {/* Section 3 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Half-Hourly Data Retrieval and Analysis
+          </h2>
+
+          <div className="space-y-4 text-white">
             <p>
               Half-hourly (HH) data provides granular insight into consumption patterns,
               enabling detailed analysis of peak demand, baseload, and time-of-use
               optimisation opportunities.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-medium mb-3">
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Clock className="w-4 h-4 text-elec-yellow" />
                 P272 and Half-Hourly Settlement
               </h3>
-              <p className="text-sm mb-3">
+              <p className="text-sm text-white mb-3">
                 Ofgem's P272 modification requires larger business meters (Profile Classes
                 05-08, typically &gt;100kW maximum demand) to be settled on actual half-hourly
                 data rather than estimated profiles. This provides:
               </p>
-              <ul className="text-sm space-y-1">
-                <li>
-                  <span className="text-green-400">✓</span> Accurate billing based on actual
-                  consumption times
-                </li>
-                <li>
-                  <span className="text-green-400">✓</span> Incentive to shift load away from
-                  expensive periods (Triads, Red zones)
-                </li>
-                <li>
-                  <span className="text-green-400">✓</span> Detailed data for energy management
-                </li>
-                <li>
-                  <span className="text-green-400">✓</span> Demand-side response opportunities
-                </li>
+              <ul className="text-sm text-white space-y-1">
+                <li><span className="text-green-400">✓</span> Accurate billing based on actual consumption times</li>
+                <li><span className="text-green-400">✓</span> Incentive to shift load away from expensive periods (Triads, Red zones)</li>
+                <li><span className="text-green-400">✓</span> Detailed data for energy management</li>
+                <li><span className="text-green-400">✓</span> Demand-side response opportunities</li>
               </ul>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-medium mb-3">
-                UK Industry Data Flows
-              </h3>
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">UK Industry Data Flows</h3>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-600">
+                    <tr className="border-b border-white/20">
                       <th className="text-left py-2 text-elec-yellow">Data Flow</th>
                       <th className="text-left py-2 text-elec-yellow">Purpose</th>
                       <th className="text-left py-2 text-elec-yellow">Content</th>
                     </tr>
                   </thead>
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-700">
+                  <tbody className="text-white">
+                    <tr className="border-b border-white/10">
                       <td className="py-2 font-mono">D0010</td>
                       <td className="py-2">Meter readings request</td>
                       <td className="py-2">Supplier to DC/DA</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2 font-mono">D0036</td>
                       <td className="py-2">Validated HH data</td>
                       <td className="py-2">48 periods per day + reactive</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2 font-mono">D0019</td>
                       <td className="py-2">Metering system fault</td>
                       <td className="py-2">Error notifications</td>
@@ -567,11 +522,9 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h4 className="text-elec-yellow font-medium mb-2">
-                  Obtaining HH Data
-                </h4>
-                <ol className="text-sm space-y-1 list-decimal list-inside">
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2">Obtaining HH Data</h4>
+                <ol className="text-sm text-white space-y-1 list-decimal list-inside">
                   <li>Request from your electricity supplier</li>
                   <li>Contact your Meter Operator (MOP)</li>
                   <li>Use bureau services (AMR providers)</li>
@@ -580,11 +533,9 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 </ol>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h4 className="text-elec-yellow font-medium mb-2">
-                  Analysis Opportunities
-                </h4>
-                <ul className="text-sm space-y-1">
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2">Analysis Opportunities</h4>
+                <ul className="text-sm text-white space-y-1">
                   <li>• Identify baseload (minimum overnight consumption)</li>
                   <li>• Peak demand timing and magnitude</li>
                   <li>• Weekend vs weekday patterns</li>
@@ -593,44 +544,41 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 </ul>
               </div>
             </div>
-
-            <InlineCheck
-              id={quickCheckQuestions[1].id}
-              question={quickCheckQuestions[1].question}
-              options={quickCheckQuestions[1].options}
-              correctIndex={quickCheckQuestions[1].correctIndex}
-              explanation={quickCheckQuestions[1].explanation}
-            />
           </div>
         </section>
 
-        {/* Section 4: BMS Logs */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold">
-              4
-            </div>
-            <Building2 className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-xl font-semibold text-white">
-              Building Management System Logs and Exports
-            </h2>
-          </div>
+        {/* Quick Check 2 */}
+        <InlineCheck
+          id={quickCheckQuestions[1].id}
+          question={quickCheckQuestions[1].question}
+          options={quickCheckQuestions[1].options}
+          correctIndex={quickCheckQuestions[1].correctIndex}
+          explanation={quickCheckQuestions[1].explanation}
+        />
 
-          <div className="space-y-4 text-gray-300">
+        {/* Section 4 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Building Management System Logs and Exports
+          </h2>
+
+          <div className="space-y-4 text-white">
             <p>
               Building Management Systems (BMS) provide contextual data essential for
               understanding energy consumption patterns. Integrating BMS data with meter
               readings enables sophisticated analysis of building performance.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-medium mb-3">
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-elec-yellow" />
                 Key BMS Data Points for Energy Analysis
               </h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="text-white font-medium mb-2">HVAC Systems</h4>
-                  <ul className="text-sm space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• AHU run status and speeds</li>
                     <li>• Zone temperature setpoints and actuals</li>
                     <li>• Chiller/boiler operation logs</li>
@@ -640,7 +588,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-2">Building Systems</h4>
-                  <ul className="text-sm space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Occupancy sensor states</li>
                     <li>• Lighting levels and schedules</li>
                     <li>• Access control data (people counting)</li>
@@ -651,16 +599,14 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-medium mb-3">
-                Data Export Methods
-              </h3>
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Data Export Methods</h3>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <FileSpreadsheet className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white">Manual Export:</strong>
-                    <p className="text-sm">
+                    <p className="text-sm text-white/80">
                       CSV/Excel export from BMS front-end. Suitable for periodic analysis
                       but labour-intensive for continuous monitoring.
                     </p>
@@ -670,7 +616,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                   <Database className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white">Database Connection:</strong>
-                    <p className="text-sm">
+                    <p className="text-sm text-white/80">
                       Direct SQL connection to BMS historian. Enables automated data
                       extraction for analytics platforms.
                     </p>
@@ -680,7 +626,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                   <Settings className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white">API Integration:</strong>
-                    <p className="text-sm">
+                    <p className="text-sm text-white/80">
                       Modern BMS platforms (e.g., Trend IQ4, Honeywell Niagara) offer REST
                       APIs for real-time data access and integration.
                     </p>
@@ -690,7 +636,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                   <Zap className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white">BACnet/Modbus:</strong>
-                    <p className="text-sm">
+                    <p className="text-sm text-white/80">
                       Protocol-level integration for adding energy meters directly to BMS
                       or extracting data to third-party systems.
                     </p>
@@ -699,9 +645,12 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-blue-900/30 border border-blue-600 rounded-lg p-4">
-              <h4 className="text-blue-400 font-medium mb-2">Integration Tip</h4>
-              <p className="text-sm">
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+              <h4 className="text-blue-400 font-medium mb-2 flex items-center gap-2">
+                <Lightbulb className="w-4 h-4" />
+                Integration Tip
+              </h4>
+              <p className="text-sm text-white">
                 When correlating BMS data with energy consumption, ensure timestamps are
                 synchronised. BMS systems may use local time while meter data uses UTC.
                 A 1-hour offset during BST can significantly skew analysis results.
@@ -710,83 +659,57 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
           </div>
         </section>
 
-        {/* Section 5: Sub-Metering */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold">
-              5
-            </div>
-            <GitBranch className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-xl font-semibold text-white">
-              Sub-Metering Strategies and Placement
-            </h2>
-          </div>
+        {/* Section 5 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Sub-Metering Strategies and Placement
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white">
             <p>
               Sub-metering provides the granular data needed to identify specific energy
               efficiency opportunities. Strategic placement maximises insight while
               managing installation costs.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-medium mb-3">
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <GitBranch className="w-4 h-4 text-elec-yellow" />
                 Sub-Metering Hierarchy
               </h3>
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-sm text-white">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-elec-yellow rounded-full"></div>
-                  <span>
-                    <strong>Level 1:</strong> Main incomer (fiscal meter) - Total site
-                    consumption
-                  </span>
+                  <span><strong>Level 1:</strong> Main incomer (fiscal meter) - Total site consumption</span>
                 </div>
                 <div className="flex items-center gap-2 ml-4">
                   <div className="w-2.5 h-2.5 bg-blue-400 rounded-full"></div>
-                  <span>
-                    <strong>Level 2:</strong> Distribution boards - Major load categories
-                  </span>
+                  <span><strong>Level 2:</strong> Distribution boards - Major load categories</span>
                 </div>
                 <div className="flex items-center gap-2 ml-8">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span>
-                    <strong>Level 3:</strong> End-use circuits - Specific equipment/zones
-                  </span>
+                  <span><strong>Level 3:</strong> End-use circuits - Specific equipment/zones</span>
                 </div>
               </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h4 className="text-elec-yellow font-medium mb-2">
-                  Priority Metering Points
-                </h4>
-                <ul className="text-sm space-y-1">
-                  <li>
-                    <span className="text-green-400">■</span> HVAC plant (chillers, AHUs, pumps)
-                  </li>
-                  <li>
-                    <span className="text-green-400">■</span> Lighting circuits by zone
-                  </li>
-                  <li>
-                    <span className="text-green-400">■</span> Server rooms/IT loads
-                  </li>
-                  <li>
-                    <span className="text-green-400">■</span> Production equipment
-                  </li>
-                  <li>
-                    <span className="text-green-400">■</span> Catering/kitchen facilities
-                  </li>
-                  <li>
-                    <span className="text-green-400">■</span> Tenant/department areas</li>
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2">Priority Metering Points</h4>
+                <ul className="text-sm text-white space-y-1">
+                  <li><span className="text-green-400">■</span> HVAC plant (chillers, AHUs, pumps)</li>
+                  <li><span className="text-green-400">■</span> Lighting circuits by zone</li>
+                  <li><span className="text-green-400">■</span> Server rooms/IT loads</li>
+                  <li><span className="text-green-400">■</span> Production equipment</li>
+                  <li><span className="text-green-400">■</span> Catering/kitchen facilities</li>
+                  <li><span className="text-green-400">■</span> Tenant/department areas</li>
                 </ul>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h4 className="text-elec-yellow font-medium mb-2">
-                  Sub-Meter Selection Criteria
-                </h4>
-                <ul className="text-sm space-y-1">
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2">Sub-Meter Selection Criteria</h4>
+                <ul className="text-sm text-white space-y-1">
                   <li>• Accuracy class (MID Class 1 or 2)</li>
                   <li>• Communication protocol (Modbus, M-Bus, Pulse)</li>
                   <li>• CT or direct connected</li>
@@ -797,14 +720,12 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-medium mb-3">
-                CIBSE TM39 Sub-Metering Guidance
-              </h3>
-              <p className="text-sm mb-2">
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">CIBSE TM39 Sub-Metering Guidance</h3>
+              <p className="text-sm text-white mb-2">
                 CIBSE Technical Memorandum 39 recommends sub-metering to cover at least:
               </p>
-              <ul className="text-sm space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• 90% of estimated annual energy consumption</li>
                 <li>• All loads greater than 10% of total building consumption</li>
                 <li>• Separately controlled lighting zones</li>
@@ -812,44 +733,41 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 <li>• Tenanted areas for recharge purposes</li>
               </ul>
             </div>
-
-            <InlineCheck
-              id={quickCheckQuestions[2].id}
-              question={quickCheckQuestions[2].question}
-              options={quickCheckQuestions[2].options}
-              correctIndex={quickCheckQuestions[2].correctIndex}
-              explanation={quickCheckQuestions[2].explanation}
-            />
           </div>
         </section>
 
-        {/* Section 6: Data Validation */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold">
-              6
-            </div>
-            <CheckCircle2 className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-xl font-semibold text-white">
-              Data Validation and Cleaning Techniques
-            </h2>
-          </div>
+        {/* Quick Check 3 */}
+        <InlineCheck
+          id={quickCheckQuestions[2].id}
+          question={quickCheckQuestions[2].question}
+          options={quickCheckQuestions[2].options}
+          correctIndex={quickCheckQuestions[2].correctIndex}
+          explanation={quickCheckQuestions[2].explanation}
+        />
 
-          <div className="space-y-4 text-gray-300">
+        {/* Section 6 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Data Validation and Cleaning Techniques
+          </h2>
+
+          <div className="space-y-4 text-white">
             <p>
               Raw energy data often contains errors, gaps, and anomalies that must be
               identified and addressed before analysis. Robust validation ensures reliable
               conclusions and recommendations.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-medium mb-3">
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
                 Common Data Quality Issues
               </h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="text-white font-medium mb-2">Completeness Issues</h4>
-                  <ul className="text-sm space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Missing readings (communication failures)</li>
                     <li>• Gaps in time series data</li>
                     <li>• Incomplete HH periods</li>
@@ -858,7 +776,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-2">Accuracy Issues</h4>
-                  <ul className="text-sm space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Meter register rollovers</li>
                     <li>• CT ratio errors</li>
                     <li>• Timestamp synchronisation problems</li>
@@ -868,35 +786,33 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-medium mb-3">
-                Validation Techniques
-              </h3>
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Validation Techniques</h3>
               <div className="space-y-3">
                 <div>
                   <h4 className="text-white font-medium mb-1">Range Checks</h4>
-                  <p className="text-sm">
+                  <p className="text-sm text-white/80">
                     Verify readings fall within expected bounds. Flag values exceeding
                     maximum demand or below zero (unless export meter).
                   </p>
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-1">Consistency Checks</h4>
-                  <p className="text-sm">
+                  <p className="text-sm text-white/80">
                     Compare cumulative readings - each must be greater than or equal to the
                     previous. Check sub-meter sum approximates main meter reading.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-1">Statistical Outlier Detection</h4>
-                  <p className="text-sm">
+                  <p className="text-sm text-white/80">
                     Use standard deviation (flag values &gt;3σ from mean) or interquartile
                     range (values below Q1-1.5×IQR or above Q3+1.5×IQR) to identify anomalies.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-1">Pattern Validation</h4>
-                  <p className="text-sm">
+                  <p className="text-sm text-white/80">
                     Compare current period to historical patterns. Unexpected baseload
                     changes or absent weekday/weekend differentiation may indicate issues.
                   </p>
@@ -905,32 +821,19 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h4 className="text-elec-yellow font-medium mb-2">
-                  Gap Filling Methods
-                </h4>
-                <ul className="text-sm space-y-2">
-                  <li>
-                    <strong>Linear interpolation:</strong> For gaps under 2 hours
-                  </li>
-                  <li>
-                    <strong>Historical substitution:</strong> Same period from previous week
-                  </li>
-                  <li>
-                    <strong>Regression models:</strong> Based on related variables (weather,
-                    occupancy)
-                  </li>
-                  <li>
-                    <strong>Mark as estimated:</strong> Always flag interpolated data
-                  </li>
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2">Gap Filling Methods</h4>
+                <ul className="text-sm text-white space-y-2">
+                  <li><strong>Linear interpolation:</strong> For gaps under 2 hours</li>
+                  <li><strong>Historical substitution:</strong> Same period from previous week</li>
+                  <li><strong>Regression models:</strong> Based on related variables (weather, occupancy)</li>
+                  <li><strong>Mark as estimated:</strong> Always flag interpolated data</li>
                 </ul>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h4 className="text-elec-yellow font-medium mb-2">
-                  Documentation Requirements
-                </h4>
-                <ul className="text-sm space-y-2">
+              <div className="bg-white/5 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-2">Documentation Requirements</h4>
+                <ul className="text-sm text-white space-y-2">
                   <li>• Log all data corrections with timestamp</li>
                   <li>• Record original values before modification</li>
                   <li>• Note method used for estimation/correction</li>
@@ -940,12 +843,12 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-red-900/30 border border-red-600 rounded-lg p-4">
+            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <div className="flex items-start gap-2">
-                <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-red-500 font-medium">Meter Fault Indicators</h4>
-                  <p className="text-sm mt-1">
+                  <h4 className="text-red-400 font-medium">Meter Fault Indicators</h4>
+                  <p className="text-sm text-white mt-1">
                     Investigate immediately if you observe: negative consumption values,
                     readings decreasing over time, consumption during confirmed shutdown
                     periods, or sudden persistent step changes in baseload without
@@ -958,16 +861,16 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
         </section>
 
         {/* Quick Reference Card */}
-        <section className="bg-gradient-to-br from-[#2a2a2a] to-[#1f1f1f] rounded-lg p-6 border-2 border-elec-yellow">
+        <section className="bg-gradient-to-br from-elec-yellow/20 to-orange-500/20 rounded-xl p-6 border border-elec-yellow/30">
           <div className="flex items-center gap-3 mb-4">
             <ClipboardList className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-xl font-semibold text-elec-yellow">Quick Reference Card</h2>
+            <h2 className="text-xl font-semibold text-white">Quick Reference Card</h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h3 className="text-white font-medium mb-2">Data Collection Checklist</h3>
-              <ul className="text-sm text-gray-300 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>□ Identify all meters (main + sub-meters)</li>
                 <li>□ Record MPAN/MPRN numbers</li>
                 <li>□ Note CT ratios and multipliers</li>
@@ -981,31 +884,19 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
 
             <div>
               <h3 className="text-white font-medium mb-2">Key UK Standards & Codes</h3>
-              <ul className="text-sm text-gray-300 space-y-1">
-                <li>
-                  <strong>P272:</strong> Half-hourly settlement for large supplies
-                </li>
-                <li>
-                  <strong>MID:</strong> Measuring Instruments Directive accuracy
-                </li>
-                <li>
-                  <strong>CIBSE TM39:</strong> Sub-metering guidance
-                </li>
-                <li>
-                  <strong>D-flows:</strong> Industry data formats (D0010, D0036)
-                </li>
-                <li>
-                  <strong>SMETS2:</strong> Second generation smart meter spec
-                </li>
-                <li>
-                  <strong>ESOS:</strong> Energy audit documentation requirements
-                </li>
+              <ul className="text-sm text-white space-y-1">
+                <li><strong>P272:</strong> Half-hourly settlement for large supplies</li>
+                <li><strong>MID:</strong> Measuring Instruments Directive accuracy</li>
+                <li><strong>CIBSE TM39:</strong> Sub-metering guidance</li>
+                <li><strong>D-flows:</strong> Industry data formats (D0010, D0036)</li>
+                <li><strong>SMETS2:</strong> Second generation smart meter spec</li>
+                <li><strong>ESOS:</strong> Energy audit documentation requirements</li>
               </ul>
             </div>
 
             <div>
               <h3 className="text-white font-medium mb-2">Smart Meter Data Routes</h3>
-              <ul className="text-sm text-gray-300 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>1. Request from supplier (free, 10 days)</li>
                 <li>2. Consumer Access Device (real-time)</li>
                 <li>3. Supplier app/portal download</li>
@@ -1016,7 +907,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
 
             <div>
               <h3 className="text-white font-medium mb-2">Data Validation Rules</h3>
-              <ul className="text-sm text-gray-300 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• Readings must increase (cumulative)</li>
                 <li>• Values within expected range</li>
                 <li>• No gaps &gt;2% of period</li>
@@ -1028,87 +919,56 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
           </div>
         </section>
 
-        {/* FAQs Section */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <h2 className="text-xl font-semibold text-elec-yellow mb-4">
-            Frequently Asked Questions
-          </h2>
-
-          <div className="space-y-3">
+        {/* FAQs */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+          <div className="space-y-2">
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="bg-[#1a1a1a] rounded-lg border border-gray-600 overflow-hidden"
+                className="border border-white/10 rounded-lg overflow-hidden"
               >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation active:scale-[0.98] hover:bg-[#252525] transition-colors"
-                >
-                  <span className="font-medium text-white pr-4">{faq.question}</span>
-                  {expandedFAQs.includes(index) ? (
-                    <ChevronUp className="w-5 h-5 text-elec-yellow flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-elec-yellow flex-shrink-0" />
-                  )}
-                </button>
-                {expandedFAQs.includes(index) && (
-                  <div className="px-4 pb-4 text-gray-300 text-sm leading-relaxed border-t border-gray-700 pt-3">
-                    {faq.answer}
-                  </div>
-                )}
+                <div className="p-4">
+                  <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                  <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Quiz Section */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              Knowledge Check Quiz
-            </h2>
-            <Button
-              onClick={() => setShowQuiz(!showQuiz)}
-              className="bg-elec-yellow text-black hover:bg-yellow-500 min-h-[44px] touch-manipulation active:scale-[0.98]"
-            >
-              {showQuiz ? 'Hide Quiz' : 'Start Quiz'}
-            </Button>
-          </div>
-
-          {showQuiz && (
-            <Quiz
-              questions={quizQuestions}
-              moduleId="energy-efficiency-m3s2"
-              onComplete={(score) => {
-                console.log(`Quiz completed with score: ${score}/${quizQuestions.length}`);
-              }}
-            />
-          )}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white">Section Quiz</h2>
+          <Quiz
+            questions={quizQuestions}
+            moduleId="energy-efficiency-m3s2"
+            onComplete={(score) => {
+              console.log(`Quiz completed with score: ${score}/${quizQuestions.length}`);
+            }}
+          />
         </section>
 
         {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-gray-700">
+        <nav className="flex flex-col sm:flex-row gap-4 justify-between pt-6 border-t border-white/10">
           <Button
-            onClick={() => navigate('/upskilling/energy-efficiency/module-3/section-1')}
+            asChild
             variant="outline"
-            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 text-white hover:bg-[#2a2a2a] hover:text-elec-yellow"
+            className="min-h-[44px] touch-manipulation border-white/20 hover:border-elec-yellow hover:text-elec-yellow bg-transparent text-white"
           >
-            <ChevronLeft className="w-5 h-5" />
-            <div className="text-left">
-              <div className="text-xs text-gray-400">Previous</div>
-              <div className="text-sm">Section 1: Energy Audit Fundamentals</div>
-            </div>
+            <Link to="../section-1" className="flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              <span>Previous: Walkthrough Surveys</span>
+            </Link>
           </Button>
-
           <Button
-            onClick={() => navigate('/upskilling/energy-efficiency/module-3/section-3')}
-            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-yellow-500"
+            asChild
+            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-yellow-400"
           >
-            <div className="text-right">
-              <div className="text-xs opacity-75">Next</div>
-              <div className="text-sm">Section 3: Analysis Techniques</div>
-            </div>
-            <ChevronRight className="w-5 h-5" />
+            <Link to="../section-3" className="flex items-center gap-2">
+              <span>Next: Analysis Techniques</span>
+              <ArrowLeft className="w-4 h-4 rotate-180" />
+            </Link>
           </Button>
         </nav>
       </div>

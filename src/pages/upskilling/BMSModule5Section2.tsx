@@ -78,7 +78,7 @@ const BMSModule5Section2 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-5">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
             </Link>
@@ -96,7 +96,7 @@ const BMSModule5Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BACnet Devices and Network Types
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding BACnet architecture and proper installation practices
           </p>
         </header>
@@ -186,7 +186,7 @@ const BMSModule5Section2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Example:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A VAV box may have a BACnet controller that talks to the central BMS workstation,
                 adjusting damper position based on occupancy and temperature readings from connected sensors.
               </p>
@@ -353,7 +353,7 @@ const BMSModule5Section2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Installation Tips:</p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Label Ethernet drops clearly as "BMS" to avoid confusion</li>
                 <li>Verify IP addresses, ping devices during commissioning</li>
                 <li>Document network topology and addressing scheme</li>
@@ -372,7 +372,7 @@ const BMSModule5Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

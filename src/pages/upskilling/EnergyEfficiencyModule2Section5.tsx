@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { useSEO } from '@/hooks/useSEO';
+import useSEO from '@/hooks/useSEO';
 import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
+  ArrowLeft,
   FileBarChart,
   AlertTriangle,
   Target,
@@ -28,10 +25,6 @@ import {
 } from 'lucide-react';
 
 const EnergyEfficiencyModule2Section5: React.FC = () => {
-  const navigate = useNavigate();
-  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
-  const [showQuiz, setShowQuiz] = useState(false);
-
   useSEO({
     title: 'Reporting Load Profiles and Variations | Energy Efficiency Module 2 Section 5 | Elec-Mate',
     description: 'Learn professional reporting techniques for load profiles including visualisations, anomaly identification, benchmarking, and presenting actionable recommendations to clients.',
@@ -216,57 +209,69 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
     },
   ];
 
-  const toggleFAQ = (index: number) => {
-    setExpandedFAQ(expandedFAQ === index ? null : index);
-  };
-
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
-      {/* Header */}
-      <div className="bg-[#1a1a1a]/95 border-b border-gray-800">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-3 mb-2">
-            <FileBarChart className="w-8 h-8 text-elec-yellow" />
-            <span className="text-elec-yellow text-sm font-medium">Module 2 • Section 5</span>
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5" />
+            </Link>
+          </Button>
+          <div className="flex items-center gap-2 text-sm text-white/70">
+            <FileBarChart className="h-4 w-4 text-elec-yellow" />
+            <span>Module 2 • Section 5</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold mb-2">
-            Reporting Load Profiles and Variations
-          </h1>
-          <p className="text-gray-400">
-            Master professional reporting techniques to communicate load profile findings effectively
-          </p>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
-        {/* Introduction */}
-        <div className="bg-[#242424] rounded-xl p-6 border border-gray-800">
-          <p className="text-gray-300 leading-relaxed">
-            Collecting and analysing load profile data is only valuable if you can communicate findings
-            clearly to clients. This section covers professional reporting techniques, from creating
-            impactful visualisations to presenting prioritised recommendations that drive action.
-            You'll learn to transform raw data into compelling narratives that help clients understand
-            their energy use and make informed decisions about efficiency improvements.
+        {/* Page Title */}
+        <div className="text-center space-y-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-white">
+            Reporting Load Profiles and Variations
+          </h1>
+          <p className="text-white/80">
+            Master professional reporting techniques to communicate load profile findings effectively
           </p>
         </div>
 
-        {/* Section 1: Creating Clear Load Profile Visualisations */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-800">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-elec-yellow/20 rounded-lg flex items-center justify-center">
-              <BarChart3 className="w-5 h-5 text-elec-yellow" />
-            </div>
-            <h2 className="text-xl font-semibold">1. Creating Clear Load Profile Visualisations</h2>
+        {/* Quick Summary */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li>• Create compelling visualisations</li>
+              <li>• Identify and explain anomalies</li>
+              <li>• Compare to industry benchmarks</li>
+            </ul>
           </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">You Will Learn</p>
+            <ul className="text-sm text-white space-y-1">
+              <li>• Professional report structure</li>
+              <li>• Client presentation techniques</li>
+              <li>• Recommendation prioritisation</li>
+            </ul>
+          </div>
+        </div>
 
-          <div className="space-y-4 text-gray-300">
+        {/* Section 1 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Creating Clear Load Profile Visualisations
+          </h2>
+
+          <div className="space-y-4 text-white">
             <p>
               Effective visualisations transform complex data into instantly understandable insights.
               The right chart type depends on what patterns you want to highlight.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
                 <PieChart className="w-4 h-4 text-elec-yellow" />
                 Visualisation Types and Applications
@@ -274,32 +279,32 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               <div className="space-y-3">
                 <div className="border-l-2 border-elec-yellow pl-3">
                   <p className="font-medium text-white">Line Charts</p>
-                  <p className="text-sm">Best for showing demand over time (24-hour profiles, weekly trends).
+                  <p className="text-sm text-white/80">Best for showing demand over time (24-hour profiles, weekly trends).
                   Use multiple lines to compare different days or periods.</p>
                 </div>
                 <div className="border-l-2 border-blue-500 pl-3">
                   <p className="font-medium text-white">Heatmaps / Carpet Plots</p>
-                  <p className="text-sm">Ideal for showing patterns across two time dimensions (hour vs day).
+                  <p className="text-sm text-white/80">Ideal for showing patterns across two time dimensions (hour vs day).
                   Colour intensity represents consumption level - immediately reveals operational patterns.</p>
                 </div>
                 <div className="border-l-2 border-green-500 pl-3">
                   <p className="font-medium text-white">Bar Charts</p>
-                  <p className="text-sm">Effective for comparing categories (monthly totals, equipment breakdown,
+                  <p className="text-sm text-white/80">Effective for comparing categories (monthly totals, equipment breakdown,
                   before/after comparisons). Easy for clients to understand.</p>
                 </div>
                 <div className="border-l-2 border-purple-500 pl-3">
                   <p className="font-medium text-white">Stacked Area Charts</p>
-                  <p className="text-sm">Shows how different loads contribute to total consumption over time.
+                  <p className="text-sm text-white/80">Shows how different loads contribute to total consumption over time.
                   Useful for identifying which equipment dominates at different times.</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-4">
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-blue-400 mb-2">Excel Heatmap Creation Tips</h4>
-              <ol className="text-sm space-y-1 list-decimal list-inside">
+              <ol className="text-sm text-white space-y-1 list-decimal list-inside">
                 <li>Arrange data with hours (0-23) as rows and dates as columns</li>
-                <li>Select data range and apply Conditional Formatting → Colour Scales</li>
+                <li>Select data range and apply Conditional Formatting - Colour Scales</li>
                 <li>Choose red-yellow-green or similar intuitive colour scheme</li>
                 <li>Adjust column widths to create square cells for cleaner appearance</li>
                 <li>Add clear axis labels and a colour legend</li>
@@ -307,9 +312,9 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-medium text-white mb-2">Do's</h4>
-                <ul className="text-sm space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     Use consistent scales across comparisons
@@ -328,9 +333,9 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   </li>
                 </ul>
               </div>
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-medium text-white mb-2">Don'ts</h4>
-                <ul className="text-sm space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
                     Truncate axes to exaggerate changes
@@ -353,29 +358,27 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
           </div>
         </section>
 
-        {/* Section 2: Identifying Anomalies and Waste Patterns */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-800">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center">
-              <AlertTriangle className="w-5 h-5 text-red-500" />
-            </div>
-            <h2 className="text-xl font-semibold">2. Identifying Anomalies and Waste Patterns</h2>
-          </div>
+        {/* Section 2 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Identifying Anomalies and Waste Patterns
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white">
             <p>
               Anomaly detection is where load profile analysis delivers the most value. Learning to
               spot unusual patterns helps identify waste, equipment faults, and optimisation opportunities.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Common Anomaly Types</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <Flame className="w-5 h-5 text-orange-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Elevated Baseload</p>
-                    <p className="text-sm">High consumption during non-operational hours indicates equipment
+                    <p className="text-sm text-white/80">High consumption during non-operational hours indicates equipment
                     running unnecessarily. Compare night/weekend loads to minimum possible (security, refrigeration, etc.).</p>
                   </div>
                 </div>
@@ -383,7 +386,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   <Zap className="w-5 h-5 text-yellow-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Unexplained Demand Spikes</p>
-                    <p className="text-sm">Sudden peaks not correlating with known activities may indicate
+                    <p className="text-sm text-white/80">Sudden peaks not correlating with known activities may indicate
                     equipment faults, poor power factor, or uncontrolled motor starts.</p>
                   </div>
                 </div>
@@ -391,7 +394,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   <Clock className="w-5 h-5 text-blue-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Schedule Misalignment</p>
-                    <p className="text-sm">HVAC or lighting operating outside business hours, or starting
+                    <p className="text-sm text-white/80">HVAC or lighting operating outside business hours, or starting
                     too early/finishing too late. Often indicates BMS or timer issues.</p>
                   </div>
                 </div>
@@ -399,16 +402,16 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   <TrendingUp className="w-5 h-5 text-purple-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Consumption Creep</p>
-                    <p className="text-sm">Gradual increase in consumption over months/years without operational
+                    <p className="text-sm text-white/80">Gradual increase in consumption over months/years without operational
                     changes. May indicate degrading equipment efficiency or control drift.</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-yellow-900/20 border border-yellow-800 rounded-lg p-4">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="font-semibold text-elec-yellow mb-2">Analysis Checklist</h4>
-              <div className="grid md:grid-cols-2 gap-2 text-sm">
+              <div className="grid md:grid-cols-2 gap-2 text-sm text-white">
                 <label className="flex items-center gap-2">
                   <input type="checkbox" className="rounded" />
                   Compare weekday vs weekend profiles
@@ -447,57 +450,55 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
           explanation={quickCheckQuestions[0].explanation}
         />
 
-        {/* Section 3: Benchmarking Against Typical Profiles */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-800">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
-              <Target className="w-5 h-5 text-green-500" />
-            </div>
-            <h2 className="text-xl font-semibold">3. Benchmarking Against Typical Profiles</h2>
-          </div>
+        {/* Section 3 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Benchmarking Against Typical Profiles
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white">
             <p>
-              Benchmarking puts your findings in context. Without comparison data, clients can't
+              Benchmarking puts your findings in context. Without comparison data, clients cannot
               assess whether their consumption is reasonable or excessive for their building type.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Key Benchmarking Metrics</h3>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/20">
                       <th className="text-left py-2 pr-4 text-elec-yellow">Metric</th>
                       <th className="text-left py-2 pr-4 text-elec-yellow">Unit</th>
                       <th className="text-left py-2 text-elec-yellow">Application</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-800">
+                  <tbody className="divide-y divide-white/10">
                     <tr>
-                      <td className="py-2 pr-4">Energy Use Intensity (EUI)</td>
-                      <td className="py-2 pr-4">kWh/m²/year</td>
-                      <td className="py-2">Commercial buildings (NABERS)</td>
+                      <td className="py-2 pr-4 text-white">Energy Use Intensity (EUI)</td>
+                      <td className="py-2 pr-4 text-white">kWh/m²/year</td>
+                      <td className="py-2 text-white">Commercial buildings (NABERS)</td>
                     </tr>
                     <tr>
-                      <td className="py-2 pr-4">Load Factor</td>
-                      <td className="py-2 pr-4">% (0-100)</td>
-                      <td className="py-2">Demand consistency measure</td>
+                      <td className="py-2 pr-4 text-white">Load Factor</td>
+                      <td className="py-2 pr-4 text-white">% (0-100)</td>
+                      <td className="py-2 text-white">Demand consistency measure</td>
                     </tr>
                     <tr>
-                      <td className="py-2 pr-4">Baseload Ratio</td>
-                      <td className="py-2 pr-4">% of peak</td>
-                      <td className="py-2">Out-of-hours efficiency</td>
+                      <td className="py-2 pr-4 text-white">Baseload Ratio</td>
+                      <td className="py-2 pr-4 text-white">% of peak</td>
+                      <td className="py-2 text-white">Out-of-hours efficiency</td>
                     </tr>
                     <tr>
-                      <td className="py-2 pr-4">kWh per unit output</td>
-                      <td className="py-2 pr-4">kWh/unit</td>
-                      <td className="py-2">Manufacturing facilities</td>
+                      <td className="py-2 pr-4 text-white">kWh per unit output</td>
+                      <td className="py-2 pr-4 text-white">kWh/unit</td>
+                      <td className="py-2 text-white">Manufacturing facilities</td>
                     </tr>
                     <tr>
-                      <td className="py-2 pr-4">kWh per employee</td>
-                      <td className="py-2 pr-4">kWh/FTE/year</td>
-                      <td className="py-2">Office buildings</td>
+                      <td className="py-2 pr-4 text-white">kWh per employee</td>
+                      <td className="py-2 pr-4 text-white">kWh/FTE/year</td>
+                      <td className="py-2 text-white">Office buildings</td>
                     </tr>
                   </tbody>
                 </table>
@@ -505,20 +506,20 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-medium text-white mb-2">NABERS Office Benchmarks</h4>
-                <ul className="text-sm space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>5 Star: &lt;100 kWh/m²/year</li>
                   <li>4 Star: 100-150 kWh/m²/year</li>
                   <li>3 Star: 150-200 kWh/m²/year</li>
                   <li>2 Star: 200-270 kWh/m²/year</li>
                   <li>1 Star: &gt;270 kWh/m²/year</li>
                 </ul>
-                <p className="text-xs text-gray-500 mt-2">*Varies by climate zone</p>
+                <p className="text-xs text-white/60 mt-2">*Varies by climate zone</p>
               </div>
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-medium text-white mb-2">Typical Baseload Ratios</h4>
-                <ul className="text-sm space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Well-managed office: 20-30%</li>
                   <li>Average office: 40-50%</li>
                   <li>Poor control: 60-70%+</li>
@@ -528,9 +529,9 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-green-900/20 border border-green-800 rounded-lg p-4">
+            <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-green-400 mb-2">Benchmark Sources</h4>
-              <ul className="text-sm space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• <strong>NABERS:</strong> nabers.gov.au - Australian building ratings</li>
                 <li>• <strong>Energy Rating:</strong> energyrating.gov.au - Appliance benchmarks</li>
                 <li>• <strong>CBD Program:</strong> cbd.gov.au - Commercial disclosure data</li>
@@ -541,23 +542,21 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
           </div>
         </section>
 
-        {/* Section 4: Report Structure and Key Metrics */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-800">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
-              <FileText className="w-5 h-5 text-blue-500" />
-            </div>
-            <h2 className="text-xl font-semibold">4. Report Structure and Key Metrics</h2>
-          </div>
+        {/* Section 4 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Report Structure and Key Metrics
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white">
             <p>
               A well-structured report guides readers from summary to detail, allowing busy
               decision-makers to grasp key points quickly while providing supporting data for those
               who want deeper analysis.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
                 <ClipboardList className="w-4 h-4 text-elec-yellow" />
                 Recommended Report Structure
@@ -567,53 +566,53 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
                   <div>
                     <p className="font-medium text-white">Executive Summary (1 page)</p>
-                    <p className="text-sm">Key findings, total savings potential, top 3 recommendations, payback overview</p>
+                    <p className="text-sm text-white/80">Key findings, total savings potential, top 3 recommendations, payback overview</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
                   <div>
                     <p className="font-medium text-white">Site Overview</p>
-                    <p className="text-sm">Building details, operational hours, major equipment, current energy costs</p>
+                    <p className="text-sm text-white/80">Building details, operational hours, major equipment, current energy costs</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
                   <div>
                     <p className="font-medium text-white">Load Profile Analysis</p>
-                    <p className="text-sm">Visualisations, patterns identified, anomalies, benchmark comparisons</p>
+                    <p className="text-sm text-white/80">Visualisations, patterns identified, anomalies, benchmark comparisons</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
                   <div>
                     <p className="font-medium text-white">Findings and Opportunities</p>
-                    <p className="text-sm">Detailed analysis of each issue, evidence, quantified waste</p>
+                    <p className="text-sm text-white/80">Detailed analysis of each issue, evidence, quantified waste</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
                   <div>
                     <p className="font-medium text-white">Recommendations</p>
-                    <p className="text-sm">Prioritised actions with costs, savings, payback periods</p>
+                    <p className="text-sm text-white/80">Prioritised actions with costs, savings, payback periods</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="w-6 h-6 bg-elec-yellow text-black rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
                   <div>
                     <p className="font-medium text-white">Appendices</p>
-                    <p className="text-sm">Raw data, detailed calculations, methodology, equipment lists</p>
+                    <p className="text-sm text-white/80">Raw data, detailed calculations, methodology, equipment lists</p>
                   </div>
                 </li>
               </ol>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Essential Metrics to Include</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="text-elec-yellow text-sm font-medium mb-2">Consumption Metrics</h4>
-                  <ul className="text-sm space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Total annual consumption (kWh)</li>
                     <li>• Monthly/seasonal breakdown</li>
                     <li>• Energy Use Intensity (kWh/m²)</li>
@@ -623,7 +622,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-elec-yellow text-sm font-medium mb-2">Financial Metrics</h4>
-                  <ul className="text-sm space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Current annual energy cost ($)</li>
                     <li>• Cost per kWh (effective rate)</li>
                     <li>• Potential annual savings ($)</li>
@@ -645,23 +644,21 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
           explanation={quickCheckQuestions[1].explanation}
         />
 
-        {/* Section 5: Presenting Findings to Clients */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-800">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
-              <Users className="w-5 h-5 text-purple-500" />
-            </div>
-            <h2 className="text-xl font-semibold">5. Presenting Findings to Clients</h2>
-          </div>
+        {/* Section 5 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Presenting Findings to Clients
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white">
             <p>
               Your analysis is only as good as your ability to communicate it. Tailor your
               presentation style to your audience - facility managers need different information
               than CEOs or finance directors.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
                 <Presentation className="w-4 h-4 text-elec-yellow" />
                 Audience-Specific Communication
@@ -669,26 +666,26 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               <div className="space-y-3">
                 <div className="border-l-2 border-elec-yellow pl-3">
                   <p className="font-medium text-white">Executive / Finance</p>
-                  <p className="text-sm">Focus on ROI, payback periods, risk reduction, compliance. Use dollar
+                  <p className="text-sm text-white/80">Focus on ROI, payback periods, risk reduction, compliance. Use dollar
                   figures prominently. Keep technical detail minimal. One-page summary with clear recommendations.</p>
                 </div>
                 <div className="border-l-2 border-blue-500 pl-3">
                   <p className="font-medium text-white">Facility Managers</p>
-                  <p className="text-sm">Technical detail appreciated but practical focus essential. Emphasise
+                  <p className="text-sm text-white/80">Technical detail appreciated but practical focus essential. Emphasise
                   operational changes, BMS adjustments, maintenance implications. Show before/after potential.</p>
                 </div>
                 <div className="border-l-2 border-green-500 pl-3">
                   <p className="font-medium text-white">Operations / Maintenance</p>
-                  <p className="text-sm">Detailed equipment-level findings. Specific faults, schedules to adjust,
+                  <p className="text-sm text-white/80">Detailed equipment-level findings. Specific faults, schedules to adjust,
                   maintenance requirements. Practical step-by-step guidance.</p>
                 </div>
               </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-green-900/20 border border-green-800 rounded-lg p-4">
+              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <h4 className="font-semibold text-green-400 mb-2">Effective Presentation Tips</h4>
-                <ul className="text-sm space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Start with the bottom line (savings potential)</li>
                   <li>• Use visual comparisons (before/after)</li>
                   <li>• Translate kWh to dollars consistently</li>
@@ -697,9 +694,9 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   <li>• End with clear next steps</li>
                 </ul>
               </div>
-              <div className="bg-red-900/20 border border-red-800 rounded-lg p-4">
+              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                 <h4 className="font-semibold text-red-400 mb-2">Common Pitfalls to Avoid</h4>
-                <ul className="text-sm space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Overwhelming with raw data</li>
                   <li>• Using unexplained jargon</li>
                   <li>• Presenting problems without solutions</li>
@@ -710,12 +707,12 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-4">
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-blue-400 mb-2">The "Money Slide"</h4>
-              <p className="text-sm mb-2">
+              <p className="text-sm text-white mb-2">
                 Every presentation should include a clear summary slide/page showing:
               </p>
-              <div className="bg-[#1a1a1a] rounded p-3 text-sm font-mono">
+              <div className="bg-white/5 rounded p-3 text-sm font-mono text-white">
                 <p>Total Identified Savings: $XX,XXX per year</p>
                 <p>Implementation Cost: $XX,XXX</p>
                 <p>Simple Payback: X.X years</p>
@@ -725,70 +722,68 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
           </div>
         </section>
 
-        {/* Section 6: Recommendations and Priority Ranking */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-800">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
-              <ListOrdered className="w-5 h-5 text-orange-500" />
-            </div>
-            <h2 className="text-xl font-semibold">6. Recommendations and Priority Ranking</h2>
-          </div>
+        {/* Section 6 */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Recommendations and Priority Ranking
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white">
             <p>
               Effective recommendations are specific, quantified, and prioritised. A long list of
               unranked suggestions leaves clients unsure where to start. Use a systematic approach
               to help them allocate limited budgets effectively.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Priority Matrix Approach</h3>
               <div className="grid grid-cols-2 gap-2 text-sm">
-                <div className="bg-green-900/30 rounded p-3 text-center">
+                <div className="bg-green-500/20 rounded p-3 text-center">
                   <p className="font-bold text-green-400">QUICK WINS</p>
-                  <p>Low Cost + High Savings</p>
-                  <p className="text-xs mt-1">Do First</p>
+                  <p className="text-white">Low Cost + High Savings</p>
+                  <p className="text-xs mt-1 text-white/70">Do First</p>
                 </div>
-                <div className="bg-blue-900/30 rounded p-3 text-center">
+                <div className="bg-blue-500/20 rounded p-3 text-center">
                   <p className="font-bold text-blue-400">STRATEGIC</p>
-                  <p>High Cost + High Savings</p>
-                  <p className="text-xs mt-1">Plan & Budget</p>
+                  <p className="text-white">High Cost + High Savings</p>
+                  <p className="text-xs mt-1 text-white/70">Plan & Budget</p>
                 </div>
-                <div className="bg-yellow-900/30 rounded p-3 text-center">
+                <div className="bg-yellow-500/20 rounded p-3 text-center">
                   <p className="font-bold text-yellow-400">CONSIDER</p>
-                  <p>Low Cost + Low Savings</p>
-                  <p className="text-xs mt-1">When Convenient</p>
+                  <p className="text-white">Low Cost + Low Savings</p>
+                  <p className="text-xs mt-1 text-white/70">When Convenient</p>
                 </div>
-                <div className="bg-red-900/30 rounded p-3 text-center">
+                <div className="bg-red-500/20 rounded p-3 text-center">
                   <p className="font-bold text-red-400">QUESTION</p>
-                  <p>High Cost + Low Savings</p>
-                  <p className="text-xs mt-1">Justify Carefully</p>
+                  <p className="text-white">High Cost + Low Savings</p>
+                  <p className="text-xs mt-1 text-white/70">Justify Carefully</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Recommendation Format Template</h3>
-              <div className="border border-gray-700 rounded-lg p-4 text-sm">
+              <div className="border border-white/20 rounded-lg p-4 text-sm">
                 <p className="text-elec-yellow font-bold mb-2">Recommendation #1: Optimise HVAC Start Times</p>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <p><span className="text-gray-400">Issue:</span> HVAC starts 2 hours before occupancy</p>
-                    <p><span className="text-gray-400">Action:</span> Adjust BMS start time to 7:00 AM</p>
-                    <p><span className="text-gray-400">Priority:</span> <span className="text-green-400">Quick Win</span></p>
+                  <div className="text-white">
+                    <p><span className="text-white/60">Issue:</span> HVAC starts 2 hours before occupancy</p>
+                    <p><span className="text-white/60">Action:</span> Adjust BMS start time to 7:00 AM</p>
+                    <p><span className="text-white/60">Priority:</span> <span className="text-green-400">Quick Win</span></p>
                   </div>
-                  <div>
-                    <p><span className="text-gray-400">Est. Cost:</span> $500 (BMS programming)</p>
-                    <p><span className="text-gray-400">Annual Savings:</span> $3,200</p>
-                    <p><span className="text-gray-400">Payback:</span> 2 months</p>
+                  <div className="text-white">
+                    <p><span className="text-white/60">Est. Cost:</span> $500 (BMS programming)</p>
+                    <p><span className="text-white/60">Annual Savings:</span> $3,200</p>
+                    <p><span className="text-white/60">Payback:</span> 2 months</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="font-semibold text-white mb-3">Typical Quick Wins from Load Profile Analysis</h3>
-              <ul className="space-y-2">
+              <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                   <span>Adjust HVAC schedules to match actual occupancy</span>
@@ -812,9 +807,9 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               </ul>
             </div>
 
-            <div className="bg-yellow-900/20 border border-yellow-800 rounded-lg p-4">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="font-semibold text-elec-yellow mb-2">Payback Period Guidelines</h4>
-              <ul className="text-sm space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• <strong>&lt;1 year:</strong> Highly attractive - implement immediately</li>
                 <li>• <strong>1-3 years:</strong> Good return - strong recommendation</li>
                 <li>• <strong>3-5 years:</strong> Acceptable for most businesses</li>
@@ -838,33 +833,33 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
         <section className="bg-gradient-to-br from-elec-yellow/20 to-orange-500/20 rounded-xl p-6 border border-elec-yellow/30">
           <div className="flex items-center gap-3 mb-4">
             <Lightbulb className="w-6 h-6 text-elec-yellow" />
-            <h2 className="text-xl font-semibold">Quick Reference Card</h2>
+            <h2 className="text-xl font-semibold text-white">Quick Reference Card</h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h3 className="font-semibold text-elec-yellow mb-2">Report Checklist</h3>
-              <ul className="text-sm space-y-1 text-gray-300">
-                <li>□ Executive summary (1 page max)</li>
-                <li>□ Site overview with key details</li>
-                <li>□ Load profile visualisations</li>
-                <li>□ Anomalies identified and explained</li>
-                <li>□ Benchmark comparisons included</li>
-                <li>□ Prioritised recommendations</li>
-                <li>□ Cost/savings/payback for each action</li>
-                <li>□ Clear next steps defined</li>
+              <ul className="text-sm space-y-1 text-white">
+                <li>* Executive summary (1 page max)</li>
+                <li>* Site overview with key details</li>
+                <li>* Load profile visualisations</li>
+                <li>* Anomalies identified and explained</li>
+                <li>* Benchmark comparisons included</li>
+                <li>* Prioritised recommendations</li>
+                <li>* Cost/savings/payback for each action</li>
+                <li>* Clear next steps defined</li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-elec-yellow mb-2">Key Visualisation Types</h3>
-              <ul className="text-sm space-y-1 text-gray-300">
+              <ul className="text-sm space-y-1 text-white">
                 <li>• <strong>Heatmap:</strong> Hour vs day patterns</li>
                 <li>• <strong>Line chart:</strong> Daily/weekly trends</li>
                 <li>• <strong>Bar chart:</strong> Category comparisons</li>
                 <li>• <strong>Stacked area:</strong> Load composition</li>
               </ul>
               <h3 className="font-semibold text-elec-yellow mb-2 mt-4">Benchmarks to Include</h3>
-              <ul className="text-sm space-y-1 text-gray-300">
+              <ul className="text-sm space-y-1 text-white">
                 <li>• Energy Use Intensity (kWh/m²/yr)</li>
                 <li>• Baseload ratio (% of peak)</li>
                 <li>• NABERS rating equivalent</li>
@@ -875,7 +870,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
 
           <div className="mt-4 pt-4 border-t border-elec-yellow/30">
             <h3 className="font-semibold text-elec-yellow mb-2">Golden Rules for Client Presentations</h3>
-            <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-300">
+            <div className="grid md:grid-cols-3 gap-4 text-sm text-white">
               <div className="flex items-center gap-2">
                 <span className="text-elec-yellow font-bold">1.</span>
                 Lead with the money (potential savings)
@@ -893,74 +888,55 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
         </section>
 
         {/* FAQs */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-800">
-          <h2 className="text-xl font-semibold mb-4">Frequently Asked Questions</h2>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
           <div className="space-y-2">
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="border border-gray-700 rounded-lg overflow-hidden"
+                className="border border-white/10 rounded-lg overflow-hidden"
               >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation active:scale-[0.98] hover:bg-[#2a2a2a] transition-colors"
-                >
-                  <span className="font-medium pr-4">{faq.question}</span>
-                  {expandedFAQ === index ? (
-                    <ChevronUp className="w-5 h-5 text-elec-yellow flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                  )}
-                </button>
-                {expandedFAQ === index && (
-                  <div className="px-4 pb-4 text-gray-300 text-sm leading-relaxed border-t border-gray-700 pt-3">
-                    {faq.answer}
-                  </div>
-                )}
+                <div className="p-4">
+                  <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                  <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Quiz Section */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-800">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Section Quiz</h2>
-            <Button
-              onClick={() => setShowQuiz(!showQuiz)}
-              variant="outline"
-              className="min-h-[44px] touch-manipulation active:scale-[0.98] border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black"
-            >
-              {showQuiz ? 'Hide Quiz' : 'Take Quiz'}
-            </Button>
-          </div>
-          {showQuiz && (
-            <Quiz
-              questions={quizQuestions}
-              moduleId="energy-efficiency-m2s5"
-              onComplete={(score) => {
-                console.log(`Quiz completed with score: ${score}/${quizQuestions.length}`);
-              }}
-            />
-          )}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white">Section Quiz</h2>
+          <Quiz
+            questions={quizQuestions}
+            moduleId="energy-efficiency-m2s5"
+            onComplete={(score) => {
+              console.log(`Quiz completed with score: ${score}/${quizQuestions.length}`);
+            }}
+          />
         </section>
 
         {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row gap-4 justify-between pt-6 border-t border-gray-800">
+        <nav className="flex flex-col sm:flex-row gap-4 justify-between pt-6 border-t border-white/10">
           <Button
-            onClick={() => navigate('/upskilling/energy-efficiency/module-2/section-4')}
+            asChild
             variant="outline"
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 hover:border-elec-yellow hover:text-elec-yellow flex items-center gap-2"
+            className="min-h-[44px] touch-manipulation border-white/20 hover:border-elec-yellow hover:text-elec-yellow bg-transparent text-white"
           >
-            <ChevronLeft className="w-4 h-4" />
-            <span>Previous: Section 4 - Load Profile Analysis Tools</span>
+            <Link to="../section-4" className="flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              <span>Previous: Load Profile Analysis Tools</span>
+            </Link>
           </Button>
           <Button
-            onClick={() => navigate('/upskilling/energy-efficiency/module-3')}
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-yellow-400 flex items-center gap-2"
+            asChild
+            className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-yellow-400"
           >
-            <span>Next: Module 3 - Energy Auditing</span>
-            <ChevronRight className="w-4 h-4" />
+            <Link to="../../module-3" className="flex items-center gap-2">
+              <span>Next: Module 3 - Energy Auditing</span>
+              <ArrowLeft className="w-4 h-4 rotate-180" />
+            </Link>
           </Button>
         </nav>
       </div>

@@ -35,7 +35,8 @@ import { TeamChatList, TeamChatView } from "@/components/employer/team-chat";
 import { CollegeChatList, CollegeChatView } from "@/components/college/chat";
 
 // Peer support
-import { peerConversationService, peerMessageService, PeerConversation, PeerMessage } from "@/services/peerSupportService";
+import { peerConversationService, PeerConversation, PeerMessage } from "@/services/peerSupportService";
+import { usePeerMessages, useSendPeerMessage, useMarkPeerMessagesAsRead } from "@/hooks/usePeerChat";
 import { PeerChatActions } from "@/components/mental-health/peer-support/PeerChatActions";
 
 // Types
@@ -70,7 +71,9 @@ function PeerConversationListItem({
   onClick: (conv: PeerConversation) => void;
 }) {
   const isSupporter = conversation.supporter?.user_id === currentUserId;
-  const otherName = isSupporter ? 'Anonymous Seeker' : (conversation.supporter?.display_name || 'Peer Supporter');
+  const otherName = isSupporter
+    ? (conversation.seeker?.full_name?.split(' ')[0] || 'Mate')
+    : (conversation.supporter?.display_name || 'Peer Supporter');
   const initials = otherName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   const timeAgo = conversation.last_message_at
     ? formatDistanceToNow(new Date(conversation.last_message_at), { addSuffix: false })
@@ -162,7 +165,7 @@ function PeerConversationList({ onSelect }: { onSelect: (conv: PeerConversation)
   );
 }
 
-// Peer Chat View Component
+// Peer Chat View Component - Uses centralized hooks for real-time updates
 function PeerChatView({
   conversation,
   currentUserId,
@@ -172,55 +175,34 @@ function PeerChatView({
   currentUserId: string;
   onBack: () => void;
 }) {
-  const [messages, setMessages] = useState<PeerMessage[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [newMessage, setNewMessage] = useState("");
-  const [isSending, setIsSending] = useState(false);
 
-  // Load messages
+  // Use centralized hooks (shared cache with MessagesDropdown and PeerSupportHub)
+  const { data: messages = [], isLoading } = usePeerMessages(conversation.id);
+  const sendPeerMessage = useSendPeerMessage();
+  const markAsRead = useMarkPeerMessagesAsRead();
+
+  // Mark as read on mount
   useEffect(() => {
-    const loadMessages = async () => {
-      try {
-        const msgs = await peerMessageService.getMessages(conversation.id);
-        setMessages(msgs);
-        await peerMessageService.markAsRead(conversation.id);
-      } catch (error) {
-        console.error("Error loading peer messages:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadMessages();
-
-    // Subscribe to new messages
-    const unsubscribe = peerMessageService.subscribeToMessages(
-      conversation.id,
-      (newMsg) => {
-        setMessages((prev) => [...prev, newMsg]);
-      }
-    );
-
-    return () => unsubscribe();
+    markAsRead.mutate(conversation.id);
   }, [conversation.id]);
 
-  const handleSend = async () => {
-    if (!newMessage.trim() || isSending) return;
+  const handleSend = () => {
+    if (!newMessage.trim() || sendPeerMessage.isPending) return;
 
-    setIsSending(true);
-    try {
-      await peerMessageService.sendMessage(conversation.id, newMessage.trim());
-      setNewMessage("");
-    } catch (error) {
-      console.error("Error sending message:", error);
-      toast({
-        title: "Failed to send",
-        description: "Please try again",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSending(false);
-    }
+    sendPeerMessage.mutate(
+      { conversationId: conversation.id, content: newMessage.trim() },
+      {
+        onSuccess: () => setNewMessage(""),
+        onError: () => {
+          toast({
+            title: "Failed to send",
+            description: "Please try again",
+            variant: "destructive",
+          });
+        },
+      }
+    );
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -292,16 +274,16 @@ function PeerChatView({
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Type a message..."
-            disabled={isSending}
+            disabled={sendPeerMessage.isPending}
             className="flex-1"
           />
           <Button
             onClick={handleSend}
-            disabled={!newMessage.trim() || isSending}
+            disabled={!newMessage.trim() || sendPeerMessage.isPending}
             size="icon"
             className="bg-pink-500 hover:bg-pink-600 text-white shrink-0"
           >
-            {isSending ? (
+            {sendPeerMessage.isPending ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <Send className="h-4 w-4" />
@@ -357,7 +339,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const jobLoading = isEmployerContext ? employerLoading : electricianLoading;
   const jobUnread = isEmployerContext ? employerUnread : electricianUnread;
   const userType = isEmployerContext ? 'employer' : 'electrician';
-  const peerUnread = peerConversations?.filter(c => c.status === 'active').length || 0;
+  const peerUnread = peerConversations?.reduce((sum, c) => sum + (c.unread_count || 0), 0) || 0;
   const totalUnread = jobUnread + teamChatUnread + collegeUnread + peerUnread;
 
   // Messages for selected job conversation
@@ -558,7 +540,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                   {selectedCollegeConversation && selectedCollegeConversation.title}
                   {selectedPeerConversation && (
                     selectedPeerConversation.supporter?.user_id === user?.id
-                      ? 'Anonymous Seeker'
+                      ? (selectedPeerConversation.seeker?.full_name?.split(' ')[0] || 'Mate')
                       : (selectedPeerConversation.supporter?.display_name || 'Peer Supporter')
                   )}
                 </h3>
@@ -573,7 +555,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                   }
                   otherUserName={
                     selectedPeerConversation.supporter?.user_id === user?.id
-                      ? 'Anonymous Seeker'
+                      ? (selectedPeerConversation.seeker?.full_name?.split(' ')[0] || 'Mate')
                       : (selectedPeerConversation.supporter?.display_name || 'Peer Supporter')
                   }
                   conversationId={selectedPeerConversation.id}

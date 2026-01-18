@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { useSEO } from '@/hooks/useSEO';
+import useSEO from '@/hooks/useSEO';
 import {
+  ArrowLeft,
   ChevronLeft,
   ChevronRight,
-  ChevronDown,
-  ChevronUp,
   ClipboardCheck,
   FileText,
   Workflow,
@@ -23,8 +22,7 @@ import {
 } from 'lucide-react';
 
 const IndustrialElectricalModule3Section5: React.FC = () => {
-  const navigate = useNavigate();
-  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
+  const [showQuiz, setShowQuiz] = useState(false);
 
   useSEO({
     title: 'Functional Testing and Documentation | Industrial Electrical Module 3 Section 5 | Elec-Mate',
@@ -170,7 +168,7 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
     },
   ];
 
-  const faqs = [
+  const faqItems = [
     {
       question: 'What is the difference between type testing and routine verification under BS EN 61439?',
       answer:
@@ -203,51 +201,62 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
     },
   ];
 
-  const toggleFAQ = (index: number) => {
-    setExpandedFAQ(expandedFAQ === index ? null : index);
-  };
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <div className="bg-[#1a1a1a]/95 border-b border-elec-yellow/20">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-2 text-elec-yellow/70 text-sm mb-2">
-            <BookOpen size={16} />
-            <span>Industrial Electrical - Module 3 - Section 5</span>
-          </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-elec-yellow">
-            Functional Testing and Documentation
-          </h1>
-          <p className="text-gray-400 mt-2">
-            BS EN 61439 verification requirements, FAT/SAT procedures, test certificates, and technical documentation packages for industrial switchgear assemblies
-          </p>
+      <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-white/10">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+          <span className="text-sm text-muted-foreground">Module 3 &gt; Section 5</span>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
-        {/* Section 1: Factory Acceptance Testing (FAT) */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <ClipboardCheck className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              1. Factory Acceptance Testing (FAT) Procedures
-            </h2>
+      <div className="max-w-3xl mx-auto px-4 py-6 space-y-8">
+        {/* Title */}
+        <div className="text-center space-y-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10">
+            <ClipboardCheck className="w-8 h-8 text-elec-yellow" />
           </div>
+          <h1 className="text-2xl font-bold text-foreground">Functional Testing and Documentation</h1>
+          <p className="text-muted-foreground">BS EN 61439 verification requirements, FAT/SAT procedures, test certificates, and technical documentation packages for industrial switchgear assemblies</p>
+        </div>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
+        {/* Section Overview */}
+        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+          <div className="flex items-start gap-3">
+            <Info className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+            <div>
+              <h2 className="font-semibold text-foreground mb-2">Section Overview</h2>
+              <p className="text-sm text-muted-foreground">
+                This section covers the essential testing and documentation requirements for industrial switchgear assemblies. You will learn about Factory Acceptance Testing (FAT), Site Acceptance Testing (SAT), BS EN 61439 routine verification procedures, point-to-point wiring verification, functional sequence testing, and the technical documentation packages required for compliance.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 1: Factory Acceptance Testing (FAT) */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Factory Acceptance Testing (FAT) Procedures
+          </h2>
+
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <p className="text-sm text-muted-foreground">
               Factory Acceptance Testing (FAT) is performed at the manufacturer's premises before the switchgear assembly is dispatched to site. It provides the opportunity to verify compliance with specifications and identify issues while corrections can still be made cost-effectively in controlled factory conditions.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">FAT Preparation Checklist</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">FAT Preparation Checklist</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="text-elec-yellow font-medium mb-2">Documentation Review</h4>
-                  <ul className="space-y-1 text-sm">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">Documentation Review</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>- Technical specification compliance matrix</li>
                     <li>- Single-line diagrams and schematics</li>
                     <li>- Component datasheets and certificates</li>
@@ -256,8 +265,8 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="text-elec-yellow font-medium mb-2">Physical Preparation</h4>
-                  <ul className="space-y-1 text-sm">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">Physical Preparation</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>- Assembly fully constructed and wired</li>
                     <li>- All labels and markings applied</li>
                     <li>- Test equipment calibrated and certified</li>
@@ -268,53 +277,53 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Typical FAT Test Sequence</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Typical FAT Test Sequence</h3>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-sm">1</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow text-background flex items-center justify-center flex-shrink-0 font-bold text-sm">1</span>
                   <div>
-                    <p className="font-medium text-white">Visual Inspection</p>
-                    <p className="text-sm text-gray-400">Verify construction quality, component installation, labelling, and general workmanship against drawings</p>
+                    <p className="font-medium text-foreground">Visual Inspection</p>
+                    <p className="text-sm text-muted-foreground">Verify construction quality, component installation, labelling, and general workmanship against drawings</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-sm">2</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow text-background flex items-center justify-center flex-shrink-0 font-bold text-sm">2</span>
                   <div>
-                    <p className="font-medium text-white">Mechanical Operation</p>
-                    <p className="text-sm text-gray-400">Check door operation, interlocks, withdrawable units, and earthing provisions</p>
+                    <p className="font-medium text-foreground">Mechanical Operation</p>
+                    <p className="text-sm text-muted-foreground">Check door operation, interlocks, withdrawable units, and earthing provisions</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-sm">3</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow text-background flex items-center justify-center flex-shrink-0 font-bold text-sm">3</span>
                   <div>
-                    <p className="font-medium text-white">Electrical Tests</p>
-                    <p className="text-sm text-gray-400">Insulation resistance, protective circuit continuity, dielectric withstand (if required)</p>
+                    <p className="font-medium text-foreground">Electrical Tests</p>
+                    <p className="text-sm text-muted-foreground">Insulation resistance, protective circuit continuity, dielectric withstand (if required)</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-sm">4</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow text-background flex items-center justify-center flex-shrink-0 font-bold text-sm">4</span>
                   <div>
-                    <p className="font-medium text-white">Functional Testing</p>
-                    <p className="text-sm text-gray-400">Control circuit operation, protection relay settings, metering accuracy, sequence testing</p>
+                    <p className="font-medium text-foreground">Functional Testing</p>
+                    <p className="text-sm text-muted-foreground">Control circuit operation, protection relay settings, metering accuracy, sequence testing</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-sm">5</span>
+                  <span className="w-6 h-6 rounded-full bg-elec-yellow text-background flex items-center justify-center flex-shrink-0 font-bold text-sm">5</span>
                   <div>
-                    <p className="font-medium text-white">Documentation Review</p>
-                    <p className="text-sm text-gray-400">Verify all certificates, test records, and O&M documentation complete and correct</p>
+                    <p className="font-medium text-foreground">Documentation Review</p>
+                    <p className="text-sm text-muted-foreground">Verify all certificates, test records, and O&M documentation complete and correct</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <div className="flex items-start gap-2">
-                <Users className="text-blue-400 mt-1 flex-shrink-0" size={18} />
+                <Users className="text-elec-yellow mt-1 flex-shrink-0 w-4 h-4" />
                 <div>
-                  <h4 className="text-blue-400 font-medium">Customer Witness Testing</h4>
-                  <p className="text-sm mt-1">
+                  <h4 className="text-elec-yellow font-medium text-sm">Customer Witness Testing</h4>
+                  <p className="text-sm mt-1 text-muted-foreground">
                     Many contracts require customer witness of FAT. The customer or their representative attends to observe testing, review results, and formally accept the equipment. A witness point schedule should be agreed in advance, and the customer must be given adequate notice (typically 5-10 working days) before each witness hold point. The customer signs off each witnessed test on the ITP.
                   </p>
                 </div>
@@ -324,27 +333,23 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
         </section>
 
         {/* Section 2: Point-to-Point Wiring Verification */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <Workflow className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              2. Point-to-Point Wiring Verification
-            </h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Point-to-Point Wiring Verification
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <p className="text-sm text-muted-foreground">
               Point-to-point (P2P) testing verifies that every wire connection in the assembly matches the schematic drawings. This is a critical quality check that must be performed on 100% of circuits, not by sampling. Modern methods combine manual verification with continuity testing.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">P2P Verification Methods</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">P2P Verification Methods</h3>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-[#2a2a2a] p-3 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">Visual Trace Method</h4>
-                  <ul className="space-y-1 text-sm text-gray-400">
+                <div className="bg-background/70 p-3 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">Visual Trace Method</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>- Trace each wire from origin to destination</li>
                     <li>- Verify wire number/label matches drawing</li>
                     <li>- Check terminal identification</li>
@@ -352,9 +357,9 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
                     <li>- Mark off on checked drawing</li>
                   </ul>
                 </div>
-                <div className="bg-[#2a2a2a] p-3 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">Continuity Testing</h4>
-                  <ul className="space-y-1 text-sm text-gray-400">
+                <div className="bg-background/70 p-3 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">Continuity Testing</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>- Use low-resistance ohmmeter</li>
                     <li>- Test from terminal to terminal</li>
                     <li>- Verify expected continuity paths</li>
@@ -365,42 +370,42 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Verification Requirements</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Verification Requirements</h3>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
                   <CheckCircle size={16} className="text-green-400 flex-shrink-0" />
-                  <span>Every power circuit connection verified against single-line diagram</span>
+                  <span className="text-muted-foreground">Every power circuit connection verified against single-line diagram</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle size={16} className="text-green-400 flex-shrink-0" />
-                  <span>All control circuit wiring checked against schematic drawings</span>
+                  <span className="text-muted-foreground">All control circuit wiring checked against schematic drawings</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle size={16} className="text-green-400 flex-shrink-0" />
-                  <span>Phase rotation and polarity confirmed (L1, L2, L3 sequence)</span>
+                  <span className="text-muted-foreground">Phase rotation and polarity confirmed (L1, L2, L3 sequence)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle size={16} className="text-green-400 flex-shrink-0" />
-                  <span>Neutral and protective earth connections traced and verified</span>
+                  <span className="text-muted-foreground">Neutral and protective earth connections traced and verified</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle size={16} className="text-green-400 flex-shrink-0" />
-                  <span>External interface terminals correctly identified and labelled</span>
+                  <span className="text-muted-foreground">External interface terminals correctly identified and labelled</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle size={16} className="text-green-400 flex-shrink-0" />
-                  <span>Ferrule/sleeve identification matches drawing references</span>
+                  <span className="text-muted-foreground">Ferrule/sleeve identification matches drawing references</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4">
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
               <div className="flex items-start gap-2">
-                <AlertTriangle className="text-yellow-400 mt-1 flex-shrink-0" size={18} />
+                <AlertTriangle className="text-amber-400 mt-1 flex-shrink-0 w-4 h-4" />
                 <div>
-                  <h4 className="text-yellow-400 font-medium">Common Wiring Errors to Check</h4>
-                  <ul className="text-sm mt-2 space-y-1">
+                  <h4 className="text-amber-400 font-medium text-sm">Common Wiring Errors to Check</h4>
+                  <ul className="text-sm mt-2 space-y-1 text-muted-foreground">
                     <li>- Transposed phases (L1/L2 or L2/L3 swapped)</li>
                     <li>- Wrong terminal connection on multi-terminal devices</li>
                     <li>- Crossed neutral and earth connections</li>
@@ -423,53 +428,49 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
         />
 
         {/* Section 3: Functional Sequence Testing */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <Workflow className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              3. Functional Sequence Testing
-            </h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Functional Sequence Testing
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <p className="text-sm text-muted-foreground">
               Functional sequence testing verifies that control circuits operate in the correct sequence and all interlocks function as designed. This goes beyond simple continuity testing to prove the system logic works correctly under simulated operating conditions.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Motor Starter Sequence Test Example</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Motor Starter Sequence Test Example</h3>
               <div className="space-y-3 text-sm">
-                <div className="border-l-2 border-elec-yellow pl-4">
-                  <p className="font-medium text-white">Step 1: Pre-conditions</p>
-                  <p className="text-gray-400">Verify isolator closed, control supply on, no fault conditions active, door closed (if interlocked)</p>
+                <div className="border-l-2 border-elec-yellow/50 pl-4">
+                  <p className="font-medium text-foreground">Step 1: Pre-conditions</p>
+                  <p className="text-muted-foreground">Verify isolator closed, control supply on, no fault conditions active, door closed (if interlocked)</p>
                 </div>
-                <div className="border-l-2 border-elec-yellow pl-4">
-                  <p className="font-medium text-white">Step 2: Start Command</p>
-                  <p className="text-gray-400">Apply start signal - verify contactor energises, run indication activates, ammeter shows current flow (if motor connected)</p>
+                <div className="border-l-2 border-elec-yellow/50 pl-4">
+                  <p className="font-medium text-foreground">Step 2: Start Command</p>
+                  <p className="text-muted-foreground">Apply start signal - verify contactor energises, run indication activates, ammeter shows current flow (if motor connected)</p>
                 </div>
-                <div className="border-l-2 border-elec-yellow pl-4">
-                  <p className="font-medium text-white">Step 3: Stop Command</p>
-                  <p className="text-gray-400">Apply stop signal - verify contactor de-energises, run indication clears, circuit ready for restart</p>
+                <div className="border-l-2 border-elec-yellow/50 pl-4">
+                  <p className="font-medium text-foreground">Step 3: Stop Command</p>
+                  <p className="text-muted-foreground">Apply stop signal - verify contactor de-energises, run indication clears, circuit ready for restart</p>
                 </div>
-                <div className="border-l-2 border-elec-yellow pl-4">
-                  <p className="font-medium text-white">Step 4: Overload Trip</p>
-                  <p className="text-gray-400">Simulate overload (test button) - verify trip, fault indication active, restart blocked until reset</p>
+                <div className="border-l-2 border-elec-yellow/50 pl-4">
+                  <p className="font-medium text-foreground">Step 4: Overload Trip</p>
+                  <p className="text-muted-foreground">Simulate overload (test button) - verify trip, fault indication active, restart blocked until reset</p>
                 </div>
-                <div className="border-l-2 border-elec-yellow pl-4">
-                  <p className="font-medium text-white">Step 5: Emergency Stop</p>
-                  <p className="text-gray-400">Test E-stop function - verify immediate de-energisation, latched until manually reset</p>
+                <div className="border-l-2 border-elec-yellow/50 pl-4">
+                  <p className="font-medium text-foreground">Step 5: Emergency Stop</p>
+                  <p className="text-muted-foreground">Test E-stop function - verify immediate de-energisation, latched until manually reset</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Interlock Testing Requirements</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Interlock Testing Requirements</h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Mechanical Interlocks</h4>
-                  <ul className="space-y-1 text-gray-400">
+                  <ul className="space-y-1 text-muted-foreground">
                     <li>- Withdrawable unit racking mechanism</li>
                     <li>- Door/cover interlocks with isolators</li>
                     <li>- Key exchange systems</li>
@@ -478,7 +479,7 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Electrical Interlocks</h4>
-                  <ul className="space-y-1 text-gray-400">
+                  <ul className="space-y-1 text-muted-foreground">
                     <li>- Bus section changeover schemes</li>
                     <li>- Auto/manual selection logic</li>
                     <li>- Sequence start/stop schemes</li>
@@ -488,12 +489,12 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <div className="flex items-start gap-2">
-                <Info className="text-blue-400 mt-1 flex-shrink-0" size={18} />
+                <Info className="text-elec-yellow mt-1 flex-shrink-0 w-4 h-4" />
                 <div>
-                  <h4 className="text-blue-400 font-medium">Simulation Methods</h4>
-                  <p className="text-sm mt-1">
+                  <h4 className="text-elec-yellow font-medium text-sm">Simulation Methods</h4>
+                  <p className="text-sm mt-1 text-muted-foreground">
                     During FAT, external signals are typically simulated using temporary links, signal generators, or dedicated test panels. PLC inputs can be forced for testing (with appropriate safety measures). Document all temporary modifications and ensure complete removal before dispatch. Some tests may require actual motor connection or load banks for full verification.
                   </p>
                 </div>
@@ -512,102 +513,98 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
         />
 
         {/* Section 4: BS EN 61439 Routine Verification */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <Shield className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              4. BS EN 61439 Routine Verification
-            </h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            BS EN 61439 Routine Verification
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <p className="text-sm text-muted-foreground">
               BS EN 61439 defines mandatory routine verification tests that must be performed on every manufactured assembly before it can be CE/UKCA marked. These tests confirm that the individual unit has been constructed correctly according to the verified design.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Mandatory Routine Verification Tests</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Mandatory Routine Verification Tests</h3>
               <div className="space-y-4">
-                <div className="bg-[#2a2a2a] p-4 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">1. Degree of Protection (IP Rating)</h4>
-                  <p className="text-sm text-gray-400">
+                <div className="bg-background/70 p-4 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">1. Degree of Protection (IP Rating)</h4>
+                  <p className="text-sm text-muted-foreground">
                     Visual inspection to verify that the enclosure construction provides the declared IP rating. Check seals, gaskets, cable entries, ventilation openings, and access covers.
                   </p>
                 </div>
 
-                <div className="bg-[#2a2a2a] p-4 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">2. Clearances and Creepage Distances</h4>
-                  <p className="text-sm text-gray-400">
+                <div className="bg-background/70 p-4 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">2. Clearances and Creepage Distances</h4>
+                  <p className="text-sm text-muted-foreground">
                     Verify adequate spacing between live parts and between live parts and earth. Compare with values established during design verification for the rated voltage and pollution degree.
                   </p>
                 </div>
 
-                <div className="bg-[#2a2a2a] p-4 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">3. Protection Against Electric Shock</h4>
-                  <p className="text-sm text-gray-400">
+                <div className="bg-background/70 p-4 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">3. Protection Against Electric Shock</h4>
+                  <p className="text-sm text-muted-foreground">
                     Check barriers, enclosures, and insulation providing protection against direct contact. Verify all exposed conductive parts are connected to protective circuit.
                   </p>
                 </div>
 
-                <div className="bg-[#2a2a2a] p-4 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">4. Installation of Switching Devices and Components</h4>
-                  <p className="text-sm text-gray-400">
+                <div className="bg-background/70 p-4 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">4. Installation of Switching Devices and Components</h4>
+                  <p className="text-sm text-muted-foreground">
                     Verify correct installation, ratings, settings, and condition of all devices. Check position indicators, rating labels, and operating mechanisms.
                   </p>
                 </div>
 
-                <div className="bg-[#2a2a2a] p-4 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">5. Internal Electrical Circuits and Connections</h4>
-                  <p className="text-sm text-gray-400">
+                <div className="bg-background/70 p-4 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">5. Internal Electrical Circuits and Connections</h4>
+                  <p className="text-sm text-muted-foreground">
                     Point-to-point verification of all wiring against drawings. Confirm conductor sizes, routing, and termination quality.
                   </p>
                 </div>
 
-                <div className="bg-[#2a2a2a] p-4 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">6. Terminals for External Conductors</h4>
-                  <p className="text-sm text-gray-400">
+                <div className="bg-background/70 p-4 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">6. Terminals for External Conductors</h4>
+                  <p className="text-sm text-muted-foreground">
                     Check terminal suitability for declared conductor size range. Verify marking, accessibility, and tightening torque capability.
                   </p>
                 </div>
 
-                <div className="bg-[#2a2a2a] p-4 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">7. Mechanical Operation</h4>
-                  <p className="text-sm text-gray-400">
+                <div className="bg-background/70 p-4 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">7. Mechanical Operation</h4>
+                  <p className="text-sm text-muted-foreground">
                     Test operation of all moving parts - doors, covers, drawout mechanisms, interlocks, padlock provisions, and indicating devices.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Electrical Routine Tests</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Electrical Routine Tests</h3>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-[#2a2a2a] p-3 rounded">
-                  <h4 className="text-elec-yellow font-medium">Insulation Resistance</h4>
-                  <p className="text-2xl font-bold text-white">≥1 M&#937;</p>
-                  <p className="text-sm text-gray-400 mt-1">
+                <div className="bg-background/70 p-3 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium text-sm">Insulation Resistance</h4>
+                  <p className="text-2xl font-bold text-foreground">≥1 MΩ</p>
+                  <p className="text-sm text-muted-foreground mt-1">
                     Tested at 500V DC between each live circuit and exposed conductive parts
                   </p>
                 </div>
-                <div className="bg-[#2a2a2a] p-3 rounded">
-                  <h4 className="text-elec-yellow font-medium">Protective Circuit Continuity</h4>
-                  <p className="text-2xl font-bold text-white">Verified</p>
-                  <p className="text-sm text-gray-400 mt-1">
+                <div className="bg-background/70 p-3 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium text-sm">Protective Circuit Continuity</h4>
+                  <p className="text-2xl font-bold text-foreground">Verified</p>
+                  <p className="text-sm text-muted-foreground mt-1">
                     Check all earth connections provide effective bonding to main earth terminal
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+            <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
               <div className="flex items-start gap-2">
-                <CheckCircle className="text-green-400 mt-1 flex-shrink-0" size={18} />
+                <CheckCircle className="text-green-400 mt-1 flex-shrink-0 w-4 h-4" />
                 <div>
-                  <h4 className="text-green-400 font-medium">Dielectric Test (Optional)</h4>
-                  <p className="text-sm mt-1">
-                    A dielectric withstand test may be performed instead of design verification. Test voltage is 2Un + 1000V for circuits rated &le;690V (minimum 1500V). Applied for 1 second between live parts and earth, and between separate circuits. This test is typically only required for power frequency withstand verification on assemblies using non-type-tested arrangements.
+                  <h4 className="text-green-400 font-medium text-sm">Dielectric Test (Optional)</h4>
+                  <p className="text-sm mt-1 text-muted-foreground">
+                    A dielectric withstand test may be performed instead of design verification. Test voltage is 2Un + 1000V for circuits rated ≤690V (minimum 1500V). Applied for 1 second between live parts and earth, and between separate circuits. This test is typically only required for power frequency withstand verification on assemblies using non-type-tested arrangements.
                   </p>
                 </div>
               </div>
@@ -616,27 +613,23 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
         </section>
 
         {/* Section 5: Technical File and Documentation Package */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <FolderOpen className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              5. Technical File and Documentation Package
-            </h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Technical File and Documentation Package
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <p className="text-sm text-muted-foreground">
               The technical file is a legal requirement that demonstrates compliance with BS EN 61439 and enables the manufacturer to affix CE/UKCA marking. It must be retained for 10 years and made available to enforcement authorities on request.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Technical File Contents</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Technical File Contents</h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Design Documentation</h4>
-                  <ul className="space-y-1 text-gray-400">
+                  <ul className="space-y-1 text-muted-foreground">
                     <li>- General arrangement drawings</li>
                     <li>- Single-line diagrams</li>
                     <li>- Schematic/circuit diagrams</li>
@@ -647,7 +640,7 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Verification Evidence</h4>
-                  <ul className="space-y-1 text-gray-400">
+                  <ul className="space-y-1 text-muted-foreground">
                     <li>- Design verification records</li>
                     <li>- Type test reports (if applicable)</li>
                     <li>- Component certificates</li>
@@ -658,59 +651,59 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Declaration of Conformity Requirements</h3>
-              <p className="text-sm mb-3 text-gray-400">
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">Declaration of Conformity Requirements</h3>
+              <p className="text-sm mb-3 text-muted-foreground">
                 The Declaration of Conformity (DoC) is the manufacturer's formal statement that the product meets all applicable requirements. It must contain:
               </p>
               <div className="space-y-2 text-sm">
                 <div className="flex items-start gap-2">
                   <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Manufacturer name and address</span>
+                  <span className="text-muted-foreground">Manufacturer name and address</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Product identification (type, serial number, description)</span>
+                  <span className="text-muted-foreground">Product identification (type, serial number, description)</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Reference to BS EN 61439 and applicable parts</span>
+                  <span className="text-muted-foreground">Reference to BS EN 61439 and applicable parts</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Reference to applicable EU Directives (LVD 2014/35/EU, EMC 2014/30/EU)</span>
+                  <span className="text-muted-foreground">Reference to applicable EU Directives (LVD 2014/35/EU, EMC 2014/30/EU)</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Signature of authorised representative with date and place</span>
+                  <span className="text-muted-foreground">Signature of authorised representative with date and place</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">O&M Manual Contents</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">O&M Manual Contents</h3>
               <div className="grid md:grid-cols-3 gap-3 text-sm">
-                <div className="bg-[#2a2a2a] p-3 rounded">
+                <div className="bg-background/70 p-3 rounded border border-white/5">
                   <h4 className="text-elec-yellow font-medium mb-2">Safety Information</h4>
-                  <ul className="space-y-1 text-gray-400 text-xs">
+                  <ul className="space-y-1 text-muted-foreground text-xs">
                     <li>- Hazard warnings</li>
                     <li>- Safe isolation procedures</li>
                     <li>- PPE requirements</li>
                     <li>- Emergency procedures</li>
                   </ul>
                 </div>
-                <div className="bg-[#2a2a2a] p-3 rounded">
+                <div className="bg-background/70 p-3 rounded border border-white/5">
                   <h4 className="text-elec-yellow font-medium mb-2">Operating Instructions</h4>
-                  <ul className="space-y-1 text-gray-400 text-xs">
+                  <ul className="space-y-1 text-muted-foreground text-xs">
                     <li>- Normal operation</li>
                     <li>- Switching procedures</li>
                     <li>- Indicator explanations</li>
                     <li>- Alarm response</li>
                   </ul>
                 </div>
-                <div className="bg-[#2a2a2a] p-3 rounded">
+                <div className="bg-background/70 p-3 rounded border border-white/5">
                   <h4 className="text-elec-yellow font-medium mb-2">Maintenance</h4>
-                  <ul className="space-y-1 text-gray-400 text-xs">
+                  <ul className="space-y-1 text-muted-foreground text-xs">
                     <li>- Inspection schedule</li>
                     <li>- Preventive maintenance</li>
                     <li>- Spare parts list</li>
@@ -732,27 +725,23 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
         />
 
         {/* Section 6: Site Acceptance Testing (SAT) */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow/20 p-2 rounded-lg">
-              <Building className="text-elec-yellow" size={24} />
-            </div>
-            <h2 className="text-xl font-semibold text-elec-yellow">
-              6. Site Acceptance Testing (SAT) Requirements
-            </h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Site Acceptance Testing (SAT) Requirements
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 space-y-4">
+            <p className="text-sm text-muted-foreground">
               Site Acceptance Testing (SAT) is performed after installation at the final location to verify the assembly has not been damaged during transport, site connections are correct, and the system integrates properly with other site equipment and services.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">SAT Test Categories</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">SAT Test Categories</h3>
               <div className="space-y-4">
-                <div className="bg-[#2a2a2a] p-4 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">Pre-Energisation Checks</h4>
-                  <ul className="space-y-1 text-sm text-gray-400">
+                <div className="bg-background/70 p-4 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">Pre-Energisation Checks</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>- Visual inspection for transport damage</li>
                     <li>- Verify all transit locks and packing removed</li>
                     <li>- Check cable entries and glands correctly installed</li>
@@ -762,9 +751,9 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
                   </ul>
                 </div>
 
-                <div className="bg-[#2a2a2a] p-4 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">Energisation Sequence</h4>
-                  <ul className="space-y-1 text-sm text-gray-400">
+                <div className="bg-background/70 p-4 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">Energisation Sequence</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>- Verify supply voltage and phase sequence</li>
                     <li>- Energise control circuits first (if separate supply)</li>
                     <li>- Close main incomer with load circuits isolated</li>
@@ -774,9 +763,9 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
                   </ul>
                 </div>
 
-                <div className="bg-[#2a2a2a] p-4 rounded">
-                  <h4 className="text-elec-yellow font-medium mb-2">Functional Verification</h4>
-                  <ul className="space-y-1 text-sm text-gray-400">
+                <div className="bg-background/70 p-4 rounded border border-white/5">
+                  <h4 className="text-elec-yellow font-medium mb-2 text-sm">Functional Verification</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
                     <li>- Test all control circuits with actual field devices</li>
                     <li>- Verify communication links to BMS/SCADA</li>
                     <li>- Check metering accuracy against reference</li>
@@ -788,12 +777,12 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">SAT Documentation</h3>
+            <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+              <h3 className="font-medium text-foreground mb-3">SAT Documentation</h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Test Records Required</h4>
-                  <ul className="space-y-1 text-gray-400">
+                  <ul className="space-y-1 text-muted-foreground">
                     <li>- Insulation resistance values</li>
                     <li>- Earth continuity measurements</li>
                     <li>- Phase rotation confirmation</li>
@@ -804,7 +793,7 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Handover Documents</h4>
-                  <ul className="space-y-1 text-gray-400">
+                  <ul className="space-y-1 text-muted-foreground">
                     <li>- SAT completion certificate</li>
                     <li>- As-installed drawings (marked up if changed)</li>
                     <li>- Updated setting schedules</li>
@@ -816,12 +805,12 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-4">
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
               <div className="flex items-start gap-2">
-                <AlertTriangle className="text-yellow-400 mt-1 flex-shrink-0" size={18} />
+                <AlertTriangle className="text-amber-400 mt-1 flex-shrink-0 w-4 h-4" />
                 <div>
-                  <h4 className="text-yellow-400 font-medium">SAT Hold Points</h4>
-                  <p className="text-sm mt-1">
+                  <h4 className="text-amber-400 font-medium text-sm">SAT Hold Points</h4>
+                  <p className="text-sm mt-1 text-muted-foreground">
                     Define hold points in the commissioning plan where work stops until witness/approval is given. Typical SAT hold points include: completion of visual inspection, pre-energisation sign-off, first energisation, protection testing completion, and final acceptance. Proceeding past a hold point without proper authorization may void warranties or contractual obligations.
                   </p>
                 </div>
@@ -831,147 +820,140 @@ const IndustrialElectricalModule3Section5: React.FC = () => {
         </section>
 
         {/* Quick Reference Card */}
-        <section className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-lg p-6 border border-elec-yellow/30">
-          <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-            <BookOpen size={20} />
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground flex items-center gap-3">
+            <BookOpen className="w-5 h-5 text-elec-yellow" />
             Quick Reference Card
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-[#1a1a1a]/80 rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">FAT vs SAT Comparison</h3>
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-elec-yellow">
-                    <th className="text-left py-1">Aspect</th>
-                    <th className="text-left py-1">FAT</th>
-                    <th className="text-left py-1">SAT</th>
-                  </tr>
-                </thead>
-                <tbody className="text-gray-300">
-                  <tr className="border-b border-gray-700">
-                    <td className="py-1">Location</td>
-                    <td className="py-1">Factory</td>
-                    <td className="py-1">Site</td>
-                  </tr>
-                  <tr className="border-b border-gray-700">
-                    <td className="py-1">Timing</td>
-                    <td className="py-1">Before dispatch</td>
-                    <td className="py-1">After installation</td>
-                  </tr>
-                  <tr className="border-b border-gray-700">
-                    <td className="py-1">Connections</td>
-                    <td className="py-1">Simulated</td>
-                    <td className="py-1">Actual</td>
-                  </tr>
-                  <tr>
-                    <td className="py-1">Purpose</td>
-                    <td className="py-1">Design verification</td>
-                    <td className="py-1">Installation check</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3">FAT vs SAT Comparison</h3>
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="text-elec-yellow">
+                      <th className="text-left py-1">Aspect</th>
+                      <th className="text-left py-1">FAT</th>
+                      <th className="text-left py-1">SAT</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-muted-foreground">
+                    <tr className="border-b border-white/10">
+                      <td className="py-1">Location</td>
+                      <td className="py-1">Factory</td>
+                      <td className="py-1">Site</td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-1">Timing</td>
+                      <td className="py-1">Before dispatch</td>
+                      <td className="py-1">After installation</td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-1">Connections</td>
+                      <td className="py-1">Simulated</td>
+                      <td className="py-1">Actual</td>
+                    </tr>
+                    <tr>
+                      <td className="py-1">Purpose</td>
+                      <td className="py-1">Design verification</td>
+                      <td className="py-1">Installation check</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-            <div className="bg-[#1a1a1a]/80 rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">BS EN 61439 Routine Tests</h3>
-              <ul className="text-sm text-gray-300 space-y-1">
-                <li><span className="text-elec-yellow">1.</span> Visual inspection of construction</li>
-                <li><span className="text-elec-yellow">2.</span> IP rating verification</li>
-                <li><span className="text-elec-yellow">3.</span> Clearances and creepage</li>
-                <li><span className="text-elec-yellow">4.</span> Wiring and connections</li>
-                <li><span className="text-elec-yellow">5.</span> Insulation resistance (&ge;1M&#937;)</li>
-                <li><span className="text-elec-yellow">6.</span> Protective circuit continuity</li>
-                <li><span className="text-elec-yellow">7.</span> Mechanical operation</li>
-              </ul>
-            </div>
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3">BS EN 61439 Routine Tests</h3>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li><span className="text-elec-yellow">1.</span> Visual inspection of construction</li>
+                  <li><span className="text-elec-yellow">2.</span> IP rating verification</li>
+                  <li><span className="text-elec-yellow">3.</span> Clearances and creepage</li>
+                  <li><span className="text-elec-yellow">4.</span> Wiring and connections</li>
+                  <li><span className="text-elec-yellow">5.</span> Insulation resistance (≥1MΩ)</li>
+                  <li><span className="text-elec-yellow">6.</span> Protective circuit continuity</li>
+                  <li><span className="text-elec-yellow">7.</span> Mechanical operation</li>
+                </ul>
+              </div>
 
-            <div className="bg-[#1a1a1a]/80 rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Documentation Checklist</h3>
-              <ul className="text-sm text-gray-300 space-y-1">
-                <li><span className="text-green-400">&#10003;</span> Declaration of Conformity</li>
-                <li><span className="text-green-400">&#10003;</span> Test certificates (FAT/SAT)</li>
-                <li><span className="text-green-400">&#10003;</span> As-built drawings</li>
-                <li><span className="text-green-400">&#10003;</span> O&M manual</li>
-                <li><span className="text-green-400">&#10003;</span> Setting schedules</li>
-                <li><span className="text-green-400">&#10003;</span> Component datasheets</li>
-              </ul>
-            </div>
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3">Documentation Checklist</h3>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li><span className="text-green-400">✓</span> Declaration of Conformity</li>
+                  <li><span className="text-green-400">✓</span> Test certificates (FAT/SAT)</li>
+                  <li><span className="text-green-400">✓</span> As-built drawings</li>
+                  <li><span className="text-green-400">✓</span> O&M manual</li>
+                  <li><span className="text-green-400">✓</span> Setting schedules</li>
+                  <li><span className="text-green-400">✓</span> Component datasheets</li>
+                </ul>
+              </div>
 
-            <div className="bg-[#1a1a1a]/80 rounded-lg p-4">
-              <h3 className="text-white font-semibold mb-3">Key Standards</h3>
-              <ul className="text-sm text-gray-300 space-y-1">
-                <li><span className="text-elec-yellow">BS EN 61439-1:</span> General rules</li>
-                <li><span className="text-elec-yellow">BS EN 61439-2:</span> Power switchgear</li>
-                <li><span className="text-elec-yellow">LVD 2014/35/EU:</span> Safety directive</li>
-                <li><span className="text-elec-yellow">EMC 2014/30/EU:</span> EMC directive</li>
-                <li><span className="text-elec-yellow font-medium">Retention:</span> 10 years minimum</li>
-              </ul>
+              <div className="bg-background/50 rounded-lg p-4 border border-white/10">
+                <h3 className="font-medium text-foreground mb-3">Key Standards</h3>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li><span className="text-elec-yellow">BS EN 61439-1:</span> General rules</li>
+                  <li><span className="text-elec-yellow">BS EN 61439-2:</span> Power switchgear</li>
+                  <li><span className="text-elec-yellow">LVD 2014/35/EU:</span> Safety directive</li>
+                  <li><span className="text-elec-yellow">EMC 2014/30/EU:</span> EMC directive</li>
+                  <li><span className="text-elec-yellow font-medium">Retention:</span> 10 years minimum</li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* FAQs */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <h2 className="text-xl font-semibold text-elec-yellow mb-4">
-            Frequently Asked Questions
-          </h2>
-
-          <div className="space-y-2">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border border-gray-700 rounded-lg overflow-hidden"
-              >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-4 text-left bg-[#1a1a1a] hover:bg-[#2a2a2a] transition-colors min-h-[44px] touch-manipulation"
-                >
-                  <span className="text-white font-medium pr-4">{faq.question}</span>
-                  {expandedFAQ === index ? (
-                    <ChevronUp className="text-elec-yellow flex-shrink-0" size={20} />
-                  ) : (
-                    <ChevronDown className="text-elec-yellow flex-shrink-0" size={20} />
-                  )}
-                </button>
-                {expandedFAQ === index && (
-                  <div className="p-4 bg-[#1a1a1a]/50 border-t border-gray-700">
-                    <p className="text-gray-300 text-sm leading-relaxed">{faq.answer}</p>
-                  </div>
-                )}
+        {/* FAQ Section - Static bordered list */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {faqItems.map((faq, index) => (
+              <div key={index} className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+                <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
+                <p className="text-sm text-muted-foreground">{faq.answer}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Quiz Section */}
-        <section className="bg-[#242424] rounded-lg p-6 border border-gray-700">
-          <h2 className="text-xl font-semibold text-elec-yellow mb-4">
-            Section Quiz
-          </h2>
-          <p className="text-gray-400 mb-6">
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-foreground">Section Quiz</h2>
+          <p className="text-sm text-muted-foreground">
             Test your knowledge of functional testing and documentation requirements. You need 70% to pass.
           </p>
-          <Quiz questions={quizQuestions} />
+          <Button
+            onClick={() => setShowQuiz(!showQuiz)}
+            className="bg-elec-yellow text-background hover:bg-elec-yellow/90"
+          >
+            {showQuiz ? 'Hide Quiz' : 'Start Quiz'}
+          </Button>
+          {showQuiz && (
+            <div className="mt-4">
+              <Quiz questions={quizQuestions} />
+            </div>
+          )}
         </section>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-4">
+        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
           <Button
-            onClick={() => navigate('/upskilling/industrial-electrical/module-3/section-4')}
             variant="outline"
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 text-white hover:bg-gray-700 flex items-center gap-2"
+            className="border-white/20 hover:bg-white/5"
+            asChild
           >
-            <ChevronLeft size={18} />
-            <span>Previous: Section 4</span>
+            <Link to="/study-centre/upskilling/industrial-electrical/module-3/section-4">
+              <ChevronLeft className="w-4 h-4 mr-2" />
+              Previous: Panel Cooling
+            </Link>
           </Button>
-
           <Button
-            onClick={() => navigate('/upskilling/industrial-electrical/module-4')}
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
+            className="bg-elec-yellow text-background hover:bg-elec-yellow/90"
+            asChild
           >
-            <span>Next: Module 4</span>
-            <ChevronRight size={18} />
+            <Link to="/study-centre/upskilling/industrial-electrical/module-4">
+              Next: Module 4
+              <ChevronRight className="w-4 h-4 ml-2" />
+            </Link>
           </Button>
         </div>
       </div>

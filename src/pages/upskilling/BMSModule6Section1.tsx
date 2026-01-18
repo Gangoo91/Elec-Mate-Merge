@@ -80,7 +80,7 @@ const BMSModule6Section1 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-6">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -99,7 +99,7 @@ const BMSModule6Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Alarm Priorities and Escalation Logic
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Managing BMS alarms effectively for safety and reliability
           </p>
         </header>
@@ -160,11 +160,11 @@ const BMSModule6Section1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-300 mb-2">The Problem</p>
-                <p className="text-sm text-white/90">Systems without alarm priorities overwhelm operators with noise, potentially masking critical safety issues.</p>
+                <p className="text-sm text-white">Systems without alarm priorities overwhelm operators with noise, potentially masking critical safety issues.</p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-300 mb-2">The Solution</p>
-                <p className="text-sm text-white/90">Alarm priorities and escalation ensure critical alerts receive immediate attention while minor issues are logged appropriately.</p>
+                <p className="text-sm text-white">Alarm priorities and escalation ensure critical alerts receive immediate attention while minor issues are logged appropriately.</p>
               </div>
             </div>
 
@@ -188,21 +188,21 @@ const BMSModule6Section1 = () => {
             <div className="my-6 space-y-4">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-300 mb-2">Critical Alarms (High Priority)</p>
-                <p className="text-sm text-white/90">Life safety or system protection issues requiring immediate action. Examples: fire alarms, boiler overpressure, chiller failures. When you see a critical alarm, everything else stops.</p>
+                <p className="text-sm text-white">Life safety or system protection issues requiring immediate action. Examples: fire alarms, boiler overpressure, chiller failures. When you see a critical alarm, everything else stops.</p>
               </div>
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
                 <p className="text-sm font-medium text-orange-300 mb-2">Major Alarms (Medium Priority)</p>
-                <p className="text-sm text-white/90">Significant issues impacting comfort or efficiency requiring prompt attention. Examples: AHU fan failure, high CO2 levels. Need addressing within hours to prevent bigger problems.</p>
+                <p className="text-sm text-white">Significant issues impacting comfort or efficiency requiring prompt attention. Examples: AHU fan failure, high CO2 levels. Need addressing within hours to prevent bigger problems.</p>
               </div>
               <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
                 <p className="text-sm font-medium text-yellow-300 mb-2">Minor Alarms (Low Priority)</p>
-                <p className="text-sm text-white/90">Maintenance-related issues that can be logged for later service. Examples: filter dirty warning, low battery in sensor. Can usually wait until next planned maintenance visit.</p>
+                <p className="text-sm text-white">Maintenance-related issues that can be logged for later service. Examples: filter dirty warning, low battery in sensor. Can usually wait until next planned maintenance visit.</p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
               <p className="text-sm font-medium text-blue-300 mb-2">Example in Practice</p>
-              <p className="text-sm text-white/90">A fire alarm should override everything else. A "filter dirty" warning should not distract operators from responding to a fire.</p>
+              <p className="text-sm text-white">A fire alarm should override everything else. A "filter dirty" warning should not distract operators from responding to a fire.</p>
             </div>
           </div>
         </section>
@@ -297,7 +297,7 @@ const BMSModule6Section1 = () => {
 
             <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
               <p className="text-sm font-medium text-yellow-300 mb-2">Critical Wiring Requirements</p>
-              <p className="text-sm text-white/90">Fire alarm cables must be fire-resistant (FP200 or equivalent), use separate containment from standard BMS cabling, ensure all connections are accessible for testing, and use monitored inputs to detect cable faults.</p>
+              <p className="text-sm text-white">Fire alarm cables must be fire-resistant (FP200 or equivalent), use separate containment from standard BMS cabling, ensure all connections are accessible for testing, and use monitored inputs to detect cable faults.</p>
             </div>
           </div>
         </section>
@@ -312,7 +312,7 @@ const BMSModule6Section1 = () => {
             <div className="my-6 space-y-4">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-red-300 mb-2">Alarms Don't Trigger</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Check sensor wiring continuity</li>
                   <li>Verify input module configuration</li>
                   <li>Confirm alarm setpoints in software</li>
@@ -321,7 +321,7 @@ const BMSModule6Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-orange-300 mb-2">Constant False Alarms</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Adjust alarm deadbands (typically 2-5% of span)</li>
                   <li>Check sensor mounting location</li>
                   <li>Verify environmental conditions match specs</li>
@@ -330,7 +330,7 @@ const BMSModule6Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-yellow-300 mb-2">No Escalation Notifications</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Check email/SMS gateway configuration</li>
                   <li>Test network connectivity</li>
                   <li>Verify contact database is accurate</li>
@@ -369,7 +369,7 @@ const BMSModule6Section1 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-elec-yellow mb-2">During Commissioning</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>Trigger alarms manually and confirm correct priority display</li>
                 <li>Check escalation timing and verify acknowledgment clears alarms</li>
                 <li>Test fail-safe operation and validate cause and effect entries</li>
@@ -384,15 +384,15 @@ const BMSModule6Section1 = () => {
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-300 mb-2">The Problem</p>
-              <p className="text-sm text-white/90">At a hospital, a boiler fault alarm was configured as "low priority" rather than "critical." Operators ignored it during the night shift, assuming it wasn't urgent.</p>
+              <p className="text-sm text-white">At a hospital, a boiler fault alarm was configured as "low priority" rather than "critical." Operators ignored it during the night shift, assuming it wasn't urgent.</p>
             </div>
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
               <p className="text-sm font-medium text-orange-300 mb-2">The Impact</p>
-              <p className="text-sm text-white/90">By morning, the boiler had locked out, and heating was lost across several wards, affecting patient care and comfort.</p>
+              <p className="text-sm text-white">By morning, the boiler had locked out, and heating was lost across several wards, affecting patient care and comfort.</p>
             </div>
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-green-300 mb-2">The Solution</p>
-              <p className="text-sm text-white/90">After reprogramming priorities and adding escalation logic, critical plant alarms were pushed to on-call engineers' phones, preventing repeat incidents.</p>
+              <p className="text-sm text-white">After reprogramming priorities and adding escalation logic, critical plant alarms were pushed to on-call engineers' phones, preventing repeat incidents.</p>
             </div>
           </div>
         </section>
@@ -404,7 +404,7 @@ const BMSModule6Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -444,7 +444,7 @@ const BMSModule6Section1 = () => {
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-6">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 6
             </Link>

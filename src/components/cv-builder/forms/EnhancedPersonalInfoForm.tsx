@@ -113,6 +113,34 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
              />
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-elec-light">
+                LinkedIn Profile
+              </label>
+               <input
+                 type="url"
+                 value={cvData.personalInfo.linkedIn || ''}
+                 onChange={(e) => updatePersonalInfo('linkedIn', e.target.value)}
+                 className="flex min-h-[48px] w-full rounded-md border border-input bg-card px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-2"
+                 placeholder="linkedin.com/in/yourname"
+               />
+            </div>
+
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-elec-light">
+                Portfolio Website
+              </label>
+               <input
+                 type="url"
+                 value={cvData.personalInfo.portfolio || ''}
+                 onChange={(e) => updatePersonalInfo('portfolio', e.target.value)}
+                 className="flex min-h-[48px] w-full rounded-md border border-input bg-card px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-2"
+                 placeholder="yourwebsite.com"
+               />
+            </div>
+          </div>
+
           <div className="space-y-4">
             <div className="space-y-3">
               <label className="text-sm font-semibold text-elec-light">

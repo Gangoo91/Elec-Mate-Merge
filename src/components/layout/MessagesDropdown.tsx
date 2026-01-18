@@ -238,7 +238,7 @@ export function MessagesDropdown() {
   const userType = isEmployerContext ? 'employer' : 'electrician';
 
   // Total unread across all message types
-  const peerUnread = peerConversations?.filter(c => c.status === 'active').length || 0;
+  const peerUnread = peerConversations?.reduce((sum, c) => sum + (c.unread_count || 0), 0) || 0;
   const totalUnread = jobUnread + teamChatUnread + collegeUnread + peerUnread;
 
   // Messages for selected job conversation

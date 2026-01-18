@@ -95,7 +95,7 @@ const BMSModule6Section3 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-6">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -114,7 +114,7 @@ const BMSModule6Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BMS Dashboards and Visualisation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Converting raw data into actionable information through intuitive displays
           </p>
         </header>
@@ -181,7 +181,7 @@ const BMSModule6Section3 = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Visual Example</p>
-                <p className="text-sm text-white/90">Instead of reviewing hundreds of sensor logs, a dashboard displays a building floor plan with colour-coded zones: green = normal, yellow = warning, red = alarm. Operators instantly see which areas need attention.</p>
+                <p className="text-sm text-white">Instead of reviewing hundreds of sensor logs, a dashboard displays a building floor plan with colour-coded zones: green = normal, yellow = warning, red = alarm. Operators instantly see which areas need attention.</p>
               </div>
             </div>
           </div>
@@ -199,25 +199,25 @@ const BMSModule6Section3 = () => {
             <div className="my-6 space-y-4">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm font-medium text-blue-300 mb-2">Graphical Floor Plans</p>
-                <p className="text-sm text-white/90">Building layouts with live data overlays, equipment locations, and real-time status indicators. Click on rooms or equipment to drill down into details.</p>
+                <p className="text-sm text-white">Building layouts with live data overlays, equipment locations, and real-time status indicators. Click on rooms or equipment to drill down into details.</p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-300 mb-2">Energy Visualisation</p>
-                <p className="text-sm text-white/90">Consumption data as kWh trends, CO2 footprint, efficiency benchmarks, and cost analysis. Charts make energy patterns immediately apparent.</p>
+                <p className="text-sm text-white">Consumption data as kWh trends, CO2 footprint, efficiency benchmarks, and cost analysis. Charts make energy patterns immediately apparent.</p>
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-300 mb-2">Alarm Views</p>
-                <p className="text-sm text-white/90">Prioritised alarm lists with acknowledgement functions. Critical alarms highlighted, history tracked, resolution progress monitored.</p>
+                <p className="text-sm text-white">Prioritised alarm lists with acknowledgement functions. Critical alarms highlighted, history tracked, resolution progress monitored.</p>
               </div>
               <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                 <p className="text-sm font-medium text-purple-300 mb-2">Trend Charts and KPIs</p>
-                <p className="text-sm text-white/90">Interactive historical graphs and key metrics like "% time within comfort band," "energy efficiency ratio," or "equipment availability."</p>
+                <p className="text-sm text-white">Interactive historical graphs and key metrics like "% time within comfort band," "energy efficiency ratio," or "equipment availability."</p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-green-300 mb-2">Dashboard Integration</p>
-              <p className="text-sm text-white/90">Modern dashboards combine BMS data with weather forecasts, energy pricing, occupancy schedules, and maintenance systems for complete operational context.</p>
+              <p className="text-sm text-white">Modern dashboards combine BMS data with weather forecasts, energy pricing, occupancy schedules, and maintenance systems for complete operational context.</p>
             </div>
           </div>
         </section>
@@ -256,7 +256,7 @@ const BMSModule6Section3 = () => {
 
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
               <p className="text-sm font-medium text-orange-300 mb-2">Critical Point</p>
-              <p className="text-sm text-white/90">Dashboards are only as good as the underlying data. Ensuring inputs are installed correctly means dashboards reflect reliable, meaningful information that operators can trust.</p>
+              <p className="text-sm text-white">Dashboards are only as good as the underlying data. Ensuring inputs are installed correctly means dashboards reflect reliable, meaningful information that operators can trust.</p>
             </div>
           </div>
         </section>
@@ -282,7 +282,7 @@ const BMSModule6Section3 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-elec-yellow mb-2">Pro Tip</p>
-              <p className="text-sm text-white/90">Create a commissioning checklist that includes dashboard verification for every sensor and device. This systematic approach prevents issues and builds confidence in dashboard reliability.</p>
+              <p className="text-sm text-white">Create a commissioning checklist that includes dashboard verification for every sensor and device. This systematic approach prevents issues and builds confidence in dashboard reliability.</p>
             </div>
           </div>
         </section>
@@ -299,19 +299,19 @@ const BMSModule6Section3 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-blue-300 mb-2">Cloud-Based Access</p>
-                <p className="text-sm text-white/90">Monitor multiple buildings from anywhere. Respond to alarms remotely and coordinate maintenance across property portfolios.</p>
+                <p className="text-sm text-white">Monitor multiple buildings from anywhere. Respond to alarms remotely and coordinate maintenance across property portfolios.</p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-green-300 mb-2">Mobile Responsive</p>
-                <p className="text-sm text-white/90">Touch-friendly interfaces work on tablets and smartphones. Check building status and respond to issues on the move.</p>
+                <p className="text-sm text-white">Touch-friendly interfaces work on tablets and smartphones. Check building status and respond to issues on the move.</p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-purple-300 mb-2">System Integration</p>
-                <p className="text-sm text-white/90">Combine BMS data with weather, energy pricing, occupancy, and maintenance systems for complete operational context.</p>
+                <p className="text-sm text-white">Combine BMS data with weather, energy pricing, occupancy, and maintenance systems for complete operational context.</p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-yellow-300 mb-2">User Customisation</p>
-                <p className="text-sm text-white/90">Different users see relevant information. Facility managers see energy data while maintenance staff focus on equipment status.</p>
+                <p className="text-sm text-white">Different users see relevant information. Facility managers see energy data while maintenance staff focus on equipment status.</p>
               </div>
             </div>
           </div>
@@ -323,15 +323,15 @@ const BMSModule6Section3 = () => {
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-300 mb-2">Problem</p>
-              <p className="text-sm text-white/90">A university dashboard displayed classroom CO2 levels as consistently low across all lecture halls, even though students reported stuffy conditions and poor air quality.</p>
+              <p className="text-sm text-white">A university dashboard displayed classroom CO2 levels as consistently low across all lecture halls, even though students reported stuffy conditions and poor air quality.</p>
             </div>
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
               <p className="text-sm font-medium text-orange-300 mb-2">Discovery</p>
-              <p className="text-sm text-white/90">Electricians discovered the CO2 sensor had been wired into the wrong input channel. The dashboard was displaying values from an unused spare channel that always read low.</p>
+              <p className="text-sm text-white">Electricians discovered the CO2 sensor had been wired into the wrong input channel. The dashboard was displaying values from an unused spare channel that always read low.</p>
             </div>
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-green-300 mb-2">Resolution</p>
-              <p className="text-sm text-white/90">Once rewired correctly, the dashboard reflected true air quality levels with red and yellow zones during occupied periods. Ventilation settings were adjusted based on accurate data.</p>
+              <p className="text-sm text-white">Once rewired correctly, the dashboard reflected true air quality levels with red and yellow zones during occupied periods. Ventilation settings were adjusted based on accurate data.</p>
             </div>
           </div>
         </section>
@@ -343,7 +343,7 @@ const BMSModule6Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

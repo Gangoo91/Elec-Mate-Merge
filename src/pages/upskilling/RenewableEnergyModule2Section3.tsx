@@ -1,586 +1,480 @@
-import { ArrowLeft, Calculator, Zap, TrendingUp, BarChart3, AlertTriangle, Lightbulb } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import { section3Questions } from '@/data/upskilling/renewableEnergyModule2QuizData';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
 
 const RenewableEnergyModule2Section3 = () => {
-  // Transform quiz data to match SingleQuestionQuiz format
-  const quizQuestions = section3Questions.map(q => ({
-    id: q.id,
-    question: q.question,
-    options: q.options,
-    correct: q.correctAnswer,
-    explanation: q.explanation
-  }));
+  useSEO({
+    title: "String Design & Voltage Matching | Solar PV Fundamentals",
+    description: "Designing solar panel strings and matching system voltages for optimal performance and safety."
+  });
+
+  const quizQuestions = [
+    {
+      question: "What does VOC stand for in panel specifications?",
+      options: ["Voltage Output Current", "Open Circuit Voltage", "Voltage Overcurrent", "Optimal Circuit Voltage"],
+      correctAnswer: 1,
+      explanation: "VOC is Open Circuit Voltage - the maximum voltage a panel produces with no load connected."
+    },
+    {
+      question: "What is the typical residential MPPT voltage range?",
+      options: ["50V to 200V", "125V to 600V", "300V to 800V", "500V to 1000V"],
+      correctAnswer: 1,
+      explanation: "Typical residential inverters have MPPT ranges of 125V to 600V."
+    },
+    {
+      question: "What happens to panel voltage in cold weather?",
+      options: ["Decreases significantly", "Stays the same", "Increases significantly", "Becomes unstable"],
+      correctAnswer: 2,
+      explanation: "Cold weather causes voltage to increase significantly - this is why string design must account for lowest expected temperatures."
+    },
+    {
+      question: "What is the typical temperature coefficient for panel voltage?",
+      options: ["-0.1% per degree C", "-0.4% per degree C", "-0.8% per degree C", "-1.2% per degree C"],
+      correctAnswer: 1,
+      explanation: "Typical temperature coefficient is around -0.4% per degree C, meaning voltage decreases 0.4% for every degree above 25 degrees C."
+    },
+    {
+      question: "In a series connection, what adds together?",
+      options: ["Current only", "Voltage only", "Both voltage and current", "Neither"],
+      correctAnswer: 1,
+      explanation: "In series connections, voltages add together while current remains the same as individual panels."
+    },
+    {
+      question: "What is the UK maximum system voltage for LV installations?",
+      options: ["600V", "800V", "1000V", "1500V"],
+      correctAnswer: 2,
+      explanation: "UK regulations specify 1000V as the maximum system voltage for LV (low voltage) PV installations."
+    },
+    {
+      question: "What safety margin should be left on maximum voltage design?",
+      options: ["5%", "10%", "15%", "20%"],
+      correctAnswer: 1,
+      explanation: "A 10% safety margin is recommended - designing for 900V maximum when 1000V is the limit."
+    },
+    {
+      question: "Which configuration gives independent string performance?",
+      options: ["Series only", "Parallel", "Mixed", "Single panel"],
+      correctAnswer: 1,
+      explanation: "Parallel connections allow each string to perform independently - one underperforming string does not affect others."
+    },
+    {
+      question: "What is a common cause of undervoltage problems?",
+      options: ["Too few panels per string", "Too many panels per string", "Using different panel types", "Incorrect fusing"],
+      correctAnswer: 0,
+      explanation: "Too few panels per string causes string VMP to fall below MPPT minimum, especially in hot weather."
+    },
+    {
+      question: "What tool provides professional PV system design capabilities?",
+      options: ["Excel only", "PVsyst", "Basic calculator", "Smartphone app only"],
+      correctAnswer: 1,
+      explanation: "PVsyst is industry-standard professional software for PV system design, simulation, and yield prediction."
+    }
+  ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-4 md:px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/renewable-energy-module-2">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 2
+    <div className="min-h-screen bg-[#1a1a1a]">
+      {/* Minimal Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center">
+          <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10 -ml-2" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-4xl font-bold text-white mb-4">
-              String Design, Voltage Matching &amp; Panel Sizing
-            </h1>
-            <p className="text-xl text-gray-400 mb-6">
-              Designing solar panel strings and matching system voltages for optimal performance and safety
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Section 3
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                String Design
-              </Badge>
+        </div>
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 py-8 pb-24">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/10 mb-4">
+            <Zap className="w-6 h-6 text-elec-yellow" />
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            String Design &amp; Voltage Matching
+          </h1>
+          <p className="text-white/60 text-sm sm:text-base">
+            Panel Sizing for Safety &amp; Performance
+          </p>
+        </div>
+
+        {/* Quick Summary */}
+        <div className="grid grid-cols-2 gap-3 mb-8">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <div className="text-elec-yellow text-xs font-medium uppercase tracking-wide mb-1">Max System Voltage</div>
+            <div className="text-white font-semibold">1000V (UK LV)</div>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <div className="text-elec-yellow text-xs font-medium uppercase tracking-wide mb-1">Safety Margin</div>
+            <div className="text-white font-semibold">Design for 900V</div>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <div className="mb-8 p-4 rounded-lg bg-white/5 border border-white/10">
+          <h2 className="text-white font-semibold mb-3">Learning Outcomes</h2>
+          <div className="space-y-2">
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <span className="text-white/80 text-sm">Calculate string voltages and currents for safe system operation</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <span className="text-white/80 text-sm">Understand inverter input requirements and MPPT windows</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <span className="text-white/80 text-sm">Avoid mismatch and overvoltage issues through proper design</span>
             </div>
           </div>
+        </div>
 
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <ul className="text-gray-300 space-y-2">
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Calculate string voltages and currents for safe system operation
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Understand inverter input requirements and MPPT windows
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Avoid mismatch and overvoltage issues through proper design
-                </li>
+        {/* Section 01 */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Panel Electrical Parameters
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Every solar panel has key electrical specifications that determine how it can be connected and what performance to expect. Electrical compatibility starts at the design table - do not mismatch your string and inverter specifications.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Voltage Parameters</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">VOC:</strong> Open Circuit Voltage (~45V)</li>
+                  <li>• <strong className="text-white">VMP:</strong> Max Power Voltage (~37V)</li>
+                  <li>• <strong className="text-white">Temp effect:</strong> Decreases with heat</li>
+                  <li>• <strong className="text-white">Design key:</strong> VOC sets string limits</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Current Parameters</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">ISC:</strong> Short Circuit Current (~11A)</li>
+                  <li>• <strong className="text-white">IMP:</strong> Max Power Current (~10A)</li>
+                  <li>• <strong className="text-white">Temp effect:</strong> Slightly increases</li>
+                  <li>• <strong className="text-white">Design key:</strong> ISC sets fusing</li>
+                </ul>
+              </div>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">Standard Test Conditions (STC):</h4>
+              <p className="text-sm">All panel ratings are given at STC: 1000 W/m² irradiance, 25°C cell temperature, AM 1.5 spectrum. Real-world conditions vary significantly from STC.</p>
+            </div>
+          </div>
+        </div>
+
+        <InlineCheck
+          question="What does VOC stand for in panel specifications?"
+          options={["Voltage Output Current", "Open Circuit Voltage", "Voltage Overcurrent"]}
+          correctIndex={1}
+          explanation="VOC is Open Circuit Voltage - the maximum voltage a panel produces with no load connected."
+        />
+
+        {/* Section 02 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            String Length &amp; MPPT Windows
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              String design must keep voltages within the inverter's MPPT (Maximum Power Point Tracking) window under all operating conditions.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">MPPT Requirements</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Minimum:</strong> String VMP &gt; MPPT min</li>
+                  <li>• <strong className="text-white">Maximum:</strong> String VOC &lt; MPPT max</li>
+                  <li>• <strong className="text-white">Residential:</strong> 125V to 600V typical</li>
+                  <li>• <strong className="text-white">Commercial:</strong> 250V to 1000V</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">String Length Calculation</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Min panels:</strong> MPPT min ÷ Panel VMP</li>
+                  <li>• <strong className="text-white">Max panels:</strong> MPPT max ÷ Panel VOC</li>
+                  <li>• <strong className="text-white">Example:</strong> 600V ÷ 45V = 13 max</li>
+                  <li>• <strong className="text-white">Safety:</strong> Leave 10% buffer</li>
+                </ul>
+              </div>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">Design Example (400W Panels):</h4>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between items-center p-2 bg-white/5 rounded">
+                  <span>8 panels: VMP 296V, VOC 360V</span>
+                  <span className="text-green-400">Within MPPT</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-white/5 rounded">
+                  <span>12 panels: VMP 444V, VOC 540V</span>
+                  <span className="text-green-400">Within MPPT</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-white/5 rounded">
+                  <span>15 panels: VMP 555V, VOC 675V</span>
+                  <span className="text-red-400">Exceeds max</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <InlineCheck
+          question="What is the typical residential MPPT voltage range?"
+          options={["50V to 200V", "125V to 600V", "500V to 1000V"]}
+          correctIndex={1}
+          explanation="Typical residential inverters have MPPT ranges of 125V to 600V."
+        />
+
+        {/* Section 03 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Series vs Parallel Configurations
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Understanding how panels combine electrically is fundamental to system design and troubleshooting.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Series Connection</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Voltage:</strong> Adds together</li>
+                  <li>• <strong className="text-white">Current:</strong> Same as individual</li>
+                  <li>• <strong className="text-white">Advantage:</strong> Lower current losses</li>
+                  <li>• <strong className="text-white">Risk:</strong> Worst panel limits string</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Parallel Connection</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Voltage:</strong> Same as individual</li>
+                  <li>• <strong className="text-white">Current:</strong> Adds together</li>
+                  <li>• <strong className="text-white">Advantage:</strong> Independent strings</li>
+                  <li>• <strong className="text-white">Risk:</strong> Larger conductors needed</li>
+                </ul>
+              </div>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">Series String Considerations:</h4>
+              <ul className="text-sm space-y-1">
+                <li>• <strong className="text-white">Shading:</strong> One shaded panel reduces entire string</li>
+                <li>• <strong className="text-white">Matching:</strong> Use panels from same batch/manufacturer</li>
+                <li>• <strong className="text-white">Bypass diodes:</strong> Minimise series shading losses</li>
+                <li>• <strong className="text-white">Safety:</strong> Higher voltages require extra precautions</li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </div>
 
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed">
-                Correct electrical configuration ensures system safety and compatibility. This section covers how to size and design panel arrays to match inverter specifications whilst maximising performance. Electrical compatibility starts at the design table — don't mismatch your string and inverter specifications.
-              </p>
-            </CardContent>
-          </Card>
+        <InlineCheck
+          question="In a series connection, what adds together?"
+          options={["Current only", "Voltage only", "Both voltage and current"]}
+          correctIndex={1}
+          explanation="In series connections, voltages add together while current remains the same as individual panels."
+        />
 
-          {/* Panel Electrical Parameters */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-6 w-6 text-yellow-400" />
-                Understanding Panel Electrical Parameters
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Every solar panel has key electrical specifications that determine how it can be connected and what performance to expect.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-blue-900/20 p-4 rounded-lg border border-yellow-400/30">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Voltage Parameters:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>VOC (Open Circuit Voltage):</strong> Maximum voltage with no load</li>
-                    <li>• <strong>VMP (Maximum Power Voltage):</strong> Voltage at maximum power point</li>
-                    <li>• <strong>Typical values:</strong> VOC ~45V, VMP ~37V (per panel)</li>
-                    <li>• <strong>Temperature effect:</strong> Voltage decreases as temperature rises</li>
-                    <li>• <strong>Design significance:</strong> VOC determines string limits</li>
-                  </ul>
-                </div>
-                <div className="bg-blue-900/20 p-4 rounded-lg border border-yellow-400/30">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Current Parameters:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>ISC (Short Circuit Current):</strong> Maximum current with no voltage</li>
-                    <li>• <strong>IMP (Maximum Power Current):</strong> Current at maximum power point</li>
-                    <li>• <strong>Typical values:</strong> ISC ~11A, IMP ~10A (per panel)</li>
-                    <li>• <strong>Temperature effect:</strong> Current slightly increases with temperature</li>
-                    <li>• <strong>Design significance:</strong> ISC determines fusing requirements</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-yellow-400 font-semibold mb-2">Standard Test Conditions (STC):</h4>
-                <div className="text-gray-300 text-sm space-y-1">
-                  <p>All panel ratings are given at STC: 1000 W/m² irradiance, 25°C cell temperature, AM 1.5 spectrum</p>
-                  <p><strong>Real-world considerations:</strong> Actual conditions vary significantly from STC</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* String Design Fundamentals */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Calculator className="h-6 w-6 text-green-400" />
-                String Length and MPPT Window Design
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                String design must keep voltages within the inverter's MPPT (Maximum Power Point Tracking) window under all operating conditions.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
-                  <h4 className="text-green-400 font-semibold mb-3">MPPT Window Requirements:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Minimum voltage:</strong> String VMP must exceed MPPT minimum</li>
-                    <li>• <strong>Maximum voltage:</strong> String VOC must stay below MPPT maximum</li>
-                    <li>• <strong>Typical residential:</strong> 125V to 600V MPPT range</li>
-                    <li>• <strong>Typical commercial:</strong> 250V to 1000V MPPT range</li>
-                    <li>• <strong>Safety margin:</strong> Leave 10% buffer on voltage limits</li>
-                  </ul>
-                </div>
-                <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
-                  <h4 className="text-green-400 font-semibold mb-3">String Length Calculation:</h4>
-                  <div className="text-sm space-y-2">
-                    <p className="text-gray-300">
-                      <strong>Minimum panels:</strong> MPPT min voltage ÷ Panel VMP
-                    </p>
-                    <p className="text-gray-300">
-                      <strong>Maximum panels:</strong> MPPT max voltage ÷ Panel VOC (at lowest temp)
-                    </p>
-                    <p className="text-yellow-400 text-xs mt-2">
-                      Example: 600V ÷ 45V = 13 panels maximum (with temperature considerations)
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-green-400 font-semibold mb-2">Design Example (400W Panels):</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-600">
-                        <th className="text-left text-white p-2">Panels per String</th>
-                        <th className="text-left text-white p-2">String VMP</th>
-                        <th className="text-left text-white p-2">String VOC</th>
-                        <th className="text-left text-white p-2">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-gray-300">
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2">8 panels</td>
-                        <td className="p-2">296V</td>
-                        <td className="p-2">360V</td>
-                        <td className="p-2 text-green-400">✓ Within MPPT</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2">12 panels</td>
-                        <td className="p-2">444V</td>
-                        <td className="p-2">540V</td>
-                        <td className="p-2 text-green-400">✓ Within MPPT</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2">15 panels</td>
-                        <td className="p-2">555V</td>
-                        <td className="p-2">675V</td>
-                        <td className="p-2 text-red-400">✗ Exceeds max</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Series vs Parallel */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <BarChart3 className="h-6 w-6 text-purple-400" />
-                Series vs Parallel Configurations
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Understanding how panels combine electrically is fundamental to system design and troubleshooting.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
-                  <h4 className="text-purple-400 font-semibold mb-3">Series Connection:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Voltage:</strong> Adds together (V1 + V2 + V3...)</li>
-                    <li>• <strong>Current:</strong> Remains the same as individual panels</li>
-                    <li>• <strong>Power:</strong> P = V(total) × I</li>
-                    <li>• <strong>Advantage:</strong> Higher voltage, lower current losses</li>
-                    <li>• <strong>Disadvantage:</strong> Entire string limited by worst panel</li>
-                  </ul>
-                </div>
-                <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
-                  <h4 className="text-purple-400 font-semibold mb-3">Parallel Connection:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Voltage:</strong> Remains the same as individual panels</li>
-                    <li>• <strong>Current:</strong> Adds together (I1 + I2 + I3...)</li>
-                    <li>• <strong>Power:</strong> P = V × I(total)</li>
-                    <li>• <strong>Advantage:</strong> Independent string performance</li>
-                    <li>• <strong>Disadvantage:</strong> Higher current, requires larger conductors</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-purple-400 font-semibold mb-2">Series String Considerations:</h4>
-                <ul className="text-gray-300 text-sm space-y-1">
-                  <li>• <strong>Shading impact:</strong> One shaded panel reduces entire string output</li>
-                  <li>• <strong>Panel matching:</strong> Use panels from same batch/manufacturer</li>
-                  <li>• <strong>Bypass diodes:</strong> Minimise series shading losses</li>
-                  <li>• <strong>Safety:</strong> Higher voltages require additional precautions</li>
+        {/* Section 04 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Temperature Effects on Voltage
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Temperature significantly affects panel voltage, requiring careful consideration in string design to avoid overvoltage conditions.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Temperature Effects</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Cold:</strong> Voltage increases</li>
+                  <li>• <strong className="text-white">Hot:</strong> Voltage decreases</li>
+                  <li>• <strong className="text-white">Coefficient:</strong> Typically -0.4%/°C</li>
+                  <li>• <strong className="text-white">UK winter:</strong> -10°C to -15°C possible</li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Temperature Effects */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <TrendingUp className="h-6 w-6 text-orange-400" />
-                Temperature Derating and Maximum System Voltage
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Temperature significantly affects panel voltage, requiring careful consideration in string design to avoid overvoltage conditions.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-orange-900/20 p-4 rounded-lg border border-orange-500/30">
-                  <h4 className="text-orange-400 font-semibold mb-3">Temperature Effects on Voltage:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Cold weather:</strong> Voltage increases significantly</li>
-                    <li>• <strong>Hot weather:</strong> Voltage decreases</li>
-                    <li>• <strong>Temperature coefficient:</strong> Typically -0.4% per °C</li>
-                    <li>• <strong>UK winter minimum:</strong> -10°C to -15°C possible</li>
-                    <li>• <strong>Design consideration:</strong> Size for coldest expected temperature</li>
-                  </ul>
-                </div>
-                <div className="bg-orange-900/20 p-4 rounded-lg border border-orange-500/30">
-                  <h4 className="text-orange-400 font-semibold mb-3">Voltage Calculation at Temperature:</h4>
-                  <div className="text-sm space-y-2">
-                    <p className="text-gray-300">
-                      <strong>Formula:</strong> V(temp) = V(STC) × [1 + (T(cell) - 25) × Temp Coeff]
-                    </p>
-                    <p className="text-gray-300">
-                      <strong>Example:</strong> 45V panel at -10°C
-                    </p>
-                    <p className="text-gray-300">
-                      V = 45V × [1 + (-10 - 25) × (-0.004)] = 51.3V
-                    </p>
-                    <p className="text-yellow-400 text-xs">
-                      14% voltage increase at cold temperatures!
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-orange-400 font-semibold mb-2">Maximum System Voltage Considerations:</h4>
-                <ul className="text-gray-300 text-sm space-y-1">
-                  <li>• <strong>UK regulations:</strong> 1000V maximum system voltage for LV installations</li>
-                  <li>• <strong>Safety margin:</strong> Design for 900V maximum to allow temperature variation</li>
-                  <li>• <strong>Component ratings:</strong> All DC components must be rated for system voltage</li>
-                  <li>• <strong>String fusing:</strong> Required for parallel strings in most cases</li>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Voltage Calculation</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Formula:</strong> V(temp) = V(STC) x factor</li>
+                  <li>• <strong className="text-white">Factor:</strong> [1 + (T - 25) x coeff]</li>
+                  <li>• <strong className="text-white">Example:</strong> 45V at -10°C = 51.3V</li>
+                  <li className="text-elec-yellow">14% voltage increase in cold!</li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">Maximum System Voltage:</h4>
+              <ul className="text-sm space-y-1">
+                <li>• <strong className="text-white">UK regulations:</strong> 1000V max for LV installations</li>
+                <li>• <strong className="text-white">Safety margin:</strong> Design for 900V maximum</li>
+                <li>• <strong className="text-white">Components:</strong> All DC parts rated for system voltage</li>
+                <li>• <strong className="text-white">String fusing:</strong> Required for parallel strings</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-          {/* Design Tools */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Calculator className="h-6 w-6 text-cyan-400" />
-                Sizing Tools and Datasheet Reading
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Professional design tools and proper datasheet interpretation are essential for accurate string sizing and system design.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-cyan-900/20 p-4 rounded-lg border border-cyan-500/30">
-                  <h4 className="text-cyan-400 font-semibold mb-3">Design Software:</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• <strong>PVsyst:</strong> Professional system design</li>
-                    <li>• <strong>Aurora Solar:</strong> Sales and design platform</li>
-                    <li>• <strong>SolarEdge Designer:</strong> System layout tool</li>
-                    <li>• <strong>Helioscope:</strong> Performance modelling</li>
-                    <li>• <strong>SketchUp:</strong> 3D design with solar plugins</li>
-                  </ul>
-                </div>
-                <div className="bg-cyan-900/20 p-4 rounded-lg border border-cyan-500/30">
-                  <h4 className="text-cyan-400 font-semibold mb-3">Key Datasheet Parameters:</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• <strong>Electrical data:</strong> VOC, VMP, ISC, IMP</li>
-                    <li>• <strong>Temperature coefficients:</strong> All parameters</li>
-                    <li>• <strong>Tolerances:</strong> Power output variation</li>
-                    <li>• <strong>Mechanical data:</strong> Dimensions, weight</li>
-                    <li>• <strong>Certifications:</strong> Standards compliance</li>
-                  </ul>
-                </div>
-                <div className="bg-cyan-900/20 p-4 rounded-lg border border-cyan-500/30">
-                  <h4 className="text-cyan-400 font-semibold mb-3">Validation Checks:</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• <strong>Voltage limits:</strong> All temperature conditions</li>
-                    <li>• <strong>Current limits:</strong> Inverter and wiring capacity</li>
-                    <li>• <strong>Power matching:</strong> Array vs inverter sizing</li>
-                    <li>• <strong>Safety factors:</strong> Code compliance margins</li>
-                    <li>• <strong>Performance ratio:</strong> Expected vs actual output</li>
-                  </ul>
-                </div>
+        {/* Section 05 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Design Tools &amp; Validation
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Professional design tools and proper datasheet interpretation are essential for accurate string sizing and system design.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Design Software</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• PVsyst (professional)</li>
+                  <li>• Aurora Solar</li>
+                  <li>• SolarEdge Designer</li>
+                  <li>• Helioscope</li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Common Design Mistakes */}
-          <Card className="bg-red-900/20 border-red-500/30">
-            <CardHeader>
-              <CardTitle className="text-red-400 flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6" />
-                Common String Design Mistakes to Avoid
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <h5 className="text-white font-medium mb-2">Overvoltage Issues:</h5>
-                  <ul className="text-gray-300 space-y-1">
-                    <li>• Not accounting for cold temperature voltage rise</li>
-                    <li>• Exceeding inverter maximum input voltage</li>
-                    <li>• Inadequate safety margins in design</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="text-white font-medium mb-2">Undervoltage Problems:</h5>
-                  <ul className="text-gray-300 space-y-1">
-                    <li>• String voltage below MPPT minimum at high temperatures</li>
-                    <li>• Poor performance during hot weather</li>
-                    <li>• Inverter unable to start in low light conditions</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="text-white font-medium mb-2">Panel Mismatch:</h5>
-                  <ul className="text-gray-300 space-y-1">
-                    <li>• Mixing different panel models in same string</li>
-                    <li>• Combining different orientations or tilt angles</li>
-                    <li>• Ignoring panel tolerance variations</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="text-white font-medium mb-2">Current Oversizing:</h5>
-                  <ul className="text-gray-300 space-y-1">
-                    <li>• Too many parallel strings for inverter input</li>
-                    <li>• Inadequate DC conductor sizing</li>
-                    <li>• Missing or undersized string fusing</li>
-                  </ul>
-                </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Datasheet Parameters</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• VOC, VMP, ISC, IMP</li>
+                  <li>• Temperature coefficients</li>
+                  <li>• Power tolerances</li>
+                  <li>• Certifications</li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed mb-4">
-                Electrical compatibility starts at the design table. Proper string design ensures safety, compliance, and optimal performance. Understanding panel parameters, temperature effects, and inverter requirements is essential for successful solar installations. Don't mismatch your string and inverter specifications.
-              </p>
-              <p className="text-yellow-400 font-medium">
-                Always validate your design with proper tools and leave safety margins for temperature variations and component tolerances.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Advanced String Design Scenarios */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Calculator className="h-6 w-6 text-yellow-400" />
-                Complex System Design Examples
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Real-world installations often present complex scenarios requiring advanced design considerations.
-              </p>
-              
-              <div className="bg-yellow-900/20 p-4 rounded-lg border border-yellow-400/30">
-                <h4 className="text-yellow-400 font-semibold mb-3">Multi-Orientation System Design:</h4>
-                <div className="text-sm space-y-3">
-                  <p className="text-gray-300">
-                    <strong>Scenario:</strong> Commercial building with east, south, and west-facing roof sections
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div>
-                      <h5 className="text-white font-medium">East Roof (90°):</h5>
-                      <ul className="text-gray-300 space-y-1">
-                        <li>• 16 × 400W panels</li>
-                        <li>• 2 strings of 8 panels</li>
-                        <li>• Dedicated MPPT input</li>
-                        <li>• Performance: 85% of south</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium">South Roof (180°):</h5>
-                      <ul className="text-gray-300 space-y-1">
-                        <li>• 24 × 400W panels</li>
-                        <li>• 3 strings of 8 panels</li>
-                        <li>• Primary MPPT input</li>
-                        <li>• Performance: 100% baseline</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium">West Roof (270°):</h5>
-                      <ul className="text-gray-300 space-y-1">
-                        <li>• 16 × 400W panels</li>
-                        <li>• 2 strings of 8 panels</li>
-                        <li>• Separate MPPT input</li>
-                        <li>• Performance: 87% of south</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <p className="text-yellow-400 text-xs">
-                    <strong>Key:</strong> Never mix orientations in the same string - use separate MPPT inputs
-                  </p>
-                </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Validation Checks</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• All temp conditions</li>
+                  <li>• Current limits</li>
+                  <li>• Power matching</li>
+                  <li>• Safety factors</li>
+                </ul>
               </div>
+            </div>
+          </div>
+        </div>
 
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-yellow-400 font-semibold mb-2">Power Optimizer vs String Inverter Comparison:</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-600">
-                        <th className="text-left text-white p-2">Factor</th>
-                        <th className="text-left text-white p-2">String Inverters</th>
-                        <th className="text-left text-white p-2">Power Optimizers</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-gray-300">
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-medium">Shading tolerance</td>
-                        <td className="p-2">Poor - whole string affected</td>
-                        <td className="p-2">Excellent - panel-level MPPT</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-medium">Monitoring</td>
-                        <td className="p-2">String-level only</td>
-                        <td className="p-2">Panel-level detail</td>
-                      </tr>
-                      <tr className="border-b border-gray-700">
-                        <td className="p-2 font-medium">Cost</td>
-                        <td className="p-2">Lower initial investment</td>
-                        <td className="p-2">15-25% premium</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2 font-medium">Reliability</td>
-                        <td className="p-2">Fewer components</td>
-                        <td className="p-2">More potential failure points</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Common Mistakes */}
+        <div className="mb-8 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+          <h3 className="text-white font-semibold mb-3">Common Design Mistakes to Avoid</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <div>
+              <h4 className="text-red-400 font-medium mb-2">Overvoltage Issues</h4>
+              <ul className="text-white/70 space-y-1">
+                <li>• Not accounting for cold temperature rise</li>
+                <li>• Exceeding inverter max input voltage</li>
+                <li>• Inadequate safety margins</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-red-400 font-medium mb-2">Undervoltage Problems</h4>
+              <ul className="text-white/70 space-y-1">
+                <li>• String voltage below MPPT min (hot)</li>
+                <li>• Poor hot weather performance</li>
+                <li>• Inverter cannot start in low light</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-red-400 font-medium mb-2">Panel Mismatch</h4>
+              <ul className="text-white/70 space-y-1">
+                <li>• Mixing different panel models</li>
+                <li>• Different orientations in same string</li>
+                <li>• Ignoring tolerance variations</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-red-400 font-medium mb-2">Current Oversizing</h4>
+              <ul className="text-white/70 space-y-1">
+                <li>• Too many parallel strings</li>
+                <li>• Inadequate DC conductor sizing</li>
+                <li>• Missing or undersized fusing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-          {/* Troubleshooting and Diagnostics */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-orange-400" />
-                String Performance Troubleshooting Guide
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Understanding common string issues and diagnostic approaches enables quick problem resolution.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-orange-900/20 p-4 rounded-lg border border-orange-500/30">
-                  <h4 className="text-orange-400 font-semibold mb-3">Common String Problems:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Underperformance:</strong> Output below expected levels</li>
-                    <li>• <strong>Overvoltage:</strong> String voltage exceeding inverter limits</li>
-                    <li>• <strong>Ground faults:</strong> Insulation breakdown to earth</li>
-                    <li>• <strong>Arc faults:</strong> Loose connections causing arcing</li>
-                    <li>• <strong>Shading losses:</strong> Partial panel obstruction</li>
-                  </ul>
-                </div>
-                <div className="bg-orange-900/20 p-4 rounded-lg border border-orange-500/30">
-                  <h4 className="text-orange-400 font-semibold mb-3">Diagnostic Tools:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>DC clamp meters:</strong> String current measurement</li>
-                    <li>• <strong>Multimeters:</strong> Voltage and resistance testing</li>
-                    <li>• <strong>Insulation testers:</strong> Ground fault detection</li>
-                    <li>• <strong>Thermal cameras:</strong> Hot spot identification</li>
-                    <li>• <strong>I-V curve tracers:</strong> Panel performance analysis</li>
-                  </ul>
-                </div>
-              </div>
+        {/* Practical Guidance */}
+        <div className="mb-8 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+          <h3 className="text-white font-semibold mb-3">Practical Guidance</h3>
+          <div className="space-y-2 text-white/80 text-sm">
+            <p>
+              <strong className="text-white">Multi-orientation systems:</strong> Never mix orientations in the same string - use separate MPPT inputs for each orientation.
+            </p>
+            <p>
+              <strong className="text-white">Power optimisers:</strong> Consider for shaded sites - panel-level MPPT provides 15-25% premium but excellent shade tolerance.
+            </p>
+            <p>
+              <strong className="text-white">String matching:</strong> Always use panels from the same batch/manufacturer in each string to minimise mismatch losses.
+            </p>
+          </div>
+        </div>
 
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-orange-400 font-semibold mb-2">Step-by-Step Diagnostic Process:</h4>
-                <div className="text-gray-300 text-sm space-y-2">
-                  <p><strong>1. Visual inspection:</strong> Check for obvious damage, shading, or soiling</p>
-                  <p><strong>2. Performance comparison:</strong> Compare string outputs against expected values</p>
-                  <p><strong>3. Electrical testing:</strong> Measure voltages and currents at key points</p>
-                  <p><strong>4. Isolation testing:</strong> Test individual panels if string-level issue identified</p>
-                  <p><strong>5. Documentation:</strong> Record findings and corrective actions taken</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* FAQs */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">Why does cold weather increase voltage?</h4>
+              <p className="text-white/70 text-sm">Solar cells are semiconductors - lower temperatures reduce electron movement resistance, increasing voltage output. This is why string design must account for coldest expected temperatures to avoid overvoltage.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">What happens if string voltage exceeds MPPT maximum?</h4>
+              <p className="text-white/70 text-sm">The inverter may shut down to protect itself, or in worst cases suffer damage. Most modern inverters have overvoltage protection, but consistent operation above limits reduces lifespan and voids warranties.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">Can I mix different wattage panels in a string?</h4>
+              <p className="text-white/70 text-sm">Generally not recommended. The string current is limited by the lowest-current panel, and voltage differences can cause mismatch losses. If unavoidable, use power optimisers to mitigate losses.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">When do I need string fuses?</h4>
+              <p className="text-white/70 text-sm">String fuses are typically required when three or more strings are connected in parallel to the same inverter input. They protect against reverse current flow from other strings if one string develops a fault.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">What is oversizing and when should I use it?</h4>
+              <p className="text-white/70 text-sm">Oversizing means installing more panel capacity than inverter rating (e.g., 6kWp panels on 5kW inverter). This improves yield during non-peak hours but clips output at peak. Typically 10-30% oversizing is beneficial.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">How do I troubleshoot underperforming strings?</h4>
+              <p className="text-white/70 text-sm">Use a DC clamp meter to measure string current and multimeter for voltage. Compare against expected values from datasheets. Thermal cameras can identify hot spots. I-V curve tracers provide detailed panel analysis.</p>
+            </div>
+          </div>
+        </div>
 
-          {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
-                Test Your Knowledge
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 mb-6">
-                Test your understanding of string design principles and electrical system matching.
-              </p>
-              <SingleQuestionQuiz 
-                questions={quizQuestions}
-                title="String Design Quiz"
-              />
-            </CardContent>
-          </Card>
+        {/* Quiz */}
+        <div className="mb-8">
+          <Quiz
+            title="Section 3 Quiz: String Design"
+            questions={quizQuestions}
+            passingScore={70}
+          />
+        </div>
+
+        {/* Bottom Navigation */}
+        <div className="flex justify-between items-center pt-6 border-t border-white/10">
+          <Button variant="ghost" className="text-white/70 hover:text-white hover:bg-white/10" asChild>
+            <Link to="../section-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous
+            </Link>
+          </Button>
+          <Button size="lg" className="bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold" asChild>
+            <Link to="../section-4">
+              Next Section
+            </Link>
+          </Button>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { AccentPanel } from '@/components/upskilling/design/AccentPanel';
 import type { QuizQuestion } from '@/types/quiz';
 
@@ -61,10 +61,10 @@ const DataCablingModule5SectionTemplate = ({
       {/* Minimal Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Link to="/study-centre/upskilling/data-cabling-module-5">
+          <Link to="..">
             <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Module 5
+              Back
             </Button>
           </Link>
         </div>
@@ -190,7 +190,7 @@ const DataCablingModule5SectionTemplate = ({
             </CardContent>
           </Card>
 
-          <SingleQuestionQuiz questions={sequentialQuestions} title="Knowledge Check" />
+          <Quiz questions={sequentialQuestions} title="Knowledge Check" />
 
           {/* Nav */}
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
@@ -210,7 +210,7 @@ const DataCablingModule5SectionTemplate = ({
                 </Button>
               </Link>
             ) : (
-              <Link to="/study-centre/upskilling/data-cabling-module-5">
+              <Link to="..">
                 <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]">
                   Module Overview
                   <ArrowRight className="ml-2 h-4 w-4" />

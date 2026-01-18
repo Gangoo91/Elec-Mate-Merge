@@ -1,4 +1,4 @@
-import { ArrowLeft, Cable, CheckCircle, Lightbulb, Zap, Info, BookOpen, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -34,54 +34,74 @@ const quickCheckQuestions = [
 
 const quizQuestions = [
   {
+    id: 1,
     question: "What does 'optical' refer to in optical fibre?",
     options: ["Electricity-based", "Light-based", "Sound-based", "Heat-based"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Optical refers to light-based transmission. Fibre optic cables use light pulses to transmit data."
   },
   {
+    id: 2,
     question: "Which layer of an optical fibre has a lower refractive index than the core?",
     options: ["Buffer", "Jacket", "Cladding", "Strength members"],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "The cladding has a lower refractive index than the core, which enables total internal reflection."
   },
   {
+    id: 3,
     question: "What is the primary advantage of fibre optics over copper for long distances?",
     options: ["Lower cost", "Much lower signal loss (attenuation)", "Easier to install", "Heavier weight"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Fibre optics has much lower signal loss over distance compared to copper, making it ideal for long-haul communications."
   },
   {
+    id: 4,
     question: "The speed of light in a vacuum is approximately:",
     options: ["186,000 miles per hour", "300,000 kilometres per second", "1,000 metres per second", "Speed cannot be measured"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Light travels at approximately 300,000 km/s in a vacuum. In fibre, it's about 2/3 of this speed."
   },
   {
+    id: 5,
     question: "What type of light is typically used in fibre optic communications?",
     options: ["Visible white light", "Infrared light", "Ultraviolet light", "X-ray light"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Infrared light at wavelengths like 850nm, 1310nm, and 1550nm is used because it experiences lower attenuation in glass."
   },
   {
+    id: 6,
     question: "The protective outer layer of a fibre optic cable is called the:",
     options: ["Core", "Cladding", "Buffer", "Jacket"],
-    correctAnswer: 3
+    correctAnswer: 3,
+    explanation: "The jacket is the outermost protective layer that shields the fibre from environmental damage."
   },
   {
+    id: 7,
     question: "What is attenuation in fibre optics?",
     options: ["Signal amplification", "Loss of signal strength over distance", "Increase in bandwidth", "Change in light colour"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Attenuation is the loss of signal strength as light travels through the fibre, measured in dB/km."
   },
   {
+    id: 8,
     question: "Who is credited with demonstrating light guidance through a water stream in 1842?",
     options: ["Alexander Graham Bell", "Jean-Daniel Colladon", "Thomas Edison", "Nikola Tesla"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Swiss physicist Jean-Daniel Colladon demonstrated that light could be guided along a curved stream of water."
   },
   {
+    id: 9,
     question: "Fibre optic cables are immune to which type of interference?",
     options: ["Physical damage", "Electromagnetic interference (EMI)", "Temperature changes", "Water damage"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Since fibre uses light rather than electricity, it is completely immune to electromagnetic interference."
   },
   {
+    id: 10,
     question: "What is the typical diameter of the cladding in standard telecommunications fibre?",
     options: ["9 micrometres", "62.5 micrometres", "125 micrometres", "250 micrometres"],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Standard telecommunications fibre has a cladding diameter of 125 micrometres regardless of core size."
   }
 ];
 
@@ -119,67 +139,58 @@ const FiberOpticsModule1Section1 = () => {
   });
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/60">
-        <div className="container flex h-14 items-center px-4">
-          <Link
-            to="/electrical-upskilling/fiber-optics-module-1"
-            className="flex items-center gap-2 text-gray-400 hover:text-elec-yellow transition-colors touch-manipulation min-h-[44px]"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm">Module 1</span>
-          </Link>
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="container px-4 py-6 md:py-8 max-w-3xl mx-auto">
-        {/* Title Section */}
-        <div className="mb-8 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10 mb-4">
-            <Cable className="h-8 w-8 text-elec-yellow" />
+      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 1 Section 1</span>
           </div>
-          <div className="text-sm text-elec-yellow font-medium mb-2">Module 1 • Section 1</div>
-          <h1 className="text-2xl md:text-3xl font-bold mb-3">What is Fibre Optic Cabling?</h1>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Understanding the fundamental principles of optical fibre technology and how light is used to transmit data.
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            What is Fibre Optic Cabling?
+          </h1>
+          <p className="text-white/80">
+            Understanding the fundamental principles of optical fibre technology
           </p>
-        </div>
+        </header>
 
-        {/* Quick Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-            <h3 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
-              <Lightbulb className="h-4 w-4" />
-              In 30 Seconds
-            </h3>
-            <p className="text-sm text-gray-300">
-              Fibre optic cables transmit data as pulses of light through ultra-thin glass or plastic fibres.
-              Light bounces along the fibre core through total internal reflection, enabling high-speed,
-              long-distance data transmission with minimal signal loss.
-            </p>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Medium:</strong> Light pulses through glass/plastic</li>
+              <li><strong>Speed:</strong> ~200,000 km/s in fibre</li>
+              <li><strong>Structure:</strong> Core + cladding + buffer + jacket</li>
+              <li><strong>Principle:</strong> Total internal reflection</li>
+            </ul>
           </div>
-          <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-            <h3 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
-              <Zap className="h-4 w-4" />
-              Key Points
-            </h3>
-            <ul className="text-sm text-gray-300 space-y-1">
-              <li>• Uses light instead of electricity</li>
-              <li>• Core + cladding + buffer + jacket structure</li>
-              <li>• Total internal reflection keeps light in core</li>
-              <li>• Immune to electromagnetic interference</li>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Yellow/orange cables, LC/SC connectors</li>
+              <li><strong>Use:</strong> High-speed data, long distances, EMI zones</li>
             </ul>
           </div>
         </div>
 
         {/* Learning Outcomes */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <CheckCircle className="h-5 w-5 text-elec-yellow" />
-            Learning Outcomes
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {[
               "Explain what fibre optic cabling is and how it works",
               "Describe the basic structure of an optical fibre",
@@ -187,39 +198,33 @@ const FiberOpticsModule1Section1 = () => {
               "Identify the key advantages of fibre over copper",
               "Recognise common fibre optic applications",
               "Understand basic optical terminology"
-            ].map((outcome, index) => (
-              <div key={index} className="flex items-start gap-3 bg-gray-800/30 rounded-lg p-3">
-                <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-xs font-bold text-elec-yellow">{index + 1}</span>
-                </div>
-                <span className="text-sm text-gray-300">{outcome}</span>
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Section 01: Introduction */}
-        <section className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-lg font-bold text-elec-yellow">01</span>
-            </div>
-            <h2 className="text-xl font-semibold">Introduction to Fibre Optics</h2>
-          </div>
+        <hr className="border-white/5 mb-12" />
 
-          <div className="space-y-4 text-gray-300">
+        {/* Section 01 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Introduction to Fibre Optics
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Fibre optic cabling represents one of the most significant advances in telecommunications technology.
               Unlike traditional copper cables that transmit data using electrical signals, fibre optic cables
               use pulses of light to carry information at incredible speeds over vast distances.
             </p>
 
-            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Info className="h-5 w-5" />
-                What is an Optical Fibre?
-              </h4>
-              <p className="text-sm">
+            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm font-medium text-elec-yellow mb-2">What is an Optical Fibre?</p>
+              <p className="text-sm text-white">
                 An optical fibre is a thin, flexible strand of ultra-pure glass or plastic, typically about
                 125 micrometres in diameter (roughly the thickness of a human hair). Data is transmitted
                 by modulating light signals that travel through the fibre core.
@@ -233,194 +238,111 @@ const FiberOpticsModule1Section1 = () => {
               optic communications in the 1970s.
             </p>
 
-            <div className="bg-gray-800 rounded-lg p-4">
-              <h4 className="font-semibold text-white mb-3">Brief History of Fibre Optics</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center gap-3">
-                  <span className="text-elec-yellow font-bold">1842</span>
-                  <span>Colladon demonstrates light guidance through water</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-elec-yellow font-bold">1880</span>
-                  <span>Alexander Graham Bell invents the Photophone</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-elec-yellow font-bold">1966</span>
-                  <span>Kao and Hockham propose low-loss optical fibre</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-elec-yellow font-bold">1970</span>
-                  <span>Corning produces first practical optical fibre</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-elec-yellow font-bold">1988</span>
-                  <span>First transatlantic fibre optic cable (TAT-8)</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-elec-yellow font-bold">Today</span>
-                  <span>Global fibre networks carry 99% of international data</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck
-          id={quickCheckQuestions[0].id}
-          question={quickCheckQuestions[0].question}
-          options={quickCheckQuestions[0].options}
-          correctIndex={quickCheckQuestions[0].correctIndex}
-          explanation={quickCheckQuestions[0].explanation}
-        />
-
-        {/* Section 02: Fibre Structure */}
-        <section className="mb-8 mt-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-lg font-bold text-elec-yellow">02</span>
-            </div>
-            <h2 className="text-xl font-semibold">Structure of an Optical Fibre</h2>
-          </div>
-
-          <div className="space-y-4 text-gray-300">
-            <p>
-              An optical fibre has a carefully engineered layered structure, with each layer serving
-              a specific purpose in protecting the delicate core and enabling light transmission.
-            </p>
-
-            <div className="bg-gray-800 rounded-lg p-4">
-              <h4 className="font-semibold text-white mb-3">The Four Main Layers</h4>
-              <div className="space-y-4">
-                <div className="border-l-4 border-elec-yellow pl-4">
-                  <h5 className="font-medium text-elec-yellow">1. Core</h5>
-                  <p className="text-sm mt-1">
-                    The innermost part where light travels. Made from ultra-pure glass (silica) or
-                    plastic. Diameter typically 9μm (singlemode) or 50-62.5μm (multimode).
-                    Has a higher refractive index than the cladding.
-                  </p>
-                </div>
-                <div className="border-l-4 border-blue-400 pl-4">
-                  <h5 className="font-medium text-blue-400">2. Cladding</h5>
-                  <p className="text-sm mt-1">
-                    Surrounds the core. Also glass but with lower refractive index. Standard diameter
-                    is 125μm. Creates the boundary for total internal reflection, keeping light
-                    trapped in the core.
-                  </p>
-                </div>
-                <div className="border-l-4 border-green-400 pl-4">
-                  <h5 className="font-medium text-green-400">3. Buffer (Coating)</h5>
-                  <p className="text-sm mt-1">
-                    Protective plastic coating applied directly to cladding. Usually 250μm diameter.
-                    Protects against moisture and mechanical stress. May be tight or loose tube
-                    depending on cable type.
-                  </p>
-                </div>
-                <div className="border-l-4 border-purple-400 pl-4">
-                  <h5 className="font-medium text-purple-400">4. Jacket (Outer Sheath)</h5>
-                  <p className="text-sm mt-1">
-                    Outermost protective layer. Provides mechanical protection, crush resistance,
-                    and environmental protection. May contain strength members (aramid yarn/steel).
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-              <h4 className="font-semibold text-elec-yellow mb-2">Fibre Notation</h4>
-              <p className="text-sm">
-                Fibres are often described by their core/cladding diameters. For example:
-              </p>
-              <ul className="text-sm mt-2 space-y-1">
-                <li>• <strong>9/125</strong> - 9μm core, 125μm cladding (singlemode)</li>
-                <li>• <strong>50/125</strong> - 50μm core, 125μm cladding (multimode OM3/OM4)</li>
-                <li>• <strong>62.5/125</strong> - 62.5μm core, 125μm cladding (multimode OM1)</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Brief History of Fibre Optics:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>1842:</strong> Colladon demonstrates light guidance through water</li>
+                <li><strong>1880:</strong> Alexander Graham Bell invents the Photophone</li>
+                <li><strong>1966:</strong> Kao and Hockham propose low-loss optical fibre</li>
+                <li><strong>1970:</strong> Corning produces first practical optical fibre</li>
+                <li><strong>1988:</strong> First transatlantic fibre optic cable (TAT-8)</li>
+                <li><strong>Today:</strong> Global fibre networks carry 99% of international data</li>
               </ul>
             </div>
           </div>
         </section>
 
-        <InlineCheck
-          id={quickCheckQuestions[1].id}
-          question={quickCheckQuestions[1].question}
-          options={quickCheckQuestions[1].options}
-          correctIndex={quickCheckQuestions[1].correctIndex}
-          explanation={quickCheckQuestions[1].explanation}
-        />
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 03: How Light Travels */}
-        <section className="mb-8 mt-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-lg font-bold text-elec-yellow">03</span>
+        {/* Section 02 */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Structure of an Optical Fibre
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              An optical fibre has a carefully engineered layered structure, with each layer serving
+              a specific purpose in protecting the delicate core and enabling light transmission.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">The Four Main Layers:</p>
+              <ul className="text-sm text-white space-y-3 ml-4">
+                <li>
+                  <strong className="text-elec-yellow">1. Core:</strong> The innermost part where light travels. Made from ultra-pure glass (silica) or
+                  plastic. Diameter typically 9um (singlemode) or 50-62.5um (multimode).
+                </li>
+                <li>
+                  <strong className="text-elec-yellow">2. Cladding:</strong> Surrounds the core. Also glass but with lower refractive index. Standard diameter
+                  is 125um. Creates the boundary for total internal reflection.
+                </li>
+                <li>
+                  <strong className="text-elec-yellow">3. Buffer (Coating):</strong> Protective plastic coating applied directly to cladding. Usually 250um diameter.
+                  Protects against moisture and mechanical stress.
+                </li>
+                <li>
+                  <strong className="text-elec-yellow">4. Jacket (Outer Sheath):</strong> Outermost protective layer. Provides mechanical protection, crush resistance,
+                  and environmental protection.
+                </li>
+              </ul>
             </div>
-            <h2 className="text-xl font-semibold">How Light Travels Through Fibre</h2>
-          </div>
 
-          <div className="space-y-4 text-gray-300">
+            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Fibre Notation</p>
+              <ul className="text-sm text-white space-y-1">
+                <li><strong>9/125:</strong> 9um core, 125um cladding (singlemode)</li>
+                <li><strong>50/125:</strong> 50um core, 125um cladding (multimode OM3/OM4)</li>
+                <li><strong>62.5/125:</strong> 62.5um core, 125um cladding (multimode OM1)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 03 */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            How Light Travels Through Fibre
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Light travels through optical fibre by a phenomenon called <strong>total internal reflection</strong>.
               This occurs because the core has a higher refractive index than the surrounding cladding.
             </p>
 
-            <div className="bg-gray-800 rounded-lg p-4">
-              <h4 className="font-semibold text-white mb-3">Total Internal Reflection</h4>
-              <p className="text-sm mb-3">
-                When light travels from a denser medium (higher refractive index) to a less dense medium
-                (lower refractive index) at a steep enough angle, it reflects back rather than passing through.
-              </p>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-start gap-2">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-elec-yellow">1</span>
-                  </div>
-                  <span>Light enters the fibre core from a transmitter (LED or laser)</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-elec-yellow">2</span>
-                  </div>
-                  <span>Light hits the core/cladding boundary at an angle</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-elec-yellow">3</span>
-                  </div>
-                  <span>If angle exceeds critical angle, light reflects back into core</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-elec-yellow">4</span>
-                  </div>
-                  <span>Light bounces along the fibre to reach the receiver</span>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Total Internal Reflection Process:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>1. Light enters the fibre core from a transmitter (LED or laser)</li>
+                <li>2. Light hits the core/cladding boundary at an angle</li>
+                <li>3. If angle exceeds critical angle, light reflects back into core</li>
+                <li>4. Light bounces along the fibre to reach the receiver</li>
+              </ul>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                <h4 className="font-semibold text-blue-400 mb-2">Refractive Index</h4>
-                <p className="text-sm">
-                  A measure of how much light slows down in a material. Glass has a refractive
-                  index of about 1.5 - light travels 1.5× slower than in a vacuum. The core
-                  has a slightly higher index (≈1.48) than cladding (≈1.46).
+            <div className="grid sm:grid-cols-2 gap-4 my-6">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="text-sm font-medium text-elec-yellow mb-2">Refractive Index</p>
+                <p className="text-sm text-white">
+                  A measure of how much light slows down in a material. The core has a slightly
+                  higher index (~1.48) than cladding (~1.46).
                 </p>
               </div>
-              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                <h4 className="font-semibold text-green-400 mb-2">Critical Angle</h4>
-                <p className="text-sm">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <p className="text-sm font-medium text-elec-yellow mb-2">Critical Angle</p>
+                <p className="text-sm text-white">
                   The minimum angle of incidence for total internal reflection to occur.
-                  Light hitting at shallower angles will escape through the cladding.
-                  Fibre design ensures practical launch angles exceed this threshold.
+                  Light at shallower angles will escape through the cladding.
                 </p>
               </div>
             </div>
 
-            <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
-              <h4 className="font-semibold text-orange-400 mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5" />
-                Bend Loss
-              </h4>
-              <p className="text-sm">
+            <div className="my-6 p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+              <p className="text-sm font-medium text-red-400 mb-2">Bend Loss Warning</p>
+              <p className="text-sm text-white">
                 If fibre is bent too sharply, light can exceed the critical angle and escape.
                 This is why all fibre has minimum bend radius specifications. Macrobends are
                 visible bends; microbends are microscopic deformations from crushing or tension.
@@ -429,214 +351,134 @@ const FiberOpticsModule1Section1 = () => {
           </div>
         </section>
 
-        <InlineCheck
-          id={quickCheckQuestions[2].id}
-          question={quickCheckQuestions[2].question}
-          options={quickCheckQuestions[2].options}
-          correctIndex={quickCheckQuestions[2].correctIndex}
-          explanation={quickCheckQuestions[2].explanation}
-        />
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04: Key Advantages */}
-        <section className="mb-8 mt-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-lg font-bold text-elec-yellow">04</span>
-            </div>
-            <h2 className="text-xl font-semibold">Key Advantages of Fibre Optics</h2>
-          </div>
-
-          <div className="space-y-4 text-gray-300">
+        {/* Section 04 */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Key Advantages of Fibre Optics
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Fibre optic cabling offers numerous advantages over traditional copper cabling,
               making it the preferred choice for high-performance networks.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-gray-800 rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">Higher Bandwidth</h4>
-                <p className="text-sm">
-                  Fibre can carry signals at frequencies in the terahertz range, supporting
-                  data rates of 100Gbps+ on a single fibre. Copper maxes out around 10Gbps
-                  for short distances.
-                </p>
-              </div>
-              <div className="bg-gray-800 rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">Longer Distances</h4>
-                <p className="text-sm">
-                  Singlemode fibre can transmit signals up to 100km+ without amplification.
-                  Copper Ethernet is limited to 100 metres. This makes fibre ideal for
-                  backbones and long-haul links.
-                </p>
-              </div>
-              <div className="bg-gray-800 rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">EMI Immunity</h4>
-                <p className="text-sm">
-                  Glass doesn't conduct electricity, so fibre is immune to electromagnetic
-                  interference, radio frequency interference, and crosstalk. Ideal near
-                  electrical equipment or in industrial environments.
-                </p>
-              </div>
-              <div className="bg-gray-800 rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">Security</h4>
-                <p className="text-sm">
-                  Fibre doesn't radiate signals and is very difficult to tap without
-                  detection. Any physical breach causes measurable signal loss.
-                  Preferred for sensitive communications.
-                </p>
-              </div>
-              <div className="bg-gray-800 rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">Lighter Weight</h4>
-                <p className="text-sm">
-                  Fibre cables are much lighter than equivalent copper cables.
-                  A 24-fibre cable weighs less than a 24-pair Cat6 cable, reducing
-                  infrastructure loading and installation effort.
-                </p>
-              </div>
-              <div className="bg-gray-800 rounded-lg p-4">
-                <h4 className="font-semibold text-elec-yellow mb-2">Future-Proof</h4>
-                <p className="text-sm">
-                  Installed fibre can often support faster speeds with equipment
-                  upgrades alone. The physical medium has capacity far beyond
-                  current utilisation.
-                </p>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Main Advantages:</p>
+              <ul className="text-sm text-white space-y-2 ml-4">
+                <li><strong>Higher Bandwidth:</strong> Supports data rates of 100Gbps+ on a single fibre. Copper maxes out around 10Gbps for short distances.</li>
+                <li><strong>Longer Distances:</strong> Singlemode fibre can transmit signals up to 100km+ without amplification. Copper Ethernet is limited to 100 metres.</li>
+                <li><strong>EMI Immunity:</strong> Glass doesn't conduct electricity, so fibre is immune to electromagnetic interference and crosstalk.</li>
+                <li><strong>Security:</strong> Fibre doesn't radiate signals and is very difficult to tap without detection.</li>
+                <li><strong>Lighter Weight:</strong> Fibre cables are much lighter than equivalent copper cables.</li>
+                <li><strong>Future-Proof:</strong> Installed fibre can often support faster speeds with equipment upgrades alone.</li>
+              </ul>
             </div>
           </div>
         </section>
 
         {/* Practical Guidance */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-elec-yellow" />
-            Practical Guidance
-          </h2>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
 
-          <div className="space-y-4">
-            <div className="bg-gray-800 rounded-lg p-4">
-              <h4 className="font-semibold text-white mb-3">Common Applications</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <h5 className="text-elec-yellow font-medium mb-2">Telecommunications</h5>
-                  <ul className="space-y-1">
-                    <li>• Internet backbone networks</li>
-                    <li>• Submarine cables</li>
-                    <li>• FTTP (Fibre to the Premises)</li>
-                    <li>• Mobile backhaul (5G)</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="text-elec-yellow font-medium mb-2">Enterprise</h5>
-                  <ul className="space-y-1">
-                    <li>• Data centre interconnects</li>
-                    <li>• Building backbone cabling</li>
-                    <li>• Campus networks</li>
-                    <li>• SAN (Storage Area Networks)</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="text-elec-yellow font-medium mb-2">Industrial</h5>
-                  <ul className="space-y-1">
-                    <li>• SCADA systems</li>
-                    <li>• Process control networks</li>
-                    <li>• High-EMI environments</li>
-                    <li>• Hazardous areas (no sparks)</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="text-elec-yellow font-medium mb-2">Specialist</h5>
-                  <ul className="space-y-1">
-                    <li>• Medical imaging</li>
-                    <li>• Broadcast/AV</li>
-                    <li>• Military/defence</li>
-                    <li>• Scientific instruments</li>
-                  </ul>
-                </div>
-              </div>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Common Applications</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Telecommunications:</strong> Internet backbone, submarine cables, FTTP, mobile backhaul</li>
+                <li><strong>Enterprise:</strong> Data centre interconnects, building backbones, campus networks</li>
+                <li><strong>Industrial:</strong> SCADA systems, process control, high-EMI environments</li>
+                <li><strong>Specialist:</strong> Medical imaging, broadcast/AV, military/defence</li>
+              </ul>
             </div>
 
-            <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
-              <h4 className="font-semibold text-orange-400 mb-2">Key Considerations</h4>
-              <ul className="text-sm space-y-1">
-                <li>• Fibre requires specialised tools and training for termination</li>
-                <li>• Glass fibre is fragile - careful handling is essential</li>
-                <li>• Cannot be repaired like copper - damaged sections must be re-spliced</li>
-                <li>• Higher initial cost but lower total cost of ownership long-term</li>
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key Considerations</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Fibre requires specialised tools and training for termination</li>
+                <li>Glass fibre is fragile - careful handling is essential</li>
+                <li>Cannot be repaired like copper - damaged sections must be re-spliced</li>
+                <li>Higher initial cost but lower total cost of ownership long-term</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Exceeding bend radius</strong> - causes signal loss and potential fibre damage</li>
+                <li><strong>Contaminated connectors</strong> - always clean before connecting</li>
+                <li><strong>Wrong fibre type</strong> - singlemode and multimode are not interchangeable</li>
               </ul>
             </div>
           </div>
         </section>
 
         {/* FAQs */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-3">
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <details key={index} className="group bg-gray-800 rounded-lg">
-                <summary className="flex items-center justify-between p-4 cursor-pointer list-none">
-                  <span className="font-medium text-sm pr-4">{faq.question}</span>
-                  <span className="text-elec-yellow transition-transform group-open:rotate-45">+</span>
-                </summary>
-                <div className="px-4 pb-4 text-sm text-gray-400">
-                  {faq.answer}
-                </div>
-              </details>
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
             ))}
           </div>
         </section>
 
         {/* Quick Reference Card */}
-        <section className="mb-8">
-          <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-5 border border-gray-700">
-            <h3 className="font-semibold text-elec-yellow mb-4">Quick Reference: Fibre Basics</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+        <section className="mb-10">
+          <div className="mt-6 p-5 rounded-lg bg-transparent border border-white/10">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference: Fibre Basics</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
               <div>
-                <h4 className="font-medium text-white mb-2">Fibre Structure</h4>
-                <ul className="space-y-1 text-gray-300">
-                  <li>• Core: Light transmission path</li>
-                  <li>• Cladding: Reflects light into core</li>
-                  <li>• Buffer: Mechanical protection</li>
-                  <li>• Jacket: Outer protection</li>
+                <p className="font-medium text-elec-yellow mb-1">Fibre Structure</p>
+                <ul className="space-y-0.5">
+                  <li>Core: Light transmission path</li>
+                  <li>Cladding: Reflects light into core</li>
+                  <li>Buffer: Mechanical protection</li>
+                  <li>Jacket: Outer protection</li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-medium text-white mb-2">Key Numbers</h4>
-                <ul className="space-y-1 text-gray-300">
-                  <li>• Singlemode core: 9μm</li>
-                  <li>• Multimode core: 50 or 62.5μm</li>
-                  <li>• Standard cladding: 125μm</li>
-                  <li>• Speed of light in fibre: ≈200,000 km/s</li>
+                <p className="font-medium text-elec-yellow mb-1">Key Numbers</p>
+                <ul className="space-y-0.5">
+                  <li>Singlemode core: 9um</li>
+                  <li>Multimode core: 50 or 62.5um</li>
+                  <li>Standard cladding: 125um</li>
+                  <li>Speed in fibre: ~200,000 km/s</li>
                 </ul>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Quiz Section */}
-        <section className="mb-8">
+        {/* Quiz */}
+        <section className="mb-10">
           <Quiz
-            title="Section 1 Quiz: What is Fibre Optic Cabling?"
+            title="Test Your Knowledge"
             questions={quizQuestions}
-            passingScore={80}
           />
         </section>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-gray-800">
-          <Link to="/electrical-upskilling/fiber-optics-module-1">
-            <Button variant="outline" className="w-full sm:w-auto border-gray-700 hover:bg-gray-800 touch-manipulation active:scale-[0.98] min-h-[44px]">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Module Overview
-            </Button>
-          </Link>
-          <Link to="/electrical-upskilling/fiber-optics-module-1-section-2">
-            <Button className="w-full sm:w-auto bg-elec-yellow text-gray-900 hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] min-h-[44px]">
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-2">
               Next: Advantages vs Copper
-              <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
-            </Button>
-          </Link>
-        </div>
-      </main>
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

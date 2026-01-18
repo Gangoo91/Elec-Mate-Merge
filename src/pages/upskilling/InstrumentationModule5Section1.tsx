@@ -1,589 +1,390 @@
-import { ArrowLeft, FileText, CheckCircle2, AlertTriangle, RotateCcw, Play, Brain, XCircle, Lightbulb, Users } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowLeft, Zap, CheckCircle, HelpCircle, RotateCcw, Play, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-
-interface QuizQuestion {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  explanation: string;
-}
+import { Button } from '@/components/ui/button';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule5Section1 = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
-  const [showResults, setShowResults] = useState(false);
-  const [quizStarted, setQuizStarted] = useState(false);
-
-  const quizQuestions: QuizQuestion[] = [
-    {
-      id: 1,
-      question: "What's a major limitation of an open loop system?",
-      options: [
-        "It's too expensive to operate",
-        "It cannot adjust to changes or disturbances",
-        "It uses too much power",
-        "It's too complex to maintain"
-      ],
-      correctAnswer: 1,
-      explanation: "Open loop systems cannot adjust to changes or disturbances because they lack feedback mechanisms to detect when conditions have changed."
-    },
-    {
-      id: 2,
-      question: "Give one example of a closed loop system.",
-      options: [
-        "A basic timer switch",
-        "A manual valve",
-        "A thermostat controlling temperature",
-        "A fixed speed motor"
-      ],
-      correctAnswer: 2,
-      explanation: "A thermostat is a classic closed loop system - it measures temperature (feedback) and adjusts heating/cooling to maintain the setpoint."
-    },
-    {
-      id: 3,
-      question: "What role does feedback play in control?",
-      options: [
-        "It increases system cost",
-        "It provides information about actual system performance",
-        "It makes systems more complex",
-        "It reduces system reliability"
-      ],
-      correctAnswer: 1,
-      explanation: "Feedback provides information about actual system performance, allowing the controller to compare actual conditions with desired conditions and make adjustments."
-    },
-    {
-      id: 4,
-      question: "Which system is typically more accurate?",
-      options: [
-        "Open loop systems",
-        "Both are equally accurate",
-        "Closed loop systems",
-        "It depends on the application"
-      ],
-      correctAnswer: 2,
-      explanation: "Closed loop systems are typically more accurate because they continuously monitor and adjust based on actual performance, compensating for disturbances and variations."
-    },
-    {
-      id: 5,
-      question: "Can open loop systems adjust to change?",
-      options: [
-        "Yes, they adjust automatically",
-        "No, they cannot adjust to changes",
-        "Only with manual intervention",
-        "They adjust slowly over time"
-      ],
-      correctAnswer: 1,
-      explanation: "Open loop systems cannot adjust to changes because they lack feedback mechanisms. They operate according to predetermined patterns regardless of actual conditions."
-    },
-    {
-      id: 6,
-      question: "What is the main advantage of open loop systems in high-speed applications?",
-      options: [
-        "Better accuracy",
-        "No feedback delay, faster response",
-        "Lower maintenance costs",
-        "Higher reliability"
-      ],
-      correctAnswer: 1,
-      explanation: "Open loop systems have no feedback delay, making them faster in response time, which is advantageous in high-speed applications where immediate action is required."
-    },
-    {
-      id: 7,
-      question: "In a washing machine, which component represents a closed loop system?",
-      options: [
-        "The timer that runs the wash cycle",
-        "The water level sensor and fill valve",
-        "The drain pump motor",
-        "The door latch mechanism"
-      ],
-      correctAnswer: 1,
-      explanation: "The water level sensor and fill valve form a closed loop - the sensor provides feedback about actual water level, and the valve adjusts flow to maintain the desired level."
-    },
-    {
-      id: 8,
-      question: "What happens to system stability when you add feedback to an open loop system?",
-      options: [
-        "Stability always improves",
-        "Stability always decreases",
-        "Stability can improve or decrease depending on design",
-        "Stability remains unchanged"
-      ],
-      correctAnswer: 2,
-      explanation: "Adding feedback can improve or decrease stability depending on the system design and tuning. Properly designed feedback improves stability, but poor design can cause oscillations."
-  }
-  ];
-
-  function handleAnswerSelect(answerIndex: number) {
-    setSelectedAnswers(prev => ({
-      ...prev,
-      [currentQuestionIndex]: answerIndex
-    }));
-};
-
-  function handleNext() {
-    if (currentQuestionIndex < quizQuestions.length - 1) {
-      setCurrentQuestionIndex(prev => prev + 1);
-    } else {
-      setShowResults(true);
-  };
-};
-
-  function handlePrevious() {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(prev => prev - 1);
-  };
-};
-
-  function calculateScore() {
-    let correct = 0;
-    quizQuestions.forEach((question, index) => {
-      if (selectedAnswers[index] === question.correctAnswer) {
-        correct++;
-    };
-    });
-    return correct;
-};
-
-  function resetQuiz() {
-    setCurrentQuestionIndex(0);
-    setSelectedAnswers({});
-    setShowResults(false);
-    setQuizStarted(false);
-};
-
-  function startQuiz() {
-    setQuizStarted(true);
-    setCurrentQuestionIndex(0);
-    setSelectedAnswers({});
-    setShowResults(false);
-};
-
-  const currentQuestion = quizQuestions[currentQuestionIndex];
-  const score = calculateScore();
-  const percentage = Math.round((score / quizQuestions.length) * 100);
+  useSEO({
+    title: "Open Loop vs Closed Loop Systems | Instrumentation Module 5",
+    description: "Understand the difference between open and closed loop control systems and how each functions in industrial control environments."
+  });
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
-        <Link to="/study-centre/upskilling/instrumentation-module-5">
-          <Button
-            variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
+    <div className="min-h-screen bg-background text-white">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="px-4 py-3">
+          <Link to=".." className="inline-flex items-center text-white hover:text-elec-yellow transition-colors">
+            <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Module 5
-          </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <FileText className="h-8 w-8 text-elec-yellow" />
-            <Badge 
-              variant="secondary" 
-              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
-            >
-              Module 5 - Section 1
-            </Badge>
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-            Open Loop vs Closed Loop Systems
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
-            Understand the difference between open and closed loop systems and how each functions in control environments
+          </Link>
+        </div>
+      </div>
+
+      <div className="px-4 py-6 max-w-4xl mx-auto">
+        {/* Title */}
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-6 text-center">
+          Open Loop vs Closed Loop Systems
+        </h1>
+
+        {/* Quick Summary */}
+        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 mb-8">
+          <h2 className="font-semibold text-white mb-2 flex items-center gap-2">
+            <Zap className="h-4 w-4 text-elec-yellow" />
+            Quick Summary
+          </h2>
+          <p className="text-white/80 text-sm">
+            Control systems can be categorised as open loop (no feedback) or closed loop (with feedback).
+            Understanding the differences helps in selecting the right approach for industrial applications.
+            Closed loop systems offer self-correction while open loop systems are simpler and faster.
           </p>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
-          
-          {/* Learning Outcomes */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl">Learning Objectives</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 mb-4">By the end of this section, you'll be able to:</p>
-              <ul className="space-y-2 text-gray-300">
+        {/* Section 01 - Open Loop Systems */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <h2 className="text-xl font-semibold text-white">Open Loop Systems</h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <Play className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-medium text-white mb-2">What is an Open Loop System?</h3>
+                <p className="text-white/80 text-sm">
+                  Open loop systems operate without feedback. They execute predetermined actions based on input
+                  commands, regardless of the actual output or system conditions. The controller sends a signal
+                  to the actuator, but there is no measurement of the result to adjust the output.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-4">
+              <h4 className="font-medium text-white mb-3">Key Characteristics</h4>
+              <ul className="space-y-2 text-white/80 text-sm">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Identify the characteristics of open and closed loop systems</span>
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>No feedback mechanism - output is not measured</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Recognize applications of each type in real-world scenarios</span>
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Simple control structure with lower cost and complexity</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Understand limitations and advantages of each system type</span>
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Cannot self-correct for disturbances or changes</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Fast response with no feedback delay</span>
                 </li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Open Loop Systems */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Play className="h-5 w-5 text-elec-yellow" />
-                Open Loop Systems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Characteristics</h4>
-                  <p className="text-gray-300 mb-3">
-                    Open loop systems operate without feedback. They execute predetermined actions based on input commands, regardless of the actual output or system conditions.
-                  </p>
-                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
-                    <h5 className="text-blue-200 font-medium mb-2">Key Features</h5>
-                    <ul className="text-gray-300 text-sm space-y-1">
-                      <li>• No feedback mechanism</li>
-                      <li>• Simple control structure</li>
-                      <li>• Lower cost and complexity</li>
-                      <li>• Cannot self-correct for disturbances</li>
-                    </ul>
-                  </div>
+            <div className="bg-white/5 rounded-lg p-4">
+              <h4 className="font-medium text-white mb-3">Common Examples</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium text-sm">Basic Timer Switch</p>
+                  <p className="text-white/70 text-xs">Runs for a set time regardless of conditions</p>
                 </div>
-
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Common Examples</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                      <h5 className="text-purple-200 font-medium mb-2">Basic Timer Switch</h5>
-                      <p className="text-gray-300 text-sm mb-2">Runs for a set time period regardless of conditions</p>
-                      <p className="text-gray-400 text-xs">Example: Garden sprinkler system</p>
-                    </div>
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                      <h5 className="text-green-200 font-medium mb-2">Manual Control Valve</h5>
-                      <p className="text-gray-300 text-sm mb-2">Fixed position until manually adjusted</p>
-                      <p className="text-gray-400 text-xs">Example: Gas cooker control</p>
-                    </div>
-                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
-                      <h5 className="text-blue-200 font-medium mb-2">Washing Machine Timer</h5>
-                      <p className="text-gray-300 text-sm mb-2">Follows predetermined cycle</p>
-                      <p className="text-gray-400 text-xs">Example: Traditional wash cycles</p>
-                    </div>
-                    <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
-                      <h5 className="text-orange-200 font-medium mb-2">Traffic Light System</h5>
-                      <p className="text-gray-300 text-sm mb-2">Fixed timing sequence</p>
-                      <p className="text-gray-400 text-xs">Example: Basic intersection control</p>
-                    </div>
-                    <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
-                      <h5 className="text-red-200 font-medium mb-2">Electric Heater</h5>
-                      <p className="text-gray-300 text-sm mb-2">Fixed power output when on</p>
-                      <p className="text-gray-400 text-xs">Example: Basic space heater</p>
-                    </div>
-                    <div className="bg-cyan-600/10 border border-cyan-600/20 rounded-lg p-4">
-                      <h5 className="text-cyan-200 font-medium mb-2">Stepper Motor Drive</h5>
-                      <p className="text-gray-300 text-sm mb-2">Moves precise steps without feedback</p>
-                      <p className="text-gray-400 text-xs">Example: 3D printer positioning</p>
-                    </div>
-                  </div>
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium text-sm">Manual Control Valve</p>
+                  <p className="text-white/70 text-xs">Fixed position until manually adjusted</p>
                 </div>
-
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Advantages & Limitations</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                      <h5 className="text-green-200 font-medium mb-2">Advantages</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Simple and inexpensive</li>
-                        <li>• Easy to understand and maintain</li>
-                        <li>• Fast response (no feedback delay)</li>
-                        <li>• Stable operation</li>
-                      </ul>
-                    </div>
-                    <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
-                      <h5 className="text-red-200 font-medium mb-2">Limitations</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Cannot adjust to disturbances</li>
-                        <li>• No error correction</li>
-                        <li>• Less accurate control</li>
-                        <li>• Poor performance with varying conditions</li>
-                      </ul>
-                    </div>
-                  </div>
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium text-sm">Washing Machine Timer</p>
+                  <p className="text-white/70 text-xs">Follows predetermined cycle</p>
+                </div>
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium text-sm">Traffic Light System</p>
+                  <p className="text-white/70 text-xs">Fixed timing sequence at intersections</p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Closed Loop Systems */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <RotateCcw className="h-5 w-5 text-elec-yellow" />
-                Closed Loop Systems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Characteristics</h4>
-                  <p className="text-gray-300 mb-3">
-                    Closed loop systems use feedback to continuously monitor output and adjust control actions. They compare actual performance with desired performance and make corrections.
-                  </p>
-                  <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
-                    <h5 className="text-blue-200 font-medium mb-2">Key Features</h5>
-                    <ul className="text-gray-300 text-sm space-y-1">
-                      <li>• Feedback mechanism present</li>
-                      <li>• Self-correcting capability</li>
-                      <li>• Higher accuracy and precision</li>
-                      <li>• Can compensate for disturbances</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Common Examples</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                      <h5 className="text-purple-200 font-medium mb-2">Thermostat Control</h5>
-                      <p className="text-gray-300 text-sm mb-2">Measures temperature and adjusts heating/cooling</p>
-                      <p className="text-gray-400 text-xs">Maintains ±1°C accuracy</p>
-                    </div>
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                      <h5 className="text-green-200 font-medium mb-2">Motor Speed Control</h5>
-                      <p className="text-gray-300 text-sm mb-2">Monitors speed and adjusts power</p>
-                      <p className="text-gray-400 text-xs">Maintains ±0.1% speed accuracy</p>
-                    </div>
-                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
-                      <h5 className="text-blue-200 font-medium mb-2">Pressure Regulation</h5>
-                      <p className="text-gray-300 text-sm mb-2">Controls valve based on pressure feedback</p>
-                      <p className="text-gray-400 text-xs">Maintains ±2% pressure accuracy</p>
-                    </div>
-                    <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
-                      <h5 className="text-orange-200 font-medium mb-2">Level Control</h5>
-                      <p className="text-gray-300 text-sm mb-2">Adjusts flow based on tank level</p>
-                      <p className="text-gray-400 text-xs">Prevents overflow and emptying</p>
-                    </div>
-                    <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
-                      <h5 className="text-red-200 font-medium mb-2">pH Control</h5>
-                      <p className="text-gray-300 text-sm mb-2">Adds chemicals based on pH measurement</p>
-                      <p className="text-gray-400 text-xs">Maintains ±0.1 pH unit accuracy</p>
-                    </div>
-                    <div className="bg-cyan-600/10 border border-cyan-600/20 rounded-lg p-4">
-                      <h5 className="text-cyan-200 font-medium mb-2">Flow Control</h5>
-                      <p className="text-gray-300 text-sm mb-2">Adjusts valve position for desired flow</p>
-                      <p className="text-gray-400 text-xs">Maintains ±1% flow accuracy</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Performance Comparison</h4>
-                  <div className="bg-gray-700/50 rounded-lg p-4">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                      <div>
-                        <h5 className="text-white font-medium mb-2">Accuracy</h5>
-                        <p className="text-green-300">Higher</p>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-medium mb-2">Reliability</h5>
-                        <p className="text-green-300">Better</p>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-medium mb-2">Disturbance Rejection</h5>
-                        <p className="text-green-300">Excellent</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
+                <h4 className="font-medium text-green-300 mb-2">Advantages</h4>
+                <ul className="space-y-1 text-white/80 text-sm">
+                  <li>Simple and inexpensive</li>
+                  <li>Easy to understand and maintain</li>
+                  <li>Fast response (no feedback delay)</li>
+                  <li>Stable operation</li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Real-World Scenario */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-elec-yellow" />
-                <CardTitle className="text-white">Real-World Scenario</CardTitle>
+              <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
+                <h4 className="font-medium text-red-300 mb-2">Limitations</h4>
+                <ul className="space-y-1 text-white/80 text-sm">
+                  <li>Cannot adjust to disturbances</li>
+                  <li>No error correction capability</li>
+                  <li>Less accurate control</li>
+                  <li>Poor with varying conditions</li>
+                </ul>
               </div>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="bg-blue-900/20 border border-elec-yellow/30 rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-medium text-white mb-2">Home Heating System Comparison</h4>
-                    <div className="space-y-3">
-                      <div>
-                        <h5 className="text-blue-200 font-medium">Open Loop (Timer-Based)</h5>
-                        <p className="text-sm">A heating system with no thermostat runs for predetermined periods regardless of actual room temperature. It cannot respond to changes in weather, occupancy, or heat losses.</p>
-                      </div>
-                      <div>
-                        <h5 className="text-green-200 font-medium">Closed Loop (Thermostat)</h5>
-                        <p className="text-sm">With feedback from a temperature sensor, the system self-regulates based on actual room temperature, automatically adjusting to maintain comfort despite changing conditions.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-elec-yellow" />
-                <CardTitle className="text-white">Summary</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p>
-                Closed loop systems offer more accuracy and control due to feedback, making them preferable in most automated processes. While open loop systems are simpler and cheaper, closed loop systems provide the self-correction and adaptability essential for maintaining precise control in varying conditions.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Interactive Quiz */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Brain className="h-5 w-5 text-elec-yellow" />
-                Knowledge Check Quiz
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {!quizStarted ? (
-                <div className="text-center space-y-4">
-                  <p className="text-gray-300">
-                    Test your understanding of open loop vs closed loop systems.
-                  </p>
-                  <Button 
-                    onClick={startQuiz}
-                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
-                  >
-                    Start Quiz
-                  </Button>
-                </div>
-              ) : !showResults ? (
-                <div className="space-y-6">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-400">
-                      Question {currentQuestionIndex + 1} of {quizQuestions.length}
-                    </span>
-                    <div className="w-32 bg-gray-700 rounded-full h-2">
-                      <div 
-                        className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 className="text-white font-medium mb-4">{currentQuestion.question}</h3>
-                    <div className="space-y-2">
-                      {currentQuestion.options.map((option, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleAnswerSelect(index)}
-                          className={`w-full text-left p-3 rounded border transition-colors ${
-                            selectedAnswers[currentQuestionIndex] === index
-                              ? 'border-elec-yellow bg-elec-yellow/20 text-elec-yellow'
-                              : 'border-gray-600 bg-gray-800/50 text-gray-300 hover:border-gray-500'
-                          }`}
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between">
-                    <Button
-                      onClick={handlePrevious}
-                      disabled={currentQuestionIndex === 0}
-                      variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-transparent disabled:opacity-50"
-                    >
-                      Previous
-                    </Button>
-                    <Button
-                      onClick={handleNext}
-                      disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50"
-                    >
-                      {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish' : 'Next'}
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  <div className="text-center">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
-                      percentage >= 70 ? 'bg-green-600/20' : 'bg-red-600/20'
-                    }`}>
-                      {percentage >= 70 ? (
-                        <CheckCircle2 className="h-8 w-8 text-green-400" />
-                      ) : (
-                        <XCircle className="h-8 w-8 text-red-400" />
-                      )}
-                    </div>
-                    <h3 className="text-white text-xl font-semibold mb-2">Quiz Complete!</h3>
-                    <p className="text-gray-300 mb-4">
-                      You scored {score} out of {quizQuestions.length} ({percentage}%)
-                    </p>
-                    {percentage >= 70 ? (
-                      <p className="text-green-400">Excellent! You understand control loop fundamentals well.</p>
-                    ) : (
-                      <p className="text-red-400">Consider reviewing the material and trying again.</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-4">
-                    <h4 className="text-white font-medium">Review Your Answers:</h4>
-                    {quizQuestions.map((question, index) => (
-                      <div key={question.id} className="border border-gray-600 rounded-lg p-4">
-                        <div className="flex items-start gap-3">
-                          {selectedAnswers[index] === question.correctAnswer ? (
-                            <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          ) : (
-                            <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                          )}
-                          <div className="flex-1">
-                            <p className="text-white font-medium mb-2">{question.question}</p>
-                            <p className="text-gray-300 text-sm mb-2">
-                              <span className="font-medium">Your answer:</span> {question.options[selectedAnswers[index]]}
-                            </p>
-                            {selectedAnswers[index] !== question.correctAnswer && (
-                              <p className="text-gray-300 text-sm mb-2">
-                                <span className="font-medium">Correct answer:</span> {question.options[question.correctAnswer]}
-                              </p>
-                            )}
-                            <p className="text-gray-400 text-sm">{question.explanation}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="text-center">
-                    <Button 
-                      onClick={resetQuiz}
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
-                    >
-                      Retake Quiz
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
+            </div>
+          </div>
         </div>
-      </main>
+
+        {/* InlineCheck 1 */}
+        <InlineCheck
+          question="What is the main limitation of an open loop system?"
+          correctAnswer="It cannot adjust to changes or disturbances because it lacks feedback"
+          explanation="Without feedback, open loop systems cannot detect when actual conditions differ from desired conditions, so they cannot make corrections."
+        />
+
+        {/* Section 02 - Closed Loop Systems */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <h2 className="text-xl font-semibold text-white">Closed Loop Systems</h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <RotateCcw className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-medium text-white mb-2">What is a Closed Loop System?</h3>
+                <p className="text-white/80 text-sm">
+                  Closed loop systems use feedback to continuously monitor output and adjust control actions.
+                  They compare actual performance with desired performance (setpoint) and make corrections
+                  automatically. This creates a continuous loop of measurement, comparison, and adjustment.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-4">
+              <h4 className="font-medium text-white mb-3">Key Characteristics</h4>
+              <ul className="space-y-2 text-white/80 text-sm">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Feedback mechanism present - output is measured and compared</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Self-correcting capability - can adjust to changes</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Higher accuracy and precision in control</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span>Can compensate for disturbances automatically</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-4">
+              <h4 className="font-medium text-white mb-3">Common Examples</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium text-sm">Thermostat Control</p>
+                  <p className="text-white/70 text-xs">Maintains temperature at ±1°C accuracy</p>
+                </div>
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium text-sm">Motor Speed Control</p>
+                  <p className="text-white/70 text-xs">Maintains ±0.1% speed accuracy</p>
+                </div>
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium text-sm">Pressure Regulation</p>
+                  <p className="text-white/70 text-xs">Maintains ±2% pressure accuracy</p>
+                </div>
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium text-sm">Level Control</p>
+                  <p className="text-white/70 text-xs">Prevents overflow and emptying</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
+              <h4 className="font-medium text-white mb-3">Performance Comparison</h4>
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <p className="text-white/70 text-xs mb-1">Accuracy</p>
+                  <p className="text-green-400 font-semibold">Higher</p>
+                </div>
+                <div>
+                  <p className="text-white/70 text-xs mb-1">Reliability</p>
+                  <p className="text-green-400 font-semibold">Better</p>
+                </div>
+                <div>
+                  <p className="text-white/70 text-xs mb-1">Disturbance Rejection</p>
+                  <p className="text-green-400 font-semibold">Excellent</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* InlineCheck 2 */}
+        <InlineCheck
+          question="What role does feedback play in a closed loop control system?"
+          correctAnswer="It provides information about actual system performance so the controller can make adjustments"
+          explanation="Feedback allows the controller to compare actual conditions with desired conditions (setpoint) and calculate the error that drives corrective action."
+        />
+
+        {/* Section 03 - Comparison */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <h2 className="text-xl font-semibold text-white">System Comparison</h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <RefreshCw className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-medium text-white mb-2">When to Use Each System</h3>
+                <p className="text-white/80 text-sm">
+                  The choice between open and closed loop control depends on accuracy requirements, cost
+                  constraints, response speed needs, and the predictability of disturbances.
+                </p>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-white/20">
+                    <th className="text-left py-2 text-white/70">Aspect</th>
+                    <th className="text-left py-2 text-white/70">Open Loop</th>
+                    <th className="text-left py-2 text-white/70">Closed Loop</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/80">
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">Accuracy</td>
+                    <td className="py-2">Lower</td>
+                    <td className="py-2 text-green-400">Higher</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">Cost</td>
+                    <td className="py-2 text-green-400">Lower</td>
+                    <td className="py-2">Higher</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">Complexity</td>
+                    <td className="py-2 text-green-400">Simpler</td>
+                    <td className="py-2">More complex</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">Response</td>
+                    <td className="py-2 text-green-400">Faster</td>
+                    <td className="py-2">Feedback delay</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">Self-correction</td>
+                    <td className="py-2">None</td>
+                    <td className="py-2 text-green-400">Automatic</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+              <h4 className="font-medium text-blue-300 mb-2">Real-World Example: Home Heating</h4>
+              <div className="space-y-3 text-white/80 text-sm">
+                <div>
+                  <p className="text-white font-medium">Open Loop (Timer-Based):</p>
+                  <p>Runs for predetermined periods regardless of actual room temperature. Cannot respond to changes in weather, occupancy, or heat losses.</p>
+                </div>
+                <div>
+                  <p className="text-white font-medium">Closed Loop (Thermostat):</p>
+                  <p>Measures temperature and adjusts heating to maintain setpoint. Automatically adjusts to maintain comfort despite changing conditions.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* InlineCheck 3 */}
+        <InlineCheck
+          question="Which system type is typically more accurate - open loop or closed loop?"
+          correctAnswer="Closed loop systems are typically more accurate because they continuously monitor and adjust based on actual performance"
+          explanation="The feedback mechanism in closed loop systems allows them to compensate for disturbances and variations that would cause errors in open loop systems."
+        />
+
+        {/* FAQs Section */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="bg-white/5 rounded-lg p-4">
+              <h4 className="font-medium text-white mb-2">Can open loop systems adjust to change?</h4>
+              <p className="text-white/70 text-sm">
+                No, open loop systems cannot adjust to changes because they lack feedback mechanisms. They operate
+                according to predetermined patterns regardless of actual conditions. Any adjustment requires
+                manual intervention.
+              </p>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-4">
+              <h4 className="font-medium text-white mb-2">What is the main advantage of open loop systems in high-speed applications?</h4>
+              <p className="text-white/70 text-sm">
+                Open loop systems have no feedback delay, making them faster in response time. This is advantageous
+                in high-speed applications where immediate action is required and the process is well understood
+                and predictable.
+              </p>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-4">
+              <h4 className="font-medium text-white mb-2">Does adding feedback always improve system stability?</h4>
+              <p className="text-white/70 text-sm">
+                Not necessarily. Adding feedback can improve or decrease stability depending on the system design
+                and tuning. Properly designed feedback improves stability, but poor design or incorrect tuning
+                can cause oscillations and instability.
+              </p>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-4">
+              <h4 className="font-medium text-white mb-2">Why are closed loop systems preferred for precision control?</h4>
+              <p className="text-white/70 text-sm">
+                Closed loop systems continuously measure and correct errors, automatically compensating for
+                disturbances, component variations, and environmental changes. This makes them essential for
+                applications requiring tight tolerances and consistent performance.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz Section */}
+        <div className="mb-8">
+          <SingleQuestionQuiz
+            question="In a washing machine, which component represents a closed loop system?"
+            options={[
+              "The timer that runs the wash cycle",
+              "The water level sensor and fill valve",
+              "The drain pump motor",
+              "The door latch mechanism"
+            ]}
+            correctAnswer={1}
+            explanation="The water level sensor and fill valve form a closed loop system - the sensor provides feedback about actual water level, and the valve adjusts flow to maintain the desired level. The timer is open loop as it runs regardless of conditions."
+          />
+        </div>
+
+        {/* Bottom Navigation */}
+        <div className="flex justify-between items-center pt-6 border-t border-border">
+          <Link to="..">
+            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
+            </Button>
+          </Link>
+          <Link to="../section-2">
+            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/80">
+              Next Section
+              <ArrowLeft className="h-4 w-4 ml-2 rotate-180" />
+            </Button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

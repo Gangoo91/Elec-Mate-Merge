@@ -90,9 +90,9 @@ const EVChargingModule3Section3 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/ev-charging-module-3">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 3
+              Back
             </Link>
           </Button>
         </div>
@@ -169,7 +169,7 @@ const EVChargingModule3Section3 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-red-400/30">
                 <p className="font-medium text-white mb-2">Type AC</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• AC residual currents only</li>
                   <li>• Not suitable for EV</li>
                   <li>• May miss DC faults</li>
@@ -178,7 +178,7 @@ const EVChargingModule3Section3 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-elec-yellow/30">
                 <p className="font-medium text-white mb-2">Type A</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• AC + pulsating DC</li>
                   <li>• Minimum for EV</li>
                   <li>• Cost-effective</li>
@@ -187,7 +187,7 @@ const EVChargingModule3Section3 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-green-400/30">
                 <p className="font-medium text-white mb-2">Type B</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• All residual currents</li>
                   <li>• Including smooth DC</li>
                   <li>• Future-proof</li>
@@ -252,7 +252,7 @@ const EVChargingModule3Section3 = () => {
                     <th className="text-left p-2 text-elec-yellow">Cable</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/90">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="p-2">3.7kW (16A)</td>
                     <td className="p-2">16A</td>
@@ -401,7 +401,7 @@ const EVChargingModule3Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

@@ -1,56 +1,65 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { useSEO } from '@/hooks/useSEO';
-import { useNavigate } from 'react-router-dom';
 import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
+  ArrowLeft,
+  ArrowRight,
   Zap,
   Settings,
   TrendingUp,
   AlertTriangle,
-  CheckCircle,
+  CheckCircle2,
   Calculator,
   Gauge,
   RotateCcw,
   Wrench,
   FileText,
   Shield,
-  Activity
+  Activity,
+  HelpCircle,
+  Cpu
 } from 'lucide-react';
 
 const EnergyEfficiencyModule4Section2: React.FC = () => {
-  const navigate = useNavigate();
-  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
-  const [showQuiz, setShowQuiz] = useState(false);
-
   useSEO({
     title: 'Motor Efficiency and VSD Retrofitting | Energy Efficiency Module 4 Section 2 | Elec-Mate',
     description: 'Learn about motor efficiency classes IE1-IE5, Variable Speed Drive retrofitting, affinity laws, and energy savings calculations for UK electrical installations.',
-    keywords: 'motor efficiency, VSD, variable speed drive, IE1, IE2, IE3, IE4, IE5, affinity laws, energy savings, EMC, harmonics, UK regulations, Ecodesign'
+    keywords: [
+      'motor efficiency',
+      'VSD',
+      'variable speed drive',
+      'IE3',
+      'IE4',
+      'IE5',
+      'affinity laws',
+      'energy savings',
+      'EMC',
+      'harmonics',
+      'UK regulations',
+      'Ecodesign'
+    ]
   });
 
   const quickCheckQuestions = [
     {
-      id: 'qc1',
+      id: 'qc-motor-efficiency',
       question: 'Under current UK/EU Ecodesign regulations, what is the minimum efficiency class required for new three-phase motors between 0.75kW and 1000kW?',
       options: ['IE1 Standard Efficiency', 'IE2 High Efficiency', 'IE3 Premium Efficiency', 'IE4 Super Premium Efficiency'],
       correctIndex: 2,
       explanation: 'Since July 2021, all new three-phase motors from 0.75kW to 1000kW must meet IE3 (Premium Efficiency) requirements under EU Ecodesign Regulation 2019/1781. Motors below 0.12kW and certain specialist applications are exempt.'
     },
     {
-      id: 'qc2',
+      id: 'qc-affinity-laws',
       question: 'According to the affinity laws, if a pump motor speed is reduced from 100% to 80%, what is the approximate power consumption?',
       options: ['80% of original power', '64% of original power', '51% of original power', '20% of original power'],
       correctIndex: 2,
       explanation: 'The affinity laws state that power varies with the cube of speed. At 80% speed: 0.8³ = 0.512 or approximately 51% of original power. This demonstrates the significant energy savings possible with VSDs on variable torque loads like pumps and fans.'
     },
     {
-      id: 'qc3',
+      id: 'qc-vsd-filters',
       question: 'What is the primary purpose of installing a line reactor or dV/dt filter with a VSD?',
       options: ['To increase motor torque', 'To reduce harmonic distortion and protect motor insulation', 'To bypass the VSD during faults', 'To provide power factor correction only'],
       correctIndex: 1,
@@ -65,7 +74,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
       correctAnswer: 'International Efficiency level'
     },
     {
-      question: 'A motor operates 6000 hours per year. At what electricity cost does replacing an IE2 motor with an IE3 become cost-effective within 2 years if the efficiency improvement saves 500W?',
+      question: 'A motor operates 6000 hours per year. At what point does replacing an IE2 motor with an IE3 become cost-effective?',
       options: ['When total energy savings exceed motor replacement cost', 'Only when the motor fails completely', 'Never - IE2 motors should always be repaired', 'Only for motors above 100kW'],
       correctAnswer: 'When total energy savings exceed motor replacement cost'
     },
@@ -100,148 +109,190 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
       correctAnswer: 'To smooth rectified DC voltage'
     },
     {
-      question: 'For EMC compliance, what is the maximum recommended cable length between VSD and motor without additional filtering?',
-      options: ['5 metres', '25-50 metres typically', '200 metres', 'No limit applies'],
-      correctAnswer: '25-50 metres typically'
+      question: 'For a pump running at 50% flow using a VSD, what percentage of full load power is approximately consumed?',
+      options: ['50%', '25%', '12.5%', '75%'],
+      correctAnswer: '12.5%'
     },
     {
-      question: 'What parameter should be verified during VSD commissioning to prevent motor overheating?',
-      options: ['Office temperature', 'Motor nameplate current and thermal settings', 'Cable colour coding', 'Switch room humidity'],
-      correctAnswer: 'Motor nameplate current and thermal settings'
+      question: 'What EMC requirement typically applies to VSD installations in the UK?',
+      options: ['No EMC requirements exist', 'C1 category for residential environments', 'C3 category for industrial environments', 'Both B and C depending on installation location'],
+      correctAnswer: 'Both B and C depending on installation location'
     }
   ];
 
   const faqs = [
     {
+      question: 'When should I recommend replacing a working motor with a higher efficiency model?',
+      answer: 'Consider proactive replacement when: the motor runs more than 4,000 hours/year, efficiency improvement exceeds 3-4%, electricity costs are high, the motor is over 15 years old, or there are known reliability concerns. Calculate simple payback: if under 2-3 years, replacement is usually justified. For critical applications, keep the old motor as a spare rather than scrapping it. Also consider replacement during planned shutdowns to avoid production losses.'
+    },
+    {
       question: 'Can any motor be retrofitted with a VSD?',
-      answer: 'Not all motors are suitable for VSD operation. Key considerations include: 1) Insulation class - older motors (pre-2000) may have Class B insulation unsuitable for PWM waveforms without filtering. 2) Cooling - motors with shaft-mounted fans lose cooling at low speeds; consider force-ventilated designs. 3) Bearings - VSD operation can cause bearing currents; insulated bearings or shaft grounding may be needed. 4) Minimum speed - many motors should not operate below 10-20% speed continuously. Always consult motor datasheets and consider a motor survey before retrofit.'
+      answer: 'Not without assessment. Check: insulation class (Class F minimum recommended for inverter duty), winding insulation condition, bearing type (standard bearings may need shaft grounding or ceramic bearings to prevent EDM damage), motor age and condition, cooling method (motors at reduced speeds may need forced ventilation), and whether the motor has inverter-duty rating. Older motors with Class B insulation may experience shortened life due to voltage stress from PWM waveforms.'
     },
     {
-      question: 'What are the payback periods for motor efficiency upgrades?',
-      answer: 'Payback periods vary significantly based on operating hours, load profile, and energy costs. Typical examples: 1) Replacing an IE1 with IE3 motor running 6000+ hours/year at high load: 1-3 years payback. 2) VSD retrofit on a throttled pump: often under 2 years payback. 3) VSD on already-efficient constant speed application: may never pay back. Key factors are annual running hours, percentage load, energy price, and whether variable flow/speed is actually required. A detailed energy audit with current measurements is essential before investment.'
+      question: 'How do I size a VSD for an existing motor application?',
+      answer: 'Size based on motor full load current (FLC), not kW rating. Allow margin for: starting torque requirements (some applications need 150% rated current), continuous operation at low speeds (derate for reduced cooling), altitude and temperature derating, and future expansion. Check VSD output frequency range matches application needs. For heavy-duty cycling or high starting loads, oversize by one frame size.'
     },
     {
-      question: 'How do I determine the correct VSD size for a motor?',
-      answer: 'VSD sizing depends on several factors: 1) Motor full load current (FLC) - the VSD continuous current rating must exceed motor FLC. 2) Starting requirements - if high starting torque needed, oversize by 1-2 frames. 3) Duty cycle - for frequent starts/stops or high inertia loads, increase rating. 4) Ambient temperature - derate if above 40°C typically. 5) Altitude - derate above 1000m. 6) Load type - constant torque loads may need larger VSDs than variable torque. General rule: size VSD to motor nameplate current plus 10-20% margin, and verify with manufacturer selection software.'
+      question: 'What causes VSD nuisance tripping and how do I prevent it?',
+      answer: 'Common causes: supply voltage dips (adjust DC bus undervoltage trip), earth fault currents (check cable shielding and EMC filters), overcurrent on acceleration (extend ramp time or enable current limit), motor overtemperature (verify cooling at reduced speeds). Solutions include proper EMC installation, correctly rated input fuses/breakers, appropriate parameter settings for the load, and avoiding long motor cables without output filters.'
     },
     {
-      question: 'What EMC measures are required for VSD installations in the UK?',
-      answer: 'UK installations must comply with the EMC Regulations 2016. Practical measures include: 1) Shielded motor cables with 360° gland terminations. 2) Separate power and control cables by minimum 200mm. 3) Ferrite cores or line reactors on input and output. 4) Internal or external EMC filters matched to cable length. 5) Proper PE bonding with high-frequency connections. 6) Maximum recommended cable lengths (typically 25-50m unfiltered). 7) Star-point earthing for filters. The VSD manufacturer\'s EMC installation guidelines must be followed to maintain CE marking compliance.'
+      question: 'What documentation should I provide after a VSD installation?',
+      answer: 'Provide: completed Electrical Installation Certificate, VSD parameter backup (electronic or printed), motor nameplate data and VSD-motor compatibility confirmation, EMC compliance declaration, commissioning records including test results, O&M manual with fault code reference, wiring diagrams showing all connections, and training records for operators. Keep backup of all programmed parameters.'
     },
     {
-      question: 'When should motors be repaired versus replaced?',
-      answer: 'The repair vs replace decision depends on: 1) Motor age and efficiency class - if IE1 or older, replacement likely better. 2) Repair cost - if exceeds 50-65% of new IE3 motor cost, replace. 3) Operating hours - high usage favours replacement with higher efficiency. 4) Number of previous rewinds - each rewind typically reduces efficiency by 1-2%. 5) Criticality - for essential plant, new motor with warranty may be preferred. 6) Availability - specialist motors may require repair due to lead times. EASA (Electrical Apparatus Service Association) guidelines and the Motor MEPS Calculator can help quantify the decision.'
-    },
-    {
-      question: 'What are the main causes of VSD failure and how can they be prevented?',
-      answer: 'Common VSD failure modes and prevention: 1) Capacitor degradation - ensure adequate ventilation, keep ambient below 40°C, scheduled replacement at 5-7 years. 2) Cooling fan failure - preventive maintenance, monitor for unusual noise. 3) Power device failure - correct sizing, avoid repeated overloads, use input reactors. 4) Control board issues - prevent contamination, maintain clean environment. 5) Earth faults - proper cable installation, insulation testing. 6) Overvoltage damage - install surge protection on exposed supplies. Regular inspection, thermal imaging, and trend monitoring of VSD parameters significantly extend service life.'
+      question: 'How do harmonics from VSDs affect other equipment?',
+      answer: 'Harmonics can cause: overheating in transformers and cables, interference with sensitive equipment, capacitor damage, nuisance tripping of electronic equipment, and metering errors. Mitigation includes: line reactors (3-5% impedance reduces harmonics significantly), active harmonic filters for critical installations, 12-pulse or 18-pulse rectifiers for large drives, proper cable separation and shielding, and consulting with DNO for large installations.'
     }
   ];
 
-  const toggleFAQ = (index: number) => {
-    setExpandedFAQ(expandedFAQ === index ? null : index);
-  };
-
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
-      {/* Header */}
-      <div className="bg-[#1a1a1a]/95 border-b border-gray-700">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-elec-yellow/20 rounded-lg">
-              <Gauge className="h-6 w-6 text-elec-yellow" />
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5" />
+            </Link>
+          </Button>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <Cpu className="w-5 h-5 text-elec-yellow" />
+              <span className="text-elec-yellow text-sm font-medium">Module 4 - Section 2</span>
             </div>
-            <span className="text-elec-yellow text-sm font-medium">Module 4 • Section 2</span>
+            <h1 className="text-lg font-semibold text-white">Motor Efficiency and VSD Retrofitting</h1>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-            Motor Efficiency and VSD Retrofitting
-          </h1>
-          <p className="text-gray-400">
-            Understanding motor efficiency classes, Variable Speed Drives, and practical retrofit guidance for UK installations
-          </p>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
-        {/* Section 1: Motor Efficiency Classes */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">
-              1
-            </div>
-            <h2 className="text-xl font-semibold text-white">Motor Efficiency Classes (IE1-IE5) and UK Regulations</h2>
-          </div>
+      <div className="max-w-3xl mx-auto px-4 py-6 space-y-8">
+        {/* Quick Summary */}
+        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+          <p className="text-white/90 leading-relaxed">
+            Electric motors account for <span className="text-elec-yellow font-semibold">approximately 70% of industrial electricity consumption</span> in the UK.
+            Understanding motor efficiency classifications and Variable Speed Drive (VSD) technology enables you to deliver significant
+            energy savings for clients whilst ensuring compliance with Ecodesign regulations and BS 7671 requirements.
+          </p>
+        </div>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
-              The International Efficiency (IE) classification system, defined by IEC 60034-30-1, provides a
-              standardised framework for comparing motor efficiency across manufacturers and regions. Understanding
-              these classes is essential for compliance with UK and EU regulations.
+        {/* Section 1: Motor Efficiency Classifications */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Motor Efficiency Classifications (IE1-IE5)
+          </h2>
+
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
+              The International Efficiency (IE) classification system, defined in IEC 60034-30-1, provides a standardised
+              method for comparing motor efficiency. Understanding these classes is essential for specifying compliant
+              and cost-effective motor replacements.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                IE Efficiency Classes Explained
+                <Gauge className="w-5 h-5" />
+                IE Efficiency Classes
               </h3>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <span className="bg-red-500/20 text-red-400 px-2 py-1 rounded text-sm font-mono">IE1</span>
-                  <div>
-                    <span className="font-medium text-white">Standard Efficiency</span>
-                    <p className="text-sm text-gray-400">Baseline level, no longer permitted for new installations in EU/UK</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="bg-orange-500/20 text-orange-400 px-2 py-1 rounded text-sm font-mono">IE2</span>
-                  <div>
-                    <span className="font-medium text-white">High Efficiency</span>
-                    <p className="text-sm text-gray-400">Previously minimum standard, now only for VSD-operated motors in certain ranges</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-sm font-mono">IE3</span>
-                  <div>
-                    <span className="font-medium text-white">Premium Efficiency</span>
-                    <p className="text-sm text-gray-400">Current minimum for most three-phase motors 0.75kW-1000kW since July 2021</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-sm font-mono">IE4</span>
-                  <div>
-                    <span className="font-medium text-white">Super Premium Efficiency</span>
-                    <p className="text-sm text-gray-400">Required for motors 75kW-200kW from July 2023 under Ecodesign</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="bg-purple-500/20 text-purple-400 px-2 py-1 rounded text-sm font-mono">IE5</span>
-                  <div>
-                    <span className="font-medium text-white">Ultra Premium Efficiency</span>
-                    <p className="text-sm text-gray-400">Highest class, typically requires permanent magnet or synchronous reluctance technology</p>
-                  </div>
-                </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-white/20">
+                      <th className="text-left py-2 text-white/70">Class</th>
+                      <th className="text-left py-2 text-white/70">Name</th>
+                      <th className="text-left py-2 text-white/70">Typical 11kW Efficiency</th>
+                      <th className="text-left py-2 text-white/70">UK/EU Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-white/80">
+                    <tr className="border-b border-white/10">
+                      <td className="py-2 text-red-400">IE1</td>
+                      <td>Standard</td>
+                      <td>87.6%</td>
+                      <td className="text-red-400">No longer permitted for sale</td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-2 text-yellow-400">IE2</td>
+                      <td>High</td>
+                      <td>89.4%</td>
+                      <td className="text-yellow-400">Only with VSD</td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-2 text-green-400">IE3</td>
+                      <td>Premium</td>
+                      <td>91.0%</td>
+                      <td className="text-green-400">Minimum requirement (DOL)</td>
+                    </tr>
+                    <tr className="border-b border-white/10">
+                      <td className="py-2 text-blue-400">IE4</td>
+                      <td>Super Premium</td>
+                      <td>92.1%</td>
+                      <td className="text-blue-400">Best practice</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 text-purple-400">IE5</td>
+                      <td>Ultra Premium</td>
+                      <td>93.0%+</td>
+                      <td className="text-purple-400">Emerging technology</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
 
-            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="text-elec-yellow font-semibold mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5" />
-                EU Ecodesign Regulation 2019/1781 Requirements
+                <FileText className="w-5 h-5" />
+                UK/EU Ecodesign Regulation 2019/1781
               </h4>
-              <ul className="list-disc list-inside space-y-1 text-sm">
-                <li><strong>July 2021:</strong> IE3 minimum for 0.75kW to 1000kW three-phase motors</li>
-                <li><strong>July 2023:</strong> IE4 minimum for 75kW to 200kW motors (2, 4, 6, or 8 poles)</li>
-                <li><strong>July 2023:</strong> IE3 minimum extended to 0.12kW and single-phase motors ≥0.75kW</li>
-                <li>Exemptions include: brake motors, hazardous atmospheres, submersible, and high-temperature applications</li>
+              <p className="text-white/80 text-sm mb-3">
+                From July 2021, the following requirements apply:
+              </p>
+              <ul className="text-white/80 text-sm space-y-1">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>Motors 0.75kW to 1000kW: <strong className="text-white">IE3 minimum</strong> (or IE2 with VSD)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <span>From July 2023: Motors 75kW to 200kW: <strong className="text-white">IE4 minimum</strong></span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                  <span>Single-phase motors above 0.12kW now included in scope</span>
+                </li>
               </ul>
             </div>
 
-            <p>
-              <strong className="text-white">Practical Impact:</strong> When specifying replacement motors, always
-              verify current regulatory requirements. Motors manufactured before regulation dates may be
-              installed from stock, but new orders must meet current Ecodesign standards. Specify IE class
-              explicitly in procurement documents.
-            </p>
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
+                <Calculator className="w-5 h-5" />
+                Energy Savings Example: Motor Upgrade
+              </h3>
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium mb-2">Scenario</p>
+                  <ul className="text-white/70 space-y-1">
+                    <li>- 15kW motor, 6000 hours/year operation</li>
+                    <li>- 75% average loading</li>
+                    <li>- Electricity cost: £0.25/kWh</li>
+                  </ul>
+                </div>
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium mb-2">Comparison</p>
+                  <ul className="text-white/70 space-y-1">
+                    <li>- IE2 (89.2% eff): 75,673 kWh/year = £18,918</li>
+                    <li>- IE4 (92.6% eff): 72,894 kWh/year = £18,224</li>
+                    <li className="text-green-400">- Annual saving: £694 (2,779 kWh)</li>
+                  </ul>
+                </div>
+              </div>
+              <p className="text-white/60 text-xs mt-3">
+                With premium motor costing ~£400 more, payback is approximately 7 months
+              </p>
+            </div>
           </div>
         </section>
 
@@ -254,198 +305,109 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
           explanation={quickCheckQuestions[0].explanation}
         />
 
-        {/* Section 2: Repair vs Replace */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">
-              2
-            </div>
-            <h2 className="text-xl font-semibold text-white">When to Repair vs Replace Motors</h2>
-          </div>
+        {/* Section 2: The Affinity Laws */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            The Affinity Laws and Variable Torque Loads
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
-              The decision to repair or replace a failed motor significantly impacts long-term energy costs
-              and operational reliability. A systematic approach using lifecycle cost analysis ensures
-              optimal decisions.
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
+              The affinity laws describe the relationship between speed, flow, pressure, and power for
+              centrifugal pumps and fans. These relationships demonstrate why VSDs deliver dramatic
+              energy savings on variable torque loads.
             </p>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h3 className="text-green-400 font-semibold mb-3 flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5" />
-                  Consider Replacement When:
-                </h3>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400 mt-1">•</span>
-                    Motor is IE1 class or older (manufactured pre-2011)
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400 mt-1">•</span>
-                    Operating hours exceed 4000 hours/year
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400 mt-1">•</span>
-                    Repair cost exceeds 50-65% of new IE3 motor
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400 mt-1">•</span>
-                    Motor has been rewound more than once
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400 mt-1">•</span>
-                    Application would benefit from VSD control
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-400 mt-1">•</span>
-                    Energy costs are high or carbon reduction targets apply
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-                <h3 className="text-blue-400 font-semibold mb-3 flex items-center gap-2">
-                  <Wrench className="h-5 w-5" />
-                  Consider Repair When:
-                </h3>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    Motor is already IE3 or higher efficiency
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    Operating hours are low (&lt;2000 hours/year)
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    Specialist motor with long lead time for replacement
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    First failure with no previous rewinds
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    EASA-accredited repairer using good practice methods
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-blue-400 mt-1">•</span>
-                    Application is critical and immediate availability required
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
-                <Calculator className="h-5 w-5" />
-                Lifecycle Cost Calculation Example
+                <Activity className="w-5 h-5" />
+                The Three Affinity Laws
               </h3>
-              <div className="font-mono text-sm bg-[#2d2d2d] rounded p-3 overflow-x-auto">
-                <p className="text-gray-400">// 15kW motor, 6000 hours/year, £0.30/kWh</p>
-                <p className="text-gray-400">// IE2 (90.4% efficient) vs IE3 (91.8% efficient)</p>
-                <br />
-                <p><span className="text-blue-400">IE2 annual cost:</span> 15kW ÷ 0.904 × 6000h × £0.30 = <span className="text-red-400">£29,867</span></p>
-                <p><span className="text-blue-400">IE3 annual cost:</span> 15kW ÷ 0.918 × 6000h × £0.30 = <span className="text-green-400">£29,412</span></p>
-                <p><span className="text-blue-400">Annual saving:</span> £455/year</p>
-                <br />
-                <p className="text-gray-400">// If IE3 motor costs £800 more than rewind:</p>
-                <p><span className="text-elec-yellow">Simple payback:</span> £800 ÷ £455 = <span className="text-green-400">1.76 years</span></p>
-              </div>
-            </div>
-
-            <p>
-              <strong className="text-white">Rewind Quality Considerations:</strong> A poorly executed rewind
-              can reduce motor efficiency by 2-5%, while EASA best practice methods maintain original
-              efficiency. Always use repairers who can demonstrate controlled core temperatures during
-              burnout (&lt;350°C) and systematic testing procedures.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: VSD Principles and Benefits */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">
-              3
-            </div>
-            <h2 className="text-xl font-semibold text-white">Variable Speed Drive (VSD) Principles and Benefits</h2>
-          </div>
-
-          <div className="space-y-4 text-gray-300">
-            <p>
-              Variable Speed Drives (also called Variable Frequency Drives or Inverters) control AC motor
-              speed by varying the frequency and voltage supplied. This enables precise process control
-              and substantial energy savings on variable load applications.
-            </p>
-
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
-                <Zap className="h-5 w-5" />
-                VSD Operating Principle
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-center gap-4">
-                  <div className="bg-blue-500/20 p-3 rounded-lg text-center min-w-[100px]">
-                    <span className="text-blue-400 font-semibold">Rectifier</span>
-                    <p className="text-xs text-gray-400 mt-1">AC → DC</p>
-                  </div>
-                  <ChevronRight className="text-gray-500" />
-                  <div className="bg-green-500/20 p-3 rounded-lg text-center min-w-[100px]">
-                    <span className="text-green-400 font-semibold">DC Bus</span>
-                    <p className="text-xs text-gray-400 mt-1">Capacitor smoothing</p>
-                  </div>
-                  <ChevronRight className="text-gray-500" />
-                  <div className="bg-purple-500/20 p-3 rounded-lg text-center min-w-[100px]">
-                    <span className="text-purple-400 font-semibold">Inverter</span>
-                    <p className="text-xs text-gray-400 mt-1">DC → Variable AC</p>
-                  </div>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="bg-white/5 rounded p-4 text-center">
+                  <p className="text-elec-yellow font-bold text-2xl mb-2">Flow proportional to Speed</p>
+                  <p className="text-white font-mono text-lg">Q₂/Q₁ = N₂/N₁</p>
+                  <p className="text-white/60 text-sm mt-2">80% speed = 80% flow</p>
                 </div>
-                <p className="text-sm">
-                  The rectifier converts AC supply to DC, capacitors smooth the DC bus voltage, and the
-                  IGBT inverter creates a Pulse Width Modulated (PWM) output that simulates variable
-                  frequency AC. The motor speed is directly proportional to output frequency.
-                </p>
+                <div className="bg-white/5 rounded p-4 text-center">
+                  <p className="text-elec-yellow font-bold text-2xl mb-2">Pressure proportional to Speed²</p>
+                  <p className="text-white font-mono text-lg">H₂/H₁ = (N₂/N₁)²</p>
+                  <p className="text-white/60 text-sm mt-2">80% speed = 64% pressure</p>
+                </div>
+                <div className="bg-white/5 rounded p-4 text-center">
+                  <p className="text-elec-yellow font-bold text-2xl mb-2">Power proportional to Speed³</p>
+                  <p className="text-white font-mono text-lg">P₂/P₁ = (N₂/N₁)³</p>
+                  <p className="text-white/60 text-sm mt-2 text-green-400">80% speed = 51% power</p>
+                </div>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                <h4 className="text-green-400 font-semibold mb-2">Energy Saving Benefits</h4>
-                <ul className="space-y-1 text-sm">
-                  <li>• Eliminate throttling/damper losses</li>
-                  <li>• Match output precisely to demand</li>
-                  <li>• Reduce peak demand charges</li>
-                  <li>• Extend motor and mechanical life</li>
-                  <li>• Typical 30-50% energy reduction on pumps/fans</li>
-                </ul>
-              </div>
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                <h4 className="text-blue-400 font-semibold mb-2">Process Control Benefits</h4>
-                <ul className="space-y-1 text-sm">
-                  <li>• Precise speed and torque control</li>
-                  <li>• Soft starting reduces mechanical stress</li>
-                  <li>• PID control for closed-loop operation</li>
-                  <li>• Multiple preset speeds available</li>
-                  <li>• Dynamic braking capability</li>
-                </ul>
-              </div>
+            <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+              <h4 className="text-green-400 font-semibold mb-2">The Cube Law Savings Potential</h4>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-white/20">
+                    <th className="text-left py-2 text-white/70">Speed Reduction</th>
+                    <th className="text-center py-2 text-white/70">Flow</th>
+                    <th className="text-center py-2 text-white/70">Power</th>
+                    <th className="text-center py-2 text-green-400">Energy Saving</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white/80">
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">10% (90% speed)</td>
+                    <td className="text-center">90%</td>
+                    <td className="text-center">73%</td>
+                    <td className="text-center text-green-400">27%</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">20% (80% speed)</td>
+                    <td className="text-center">80%</td>
+                    <td className="text-center">51%</td>
+                    <td className="text-center text-green-400">49%</td>
+                  </tr>
+                  <tr className="border-b border-white/10">
+                    <td className="py-2">30% (70% speed)</td>
+                    <td className="text-center">70%</td>
+                    <td className="text-center">34%</td>
+                    <td className="text-center text-green-400">66%</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2">50% (50% speed)</td>
+                    <td className="text-center">50%</td>
+                    <td className="text-center">12.5%</td>
+                    <td className="text-center text-green-400">87.5%</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-              <h4 className="text-elec-yellow font-semibold mb-2">V/f Control vs Vector Control</h4>
-              <p className="text-sm mb-2">
-                <strong>V/f (Scalar) Control:</strong> Maintains constant voltage/frequency ratio. Simple,
-                suitable for pumps, fans, and applications not requiring high torque at low speed. Most
-                common for energy-saving retrofits.
-              </p>
-              <p className="text-sm">
-                <strong>Vector (Field Oriented) Control:</strong> Provides independent control of torque and
-                flux, enabling full torque at zero speed. Required for cranes, hoists, and high-performance
-                positioning applications. Requires motor parameter tuning.
-              </p>
+            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+              <h4 className="text-red-400 font-semibold mb-2 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5" />
+                Important: Load Type Matters
+              </h4>
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-green-400 font-medium">Variable Torque (Great for VSDs)</p>
+                  <ul className="text-white/70 mt-1 space-y-1">
+                    <li>- Centrifugal pumps</li>
+                    <li>- Centrifugal fans</li>
+                    <li>- Centrifugal compressors</li>
+                    <li className="text-green-400">Torque varies with speed²</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-yellow-400 font-medium">Constant Torque (Limited VSD benefit)</p>
+                  <ul className="text-white/70 mt-1 space-y-1">
+                    <li>- Conveyors</li>
+                    <li>- Positive displacement pumps</li>
+                    <li>- Hoists and lifts</li>
+                    <li className="text-yellow-400">Power varies linearly with speed</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -459,181 +421,173 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
           explanation={quickCheckQuestions[1].explanation}
         />
 
-        {/* Section 4: Affinity Laws */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">
-              4
-            </div>
-            <h2 className="text-xl font-semibold text-white">Affinity Laws and Energy Savings Calculations</h2>
-          </div>
+        {/* Section 3: VSD Technology */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            VSD Technology and Operation
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
-              The affinity laws (also called fan/pump laws) describe the mathematical relationships between
-              speed, flow, pressure, and power for centrifugal equipment. These fundamental principles
-              explain why VSDs achieve dramatic energy savings on variable torque loads.
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
+              Variable Speed Drives (also called Variable Frequency Drives, Inverters, or AC Drives) control motor
+              speed by varying the frequency and voltage supplied to the motor. Understanding their operation
+              is essential for correct specification and installation.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-semibold mb-4 flex items-center gap-2">
-                <Activity className="h-5 w-5" />
-                The Three Affinity Laws
-              </h3>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="bg-[#2d2d2d] rounded-lg p-4 text-center">
-                  <div className="text-3xl font-bold text-blue-400 mb-2">Q ∝ N</div>
-                  <p className="text-sm text-gray-400">Flow varies linearly with speed</p>
-                  <p className="text-xs mt-2">Q₂/Q₁ = N₂/N₁</p>
-                </div>
-                <div className="bg-[#2d2d2d] rounded-lg p-4 text-center">
-                  <div className="text-3xl font-bold text-green-400 mb-2">H ∝ N²</div>
-                  <p className="text-sm text-gray-400">Head/pressure varies with speed squared</p>
-                  <p className="text-xs mt-2">H₂/H₁ = (N₂/N₁)²</p>
-                </div>
-                <div className="bg-[#2d2d2d] rounded-lg p-4 text-center">
-                  <div className="text-3xl font-bold text-red-400 mb-2">P ∝ N³</div>
-                  <p className="text-sm text-gray-400">Power varies with speed cubed</p>
-                  <p className="text-xs mt-2">P₂/P₁ = (N₂/N₁)³</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
-                <Calculator className="h-5 w-5" />
-                Energy Savings Calculation Example
+                <Settings className="w-5 h-5" />
+                VSD Operating Principle
               </h3>
-              <div className="space-y-3 text-sm">
-                <p className="text-gray-400">
-                  A 30kW pump motor currently runs at full speed with a throttle valve controlling flow to 70%
-                  of maximum. Calculate savings with VSD control:
-                </p>
-                <div className="font-mono bg-[#2d2d2d] rounded p-3 space-y-2">
-                  <p><span className="text-blue-400">Current state:</span> Valve throttling, motor at 100% speed</p>
-                  <p><span className="text-blue-400">Power consumed:</span> ~30kW (throttle wastes energy)</p>
-                  <br />
-                  <p><span className="text-green-400">With VSD at 70% speed:</span></p>
-                  <p>Power = 30kW × (0.70)³</p>
-                  <p>Power = 30kW × 0.343</p>
-                  <p>Power = <span className="text-elec-yellow">10.3kW</span></p>
-                  <br />
-                  <p><span className="text-red-400">Saving:</span> 30kW - 10.3kW = 19.7kW (65.7%)</p>
-                  <p><span className="text-gray-400">// At 6000 hours/year, £0.30/kWh:</span></p>
-                  <p><span className="text-green-400">Annual saving:</span> 19.7kW × 6000h × £0.30 = <span className="text-elec-yellow">£35,460/year</span></p>
+              <div className="space-y-4">
+                <div className="grid md:grid-cols-3 gap-4 text-sm">
+                  <div className="bg-white/5 rounded p-3 text-center">
+                    <p className="text-blue-400 font-semibold">1. Rectifier</p>
+                    <p className="text-white/70 mt-1">Converts AC supply to DC</p>
+                    <p className="text-white/50 text-xs mt-1">Typically 6-pulse diode bridge</p>
+                  </div>
+                  <div className="bg-white/5 rounded p-3 text-center">
+                    <p className="text-elec-yellow font-semibold">2. DC Bus</p>
+                    <p className="text-white/70 mt-1">Smooths DC with capacitors</p>
+                    <p className="text-white/50 text-xs mt-1">Stores energy for dynamic loads</p>
+                  </div>
+                  <div className="bg-white/5 rounded p-3 text-center">
+                    <p className="text-green-400 font-semibold">3. Inverter</p>
+                    <p className="text-white/70 mt-1">Creates variable frequency AC</p>
+                    <p className="text-white/50 text-xs mt-1">PWM switching with IGBTs</p>
+                  </div>
+                </div>
+
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium mb-2">V/f Control (Constant Flux)</p>
+                  <p className="text-white/70 text-sm">
+                    Motor speed is proportional to frequency. To maintain constant torque capability, voltage
+                    must vary proportionally with frequency (V/f = constant). At 25Hz, voltage is reduced to
+                    approximately half of the 50Hz value. Below ~5Hz, additional voltage boost is applied to
+                    overcome stator resistance and maintain flux.
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-              <h4 className="text-red-400 font-semibold mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5" />
-                Important Limitations
-              </h4>
-              <ul className="space-y-1 text-sm">
-                <li>• Affinity laws apply to <strong>centrifugal</strong> equipment (pumps, fans, compressors) only</li>
-                <li>• Systems with high static head show reduced savings potential</li>
-                <li>• Minimum speeds may be limited by motor cooling or process requirements</li>
-                <li>• Constant torque loads (conveyors, mixers) follow different rules - power ∝ speed</li>
-                <li>• VSD losses (typically 2-4%) must be factored into net savings</li>
-              </ul>
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5" />
+                Additional VSD Benefits Beyond Energy Savings
+              </h3>
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <ul className="text-white/80 space-y-2">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span><strong className="text-white">Soft starting:</strong> Reduced mechanical stress, no starting current spike</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span><strong className="text-white">Process control:</strong> Precise speed regulation for quality</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span><strong className="text-white">Extended motor life:</strong> Controlled acceleration/deceleration</span>
+                  </li>
+                </ul>
+                <ul className="text-white/80 space-y-2">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span><strong className="text-white">Power factor:</strong> Near unity at the supply terminals</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span><strong className="text-white">Protection:</strong> Built-in motor protection features</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span><strong className="text-white">Diagnostics:</strong> Monitoring and fault logging</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Section 5: VSD Installation Requirements */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">
-              5
-            </div>
-            <h2 className="text-xl font-semibold text-white">VSD Installation Requirements and EMC Considerations</h2>
-          </div>
+        {/* Section 4: Installation Considerations */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            VSD Installation and EMC Considerations
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
-              Proper VSD installation is critical for reliable operation, electromagnetic compatibility (EMC),
-              and maintaining compliance with UK regulations. Poor installation practices cause the majority
-              of VSD-related problems.
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
+              Correct installation of VSDs is critical for reliable operation and compliance with EMC regulations.
+              Poor installation can cause interference, nuisance tripping, and premature motor failure.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
-                <Settings className="h-5 w-5" />
-                Essential Installation Requirements
+                <Shield className="w-5 h-5" />
+                EMC Categories and Requirements
               </h3>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="text-white font-medium mb-2">Supply Side</h4>
-                  <ul className="space-y-1 text-sm">
-                    <li>• Dedicated supply circuit recommended</li>
-                    <li>• Line reactor (3-5% impedance) for harmonic reduction</li>
-                    <li>• Surge protection device (SPD) on exposed supplies</li>
-                    <li>• Type B RCD if RCD protection required (BS 7671)</li>
-                    <li>• Correct cable sizing for non-sinusoidal currents</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-white font-medium mb-2">Motor Side</h4>
-                  <ul className="space-y-1 text-sm">
-                    <li>• Screened/armoured cable with 360° gland termination</li>
-                    <li>• Maximum cable length per manufacturer guidelines</li>
-                    <li>• dV/dt filter or output reactor for long runs (&gt;50m)</li>
-                    <li>• Motor thermistor connection for thermal protection</li>
-                    <li>• Verify motor is inverter-rated or install sinewave filter</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
-                <Shield className="h-5 w-5" />
-                EMC Compliance Requirements
-              </h3>
-              <p className="text-sm mb-3">
-                The Electromagnetic Compatibility Regulations 2016 require all electrical equipment to not
-                cause interference and to be immune to expected interference. VSDs require careful
-                installation to achieve EMC compliance:
-              </p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
-                <div className="bg-[#2d2d2d] rounded p-3">
-                  <h4 className="text-blue-400 font-medium mb-2">Conducted Emissions Control</h4>
-                  <ul className="space-y-1">
-                    <li>• Internal or external EMC filter matched to cable length</li>
-                    <li>• Input line reactor reduces harmonic currents</li>
-                    <li>• Filter earthed with short, low-inductance connection</li>
-                    <li>• Separate PE conductor for filter if required</li>
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-green-400 font-semibold mb-2">C1 (First Environment - Residential)</p>
+                  <ul className="text-white/70 space-y-1">
+                    <li>- Lowest emission limits</li>
+                    <li>- Requires integral EMC filter</li>
+                    <li>- Suitable for: offices, shops, residential</li>
                   </ul>
                 </div>
-                <div className="bg-[#2d2d2d] rounded p-3">
-                  <h4 className="text-green-400 font-medium mb-2">Radiated Emissions Control</h4>
-                  <ul className="space-y-1">
-                    <li>• Screened motor cable with full 360° termination</li>
-                    <li>• Metal glands or EMC glands, not plastic</li>
-                    <li>• Cable screen bonded at both VSD and motor ends</li>
-                    <li>• Minimum 200mm separation from signal cables</li>
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-yellow-400 font-semibold mb-2">C3 (Second Environment - Industrial)</p>
+                  <ul className="text-white/70 space-y-1">
+                    <li>- Higher emission limits permitted</li>
+                    <li>- Basic filtering may be acceptable</li>
+                    <li>- Suitable for: factories, plant rooms</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
-              <h4 className="text-elec-yellow font-semibold mb-2">Harmonic Distortion</h4>
-              <p className="text-sm mb-2">
-                Standard 6-pulse VSDs produce characteristic harmonics at the 5th, 7th, 11th, 13th orders
-                etc. (6n±1 rule). High harmonic levels can cause:
-              </p>
-              <ul className="text-sm space-y-1 list-disc list-inside">
-                <li>Transformer and cable overheating</li>
-                <li>Capacitor failures and nuisance tripping</li>
-                <li>Interference with sensitive equipment</li>
-                <li>Neutral conductor overload in three-phase systems</li>
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
+                <Wrench className="w-5 h-5" />
+                Critical Installation Requirements
+              </h3>
+              <ul className="text-white/80 space-y-2 text-sm">
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Cable shielding:</strong> Use screened/armoured cable for motor connections, earth screen at both ends</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Cable separation:</strong> Maintain 300mm from control cables, cross at 90° only</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Motor cable length:</strong> Check manufacturer limits; may need output filter for long runs</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Earthing:</strong> Low impedance earth connections essential for EMC filter operation</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span><strong className="text-white">Ventilation:</strong> Allow adequate clearance for cooling; derate for high ambient temperatures</span>
+                </li>
               </ul>
-              <p className="text-sm mt-2">
-                <strong>Mitigation:</strong> Line reactors (3-5% impedance), active front end (AFE) drives,
-                12-pulse or 18-pulse configurations for large installations, or active harmonic filters.
-              </p>
+            </div>
+
+            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+              <h4 className="text-red-400 font-semibold mb-2 flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5" />
+                BS 7671 Considerations for VSD Circuits
+              </h4>
+              <ul className="text-white/80 text-sm space-y-1">
+                <li>- <strong className="text-white">RCD selection:</strong> Type B or Type B+ RCDs may be required due to DC fault currents from rectifier</li>
+                <li>- <strong className="text-white">Harmonic currents:</strong> May require cable derating and neutral sizing (harmonics add in neutral)</li>
+                <li>- <strong className="text-white">Protective device coordination:</strong> Account for drive's current limiting during overloads</li>
+                <li>- <strong className="text-white">EMC filter earth leakage:</strong> Consider cumulative leakage when multiple drives on one RCD</li>
+              </ul>
             </div>
           </div>
         </section>
@@ -647,247 +601,336 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
           explanation={quickCheckQuestions[2].explanation}
         />
 
-        {/* Section 6: Commissioning and Optimisation */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">
-              6
-            </div>
-            <h2 className="text-xl font-semibold text-white">Commissioning and Optimisation of Motor Systems</h2>
-          </div>
+        {/* Section 5: Motor-VSD Compatibility */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Motor-VSD Compatibility Assessment
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
-            <p>
-              Systematic commissioning ensures VSD systems operate safely and efficiently. Poor commissioning
-              is a common cause of motor damage, nuisance tripping, and underperformance.
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
+              Not all motors are suitable for VSD operation. Retrofitting a VSD to an unsuitable motor
+              can result in overheating, insulation breakdown, and bearing damage.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Pre-Commissioning Checklist
+                <RotateCcw className="w-5 h-5" />
+                Pre-Installation Assessment Checklist
               </h3>
-              <div className="grid md:grid-cols-2 gap-4 text-sm">
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span>Verify supply voltage matches VSD rating</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span>Check motor nameplate data (kW, V, A, Hz, RPM)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span>Confirm motor insulation resistance (&gt;1MΩ at 500V DC)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span>Verify all cable terminations are tight</span>
-                  </li>
-                </ul>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span>Check earth continuity including cable screens</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span>Confirm motor rotation direction before coupling</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span>Review protective device settings</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span>Check mechanical freedom of driven equipment</span>
-                  </li>
-                </ul>
+              <div className="space-y-3">
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium mb-2">Insulation System</p>
+                  <ul className="text-white/70 text-sm space-y-1">
+                    <li>- Class F minimum recommended (155°C)</li>
+                    <li>- Inverter-duty rating preferred (reinforced insulation)</li>
+                    <li>- Older Class B motors at higher risk from PWM voltage spikes</li>
+                    <li>- Consider dV/dt filter for existing non-inverter-duty motors</li>
+                  </ul>
+                </div>
+
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium mb-2">Bearing Protection</p>
+                  <ul className="text-white/70 text-sm space-y-1">
+                    <li>- PWM switching can cause bearing currents (EDM damage)</li>
+                    <li>- Insulated bearings or ceramic bearings for larger motors (&gt;30kW)</li>
+                    <li>- Shaft grounding brush as alternative solution</li>
+                    <li>- Symmetric cable layout reduces common-mode currents</li>
+                  </ul>
+                </div>
+
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium mb-2">Cooling at Low Speed</p>
+                  <ul className="text-white/70 text-sm space-y-1">
+                    <li>- Fan-cooled motors lose cooling below ~20Hz</li>
+                    <li>- Derate or add forced ventilation for continuous low-speed operation</li>
+                    <li>- Totally enclosed motors less affected but still derate</li>
+                    <li>- Check drive thermal model/motor thermistor protection</li>
+                  </ul>
+                </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
-              <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
-                <RotateCcw className="h-5 w-5" />
-                Key Parameter Settings
-              </h3>
-              <div className="space-y-3 text-sm">
-                <div className="bg-[#2d2d2d] rounded p-3">
-                  <span className="text-blue-400 font-medium">Motor Parameters:</span>
-                  <p className="text-gray-400 mt-1">Enter exact nameplate values - rated voltage, current, frequency,
-                  power, RPM, and cos φ. Run auto-tune if available to measure motor characteristics.</p>
-                </div>
-                <div className="bg-[#2d2d2d] rounded p-3">
-                  <span className="text-green-400 font-medium">Acceleration/Deceleration Times:</span>
-                  <p className="text-gray-400 mt-1">Set appropriate ramp times based on load inertia. Too fast
-                  causes overcurrent trips; too slow wastes energy. Typical starting point: 5-15 seconds.</p>
-                </div>
-                <div className="bg-[#2d2d2d] rounded p-3">
-                  <span className="text-purple-400 font-medium">Current Limits:</span>
-                  <p className="text-gray-400 mt-1">Set motor thermal protection current to nameplate FLA.
-                  Configure current limit typically 110-150% for normal starting.</p>
-                </div>
-                <div className="bg-[#2d2d2d] rounded p-3">
-                  <span className="text-orange-400 font-medium">Min/Max Frequency:</span>
-                  <p className="text-gray-400 mt-1">Set minimum frequency based on motor cooling requirements
-                  (typically 10-20Hz for TEFC motors). Maximum usually 50Hz unless designed for higher speed.</p>
-                </div>
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
+              <h4 className="text-elec-yellow font-semibold mb-2">Motor Nameplate Information Required</h4>
+              <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+                <ul className="space-y-1">
+                  <li>- Rated power (kW)</li>
+                  <li>- Rated voltage and frequency</li>
+                  <li>- Full load current (FLC)</li>
+                  <li>- Rated speed (rpm)</li>
+                </ul>
+                <ul className="space-y-1">
+                  <li>- Efficiency class (IE code)</li>
+                  <li>- Insulation class (B, F, H)</li>
+                  <li>- Duty cycle (S1, S2, etc.)</li>
+                  <li>- Inverter duty rating if present</li>
+                </ul>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Section 6: Energy Savings Calculations */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Energy Savings Calculations
+          </h2>
+
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
+              Accurate savings calculations are essential for building business cases and verifying
+              project outcomes. Consider both direct energy savings and secondary benefits.
+            </p>
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-              <h4 className="text-green-400 font-semibold mb-2">Optimisation Opportunities</h4>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  <TrendingUp className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span><strong>Sleep Mode:</strong> Configure VSD to stop motor when demand is zero, restart on demand signal</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <TrendingUp className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span><strong>PID Tuning:</strong> Optimise closed-loop control for stable operation without hunting</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <TrendingUp className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span><strong>Energy Optimisation:</strong> Enable flux optimisation mode for variable torque loads</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <TrendingUp className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span><strong>Flying Start:</strong> Enable for applications where motor may be spinning when restarted</span>
-                </li>
-              </ul>
+              <h3 className="text-green-400 font-semibold mb-3 flex items-center gap-2">
+                <Calculator className="w-5 h-5" />
+                Worked Example: Pump VSD Retrofit
+              </h3>
+              <div className="space-y-4">
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium mb-2">System Data</p>
+                  <div className="grid md:grid-cols-2 gap-4 text-sm text-white/70">
+                    <ul className="space-y-1">
+                      <li>- 22kW centrifugal pump motor</li>
+                      <li>- 6,000 operating hours/year</li>
+                      <li>- Currently throttled to 70% flow</li>
+                    </ul>
+                    <ul className="space-y-1">
+                      <li>- Motor efficiency: 91%</li>
+                      <li>- Electricity cost: £0.25/kWh</li>
+                      <li>- VSD + installation: £3,500</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="bg-white/5 rounded p-3">
+                  <p className="text-white font-medium mb-2">Calculation</p>
+                  <div className="text-sm text-white/70 space-y-2">
+                    <p><strong className="text-white">Current consumption:</strong> 22kW / 0.91 x 6,000h = 145,055 kWh/year (£36,264)</p>
+                    <p><strong className="text-white">With VSD at 70% speed:</strong> Power = 22kW x 0.7³ / 0.91 x 6,000h = 49,719 kWh/year (£12,430)</p>
+                    <p><strong className="text-green-400">Annual saving:</strong> 95,336 kWh = £23,834</p>
+                    <p><strong className="text-elec-yellow">Simple payback:</strong> £3,500 / £23,834 = 1.8 months</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-4">
+              <h3 className="text-elec-yellow font-semibold mb-3">Factors Affecting Real-World Savings</h3>
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-white font-medium mb-2">Positive Factors</p>
+                  <ul className="text-white/70 space-y-1">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      Higher electricity prices
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      Greater speed variation
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      More operating hours
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-500" />
+                      Larger motor size
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-white font-medium mb-2">Negative Factors</p>
+                  <ul className="text-white/70 space-y-1">
+                    <li className="flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 text-yellow-500" />
+                      VSD losses (2-4% typical)
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 text-yellow-500" />
+                      Static head in pump systems
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 text-yellow-500" />
+                      Minimum speed requirements
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 text-yellow-500" />
+                      Constant torque loads
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Quick Reference Card */}
-        <section className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-xl p-6 border border-elec-yellow/30">
-          <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center gap-2">
-            <Zap className="h-5 w-5" />
+        <section className="bg-gradient-to-r from-elec-yellow/20 to-yellow-600/20 rounded-xl p-6 border border-elec-yellow/30">
+          <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center gap-2">
+            <Zap className="w-6 h-6" />
             Quick Reference Card
-          </h2>
+          </h3>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h3 className="text-white font-semibold mb-2">Motor Efficiency Classes</h3>
-              <ul className="space-y-1 text-sm text-gray-300">
-                <li><span className="text-red-400 font-mono">IE1</span> - Standard (no longer compliant)</li>
-                <li><span className="text-orange-400 font-mono">IE2</span> - High (VSD use only for some ranges)</li>
-                <li><span className="text-green-400 font-mono">IE3</span> - Premium (current minimum standard)</li>
-                <li><span className="text-blue-400 font-mono">IE4</span> - Super Premium (75-200kW from 2023)</li>
-                <li><span className="text-purple-400 font-mono">IE5</span> - Ultra Premium (emerging tech)</li>
+              <h4 className="text-white font-semibold mb-2">IE Class Minimum Requirements</h4>
+              <table className="w-full text-sm">
+                <tbody className="text-white/80">
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">0.75-1000kW (DOL)</td>
+                    <td className="text-right text-green-400">IE3</td>
+                  </tr>
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">0.75-1000kW (with VSD)</td>
+                    <td className="text-right text-yellow-400">IE2</td>
+                  </tr>
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">75-200kW (from 2023)</td>
+                    <td className="text-right text-blue-400">IE4</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1">Single-phase &gt;0.12kW</td>
+                    <td className="text-right text-green-400">IE2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <h4 className="text-white font-semibold mb-2">Affinity Law Summary</h4>
+              <table className="w-full text-sm">
+                <tbody className="text-white/80">
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">Flow</td>
+                    <td className="text-right">proportional to speed</td>
+                  </tr>
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">Pressure</td>
+                    <td className="text-right">proportional to speed²</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1">Power</td>
+                    <td className="text-right text-green-400">proportional to speed³</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <h4 className="text-white font-semibold mb-2">VSD Installation Checklist</h4>
+              <ul className="text-sm text-white/80 space-y-1">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
+                  Motor insulation Class F minimum
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
+                  Screened motor cable, earthed both ends
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
+                  300mm separation from control cables
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
+                  EMC category appropriate for location
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
+                  Type B RCD if required
+                </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-white font-semibold mb-2">Affinity Laws Summary</h3>
-              <ul className="space-y-1 text-sm text-gray-300">
-                <li>Flow (Q) ∝ Speed (N)</li>
-                <li>Pressure (H) ∝ Speed² (N²)</li>
-                <li className="text-elec-yellow font-semibold">Power (P) ∝ Speed³ (N³)</li>
-                <li className="text-gray-400 mt-2">80% speed = 51% power</li>
-                <li className="text-gray-400">50% speed = 12.5% power</li>
+              <h4 className="text-white font-semibold mb-2">Typical Savings by Application</h4>
+              <ul className="text-sm text-white/80 space-y-1">
+                <li className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-green-400" />
+                  Centrifugal pumps: 30-50%
+                </li>
+                <li className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-green-400" />
+                  HVAC fans: 40-60%
+                </li>
+                <li className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-yellow-400" />
+                  Compressors: 15-30%
+                </li>
+                <li className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-yellow-400" />
+                  Conveyors: 5-15%
+                </li>
               </ul>
             </div>
-
-            <div>
-              <h3 className="text-white font-semibold mb-2">VSD Harmonics (6-pulse)</h3>
-              <ul className="space-y-1 text-sm text-gray-300">
-                <li>5th harmonic (250Hz) - largest magnitude</li>
-                <li>7th harmonic (350Hz)</li>
-                <li>11th, 13th harmonics</li>
-                <li className="text-gray-400 mt-2">Rule: h = 6n ± 1</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-white font-semibold mb-2">EMC Essentials</h3>
-              <ul className="space-y-1 text-sm text-gray-300">
-                <li>• Screened motor cable required</li>
-                <li>• 360° gland termination</li>
-                <li>• Max ~50m without output filter</li>
-                <li>• 200mm min from signal cables</li>
-                <li>• EMC filter sized to cable length</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-4 pt-4 border-t border-elec-yellow/30">
-            <h3 className="text-white font-semibold mb-2">Repair vs Replace Rule of Thumb</h3>
-            <p className="text-sm text-gray-300">
-              If repair cost &gt; 50-65% of new IE3 motor AND operating hours &gt; 4000/year → <span className="text-green-400 font-semibold">REPLACE</span>
-            </p>
           </div>
         </section>
 
-        {/* FAQs Section */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-700">
-          <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+        {/* FAQs */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            <HelpCircle className="w-6 h-6 text-elec-yellow" />
+            Frequently Asked Questions
+          </h2>
+
           <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <div key={index} className="border border-gray-700 rounded-lg overflow-hidden">
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-4 text-left bg-[#1a1a1a] hover:bg-[#2d2d2d] transition-colors min-h-[44px] touch-manipulation active:scale-[0.98]"
-                >
-                  <span className="font-medium text-white pr-4">{faq.question}</span>
-                  {expandedFAQ === index ? (
-                    <ChevronUp className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                  )}
-                </button>
-                {expandedFAQ === index && (
-                  <div className="p-4 bg-[#2d2d2d] text-gray-300 text-sm leading-relaxed">
-                    {faq.answer}
-                  </div>
-                )}
+              <div
+                key={index}
+                className="bg-white/5 rounded-lg overflow-hidden"
+              >
+                <div className="p-4">
+                  <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                  <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Quiz Section */}
-        <section className="bg-[#242424] rounded-xl p-6 border border-gray-700">
-          <h2 className="text-xl font-semibold text-white mb-4">Section Quiz</h2>
-          {!showQuiz ? (
-            <div className="text-center py-8">
-              <p className="text-gray-400 mb-4">
-                Test your understanding of motor efficiency and VSD retrofitting concepts.
-              </p>
-              <Button
-                onClick={() => setShowQuiz(true)}
-                className="bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 min-h-[44px] px-6 touch-manipulation active:scale-[0.98]"
-              >
-                Start Quiz (10 Questions)
-              </Button>
-            </div>
-          ) : (
-            <Quiz
-              questions={quizQuestions}
-              onComplete={(score) => {
-                console.log(`Quiz completed with score: ${score}/${quizQuestions.length}`);
-              }}
-            />
-          )}
+        <section className="bg-white/5 rounded-xl p-6">
+          <h2 className="text-xl font-bold text-elec-yellow mb-4 flex items-center gap-2">
+            <CheckCircle2 className="w-6 h-6" />
+            Section Knowledge Check
+          </h2>
+          <p className="text-white/80 mb-6">
+            Test your understanding of motor efficiency and VSD technology with this 10-question quiz.
+          </p>
+          <Quiz
+            questions={quizQuestions}
+            onComplete={(score) => {
+              console.log(`Quiz completed with score: ${score}/${quizQuestions.length}`);
+            }}
+          />
         </section>
 
         {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-gray-700">
+        <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
           <Button
-            onClick={() => navigate('/upskilling/energy-efficiency/module-4/section-1')}
             variant="outline"
-            className="flex items-center justify-center gap-2 bg-transparent border-gray-600 text-white hover:bg-gray-800 hover:text-elec-yellow min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] border-white/20 text-white hover:bg-white/5 hover:text-elec-yellow"
           >
-            <ChevronLeft className="h-4 w-4" />
-            Previous: Section 1 - Energy Auditing Fundamentals
+            <Link to="../section-1">
+              <ArrowLeft className="w-5 h-5" />
+              <span>Previous: Section 1</span>
+            </Link>
           </Button>
+
           <Button
-            onClick={() => navigate('/upskilling/energy-efficiency/module-4/section-3')}
-            className="flex items-center justify-center gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            asChild
+            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-yellow-500"
           >
-            Next: Section 3 - Lighting and Building Management
-            <ChevronRight className="h-4 w-4" />
+            <Link to="../section-3">
+              <span>Next: Section 3</span>
+              <ArrowRight className="w-5 h-5" />
+            </Link>
           </Button>
         </nav>
       </div>

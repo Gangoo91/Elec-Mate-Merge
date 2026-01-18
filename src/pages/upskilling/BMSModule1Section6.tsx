@@ -93,7 +93,7 @@ const BMSModule1Section6 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/bms-module-1">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -240,7 +240,7 @@ const BMSModule1Section6 = () => {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Mains Voltage Circuits</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>230V/400V power circuits</li>
                     <li>Motor control circuits</li>
                     <li>Lighting circuits</li>
@@ -249,7 +249,7 @@ const BMSModule1Section6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Low Voltage/Data Circuits</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>24V sensor circuits</li>
                     <li>Communication cables (RS485, Ethernet)</li>
                     <li>Analogue signal cables (0-10V, 4-20mA)</li>
@@ -269,15 +269,15 @@ const BMSModule1Section6 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Trunking</p>
-                  <p className="text-white/90 text-xs">Compartmentalised for segregation, clean appearance</p>
+                  <p className="text-white text-xs">Compartmentalised for segregation, clean appearance</p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Conduit</p>
-                  <p className="text-white/90 text-xs">Individual circuit protection, suitable for wet areas</p>
+                  <p className="text-white text-xs">Individual circuit protection, suitable for wet areas</p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Cable Tray</p>
-                  <p className="text-white/90 text-xs">High capacity, natural cooling, cost-effective</p>
+                  <p className="text-white text-xs">High capacity, natural cooling, cost-effective</p>
                 </div>
               </div>
             </div>
@@ -321,7 +321,7 @@ const BMSModule1Section6 = () => {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">HVAC Dependencies</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>Valve actuator wiring and control</li>
                     <li>Damper motor connections</li>
                     <li>Fan and pump control integration</li>
@@ -331,7 +331,7 @@ const BMSModule1Section6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Coordination Points</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>Sensor locations and mounting requirements</li>
                     <li>Cable routes through mechanical areas</li>
                     <li>Control panel locations and access</li>
@@ -347,7 +347,7 @@ const BMSModule1Section6 = () => {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Network Infrastructure</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>Ethernet backbone installation</li>
                     <li>Switch and router connections</li>
                     <li>Server room cable management</li>
@@ -357,7 +357,7 @@ const BMSModule1Section6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Interface Requirements</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>IP address planning coordination</li>
                     <li>VLAN configuration requirements</li>
                     <li>Security and firewall considerations</li>
@@ -379,7 +379,7 @@ const BMSModule1Section6 = () => {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Pre-Commissioning Support</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>Circuit testing and verification</li>
                     <li>Cable schedule documentation</li>
                     <li>Point-to-point testing</li>
@@ -389,7 +389,7 @@ const BMSModule1Section6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Ongoing Collaboration</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>Fault finding and troubleshooting</li>
                     <li>System modifications and additions</li>
                     <li>Performance optimisation support</li>
@@ -453,15 +453,15 @@ const BMSModule1Section6 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-red-400 text-xl mb-1">75%</p>
-                <p className="text-white/90 text-xs">BMS failures caused by installation issues</p>
+                <p className="text-white text-xs">BMS failures caused by installation issues</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-elec-yellow text-xl mb-1">40%</p>
-                <p className="text-white/90 text-xs">Project delays due to wiring problems</p>
+                <p className="text-white text-xs">Project delays due to wiring problems</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-green-400 text-xl mb-1">90%</p>
-                <p className="text-white/90 text-xs">Issues preventable with quality installation</p>
+                <p className="text-white text-xs">Issues preventable with quality installation</p>
               </div>
             </div>
 
@@ -470,7 +470,7 @@ const BMSModule1Section6 = () => {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm font-medium text-red-400/80 mb-2">Poor Installation</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>Temperature errors up to ±5°C</li>
                     <li>Humidity readings ±20% inaccurate</li>
                     <li>CO2 sensors providing false alarms</li>
@@ -479,7 +479,7 @@ const BMSModule1Section6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Installation</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>Temperature accuracy ±0.5°C</li>
                     <li>Humidity readings ±3% accurate</li>
                     <li>CO2 sensors reliable and stable</li>
@@ -500,7 +500,7 @@ const BMSModule1Section6 = () => {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <p className="text-sm font-medium text-red-400/80 mb-2">Poor Labelling</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>4-8 hours to trace unmarked circuits</li>
                     <li>Risk of damage during maintenance</li>
                     <li>System modifications nearly impossible</li>
@@ -510,7 +510,7 @@ const BMSModule1Section6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-elec-yellow/80 mb-2">Quality Documentation</p>
-                  <ul className="text-sm text-white/90 space-y-1 ml-4">
+                  <ul className="text-sm text-white space-y-1 ml-4">
                     <li>15-30 minutes to resolve issues</li>
                     <li>Clear identification prevents accidents</li>
                     <li>System changes implemented quickly</li>
@@ -643,7 +643,7 @@ const BMSModule1Section6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

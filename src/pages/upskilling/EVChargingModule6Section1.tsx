@@ -80,9 +80,9 @@ const EVChargingModule6Section1 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/ev-charging-module-6">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 6
+              Back
             </Link>
           </Button>
         </div>
@@ -240,15 +240,15 @@ const EVChargingModule6Section1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Gas: 500mm</p>
-                <p className="text-white/90 text-xs">Minimum clearance</p>
+                <p className="text-white text-xs">Minimum clearance</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Electric: 500mm</p>
-                <p className="text-white/90 text-xs">Minimum clearance</p>
+                <p className="text-white text-xs">Minimum clearance</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Water: 300mm</p>
-                <p className="text-white/90 text-xs">Minimum clearance</p>
+                <p className="text-white text-xs">Minimum clearance</p>
               </div>
             </div>
           </div>
@@ -336,7 +336,7 @@ const EVChargingModule6Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -381,9 +381,9 @@ const EVChargingModule6Section1 = () => {
             className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/ev-charging-module-6">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 6
+              Back
             </Link>
           </Button>
           <Button

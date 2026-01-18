@@ -6,7 +6,10 @@
  * - Clean section dividers
  * - Traditional single-column layout
  * - Clear visual hierarchy
- * - ATS-optimised formatting
+ * - Photo in top-right corner
+ * - ECS Card badge
+ * - Key Projects section
+ * - References
  */
 
 import jsPDF from 'jspdf';
@@ -25,7 +28,11 @@ import {
   addPageFooter,
   generateProfessionalTitle,
   categoriseCertifications,
-  calculateExperienceYears,
+  addProfilePhoto,
+  addECSBadge,
+  addKeyProjectsSection,
+  addReferencesSection,
+  formatLinkedInUrl,
 } from './shared';
 
 const colors = TEMPLATE_COLORS.classic;
@@ -35,11 +42,8 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
   const { margin, contentWidth, pageHeight } = PDF_CONFIG;
   let y = margin;
 
-  // Track pages for footer
-  let currentPage = 1;
-
   // ═══════════════════════════════════════════════════════════════════════════
-  // HEADER SECTION
+  // HEADER SECTION WITH PHOTO
   // ═══════════════════════════════════════════════════════════════════════════
 
   // Accent bar at top
@@ -47,12 +51,23 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
 
   y = margin + 5;
 
+  // Photo (top-right corner if present)
+  const photoSize = 30;
+  const photoX = margin + contentWidth - photoSize;
+  let headerContentWidth = contentWidth;
+
+  if (cvData.personalInfo.photoUrl) {
+    await addProfilePhoto(pdf, cvData.personalInfo.photoUrl, photoX, y, photoSize);
+    headerContentWidth = contentWidth - photoSize - 5;
+  }
+
   // Name - large, navy blue
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(26);
   setColor(pdf, colors.primary);
-  pdf.text(cvData.personalInfo.fullName || 'Your Name', margin, y);
-  y += 8;
+  const nameLines = pdf.splitTextToSize(cvData.personalInfo.fullName || 'Your Name', headerContentWidth);
+  pdf.text(nameLines, margin, y);
+  y += nameLines.length * 8;
 
   // Professional title (auto-generated based on experience)
   const professionalTitle = generateProfessionalTitle(cvData);
@@ -60,7 +75,7 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
   pdf.setFontSize(12);
   setColor(pdf, colors.secondary);
   pdf.text(professionalTitle, margin, y);
-  y += 10;
+  y += 8;
 
   // Contact information - clean row format
   pdf.setFontSize(10);
@@ -77,22 +92,68 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
 
   if (contactParts.length > 0) {
     pdf.text(contactParts.join('  |  '), margin, y);
-    y += 8;
+    y += 5;
+  }
+
+  // LinkedIn and portfolio
+  const linkParts: string[] = [];
+  if (cvData.personalInfo.linkedIn) {
+    linkParts.push(formatLinkedInUrl(cvData.personalInfo.linkedIn));
+  }
+  if (cvData.personalInfo.portfolio) {
+    linkParts.push(cvData.personalInfo.portfolio);
+  }
+
+  if (linkParts.length > 0) {
+    pdf.setFontSize(9);
+    setColor(pdf, colors.secondary);
+    pdf.text(linkParts.join('  |  '), margin, y);
+    y += 5;
+  }
+
+  // Make sure y is below the photo
+  if (cvData.personalInfo.photoUrl) {
+    y = Math.max(y, margin + 5 + photoSize + 5);
   }
 
   // Header divider line
   drawLine(pdf, margin, y, contentWidth, colors.primary, 1);
-  y += 12;
+  y += 10;
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // KEY QUALIFICATIONS (Essential certifications at top for electricians)
+  // KEY QUALIFICATIONS & ECS CARD
   // ═══════════════════════════════════════════════════════════════════════════
 
   const { essential: essentialCerts, additional: additionalCerts } =
     categoriseCertifications(cvData.certifications);
 
-  if (essentialCerts.length > 0) {
-    // Highlight box for key qualifications
+  // ECS Card badge (if present)
+  if (cvData.professionalCards.ecsCardType) {
+    const badgeY = y;
+    y = addECSBadge(pdf, cvData.professionalCards.ecsCardType, cvData.professionalCards.ecsExpiry, margin, y);
+
+    // Key qualifications box next to ECS badge
+    if (essentialCerts.length > 0) {
+      const boxX = margin + 55;
+      const boxWidth = contentWidth - 55;
+      const boxHeight = 16;
+
+      drawRect(pdf, boxX, badgeY, boxWidth, boxHeight, '#f1f5f9', 2);
+
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(9);
+      setColor(pdf, colors.primary);
+      pdf.text('KEY QUALIFICATIONS:', boxX + 4, badgeY + 6);
+
+      pdf.setFont('helvetica', 'normal');
+      setColor(pdf, colors.text);
+      const certsText = essentialCerts.slice(0, 3).join('  •  ');
+      y = addWrappedText(pdf, certsText, boxX + 4, badgeY + 11, boxWidth - 8, 4);
+    }
+
+    y += 6;
+  } else if (essentialCerts.length > 0) {
+    // Just qualifications box if no ECS card
     const boxHeight = 12;
     drawRect(pdf, margin, y - 2, contentWidth, boxHeight, '#f1f5f9', 2);
 
@@ -107,6 +168,16 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
     pdf.text(certsText, margin + 45, y + 4);
 
     y += boxHeight + 8;
+  }
+
+  // Driving licences (compact display)
+  if (cvData.professionalCards.drivingLicence.length > 0) {
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(9);
+    setColor(pdf, colors.muted);
+    const licenceText = 'Licences: ' + cvData.professionalCards.drivingLicence.join(' • ');
+    pdf.text(licenceText, margin, y);
+    y += 8;
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -128,7 +199,7 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
     pdf.setFontSize(10);
     setColor(pdf, colors.text);
     y = addWrappedText(pdf, cvData.personalInfo.professionalSummary, margin, y, contentWidth, 5);
-    y += 10;
+    y += 8;
 
     // Subtle divider
     drawLine(pdf, margin, y, contentWidth, colors.divider, 0.5);
@@ -194,9 +265,17 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
       }
     });
 
-    y += 8;
+    y += 6;
     drawLine(pdf, margin, y, contentWidth, colors.divider, 0.5);
     y += 10;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // KEY PROJECTS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (cvData.keyProjects.length > 0) {
+    y = addKeyProjectsSection(pdf, cvData.keyProjects, margin, y, contentWidth, colors);
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -252,7 +331,7 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
       }
     });
 
-    y += 8;
+    y += 6;
     drawLine(pdf, margin, y, contentWidth, colors.divider, 0.5);
     y += 10;
   }
@@ -294,7 +373,7 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
     });
 
     if (col !== 0) y += 6;
-    y += 8;
+    y += 6;
     drawLine(pdf, margin, y, contentWidth, colors.divider, 0.5);
     y += 10;
   }
@@ -324,7 +403,15 @@ export const generateClassicPDF = async (cvData: CVData): Promise<void> => {
       y = addWrappedText(pdf, cert, margin + 7, y, contentWidth - 7, 5);
       y += 3;
     });
+
+    y += 6;
   }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // REFERENCES
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  y = addReferencesSection(pdf, cvData.references, margin, y, contentWidth, colors);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PAGE FOOTER

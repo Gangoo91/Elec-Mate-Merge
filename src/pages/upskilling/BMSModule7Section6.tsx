@@ -90,7 +90,7 @@ const BMSModule7Section6 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-7">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -108,7 +108,7 @@ const BMSModule7Section6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Client Handover and Documentation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Professional project completion and handover requirements
           </p>
         </header>
@@ -374,7 +374,7 @@ const BMSModule7Section6 = () => {
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Critical Consequences of Missing Documentation</p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Future modifications become dangerous and time-consuming</li>
                 <li>Troubleshooting becomes nearly impossible</li>
                 <li>Warranty claims may be rejected</li>
@@ -404,7 +404,7 @@ const BMSModule7Section6 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10">
               <h3 className="text-sm font-medium text-white mb-4">Handover Checklist</h3>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/90">
+              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <ul className="space-y-1">
                     <li>All field devices correctly labelled</li>
@@ -441,7 +441,7 @@ const BMSModule7Section6 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <p className="text-xs font-medium text-white/70 mb-1">The Situation</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>BMS installed and tested successfully</li>
                     <li>System was functioning correctly</li>
                     <li>Client was eager to take control</li>
@@ -450,7 +450,7 @@ const BMSModule7Section6 = () => {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white/70 mb-1">Missing Documentation</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>No updated IO list provided</li>
                     <li>Software backups not created</li>
                     <li>As-built drawings incomplete</li>
@@ -460,7 +460,7 @@ const BMSModule7Section6 = () => {
               </div>
 
               <div className="p-3 rounded bg-red-500/10 mb-4">
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   <strong>One month later:</strong> A fault occurred in the ventilation system. The facilities team couldn't diagnose
                   the problem because they had no documentation to identify which sensor was
                   malfunctioning or how to access the relevant control parameters.
@@ -470,7 +470,7 @@ const BMSModule7Section6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-white/70 mb-1">Immediate Consequences</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>System remained faulty for days</li>
                     <li>Poor indoor air quality in classrooms</li>
                     <li>Client lost confidence in the installation</li>
@@ -479,7 +479,7 @@ const BMSModule7Section6 = () => {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white/70 mb-1">Financial Impact</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Costly emergency site visit</li>
                     <li>Time spent recreating documentation</li>
                     <li>Damaged professional reputation</li>
@@ -494,7 +494,7 @@ const BMSModule7Section6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-white/70 mb-1">Mandatory Requirements</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Complete as-built documentation before handover</li>
                     <li>Tested software backups on separate media</li>
                     <li>Verified IO lists with physical device checks</li>
@@ -503,7 +503,7 @@ const BMSModule7Section6 = () => {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white/70 mb-1">Quality Assurance</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Project manager sign-off on all documentation</li>
                     <li>Client acknowledgment of training received</li>
                     <li>30-day follow-up support included</li>
@@ -528,7 +528,7 @@ const BMSModule7Section6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

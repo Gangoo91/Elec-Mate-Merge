@@ -1,603 +1,634 @@
-import { ArrowLeft, ArrowRight, Target, AlertTriangle, CheckCircle, Zap, Lightbulb, Settings, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Link } from 'react-router-dom';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
+
+const TITLE = "Choosing the Right Sensor - Instrumentation Module 2 Section 6";
+const DESCRIPTION = "Learn systematic sensor selection methods balancing technical requirements, environmental conditions, and economic factors for optimal instrumentation.";
+
+const quickCheckQuestions = [
+  {
+    id: "selection-factors",
+    question: "What are the three most critical factors when selecting a sensor?",
+    options: [
+      "Brand, colour, and size",
+      "Environment, accuracy requirements, and measured variable",
+      "Price, availability, and warranty",
+      "Weight, appearance, and packaging"
+    ],
+    correctIndex: 1,
+    explanation: "The three critical factors are environmental conditions (temperature, humidity, chemicals), accuracy requirements (precision and resolution), and the measured variable (what parameter needs measuring)."
+  },
+  {
+    id: "rugged-vs-accurate",
+    question: "When should you prioritise ruggedness over accuracy?",
+    options: [
+      "Always - rugged sensors are better",
+      "In harsh environments where reliability matters more than precision",
+      "Never - accuracy is always most important",
+      "Only in laboratory settings"
+    ],
+    correctIndex: 1,
+    explanation: "In harsh industrial environments, a sensor that operates reliably with good accuracy is preferable to a highly accurate sensor that fails frequently due to environmental stress."
+  },
+  {
+    id: "redundancy-meaning",
+    question: "What does sensor redundancy mean in safety-critical applications?",
+    options: [
+      "Using expensive sensors",
+      "Installing backup sensors to maintain operation if primary fails",
+      "Having spare sensors in storage",
+      "Using sensors from multiple brands"
+    ],
+    correctIndex: 1,
+    explanation: "Sensor redundancy means installing multiple sensors (typically 2 or 3) to measure the same parameter, ensuring continued operation and safety if one sensor fails."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "Name three critical factors when selecting a sensor.",
+    options: [
+      "Cost, colour, and brand name",
+      "Environmental conditions, accuracy requirements, and measured variable",
+      "Size, weight, and appearance",
+      "Manufacturer location, warranty, and packaging"
+    ],
+    correctAnswer: 1,
+    explanation: "The three critical factors are environmental conditions (temperature, humidity, chemicals), accuracy requirements (precision and resolution), and the measured variable (what parameter you are measuring)."
+  },
+  {
+    id: 2,
+    question: "Why would you choose a rugged sensor over a more accurate one?",
+    options: [
+      "Rugged sensors are always cheaper",
+      "In harsh environments, reliability is more important than absolute accuracy",
+      "Rugged sensors consume less power",
+      "They require less maintenance documentation"
+    ],
+    correctAnswer: 1,
+    explanation: "In harsh industrial environments, a sensor that continues to operate reliably with good accuracy is better than a highly accurate sensor that fails frequently."
+  },
+  {
+    id: 3,
+    question: "What is the risk of ignoring sensor datasheets?",
+    options: [
+      "Legal liability issues only",
+      "Higher insurance premiums",
+      "Sensor failure, safety hazards, and system malfunction",
+      "Warranty void only"
+    ],
+    correctAnswer: 2,
+    explanation: "Ignoring datasheets can lead to sensors operating outside their specifications, causing premature failure, safety hazards, inaccurate measurements, and system malfunction."
+  },
+  {
+    id: 4,
+    question: "What role does environment play in sensor choice?",
+    options: [
+      "Environment only affects sensor appearance",
+      "Environmental conditions determine sensor survival, accuracy, and reliability",
+      "Environment only matters for outdoor installations",
+      "Environmental factors are less important than cost"
+    ],
+    correctAnswer: 1,
+    explanation: "Environmental conditions (temperature, humidity, vibration, chemicals) directly affect sensor survival, measurement accuracy, and long-term reliability."
+  },
+  {
+    id: 5,
+    question: "What does sensor redundancy mean?",
+    options: [
+      "Using the same sensor brand throughout the system",
+      "Installing backup sensors to maintain operation if the primary sensor fails",
+      "Having spare sensors in storage",
+      "Using sensors with multiple output signals"
+    ],
+    correctAnswer: 1,
+    explanation: "Sensor redundancy means installing multiple sensors to measure the same parameter, so if one fails, the system can continue operating using backup sensors."
+  },
+  {
+    id: 6,
+    question: "What is a 2oo3 voting configuration?",
+    options: [
+      "Two sensors out of three must be installed",
+      "The system uses the measurement from two agreeing sensors out of three",
+      "Two sensors are primary, one is backup",
+      "Three sensors measure two parameters"
+    ],
+    correctAnswer: 1,
+    explanation: "In 2oo3 (2 out of 3) voting, three sensors measure the same variable and the system uses the value from the two that agree, providing high safety integrity and fault tolerance."
+  },
+  {
+    id: 7,
+    question: "Why consider total cost of ownership rather than purchase price?",
+    options: [
+      "To justify expensive equipment",
+      "Because maintenance, downtime, and reliability affect overall costs",
+      "For accounting purposes only",
+      "Total cost is always lower"
+    ],
+    correctAnswer: 1,
+    explanation: "Total cost of ownership includes purchase price, installation, maintenance, calibration, replacement, and downtime costs - a cheap sensor that fails frequently may cost more overall."
+  },
+  {
+    id: 8,
+    question: "What is a fail-safe sensor output?",
+    options: [
+      "A sensor that never fails",
+      "An output that goes to a predetermined safe state when the sensor fails",
+      "A backup power supply",
+      "A redundant communication path"
+    ],
+    correctAnswer: 1,
+    explanation: "Fail-safe output means the sensor provides a predetermined safe state (like 0mA or high alarm) when it fails, allowing the control system to take appropriate safety action."
+  },
+  {
+    id: 9,
+    question: "When should you use intrinsically safe sensors?",
+    options: [
+      "In all industrial applications",
+      "In potentially explosive atmospheres where electrical sparks must be prevented",
+      "Only in wet environments",
+      "When sensors are very expensive"
+    ],
+    correctAnswer: 1,
+    explanation: "Intrinsically safe (IS) sensors are required in hazardous areas where explosive gases, vapours, or dusts may be present, to prevent electrical energy from causing ignition."
+  },
+  {
+    id: 10,
+    question: "What information should be documented for each sensor installation?",
+    options: [
+      "Only the purchase price",
+      "Tag number, location, range, output type, calibration data, and maintenance schedule",
+      "Just the manufacturer name",
+      "Only warranty information"
+    ],
+    correctAnswer: 1,
+    explanation: "Complete documentation including tag number, location, measurement range, output type, calibration data, and maintenance schedule is essential for ongoing operation and troubleshooting."
+  }
+];
+
+const faqs = [
+  {
+    question: "How do I determine the required sensor accuracy?",
+    answer: "Start with the process requirements - what accuracy does the control system or quality specification need? Then consider measurement uncertainty contributors (sensor, wiring, ADC). Generally, select a sensor 3-4 times more accurate than the required measurement accuracy to allow for installation and environmental effects."
+  },
+  {
+    question: "What IP rating do I need for my application?",
+    answer: "IP65 is typically minimum for industrial environments (dust-tight, protected against water jets). IP67 is needed for temporary immersion, IP68 for continuous submersion. For food/pharma washdown, specify IP69K. Always verify temperature ratings alongside IP ratings."
+  },
+  {
+    question: "How do I justify the cost of premium sensors to management?",
+    answer: "Calculate total cost of ownership including downtime costs, maintenance frequency, calibration intervals, and replacement parts. Premium sensors often have longer life, better stability, and lower maintenance needs. Include safety and compliance benefits in regulated industries."
+  },
+  {
+    question: "When is sensor redundancy required versus optional?",
+    answer: "Redundancy is typically required for safety-critical measurements (SIL-rated systems), custody transfer, and process-critical variables where failure causes significant production loss. It is optional but recommended for important measurements where temporary loss is acceptable."
+  },
+  {
+    question: "How do I select sensors for hazardous areas?",
+    answer: "First, determine the hazardous area classification (Zone 0, 1, 2 for gas; Zone 20, 21, 22 for dust). Then select sensors with appropriate protection methods (Ex ia intrinsic safety, Ex d flameproof, etc.) and temperature class. Always verify certifications match your specific hazardous substance and installation requirements."
+  },
+  {
+    question: "What should I check when replacing sensors with different brands?",
+    answer: "Verify identical measurement range, output signal type, accuracy class, environmental ratings, physical dimensions, and process connections. Check that response time and stability meet requirements. Update calibration procedures and documentation to reflect the new manufacturer's specifications."
+  }
+];
 
 const InstrumentationModule2Section6 = () => {
-  const quizQuestions = [
-    {
-      id: 1,
-      question: "Name three critical factors when selecting a sensor.",
-      options: [
-        "Cost, colour, and brand name",
-        "Environmental conditions, accuracy requirements, and measured variable",
-        "Size, weight, and appearance",
-        "Manufacturer location, warranty, and packaging"
-      ],
-      correct: 1,
-      explanation: "The three most critical factors are environmental conditions (temperature, humidity, chemicals), accuracy requirements (precision and resolution needed), and the measured variable (what parameter you're measuring)."
-    },
-    {
-      id: 2,
-      question: "Why would you choose a rugged sensor over a more accurate one?",
-      options: [
-        "Rugged sensors are always cheaper",
-        "In harsh environments, reliability is more important than absolute accuracy",
-        "Rugged sensors consume less power",
-        "They require less maintenance documentation"
-      ],
-      correct: 1,
-      explanation: "In harsh industrial environments, a sensor that continues to operate reliably with good accuracy is better than a highly accurate sensor that fails frequently due to environmental stress."
-    },
-    {
-      id: 3,
-      question: "What is the risk of ignoring datasheets?",
-      options: [
-        "Legal liability issues only",
-        "Higher insurance premiums",
-        "Sensor failure, safety hazards, and system malfunction",
-        "Warranty void only"
-      ],
-      correct: 2,
-      explanation: "Ignoring datasheets can lead to sensors operating outside their specifications, causing premature failure, safety hazards, inaccurate measurements, and complete system malfunction."
-    },
-    {
-      id: 4,
-      question: "What role does environment play in sensor choice?",
-      options: [
-        "Environment only affects sensor appearance",
-        "Environmental conditions determine sensor survival, accuracy, and reliability",
-        "Environment only matters for outdoor installations",
-        "Environmental factors are less important than cost"
-      ],
-      correct: 1,
-      explanation: "Environmental conditions (temperature, humidity, vibration, chemicals, pressure) directly affect sensor survival, measurement accuracy, and long-term reliability. Proper environmental matching is crucial for successful applications."
-    },
-    {
-      id: 5,
-      question: "What does sensor redundancy mean?",
-      options: [
-        "Using the same sensor brand throughout the system",
-        "Installing backup sensors to maintain operation if the primary sensor fails",
-        "Having spare sensors in storage",
-        "Using sensors with multiple output signals"
-      ],
-      correct: 1,
-      explanation: "Sensor redundancy means installing multiple sensors (usually 2 or 3) to measure the same parameter, so if one fails, the system can continue operating using the backup sensors. This is critical in safety and process-critical applications."
-  }  ];
+  useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-12">
-        <Link to="/study-centre/upskilling/instrumentation-module-2">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-6 sm:mb-8 px-3 py-2 rounded-md text-sm sm:text-base touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 2
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
-          {/* Header */}
-          <div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
-              <Target className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-400 flex-shrink-0" />
-              <div className="min-w-0">
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
-                  Choosing the Right Sensor for the Application
-                </h1>
-                <p className="text-base sm:text-lg lg:text-xl text-gray-400 mt-1">
-                  Decision-making framework for sensor selection based on technical and environmental criteria
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 sm:gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black text-xs sm:text-sm">
-                Module 2.6
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300 text-xs sm:text-sm">
-                35 minutes
-              </Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p className="text-sm sm:text-base leading-relaxed">
-                The final step in sensor implementation is applying your knowledge to match the right sensor to a specific industrial task. This section provides a comprehensive decision-making framework that balances technical requirements, environmental constraints, and economic considerations. Poor sensor selection can compromise an entire system, making this one of the most critical skills in instrumentation engineering.
-              </p>
-              <Alert className="bg-yellow-400/10 border-blue-600/30">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription className="text-gray-300 text-sm sm:text-base">
-                  Smart sensor selection balances technical needs, budget constraints, and reliability requirements. A systematic approach prevents costly mistakes and ensures optimal system performance.
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          </Card>
-
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p className="text-sm sm:text-base">By the end of this section, you should be able to:</p>
-              <div className="grid grid-cols-1 gap-4">
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Learn a systematic decision-making framework for sensor selection</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Evaluate key criteria including environment, signal requirements, and accuracy</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Prevent common sensor selection mistakes that lead to system failures</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Apply trade-off analysis to balance performance requirements and budget constraints</span>
-                  </li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Selection Framework */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Systematic Selection Framework
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                A structured approach to sensor selection ensures all critical factors are considered and documented. This framework prevents oversight and enables consistent decision-making across projects.
-              </p>
-
-              <div className="space-y-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Step 1: Define the Measurement Requirements</h4>
-                  
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Measured Variable</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Parameter:</strong> What exactly needs to be measured?</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Range:</strong> Minimum and maximum expected values</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Units:</strong> Engineering units required for display/control</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Media:</strong> What substance is being measured?</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Performance Requirements</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Accuracy:</strong> Required measurement precision</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Response Time:</strong> Speed of measurement updates needed</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Resolution:</strong> Smallest detectable change required</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Repeatability:</strong> Consistency of readings over time</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Step 2: Assess Environmental Conditions</h4>
-                  
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Physical Environment</h5>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Temperature range (ambient and process)</li>
-                        <li>• Humidity levels</li>
-                        <li>• Pressure conditions</li>
-                        <li>• Vibration and shock</li>
-                        <li>• Dust and contamination</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Chemical Environment</h5>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Corrosive substances</li>
-                        <li>• pH levels</li>
-                        <li>• Chemical compatibility</li>
-                        <li>• Cleaning agents used</li>
-                        <li>• Explosive atmospheres</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Electrical Environment</h5>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Power supply availability</li>
-                        <li>• EMI/RFI interference</li>
-                        <li>• Grounding systems</li>
-                        <li>• Safety classifications</li>
-                        <li>• Cable routing constraints</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Step 3: Determine System Integration Requirements</h4>
-                  
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Signal Requirements</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Output Type:</strong> Analog (4-20mA, 0-10V) or Digital</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Communication:</strong> HART, Modbus, Profibus, etc.</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Power Supply:</strong> Loop-powered or separate supply</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Wiring:</strong> 2-wire, 3-wire, or 4-wire connection</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Installation Constraints</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Mounting:</strong> Available space and orientation</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Access:</strong> Maintenance and calibration requirements</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Safety:</strong> Hazardous area classifications</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Approval:</strong> Required certifications and standards</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Trade-offs and Economics */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Performance vs Budget Trade-offs
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Real-world sensor selection requires balancing performance requirements against budget constraints and availability. Understanding these trade-offs enables optimal decisions that meet project objectives.
-              </p>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Cost Considerations</h4>
-                  <div className="space-y-4">
-                    <div>
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Initial Costs:</h5>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Sensor purchase price</li>
-                        <li>• Installation materials and labour</li>
-                        <li>• Calibration equipment and setup</li>
-                        <li>• Documentation and training</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Operating Costs:</h5>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Maintenance and calibration</li>
-                        <li>• Replacement parts and consumables</li>
-                        <li>• Energy consumption</li>
-                        <li>• Downtime and lost production</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Performance Trade-offs</h4>
-                  <div className="space-y-4">
-                    <div>
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Accuracy vs Cost:</h5>
-                      <p className="text-xs sm:text-sm mb-2">Higher accuracy sensors cost more but may be essential for process control or regulatory compliance.</p>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Reliability vs Features:</h5>
-                      <p className="text-xs sm:text-sm mb-2">Simple, proven designs may be more reliable than feature-rich smart sensors in harsh environments.</p>
-                    </div>
-                    <div>
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Response Time vs Stability:</h5>
-                      <p className="text-xs sm:text-sm">Fast-response sensors may be more sensitive to noise and require additional filtering.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <Alert className="bg-yellow-600/10 border-yellow-600/30">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription className="text-gray-300 text-sm sm:text-base">
-                  <strong>Economic Reality:</strong> The lowest-cost sensor is rarely the most economical choice when total cost of ownership is considered. Factor in reliability, maintenance, and downtime costs.
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          </Card>
-
-          {/* Redundancy and Fail-safes */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Redundancy and Fail-safes
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Critical applications require redundancy and fail-safe strategies to maintain operation and safety when sensors fail. Understanding these concepts is essential for safety-critical and process-critical systems.
-              </p>
-
-              <div className="space-y-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Redundancy Strategies</h4>
-                  
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">1oo2 (1 out of 2)</h5>
-                      <p className="text-xs sm:text-sm mb-2">Two sensors, system operates if one is working. Good for availability.</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• High availability</li>
-                        <li>• Moderate cost</li>
-                        <li>• Voting logic required</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">2oo3 (2 out of 3)</h5>
-                      <p className="text-xs sm:text-sm mb-2">Three sensors, system operates if two agree. Excellent for critical safety.</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Highest safety integrity</li>
-                        <li>• Fault tolerance</li>
-                        <li>• Higher cost and complexity</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Standby Redundancy</h5>
-                      <p className="text-xs sm:text-sm mb-2">Backup sensor activates when primary fails. Lower cost option.</p>
-                      <ul className="text-xs space-y-1">
-                        <li>• Cost-effective</li>
-                        <li>• Automatic switchover</li>
-                        <li>• Brief interruption possible</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Fail-safe Design Principles</h4>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Fail-safe States</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Fail-Open:</strong> Circuit opens on failure (de-energise to trip)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Fail-Closed:</strong> Circuit closes on failure (energise to trip)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Fail-Fixed:</strong> Output goes to predetermined safe value</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Fail-Last:</strong> Maintains last known good value</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Diagnostic Features</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Self-Diagnostics:</strong> Built-in tests detect internal faults</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Range Checking:</strong> Detect out-of-range readings</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Rate of Change:</strong> Detect unrealistic signal changes</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span><strong>Cross-checking:</strong> Compare multiple sensor readings</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real-World Scenario */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Real-World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="bg-yellow-400/10 p-4 rounded-lg border border-blue-600/30">
-                <h4 className="text-white font-semibold mb-3 text-sm sm:text-base">Offshore Platform Wave Monitoring System</h4>
-                <p className="text-xs sm:text-sm leading-relaxed mb-4">
-                  An offshore oil platform requires wave height monitoring for helicopter landing safety and structural load management. The selection process demonstrates prioritising durability and reliability over absolute accuracy:
-                </p>
-                
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">Environmental Assessment</h5>
-                      <p className="text-xs">Salt spray, temperature extremes (-20°C to +50°C), vibration from waves, and no maintenance access for months at a time.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">Technology Selection</h5>
-                      <p className="text-xs">Radar level sensors chosen over ultrasonic for immunity to salt spray and fog. Marine-grade housings specified for corrosion resistance.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">Redundancy Strategy</h5>
-                      <p className="text-xs">Three sensors in 2oo3 configuration ensure helicopter landing decisions aren't compromised by single sensor failures.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">4</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">Economic Justification</h5>
-                      <p className="text-xs">Higher initial cost justified by avoiding helicopter flight delays, which cost £10,000+ per incident.</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <Alert className="mt-4 bg-green-600/10 border-green-600/30">
-                  <CheckCircle className="h-4 w-4" />
-                  <AlertDescription className="text-gray-300 text-xs sm:text-sm">
-                    <strong>Results:</strong> System achieved 99.9% availability over three years with zero maintenance-related helicopter delays, fully justifying the premium sensor selection.
-                  </AlertDescription>
-                </Alert>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Smart sensor selection balances technical needs, budget, and reliability requirements using a systematic approach. Understanding environmental constraints, performance trade-offs, and fail-safe strategies enables optimal decisions that ensure long-term system success.
-              </p>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-2 text-sm sm:text-base">Key Concepts</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                  <div>
-                    <strong className="text-white">Systematic Approach:</strong> Use structured framework to evaluate all critical factors
-                  </div>
-                  <div>
-                    <strong className="text-white">Environmental Matching:</strong> Ensure sensors can survive and perform in actual conditions
-                  </div>
-                  <div>
-                    <strong className="text-white">Economic Balance:</strong> Consider total cost of ownership, not just purchase price
-                  </div>
-                  <div>
-                    <strong className="text-white">Risk Management:</strong> Apply redundancy and fail-safe strategies for critical applications
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <SingleQuestionQuiz 
-            questions={quizQuestions}
-            title="Knowledge Check"
-          />
-
-          {/* Navigation */}
-          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-0 pt-6 sm:pt-8">
-            <Link to="/study-centre/upskilling/instrumentation-module-2-section-5" className="w-full sm:w-auto">
-              <Button variant="outline" className="w-full sm:w-auto border-gray-600 text-gray-300 hover:border-yellow-400 hover:text-yellow-400 touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/study-centre/upskilling/instrumentation-course" className="w-full sm:w-auto">
-              <Button className="w-full sm:w-auto bg-yellow-400 text-black hover:bg-yellow-400/10 touch-manipulation active:scale-[0.98]">
-                Complete Module 2
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+
+        {/* Centered Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 2 Section 6</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Choosing the Right Sensor
+          </h1>
+          <p className="text-white/80">
+            Systematic sensor selection for optimal system performance
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Define:</strong> Measurement requirements and range</li>
+              <li><strong>Assess:</strong> Environmental and installation conditions</li>
+              <li><strong>Match:</strong> Signal output to control system</li>
+              <li><strong>Balance:</strong> Performance, cost, and reliability</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Datasheets, spec sheets, certification marks</li>
+              <li><strong>Use:</strong> Selection checklists, comparison tables</li>
+              <li><strong>Apply:</strong> Total cost analysis, redundancy planning</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Apply a systematic decision-making framework",
+              "Evaluate environmental and performance criteria",
+              "Prevent common sensor selection mistakes",
+              "Balance performance requirements with budget",
+              "Understand redundancy and fail-safe strategies",
+              "Document sensor selections properly"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1: Selection Framework */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Systematic Selection Framework
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              A structured approach to sensor selection ensures all critical factors are considered. This framework prevents oversight and enables consistent decision-making across projects.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Step 1: Define Measurement Requirements</p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-white mb-1">Measured Variable</p>
+                  <ul className="text-sm text-white space-y-1 ml-4">
+                    <li>Parameter: What exactly needs measuring?</li>
+                    <li>Range: Minimum and maximum values</li>
+                    <li>Units: Engineering units required</li>
+                    <li>Media: Substance being measured</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white mb-1">Performance Requirements</p>
+                  <ul className="text-sm text-white space-y-1 ml-4">
+                    <li>Accuracy: Required measurement precision</li>
+                    <li>Response time: Speed of updates needed</li>
+                    <li>Resolution: Smallest detectable change</li>
+                    <li>Repeatability: Consistency over time</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Step 2: Assess Environmental Conditions</p>
+              <div className="grid sm:grid-cols-3 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-white mb-1">Physical Environment</p>
+                  <ul className="text-sm text-white space-y-1 ml-4">
+                    <li>Temperature range</li>
+                    <li>Humidity levels</li>
+                    <li>Vibration and shock</li>
+                    <li>Dust and contamination</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white mb-1">Chemical Environment</p>
+                  <ul className="text-sm text-white space-y-1 ml-4">
+                    <li>Corrosive substances</li>
+                    <li>Chemical compatibility</li>
+                    <li>Cleaning agents used</li>
+                    <li>Explosive atmospheres</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white mb-1">Electrical Environment</p>
+                  <ul className="text-sm text-white space-y-1 ml-4">
+                    <li>Power supply availability</li>
+                    <li>EMI/RFI interference</li>
+                    <li>Grounding systems</li>
+                    <li>Safety classifications</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Step 3: Determine System Integration</p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-white mb-1">Signal Requirements</p>
+                  <ul className="text-sm text-white space-y-1 ml-4">
+                    <li>Output type: 4-20mA, 0-10V, digital</li>
+                    <li>Communication: HART, Modbus, Profibus</li>
+                    <li>Power: Loop-powered or separate supply</li>
+                    <li>Wiring: 2-wire, 3-wire, or 4-wire</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white mb-1">Installation Constraints</p>
+                  <ul className="text-sm text-white space-y-1 ml-4">
+                    <li>Mounting space and orientation</li>
+                    <li>Maintenance accessibility</li>
+                    <li>Hazardous area classifications</li>
+                    <li>Required certifications</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2: Performance vs Budget */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Performance vs Budget Trade-offs
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Real-world sensor selection requires balancing performance requirements against budget constraints and availability. Understanding these trade-offs enables optimal decisions.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cost Considerations</p>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-sm font-medium text-white mb-1">Initial Costs</p>
+                    <ul className="text-sm text-white space-y-1 ml-4">
+                      <li>Sensor purchase price</li>
+                      <li>Installation materials and labour</li>
+                      <li>Calibration equipment and setup</li>
+                      <li>Documentation and training</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white mb-1">Operating Costs</p>
+                    <ul className="text-sm text-white space-y-1 ml-4">
+                      <li>Maintenance and calibration</li>
+                      <li>Replacement parts</li>
+                      <li>Energy consumption</li>
+                      <li>Downtime and lost production</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Performance Trade-offs</p>
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-sm font-medium text-white mb-1">Accuracy vs Cost</p>
+                    <p className="text-sm text-white">Higher accuracy costs more but may be essential for process control or regulatory compliance.</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white mb-1">Reliability vs Features</p>
+                    <p className="text-sm text-white">Simple, proven designs may be more reliable than feature-rich smart sensors in harsh environments.</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white mb-1">Response vs Stability</p>
+                    <p className="text-sm text-white">Fast-response sensors may be more sensitive to noise and require additional filtering.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>Economic Reality:</strong> The lowest-cost sensor is rarely the most economical choice when total cost of ownership is considered. Factor in reliability, maintenance, and downtime costs.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3: Redundancy and Fail-safes */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Redundancy and Fail-safe Strategies
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Critical applications require redundancy and fail-safe strategies to maintain operation and safety when sensors fail.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Redundancy Configurations</p>
+              <div className="grid sm:grid-cols-3 gap-4">
+                <div className="p-4 rounded bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                  <p className="text-sm font-medium text-white mb-2">1oo2 (1 out of 2)</p>
+                  <p className="text-sm text-white mb-2">Two sensors, system operates if one works. Good for availability.</p>
+                  <ul className="text-sm text-white space-y-1">
+                    <li>High availability</li>
+                    <li>Moderate cost</li>
+                    <li>Voting logic required</li>
+                  </ul>
+                </div>
+                <div className="p-4 rounded bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                  <p className="text-sm font-medium text-white mb-2">2oo3 (2 out of 3)</p>
+                  <p className="text-sm text-white mb-2">Three sensors, system uses two that agree. Best for safety.</p>
+                  <ul className="text-sm text-white space-y-1">
+                    <li>Highest safety integrity</li>
+                    <li>Fault tolerance</li>
+                    <li>Higher cost</li>
+                  </ul>
+                </div>
+                <div className="p-4 rounded bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                  <p className="text-sm font-medium text-white mb-2">Standby Redundancy</p>
+                  <p className="text-sm text-white mb-2">Backup sensor activates when primary fails. Lower cost option.</p>
+                  <ul className="text-sm text-white space-y-1">
+                    <li>Cost-effective</li>
+                    <li>Automatic switchover</li>
+                    <li>Brief interruption possible</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fail-safe Design Principles</p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-white mb-1">Fail-safe States</p>
+                  <ul className="text-sm text-white space-y-1 ml-4">
+                    <li><strong>Fail-Open:</strong> Circuit opens on failure (de-energise to trip)</li>
+                    <li><strong>Fail-Closed:</strong> Circuit closes on failure (energise to trip)</li>
+                    <li><strong>Fail-Fixed:</strong> Output goes to predetermined safe value</li>
+                    <li><strong>Fail-Last:</strong> Maintains last known good value</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white mb-1">Diagnostic Features</p>
+                  <ul className="text-sm text-white space-y-1 ml-4">
+                    <li><strong>Self-diagnostics:</strong> Built-in tests detect internal faults</li>
+                    <li><strong>Range checking:</strong> Detect out-of-range readings</li>
+                    <li><strong>Rate of change:</strong> Detect unrealistic signal changes</li>
+                    <li><strong>Cross-checking:</strong> Compare multiple sensor readings</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 4: Documentation */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Documentation and Specification
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Proper documentation ensures sensors are correctly specified, installed, and maintained throughout their service life.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Essential Documentation:</p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-elec-yellow/80 mb-1">Specification Sheet</p>
+                  <ul className="text-sm text-white space-y-1 ml-4">
+                    <li>Tag number and service description</li>
+                    <li>Measurement range and units</li>
+                    <li>Output signal type and range</li>
+                    <li>Accuracy and response time</li>
+                    <li>Environmental ratings (IP, temperature)</li>
+                    <li>Process connection details</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-elec-yellow/80 mb-1">Installation Records</p>
+                  <ul className="text-sm text-white space-y-1 ml-4">
+                    <li>Physical location and orientation</li>
+                    <li>Wiring and cable details</li>
+                    <li>Calibration data and certificates</li>
+                    <li>Commissioning test results</li>
+                    <li>Maintenance schedule</li>
+                    <li>Spare parts information</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Specifying Sensors</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always review manufacturer datasheets thoroughly</li>
+                <li>Verify environmental ratings match installation conditions</li>
+                <li>Consider future expansion and standardisation</li>
+                <li>Check lead times and availability before finalising</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Evaluating Options</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Create comparison tables for shortlisted sensors</li>
+                <li>Request samples for critical applications</li>
+                <li>Check references from similar installations</li>
+                <li>Evaluate supplier support and service capability</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Selecting on price alone</strong> — false economy when reliability is compromised</li>
+                <li><strong>Ignoring environmental conditions</strong> — sensors fail outside rated conditions</li>
+                <li><strong>Over-specifying accuracy</strong> — paying for precision that is not required</li>
+                <li><strong>Forgetting maintenance access</strong> — sensors that cannot be calibrated or replaced easily</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="/study-centre/upskilling/instrumentation/module-3">
+              Next Module
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+
+      </article>
     </div>
   );
 };

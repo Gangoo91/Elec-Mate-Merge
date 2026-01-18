@@ -1,36 +1,27 @@
-import { ArrowLeft, Gauge, CheckCircle2, AlertTriangle, Eye, Settings, Zap, Activity, Brain, XCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-
-interface QuizQuestion {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  explanation: string;
-}
+import { Button } from '@/components/ui/button';
+import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule4Section4 = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
-  const [showResults, setShowResults] = useState(false);
-  const [quizStarted, setQuizStarted] = useState(false);
+  useSEO({
+    title: "Measurement Equipment: Multimeters, Clamp Meters, Oscilloscopes | Instrumentation Course",
+    description: "Learn about key electrical measurement instruments including digital multimeters, clamp meters, and oscilloscopes."
+  });
 
-  const quizQuestions: QuizQuestion[] = [
+  const quizQuestions = [
     {
       id: 1,
-      question: "Which tool visualizes electrical waveforms?",
+      question: "Which tool visualises electrical waveforms?",
       options: [
         "Multimeter",
         "Clamp meter",
         "Oscilloscope",
         "Frequency counter"
       ],
-      correctAnswer: 2,
+      correct: 2,
       explanation: "Oscilloscopes display voltage waveforms over time, allowing analysis of signal shape, timing, and characteristics that other instruments cannot show."
     },
     {
@@ -42,7 +33,7 @@ const InstrumentationModule4Section4 = () => {
         "No need to break the circuit for measurement",
         "Better for AC measurements only"
       ],
-      correctAnswer: 2,
+      correct: 2,
       explanation: "Clamp meters measure current non-intrusively by detecting the magnetic field around a conductor, eliminating the need to disconnect circuits."
     },
     {
@@ -54,7 +45,7 @@ const InstrumentationModule4Section4 = () => {
         "Digital display",
         "Probe leads"
       ],
-      correctAnswer: 1,
+      correct: 1,
       explanation: "Fuse protection prevents damage to the meter's internal circuits when excessive current flows through the measurement path."
     },
     {
@@ -66,7 +57,7 @@ const InstrumentationModule4Section4 = () => {
         "For resistance measurements",
         "For current measurements only"
       ],
-      correctAnswer: 1,
+      correct: 1,
       explanation: "Oscilloscopes excel at showing signal behaviour over time, revealing details like distortion, noise, and timing that DMMs cannot display."
     },
     {
@@ -78,417 +69,378 @@ const InstrumentationModule4Section4 = () => {
         "Only use digital instruments",
         "Avoid using probes"
       ],
-      correctAnswer: 1,
+      correct: 1,
       explanation: "Always verify that the instrument's voltage, current, and frequency ratings are suitable for the circuit being measured to prevent damage and ensure safety."
-  }
+    }
   ];
 
-  function handleAnswerSelect(answerIndex: number) {
-    setSelectedAnswers(prev => ({
-      ...prev,
-      [currentQuestionIndex]: answerIndex
-    }));
-};
-
-  function handleNext() {
-    if (currentQuestionIndex < quizQuestions.length - 1) {
-      setCurrentQuestionIndex(prev => prev + 1);
-    } else {
-      setShowResults(true);
-  };
-};
-
-  function handlePrevious() {
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(prev => prev - 1);
-  };
-};
-
-  function calculateScore() {
-    let correct = 0;
-    quizQuestions.forEach((question, index) => {
-      if (selectedAnswers[index] === question.correctAnswer) {
-        correct++;
-    };
-    });
-    return correct;
-};
-
-  function resetQuiz() {
-    setCurrentQuestionIndex(0);
-    setSelectedAnswers({});
-    setShowResults(false);
-    setQuizStarted(false);
-};
-
-  function startQuiz() {
-    setQuizStarted(true);
-    setCurrentQuestionIndex(0);
-    setSelectedAnswers({});
-    setShowResults(false);
-};
-
-  const currentQuestion = quizQuestions[currentQuestionIndex];
-  const score = calculateScore();
-  const percentage = Math.round((score / quizQuestions.length) * 100);
-
   return (
-    <div className="min-h-screen bg-[#1a1a1a] overflow-x-hidden">
-      {/* Header */}
-      <header className="px-4 sm:px-6 lg:px-8 pt-8 pb-8 bg-[#1a1a1a]/95">
-        <Link to="/study-centre/upskilling/instrumentation-module-4">
-          <Button
-            variant="ghost"
-            className="bg-transparent text-white hover:bg-transparent/80 hover:text-elec-yellow transition-all duration-200 mb-6 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
+    <div className="min-h-screen bg-background">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="px-4 py-3">
+          <Link to=".." className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <ArrowLeft className="h-4 w-4 mr-1" />
             Back to Module 4
-          </Button>
-        </Link>
-        
-        <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <Gauge className="h-8 w-8 text-elec-yellow" />
-            <Badge 
-              variant="secondary" 
-              className="bg-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/50 font-semibold text-sm px-3 py-1 border-0"
-            >
-              Module 4 - Section 4
-            </Badge>
+          </Link>
+        </div>
+      </div>
+
+      <div className="px-4 py-6 max-w-4xl mx-auto">
+        {/* Title */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/10 mb-4">
+            <Zap className="h-6 w-6 text-elec-yellow" />
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-            Measurement Equipment: Multimeters, Clamp Meters, Oscilloscopes
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            Measurement Equipment Overview
           </h1>
-          <p className="text-lg sm:text-xl text-gray-400 max-w-3xl">
-            With the right tool, you can make the right diagnosis. This section explores key electrical measurement instruments
+          <p className="text-white/80">
+            Multimeters, clamp meters, and oscilloscopes
           </p>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="space-y-4 sm:space-y-6">
-          
-          {/* Quick Introduction */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Eye className="h-6 w-6 text-elec-yellow" />
-                <CardTitle className="text-white text-xl">Quick Introduction</CardTitle>
+        {/* Quick Summary */}
+        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 mb-8">
+          <h2 className="font-semibold text-white mb-2">Quick Summary</h2>
+          <p className="text-white text-sm">
+            With the right tool, you can make the right diagnosis. Understanding each instrument's capabilities and limitations is essential for effective troubleshooting and system analysis.
+          </p>
+        </div>
+
+        {/* Section 01: Digital Multimeters */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <h2 className="text-xl font-semibold text-white">Digital Multimeters (DMMs)</h2>
+          </div>
+
+          <div className="space-y-4 text-white">
+            <p>
+              Digital multimeters are the most versatile and commonly used electrical test instruments, capable of measuring voltage, current, resistance, and often additional parameters.
+            </p>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Core Functions</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">Basic Measurements:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      DC and AC voltage
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      DC and AC current
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Resistance and continuity
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Diode and transistor testing
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">Advanced Features:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Frequency measurement
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Capacitance
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Temperature (with probe)
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      True RMS for non-sinusoidal
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed">
-                With the right tool, you can make the right diagnosis. This section explores key electrical measurement instruments used in modern industrial and laboratory environments. Understanding each tool's capabilities and limitations is essential for effective troubleshooting and system analysis.
-              </p>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Learning Outcomes */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl">Learning Outcomes</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 mb-4">By the end of this section, you'll be able to:</p>
-              <ul className="space-y-2 text-gray-300">
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">DMM Types</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="bg-background/50 rounded p-3">
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">Handheld DMMs</h4>
+                  <ul className="text-xs text-white space-y-1">
+                    <li>• 3.5 to 4.5 digit resolution</li>
+                    <li>• Battery powered, portable</li>
+                    <li>• Rugged construction</li>
+                    <li>• CAT II/III/IV ratings available</li>
+                  </ul>
+                </div>
+                <div className="bg-background/50 rounded p-3">
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">Bench DMMs</h4>
+                  <ul className="text-xs text-white space-y-1">
+                    <li>• 5.5 to 8.5 digit resolution</li>
+                    <li>• Superior accuracy</li>
+                    <li>• Computer interface</li>
+                    <li>• Advanced maths functions</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Safety Features</h3>
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Understand the function and capabilities of each instrument type</span>
+                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Input protection fuses on current ranges
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Select appropriate measurement tools for specific applications</span>
+                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  High voltage input protection circuits
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Use measurement instruments safely and effectively</span>
+                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  CAT ratings for installation safety
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Recognise the advantages and limitations of each tool</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span>Apply proper measurement techniques and best practices</span>
+                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Low battery and overload indicators
                 </li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </section>
 
-          {/* Digital Multimeters */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Settings className="h-5 w-5 text-elec-yellow" />
-                Digital Multimeters (DMMs)
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
+        <InlineCheck
+          question="Why is True RMS measurement important for AC readings?"
+          answer="True RMS accurately measures non-sinusoidal waveforms (like those from VSDs, dimmers, or switch-mode power supplies). Average-responding meters only give correct readings for pure sine waves and will show errors on distorted waveforms."
+        />
+
+        {/* Section 02: Clamp Meters */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <h2 className="text-xl font-semibold text-white">Clamp Meters</h2>
+          </div>
+
+          <div className="space-y-4 text-white">
+            <p>
+              Clamp meters measure current by detecting the magnetic field around a conductor, allowing non-contact measurement without breaking the circuit.
+            </p>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Operating Principle</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">The Swiss Army Knife of Electrical Measurement</h4>
-                  <p className="text-gray-300 mb-3">
-                    Digital multimeters are the most versatile and commonly used electrical test instruments:
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
-                      <h5 className="text-blue-200 font-medium mb-2">Basic Functions</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• DC and AC voltage measurement</li>
-                        <li>• DC and AC current measurement</li>
-                        <li>• Resistance and continuity testing</li>
-                        <li>• Diode and transistor testing</li>
-                        <li>• Frequency and capacitance (advanced models)</li>
-                      </ul>
-                    </div>
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                      <h5 className="text-green-200 font-medium mb-2">Key Advantages</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• High accuracy and resolution</li>
-                        <li>• Auto-ranging capability</li>
-                        <li>• Digital display - no parallax errors</li>
-                        <li>• Wide measurement ranges</li>
-                        <li>• Data logging features (some models)</li>
-                      </ul>
-                    </div>
-                  </div>
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">AC Clamp Meters:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Transformer action principle
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Conductor is the primary
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Clamp core is the secondary
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Only works with AC current
+                    </li>
+                  </ul>
                 </div>
-
                 <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Types of Digital Multimeters</h4>
-                  <div className="space-y-3">
-                    <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                      <h5 className="text-purple-200 font-medium mb-2">Handheld DMMs</h5>
-                      <p className="text-gray-300 text-sm mb-2">Portable units for field work and general troubleshooting</p>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• 3½ to 4½ digit resolution typically</li>
-                        <li>• Battery powered for portability</li>
-                        <li>• Rugged construction for field use</li>
-                        <li>• CAT II/III/IV safety ratings</li>
-                      </ul>
-                    </div>
-                    <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
-                      <h5 className="text-orange-200 font-medium mb-2">Bench DMMs</h5>
-                      <p className="text-gray-300 text-sm mb-2">High-precision instruments for laboratory and calibration work</p>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• 5½ to 8½ digit resolution</li>
-                        <li>• Superior accuracy specifications</li>
-                        <li>• Computer interface capabilities</li>
-                        <li>• Advanced mathematical functions</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Safety Features</h4>
-                  <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
-                    <ul className="text-gray-300 space-y-2">
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                        <span>Input protection fuses on current ranges</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                        <span>High voltage input protection circuits</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                        <span>CAT ratings for installation safety</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
-                        <span>Low battery and overload indicators</span>
-                      </li>
-                    </ul>
-                  </div>
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">DC/AC Clamp Meters:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Hall effect sensor technology
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Measures both AC and DC
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      More expensive
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Requires zero adjustment
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Clamp Meters */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Activity className="h-5 w-5 text-elec-yellow" />
-                Clamp Meters
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Advantages and Limitations</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Non-Contact Current Measurement</h4>
-                  <p className="text-gray-300 mb-3">
-                    Clamp meters measure current by detecting the magnetic field around a conductor:
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                      <h5 className="text-green-200 font-medium mb-2">How They Work</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Magnetic field detection principle</li>
-                        <li>• Transformer action in AC measurements</li>
-                        <li>• Hall effect sensors for DC (some models)</li>
-                        <li>• Current transformer secondary output</li>
-                      </ul>
-                    </div>
-                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
-                      <h5 className="text-blue-200 font-medium mb-2">Key Benefits</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• No circuit interruption required</li>
-                        <li>• Safe measurements on live circuits</li>
-                        <li>• Quick readings for troubleshooting</li>
-                        <li>• Suitable for high current measurements</li>
-                      </ul>
-                    </div>
-                  </div>
+                  <h4 className="text-green-400 font-medium text-sm mb-2">Advantages:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      No circuit interruption required
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      Safe for live measurements
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      Can measure very high currents
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      Quick and convenient
+                    </li>
+                  </ul>
                 </div>
-
                 <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Types and Applications</h4>
-                  <div className="space-y-3">
-                    <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
-                      <h5 className="text-yellow-200 font-medium mb-2">AC Current Clamps</h5>
-                      <p className="text-gray-300 text-sm mb-2">Most common type for general electrical work</p>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Transformer-based measurement</li>
-                        <li>• Accurate for sinusoidal waveforms</li>
-                        <li>• Lower cost and simpler construction</li>
-                        <li>• Ideal for power system measurements</li>
-                      </ul>
-                    </div>
-                    <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                      <h5 className="text-purple-200 font-medium mb-2">AC/DC Current Clamps</h5>
-                      <p className="text-gray-300 text-sm mb-2">Advanced clamps for both AC and DC measurements</p>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Hall effect sensor technology</li>
-                        <li>• More expensive but versatile</li>
-                        <li>• Essential for DC motor circuits</li>
-                        <li>• Battery and automotive applications</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Limitations and Considerations</h4>
-                  <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
-                    <ul className="text-gray-300 text-sm space-y-1">
-                      <li>• Lower accuracy than series measurement</li>
-                      <li>• Sensitive to conductor position in jaw</li>
-                      <li>• May be affected by adjacent conductors</li>
-                      <li>• Limited resolution for small currents</li>
-                      <li>• Zero adjustment needed for DC models</li>
-                    </ul>
-                  </div>
+                  <h4 className="text-orange-400 font-medium text-sm mb-2">Limitations:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Lower accuracy than series measurement
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Sensitive to conductor position
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Affected by adjacent conductors
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Minimum current threshold
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </section>
 
-          {/* Oscilloscopes */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Zap className="h-5 w-5 text-elec-yellow" />
-                Oscilloscopes
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-4">
+        <InlineCheck
+          question="Can you measure the total current in a three-phase circuit by clamping around all three conductors together?"
+          answer="No. In a balanced three-phase system, the magnetic fields cancel out and you would read near zero. You must clamp around each conductor individually to measure phase currents."
+        />
+
+        {/* Section 03: Oscilloscopes */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <h2 className="text-xl font-semibold text-white">Oscilloscopes</h2>
+          </div>
+
+          <div className="space-y-4 text-white">
+            <p>
+              Oscilloscopes display voltage waveforms over time, revealing signal characteristics invisible to other instruments.
+            </p>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">What Oscilloscopes Show</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Visualizing Electrical Signals</h4>
-                  <p className="text-gray-300 mb-3">
-                    Oscilloscopes display voltage waveforms over time, revealing signal characteristics invisible to other instruments:
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
-                      <h5 className="text-blue-200 font-medium mb-2">What They Show</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Signal amplitude and frequency</li>
-                        <li>• Rise and fall times</li>
-                        <li>• Distortion and noise content</li>
-                        <li>• Phase relationships between signals</li>
-                        <li>• Transient events and glitches</li>
-                      </ul>
-                    </div>
-                    <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                      <h5 className="text-green-200 font-medium mb-2">Key Capabilities</h5>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Time domain analysis</li>
-                        <li>• Frequency domain (FFT)</li>
-                        <li>• Multiple channel comparison</li>
-                        <li>• Advanced triggering options</li>
-                        <li>• Mathematical operations</li>
-                      </ul>
-                    </div>
-                  </div>
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">Signal Characteristics:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Amplitude and frequency
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Rise and fall times
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Distortion and noise content
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Phase relationships
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Transient events and glitches
+                    </li>
+                  </ul>
                 </div>
-
                 <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Types of Oscilloscopes</h4>
-                  <div className="space-y-3">
-                    <div className="bg-purple-600/10 border border-purple-600/20 rounded-lg p-4">
-                      <h5 className="text-purple-200 font-medium mb-2">Digital Storage Oscilloscopes (DSO)</h5>
-                      <p className="text-gray-300 text-sm mb-2">Most common type in modern applications</p>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Digital signal processing and storage</li>
-                        <li>• Freeze and analyse captured waveforms</li>
-                        <li>• Advanced measurement capabilities</li>
-                        <li>• Computer connectivity options</li>
-                      </ul>
-                    </div>
-                    <div className="bg-orange-600/10 border border-orange-600/20 rounded-lg p-4">
-                      <h5 className="text-orange-200 font-medium mb-2">Mixed Signal Oscilloscopes (MSO)</h5>
-                      <p className="text-gray-300 text-sm mb-2">Combines oscilloscope with logic analyser functions</p>
-                      <ul className="text-gray-300 text-sm space-y-1">
-                        <li>• Analogue and digital channel inputs</li>
-                        <li>• Protocol analysis capabilities</li>
-                        <li>• Ideal for embedded system debugging</li>
-                        <li>• Timing correlation between domains</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="text-elec-yellow font-semibold mb-2">Key Specifications</h4>
-                  <div className="bg-gray-700/50 rounded-lg p-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-white font-medium mb-2">Bandwidth</h5>
-                        <p className="text-gray-300 text-sm">Determines highest frequency that can be accurately measured</p>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-medium mb-2">Sample Rate</h5>
-                        <p className="text-gray-300 text-sm">How frequently the scope samples the input signal</p>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-medium mb-2">Memory Depth</h5>
-                        <p className="text-gray-300 text-sm">Amount of data that can be captured and stored</p>
-                      </div>
-                      <div>
-                        <h5 className="text-white font-medium mb-2">Number of Channels</h5>
-                        <p className="text-gray-300 text-sm">How many signals can be viewed simultaneously</p>
-                      </div>
-                    </div>
-                  </div>
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">Key Capabilities:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Time domain analysis
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Frequency domain (FFT)
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Multiple channel comparison
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Advanced triggering options
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Automatic measurements
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Tool Selection Guide */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl">When to Use Each Tool</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-transparent/80 rounded-lg p-4 border-l-4 border-elec-yellow/30">
-                  <h4 className="text-blue-200 font-medium mb-2">Use DMMs For:</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Key Specifications</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="bg-background/50 rounded p-3">
+                  <h4 className="text-elec-yellow font-medium text-sm mb-1">Bandwidth</h4>
+                  <p className="text-white text-xs">Highest frequency that can be accurately measured. Should be 5x the signal frequency for amplitude accuracy.</p>
+                </div>
+                <div className="bg-background/50 rounded p-3">
+                  <h4 className="text-elec-yellow font-medium text-sm mb-1">Sample Rate</h4>
+                  <p className="text-white text-xs">How frequently the scope samples the input. Higher rates capture faster details.</p>
+                </div>
+                <div className="bg-background/50 rounded p-3">
+                  <h4 className="text-elec-yellow font-medium text-sm mb-1">Memory Depth</h4>
+                  <p className="text-white text-xs">Amount of data that can be captured. More memory allows longer captures at full sample rate.</p>
+                </div>
+                <div className="bg-background/50 rounded p-3">
+                  <h4 className="text-elec-yellow font-medium text-sm mb-1">Channels</h4>
+                  <p className="text-white text-xs">Number of signals viewable simultaneously. 2 or 4 channels are common.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 04: Tool Selection Guide */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <h2 className="text-xl font-semibold text-white">Choosing the Right Tool</h2>
+          </div>
+
+          <div className="space-y-4 text-white">
+            <div className="bg-card/50 rounded-lg p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="bg-background/50 rounded p-4 border-l-2 border-blue-400">
+                  <h4 className="text-blue-400 font-medium text-sm mb-2">Use DMMs For:</h4>
+                  <ul className="space-y-1 text-xs text-white">
                     <li>• Precise DC measurements</li>
                     <li>• RMS AC voltage/current</li>
                     <li>• Resistance and continuity</li>
@@ -496,242 +448,141 @@ const InstrumentationModule4Section4 = () => {
                     <li>• General troubleshooting</li>
                   </ul>
                 </div>
-                <div className="bg-transparent/80 rounded-lg p-4 border-l-4 border-green-500/50">
-                  <h4 className="text-green-200 font-medium mb-2">Use Clamp Meters For:</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• Live circuit current measurement</li>
+                <div className="bg-background/50 rounded p-4 border-l-2 border-green-400">
+                  <h4 className="text-green-400 font-medium text-sm mb-2">Use Clamp Meters For:</h4>
+                  <ul className="space-y-1 text-xs text-white">
+                    <li>• Live circuit current</li>
                     <li>• High current applications</li>
                     <li>• Power system diagnostics</li>
                     <li>• Quick current checks</li>
                     <li>• Load monitoring</li>
                   </ul>
                 </div>
-                <div className="bg-transparent/80 rounded-lg p-4 border-l-4 border-purple-500/50">
-                  <h4 className="text-purple-200 font-medium mb-2">Use Oscilloscopes For:</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
+                <div className="bg-background/50 rounded p-4 border-l-2 border-purple-400">
+                  <h4 className="text-purple-400 font-medium text-sm mb-2">Use Oscilloscopes For:</h4>
+                  <ul className="space-y-1 text-xs text-white">
                     <li>• Waveform analysis</li>
                     <li>• Signal timing measurements</li>
-                    <li>• Noise and distortion analysis</li>
+                    <li>• Noise and distortion</li>
                     <li>• Transient capture</li>
                     <li>• Protocol debugging</li>
                   </ul>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </section>
 
-          {/* Best Practices */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl">Best Practices and Safety</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-4">
-                <div className="bg-red-600/10 border border-red-600/20 rounded-lg p-4">
-                  <h4 className="text-red-200 font-medium mb-2">Safety First</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• Verify instrument CAT ratings before use</li>
-                    <li>• Check probe leads for damage regularly</li>
-                    <li>• Use appropriate PPE for electrical work</li>
-                    <li>• Never exceed instrument specifications</li>
-                    <li>• Understand arc flash risks in power systems</li>
-                  </ul>
-                </div>
+        {/* Section 05: Safety and Best Practices */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
+            <h2 className="text-xl font-semibold text-white">Safety and Best Practices</h2>
+          </div>
 
-                <div className="bg-green-600/10 border border-green-600/20 rounded-lg p-4">
-                  <h4 className="text-green-200 font-medium mb-2">Measurement Accuracy Tips</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• Select appropriate measurement range</li>
-                    <li>• Allow instruments to warm up</li>
-                    <li>• Use proper probe techniques</li>
-                    <li>• Consider measurement loading effects</li>
-                    <li>• Perform regular calibration checks</li>
-                  </ul>
-                </div>
+          <div className="space-y-4 text-white">
+            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Safety First</h3>
+              <ul className="space-y-2 text-sm text-white">
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400">!</span>
+                  Verify instrument CAT ratings before use
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400">!</span>
+                  Check probe leads for damage regularly
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400">!</span>
+                  Use appropriate PPE for electrical work
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400">!</span>
+                  Never exceed instrument specifications
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400">!</span>
+                  Understand arc flash risks in power systems
+                </li>
+              </ul>
+            </div>
 
-                <div className="bg-elec-yellow/10 border border-blue-600/20 rounded-lg p-4">
-                  <h4 className="text-blue-200 font-medium mb-2">Maintenance Guidelines</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• Keep instruments clean and dry</li>
-                    <li>• Store in appropriate cases when not in use</li>
-                    <li>• Replace fuses with correct ratings only</li>
-                    <li>• Check battery levels regularly</li>
-                    <li>• Schedule periodic calibration service</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Measurement Accuracy Tips</h3>
+              <ul className="space-y-2 text-sm text-white">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Select appropriate measurement range
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Allow instruments to warm up
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Use proper probe techniques
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Consider measurement loading effects
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  Perform regular calibration checks
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
 
-          {/* Real-World Scenario */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl">Real-World Scenario</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-blue-900/20 border border-elec-yellow/30 rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-medium text-white mb-2">Motor Starter Troubleshooting</h4>
-                    <p className="text-gray-300 leading-relaxed">
-                      When troubleshooting a motor starter circuit, a technician uses multiple instruments strategically. A clamp meter reveals excessive inrush current of 8x normal instead of the expected 6x, suggesting a mechanical binding issue. An oscilloscope confirms this by showing the current waveform has irregular spikes during startup. Finally, a DMM verifies that all control voltages are within specification, confirming the problem is mechanical rather than electrical. This systematic approach using appropriate tools quickly isolates the root cause.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* FAQs */}
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
 
-          {/* Summary */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white text-xl">Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed">
-                Measurement tools each serve a distinct role in electrical diagnostics and system analysis. Knowing when and how to use them elevates your diagnostic capabilities and ensures safe, efficient troubleshooting. The key is matching the right instrument to the specific measurement requirements and understanding each tool's strengths and limitations.
+          <div className="space-y-4">
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-2">What does CAT rating mean?</h3>
+              <p className="text-white text-sm">
+                CAT ratings (I to IV) indicate the level of transient overvoltage protection. Higher categories are used closer to the power source: CAT IV at the service entrance, CAT III at distribution panels, CAT II at receptacles, CAT I for protected electronics.
               </p>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Interactive Quiz */}
-          <Card className="bg-transparent border-transparent">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-white text-xl">
-                <Brain className="h-5 w-5 text-elec-yellow" />
-                Knowledge Check Quiz
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {!quizStarted ? (
-                <div className="text-center space-y-4">
-                  <p className="text-gray-300">
-                    Test your understanding of measurement equipment capabilities and applications.
-                  </p>
-                  <Button 
-                    onClick={startQuiz}
-                    className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
-                  >
-                    Start Quiz
-                  </Button>
-                </div>
-              ) : !showResults ? (
-                <div className="space-y-6">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-400">
-                      Question {currentQuestionIndex + 1} of {quizQuestions.length}
-                    </span>
-                    <div className="w-32 bg-gray-700 rounded-full h-2">
-                      <div 
-                        className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-2">Do I need a True RMS meter?</h3>
+              <p className="text-white text-sm">
+                Yes, if you measure AC on circuits with VSDs, dimmers, electronic loads, or any non-sinusoidal waveforms. For pure sine wave measurements (like clean mains), an average-responding meter is adequate.
+              </p>
+            </div>
 
-                  <div>
-                    <h3 className="text-white font-medium mb-4">{currentQuestion.question}</h3>
-                    <div className="space-y-2">
-                      {currentQuestion.options.map((option, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleAnswerSelect(index)}
-                          className={`w-full text-left p-3 rounded border transition-colors ${
-                            selectedAnswers[currentQuestionIndex] === index
-                              ? 'border-elec-yellow bg-elec-yellow/20 text-elec-yellow'
-                              : 'border-gray-600 bg-gray-800/50 text-gray-300 hover:border-gray-500'
-                          }`}
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-2">How do I choose oscilloscope bandwidth?</h3>
+              <p className="text-white text-sm">
+                For sine waves, bandwidth should be at least 3x the highest frequency. For square waves or pulses, use bandwidth = 0.35/rise time. A 100MHz scope handles most industrial applications up to 20MHz signals.
+              </p>
+            </div>
+          </div>
+        </section>
 
-                  <div className="flex justify-between">
-                    <Button
-                      onClick={handlePrevious}
-                      disabled={currentQuestionIndex === 0}
-                      variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-transparent disabled:opacity-50"
-                    >
-                      Previous
-                    </Button>
-                    <Button
-                      onClick={handleNext}
-                      disabled={selectedAnswers[currentQuestionIndex] === undefined}
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow disabled:opacity-50"
-                    >
-                      {currentQuestionIndex === quizQuestions.length - 1 ? 'Finish' : 'Next'}
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  <div className="text-center">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
-                      percentage >= 70 ? 'bg-green-600/20' : 'bg-red-600/20'
-                    }`}>
-                      {percentage >= 70 ? (
-                        <CheckCircle2 className="h-8 w-8 text-green-400" />
-                      ) : (
-                        <XCircle className="h-8 w-8 text-red-400" />
-                      )}
-                    </div>
-                    <h3 className="text-white text-xl font-semibold mb-2">Quiz Complete!</h3>
-                    <p className="text-gray-300 mb-4">
-                      You scored {score} out of {quizQuestions.length} ({percentage}%)
-                    </p>
-                    {percentage >= 70 ? (
-                      <p className="text-green-400">Excellent work! You understand measurement equipment well.</p>
-                    ) : (
-                      <p className="text-red-400">Consider reviewing the material and trying again.</p>
-                    )}
-                  </div>
+        {/* Quiz */}
+        <section className="mb-8">
+          <SingleQuestionQuiz questions={quizQuestions} />
+        </section>
 
-                  <div className="space-y-4">
-                    <h4 className="text-white font-medium">Review Your Answers:</h4>
-                    {quizQuestions.map((question, index) => (
-                      <div key={question.id} className="border border-gray-600 rounded-lg p-4">
-                        <div className="flex items-start gap-3">
-                          {selectedAnswers[index] === question.correctAnswer ? (
-                            <CheckCircle2 className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                          ) : (
-                            <XCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
-                          )}
-                          <div className="flex-1">
-                            <p className="text-white font-medium mb-2">{question.question}</p>
-                            <p className="text-gray-300 text-sm mb-2">
-                              <span className="font-medium">Your answer:</span> {question.options[selectedAnswers[index]]}
-                            </p>
-                            {selectedAnswers[index] !== question.correctAnswer && (
-                              <p className="text-gray-300 text-sm mb-2">
-                                <span className="font-medium">Correct answer:</span> {question.options[question.correctAnswer]}
-                              </p>
-                            )}
-                            <p className="text-gray-400 text-sm">{question.explanation}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="text-center">
-                    <Button 
-                      onClick={resetQuiz}
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow font-semibold px-8 py-2"
-                    >
-                      Retake Quiz
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
+        {/* Navigation */}
+        <div className="flex flex-col sm:flex-row justify-between gap-3 pt-6 border-t border-border">
+          <Link to="/study-centre/upskilling/instrumentation-module-4-section-3" className="w-full sm:w-auto">
+            <Button variant="outline" className="w-full sm:w-auto">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back
+            </Button>
+          </Link>
+          <Link to="/study-centre/upskilling/instrumentation-module-4-section-5" className="w-full sm:w-auto">
+            <Button className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              Next Section
+            </Button>
+          </Link>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

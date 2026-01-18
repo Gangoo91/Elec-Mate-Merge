@@ -90,9 +90,9 @@ const EVChargingModule3Section1 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/ev-charging-module-3">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 3
+              Back
             </Link>
           </Button>
         </div>
@@ -258,15 +258,15 @@ const EVChargingModule3Section1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Static</p>
-                <p className="text-white/90 text-xs">Fixed power allocation</p>
+                <p className="text-white text-xs">Fixed power allocation</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Dynamic</p>
-                <p className="text-white/90 text-xs">Real-time adjustment</p>
+                <p className="text-white text-xs">Real-time adjustment</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Predictive</p>
-                <p className="text-white/90 text-xs">AI-based optimisation</p>
+                <p className="text-white text-xs">AI-based optimisation</p>
               </div>
             </div>
 
@@ -302,7 +302,7 @@ const EVChargingModule3Section1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white mb-2">Example: 10-House Development</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Connected: 10 × 7kW = 70kW</li>
                   <li>Diversity: 75%</li>
                   <li>Safety: 15%</li>
@@ -311,7 +311,7 @@ const EVChargingModule3Section1 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white mb-2">Example: Office Car Park</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Connected: 20 × 22kW = 440kW</li>
                   <li>Diversity: 70%</li>
                   <li>Safety: 20%</li>
@@ -355,7 +355,7 @@ const EVChargingModule3Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

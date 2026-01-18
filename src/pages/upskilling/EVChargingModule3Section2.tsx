@@ -90,9 +90,9 @@ const EVChargingModule3Section2 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/ev-charging-module-3">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 3
+              Back
             </Link>
           </Button>
         </div>
@@ -224,15 +224,15 @@ const EVChargingModule3Section2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Ca</p>
-                <p className="text-white/90 text-xs">Temperature factor</p>
+                <p className="text-white text-xs">Temperature factor</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Cg</p>
-                <p className="text-white/90 text-xs">Grouping factor</p>
+                <p className="text-white text-xs">Grouping factor</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Ci</p>
-                <p className="text-white/90 text-xs">Installation factor</p>
+                <p className="text-white text-xs">Installation factor</p>
               </div>
             </div>
 
@@ -255,7 +255,7 @@ const EVChargingModule3Section2 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">SWA Cable</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Mechanical protection</li>
                   <li>• Direct burial suitable</li>
                   <li>• Higher cost, very durable</li>
@@ -263,7 +263,7 @@ const EVChargingModule3Section2 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">LSF Cable</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Low smoke emission</li>
                   <li>• Required in car parks</li>
                   <li>• Enclosed spaces</li>
@@ -271,7 +271,7 @@ const EVChargingModule3Section2 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">XLPE Cable</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• 90°C operating temp</li>
                   <li>• Higher current capacity</li>
                   <li>• Cost-effective</li>
@@ -308,7 +308,7 @@ const EVChargingModule3Section2 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white mb-2">Example 1: Domestic 7kW</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Scenario: 25m cable run, conduit</li>
                   <li>Design current: 30.4A</li>
                   <li>Cable for current: 4mm²</li>
@@ -318,7 +318,7 @@ const EVChargingModule3Section2 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white mb-2">Example 2: Commercial 22kW</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Scenario: 50m SWA, 3-phase</li>
                   <li>Design current: 31.8A</li>
                   <li>Cable for current: 6mm²</li>
@@ -330,7 +330,7 @@ const EVChargingModule3Section2 = () => {
 
             <div className="p-4 rounded bg-transparent border border-red-400/30">
               <p className="text-sm font-medium text-white mb-2">Example 3: Long Run Problem</p>
-              <ul className="text-xs text-white/90 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Scenario: 7kW charger, 80m cable run</li>
                 <li>4mm² Vd: 28V (12.2%) — too high!</li>
                 <li>10mm² Vd: 10.7V (4.7%) — acceptable</li>
@@ -373,7 +373,7 @@ const EVChargingModule3Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

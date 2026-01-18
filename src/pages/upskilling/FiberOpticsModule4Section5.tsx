@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { ArrowLeft, Zap, CheckCircle, ChevronDown, Eye, Sparkles, AlertTriangle, Shield, BookOpen, Target } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import useSEO from "@/hooks/useSEO";
 
-const TITLE = "Inspection Microscopes and Cleaning Tools - Fiber Optics Technology";
+const TITLE = "Inspection Microscopes and Cleaning Tools - Fibre Optics Technology";
 const DESCRIPTION = "Learn about fibre optic inspection equipment, cleaning methods, and best practices for maintaining connector quality and system reliability.";
 
 const quickCheckQuestions = [
@@ -50,6 +49,7 @@ const quickCheckQuestions = [
 
 const quizQuestions = [
   {
+    id: 1,
     question: "What type of contamination commonly causes high insertion loss?",
     options: [
       "Magnetic particles",
@@ -57,9 +57,11 @@ const quizQuestions = [
       "Connector colour",
       "Cable jacket damage"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Dust, oil, fingerprints and debris on the connector end face block light transmission and cause insertion loss."
   },
   {
+    id: 2,
     question: "What is a video probe microscope used for?",
     options: [
       "Testing cable length",
@@ -67,9 +69,11 @@ const quizQuestions = [
       "Measuring loss",
       "Stripping cable"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Video probe microscopes have thin probes that can reach connectors installed in adapters and patch panels where handheld scopes cannot access."
   },
   {
+    id: 3,
     question: "What cleaning method is recommended for connectors in adapters?",
     options: [
       "Compressed air only",
@@ -77,9 +81,11 @@ const quizQuestions = [
       "Water rinse",
       "Abrasive pads"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Stick cleaners (1.25mm for LC, 2.5mm for SC) are designed to reach into adapter ports and clean the ferrule end face."
   },
   {
+    id: 4,
     question: "How should used cleaning stick tips be handled?",
     options: [
       "Reuse until dirty",
@@ -87,9 +93,11 @@ const quizQuestions = [
       "Wash and reuse",
       "Share between technicians"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Cleaning sticks are single-use consumables. Reusing them transfers contamination back to connectors."
   },
   {
+    id: 5,
     question: "What IEC standard defines end-face inspection criteria?",
     options: [
       "IEC 60793",
@@ -97,9 +105,11 @@ const quizQuestions = [
       "IEC 61754",
       "IEC 60794"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "IEC 61300-3-35 defines the inspection zones (A, B, C, D) and acceptance criteria for fibre connector end faces."
   },
   {
+    id: 6,
     question: "What does a 'cassette cleaner' contain?",
     options: [
       "Compressed air",
@@ -107,9 +117,11 @@ const quizQuestions = [
       "Liquid cleaner",
       "Polishing film"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Cassette cleaners contain a ribbon of dry lint-free cleaning material that advances to provide fresh cleaning surface for each use."
   },
   {
+    id: 7,
     question: "What contamination type is most likely from skin contact?",
     options: [
       "Dust",
@@ -117,9 +129,11 @@ const quizQuestions = [
       "Metal particles",
       "Water"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Skin oils transfer easily to connector end faces and require wet cleaning with IPA to fully remove."
   },
   {
+    id: 8,
     question: "When should you use wet cleaning (IPA)?",
     options: [
       "Always as first step",
@@ -127,9 +141,11 @@ const quizQuestions = [
       "Never on fibre",
       "Only on outdoor connectors"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Try dry cleaning first. Use IPA (isopropyl alcohol) wet cleaning when dry methods fail to remove oils or stubborn contamination."
   },
   {
+    id: 9,
     question: "What can result from mating a contaminated connector?",
     options: [
       "Improved signal",
@@ -137,9 +153,11 @@ const quizQuestions = [
       "No significant effect",
       "Cleaner connection"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Contamination gets pressed between end faces causing scratches and permanent damage to both connectors when mated."
   },
   {
+    id: 10,
     question: "How should inspection equipment be stored?",
     options: [
       "Any convenient location",
@@ -147,7 +165,8 @@ const quizQuestions = [
       "In direct sunlight",
       "Loose in tool bag"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Protect microscope optics with lens caps and cases. Store away from dust and contamination that could affect inspection accuracy."
   }
 ];
 
@@ -184,729 +203,454 @@ const FiberOpticsModule4Section5 = () => {
     description: DESCRIPTION,
   });
 
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
-      {/* Minimal Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-screen-2xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module4"
-            className="flex items-center gap-2 text-white/70 hover:text-white active:scale-[0.98] touch-manipulation min-h-[44px]"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="text-sm">Back to Module 4</span>
-          </Link>
-          <span className="text-xs text-white/40 hidden sm:block">Section 5 of 5</span>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="pt-20 pb-24 px-4 max-w-3xl mx-auto">
-        {/* Module Number Badge */}
-        <div className="flex justify-center mb-4">
-          <span className="inline-flex items-center gap-1.5 text-sm text-elec-yellow">
-            <Eye className="w-4 h-4" />
-            Module 4 · Section 5
-          </span>
-        </div>
-
-        {/* Title */}
-        <h1 className="text-2xl md:text-3xl font-bold text-center mb-8">
-          Inspection Microscopes and Cleaning Tools
-        </h1>
-
-        {/* Quick Summary Card */}
-        <div className="bg-gradient-to-br from-teal-500/20 to-cyan-500/20 rounded-2xl p-5 border border-teal-500/30 mb-6">
-          <h2 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-elec-yellow" />
-            In 30 Seconds
-          </h2>
-          <p className="text-white/80 text-sm leading-relaxed">
-            Contaminated connectors are the leading cause of fibre network problems. Always
-            inspect connectors at 200-400x magnification before mating. Clean using dry
-            methods first, wet (IPA) if needed, then verify with final inspection. Proper
-            cleaning takes seconds but prevents costly troubleshooting and permanent damage.
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 4 Section 5</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Inspection Microscopes and Cleaning Tools
+          </h1>
+          <p className="text-white/80">
+            Master connector inspection and cleaning for reliable fibre networks
           </p>
-        </div>
+        </header>
 
-        {/* Spot it / Use it Card */}
-        <div className="bg-gradient-to-br from-cyan-500/10 to-teal-500/10 rounded-2xl p-5 border border-cyan-500/20 mb-8">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div>
-              <h3 className="text-sm font-semibold text-cyan-400 mb-2">Inspection Tools</h3>
-              <ul className="text-white/70 text-sm space-y-1">
-                <li>• Handheld microscope (200x)</li>
-                <li>• Video probe microscope</li>
-                <li>• Desktop microscope</li>
-                <li>• USB/digital scopes</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-teal-400 mb-2">Cleaning Tools</h3>
-              <ul className="text-white/70 text-sm space-y-1">
-                <li>• Cassette/reel cleaners</li>
-                <li>• Stick cleaners (wet/dry)</li>
-                <li>• Lint-free wipes + IPA</li>
-                <li>• Compressed air (filtered)</li>
-              </ul>
-            </div>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Contamination:</strong> Leading cause of fibre problems</li>
+              <li><strong>Magnification:</strong> 200-400x for inspection</li>
+              <li><strong>Rule:</strong> Inspect, clean, inspect again</li>
+              <li><strong>Tools:</strong> Cassette cleaners and stick cleaners</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Handheld scope:</strong> Patch cords, loose connectors</li>
+              <li><strong>Video probe:</strong> Adapters, patch panels</li>
+              <li><strong>Cassette cleaner:</strong> Quick dry cleaning</li>
+              <li><strong>Stick cleaner:</strong> Cleaning inside adapters</li>
+            </ul>
           </div>
         </div>
 
         {/* Learning Outcomes */}
-        <div className="bg-white/5 rounded-2xl p-5 border border-white/10 mb-8">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-green-400" />
-            What You'll Learn
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Inspection microscope types and use",
-              "IEC inspection criteria",
-              "Cleaning tool types and selection",
-              "Proper cleaning procedures",
+              "Inspection microscope types and selection",
+              "IEC end-face inspection criteria",
+              "Cleaning tool types and applications",
+              "Proper cleaning procedures and techniques",
               "Troubleshooting persistent contamination",
               "Equipment care and maintenance"
-            ].map((outcome, index) => (
-              <div key={index} className="flex items-start gap-2">
-                <div className="w-5 h-5 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-xs font-bold text-elec-yellow">{index + 1}</span>
-                </div>
-                <span className="text-sm text-white/80">{outcome}</span>
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Section 1: Why Inspection Matters */}
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 01 */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center">
-              <span className="text-lg font-bold">01</span>
-            </div>
-            <h2 className="text-xl font-bold">Why Inspection Matters</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Why Inspection and Cleaning Matters
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Contamination is the number one cause of fibre optic network problems. A particle
-              as small as 1 micron on a 9-micron singlemode core can block significant light
-              and cause signal loss.
+              Contamination is the number one cause of fibre optic network problems. A particle as small as 1 micron on a 9-micron singlemode core can block significant light and cause signal loss.
             </p>
 
-            <div className="bg-orange-500/10 rounded-xl p-4 border border-orange-500/30">
-              <h4 className="font-semibold text-orange-300 mb-2 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4" />
-                The Cost of Contamination
-              </h4>
-              <ul className="text-sm space-y-1 text-white/80">
-                <li>• <strong>Signal loss:</strong> Particles block light transmission</li>
-                <li>• <strong>Back-reflection:</strong> Contamination causes unwanted reflections</li>
-                <li>• <strong>Permanent damage:</strong> Dirt gets pressed into end faces when mated</li>
-                <li>• <strong>Chain reaction:</strong> One dirty connector contaminates others it mates with</li>
-                <li>• <strong>Troubleshooting cost:</strong> Hours finding problems that cleaning prevents</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">The cost of contamination:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Signal loss:</strong> Particles block light transmission</li>
+                <li><strong>Back-reflection:</strong> Contamination causes unwanted reflections</li>
+                <li><strong>Permanent damage:</strong> Dirt gets pressed into end faces when mated</li>
+                <li><strong>Chain reaction:</strong> One dirty connector contaminates others it mates with</li>
+                <li><strong>Troubleshooting cost:</strong> Hours finding problems that cleaning prevents</li>
               </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Common Contamination Sources</h4>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-cyan-300 font-medium mb-1">Environmental:</p>
-                  <ul className="text-white/60 space-y-1">
-                    <li>• Dust and airborne particles</li>
-                    <li>• Humidity and moisture</li>
-                    <li>• Construction debris</li>
-                    <li>• Office environment dust</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-teal-300 font-medium mb-1">Handling:</p>
-                  <ul className="text-white/60 space-y-1">
-                    <li>• Fingerprints and skin oils</li>
-                    <li>• Clothing fibres</li>
-                    <li>• Cable jacket debris</li>
-                    <li>• Alcohol residue (if not dried)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-elec-yellow/10 rounded-xl p-4 border border-elec-yellow/30">
-              <h4 className="font-semibold text-elec-yellow mb-2">The Golden Rule</h4>
-              <p className="text-sm text-white/80">
-                <strong>Inspect → Clean → Inspect</strong> before every connection. First inspection
-                identifies contamination, cleaning removes it, final inspection verifies success.
-                This takes only seconds but prevents hours of troubleshooting.
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">The Golden Rule</p>
+              <p className="text-sm text-white">
+                <strong>Inspect, Clean, Inspect</strong> before every connection. First inspection identifies contamination, cleaning removes it, final inspection verifies success. This takes only seconds but prevents hours of troubleshooting.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Section 2: Inspection Microscopes */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center">
-              <span className="text-lg font-bold">02</span>
-            </div>
-            <h2 className="text-xl font-bold">Inspection Microscope Types</h2>
-          </div>
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-          <div className="space-y-4 text-white/80">
+        {/* Section 02 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Inspection Microscope Types
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different inspection tools serve different purposes. Most technicians need both
-              handheld and video probe types for comprehensive inspection capability.
+              Different inspection tools serve different purposes. Most technicians need both handheld and video probe types for comprehensive inspection capability.
             </p>
 
-            <div className="grid gap-4">
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-cyan-400 mb-2 flex items-center gap-2">
-                  <Eye className="w-4 h-4" />
-                  Handheld Microscope
-                </h4>
-                <p className="text-sm text-white/60 mb-2">
-                  Compact scope for inspecting patch cords and accessible connectors.
-                </p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• Magnification: 200x or 400x</li>
-                  <li>• Built-in LED illumination</li>
-                  <li>• Adapter tips for different connectors</li>
-                  <li>• Price range: £50-300</li>
-                  <li>• Use for: Patch cords, accessible ferrules</li>
-                </ul>
-              </div>
-
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-teal-400 mb-2">Video Probe Microscope</h4>
-                <p className="text-sm text-white/60 mb-2">
-                  Thin probe for inspecting connectors installed in adapters and panels.
-                </p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• Probe diameter: 1.25mm (LC) or 2.5mm (SC)</li>
-                  <li>• LCD display or phone app connection</li>
-                  <li>• Essential for installed connectors</li>
-                  <li>• Price range: £500-2,000</li>
-                  <li>• Use for: Panels, switches, adapters</li>
-                </ul>
-              </div>
-
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-blue-400 mb-2">Desktop/USB Microscope</h4>
-                <p className="text-sm text-white/60 mb-2">
-                  Fixed microscope with digital output for documentation and training.
-                </p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• Higher magnification options (up to 800x)</li>
-                  <li>• Image capture and storage</li>
-                  <li>• Computer connection</li>
-                  <li>• Price range: £300-3,000</li>
-                  <li>• Use for: Lab, QC, training, documentation</li>
-                </ul>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Handheld microscope:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Magnification: 200x or 400x with built-in LED illumination</li>
+                <li>Adapter tips for different connector types (LC, SC, FC, ST)</li>
+                <li>Price range: typically 50 to 300 pounds</li>
+                <li>Best for: Patch cords and accessible ferrules</li>
+              </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-cyan-500/20 to-teal-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-2">Recommended Setup</h4>
-              <p className="text-sm text-white/70">
-                For field work, carry both a handheld scope (for patch cords) and a video
-                probe (for installed connectors). Many manufacturers offer combined kits.
-                For workshop use, add a desktop microscope for detailed analysis and
-                documentation.
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Video probe microscope:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Thin probe diameter: 1.25mm (LC) or 2.5mm (SC)</li>
+                <li>LCD display or smartphone app connection</li>
+                <li>Essential for installed connectors in adapters</li>
+                <li>Price range: typically 500 to 2,000 pounds</li>
+                <li>Best for: Panels, switches, adapters</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Desktop/USB microscope:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Higher magnification options (up to 800x)</li>
+                <li>Image capture and storage capability</li>
+                <li>Computer connection for documentation</li>
+                <li>Best for: Lab, quality control, training, documentation</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">Recommended Setup</p>
+              <p className="text-sm text-white">
+                For field work, carry both a handheld scope (for patch cords) and a video probe (for installed connectors). Many manufacturers offer combined kits. For workshop use, add a desktop microscope for detailed analysis and documentation.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 1 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[0].id}
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-        </div>
-
-        {/* Section 3: IEC Inspection Criteria */}
+        {/* Section 03 */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center">
-              <span className="text-lg font-bold">03</span>
-            </div>
-            <h2 className="text-xl font-bold">IEC Inspection Criteria</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            IEC Inspection Criteria
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              IEC 61300-3-35 defines inspection zones and cleanliness criteria for fibre
-              connector end faces. Understanding these zones helps evaluate inspection results.
+              IEC 61300-3-35 defines inspection zones and cleanliness criteria for fibre connector end faces. Understanding these zones helps evaluate inspection results.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <Target className="w-4 h-4 text-cyan-400" />
-                End Face Zones (Singlemode)
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Zone A (Core):</strong> 0-25μm from centre. NO defects or contamination allowed.</li>
-                <li><strong>Zone B (Cladding):</strong> 25-120μm. Limited scratches acceptable, no contamination.</li>
-                <li><strong>Zone C (Adhesive):</strong> 120-130μm. Some defects acceptable, not critical.</li>
-                <li><strong>Zone D (Contact):</strong> 130-250μm. Ferrule contact area, limited defects.</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">End face zones (singlemode):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Zone A (Core):</strong> 0-25 micrometres from centre. NO defects or contamination allowed.</li>
+                <li><strong>Zone B (Cladding):</strong> 25-120 micrometres. Limited scratches acceptable, no contamination.</li>
+                <li><strong>Zone C (Adhesive):</strong> 120-130 micrometres. Some defects acceptable, not critical.</li>
+                <li><strong>Zone D (Contact):</strong> 130-250 micrometres. Ferrule contact area, limited defects.</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-teal-500/20 to-cyan-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">Pass/Fail Criteria (Summary)</h4>
-              <div className="overflow-x-auto">
-                <table className="text-sm w-full">
-                  <thead>
-                    <tr className="text-left border-b border-white/20">
-                      <th className="pb-2 text-white/80">Zone</th>
-                      <th className="pb-2 text-white/80">Scratches</th>
-                      <th className="pb-2 text-white/80">Defects</th>
-                      <th className="pb-2 text-white/80">Contamination</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white/60">
-                    <tr className="border-b border-white/10">
-                      <td className="py-2">A (Core)</td>
-                      <td>None</td>
-                      <td>None</td>
-                      <td>None</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-2">B (Cladding)</td>
-                      <td>&lt;3μm wide</td>
-                      <td>&lt;5 max</td>
-                      <td>None</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-2">C (Adhesive)</td>
-                      <td>N/A</td>
-                      <td>Limited</td>
-                      <td>Limited</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2">D (Contact)</td>
-                      <td>Limited</td>
-                      <td>Limited</td>
-                      <td>None on contact</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="bg-elec-yellow/10 rounded-xl p-4 border border-elec-yellow/30">
-              <h4 className="font-semibold text-elec-yellow mb-2">Practical Interpretation</h4>
-              <p className="text-sm text-white/80">
-                Focus on the core area (Zone A) - this is most critical. Any visible contamination
-                or defect in the core fails inspection. Light scratches in the cladding are often
-                acceptable. When in doubt, clean again and re-inspect. Never mate a connector
-                with visible core contamination.
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">Practical Interpretation</p>
+              <p className="text-sm text-white">
+                Focus on the core area (Zone A) - this is most critical. Any visible contamination or defect in the core fails inspection. Light scratches in the cladding are often acceptable. When in doubt, clean again and re-inspect. Never mate a connector with visible core contamination.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Section 4: Cleaning Tools */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center">
-              <span className="text-lg font-bold">04</span>
-            </div>
-            <h2 className="text-xl font-bold">Cleaning Tool Types</h2>
-          </div>
+        <InlineCheck {...quickCheckQuestions[1]} />
 
-          <div className="space-y-4 text-white/80">
+        {/* Section 04 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Cleaning Tool Types
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different cleaning tools suit different situations. Choose based on whether
-              the connector is accessible (patch cord) or installed (in an adapter).
+              Different cleaning tools suit different situations. Choose based on whether the connector is accessible (patch cord) or installed (in an adapter).
             </p>
 
-            <div className="grid gap-4">
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-cyan-400 mb-2 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
-                  Cassette/Reel Cleaners
-                </h4>
-                <p className="text-sm text-white/60 mb-2">
-                  Dry cleaning tape in a cassette. Swipe connector across exposed tape.
-                </p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• Quick and convenient</li>
-                  <li>• 500+ cleans per cassette</li>
-                  <li>• No consumables to manage</li>
-                  <li>• For patch cords and accessible connectors</li>
-                  <li>• Popular brands: Cletop, NTT-AT, AFL</li>
-                </ul>
-              </div>
-
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-teal-400 mb-2">Stick Cleaners (Swabs)</h4>
-                <p className="text-sm text-white/60 mb-2">
-                  Cleaning sticks for reaching connectors in adapters and ports.
-                </p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• 1.25mm tip for LC/MU ports</li>
-                  <li>• 2.5mm tip for SC/FC/ST ports</li>
-                  <li>• Available dry or with IPA</li>
-                  <li>• Single-use disposable tips</li>
-                  <li>• Essential for cleaning adapters and switch ports</li>
-                </ul>
-              </div>
-
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-blue-400 mb-2">Lint-Free Wipes + IPA</h4>
-                <p className="text-sm text-white/60 mb-2">
-                  Traditional wet cleaning for stubborn contamination.
-                </p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• 99%+ isopropyl alcohol</li>
-                  <li>• Optical-grade lint-free wipes</li>
-                  <li>• For stubborn contamination</li>
-                  <li>• Requires dry follow-up</li>
-                  <li>• Lower cost but more technique-dependent</li>
-                </ul>
-              </div>
-
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-purple-400 mb-2">Ferrule Cleaners</h4>
-                <p className="text-sm text-white/60 mb-2">
-                  Pen-style push cleaners for patch cords.
-                </p>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• One-click operation</li>
-                  <li>• Dry or combined wet/dry action</li>
-                  <li>• Compact for tool bag</li>
-                  <li>• Good for high-volume work</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quick Check 2 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[1].id}
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-        </div>
-
-        {/* Section 5: Cleaning Procedures */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center">
-              <span className="text-lg font-bold">05</span>
-            </div>
-            <h2 className="text-xl font-bold">Cleaning Procedures</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
-            <p>
-              Proper cleaning technique ensures contamination is removed without damaging
-              the end face or spreading contamination.
-            </p>
-
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <Shield className="w-4 h-4 text-green-400" />
-                Cleaning Patch Cords (Cassette Method)
-              </h4>
-              <ol className="space-y-2 text-sm">
-                <li><strong>1.</strong> Inspect connector under microscope</li>
-                <li><strong>2.</strong> Open cassette cleaner to expose cleaning surface</li>
-                <li><strong>3.</strong> Hold connector perpendicular to cleaning surface</li>
-                <li><strong>4.</strong> Press down and swipe across tape once</li>
-                <li><strong>5.</strong> Advance tape to fresh area for next use</li>
-                <li><strong>6.</strong> Re-inspect to verify clean</li>
-              </ol>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Cassette/reel cleaners:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Dry cleaning tape in a cassette - swipe connector across exposed tape</li>
+                <li>Quick and convenient with 500+ cleans per cassette</li>
+                <li>No consumables to manage individually</li>
+                <li>For patch cords and accessible connectors</li>
+                <li>Popular brands: Cletop, NTT-AT, AFL</li>
+              </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Cleaning Adapters/Ports (Stick Method)</h4>
-              <ol className="space-y-2 text-sm">
-                <li><strong>1.</strong> Inspect with video probe if possible</li>
-                <li><strong>2.</strong> Select correct stick size (1.25mm or 2.5mm)</li>
-                <li><strong>3.</strong> Insert stick straight into adapter</li>
-                <li><strong>4.</strong> Rotate 2-3 times with light pressure</li>
-                <li><strong>5.</strong> Remove and discard used stick</li>
-                <li><strong>6.</strong> Inspect to verify clean</li>
-              </ol>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Stick cleaners (swabs):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>1.25mm tip for LC/MU ports</li>
+                <li>2.5mm tip for SC/FC/ST ports</li>
+                <li>Available dry or with IPA pre-saturated</li>
+                <li>Single-use disposable tips - never reuse</li>
+                <li>Essential for cleaning adapters and switch ports</li>
+              </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-cyan-500/20 to-teal-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-2">Wet Cleaning Procedure</h4>
-              <p className="text-sm text-white/70 mb-2">
-                Use when dry cleaning doesn't remove contamination:
-              </p>
-              <ol className="text-sm text-white/60 space-y-1">
-                <li>1. Dampen (not soak) wipe or stick with IPA</li>
-                <li>2. Clean end face with wet material</li>
-                <li>3. Immediately follow with dry cleaning</li>
-                <li>4. Ensure no residue remains before inspection</li>
-              </ol>
-              <p className="text-xs text-white/50 mt-2">
-                Never leave IPA to air dry - it can leave residue.
-              </p>
-            </div>
-
-            <div className="bg-orange-500/10 rounded-xl p-4 border border-orange-500/30">
-              <h4 className="font-semibold text-orange-300 mb-2 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4" />
-                Common Cleaning Mistakes
-              </h4>
-              <ul className="text-sm space-y-1 text-white/80">
-                <li>• <strong>Reusing cleaning surfaces:</strong> Transfers contamination back</li>
-                <li>• <strong>Skipping final inspection:</strong> Cleaning isn't complete until verified</li>
-                <li>• <strong>Excessive pressure:</strong> Can damage end face</li>
-                <li>• <strong>Circular motion on ferrule:</strong> Use straight wipes</li>
-                <li>• <strong>Letting IPA dry naturally:</strong> Leaves residue</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Lint-free wipes and IPA:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>99%+ isopropyl alcohol for wet cleaning</li>
+                <li>Optical-grade lint-free wipes</li>
+                <li>For stubborn contamination (oils, fingerprints)</li>
+                <li>Requires dry follow-up - never let IPA air dry</li>
+                <li>Lower cost but more technique-dependent</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Section 6: Equipment Care */}
+        {/* Section 05 */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center">
-              <span className="text-lg font-bold">06</span>
-            </div>
-            <h2 className="text-xl font-bold">Equipment Care and Maintenance</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Cleaning Procedures
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Proper care of inspection and cleaning equipment ensures reliable performance
-              and extends equipment life.
+              Proper cleaning technique ensures contamination is removed without damaging the end face or spreading contamination.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-elec-yellow" />
-                Microscope Care
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Lens protection:</strong> Always cap lenses when not in use</li>
-                <li><strong>Lens cleaning:</strong> Use only optical-grade lens cleaners</li>
-                <li><strong>Battery management:</strong> Remove batteries if storing long-term</li>
-                <li><strong>Video probes:</strong> Protect thin probe from bending</li>
-                <li><strong>Storage:</strong> Keep in protective case, away from dust</li>
-                <li><strong>Calibration:</strong> Periodic check for focus and illumination</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Cleaning patch cords (cassette method):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>1. Inspect connector under microscope</li>
+                <li>2. Open cassette cleaner to expose cleaning surface</li>
+                <li>3. Hold connector perpendicular to cleaning surface</li>
+                <li>4. Press down and swipe across tape once</li>
+                <li>5. Advance tape to fresh area for next use</li>
+                <li>6. Re-inspect to verify clean</li>
               </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Cleaning Supply Management</h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Cassette cleaners:</strong> Advance tape fully after contaminated environments</li>
-                <li><strong>Stick cleaners:</strong> Store in sealed packaging, check expiry dates</li>
-                <li><strong>IPA:</strong> Keep tightly sealed, discard if contaminated</li>
-                <li><strong>Wipes:</strong> Store in sealed containers, don't touch cleaning surfaces</li>
-                <li><strong>Stock management:</strong> Rotate stock, use FIFO</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Cleaning adapters/ports (stick method):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>1. Inspect with video probe if possible</li>
+                <li>2. Select correct stick size (1.25mm or 2.5mm)</li>
+                <li>3. Insert stick straight into adapter</li>
+                <li>4. Rotate 2-3 times with light pressure</li>
+                <li>5. Remove and discard used stick</li>
+                <li>6. Inspect to verify clean</li>
               </ul>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-green-500/10 rounded-xl p-4 border border-green-500/30">
-                <h4 className="font-semibold text-green-400 mb-2">Do</h4>
-                <ul className="text-sm space-y-1 text-white/70">
-                  <li>• Store in cases</li>
-                  <li>• Use lens caps</li>
-                  <li>• Keep supplies sealed</li>
-                  <li>• Replace consumables regularly</li>
-                  <li>• Clean equipment periodically</li>
-                </ul>
-              </div>
-              <div className="bg-red-500/10 rounded-xl p-4 border border-red-500/30">
-                <h4 className="font-semibold text-red-400 mb-2">Don't</h4>
-                <ul className="text-sm space-y-1 text-white/70">
-                  <li>• Leave uncovered</li>
-                  <li>• Touch optical surfaces</li>
-                  <li>• Reuse single-use items</li>
-                  <li>• Store in dirty environments</li>
-                  <li>• Use expired supplies</li>
-                </ul>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wet cleaning procedure:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Use when dry cleaning doesn't remove contamination</li>
+                <li>Dampen (not soak) wipe or stick with IPA</li>
+                <li>Clean end face with wet material</li>
+                <li>Immediately follow with dry cleaning</li>
+                <li>Ensure no residue remains - never let IPA air dry</li>
+              </ul>
             </div>
 
-            <div className="bg-elec-yellow/10 rounded-xl p-4 border border-elec-yellow/30">
-              <h4 className="font-semibold text-elec-yellow mb-2">Kit Checklist</h4>
-              <p className="text-sm text-white/80 mb-2">
-                Every fibre technician should carry:
-              </p>
-              <ul className="text-sm text-white/70 space-y-1">
-                <li>☐ Handheld microscope with adapter tips</li>
-                <li>☐ Video probe microscope (for installed connectors)</li>
-                <li>☐ Cassette/reel cleaner</li>
-                <li>☐ Stick cleaners (1.25mm and 2.5mm)</li>
-                <li>☐ IPA and lint-free wipes (backup)</li>
-                <li>☐ Spare batteries</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">Common cleaning mistakes to avoid:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Reusing cleaning surfaces:</strong> Transfers contamination back</li>
+                <li><strong>Skipping final inspection:</strong> Cleaning isn't complete until verified</li>
+                <li><strong>Excessive pressure:</strong> Can damage end face</li>
+                <li><strong>Circular motion on ferrule:</strong> Use straight wipes</li>
+                <li><strong>Letting IPA dry naturally:</strong> Leaves residue</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 3 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[2].id}
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-        </div>
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 06 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Equipment Care and Maintenance
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Proper care of inspection and cleaning equipment ensures reliable performance and extends equipment life.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Microscope care:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always cap lenses when not in use</li>
+                <li>Use only optical-grade lens cleaners</li>
+                <li>Remove batteries if storing long-term</li>
+                <li>Protect thin video probes from bending</li>
+                <li>Keep in protective case, away from dust</li>
+                <li>Periodic check for focus and illumination</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Cleaning supply management:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Advance cassette tape fully after contaminated environments</li>
+                <li>Store stick cleaners in sealed packaging, check expiry dates</li>
+                <li>Keep IPA tightly sealed, discard if contaminated</li>
+                <li>Store wipes in sealed containers, don't touch cleaning surfaces</li>
+                <li>Rotate stock, use first-in first-out</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">Kit Checklist</p>
+              <p className="text-sm text-white mb-2">Every fibre technician should carry:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Handheld microscope with adapter tips</li>
+                <li>Video probe microscope (for installed connectors)</li>
+                <li>Cassette/reel cleaner</li>
+                <li>Stick cleaners (1.25mm and 2.5mm)</li>
+                <li>IPA and lint-free wipes (backup)</li>
+                <li>Spare batteries</li>
+              </ul>
+            </div>
+          </div>
+        </section>
 
         {/* Practical Guidance */}
         <section className="mb-10">
-          <h2 className="text-xl font-bold mb-4">Practical Guidance</h2>
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
 
-          <div className="space-y-4">
-            <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-xl p-4 border border-green-500/20">
-              <h4 className="font-semibold text-green-400 mb-2">Best Practices</h4>
-              <ul className="text-sm text-white/70 space-y-2">
-                <li>• <strong>Make it routine:</strong> Inspect and clean EVERY connection, EVERY time</li>
-                <li>• <strong>Dry first:</strong> Try dry cleaning before wet - often sufficient</li>
-                <li>• <strong>Don't assume:</strong> Even new connectors from packaging need inspection</li>
-                <li>• <strong>Use proper tools:</strong> Right size stick for adapter type</li>
-                <li>• <strong>Document issues:</strong> Photograph persistent problems for analysis</li>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Best Practices</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Make it routine:</strong> Inspect and clean EVERY connection, EVERY time</li>
+                <li><strong>Dry first:</strong> Try dry cleaning before wet - often sufficient</li>
+                <li><strong>Don't assume:</strong> Even new connectors from packaging need inspection</li>
+                <li><strong>Use proper tools:</strong> Right size stick for adapter type</li>
+                <li><strong>Document issues:</strong> Photograph persistent problems for analysis</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-xl p-4 border border-red-500/20">
-              <h4 className="font-semibold text-red-400 mb-2">Troubleshooting Persistent Contamination</h4>
-              <ul className="text-sm text-white/70 space-y-2">
-                <li>• <strong>Try wet cleaning:</strong> IPA removes oils that dry cleaning misses</li>
-                <li>• <strong>Check cleaning supplies:</strong> Are they contaminated?</li>
-                <li>• <strong>Evaluate environment:</strong> Is workspace too dirty?</li>
-                <li>• <strong>Look for damage:</strong> What looks like dirt may be physical damage</li>
-                <li>• <strong>Check mating connector:</strong> May be transferring contamination</li>
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Troubleshooting Persistent Contamination</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Try wet cleaning:</strong> IPA removes oils that dry cleaning misses</li>
+                <li><strong>Check cleaning supplies:</strong> Are they contaminated?</li>
+                <li><strong>Evaluate environment:</strong> Is workspace too dirty?</li>
+                <li><strong>Look for damage:</strong> What looks like dirt may be physical damage</li>
+                <li><strong>Check mating connector:</strong> May be transferring contamination</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-cyan-500/10 to-teal-500/10 rounded-xl p-4 border border-cyan-500/20">
-              <h4 className="font-semibold text-cyan-400 mb-2">When Cleaning Fails</h4>
-              <p className="text-sm text-white/70">
-                If contamination won't clean after multiple attempts with wet and dry methods,
-                the end face may be damaged. Scratches, pits, or burned-in debris cannot be
-                cleaned away. These connectors must be re-terminated or replaced. Continuing
-                to use damaged connectors risks damaging mating connectors.
-              </p>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">When Cleaning Fails</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>If contamination won't clean after multiple attempts with wet and dry methods, the end face may be damaged</li>
+                <li>Scratches, pits, or burned-in debris cannot be cleaned away</li>
+                <li>These connectors must be re-terminated or replaced</li>
+                <li>Continuing to use damaged connectors risks damaging mating connectors</li>
+              </ul>
             </div>
           </div>
         </section>
 
         {/* FAQs */}
         <section className="mb-10">
-          <h2 className="text-xl font-bold mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-3">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white/5 rounded-xl border border-white/10 overflow-hidden"
-              >
-                <button
-                  className="w-full px-4 py-3 flex items-center justify-between text-left min-h-[44px] touch-manipulation"
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                >
-                  <span className="text-sm font-medium text-white/90">{faq.question}</span>
-                  <ChevronDown
-                    className={`w-4 h-4 text-white/60 transition-transform ${
-                      openFaq === index ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {openFaq === index && (
-                  <div className="px-4 pb-3">
-                    <p className="text-sm text-white/70">{faq.answer}</p>
-                  </div>
-                )}
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Quick Reference Card */}
+        {/* Quick Reference */}
         <section className="mb-10">
-          <div className="bg-gradient-to-br from-teal-500/20 to-cyan-500/20 rounded-2xl p-5 border border-teal-500/30">
-            <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-              <Eye className="w-5 h-5 text-cyan-400" />
-              Quick Reference: Inspect → Clean → Inspect
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+          <div className="p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference: Inspect, Clean, Inspect</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
               <div>
-                <h4 className="text-sm font-semibold text-cyan-300 mb-2">Inspection</h4>
-                <ul className="text-xs text-white/70 space-y-1">
-                  <li>• 200-400x magnification</li>
-                  <li>• Focus on core area (Zone A)</li>
-                  <li>• No defects in core = pass</li>
-                  <li>• Use video probe for adapters</li>
+                <p className="font-medium text-white mb-1">Inspection</p>
+                <ul className="space-y-0.5">
+                  <li>200-400x magnification</li>
+                  <li>Focus on core area (Zone A)</li>
+                  <li>No defects in core = pass</li>
+                  <li>Use video probe for adapters</li>
                 </ul>
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-teal-300 mb-2">Cleaning</h4>
-                <ul className="text-xs text-white/70 space-y-1">
-                  <li>• Dry clean first (cassette/stick)</li>
-                  <li>• Wet clean if needed (IPA)</li>
-                  <li>• Always dry after wet</li>
-                  <li>• Verify with final inspection</li>
+                <p className="font-medium text-white mb-1">Cleaning</p>
+                <ul className="space-y-0.5">
+                  <li>Dry clean first (cassette/stick)</li>
+                  <li>Wet clean if needed (IPA)</li>
+                  <li>Always dry after wet</li>
+                  <li>Verify with final inspection</li>
                 </ul>
               </div>
-            </div>
-            <div className="mt-4 pt-4 border-t border-white/10">
-              <p className="text-xs text-white/50">
-                Remember: Contamination is #1 cause of fibre problems. A few seconds of cleaning prevents hours of troubleshooting.
-              </p>
             </div>
           </div>
         </section>
 
-        {/* Quiz Section */}
+        {/* Quiz */}
         <section className="mb-10">
           <Quiz
-            title="Section Quiz"
+            title="Test Your Knowledge"
             questions={quizQuestions}
-            onComplete={(score, total) => {
-              console.log(`Quiz completed: ${score}/${total}`);
-            }}
           />
         </section>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-white/10">
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module4/section4"
-            className="w-full sm:w-auto"
-          >
-            <Button
-              variant="ghost"
-              className="w-full sm:w-auto gap-2 text-white/70 hover:text-white min-h-[44px] touch-manipulation"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Previous: Connectorisation Techniques
-            </Button>
-          </Link>
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module5"
-            className="w-full sm:w-auto"
-          >
-            <Button
-              className="w-full sm:w-auto gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation"
-            >
-              Next Module: Testing & Measurement
-              <ArrowLeft className="w-4 h-4 rotate-180" />
-            </Button>
-          </Link>
-        </div>
-      </main>
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="/study-centre/upskilling/fiber-optics/module-5">
+              Next Module
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

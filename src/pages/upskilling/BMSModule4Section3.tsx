@@ -88,7 +88,7 @@ const BMSModule4Section3 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-4">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -96,7 +96,7 @@ const BMSModule4Section3 = () => {
         </div>
       </div>
 
-      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
         {/* Page Title Header */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -106,7 +106,7 @@ const BMSModule4Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Access Control Basics and Door Relays
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Security integration and door control systems in BMS
           </p>
         </header>
@@ -298,15 +298,15 @@ const BMSModule4Section3 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">300kg Maglock</p>
-                <p className="text-white/90 text-xs">12/24V DC, 0.5A, 2-4 core</p>
+                <p className="text-white text-xs">12/24V DC, 0.5A, 2-4 core</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Electric Strike</p>
-                <p className="text-white/90 text-xs">12V DC, 0.2A, 2 core min</p>
+                <p className="text-white text-xs">12V DC, 0.2A, 2 core min</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Mortice Lock</p>
-                <p className="text-white/90 text-xs">12V DC, 0.8A, 4 core min</p>
+                <p className="text-white text-xs">12V DC, 0.8A, 4 core min</p>
               </div>
             </div>
 
@@ -365,7 +365,7 @@ const BMSModule4Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

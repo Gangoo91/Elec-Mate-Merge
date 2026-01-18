@@ -1,530 +1,467 @@
-import { ArrowLeft, Layers, Zap, TrendingUp, Sun, Shield, Lightbulb } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import { section1Questions } from '@/data/upskilling/renewableEnergyModule2QuizData';
-import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
 
 const RenewableEnergyModule2Section1 = () => {
-  // Transform quiz data to match SingleQuestionQuiz format
-  const quizQuestions = section1Questions.map(q => ({
-    id: q.id,
-    question: q.question,
-    options: q.options,
-    correct: q.correctAnswer,
-    explanation: q.explanation
-  }));
+  useSEO({
+    title: "PV Panel Types | Solar PV Fundamentals",
+    description: "Understanding monocrystalline, polycrystalline, and thin-film photovoltaic panel technologies and their characteristics."
+  });
+
+  const quizQuestions = [
+    {
+      question: "What is the typical efficiency range for monocrystalline solar panels?",
+      options: ["10-14%", "15-18%", "18-22%", "23-28%"],
+      correctAnswer: 2,
+      explanation: "Monocrystalline panels offer the highest commercially available efficiency at 18-22%."
+    },
+    {
+      question: "Which panel type has a distinctive bluish hue with visible grain patterns?",
+      options: ["Monocrystalline", "Polycrystalline", "Amorphous silicon", "CIGS"],
+      correctAnswer: 1,
+      explanation: "Polycrystalline panels have a distinctive bluish hue with visible grain patterns from multiple silicon crystals."
+    },
+    {
+      question: "What is the temperature coefficient for thin-film panels?",
+      options: ["-0.4% to -0.5% per degree C", "-0.45% to -0.5% per degree C", "-0.25% to -0.4% per degree C", "-0.1% to -0.2% per degree C"],
+      correctAnswer: 2,
+      explanation: "Thin-film panels have the best temperature coefficient at -0.25% to -0.4% per degree C, meaning better high-temperature performance."
+    },
+    {
+      question: "Which thin-film technology offers the highest efficiency?",
+      options: ["Amorphous Silicon (a-Si)", "Cadmium Telluride (CdTe)", "CIGS", "All are equal"],
+      correctAnswer: 2,
+      explanation: "CIGS (Copper Indium Gallium Selenide) offers the highest thin-film efficiency at 10-12%."
+    },
+    {
+      question: "What is the typical degradation rate for monocrystalline panels per year?",
+      options: ["0.2-0.3%", "0.4-0.5%", "0.6-0.8%", "1.0-1.2%"],
+      correctAnswer: 1,
+      explanation: "Monocrystalline panels have excellent degradation rates of 0.4-0.5% per year, maintaining performance longest."
+    },
+    {
+      question: "Which panel type is best suited for limited roof space?",
+      options: ["Polycrystalline", "Thin film", "Monocrystalline", "Amorphous silicon"],
+      correctAnswer: 2,
+      explanation: "Monocrystalline's highest efficiency maximises power output in limited space."
+    },
+    {
+      question: "What technology has 80%+ market adoption for new installations?",
+      options: ["Thin film", "PERC technology", "Bifacial panels", "Standard polycrystalline"],
+      correctAnswer: 1,
+      explanation: "PERC (Passivated Emitter Rear Cell) technology has 80%+ market adoption with minimal cost premium."
+    },
+    {
+      question: "What is the typical bifaciality factor range?",
+      options: ["30-50%", "50-70%", "70-95%", "95-100%"],
+      correctAnswer: 2,
+      explanation: "Bifacial panels have a bifaciality factor of 70-95%, meaning rear-side efficiency is 70-95% of front-side."
+    },
+    {
+      question: "Which certification standards are key quality indicators for panels?",
+      options: ["ISO 9001 only", "IEC 61215 and IEC 61730", "CE marking only", "UL certification only"],
+      correctAnswer: 1,
+      explanation: "IEC 61215 (performance) and IEC 61730 (safety) are the key international standards for PV panel quality."
+    },
+    {
+      question: "What is a typical performance warranty for premium panels?",
+      options: ["60% after 20 years", "70% after 25 years", "80% after 25 years", "90% after 30 years"],
+      correctAnswer: 2,
+      explanation: "Most quality panels offer performance warranties guaranteeing 80% output after 25 years."
+    }
+  ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-4 md:px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/renewable-energy-module-2">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 2
+    <div className="min-h-screen bg-[#1a1a1a]">
+      {/* Minimal Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center">
+          <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10 -ml-2" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <h1 className="text-4xl font-bold text-white mb-4">
-              PV Panel Types (Monocrystalline, Poly, Thin Film)
-            </h1>
-            <p className="text-xl text-gray-400 mb-6">
-              Understanding different photovoltaic panel technologies and their characteristics
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Section 1
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                Panel Technologies
-              </Badge>
+        </div>
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 py-8 pb-24">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/10 mb-4">
+            <Zap className="w-6 h-6 text-elec-yellow" />
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            PV Panel Types
+          </h1>
+          <p className="text-white/60 text-sm sm:text-base">
+            Monocrystalline, Polycrystalline &amp; Thin Film Technologies
+          </p>
+        </div>
+
+        {/* Quick Summary */}
+        <div className="grid grid-cols-2 gap-3 mb-8">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <div className="text-elec-yellow text-xs font-medium uppercase tracking-wide mb-1">Highest Efficiency</div>
+            <div className="text-white font-semibold">Monocrystalline 18-22%</div>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <div className="text-elec-yellow text-xs font-medium uppercase tracking-wide mb-1">Best Value</div>
+            <div className="text-white font-semibold">Polycrystalline 15-18%</div>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <div className="mb-8 p-4 rounded-lg bg-white/5 border border-white/10">
+          <h2 className="text-white font-semibold mb-3">Learning Outcomes</h2>
+          <div className="space-y-2">
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <span className="text-white/80 text-sm">Distinguish between monocrystalline, polycrystalline, and thin-film technologies</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <span className="text-white/80 text-sm">Evaluate efficiency, cost, and physical characteristics of each type</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <span className="text-white/80 text-sm">Select appropriate panels for different use cases and applications</span>
             </div>
           </div>
+        </div>
 
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <ul className="text-gray-300 space-y-2">
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Distinguish between monocrystalline, polycrystalline, and thin-film technologies
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Evaluate efficiency, cost, and physical characteristics
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  Select appropriate panels for different use cases
-                </li>
+        {/* Section 01 */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Monocrystalline Silicon Panels
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Monocrystalline panels are manufactured from single silicon crystals, offering the highest efficiency and premium performance characteristics. They have a dark black or very dark blue colour with uniform appearance and rounded corners.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Key Characteristics</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Efficiency:</strong> 18-22% (highest)</li>
+                  <li>• <strong className="text-white">Temp coefficient:</strong> -0.4% to -0.5%/°C</li>
+                  <li>• <strong className="text-white">Lifespan:</strong> 25-30 years</li>
+                  <li>• <strong className="text-white">Degradation:</strong> 0.4-0.5%/year</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h4 className="text-white font-medium mb-2">Advantages</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Space-efficient due to high efficiency</li>
+                  <li>• Better low-light performance</li>
+                  <li>• Longer warranties</li>
+                  <li>• Higher power output per m²</li>
+                </ul>
+              </div>
+            </div>
+            <p>
+              <strong className="text-white">Best suited for:</strong> Limited roof space, premium residential installations, and applications where space efficiency matters more than upfront cost.
+            </p>
+          </div>
+        </div>
+
+        <InlineCheck
+          question="What is the typical efficiency range for monocrystalline panels?"
+          options={["10-14%", "15-18%", "18-22%"]}
+          correctIndex={2}
+          explanation="Monocrystalline panels offer the highest efficiency at 18-22%, making them ideal for space-constrained installations."
+        />
+
+        {/* Section 02 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Polycrystalline Silicon Panels
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Polycrystalline panels are made from multiple silicon crystals melted together, offering a balance between cost and performance. They have a distinctive bluish hue with visible grain patterns and square cells with sharp corners.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Key Characteristics</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Efficiency:</strong> 15-18%</li>
+                  <li>• <strong className="text-white">Temp coefficient:</strong> -0.45% to -0.5%/°C</li>
+                  <li>• <strong className="text-white">Manufacturing:</strong> Less energy-intensive</li>
+                  <li>• <strong className="text-white">Degradation:</strong> 0.5-0.6%/year</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h4 className="text-white font-medium mb-2">Advantages</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Lower cost per watt - budget-friendly</li>
+                  <li>• Simpler manufacturing process</li>
+                  <li>• Good performance-to-price ratio</li>
+                  <li>• Widely available</li>
+                </ul>
+              </div>
+            </div>
+            <p>
+              <strong className="text-white">Best suited for:</strong> Budget-conscious residential installations, projects with ample roof space, and applications where upfront cost is the primary concern.
+            </p>
+          </div>
+        </div>
+
+        <InlineCheck
+          question="Which panel type offers the best balance between cost and performance?"
+          options={["Monocrystalline", "Polycrystalline", "Thin film"]}
+          correctIndex={1}
+          explanation="Polycrystalline panels offer the best cost-performance balance with good efficiency at lower cost per watt."
+        />
+
+        {/* Section 03 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Thin Film Technologies
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Thin film panels use different semiconductor materials deposited in thin layers, offering unique advantages for specific applications including flexibility and better high-temperature performance.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Amorphous Silicon (a-Si)</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Efficiency: 6-8%</li>
+                  <li>• Flexible substrate options</li>
+                  <li>• Best low-light performance</li>
+                  <li>• Lowest manufacturing cost</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Cadmium Telluride (CdTe)</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Efficiency: 9-11%</li>
+                  <li>• Excellent temp coefficient</li>
+                  <li>• Fast energy payback</li>
+                  <li>• Utility-scale applications</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">CIGS</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Efficiency: 10-12%</li>
+                  <li>• Best thin-film efficiency</li>
+                  <li>• Flexible and lightweight</li>
+                  <li>• Premium thin-film option</li>
+                </ul>
+              </div>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">Thin Film Advantages:</h4>
+              <ul className="text-sm space-y-1">
+                <li>• <strong className="text-white">Flexible and lightweight:</strong> Suitable for unconventional installations</li>
+                <li>• <strong className="text-white">Better in diffuse light:</strong> Maintains output in cloudy conditions</li>
+                <li>• <strong className="text-white">Lower temperature coefficient:</strong> Better high-temperature performance</li>
+                <li>• <strong className="text-white">Aesthetic options:</strong> Can be integrated into building materials</li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </div>
 
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed">
-                The first step in designing any PV system is understanding your panel technology. This section breaks down the three main PV types, helping you make informed decisions based on efficiency, cost, space constraints, and application requirements.
-              </p>
-            </CardContent>
-          </Card>
+        <InlineCheck
+          question="Which thin-film technology has the highest efficiency?"
+          options={["Amorphous Silicon", "Cadmium Telluride", "CIGS"]}
+          correctIndex={2}
+          explanation="CIGS (Copper Indium Gallium Selenide) offers the highest thin-film efficiency at 10-12%."
+        />
 
-          {/* Monocrystalline Panels */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Sun className="h-6 w-6 text-yellow-400" />
-                Monocrystalline Silicon Panels
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Monocrystalline panels are manufactured from single silicon crystals, offering the highest efficiency and premium performance characteristics.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-blue-900/20 p-4 rounded-lg border border-yellow-400/30">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Key Characteristics:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Efficiency:</strong> 18-22% (highest commercially available)</li>
-                    <li>• <strong>Appearance:</strong> Dark black or very dark blue colour</li>
-                    <li>• <strong>Cell structure:</strong> Uniform appearance with rounded corners</li>
-                    <li>• <strong>Temperature coefficient:</strong> -0.4% to -0.5% per °C</li>
-                    <li>• <strong>Lifespan:</strong> 25-30 years with excellent degradation rates</li>
-                  </ul>
-                </div>
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-yellow-400 font-semibold mb-3">Advantages & Disadvantages:</h4>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <h5 className="text-green-400 font-medium">Advantages:</h5>
-                      <ul className="text-gray-300 space-y-1">
-                        <li>• Space-efficient due to high efficiency</li>
-                        <li>• Better performance in low-light conditions</li>
-                        <li>• Longer warranties and proven reliability</li>
-                        <li>• Higher power output per unit area</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-red-400 font-medium">Disadvantages:</h5>
-                      <ul className="text-gray-300 space-y-1">
-                        <li>• Higher initial cost per watt</li>
-                        <li>• More energy-intensive manufacturing process</li>
-                        <li>• Performance drops more in high temperatures</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+        {/* Section 04 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Performance Factors
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Understanding key performance factors helps select the right panel technology for specific conditions and applications.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h4 className="text-white font-medium mb-2">Temperature Coefficients</h4>
+                <p className="text-sm mb-2">Percentage decrease in power per °C above 25°C:</p>
+                <ul className="text-sm space-y-1">
+                  <li>• Monocrystalline: -0.4% to -0.5%/°C</li>
+                  <li>• Polycrystalline: -0.45% to -0.5%/°C</li>
+                  <li>• Thin film: -0.25% to -0.4%/°C</li>
+                </ul>
+                <p className="text-elec-yellow text-xs mt-2">Lower = better in hot climates</p>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Polycrystalline Panels */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Layers className="h-6 w-6 text-cyan-400" />
-                Polycrystalline Silicon Panels
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Polycrystalline panels are made from multiple silicon crystals melted together, offering a balance between cost and performance.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-cyan-900/20 p-4 rounded-lg border border-cyan-500/30">
-                  <h4 className="text-cyan-400 font-semibold mb-3">Key Characteristics:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Efficiency:</strong> 15-18% (good performance)</li>
-                    <li>• <strong>Appearance:</strong> Distinctive bluish hue with visible grain patterns</li>
-                    <li>• <strong>Cell structure:</strong> Square cells with sharp corners</li>
-                    <li>• <strong>Temperature coefficient:</strong> -0.45% to -0.5% per °C</li>
-                    <li>• <strong>Manufacturing:</strong> Less energy-intensive production process</li>
-                  </ul>
-                </div>
-                <div className="bg-card p-4 rounded-lg border border-gray-600">
-                  <h4 className="text-cyan-400 font-semibold mb-3">Advantages & Disadvantages:</h4>
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <h5 className="text-green-400 font-medium">Advantages:</h5>
-                      <ul className="text-gray-300 space-y-1">
-                        <li>• Lower cost per watt - budget-friendly</li>
-                        <li>• Simpler manufacturing process</li>
-                        <li>• Good performance-to-price ratio</li>
-                        <li>• Widely available with established supply chains</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-red-400 font-medium">Disadvantages:</h5>
-                      <ul className="text-gray-300 space-y-1">
-                        <li>• Lower efficiency requires more roof space</li>
-                        <li>• Slightly higher temperature coefficient</li>
-                        <li>• Less aesthetically appealing to some users</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h4 className="text-white font-medium mb-2">Degradation Rates</h4>
+                <p className="text-sm mb-2">Annual reduction in power output:</p>
+                <ul className="text-sm space-y-1">
+                  <li>• Monocrystalline: 0.4-0.5%/year</li>
+                  <li>• Polycrystalline: 0.5-0.6%/year</li>
+                  <li>• Thin film: 0.6-0.8%/year</li>
+                </ul>
+                <p className="text-elec-yellow text-xs mt-2">Lower = better long-term performance</p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </div>
 
-          {/* Thin Film Panels */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-6 w-6 text-purple-400" />
-                Thin Film Technologies
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Thin film panels use different semiconductor materials deposited in thin layers, offering unique advantages for specific applications.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
-                  <h4 className="text-purple-400 font-semibold mb-3">Amorphous Silicon (a-Si):</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• Efficiency: 6-8%</li>
-                    <li>• Flexible substrate options</li>
-                    <li>• Better low-light performance</li>
-                    <li>• Lower temperature coefficient</li>
-                    <li>• Lowest manufacturing cost</li>
-                  </ul>
-                </div>
-                <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
-                  <h4 className="text-purple-400 font-semibold mb-3">Cadmium Telluride (CdTe):</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• Efficiency: 9-11%</li>
-                    <li>• Excellent temperature coefficient</li>
-                    <li>• Fast energy payback time</li>
-                    <li>• Good performance in high temperatures</li>
-                    <li>• Utility-scale applications</li>
-                  </ul>
-                </div>
-                <div className="bg-purple-900/20 p-4 rounded-lg border border-purple-500/30">
-                  <h4 className="text-purple-400 font-semibold mb-3">CIGS (Copper Indium Gallium Selenide):</h4>
-                  <ul className="text-gray-300 text-sm space-y-1">
-                    <li>• Efficiency: 10-12%</li>
-                    <li>• Best thin-film efficiency</li>
-                    <li>• Flexible and lightweight</li>
-                    <li>• Good low-light performance</li>
-                    <li>• Premium thin-film option</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-purple-400 font-semibold mb-3">Thin Film Advantages:</h4>
-                <ul className="text-gray-300 text-sm space-y-1">
-                  <li>• <strong>Flexible and lightweight:</strong> Suitable for unconventional installations</li>
-                  <li>• <strong>Better in diffuse light:</strong> Maintains output in cloudy conditions</li>
-                  <li>• <strong>Lower temperature coefficient:</strong> Better high-temperature performance</li>
-                  <li>• <strong>Aesthetic options:</strong> Can be integrated into building materials</li>
-                  <li>• <strong>Lower manufacturing energy:</strong> Reduced carbon footprint</li>
+        {/* Section 05 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Emerging Technologies
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              The solar industry continues to innovate with new technologies that push efficiency boundaries and reduce costs.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">PERC Technology</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• 1-2% efficiency improvement</li>
+                  <li>• 80%+ market adoption</li>
+                  <li>• Minimal cost premium</li>
+                  <li>• Better low-light response</li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Performance Factors */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <TrendingUp className="h-6 w-6 text-orange-400" />
-                Performance Impact Factors
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Understanding key performance factors helps in selecting the right panel technology for specific conditions and applications.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-orange-900/20 p-4 rounded-lg border border-orange-500/30">
-                  <h4 className="text-orange-400 font-semibold mb-3">Temperature Coefficients:</h4>
-                  <div className="text-sm space-y-2">
-                    <p className="text-gray-300">
-                      <strong>Definition:</strong> Percentage decrease in power output per degree Celsius above 25°C
-                    </p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• <strong>Monocrystalline:</strong> -0.4% to -0.5% per °C</li>
-                      <li>• <strong>Polycrystalline:</strong> -0.45% to -0.5% per °C</li>
-                      <li>• <strong>Thin film:</strong> -0.25% to -0.4% per °C</li>
-                    </ul>
-                    <p className="text-yellow-400 text-xs">
-                      Lower temperature coefficients mean better performance in hot climates.
-                    </p>
-                  </div>
-                </div>
-                <div className="bg-orange-900/20 p-4 rounded-lg border border-orange-500/30">
-                  <h4 className="text-orange-400 font-semibold mb-3">Degradation Rates:</h4>
-                  <div className="text-sm space-y-2">
-                    <p className="text-gray-300">
-                      <strong>Definition:</strong> Annual reduction in power output over the panel's lifetime
-                    </p>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• <strong>Monocrystalline:</strong> 0.4-0.5% per year</li>
-                      <li>• <strong>Polycrystalline:</strong> 0.5-0.6% per year</li>
-                      <li>• <strong>Thin film:</strong> 0.6-0.8% per year</li>
-                    </ul>
-                    <p className="text-yellow-400 text-xs">
-                      Lower degradation rates mean better long-term performance.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Emerging Technologies */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <TrendingUp className="h-6 w-6 text-cyan-400" />
-                Emerging PV Technologies and Market Trends
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                The solar industry continues to innovate with new technologies that push efficiency boundaries and reduce costs.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="bg-cyan-900/20 p-4 rounded-lg border border-cyan-500/30">
-                  <h4 className="text-cyan-400 font-semibold mb-3">PERC Technology:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Passivated Emitter Rear Cell:</strong> Enhanced light capture</li>
-                    <li>• <strong>Efficiency gains:</strong> 1-2% improvement over standard cells</li>
-                    <li>• <strong>Market adoption:</strong> 80%+ of new installations</li>
-                    <li>• <strong>Cost premium:</strong> Minimal additional cost</li>
-                    <li>• <strong>Performance:</strong> Better low-light and high-temperature response</li>
-                  </ul>
-                </div>
-                <div className="bg-cyan-900/20 p-4 rounded-lg border border-cyan-500/30">
-                  <h4 className="text-cyan-400 font-semibold mb-3">Bifacial Panels:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Dual-sided generation:</strong> Front and rear light capture</li>
-                    <li>• <strong>Bifaciality factor:</strong> 70-95% rear-side efficiency</li>
-                    <li>• <strong>Gain potential:</strong> 10-30% additional energy yield</li>
-                    <li>• <strong>Mounting requirements:</strong> Elevated for ground reflection</li>
-                    <li>• <strong>Applications:</strong> Ground mount, elevated installations</li>
-                  </ul>
-                </div>
-                <div className="bg-cyan-900/20 p-4 rounded-lg border border-cyan-500/30">
-                  <h4 className="text-cyan-400 font-semibold mb-3">Half-Cell Technology:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Cell division:</strong> Reduces resistive losses</li>
-                    <li>• <strong>Shading tolerance:</strong> Better partial shading performance</li>
-                    <li>• <strong>Hot spot reduction:</strong> Lower cell operating temperatures</li>
-                    <li>• <strong>Power gain:</strong> 5-10W additional output per panel</li>
-                    <li>• <strong>Reliability:</strong> Reduced thermal stress and cracking</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real-World Performance Analysis */}
-          <Card className="bg-blue-900/20 border-yellow-400/30">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">Performance Analysis: UK Installation Comparison</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed mb-4">
-                A comprehensive study of three identical 4kWp residential installations in Manchester using different panel technologies over 12 months provides valuable performance insights.
-              </p>
-              <div className="bg-card p-4 rounded-lg mb-4">
-                <h4 className="text-yellow-400 font-semibold mb-3">Installation Details:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <h5 className="text-white font-medium">System A: Monocrystalline</h5>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• 10 × 400W mono panels</li>
-                      <li>• 20.8% panel efficiency</li>
-                      <li>• -0.38%/°C temperature coefficient</li>
-                      <li>• Annual yield: 3,847 kWh</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-medium">System B: Polycrystalline</h5>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• 12 × 335W poly panels</li>
-                      <li>• 17.2% panel efficiency</li>
-                      <li>• -0.41%/°C temperature coefficient</li>
-                      <li>• Annual yield: 3,654 kWh</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-medium">System C: Thin Film (CdTe)</h5>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• 36 × 112W thin film panels</li>
-                      <li>• 11.5% panel efficiency</li>
-                      <li>• -0.25%/°C temperature coefficient</li>
-                      <li>• Annual yield: 3,721 kWh</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-2">Key Performance Insights:</h4>
-                <ul className="text-gray-300 text-sm space-y-1">
-                  <li>• <strong>Summer performance:</strong> Thin film outperformed in high temperatures (July-August)</li>
-                  <li>• <strong>Winter performance:</strong> Monocrystalline maintained highest output in low light</li>
-                  <li>• <strong>Cloudy day performance:</strong> Thin film showed best diffuse light response</li>
-                  <li>• <strong>Overall leader:</strong> Monocrystalline achieved 5% higher annual yield</li>
-                  <li>• <strong>Cost effectiveness:</strong> Polycrystalline provided best £/kWh over system lifetime</li>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Bifacial Panels</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Dual-sided generation</li>
+                  <li>• 70-95% rear efficiency</li>
+                  <li>• 10-30% extra yield</li>
+                  <li>• Elevated mounting required</li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Manufacturing Quality and Warranties */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-6 w-6 text-green-400" />
-                Manufacturing Quality and Warranty Considerations
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-300 leading-relaxed">
-                Panel quality and manufacturer warranties significantly impact long-term system performance and project economics.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
-                  <h4 className="text-green-400 font-semibold mb-3">Quality Indicators:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>IEC certifications:</strong> IEC 61215, IEC 61730 compliance</li>
-                    <li>• <strong>Flash test results:</strong> Factory power measurement accuracy</li>
-                    <li>• <strong>Visual inspection:</strong> Cell alignment, soldering quality</li>
-                    <li>• <strong>Mechanical testing:</strong> Hail impact, wind loading certification</li>
-                    <li>• <strong>Salt mist testing:</strong> Corrosion resistance for coastal areas</li>
-                  </ul>
-                </div>
-                <div className="bg-green-900/20 p-4 rounded-lg border border-green-500/30">
-                  <h4 className="text-green-400 font-semibold mb-3">Warranty Structures:</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• <strong>Product warranty:</strong> 10-25 years materials/workmanship</li>
-                    <li>• <strong>Performance warranty:</strong> 80% output after 25 years</li>
-                    <li>• <strong>Linear warranties:</strong> Annual degradation limits (≤0.6%/year)</li>
-                    <li>• <strong>Enhanced warranties:</strong> Premium tiers with lower degradation</li>
-                    <li>• <strong>Bankability factors:</strong> Manufacturer financial stability</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-card p-4 rounded-lg border border-gray-600">
-                <h4 className="text-green-400 font-semibold mb-2">Tier 1 Manufacturer Criteria (Bloomberg NEF):</h4>
-                <ul className="text-gray-300 text-sm space-y-1">
-                  <li>• Vertically integrated manufacturing (from wafer to module)</li>
-                  <li>• Bankable by development banks for utility-scale projects</li>
-                  <li>• Automated production lines with quality control systems</li>
-                  <li>• Substantial R&D investment and patent portfolio</li>
-                  <li>• Financial transparency and stable business model</li>
+              <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+                <h4 className="text-white font-medium mb-2">Half-Cell Technology</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• Reduced resistive losses</li>
+                  <li>• Better shade tolerance</li>
+                  <li>• Lower operating temps</li>
+                  <li>• 5-10W extra per panel</li>
                 </ul>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </div>
 
-          {/* Application Selection Guide */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Panel Selection Guide</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-gray-600">
-                      <th className="text-left text-white p-2">Application</th>
-                      <th className="text-left text-white p-2">Recommended Type</th>
-                      <th className="text-left text-white p-2">Key Reasons</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2 font-medium">Limited roof space</td>
-                      <td className="p-2 text-yellow-400">Monocrystalline</td>
-                      <td className="p-2">Highest efficiency maximises power in small areas</td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2 font-medium">Budget-conscious residential</td>
-                      <td className="p-2 text-cyan-400">Polycrystalline</td>
-                      <td className="p-2">Best balance of cost and performance</td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2 font-medium">Hot climate installations</td>
-                      <td className="p-2 text-purple-400">Thin film</td>
-                      <td className="p-2">Better temperature coefficient and heat tolerance</td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="p-2 font-medium">Flexible/curved surfaces</td>
-                      <td className="p-2 text-purple-400">Thin film</td>
-                      <td className="p-2">Flexible substrate options available</td>
-                    </tr>
-                    <tr>
-                      <td className="p-2 font-medium">Utility-scale projects</td>
-                      <td className="p-2 text-yellow-400">Monocrystalline</td>
-                      <td className="p-2">Lowest levelised cost of energy (LCOE)</td>
-                    </tr>
-                  </tbody>
-                </table>
+        {/* Section 06 */}
+        <div className="mb-8 mt-8">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Quality &amp; Warranties
+          </h2>
+          <div className="space-y-4 text-white/80 leading-relaxed">
+            <p>
+              Panel quality and manufacturer warranties significantly impact long-term system performance and project economics.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h4 className="text-white font-medium mb-2">Quality Indicators</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">IEC 61215/61730:</strong> Key certifications</li>
+                  <li>• <strong className="text-white">Flash test results:</strong> Power accuracy</li>
+                  <li>• <strong className="text-white">Visual inspection:</strong> Cell/solder quality</li>
+                  <li>• <strong className="text-white">Mechanical testing:</strong> Hail/wind rated</li>
+                </ul>
               </div>
-            </CardContent>
-          </Card>
+              <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <h4 className="text-white font-medium mb-2">Warranty Structures</h4>
+                <ul className="text-sm space-y-1">
+                  <li>• <strong className="text-white">Product:</strong> 10-25 years materials</li>
+                  <li>• <strong className="text-white">Performance:</strong> 80% after 25 years</li>
+                  <li>• <strong className="text-white">Linear:</strong> ≤0.6%/year degradation</li>
+                  <li>• <strong className="text-white">Tier 1:</strong> Bankable manufacturers</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 leading-relaxed mb-4">
-                Each panel type suits different project needs. Know your trade-offs in cost, space, and performance. Monocrystalline offers premium efficiency, polycrystalline provides the best value proposition, and thin film excels in challenging conditions.
-              </p>
-              <p className="text-yellow-400 font-medium">
-                The right panel choice depends on your specific application requirements, budget constraints, and site conditions.
-              </p>
-            </CardContent>
-          </Card>
+        {/* Panel Selection Guide */}
+        <div className="mb-8 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+          <h3 className="text-white font-semibold mb-3">Panel Selection Guide</h3>
+          <div className="space-y-2 text-white/80 text-sm">
+            <p>
+              <strong className="text-white">Limited roof space:</strong> Monocrystalline - highest efficiency maximises power in small areas
+            </p>
+            <p>
+              <strong className="text-white">Budget-conscious residential:</strong> Polycrystalline - best balance of cost and performance
+            </p>
+            <p>
+              <strong className="text-white">Hot climate installations:</strong> Thin film - better temperature coefficient
+            </p>
+            <p>
+              <strong className="text-white">Flexible/curved surfaces:</strong> Thin film - flexible substrate options
+            </p>
+            <p>
+              <strong className="text-white">Utility-scale projects:</strong> Monocrystalline - lowest levelised cost of energy
+            </p>
+          </div>
+        </div>
 
-          {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-6 w-6 text-yellow-400" />
-                Test Your Knowledge
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-300 mb-6">
-                Test your understanding of different PV panel technologies and their characteristics.
-              </p>
-              <SingleQuestionQuiz 
-                questions={quizQuestions}
-                title="PV Panel Types Quiz"
-              />
-            </CardContent>
-          </Card>
+        {/* FAQs */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">Why do monocrystalline panels cost more?</h4>
+              <p className="text-white/70 text-sm">Monocrystalline panels require more energy and precision in manufacturing as they use single-crystal silicon. The Czochralski process creates a pure silicon ingot that is then sliced into wafers, which is more complex than polycrystalline production.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">How do I identify panel types visually?</h4>
+              <p className="text-white/70 text-sm">Monocrystalline panels are dark black/blue with rounded cell corners. Polycrystalline panels are distinctly blue with visible grain patterns and square cell corners. Thin film panels have a uniform dark appearance without visible cells.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">What makes PERC technology so popular?</h4>
+              <p className="text-white/70 text-sm">PERC adds a passivation layer to the rear of cells, improving light capture and efficiency by 1-2% with minimal cost increase. This makes it the default choice for most new installations.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">When should I choose thin film panels?</h4>
+              <p className="text-white/70 text-sm">Choose thin film for hot climates (better temperature coefficient), flexible/curved surfaces, building-integrated applications (BIPV), or when consistent diffuse light performance matters more than peak output.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">What is a Tier 1 manufacturer?</h4>
+              <p className="text-white/70 text-sm">Bloomberg NEF classifies Tier 1 manufacturers based on bankability - whether development banks will finance projects using their panels. This indicates financial stability, quality control, and long-term warranty reliability.</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <h4 className="text-white font-medium mb-2">How much extra yield do bifacial panels provide?</h4>
+              <p className="text-white/70 text-sm">Bifacial panels can provide 10-30% additional energy yield depending on mounting height, ground reflectivity (albedo), and installation angle. They work best over light-coloured surfaces with elevated mounting.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Quiz */}
+        <div className="mb-8">
+          <Quiz
+            title="Section 1 Quiz: PV Panel Types"
+            questions={quizQuestions}
+            passingScore={70}
+          />
+        </div>
+
+        {/* Bottom Navigation */}
+        <div className="flex justify-between items-center pt-6 border-t border-white/10">
+          <Button variant="ghost" className="text-white/70 hover:text-white hover:bg-white/10" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+          <Button size="lg" className="bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold" asChild>
+            <Link to="../section-2">
+              Next Section
+            </Link>
+          </Button>
         </div>
       </div>
     </div>

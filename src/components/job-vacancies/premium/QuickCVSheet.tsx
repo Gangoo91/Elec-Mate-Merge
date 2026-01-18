@@ -98,12 +98,12 @@ const QuickCVSheet = ({ isOpen, onClose }: QuickCVSheetProps) => {
       localStorage.setItem("elecmate-cv-template", cv.template_id);
       localStorage.setItem("elecmate-cv-editing-id", cv.id);
     }
-    navigate("/electrician-hub/cv-builder");
+    navigate("/electrician/cv-builder");
     onClose();
   };
 
   const handleCreateCV = () => {
-    navigate("/electrician-hub/cv-builder");
+    navigate("/electrician/cv-builder");
     onClose();
   };
 

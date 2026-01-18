@@ -11,26 +11,27 @@ export const useCompanyProfile = () => {
     try {
       setLoading(true);
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) return;
 
+      // Use RPC function to bypass 406 error from direct table query
       const { data, error } = await supabase
-        .from('company_profiles')
-        .select('*')
-        .eq('user_id', user.id)
-        .maybeSingle();
+        .rpc('get_my_company_profile');
 
       if (error) {
         console.error('Error fetching company profile:', error);
         return;
       }
 
-      if (data) {
+      // RPC returns an array, get first item
+      const profile = Array.isArray(data) ? data[0] : data;
+
+      if (profile) {
         setCompanyProfile({
-          ...data,
-          bank_details: data.bank_details || {},
-          created_at: new Date(data.created_at),
-          updated_at: new Date(data.updated_at),
+          ...profile,
+          bank_details: profile.bank_details || {},
+          created_at: new Date(profile.created_at),
+          updated_at: new Date(profile.updated_at),
         } as CompanyProfile);
       }
     } catch (error) {

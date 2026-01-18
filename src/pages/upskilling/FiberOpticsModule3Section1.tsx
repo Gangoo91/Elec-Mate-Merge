@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { ArrowLeft, Zap, CheckCircle, Info, BookOpen, Lightbulb, AlertTriangle, HelpCircle, ChevronDown, ChevronUp, Cable, Shield, Building, TreePine } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle, Cable, Shield, Building, TreePine } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -35,54 +34,74 @@ const quickCheckQuestions = [
 
 const quizQuestions = [
   {
+    id: 1,
     question: "Tight-buffered fibre cables are most suitable for:",
     options: ["Direct burial", "Indoor and riser applications", "Submarine installations", "Overhead aerial"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Tight-buffered cables are designed for indoor use where flexibility and direct termination are priorities."
   },
   {
+    id: 2,
     question: "The gel in loose-tube cables serves to:",
     options: ["Increase bandwidth", "Protect fibres from moisture and allow thermal expansion", "Improve bend radius", "Reduce weight"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Gel provides moisture protection and allows fibres to move freely during temperature cycling."
   },
   {
+    id: 3,
     question: "What does 'CST' stand for in fibre cable construction?",
     options: ["Copper Shielded Tube", "Corrugated Steel Tape", "Central Strength Tube", "Cable Support Tray"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "CST stands for Corrugated Steel Tape, a type of metallic armour for rodent protection."
   },
   {
+    id: 4,
     question: "Plenum-rated cables in the UK equivalent are typically:",
     options: ["PVC sheathed", "PE sheathed", "LSZH sheathed with Euroclass ratings", "Armoured only"],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "UK installations use LSZH sheathing with Euroclass fire ratings (Cca, Dca, etc.) equivalent to US plenum ratings."
   },
   {
+    id: 5,
     question: "For a cable run between buildings through an underground duct:",
     options: ["Indoor tight-buffer is adequate", "External-grade loose-tube is required", "Any cable with LSZH", "Only armoured cables"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "External runs require loose-tube construction with water-blocking and appropriate temperature range."
   },
   {
+    id: 6,
     question: "The Euroclass fire rating 'Cca' indicates:",
     options: ["Combustible, poor performance", "Non-combustible", "Limited fire spread with low smoke", "No rating required"],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Cca indicates limited flame spread with low smoke production, suitable for most indoor installations."
   },
   {
+    id: 7,
     question: "Water-blocking in fibre cables is achieved using:",
     options: ["Tight buffering only", "Water-swellable tapes and gels", "Metal armouring", "PVC inner sheath"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Water-swellable tapes and gels expand when wet to block water ingress."
   },
   {
+    id: 8,
     question: "Messenger wire is used with fibre cables for:",
     options: ["Grounding", "Aerial/overhead installation support", "Rodent protection", "Termination"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Messenger wire supports fibre cables in overhead/aerial installations between poles."
   },
   {
+    id: 9,
     question: "When selecting cable for a riser between floors:",
     options: ["External grade is required", "Riser-rated (CMR/Cca equivalent) with flame retardance", "Any indoor cable", "Only singlemode"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Riser applications require enhanced fire-retardant ratings to prevent vertical fire spread."
   },
   {
+    id: 10,
     question: "Direct burial without conduit requires cable with:",
     options: ["LSZH sheath only", "Armoured construction and water-blocking", "Tight-buffered design", "Messenger wire"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Direct burial requires SWA armour for mechanical protection and water-blocking for moisture resistance."
   }
 ];
 
@@ -119,75 +138,59 @@ const FiberOpticsModule3Section1 = () => {
     description: DESCRIPTION
   });
 
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/60">
-        <div className="container flex h-14 max-w-screen-2xl items-center px-4">
-          <Link
-            to="/study-centre/apprentice/fibre-optics/module-3"
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors touch-manipulation min-h-[44px]"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Module 3</span>
-          </Link>
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="container max-w-3xl mx-auto px-4 py-6 space-y-8">
-        {/* Title Section */}
-        <section className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm font-medium px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
             <Cable className="h-4 w-4" />
-            Module 3 • Section 1
+            <span>Module 3 Section 1</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fibre Cable Types
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-white/80">
             Indoor, outdoor, and armoured cable construction
           </p>
-        </section>
+        </header>
 
-        {/* Quick Summary Cards */}
-        <section className="grid sm:grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-xl p-5 border border-elec-yellow/30">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-lg bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                <Zap className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">In 30 Seconds</h3>
-                <p className="text-sm text-white/80">
-                  Indoor = tight-buffer, LSZH sheath. Outdoor = loose-tube, water-blocked, PE/MDPE. Armoured = SWA/CST for burial/rodent protection. Match cable to environment.
-                </p>
-              </div>
-            </div>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Indoor:</strong> Tight-buffer, LSZH sheath</li>
+              <li><strong>Outdoor:</strong> Loose-tube, water-blocked, PE</li>
+              <li><strong>Armoured:</strong> SWA/CST for burial/rodent protection</li>
+            </ul>
           </div>
-          <div className="bg-gradient-to-br from-blue-500/20 to-blue-500/5 rounded-xl p-5 border border-blue-500/30">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <Info className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Select It / Install It</h3>
-                <p className="text-sm text-white/80">
-                  Check environment: indoor, outdoor, buried? Check fire rating: LSZH/Cca for buildings. Check protection: armour for mechanical risk. Verify temperature range.
-                </p>
-              </div>
-            </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Select It / Install It</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Environment:</strong> Indoor, outdoor, buried?</li>
+              <li><strong>Fire rating:</strong> LSZH/Cca for buildings</li>
+              <li><strong>Protection:</strong> Armour for mechanical risk</li>
+            </ul>
           </div>
-        </section>
+        </div>
 
         {/* Learning Outcomes */}
-        <section className="bg-white/5 rounded-xl p-6 border border-white/10">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-elec-yellow" />
-            What You'll Learn
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {[
               "Tight-buffer vs loose-tube construction",
               "Indoor cable requirements (LSZH, fire rating)",
@@ -195,585 +198,406 @@ const FiberOpticsModule3Section1 = () => {
               "Armoured cable types (SWA, CST)",
               "Environmental and temperature ratings",
               "Selection criteria for different applications"
-            ].map((outcome, index) => (
-              <div key={index} className="flex items-start gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Section 1: Cable Construction Fundamentals */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">01</span>
-            <h2 className="text-2xl font-bold">Cable Construction Fundamentals</h2>
-          </div>
+        <hr className="border-white/5 mb-12" />
 
-          <div className="space-y-4 text-white/80">
+        {/* Section 01: Cable Construction Fundamentals */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Cable Construction Fundamentals
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Fibre optic cables are engineered structures designed to protect delicate glass fibres while enabling practical installation and long-term reliability. The <strong>buffer type</strong>—how fibres are protected within the cable—is the primary construction difference affecting cable selection.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-                <h4 className="font-semibold text-blue-400 mb-2">Tight-Buffered Construction</h4>
-                <p className="text-sm text-white/70 mb-2">Fibre coated directly with 900µm buffer</p>
-                <ul className="text-sm space-y-1">
-                  <li>• Direct termination possible</li>
-                  <li>• Good for indoor/riser use</li>
-                  <li>• More robust handling</li>
-                  <li>• Limited temperature range</li>
-                  <li>• Higher cost per metre</li>
+            <div className="my-6 grid sm:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Tight-Buffered Construction</p>
+                <p className="text-sm text-white mb-2 ml-4">Fibre coated directly with 900µm buffer</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>Direct termination possible</li>
+                  <li>Good for indoor/riser use</li>
+                  <li>More robust handling</li>
+                  <li>Limited temperature range</li>
+                  <li>Higher cost per metre</li>
                 </ul>
               </div>
-              <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-                <h4 className="font-semibold text-green-400 mb-2">Loose-Tube Construction</h4>
-                <p className="text-sm text-white/70 mb-2">Fibres loose in gel-filled tubes</p>
-                <ul className="text-sm space-y-1">
-                  <li>• Excellent temperature tolerance</li>
-                  <li>• Best for outdoor/external</li>
-                  <li>• Requires fan-out for termination</li>
-                  <li>• Higher fibre counts possible</li>
-                  <li>• Lower cost for high counts</li>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Loose-Tube Construction</p>
+                <p className="text-sm text-white mb-2 ml-4">Fibres loose in gel-filled tubes</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>Excellent temperature tolerance</li>
+                  <li>Best for outdoor/external</li>
+                  <li>Requires fan-out for termination</li>
+                  <li>Higher fibre counts possible</li>
+                  <li>Lower cost for high counts</li>
                 </ul>
               </div>
             </div>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Cable Layer Structure</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold">1.</span>
-                  <span><strong>Fibre:</strong> 125µm glass with coating (250µm total)</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold">2.</span>
-                  <span><strong>Buffer:</strong> 900µm tight or loose-tube with gel</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold">3.</span>
-                  <span><strong>Strength Members:</strong> Aramid yarn (Kevlar) or fibreglass rods</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold">4.</span>
-                  <span><strong>Water Blocking:</strong> Gel, tapes, or swellable elements</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold">5.</span>
-                  <span><strong>Armour:</strong> Steel wire or tape (if required)</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="text-elec-yellow font-bold">6.</span>
-                  <span><strong>Outer Sheath:</strong> LSZH, PE, PVC depending on application</span>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Cable Layer Structure:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>1. Fibre:</strong> 125µm glass with coating (250µm total)</li>
+                <li><strong>2. Buffer:</strong> 900µm tight or loose-tube with gel</li>
+                <li><strong>3. Strength Members:</strong> Aramid yarn (Kevlar) or fibreglass rods</li>
+                <li><strong>4. Water Blocking:</strong> Gel, tapes, or swellable elements</li>
+                <li><strong>5. Armour:</strong> Steel wire or tape (if required)</li>
+                <li><strong>6. Outer Sheath:</strong> LSZH, PE, PVC depending on application</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Inline Check 1 */}
-        <InlineCheck
-          id={quickCheckQuestions[0].id}
-          question={quickCheckQuestions[0].question}
-          options={quickCheckQuestions[0].options}
-          correctIndex={quickCheckQuestions[0].correctIndex}
-          explanation={quickCheckQuestions[0].explanation}
-        />
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Indoor Cable Types */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">02</span>
-            <h2 className="text-2xl font-bold">Indoor Cable Types</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 02: Indoor Cable Types */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Indoor Cable Types
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Indoor fibre cables are designed for installation within building envelopes where fire safety, flexibility, and ease of termination are priorities. The key requirement is <strong>LSZH (Low Smoke Zero Halogen)</strong> sheathing to meet UK building regulations and protect occupants during fire events.
             </p>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Indoor Cable Categories</h4>
-              <div className="space-y-4">
-                <div>
-                  <h5 className="font-medium text-white">Distribution Cable (Tight-Buffer)</h5>
-                  <p className="text-sm text-white/70">Multiple 900µm tight-buffered fibres in a common sheath. Flexible, easy to route. Used for backbone and horizontal runs within buildings. Typically 4-48 fibres.</p>
-                </div>
-                <div>
-                  <h5 className="font-medium text-white">Breakout Cable</h5>
-                  <p className="text-sm text-white/70">Individual tight-buffered fibres each with own sub-unit jacket. Direct termination without fan-out kits. Higher cost but faster installation. Typically 2-24 fibres.</p>
-                </div>
-                <div>
-                  <h5 className="font-medium text-white">Patch Cable / Jumper</h5>
-                  <p className="text-sm text-white/70">Single or duplex fibre with connectors factory-fitted. Used for equipment connections. Simplex (1 fibre) or duplex (2 fibres in figure-8 or zip-cord format).</p>
-                </div>
-                <div>
-                  <h5 className="font-medium text-white">Riser Cable</h5>
-                  <p className="text-sm text-white/70">Enhanced fire-retardant rating for vertical runs between floors. Prevents fire spreading through risers. Must meet Euroclass Cca or better in UK applications.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
-              <h4 className="font-semibold text-amber-400 mb-2 flex items-center gap-2">
-                <Building className="h-4 w-4" />
-                UK Fire Rating Requirements
-              </h4>
-              <p className="text-sm mb-3">
-                The Construction Products Regulation (CPR) requires cables in buildings to have Euroclass fire ratings:
-              </p>
-              <ul className="text-sm space-y-1">
-                <li>• <strong>Cca:</strong> Most common for indoor backbone/distribution (low flame spread, limited smoke)</li>
-                <li>• <strong>Dca:</strong> Minimum for general areas (moderate performance)</li>
-                <li>• <strong>B2ca:</strong> Enhanced protection for sensitive areas</li>
-                <li>• <strong>Eca:</strong> Basic compliance, limited applications</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Indoor Cable Categories:</p>
+              <ul className="text-sm text-white space-y-2 ml-4">
+                <li><strong>Distribution Cable (Tight-Buffer):</strong> Multiple 900µm tight-buffered fibres in a common sheath. Flexible, easy to route. Used for backbone and horizontal runs within buildings. Typically 4-48 fibres.</li>
+                <li><strong>Breakout Cable:</strong> Individual tight-buffered fibres each with own sub-unit jacket. Direct termination without fan-out kits. Higher cost but faster installation. Typically 2-24 fibres.</li>
+                <li><strong>Patch Cable / Jumper:</strong> Single or duplex fibre with connectors factory-fitted. Used for equipment connections. Simplex (1 fibre) or duplex (2 fibres in figure-8 or zip-cord format).</li>
+                <li><strong>Riser Cable:</strong> Enhanced fire-retardant rating for vertical runs between floors. Prevents fire spreading through risers. Must meet Euroclass Cca or better in UK applications.</li>
               </ul>
             </div>
 
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-              <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Info className="h-4 w-4" />
-                LSZH vs PVC Sheathing
-              </h4>
-              <p className="text-sm">
-                <strong>LSZH</strong> emits minimal smoke and no toxic halogens (chlorine, bromine) when burned—critical for occupied buildings. <strong>PVC</strong> produces dense smoke and toxic hydrogen chloride gas. While PVC is cheaper, LSZH is required by BS 6701 and building regulations for most UK commercial installations. PVC may be acceptable in industrial/well-ventilated areas only.
-              </p>
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">UK Fire Rating Requirements</p>
+              <p className="text-sm text-white mb-2 ml-4">The Construction Products Regulation (CPR) requires cables in buildings to have Euroclass fire ratings:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Cca:</strong> Most common for indoor backbone/distribution (low flame spread, limited smoke)</li>
+                <li><strong>Dca:</strong> Minimum for general areas (moderate performance)</li>
+                <li><strong>B2ca:</strong> Enhanced protection for sensitive areas</li>
+                <li><strong>Eca:</strong> Basic compliance, limited applications</li>
+              </ul>
             </div>
+
+            <p>
+              <strong>LSZH vs PVC Sheathing:</strong> LSZH emits minimal smoke and no toxic halogens (chlorine, bromine) when burned—critical for occupied buildings. PVC produces dense smoke and toxic hydrogen chloride gas. While PVC is cheaper, LSZH is required by BS 6701 and building regulations for most UK commercial installations. PVC may be acceptable in industrial/well-ventilated areas only.
+            </p>
           </div>
         </section>
 
-        {/* Section 3: Outdoor Cable Types */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">03</span>
-            <h2 className="text-2xl font-bold">Outdoor Cable Types</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 03: Outdoor Cable Types */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Outdoor Cable Types
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Outdoor (external) fibre cables are engineered to withstand environmental extremes: temperature cycling, moisture ingress, UV exposure, and mechanical stress. <strong>Loose-tube construction</strong> is standard for external cables, allowing fibres to move freely within gel-filled tubes as temperature changes cause expansion and contraction.
             </p>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">External Cable Features</h4>
-              <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">External Cable Features:</p>
+              <div className="grid grid-cols-2 gap-4 text-sm text-white ml-4">
                 <div>
-                  <p className="text-white/60">Construction</p>
-                  <p className="font-medium">Loose-tube, central tube, or ribbon</p>
+                  <p className="text-elec-yellow/80">Construction</p>
+                  <p>Loose-tube, central tube, or ribbon</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Water Blocking</p>
-                  <p className="font-medium">Gel-filled tubes + water-swellable tapes</p>
+                  <p className="text-elec-yellow/80">Water Blocking</p>
+                  <p>Gel-filled tubes + water-swellable tapes</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Outer Sheath</p>
-                  <p className="font-medium">PE or MDPE (UV resistant)</p>
+                  <p className="text-elec-yellow/80">Outer Sheath</p>
+                  <p>PE or MDPE (UV resistant)</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Temperature Range</p>
-                  <p className="font-medium">-20°C to +70°C (standard)</p>
+                  <p className="text-elec-yellow/80">Temperature Range</p>
+                  <p>-20°C to +70°C (standard)</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Typical Fibre Count</p>
-                  <p className="font-medium">4 to 288+ fibres</p>
+                  <p className="text-elec-yellow/80">Typical Fibre Count</p>
+                  <p>4 to 288+ fibres</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Strength Members</p>
-                  <p className="font-medium">Central GRP rod + aramid yarns</p>
+                  <p className="text-elec-yellow/80">Strength Members</p>
+                  <p>Central GRP rod + aramid yarns</p>
                 </div>
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
-                  <TreePine className="h-4 w-4" />
-                  Duct Cable
-                </h4>
-                <p className="text-sm text-white/70 mb-2">For installation in underground ducts</p>
-                <ul className="text-sm space-y-1">
-                  <li>• Smooth PE outer sheath</li>
-                  <li>• Water-blocked but not armoured</li>
-                  <li>• Designed for pulling through ducts</li>
-                  <li>• Lower cost than armoured</li>
+            <div className="my-6 grid sm:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Duct Cable</p>
+                <p className="text-sm text-white mb-2 ml-4">For installation in underground ducts</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>Smooth PE outer sheath</li>
+                  <li>Water-blocked but not armoured</li>
+                  <li>Designed for pulling through ducts</li>
+                  <li>Lower cost than armoured</li>
                 </ul>
               </div>
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2 flex items-center gap-2">
-                  <Cable className="h-4 w-4" />
-                  Aerial Cable
-                </h4>
-                <p className="text-sm text-white/70 mb-2">For overhead installation on poles</p>
-                <ul className="text-sm space-y-1">
-                  <li>• Self-supporting (figure-8) or messenger</li>
-                  <li>• ADSS (All-Dielectric Self-Supporting)</li>
-                  <li>• UV-resistant outer sheath</li>
-                  <li>• Wind and ice loading rated</li>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Aerial Cable</p>
+                <p className="text-sm text-white mb-2 ml-4">For overhead installation on poles</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>Self-supporting (figure-8) or messenger</li>
+                  <li>ADSS (All-Dielectric Self-Supporting)</li>
+                  <li>UV-resistant outer sheath</li>
+                  <li>Wind and ice loading rated</li>
                 </ul>
               </div>
             </div>
 
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-              <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
-                <Lightbulb className="h-4 w-4" />
-                Transition at Building Entry
-              </h4>
-              <p className="text-sm">
-                External cables cannot be used inside buildings due to PE sheath (fire hazard). At building entry points, external cables must transition to internal cables via a <strong>splice enclosure</strong> or <strong>transition box</strong>. This is typically within 15m of building entry. Plan for adequate splice space and protect the transition point.
-              </p>
-            </div>
+            <p>
+              <strong>Transition at Building Entry:</strong> External cables cannot be used inside buildings due to PE sheath (fire hazard). At building entry points, external cables must transition to internal cables via a <strong>splice enclosure</strong> or <strong>transition box</strong>. This is typically within 15m of building entry. Plan for adequate splice space and protect the transition point.
+            </p>
           </div>
         </section>
 
-        {/* Inline Check 2 */}
-        <InlineCheck
-          id={quickCheckQuestions[1].id}
-          question={quickCheckQuestions[1].question}
-          options={quickCheckQuestions[1].options}
-          correctIndex={quickCheckQuestions[1].correctIndex}
-          explanation={quickCheckQuestions[1].explanation}
-        />
+        <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 4: Armoured Cable Types */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">04</span>
-            <h2 className="text-2xl font-bold">Armoured Cable Types</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 04: Armoured Cable Types */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Armoured Cable Types
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Armoured fibre cables add a metallic layer for mechanical protection against crushing, impact, rodent attack, and dig-in damage. The choice of armour type depends on the specific threats and installation method.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">SWA - Steel Wire Armour</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Helically wound galvanised steel wires</li>
-                  <li>• Excellent crush/impact protection</li>
-                  <li>• Best for direct burial</li>
-                  <li>• Higher weight and rigidity</li>
-                  <li>• Requires proper earthing</li>
+            <div className="my-6 grid sm:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">SWA - Steel Wire Armour</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>Helically wound galvanised steel wires</li>
+                  <li>Excellent crush/impact protection</li>
+                  <li>Best for direct burial</li>
+                  <li>Higher weight and rigidity</li>
+                  <li>Requires proper earthing</li>
                 </ul>
               </div>
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">CST - Corrugated Steel Tape</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Longitudinally folded steel tape</li>
-                  <li>• Good rodent protection</li>
-                  <li>• Lighter than SWA</li>
-                  <li>• Suitable for duct/tray</li>
-                  <li>• Easier to strip/terminate</li>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">CST - Corrugated Steel Tape</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>Longitudinally folded steel tape</li>
+                  <li>Good rodent protection</li>
+                  <li>Lighter than SWA</li>
+                  <li>Suitable for duct/tray</li>
+                  <li>Easier to strip/terminate</li>
                 </ul>
               </div>
             </div>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">When to Specify Armoured Cable</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                  <span><strong>Direct burial:</strong> SWA provides protection against accidental dig-in</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                  <span><strong>Rodent risk:</strong> CST or SWA in areas with known rodent activity</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                  <span><strong>Shared ducts:</strong> Protection from other cable pulls and maintenance</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                  <span><strong>Industrial areas:</strong> Mechanical protection from vehicles/equipment</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                  <span><strong>Specification requirement:</strong> Client or network operator mandates armour</span>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">When to Specify Armoured Cable:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Direct burial:</strong> SWA provides protection against accidental dig-in</li>
+                <li><strong>Rodent risk:</strong> CST or SWA in areas with known rodent activity</li>
+                <li><strong>Shared ducts:</strong> Protection from other cable pulls and maintenance</li>
+                <li><strong>Industrial areas:</strong> Mechanical protection from vehicles/equipment</li>
+                <li><strong>Specification requirement:</strong> Client or network operator mandates armour</li>
+              </ul>
             </div>
 
-            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
-              <h4 className="font-semibold text-amber-400 mb-2 flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                Earthing Requirements
-              </h4>
-              <p className="text-sm">
-                Steel armour must be <strong>earthed at both ends</strong> to prevent induced voltages and ensure safety. Use proper armour glands and earth connections per BS 7671. The armour should be continuous—don't cut through during mid-span work. Some cables use aluminium armour (lighter, no earthing required but less mechanical protection).
-              </p>
-            </div>
+            <p>
+              <strong>Earthing Requirements:</strong> Steel armour must be <strong>earthed at both ends</strong> to prevent induced voltages and ensure safety. Use proper armour glands and earth connections per BS 7671. The armour should be continuous—don't cut through during mid-span work. Some cables use aluminium armour (lighter, no earthing required but less mechanical protection).
+            </p>
           </div>
         </section>
 
-        {/* Inline Check 3 */}
-        <InlineCheck
-          id={quickCheckQuestions[2].id}
-          question={quickCheckQuestions[2].question}
-          options={quickCheckQuestions[2].options}
-          correctIndex={quickCheckQuestions[2].correctIndex}
-          explanation={quickCheckQuestions[2].explanation}
-        />
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 5: Special Cable Types */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">05</span>
-            <h2 className="text-2xl font-bold">Special Cable Types</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 05: Special Cable Types */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Special Cable Types
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Beyond standard indoor, outdoor, and armoured cables, specialised types address specific installation requirements or environments.
             </p>
 
-            <div className="space-y-4">
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">Hybrid Cables</h4>
-                <p className="text-sm text-white/70">Combine fibre with copper conductors in single cable. Used for applications needing both data (fibre) and power or legacy signals (copper). Common in CCTV, access control, and industrial applications. Reduces installation complexity but requires careful segregation at termination.</p>
+            <div className="my-6 space-y-4">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-1">Hybrid Cables</p>
+                <p className="text-sm text-white ml-4">Combine fibre with copper conductors in single cable. Used for applications needing both data (fibre) and power or legacy signals (copper). Common in CCTV, access control, and industrial applications. Reduces installation complexity but requires careful segregation at termination.</p>
               </div>
 
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">Ribbon Cable</h4>
-                <p className="text-sm text-white/70">Fibres arranged in flat ribbons of 4, 8, or 12 fibres. Enables mass fusion splicing (12 fibres at once). Used in high-fibre-count applications (96-864 fibres). Requires ribbon splicing equipment but dramatically reduces installation time for large counts.</p>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-1">Ribbon Cable</p>
+                <p className="text-sm text-white ml-4">Fibres arranged in flat ribbons of 4, 8, or 12 fibres. Enables mass fusion splicing (12 fibres at once). Used in high-fibre-count applications (96-864 fibres). Requires ribbon splicing equipment but dramatically reduces installation time for large counts.</p>
               </div>
 
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">Micro-Duct Cable</h4>
-                <p className="text-sm text-white/70">Ultra-small diameter cables for blowing into micro-ducts. Typical 4-6mm diameter for 12-48 fibres. Used in FTTH deployments for efficient duct utilisation. Requires specialist blowing equipment but allows future capacity addition.</p>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-1">Micro-Duct Cable</p>
+                <p className="text-sm text-white ml-4">Ultra-small diameter cables for blowing into micro-ducts. Typical 4-6mm diameter for 12-48 fibres. Used in FTTH deployments for efficient duct utilisation. Requires specialist blowing equipment but allows future capacity addition.</p>
               </div>
 
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">Tactical/Deployable Cable</h4>
-                <p className="text-sm text-white/70">Ruggedised cable for temporary installations. Heavy-duty crush-resistant jacket. Used in military, events, and emergency services. Designed for repeated deployment/recovery. Often pre-terminated.</p>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-1">Tactical/Deployable Cable</p>
+                <p className="text-sm text-white ml-4">Ruggedised cable for temporary installations. Heavy-duty crush-resistant jacket. Used in military, events, and emergency services. Designed for repeated deployment/recovery. Often pre-terminated.</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Section 6: Cable Selection Guide */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">06</span>
-            <h2 className="text-2xl font-bold">Cable Selection Guide</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 06: Cable Selection Guide */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Cable Selection Guide
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Selecting the correct cable type requires evaluating the <strong>installation environment</strong>, <strong>physical protection needs</strong>, <strong>regulatory requirements</strong>, and <strong>future scalability</strong>.
             </p>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Selection Decision Tree</h4>
-              <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-2">
-                  <span className="font-bold text-elec-yellow">1.</span>
-                  <span>Indoor only? → Tight-buffer, LSZH, Cca rated</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="font-bold text-elec-yellow">2.</span>
-                  <span>External in duct? → Loose-tube, PE sheath, water-blocked</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="font-bold text-elec-yellow">3.</span>
-                  <span>Direct burial? → SWA armoured, PE sheath, water-blocked</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="font-bold text-elec-yellow">4.</span>
-                  <span>Aerial? → ADSS or figure-8, UV resistant, wind/ice rated</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="font-bold text-elec-yellow">5.</span>
-                  <span>Rodent risk? → Add CST or SWA armour</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="font-bold text-elec-yellow">6.</span>
-                  <span>Building entry transition? → Plan splice enclosure location</span>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Selection Decision Tree:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>1.</strong> Indoor only? → Tight-buffer, LSZH, Cca rated</li>
+                <li><strong>2.</strong> External in duct? → Loose-tube, PE sheath, water-blocked</li>
+                <li><strong>3.</strong> Direct burial? → SWA armoured, PE sheath, water-blocked</li>
+                <li><strong>4.</strong> Aerial? → ADSS or figure-8, UV resistant, wind/ice rated</li>
+                <li><strong>5.</strong> Rodent risk? → Add CST or SWA armour</li>
+                <li><strong>6.</strong> Building entry transition? → Plan splice enclosure location</li>
+              </ul>
             </div>
 
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-              <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
-                <Lightbulb className="h-4 w-4" />
-                Specification Tips
-              </h4>
-              <ul className="text-sm space-y-1">
-                <li>• Always specify fibre type (SM/MM) and grade (OS2, OM4, etc.)</li>
-                <li>• Include fibre count plus spare capacity (typically 25-50%)</li>
-                <li>• State sheath material and fire rating explicitly</li>
-                <li>• Define temperature range if extreme conditions expected</li>
-                <li>• Reference relevant standards (BS EN 60794, CPR)</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Specification Tips</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always specify fibre type (SM/MM) and grade (OS2, OM4, etc.)</li>
+                <li>Include fibre count plus spare capacity (typically 25-50%)</li>
+                <li>State sheath material and fire rating explicitly</li>
+                <li>Define temperature range if extreme conditions expected</li>
+                <li>Reference relevant standards (BS EN 60794, CPR)</li>
               </ul>
             </div>
           </div>
         </section>
 
         {/* Practical Guidance */}
-        <section className="bg-white/5 rounded-xl p-6 border border-white/10 space-y-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
-            <Cable className="h-5 w-5 text-elec-yellow" />
-            Practical Guidance
-          </h2>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div>
-              <h3 className="font-semibold text-white mb-2">Cable Handling</h3>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Store cables in original packaging until installation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Keep cables in warm environment before cold-weather installation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Check for damage before installation—look for kinks, crushing</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Never exceed maximum pulling tension or bend radius</span>
-                </li>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Handling</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Store cables in original packaging until installation</li>
+                <li>Keep cables in warm environment before cold-weather installation</li>
+                <li>Check for damage before installation—look for kinks, crushing</li>
+                <li>Never exceed maximum pulling tension or bend radius</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-white mb-2">Documentation</h3>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Record cable manufacturer and part number</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Document drum number and meterage from drum</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Keep specification sheets for reference</span>
-                </li>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Documentation</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Record cable manufacturer and part number</li>
+                <li>Document drum number and meterage from drum</li>
+                <li>Keep specification sheets for reference</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-white mb-2">Common Mistakes to Avoid</h3>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Using indoor cable for any external run (even in duct)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Using PE-sheathed cable inside buildings</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Under-specifying fire rating for the location</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Not allowing spare fibres for future growth</span>
-                </li>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Using indoor cable for external run</strong> — even in duct</li>
+                <li><strong>Using PE-sheathed cable inside buildings</strong> — fire hazard</li>
+                <li><strong>Under-specifying fire rating</strong> — for the location</li>
+                <li><strong>Not allowing spare fibres</strong> — for future growth</li>
               </ul>
             </div>
           </div>
         </section>
 
         {/* FAQs */}
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
-            <HelpCircle className="h-5 w-5 text-elec-yellow" />
-            Frequently Asked Questions
-          </h2>
-
-          <div className="space-y-2">
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-white/5 rounded-lg border border-white/10 overflow-hidden">
-                <button
-                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                  className="w-full px-4 py-3 text-left flex items-center justify-between gap-4 hover:bg-white/5 transition-colors touch-manipulation min-h-[44px]"
-                >
-                  <span className="font-medium text-white">{faq.question}</span>
-                  {expandedFaq === index ? (
-                    <ChevronUp className="h-5 w-5 text-white/60 flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-white/60 flex-shrink-0" />
-                  )}
-                </button>
-                {expandedFaq === index && (
-                  <div className="px-4 pb-4 text-white/70 text-sm">
-                    {faq.answer}
-                  </div>
-                )}
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Quick Reference Card */}
-        <section className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-xl p-6 border border-elec-yellow/30">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <Cable className="h-5 w-5 text-elec-yellow" />
-            Quick Reference: Cable Types
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4 text-sm">
-            <div className="space-y-2">
-              <h4 className="font-semibold text-white">Indoor Cables</h4>
-              <div className="space-y-1 text-white/80">
-                <p><strong>Construction:</strong> Tight-buffer</p>
-                <p><strong>Sheath:</strong> LSZH</p>
-                <p><strong>Fire Rating:</strong> Cca or better</p>
-                <p><strong>Use:</strong> Building backbone, risers</p>
+        {/* Quick Reference */}
+        <section className="mb-10">
+          <div className="p-5 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference: Cable Types</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-elec-yellow/80 mb-1">Indoor Cables</p>
+                <ul className="space-y-0.5">
+                  <li><strong>Construction:</strong> Tight-buffer</li>
+                  <li><strong>Sheath:</strong> LSZH</li>
+                  <li><strong>Fire Rating:</strong> Cca or better</li>
+                  <li><strong>Use:</strong> Building backbone, risers</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-elec-yellow/80 mb-1">Outdoor Cables</p>
+                <ul className="space-y-0.5">
+                  <li><strong>Construction:</strong> Loose-tube</li>
+                  <li><strong>Sheath:</strong> PE/MDPE</li>
+                  <li><strong>Features:</strong> Water-blocked, UV resistant</li>
+                  <li><strong>Use:</strong> Duct, direct burial, aerial</li>
+                </ul>
               </div>
             </div>
-            <div className="space-y-2">
-              <h4 className="font-semibold text-white">Outdoor Cables</h4>
-              <div className="space-y-1 text-white/80">
-                <p><strong>Construction:</strong> Loose-tube</p>
-                <p><strong>Sheath:</strong> PE/MDPE</p>
-                <p><strong>Features:</strong> Water-blocked, UV resistant</p>
-                <p><strong>Use:</strong> Duct, direct burial, aerial</p>
-              </div>
-            </div>
-          </div>
-          <div className="mt-4 pt-4 border-t border-elec-yellow/30 text-sm text-white/80">
-            <p className="font-semibold text-white">Armour Options:</p>
-            <p>SWA = direct burial, crush protection | CST = rodent protection, duct/tray</p>
+            <p className="text-xs text-white mt-4 pt-4 border-t border-elec-yellow/30">
+              <strong>Armour Options:</strong> SWA = direct burial, crush protection | CST = rodent protection, duct/tray
+            </p>
           </div>
         </section>
 
-        {/* Quiz Section */}
-        <section className="bg-white/5 rounded-xl p-6 border border-white/10">
+        {/* Quiz */}
+        <section className="mb-10">
           <Quiz
-            title="Fibre Cable Types Quiz"
+            title="Test Your Knowledge"
             questions={quizQuestions}
-            passingScore={80}
           />
         </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
-          <Link
-            to="/study-centre/apprentice/fibre-optics/module-2/section-6"
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors touch-manipulation min-h-[44px] active:scale-[0.98]"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span>Previous: Connector Compatibility</span>
-          </Link>
-          <Link
-            to="/study-centre/apprentice/fibre-optics/module-3/section-2"
-            className="flex items-center gap-2 text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation min-h-[44px] sm:flex-row-reverse active:scale-[0.98]"
-          >
-            <span>Next: Bend Radius</span>
-            <ArrowLeft className="h-5 w-5 rotate-180" />
-          </Link>
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="/study-centre/upskilling/fibre-optics/module-2/section-6">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous: Connector Compatibility
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-2">
+              Next: Bend Radius
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
         </nav>
-      </main>
+      </article>
     </div>
   );
 };

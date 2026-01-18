@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { ArrowLeft, Zap, CheckCircle, Info, BookOpen, Lightbulb, AlertTriangle, HelpCircle, ChevronDown, ChevronUp, Grid3X3, Cpu, Server, Network } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle, Grid3X3, Cpu, Server, Network } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -35,54 +34,74 @@ const quickCheckQuestions = [
 
 const quizQuestions = [
   {
+    id: 1,
     question: "SFP stands for:",
     options: ["Standard Fibre Port", "Small Form-factor Pluggable", "Single Fibre Pair", "Server Fibre Protocol"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "SFP stands for Small Form-factor Pluggable, a compact transceiver format used for network communications."
   },
   {
+    id: 2,
     question: "What is the primary function of a fibre patch panel?",
     options: ["Signal amplification", "Organised termination and cross-connection", "Wavelength conversion", "Power distribution"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Fibre patch panels provide organised termination points and enable cross-connections between permanent cabling and active equipment."
   },
   {
+    id: 3,
     question: "The 'Q' in QSFP stands for:",
     options: ["Quick", "Quad", "Quality", "Quantum"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "QSFP stands for Quad Small Form-factor Pluggable, using four parallel lanes for higher bandwidth."
   },
   {
+    id: 4,
     question: "What port density does a 1U LC patch panel typically provide?",
     options: ["12 ports", "24 ports", "48 ports", "96 ports"],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "A 1U LC patch panel typically provides 48 ports (24 duplex connections)."
   },
   {
+    id: 5,
     question: "BiDi transceivers achieve bidirectional transmission by using:",
     options: ["Time division multiplexing", "Different wavelengths for TX and RX", "Polarisation division", "Two parallel fibres"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "BiDi (bidirectional) transceivers use different wavelengths for transmit and receive over a single fibre."
   },
   {
+    id: 6,
     question: "When selecting transceivers, 'SR' typically indicates:",
     options: ["Super Range", "Short Range (multimode)", "Single Rate", "Standard Redundancy"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "SR indicates Short Range, designed for multimode fibre applications."
   },
   {
+    id: 7,
     question: "MTP cassettes in structured cabling systems provide:",
     options: ["Signal boosting", "Transition between trunk and equipment cables", "Error correction", "Wavelength filtering"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "MTP cassettes convert high-fibre-count trunk cables to individual duplex connections for equipment ports."
   },
   {
+    id: 8,
     question: "What information does the transceiver DOM feature provide?",
     options: ["Distance measurement", "Digital Optical Monitoring (power, temperature)", "Data throughput statistics", "Duplex configuration"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "DOM (Digital Optical Monitoring) provides real-time telemetry including optical power levels and temperature."
   },
   {
+    id: 9,
     question: "A 'hot-swappable' transceiver can be:",
     options: ["Used at high temperatures", "Inserted/removed without powering down", "Shared between ports", "Used with any wavelength"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Hot-swappable means the transceiver can be inserted or removed while the equipment is powered on."
   },
   {
+    id: 10,
     question: "QSFP-DD modules support data rates up to:",
     options: ["100 Gbps", "200 Gbps", "400 Gbps", "800 Gbps"],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "QSFP-DD (Double Density) supports up to 400 Gbps using 8×50G lanes."
   }
 ];
 
@@ -119,75 +138,59 @@ const FiberOpticsModule2Section5 = () => {
     description: DESCRIPTION
   });
 
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/60">
-        <div className="container flex h-14 max-w-screen-2xl items-center px-4">
-          <Link
-            to="/study-centre/apprentice/fibre-optics/module-2"
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors touch-manipulation min-h-[44px]"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Module 2</span>
-          </Link>
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="container max-w-3xl mx-auto px-4 py-6 space-y-8">
-        {/* Title Section */}
-        <section className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm font-medium px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
             <Grid3X3 className="h-4 w-4" />
-            Module 2 • Section 5
+            <span>Module 2 Section 5</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Patch Panels and Transceivers
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-white/80">
             Infrastructure components for fibre network termination and connectivity
           </p>
-        </section>
+        </header>
 
-        {/* Quick Summary Cards */}
-        <section className="grid sm:grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-xl p-5 border border-elec-yellow/30">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-lg bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                <Zap className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">In 30 Seconds</h3>
-                <p className="text-sm text-white/80">
-                  Patch panels organise fibre terminations. Transceivers convert electrical to optical signals. SFP=1G, SFP+=10G, QSFP28=100G. Match transceiver to fibre type and distance.
-                </p>
-              </div>
-            </div>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Patch panels:</strong> Organised fibre termination points</li>
+              <li><strong>SFP:</strong> 1G, SFP+: 10G, QSFP28: 100G</li>
+              <li><strong>Match:</strong> Transceiver to fibre type and distance</li>
+            </ul>
           </div>
-          <div className="bg-gradient-to-br from-blue-500/20 to-blue-500/5 rounded-xl p-5 border border-blue-500/30">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <Info className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Install It / Connect It</h3>
-                <p className="text-sm text-white/80">
-                  Mount panels at accessible heights. Label all ports. Match transceivers to fibre grade (SR for multimode, LR for singlemode). Check DOM readings after install.
-                </p>
-              </div>
-            </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Install It / Connect It</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Mount:</strong> Panels at accessible heights</li>
+              <li><strong>Match:</strong> SR for multimode, LR for singlemode</li>
+              <li><strong>Verify:</strong> Check DOM readings after install</li>
+            </ul>
           </div>
-        </section>
+        </div>
 
         {/* Learning Outcomes */}
-        <section className="bg-white/5 rounded-xl p-6 border border-white/10">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-elec-yellow" />
-            What You'll Learn
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {[
               "Fibre patch panel types and specifications",
               "MTP cassette systems and applications",
@@ -195,132 +198,107 @@ const FiberOpticsModule2Section5 = () => {
               "Transceiver selection for fibre types",
               "Installation and documentation practices",
               "Structured cabling design principles"
-            ].map((outcome, index) => (
-              <div key={index} className="flex items-start gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Section 1: Fibre Patch Panels */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">01</span>
-            <h2 className="text-2xl font-bold">Fibre Patch Panels</h2>
-          </div>
+        <hr className="border-white/5 mb-12" />
 
-          <div className="space-y-4 text-white/80">
+        {/* Section 01: Fibre Patch Panels */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Fibre Patch Panels
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               <strong>Fibre patch panels</strong> (also called fibre distribution frames or FDFs) provide organised termination points for fibre optic cables. They create a structured interface between permanent cabling infrastructure and active equipment, enabling flexible cross-connections and simplified maintenance.
             </p>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Patch Panel Types</h4>
-              <div className="space-y-3">
-                <div>
-                  <h5 className="font-medium text-white">Loaded Panels</h5>
-                  <p className="text-sm text-white/70">Pre-installed with adaptors (LC, SC, etc.). Ready for immediate use with pigtails or direct termination. Common for standard deployments.</p>
-                </div>
-                <div>
-                  <h5 className="font-medium text-white">Unloaded Panels</h5>
-                  <p className="text-sm text-white/70">Empty chassis accepting snap-in adaptor plates. Flexible configuration—mix connector types or densities as needed.</p>
-                </div>
-                <div>
-                  <h5 className="font-medium text-white">Cassette-Based Panels</h5>
-                  <p className="text-sm text-white/70">Accept pre-terminated cassette modules (MTP-to-LC). Enable rapid deployment and change. Standard in high-density data centres.</p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Patch Panel Types:</p>
+              <ul className="text-sm text-white space-y-2 ml-4">
+                <li><strong>Loaded Panels:</strong> Pre-installed with adaptors (LC, SC, etc.). Ready for immediate use with pigtails or direct termination. Common for standard deployments.</li>
+                <li><strong>Unloaded Panels:</strong> Empty chassis accepting snap-in adaptor plates. Flexible configuration—mix connector types or densities as needed.</li>
+                <li><strong>Cassette-Based Panels:</strong> Accept pre-terminated cassette modules (MTP-to-LC). Enable rapid deployment and change. Standard in high-density data centres.</li>
+              </ul>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">Typical Densities (1U)</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• LC: 24-48 duplex ports</li>
-                  <li>• SC: 12-24 duplex ports</li>
-                  <li>• MTP: 4-6 ports (48-72 fibres)</li>
-                  <li>• Cassette: 3-4 cassettes</li>
+            <div className="my-6 grid sm:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Densities (1U)</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>LC: 24-48 duplex ports</li>
+                  <li>SC: 12-24 duplex ports</li>
+                  <li>MTP: 4-6 ports (48-72 fibres)</li>
+                  <li>Cassette: 3-4 cassettes</li>
                 </ul>
               </div>
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">Key Features</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Cable management guides</li>
-                  <li>• Splice tray integration</li>
-                  <li>• Bend radius protection</li>
-                  <li>• Labelling systems</li>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Features</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>Cable management guides</li>
+                  <li>Splice tray integration</li>
+                  <li>Bend radius protection</li>
+                  <li>Labelling systems</li>
                 </ul>
               </div>
             </div>
 
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-              <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Info className="h-4 w-4" />
-                High-Density Considerations
-              </h4>
-              <p className="text-sm">
-                High-density panels (48+ LC ports per 1U) require careful cable management. Use angled adaptor panels or sliding trays for rear access. Ensure adequate bend radius—a 1U panel with 96 fibres can become unmanageable without proper strain relief and routing.
-              </p>
-            </div>
+            <p>
+              <strong>High-density considerations:</strong> High-density panels (48+ LC ports per 1U) require careful cable management. Use angled adaptor panels or sliding trays for rear access. Ensure adequate bend radius—a 1U panel with 96 fibres can become unmanageable without proper strain relief and routing.
+            </p>
           </div>
         </section>
 
-        {/* Inline Check 1 */}
-        <InlineCheck
-          id={quickCheckQuestions[1].id}
-          question={quickCheckQuestions[1].question}
-          options={quickCheckQuestions[1].options}
-          correctIndex={quickCheckQuestions[1].correctIndex}
-          explanation={quickCheckQuestions[1].explanation}
-        />
+        <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 2: MTP Cassette Systems */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">02</span>
-            <h2 className="text-2xl font-bold">MTP Cassette Systems</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 02: MTP Cassette Systems */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            MTP Cassette Systems
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               <strong>MTP cassettes</strong> are modular enclosures that convert high-fibre-count MTP trunk cables into individual duplex connections suitable for transceiver ports. They're central to modern structured cabling designs, enabling rapid deployment and simplified moves/adds/changes.
             </p>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Cassette Architecture</h4>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Cassette Architecture:</p>
+              <div className="grid grid-cols-2 gap-4 text-sm text-white ml-4">
                 <div>
-                  <p className="text-white/60">Rear Connection</p>
-                  <p className="font-medium">MTP (12 or 24 fibre)</p>
+                  <p className="text-elec-yellow/80">Rear Connection</p>
+                  <p>MTP (12 or 24 fibre)</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Front Ports</p>
-                  <p className="font-medium">6x or 12x LC duplex</p>
+                  <p className="text-elec-yellow/80">Front Ports</p>
+                  <p>6x or 12x LC duplex</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Internal Routing</p>
-                  <p className="font-medium">Factory-terminated fanout</p>
+                  <p className="text-elec-yellow/80">Internal Routing</p>
+                  <p>Factory-terminated fanout</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Polarity Management</p>
-                  <p className="font-medium">Type A, B, or Universal</p>
+                  <p className="text-elec-yellow/80">Polarity Management</p>
+                  <p>Type A, B, or Universal</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-              <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
-                <Lightbulb className="h-4 w-4" />
-                Cassette Benefits
-              </h4>
-              <ul className="text-sm space-y-1">
-                <li>• <strong>Rapid deployment:</strong> Pre-terminated—no field splicing</li>
-                <li>• <strong>Consistent quality:</strong> Factory-tested to specification</li>
-                <li>• <strong>Flexibility:</strong> Swap cassettes for different configurations</li>
-                <li>• <strong>Reduced congestion:</strong> Single MTP trunk vs. 12 individual cables</li>
-                <li>• <strong>Future-proof:</strong> Trunk infrastructure supports speed upgrades</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cassette Benefits</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Rapid deployment:</strong> Pre-terminated—no field splicing</li>
+                <li><strong>Consistent quality:</strong> Factory-tested to specification</li>
+                <li><strong>Flexibility:</strong> Swap cassettes for different configurations</li>
+                <li><strong>Reduced congestion:</strong> Single MTP trunk vs. 12 individual cables</li>
+                <li><strong>Future-proof:</strong> Trunk infrastructure supports speed upgrades</li>
               </ul>
             </div>
 
@@ -328,70 +306,60 @@ const FiberOpticsModule2Section5 = () => {
               In a typical deployment, <strong>MTP trunk cables</strong> run between patch panel locations (e.g., MDA to IDA in a data centre). Cassettes at each end convert to LC duplex for connection to server/switch transceivers. The same trunk can support 1G, 10G, or 40G/100G parallel optics by changing cassettes.
             </p>
 
-            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
-              <h4 className="font-semibold text-amber-400 mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4" />
-                Polarity Considerations
-              </h4>
-              <p className="text-sm">
-                Fibre polarity (ensuring Tx connects to Rx) must be maintained across the link. Cassette systems use <strong>Type A</strong> (straight), <strong>Type B</strong> (reversed pairs), or <strong>Universal</strong> methods. Document and standardise your polarity method—mixing types causes connection failures.
-              </p>
-            </div>
+            <p>
+              <strong>Polarity considerations:</strong> Fibre polarity (ensuring Tx connects to Rx) must be maintained across the link. Cassette systems use <strong>Type A</strong> (straight), <strong>Type B</strong> (reversed pairs), or <strong>Universal</strong> methods. Document and standardise your polarity method—mixing types causes connection failures.
+            </p>
           </div>
         </section>
 
-        {/* Section 3: Transceiver Fundamentals */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">03</span>
-            <h2 className="text-2xl font-bold">Transceiver Fundamentals</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 03: Transceiver Fundamentals */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Transceiver Fundamentals
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               <strong>Optical transceivers</strong> convert electrical signals from network equipment into optical signals for fibre transmission, and vice versa. They're pluggable modules that insert into switch, router, or server ports, providing flexibility to match the network interface to the installed fibre type and distance requirements.
             </p>
 
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-              <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Cpu className="h-4 w-4" />
-                Transceiver Components
-              </h4>
-              <ul className="text-sm space-y-1">
-                <li>• <strong>TOSA:</strong> Transmitter Optical Sub-Assembly (laser/LED + driver)</li>
-                <li>• <strong>ROSA:</strong> Receiver Optical Sub-Assembly (photodiode + amplifier)</li>
-                <li>• <strong>CDR:</strong> Clock and Data Recovery circuits</li>
-                <li>• <strong>MCU:</strong> Microcontroller for DOM and management</li>
-                <li>• <strong>Optical interface:</strong> LC, SC, or MTP connector receptacle</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Transceiver Components</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>TOSA:</strong> Transmitter Optical Sub-Assembly (laser/LED + driver)</li>
+                <li><strong>ROSA:</strong> Receiver Optical Sub-Assembly (photodiode + amplifier)</li>
+                <li><strong>CDR:</strong> Clock and Data Recovery circuits</li>
+                <li><strong>MCU:</strong> Microcontroller for DOM and management</li>
+                <li><strong>Optical interface:</strong> LC, SC, or MTP connector receptacle</li>
               </ul>
             </div>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Key Specifications</h4>
-              <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Key Specifications:</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm text-white ml-4">
                 <div>
-                  <p className="text-white/60">Data Rate</p>
-                  <p className="font-medium">1G to 400G+</p>
+                  <p className="text-elec-yellow/80">Data Rate</p>
+                  <p>1G to 400G+</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Wavelength</p>
-                  <p className="font-medium">850nm, 1310nm, 1550nm, etc.</p>
+                  <p className="text-elec-yellow/80">Wavelength</p>
+                  <p>850nm, 1310nm, 1550nm</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Reach</p>
-                  <p className="font-medium">SR, LR, ER, ZR (varies)</p>
+                  <p className="text-elec-yellow/80">Reach</p>
+                  <p>SR, LR, ER, ZR</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Fibre Type</p>
-                  <p className="font-medium">MMF or SMF</p>
+                  <p className="text-elec-yellow/80">Fibre Type</p>
+                  <p>MMF or SMF</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Connector</p>
-                  <p className="font-medium">LC duplex, MTP, etc.</p>
+                  <p className="text-elec-yellow/80">Connector</p>
+                  <p>LC duplex, MTP</p>
                 </div>
                 <div>
-                  <p className="text-white/60">Power Consumption</p>
-                  <p className="font-medium">0.5W to 10W+</p>
+                  <p className="text-elec-yellow/80">Power</p>
+                  <p>0.5W to 10W+</p>
                 </div>
               </div>
             </div>
@@ -402,243 +370,156 @@ const FiberOpticsModule2Section5 = () => {
           </div>
         </section>
 
-        {/* Inline Check 2 */}
-        <InlineCheck
-          id={quickCheckQuestions[0].id}
-          question={quickCheckQuestions[0].question}
-          options={quickCheckQuestions[0].options}
-          correctIndex={quickCheckQuestions[0].correctIndex}
-          explanation={quickCheckQuestions[0].explanation}
-        />
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 4: SFP and SFP+ Transceivers */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">04</span>
-            <h2 className="text-2xl font-bold">SFP and SFP+ Transceivers</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 04: SFP and SFP+ Transceivers */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            SFP and SFP+ Transceivers
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               <strong>SFP (Small Form-factor Pluggable)</strong> and <strong>SFP+</strong> are the most common transceiver formats in enterprise and data centre networks. Their compact size, hot-swappable design, and wide availability make them the standard choice for 1G and 10G connectivity.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-3">SFP (1G)</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-white/60">Data Rate</span>
-                    <span>Up to 1.25 Gbps</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/60">Common Types</span>
-                    <span>1000BASE-SX, LX, ZX</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/60">Connector</span>
-                    <span>LC duplex</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/60">Power</span>
-                    <span>~0.5-1W</span>
-                  </div>
-                </div>
+            <div className="my-6 grid sm:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">SFP (1G)</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>Data Rate: Up to 1.25 Gbps</li>
+                  <li>Common: 1000BASE-SX, LX, ZX</li>
+                  <li>Connector: LC duplex</li>
+                  <li>Power: ~0.5-1W</li>
+                </ul>
               </div>
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-3">SFP+ (10G)</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-white/60">Data Rate</span>
-                    <span>Up to 10 Gbps</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/60">Common Types</span>
-                    <span>10GBASE-SR, LR, ER</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/60">Connector</span>
-                    <span>LC duplex</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/60">Power</span>
-                    <span>~0.7-1.5W</span>
-                  </div>
-                </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">SFP+ (10G)</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li>Data Rate: Up to 10 Gbps</li>
+                  <li>Common: 10GBASE-SR, LR, ER</li>
+                  <li>Connector: LC duplex</li>
+                  <li>Power: ~0.7-1.5W</li>
+                </ul>
               </div>
             </div>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Common 10G SFP+ Types</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex flex-col sm:flex-row gap-1 sm:gap-4">
-                  <span className="font-medium text-white min-w-[120px]">10GBASE-SR</span>
-                  <span className="text-white/70">850nm, multimode, 26-400m (grade dependent)</span>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-1 sm:gap-4">
-                  <span className="font-medium text-white min-w-[120px]">10GBASE-LR</span>
-                  <span className="text-white/70">1310nm, singlemode, up to 10km</span>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-1 sm:gap-4">
-                  <span className="font-medium text-white min-w-[120px]">10GBASE-ER</span>
-                  <span className="text-white/70">1550nm, singlemode, up to 40km</span>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-1 sm:gap-4">
-                  <span className="font-medium text-white min-w-[120px]">10GBASE-LRM</span>
-                  <span className="text-white/70">1310nm, multimode (legacy 62.5µm), 220m</span>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Common 10G SFP+ Types:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>10GBASE-SR:</strong> 850nm, multimode, 26-400m (grade dependent)</li>
+                <li><strong>10GBASE-LR:</strong> 1310nm, singlemode, up to 10km</li>
+                <li><strong>10GBASE-ER:</strong> 1550nm, singlemode, up to 40km</li>
+                <li><strong>10GBASE-LRM:</strong> 1310nm, multimode (legacy 62.5µm), 220m</li>
+              </ul>
             </div>
 
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-              <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
-                <Lightbulb className="h-4 w-4" />
-                SFP28 - 25G Option
-              </h4>
-              <p className="text-sm">
-                <strong>SFP28</strong> extends the SFP form factor to 25 Gbps, using the same cage as SFP+. Commonly used for 25GbE server connections and as building blocks for 100G (4×25G). Check switch compatibility—not all SFP+ ports support SFP28.
-              </p>
-            </div>
+            <p>
+              <strong>SFP28 - 25G Option:</strong> SFP28 extends the SFP form factor to 25 Gbps, using the same cage as SFP+. Commonly used for 25GbE server connections and as building blocks for 100G (4×25G). Check switch compatibility—not all SFP+ ports support SFP28.
+            </p>
           </div>
         </section>
 
-        {/* Section 5: QSFP Transceivers */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">05</span>
-            <h2 className="text-2xl font-bold">QSFP and High-Speed Transceivers</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 05: QSFP and High-Speed Transceivers */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            QSFP and High-Speed Transceivers
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               <strong>QSFP (Quad Small Form-factor Pluggable)</strong> transceivers use four parallel lanes to achieve higher aggregate bandwidth. They're essential for 40G, 100G, and 400G connections in data centres and high-performance computing environments.
             </p>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">QSFP Family Overview</h4>
-              <div className="space-y-3 text-sm">
-                <div className="grid grid-cols-3 gap-2 font-medium border-b border-white/20 pb-2">
-                  <span>Module</span>
-                  <span>Data Rate</span>
-                  <span>Lane Config</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <span>QSFP+</span>
-                  <span>40 Gbps</span>
-                  <span>4×10G</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <span>QSFP28</span>
-                  <span>100 Gbps</span>
-                  <span>4×25G</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <span>QSFP56</span>
-                  <span>200 Gbps</span>
-                  <span>4×50G</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <span>QSFP-DD</span>
-                  <span>400 Gbps</span>
-                  <span>8×50G</span>
-                </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">QSFP Family Overview:</p>
+              <div className="grid grid-cols-3 gap-2 text-sm text-white ml-4 mb-2">
+                <span className="font-medium">Module</span>
+                <span className="font-medium">Data Rate</span>
+                <span className="font-medium">Lane Config</span>
+              </div>
+              <div className="grid grid-cols-3 gap-2 text-sm text-white ml-4">
+                <span>QSFP+</span>
+                <span>40 Gbps</span>
+                <span>4×10G</span>
+              </div>
+              <div className="grid grid-cols-3 gap-2 text-sm text-white ml-4">
+                <span>QSFP28</span>
+                <span>100 Gbps</span>
+                <span>4×25G</span>
+              </div>
+              <div className="grid grid-cols-3 gap-2 text-sm text-white ml-4">
+                <span>QSFP56</span>
+                <span>200 Gbps</span>
+                <span>4×50G</span>
+              </div>
+              <div className="grid grid-cols-3 gap-2 text-sm text-white ml-4">
+                <span>QSFP-DD</span>
+                <span>400 Gbps</span>
+                <span>8×50G</span>
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">40G QSFP+ Options</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• <strong>40GBASE-SR4:</strong> 4×10G, MMF, 100-150m</li>
-                  <li>• <strong>40GBASE-LR4:</strong> WDM, SMF, 10km</li>
-                  <li>• <strong>40GBASE-ER4:</strong> WDM, SMF, 40km</li>
-                  <li>• Connector: MTP (SR4) or LC (LR4)</li>
+            <div className="my-6 grid sm:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">40G QSFP+ Options</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li><strong>40GBASE-SR4:</strong> 4×10G, MMF, 100-150m</li>
+                  <li><strong>40GBASE-LR4:</strong> WDM, SMF, 10km</li>
+                  <li><strong>40GBASE-ER4:</strong> WDM, SMF, 40km</li>
+                  <li>Connector: MTP (SR4) or LC (LR4)</li>
                 </ul>
               </div>
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">100G QSFP28 Options</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• <strong>100GBASE-SR4:</strong> 4×25G, MMF, 70-100m</li>
-                  <li>• <strong>100GBASE-LR4:</strong> WDM, SMF, 10km</li>
-                  <li>• <strong>100GBASE-CWDM4:</strong> CWDM, SMF, 2km</li>
-                  <li>• Connector: MTP (SR4) or LC (LR4)</li>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">100G QSFP28 Options</p>
+                <ul className="text-sm text-white space-y-1 ml-4">
+                  <li><strong>100GBASE-SR4:</strong> 4×25G, MMF, 70-100m</li>
+                  <li><strong>100GBASE-LR4:</strong> WDM, SMF, 10km</li>
+                  <li><strong>100GBASE-CWDM4:</strong> CWDM, SMF, 2km</li>
+                  <li>Connector: MTP (SR4) or LC (LR4)</li>
                 </ul>
               </div>
             </div>
 
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-              <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Network className="h-4 w-4" />
-                Breakout Cables
-              </h4>
-              <p className="text-sm">
-                QSFP ports can connect to multiple lower-speed ports using <strong>breakout cables</strong>. A 40G QSFP+ can break out to 4×10G SFP+ ports using an MTP-to-4×LC cable. Similarly, 100G QSFP28 breaks out to 4×25G SFP28. This enables flexible connectivity between high-density spine switches and lower-speed leaf or server ports.
-              </p>
-            </div>
+            <p>
+              <strong>Breakout Cables:</strong> QSFP ports can connect to multiple lower-speed ports using breakout cables. A 40G QSFP+ can break out to 4×10G SFP+ ports using an MTP-to-4×LC cable. Similarly, 100G QSFP28 breaks out to 4×25G SFP28. This enables flexible connectivity between high-density spine switches and lower-speed leaf or server ports.
+            </p>
           </div>
         </section>
 
-        {/* Inline Check 3 */}
-        <InlineCheck
-          id={quickCheckQuestions[2].id}
-          question={quickCheckQuestions[2].question}
-          options={quickCheckQuestions[2].options}
-          correctIndex={quickCheckQuestions[2].correctIndex}
-          explanation={quickCheckQuestions[2].explanation}
-        />
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 6: Transceiver Selection and DOM */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">06</span>
-            <h2 className="text-2xl font-bold">Selection and Monitoring</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 06: Selection and Monitoring */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Selection and Monitoring
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Selecting the right transceiver requires matching <strong>data rate</strong>, <strong>fibre type</strong>, <strong>distance</strong>, and <strong>equipment compatibility</strong>. Once installed, <strong>Digital Optical Monitoring (DOM)</strong> provides real-time visibility into transceiver health and link quality.
             </p>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Selection Checklist</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                  <span><strong>Data Rate:</strong> Match to port speed (1G, 10G, 25G, 100G)</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                  <span><strong>Fibre Type:</strong> SR for multimode, LR/ER for singlemode</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 mt-0.5 text-green-400" />
-                  <span><strong>Distance:</strong> Verify transceiver reach exceeds link length</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                  <span><strong>Connector:</strong> LC duplex for SFP, MTP or LC for QSFP</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                  <span><strong>Compatibility:</strong> OEM or validated third-party for your switch</span>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Selection Checklist:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Data Rate:</strong> Match to port speed (1G, 10G, 25G, 100G)</li>
+                <li><strong>Fibre Type:</strong> SR for multimode, LR/ER for singlemode</li>
+                <li><strong>Distance:</strong> Verify transceiver reach exceeds link length</li>
+                <li><strong>Connector:</strong> LC duplex for SFP, MTP or LC for QSFP</li>
+                <li><strong>Compatibility:</strong> OEM or validated third-party for your switch</li>
+              </ul>
             </div>
 
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-              <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
-                <Server className="h-4 w-4" />
-                Digital Optical Monitoring (DOM)
-              </h4>
-              <p className="text-sm mb-3">
-                DOM (also called DDM - Digital Diagnostic Monitoring) provides real-time telemetry from the transceiver:
-              </p>
-              <ul className="text-sm space-y-1">
-                <li>• <strong>TX Power:</strong> Transmitted optical power (dBm)</li>
-                <li>• <strong>RX Power:</strong> Received optical power (dBm)</li>
-                <li>• <strong>Temperature:</strong> Module internal temperature</li>
-                <li>• <strong>Voltage:</strong> Supply voltage</li>
-                <li>• <strong>Bias Current:</strong> Laser drive current</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Digital Optical Monitoring (DOM)</p>
+              <p className="text-sm text-white mb-2">DOM (also called DDM - Digital Diagnostic Monitoring) provides real-time telemetry:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>TX Power:</strong> Transmitted optical power (dBm)</li>
+                <li><strong>RX Power:</strong> Received optical power (dBm)</li>
+                <li><strong>Temperature:</strong> Module internal temperature</li>
+                <li><strong>Voltage:</strong> Supply voltage</li>
+                <li><strong>Bias Current:</strong> Laser drive current</li>
               </ul>
             </div>
 
@@ -646,184 +527,120 @@ const FiberOpticsModule2Section5 = () => {
               Monitor DOM readings to detect problems before they cause outages. <strong>Declining RX power</strong> may indicate dirty connectors or degrading fibre. <strong>High temperature</strong> suggests cooling issues. <strong>Abnormal bias current</strong> can predict laser failure. Set alerts for readings approaching threshold limits.
             </p>
 
-            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
-              <h4 className="font-semibold text-amber-400 mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4" />
-                Common Selection Errors
-              </h4>
-              <ul className="text-sm space-y-1">
-                <li>• Using SR transceivers on singlemode fibre (incompatible)</li>
-                <li>• Exceeding distance rating (causes bit errors or link failure)</li>
-                <li>• Mismatched wavelengths at each end (no communication)</li>
-                <li>• Ignoring power budget (insufficient margin for losses)</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">Common Selection Errors</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Using SR transceivers on singlemode fibre (incompatible)</li>
+                <li>Exceeding distance rating (causes bit errors or link failure)</li>
+                <li>Mismatched wavelengths at each end (no communication)</li>
+                <li>Ignoring power budget (insufficient margin for losses)</li>
               </ul>
             </div>
           </div>
         </section>
 
         {/* Practical Guidance */}
-        <section className="bg-white/5 rounded-xl p-6 border border-white/10 space-y-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
-            <Server className="h-5 w-5 text-elec-yellow" />
-            Practical Guidance
-          </h2>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div>
-              <h3 className="font-semibold text-white mb-2">Patch Panel Installation</h3>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Mount at accessible height—avoid floor level or extreme top of rack</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Leave adequate slack for panel removal/sliding trays</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Label both front ports and rear cable entry points</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Maintain minimum bend radius throughout routing</span>
-                </li>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Patch Panel Installation</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Mount at accessible height—avoid floor level or extreme top of rack</li>
+                <li>Leave adequate slack for panel removal/sliding trays</li>
+                <li>Label both front ports and rear cable entry points</li>
+                <li>Maintain minimum bend radius throughout routing</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-white mb-2">Transceiver Handling</h3>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Always use ESD protection when handling transceivers</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Keep dust plugs in place until connecting fibre</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Insert fully until latch clicks—partial insertion causes errors</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Check DOM readings after installation to verify operation</span>
-                </li>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Transceiver Handling</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always use ESD protection when handling transceivers</li>
+                <li>Keep dust plugs in place until connecting fibre</li>
+                <li>Insert fully until latch clicks—partial insertion causes errors</li>
+                <li>Check DOM readings after installation to verify operation</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-white mb-2">Common Mistakes to Avoid</h3>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Mixing polarity methods within the same infrastructure</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Over-tightening rack screws (can warp panel frame)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Using incompatible transceiver/fibre combinations</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Neglecting to document port assignments and cable IDs</span>
-                </li>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Mixing polarity methods</strong> — within the same infrastructure</li>
+                <li><strong>Over-tightening rack screws</strong> — can warp panel frame</li>
+                <li><strong>Incompatible combinations</strong> — transceiver/fibre mismatch</li>
+                <li><strong>Missing documentation</strong> — port assignments and cable IDs</li>
               </ul>
             </div>
           </div>
         </section>
 
         {/* FAQs */}
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
-            <HelpCircle className="h-5 w-5 text-elec-yellow" />
-            Frequently Asked Questions
-          </h2>
-
-          <div className="space-y-2">
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-white/5 rounded-lg border border-white/10 overflow-hidden">
-                <button
-                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                  className="w-full px-4 py-3 text-left flex items-center justify-between gap-4 hover:bg-white/5 transition-colors touch-manipulation min-h-[44px]"
-                >
-                  <span className="font-medium text-white">{faq.question}</span>
-                  {expandedFaq === index ? (
-                    <ChevronUp className="h-5 w-5 text-white/60 flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-white/60 flex-shrink-0" />
-                  )}
-                </button>
-                {expandedFaq === index && (
-                  <div className="px-4 pb-4 text-white/70 text-sm">
-                    {faq.answer}
-                  </div>
-                )}
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Quick Reference Card */}
-        <section className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-xl p-6 border border-elec-yellow/30">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <Cpu className="h-5 w-5 text-elec-yellow" />
-            Quick Reference: Transceiver Selection
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4 text-sm">
-            <div className="space-y-2">
-              <h4 className="font-semibold text-white">By Speed</h4>
-              <div className="space-y-1 text-white/80">
-                <p><strong>1G:</strong> SFP (SX/LX/ZX)</p>
-                <p><strong>10G:</strong> SFP+ (SR/LR/ER)</p>
-                <p><strong>25G:</strong> SFP28</p>
-                <p><strong>40G:</strong> QSFP+ (SR4/LR4)</p>
-                <p><strong>100G:</strong> QSFP28 (SR4/LR4)</p>
+        {/* Quick Reference */}
+        <section className="mb-10">
+          <div className="p-5 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference: Transceiver Selection</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-elec-yellow/80 mb-1">By Speed</p>
+                <ul className="space-y-0.5">
+                  <li><strong>1G:</strong> SFP (SX/LX/ZX)</li>
+                  <li><strong>10G:</strong> SFP+ (SR/LR/ER)</li>
+                  <li><strong>25G:</strong> SFP28</li>
+                  <li><strong>40G:</strong> QSFP+ (SR4/LR4)</li>
+                  <li><strong>100G:</strong> QSFP28 (SR4/LR4)</li>
+                </ul>
               </div>
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-semibold text-white">By Fibre Type</h4>
-              <div className="space-y-1 text-white/80">
-                <p><strong>Multimode:</strong> SR variants (850nm)</p>
-                <p><strong>Singlemode &lt;10km:</strong> LR (1310nm)</p>
-                <p><strong>Singlemode &lt;40km:</strong> ER (1550nm)</p>
-                <p><strong>Singlemode &lt;80km:</strong> ZR (1550nm)</p>
+              <div>
+                <p className="font-medium text-elec-yellow/80 mb-1">By Fibre Type</p>
+                <ul className="space-y-0.5">
+                  <li><strong>Multimode:</strong> SR variants (850nm)</li>
+                  <li><strong>Singlemode &lt;10km:</strong> LR (1310nm)</li>
+                  <li><strong>Singlemode &lt;40km:</strong> ER (1550nm)</li>
+                  <li><strong>Singlemode &lt;80km:</strong> ZR (1550nm)</li>
+                </ul>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Quiz Section */}
-        <section className="bg-white/5 rounded-xl p-6 border border-white/10">
+        {/* Quiz */}
+        <section className="mb-10">
           <Quiz
-            title="Patch Panels and Transceivers Quiz"
+            title="Test Your Knowledge"
             questions={quizQuestions}
-            passingScore={80}
           />
         </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
-          <Link
-            to="/study-centre/apprentice/fibre-optics/module-2/section-4"
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors touch-manipulation min-h-[44px] active:scale-[0.98]"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span>Previous: Polish Grades</span>
-          </Link>
-          <Link
-            to="/study-centre/apprentice/fibre-optics/module-2/section-6"
-            className="flex items-center gap-2 text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation min-h-[44px] sm:flex-row-reverse active:scale-[0.98]"
-          >
-            <span>Next: Connector Compatibility</span>
-            <ArrowLeft className="h-5 w-5 rotate-180" />
-          </Link>
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous: Polish Grades
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-6">
+              Next: Connector Compatibility
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
         </nav>
-      </main>
+      </article>
     </div>
   );
 };

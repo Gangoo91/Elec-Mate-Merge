@@ -71,7 +71,7 @@ const BMSModule5Section6 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-5">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
             </Link>
@@ -89,7 +89,7 @@ const BMSModule5Section6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Network Planning and Latency Management
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Network design, segmentation strategies, and performance optimisation
           </p>
         </header>
@@ -183,15 +183,15 @@ const BMSModule5Section6 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-red-400/80 mb-1">9600 baud</p>
-                  <p className="text-white/90 text-xs">Max: 1200m</p>
+                  <p className="text-white text-xs">Max: 1200m</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-elec-yellow/80 mb-1">19200 baud</p>
-                  <p className="text-white/90 text-xs">Max: 600m</p>
+                  <p className="text-white text-xs">Max: 600m</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-blue-400/80 mb-1">38400 baud</p>
-                  <p className="text-white/90 text-xs">Max: 300m</p>
+                  <p className="text-white text-xs">Max: 300m</p>
                 </div>
               </div>
             </div>
@@ -248,15 +248,15 @@ const BMSModule5Section6 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-blue-400/80 mb-1">Geographic</p>
-                  <p className="text-white/90 text-xs">By floor, zone, plant room</p>
+                  <p className="text-white text-xs">By floor, zone, plant room</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-green-400/80 mb-1">Functional</p>
-                  <p className="text-white/90 text-xs">By system type (AHU, VAV)</p>
+                  <p className="text-white text-xs">By system type (AHU, VAV)</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-purple-400/80 mb-1">Hybrid</p>
-                  <p className="text-white/90 text-xs">Combined approach</p>
+                  <p className="text-white text-xs">Combined approach</p>
                 </div>
               </div>
             </div>
@@ -330,15 +330,15 @@ const BMSModule5Section6 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-red-400/30">
                 <p className="font-medium text-red-400/80 mb-1">Life Safety</p>
-                <p className="text-white/90 text-xs">&lt;100ms target</p>
+                <p className="text-white text-xs">&lt;100ms target</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-elec-yellow/30">
                 <p className="font-medium text-elec-yellow/80 mb-1">HVAC Control</p>
-                <p className="text-white/90 text-xs">&lt;500ms target</p>
+                <p className="text-white text-xs">&lt;500ms target</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-green-400/30">
                 <p className="font-medium text-green-400/80 mb-1">Monitoring</p>
-                <p className="text-white/90 text-xs">&lt;2 seconds target</p>
+                <p className="text-white text-xs">&lt;2 seconds target</p>
               </div>
             </div>
 
@@ -385,7 +385,7 @@ const BMSModule5Section6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

@@ -94,7 +94,7 @@ const BMSModule7Section4 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-7">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -112,7 +112,7 @@ const BMSModule7Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Software Upload and Controller Setup
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             System configuration and deployment for BMS controllers
           </p>
         </header>
@@ -177,15 +177,15 @@ const BMSModule7Section4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">USB Connection</p>
-                <p className="text-white/90 text-xs">Direct laptop to controller. Fast and reliable for individual controllers.</p>
+                <p className="text-white text-xs">Direct laptop to controller. Fast and reliable for individual controllers.</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Ethernet/IP</p>
-                <p className="text-white/90 text-xs">Network connection via switch. Can upload to multiple controllers remotely.</p>
+                <p className="text-white text-xs">Network connection via switch. Can upload to multiple controllers remotely.</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Serial/RS-485</p>
-                <p className="text-white/90 text-xs">Multi-drop bus for older controllers. Requires correct termination.</p>
+                <p className="text-white text-xs">Multi-drop bus for older controllers. Requires correct termination.</p>
               </div>
             </div>
 
@@ -233,15 +233,15 @@ const BMSModule7Section4 = () => {
               <div className="grid grid-cols-3 gap-3 text-sm">
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">BACnet Device IDs</p>
-                  <p className="text-white/90 text-xs">Unique 6-digit identifier (e.g., 100001). Must be unique across entire network.</p>
+                  <p className="text-white text-xs">Unique 6-digit identifier (e.g., 100001). Must be unique across entire network.</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Modbus Addresses</p>
-                  <p className="text-white/90 text-xs">Range 1-247 per segment. Sequential numbering recommended.</p>
+                  <p className="text-white text-xs">Range 1-247 per segment. Sequential numbering recommended.</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">KNX Addresses</p>
-                  <p className="text-white/90 text-xs">Area.Line.Device format (e.g., 2.3.15). Physical topology based.</p>
+                  <p className="text-white text-xs">Area.Line.Device format (e.g., 2.3.15). Physical topology based.</p>
                 </div>
               </div>
             </div>
@@ -390,7 +390,7 @@ const BMSModule7Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

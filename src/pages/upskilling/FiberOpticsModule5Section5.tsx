@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { ArrowLeft, Zap, CheckCircle, ChevronDown, Scale, Target, AlertTriangle, Calculator, BookOpen, FileCheck } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import useSEO from "@/hooks/useSEO";
 
-const TITLE = "Fibre Testing Pass/Fail Criteria - Fiber Optics Technology";
+const TITLE = "Fibre Testing Pass/Fail Criteria - Fibre Optics Technology";
 const DESCRIPTION = "Master TIA-568 and ISO 11801 standards for fibre optic testing, including link budget calculations, connector and splice loss allowances, and margin requirements.";
 
 const quickCheckQuestions = [
@@ -50,6 +49,7 @@ const quickCheckQuestions = [
 
 const quizQuestions = [
   {
+    id: 1,
     question: "Which standard series specifically addresses premises cabling requirements including fibre?",
     options: [
       "ISO 9001",
@@ -57,9 +57,11 @@ const quizQuestions = [
       "IEEE 802.3",
       "ITU-T G.652"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "TIA-568 is the structured cabling standard that defines premises cabling requirements including fibre optic components."
   },
   {
+    id: 2,
     question: "What is the maximum splice loss allowance per TIA-568 for fusion splices?",
     options: [
       "0.1 dB",
@@ -67,9 +69,11 @@ const quizQuestions = [
       "0.5 dB",
       "0.75 dB"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "TIA-568 specifies 0.3 dB maximum loss for fusion splices. Quality splices typically achieve 0.02-0.1 dB."
   },
   {
+    id: 3,
     question: "For OM3 multimode fibre at 850nm, what is the maximum attenuation per TIA-568?",
     options: [
       "1.5 dB/km",
@@ -77,9 +81,11 @@ const quizQuestions = [
       "3.5 dB/km",
       "4.5 dB/km"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "OM3 multimode fibre has a maximum attenuation of 3.5 dB/km at 850nm per TIA-568 specifications."
   },
   {
+    id: 4,
     question: "How do you calculate total link loss budget?",
     options: [
       "Cable loss only",
@@ -87,9 +93,11 @@ const quizQuestions = [
       "Just connector losses",
       "Equipment transmit power"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Total link budget includes all loss components: cable attenuation, connector losses, splice losses, plus recommended margin."
   },
   {
+    id: 5,
     question: "What does ISO 11801 Class EA require for connector grades?",
     options: [
       "Any grade connector",
@@ -97,9 +105,11 @@ const quizQuestions = [
       "Only fusion spliced connections",
       "Grade D connectors"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "ISO 11801 Class EA requires Grade B or better connectors with typical loss of 0.25 dB or less."
   },
   {
+    id: 6,
     question: "A 500m OS2 link with 4 connectors and 1 splice has a measured loss of 2.1 dB. Using TIA limits, what is the verdict?",
     options: [
       "Pass (within budget)",
@@ -107,9 +117,11 @@ const quizQuestions = [
       "Cannot determine",
       "Marginal"
     ],
-    correctAnswer: 0
+    correctAnswer: 0,
+    explanation: "Budget: 0.5km x 0.4dB/km + 4 x 0.75dB + 1 x 0.3dB = 0.2 + 3.0 + 0.3 = 3.5 dB max. Measured 2.1 dB is well within budget - Pass."
   },
   {
+    id: 7,
     question: "Why is 1550nm testing often required in addition to 1310nm for singlemode?",
     options: [
       "It's faster",
@@ -117,9 +129,11 @@ const quizQuestions = [
       "Equipment requires it",
       "It's optional"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "1550nm is more sensitive to macrobending losses, revealing installation issues that may not appear at 1310nm."
   },
   {
+    id: 8,
     question: "What safety factor should be included for future repairs and degradation?",
     options: [
       "0 dB - standards cover everything",
@@ -127,9 +141,11 @@ const quizQuestions = [
       "10 dB minimum",
       "50% of total budget"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "A 1.5-3.0 dB margin allows for future repairs, connector ageing, and additional splices over the link's lifetime."
   },
   {
+    id: 9,
     question: "Per ISO 11801, what is a Grade A connector maximum insertion loss?",
     options: [
       "0.10 dB",
@@ -137,9 +153,11 @@ const quizQuestions = [
       "0.25 dB",
       "0.50 dB"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "ISO 11801 Grade A connectors have a maximum insertion loss of 0.15 dB - the highest quality grade."
   },
   {
+    id: 10,
     question: "If measured loss exceeds budget but equipment still functions, what should you do?",
     options: [
       "Accept as pass",
@@ -147,7 +165,8 @@ const quizQuestions = [
       "Ignore the measurement",
       "Retest until it passes"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Document the actual values, note it as marginal/conditional pass, and recommend remediation of high-loss points."
   }
 ];
 
@@ -184,805 +203,442 @@ const FiberOpticsModule5Section5 = () => {
     description: DESCRIPTION,
   });
 
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
-      {/* Minimal Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-screen-2xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module5"
-            className="flex items-center gap-2 text-white/70 hover:text-white active:scale-[0.98] touch-manipulation min-h-[44px]"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="text-sm">Back to Module 5</span>
-          </Link>
-          <span className="text-xs text-white/40 hidden sm:block">Section 5 of 6</span>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="pt-20 pb-24 px-4 max-w-3xl mx-auto">
-        {/* Module Number Badge */}
-        <div className="flex justify-center mb-4">
-          <span className="inline-flex items-center gap-1.5 text-sm text-elec-yellow">
-            <CheckCircle className="w-4 h-4" />
-            Module 5 · Section 5
-          </span>
-        </div>
-
-        {/* Title */}
-        <h1 className="text-2xl md:text-3xl font-bold text-center mb-8">
-          Fibre Testing Pass/Fail Criteria
-        </h1>
-
-        {/* Quick Summary Card */}
-        <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl p-5 border border-green-500/30 mb-6">
-          <h2 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-elec-yellow" />
-            In 30 Seconds
-          </h2>
-          <p className="text-white/80 text-sm leading-relaxed">
-            Pass/fail criteria for fibre testing are defined by industry standards including TIA-568
-            and ISO 11801. These specify maximum allowable losses for connectors (0.75 dB), splices
-            (0.3 dB), and cable attenuation by fibre type. Calculate total link budget by summing
-            all loss components, then compare measured loss. Include 1.5-3.0 dB margin for future
-            repairs and degradation.
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 5 Section 5</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Fibre Testing Pass/Fail Criteria
+          </h1>
+          <p className="text-white/80">
+            Standards-based testing and link budget calculations
           </p>
-        </div>
+        </header>
 
-        {/* Spot it / Use it Card */}
-        <div className="bg-gradient-to-br from-emerald-500/10 to-green-500/10 rounded-2xl p-5 border border-emerald-500/20 mb-8">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div>
-              <h3 className="text-sm font-semibold text-emerald-400 mb-2">Key Standards</h3>
-              <ul className="text-white/70 text-sm space-y-1">
-                <li>• TIA-568 (North America)</li>
-                <li>• ISO 11801 (International)</li>
-                <li>• IEC 61280 (Test methods)</li>
-                <li>• IEC 61300 (Connectors)</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-green-400 mb-2">Critical Values</h3>
-              <ul className="text-white/70 text-sm space-y-1">
-                <li>• Connector pair: 0.75 dB max</li>
-                <li>• Fusion splice: 0.3 dB max</li>
-                <li>• SM fibre: 0.4 dB/km (1310nm)</li>
-                <li>• Margin: 1.5-3.0 dB recommended</li>
-              </ul>
-            </div>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Standards:</strong> TIA-568 and ISO 11801</li>
+              <li><strong>Connector:</strong> 0.75 dB max per pair</li>
+              <li><strong>Splice:</strong> 0.3 dB max (fusion)</li>
+              <li><strong>Margin:</strong> 1.5-3.0 dB recommended</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Values</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>OS2 at 1310nm:</strong> 0.4 dB/km max</li>
+              <li><strong>OS2 at 1550nm:</strong> 0.3 dB/km max</li>
+              <li><strong>OM3 at 850nm:</strong> 3.5 dB/km max</li>
+              <li><strong>Test both:</strong> 1310nm and 1550nm</li>
+            </ul>
           </div>
         </div>
 
         {/* Learning Outcomes */}
-        <div className="bg-white/5 rounded-2xl p-5 border border-white/10 mb-8">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-green-400" />
-            What You'll Learn
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {[
               "TIA-568 and ISO 11801 requirements",
-              "Link budget calculation methods",
-              "Connector loss allowances and grades",
-              "Splice loss specifications",
-              "Cable attenuation limits by type",
-              "Margin requirements and safety factors"
-            ].map((outcome, index) => (
-              <div key={index} className="flex items-start gap-2">
-                <div className="w-5 h-5 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-xs font-bold text-elec-yellow">{index + 1}</span>
-                </div>
-                <span className="text-sm text-white/80">{outcome}</span>
+              "Connector and splice loss limits",
+              "Fibre attenuation specifications",
+              "Link budget calculations",
+              "Margin requirements",
+              "Documenting test results"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Section 1: TIA and ISO Standards Overview */}
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 01 */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-              <span className="text-lg font-bold">01</span>
-            </div>
-            <h2 className="text-xl font-bold">TIA and ISO Standards Overview</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Industry Standards
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Industry standards define the performance requirements for fibre optic cabling systems.
-              These standards ensure interoperability, quality, and consistent testing methodology
-              across installations worldwide.
+              Fibre optic testing pass/fail criteria are defined by industry standards. Knowing which standard applies to your project is essential.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <Scale className="w-4 h-4 text-blue-400" />
-                TIA-568 Standard Series
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>TIA-568.3-D:</strong> Optical fibre cabling and components standard</li>
-                <li><strong>Scope:</strong> Premises cabling including backbone and horizontal</li>
-                <li><strong>Specifies:</strong> Fibre types, connector performance, channel limits</li>
-                <li><strong>Test methods:</strong> References TIA-526 for measurement procedures</li>
-                <li><strong>Application:</strong> Primary standard in North America</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">TIA-568 (ANSI/TIA-568):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Primary standard in North America</li>
+                <li>Covers structured cabling for commercial buildings</li>
+                <li>Defines component specifications and performance</li>
+                <li>Updated regularly (current versions TIA-568.3-D for optical fibre)</li>
               </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">ISO/IEC 11801 Standard</h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>ISO 11801-1:</strong> Generic cabling - General requirements</li>
-                <li><strong>Class system:</strong> OF-300, OF-500, OF-2000 for channel lengths</li>
-                <li><strong>Connector grades:</strong> Grade A, B, C, D for insertion loss</li>
-                <li><strong>Global application:</strong> International standard used worldwide</li>
-                <li><strong>Harmonised:</strong> Aligned with regional standards (EN 50173)</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">ISO/IEC 11801:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>International standard used globally</li>
+                <li>Class-based performance system (D, E, EA, F, FA)</li>
+                <li>Defines channel and permanent link requirements</li>
+                <li>Connector grading system (Grade A, B, C, D)</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-2">Standard Comparison</h4>
-              <div className="grid grid-cols-3 gap-2 text-xs">
-                <div className="font-semibold text-white/60">Parameter</div>
-                <div className="font-semibold text-white/60">TIA-568</div>
-                <div className="font-semibold text-white/60">ISO 11801</div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Related standards:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>IEC 61280:</strong> Fibre optic test procedures</li>
+                <li><strong>IEC 61300:</strong> Fibre optic connector tests</li>
+                <li><strong>IEC 61300-3-35:</strong> Connector end face inspection</li>
+              </ul>
+            </div>
+          </div>
+        </section>
 
-                <div className="text-white/70">Connector loss</div>
-                <div className="text-white/70">0.75 dB max</div>
-                <div className="text-white/70">Grade dependent</div>
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-                <div className="text-white/70">Splice loss</div>
-                <div className="text-white/70">0.3 dB max</div>
-                <div className="text-white/70">0.3 dB max</div>
+        {/* Section 02 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Component Loss Limits
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Standards specify maximum allowable loss for each component type. These values are used to calculate total link budgets.
+            </p>
 
-                <div className="text-white/70">OS2 @ 1310nm</div>
-                <div className="text-white/70">0.4 dB/km</div>
-                <div className="text-white/70">0.4 dB/km</div>
-
-                <div className="text-white/70">OM3 @ 850nm</div>
-                <div className="text-white/70">3.5 dB/km</div>
-                <div className="text-white/70">3.5 dB/km</div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Connector loss (TIA-568):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Maximum per mated pair:</strong> 0.75 dB</li>
+                <li><strong>Typical quality connector:</strong> 0.2-0.5 dB</li>
+                <li><strong>High-performance:</strong> Under 0.2 dB</li>
+                <li>Includes both ferrules and adapter</li>
+              </ul>
             </div>
 
-            <div className="bg-elec-yellow/10 rounded-xl p-4 border border-elec-yellow/30">
-              <h4 className="font-semibold text-elec-yellow mb-2">Which Standard to Use?</h4>
-              <p className="text-sm text-white/80">
-                Check project specifications and local requirements. North American projects typically
-                reference TIA-568, while international projects use ISO 11801. Many specifications
-                reference both. When in doubt, apply the more stringent requirement to ensure
-                compliance with either standard.
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">ISO 11801 connector grades:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Grade A:</strong> 0.15 dB maximum (highest quality)</li>
+                <li><strong>Grade B:</strong> 0.25 dB maximum</li>
+                <li><strong>Grade C:</strong> 0.50 dB maximum</li>
+                <li><strong>Grade D:</strong> 0.75 dB maximum</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Splice loss (TIA-568):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Fusion splice maximum:</strong> 0.3 dB</li>
+                <li><strong>Typical fusion splice:</strong> 0.02-0.1 dB</li>
+                <li><strong>Mechanical splice maximum:</strong> 0.3 dB</li>
+                <li><strong>Typical mechanical splice:</strong> 0.1-0.2 dB</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 03 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Fibre Attenuation Specifications
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Different fibre types have different attenuation characteristics. Standards specify maximum attenuation per kilometre.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Singlemode (OS1/OS2):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>At 1310nm:</strong> 0.4 dB/km maximum</li>
+                <li><strong>At 1550nm:</strong> 0.3 dB/km maximum</li>
+                <li>OS2 (low water peak) performs better across all wavelengths</li>
+                <li>Typical actual values: 0.32-0.35 dB/km at 1310nm</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Multimode (OM1-OM5):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>OM1/OM2 at 850nm:</strong> 3.5 dB/km maximum</li>
+                <li><strong>OM3/OM4/OM5 at 850nm:</strong> 3.5 dB/km maximum</li>
+                <li><strong>All OM at 1300nm:</strong> 1.5 dB/km maximum</li>
+                <li>Higher attenuation limits multimode to shorter distances</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">Why Test Both Wavelengths</p>
+              <p className="text-sm text-white">
+                For singlemode, always test at both 1310nm and 1550nm. While 1310nm detects connector and splice losses effectively, 1550nm is more sensitive to macrobending. A link that passes at 1310nm but fails at 1550nm has installation issues (tight bends, stressed cable) that need correction.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Section 2: Link Budget Calculation */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-              <span className="text-lg font-bold">02</span>
-            </div>
-            <h2 className="text-xl font-bold">Link Budget Calculation</h2>
-          </div>
+        <InlineCheck {...quickCheckQuestions[1]} />
 
-          <div className="space-y-4 text-white/80">
+        {/* Section 04 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Link Budget Calculations
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The link budget calculation determines the maximum allowable loss for a fibre channel.
-              Compare your measured loss against this budget to determine pass or fail.
+              A link budget calculates the maximum allowable loss for a fibre link. Measured loss must be at or below this calculated budget.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <Calculator className="w-4 h-4 text-green-400" />
-                Link Budget Formula
-              </h4>
-              <div className="bg-black/30 rounded-lg p-4 font-mono text-sm mb-3">
-                <p className="text-green-400">Total Budget = Cable Loss + Connector Losses + Splice Losses + Margin</p>
-                <p className="text-white/60 mt-2">Where:</p>
-                <p className="text-white/70">Cable Loss = Length (km) x Attenuation (dB/km)</p>
-                <p className="text-white/70">Connector Losses = Number of pairs x Loss per pair</p>
-                <p className="text-white/70">Splice Losses = Number of splices x Loss per splice</p>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Link budget formula:</p>
+              <p className="text-sm text-white ml-4 p-3 bg-white/5 rounded font-mono">
+                Total Budget = (Length x Attenuation) + (Connectors x Loss) + (Splices x Loss) + Margin
+              </p>
             </div>
 
-            <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">Example Calculation - OS2 Singlemode</h4>
-              <div className="space-y-2 text-sm">
-                <p><strong>Scenario:</strong> 500m backbone link, 4 connector pairs, 2 fusion splices</p>
-                <div className="bg-black/20 rounded-lg p-3 mt-2 space-y-1 font-mono text-xs">
-                  <p>Cable loss: 0.5 km x 0.4 dB/km = <span className="text-green-400">0.20 dB</span></p>
-                  <p>Connectors: 4 pairs x 0.75 dB = <span className="text-green-400">3.00 dB</span></p>
-                  <p>Splices: 2 x 0.3 dB = <span className="text-green-400">0.60 dB</span></p>
-                  <p>Margin: <span className="text-green-400">2.00 dB</span></p>
-                  <p className="border-t border-white/20 pt-1 mt-1">
-                    Total budget: <span className="text-elec-yellow font-bold">5.80 dB</span>
-                  </p>
-                </div>
-                <p className="text-white/60 mt-2">If measured loss is 2.1 dB, result is <span className="text-green-400 font-semibold">PASS</span> with 3.7 dB margin remaining.</p>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-green-400 mb-2">Channel vs Permanent Link</h4>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• <strong>Channel:</strong> Includes equipment cords</li>
-                  <li>• <strong>Permanent link:</strong> Fixed cabling only</li>
-                  <li>• Channel has more connectors</li>
-                  <li>• Permanent link tested for acceptance</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-emerald-400 mb-2">Bidirectional Testing</h4>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• Test both directions</li>
-                  <li>• Results may differ slightly</li>
-                  <li>• Average or use worst case</li>
-                  <li>• Both must pass budget</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quick Check 1 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[0].id}
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-        </div>
-
-        {/* Section 3: Connector Loss Allowances */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-              <span className="text-lg font-bold">03</span>
-            </div>
-            <h2 className="text-xl font-bold">Connector Loss Allowances</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
-            <p>
-              Connector losses are a significant portion of total link loss. Standards specify maximum
-              values, while quality connectors typically perform much better than these limits.
-            </p>
-
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">TIA-568 Connector Requirements</h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Mated pair maximum:</strong> 0.75 dB insertion loss</li>
-                <li><strong>Random mated:</strong> Any two compatible connectors</li>
-                <li><strong>Applies to:</strong> LC, SC, ST, and MPO connectors</li>
-                <li><strong>Return loss (SM):</strong> Minimum 26 dB (APC: 65 dB)</li>
-                <li><strong>Typical performance:</strong> Quality connectors achieve 0.2-0.3 dB</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Example calculation (singlemode at 1310nm):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Cable length: 2 km</li>
+                <li>Fibre attenuation: 2 km x 0.4 dB/km = <strong>0.8 dB</strong></li>
+                <li>Connectors: 4 pairs x 0.75 dB = <strong>3.0 dB</strong></li>
+                <li>Splices: 2 x 0.3 dB = <strong>0.6 dB</strong></li>
+                <li>Margin: <strong>2.0 dB</strong></li>
+                <li><strong>Total budget: 6.4 dB</strong></li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">ISO 11801 Connector Grades</h4>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-white/20">
-                      <th className="text-left py-2 text-white/60">Grade</th>
-                      <th className="text-left py-2 text-white/60">Max IL</th>
-                      <th className="text-left py-2 text-white/60">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white/70">
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 text-green-400 font-semibold">Grade A</td>
-                      <td className="py-2">0.15 dB</td>
-                      <td className="py-2">Premium, reference grade</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 text-blue-400 font-semibold">Grade B</td>
-                      <td className="py-2">0.25 dB</td>
-                      <td className="py-2">High performance</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 text-yellow-400 font-semibold">Grade C</td>
-                      <td className="py-2">0.50 dB</td>
-                      <td className="py-2">Standard performance</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 text-orange-400 font-semibold">Grade D</td>
-                      <td className="py-2">1.00 dB</td>
-                      <td className="py-2">Basic, legacy</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <Target className="w-4 h-4 text-red-400" />
-                MPO/MTP Connector Requirements
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>12-fibre MPO:</strong> 0.75 dB maximum per mated pair</li>
-                <li><strong>Per fibre average:</strong> Should not exceed limits</li>
-                <li><strong>Polarity:</strong> Type A, B, or C - must match system design</li>
-                <li><strong>Pin alignment:</strong> Critical for multi-fibre performance</li>
-                <li><strong>Typical performance:</strong> 0.3-0.5 dB for quality MPO</li>
-              </ul>
-            </div>
-
-            <div className="bg-orange-500/10 rounded-xl p-4 border border-orange-500/30">
-              <h4 className="font-semibold text-orange-300 mb-2 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4" />
-                Common Causes of High Connector Loss
-              </h4>
-              <ul className="text-sm space-y-1 text-white/80">
-                <li>• <strong>Contamination:</strong> Dust, oil, fingerprints on end face</li>
-                <li>• <strong>End face damage:</strong> Scratches, chips, pits</li>
-                <li>• <strong>Poor polish:</strong> Incorrect geometry or finish</li>
-                <li>• <strong>Core misalignment:</strong> Concentricity errors</li>
-                <li>• <strong>Air gap:</strong> Connectors not fully seated</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Pass/fail determination:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>If measured loss is 5.2 dB: <strong>Pass</strong> (under 6.4 dB budget)</li>
+                <li>If measured loss is 6.8 dB: <strong>Fail</strong> (exceeds budget)</li>
+                <li>Remaining margin: Budget minus Measured = Available headroom</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Section 4: Splice Loss Allowances */}
+        {/* Section 05 */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-              <span className="text-lg font-bold">04</span>
-            </div>
-            <h2 className="text-xl font-bold">Splice Loss Allowances</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Margin Requirements
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Splices create permanent fibre joints with lower loss than connectors. Standards specify
-              maximum allowable losses, while quality splices typically achieve much better results.
+              Including margin in your budget accounts for future changes and degradation over the link's lifetime.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Fusion Splice Requirements</h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>TIA-568 maximum:</strong> 0.3 dB per splice</li>
-                <li><strong>Typical performance:</strong> 0.02-0.05 dB for quality splices</li>
-                <li><strong>Singlemode:</strong> Often achieves less than 0.02 dB</li>
-                <li><strong>Multimode:</strong> Typically 0.05-0.10 dB</li>
-                <li><strong>Bidirectional average:</strong> Measure both directions</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Why margin matters:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Future repairs:</strong> Additional splices from cable breaks</li>
+                <li><strong>Connector ageing:</strong> Slight degradation over time</li>
+                <li><strong>Environmental changes:</strong> Temperature variations</li>
+                <li><strong>Additional connections:</strong> Patches added later</li>
+                <li><strong>Measurement uncertainty:</strong> Test equipment tolerance</li>
               </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Mechanical Splice Requirements</h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Maximum allowed:</strong> 0.3 dB (same as fusion)</li>
-                <li><strong>Typical performance:</strong> 0.1-0.2 dB</li>
-                <li><strong>Application:</strong> Restoration, temporary repairs</li>
-                <li><strong>Permanence:</strong> Less stable than fusion over time</li>
-                <li><strong>Index matching:</strong> Gel required for low loss</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Recommended margin values:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Minimum:</strong> 1.5 dB for stable environments</li>
+                <li><strong>Typical:</strong> 2.0-3.0 dB for most installations</li>
+                <li><strong>High-reliability:</strong> 3.0 dB or more</li>
+                <li>Consider application criticality when selecting margin</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">Splice Quality Indicators</h4>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-green-400 font-semibold mb-1">Excellent (&lt;0.05 dB)</p>
-                  <ul className="text-white/60 space-y-1">
-                    <li>• Clean fibre preparation</li>
-                    <li>• Correct arc parameters</li>
-                    <li>• Matched fibre types</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-yellow-400 font-semibold mb-1">Acceptable (&lt;0.3 dB)</p>
-                  <ul className="text-white/60 space-y-1">
-                    <li>• Within specification</li>
-                    <li>• May indicate issues</li>
-                    <li>• Consider re-splicing if high</li>
-                  </ul>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">Low margin warnings:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Margin under 1.5 dB: Flag as 'low margin' in report</li>
+                <li>Margin under 1.0 dB: Recommend investigation</li>
+                <li>Negative margin: Investigate high-loss points immediately</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 06 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Documentation and Reporting
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Proper documentation of test results is essential for handover, troubleshooting, and future reference.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Required documentation:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Link identification:</strong> Clear labelling of both ends</li>
+                <li><strong>Test date and time:</strong> When testing was performed</li>
+                <li><strong>Test equipment:</strong> OTDR/power meter model, serial, calibration date</li>
+                <li><strong>Test parameters:</strong> Wavelength, reference method, settings</li>
+                <li><strong>Measured values:</strong> Loss, ORL, event table</li>
+                <li><strong>Calculated budget:</strong> Show workings</li>
+                <li><strong>Pass/fail verdict:</strong> Clear determination</li>
+              </ul>
             </div>
 
-            <div className="bg-elec-yellow/10 rounded-xl p-4 border border-elec-yellow/30">
-              <h4 className="font-semibold text-elec-yellow mb-2">Splice Loss Estimation</h4>
-              <p className="text-sm text-white/80">
-                Fusion splicer estimates may differ from actual measured loss. The splicer calculates
-                loss from core alignment, but factors like cleave angle and fibre mismatch affect
-                true loss. Always verify critical splices with OTDR or insertion loss testing.
-                Estimated loss is a guide, not a guarantee.
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Report elements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Summary page with pass/fail status</li>
+                <li>Individual link test results</li>
+                <li>OTDR traces (saved files)</li>
+                <li>Any noted issues or recommendations</li>
+                <li>Operator signature/certification</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">Marginal Results</p>
+              <p className="text-sm text-white">
+                For links that pass but with low margin: Document as 'Pass (Low Margin)' and note specific recommendations. Identify the highest-loss events and suggest remediation priorities. This provides valuable information for future troubleshooting and maintenance planning.
               </p>
             </div>
           </div>
         </section>
-
-        {/* Quick Check 2 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[1].id}
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-        </div>
-
-        {/* Section 5: Cable Attenuation Limits by Type */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-              <span className="text-lg font-bold">05</span>
-            </div>
-            <h2 className="text-xl font-bold">Cable Attenuation Limits by Type</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
-            <p>
-              Different fibre types have specific attenuation limits at standard wavelengths.
-              These values are used in link budget calculations and for pass/fail certification.
-            </p>
-
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Singlemode Fibre (OS1/OS2)</h4>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-white/20">
-                      <th className="text-left py-2 text-white/60">Type</th>
-                      <th className="text-left py-2 text-white/60">1310nm</th>
-                      <th className="text-left py-2 text-white/60">1550nm</th>
-                      <th className="text-left py-2 text-white/60">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white/70">
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 font-semibold">OS1</td>
-                      <td className="py-2">1.0 dB/km</td>
-                      <td className="py-2">1.0 dB/km</td>
-                      <td className="py-2">Indoor tight buffer</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 font-semibold text-green-400">OS2</td>
-                      <td className="py-2">0.4 dB/km</td>
-                      <td className="py-2">0.3 dB/km</td>
-                      <td className="py-2">Loose tube, outdoor</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Multimode Fibre (OM1-OM5)</h4>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-white/20">
-                      <th className="text-left py-2 text-white/60">Type</th>
-                      <th className="text-left py-2 text-white/60">850nm</th>
-                      <th className="text-left py-2 text-white/60">1300nm</th>
-                      <th className="text-left py-2 text-white/60">Core</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white/70">
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 font-semibold">OM1</td>
-                      <td className="py-2">3.5 dB/km</td>
-                      <td className="py-2">1.5 dB/km</td>
-                      <td className="py-2">62.5 um</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 font-semibold">OM2</td>
-                      <td className="py-2">3.5 dB/km</td>
-                      <td className="py-2">1.5 dB/km</td>
-                      <td className="py-2">50 um</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 font-semibold text-cyan-400">OM3</td>
-                      <td className="py-2">3.5 dB/km</td>
-                      <td className="py-2">1.5 dB/km</td>
-                      <td className="py-2">50 um (laser opt)</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 font-semibold text-blue-400">OM4</td>
-                      <td className="py-2">3.5 dB/km</td>
-                      <td className="py-2">1.5 dB/km</td>
-                      <td className="py-2">50 um (laser opt+)</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 font-semibold text-green-400">OM5</td>
-                      <td className="py-2">3.5 dB/km</td>
-                      <td className="py-2">1.5 dB/km</td>
-                      <td className="py-2">50 um (SWDM)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-2">Wavelength Selection for Testing</h4>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-blue-400 font-semibold">Singlemode</p>
-                  <ul className="text-white/60 space-y-1 mt-1">
-                    <li>• Test at 1310nm AND 1550nm</li>
-                    <li>• 1550nm shows bending losses</li>
-                    <li>• Both must pass limits</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-cyan-400 font-semibold">Multimode</p>
-                  <ul className="text-white/60 space-y-1 mt-1">
-                    <li>• Test at 850nm AND 1300nm</li>
-                    <li>• Match to application wavelength</li>
-                    <li>• 850nm common for 10G+</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-orange-500/10 rounded-xl p-4 border border-orange-500/30">
-              <h4 className="font-semibold text-orange-300 mb-2">Installed vs Specified Attenuation</h4>
-              <p className="text-sm text-white/80">
-                Installed cable attenuation may exceed manufacturer specifications due to installation
-                stress, bends, and environmental factors. Use the TIA/ISO maximum values for budget
-                calculations, not the manufacturer's typical values. If measured attenuation significantly
-                exceeds expected values, investigate for damage or installation issues.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 6: Margin Requirements and Safety Factors */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-              <span className="text-lg font-bold">06</span>
-            </div>
-            <h2 className="text-xl font-bold">Margin Requirements and Safety Factors</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
-            <p>
-              Link margin is the difference between the total loss budget and measured loss. Adequate
-              margin ensures the link remains functional despite ageing, repairs, and environmental changes.
-            </p>
-
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <FileCheck className="w-4 h-4 text-green-400" />
-                Recommended Margin Values
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Minimum margin:</strong> 1.5 dB for new installations</li>
-                <li><strong>Recommended:</strong> 2.0-3.0 dB for long-term reliability</li>
-                <li><strong>High-reliability:</strong> 3.0 dB or more for critical links</li>
-                <li><strong>Repair allowance:</strong> 0.5-1.0 dB for future splice repairs</li>
-                <li><strong>Temperature variation:</strong> 0.1-0.2 dB for extreme environments</li>
-              </ul>
-            </div>
-
-            <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">Margin Calculation Example</h4>
-              <div className="bg-black/20 rounded-lg p-3 space-y-1 font-mono text-xs">
-                <p>Total link budget: <span className="text-white/70">5.80 dB</span></p>
-                <p>Measured loss: <span className="text-white/70">2.10 dB</span></p>
-                <p className="border-t border-white/20 pt-1 mt-1">
-                  Available margin: <span className="text-green-400 font-bold">3.70 dB</span>
-                </p>
-                <p className="text-white/50 mt-2">Result: PASS with excellent margin</p>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-green-500/10 rounded-xl p-4 border border-green-500/30">
-                <h4 className="font-semibold text-green-400 mb-2">Adequate Margin (&gt;3 dB)</h4>
-                <ul className="text-sm space-y-1 text-white/70">
-                  <li>• Room for repairs and changes</li>
-                  <li>• Accommodates ageing</li>
-                  <li>• Temperature tolerance</li>
-                  <li>• Long-term reliability</li>
-                </ul>
-              </div>
-              <div className="bg-yellow-500/10 rounded-xl p-4 border border-yellow-500/30">
-                <h4 className="font-semibold text-yellow-400 mb-2">Low Margin (&lt;1.5 dB)</h4>
-                <ul className="text-sm space-y-1 text-white/70">
-                  <li>• Document and flag</li>
-                  <li>• May need remediation</li>
-                  <li>• Risk of future failure</li>
-                  <li>• Investigate high-loss points</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Safety Factors to Consider</h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Connector degradation:</strong> 0.1-0.2 dB per mating cycle</li>
-                <li><strong>Future splices:</strong> 0.3 dB per potential repair point</li>
-                <li><strong>Cable ageing:</strong> Up to 0.05 dB/km over 25 years</li>
-                <li><strong>Measurement uncertainty:</strong> +/- 0.1 to 0.2 dB typical</li>
-                <li><strong>Equipment margin:</strong> Transceiver tolerance range</li>
-              </ul>
-            </div>
-
-            <div className="bg-elec-yellow/10 rounded-xl p-4 border border-elec-yellow/30">
-              <h4 className="font-semibold text-elec-yellow mb-2">Pass/Fail Decision Process</h4>
-              <ol className="text-sm text-white/80 space-y-1">
-                <li>1. Calculate link budget using standard maximum values</li>
-                <li>2. Measure insertion loss at required wavelengths</li>
-                <li>3. Compare measured loss to calculated budget</li>
-                <li>4. Verify minimum margin requirement is met</li>
-                <li>5. Document result as PASS, MARGINAL PASS, or FAIL</li>
-                <li>6. For marginal links, recommend corrective action</li>
-              </ol>
-            </div>
-          </div>
-        </section>
-
-        {/* Quick Check 3 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[2].id}
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-        </div>
 
         {/* Practical Guidance */}
         <section className="mb-10">
-          <h2 className="text-xl font-bold mb-4">Practical Guidance</h2>
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
 
-          <div className="space-y-4">
-            <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-xl p-4 border border-green-500/20">
-              <h4 className="font-semibold text-green-400 mb-2">Budget Calculation Checklist</h4>
-              <ul className="text-sm text-white/70 space-y-2">
-                <li>• <strong>Count all connections:</strong> Include every mated connector pair</li>
-                <li>• <strong>Identify splices:</strong> Count fusion and mechanical splices separately</li>
-                <li>• <strong>Measure cable length:</strong> Use actual installed length, not straight-line</li>
-                <li>• <strong>Select correct fibre type:</strong> OS2, OM3, etc. affect attenuation</li>
-                <li>• <strong>Include margin:</strong> Minimum 1.5 dB, 2-3 dB recommended</li>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Budget Calculation Checklist</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>1. Measure or confirm cable length</li>
+                <li>2. Count all connector pairs</li>
+                <li>3. Count all splice points</li>
+                <li>4. Apply appropriate loss values per standard</li>
+                <li>5. Add margin (minimum 1.5 dB)</li>
+                <li>6. Compare measured loss against budget</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-xl p-4 border border-red-500/20">
-              <h4 className="font-semibold text-red-400 mb-2">Common Certification Failures</h4>
-              <ul className="text-sm text-white/70 space-y-2">
-                <li>• <strong>Dirty connectors:</strong> Clean and re-test before failing</li>
-                <li>• <strong>Bad terminations:</strong> Re-terminate high-loss connectors</li>
-                <li>• <strong>Tight bends:</strong> Relocate cable or add slack</li>
-                <li>• <strong>Wrong fibre type in budget:</strong> Verify fibre specification</li>
-                <li>• <strong>Missing connections in count:</strong> Recheck connection points</li>
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Typical vs Worst-Case Values</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Certification:</strong> Use maximum (worst-case) values from standards</li>
+                <li><strong>Design:</strong> May use typical values with adequate margin</li>
+                <li><strong>Always document:</strong> Which approach was used</li>
+                <li><strong>Worst-case:</strong> Provides inherent safety factor</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-xl p-4 border border-blue-500/20">
-              <h4 className="font-semibold text-blue-400 mb-2">Documentation Requirements</h4>
-              <ul className="text-sm text-white/70 space-y-2">
-                <li>• Record measured loss at each wavelength</li>
-                <li>• Document calculated budget and assumptions</li>
-                <li>• Note available margin and pass/fail result</li>
-                <li>• Include test equipment details and calibration</li>
-                <li>• Flag marginal links for follow-up</li>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">When Results Exceed Budget</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Clean all connectors and retest first</li>
+                <li>Identify highest-loss events on OTDR</li>
+                <li>Clean, reterminate, or resplice as needed</li>
+                <li>Document all remediation actions</li>
+                <li>Retest and verify improvement</li>
               </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Quick Reference Card */}
-        <section className="mb-10">
-          <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl p-5 border border-green-500/30">
-            <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-green-400" />
-              Quick Reference: Pass/Fail Criteria
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <h4 className="text-sm font-semibold text-green-300 mb-2">TIA-568 Limits</h4>
-                <ul className="text-xs text-white/70 space-y-1">
-                  <li>Connector pair: 0.75 dB max</li>
-                  <li>Fusion splice: 0.3 dB max</li>
-                  <li>OS2 @ 1310nm: 0.4 dB/km</li>
-                  <li>OS2 @ 1550nm: 0.3 dB/km</li>
-                  <li>OM3/4 @ 850nm: 3.5 dB/km</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-emerald-300 mb-2">Budget Formula</h4>
-                <ul className="text-xs text-white/70 space-y-1">
-                  <li>Cable: Length x dB/km</li>
-                  <li>Connectors: Pairs x 0.75</li>
-                  <li>Splices: Count x 0.3</li>
-                  <li>Margin: 1.5-3.0 dB</li>
-                  <li>PASS if measured &lt; budget</li>
-                </ul>
-              </div>
-            </div>
-            <div className="mt-4 pt-4 border-t border-white/10">
-              <p className="text-xs text-white/50">
-                Test both wavelengths | Clean before testing | Document all results | Include adequate margin
-              </p>
             </div>
           </div>
         </section>
 
         {/* FAQs */}
         <section className="mb-10">
-          <h2 className="text-xl font-bold mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-3">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white/5 rounded-xl border border-white/10 overflow-hidden"
-              >
-                <button
-                  className="w-full px-4 py-3 flex items-center justify-between text-left min-h-[44px] touch-manipulation"
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                >
-                  <span className="text-sm font-medium text-white/90">{faq.question}</span>
-                  <ChevronDown
-                    className={`w-4 h-4 text-white/60 transition-transform ${
-                      openFaq === index ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {openFaq === index && (
-                  <div className="px-4 pb-3">
-                    <p className="text-sm text-white/70">{faq.answer}</p>
-                  </div>
-                )}
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Quiz Section */}
+        {/* Quick Reference */}
+        <section className="mb-10">
+          <div className="p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference: Loss Values</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">Components (TIA-568)</p>
+                <ul className="space-y-0.5">
+                  <li>Connector pair: 0.75 dB max</li>
+                  <li>Fusion splice: 0.3 dB max</li>
+                  <li>Mechanical splice: 0.3 dB max</li>
+                  <li>Margin: 1.5-3.0 dB</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-white mb-1">Fibre (per km)</p>
+                <ul className="space-y-0.5">
+                  <li>OS2 @ 1310nm: 0.4 dB/km</li>
+                  <li>OS2 @ 1550nm: 0.3 dB/km</li>
+                  <li>OM3/OM4 @ 850nm: 3.5 dB/km</li>
+                  <li>OM @ 1300nm: 1.5 dB/km</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz */}
         <section className="mb-10">
           <Quiz
-            title="Section Quiz"
+            title="Test Your Knowledge"
             questions={quizQuestions}
-            onComplete={(score, total) => {
-              console.log(`Quiz completed: ${score}/${total}`);
-            }}
           />
         </section>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-white/10">
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module5/section4"
-            className="w-full sm:w-auto"
-          >
-            <Button
-              variant="ghost"
-              className="w-full sm:w-auto gap-2 text-white/70 hover:text-white min-h-[44px] touch-manipulation"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Previous: Interpreting Test Results
-            </Button>
-          </Link>
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module5/section6"
-            className="w-full sm:w-auto"
-          >
-            <Button
-              className="w-full sm:w-auto gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation"
-            >
-              Next: Generating Test Reports
-              <ArrowLeft className="w-4 h-4 rotate-180" />
-            </Button>
-          </Link>
-        </div>
-      </main>
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-4">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-6">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

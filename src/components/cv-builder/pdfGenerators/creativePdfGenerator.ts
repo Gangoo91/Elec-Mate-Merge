@@ -25,6 +25,9 @@ import {
   generateProfessionalTitle,
   categoriseCertifications,
   getSkillProficiency,
+  addProfilePhoto,
+  addECSBadge,
+  formatLinkedInUrl,
 } from './shared';
 
 const colors = TEMPLATE_COLORS.creative;
@@ -35,11 +38,11 @@ export const generateCreativePDF = async (cvData: CVData): Promise<void> => {
   let y = margin;
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // GRADIENT HEADER
+  // GRADIENT HEADER WITH PHOTO
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Simulated gradient header (purple to pink)
-  const headerHeight = 55;
+  // Simulated gradient header (purple to pink) - taller if photo
+  const headerHeight = cvData.personalInfo.photoUrl ? 70 : 55;
   const gradientSteps = 25;
   const stepWidth = pageWidth / gradientSteps;
 
@@ -53,18 +56,27 @@ export const generateCreativePDF = async (cvData: CVData): Promise<void> => {
     pdf.rect(i * stepWidth, 0, stepWidth + 1, headerHeight, 'F');
   }
 
+  // Photo (if present) - centered at top
+  let headerY = 8;
+  if (cvData.personalInfo.photoUrl) {
+    const photoSize = 25;
+    const photoX = (pageWidth - photoSize) / 2;
+    await addProfilePhoto(pdf, cvData.personalInfo.photoUrl, photoX, headerY, photoSize);
+    headerY += photoSize + 5;
+  }
+
   // Name - centered in header, large and bold
   pdf.setFont('helvetica', 'bold');
-  pdf.setFontSize(30);
+  pdf.setFontSize(cvData.personalInfo.photoUrl ? 22 : 30);
   setColor(pdf, '#ffffff');
   const name = cvData.personalInfo.fullName || 'Your Name';
-  pdf.text(name, pageWidth / 2, 24, { align: 'center' });
+  pdf.text(name, pageWidth / 2, headerY + (cvData.personalInfo.photoUrl ? 6 : 16), { align: 'center' });
 
   // Professional title - centered below name
   const professionalTitle = generateProfessionalTitle(cvData);
   pdf.setFont('helvetica', 'normal');
-  pdf.setFontSize(12);
-  pdf.text(professionalTitle, pageWidth / 2, 34, { align: 'center' });
+  pdf.setFontSize(11);
+  pdf.text(professionalTitle, pageWidth / 2, headerY + (cvData.personalInfo.photoUrl ? 14 : 26), { align: 'center' });
 
   // Contact info - centered at bottom of header
   pdf.setFontSize(9);
@@ -74,10 +86,41 @@ export const generateCreativePDF = async (cvData: CVData): Promise<void> => {
     [cvData.personalInfo.address, cvData.personalInfo.postcode].filter(Boolean).join(', '),
   ].filter(Boolean);
   if (contactParts.length > 0) {
-    pdf.text(contactParts.join('  |  '), pageWidth / 2, 46, { align: 'center' });
+    pdf.text(contactParts.join('  |  '), pageWidth / 2, headerY + (cvData.personalInfo.photoUrl ? 22 : 38), { align: 'center' });
   }
 
-  y = headerHeight + 15;
+  // LinkedIn if present
+  if (cvData.personalInfo.linkedIn) {
+    pdf.setFontSize(8);
+    pdf.text(formatLinkedInUrl(cvData.personalInfo.linkedIn), pageWidth / 2, headerHeight - 4, { align: 'center' });
+  }
+
+  y = headerHeight + 12;
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ECS CARD BADGE (if present)
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (cvData.professionalCards.ecsCardType) {
+    y = addECSBadge(pdf, cvData.professionalCards.ecsCardType, cvData.professionalCards.ecsExpiry, margin, y, 55);
+
+    // Driving licences on same line if present
+    if (cvData.professionalCards.drivingLicence.length > 0) {
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(8);
+      setColor(pdf, colors.muted);
+      const licenceText = cvData.professionalCards.drivingLicence.slice(0, 3).join(' • ');
+      pdf.text(licenceText, margin + 60, y - 10);
+    }
+    y += 4;
+  } else if (cvData.professionalCards.drivingLicence.length > 0) {
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(9);
+    setColor(pdf, colors.muted);
+    const licenceText = 'Licences: ' + cvData.professionalCards.drivingLicence.join(' • ');
+    pdf.text(licenceText, margin, y);
+    y += 8;
+  }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PROFESSIONAL SUMMARY - Highlighted box
@@ -343,6 +386,107 @@ export const generateCreativePDF = async (cvData: CVData): Promise<void> => {
     });
 
     y += 5;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // KEY PROJECTS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  if (cvData.keyProjects.length > 0) {
+    y = checkPageBreak(pdf, y, 50);
+
+    // Section heading
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(14);
+    setColor(pdf, colors.primary);
+    pdf.text('Key Projects', margin, y);
+    drawRect(pdf, margin, y + 2, 30, 2, colors.primary);
+    drawRect(pdf, margin + 32, y + 2, 15, 2, colors.secondary);
+    y += 16;
+
+    cvData.keyProjects.forEach((project, index) => {
+      y = checkPageBreak(pdf, y, 35);
+
+      // Card background
+      drawRect(pdf, margin, y - 4, contentWidth, 28, '#fdf4ff', 3);
+
+      // Project title
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(10);
+      setColor(pdf, colors.text);
+      pdf.text(project.title, margin + 6, y + 3);
+
+      // Value badge (if present)
+      if (project.value) {
+        setColor(pdf, colors.primary);
+        pdf.text(project.value, margin + contentWidth - 6, y + 3, { align: 'right' });
+      }
+
+      // Role and client
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(9);
+      setColor(pdf, colors.secondary);
+      const metaLine = [project.role, project.client].filter(Boolean).join(' | ');
+      if (metaLine) {
+        pdf.text(metaLine, margin + 6, y + 10);
+      }
+
+      // Description (truncated)
+      if (project.description) {
+        pdf.setFontSize(8);
+        setColor(pdf, colors.muted);
+        const descLines = pdf.splitTextToSize(project.description, contentWidth - 12);
+        pdf.text(descLines.slice(0, 2), margin + 6, y + 17);
+      }
+
+      y += 32;
+    });
+
+    y += 5;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // REFERENCES
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  y = checkPageBreak(pdf, y, 35);
+
+  // Section heading
+  pdf.setFont('helvetica', 'bold');
+  pdf.setFontSize(14);
+  setColor(pdf, colors.primary);
+  pdf.text('References', margin, y);
+  drawRect(pdf, margin, y + 2, 30, 2, colors.primary);
+  drawRect(pdf, margin + 32, y + 2, 15, 2, colors.secondary);
+  y += 14;
+
+  if (cvData.references.length === 0) {
+    pdf.setFont('helvetica', 'italic');
+    pdf.setFontSize(10);
+    setColor(pdf, colors.muted);
+    pdf.text('Available on request', margin, y);
+    y += 12;
+  } else {
+    const refWidth = contentWidth / 2;
+    cvData.references.slice(0, 2).forEach((ref, index) => {
+      const refX = margin + (index * refWidth);
+
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(10);
+      setColor(pdf, colors.text);
+      pdf.text(ref.name, refX, y);
+
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(9);
+      setColor(pdf, colors.muted);
+      pdf.text(`${ref.jobTitle}, ${ref.company}`, refX, y + 4);
+
+      if (ref.relationship) {
+        pdf.setFontSize(8);
+        pdf.text(ref.relationship, refX, y + 8);
+      }
+    });
+    y += 16;
   }
 
   // ═══════════════════════════════════════════════════════════════════════════

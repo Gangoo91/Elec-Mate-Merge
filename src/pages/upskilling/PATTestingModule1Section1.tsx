@@ -1,23 +1,65 @@
-import { ArrowLeft, BookOpen, Target, FileText, AlertTriangle, CheckCircle, Building2, HardHat, School, Shield, Factory, Wrench, Eye, TestTube } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
-import QuizQuestion from '@/components/upskilling/quiz/QuizQuestion';
-import QuizResults from '@/components/upskilling/quiz/QuizResults';
-import QuizNavigation from '@/components/upskilling/quiz/QuizNavigation';
-import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
 
-interface QuizQuestionType {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  explanation: string;
-}
+const TITLE = "What is PAT Testing and Why It's Required - PAT Testing Module 1";
+const DESCRIPTION = "Learn what PAT testing involves, why it's essential for workplace safety, and understand the comprehensive scope of portable appliance testing across different sectors.";
 
-const quizData: QuizQuestionType[] = [
+const quickCheckQuestions = [
+  {
+    id: "pat-definition",
+    question: "What does PAT stand for?",
+    options: [
+      "Power Application Testing",
+      "Portable Appliance Testing",
+      "Protective Apparatus Testing",
+      "Precision Analysis Testing"
+    ],
+    correctIndex: 1,
+    explanation: "PAT stands for Portable Appliance Testing - the routine inspection and testing of electrical appliances to ensure they are safe to use."
+  },
+  {
+    id: "pat-purpose",
+    question: "What is the primary purpose of PAT testing?",
+    options: [
+      "To reduce electricity bills",
+      "To prevent electrical accidents and ensure equipment safety",
+      "To extend equipment warranty",
+      "To comply with insurance only"
+    ],
+    correctIndex: 1,
+    explanation: "The primary purpose of PAT testing is to prevent electrical accidents by identifying faulty appliances before they can cause harm to users."
+  },
+  {
+    id: "pat-approach",
+    question: "What does a comprehensive PAT testing programme include?",
+    options: [
+      "Only visual inspection",
+      "Only electrical testing",
+      "Both visual inspection and electrical testing",
+      "Just checking the equipment works"
+    ],
+    correctIndex: 2,
+    explanation: "PAT testing involves both thorough visual inspection and electrical testing. Visual checks identify obvious damage, while electrical tests verify safety parameters."
+  },
+  {
+    id: "testing-frequency",
+    question: "How often should PAT testing typically be carried out?",
+    options: [
+      "Once per year for all equipment",
+      "Depends on equipment type, usage, and environment",
+      "Only when equipment appears damaged",
+      "Every five years regardless of usage"
+    ],
+    correctIndex: 1,
+    explanation: "PAT testing frequency depends on factors including equipment class, usage intensity, environmental conditions, and user competence - ranging from daily checks to several years."
+  }
+];
+
+const quizQuestions = [
   {
     id: 1,
     question: "What does PAT stand for in electrical safety?",
@@ -140,623 +182,457 @@ const quizData: QuizQuestionType[] = [
   }
 ];
 
+const faqs = [
+  {
+    question: "What equipment requires PAT testing?",
+    answer: "PAT testing applies to portable electrical equipment that can be moved or connected to different locations. This includes office equipment (computers, printers), kitchen appliances (kettles, microwaves), power tools, extension leads, and any device with a plug that connects to the mains supply."
+  },
+  {
+    question: "Is PAT testing a legal requirement?",
+    answer: "While PAT testing isn't explicitly named in UK legislation, it's widely recognised as an effective way to comply with the Electricity at Work Regulations 1989 (EAWR) and PUWER. These laws require employers to maintain electrical equipment in a safe condition."
+  },
+  {
+    question: "How often should equipment be PAT tested?",
+    answer: "Testing frequency depends on the equipment type, usage intensity, and environment. Construction site tools may need testing every 3 months, office equipment annually, and IT equipment in controlled environments every 2-4 years. Risk assessment guides frequency."
+  },
+  {
+    question: "Can anyone perform PAT testing?",
+    answer: "PAT testing should be carried out by a competent person with appropriate training and understanding of electrical safety. While formal qualifications aren't legally required, proper training ensures accurate testing and correct interpretation of results."
+  },
+  {
+    question: "What happens if equipment fails a PAT test?",
+    answer: "Failed equipment must be immediately removed from service and labelled as unsafe. It should either be repaired by a competent person and retested, or disposed of safely. Never allow failed equipment to be used, even temporarily."
+  },
+  {
+    question: "What's the difference between visual inspection and electrical testing?",
+    answer: "Visual inspection checks for obvious damage like frayed cables, cracked casings, or damaged plugs. Electrical testing uses specialised equipment to measure earth continuity, insulation resistance, and other safety parameters that aren't visible to the eye."
+  }
+];
+
 const PATTestingModule1Section1 = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
-  const [showResults, setShowResults] = useState(false);
-  const [quizStarted, setQuizStarted] = useState(true); // Start quiz immediately
-
-  const handleAnswerSelect = (answerIndex: number) => {
-    const newAnswers = [...selectedAnswers];
-    newAnswers[currentQuestion] = answerIndex;
-    setSelectedAnswers(newAnswers);
-  };
-
-  const handleNext = () => {
-    if (currentQuestion < quizData.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      setShowResults(true);
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-    }
-  };
-
-  const handleRestart = () => {
-    setCurrentQuestion(0);
-    setSelectedAnswers([]);
-    setShowResults(false);
-    setQuizStarted(true); // Reset to show first question immediately
-  };
-
-  const renderQuiz = () => {
-    if (!quizStarted) {
-      return (
-        <Card className="bg-card/80 border-transparent">
-          <CardHeader>
-            <CardTitle className="text-white">🧠 Knowledge Check Quiz - 10 Questions</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-white">
-              Test your understanding of PAT testing fundamentals with this comprehensive 10-question quiz covering all key concepts.
-            </p>
-            <Button 
-              onClick={() => setQuizStarted(true)}
-              className="bg-yellow-400 text-black hover:bg-yellow-400"
-            >
-              Start Quiz
-            </Button>
-          </CardContent>
-        </Card>
-      );
-    }
-
-    if (showResults) {
-      return <QuizResults questions={quizData} selectedAnswers={selectedAnswers} onRestart={handleRestart} />;
-    }
-
-    const question = quizData[currentQuestion];
-
-    return (
-      <div className="space-y-6">
-        <QuizProgress currentQuestion={currentQuestion} totalQuestions={quizData.length} />
-        <QuizQuestion
-          question={question}
-          selectedAnswer={selectedAnswers[currentQuestion]}
-          onAnswerSelect={handleAnswerSelect}
-        />
-        <QuizNavigation
-          currentQuestion={currentQuestion}
-          totalQuestions={quizData.length}
-          selectedAnswer={selectedAnswers[currentQuestion]}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          isLastQuestion={currentQuestion === quizData.length - 1}
-        />
-      </div>
-    );
-  };
+  useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a] space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/pat-testing-module-1">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 1
-          </Button>
-        </Link>
-        
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <BookOpen className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-4xl font-bold text-white">
-                  What is PAT Testing and Why It's Required
-                </h1>
-                <p className="text-xl text-white">
-                  Module 1, Section 1
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Section 1.1
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-white">
-                30 minutes
-              </Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-yellow-400 flex items-center gap-2">
-                <BookOpen className="h-5 w-5" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white">
-              <p className="text-lg leading-relaxed">
-                PAT testing is a systematic safety methodology for electrical appliances that could be moved or connected to different locations. 
-                But why is it needed, and who needs it? In this comprehensive section, we'll explore the fundamental purpose of PAT testing, 
-                its critical role in electrical safety management, and why it has become an essential practice across virtually all sectors that use electrical equipment.
-                PAT testing combines systematic visual inspection with precise electrical measurements to identify potential hazards before they cause harm, 
-                making it one of the most effective preventive safety measures available to businesses today. This proactive approach to electrical safety 
-                not only protects lives and property but also demonstrates compliance with legal duties and helps maintain insurance coverage.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-yellow-400 flex items-center gap-2">
-                <Target className="h-5 w-5" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-3">
-              <p className="mb-4">By the end of this section, you will be able to:</p>
-              <ul className="list-disc list-inside space-y-2">
-                <li>Understand what PAT testing involves and its comprehensive scope across different equipment types</li>
-                <li>Recognise why PAT is crucial for safety, compliance, and business protection in the modern workplace</li>
-                <li>Identify typical use cases and industries affected by PAT requirements and regulations</li>
-                <li>Learn the goals of PAT: prevention, compliance, liability reduction, and cost-effective risk management</li>
-                <li>Explain the difference between visual inspection and electrical testing methods and their complementary roles</li>
-                <li>Understand the business case and ROI of implementing comprehensive PAT testing programmes</li>
-                <li>Analyse real-world accident scenarios and how proper PAT testing prevents serious incidents</li>
-                <li>Evaluate the consequences of non-compliance and inadequate testing on business operations</li>
-                <li>Appreciate the evolution of PAT testing standards and current best practices</li>
-                <li>Recognise the relationship between PAT testing and broader electrical safety management systems</li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* What PAT Stands For */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-yellow-400 flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                What is PAT Testing? - Comprehensive Definition
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="bg-yellow-400/10 border border-yellow-400/30 p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-bold text-xl mb-2">PAT = Portable Appliance Testing</h4>
-                <p>
-                  PAT testing is the routine inspection and testing of electrical appliances to check they are safe to use. 
-                  It combines visual inspection with electrical testing to identify potential safety hazards before they can cause harm.
-                  This systematic approach ensures that portable electrical equipment remains safe throughout its operational life,
-                  from initial installation through regular use to end-of-life disposal.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-white font-semibold mb-3">Key Characteristics of Modern PAT Testing:</h4>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <strong className="text-white">Systematic approach:</strong> Regular, scheduled testing of all portable electrical equipment using standardised procedures, 
-                      detailed documentation, and risk-based testing frequencies tailored to specific equipment and usage patterns.
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <strong className="text-white">Preventive measure:</strong> Identifies faults, wear, damage, and degradation before they cause accidents, electric shock, 
-                      fires, or equipment failure. This proactive approach is far more cost-effective than reactive maintenance.
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <strong className="text-white">Documentation:</strong> Creates a comprehensive audit trail of equipment condition, test results, maintenance history, 
-                      and compliance evidence for legal, insurance, and regulatory purposes.
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <strong className="text-white">Risk management:</strong> Forms part of a comprehensive electrical safety strategy that reduces liability exposure, 
-                      protects people and property, and supports business continuity planning.
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <strong className="text-white">Legal compliance:</strong> Demonstrates due diligence and helps meet obligations under EAWR, PUWER, 
-                      Health & Safety legislation, and supports defence against potential liability claims.
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <strong className="text-white">Quality assurance:</strong> Ensures equipment performance, reliability, and energy efficiency while extending 
-                      operational life through early identification of deterioration.
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-blue-900/20 border border-yellow-400/30 p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-3">Equipment Requiring PAT Testing - Comprehensive Coverage:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <p className="text-white font-medium mb-2">Office & IT Equipment:</p>
-                    <ul className="space-y-1 text-sm text-white">
-                      <li>• Desktop computers and laptops</li>
-                      <li>• Printers, copiers, and scanners</li>
-                      <li>• Monitors and displays</li>
-                      <li>• Network equipment and servers</li>
-                      <li>• Projection equipment</li>
-                      <li>• Desk lamps and lighting</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">Catering & Kitchen:</p>
-                    <ul className="space-y-1 text-sm text-white">
-                      <li>• Kettles and coffee machines</li>
-                      <li>• Microwaves and toasters</li>
-                      <li>• Refrigerators and freezers</li>
-                      <li>• Dishwashers and food processors</li>
-                      <li>• Hot plates and grills</li>
-                      <li>• Vending machines</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">Tools & Equipment:</p>
-                    <ul className="space-y-1 text-sm text-white">
-                      <li>• Power tools and drills</li>
-                      <li>• Extension leads and RCDs</li>
-                      <li>• Vacuum cleaners</li>
-                      <li>• Fans and heaters</li>
-                      <li>• Audio/visual equipment</li>
-                      <li>• Laboratory and medical devices</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-purple-900/20 border border-purple-500/30 p-4 rounded-lg">
-                <h4 className="text-purple-400 font-semibold mb-2">The Two-Stage PAT Testing Approach:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-white font-medium mb-2">Stage 1: Visual Inspection</p>
-                    <ul className="space-y-1 text-sm text-white">
-                      <li>• Cable and plug condition assessment</li>
-                      <li>• Housing integrity and damage check</li>
-                      <li>• Cleanliness and contamination review</li>
-                      <li>• User modifications or repairs identification</li>
-                      <li>• Environmental suitability evaluation</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">Stage 2: Electrical Testing</p>
-                    <ul className="space-y-1 text-sm text-white">
-                      <li>• Earth continuity verification</li>
-                      <li>• Insulation resistance measurement</li>
-                      <li>• Touch current/protective conductor testing</li>
-                      <li>• Functional safety checks</li>
-                      <li>• Load testing where appropriate</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Why PAT Testing is Essential */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-yellow-400 flex items-center gap-2">
-                <Shield className="h-5 w-5" />
-                Why PAT Testing is Essential - Comprehensive Risk Analysis
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-red-900/20 border border-red-500/30 p-4 rounded-lg">
-                  <h5 className="text-red-400 font-semibold mb-2">Safety Risks Without PAT Testing:</h5>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li>• Electric shock from deteriorated insulation</li>
-                    <li>• Electrical fires from overheating or arcing</li>
-                    <li>• Equipment failure causing operational injury</li>
-                    <li>• Electrocution from earth faults</li>
-                    <li>• Burns from overheating equipment or cables</li>
-                    <li>• Secondary injuries from equipment malfunction</li>
-                    <li>• Arc flash incidents in fault conditions</li>
-                    <li>• Toxic fume release from burning insulation</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-green-900/20 border border-green-500/30 p-4 rounded-lg">
-                  <h5 className="text-green-400 font-semibold mb-2">Benefits of Comprehensive PAT Testing:</h5>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li>• Prevents 95%+ of electrical accidents</li>
-                    <li>• Reduces fire risk by early fault detection</li>
-                    <li>• Demonstrates legal due diligence</li>
-                    <li>• Protects and reduces insurance premiums</li>
-                    <li>• Reduces liability exposure significantly</li>
-                    <li>• Improves equipment reliability and uptime</li>
-                    <li>• Extends equipment operational life</li>
-                    <li>• Provides workforce confidence and morale</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-white font-semibold mb-3">How Electrical Faults Develop - Progressive Failure Analysis:</h4>
-                <div className="space-y-3">
-                  <div className="bg-card p-4 rounded border border-gray-600">
-                    <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="h-5 w-5 text-red-400" />
-                      <span className="text-red-400 font-medium">Normal Wear and Tear (Progressive)</span>
-                    </div>
-                    <p className="text-white text-sm">
-                      Regular use causes gradual deterioration of cables, plugs, and internal components. Flexing of cables weakens insulation, 
-                      connections loosen due to thermal cycling, and protective devices may degrade over time. This natural aging process is often 
-                      invisible until electrical testing reveals deterioration in safety parameters. Vibration, thermal stress, and mechanical 
-                      fatigue combine to reduce equipment integrity over months and years of operation.
-                    </p>
-                  </div>
-                  
-                  <div className="bg-card p-4 rounded border border-gray-600">
-                    <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="h-5 w-5 text-orange-400" />
-                      <span className="text-orange-400 font-medium">Environmental Damage (Accelerated)</span>
-                    </div>
-                    <p className="text-white text-sm">
-                      Moisture, dust, heat, chemical exposure, and UV radiation can accelerate equipment degradation significantly. Even seemingly benign 
-                      office environments present hazards: spilled drinks, humidity variations, dust accumulation, and cleaning chemicals can create 
-                      dangerous conditions that visual inspection alone may miss. Construction and industrial environments present additional challenges 
-                      including cement dust, metal particles, and aggressive cleaning regimes that attack insulation materials.
-                    </p>
-                  </div>
-                  
-                  <div className="bg-card p-4 rounded border border-gray-600">
-                    <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="h-5 w-5 text-yellow-400" />
-                      <span className="text-yellow-400 font-medium">User Damage (Immediate or Progressive)</span>
-                    </div>
-                    <p className="text-white text-sm">
-                      Incorrect handling, dropping equipment, pulling cables, and overloading circuits cause immediate or progressive damage. 
-                      Users may not report minor incidents that compromise electrical safety, making regular testing essential. Poor cable management, 
-                      inappropriate extension lead use, and attempts at user maintenance can introduce serious safety hazards. Training and awareness 
-                      can reduce but never eliminate user-induced damage patterns.
-                    </p>
-                  </div>
-
-                  <div className="bg-card p-4 rounded border border-gray-600">
-                    <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="h-5 w-5 text-purple-400" />
-                      <span className="text-purple-400 font-medium">Manufacturing Defects (Latent)</span>
-                    </div>
-                    <p className="text-white text-sm">
-                      Even new equipment may contain latent defects that don't manifest immediately. Poor quality control, component substitution, 
-                      and design flaws can result in premature failure. Economic pressures on manufacturers sometimes lead to reduced quality margins, 
-                      making initial and regular testing even more important. Counterfeit and non-compliant equipment poses particular risks.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-amber-900/20 border border-amber-500/30 p-4 rounded-lg">
-                <h4 className="text-amber-400 font-semibold mb-2">Real-World Impact Statistics and Case Studies:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-white">~1,000</p>
-                    <p className="text-sm text-white">Electrical fires annually in UK workplaces</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-white">£1.2M+</p>
-                    <p className="text-sm text-white">Average cost of serious electrical incident</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-white">95%</p>
-                    <p className="text-sm text-white">Of electrical incidents are preventable through PAT</p>
-                  </div>
-                </div>
-                <div className="bg-gray-800/50 p-3 rounded">
-                  <p className="text-white text-sm">
-                    <strong className="text-amber-400">Case Example:</strong> A construction company avoided a potential £500,000 claim when PAT testing 
-                    identified a defective angle grinder with compromised earth continuity. The equipment appeared functional but would have created a 
-                    serious shock risk during use on a wet construction site.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Industry Applications */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-yellow-400 flex items-center gap-2">
-                <Building2 className="h-5 w-5" />
-                Industries Where PAT Testing is Essential - Sector-Specific Requirements
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="bg-card p-4 rounded border border-gray-600">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Building2 className="h-5 w-5 text-yellow-400" />
-                    <h5 className="text-yellow-400 font-medium">Office Environments</h5>
-                  </div>
-                  <p className="text-white text-sm mb-2">
-                    Computers, printers, desk lamps, kitchen appliances, and presentation equipment require regular testing.
-                  </p>
-                  <p className="text-gray-300 text-xs">
-                    Typical frequency: Annual testing for most equipment, 6-monthly for kitchen appliances in heavy use.
-                  </p>
-                </div>
-
-                <div className="bg-card p-4 rounded border border-gray-600">
-                  <div className="flex items-center gap-2 mb-2">
-                    <HardHat className="h-5 w-5 text-orange-400" />
-                    <h5 className="text-orange-400 font-medium">Construction Sites</h5>
-                  </div>
-                  <p className="text-white text-sm mb-2">
-                    Power tools, extension leads, lighting, and temporary equipment face harsh conditions requiring frequent testing.
-                  </p>
-                  <p className="text-gray-300 text-xs">
-                    Typical frequency: 3-monthly testing, daily visual checks, immediate testing after incidents.
-                  </p>
-                </div>
-
-                <div className="bg-card p-4 rounded border border-gray-600">
-                  <div className="flex items-center gap-2 mb-2">
-                    <School className="h-5 w-5 text-green-400" />
-                    <h5 className="text-green-400 font-medium">Educational Facilities</h5>
-                  </div>
-                  <p className="text-white text-sm mb-2">
-                    Laboratories, workshops, IT equipment, and portable classroom devices need systematic testing programmes.
-                  </p>
-                  <p className="text-gray-300 text-xs">
-                    Typical frequency: Annual for IT, 6-monthly for workshop tools, termly for high-use equipment.
-                  </p>
-                </div>
-
-                <div className="bg-card p-4 rounded border border-gray-600">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Shield className="h-5 w-5 text-red-400" />
-                    <h5 className="text-red-400 font-medium">Healthcare Facilities</h5>
-                  </div>
-                  <p className="text-white text-sm mb-2">
-                    Medical devices, patient care equipment, and general appliances require enhanced testing protocols.
-                  </p>
-                  <p className="text-gray-300 text-xs">
-                    Typical frequency: 6-monthly or more frequent, with specialised medical equipment testing requirements.
-                  </p>
-                </div>
-
-                <div className="bg-card p-4 rounded border border-gray-600">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Factory className="h-5 w-5 text-purple-400" />
-                    <h5 className="text-purple-400 font-medium">Manufacturing</h5>
-                  </div>
-                  <p className="text-white text-sm mb-2">
-                    Production equipment, maintenance tools, and portable machinery require robust testing schedules.
-                  </p>
-                  <p className="text-gray-300 text-xs">
-                    Typical frequency: 6-monthly for production tools, 3-monthly for maintenance equipment, risk-based intervals.
-                  </p>
-                </div>
-
-                <div className="bg-card p-4 rounded border border-gray-600">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Wrench className="h-5 w-5 text-yellow-400" />
-                    <h5 className="text-yellow-400 font-medium">Facilities Management</h5>
-                  </div>
-                  <p className="text-white text-sm mb-2">
-                    Cleaning equipment, maintenance tools, and portable facilities require comprehensive testing programmes.
-                  </p>
-                  <p className="text-gray-300 text-xs">
-                    Typical frequency: 6-monthly for cleaning equipment, 3-monthly for power tools, annual for office equipment.
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-teal-900/20 border border-teal-500/30 p-4 rounded-lg">
-                <h4 className="text-teal-400 font-semibold mb-2">Specialised Industry Considerations:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-white font-medium mb-2">High-Risk Environments:</p>
-                    <ul className="space-y-1 text-sm text-white">
-                      <li>• Chemical plants - increased corrosion risk</li>
-                      <li>• Marine environments - salt spray and humidity</li>
-                      <li>• Mining operations - dust and mechanical stress</li>
-                      <li>• Food processing - wash-down and chemicals</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">Special Requirements:</p>
-                    <ul className="space-y-1 text-sm text-white">
-                      <li>• ATEX zones - explosion-proof equipment</li>
-                      <li>• Clean rooms - ESD and contamination control</li>
-                      <li>• Outdoor events - weather protection and earthing</li>
-                      <li>• Hire equipment - enhanced testing regimes</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Business Case */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-yellow-400 flex items-center gap-2">
-                <TestTube className="h-5 w-5" />
-                The Business Case for PAT Testing - ROI and Cost-Benefit Analysis
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-white space-y-4">
-              <div className="bg-green-900/20 border border-green-500/30 p-4 rounded-lg">
-                <h4 className="text-green-400 font-semibold mb-3">Return on Investment - Quantifiable Benefits:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-white font-medium mb-2">Direct Cost Savings:</p>
-                    <ul className="space-y-1 text-sm text-white">
-                      <li>• Reduced insurance premiums (up to 15% discount)</li>
-                      <li>• Prevention of business interruption costs</li>
-                      <li>• Extended equipment life through early maintenance</li>
-                      <li>• Reduced emergency repair costs</li>
-                      <li>• Avoided regulatory fines and penalties</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium mb-2">Risk Mitigation Value:</p>
-                    <ul className="space-y-1 text-sm text-white">
-                      <li>• Personal injury claim prevention</li>
-                      <li>• Property damage limitation</li>
-                      <li>• Reputation protection and brand value</li>
-                      <li>• Director and officer liability protection</li>
-                      <li>• Regulatory compliance assurance</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-blue-900/20 border border-yellow-400/30 p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-2">Cost-Benefit Example - 200 Employee Office:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <p className="text-white font-medium">Annual PAT Testing Cost:</p>
-                    <p className="text-yellow-400 font-bold">£2,500</p>
-                    <p className="text-sm text-white">500 items @ £5 each average</p>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium">Potential Incident Cost:</p>
-                    <p className="text-red-400 font-bold">£150,000+</p>
-                    <p className="text-sm text-white">HSE fine, claims, business disruption</p>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium">ROI Ratio:</p>
-                    <p className="text-green-400 font-bold">60:1</p>
-                    <p className="text-sm text-white">£150k saved per £2.5k invested</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-yellow-400">
-                Test Your Knowledge - 10 Questions
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-white mb-6">
-                Complete this comprehensive quiz to test your understanding of PAT testing fundamentals. The quiz covers all key concepts including definitions, risk management, industry applications, and business benefits.
-              </p>
-              {renderQuiz()}
-            </CardContent>
-          </Card>
-
-          {/* Next Section Button */}
-          <div className="flex justify-end">
-            <Link to="/study-centre/upskilling/pat-testing-module-1-section-2">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                Next: Legal Duties (EAWR, PUWER, H&S at Work Act)
-                <ArrowLeft className="ml-2 h-4 w-4 rotate-180" />
-              </Button>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Minimal Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
             </Link>
-          </div>
+          </Button>
         </div>
       </div>
+
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+
+        {/* Centered Title */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 1 Section 1</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            What is PAT Testing and Why It's Required
+          </h1>
+          <p className="text-white/80">
+            Understanding the fundamentals of portable appliance testing
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>PAT:</strong> Portable Appliance Testing</li>
+              <li><strong>Purpose:</strong> Prevent electrical accidents</li>
+              <li><strong>Method:</strong> Visual inspection + electrical testing</li>
+              <li><strong>Scope:</strong> All portable electrical equipment</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Equipment with plugs, cables, portable devices</li>
+              <li><strong>Use:</strong> Systematic safety checks, documentation</li>
+              <li><strong>Apply:</strong> Risk-based testing frequencies</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Understand what PAT testing involves and its comprehensive scope",
+              "Recognise why PAT is crucial for safety and compliance",
+              "Identify typical use cases and industries requiring PAT",
+              "Learn the goals: prevention, compliance, liability reduction",
+              "Explain visual inspection vs electrical testing methods",
+              "Understand the business case for PAT testing programmes"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 1: What is PAT Testing */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            What is PAT Testing?
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              PAT testing is a systematic safety methodology for electrical appliances that could be moved or connected to different locations.
+              It combines systematic visual inspection with precise electrical measurements to identify potential hazards before they cause harm.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Key characteristics of PAT testing:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Systematic approach:</strong> Regular, scheduled testing using standardised procedures</li>
+                <li><strong>Preventive measure:</strong> Identifies faults before they cause accidents</li>
+                <li><strong>Documentation:</strong> Creates audit trail for compliance evidence</li>
+                <li><strong>Risk management:</strong> Forms part of comprehensive electrical safety strategy</li>
+                <li><strong>Legal compliance:</strong> Demonstrates due diligence under EAWR and PUWER</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Equipment requiring PAT testing:</p>
+              <div className="grid sm:grid-cols-3 gap-4 text-sm text-white">
+                <div>
+                  <p className="font-medium mb-1">Office &amp; IT Equipment</p>
+                  <ul className="space-y-0.5 text-white/90">
+                    <li>Desktop computers and laptops</li>
+                    <li>Printers and scanners</li>
+                    <li>Monitors and displays</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-medium mb-1">Catering &amp; Kitchen</p>
+                  <ul className="space-y-0.5 text-white/90">
+                    <li>Kettles and coffee machines</li>
+                    <li>Microwaves and toasters</li>
+                    <li>Refrigerators and freezers</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="font-medium mb-1">Tools &amp; Equipment</p>
+                  <ul className="space-y-0.5 text-white/90">
+                    <li>Power tools and drills</li>
+                    <li>Extension leads and RCDs</li>
+                    <li>Vacuum cleaners</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 2: The Two-Stage Approach */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            The Two-Stage PAT Testing Approach
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              PAT testing combines two complementary inspection methods to provide comprehensive safety assurance.
+              Both stages are essential for thorough equipment assessment.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Stage 1: Visual Inspection</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Cable and plug condition assessment</li>
+                  <li>Housing integrity and damage check</li>
+                  <li>Cleanliness and contamination review</li>
+                  <li>User modifications identification</li>
+                  <li>Environmental suitability evaluation</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Stage 2: Electrical Testing</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Earth continuity verification</li>
+                  <li>Insulation resistance measurement</li>
+                  <li>Touch current testing</li>
+                  <li>Functional safety checks</li>
+                  <li>Load testing where appropriate</li>
+                </ul>
+              </div>
+            </div>
+
+            <p className="text-sm text-elec-yellow/70">
+              <strong>Important:</strong> Visual inspection alone identifies approximately 95% of faults,
+              but electrical testing catches hidden dangers that could cause serious harm.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 3: Why PAT Testing is Essential */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Why PAT Testing is Essential
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-white mb-2">Safety Risks Without PAT Testing</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Electric shock from deteriorated insulation</li>
+                  <li>Electrical fires from overheating or arcing</li>
+                  <li>Equipment failure causing injury</li>
+                  <li>Electrocution from earth faults</li>
+                  <li>Burns from overheating equipment</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-white mb-2">Benefits of PAT Testing</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Prevents 95%+ of electrical accidents</li>
+                  <li>Reduces fire risk through early detection</li>
+                  <li>Demonstrates legal due diligence</li>
+                  <li>Protects insurance coverage</li>
+                  <li>Extends equipment operational life</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">How electrical faults develop:</p>
+              <ul className="text-sm text-white space-y-2 ml-4">
+                <li><strong>Normal wear and tear:</strong> Regular use causes gradual deterioration of cables, plugs, and internal components through thermal cycling and mechanical stress.</li>
+                <li><strong>Environmental damage:</strong> Moisture, dust, heat, and chemical exposure accelerate equipment degradation significantly.</li>
+                <li><strong>User damage:</strong> Incorrect handling, dropping equipment, and pulling cables cause immediate or progressive damage.</li>
+                <li><strong>Manufacturing defects:</strong> Even new equipment may contain latent defects that manifest over time.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 4: Industries and Applications */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Industries Where PAT Testing is Essential
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-4 my-6">
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Office Environments</p>
+                <p className="text-sm text-white mb-1">Computers, printers, desk lamps, kitchen appliances</p>
+                <p className="text-xs text-white/80">Typical frequency: Annual testing for most equipment</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Construction Sites</p>
+                <p className="text-sm text-white mb-1">Power tools, extension leads, temporary equipment</p>
+                <p className="text-xs text-white/80">Typical frequency: 3-monthly testing, daily visual checks</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Educational Facilities</p>
+                <p className="text-sm text-white mb-1">Laboratories, workshops, IT equipment</p>
+                <p className="text-xs text-white/80">Typical frequency: Annual for IT, 6-monthly for workshop tools</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Healthcare Facilities</p>
+                <p className="text-sm text-white mb-1">Medical devices, patient care equipment</p>
+                <p className="text-xs text-white/80">Typical frequency: 6-monthly with specialised requirements</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Manufacturing</p>
+                <p className="text-sm text-white mb-1">Production equipment, maintenance tools</p>
+                <p className="text-xs text-white/80">Typical frequency: 6-monthly for production, 3-monthly for maintenance</p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Facilities Management</p>
+                <p className="text-sm text-white mb-1">Cleaning equipment, maintenance tools</p>
+                <p className="text-xs text-white/80">Typical frequency: 6-monthly for cleaning, 3-monthly for power tools</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[3]} />
+
+        {/* Section 5: The Business Case */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            The Business Case for PAT Testing
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+              <div>
+                <p className="text-sm font-medium text-white mb-2">Direct Cost Savings</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Reduced insurance premiums (up to 15% discount)</li>
+                  <li>Prevention of business interruption costs</li>
+                  <li>Extended equipment life through early maintenance</li>
+                  <li>Avoided regulatory fines and penalties</li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-white mb-2">Risk Mitigation Value</p>
+                <ul className="text-sm text-white space-y-1">
+                  <li>Personal injury claim prevention</li>
+                  <li>Property damage limitation</li>
+                  <li>Reputation protection and brand value</li>
+                  <li>Regulatory compliance assurance</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Cost-Benefit Example: 200 Employee Office</p>
+              <div className="grid grid-cols-3 gap-4 text-sm text-white">
+                <div>
+                  <p className="font-medium">Annual PAT Cost</p>
+                  <p className="text-elec-yellow">£2,500</p>
+                  <p className="text-xs text-white/80">500 items @ £5 each</p>
+                </div>
+                <div>
+                  <p className="font-medium">Potential Incident Cost</p>
+                  <p className="text-elec-yellow">£150,000+</p>
+                  <p className="text-xs text-white/80">Fines, claims, disruption</p>
+                </div>
+                <div>
+                  <p className="font-medium">ROI Ratio</p>
+                  <p className="text-elec-yellow">60:1</p>
+                  <p className="text-xs text-white/80">£150k saved per £2.5k</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Setting Up a PAT Programme</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Create a comprehensive equipment register listing all portable appliances</li>
+                <li>Assess risk levels for different equipment types and environments</li>
+                <li>Establish testing frequencies based on risk assessment</li>
+                <li>Ensure testers are competent and properly trained</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Conducting Tests</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always start with thorough visual inspection</li>
+                <li>Follow manufacturer guidelines for electrical tests</li>
+                <li>Record all results accurately and completely</li>
+                <li>Label equipment clearly with test date and result</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Missing equipment</strong> — ensure all portable appliances are included in the register</li>
+                <li><strong>Inconsistent testing</strong> — stick to scheduled frequencies</li>
+                <li><strong>Poor documentation</strong> — records must be complete and accessible</li>
+                <li><strong>Untrained testers</strong> — competence is essential for valid results</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Divider */}
+        <hr className="border-white/5 my-12" />
+
+        {/* Quick Reference */}
+        <section className="mb-10">
+          <div className="p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">PAT Testing Basics</p>
+                <ul className="space-y-0.5">
+                  <li>PAT = Portable Appliance Testing</li>
+                  <li>Two stages: visual + electrical</li>
+                  <li>Frequency based on risk assessment</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-white mb-1">Key Benefits</p>
+                <ul className="space-y-0.5">
+                  <li>Prevents electrical accidents</li>
+                  <li>Demonstrates legal compliance</li>
+                  <li>Protects insurance coverage</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-2">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+
+      </article>
     </div>
   );
 };

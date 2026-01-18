@@ -85,9 +85,9 @@ const EVChargingModule3Section5 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/ev-charging-module-3">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 3
+              Back
             </Link>
           </Button>
         </div>
@@ -226,7 +226,7 @@ const EVChargingModule3Section5 = () => {
 
             <div className="p-3 rounded bg-transparent border border-elec-yellow/20">
               <p className="text-sm font-medium text-elec-yellow mb-2">Example: Residential PV-EV System</p>
-              <ul className="text-xs text-white/90 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li><strong>PV Array:</strong> 6kWp (24 × 250W panels)</li>
                 <li><strong>Annual generation:</strong> ~5,400kWh</li>
                 <li><strong>EV consumption:</strong> 3,500kWh/year (12,000 miles)</li>
@@ -279,7 +279,7 @@ const EVChargingModule3Section5 = () => {
 
             <div className="p-3 rounded bg-transparent border border-elec-yellow/20">
               <p className="text-sm font-medium text-elec-yellow mb-2">Example: Octopus Go Integration</p>
-              <ul className="text-xs text-white/90 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li><strong>Off-peak:</strong> 00:30-04:30 at 7.5p/kWh</li>
                 <li><strong>Day rate:</strong> 05:00-00:00 at 30.9p/kWh</li>
                 <li><strong>Smart charging:</strong> 90% in off-peak window</li>
@@ -330,7 +330,7 @@ const EVChargingModule3Section5 = () => {
                     <th className="text-left p-2 text-elec-yellow">Capacity</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/90">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="p-2">Single dwelling</td>
                     <td className="p-2">7kW + 8kW house</td>
@@ -365,7 +365,7 @@ const EVChargingModule3Section5 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Ultra-High Power</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• 350kW+ DC charging</li>
                   <li>• 800V architectures</li>
                   <li>• Liquid-cooled cables</li>
@@ -373,7 +373,7 @@ const EVChargingModule3Section5 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Wireless Charging</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• 11-22kW inductive pads</li>
                   <li>• Position accuracy ±50mm</li>
                   <li>• EMF compliance (ICNIRP)</li>
@@ -381,7 +381,7 @@ const EVChargingModule3Section5 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Autonomous EVs</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Robotic plug connection</li>
                   <li>• 5G/V2X communication</li>
                   <li>• Fleet optimisation</li>
@@ -436,7 +436,7 @@ const EVChargingModule3Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

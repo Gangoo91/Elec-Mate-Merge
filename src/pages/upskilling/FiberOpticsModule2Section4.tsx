@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { ArrowLeft, Zap, CheckCircle, Info, BookOpen, Lightbulb, AlertTriangle, HelpCircle, ChevronDown, ChevronUp, Sparkles, Eye, RefreshCcw, Target } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import useSEO from "@/hooks/useSEO";
 
-const TITLE = "Polish Grades (UPC, APC) | Fibre Optics Module 2";
+const TITLE = "Polish Grades (UPC, APC) - Fibre Optics Course";
 const DESCRIPTION = "Understand fibre optic connector polish grades including PC, UPC, and APC. Learn return loss specifications, colour coding, and selection criteria for UK installations.";
 
 const quickCheckQuestions = [
@@ -35,54 +34,74 @@ const quickCheckQuestions = [
 
 const quizQuestions = [
   {
+    id: 1,
     question: "What does PC stand for in connector polish terminology?",
     options: ["Polished Connection", "Physical Contact", "Precision Core", "Permanent Coupling"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "PC stands for Physical Contact - the ferrule end faces make direct physical contact when mated."
   },
   {
+    id: 2,
     question: "Standard PC polish typically achieves a return loss of:",
     options: ["-20 dB", "-30 to -35 dB", "-50 dB", "-65 dB"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Standard PC polish achieves approximately -30 to -35 dB return loss."
   },
   {
+    id: 3,
     question: "Why is APC polish superior for analogue signal transmission?",
     options: ["Lower insertion loss", "Fewer back-reflections cause less signal distortion", "Faster connection speed", "Lower cost"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "APC's extremely low back-reflections prevent interference patterns in analogue signals like CATV."
   },
   {
+    id: 4,
     question: "Can you connect an APC connector to a UPC adaptor?",
     options: ["Yes, they are interchangeable", "No, it will damage the connector", "Only for multimode fibre", "Only at low power levels"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "APC and UPC are not interchangeable - forcing them together damages both ferrule end faces."
   },
   {
+    id: 5,
     question: "The curved end face of a UPC connector is polished with radius of approximately:",
     options: ["5-10mm", "10-25mm", "50-100mm", "Completely flat"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "UPC ferrules have a domed end face with approximately 10-25mm radius curvature."
   },
   {
+    id: 6,
     question: "Which polish grade is typically specified for CATV/RF-over-fibre applications?",
     options: ["PC", "SPC", "UPC", "APC"],
-    correctAnswer: 3
+    correctAnswer: 3,
+    explanation: "APC is required for CATV and RF-over-fibre due to its superior return loss performance."
   },
   {
+    id: 7,
     question: "The 8-degree angle in APC connectors directs reflections:",
     options: ["Into the core for maximum power", "Into the cladding away from the core", "Back to the source", "Into adjacent fibres"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "The 8-degree angle causes reflections to exceed the fibre's numerical aperture and escape into the cladding."
   },
   {
+    id: 8,
     question: "What insertion loss increase might be expected with APC vs UPC?",
     options: ["None - identical IL", "0.1-0.2 dB higher", "0.5 dB higher", "1.0 dB higher"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "APC connectors typically have slightly higher insertion loss (0.1-0.2 dB) than UPC due to the angled interface."
   },
   {
+    id: 9,
     question: "Blue coloured connector housings typically indicate:",
     options: ["APC polish", "UPC polish", "Multimode fibre", "High-power rating"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Blue is the standard colour code for UPC singlemode connectors."
   },
   {
+    id: 10,
     question: "SPC (Super Physical Contact) polish achieves return loss of approximately:",
     options: ["-30 dB", "-40 dB", "-50 dB", "-65 dB"],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "SPC achieves approximately -40 dB return loss, between PC and UPC performance."
   }
 ];
 
@@ -97,19 +116,15 @@ const faqs = [
   },
   {
     question: "How can I tell polish grade if there's no colour coding?",
-    answer: "Look for markings on the connector body—'APC' or 'PC/UPC' may be printed or engraved. Check documentation or labelling. Use a fibre microscope to examine the ferrule end face: APC shows an oval light pattern due to the angle, while UPC shows a circular pattern. When in doubt, use an inspection scope before connecting."
+    answer: "Look for markings on the connector body - 'APC' or 'PC/UPC' may be printed or engraved. Check documentation or labelling. Use a fibre microscope to examine the ferrule end face: APC shows an oval light pattern due to the angle, while UPC shows a circular pattern. When in doubt, use an inspection scope before connecting."
   },
   {
     question: "Do I need APC for 10 Gigabit Ethernet?",
-    answer: "For standard 10GbE data transmission, UPC polish (-50 dB return loss) is typically adequate. APC is primarily needed for analogue applications (CATV, RF), wavelength-sensitive equipment (DWDM), or where specifications explicitly require >55 dB return loss. Check your equipment specifications—most enterprise and data centre equipment works fine with UPC."
+    answer: "For standard 10GbE data transmission, UPC polish (-50 dB return loss) is typically adequate. APC is primarily needed for analogue applications (CATV, RF), wavelength-sensitive equipment (DWDM), or where specifications explicitly require greater than 55 dB return loss. Check your equipment specifications - most enterprise and data centre equipment works fine with UPC."
   },
   {
     question: "Can worn UPC connectors be re-polished to APC?",
-    answer: "No—the fundamental geometry is different. APC requires removing material at an 8-degree angle, which would completely reshape the ferrule end. A UPC connector can be re-polished to restore UPC finish (common maintenance practice), but converting between polish types requires replacing the connector or using a new ferrule assembly."
-  },
-  {
-    question: "Why do some patch leads have APC on one end and UPC on the other?",
-    answer: "These 'hybrid' patch leads are used to connect between systems with different requirements. For example, connecting a CATV distribution system (APC) to test equipment (UPC). They're factory-made with proper transitions. However, for permanent infrastructure, it's better to standardise on one polish type throughout and use hybrid cables only at specific interface points."
+    answer: "No - the fundamental geometry is different. APC requires removing material at an 8-degree angle, which would completely reshape the ferrule end. A UPC connector can be re-polished to restore UPC finish (common maintenance practice), but converting between polish types requires replacing the connector or using a new ferrule assembly."
   }
 ];
 
@@ -119,729 +134,414 @@ const FiberOpticsModule2Section4 = () => {
     description: DESCRIPTION
   });
 
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/60">
-        <div className="container flex h-14 max-w-screen-2xl items-center px-4">
-          <Link
-            to="/study-centre/apprentice/fibre-optics/module-2"
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors touch-manipulation min-h-[44px]"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Module 2</span>
-          </Link>
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="container max-w-3xl mx-auto px-4 py-6 space-y-8">
-        {/* Title Section */}
-        <section className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm font-medium px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
-            <Sparkles className="h-4 w-4" />
-            Module 2 • Section 4
+      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
+        {/* Centred Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 2 Section 4</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Polish Grades (UPC, APC)
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-white/80">
             Understanding connector end face finishing for optimal performance
           </p>
-        </section>
+        </header>
 
-        {/* Quick Summary Cards */}
-        <section className="grid sm:grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-xl p-5 border border-elec-yellow/30">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-lg bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                <Zap className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">In 30 Seconds</h3>
-                <p className="text-sm text-white/80">
-                  Polish grade affects back-reflections. UPC (blue) = flat, -50dB return loss, general use. APC (green) = 8° angle, -65dB, for analogue/CATV. Never mix APC with UPC.
-                </p>
-              </div>
-            </div>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>PC:</strong> Basic polish, -30dB return loss</li>
+              <li><strong>UPC:</strong> Extended polish, -50dB, blue colour</li>
+              <li><strong>APC:</strong> 8-degree angle, -65dB, green colour</li>
+              <li><strong>Rule:</strong> Never mix APC with UPC</li>
+            </ul>
           </div>
-          <div className="bg-gradient-to-br from-blue-500/20 to-blue-500/5 rounded-xl p-5 border border-blue-500/30">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <Info className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Identify It / Match It</h3>
-                <p className="text-sm text-white/80">
-                  Blue housing = UPC. Green housing = APC. Always match polish grades. Check markings if colour is ambiguous. APC to UPC = damage.
-                </p>
-              </div>
-            </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Blue = UPC, Green = APC</li>
+              <li><strong>Use:</strong> UPC for data, APC for CATV/analogue</li>
+            </ul>
           </div>
-        </section>
+        </div>
 
         {/* Learning Outcomes */}
-        <section className="bg-white/5 rounded-xl p-6 border border-white/10">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-elec-yellow" />
-            What You'll Learn
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "PC, UPC, and APC polish differences",
-              "Return loss specifications by grade",
-              "Colour coding conventions",
-              "Application selection criteria",
-              "Compatibility requirements",
-              "Inspection and identification"
-            ].map((outcome, index) => (
-              <div key={index} className="flex items-start gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+              "Distinguish PC, UPC, and APC polish grades",
+              "Understand return loss specifications",
+              "Identify polish grades by colour coding",
+              "Select appropriate polish for applications",
+              "Recognise compatibility requirements",
+              "Avoid damaging polish grade mismatches"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Section 1: Understanding Polish Grades */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">01</span>
-            <h2 className="text-2xl font-bold">Understanding Polish Grades</h2>
-          </div>
+        <hr className="border-white/5 mb-12" />
 
-          <div className="space-y-4 text-white/80">
+        {/* Section 01 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Understanding Polish Grades
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Fibre optic connector <strong>polish grade</strong> refers to the quality and geometry of the ferrule end face finish. This directly affects <strong>return loss</strong> (back-reflections) and <strong>insertion loss</strong> (signal attenuation). Proper polish selection is essential for system performance, particularly in singlemode applications.
+              Fibre optic connector polish grade refers to the quality and geometry of the ferrule
+              end face finish. This directly affects return loss (back-reflections) and insertion
+              loss (signal attenuation). Proper polish selection is essential for system performance,
+              particularly in singlemode applications.
             </p>
 
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-              <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Info className="h-4 w-4" />
-                Why Polish Matters
-              </h4>
-              <p className="text-sm">
-                When light transitions between two fibre end faces, some reflects back toward the source. This <strong>Fresnel reflection</strong> causes approximately 4% power loss (about -14 dB return loss) at an unpolished air gap. Physical contact polishing eliminates the air gap and dramatically reduces reflections—critical for laser sources sensitive to back-reflected light.
+            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Why Polish Matters</p>
+              <p className="text-sm text-white">
+                When light transitions between two fibre end faces, some reflects back toward the
+                source. This Fresnel reflection causes approximately 4% power loss (about -14 dB
+                return loss) at an unpolished air gap. Physical contact polishing eliminates the
+                air gap and dramatically reduces reflections - critical for laser sources sensitive
+                to back-reflected light.
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-3 gap-4 mt-4">
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-white mb-2">PC (Physical Contact)</h4>
-                <p className="text-sm text-white/60 mb-2">Original standard polish</p>
-                <ul className="text-sm space-y-1">
-                  <li>• Curved end face</li>
-                  <li>• ~-30 to -35 dB RL</li>
-                  <li>• Basic applications</li>
-                </ul>
-              </div>
-              <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-                <h4 className="font-semibold text-blue-400 mb-2">UPC (Ultra PC)</h4>
-                <p className="text-sm text-white/60 mb-2">Enhanced standard</p>
-                <ul className="text-sm space-y-1">
-                  <li>• Extended polish process</li>
-                  <li>• ≥-50 dB return loss</li>
-                  <li>• Data/telecom standard</li>
-                </ul>
-              </div>
-              <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-                <h4 className="font-semibold text-green-400 mb-2">APC (Angled PC)</h4>
-                <p className="text-sm text-white/60 mb-2">Lowest reflections</p>
-                <ul className="text-sm space-y-1">
-                  <li>• 8° angled face</li>
-                  <li>• ≥-65 dB return loss</li>
-                  <li>• Analogue/RF/CATV</li>
-                </ul>
-              </div>
-            </div>
-
-            <p>
-              The evolution from PC to UPC to APC represents increasingly stringent control of back-reflections. While <strong>insertion loss</strong> (the light lost passing through the connection) is similar across grades, the <strong>return loss</strong> (reflected light) varies significantly and drives polish grade selection.
-            </p>
-          </div>
-        </section>
-
-        {/* Inline Check 1 */}
-        <InlineCheck
-          id={quickCheckQuestions[0].id}
-          question={quickCheckQuestions[0].question}
-          options={quickCheckQuestions[0].options}
-          correctIndex={quickCheckQuestions[0].correctIndex}
-          explanation={quickCheckQuestions[0].explanation}
-        />
-
-        {/* Section 2: UPC - Ultra Physical Contact */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">02</span>
-            <h2 className="text-2xl font-bold">UPC - Ultra Physical Contact</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
-            <p>
-              <strong>UPC (Ultra Physical Contact)</strong> is the standard polish grade for most singlemode and multimode data communications applications. The ferrule end face is polished to a slight dome shape (typically 10-25mm radius) with an extended polishing process that achieves superior surface finish compared to basic PC.
-            </p>
-
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">UPC Specifications</h4>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white/60">End Face Geometry</p>
-                  <p className="font-medium">Domed, 10-25mm radius</p>
-                </div>
-                <div>
-                  <p className="text-white/60">Return Loss</p>
-                  <p className="font-medium">≥50 dB typical</p>
-                </div>
-                <div>
-                  <p className="text-white/60">Insertion Loss</p>
-                  <p className="font-medium">≤0.25 dB typical</p>
-                </div>
-                <div>
-                  <p className="text-white/60">Colour Code</p>
-                  <p className="font-medium">Blue (singlemode)</p>
-                </div>
-                <div>
-                  <p className="text-white/60">Surface Quality</p>
-                  <p className="font-medium">Scratch-free core zone</p>
-                </div>
-                <div>
-                  <p className="text-white/60">Primary Applications</p>
-                  <p className="font-medium">Data, telecom, enterprise</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-              <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Eye className="h-4 w-4" />
-                How UPC Achieves Low Return Loss
-              </h4>
-              <p className="text-sm">
-                The domed end face ensures the cores make contact first when connectors mate, eliminating air gaps at the critical light-carrying centre. The extended polishing removes sub-surface damage and achieves a mirror-smooth finish. Under a microscope, a properly polished UPC ferrule shows no visible scratches in the core zone.
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-                <h4 className="font-semibold text-green-400 mb-2">UPC Advantages</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Industry standard availability</li>
-                  <li>• Lower cost than APC</li>
-                  <li>• Suitable for most digital data</li>
-                  <li>• Easy field termination</li>
-                  <li>• Wide equipment compatibility</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <h4 className="font-semibold text-elec-yellow mb-2">Typical Applications</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Gigabit & 10G Ethernet</li>
-                  <li>• Fibre Channel storage</li>
-                  <li>• Passive optical networks</li>
-                  <li>• Enterprise LAN infrastructure</li>
-                  <li>• Data centre interconnects</li>
-                </ul>
-              </div>
-            </div>
-
-            <p>
-              For <strong>multimode fibre</strong>, standard PC or UPC polish is universally used. The larger core diameter and LED/VCSEL sources are less sensitive to reflections than singlemode laser systems. Most multimode connectors use <strong>beige or black</strong> colour coding rather than blue.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 3: APC - Angled Physical Contact */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">03</span>
-            <h2 className="text-2xl font-bold">APC - Angled Physical Contact</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
-            <p>
-              <strong>APC (Angled Physical Contact)</strong> connectors feature an 8-degree angled ferrule end face. This angle directs any reflected light into the cladding rather than back down the core, achieving return loss values of <strong>-65 dB or better</strong>—approximately 100 times less reflection than UPC.
-            </p>
-
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">APC Specifications</h4>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-white/60">End Face Angle</p>
-                  <p className="font-medium">8 degrees</p>
-                </div>
-                <div>
-                  <p className="text-white/60">Return Loss</p>
-                  <p className="font-medium">≥65 dB typical</p>
-                </div>
-                <div>
-                  <p className="text-white/60">Insertion Loss</p>
-                  <p className="font-medium">≤0.30 dB typical</p>
-                </div>
-                <div>
-                  <p className="text-white/60">Colour Code</p>
-                  <p className="font-medium">Green (universal)</p>
-                </div>
-                <div>
-                  <p className="text-white/60">Fibre Type</p>
-                  <p className="font-medium">Singlemode only</p>
-                </div>
-                <div>
-                  <p className="text-white/60">Primary Applications</p>
-                  <p className="font-medium">CATV, RF, analogue</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-              <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
-                <Target className="h-4 w-4" />
-                Why the 8-Degree Angle?
-              </h4>
-              <p className="text-sm">
-                When light reflects from an angled surface, it follows the law of reflection at an angle equal to the incident angle. At 8 degrees, reflected light exits the core at 16 degrees (double the surface angle)—sufficient to exceed the fibre's numerical aperture and escape into the cladding rather than propagating back to the source.
-              </p>
-            </div>
-
-            <p>
-              APC is essential for <strong>analogue signal transmission</strong> where back-reflections cause interference patterns (composite second-order and triple-beat distortion). CATV distribution, RF-over-fibre, and precision measurement applications require APC's superior reflection control.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-                <h4 className="font-semibold text-green-400 mb-2">When to Use APC</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• CATV / video distribution</li>
-                  <li>• RF-over-fibre systems</li>
-                  <li>• DWDM networks (some)</li>
-                  <li>• Instrumentation / sensing</li>
-                  <li>• High-power laser systems</li>
-                </ul>
-              </div>
-              <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
-                <h4 className="font-semibold text-amber-400 mb-2">APC Considerations</h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Higher cost (~20% more)</li>
-                  <li>• Slightly higher IL</li>
-                  <li>• Not compatible with UPC</li>
-                  <li>• Requires angle-specific tooling</li>
-                  <li>• Singlemode only</li>
-                </ul>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">The Three Main Polish Grades:</p>
+              <ul className="text-sm text-white space-y-2 ml-4">
+                <li>
+                  <strong className="text-elec-yellow">PC (Physical Contact):</strong> Original standard polish with curved end face.
+                  Achieves -30 to -35 dB return loss. Suitable for basic applications.
+                </li>
+                <li>
+                  <strong className="text-elec-yellow">UPC (Ultra Physical Contact):</strong> Extended polishing process for superior surface finish.
+                  Achieves -50 dB or better return loss. Standard for data/telecom.
+                </li>
+                <li>
+                  <strong className="text-elec-yellow">APC (Angled Physical Contact):</strong> 8-degree angled ferrule face directing reflections into cladding.
+                  Achieves -65 dB or better return loss. Required for CATV/analogue.
+                </li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Inline Check 2 */}
-        <InlineCheck
-          id={quickCheckQuestions[1].id}
-          question={quickCheckQuestions[1].question}
-          options={quickCheckQuestions[1].options}
-          correctIndex={quickCheckQuestions[1].correctIndex}
-          explanation={quickCheckQuestions[1].explanation}
-        />
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 4: Colour Coding and Identification */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">04</span>
-            <h2 className="text-2xl font-bold">Colour Coding and Identification</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 02 */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            UPC - Ultra Physical Contact
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Consistent <strong>colour coding</strong> prevents accidental mismatch between incompatible polish grades. While not a formal standard, industry convention has established clear visual identification that is followed by most manufacturers.
+              UPC (Ultra Physical Contact) is the standard polish grade for most singlemode and
+              multimode data communications applications. The ferrule end face is polished to a
+              slight dome shape (typically 10-25mm radius) with an extended polishing process that
+              achieves superior surface finish compared to basic PC.
             </p>
 
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Standard Colour Conventions</h4>
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-blue-500 flex-shrink-0"></div>
-                  <div>
-                    <h5 className="font-semibold text-white">Blue - UPC Singlemode</h5>
-                    <p className="text-sm text-white/70">Standard for singlemode UPC connectors and adaptors</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-green-500 flex-shrink-0"></div>
-                  <div>
-                    <h5 className="font-semibold text-white">Green - APC</h5>
-                    <p className="text-sm text-white/70">Universal identifier for APC polish (always singlemode)</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-amber-200 flex-shrink-0"></div>
-                  <div>
-                    <h5 className="font-semibold text-white">Beige/Cream - Multimode</h5>
-                    <p className="text-sm text-white/70">Standard multimode (OM1-OM5) - always UPC/PC polish</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-cyan-400 flex-shrink-0"></div>
-                  <div>
-                    <h5 className="font-semibold text-white">Aqua - OM3/OM4/OM5</h5>
-                    <p className="text-sm text-white/70">Laser-optimised multimode - always UPC/PC polish</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
-              <h4 className="font-semibold text-amber-400 mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4" />
-                Identification Cautions
-              </h4>
-              <ul className="text-sm space-y-1">
-                <li>• Colour may be on housing, boot, or both—check carefully</li>
-                <li>• Some manufacturers use different colours—verify markings</li>
-                <li>• Adaptors should match connector polish grade colour</li>
-                <li>• When in doubt, inspect the ferrule angle under magnification</li>
+            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm font-medium text-elec-yellow mb-2">UPC Specifications</p>
+              <ul className="text-sm text-white space-y-1">
+                <li><strong>End face geometry:</strong> Domed, 10-25mm radius</li>
+                <li><strong>Return loss:</strong> 50 dB or better typical</li>
+                <li><strong>Insertion loss:</strong> 0.25 dB or better typical</li>
+                <li><strong>Colour code:</strong> Blue (singlemode)</li>
+                <li><strong>Applications:</strong> Data, telecom, enterprise networks</li>
               </ul>
             </div>
 
             <p>
-              Beyond colour, look for <strong>text markings</strong> on the connector body. Many connectors are marked "APC", "UPC", or "PC". The adaptor sleeve should also indicate polish grade. Using a blue UPC adaptor with green APC connectors is as damaging as mixing the connectors directly.
+              The domed end face ensures cores make contact first when connectors mate, eliminating
+              air gaps at the critical light-carrying centre. Under a microscope, a properly polished
+              UPC ferrule shows no visible scratches in the core zone.
             </p>
 
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-              <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                <Eye className="h-4 w-4" />
-                Visual Inspection Technique
-              </h4>
-              <p className="text-sm">
-                Under a fibre microscope, APC and UPC appear distinctly different. UPC shows a <strong>circular reflection pattern</strong> centred on the core. APC shows an <strong>oval or elliptical pattern</strong> due to the angled surface. If you see an oval pattern in what should be a UPC connector, stop—it may be APC mislabelled or installed in the wrong adaptor.
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Typical UPC Applications:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Gigabit and 10G Ethernet</li>
+                <li>Fibre Channel storage networks</li>
+                <li>Passive optical networks (PON)</li>
+                <li>Enterprise LAN infrastructure</li>
+                <li>Data centre interconnects</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 03 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            APC - Angled Physical Contact
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              APC (Angled Physical Contact) connectors feature an 8-degree angled ferrule end face.
+              This angle directs any reflected light into the cladding rather than back down the
+              core, achieving return loss values of -65 dB or better - approximately 100 times less
+              reflection than UPC.
+            </p>
+
+            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm font-medium text-elec-yellow mb-2">APC Specifications</p>
+              <ul className="text-sm text-white space-y-1">
+                <li><strong>End face angle:</strong> 8 degrees</li>
+                <li><strong>Return loss:</strong> 65 dB or better typical</li>
+                <li><strong>Insertion loss:</strong> 0.30 dB or better typical</li>
+                <li><strong>Colour code:</strong> Green (universal)</li>
+                <li><strong>Fibre type:</strong> Singlemode only</li>
+              </ul>
+            </div>
+
+            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Why the 8-Degree Angle?</p>
+              <p className="text-sm text-white">
+                When light reflects from an angled surface, it follows the law of reflection at an
+                angle equal to the incident angle. At 8 degrees, reflected light exits the core at
+                16 degrees (double the surface angle) - sufficient to exceed the fibre's numerical
+                aperture and escape into the cladding rather than propagating back to the source.
+              </p>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">When to Use APC:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>CATV / video distribution</li>
+                <li>RF-over-fibre systems</li>
+                <li>DWDM networks (some applications)</li>
+                <li>Instrumentation and sensing</li>
+                <li>High-power laser systems</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 04 */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Colour Coding and Identification
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Consistent colour coding prevents accidental mismatch between incompatible polish
+              grades. While not a formal standard, industry convention has established clear visual
+              identification that is followed by most manufacturers.
+            </p>
+
+            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Standard Colour Conventions</p>
+              <ul className="text-sm text-white space-y-1">
+                <li><strong>Blue:</strong> UPC singlemode - standard for data/telecom</li>
+                <li><strong>Green:</strong> APC - always singlemode, CATV/analogue</li>
+                <li><strong>Beige/Cream:</strong> Multimode (OM1-OM5) - always UPC/PC</li>
+                <li><strong>Aqua:</strong> OM3/OM4/OM5 laser-optimised multimode</li>
+              </ul>
+            </div>
+
+            <p>
+              Colour may be on the connector housing, boot, or both - check carefully. Some
+              manufacturers use different colours, so verify markings when in doubt. Adaptors should
+              match connector polish grade colour - using a blue UPC adaptor with green APC connectors
+              is as damaging as mixing the connectors directly.
+            </p>
+
+            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Visual Inspection Technique</p>
+              <p className="text-sm text-white">
+                Under a fibre microscope, APC and UPC appear distinctly different. UPC shows a
+                circular reflection pattern centred on the core. APC shows an oval or elliptical
+                pattern due to the angled surface. If you see an oval pattern in what should be a
+                UPC connector, stop - it may be APC mislabelled or in the wrong adaptor.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Inline Check 3 */}
-        <InlineCheck
-          id={quickCheckQuestions[2].id}
-          question={quickCheckQuestions[2].question}
-          options={quickCheckQuestions[2].options}
-          correctIndex={quickCheckQuestions[2].correctIndex}
-          explanation={quickCheckQuestions[2].explanation}
-        />
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 5: Compatibility and Damage Prevention */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">05</span>
-            <h2 className="text-2xl font-bold">Compatibility and Damage Prevention</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+        {/* Section 05 */}
+        <section className="mb-10 mt-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Compatibility and Damage Prevention
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              The most critical rule of polish grades: <strong>APC and UPC are not interchangeable</strong>. Attempting to mate an APC connector with a UPC adaptor (or vice versa) causes immediate damage to both ferrule end faces and creates an unusable connection.
+              The most critical rule of polish grades: APC and UPC are not interchangeable.
+              Attempting to mate an APC connector with a UPC adaptor (or vice versa) causes
+              immediate damage to both ferrule end faces and creates an unusable connection.
             </p>
 
-            <div className="bg-red-500/10 rounded-lg p-4 border border-red-500/30">
-              <h4 className="font-semibold text-red-400 mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4" />
-                CRITICAL: What Happens When APC Meets UPC
-              </h4>
-              <div className="space-y-2 text-sm">
-                <p>When an 8-degree APC ferrule is forced against a flat UPC ferrule:</p>
-                <ul className="space-y-1 ml-4">
-                  <li>• Only partial edge contact occurs—massive air gap at core</li>
-                  <li>• Insertion loss jumps to 3-10 dB (virtually no signal passes)</li>
-                  <li>• Contact pressure chips and cracks both ferrule surfaces</li>
-                  <li>• Both connectors are permanently damaged</li>
-                  <li>• Contamination from damaged material affects other ports</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Compatibility Matrix</h4>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-white/20">
-                      <th className="text-left py-2 pr-4">Connector</th>
-                      <th className="text-left py-2 pr-4">UPC Adaptor</th>
-                      <th className="text-left py-2">APC Adaptor</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white/80">
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 pr-4 font-medium">UPC Connector</td>
-                      <td className="py-2 pr-4 text-green-400">✓ Compatible</td>
-                      <td className="py-2 text-red-400">✗ DAMAGE</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 pr-4 font-medium">APC Connector</td>
-                      <td className="py-2 pr-4 text-red-400">✗ DAMAGE</td>
-                      <td className="py-2 text-green-400">✓ Compatible</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-4 font-medium">PC Connector</td>
-                      <td className="py-2 pr-4 text-green-400">✓ Compatible</td>
-                      <td className="py-2 text-red-400">✗ DAMAGE</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-              <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
-                <CheckCircle className="h-4 w-4" />
-                Prevention Best Practices
-              </h4>
-              <ul className="text-sm space-y-1">
-                <li>• Standardise on one polish grade per system where possible</li>
-                <li>• Label patch panels and cables clearly with polish grade</li>
-                <li>• Train all personnel on colour coding significance</li>
-                <li>• Verify before connecting—colour and marking check</li>
-                <li>• Use adaptor panels with consistent polish grades</li>
-                <li>• Store APC and UPC patch leads separately</li>
+            <div className="my-6 p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
+              <p className="text-sm font-medium text-red-400 mb-2">CRITICAL: What Happens When APC Meets UPC</p>
+              <ul className="text-sm text-white space-y-1">
+                <li>Only partial edge contact occurs - massive air gap at core</li>
+                <li>Insertion loss jumps to 3-10 dB (virtually no signal passes)</li>
+                <li>Contact pressure chips and cracks both ferrule surfaces</li>
+                <li>Both connectors are permanently damaged</li>
+                <li>Contamination from damaged material affects other ports</li>
               </ul>
             </div>
 
-            <p>
-              If you encounter a mixed installation (APC equipment connecting to UPC infrastructure), use <strong>hybrid patch leads</strong> factory-made with APC on one end and UPC on the other. These provide proper transitions at each interface without attempting incompatible matings.
-            </p>
-          </div>
-        </section>
-
-        {/* Section 6: Selection Criteria */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow text-[#1a1a1a] font-bold text-sm">06</span>
-            <h2 className="text-2xl font-bold">Selection Criteria</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
-            <p>
-              Selecting the appropriate polish grade depends on the application's <strong>sensitivity to reflections</strong>, <strong>equipment specifications</strong>, and <strong>existing infrastructure</strong>. Use these guidelines to make appropriate selections.
-            </p>
-
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
-              <h4 className="font-semibold text-blue-400 mb-3">Use UPC When:</h4>
-              <ul className="text-sm space-y-1">
-                <li>• Application is digital data transmission (Ethernet, Fibre Channel)</li>
-                <li>• Equipment specifications allow ≥-50 dB return loss</li>
-                <li>• Existing infrastructure uses UPC throughout</li>
-                <li>• Cost is a significant factor</li>
-                <li>• Field termination simplicity is required</li>
-                <li>• Multimode fibre is used (UPC is the only practical option)</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Compatibility Matrix:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>UPC connector + UPC adaptor:</strong> Compatible</li>
+                <li><strong>APC connector + APC adaptor:</strong> Compatible</li>
+                <li><strong>PC connector + UPC adaptor:</strong> Compatible</li>
+                <li><strong>UPC connector + APC adaptor:</strong> DAMAGE - never connect</li>
+                <li><strong>APC connector + UPC adaptor:</strong> DAMAGE - never connect</li>
               </ul>
             </div>
 
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/30">
-              <h4 className="font-semibold text-green-400 mb-3">Use APC When:</h4>
-              <ul className="text-sm space-y-1">
-                <li>• Application transmits analogue signals (CATV, RF)</li>
-                <li>• Equipment specifications require ≥-60 dB return loss</li>
-                <li>• DWDM or wavelength-sensitive transmission</li>
-                <li>• High-power laser systems where reflections damage sources</li>
-                <li>• Precision measurement or sensing applications</li>
-                <li>• Existing CATV/video infrastructure uses APC</li>
+            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm font-medium text-elec-yellow mb-2">Prevention Best Practices</p>
+              <ul className="text-sm text-white space-y-1">
+                <li>Standardise on one polish grade per system where possible</li>
+                <li>Label patch panels and cables clearly with polish grade</li>
+                <li>Train all personnel on colour coding significance</li>
+                <li>Verify before connecting - colour and marking check</li>
+                <li>Store APC and UPC patch leads separately</li>
               </ul>
-            </div>
-
-            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-              <h4 className="font-semibold text-elec-yellow mb-3">Decision Flowchart</h4>
-              <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-2">
-                  <span className="font-bold text-elec-yellow">1.</span>
-                  <span>Is the fibre multimode? → Use UPC (or PC)</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="font-bold text-elec-yellow">2.</span>
-                  <span>Is the signal analogue (RF, video, CATV)? → Use APC</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="font-bold text-elec-yellow">3.</span>
-                  <span>Does equipment specify ≥-60 dB return loss? → Use APC</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="font-bold text-elec-yellow">4.</span>
-                  <span>Is existing infrastructure APC? → Match with APC</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="font-bold text-elec-yellow">5.</span>
-                  <span>None of the above? → Use UPC (standard digital singlemode)</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
-              <h4 className="font-semibold text-amber-400 mb-2 flex items-center gap-2">
-                <Lightbulb className="h-4 w-4" />
-                Standardisation Tip
-              </h4>
-              <p className="text-sm">
-                For new builds, consider standardising entirely on <strong>UPC for data/enterprise</strong> or <strong>APC for CATV/broadcast</strong>. Mixed environments create ongoing risk of accidental damage. If you must interface between systems, designate specific patch panel positions for hybrid cables and label clearly.
-              </p>
             </div>
           </div>
         </section>
 
         {/* Practical Guidance */}
-        <section className="bg-white/5 rounded-xl p-6 border border-white/10 space-y-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
-            <RefreshCcw className="h-5 w-5 text-elec-yellow" />
-            Practical Guidance
-          </h2>
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div>
-              <h3 className="font-semibold text-white mb-2">Installation Best Practices</h3>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Verify polish grade of all components before installation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Use colour-matched adaptors (blue for UPC, green for APC)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Document polish grades in as-built records</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Test return loss to verify polish grade performance</span>
-                </li>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Installation Best Practices</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Verify polish grade of all components before installation</li>
+                <li>Use colour-matched adaptors (blue for UPC, green for APC)</li>
+                <li>Document polish grades in as-built records</li>
+                <li>Test return loss to verify polish grade performance</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-white mb-2">Maintenance Considerations</h3>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Inspect end faces before each mating—contamination degrades return loss</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Clean with appropriate grade-specific procedures</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span>Track return loss measurements over time—degradation indicates damage</span>
-                </li>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Selection Criteria</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Is it multimode?</strong> Use UPC (or PC)</li>
+                <li><strong>Is the signal analogue (RF, video, CATV)?</strong> Use APC</li>
+                <li><strong>Does equipment specify greater than 60 dB return loss?</strong> Use APC</li>
+                <li><strong>Is existing infrastructure APC?</strong> Match with APC</li>
+                <li><strong>None of the above?</strong> Use UPC (standard digital singlemode)</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-white mb-2">Common Mistakes to Avoid</h3>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Assuming all singlemode connectors are compatible</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Ignoring adaptor polish grade when troubleshooting</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Using APC connectors for multimode (doesn't exist—they'd be wasting money)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Forcing connections that feel "tight"—could indicate mismatch</span>
-                </li>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Assuming all singlemode connectors are compatible</strong> - check polish grade</li>
+                <li><strong>Ignoring adaptor polish grade</strong> - adaptors must match too</li>
+                <li><strong>Using APC connectors for multimode</strong> - unnecessary, doesn't exist</li>
+                <li><strong>Forcing tight connections</strong> - could indicate polish mismatch</li>
               </ul>
             </div>
           </div>
         </section>
 
         {/* FAQs */}
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
-            <HelpCircle className="h-5 w-5 text-elec-yellow" />
-            Frequently Asked Questions
-          </h2>
-
-          <div className="space-y-2">
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-white/5 rounded-lg border border-white/10 overflow-hidden">
-                <button
-                  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                  className="w-full px-4 py-3 text-left flex items-center justify-between gap-4 hover:bg-white/5 transition-colors touch-manipulation min-h-[44px]"
-                >
-                  <span className="font-medium text-white">{faq.question}</span>
-                  {expandedFaq === index ? (
-                    <ChevronUp className="h-5 w-5 text-white/60 flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-white/60 flex-shrink-0" />
-                  )}
-                </button>
-                {expandedFaq === index && (
-                  <div className="px-4 pb-4 text-white/70 text-sm">
-                    {faq.answer}
-                  </div>
-                )}
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Quick Reference Card */}
-        <section className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-xl p-6 border border-elec-yellow/30">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-elec-yellow" />
-            Quick Reference: Polish Grades
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-4 text-sm">
-            <div className="space-y-2">
-              <h4 className="font-semibold text-white">Specifications</h4>
-              <div className="space-y-1 text-white/80">
-                <p><strong>PC:</strong> ~-30dB RL, curved face</p>
-                <p><strong>UPC:</strong> ≥-50dB RL, extended polish</p>
-                <p><strong>APC:</strong> ≥-65dB RL, 8° angle</p>
+        <section className="mb-10">
+          <div className="mt-6 p-5 rounded-lg bg-transparent border border-white/10">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference: Polish Grades</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-elec-yellow mb-1">Specifications</p>
+                <ul className="space-y-0.5">
+                  <li>PC: -30 to -35 dB return loss</li>
+                  <li>UPC: -50 dB or better</li>
+                  <li>APC: -65 dB or better, 8-degree</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-elec-yellow mb-1">Colour Codes</p>
+                <ul className="space-y-0.5">
+                  <li>Blue: UPC singlemode</li>
+                  <li>Green: APC (always singlemode)</li>
+                  <li>Beige/Aqua: Multimode (PC/UPC)</li>
+                </ul>
               </div>
             </div>
-            <div className="space-y-2">
-              <h4 className="font-semibold text-white">Colour Codes</h4>
-              <div className="space-y-1 text-white/80">
-                <p><strong>Blue:</strong> UPC singlemode</p>
-                <p><strong>Green:</strong> APC (always SM)</p>
-                <p><strong>Beige/Aqua:</strong> Multimode (PC/UPC)</p>
-              </div>
+            <div className="mt-4 pt-4 border-t border-white/10 text-xs text-white">
+              <p className="font-medium text-elec-yellow">Golden Rule:</p>
+              <p>APC to APC only | UPC to UPC only | Never mix!</p>
             </div>
-          </div>
-          <div className="mt-4 pt-4 border-t border-elec-yellow/30 text-sm text-white/80">
-            <p className="font-semibold text-white">Golden Rule:</p>
-            <p>APC ↔ APC only • UPC ↔ UPC only • Never mix!</p>
           </div>
         </section>
 
-        {/* Quiz Section */}
-        <section className="bg-white/5 rounded-xl p-6 border border-white/10">
+        {/* Quiz */}
+        <section className="mb-10">
           <Quiz
-            title="Polish Grades Quiz"
+            title="Test Your Knowledge"
             questions={quizQuestions}
-            passingScore={80}
           />
         </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
-          <Link
-            to="/study-centre/apprentice/fibre-optics/module-2/section-3"
-            className="flex items-center gap-2 text-white/70 hover:text-white transition-colors touch-manipulation min-h-[44px] active:scale-[0.98]"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span>Previous: Connector Types</span>
-          </Link>
-          <Link
-            to="/study-centre/apprentice/fibre-optics/module-2/section-5"
-            className="flex items-center gap-2 text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation min-h-[44px] sm:flex-row-reverse active:scale-[0.98]"
-          >
-            <span>Next: Patch Panels</span>
-            <ArrowLeft className="h-5 w-5 rotate-180" />
-          </Link>
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-5">
+              Next: Patch Panels
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
         </nav>
-      </main>
+      </article>
     </div>
   );
 };

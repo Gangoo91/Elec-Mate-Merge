@@ -71,7 +71,7 @@ const BMSModule5Section5 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-5">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module
             </Link>
@@ -89,7 +89,7 @@ const BMSModule5Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Gateways and Interoperability
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Protocol conversion and system integration for building automation
           </p>
         </header>
@@ -149,21 +149,21 @@ const BMSModule5Section5 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow/80 mb-1">Translation</p>
-                <p className="text-white/90 text-xs">Converts between protocol formats</p>
+                <p className="text-white text-xs">Converts between protocol formats</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow/80 mb-1">Integration</p>
-                <p className="text-white/90 text-xs">Links isolated systems together</p>
+                <p className="text-white text-xs">Links isolated systems together</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow/80 mb-1">Unity</p>
-                <p className="text-white/90 text-xs">Creates one integrated solution</p>
+                <p className="text-white text-xs">Creates one integrated solution</p>
               </div>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Practical Example:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A building with BACnet HVAC controllers, Modbus energy meters, and KNX lighting controls.
                 A gateway allows the BMS operator to see all data in one place - room temperatures from BACnet,
                 power consumption from Modbus, and lighting status from KNX - all displayed together.
@@ -276,7 +276,7 @@ const BMSModule5Section5 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Multi-Protocol Controllers:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Some advanced gateways support multiple conversions simultaneously - handling Modbus-to-BACnet,
                 KNX-to-BACnet, and DALI-to-BACnet in a single device, reducing panel space and complexity.
               </p>
@@ -334,15 +334,15 @@ const BMSModule5Section5 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow/80 mb-1">Capital Savings</p>
-                <p className="text-white/90 text-xs">Keep existing controllers, avoid proprietary lock-in</p>
+                <p className="text-white text-xs">Keep existing controllers, avoid proprietary lock-in</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-orange-400/80 mb-1">Operational Savings</p>
-                <p className="text-white/90 text-xs">Single training, unified maintenance</p>
+                <p className="text-white text-xs">Single training, unified maintenance</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-green-400/80 mb-1">Energy Savings</p>
-                <p className="text-white/90 text-xs">Coordinated HVAC/lighting control</p>
+                <p className="text-white text-xs">Coordinated HVAC/lighting control</p>
               </div>
             </div>
 
@@ -390,7 +390,7 @@ const BMSModule5Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

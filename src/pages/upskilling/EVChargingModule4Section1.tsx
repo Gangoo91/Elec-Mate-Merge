@@ -85,9 +85,9 @@ const EVChargingModule4Section1 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/ev-charging-module-4">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 4
+              Back
             </Link>
           </Button>
         </div>
@@ -191,7 +191,7 @@ const EVChargingModule4Section1 = () => {
                     <th className="text-left p-2 text-elec-yellow">BS 7671</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/90">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="p-2">Disconnection time</td>
                     <td className="p-2">≤0.4s (≤32A circuits)</td>
@@ -241,7 +241,7 @@ const EVChargingModule4Section1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-green-400/30">
                 <p className="text-sm font-medium text-white mb-2">Method 1: Earth Electrode</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Install TT earth electrode (≤200Ω)</li>
                   <li>• RCD protection mandatory</li>
                   <li>• Isolate from PME earth</li>
@@ -250,7 +250,7 @@ const EVChargingModule4Section1 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-green-400/30">
                 <p className="text-sm font-medium text-white mb-2">Method 2: Equipotential Zone</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Create local bonding network</li>
                   <li>• Bond metalwork within 2.5m</li>
                   <li>• Mesh earthing if required</li>
@@ -268,7 +268,7 @@ const EVChargingModule4Section1 = () => {
                     <th className="text-left p-2 text-elec-yellow">Measures Required</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/90">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="p-2">Internal garage</td>
                     <td className="p-2 text-green-400">Suitable</td>
@@ -365,7 +365,7 @@ const EVChargingModule4Section1 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">TN-S</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Best overall performance</li>
                   <li>• Low Zs, fast disconnection</li>
                   <li>• May not be available</li>
@@ -374,7 +374,7 @@ const EVChargingModule4Section1 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">TN-C-S</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Most common UK supply</li>
                   <li>• PME restrictions apply</li>
                   <li>• Risk assessment needed</li>
@@ -383,7 +383,7 @@ const EVChargingModule4Section1 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">TT</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Independent earthing</li>
                   <li>• RCD mandatory</li>
                   <li>• No PME restrictions</li>
@@ -427,7 +427,7 @@ const EVChargingModule4Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

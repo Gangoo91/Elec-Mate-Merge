@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { useSEO } from '@/hooks/useSEO';
 import {
   Lightbulb,
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
+  ArrowLeft,
+  ArrowRight,
   Zap,
   Settings,
   FileCheck,
@@ -22,16 +20,12 @@ import {
   PoundSterling,
   Gauge,
   Sun,
-  Moon,
   Radio,
-  Target
+  Target,
+  HelpCircle
 } from 'lucide-react';
 
 const EnergyEfficiencyModule4Section1: React.FC = () => {
-  const navigate = useNavigate();
-  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
-  const [showQuiz, setShowQuiz] = useState(false);
-
   useSEO({
     title: 'LED and Lighting Control Upgrades | Energy Efficiency Module 4 Section 1 | Elec-Mate',
     description: 'Master LED lighting technology, control systems including DALI and PIR, UK Part L compliance requirements, and ROI calculations for energy-efficient lighting upgrades.',
@@ -193,30 +187,30 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
     }
   ];
 
-  const toggleFAQ = (index: number) => {
-    setExpandedFAQ(expandedFAQ === index ? null : index);
-  };
-
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
-      {/* Header */}
-      <div className="bg-[#1a1a1a]/95 border-b border-elec-yellow/20">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center gap-3 mb-2">
-            <Lightbulb className="w-8 h-8 text-elec-yellow" />
-            <span className="text-elec-yellow text-sm font-medium">Module 4 - Section 1</span>
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5" />
+            </Link>
+          </Button>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-elec-yellow" />
+              <span className="text-elec-yellow text-sm font-medium">Module 4 - Section 1</span>
+            </div>
+            <h1 className="text-lg font-semibold text-white">LED and Lighting Control Upgrades</h1>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold mb-2">LED and Lighting Control Upgrades</h1>
-          <p className="text-gray-400">
-            Master energy-efficient lighting technology, control strategies, and UK compliance requirements
-          </p>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 max-w-3xl">
-        {/* Introduction */}
-        <div className="bg-[#2a2a2a] rounded-lg p-6 mb-8 border-l-4 border-elec-yellow">
-          <p className="text-gray-300 leading-relaxed">
+      <div className="max-w-3xl mx-auto px-4 py-6 space-y-8">
+        {/* Quick Summary */}
+        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+          <p className="text-white/90 leading-relaxed">
             Lighting typically accounts for <span className="text-elec-yellow font-semibold">15-25% of a commercial building's electricity consumption</span>.
             Modern LED technology combined with intelligent controls can reduce this by 50-80%. This section covers the technical knowledge
             and practical skills needed to specify, install, and commission energy-efficient lighting systems that comply with UK Building
@@ -225,51 +219,49 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         </div>
 
         {/* Section 1: LED Technology Advantages */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">1</span>
-            </div>
-            <h2 className="text-xl font-bold text-elec-yellow">LED Technology Advantages and Lumen Efficacy</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            LED Technology Advantages and Lumen Efficacy
+          </h2>
 
-          <div className="bg-[#2a2a2a] rounded-lg p-6 space-y-4">
-            <p className="text-gray-300">
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
               LED (Light Emitting Diode) technology has revolutionised the lighting industry. Understanding efficacy
               comparisons is essential for specifying appropriate replacements and calculating energy savings.
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                   <Gauge className="w-5 h-5" />
                   Lumen Efficacy Comparison
                 </h3>
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-600">
-                      <th className="text-left py-2 text-gray-400">Technology</th>
-                      <th className="text-right py-2 text-gray-400">lm/W</th>
+                    <tr className="border-b border-white/20">
+                      <th className="text-left py-2 text-white/70">Technology</th>
+                      <th className="text-right py-2 text-white/70">lm/W</th>
                     </tr>
                   </thead>
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-700">
+                  <tbody className="text-white/80">
+                    <tr className="border-b border-white/10">
                       <td className="py-2">Incandescent</td>
                       <td className="text-right">10-17</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2">Halogen</td>
                       <td className="text-right">15-25</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2">CFL</td>
                       <td className="text-right">45-75</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2">T8 Fluorescent</td>
                       <td className="text-right">70-100</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2">T5 Fluorescent</td>
                       <td className="text-right">80-105</td>
                     </tr>
@@ -281,43 +273,43 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 </table>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                   <TrendingUp className="w-5 h-5" />
                   Key LED Advantages
                 </h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white/80 text-sm">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Long lifespan:</strong> 50,000+ hours (L70) vs 15,000 for fluorescent</span>
+                    <span><strong className="text-white">Long lifespan:</strong> 50,000+ hours (L70) vs 15,000 for fluorescent</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Instant start:</strong> Full brightness immediately, unlimited switching cycles</span>
+                    <span><strong className="text-white">Instant start:</strong> Full brightness immediately, unlimited switching cycles</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Dimmable:</strong> Smooth dimming to 1% with appropriate drivers</span>
+                    <span><strong className="text-white">Dimmable:</strong> Smooth dimming to 1% with appropriate drivers</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Directional:</strong> Light output can be precisely directed, reducing waste</span>
+                    <span><strong className="text-white">Directional:</strong> Light output can be precisely directed, reducing waste</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Mercury-free:</strong> No hazardous materials, easier disposal</span>
+                    <span><strong className="text-white">Mercury-free:</strong> No hazardous materials, easier disposal</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span><strong>Low heat:</strong> Reduced HVAC load, safer installation options</span>
+                    <span><strong className="text-white">Low heat:</strong> Reduced HVAC load, safer installation options</span>
                   </li>
                 </ul>
               </div>
             </div>
 
-            <div className="bg-yellow-900/20 border border-elec-yellow/30 rounded-lg p-4 mt-4">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4 mt-4">
               <h4 className="text-elec-yellow font-semibold mb-2">Understanding L70 and Lumen Maintenance</h4>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white/80 text-sm">
                 L70 indicates the point at which LED light output has degraded to 70% of its initial lumens.
                 A 50,000-hour L70 rating means the LED will still produce 70% of original output after 50,000 hours.
                 For critical applications, specify L80 or L90 ratings. Always factor in lumen depreciation when
@@ -328,35 +320,31 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         </section>
 
         {/* Quick Check 1 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[0].id}
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-        </div>
+        <InlineCheck
+          id={quickCheckQuestions[0].id}
+          question={quickCheckQuestions[0].question}
+          options={quickCheckQuestions[0].options}
+          correctIndex={quickCheckQuestions[0].correctIndex}
+          explanation={quickCheckQuestions[0].explanation}
+        />
 
         {/* Section 2: Lamp vs Luminaire Replacement */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">2</span>
-            </div>
-            <h2 className="text-xl font-bold text-elec-yellow">Lamp Replacement vs Luminaire Replacement Decisions</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Lamp Replacement vs Luminaire Replacement Decisions
+          </h2>
 
-          <div className="bg-[#2a2a2a] rounded-lg p-6 space-y-4">
-            <p className="text-gray-300">
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
               Choosing between retrofit lamps and complete luminaire replacement requires careful assessment of
               the existing installation, desired outcomes, and total cost of ownership.
             </p>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-green-400 font-semibold mb-3">Lamp Retrofit - When Suitable</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white/80 text-sm">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     Luminaires less than 10 years old in good condition
@@ -378,16 +366,16 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                     Listed or heritage buildings with appearance restrictions
                   </li>
                 </ul>
-                <div className="mt-3 pt-3 border-t border-gray-700">
+                <div className="mt-3 pt-3 border-t border-white/10">
                   <p className="text-yellow-400 text-xs">
                     <strong>Note:</strong> Typical retrofit savings: 40-50% energy reduction
                   </p>
                 </div>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3">Full Luminaire Replacement - When Required</h3>
-                <ul className="space-y-2 text-gray-300 text-sm">
+                <ul className="space-y-2 text-white/80 text-sm">
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                     Magnetic ballasts (incompatible with LED retrofit)
@@ -409,7 +397,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                     Lighting design inadequate (spacing, levels)
                   </li>
                 </ul>
-                <div className="mt-3 pt-3 border-t border-gray-700">
+                <div className="mt-3 pt-3 border-t border-white/10">
                   <p className="text-green-400 text-xs">
                     <strong>Benefit:</strong> Typical new installation savings: 60-75% energy reduction
                   </p>
@@ -417,21 +405,21 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
+            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <h4 className="text-red-400 font-semibold mb-2 flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5" />
                 Critical: LED Tube Retrofit Types
               </h4>
               <div className="grid md:grid-cols-3 gap-4 text-sm">
-                <div className="text-gray-300">
-                  <strong className="text-white">Type A (Plug & Play)</strong>
+                <div className="text-white/80">
+                  <strong className="text-white">Type A (Plug and Play)</strong>
                   <p>Works with existing ballast. Quick install but limited compatibility and reduced efficiency.</p>
                 </div>
-                <div className="text-gray-300">
+                <div className="text-white/80">
                   <strong className="text-white">Type B (Ballast Bypass)</strong>
                   <p>Direct mains connection. Requires rewiring but more efficient. Fitting becomes new product.</p>
                 </div>
-                <div className="text-gray-300">
+                <div className="text-white/80">
                   <strong className="text-white">Type C (External Driver)</strong>
                   <p>Uses separate LED driver. Most flexible and efficient but highest installation complexity.</p>
                 </div>
@@ -441,77 +429,75 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         </section>
 
         {/* Section 3: Lighting Control Strategies */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">3</span>
-            </div>
-            <h2 className="text-xl font-bold text-elec-yellow">Lighting Control Strategies (PIR, Daylight, DALI)</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Lighting Control Strategies (PIR, Daylight, DALI)
+          </h2>
 
-          <div className="bg-[#2a2a2a] rounded-lg p-6 space-y-4">
-            <p className="text-gray-300">
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
               Effective lighting controls can save an additional 30-50% beyond the LED lamp savings.
               Understanding each technology's strengths enables optimal system design.
             </p>
 
             <div className="space-y-4">
               {/* Occupancy Sensing */}
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                   <Radio className="w-5 h-5" />
                   Occupancy/Presence Detection
                 </h3>
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
-                  <div className="bg-[#2a2a2a] rounded p-3">
+                  <div className="bg-white/5 rounded p-3">
                     <h4 className="text-white font-medium mb-2">PIR (Passive Infrared)</h4>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Detects body heat movement</li>
-                      <li>• Line-of-sight required</li>
-                      <li>• Best for: offices, corridors</li>
-                      <li>• Range: up to 12m typical</li>
-                      <li>• Cost: Low</li>
+                    <ul className="text-white/70 space-y-1">
+                      <li>- Detects body heat movement</li>
+                      <li>- Line-of-sight required</li>
+                      <li>- Best for: offices, corridors</li>
+                      <li>- Range: up to 12m typical</li>
+                      <li>- Cost: Low</li>
                     </ul>
                   </div>
-                  <div className="bg-[#2a2a2a] rounded p-3">
+                  <div className="bg-white/5 rounded p-3">
                     <h4 className="text-white font-medium mb-2">Microwave</h4>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Detects any movement</li>
-                      <li>• Works through partitions</li>
-                      <li>• Best for: open areas, WCs</li>
-                      <li>• Range: up to 15m+</li>
-                      <li>• Cost: Medium</li>
+                    <ul className="text-white/70 space-y-1">
+                      <li>- Detects any movement</li>
+                      <li>- Works through partitions</li>
+                      <li>- Best for: open areas, WCs</li>
+                      <li>- Range: up to 15m+</li>
+                      <li>- Cost: Medium</li>
                     </ul>
                   </div>
-                  <div className="bg-[#2a2a2a] rounded p-3">
+                  <div className="bg-white/5 rounded p-3">
                     <h4 className="text-white font-medium mb-2">Dual Technology</h4>
-                    <ul className="text-gray-300 space-y-1">
-                      <li>• Combines PIR + microwave</li>
-                      <li>• Reduces false triggers</li>
-                      <li>• Best for: high-reliability needs</li>
-                      <li>• Range: varies by model</li>
-                      <li>• Cost: Higher</li>
+                    <ul className="text-white/70 space-y-1">
+                      <li>- Combines PIR + microwave</li>
+                      <li>- Reduces false triggers</li>
+                      <li>- Best for: high-reliability needs</li>
+                      <li>- Range: varies by model</li>
+                      <li>- Cost: Higher</li>
                     </ul>
                   </div>
                 </div>
               </div>
 
               {/* Daylight Harvesting */}
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                   <Sun className="w-5 h-5" />
                   Daylight Harvesting/Linking
                 </h3>
-                <p className="text-gray-300 text-sm mb-3">
+                <p className="text-white/80 text-sm mb-3">
                   Photocells measure ambient light levels and automatically dim artificial lighting to maintain
                   target lux levels while maximising daylight use. Savings of 20-40% are typical in daylit spaces.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="text-sm text-gray-300">
+                  <div className="text-sm text-white/80">
                     <strong className="text-white">Open Loop</strong>
                     <p>Sensor faces window, measures daylight only. Simple but less accurate.</p>
                   </div>
-                  <div className="text-sm text-gray-300">
+                  <div className="text-sm text-white/80">
                     <strong className="text-white">Closed Loop</strong>
                     <p>Sensor faces task area, measures combined light. More accurate, requires calibration.</p>
                   </div>
@@ -519,7 +505,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
               </div>
 
               {/* DALI vs 1-10V */}
-              <div className="bg-[#1a1a1a] rounded-lg p-4">
+              <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                   <Settings className="w-5 h-5" />
                   DALI vs 1-10V Dimming Systems
@@ -527,34 +513,34 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-gray-600">
-                        <th className="text-left py-2 text-gray-400">Feature</th>
-                        <th className="text-center py-2 text-gray-400">1-10V</th>
+                      <tr className="border-b border-white/20">
+                        <th className="text-left py-2 text-white/70">Feature</th>
+                        <th className="text-center py-2 text-white/70">1-10V</th>
                         <th className="text-center py-2 text-elec-yellow">DALI</th>
                       </tr>
                     </thead>
-                    <tbody className="text-gray-300">
-                      <tr className="border-b border-gray-700">
+                    <tbody className="text-white/80">
+                      <tr className="border-b border-white/10">
                         <td className="py-2">Communication</td>
                         <td className="text-center">One-way (analogue)</td>
                         <td className="text-center text-green-400">Two-way (digital)</td>
                       </tr>
-                      <tr className="border-b border-gray-700">
+                      <tr className="border-b border-white/10">
                         <td className="py-2">Individual addressing</td>
                         <td className="text-center text-red-400">No (groups only)</td>
                         <td className="text-center text-green-400">Yes (64 per line)</td>
                       </tr>
-                      <tr className="border-b border-gray-700">
+                      <tr className="border-b border-white/10">
                         <td className="py-2">Status feedback</td>
                         <td className="text-center text-red-400">No</td>
                         <td className="text-center text-green-400">Yes (fault reporting)</td>
                       </tr>
-                      <tr className="border-b border-gray-700">
+                      <tr className="border-b border-white/10">
                         <td className="py-2">Wiring</td>
                         <td className="text-center">Dedicated control wire</td>
                         <td className="text-center">2-core, polarity free</td>
                       </tr>
-                      <tr className="border-b border-gray-700">
+                      <tr className="border-b border-white/10">
                         <td className="py-2">Scene control</td>
                         <td className="text-center text-red-400">Limited</td>
                         <td className="text-center text-green-400">16 scenes per group</td>
@@ -573,61 +559,57 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         </section>
 
         {/* Quick Check 2 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[1].id}
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-        </div>
+        <InlineCheck
+          id={quickCheckQuestions[1].id}
+          question={quickCheckQuestions[1].question}
+          options={quickCheckQuestions[1].options}
+          correctIndex={quickCheckQuestions[1].correctIndex}
+          explanation={quickCheckQuestions[1].explanation}
+        />
 
         {/* Section 4: Part L Compliance */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">4</span>
-            </div>
-            <h2 className="text-xl font-bold text-elec-yellow">Part L Compliance and Lux Level Requirements</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Part L Compliance and Lux Level Requirements
+          </h2>
 
-          <div className="bg-[#2a2a2a] rounded-lg p-6 space-y-4">
-            <p className="text-gray-300">
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
               UK Building Regulations Part L sets minimum energy efficiency standards for lighting in new
               and refurbished buildings. Understanding these requirements is essential for compliant installations.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                 <FileCheck className="w-5 h-5" />
                 Part L 2021 Key Requirements (Non-Domestic)
               </h3>
-              <ul className="space-y-2 text-gray-300">
+              <ul className="space-y-2 text-white/80">
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong>Minimum efficacy:</strong> 60 luminaire lumens per circuit watt for general lighting</span>
+                  <span><strong className="text-white">Minimum efficacy:</strong> 60 luminaire lumens per circuit watt for general lighting</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong>Controls required:</strong> Automatic switching/dimming in response to daylight and occupancy</span>
+                  <span><strong className="text-white">Controls required:</strong> Automatic switching/dimming in response to daylight and occupancy</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong>Zoning:</strong> Local switching for areas over 100m² to avoid lighting unoccupied zones</span>
+                  <span><strong className="text-white">Zoning:</strong> Local switching for areas over 100m² to avoid lighting unoccupied zones</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong>Metering:</strong> Sub-metering for lighting loads exceeding 100kW total</span>
+                  <span><strong className="text-white">Metering:</strong> Sub-metering for lighting loads exceeding 100kW total</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span><strong>Commissioning:</strong> System must be commissioned and results recorded</span>
+                  <span><strong className="text-white">Commissioning:</strong> System must be commissioned and results recorded</span>
                 </li>
               </ul>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                 <BookOpen className="w-5 h-5" />
                 BS EN 12464-1 Maintained Illuminance Levels
@@ -635,25 +617,25 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <table className="text-sm">
                   <thead>
-                    <tr className="border-b border-gray-600">
-                      <th className="text-left py-2 text-gray-400">Space Type</th>
-                      <th className="text-right py-2 text-gray-400">Lux</th>
+                    <tr className="border-b border-white/20">
+                      <th className="text-left py-2 text-white/70">Space Type</th>
+                      <th className="text-right py-2 text-white/70">Lux</th>
                     </tr>
                   </thead>
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-700">
+                  <tbody className="text-white/80">
+                    <tr className="border-b border-white/10">
                       <td className="py-1">Corridors</td>
                       <td className="text-right">100</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-1">Stairs</td>
                       <td className="text-right">150</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-1">Reception areas</td>
                       <td className="text-right">300</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-1">General offices</td>
                       <td className="text-right">500</td>
                     </tr>
@@ -665,25 +647,25 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 </table>
                 <table className="text-sm">
                   <thead>
-                    <tr className="border-b border-gray-600">
-                      <th className="text-left py-2 text-gray-400">Space Type</th>
-                      <th className="text-right py-2 text-gray-400">Lux</th>
+                    <tr className="border-b border-white/20">
+                      <th className="text-left py-2 text-white/70">Space Type</th>
+                      <th className="text-right py-2 text-white/70">Lux</th>
                     </tr>
                   </thead>
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-700">
+                  <tbody className="text-white/80">
+                    <tr className="border-b border-white/10">
                       <td className="py-1">Storage/archives</td>
                       <td className="text-right">100</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-1">Meeting rooms</td>
                       <td className="text-right">500</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-1">Retail general</td>
                       <td className="text-right">300</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-1">Industrial fine work</td>
                       <td className="text-right">1000</td>
                     </tr>
@@ -696,9 +678,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h4 className="text-blue-400 font-semibold mb-2">Calculating Circuit Watts</h4>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white/80 text-sm">
                 Circuit watts = lamp watts + control gear losses. For LED luminaires, this is typically the
                 stated luminaire wattage. For older technology with separate ballasts, add ballast losses
                 (typically 10-15% for electronic, 20-25% for magnetic). The 60 lm/W requirement uses
@@ -709,78 +691,74 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         </section>
 
         {/* Quick Check 3 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[2].id}
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-        </div>
+        <InlineCheck
+          id={quickCheckQuestions[2].id}
+          question={quickCheckQuestions[2].question}
+          options={quickCheckQuestions[2].options}
+          correctIndex={quickCheckQuestions[2].correctIndex}
+          explanation={quickCheckQuestions[2].explanation}
+        />
 
         {/* Section 5: ROI Calculations */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">5</span>
-            </div>
-            <h2 className="text-xl font-bold text-elec-yellow">ROI Calculations for Lighting Upgrades</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            ROI Calculations for Lighting Upgrades
+          </h2>
 
-          <div className="bg-[#2a2a2a] rounded-lg p-6 space-y-4">
-            <p className="text-gray-300">
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
               Demonstrating financial returns is often key to securing approval for lighting upgrades.
               Understanding payback calculations helps you make compelling business cases.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                 <Calculator className="w-5 h-5" />
                 Simple Payback Calculation
               </h3>
-              <div className="bg-[#2a2a2a] rounded p-4 mb-4">
+              <div className="bg-white/5 rounded p-4 mb-4">
                 <p className="text-center text-lg text-elec-yellow font-mono mb-2">
-                  Payback (years) = Total Project Cost ÷ Annual Savings
+                  Payback (years) = Total Project Cost / Annual Savings
                 </p>
               </div>
 
-              <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <h4 className="text-green-400 font-semibold mb-2">Worked Example: Office Lighting Upgrade</h4>
-                <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-300">
+                <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
                   <div>
                     <strong className="text-white">Existing System:</strong>
                     <ul className="mt-1 space-y-1">
-                      <li>• 100 x 4ft twin T8 fluorescent (2 × 36W + ballast)</li>
-                      <li>• Total load: 100 × 80W = 8,000W</li>
-                      <li>• Operating hours: 2,500/year</li>
-                      <li>• Annual consumption: 20,000 kWh</li>
-                      <li>• Annual cost @ £0.30/kWh: £6,000</li>
+                      <li>- 100 x 4ft twin T8 fluorescent (2 x 36W + ballast)</li>
+                      <li>- Total load: 100 x 80W = 8,000W</li>
+                      <li>- Operating hours: 2,500/year</li>
+                      <li>- Annual consumption: 20,000 kWh</li>
+                      <li>- Annual cost @ £0.30/kWh: £6,000</li>
                     </ul>
                   </div>
                   <div>
                     <strong className="text-white">Proposed LED System:</strong>
                     <ul className="mt-1 space-y-1">
-                      <li>• 100 x LED panels (40W each)</li>
-                      <li>• Total load: 100 × 40W = 4,000W</li>
-                      <li>• Operating hours: 2,500/year</li>
-                      <li>• Annual consumption: 10,000 kWh</li>
-                      <li>• Annual cost @ £0.30/kWh: £3,000</li>
+                      <li>- 100 x LED panels (40W each)</li>
+                      <li>- Total load: 100 x 40W = 4,000W</li>
+                      <li>- Operating hours: 2,500/year</li>
+                      <li>- Annual consumption: 10,000 kWh</li>
+                      <li>- Annual cost @ £0.30/kWh: £3,000</li>
                     </ul>
                   </div>
                 </div>
                 <div className="mt-4 pt-4 border-t border-green-500/30">
                   <div className="flex flex-wrap gap-4 justify-center text-center">
                     <div>
-                      <p className="text-gray-400 text-xs">Annual Savings</p>
+                      <p className="text-white/60 text-xs">Annual Savings</p>
                       <p className="text-green-400 font-bold text-xl">£3,000</p>
                     </div>
                     <div>
-                      <p className="text-gray-400 text-xs">Project Cost</p>
+                      <p className="text-white/60 text-xs">Project Cost</p>
                       <p className="text-white font-bold text-xl">£8,000</p>
                     </div>
                     <div>
-                      <p className="text-gray-400 text-xs">Simple Payback</p>
+                      <p className="text-white/60 text-xs">Simple Payback</p>
                       <p className="text-elec-yellow font-bold text-xl">2.7 years</p>
                     </div>
                   </div>
@@ -788,39 +766,39 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
+            <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                 <PoundSterling className="w-5 h-5" />
                 Additional Savings to Consider
               </h3>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="text-sm text-gray-300">
+                <div className="text-sm text-white/80">
                   <strong className="text-white">Maintenance Savings</strong>
                   <ul className="mt-1 space-y-1">
-                    <li>• Reduced lamp replacement frequency</li>
-                    <li>• Lower labour costs for relamping</li>
-                    <li>• Fewer call-outs for failures</li>
-                    <li>• Typical saving: £500-2,000/year for 100 fittings</li>
+                    <li>- Reduced lamp replacement frequency</li>
+                    <li>- Lower labour costs for relamping</li>
+                    <li>- Fewer call-outs for failures</li>
+                    <li>- Typical saving: £500-2,000/year for 100 fittings</li>
                   </ul>
                 </div>
-                <div className="text-sm text-gray-300">
+                <div className="text-sm text-white/80">
                   <strong className="text-white">Control System Savings</strong>
                   <ul className="mt-1 space-y-1">
-                    <li>• Occupancy sensing: 20-30% additional</li>
-                    <li>• Daylight harvesting: 20-40% additional</li>
-                    <li>• Time scheduling: 10-20% additional</li>
-                    <li>• Combined controls: up to 50% additional</li>
+                    <li>- Occupancy sensing: 20-30% additional</li>
+                    <li>- Daylight harvesting: 20-40% additional</li>
+                    <li>- Time scheduling: 10-20% additional</li>
+                    <li>- Combined controls: up to 50% additional</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <div className="bg-yellow-900/20 border border-elec-yellow/30 rounded-lg p-4">
+            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="text-elec-yellow font-semibold mb-2 flex items-center gap-2">
                 <Clock className="w-5 h-5" />
                 Lifecycle Cost Analysis
               </h4>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white/80 text-sm">
                 For a more complete picture, calculate Total Cost of Ownership (TCO) over 10-15 years, including:
                 initial purchase and installation, energy costs, lamp/driver replacements, maintenance labour,
                 and disposal costs. LED systems typically show 40-60% lower TCO despite higher initial cost.
@@ -830,24 +808,22 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         </section>
 
         {/* Section 6: Installation Pitfalls */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">6</span>
-            </div>
-            <h2 className="text-xl font-bold text-elec-yellow">Common Installation Pitfalls and Solutions</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Common Installation Pitfalls and Solutions
+          </h2>
 
-          <div className="bg-[#2a2a2a] rounded-lg p-6 space-y-4">
-            <p className="text-gray-300">
+          <div className="bg-white/5 rounded-xl p-5 space-y-4">
+            <p className="text-white/80">
               Learning from common mistakes helps ensure successful installations. Here are the most frequent
               issues encountered in LED and lighting control projects.
             </p>
 
             <div className="space-y-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border-l-4 border-red-500">
+              <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
                 <h4 className="text-red-400 font-semibold mb-2">Pitfall 1: Dimmer Compatibility Issues</h4>
-                <p className="text-gray-300 text-sm mb-2">
+                <p className="text-white/80 text-sm mb-2">
                   <strong>Problem:</strong> Flickering, buzzing, or limited dimming range when using existing dimmers with LED lamps.
                 </p>
                 <p className="text-green-400 text-sm">
@@ -856,9 +832,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 </p>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border-l-4 border-red-500">
+              <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
                 <h4 className="text-red-400 font-semibold mb-2">Pitfall 2: Thermal Management Failures</h4>
-                <p className="text-gray-300 text-sm mb-2">
+                <p className="text-white/80 text-sm mb-2">
                   <strong>Problem:</strong> Premature LED failure due to overheating in enclosed fittings or insulated ceilings.
                 </p>
                 <p className="text-green-400 text-sm">
@@ -867,9 +843,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 </p>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border-l-4 border-red-500">
+              <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
                 <h4 className="text-red-400 font-semibold mb-2">Pitfall 3: Incorrect Colour Temperature Selection</h4>
-                <p className="text-gray-300 text-sm mb-2">
+                <p className="text-white/80 text-sm mb-2">
                   <strong>Problem:</strong> Mixed colour temperatures creating uneven appearance, or wrong colour for application.
                 </p>
                 <p className="text-green-400 text-sm">
@@ -878,9 +854,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 </p>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border-l-4 border-red-500">
+              <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
                 <h4 className="text-red-400 font-semibold mb-2">Pitfall 4: Emergency Lighting Compatibility</h4>
-                <p className="text-gray-300 text-sm mb-2">
+                <p className="text-white/80 text-sm mb-2">
                   <strong>Problem:</strong> Existing emergency inverters/batteries incompatible with LED loads.
                 </p>
                 <p className="text-green-400 text-sm">
@@ -889,9 +865,9 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 </p>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border-l-4 border-red-500">
+              <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
                 <h4 className="text-red-400 font-semibold mb-2">Pitfall 5: Control System Commissioning Failures</h4>
-                <p className="text-gray-300 text-sm mb-2">
+                <p className="text-white/80 text-sm mb-2">
                   <strong>Problem:</strong> DALI systems not functioning correctly due to addressing errors or sensor placement.
                 </p>
                 <p className="text-green-400 text-sm">
@@ -900,14 +876,14 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 </p>
               </div>
 
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border-l-4 border-red-500">
+              <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
                 <h4 className="text-red-400 font-semibold mb-2">Pitfall 6: Over-Lighting Spaces</h4>
-                <p className="text-gray-300 text-sm mb-2">
+                <p className="text-white/80 text-sm mb-2">
                   <strong>Problem:</strong> Replacing like-for-like without considering LED's superior efficacy, resulting in excessive light levels.
                 </p>
                 <p className="text-green-400 text-sm">
                   <strong>Solution:</strong> Conduct proper lighting calculations for the space. A 36W LED panel often replaces
-                  a 4×18W fluorescent fitting. Verify lux levels meet but don't vastly exceed requirements. Consider dimming to optimise levels.
+                  a 4x18W fluorescent fitting. Verify lux levels meet but do not vastly exceed requirements. Consider dimming to optimise levels.
                 </p>
               </div>
             </div>
@@ -915,133 +891,131 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         </section>
 
         {/* Quick Reference Card */}
-        <section className="mb-10">
-          <div className="bg-gradient-to-r from-elec-yellow/20 to-yellow-600/20 rounded-lg p-6 border border-elec-yellow/30">
-            <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center gap-2">
-              <Zap className="w-6 h-6" />
-              Quick Reference Card
-            </h3>
+        <section className="bg-gradient-to-r from-elec-yellow/20 to-yellow-600/20 rounded-xl p-6 border border-elec-yellow/30">
+          <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center gap-2">
+            <Zap className="w-6 h-6" />
+            Quick Reference Card
+          </h3>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="text-white font-semibold mb-2">LED Lamp Equivalents</h4>
-                <table className="w-full text-sm">
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-600">
-                      <td className="py-1">40W incandescent</td>
-                      <td className="text-right">→ 5-6W LED</td>
-                    </tr>
-                    <tr className="border-b border-gray-600">
-                      <td className="py-1">60W incandescent</td>
-                      <td className="text-right">→ 8-10W LED</td>
-                    </tr>
-                    <tr className="border-b border-gray-600">
-                      <td className="py-1">100W incandescent</td>
-                      <td className="text-right">→ 12-15W LED</td>
-                    </tr>
-                    <tr className="border-b border-gray-600">
-                      <td className="py-1">50W halogen GU10</td>
-                      <td className="text-right">→ 5-7W LED</td>
-                    </tr>
-                    <tr className="border-b border-gray-600">
-                      <td className="py-1">58W T8 fluorescent</td>
-                      <td className="text-right">→ 22-25W LED tube</td>
-                    </tr>
-                    <tr>
-                      <td className="py-1">4×18W T8 fitting</td>
-                      <td className="text-right">→ 36-40W LED panel</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="text-white font-semibold mb-2">LED Lamp Equivalents</h4>
+              <table className="w-full text-sm">
+                <tbody className="text-white/80">
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">40W incandescent</td>
+                    <td className="text-right">= 5-6W LED</td>
+                  </tr>
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">60W incandescent</td>
+                    <td className="text-right">= 8-10W LED</td>
+                  </tr>
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">100W incandescent</td>
+                    <td className="text-right">= 12-15W LED</td>
+                  </tr>
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">50W halogen GU10</td>
+                    <td className="text-right">= 5-7W LED</td>
+                  </tr>
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">58W T8 fluorescent</td>
+                    <td className="text-right">= 22-25W LED tube</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1">4x18W T8 fitting</td>
+                    <td className="text-right">= 36-40W LED panel</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-              <div>
-                <h4 className="text-white font-semibold mb-2">Key Colour Temperatures</h4>
-                <table className="w-full text-sm">
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-600">
-                      <td className="py-1">2700K</td>
-                      <td className="text-right">Warm White (residential)</td>
-                    </tr>
-                    <tr className="border-b border-gray-600">
-                      <td className="py-1">3000K</td>
-                      <td className="text-right">Warm White (hospitality)</td>
-                    </tr>
-                    <tr className="border-b border-gray-600">
-                      <td className="py-1">4000K</td>
-                      <td className="text-right">Cool White (office)</td>
-                    </tr>
-                    <tr className="border-b border-gray-600">
-                      <td className="py-1">5000K</td>
-                      <td className="text-right">Daylight (retail/industrial)</td>
-                    </tr>
-                    <tr>
-                      <td className="py-1">6500K</td>
-                      <td className="text-right">Cool Daylight (inspection)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div>
+              <h4 className="text-white font-semibold mb-2">Key Colour Temperatures</h4>
+              <table className="w-full text-sm">
+                <tbody className="text-white/80">
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">2700K</td>
+                    <td className="text-right">Warm White (residential)</td>
+                  </tr>
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">3000K</td>
+                    <td className="text-right">Warm White (hospitality)</td>
+                  </tr>
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">4000K</td>
+                    <td className="text-right">Cool White (office)</td>
+                  </tr>
+                  <tr className="border-b border-white/20">
+                    <td className="py-1">5000K</td>
+                    <td className="text-right">Daylight (retail/industrial)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1">6500K</td>
+                    <td className="text-right">Cool Daylight (inspection)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-              <div>
-                <h4 className="text-white font-semibold mb-2">Part L Checklist</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
-                    60+ luminaire lm/circuit watt
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
-                    Occupancy sensing where appropriate
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
-                    Daylight linking in daylit spaces
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
-                    Local switching for areas &gt;100m²
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
-                    Commissioning records complete
-                  </li>
-                </ul>
-              </div>
+            <div>
+              <h4 className="text-white font-semibold mb-2">Part L Checklist</h4>
+              <ul className="text-sm text-white/80 space-y-1">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
+                  60+ luminaire lm/circuit watt
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
+                  Occupancy sensing where appropriate
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
+                  Daylight linking in daylit spaces
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
+                  Local switching for areas over 100m2
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
+                  Commissioning records complete
+                </li>
+              </ul>
+            </div>
 
-              <div>
-                <h4 className="text-white font-semibold mb-2">DALI Quick Facts</h4>
-                <ul className="text-sm text-gray-300 space-y-1">
-                  <li className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-elec-yellow" />
-                    Max 64 devices per DALI line
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-elec-yellow" />
-                    16 groups, 16 scenes available
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-elec-yellow" />
-                    Max cable length: 300m
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-elec-yellow" />
-                    Two-wire, polarity independent
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-elec-yellow" />
-                    Dimming range: 0.1% to 100%
-                  </li>
-                </ul>
-              </div>
+            <div>
+              <h4 className="text-white font-semibold mb-2">DALI Quick Facts</h4>
+              <ul className="text-sm text-white/80 space-y-1">
+                <li className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-elec-yellow" />
+                  Max 64 devices per DALI line
+                </li>
+                <li className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-elec-yellow" />
+                  16 groups, 16 scenes available
+                </li>
+                <li className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-elec-yellow" />
+                  Max cable length: 300m
+                </li>
+                <li className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-elec-yellow" />
+                  Two-wire, polarity independent
+                </li>
+                <li className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-elec-yellow" />
+                  Dimming range: 0.1% to 100%
+                </li>
+              </ul>
             </div>
           </div>
         </section>
 
         {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-bold text-elec-yellow mb-4 flex items-center gap-2">
-            <BookOpen className="w-6 h-6" />
+        <section className="space-y-4">
+          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            <HelpCircle className="w-6 h-6 text-elec-yellow" />
             Frequently Asked Questions
           </h2>
 
@@ -1049,77 +1023,55 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="bg-[#2a2a2a] rounded-lg overflow-hidden"
+                className="bg-white/5 rounded-lg overflow-hidden"
               >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation active:scale-[0.98] hover:bg-[#333]"
-                >
-                  <span className="font-medium text-white pr-4">{faq.question}</span>
-                  {expandedFAQ === index ? (
-                    <ChevronUp className="w-5 h-5 text-elec-yellow flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-elec-yellow flex-shrink-0" />
-                  )}
-                </button>
-                {expandedFAQ === index && (
-                  <div className="px-4 pb-4">
-                    <p className="text-gray-300 text-sm leading-relaxed">{faq.answer}</p>
-                  </div>
-                )}
+                <div className="p-4">
+                  <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                  <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Quiz Section */}
-        <section className="mb-10">
-          <div className="bg-[#2a2a2a] rounded-lg p-6">
-            <h2 className="text-xl font-bold text-elec-yellow mb-4 flex items-center gap-2">
-              <CheckCircle2 className="w-6 h-6" />
-              Section Knowledge Check
-            </h2>
-
-            {!showQuiz ? (
-              <div className="text-center">
-                <p className="text-gray-300 mb-4">
-                  Test your understanding of LED technology and lighting controls with this 10-question quiz.
-                </p>
-                <Button
-                  onClick={() => setShowQuiz(true)}
-                  className="bg-elec-yellow text-black hover:bg-yellow-500 min-h-[44px] touch-manipulation active:scale-[0.98]"
-                >
-                  Start Quiz
-                </Button>
-              </div>
-            ) : (
-              <Quiz
-                questions={quizQuestions}
-                onComplete={(score) => {
-                  console.log(`Quiz completed with score: ${score}/${quizQuestions.length}`);
-                }}
-              />
-            )}
-          </div>
+        <section className="bg-white/5 rounded-xl p-6">
+          <h2 className="text-xl font-bold text-elec-yellow mb-4 flex items-center gap-2">
+            <CheckCircle2 className="w-6 h-6" />
+            Section Knowledge Check
+          </h2>
+          <p className="text-white/80 mb-6">
+            Test your understanding of LED technology and lighting controls with this 10-question quiz.
+          </p>
+          <Quiz
+            questions={quizQuestions}
+            onComplete={(score) => {
+              console.log(`Quiz completed with score: ${score}/${quizQuestions.length}`);
+            }}
+          />
         </section>
 
         {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-gray-700">
+        <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
           <Button
-            onClick={() => navigate('/upskilling/energy-efficiency/module-3')}
             variant="outline"
-            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] border-gray-600 text-white hover:bg-[#2a2a2a] hover:text-elec-yellow"
+            asChild
+            className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] border-white/20 text-white hover:bg-white/5 hover:text-elec-yellow"
           >
-            <ChevronLeft className="w-5 h-5" />
-            <span>Previous: Module 3</span>
+            <Link to="/upskilling/energy-efficiency/module-3">
+              <ArrowLeft className="w-5 h-5" />
+              <span>Previous: Module 3</span>
+            </Link>
           </Button>
 
           <Button
-            onClick={() => navigate('/upskilling/energy-efficiency/module-4/section-2')}
+            asChild
             className="flex items-center justify-center gap-2 min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-yellow-500"
           >
-            <span>Next: Section 2</span>
-            <ChevronRight className="w-5 h-5" />
+            <Link to="../section-2">
+              <span>Next: Section 2</span>
+              <ArrowRight className="w-5 h-5" />
+            </Link>
           </Button>
         </nav>
       </div>

@@ -84,7 +84,7 @@ const BMSModule7Section1 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
           <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-7">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -103,7 +103,7 @@ const BMSModule7Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BMS Design Documentation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             IO lists, schematics, and network topology planning
           </p>
         </header>
@@ -161,7 +161,7 @@ const BMSModule7Section1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm font-medium text-blue-300 mb-2">Digital Inputs</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Flow switches (water/air detection)</li>
                   <li>Fire alarm interface signals</li>
                   <li>Door contacts (plant room security)</li>
@@ -170,7 +170,7 @@ const BMSModule7Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-300 mb-2">Analog Inputs</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Temperature sensors (0-10V, 4-20mA)</li>
                   <li>Pressure sensors (duct and pipe)</li>
                   <li>CO2 sensors (air quality)</li>
@@ -182,7 +182,7 @@ const BMSModule7Section1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
                 <p className="text-sm font-medium text-orange-300 mb-2">Digital Outputs</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Relays (switching pumps, fans)</li>
                   <li>Solenoids (on/off valve control)</li>
                   <li>Dampers (open/close actuators)</li>
@@ -191,7 +191,7 @@ const BMSModule7Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                 <p className="text-sm font-medium text-purple-300 mb-2">Analog Outputs</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Modulating valves (0-10V, 4-20mA)</li>
                   <li>VSDs (variable speed drives)</li>
                   <li>Damper positioning signals</li>
@@ -229,7 +229,7 @@ const BMSModule7Section1 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm font-medium text-blue-300 mb-2">Control Panel Wiring</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>I/O module connections</li>
                   <li>Terminal block layouts</li>
                   <li>Power distribution</li>
@@ -238,7 +238,7 @@ const BMSModule7Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-300 mb-2">Field Device Wiring</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Sensor connections</li>
                   <li>Actuator wiring</li>
                   <li>Cable specifications</li>
@@ -247,7 +247,7 @@ const BMSModule7Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                 <p className="text-sm font-medium text-purple-300 mb-2">Control Logic</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Control sequences</li>
                   <li>Interlocks and safety</li>
                   <li>Alarm conditions</li>
@@ -258,7 +258,7 @@ const BMSModule7Section1 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-elec-yellow mb-2">Boiler Control Loop Example</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/90">
+              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium mb-1">Input Side:</p>
                   <ul className="space-y-0.5 ml-2">
@@ -298,7 +298,7 @@ const BMSModule7Section1 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm font-medium text-blue-300 mb-2">Bus Topology</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>RS-485 Modbus networks</li>
                   <li>BACnet MSTP</li>
                   <li>Devices in series</li>
@@ -308,7 +308,7 @@ const BMSModule7Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-300 mb-2">Star Topology</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>BACnet/IP networks</li>
                   <li>Ethernet-based systems</li>
                   <li>Central switch connection</li>
@@ -318,7 +318,7 @@ const BMSModule7Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                 <p className="text-sm font-medium text-purple-300 mb-2">Tree/Hybrid</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>KNX installations</li>
                   <li>Large BACnet networks</li>
                   <li>Combines bus and star</li>
@@ -338,7 +338,7 @@ const BMSModule7Section1 = () => {
                     <th className="text-left py-2 px-3 text-elec-yellow">Max Distance</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/90">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-2 px-3">Modbus RTU</td>
                     <td className="py-2 px-3">32 per segment</td>
@@ -397,7 +397,7 @@ const BMSModule7Section1 = () => {
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-300 mb-2">Common Mistakes to Avoid</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li><strong>Mixed containment:</strong> Running signal cables with mains power</li>
                 <li><strong>Reversed polarity:</strong> Incorrect analog signal wiring</li>
                 <li><strong>Missing terminations:</strong> RS-485 bus without end resistors</li>
@@ -413,15 +413,15 @@ const BMSModule7Section1 = () => {
           <div className="space-y-4">
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-300 mb-2">Problem</p>
-              <p className="text-sm text-white/90">CO2 sensors in an office building gave unstable, fluctuating readings despite being new and properly calibrated.</p>
+              <p className="text-sm text-white">CO2 sensors in an office building gave unstable, fluctuating readings despite being new and properly calibrated.</p>
             </div>
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
               <p className="text-sm font-medium text-orange-300 mb-2">Investigation</p>
-              <p className="text-sm text-white/90">The 0-10V signal cables had been run in the same trunking as 230V fan power supplies, violating cable segregation rules.</p>
+              <p className="text-sm text-white">The 0-10V signal cables had been run in the same trunking as 230V fan power supplies, violating cable segregation rules.</p>
             </div>
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-green-300 mb-2">Solution</p>
-              <p className="text-sm text-white/90">Signal cables were re-routed through separate containment. Readings immediately stabilized and matched expected values.</p>
+              <p className="text-sm text-white">Signal cables were re-routed through separate containment. Readings immediately stabilized and matched expected values.</p>
             </div>
           </div>
         </section>
@@ -433,7 +433,7 @@ const BMSModule7Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -475,7 +475,7 @@ const BMSModule7Section1 = () => {
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/bms-module-7">
+            <Link to="..">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 7
             </Link>

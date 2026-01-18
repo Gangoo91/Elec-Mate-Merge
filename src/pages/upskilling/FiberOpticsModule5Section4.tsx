@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { ArrowLeft, Zap, CheckCircle, ChevronDown, Activity, AlertTriangle, BarChart3, GitCompare, Wrench, BookOpen } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
 import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import useSEO from "@/hooks/useSEO";
 
-const TITLE = "Interpreting Test Results - Fiber Optics Technology";
+const TITLE = "Interpreting Test Results - Fibre Optics Technology";
 const DESCRIPTION = "Learn how to interpret fibre optic test results including dB/dBm units, OTDR event analysis, fault signatures, bidirectional testing, and remediation decisions.";
 
 const quickCheckQuestions = [
@@ -50,6 +49,7 @@ const quickCheckQuestions = [
 
 const quizQuestions = [
   {
+    id: 1,
     question: "What is the relationship between dB and dBm?",
     options: [
       "They are the same measurement",
@@ -57,9 +57,11 @@ const quizQuestions = [
       "dBm measures relative change, dB measures absolute power",
       "dB is for multimode, dBm is for singlemode"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "dB measures relative change (ratio), while dBm measures absolute power level referenced to 1 milliwatt."
   },
   {
+    id: 2,
     question: "A connector shows 0.8 dB loss on OTDR. What is the likely cause?",
     options: [
       "Normal performance for mechanical splice",
@@ -67,9 +69,11 @@ const quizQuestions = [
       "Expected value for fusion splice",
       "Normal value for all connectors"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "0.8 dB is high for a connector (typical should be 0.3-0.5 dB). Contamination or poor mating is the most common cause."
   },
   {
+    id: 3,
     question: "What signature indicates a macrobend on an OTDR trace?",
     options: [
       "Large reflective spike",
@@ -77,9 +81,11 @@ const quizQuestions = [
       "Gain event",
       "End-of-fibre reflection"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Macrobends cause light to escape without reflection, showing as non-reflective loss at a location where no splice or connector should exist."
   },
   {
+    id: 4,
     question: "Why is bidirectional OTDR testing important?",
     options: [
       "It's faster than single-direction",
@@ -87,19 +93,23 @@ const quizQuestions = [
       "It only matters for multimode fibre",
       "It's required by law"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Bidirectional testing averages out the effects of different fibre characteristics, giving accurate splice loss values."
   },
   {
+    id: 5,
     question: "An OTDR shows 0.15 dB gain at a splice. What causes this?",
     options: [
       "The splice is amplifying the signal",
-      "Measurement artifact due to different fibre mode field diameters",
+      "Measurement artefact due to different fibre mode field diameters",
       "Faulty OTDR equipment",
       "Reflection from dirty connector"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Gainers are caused by different backscatter coefficients in fibres with different mode field diameters - not actual gain."
   },
   {
+    id: 6,
     question: "How should insertion loss test results compare with OTDR total link loss?",
     options: [
       "They should never be compared",
@@ -107,9 +117,11 @@ const quizQuestions = [
       "They should agree within approximately 0.5 dB for a healthy link",
       "Insertion loss is always exactly double OTDR loss"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Both methods should give similar results. Differences greater than 0.5 dB suggest measurement issues or problems."
   },
   {
+    id: 7,
     question: "What is a typical acceptable loss for a quality fusion splice?",
     options: [
       "Less than 1.0 dB",
@@ -117,9 +129,11 @@ const quizQuestions = [
       "Exactly 0 dB",
       "Between 0.5-1.0 dB"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Quality fusion splices typically achieve less than 0.1 dB loss, often 0.02-0.05 dB with modern equipment."
   },
   {
+    id: 8,
     question: "When interpreting results, what does ORL (Optical Return Loss) measure?",
     options: [
       "Total loss through the link",
@@ -127,9 +141,11 @@ const quizQuestions = [
       "Power at the receiver",
       "Distance to the first connector"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "ORL measures the total reflections returning toward the source - important for laser-based systems sensitive to back-reflections."
   },
   {
+    id: 9,
     question: "A link shows 8 dB total loss with a budget of 7 dB. What should you do first?",
     options: [
       "Replace the entire cable",
@@ -137,9 +153,11 @@ const quizQuestions = [
       "Add an amplifier",
       "Accept the failure and document"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Always clean and retest first - dirty connectors are the most common cause of marginal failures and are easy to fix."
   },
   {
+    id: 10,
     question: "What distinguishes a high-loss splice from a dirty connector on OTDR?",
     options: [
       "They look identical",
@@ -147,7 +165,8 @@ const quizQuestions = [
       "Dirty connector shows no loss",
       "High-loss splice always shows reflection"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Fusion splices are non-reflective (loss only), while dirty connectors typically show both loss and a reflection spike."
   }
 ];
 
@@ -158,7 +177,7 @@ const faqs = [
   },
   {
     question: "How accurate are OTDR loss measurements compared to insertion loss testing?",
-    answer: "Insertion loss testing with a calibrated source and power meter is generally more accurate for total link loss measurement (+/- 0.1 dB typical). OTDR is better for locating faults and characterising individual events but may have +/- 0.2-0.5 dB uncertainty on individual event measurements. Use both methods together for comprehensive testing."
+    answer: "Insertion loss testing with a calibrated source and power meter is generally more accurate for total link loss measurement (plus or minus 0.1 dB typical). OTDR is better for locating faults and characterising individual events but may have plus or minus 0.2-0.5 dB uncertainty on individual event measurements. Use both methods together for comprehensive testing."
   },
   {
     question: "What if my test results are right at the pass/fail threshold?",
@@ -184,742 +203,456 @@ const FiberOpticsModule5Section4 = () => {
     description: DESCRIPTION,
   });
 
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
-      {/* Minimal Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-screen-2xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module5"
-            className="flex items-center gap-2 text-white/70 hover:text-white active:scale-[0.98] touch-manipulation min-h-[44px]"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="text-sm">Back to Module 5</span>
-          </Link>
-          <span className="text-xs text-white/40 hidden sm:block">Section 4 of 6</span>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
-      </header>
+      </div>
 
-      <main className="pt-20 pb-24 px-4 max-w-3xl mx-auto">
-        {/* Module Number Badge */}
-        <div className="flex justify-center mb-4">
-          <span className="inline-flex items-center gap-1.5 text-sm text-elec-yellow">
-            <CheckCircle className="w-4 h-4" />
-            Module 5 · Section 4
-          </span>
-        </div>
-
-        {/* Title */}
-        <h1 className="text-2xl md:text-3xl font-bold text-center mb-8">
-          Interpreting Test Results
-        </h1>
-
-        {/* Quick Summary Card */}
-        <div className="bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-2xl p-5 border border-purple-500/30 mb-6">
-          <h2 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-elec-yellow" />
-            In 30 Seconds
-          </h2>
-          <p className="text-white/80 text-sm leading-relaxed">
-            Understanding test results is crucial for making informed decisions about fibre links.
-            Learn to interpret dB and dBm measurements, analyse OTDR event tables, identify fault
-            signatures like high-loss splices and dirty connectors, and determine when cleaning
-            and retesting is sufficient versus when repair is necessary.
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 5 Section 4</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Interpreting Test Results
+          </h1>
+          <p className="text-white/80">
+            Make informed decisions from fibre optic measurements
           </p>
-        </div>
+        </header>
 
-        {/* Spot it / Use it Card */}
-        <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-2xl p-5 border border-indigo-500/20 mb-8">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div>
-              <h3 className="text-sm font-semibold text-indigo-400 mb-2">Key Measurements</h3>
-              <ul className="text-white/70 text-sm space-y-1">
-                <li>• dB - relative loss/gain</li>
-                <li>• dBm - absolute power level</li>
-                <li>• ORL - return loss quality</li>
-                <li>• Event loss - individual points</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold text-purple-400 mb-2">Decision Points</h3>
-              <ul className="text-white/70 text-sm space-y-1">
-                <li>• Pass/fail against budget</li>
-                <li>• Clean and retest first</li>
-                <li>• Identify fault type</li>
-                <li>• Repair vs accept</li>
-              </ul>
-            </div>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>dB:</strong> Relative loss or gain (ratio)</li>
+              <li><strong>dBm:</strong> Absolute power (ref to 1mW)</li>
+              <li><strong>Signatures:</strong> Learn fault patterns on OTDR</li>
+              <li><strong>Decision:</strong> Clean and retest before repair</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Key Decisions</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Pass/fail:</strong> Compare against loss budget</li>
+              <li><strong>Marginal:</strong> Clean, retest, verify</li>
+              <li><strong>High loss:</strong> Identify cause before repair</li>
+              <li><strong>Bidirectional:</strong> Average for true values</li>
+            </ul>
           </div>
         </div>
 
         {/* Learning Outcomes */}
-        <div className="bg-white/5 rounded-2xl p-5 border border-white/10 mb-8">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-green-400" />
-            What You'll Learn
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {[
-              "Understanding dB and dBm units",
+              "Understanding dB and dBm measurements",
               "Analysing OTDR event tables",
-              "Identifying problem signatures",
-              "Comparing bidirectional results",
-              "Correlating OTDR with insertion loss",
-              "When to retest vs when to repair"
-            ].map((outcome, index) => (
-              <div key={index} className="flex items-start gap-2">
-                <div className="w-5 h-5 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-xs font-bold text-elec-yellow">{index + 1}</span>
-                </div>
-                <span className="text-sm text-white/80">{outcome}</span>
+              "Identifying fault signatures",
+              "Bidirectional test interpretation",
+              "Making remediation decisions",
+              "Correlating different test methods"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Section 1: Understanding dB and dBm Units */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center">
-              <span className="text-lg font-bold">01</span>
-            </div>
-            <h2 className="text-xl font-bold">Understanding dB and dBm Units</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
-            <p>
-              Fibre optic measurements use logarithmic units that can confuse newcomers. Understanding
-              the difference between dB (relative) and dBm (absolute) is fundamental to interpreting
-              all test results correctly.
-            </p>
-
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <BarChart3 className="w-4 h-4 text-purple-400" />
-                dB - Decibels (Relative Measurement)
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Definition:</strong> Ratio between two power levels, expressed logarithmically</li>
-                <li><strong>Formula:</strong> dB = 10 × log₁₀(P₂/P₁)</li>
-                <li><strong>Use:</strong> Measuring loss or gain between points</li>
-                <li><strong>Examples:</strong> 3 dB loss = half power, 10 dB loss = 1/10 power</li>
-                <li><strong>No reference:</strong> Always compares two values (before/after)</li>
-              </ul>
-            </div>
-
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <Activity className="w-4 h-4 text-indigo-400" />
-                dBm - Decibels Referenced to 1 Milliwatt (Absolute)
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Definition:</strong> Absolute power level referenced to 1 mW</li>
-                <li><strong>Formula:</strong> dBm = 10 × log₁₀(Power in mW / 1 mW)</li>
-                <li><strong>Use:</strong> Measuring actual transmit or receive power</li>
-                <li><strong>Examples:</strong> 0 dBm = 1 mW, -10 dBm = 0.1 mW, -20 dBm = 0.01 mW</li>
-                <li><strong>Fixed reference:</strong> Always tells you actual power level</li>
-              </ul>
-            </div>
-
-            <div className="bg-gradient-to-r from-purple-500/20 to-indigo-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">Practical Relationship</h4>
-              <div className="space-y-2 text-sm text-white/70">
-                <p>
-                  <strong>Key insight:</strong> If a transmitter outputs -3 dBm and the link has 12 dB loss,
-                  the receiver sees -3 dBm - 12 dB = -15 dBm.
-                </p>
-                <p>
-                  dBm (absolute) minus dB (loss) = dBm (absolute). You can subtract dB from dBm to get
-                  the resulting power level. This is the basis of link budget calculations.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-purple-400 mb-2">Common dB Values</h4>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• 0.1 dB - Good fusion splice</li>
-                  <li>• 0.3 dB - Typical connector loss</li>
-                  <li>• 0.5 dB - Maximum connector spec</li>
-                  <li>• 3 dB - Half power (significant)</li>
-                  <li>• 10 dB - 90% power lost</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-indigo-400 mb-2">Common dBm Values</h4>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• 0 dBm - 1 mW (high power)</li>
-                  <li>• -3 dBm - Typical SFP output</li>
-                  <li>• -10 dBm - Strong signal</li>
-                  <li>• -20 dBm - Moderate signal</li>
-                  <li>• -30 dBm - Near sensitivity limit</li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </section>
 
-        {/* Section 2: Analyzing OTDR Event Tables */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center">
-              <span className="text-lg font-bold">02</span>
-            </div>
-            <h2 className="text-xl font-bold">Analysing OTDR Event Tables</h2>
-          </div>
+        <hr className="border-white/5 mb-12" />
 
-          <div className="space-y-4 text-white/80">
+        {/* Section 01 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Understanding dB and dBm
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              OTDR instruments automatically detect events (connectors, splices, bends, breaks) and
-              present them in an event table. Understanding how to read this table is essential for
-              quick fault diagnosis.
+              Decibels (dB) and decibel-milliwatts (dBm) are fundamental to fibre optic measurements, but they measure different things. Understanding the distinction is essential.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Event Table Columns</h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Event #:</strong> Sequential number for each detected event</li>
-                <li><strong>Distance:</strong> Location from OTDR (in metres or km)</li>
-                <li><strong>Event Type:</strong> Reflective, non-reflective, or end</li>
-                <li><strong>Loss (dB):</strong> Signal loss at this event</li>
-                <li><strong>Reflectance (dB):</strong> Amount of light reflected back</li>
-                <li><strong>Cumulative Loss:</strong> Total loss up to this point</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">dB (decibel) - Relative measurement:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Measures the ratio between two power levels</li>
+                <li>Used for loss, gain, and attenuation</li>
+                <li>Loss example: 3 dB means half the power lost</li>
+                <li>10 dB loss = 90% of power lost (1/10 remaining)</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">Event Types Explained</h4>
-              <div className="space-y-3 text-sm">
-                <div>
-                  <p className="text-indigo-400 font-medium">Reflective Events</p>
-                  <p className="text-white/60">Show both loss and reflection - typically connectors, mechanical splices, or breaks. The spike on the trace indicates reflection.</p>
-                </div>
-                <div>
-                  <p className="text-purple-400 font-medium">Non-Reflective Events</p>
-                  <p className="text-white/60">Show loss without reflection - typically fusion splices, macrobends, or fibre transitions. No spike, just a step down in the trace.</p>
-                </div>
-                <div>
-                  <p className="text-pink-400 font-medium">End Event</p>
-                  <p className="text-white/60">Large reflection followed by drop to noise floor - indicates fibre end, break, or open connector.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Reading the Trace Graphically</h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Slope:</strong> Gradual downward slope = normal fibre attenuation</li>
-                <li><strong>Spikes upward:</strong> Reflections from connectors or breaks</li>
-                <li><strong>Steps downward:</strong> Loss events (splices, bends, connectors)</li>
-                <li><strong>Noise floor:</strong> Bottom of trace where signal is lost</li>
-                <li><strong>Dead zone:</strong> Blind region after strong reflections</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">dBm (decibel-milliwatt) - Absolute measurement:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Measures actual power level referenced to 1 mW</li>
+                <li>0 dBm = 1 milliwatt</li>
+                <li>-10 dBm = 0.1 mW (100 microwatts)</li>
+                <li>+3 dBm = 2 mW</li>
               </ul>
             </div>
 
-            <div className="bg-elec-yellow/10 rounded-xl p-4 border border-elec-yellow/30">
-              <h4 className="font-semibold text-elec-yellow mb-2">Distance Accuracy</h4>
-              <p className="text-sm text-white/80">
-                OTDR distance depends on the refractive index (IOR) setting matching your fibre.
-                Typical singlemode IOR is 1.4677 at 1310nm. Incorrect IOR causes distance errors.
-                Always verify IOR matches the fibre specification for accurate fault location.
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">Practical Example</p>
+              <p className="text-sm text-white">
+                If a transmitter outputs +2 dBm and the link has 8 dB loss, the received power is +2 - 8 = -6 dBm. You can subtract dB loss from dBm power because dB represents a ratio. The receiver needs the power to be above its sensitivity (e.g., -25 dBm) to work.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 1 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[0].id}
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-        </div>
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 3: Identifying Problem Signatures */}
+        {/* Section 02 */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center">
-              <span className="text-lg font-bold">03</span>
-            </div>
-            <h2 className="text-xl font-bold">Identifying Problem Signatures</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            OTDR Fault Signatures
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Different faults produce distinctive signatures on OTDR traces. Learning to recognise
-              these patterns allows rapid diagnosis and targeted repair strategies.
+              Different faults create distinctive patterns on OTDR traces. Learning these signatures helps quickly identify problems.
             </p>
 
-            <div className="bg-red-500/10 rounded-xl p-4 border border-red-500/30">
-              <h4 className="font-semibold text-red-400 mb-3 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4" />
-                High-Loss Splice Signature
-              </h4>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li><strong>Appearance:</strong> Non-reflective step down greater than 0.1-0.2 dB</li>
-                <li><strong>Cause:</strong> Poor fusion splice - misalignment, contamination, or fibre mismatch</li>
-                <li><strong>Diagnosis:</strong> Loss exceeds typical 0.05-0.1 dB for good fusion splice</li>
-                <li><strong>Action:</strong> May require re-splicing if loss exceeds specification</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Fusion splice (good):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Small step down in backscatter level (typically 0.02-0.1 dB)</li>
+                <li>No reflection spike (non-reflective)</li>
+                <li>Located where splice should be per documentation</li>
               </ul>
             </div>
 
-            <div className="bg-orange-500/10 rounded-xl p-4 border border-orange-500/30">
-              <h4 className="font-semibold text-orange-400 mb-3 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4" />
-                Dirty or Damaged Connector Signature
-              </h4>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li><strong>Appearance:</strong> Reflective spike with high loss (greater than 0.5 dB)</li>
-                <li><strong>Reflectance:</strong> May show poor reflectance (less negative than -35 dB)</li>
-                <li><strong>Cause:</strong> Contamination, scratched end face, or poor mating</li>
-                <li><strong>Action:</strong> Clean connector and retest before considering replacement</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Connector (good):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Reflection spike above backscatter level</li>
+                <li>Step down showing loss (typically 0.3-0.5 dB)</li>
+                <li>Located at patch panel or termination point</li>
               </ul>
             </div>
 
-            <div className="bg-yellow-500/10 rounded-xl p-4 border border-yellow-500/30">
-              <h4 className="font-semibold text-yellow-400 mb-3 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4" />
-                Macrobend Signature
-              </h4>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li><strong>Appearance:</strong> Non-reflective loss at unexpected location (no splice or connector)</li>
-                <li><strong>Characteristic:</strong> Often higher loss at 1550nm than 1310nm</li>
-                <li><strong>Cause:</strong> Cable bent too tightly, cable tie over-tightened, or cable crushed</li>
-                <li><strong>Action:</strong> Locate physical position and relieve the bend stress</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Dirty or damaged connector:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Higher than normal loss (over 0.5 dB)</li>
+                <li>Often higher reflection than clean connector</li>
+                <li>Cleaning may resolve the issue</li>
               </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Fibre Break Signature</h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Appearance:</strong> Large reflective spike followed by immediate drop to noise floor</li>
-                <li><strong>Reflectance:</strong> Very high reflection (Fresnel reflection from glass-air)</li>
-                <li><strong>Cause:</strong> Complete fibre break, cable cut, or unterminated fibre end</li>
-                <li><strong>Action:</strong> Locate and repair break or install new termination</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Macrobend:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Non-reflective loss (no spike, just step down)</li>
+                <li>Located where no connection should exist</li>
+                <li>Higher at 1550nm than 1310nm (bend-sensitive)</li>
               </ul>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-green-400 mb-2">Good Event Values</h4>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• Fusion splice: less than 0.1 dB</li>
-                  <li>• Connector: less than 0.5 dB</li>
-                  <li>• Connector reflectance: less than -35 dB</li>
-                  <li>• Fibre attenuation: matches spec</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h4 className="font-semibold text-red-400 mb-2">Problem Values</h4>
-                <ul className="text-sm text-white/60 space-y-1">
-                  <li>• Splice: greater than 0.2 dB</li>
-                  <li>• Connector: greater than 0.75 dB</li>
-                  <li>• Poor reflectance: greater than -25 dB</li>
-                  <li>• Unexpected loss locations</li>
-                </ul>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Fibre break:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Large reflective spike (glass-to-air)</li>
+                <li>Signal drops to noise floor immediately after</li>
+                <li>No more fibre visible beyond break point</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Section 4: Comparing Bidirectional Results */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center">
-              <span className="text-lg font-bold">04</span>
-            </div>
-            <h2 className="text-xl font-bold">Comparing Bidirectional Results</h2>
-          </div>
+        <InlineCheck {...quickCheckQuestions[1]} />
 
-          <div className="space-y-4 text-white/80">
+        {/* Section 03 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Bidirectional Testing
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Testing from both ends of a fibre link is essential for accurate loss measurement. OTDR
-              measurements can vary significantly depending on direction due to fibre characteristics.
+              Testing from both ends of a fibre link is essential for accurate splice loss measurement and professional certification.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
-                <GitCompare className="w-4 h-4 text-purple-400" />
-                Why Bidirectional Testing Matters
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Mode field diameter differences:</strong> Splices between fibres with different MFDs appear as loss in one direction and gain in the other</li>
-                <li><strong>Backscatter coefficient variation:</strong> Different fibres reflect different amounts of light back to the OTDR</li>
-                <li><strong>True loss calculation:</strong> Average of both directions gives accurate splice/event loss</li>
-                <li><strong>Dead zone compensation:</strong> Events hidden by dead zones from one end may be visible from the other</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Why bidirectional matters:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>OTDR measures backscatter, which varies with fibre characteristics</li>
+                <li>Different mode field diameters cause apparent gainers or excess loss</li>
+                <li>Single-direction measurement can be misleading</li>
+                <li>Averaging both directions gives true splice loss</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-purple-500/20 to-indigo-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">Bidirectional Averaging</h4>
-              <div className="space-y-2 text-sm text-white/70">
-                <p>
-                  <strong>Formula:</strong> True Loss = (Loss A→B + Loss B→A) / 2
-                </p>
-                <p>
-                  Example: A splice shows 0.15 dB loss from End A and 0.05 dB "gain" from End B.
-                  True splice loss = (0.15 + (-0.05)) / 2 = 0.05 dB.
-                </p>
-                <p>
-                  Modern OTDR software can automatically merge bidirectional traces and calculate
-                  averaged event values.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Understanding "Gainers"</h4>
-              <p className="text-sm text-white/70 mb-3">
-                An OTDR cannot detect actual optical gain - fibres don't amplify light. An apparent
-                "gain" event is a measurement artifact caused by:
-              </p>
-              <ul className="space-y-2 text-sm">
-                <li><strong>Larger MFD on far side:</strong> More backscatter after the event makes it appear brighter</li>
-                <li><strong>Higher backscatter coefficient:</strong> Different fibre type or manufacturer</li>
-                <li><strong>Always investigate:</strong> A gainer from one direction means higher-than-shown loss from the other</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Gainer events:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Apparent gain (negative loss) at some splices</li>
+                <li>Caused by downstream fibre having higher backscatter</li>
+                <li>Not real gain - artefact of measurement technique</li>
+                <li>Bidirectional averaging eliminates the effect</li>
               </ul>
             </div>
 
-            <div className="bg-elec-yellow/10 rounded-xl p-4 border border-elec-yellow/30">
-              <h4 className="font-semibold text-elec-yellow mb-2">Certification Requirement</h4>
-              <p className="text-sm text-white/80">
-                Industry standards including ISO/IEC 14763-3 and TIA-568 require bidirectional OTDR
-                testing for certification. This ensures accurate characterisation of all events.
-                Always test from both ends and report averaged values for professional certification.
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">Calculating True Splice Loss</p>
+              <p className="text-sm text-white">
+                True loss = (Loss from A + Loss from B) / 2. For example, if a splice shows +0.05 dB (gainer) from one direction and 0.15 dB loss from the other, the true loss is (0.15 - 0.05) / 2 = 0.05 dB. Always average bidirectional results for certification.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 2 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[1].id}
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-        </div>
-
-        {/* Section 5: Correlating OTDR with Insertion Loss Tests */}
+        {/* Section 04 */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center">
-              <span className="text-lg font-bold">05</span>
-            </div>
-            <h2 className="text-xl font-bold">Correlating OTDR with Insertion Loss Tests</h2>
-          </div>
-
-          <div className="space-y-4 text-white/80">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Comparing Test Methods
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              OTDR and insertion loss (IL) testing serve different purposes but should correlate
-              on a healthy link. Understanding both methods and cross-checking results provides
-              confidence in your measurements.
+              Different test methods serve different purposes and may give slightly different results. Understanding these differences helps interpret results correctly.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Comparison of Methods</h4>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-purple-400 font-medium mb-2">OTDR Testing</p>
-                  <ul className="text-white/60 space-y-1">
-                    <li>• Single-ended measurement</li>
-                    <li>• Shows individual event losses</li>
-                    <li>• Provides distance to faults</li>
-                    <li>• Uses backscatter analysis</li>
-                    <li>• Accuracy: +/- 0.2-0.5 dB typical</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-indigo-400 font-medium mb-2">Insertion Loss Testing</p>
-                  <ul className="text-white/60 space-y-1">
-                    <li>• End-to-end measurement</li>
-                    <li>• Shows total link loss only</li>
-                    <li>• No fault location capability</li>
-                    <li>• Direct power measurement</li>
-                    <li>• Accuracy: +/- 0.1 dB typical</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">Expected Correlation</h4>
-              <ul className="space-y-2 text-sm text-white/70">
-                <li>• Total OTDR loss (sum of all events plus fibre loss) should match insertion loss within approximately 0.5 dB</li>
-                <li>• Larger discrepancies indicate measurement issues or hidden faults</li>
-                <li>• OTDR may miss very short events within dead zones</li>
-                <li>• Insertion loss includes launch/receive connector losses that OTDR doesn't measure</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Insertion loss testing (power meter):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Most accurate for total link loss</li>
+                <li>Measures actual light transmission end-to-end</li>
+                <li>Typical accuracy: plus or minus 0.1 dB</li>
+                <li>Cannot locate where loss occurs</li>
               </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">When Results Don't Match</h4>
-              <ul className="space-y-2 text-sm">
-                <li><strong>OTDR shows less loss:</strong> Check for dirty test connectors, poor launch, or events in dead zones</li>
-                <li><strong>OTDR shows more loss:</strong> Verify OTDR settings, check for ghost events, or averaging errors</li>
-                <li><strong>Intermittent differences:</strong> May indicate unstable connection - check and reseat connectors</li>
-                <li><strong>Resolution:</strong> Clean all connectors, verify test setup, repeat both tests</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">OTDR testing:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Shows loss location and individual events</li>
+                <li>Uses backscatter (indirect measurement)</li>
+                <li>Typical accuracy: plus or minus 0.2-0.5 dB per event</li>
+                <li>Essential for fault location and troubleshooting</li>
               </ul>
             </div>
 
-            <div className="bg-elec-yellow/10 rounded-xl p-4 border border-elec-yellow/30">
-              <h4 className="font-semibold text-elec-yellow mb-2">Best Practice</h4>
-              <p className="text-sm text-white/80">
-                For critical links, perform both OTDR and insertion loss testing. Use insertion loss
-                for accurate pass/fail determination against the link budget. Use OTDR to characterise
-                individual events and locate any problems. The two methods complement each other for
-                comprehensive link certification.
-              </p>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Comparing results:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Total OTDR loss should be within 0.5 dB of insertion loss</li>
+                <li>Larger differences suggest measurement issues</li>
+                <li>OTDR may miss some loss that power meter captures</li>
+                <li>Use both methods for comprehensive testing</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Section 6: When to Retest vs When to Repair */}
-        <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center">
-              <span className="text-lg font-bold">06</span>
-            </div>
-            <h2 className="text-xl font-bold">When to Retest vs When to Repair</h2>
-          </div>
+        <InlineCheck {...quickCheckQuestions[2]} />
 
-          <div className="space-y-4 text-white/80">
+        {/* Section 05 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Making Remediation Decisions
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
-              Not every high reading requires immediate repair. Developing judgment about when to clean
-              and retest versus when to proceed with repair saves time and avoids unnecessary work.
+              Test results drive decisions about whether to accept, clean and retest, or repair a fibre link.
             </p>
 
-            <div className="bg-green-500/10 rounded-xl p-4 border border-green-500/30">
-              <h4 className="font-semibold text-green-400 mb-3 flex items-center gap-2">
-                <Wrench className="w-4 h-4" />
-                Retest First When:
-              </h4>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li><strong>Marginal readings:</strong> Values close to pass/fail threshold may be test setup related</li>
-                <li><strong>High connector loss:</strong> Likely contamination - clean and retest before replacing</li>
-                <li><strong>Inconsistent results:</strong> Varying readings suggest connection issues not permanent faults</li>
-                <li><strong>First test of the day:</strong> Equipment needs warm-up, references may need refreshing</li>
-                <li><strong>Single-direction OTDR:</strong> Bidirectional testing may show different results</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Pass - within budget:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>All measurements within specification</li>
+                <li>Document results and move on</li>
+                <li>Consider margin for future ageing and connections</li>
               </ul>
             </div>
 
-            <div className="bg-red-500/10 rounded-xl p-4 border border-red-500/30">
-              <h4 className="font-semibold text-red-400 mb-3 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4" />
-                Proceed to Repair When:
-              </h4>
-              <ul className="space-y-2 text-sm text-white/80">
-                <li><strong>Clear fibre break:</strong> End-of-fibre signature where none should exist</li>
-                <li><strong>Persistent high splice loss:</strong> Same reading after verification from both directions</li>
-                <li><strong>Damaged connector:</strong> Physical inspection shows scratches or chips</li>
-                <li><strong>Multiple retests confirm:</strong> Consistent fault after cleaning and setup verification</li>
-                <li><strong>Macrobend confirmed:</strong> Non-reflective loss at known stress point</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Marginal - close to threshold:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Clean all connectors thoroughly</li>
+                <li>Clean and verify reference cables</li>
+                <li>Retest from both directions</li>
+                <li>Check test setup and environmental conditions</li>
+                <li>If still marginal, investigate individual events</li>
               </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-              <h4 className="font-semibold text-white mb-3">Systematic Troubleshooting Process</h4>
-              <ol className="space-y-2 text-sm">
-                <li><strong>1. Verify test setup:</strong> Check reference cables, clean all connections</li>
-                <li><strong>2. Repeat the test:</strong> Same result confirms issue is real</li>
-                <li><strong>3. Test bidirectionally:</strong> Average OTDR results for accurate loss values</li>
-                <li><strong>4. Cross-check methods:</strong> Compare OTDR with insertion loss if available</li>
-                <li><strong>5. Physical inspection:</strong> Use microscope to examine suspect connectors</li>
-                <li><strong>6. Isolate the fault:</strong> Use OTDR distance to locate physical position</li>
-                <li><strong>7. Repair and verify:</strong> After repair, retest to confirm improvement</li>
-              </ol>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Fail - exceeds budget:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Identify highest-loss events on OTDR</li>
+                <li>Determine if cleaning will help (connectors)</li>
+                <li>Consider retermination for high-loss connectors</li>
+                <li>Consider resplicing for high-loss fusion splices</li>
+                <li>Investigate macrobends (routing issues)</li>
+              </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-purple-500/20 to-indigo-500/20 rounded-xl p-4">
-              <h4 className="font-semibold text-white mb-3">Decision Matrix</h4>
-              <div className="space-y-2 text-sm text-white/70">
-                <div className="flex justify-between items-center py-1 border-b border-white/10">
-                  <span>Clean connectors and retest</span>
-                  <span className="text-green-400">5 minutes</span>
-                </div>
-                <div className="flex justify-between items-center py-1 border-b border-white/10">
-                  <span>Replace patch cord</span>
-                  <span className="text-yellow-400">10 minutes</span>
-                </div>
-                <div className="flex justify-between items-center py-1 border-b border-white/10">
-                  <span>Re-terminate connector</span>
-                  <span className="text-orange-400">20-30 minutes</span>
-                </div>
-                <div className="flex justify-between items-center py-1">
-                  <span>Access and re-splice</span>
-                  <span className="text-red-400">1-2 hours</span>
-                </div>
-              </div>
-              <p className="text-xs text-white/50 mt-3">
-                Always try the quickest fixes first. Many "failures" are solved by cleaning.
-              </p>
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">When to repair vs. replace:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Single high-loss event: Repair that event</li>
+                <li>Multiple marginal events: May need systematic review</li>
+                <li>Cable damage: May require cable replacement</li>
+                <li>Cost-benefit: Compare repair time vs. replacement cost</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 3 */}
-        <div className="mb-10">
-          <InlineCheck
-            id={quickCheckQuestions[2].id}
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-        </div>
+        {/* Section 06 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Common Interpretation Pitfalls
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Avoiding common mistakes ensures accurate interpretation and appropriate decisions.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">Pitfalls to avoid:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Trusting single-direction OTDR:</strong> Always test bidirectionally for splices</li>
+                <li><strong>Ignoring gainers:</strong> They indicate fibre differences, not actual gain</li>
+                <li><strong>Dirty reference cables:</strong> Can add loss that appears as link loss</li>
+                <li><strong>Wrong index of refraction:</strong> Distances will be incorrect</li>
+                <li><strong>Ghost events:</strong> Multiple reflections creating false events</li>
+                <li><strong>Rushing to repair:</strong> Clean and retest first</li>
+              </ul>
+            </div>
+
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">Verification Steps</p>
+              <p className="text-sm text-white">
+                Before concluding a link has problems: 1) Clean all connectors, 2) Verify reference cables on known-good link, 3) Check OTDR settings match fibre type, 4) Test from both directions, 5) Compare OTDR total with insertion loss test. If issues persist after verification, investigate specific events.
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* Practical Guidance */}
         <section className="mb-10">
-          <h2 className="text-xl font-bold mb-4">Practical Guidance</h2>
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
 
-          <div className="space-y-4">
-            <div className="bg-gradient-to-br from-purple-500/10 to-indigo-500/10 rounded-xl p-4 border border-purple-500/20">
-              <h4 className="font-semibold text-purple-400 mb-2">Professional Interpretation Tips</h4>
-              <ul className="text-sm text-white/70 space-y-2">
-                <li>• <strong>Know your baselines:</strong> Understand what good results look like for your equipment</li>
-                <li>• <strong>Document everything:</strong> Save traces and test results for future comparison</li>
-                <li>• <strong>Consider the application:</strong> Telecom links have stricter requirements than short runs</li>
-                <li>• <strong>Factor in temperature:</strong> Cold weather increases loss, especially at bends</li>
-                <li>• <strong>Allow for ageing:</strong> New installs should have margin for future degradation</li>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Loss Values</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Fusion splice:</strong> Under 0.1 dB (often 0.02-0.05 dB)</li>
+                <li><strong>Mechanical splice:</strong> 0.1-0.5 dB</li>
+                <li><strong>Connector pair (mated):</strong> 0.3-0.5 dB</li>
+                <li><strong>Singlemode fibre:</strong> 0.35 dB/km at 1310nm, 0.25 dB/km at 1550nm</li>
+                <li><strong>Multimode fibre (OM3/OM4):</strong> 3.5 dB/km at 850nm</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-xl p-4 border border-red-500/20">
-              <h4 className="font-semibold text-red-400 mb-2">Common Interpretation Mistakes</h4>
-              <ul className="text-sm text-white/70 space-y-2">
-                <li>• <strong>Ignoring gainers:</strong> Treating apparent gains as normal - they mask real loss</li>
-                <li>• <strong>Single-direction only:</strong> Missing bidirectional averaging requirement</li>
-                <li>• <strong>Trusting dirty tests:</strong> Not cleaning references leads to false failures</li>
-                <li>• <strong>Wrong IOR setting:</strong> Distance errors from incorrect refractive index</li>
-                <li>• <strong>Ignoring dead zones:</strong> Missing events hidden by reflections</li>
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Documentation Best Practices</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Save all test results with clear naming</li>
+                <li>Include test date, operator, and equipment used</li>
+                <li>Note ambient temperature for certification</li>
+                <li>Store bidirectional OTDR traces</li>
+                <li>Keep insertion loss test results with OTDR data</li>
               </ul>
             </div>
 
-            <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 rounded-xl p-4 border border-indigo-500/20">
-              <h4 className="font-semibold text-indigo-400 mb-2">Analysis Workflow</h4>
-              <ol className="text-sm text-white/70 space-y-1">
-                <li>1. Review overall link loss against budget</li>
-                <li>2. Check each event against expected values</li>
-                <li>3. Identify any anomalies or failures</li>
-                <li>4. Compare bidirectional results</li>
-                <li>5. Correlate with insertion loss test</li>
-                <li>6. Document findings and recommendations</li>
-              </ol>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Red Flags Requiring Investigation</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Loss over 0.5 dB at any connector</li>
+                <li>Non-reflective loss where no splice should exist</li>
+                <li>Large difference between OTDR and insertion loss</li>
+                <li>Unexpected events on trace</li>
+                <li>Total loss exceeds budget even after cleaning</li>
+              </ul>
             </div>
           </div>
         </section>
 
         {/* FAQs */}
         <section className="mb-10">
-          <h2 className="text-xl font-bold mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-3">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white/5 rounded-xl border border-white/10 overflow-hidden"
-              >
-                <button
-                  className="w-full px-4 py-3 flex items-center justify-between text-left min-h-[44px] touch-manipulation"
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                >
-                  <span className="text-sm font-medium text-white/90">{faq.question}</span>
-                  <ChevronDown
-                    className={`w-4 h-4 text-white/60 transition-transform ${
-                      openFaq === index ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {openFaq === index && (
-                  <div className="px-4 pb-3">
-                    <p className="text-sm text-white/70">{faq.answer}</p>
-                  </div>
-                )}
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Quick Reference Card */}
+        {/* Quick Reference */}
         <section className="mb-10">
-          <div className="bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-2xl p-5 border border-purple-500/30">
-            <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-purple-400" />
-              Quick Reference: Test Result Interpretation
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-4">
+          <div className="p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference: Result Interpretation</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
               <div>
-                <h4 className="text-sm font-semibold text-purple-300 mb-2">Acceptable Values</h4>
-                <ul className="text-xs text-white/70 space-y-1">
-                  <li>Fusion splice: less than 0.1 dB</li>
-                  <li>Connector: less than 0.5 dB</li>
-                  <li>Reflectance: less than -35 dB</li>
-                  <li>Fibre: per spec (0.35 dB/km @ 1310)</li>
+                <p className="font-medium text-white mb-1">dB vs dBm</p>
+                <ul className="space-y-0.5">
+                  <li>dB = relative (ratio)</li>
+                  <li>dBm = absolute (power)</li>
+                  <li>0 dBm = 1 milliwatt</li>
+                  <li>Subtract dB from dBm</li>
                 </ul>
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-indigo-300 mb-2">Problem Indicators</h4>
-                <ul className="text-xs text-white/70 space-y-1">
-                  <li>Unexpected loss locations</li>
-                  <li>High reflectance (greater than -25 dB)</li>
-                  <li>Loss greater than 1550nm compared to 1310nm at same point</li>
-                  <li>Large direction-dependent variation</li>
+                <p className="font-medium text-white mb-1">Decision Flow</p>
+                <ul className="space-y-0.5">
+                  <li>Within budget = Pass</li>
+                  <li>Marginal = Clean and retest</li>
+                  <li>Over budget = Investigate events</li>
+                  <li>Always test both directions</li>
                 </ul>
               </div>
-            </div>
-            <div className="mt-4 pt-4 border-t border-white/10">
-              <p className="text-xs text-white/50">
-                Always clean and retest before repair | Bidirectional average for true loss | Cross-check OTDR with insertion loss
-              </p>
             </div>
           </div>
         </section>
 
-        {/* Quiz Section */}
+        {/* Quiz */}
         <section className="mb-10">
           <Quiz
-            title="Section Quiz"
+            title="Test Your Knowledge"
             questions={quizQuestions}
-            onComplete={(score, total) => {
-              console.log(`Quiz completed: ${score}/${total}`);
-            }}
           />
         </section>
 
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-white/10">
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module5/section3"
-            className="w-full sm:w-auto"
-          >
-            <Button
-              variant="ghost"
-              className="w-full sm:w-auto gap-2 text-white/70 hover:text-white min-h-[44px] touch-manipulation"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Previous: OTDR Testing Basics
-            </Button>
-          </Link>
-          <Link
-            to="/apprentice/study-centre/upskilling/fiber-optics/module5/section5"
-            className="w-full sm:w-auto"
-          >
-            <Button
-              className="w-full sm:w-auto gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation"
-            >
-              Next: Pass/Fail Criteria
-              <ArrowLeft className="w-4 h-4 rotate-180" />
-            </Button>
-          </Link>
-        </div>
-      </main>
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-5">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

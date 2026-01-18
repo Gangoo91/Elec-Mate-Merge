@@ -1,16 +1,20 @@
-import { ArrowLeft, ArrowRight, Calculator, Target, AlertTriangle, CheckCircle, Lightbulb, TrendingUp, BarChart3, Settings } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from '@/hooks/useSEO';
 
 const InstrumentationModule3Section4 = () => {
+  useSEO({
+    title: "Signal Scaling, Conversions, and Error | Instrumentation Course",
+    description: "Learn signal scaling techniques, analogue-to-digital conversion, and error management in instrumentation systems."
+  });
+
   const quizQuestions = [
     {
       id: 1,
-      question: "What does signal scaling mean?",
+      question: "What does signal scaling achieve in instrumentation?",
       options: [
         "Making signals larger in amplitude",
         "Converting one signal range to match another range requirement",
@@ -18,23 +22,23 @@ const InstrumentationModule3Section4 = () => {
         "Isolating signals electrically"
       ],
       correct: 1,
-      explanation: "Signal scaling is the process of converting one signal range (e.g., 0-5V) to match another range requirement (e.g., 0-100°C) to ensure proper interpretation by receiving systems."
+      explanation: "Signal scaling converts one signal range (e.g., 0-5V) to match another range requirement (e.g., 0-100 degrees C) to ensure proper interpretation by receiving systems."
     },
     {
       id: 2,
       question: "What is quantisation error?",
       options: [
         "Error caused by filtering",
-        "The difference between actual analog value and its digital representation",
+        "The difference between actual analogue value and its digital representation",
         "Error in signal timing",
         "Noise introduced by amplification"
       ],
       correct: 1,
-      explanation: "Quantisation error is the difference between the actual analog signal value and its nearest digital representation, caused by the finite resolution of analog-to-digital converters."
+      explanation: "Quantisation error is the difference between the actual analogue signal value and its nearest digital representation, caused by the finite resolution of analogue-to-digital converters."
     },
     {
       id: 3,
-      question: "Why would you convert a voltage signal to current?",
+      question: "Why convert a voltage signal to current for transmission?",
       options: [
         "To reduce power consumption",
         "To improve noise immunity and enable long-distance transmission",
@@ -46,7 +50,7 @@ const InstrumentationModule3Section4 = () => {
     },
     {
       id: 4,
-      question: "How can scaling affect accuracy?",
+      question: "How does poor scaling affect accuracy?",
       options: [
         "Scaling always improves accuracy",
         "Poor scaling can introduce errors and reduce resolution",
@@ -58,700 +62,490 @@ const InstrumentationModule3Section4 = () => {
     },
     {
       id: 5,
-      question: "Give an example of a conversion used in instrumentation.",
+      question: "What is a common instrumentation conversion example?",
       options: [
         "Converting temperature to humidity",
-        "Converting RTD resistance to temperature display (°C)",
+        "Converting RTD resistance to temperature display in degrees Celsius",
         "Converting pressure to flow",
         "Converting AC to battery power"
       ],
       correct: 1,
-      explanation: "Converting RTD resistance changes to temperature values in °C is a common instrumentation conversion, where the sensor's resistance variation is mathematically converted to meaningful temperature units."
-  }  ];
+      explanation: "Converting RTD resistance changes to temperature values in degrees Celsius is a common instrumentation conversion, where the sensor's resistance variation is mathematically converted to meaningful temperature units."
+    }
+  ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-4 sm:px-6 lg:px-8 pt-6 pb-8 sm:pt-8 sm:pb-12">
-        <Link to="/study-centre/upskilling/instrumentation-module-3">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-6 sm:mb-8 px-3 py-2 rounded-md text-sm sm:text-base touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
+    <div className="min-h-screen bg-background">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="px-4 py-3">
+          <Link to=".." className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <ArrowLeft className="h-4 w-4 mr-1" />
             Back to Module 3
-          </Button>
-        </Link>
-        
-        <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
-          {/* Header */}
-          <div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
-              <Calculator className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-400 flex-shrink-0" />
-              <div className="min-w-0">
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
-                  Signal Scaling, Conversions, and Error Introduction
-                </h1>
-                <p className="text-base sm:text-lg lg:text-xl text-gray-400 mt-1">
-                  Ensuring accurate signal interpretation through proper scaling and conversion techniques
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 sm:gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black text-xs sm:text-sm">
-                Module 3.4
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300 text-xs sm:text-sm">
-                45 minutes
-              </Badge>
-            </div>
+          </Link>
+        </div>
+      </div>
+
+      <div className="px-4 py-6 max-w-4xl mx-auto">
+        {/* Title */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/10 mb-4">
+            <Zap className="h-6 w-6 text-elec-yellow" />
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            Signal Scaling, Conversions, and Error
+          </h1>
+          <p className="text-white/80">
+            Transform signals accurately while managing error sources
+          </p>
+        </div>
+
+        {/* Quick Summary */}
+        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4 mb-8">
+          <h2 className="font-semibold text-white mb-2">Quick Summary</h2>
+          <p className="text-white text-sm">
+            Signal scaling and conversion ensure different system components interpret measurement data correctly. Understanding error sources in these processes is essential for maintaining measurement integrity throughout the signal chain.
+          </p>
+        </div>
+
+        {/* Section 01: Signal Scaling Fundamentals */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">01</span>
+            <h2 className="text-xl font-semibold text-white">Signal Scaling Fundamentals</h2>
           </div>
 
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Target className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p className="text-sm sm:text-base leading-relaxed">
-                To ensure accurate interpretation across different system components, signals must often be scaled or converted between different ranges and formats. This critical process transforms raw sensor outputs into meaningful engineering units while maintaining measurement integrity. However, each conversion step introduces potential sources of error that must be understood and managed.
+          <div className="space-y-4 text-white">
+            <p>
+              Signal scaling ensures that different system components can properly interpret measurement data by converting between different ranges and units.
+            </p>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Linear Scaling</h3>
+              <p className="text-white text-sm mb-3">
+                The most common method using direct proportional relationships.
               </p>
-              <Alert className="bg-yellow-400/10 border-blue-600/30">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription className="text-gray-300 text-sm sm:text-base">
-                  Poor scaling and conversion practices can distort measurements, leading to incorrect control actions and system failures. Understanding error sources is crucial for maintaining measurement accuracy.
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          </Card>
-
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p className="text-sm sm:text-base">By the end of this section, you should be able to:</p>
-              <div className="grid grid-cols-1 gap-4">
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Learn how to scale signals to match system requirements effectively</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Understand analog-to-digital conversion processes and limitations</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Identify sources of error during conversion and scaling operations</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Balance resolution requirements with accuracy considerations</span>
-                  </li>
-                </ul>
+              <div className="bg-background/50 rounded p-3 font-mono text-sm text-white">
+                <p className="mb-2"><strong>Formula:</strong> Output = (Input - Input_Min) x (Output_Range / Input_Range) + Output_Min</p>
+                <p className="mb-1"><strong>Example:</strong> Converting 0-10V sensor to 0-100 degrees C display</p>
+                <p>For 5V input: Temperature = (5-0) x (100/10) + 0 = 50 degrees C</p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Signal Scaling */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Signal Scaling Fundamentals
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Signal scaling ensures that different system components can properly interpret measurement data by converting between different ranges and units. This process maintains proportional relationships while adapting signals to match receiving system requirements.
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Non-Linear Scaling</h3>
+              <p className="text-white text-sm mb-3">
+                Required when sensor response is not linear with the measured parameter.
               </p>
-
-              <div className="space-y-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Scaling Methods and Applications</h4>
-                  
-                  <div className="space-y-4">
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Linear Scaling</h5>
-                      <p className="text-xs sm:text-sm mb-3">Most common method using direct proportional relationships.</p>
-                      <div className="bg-card p-3 rounded text-xs sm:text-sm">
-                        <p className="font-mono mb-2"><strong>Formula: Output = (Input - Input_Min) × (Output_Range / Input_Range) + Output_Min</strong></p>
-                        <p className="mb-2"><strong>Example:</strong> Converting 0-10V sensor to 0-100°C display</p>
-                        <p>For 5V input: Temperature = (5-0) × (100/10) + 0 = 50°C</p>
-                      </div>
-                    </div>
-
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Non-Linear Scaling</h5>
-                      <p className="text-xs sm:text-sm mb-2">Required when sensor response is not linear with the measured parameter.</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                        <div>
-                          <strong className="text-white">Common Applications:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• Thermocouple linearisation</li>
-                            <li>• Flow measurement (square root)</li>
-                            <li>• Tank level (irregular shapes)</li>
-                            <li>• pH measurement</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <strong className="text-white">Implementation:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• Lookup tables</li>
-                            <li>• Polynomial equations</li>
-                            <li>• Piecewise linear approximation</li>
-                            <li>• Mathematical functions</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Engineering Unit Conversion</h5>
-                      <p className="text-xs sm:text-sm mb-2">Converting between different measurement units for display and analysis.</p>
-                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 text-xs sm:text-sm">
-                        <div className="bg-card p-2 rounded">
-                          <h6 className="text-white font-medium mb-1">Temperature</h6>
-                          <p>°C ↔ °F ↔ K ↔ °R</p>
-                        </div>
-                        <div className="bg-card p-2 rounded">
-                          <h6 className="text-white font-medium mb-1">Pressure</h6>
-                          <p>bar ↔ PSI ↔ kPa ↔ mmHg</p>
-                        </div>
-                        <div className="bg-card p-2 rounded">
-                          <h6 className="text-white font-medium mb-1">Flow</h6>
-                          <p>L/min ↔ GPM ↔ m³/h</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <h4 className="text-white font-medium text-sm mb-2">Common Applications:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Thermocouple linearisation
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Flow measurement (square root)
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Tank level (irregular shapes)
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      pH measurement
+                    </li>
+                  </ul>
                 </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Scaling Implementation Considerations</h4>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Resolution Requirements</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Match scaling to required measurement precision</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Consider ADC resolution limitations</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Avoid unnecessary over-scaling</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Maintain meaningful decimal places</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Range Matching</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Ensure output range suits receiving system</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Prevent saturation and clipping</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Account for signal variations</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Include safety margins</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                <div>
+                  <h4 className="text-white font-medium text-sm mb-2">Implementation Methods:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Lookup tables
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Polynomial equations
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Piecewise linear approximation
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      Mathematical functions
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Signal Conversions */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Signal Conversions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Signal conversion transforms signals between different formats (analog/digital) and types (voltage/current) to enable compatibility between system components while maintaining signal integrity.
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Engineering Unit Conversion</h3>
+              <p className="text-white text-sm mb-3">
+                Converting between different measurement units for display and analysis.
               </p>
-
-              <div className="space-y-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Analog-to-Digital Conversion (ADC)</h4>
-                  
-                  <div className="space-y-4">
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">ADC Types and Characteristics</h5>
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-xs sm:text-sm">
-                        <div>
-                          <h6 className="text-white font-medium mb-2">Successive Approximation (SAR)</h6>
-                          <ul className="space-y-1">
-                            <li>• Medium speed (1-5 MSPS)</li>
-                            <li>• Good accuracy (12-18 bits)</li>
-                            <li>• Low power consumption</li>
-                            <li>• Most common in instrumentation</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <h6 className="text-white font-medium mb-2">Sigma-Delta (ΔΣ)</h6>
-                          <ul className="space-y-1">
-                            <li>• High resolution (16-24 bits)</li>
-                            <li>• Lower sampling rates</li>
-                            <li>• Excellent noise performance</li>
-                            <li>• Ideal for precision measurements</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">ADC Specifications</h5>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                        <div>
-                          <strong className="text-white">Resolution:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• 12-bit: 1 part in 4,096</li>
-                            <li>• 16-bit: 1 part in 65,536</li>
-                            <li>• 24-bit: 1 part in 16,777,216</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <strong className="text-white">Key Parameters:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• Sampling rate (SPS)</li>
-                            <li>• Input range and gain</li>
-                            <li>• Reference voltage accuracy</li>
-                            <li>• Temperature coefficient</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="bg-background/50 rounded p-3 text-center">
+                  <h4 className="text-white font-medium text-sm mb-1">Temperature</h4>
+                  <p className="text-white text-xs">Celsius, Fahrenheit, Kelvin</p>
                 </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Digital-to-Analog Conversion (DAC)</h4>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Applications</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Control signal generation</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Actuator drive signals</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Reference voltage generation</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-500 mt-1 flex-shrink-0" />
-                          <span>Calibration and testing</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Performance Factors</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-yellow-400 mt-1 flex-shrink-0" />
-                          <span>Resolution vs settling time</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-yellow-400 mt-1 flex-shrink-0" />
-                          <span>Output buffer drive capability</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-yellow-400 mt-1 flex-shrink-0" />
-                          <span>Reference stability requirements</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-yellow-400 mt-1 flex-shrink-0" />
-                          <span>Temperature drift characteristics</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                <div className="bg-background/50 rounded p-3 text-center">
+                  <h4 className="text-white font-medium text-sm mb-1">Pressure</h4>
+                  <p className="text-white text-xs">bar, PSI, kPa, mmHg</p>
                 </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Signal Type Conversions</h4>
-                  <div className="grid grid-cols-1 gap-4">
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Voltage-to-Current (V/I) Conversion</h5>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                        <div>
-                          <strong className="text-white">Implementation:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• Op-amp based V/I converter</li>
-                            <li>• Precision resistor for current sensing</li>
-                            <li>• Output compliance voltage consideration</li>
-                            <li>• Loop power supply requirements</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <strong className="text-white">Benefits:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• Noise immunity improvement</li>
-                            <li>• Long-distance transmission</li>
-                            <li>• Standard 4-20mA compatibility</li>
-                            <li>• Ground loop elimination</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="border-l-4 border-yellow-400 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Current-to-Voltage (I/V) Conversion</h5>
-                      <p className="text-xs sm:text-sm mb-2">Simple precision resistor converts current to proportional voltage for ADC input.</p>
-                      <div className="bg-card p-2 rounded text-xs">
-                        <p><strong>Example:</strong> 4-20mA × 250Ω = 1-5V (compatible with 0-5V ADC input)</p>
-                      </div>
-                    </div>
-                  </div>
+                <div className="bg-background/50 rounded p-3 text-center">
+                  <h4 className="text-white font-medium text-sm mb-1">Flow</h4>
+                  <p className="text-white text-xs">L/min, GPM, cubic m/h</p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Error Sources */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Error Sources in Conversion and Scaling
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Every conversion and scaling operation introduces potential sources of error that can degrade measurement accuracy. Understanding these error sources enables proper system design and error minimisation strategies.
-              </p>
-
-              <div className="space-y-6">
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Quantisation and Resolution Errors</h4>
-                  
-                  <div className="space-y-4">
-                    <div className="border-l-4 border-red-500 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Quantisation Error</h5>
-                      <p className="text-xs sm:text-sm mb-2">The inherent error in representing continuous analog signals with discrete digital values.</p>
-                      <div className="bg-card p-3 rounded text-xs sm:text-sm">
-                        <p className="mb-2"><strong>Maximum Error = ±0.5 LSB (Least Significant Bit)</strong></p>
-                        <p className="mb-1">Example for 12-bit ADC with 10V range:</p>
-                        <p>LSB = 10V / 4096 = 2.44mV</p>
-                        <p>Maximum quantisation error = ±1.22mV</p>
-                      </div>
-                    </div>
-
-                    <div className="border-l-4 border-red-500 pl-4">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Resolution Limitations</h5>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                        <div>
-                          <strong className="text-white">Impact Factors:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• ADC bit resolution</li>
-                            <li>• Signal range utilisation</li>
-                            <li>• Scaling factor selection</li>
-                            <li>• Display resolution requirements</li>
-                          </ul>
-                        </div>
-                        <div>
-                          <strong className="text-white">Improvement Strategies:</strong>
-                          <ul className="space-y-1 mt-1">
-                            <li>• Higher resolution converters</li>
-                            <li>• Optimal range matching</li>
-                            <li>• Signal amplification</li>
-                            <li>• Oversampling techniques</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Systematic Errors</h4>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Linearity Errors</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-red-500 mt-1 flex-shrink-0" />
-                          <span><strong>Integral Linearity Error (INL):</strong> Deviation from ideal transfer function</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-red-500 mt-1 flex-shrink-0" />
-                          <span><strong>Differential Linearity Error (DNL):</strong> Unequal step sizes between codes</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-red-500 mt-1 flex-shrink-0" />
-                          <span><strong>Gain Error:</strong> Incorrect scaling factor</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-red-500 mt-1 flex-shrink-0" />
-                          <span><strong>Offset Error:</strong> Zero-point deviation</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-white font-medium mb-3 text-sm sm:text-base">Temperature Effects</h5>
-                      <ul className="space-y-2 text-xs sm:text-sm">
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-orange-500 mt-1 flex-shrink-0" />
-                          <span><strong>Reference Drift:</strong> Voltage reference temperature coefficient</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-orange-500 mt-1 flex-shrink-0" />
-                          <span><strong>Component Drift:</strong> Resistor and capacitor variations</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-orange-500 mt-1 flex-shrink-0" />
-                          <span><strong>Amplifier Drift:</strong> Op-amp offset and gain changes</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <AlertTriangle className="h-3 w-3 text-orange-500 mt-1 flex-shrink-0" />
-                          <span><strong>Timing Variations:</strong> Clock frequency changes</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-card p-4 rounded-lg">
-                  <h4 className="text-yellow-400 font-semibold mb-4 text-base sm:text-lg">Error Minimisation Techniques</h4>
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Calibration</h5>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Multi-point calibration</li>
-                        <li>• Gain and offset correction</li>
-                        <li>• Temperature compensation</li>
-                        <li>• Periodic recalibration</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Component Selection</h5>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Precision references</li>
-                        <li>• Temperature stable components</li>
-                        <li>• High-resolution converters</li>
-                        <li>• Low-drift amplifiers</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded">
-                      <h5 className="text-white font-medium mb-2 text-sm sm:text-base">Design Practices</h5>
-                      <ul className="space-y-1 text-xs sm:text-sm">
-                        <li>• Ratiometric measurements</li>
-                        <li>• Differential signaling</li>
-                        <li>• Thermal management</li>
-                        <li>• Shielding and grounding</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Resolution vs Accuracy */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Resolution vs Accuracy Balance
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-6">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Understanding the distinction between resolution and accuracy is crucial for proper system design. High resolution doesn't guarantee high accuracy, and excessive resolution can sometimes mask accuracy problems.
-              </p>
-
-              <div className="overflow-x-auto">
-                <table className="w-full border border-gray-600 rounded-lg">
-                  <thead>
-                    <tr className="bg-card">
-                      <th className="border border-gray-600 p-3 text-left text-xs sm:text-sm font-semibold text-yellow-400">Aspect</th>
-                      <th className="border border-gray-600 p-3 text-left text-xs sm:text-sm font-semibold text-white">Resolution</th>
-                      <th className="border border-gray-600 p-3 text-left text-xs sm:text-sm font-semibold text-white">Accuracy</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-xs sm:text-sm">
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Definition</td>
-                      <td className="border border-gray-600 p-3">Smallest measurable change</td>
-                      <td className="border border-gray-600 p-3">Closeness to true value</td>
-                    </tr>
-                    <tr className="bg-card">
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Limiting Factors</td>
-                      <td className="border border-gray-600 p-3">ADC bits, display digits</td>
-                      <td className="border border-gray-600 p-3">Calibration, component tolerances</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Improvement Cost</td>
-                      <td className="border border-gray-600 p-3">Moderate (higher bit ADCs)</td>
-                      <td className="border border-gray-600 p-3">Higher (precision components)</td>
-                    </tr>
-                    <tr className="bg-card">
-                      <td className="border border-gray-600 p-3 font-medium text-yellow-400">Practical Limit</td>
-                      <td className="border border-gray-600 p-3">Noise floor determines useful resolution</td>
-                      <td className="border border-gray-600 p-3">System errors limit achievable accuracy</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <Alert className="bg-green-600/10 border-green-600/30">
-                <CheckCircle className="h-4 w-4" />
-                <AlertDescription className="text-gray-300 text-sm sm:text-base">
-                  <strong>Design Principle:</strong> Match resolution to accuracy requirements. Excessive resolution beyond accuracy capabilities wastes resources and can give false confidence in measurement quality.
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          </Card>
-
-          {/* Real-World Scenario */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Real-World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <div className="bg-yellow-400/10 p-4 rounded-lg border border-blue-600/30">
-                <h4 className="text-white font-semibold mb-3 text-sm sm:text-base">PLC Pressure Control System</h4>
-                <p className="text-xs sm:text-sm leading-relaxed mb-4">
-                  A PLC system scales 0-10V sensor output to represent 0-200 bar pressure for accurate data logging and control, demonstrating the importance of proper scaling and error management:
-                </p>
-                
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">Signal Scaling Implementation</h5>
-                      <p className="text-xs">0-10V sensor output scaled to 0-200 bar: Pressure = (Voltage / 10) × 200. 5V input = 100 bar output.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">Resolution Analysis</h5>
-                      <p className="text-xs">12-bit ADC provides 4096 steps over 10V range = 2.44mV resolution, equivalent to 0.049 bar pressure resolution - adequate for ±1 bar control accuracy.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">Error Management</h5>
-                      <p className="text-xs">Two-point calibration at 0V (0 bar) and 10V (200 bar) corrects for gain and offset errors, achieving ±0.5% accuracy specification.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="bg-yellow-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">4</div>
-                    <div>
-                      <h5 className="text-white font-medium text-xs sm:text-sm">System Integration</h5>
-                      <p className="text-xs">Scaled data feeds both data logger (0.1 bar resolution) and control algorithm (proportional band = 10 bar) with appropriate formatting for each application.</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <Alert className="mt-4 bg-green-600/10 border-green-600/30">
-                  <CheckCircle className="h-4 w-4" />
-                  <AlertDescription className="text-gray-300 text-xs sm:text-sm">
-                    <strong>Results:</strong> Proper scaling and error management achieved stable process control with ±0.2 bar accuracy over 6-month calibration intervals, meeting both control and data logging requirements.
-                  </AlertDescription>
-                </Alert>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" />
-                Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p className="text-sm sm:text-base leading-relaxed">
-                Signal scaling and conversion are essential processes in aligning devices and minimising error, but poor implementation can distort measurements and compromise system performance. Understanding error sources and applying proper design techniques ensures reliable signal processing throughout measurement systems.
-              </p>
-              <div className="bg-card p-4 rounded-lg">
-                <h4 className="text-yellow-400 font-semibold mb-2 text-sm sm:text-base">Key Design Principles</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                  <div>
-                    <strong className="text-white">Scaling:</strong> Match ranges appropriately while maintaining required resolution
-                  </div>
-                  <div>
-                    <strong className="text-white">Conversion:</strong> Select converters based on accuracy and speed requirements
-                  </div>
-                  <div>
-                    <strong className="text-white">Error Management:</strong> Identify and minimise all significant error sources
-                  </div>
-                  <div>
-                    <strong className="text-white">Calibration:</strong> Implement regular calibration to maintain system accuracy
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <SingleQuestionQuiz 
-            questions={quizQuestions}
-            title="Knowledge Check"
-          />
-
-          {/* Navigation */}
-          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-0 pt-6 sm:pt-8">
-            <Link to="/study-centre/upskilling/instrumentation-module-3-section-3" className="w-full sm:w-auto">
-              <Button variant="outline" className="w-full sm:w-auto border-gray-600 text-gray-300 hover:border-yellow-400 hover:text-yellow-400 touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/study-centre/upskilling/instrumentation-module-3-section-5" className="w-full sm:w-auto">
-              <Button className="w-full sm:w-auto bg-yellow-400 text-black hover:bg-yellow-400/10 touch-manipulation active:scale-[0.98]">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+            </div>
           </div>
+        </section>
+
+        <InlineCheck
+          question="What scaling method would you use for a thermocouple signal?"
+          answer="Non-linear scaling using lookup tables or polynomial equations, because thermocouples have a non-linear relationship between temperature and voltage output."
+        />
+
+        {/* Section 02: Signal Conversions */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">02</span>
+            <h2 className="text-xl font-semibold text-white">Signal Conversions</h2>
+          </div>
+
+          <div className="space-y-4 text-white">
+            <p>
+              Signal conversion transforms signals between different formats (analogue/digital) and types (voltage/current) to enable compatibility between system components.
+            </p>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Analogue-to-Digital Conversion (ADC)</h3>
+
+              <div className="space-y-4">
+                <div>
+                  <h4 className="text-white font-medium text-sm mb-2">ADC Types:</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="bg-background/50 rounded p-3">
+                      <h5 className="text-elec-yellow font-medium text-sm mb-1">Successive Approximation (SAR)</h5>
+                      <ul className="text-xs text-white space-y-1">
+                        <li>• Medium speed (1-5 MSPS)</li>
+                        <li>• Good accuracy (12-18 bits)</li>
+                        <li>• Most common in instrumentation</li>
+                      </ul>
+                    </div>
+                    <div className="bg-background/50 rounded p-3">
+                      <h5 className="text-elec-yellow font-medium text-sm mb-1">Sigma-Delta</h5>
+                      <ul className="text-xs text-white space-y-1">
+                        <li>• High resolution (16-24 bits)</li>
+                        <li>• Lower sampling rates</li>
+                        <li>• Excellent noise performance</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-white font-medium text-sm mb-2">Resolution Examples:</h4>
+                  <div className="bg-background/50 rounded p-3">
+                    <ul className="text-sm text-white space-y-1">
+                      <li><strong>12-bit:</strong> 1 part in 4,096 (0.024% resolution)</li>
+                      <li><strong>16-bit:</strong> 1 part in 65,536 (0.0015% resolution)</li>
+                      <li><strong>24-bit:</strong> 1 part in 16,777,216 (0.000006% resolution)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Voltage-to-Current Conversion</h3>
+              <p className="text-white text-sm mb-3">
+                Converting voltage signals to current improves transmission reliability.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <h4 className="text-white font-medium text-sm mb-2">Benefits:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      Noise immunity improvement
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      Long-distance transmission
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      Standard 4-20mA compatibility
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      Ground loop elimination
+                    </li>
+                  </ul>
+                </div>
+                <div className="bg-background/50 rounded p-3">
+                  <h4 className="text-white font-medium text-sm mb-2">Current-to-Voltage Conversion:</h4>
+                  <p className="text-white text-xs">
+                    Simple precision resistor converts current to proportional voltage for ADC input.
+                  </p>
+                  <p className="text-white text-xs mt-2 font-mono">
+                    Example: 4-20mA x 250 ohms = 1-5V
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck
+          question="Why is 4-20mA current preferred over 0-10V for long cable runs?"
+          answer="Current signals are not affected by cable resistance or voltage drops, and the live-zero at 4mA allows detection of broken wires versus a true zero reading."
+        />
+
+        {/* Section 03: Error Sources */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">03</span>
+            <h2 className="text-xl font-semibold text-white">Error Sources in Conversion</h2>
+          </div>
+
+          <div className="space-y-4 text-white">
+            <p>
+              Every conversion and scaling operation introduces potential sources of error that can degrade measurement accuracy. Understanding these error sources enables proper system design.
+            </p>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Quantisation Error</h3>
+              <p className="text-white text-sm mb-3">
+                The inherent error in representing continuous analogue signals with discrete digital values.
+              </p>
+              <div className="bg-background/50 rounded p-3">
+                <p className="text-white text-sm mb-2"><strong>Maximum Error = plus or minus 0.5 LSB (Least Significant Bit)</strong></p>
+                <p className="text-white text-xs mb-1">Example for 12-bit ADC with 10V range:</p>
+                <p className="text-white text-xs">LSB = 10V / 4096 = 2.44mV</p>
+                <p className="text-white text-xs">Maximum quantisation error = plus or minus 1.22mV</p>
+              </div>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Systematic Errors</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <h4 className="text-white font-medium text-sm mb-2">Linearity Errors:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li><strong>INL:</strong> Deviation from ideal transfer function</li>
+                    <li><strong>DNL:</strong> Unequal step sizes between codes</li>
+                    <li><strong>Gain Error:</strong> Incorrect scaling factor</li>
+                    <li><strong>Offset Error:</strong> Zero-point deviation</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="text-white font-medium text-sm mb-2">Temperature Effects:</h4>
+                  <ul className="space-y-1 text-sm text-white">
+                    <li>Reference voltage drift</li>
+                    <li>Component value changes</li>
+                    <li>Amplifier offset drift</li>
+                    <li>Timing variations</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-3">Error Minimisation Techniques</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="bg-background/50 rounded p-3">
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">Calibration</h4>
+                  <ul className="text-xs text-white space-y-1">
+                    <li>• Multi-point calibration</li>
+                    <li>• Gain and offset correction</li>
+                    <li>• Temperature compensation</li>
+                    <li>• Periodic recalibration</li>
+                  </ul>
+                </div>
+                <div className="bg-background/50 rounded p-3">
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">Component Selection</h4>
+                  <ul className="text-xs text-white space-y-1">
+                    <li>• Precision references</li>
+                    <li>• Temperature stable parts</li>
+                    <li>• High-resolution converters</li>
+                    <li>• Low-drift amplifiers</li>
+                  </ul>
+                </div>
+                <div className="bg-background/50 rounded p-3">
+                  <h4 className="text-elec-yellow font-medium text-sm mb-2">Design Practices</h4>
+                  <ul className="text-xs text-white space-y-1">
+                    <li>• Ratiometric measurements</li>
+                    <li>• Differential signalling</li>
+                    <li>• Thermal management</li>
+                    <li>• Proper grounding</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 04: Resolution vs Accuracy */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">04</span>
+            <h2 className="text-xl font-semibold text-white">Resolution vs Accuracy Balance</h2>
+          </div>
+
+          <div className="space-y-4 text-white">
+            <p>
+              Understanding the distinction between resolution and accuracy is crucial for proper system design. High resolution does not guarantee high accuracy.
+            </p>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-3 px-4 text-elec-yellow font-semibold">Aspect</th>
+                    <th className="text-left py-3 px-4 text-white font-semibold">Resolution</th>
+                    <th className="text-left py-3 px-4 text-white font-semibold">Accuracy</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-border/50">
+                    <td className="py-3 px-4 text-elec-yellow">Definition</td>
+                    <td className="py-3 px-4">Smallest measurable change</td>
+                    <td className="py-3 px-4">Closeness to true value</td>
+                  </tr>
+                  <tr className="border-b border-border/50">
+                    <td className="py-3 px-4 text-elec-yellow">Limiting Factors</td>
+                    <td className="py-3 px-4">ADC bits, display digits</td>
+                    <td className="py-3 px-4">Calibration, tolerances</td>
+                  </tr>
+                  <tr className="border-b border-border/50">
+                    <td className="py-3 px-4 text-elec-yellow">Improvement Cost</td>
+                    <td className="py-3 px-4">Moderate (higher bit ADCs)</td>
+                    <td className="py-3 px-4">Higher (precision parts)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-4 text-elec-yellow">Practical Limit</td>
+                    <td className="py-3 px-4">Noise floor</td>
+                    <td className="py-3 px-4">System errors</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+              <p className="text-white text-sm">
+                <strong>Design Principle:</strong> Match resolution to accuracy requirements. Excessive resolution beyond accuracy capabilities wastes resources and can give false confidence in measurement quality.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck
+          question="A 16-bit ADC has higher resolution than a 12-bit ADC. Does this mean it is more accurate?"
+          answer="Not necessarily. Resolution determines the smallest detectable change, but accuracy depends on calibration, reference quality, and component tolerances. A well-calibrated 12-bit system may be more accurate than a poorly calibrated 16-bit system."
+        />
+
+        {/* Section 05: Practical Application */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow font-bold text-sm">05</span>
+            <h2 className="text-xl font-semibold text-white">Practical Application</h2>
+          </div>
+
+          <div className="bg-card/50 rounded-lg p-4">
+            <h3 className="font-semibold text-white mb-3">PLC Pressure Control System</h3>
+            <p className="text-white text-sm mb-4">
+              A PLC system scales 0-10V sensor output to represent 0-200 bar pressure for data logging and control.
+            </p>
+
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">1</div>
+                <div>
+                  <h4 className="text-white font-medium text-sm">Signal Scaling</h4>
+                  <p className="text-white text-xs">0-10V scaled to 0-200 bar: Pressure = (Voltage / 10) x 200. For 5V input = 100 bar output.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">2</div>
+                <div>
+                  <h4 className="text-white font-medium text-sm">Resolution Analysis</h4>
+                  <p className="text-white text-xs">12-bit ADC provides 4096 steps over 10V = 2.44mV resolution, equivalent to 0.049 bar pressure resolution.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">3</div>
+                <div>
+                  <h4 className="text-white font-medium text-sm">Error Management</h4>
+                  <p className="text-white text-xs">Two-point calibration at 0V (0 bar) and 10V (200 bar) corrects gain and offset errors.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow text-black text-xs font-bold flex-shrink-0">4</div>
+                <div>
+                  <h4 className="text-white font-medium text-sm">Result</h4>
+                  <p className="text-white text-xs">Achieves plus or minus 0.5% accuracy specification with 6-month calibration intervals.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+
+          <div className="space-y-4">
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-2">When should I use linear vs non-linear scaling?</h3>
+              <p className="text-white text-sm">
+                Use linear scaling when the sensor output is directly proportional to the measured parameter. Use non-linear scaling for sensors like thermocouples, RTDs, or flow sensors where the relationship is not linear.
+              </p>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-2">How often should I recalibrate conversion systems?</h3>
+              <p className="text-white text-sm">
+                Calibration intervals depend on accuracy requirements and environmental conditions. Critical systems may need monthly calibration, while stable environments may allow annual calibration. Always recalibrate after significant temperature changes or component replacement.
+              </p>
+            </div>
+
+            <div className="bg-card/50 rounded-lg p-4">
+              <h3 className="font-semibold text-white mb-2">What ADC resolution do I need for my application?</h3>
+              <p className="text-white text-sm">
+                Choose ADC resolution based on required measurement precision. For 0.1% accuracy, you need at least 10 bits (1024 steps). For 0.01% accuracy, you need at least 14 bits. Always select 2-4 bits more than the minimum for noise margin.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-8">
+          <SingleQuestionQuiz questions={quizQuestions} />
+        </section>
+
+        {/* Navigation */}
+        <div className="flex flex-col sm:flex-row justify-between gap-3 pt-6 border-t border-border">
+          <Link to="/study-centre/upskilling/instrumentation-module-3-section-3" className="w-full sm:w-auto">
+            <Button variant="outline" className="w-full sm:w-auto">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back
+            </Button>
+          </Link>
+          <Link to="/study-centre/upskilling/instrumentation-module-3-section-5" className="w-full sm:w-auto">
+            <Button className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              Next Section
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
