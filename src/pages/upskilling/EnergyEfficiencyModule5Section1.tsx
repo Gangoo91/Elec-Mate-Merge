@@ -189,7 +189,7 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
           <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
-            <Link to="..">
+            <Link to="/electrician/upskilling/energy-efficiency-module-5">
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>

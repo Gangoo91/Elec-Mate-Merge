@@ -121,7 +121,7 @@ const InstrumentationModule8Section6 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-3">
-          <Link to="/upskilling/instrumentation-module-8">
+          <Link to="/electrician/upskilling/instrumentation-module-8">
             <Button variant="ghost" size="sm" className="text-white hover:text-elec-yellow touch-manipulation active:scale-[0.98]">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Module 8

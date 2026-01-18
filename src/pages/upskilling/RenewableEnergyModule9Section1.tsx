@@ -217,7 +217,7 @@ const RenewableEnergyModule9Section1 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-3 flex items-center gap-3">
-          <Link to="..">
+          <Link to="/electrician/upskilling/renewable-energy-module-9">
             <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
               <ArrowLeft className="h-5 w-5" />
             </Button>
@@ -462,7 +462,7 @@ const RenewableEnergyModule9Section1 = () => {
 
         {/* Bottom Navigation */}
         <div className="flex justify-between items-center pt-4 border-t border-white/10">
-          <Link to="..">
+          <Link to="/electrician/upskilling/renewable-energy-module-9">
             <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module

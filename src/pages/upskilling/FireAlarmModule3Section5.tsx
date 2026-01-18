@@ -122,7 +122,7 @@ const FireAlarmModule3Section5 = () => {
       <header className="border-b border-white/10 bg-background/95 backdrop-blur-sm sticky top-0 z-10">
         <div className="px-4 py-4 flex items-center justify-between max-w-3xl mx-auto">
           <Button variant="ghost" size="sm" asChild className="gap-2 text-white hover:text-elec-yellow">
-            <Link to="..">
+            <Link to="/electrician/upskilling/fire-alarm-module-3">
               <ArrowLeft className="h-4 w-4" />
               <span className="hidden sm:inline">Back to Module</span>
             </Link>

@@ -196,7 +196,7 @@ const IndustrialElectricalModule4Section3: React.FC = () => {
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
           <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
-            <Link to="..">
+            <Link to="/electrician/upskilling/industrial-electrical-module-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>

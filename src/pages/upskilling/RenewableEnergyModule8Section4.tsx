@@ -217,7 +217,7 @@ const RenewableEnergyModule8Section4 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-3 flex items-center gap-3">
-          <Link to="..">
+          <Link to="/electrician/upskilling/renewable-energy-module-8">
             <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
               <ArrowLeft className="h-5 w-5" />
             </Button>

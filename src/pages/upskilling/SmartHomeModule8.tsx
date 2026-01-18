@@ -43,7 +43,7 @@ const SmartHomeModule8 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/smart-home-course">
+            <Link to="/electrician/upskilling/smart-home-course">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Smart Home Course
             </Link>
@@ -133,7 +133,7 @@ const SmartHomeModule8 = () => {
 
         {/* Start Exam Button */}
         <div className="flex justify-center pt-6">
-          <Link to="/study-centre/upskilling/smart-home-mock-exam">
+          <Link to="/electrician/upskilling/smart-home-mock-exam">
             <Button
               className="bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-all duration-200 px-8 py-3 text-lg font-semibold min-h-[48px] touch-manipulation active:scale-[0.98]"
             >

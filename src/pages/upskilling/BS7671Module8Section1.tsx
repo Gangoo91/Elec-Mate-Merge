@@ -90,7 +90,7 @@ const BS7671Module8Section1 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/bs7671-module-8">
+            <Link to="/electrician/upskilling/bs7671-module-8">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 8
             </Link>

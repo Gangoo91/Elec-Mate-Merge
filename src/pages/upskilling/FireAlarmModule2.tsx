@@ -54,7 +54,7 @@ const FireAlarmModule2 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/fire-alarm-course">
+            <Link to="/electrician/upskilling/fire-alarm-course">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Fire Alarm Course
             </Link>

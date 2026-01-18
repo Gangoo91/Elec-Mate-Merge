@@ -215,7 +215,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
           <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
-            <Link to="..">
+            <Link to="/electrician/upskilling/energy-efficiency-module-3">
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
@@ -1068,7 +1068,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
             variant="outline"
             className="min-h-[44px] touch-manipulation border-white/20 hover:border-elec-yellow hover:text-elec-yellow bg-transparent text-white"
           >
-            <Link to=".." className="flex items-center gap-2">
+            <Link to="/electrician/upskilling/energy-efficiency-module-3" className="flex items-center gap-2">
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Module 3</span>
             </Link>

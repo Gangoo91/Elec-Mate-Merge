@@ -42,7 +42,7 @@ const FiberOpticsModule1 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/fiber-optics-course">
+            <Link to="/electrician/upskilling/fiber-optics-course">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Fiber Optics Course
             </Link>

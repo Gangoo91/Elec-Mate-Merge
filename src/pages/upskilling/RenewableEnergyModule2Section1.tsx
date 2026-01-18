@@ -80,7 +80,7 @@ const RenewableEnergyModule2Section1 = () => {
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="max-w-3xl mx-auto px-4 h-14 flex items-center">
           <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10 -ml-2" asChild>
-            <Link to="..">
+            <Link to="/electrician/upskilling/renewable-energy-module-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -452,7 +452,7 @@ const RenewableEnergyModule2Section1 = () => {
         {/* Bottom Navigation */}
         <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button variant="ghost" className="text-white/70 hover:text-white hover:bg-white/10" asChild>
-            <Link to="..">
+            <Link to="/electrician/upskilling/renewable-energy-module-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>

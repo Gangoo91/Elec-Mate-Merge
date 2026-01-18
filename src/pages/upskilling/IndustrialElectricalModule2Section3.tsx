@@ -125,7 +125,7 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
           <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
-            <Link to="..">
+            <Link to="/electrician/upskilling/industrial-electrical-module-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -904,7 +904,7 @@ const IndustrialElectricalModule2Section3: React.FC = () => {
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="text-muted-foreground hover:text-foreground" asChild>
-            <Link to="..">
+            <Link to="/electrician/upskilling/industrial-electrical-module-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>

@@ -79,7 +79,7 @@ const InstrumentationModule3Section4 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="px-4 py-3">
-          <Link to=".." className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/electrician/upskilling/instrumentation-module-3" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back to Module 3
           </Link>

@@ -48,7 +48,7 @@ const PATTestingModule1 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/study-centre/upskilling/pat-testing-course">
+            <Link to="/electrician/upskilling/pat-testing-course">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to PAT Testing Course
             </Link>

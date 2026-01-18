@@ -204,7 +204,7 @@ const IndustrialElectricalModule1Section5: React.FC = () => {
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-white/10">
         <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
           <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" asChild>
-            <Link to="..">
+            <Link to="/electrician/upskilling/industrial-electrical-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -787,7 +787,7 @@ const IndustrialElectricalModule1Section5: React.FC = () => {
         {/* Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="text-muted-foreground hover:text-foreground" asChild>
-            <Link to="..">
+            <Link to="/electrician/upskilling/industrial-electrical-module-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
