@@ -87,10 +87,36 @@ const EmergencyLightingModule6Section3 = React.lazy(() => import('@/pages/upskil
 const EmergencyLightingModule6Section4 = React.lazy(() => import('@/pages/upskilling/EmergencyLightingModule6Section4'));
 const FiberOpticsCourse = React.lazy(() => import('@/pages/upskilling/FiberOpticsCourse'));
 const FiberOpticsModule1 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule1'));
+const FiberOpticsModule1Section1 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule1Section1'));
+const FiberOpticsModule1Section2 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule1Section2'));
+const FiberOpticsModule1Section3 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule1Section3'));
+const FiberOpticsModule1Section4 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule1Section4'));
 const FiberOpticsModule2 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule2'));
+const FiberOpticsModule2Section1 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule2Section1'));
+const FiberOpticsModule2Section2 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule2Section2'));
+const FiberOpticsModule2Section3 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule2Section3'));
+const FiberOpticsModule2Section4 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule2Section4'));
+const FiberOpticsModule2Section5 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule2Section5'));
+const FiberOpticsModule2Section6 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule2Section6'));
 const FiberOpticsModule3 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule3'));
+const FiberOpticsModule3Section1 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule3Section1'));
+const FiberOpticsModule3Section2 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule3Section2'));
+const FiberOpticsModule3Section3 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule3Section3'));
+const FiberOpticsModule3Section4 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule3Section4'));
+const FiberOpticsModule3Section5 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule3Section5'));
+const FiberOpticsModule3Section6 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule3Section6'));
 const FiberOpticsModule4 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule4'));
+const FiberOpticsModule4Section1 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule4Section1'));
+const FiberOpticsModule4Section2 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule4Section2'));
+const FiberOpticsModule4Section3 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule4Section3'));
+const FiberOpticsModule4Section4 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule4Section4'));
+const FiberOpticsModule4Section5 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule4Section5'));
 const FiberOpticsModule5 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule5'));
+const FiberOpticsModule5Section1 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule5Section1'));
+const FiberOpticsModule5Section3 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule5Section3'));
+const FiberOpticsModule5Section4 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule5Section4'));
+const FiberOpticsModule5Section5 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule5Section5'));
+const FiberOpticsModule5Section6 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule5Section6'));
 const FiberOpticsModule6 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule6'));
 const FiberOpticsModule7 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule7'));
 const EmergencyLightingMockExam = React.lazy(() => import('@/pages/upskilling/EmergencyLightingMockExam'));
@@ -183,10 +209,36 @@ export const industrialDataRoutes = (
   <Route path="emergency-lighting-mock-exam" element={<EmergencyLightingMockExam />} />,
   <Route path="fiber-optics-course" element={<FiberOpticsCourse />} />,
   <Route path="fiber-optics-module-1" element={<FiberOpticsModule1 />} />,
+  <Route path="fiber-optics-module-1-section-1" element={<FiberOpticsModule1Section1 />} />,
+  <Route path="fiber-optics-module-1-section-2" element={<FiberOpticsModule1Section2 />} />,
+  <Route path="fiber-optics-module-1-section-3" element={<FiberOpticsModule1Section3 />} />,
+  <Route path="fiber-optics-module-1-section-4" element={<FiberOpticsModule1Section4 />} />,
   <Route path="fiber-optics-module-2" element={<FiberOpticsModule2 />} />,
+  <Route path="fiber-optics-module-2-section-1" element={<FiberOpticsModule2Section1 />} />,
+  <Route path="fiber-optics-module-2-section-2" element={<FiberOpticsModule2Section2 />} />,
+  <Route path="fiber-optics-module-2-section-3" element={<FiberOpticsModule2Section3 />} />,
+  <Route path="fiber-optics-module-2-section-4" element={<FiberOpticsModule2Section4 />} />,
+  <Route path="fiber-optics-module-2-section-5" element={<FiberOpticsModule2Section5 />} />,
+  <Route path="fiber-optics-module-2-section-6" element={<FiberOpticsModule2Section6 />} />,
   <Route path="fiber-optics-module-3" element={<FiberOpticsModule3 />} />,
+  <Route path="fiber-optics-module-3-section-1" element={<FiberOpticsModule3Section1 />} />,
+  <Route path="fiber-optics-module-3-section-2" element={<FiberOpticsModule3Section2 />} />,
+  <Route path="fiber-optics-module-3-section-3" element={<FiberOpticsModule3Section3 />} />,
+  <Route path="fiber-optics-module-3-section-4" element={<FiberOpticsModule3Section4 />} />,
+  <Route path="fiber-optics-module-3-section-5" element={<FiberOpticsModule3Section5 />} />,
+  <Route path="fiber-optics-module-3-section-6" element={<FiberOpticsModule3Section6 />} />,
   <Route path="fiber-optics-module-4" element={<FiberOpticsModule4 />} />,
+  <Route path="fiber-optics-module-4-section-1" element={<FiberOpticsModule4Section1 />} />,
+  <Route path="fiber-optics-module-4-section-2" element={<FiberOpticsModule4Section2 />} />,
+  <Route path="fiber-optics-module-4-section-3" element={<FiberOpticsModule4Section3 />} />,
+  <Route path="fiber-optics-module-4-section-4" element={<FiberOpticsModule4Section4 />} />,
+  <Route path="fiber-optics-module-4-section-5" element={<FiberOpticsModule4Section5 />} />,
   <Route path="fiber-optics-module-5" element={<FiberOpticsModule5 />} />,
+  <Route path="fiber-optics-module-5-section-1" element={<FiberOpticsModule5Section1 />} />,
+  <Route path="fiber-optics-module-5-section-3" element={<FiberOpticsModule5Section3 />} />,
+  <Route path="fiber-optics-module-5-section-4" element={<FiberOpticsModule5Section4 />} />,
+  <Route path="fiber-optics-module-5-section-5" element={<FiberOpticsModule5Section5 />} />,
+  <Route path="fiber-optics-module-5-section-6" element={<FiberOpticsModule5Section6 />} />,
   <Route path="fiber-optics-module-6" element={<FiberOpticsModule6 />} />,
   <Route path="fiber-optics-module-7" element={<FiberOpticsModule7 />} />
   </>

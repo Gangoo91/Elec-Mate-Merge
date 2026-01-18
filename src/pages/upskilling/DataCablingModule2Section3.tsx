@@ -85,7 +85,7 @@ const DataCablingModule2Section3 = () => {
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/electrician/upskilling/data-cabling-module-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -364,7 +364,7 @@ const DataCablingModule2Section3 = () => {
             className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../section-2">
+            <Link to="/electrician/upskilling/data-cabling-module-2-section-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
@@ -374,7 +374,7 @@ const DataCablingModule2Section3 = () => {
             className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../section-4">
+            <Link to="/electrician/upskilling/data-cabling-module-2-section-4">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

@@ -405,7 +405,7 @@ const PATTestingModule4Section1 = () => {
         {/* Bottom Navigation */}
         <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
           <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../../pat-testing/module-3/section-5">
+            <Link to="/electrician/upskilling/pat-testing-module-3-section-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>

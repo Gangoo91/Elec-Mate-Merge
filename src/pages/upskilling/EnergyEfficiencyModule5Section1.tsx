@@ -1050,7 +1050,7 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
           <Button variant="outline" asChild className="min-h-[44px] touch-manipulation bg-transparent border-white/20 text-white hover:bg-white/5 hover:border-elec-yellow">
-            <Link to="../../module-4">
+            <Link to="/study-centre/upskilling/energy-efficiency/module-4/section-5">
               <ArrowLeft className="w-5 h-5 mr-2" />
               Previous: Module 4
             </Link>

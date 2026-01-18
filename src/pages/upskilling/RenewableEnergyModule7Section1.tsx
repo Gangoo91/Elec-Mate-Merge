@@ -446,7 +446,7 @@ const RenewableEnergyModule7Section1 = () => {
 
         {/* Bottom Navigation */}
         <div className="flex justify-between items-center pt-4 border-t border-white/10">
-          <Link to="/upskilling/renewable-energy/module-6/section-5">
+          <Link to="/study-centre/upskilling/renewable-energy-module-6-section-5">
             <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Module

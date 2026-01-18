@@ -415,7 +415,7 @@ const SmartHomeModule7Section6 = () => {
               className="bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
               asChild
             >
-              <Link to="/study-centre/upskilling/smart-home">
+              <Link to="/electrician/upskilling/smart-home-course">
                 Return to Course Overview
               </Link>
             </Button>
@@ -479,7 +479,7 @@ const SmartHomeModule7Section6 = () => {
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
             asChild
           >
-            <Link to="/study-centre/upskilling/smart-home">
+            <Link to="/electrician/upskilling/smart-home-course">
               Back to Course
             </Link>
           </Button>

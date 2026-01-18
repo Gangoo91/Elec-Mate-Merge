@@ -308,7 +308,7 @@ const PATTestingModule4Section6 = () => {
               <ChevronLeft className="h-4 w-4" /> Previous: Test Equipment
             </Button>
           </Link>
-          <Link to="../../pat-testing/module-5" className="flex-1">
+          <Link to="/electrician/upskilling/pat-testing-module-5" className="flex-1">
             <Button className="w-full min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-2 touch-manipulation active:scale-[0.98]">
               Next: Module 5 <ChevronRight className="h-4 w-4" />
             </Button>

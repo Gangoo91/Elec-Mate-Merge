@@ -467,7 +467,7 @@ const RenewableEnergyModule7Section6 = () => {
               Previous Section
             </Button>
           </Link>
-          <Link to="/upskilling/renewable-energy/module-8/section-1">
+          <Link to="/study-centre/upskilling/renewable-energy-module-8-section-1">
             <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
               Next Module
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

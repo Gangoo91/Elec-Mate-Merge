@@ -604,13 +604,13 @@ const FireAlarmModule5Section6 = () => {
         {/* Navigation Footer */}
         <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
           <Button variant="outline" asChild className="flex-1 min-h-[44px] border-white/20 text-white hover:bg-white/5 touch-manipulation">
-            <Link to="/study-centre/upskilling/fire-alarm-module-5-section-5">
+            <Link to="../section-5">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Link>
           </Button>
           <Button asChild className="flex-1 min-h-[44px] bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation">
-            <Link to="/study-centre/upskilling/fire-alarm-module-6">
+            <Link to="/upskilling/fire-alarm-course/module-6">
               Next Module
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

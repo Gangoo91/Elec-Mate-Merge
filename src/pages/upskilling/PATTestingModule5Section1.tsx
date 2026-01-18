@@ -356,7 +356,7 @@ const PATTestingModule5Section1 = () => {
         </section>
 
         <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-white/10">
-          <Link to="../../pat-testing/module-4/section-6" className="flex-1">
+          <Link to="/electrician/upskilling/pat-testing-module-4-section-6" className="flex-1">
             <Button variant="outline" className="w-full min-h-[48px] border-white/20 text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]">
               <ChevronLeft className="h-4 w-4" /> Previous: Interpreting Results
             </Button>

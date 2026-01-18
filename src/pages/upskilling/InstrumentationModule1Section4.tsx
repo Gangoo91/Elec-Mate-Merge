@@ -664,7 +664,7 @@ const InstrumentationModule1Section4 = () => {
             </Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="/study-centre/upskilling/instrumentation/module-2">
+            <Link to="/upskilling/instrumentation-module-2">
               Next Module
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

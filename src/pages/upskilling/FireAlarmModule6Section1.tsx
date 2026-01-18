@@ -587,7 +587,7 @@ const FireAlarmModule6Section1 = () => {
             </Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../fire-alarm-module-6-section-2">
+            <Link to="../section-2">
               Next Section
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

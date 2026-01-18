@@ -483,7 +483,7 @@ const SmartHomeModule6Section5 = () => {
                 className="bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
                 asChild
               >
-                <Link to="/study-centre/upskilling/smart-home-module-7">
+                <Link to="/electrician/upskilling/smart-home-module-7">
                   Continue to Module 7
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
@@ -493,7 +493,7 @@ const SmartHomeModule6Section5 = () => {
                 className="border-white/30 text-white hover:bg-white/10 touch-manipulation"
                 asChild
               >
-                <Link to="/study-centre/upskilling/smart-home">
+                <Link to="/electrician/upskilling/smart-home-course">
                   Back to Course Overview
                 </Link>
               </Button>
@@ -517,7 +517,7 @@ const SmartHomeModule6Section5 = () => {
             className="bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
             asChild
           >
-            <Link to="/study-centre/upskilling/smart-home-module-7">
+            <Link to="/electrician/upskilling/smart-home-module-7">
               Module 7: Installation
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

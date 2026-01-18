@@ -638,13 +638,13 @@ const InstrumentationModule6Section2 = () => {
 
         {/* Bottom Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-border">
-          <Link to="/study-centre/upskilling/instrumentation-module-6-section-1" className="w-full sm:w-auto">
+          <Link to="/upskilling/instrumentation-module-6-section-1" className="w-full sm:w-auto">
             <Button variant="outline" className="w-full h-11 touch-manipulation border-border hover:bg-card">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>
           </Link>
-          <Link to="/study-centre/upskilling/instrumentation-module-6-section-3" className="w-full sm:w-auto">
+          <Link to="/upskilling/instrumentation-module-6-section-3" className="w-full sm:w-auto">
             <Button className="w-full h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
               Next Section
             </Button>

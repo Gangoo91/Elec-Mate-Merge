@@ -645,7 +645,7 @@ const FireAlarmModule7Section4 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-white/5 text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
           >
-            <Link to="../fire-alarm-module-7-section-3">
+            <Link to="../section-3">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous Section
             </Link>
@@ -654,7 +654,7 @@ const FireAlarmModule7Section4 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
           >
-            <Link to="../fire-alarm-course/mock-exam">
+            <Link to="/upskilling/fire-alarm-course/mock-exam">
               Mock Exam
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

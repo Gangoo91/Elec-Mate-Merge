@@ -633,7 +633,7 @@ const FireAlarmModule7Section1 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
           >
-            <Link to="../fire-alarm-module-7-section-2">
+            <Link to="../section-2">
               Next Section
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

@@ -584,7 +584,7 @@ const InstrumentationModule7Section1 = () => {
           <div className="w-full sm:w-auto">
             {/* Empty div for spacing */}
           </div>
-          <Link to="/study-centre/upskilling/instrumentation-module-7-section-2" className="w-full sm:w-auto">
+          <Link to="/upskilling/instrumentation-module-7-section-2" className="w-full sm:w-auto">
             <Button className="w-full h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
               Next Section
             </Button>

@@ -599,7 +599,7 @@ const PATTestingModule5Section5 = () => {
               results effectively to different stakeholders.
             </p>
             <Button size="lg" className="bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
-              <Link to="../../pat-testing">
+              <Link to="/electrician/upskilling/pat-testing-course">
                 Return to Course Overview
               </Link>
             </Button>
@@ -623,7 +623,7 @@ const PATTestingModule5Section5 = () => {
             </Link>
           </Button>
           <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../../pat-testing">
+            <Link to="/electrician/upskilling/pat-testing-course">
               Course Overview
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

@@ -121,7 +121,7 @@ const InstrumentationModule8Section3 = () => {
       {/* Sticky Header */}
       <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-3">
-          <Link to="/study-centre/upskilling/instrumentation-module-8">
+          <Link to="/upskilling/instrumentation-module-8">
             <Button variant="ghost" size="sm" className="text-white hover:text-elec-yellow touch-manipulation active:scale-[0.98]">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Module 8
@@ -453,13 +453,13 @@ const InstrumentationModule8Section3 = () => {
 
         {/* Bottom Navigation */}
         <div className="flex justify-between items-center pt-8 border-t border-white/10">
-          <Link to="/study-centre/upskilling/instrumentation-module-8-section-2">
+          <Link to="/upskilling/instrumentation-module-8-section-2">
             <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Previous
             </Button>
           </Link>
-          <Link to="/study-centre/upskilling/instrumentation-module-8-section-4">
+          <Link to="/upskilling/instrumentation-module-8-section-4">
             <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/80 touch-manipulation active:scale-[0.98]">
               Next Section
               <ArrowRight className="ml-2 h-4 w-4" />

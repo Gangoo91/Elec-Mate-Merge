@@ -389,7 +389,7 @@ const SmartHomeModule2Section6 = () => {
             </Link>
           </Button>
           <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation" asChild>
-            <Link to="/study-centre/upskilling/smart-home-module-3">
+            <Link to="/electrician/upskilling/smart-home-module-3">
               Next Module
             </Link>
           </Button>
