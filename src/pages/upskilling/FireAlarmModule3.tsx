@@ -1,9 +1,7 @@
-import { ArrowLeft, MapPin, Clock, Target, CheckCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowLeft, MapPin, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
+import { SectionCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = "Module 3: System Design & Zone Planning - Fire Alarm Course";
@@ -16,158 +14,98 @@ const FireAlarmModule3 = () => {
     {
       id: 1,
       title: "Zone Design Principles",
-      description: "Zone layouts, floor areas, search distances and zone indication",
       icon: CheckCircle,
-      link: "section-1",
+      description: "Zone layouts, floor areas and search distances"
     },
     {
       id: 2,
       title: "Addressable vs Conventional",
-      description: "System architectures, loop design and device addressing",
       icon: CheckCircle,
-      link: "section-2",
+      description: "System architectures and loop design"
     },
     {
       id: 3,
       title: "Cause & Effect Programming",
-      description: "Input/output relationships, staged alarms and evacuation strategies",
       icon: CheckCircle,
-      link: "section-3",
+      description: "Input/output relationships and staged alarms"
     },
     {
       id: 4,
       title: "Interface Design",
-      description: "Integration with other systems, BMS, access control and lifts",
       icon: CheckCircle,
-      link: "section-4",
+      description: "Integration with BMS, access control and lifts"
     },
     {
       id: 5,
       title: "Network & Multi-Panel Systems",
-      description: "Networked panels, peer-to-peer communication and redundancy",
       icon: CheckCircle,
-      link: "section-5",
+      description: "Networked panels and redundancy"
     },
     {
       id: 6,
       title: "Design Documentation",
-      description: "Design specifications, drawings, schedules and risk assessments",
       icon: CheckCircle,
-      link: "section-6",
-    },
+      description: "Specifications, drawings and schedules"
+    }
   ];
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1 text-white min-h-[48px]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/fire-alarm-course">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Course</span>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Fire Alarm Course
             </Link>
           </Button>
-          <span className="flex-1 text-center text-[17px] font-semibold text-white">Module 3</span>
-          <div className="w-[60px]" />
         </div>
-      </header>
+      </div>
 
-      {/* Hero */}
-      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
-            <MapPin className="h-7 w-7 text-elec-yellow" />
+      <div className="px-4 sm:px-6 py-6 sm:py-8">
+        {/* Module Header */}
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
+            <span className="text-elec-yellow text-xs font-semibold">MODULE 3</span>
+            <span className="text-white/40 text-xs">•</span>
+            <span className="text-white/60 text-xs">{sections.length} Sections</span>
+            <span className="text-white/40 text-xs">•</span>
+            <span className="text-white/60 text-xs">3-4 hours</span>
           </div>
-          <span className="text-[11px] font-medium text-elec-yellow uppercase tracking-wide">
-            Module 3 of 7
-          </span>
+          <div className="flex items-center gap-3 mb-3">
+            <div className="p-3 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <MapPin className="h-7 w-7 text-elec-yellow" />
+            </div>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            System Design & Zone Planning
+          </h1>
+          <p className="text-white/60 text-sm sm:text-base">
+            Designing effective zone layouts, selecting system architectures and programming cause & effect relationships.
+          </p>
         </div>
-        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
-          System Design & Zone Planning
-        </h1>
-        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
-          Designing effective zone layouts, selecting system architectures and programming cause & effect relationships.
-        </p>
-        <div className="flex items-center gap-4 text-[13px] text-white/50">
-          <span className="flex items-center gap-1">
-            <Target className="h-4 w-4" />
-            {sections.length} sections
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            3-4 hours
-          </span>
-        </div>
-      </section>
 
-      {/* Sections Grid */}
-      <section className="px-4 pb-8 max-w-3xl mx-auto">
-        <div className="grid grid-cols-1 gap-3">
+        {/* Section Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {sections.map((section, index) => (
-            <motion.div
+            <SectionCard
               key={section.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-            >
-              <Link to={section.link} className="h-full block">
-                <Card
-                  className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/10 active:scale-[0.98] transition-all duration-300 cursor-pointer touch-manipulation h-full min-h-[200px]"
-                >
-                  {/* Accent line at top */}
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />
-
-                  {/* Hover glow */}
-                  <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl bg-elec-yellow/20 opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
-
-                  <CardContent className="relative text-center space-y-3 p-4">
-                    {/* Icon with gradient bg */}
-                    <div className="flex justify-center">
-                      <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/20 border border-white/10">
-                        <section.icon className="h-6 w-6 text-elec-yellow" strokeWidth={1.5} />
-                      </div>
-                    </div>
-
-                    {/* Section Badge */}
-                    <div className="flex justify-center">
-                      <Badge
-                        variant="secondary"
-                        className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 font-bold text-xs px-3 py-1"
-                      >
-                        Section {section.id}
-                      </Badge>
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="text-base font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors duration-300">
-                      {section.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-white/50 text-xs leading-relaxed line-clamp-2">
-                      {section.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
-            </motion.div>
+              to={`../fire-alarm-module-3-section-${section.id}`}
+              sectionNumber={section.id}
+              title={section.title}
+              description={section.description}
+              icon={section.icon}
+              index={index}
+            />
           ))}
         </div>
-      </section>
-
-      {/* Module Overview Card */}
-      <section className="px-4 pb-safe max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-elec-yellow/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[15px] font-semibold text-white/80">Module Overview</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-[13px] text-white/70">
-            <p>This module covers the design principles that determine how a fire alarm system is structured and programmed.</p>
-            <p>You'll learn to create effective zone layouts, choose between conventional and addressable systems, and design complex cause & effect relationships.</p>
-          </CardContent>
-        </Card>
-      </section>
+      </div>
     </div>
   );
 };

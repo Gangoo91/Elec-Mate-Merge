@@ -1,51 +1,45 @@
 import { ArrowLeft, Shield, Lock, Tag, Zap, Power, RotateCw } from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { SectionCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: "Section 1",
+    id: 1,
     title: 'Principles of Safe Isolation',
     description: 'Understand the fundamental principles and importance of safe isolation in electrical work.',
     icon: Shield,
-    href: 'section-1',
   },
   {
-    number: "Section 2",
+    id: 2,
     title: 'Isolation Equipment and PPE',
     description: 'Learn about the essential equipment and personal protective equipment required for safe isolation.',
     icon: Lock,
-    href: 'section-2',
   },
   {
-    number: "Section 3",
+    id: 3,
     title: 'Lock-Off/Tag-Out Procedures',
     description: 'Master the lock-off and tag-out procedures to ensure circuits remain isolated during work.',
     icon: Tag,
-    href: 'section-3',
   },
   {
-    number: "Section 4",
+    id: 4,
     title: 'Proving Dead Techniques',
     description: 'Learn the correct methods for proving that circuits are dead before commencing work.',
     icon: Zap,
-    href: 'section-4',
   },
   {
-    number: "Section 5",
+    id: 5,
     title: 'Working on Isolated Systems',
     description: 'Best practices and safety considerations when working on isolated electrical systems.',
     icon: Power,
-    href: 'section-5',
   },
   {
-    number: "Section 6",
+    id: 6,
     title: 'Re-energisation Procedures',
     description: 'Safe procedures for re-energising circuits after work has been completed.',
     icon: RotateCw,
-    href: 'section-6',
   },
 ];
 
@@ -59,7 +53,7 @@ export default function InspectionTestingModule2() {
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
             size="lg"
@@ -68,45 +62,41 @@ export default function InspectionTestingModule2() {
           >
             <Link to="/study-centre/upskilling/inspection-testing">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Course
+              Back to Inspection & Testing
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-3xl mx-auto">
-          {/* Hero Section */}
-          <header className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-              <Zap className="h-4 w-4" />
-              <span>Module 2</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-              Safe Isolation Procedures
-            </h1>
-            <p className="text-white/80 max-w-3xl mx-auto">
-              Master the critical procedures for safely isolating electrical circuits before carrying out any work.
-            </p>
-          </header>
+      <div className="px-4 sm:px-6 py-6 sm:py-8">
+        {/* Module Header */}
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
+            <span className="text-elec-yellow text-xs font-semibold">MODULE 2</span>
+            <span className="text-white/40 text-xs">•</span>
+            <span className="text-white/60 text-xs">6 Sections</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            Safe Isolation Procedures
+          </h1>
+          <p className="text-white/60 text-sm sm:text-base">
+            Master the critical procedures for safely isolating electrical circuits before carrying out any work
+          </p>
+        </div>
 
-          {/* Sections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Module Sections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {sections.map((section, index) => (
-                <ModuleCard
-                  key={index}
-                  number={section.number}
-                  title={section.title}
-                  description={section.description}
-                  icon={section.icon}
-                  href={section.href}
-                />
-              ))}
-            </div>
-          </section>
+        {/* Section Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {sections.map((section, index) => (
+            <SectionCard
+              key={section.id}
+              to={`../inspection-testing-module-2-section-${section.id}`}
+              sectionNumber={section.id}
+              title={section.title}
+              description={section.description}
+              icon={section.icon}
+              index={index}
+            />
+          ))}
         </div>
       </div>
     </div>

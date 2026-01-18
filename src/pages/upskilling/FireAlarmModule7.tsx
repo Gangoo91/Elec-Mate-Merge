@@ -1,9 +1,7 @@
-import { ArrowLeft, BookOpen, Clock, Target, CheckCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowLeft, BookOpen, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
+import { SectionCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = "Module 7: Regulatory Compliance & BS 5839 - Fire Alarm Course";
@@ -16,144 +14,86 @@ const FireAlarmModule7 = () => {
     {
       id: 1,
       title: "Fire Safety Legislation",
-      description: "Regulatory Reform Order 2005, fire safety duties and responsible persons",
       icon: CheckCircle,
-      link: "section-1",
+      description: "Regulatory Reform Order 2005 and fire safety duties"
     },
     {
       id: 2,
       title: "Building Regulations",
-      description: "Approved Document B, notification requirements and compliance routes",
       icon: CheckCircle,
-      link: "section-2",
+      description: "Approved Document B and compliance routes"
     },
     {
       id: 3,
       title: "BS 5839-1 Requirements",
-      description: "Non-domestic systems, categories, design and installation standards",
       icon: CheckCircle,
-      link: "section-3",
+      description: "Non-domestic systems and categories"
     },
     {
       id: 4,
       title: "BS 5839-6 Requirements",
-      description: "Domestic systems, grades, categories and LD classifications",
       icon: CheckCircle,
-      link: "section-4",
-    },
+      description: "Domestic systems, grades and LD classifications"
+    }
   ];
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1 text-white min-h-[48px]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
             <Link to="/study-centre/upskilling/fire-alarm-course">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Course</span>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Fire Alarm Course
             </Link>
           </Button>
-          <span className="flex-1 text-center text-[17px] font-semibold text-white">Module 7</span>
-          <div className="w-[60px]" />
         </div>
-      </header>
+      </div>
 
-      {/* Hero */}
-      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
-            <BookOpen className="h-7 w-7 text-elec-yellow" />
+      <div className="px-4 sm:px-6 py-6 sm:py-8">
+        {/* Module Header */}
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
+            <span className="text-elec-yellow text-xs font-semibold">MODULE 7</span>
+            <span className="text-white/40 text-xs">•</span>
+            <span className="text-white/60 text-xs">{sections.length} Sections</span>
+            <span className="text-white/40 text-xs">•</span>
+            <span className="text-white/60 text-xs">2-3 hours</span>
           </div>
-          <span className="text-[11px] font-medium text-elec-yellow uppercase tracking-wide">
-            Module 7 of 7
-          </span>
+          <div className="flex items-center gap-3 mb-3">
+            <div className="p-3 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <BookOpen className="h-7 w-7 text-elec-yellow" />
+            </div>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            Regulatory Compliance & BS 5839
+          </h1>
+          <p className="text-white/60 text-sm sm:text-base">
+            Understanding the legal framework, standards and regulations governing fire alarm systems in the UK.
+          </p>
         </div>
-        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
-          Regulatory Compliance & BS 5839
-        </h1>
-        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
-          Understanding the legal framework, standards and regulations governing fire alarm systems in the UK.
-        </p>
-        <div className="flex items-center gap-4 text-[13px] text-white/50">
-          <span className="flex items-center gap-1">
-            <Target className="h-4 w-4" />
-            {sections.length} sections
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            2-3 hours
-          </span>
-        </div>
-      </section>
 
-      {/* Sections Grid */}
-      <section className="px-4 pb-8 max-w-3xl mx-auto">
-        <div className="grid grid-cols-1 gap-3">
+        {/* Section Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {sections.map((section, index) => (
-            <motion.div
+            <SectionCard
               key={section.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-            >
-              <Link to={section.link} className="h-full block">
-                <Card
-                  className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/10 active:scale-[0.98] transition-all duration-300 cursor-pointer touch-manipulation h-full min-h-[200px]"
-                >
-                  {/* Accent line at top */}
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />
-
-                  {/* Hover glow */}
-                  <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl bg-elec-yellow/20 opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
-
-                  <CardContent className="relative text-center space-y-3 p-4">
-                    {/* Icon with gradient bg */}
-                    <div className="flex justify-center">
-                      <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/20 border border-white/10">
-                        <section.icon className="h-6 w-6 text-elec-yellow" strokeWidth={1.5} />
-                      </div>
-                    </div>
-
-                    {/* Section Badge */}
-                    <div className="flex justify-center">
-                      <Badge
-                        variant="secondary"
-                        className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 font-bold text-xs px-3 py-1"
-                      >
-                        Section {section.id}
-                      </Badge>
-                    </div>
-
-                    {/* Title */}
-                    <h3 className="text-base font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors duration-300">
-                      {section.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-white/50 text-xs leading-relaxed line-clamp-2">
-                      {section.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
-            </motion.div>
+              to={`../fire-alarm-module-7-section-${section.id}`}
+              sectionNumber={section.id}
+              title={section.title}
+              description={section.description}
+              icon={section.icon}
+              index={index}
+            />
           ))}
         </div>
-      </section>
-
-      {/* Module Overview Card */}
-      <section className="px-4 pb-safe max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-elec-yellow/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[15px] font-semibold text-white/80">Module Overview</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-[13px] text-white/70">
-            <p>This module covers the regulatory and standards framework that governs fire alarm system design, installation and maintenance.</p>
-            <p>You'll understand your legal obligations under fire safety legislation and how to ensure compliance with BS 5839 requirements.</p>
-          </CardContent>
-        </Card>
-      </section>
+      </div>
     </div>
   );
 };

@@ -1,504 +1,464 @@
-import { ArrowLeft, ArrowRight, AlertTriangle, Activity, CheckCircle2, Book, Brain, Zap, TrendingUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import InstrumentationQuiz from '@/components/upskilling/quiz/InstrumentationQuiz';
+import { ArrowLeft, Activity, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
+
+const TITLE = "Symptoms of Sensor, Loop, or Signal Failure - Instrumentation Course";
+const DESCRIPTION = "Learn to identify and distinguish between sensor failures, loop faults, and signal processing problems in instrumentation systems.";
+
+const quickCheckQuestions = [
+  {
+    id: "m8s2-qc1",
+    question: "What does a 4-20mA signal reading of less than 4mA typically indicate?",
+    options: ["Normal minimum reading", "Sensor saturation", "Open circuit or wiring fault", "Maximum process value"],
+    correctIndex: 2,
+    explanation: "A reading below 4mA indicates a loop fault such as an open circuit, broken wire, or power supply failure - not a process measurement issue."
+  },
+  {
+    id: "m8s2-qc2",
+    question: "What symptom suggests sensor drift rather than sudden failure?",
+    options: ["Signal drops to zero", "Gradual change in readings over time that doesn't match process changes", "Signal stuck at 20mA", "Intermittent dropouts"],
+    correctIndex: 1,
+    explanation: "Drift appears as gradual change in readings over time that doesn't correlate with actual process changes. It often develops slowly and may not trigger alarms."
+  },
+  {
+    id: "m8s2-qc3",
+    question: "How can you distinguish between a sensor fault and a wiring fault?",
+    options: ["Check the cable colour", "Substitute a calibrator for the sensor and check if receiver responds correctly", "Measure the ambient temperature", "Check the equipment serial number"],
+    correctIndex: 1,
+    explanation: "By substituting a calibrator for the sensor, you can inject a known signal. If the receiver responds correctly, the wiring is good and the sensor is faulty."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "A signal stuck at 4mA usually means:",
+    options: ["Maximum process reading", "Open circuit, power supply failure, or sensor at minimum range", "Signal is normal", "Wiring short circuit"],
+    correctAnswer: 1,
+    explanation: "A signal stuck at 4mA can indicate the sensor is at minimum range (normal), or there's a power supply failure, open circuit, or the transmitter has failed to its low output state."
+  },
+  {
+    id: 2,
+    question: "How would you identify signal drift?",
+    options: ["Sudden change in reading", "Compare current reading to known reference values or check calibration history for gradual deviation", "Signal oscillating rapidly", "No change at all"],
+    correctAnswer: 1,
+    explanation: "Signal drift is identified by comparing current readings to known reference values, checking calibration history for gradual deviation, or noting that readings don't match verified process conditions."
+  },
+  {
+    id: 3,
+    question: "What's a common cause of erratic or noisy signals?",
+    options: ["Perfect installation", "Electrical interference (EMI), loose connections, or ground loops", "Correct cable routing", "Proper shielding"],
+    correctAnswer: 1,
+    explanation: "Erratic or noisy signals are commonly caused by EMI from motors or VFDs, loose connections that make intermittent contact, ground loops, or damaged cable shielding."
+  },
+  {
+    id: 4,
+    question: "What might cause a signal to be stuck at exactly 20mA?",
+    options: ["Open circuit", "Sensor output saturation at maximum, short circuit across sensor, or receiver fault", "Normal operation", "Power supply off"],
+    correctAnswer: 1,
+    explanation: "A signal stuck at 20mA can indicate the sensor is at maximum range (normal if process is at max), sensor saturation beyond range, short circuit across the transmitter, or receiver input fault."
+  },
+  {
+    id: 5,
+    question: "Why might readings differ between transmitter and control room?",
+    options: ["They should always match exactly", "Voltage drop in long cables, scaling differences, or A/D converter issues at the receiver", "Different time zones", "Cable colour mismatch"],
+    correctAnswer: 1,
+    explanation: "Differences between transmitter and control room readings can result from voltage drop in long cable runs, incorrect scaling configuration, A/D converter calibration issues, or input card problems."
+  },
+  {
+    id: 6,
+    question: "What does a signal below 3.6mA typically indicate in NAMUR convention?",
+    options: ["Normal minimum reading", "Transmitter fault or cable break (downscale fault indication)", "Maximum process value", "Calibration required"],
+    correctAnswer: 1,
+    explanation: "NAMUR NE43 convention uses below 3.6mA as a downscale fault indication, signalling transmitter failure or cable break. This distinguishes faults from valid minimum readings."
+  },
+  {
+    id: 7,
+    question: "What causes signal oscillation or hunting?",
+    options: ["Correct installation", "Control loop instability, process instability, or intermittent connection", "Proper tuning", "Good shielding"],
+    correctAnswer: 1,
+    explanation: "Signal oscillation can result from control loop tuning problems, actual process instability, or electrical issues like intermittent connections that cause the signal to vary."
+  },
+  {
+    id: 8,
+    question: "How can you test if a fault is in the sensor or the loop?",
+    options: ["Replace both at once", "Use a calibrator to simulate the sensor signal and check if the loop responds correctly", "Check the cable colour", "Measure the cable length"],
+    correctAnswer: 1,
+    explanation: "By disconnecting the sensor and connecting a calibrator to simulate known signals, you can verify if the loop (wiring and receiver) responds correctly, isolating the sensor."
+  },
+  {
+    id: 9,
+    question: "What's the significance of a signal reading negative current?",
+    options: ["Normal operation", "Reversed polarity, faulty transmitter, or measurement error", "Maximum reading", "Correct installation"],
+    correctAnswer: 1,
+    explanation: "Negative current indicates reversed polarity (transmitter connected backwards), a failed transmitter outputting reverse current, or a measurement error in the test equipment."
+  },
+  {
+    id: 10,
+    question: "Why is trend data valuable for fault diagnosis?",
+    options: ["It looks good in reports", "Shows historical patterns, drift development, and correlation with events", "It's required by law", "It increases storage costs"],
+    correctAnswer: 1,
+    explanation: "Trend data reveals patterns like gradual drift, intermittent faults, correlation with process events, time-of-day variations, and helps distinguish between sudden failures and developing problems."
+  }
+];
+
+const faqs = [
+  {
+    question: "How do I know if drift is in the sensor or the receiver?",
+    answer: "Measure the actual current in the loop with a calibrated meter. If the current is correct but the displayed value is wrong, the receiver or scaling is drifting. If the current is wrong, the sensor is drifting."
+  },
+  {
+    question: "What's the difference between noise and signal instability?",
+    answer: "Noise is typically high-frequency interference superimposed on the signal. Instability is lower-frequency variation often related to the process or control loop tuning. Noise can be filtered; instability requires process or tuning changes."
+  },
+  {
+    question: "Can a partially blocked impulse line cause symptoms?",
+    answer: "Yes. Partial blockage causes sluggish response, delayed readings, and can create oscillation as pressure equalises slowly. Complete blockage causes the reading to freeze at the last value."
+  },
+  {
+    question: "Why does my temperature reading spike when the plant shuts down?",
+    answer: "Loss of cooling or process flow can cause actual temperature spikes. Alternatively, electrical noise from shutdown sequences can affect sensitive inputs. Check if multiple readings are affected."
+  },
+  {
+    question: "How can vibration cause signal problems?",
+    answer: "Vibration can loosen connections causing intermittent contact, damage sensor elements, create mechanical resonance in pressure sensing elements, and cause premature fatigue failure of cables and components."
+  },
+  {
+    question: "What causes a transmitter to fail to its designed fail-safe state?",
+    answer: "Transmitters are designed to fail to a known state (high or low) when they detect internal faults. Power supply problems, internal component failure, or sensor element failure trigger this safety function."
+  }
+];
 
 const InstrumentationModule8Section2 = () => {
+  useSEO({
+    title: TITLE,
+    description: DESCRIPTION
+  });
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-4 md:px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/instrumentation-module-8">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 8
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-8">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Activity className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-4xl font-bold text-white">
-                  Symptoms of Sensor, Loop, or Signal Failure
-                </h1>
-                <p className="text-xl text-gray-400">
-                  Module 8, Section 2
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Section 8.2
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                25 minutes
-              </Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Book className="h-5 w-5 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Instrumentation failures often show up as signals that are incorrect, inconsistent, 
-                or missing altogether. This section breaks down how to recognise and interpret these 
-                symptoms, linking observable behaviours to their likely root causes.
-              </p>
-              <p>
-                Understanding signal symptoms enables rapid diagnosis and prevents unnecessary downtime. 
-                Each type of failure produces characteristic patterns that, when properly interpreted, 
-                point directly to the underlying problem and guide effective repair strategies.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Identify common symptoms of signal failure and their characteristics</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Link symptoms to their likely root causes for efficient diagnosis</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Learn what values (or lack thereof) suggest different issues</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* Content - Signal Failure Types */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
-                Common Signal Failure Symptoms
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Symptom Analysis and Root Causes</h4>
-              
-              <div className="space-y-4">
-                <div className="bg-red-900/20 p-4 rounded border border-red-600/30">
-                  <h5 className="text-red-400 font-semibold mb-2">Dead Signal (0mA): Open Circuit or No Power</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Symptoms</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Current reading shows 0.00mA consistently</li>
-                        <li>• Receiver displays minimum scale or fault condition</li>
-                        <li>• No response to process changes</li>
-                        <li>• Power supply shows high voltage, minimal current</li>
-                        <li>• Loop resistance appears infinite</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Probable Causes</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Power Supply Failure:</strong> No 24V supply voltage</li>
-                        <li>• <strong>Open Circuit:</strong> Broken wire or connection</li>
-                        <li>• <strong>Transmitter Failure:</strong> Internal electronics failed</li>
-                        <li>• <strong>Fuse Blown:</strong> Protection device operated</li>
-                        <li>• <strong>Terminal Disconnection:</strong> Loose or corroded connection</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-yellow-900/20 p-4 rounded border border-yellow-600/30">
-                  <h5 className="text-yellow-400 font-semibold mb-2">Fixed 4mA: Healthy Loop, Faulty Sensor</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Symptoms</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Signal locked at exactly 4.00mA</li>
-                        <li>• No response to process variable changes</li>
-                        <li>• Power supply and wiring test normal</li>
-                        <li>• Loop resistance within expected range</li>
-                        <li>• Communication may still function (HART/digital)</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Probable Causes</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Sensor Element Failure:</strong> Primary element damaged</li>
-                        <li>• <strong>Transmitter Electronics:</strong> A/D converter failure</li>
-                        <li>• <strong>Calibration Lost:</strong> Internal reference drift</li>
-                        <li>• <strong>Configuration Error:</strong> Wrong range or units</li>
-                        <li>• <strong>Process Connection:</strong> Blocked impulse lines</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-orange-900/20 p-4 rounded border border-orange-600/30">
-                  <h5 className="text-orange-400 font-semibold mb-2">Erratic Signals: Noise, Grounding Issues, Moisture</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Symptoms</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Signal fluctuates rapidly and unpredictably</li>
-                        <li>• Random spikes or dropouts in reading</li>
-                        <li>• High frequency noise superimposed on signal</li>
-                        <li>• Pattern may correlate with nearby equipment</li>
-                        <li>• Worse during specific weather conditions</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Probable Causes</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>EMI/RFI Interference:</strong> Nearby electrical equipment</li>
-                        <li>• <strong>Ground Loops:</strong> Multiple earth paths</li>
-                        <li>• <strong>Poor Shielding:</strong> Damaged or incorrect cable shield</li>
-                        <li>• <strong>Moisture Ingress:</strong> Water in junction boxes</li>
-                        <li>• <strong>Vibration:</strong> Mechanical stress on connections</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-blue-900/20 p-4 rounded border border-blue-600/30">
-                  <h5 className="text-yellow-400 font-semibold mb-2">Signal Drift: Aging or Overheating Sensor</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Symptoms</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Gradual change in signal over time</li>
-                        <li>• Reading offset from known reference</li>
-                        <li>• Drift rate may accelerate over time</li>
-                        <li>• Temperature-dependent behaviour</li>
-                        <li>• Similar instruments show different readings</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Probable Causes</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Component Aging:</strong> Electronic component degradation</li>
-                        <li>• <strong>Temperature Effects:</strong> Thermal stress on sensor</li>
-                        <li>• <strong>Calibration Drift:</strong> Reference standards changing</li>
-                        <li>• <strong>Process Fouling:</strong> Material buildup on sensor</li>
-                        <li>• <strong>Mechanical Wear:</strong> Moving parts degradation</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="bg-purple-900/20 p-4 rounded border border-purple-600/30">
-                  <h5 className="text-purple-400 font-semibold mb-2">Intermittent Faults: Connector or Mechanical Issue</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Symptoms</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Signal appears and disappears unpredictably</li>
-                        <li>• Fault may correlate with vibration or movement</li>
-                        <li>• Environmental conditions affect reliability</li>
-                        <li>• Difficult to reproduce during testing</li>
-                        <li>• May work perfectly for extended periods</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Probable Causes</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Loose Connections:</strong> Terminal screws not tight</li>
-                        <li>• <strong>Corroded Contacts:</strong> Oxidation creating resistance</li>
-                        <li>• <strong>Cable Flexing:</strong> Wire fatigue in moving applications</li>
-                        <li>• <strong>Thermal Cycling:</strong> Expansion/contraction effects</li>
-                        <li>• <strong>Vibration Damage:</strong> Mechanical stress on joints</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* EMI Effects */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 text-yellow-400" />
-                Electromagnetic Interference (EMI) Effects
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">How EMI Affects Sensor Outputs</h4>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-card p-3 rounded border border-gray-600">
-                  <h5 className="text-white font-semibold mb-2">Common EMI Sources</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Variable Frequency Drives (VFDs):</strong> High-frequency switching</li>
-                    <li>• <strong>Welding Equipment:</strong> High current transients</li>
-                    <li>• <strong>Radio Transmitters:</strong> High-power RF fields</li>
-                    <li>• <strong>Motor Starters:</strong> Contact arcing and switching</li>
-                    <li>• <strong>Power Lines:</strong> 50/60Hz and harmonics</li>
-                  </ul>
-                </div>
-                
-                <div className="bg-card p-3 rounded border border-gray-600">
-                  <h5 className="text-white font-semibold mb-2">EMI Symptoms in Signals</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Noise Spikes:</strong> Sharp peaks in signal</li>
-                    <li>• <strong>AC Coupling:</strong> Sinusoidal variations</li>
-                    <li>• <strong>Signal Offset:</strong> DC bias changes</li>
-                    <li>• <strong>Loss of Resolution:</strong> Reduced measurement precision</li>
-                    <li>• <strong>False Alarms:</strong> Spurious high/low signals</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="bg-card p-3 rounded border border-gray-600">
-                <h5 className="text-white font-semibold mb-2">EMI Diagnosis Techniques</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• <strong>Correlation Testing:</strong> Check if interference correlates with nearby equipment operation</li>
-                  <li>• <strong>Shield Effectiveness:</strong> Test signal quality with and without cable shielding</li>
-                  <li>• <strong>Frequency Analysis:</strong> Use spectrum analyser to identify interference frequencies</li>
-                  <li>• <strong>Isolation Testing:</strong> Temporarily relocate or power down suspected sources</li>
-                  <li>• <strong>Time Domain:</strong> Capture interference patterns using oscilloscope</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Diagnostic Guide */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-yellow-400" />
-                Signal Symptom Diagnostic Guide
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Quick Reference for Signal Interpretation</h4>
-              
-              <div className="bg-card p-4 rounded border border-gray-600">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h5 className="text-white font-semibold mb-3">Signal Value Analysis</h5>
-                    <div className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-red-400">0.00mA</span>
-                        <span className="text-sm">→ Open circuit/no power</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-yellow-400">4.00mA (fixed)</span>
-                        <span className="text-sm">→ Sensor failure</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-orange-400">4-20mA (noisy)</span>
-                        <span className="text-sm">→ EMI/grounding</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-yellow-400">Drifting slowly</span>
-                        <span className="text-sm">→ Component aging</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-purple-400">On/off randomly</span>
-                        <span className="text-sm">→ Loose connection</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-3">First Test Actions</h5>
-                    <div className="space-y-2">
-                      <div className="text-sm">
-                        <span className="text-red-400">0mA:</span> Check power, then continuity
-                      </div>
-                      <div className="text-sm">
-                        <span className="text-yellow-400">Fixed 4mA:</span> Calibrate or replace sensor
-                      </div>
-                      <div className="text-sm">
-                        <span className="text-orange-400">Noisy:</span> Check shielding and earthing
-                      </div>
-                      <div className="text-sm">
-                        <span className="text-yellow-400">Drifting:</span> Check calibration and temperature
-                      </div>
-                      <div className="text-sm">
-                        <span className="text-purple-400">Intermittent:</span> Check all connections
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Scenario */}
-          <Card className="bg-gradient-to-r from-elec-gray to-elec-dark border-yellow-400/30">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Brain className="h-5 w-5 text-yellow-400" />
-                Real World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p className="font-semibold text-yellow-400">
-                Tank Level Signal Showing Sudden Jumps
-              </p>
-              <p>
-                A tank level signal shows sudden jumps every few hours, making process control 
-                difficult. The pattern suggests electromagnetic interference, leading to a 
-                systematic investigation of potential sources.
-              </p>
-              <div className="bg-card p-3 rounded border border-gray-600">
-                <h5 className="text-yellow-400 font-semibold text-sm mb-2">Symptom Analysis:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Signal jumps 2-3mA suddenly then returns to normal</li>
-                  <li>• Occurs every 2-4 hours with no process correlation</li>
-                  <li>• Other nearby instruments unaffected</li>
-                  <li>• Jumps always upward, never downward</li>
-                  <li>• Duration of each spike approximately 5-10 seconds</li>
-                </ul>
-              </div>
-              <div className="bg-yellow-900/20 p-3 rounded border border-yellow-600/30">
-                <h5 className="text-yellow-400 font-semibold text-sm mb-2">Investigation Process:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Correlated timing with nearby equipment schedules</li>
-                  <li>• Discovered large pump motor starts matched spike timing</li>
-                  <li>• Found loose shield connection on transmitter cable</li>
-                  <li>• EMI from motor starter coupling into unshielded portion</li>
-                </ul>
-              </div>
-              <div className="bg-green-900/20 p-3 rounded border border-green-600/30">
-                <h5 className="text-green-400 font-semibold text-sm mb-2">Resolution:</h5>
-                <p className="text-sm">
-                  Eventually traced to a loose shield on the loop cable picking up EMI from a 
-                  nearby pump motor starter. Repairing the shield connection eliminated the 
-                  interference, demonstrating how symptom analysis guides effective diagnosis.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p>
-                Symptoms often tell the full story. Learn to interpret them properly and trace 
-                faults quickly. Understanding characteristic signal patterns for different failure 
-                modes enables rapid diagnosis and prevents unnecessary component replacement, 
-                reducing downtime and maintenance costs.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <InstrumentationQuiz 
-            questions={[
-              {
-                id: 1,
-                question: "What might a flat 0mA signal indicate?",
-                options: [
-                  "Normal operation at minimum scale",
-                  "Open circuit or power supply failure preventing current flow",
-                  "Sensor reading exactly zero",
-                  "Calibration is perfect"
-                ],
-                correctAnswer: 1,
-                explanation: "A 0mA signal indicates no current flow, typically caused by open circuits, power supply failure, blown fuses, or broken connections."
-              },
-              {
-                id: 2,
-                question: "What does signal drift usually suggest?",
-                options: [
-                  "Perfect calibration",
-                  "Component aging, temperature effects, or calibration degradation over time",
-                  "Intermittent connection",
-                  "EMI interference"
-                ],
-                correctAnswer: 1,
-                explanation: "Signal drift indicates gradual changes over time, typically caused by component aging, temperature effects, calibration degradation, or process fouling."
-              },
-              {
-                id: 3,
-                question: "How can EMI affect sensor outputs?",
-                options: [
-                  "It improves signal quality",
-                  "It causes noise spikes, signal offset, AC coupling, and false alarms",
-                  "It has no effect on sensors",
-                  "It only affects digital signals"
-                ],
-                correctAnswer: 1,
-                explanation: "EMI creates various signal disturbances including noise spikes, sinusoidal variations, DC bias changes, and can trigger false alarms in measurement systems."
-              },
-              {
-                id: 4,
-                question: "What's a likely cause of intermittent failure?",
-                options: [
-                  "Perfect wiring",
-                  "Loose connections, corroded contacts, cable flexing, or vibration damage",
-                  "Stable power supply",
-                  "Good calibration"
-                ],
-                correctAnswer: 1,
-                explanation: "Intermittent failures are typically caused by mechanical issues like loose connections, corroded contacts, cable fatigue, thermal cycling, or vibration damage."
-              },
-              {
-                id: 5,
-                question: "What does a stable 4mA with no response to change suggest?",
-                options: [
-                  "Perfect operation",
-                  "Power supply failure",
-                  "Sensor element failure or transmitter electronics fault with healthy loop wiring",
-                  "Open circuit"
-                ],
-                correctAnswer: 2,
-                explanation: "A fixed 4mA signal indicates the loop wiring and power are healthy, but the sensor element or transmitter electronics have failed, preventing response to process changes."
-            }
-            ]}
-            title="Section 2 Knowledge Check"
-          />
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Link to="/study-centre/upskilling/instrumentation-module-8-section-1">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/study-centre/upskilling/instrumentation-module-8-section-3">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 touch-manipulation active:scale-[0.98]">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Activity className="h-4 w-4" />
+            <span>Module 8 Section 2</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Symptoms of Sensor, Loop, or Signal Failure
+          </h1>
+          <p className="text-white/80">
+            Recognising and distinguishing different failure modes
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Below 4mA:</strong> Open circuit or power failure</li>
+              <li><strong>Stuck at 4mA:</strong> Minimum range or transmitter fault</li>
+              <li><strong>Stuck at 20mA:</strong> Maximum range or saturation</li>
+              <li><strong>Erratic Signal:</strong> EMI, loose connections, ground loops</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Below 3.6mA = NAMUR fault indication</li>
+              <li><strong>Use:</strong> Calibrator substitution isolates sensor vs loop faults</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Identify sensor failure symptoms",
+              "Recognise loop and wiring fault indicators",
+              "Distinguish signal processing problems",
+              "Interpret trend data for fault diagnosis",
+              "Use substitution testing to isolate faults",
+              "Understand NAMUR fault indication standards"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 01 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Signal Level Indicators
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              The current level in a 4-20mA loop provides immediate diagnostic information.
+              Understanding what different signal levels indicate helps quickly categorise
+              faults and direct troubleshooting efforts.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Below 4mA (Less than 3.6mA):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Open Circuit:</strong> Broken wire, loose connection, failed termination</li>
+                <li><strong>Power Failure:</strong> Loop power supply off or failed</li>
+                <li><strong>Transmitter Fault:</strong> Internal failure, no output</li>
+                <li><strong>NAMUR Indication:</strong> Below 3.6mA signals fault condition</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Stuck at 4mA:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Minimum Range:</strong> Process at lowest measurement point (normal)</li>
+                <li><strong>Transmitter Fail-Low:</strong> Internal fault defaulting to minimum</li>
+                <li><strong>Sensor Element Open:</strong> RTD or thermocouple break</li>
+                <li><strong>Blocked Process Connection:</strong> Impulse line blocked</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Stuck at 20mA:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Maximum Range:</strong> Process at highest measurement point (normal)</li>
+                <li><strong>Sensor Saturation:</strong> Process beyond measurement range</li>
+                <li><strong>Transmitter Fail-High:</strong> Internal fault defaulting to maximum</li>
+                <li><strong>Short Circuit:</strong> Signal wires shorted at transmitter</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 02 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Drift and Gradual Degradation
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Unlike sudden failures, drift develops gradually over time. The reading slowly
+              deviates from the true value, often without triggering alarms. Identifying drift
+              requires comparison to known references or calibration history.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Common Drift Causes:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Sensor Ageing:</strong> Gradual degradation of sensing element</li>
+                <li><strong>Environmental Effects:</strong> Temperature changes affecting electronics</li>
+                <li><strong>Process Buildup:</strong> Coating or fouling on sensor element</li>
+                <li><strong>Cable Degradation:</strong> Insulation breakdown causing leakage</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Detection Methods:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Reference Comparison:</strong> Compare to known reference or redundant sensor</li>
+                <li><strong>Calibration History:</strong> Track as-found values over time</li>
+                <li><strong>Process Correlation:</strong> Compare to laboratory analysis or other measurements</li>
+                <li><strong>Trend Analysis:</strong> Review long-term trend data for gradual changes</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 03 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Noise and Erratic Signals
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Erratic or noisy signals indicate problems with signal integrity rather than
+              measurement accuracy. These symptoms typically point to wiring issues, EMI,
+              or grounding problems rather than sensor failure.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Noise Characteristics:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>50/60Hz Pattern:</strong> Mains frequency interference - ground loop or EMI</li>
+                <li><strong>Random Spikes:</strong> Loose connections, intermittent contact</li>
+                <li><strong>High Frequency:</strong> VFD or motor drive interference</li>
+                <li><strong>Cyclic Pattern:</strong> Process-related or mechanical vibration</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Diagnostic Steps:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Check Shield:</strong> Verify continuous shield with single-point earth</li>
+                <li><strong>Inspect Connections:</strong> Look for loose, corroded, or damaged terminals</li>
+                <li><strong>Cable Routing:</strong> Check separation from power cables</li>
+                <li><strong>Ground Loop:</strong> Test for multiple earth connections</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 04 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Isolating Fault Location
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Determining whether a fault is in the sensor, wiring, or receiver requires
+              systematic substitution testing. By injecting known signals at different
+              points, you can isolate the faulty section.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Substitution Testing:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Step 1:</strong> Disconnect sensor and connect calibrator to loop</li>
+                <li><strong>Step 2:</strong> Inject known current (e.g., 12mA for 50%)</li>
+                <li><strong>Step 3:</strong> Check receiver displays correct value</li>
+                <li><strong>Step 4:</strong> If receiver correct, fault is in sensor</li>
+                <li><strong>Step 5:</strong> If receiver incorrect, fault is in loop or receiver</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Interpreting Results:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Receiver responds correctly:</strong> Sensor or sensor wiring fault</li>
+                <li><strong>Receiver shows no change:</strong> Loop wiring open circuit</li>
+                <li><strong>Receiver shows wrong value:</strong> Scaling error or receiver fault</li>
+                <li><strong>Receiver shows noise:</strong> Wiring interference or ground loop</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Real World Example */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4">Real World Example</h2>
+          <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+            <h3 className="text-sm font-medium text-elec-yellow mb-2">Flow Transmitter Reading Low</h3>
+            <p className="text-sm text-white mb-3">
+              A flow transmitter consistently reads 10% lower than expected. Operations suspect
+              sensor drift, but systematic diagnosis reveals a different cause.
+            </p>
+            <div className="text-sm text-white space-y-2">
+              <p><strong>Symptom:</strong> Flow reading consistently low compared to laboratory samples and material balance calculations. No alarms, signal appears stable.</p>
+              <p><strong>Calibrator Test:</strong> Inject 12mA at transmitter terminals. DCS shows 48.5% instead of expected 50%. Indicates receiver or scaling issue, not transmitter.</p>
+              <p><strong>Investigation:</strong> Check input card scaling configuration. Discover engineering unit range was changed from 0-1000 to 0-1100 during a software update but transmitter range wasn't updated.</p>
+              <p><strong>Resolution:</strong> Correct scaling to match transmitter 4-20mA range. Verify reading accuracy with calibrator injection. Document configuration change procedure to prevent recurrence.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Quick Symptom Guide</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Signal below 4mA = Loop problem (open circuit, power)</li>
+                <li>Signal stuck at one value = Sensor or process fault</li>
+                <li>Erratic signal = EMI, connections, or ground loops</li>
+                <li>Gradual change = Drift, fouling, or degradation</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">First Response Steps</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Check if problem is isolated to one loop or multiple</li>
+                <li>Review recent changes and maintenance activities</li>
+                <li>Compare to redundant sensors if available</li>
+                <li>Check alarm history and trend data</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Assuming sensor fault</strong> - always verify before replacing</li>
+                <li><strong>Ignoring gradual drift</strong> - small errors compound over time</li>
+                <li><strong>Not checking scaling</strong> - configuration errors are common</li>
+                <li><strong>Overlooking recent changes</strong> - often the cause of new faults</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-3">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

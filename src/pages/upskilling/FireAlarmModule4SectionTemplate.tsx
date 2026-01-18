@@ -1,14 +1,9 @@
-import { useEffect, useMemo } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { ArrowLeft, CheckCircle, ChevronDown, ChevronUp, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { AccentPanel } from '@/components/upskilling/design/AccentPanel';
 import type { QuizQuestion } from '@/types/quiz';
-
-// Placeholder for the shared quiz component exists in project
 
 const FireAlarmModule4SectionTemplate = ({
   icon: Icon,
@@ -35,9 +30,10 @@ const FireAlarmModule4SectionTemplate = ({
   prev?: string;
   next?: string;
 }) => {
-  // SEO per section
+  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
+
   useEffect(() => {
-    document.title = `${title} | Fire Alarm Module 4 ${sectionNumber}`;
+    document.title = `${title} | Fire Alarm Module 4 Section ${sectionNumber} | Elec-Mate`;
     const desc = description;
     let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
     if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta); }
@@ -47,121 +43,195 @@ const FireAlarmModule4SectionTemplate = ({
     if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
     if (canonical) canonical.href = window.location.href;
 
-    const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: title, description: desc, about: [title, 'BS 5839-1'], author: { '@type': 'Organization', name: 'Training Module' } };
+    const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: title, description: desc, about: [title, 'BS 5839-1'], author: { '@type': 'Organization', name: 'Elec-Mate' } };
     const script = document.createElement('script'); script.type = 'application/ld+json'; script.text = JSON.stringify(ld); document.head.appendChild(script);
     return () => { if (script && script.parentNode) script.parentNode.removeChild(script); };
   }, [title, description, sectionNumber]);
 
   const sequentialQuestions = useMemo(() => quiz.map(q => ({ id: q.id, question: q.question, options: q.options, correct: q.correctAnswer, explanation: q.explanation })), [quiz]);
 
-  return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/fire-alarm-module-4">
-          <Button variant="ghost" className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 4
-          </Button>
-        </Link>
+  const faqs = [
+    { q: `What are the key requirements covered in ${title}?`, a: intro },
+    { q: 'How does this relate to BS 5839-1?', a: 'All fire alarm system design and installation in the UK must comply with BS 5839-1. This section covers specific requirements that support compliant installations.' },
+    { q: 'What documentation is required?', a: 'Full design documentation, commissioning records, and handover certificates are required. Keep records for maintenance and future modifications.' },
+  ];
 
-        <div className="space-y-6 max-w-5xl mx-auto">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <Icon className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-3xl font-bold text-white">{title}</h1>
-                <p className="text-lg text-gray-400">{description}</p>
-              </div>
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="px-4 sm:px-6 py-6 sm:py-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Title Header - Centered */}
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-4">
+              <Zap className="w-4 h-4 text-elec-yellow" />
+              <span className="text-elec-yellow text-sm font-medium">Module 4 • Section {sectionNumber}</span>
             </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">Section {sectionNumber}</Badge>
-              {badges.map((b) => (
-                <Badge key={b} variant="outline" className="border-gray-600 text-gray-300">{b}</Badge>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+              {title}
+            </h1>
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
+              {description}
+            </p>
+          </div>
+
+          {/* Quick Summary Boxes */}
+          <div className="grid sm:grid-cols-2 gap-4 mb-12">
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+              <ul className="text-sm text-white space-y-1">
+                {learnings.slice(0, 3).map((l, i) => (
+                  <li key={i}>• {l}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">Spot it / Use it</p>
+              <ul className="text-sm text-white space-y-1">
+                <li>• Fire alarm design documentation</li>
+                <li>• System commissioning</li>
+                <li>• BS 5839-1 compliance</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Learning Outcomes */}
+          <div className="mb-12">
+            <h2 className="text-xl font-semibold text-white mb-4">What You'll Learn</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {learnings.map((l, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span className="text-white text-sm">{l}</span>
+                </div>
               ))}
             </div>
           </div>
 
           {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Introduction</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3 text-gray-300">
-              <p>{intro}</p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Learning Objectives</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                <ul className="list-disc pl-6 space-y-2">
-                  {learnings.map((l) => (<li key={l}>{l}</li>))}
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            <p className="text-white leading-relaxed">{intro}</p>
+          </section>
 
           {/* Content Blocks */}
-          {blocks.map((block) => (
-            <Card key={block.heading} className="bg-card border-transparent">
-              <CardHeader>
-                <CardTitle className="text-white">{block.heading}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-gray-300">
-                <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                  <ul className="list-disc pl-6 space-y-1">
-                    {block.points.map((p) => (<li key={p}>{p}</li>))}
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
+          {blocks.map((block, index) => (
+            <section key={block.heading} className="mb-10">
+              <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+                <span className="text-elec-yellow/80 text-sm font-normal">{String(index + 2).padStart(2, '0')}</span>
+                {block.heading}
+              </h2>
+              <ul className="space-y-2">
+                {block.points.map((p, i) => (
+                  <li key={i} className="flex items-start gap-3 text-white">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
           ))}
 
           {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <AccentPanel tone="green" variant="subtle">
-                <p>Key points have been covered to support safe, compliant design and commissioning in the UK context.</p>
-              </AccentPanel>
-            </CardContent>
-          </Card>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">{String(blocks.length + 2).padStart(2, '0')}</span>
+              Summary
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-white">Key points have been covered to support safe, compliant design and commissioning in the UK context. Apply these principles when working on fire alarm installations to ensure BS 5839-1 compliance.</p>
+            </div>
+          </section>
 
-          <SingleQuestionQuiz questions={sequentialQuestions} title="Knowledge Check" />
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+            <div className="space-y-3">
+              {faqs.map((faq, index) => (
+                <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
+                  <button
+                    onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
+                    className="w-full px-4 py-3 flex items-center justify-between text-left bg-white/5 hover:bg-white/10 transition-colors"
+                  >
+                    <span className="text-white font-medium">{faq.q}</span>
+                    {expandedFAQ === index ? (
+                      <ChevronUp className="w-5 h-5 text-white flex-shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-white flex-shrink-0" />
+                    )}
+                  </button>
+                  {expandedFAQ === index && (
+                    <div className="px-4 py-3 bg-white/5">
+                      <p className="text-white">{faq.a}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
 
-          {/* Nav */}
-          <div className="flex justify-between mt-8">
-            {prev ? (
-              <Link to={prev}>
-                <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Previous Section
-                </Button>
+          {/* Quiz */}
+          <section className="mb-10">
+            <SingleQuestionQuiz questions={sequentialQuestions} title="Knowledge Check" />
+          </section>
+
+          {/* Bottom Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              size="lg"
+              className="min-h-[48px] px-6 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="..">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Module
               </Link>
-            ) : <div />}
+            </Button>
             {next ? (
-              <Link to={next}>
-                <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
+              <Button
+                size="lg"
+                className="min-h-[48px] px-6 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+                asChild
+              >
+                <Link to={next}>
                   Next Section
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+                  <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+                </Link>
+              </Button>
             ) : (
-              <Link to="/study-centre/upskilling/fire-alarm-module-4">
-                <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                  Module Overview
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <Button
+                size="lg"
+                className="min-h-[48px] px-6 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+                asChild
+              >
+                <Link to="..">
+                  Complete Module
+                  <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+                </Link>
+              </Button>
             )}
-          </div>
+          </nav>
         </div>
       </div>
     </div>

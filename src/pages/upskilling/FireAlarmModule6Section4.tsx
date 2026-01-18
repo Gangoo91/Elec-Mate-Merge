@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, RotateCcw, ClipboardList } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ClipboardList, CheckCircle, AlertTriangle, HelpCircle, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
@@ -164,305 +163,258 @@ const FireAlarmModule6Section4 = () => {
     selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-6">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Module 6</span>
+    <div className="min-h-screen bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Module 6
             </Link>
           </Button>
-          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 4</span>
-          <div className="w-[60px]" />
         </div>
-      </header>
+      </div>
 
-      {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
-            <ClipboardList className="h-7 w-7 text-cyan-400" />
+      <div className="px-4 sm:px-6 py-6 max-w-3xl mx-auto space-y-8">
+        {/* Page Title */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
+              <ClipboardList className="h-5 w-5 text-elec-yellow" />
+            </div>
+            <span className="text-sm text-white/50">Section 4 of 6</span>
           </div>
-          <span className="text-[11px] font-medium text-cyan-400 uppercase tracking-wide">
-            Section 4 of 6
-          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">Record Keeping & Logbooks</h1>
+          <p className="text-white/70">Maintenance records, logbook entries and compliance evidence requirements.</p>
         </div>
-        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
-          Record Keeping & Logbooks
-        </h1>
-        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
-          Maintenance records, logbook entries and compliance evidence requirements.
-        </p>
-        <div className="flex items-center gap-4 text-[13px] text-white/50">
-          <span className="flex items-center gap-1">
-            <Target className="h-4 w-4" />
-            6 learning outcomes
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            20-25 mins
-          </span>
+
+        {/* Quick Summary */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+          <ul className="space-y-2 text-white/80 text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Logbooks</strong> must record all tests, faults, false alarms, and system changes</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Retention period</strong> is minimum 3 years per BS 5839-1 for authority inspection</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Entries must be immediate</strong> - made before leaving site after any work or test</span>
+            </li>
+          </ul>
         </div>
-      </section>
 
-      {/* In 30 Seconds Card */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-cyan-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[15px] font-semibold text-cyan-400 flex items-center gap-2">
-              <Lightbulb className="h-4 w-4" />
-              In 30 Seconds
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-[15px] text-white/80">
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Logbooks</strong> must record all tests, faults, false alarms, and system changes</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Retention period</strong> is minimum 3 years per BS 5839-1 for authority inspection</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Entries must be immediate</strong> - made before leaving site after any work or test</span>
-            </p>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Learning Outcomes */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            "Explain BS 5839-1 record retention requirements and their purpose",
-            "Complete logbook entries correctly for all test and maintenance activities",
-            "Document faults with sufficient detail for effective follow-up",
-            "Record false alarms to support unwanted alarm reduction programmes",
-            "Maintain digital records with appropriate security and audit trails",
-            "Present records professionally for authority and insurance inspection"
-          ].map((outcome, i) => (
-            <Card key={i} variant="ios" className="p-3">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-[11px] font-bold text-cyan-400">{i + 1}</span>
+        {/* Learning Outcomes */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Learning Outcomes</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              "Explain BS 5839-1 record retention requirements and their purpose",
+              "Complete logbook entries correctly for all test and maintenance activities",
+              "Document faults with sufficient detail for effective follow-up",
+              "Record false alarms to support unwanted alarm reduction programmes",
+              "Maintain digital records with appropriate security and audit trails",
+              "Present records professionally for authority and insurance inspection"
+            ].map((outcome, i) => (
+              <div key={i} className="p-3 rounded-lg bg-white/5 border border-white/10">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                    <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
+                  </div>
+                  <p className="text-sm text-white/80">{outcome}</p>
                 </div>
-                <p className="text-[13px] text-white/80">{outcome}</p>
               </div>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
-      </section>
 
-      {/* Main Content */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto space-y-6">
         {/* Section 01 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">01</span>
-              <h3 className="text-[17px] font-semibold text-white">Legal Requirements for Record Keeping</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Legal Requirements for Record Keeping
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">BS 5839-1 mandates comprehensive record keeping as <strong className="text-white">legal evidence of compliance</strong> with fire safety regulations.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Key Legal Requirements:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Minimum 3-year retention of all records</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Records available for fire authority inspection</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Insurance companies may require access</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Evidence of competent person involvement</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>BS 5839-1 mandates comprehensive record keeping as <strong className="text-white">legal evidence of compliance</strong> with fire safety regulations.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Key Legal Requirements:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Minimum 3-year retention of all records</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Records available for fire authority inspection</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Insurance companies may require access</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Evidence of competent person involvement</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Poor record keeping can invalidate insurance and result in enforcement action.</p>
-            </div>
-          </CardContent>
-        </Card>
+            <p className="text-sm text-white/60 italic">Poor record keeping can invalidate insurance and result in enforcement action.</p>
+          </div>
+        </div>
 
         {/* Section 02 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">02</span>
-              <h3 className="text-[17px] font-semibold text-white">Fire Alarm Logbook Contents</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Fire Alarm Logbook Contents
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">The logbook is the <strong className="text-elec-yellow">central record</strong> of all fire alarm system activities and should be maintained throughout the system's life.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Essential Logbook Sections:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />System description and zone schedule</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Installation certificate and design data</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Weekly test records</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Service visit reports</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Fault and remedial action log</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />False alarm register</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />System modifications record</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>The logbook is the <strong className="text-cyan-400">central record</strong> of all fire alarm system activities and should be maintained throughout the system's life.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Essential Logbook Sections:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />System description and zone schedule</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Installation certificate and design data</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Weekly test records</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Service visit reports</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Fault and remedial action log</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />False alarm register</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />System modifications record</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 03 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">03</span>
-              <h3 className="text-[17px] font-semibold text-white">Recording Weekly Tests</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Recording Weekly Tests
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Every weekly test must be <strong className="text-white">documented immediately</strong> with sufficient detail to demonstrate compliance.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Weekly Test Entry Requirements:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Date and time of test</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Name and signature of person conducting test</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Zone or device tested (rotating through all)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Test result (satisfactory/unsatisfactory)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Any faults observed with description</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Actions taken or required</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Every weekly test must be <strong className="text-white">documented immediately</strong> with sufficient detail to demonstrate compliance.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Weekly Test Entry Requirements:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Date and time of test</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Name and signature of person conducting test</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Zone or device tested (rotating through all)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Test result (satisfactory/unsatisfactory)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Any faults observed with description</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Actions taken or required</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        {/* Inline Check 1 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A weekly test entry simply states "Test OK". Is this adequate?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> No - the entry lacks required detail. It should specify which zone/device was tested, the time, who conducted the test, and their signature. Without this detail, compliance cannot be demonstrated.</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Quick Check 1 */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <span className="font-semibold text-elec-yellow">Quick Check</span>
+          </div>
+          <p className="text-white/80 mb-3">A weekly test entry simply states "Test OK". Is this adequate?</p>
+          <div className="p-3 rounded-lg bg-white/5">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> No - the entry lacks required detail. It should specify which zone/device was tested, the time, who conducted the test, and their signature. Without this detail, compliance cannot be demonstrated.</p>
+          </div>
+        </div>
 
         {/* Section 04 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">04</span>
-              <h3 className="text-[17px] font-semibold text-white">Fault Recording Procedures</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Fault Recording Procedures
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Comprehensive fault recording enables <strong className="text-elec-yellow">effective remediation</strong> and helps identify recurring issues.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Fault Entry Requirements:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Date and time fault discovered</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Exact location (zone, device, address)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Nature of fault (detailed description)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Immediate actions taken</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Remedial work required</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Completion date and verification</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Comprehensive fault recording enables <strong className="text-cyan-400">effective remediation</strong> and helps identify recurring issues.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Fault Entry Requirements:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Date and time fault discovered</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Exact location (zone, device, address)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Nature of fault (detailed description)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Immediate actions taken</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Remedial work required</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Completion date and verification</li>
-                </ul>
-              </div>
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-amber-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  Critical faults must be escalated immediately - do not just record and wait.
-                </p>
-              </div>
+            <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <p className="text-sm text-amber-300 flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                Critical faults must be escalated immediately - do not just record and wait.
+              </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 05 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">05</span>
-              <h3 className="text-[17px] font-semibold text-white">False Alarm Recording</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            False Alarm Recording
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Recording false alarms supports <strong className="text-white">unwanted alarm reduction</strong> and helps identify problem areas.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">False Alarm Record Contents:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Date and time of alarm activation</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Zone and device that activated</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Cause of activation (if known)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Investigation findings</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Preventive measures implemented</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Fire brigade attendance (if applicable)</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Recording false alarms supports <strong className="text-white">unwanted alarm reduction</strong> and helps identify problem areas.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">False Alarm Record Contents:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Date and time of alarm activation</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Zone and device that activated</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Cause of activation (if known)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Investigation findings</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Preventive measures implemented</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Fire brigade attendance (if applicable)</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">High false alarm rates may trigger fire brigade charging schemes.</p>
-            </div>
-          </CardContent>
-        </Card>
+            <p className="text-sm text-white/60 italic">High false alarm rates may trigger fire brigade charging schemes.</p>
+          </div>
+        </div>
 
         {/* Section 06 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">06</span>
-              <h3 className="text-[17px] font-semibold text-white">Digital Record Systems</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Digital Record Systems
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Digital systems offer advantages but must meet <strong className="text-elec-yellow">specific security requirements</strong> to be acceptable.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Digital System Requirements:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Secure user authentication and access control</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Comprehensive audit trail of all entries</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Tamper-evident record storage</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Regular backup procedures</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Data protection compliance (GDPR)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Ability to produce printed reports</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Digital systems offer advantages but must meet <strong className="text-cyan-400">specific security requirements</strong> to be acceptable.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Digital System Requirements:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Secure user authentication and access control</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Comprehensive audit trail of all entries</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Tamper-evident record storage</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Regular backup procedures</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Data protection compliance (GDPR)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Ability to produce printed reports</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Consider maintaining paper backup for critical records.</p>
-            </div>
-          </CardContent>
-        </Card>
+            <p className="text-sm text-white/60 italic">Consider maintaining paper backup for critical records.</p>
+          </div>
+        </div>
 
-        {/* Inline Check 2 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">The fire authority requests to see test records from 2 years ago. The records have been deleted to save storage space. What are the implications?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> This is a compliance breach - BS 5839-1 requires 3-year retention. The responsible person may face enforcement action, and insurance validity could be questioned. Always maintain records for the full retention period.</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Quick Check 2 */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <span className="font-semibold text-elec-yellow">Quick Check</span>
+          </div>
+          <p className="text-white/80 mb-3">The fire authority requests to see test records from 2 years ago. The records have been deleted to save storage space. What are the implications?</p>
+          <div className="p-3 rounded-lg bg-white/5">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> This is a compliance breach - BS 5839-1 requires 3-year retention. The responsible person may face enforcement action, and insurance validity could be questioned. Always maintain records for the full retention period.</p>
+          </div>
+        </div>
 
-        {/* Inline Check 3 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A building has experienced 5 false alarms from the same detector in the past month. What should the logbook show?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Each incident should be recorded separately with investigation findings. The pattern should trigger escalated investigation, documented in the fault log. Actions might include detector cleaning, relocation, or type change - all documented with justification.</p>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+        {/* Quick Check 3 */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <span className="font-semibold text-elec-yellow">Quick Check</span>
+          </div>
+          <p className="text-white/80 mb-3">A building has experienced 5 false alarms from the same detector in the past month. What should the logbook show?</p>
+          <div className="p-3 rounded-lg bg-white/5">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> Each incident should be recorded separately with investigation findings. The pattern should trigger escalated investigation, documented in the fault log. Actions might include detector cleaning, relocation, or type change - all documented with justification.</p>
+          </div>
+        </div>
 
-      {/* Practical Guidance */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
-
-        <div className="space-y-3">
-          <Card variant="ios" className="border-green-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
+        {/* Practical Guidance */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Practical Guidance</h2>
+          <div className="space-y-3">
+            <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
+              <h4 className="font-semibold text-green-400 mb-2">Pro Tips</h4>
+              <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Use standardised forms to ensure all required information is captured
@@ -476,13 +428,11 @@ const FireAlarmModule6Section4 = () => {
                   Keep the logbook secure but accessible - near the main panel is ideal
                 </li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card variant="ios" className="border-red-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
+            <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
+              <h4 className="font-semibold text-red-400 mb-2">Common Mistakes</h4>
+              <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Vague entries that lack specific details about what was tested or found
@@ -496,147 +446,137 @@ const FireAlarmModule6Section4 = () => {
                   Deleting or destroying records before the 3-year retention period
                 </li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
-      </section>
 
-      {/* FAQs */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
-        <div className="space-y-3">
-          {[
-            { q: "Can I use a spreadsheet as my logbook?", a: "Yes, if it meets security requirements - audit trails, access control, and tamper evidence. A dedicated fire alarm record system is preferable." },
-            { q: "Who is responsible for maintaining the logbook?", a: "The responsible person (typically building owner/manager) has overall responsibility, but may delegate entries to trained staff or service engineers." },
-            { q: "What if the logbook is lost or destroyed?", a: "Report to the responsible person immediately. Reconstruct what records are possible from service company copies. Implement better security for replacement." },
-            { q: "Must service engineers update the logbook?", a: "Yes - service visit details must be entered before leaving site. Engineers should also review the logbook for any reported issues since the last visit." },
-            { q: "How detailed should fault descriptions be?", a: "Detailed enough that another engineer could understand the issue without attending site. Include symptoms, location, suspected cause, and actions taken." },
-            { q: "Should evacuations during tests be recorded?", a: "Yes - record any evacuation drills conducted, including timing, participation, and any issues identified. This demonstrates emergency procedure compliance." }
-          ].map((faq, i) => (
-            <Card key={i} variant="ios">
-              <CardContent className="p-4">
-                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-[13px] text-white/70">{faq.a}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Quiz Section */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-cyan-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-cyan-400" />
-              Knowledge Check
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {!showQuiz ? (
-              <div className="text-center py-6">
-                <p className="text-[15px] text-white/70 mb-4">Test your understanding of record keeping and logbooks with 10 questions.</p>
-                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
-                  Start Quiz
-                </Button>
+        {/* FAQs */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {[
+              { q: "Can I use a spreadsheet as my logbook?", a: "Yes, if it meets security requirements - audit trails, access control, and tamper evidence. A dedicated fire alarm record system is preferable." },
+              { q: "Who is responsible for maintaining the logbook?", a: "The responsible person (typically building owner/manager) has overall responsibility, but may delegate entries to trained staff or service engineers." },
+              { q: "What if the logbook is lost or destroyed?", a: "Report to the responsible person immediately. Reconstruct what records are possible from service company copies. Implement better security for replacement." },
+              { q: "Must service engineers update the logbook?", a: "Yes - service visit details must be entered before leaving site. Engineers should also review the logbook for any reported issues since the last visit." },
+              { q: "How detailed should fault descriptions be?", a: "Detailed enough that another engineer could understand the issue without attending site. Include symptoms, location, suspected cause, and actions taken." },
+              { q: "Should evacuations during tests be recorded?", a: "Yes - record any evacuation drills conducted, including timing, participation, and any issues identified. This demonstrates emergency procedure compliance." }
+            ].map((faq, i) => (
+              <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-semibold text-white mb-2">{faq.q}</p>
+                <p className="text-sm text-white/70">{faq.a}</p>
               </div>
-            ) : showResults ? (
-              <div className="space-y-6">
-                <div className="text-center py-4">
-                  <p className="text-[34px] font-bold text-cyan-400">{calculateScore()}/{questions.length}</p>
-                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
-                </div>
+            ))}
+          </div>
+        </div>
 
-                <div className="space-y-4">
-                  {questions.map((q, i) => {
-                    const correct = selectedAnswers[i] === q.correctAnswer;
+        {/* Quiz Section */}
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-4">
+            <BookOpen className="h-5 w-5 text-elec-yellow" />
+            <h3 className="text-lg font-semibold text-white">Knowledge Check</h3>
+          </div>
+
+          {!showQuiz ? (
+            <div className="text-center py-6">
+              <p className="text-white/70 mb-4">Test your understanding of record keeping and logbooks with 10 questions.</p>
+              <Button onClick={() => setShowQuiz(true)} className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation">
+                Start Quiz
+              </Button>
+            </div>
+          ) : showResults ? (
+            <div className="space-y-6">
+              <div className="text-center py-4">
+                <p className="text-3xl font-bold text-elec-yellow">{calculateScore()}/{questions.length}</p>
+                <p className="text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+              </div>
+
+              <div className="space-y-4">
+                {questions.map((q, i) => {
+                  const correct = selectedAnswers[i] === q.correctAnswer;
+                  return (
+                    <div key={q.id} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                      <p className="font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                      <p className={`text-sm ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                        Your answer: {q.options[selectedAnswers[i]] ?? 'Not answered'} {correct ? '(Correct)' : '(Incorrect)'}
+                      </p>
+                      {!correct && (
+                        <p className="text-sm text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                      )}
+                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Button onClick={resetQuiz} variant="outline" className="w-full min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10">
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Restart Quiz
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+
+              <div>
+                <p className="font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                <div className="space-y-2">
+                  {questions[currentQuestion].options.map((opt, idx) => {
+                    const selected = selectedAnswers[currentQuestion] === idx;
                     return (
-                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
-                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
-                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
-                        </p>
-                        {!correct && (
-                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
-                        )}
-                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
-                      </div>
+                      <button
+                        key={idx}
+                        onClick={() => handleAnswerSelect(idx)}
+                        className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
+                          selected
+                            ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
+                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                        }`}
+                      >
+                        {opt}
+                      </button>
                     );
                   })}
                 </div>
+              </div>
 
-                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
-                  <RotateCcw className="h-4 w-4" />
-                  Restart Quiz
+              <div className="flex items-center justify-between gap-3">
+                <Button
+                  onClick={handlePrevious}
+                  disabled={currentQuestion === 0}
+                  variant="outline"
+                  className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10 disabled:opacity-50"
+                >
+                  Previous
+                </Button>
+                <Button
+                  onClick={handleNext}
+                  disabled={selectedAnswers[currentQuestion] === -1}
+                  className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+                >
+                  {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </div>
-            ) : (
-              <div className="space-y-6">
-                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+            </div>
+          )}
+        </div>
 
-                <div>
-                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-                  <div className="space-y-2">
-                    {questions[currentQuestion].options.map((opt, idx) => {
-                      const selected = selectedAnswers[currentQuestion] === idx;
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => handleAnswerSelect(idx)}
-                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
-                            selected
-                              ? 'bg-cyan-500/20 border-cyan-500/50 text-white'
-                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
-                          }`}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between gap-3">
-                  <Button
-                    variant="ios-secondary"
-                    onClick={handlePrevious}
-                    disabled={currentQuestion === 0}
-                    className="flex-1"
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="ios-primary"
-                    onClick={handleNext}
-                    disabled={selectedAnswers[currentQuestion] === -1}
-                    className="flex-1"
-                  >
-                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Navigation Footer */}
-      <section className="px-4 pb-safe max-w-3xl mx-auto">
-        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
-          <Button variant="ios-secondary" asChild className="flex-1">
+        {/* Navigation Footer */}
+        <div className="flex items-center justify-between gap-3 pt-6 border-t border-white/10">
+          <Button variant="outline" asChild className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10">
             <Link to="/study-centre/upskilling/fire-alarm-module-6-section-3">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Previous Section
+              Previous
             </Link>
           </Button>
-          <Button variant="ios-primary" asChild className="flex-1">
+          <Button asChild className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
             <Link to="/study-centre/upskilling/fire-alarm-module-6-section-5">
-              Next Section
+              Next
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>
           </Button>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

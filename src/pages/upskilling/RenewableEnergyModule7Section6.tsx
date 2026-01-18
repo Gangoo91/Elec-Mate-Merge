@@ -101,127 +101,127 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: "How should battery systems be isolated?",
+    question: "What is the safe system of work for PV maintenance?",
     options: [
-      "AC isolation is sufficient",
-      "Use BMS shutdown followed by physical disconnection",
-      "Simply unplug the monitoring cable",
-      "No isolation is possible",
+      "Work alone to complete tasks faster",
+      "Planned approach including risk assessment, isolation, and verification",
+      "Work only in good weather",
+      "No formal system needed for small installations",
     ],
     correctAnswer: 1,
     explanation:
-      "Battery isolation requires controlled BMS shutdown followed by physical disconnection of battery terminals. Batteries remain energised and hazardous even when isolated from the system.",
+      "A safe system of work includes risk assessment, method statement, proper isolation procedures, dead verification, appropriate PPE, and emergency procedures.",
   },
   {
     id: 5,
-    question: "What is the purpose of a permit to work system?",
+    question: "What hazard exists when working on rooftop PV installations?",
     options: [
-      "To track working hours",
-      "To formally control hazardous work with documented safety measures",
-      "To record equipment serial numbers",
-      "To schedule maintenance visits",
+      "Electrical hazards only",
+      "Multiple hazards including electrical, working at height, and manual handling",
+      "Height hazards only",
+      "No significant hazards with proper training",
     ],
     correctAnswer: 1,
     explanation:
-      "Permit to work systems formally document hazards, required precautions, isolation details, and authorisation for high-risk work, ensuring proper safety controls.",
+      "Rooftop PV work involves multiple hazards: electrical shock and arc flash, working at height, fragile roof surfaces, manual handling, and environmental conditions.",
   },
   {
     id: 6,
-    question: "What should a risk assessment for renewable energy work include?",
+    question: "How should DC isolators be operated during system isolation?",
     options: [
-      "Cost estimates only",
-      "Hazards, risks, control measures, and emergency procedures",
-      "Equipment specifications only",
-      "Customer contact details",
+      "Switch under full load",
+      "Never switch under load - isolators are not rated for load breaking",
+      "Rapid switching",
+      "Partial opening for gradual disconnection",
     ],
     correctAnswer: 1,
     explanation:
-      "Risk assessments must identify hazards (electrical, working at height, etc.), assess risks, specify control measures, and include emergency procedures.",
+      "DC isolators are typically load-break rated but should not be switched under load where avoidable. Wait for low irradiance or use inverter shutdown first.",
   },
   {
     id: 7,
-    question: "When should a toolbox talk be conducted?",
+    question: "What is the purpose of a permit-to-work system?",
     options: [
-      "Only for new employees",
-      "Before starting work to review hazards and procedures",
-      "After completing work",
-      "Only when accidents occur",
+      "Regulatory paperwork only",
+      "Formal system ensuring safe isolation and controlled access",
+      "Speed up work completion",
+      "Reduce training requirements",
     ],
     correctAnswer: 1,
     explanation:
-      "Toolbox talks should be conducted before work begins to review specific hazards, safety procedures, and emergency arrangements for that particular job.",
+      "Permit-to-work systems formally document isolation status, define safe working conditions, control access, and ensure proper handback procedures.",
   },
   {
     id: 8,
-    question: "What is the safe approach to a suspected arc fault?",
+    question: "What emergency response should be planned for PV work?",
     options: [
-      "Reset and continue operating",
-      "Isolate, investigate thoroughly, repair before re-energising",
-      "Bypass the protection device",
-      "Wait for the fault to clear itself",
+      "Call 999 if anything goes wrong",
+      "Site-specific plan including rescue procedures and first aid",
+      "Rely on monitoring system alerts",
+      "Emergency response is not required for small systems",
     ],
     correctAnswer: 1,
     explanation:
-      "Arc faults are serious fire hazards. Always isolate completely, investigate the cause thoroughly, and repair before re-energising. Never bypass arc fault protection.",
+      "Emergency plans should include rescue procedures for working at height, electrical incident response, first aid provision, and communication methods.",
   },
   {
     id: 9,
-    question: "What emergency information should be available at a PV installation?",
+    question: "What training is required for working on PV systems?",
     options: [
-      "Customer phone number only",
-      "Isolation procedures, emergency contacts, and first aid arrangements",
-      "Equipment warranty details",
-      "Energy production data",
+      "No specific training needed",
+      "Electrical competence plus PV-specific training",
+      "Basic health and safety only",
+      "Manufacturer training only",
     ],
     correctAnswer: 1,
     explanation:
-      "Emergency information should include system isolation procedures, emergency service contacts, first aid arrangements, and any site-specific hazards.",
+      "Workers need electrical competence (e.g., 18th Edition), PV-specific training covering DC hazards and system operation, plus working at height if applicable.",
   },
   {
     id: 10,
-    question: "What is the minimum number of people recommended for high-risk electrical work?",
+    question: "What should be verified before re-energising a system after maintenance?",
     options: [
-      "One competent person",
-      "Two people (one to monitor safety)",
-      "Three people minimum",
-      "No minimum specified",
+      "Weather conditions only",
+      "All work complete, tools removed, personnel clear, and protection in place",
+      "Monitoring system online",
+      "Time of day",
     ],
     correctAnswer: 1,
     explanation:
-      "High-risk electrical work should involve at least two people - one to perform the work and one to monitor safety and be able to summon help if needed.",
+      "Before re-energising: verify all work is complete, tools and temporary equipment removed, all personnel are clear, protection devices are in place, and isolation is systematically removed.",
   },
 ];
 
 const faqs = [
   {
-    question: "Can I work on a PV system while it is generating power?",
+    question: "Can I work live on PV systems?",
     answer:
-      "Live working on PV systems should only be undertaken when dead working is not reasonably practicable, by competent persons with appropriate training, using correct PPE and safe systems of work. Most maintenance and repair work should be performed with systems isolated.",
+      "Live working should be avoided wherever possible. When unavoidable (e.g., commissioning tests), it requires specific training, appropriate PPE, approved test equipment, and a formal safe system of work. Many tasks can be performed with the DC side isolated even though it cannot be fully de-energised.",
   },
   {
-    question: "How do I isolate a battery storage system safely?",
+    question: "What voltage indicator should I use for PV systems?",
     answer:
-      "First use the BMS interface to initiate controlled shutdown. Wait for confirmation that contactors have opened. Then physically disconnect battery terminals, removing the negative terminal first. Verify zero voltage before starting work. Remember that individual battery modules remain energised.",
+      "Use a CAT III or CAT IV rated indicator capable of measuring the DC voltages present (typically up to 1000V DC). Prove the indicator on a known live source before and after testing. Two-pole testers are preferred over non-contact indicators for reliability.",
   },
   {
-    question: "What should I do if someone receives an electric shock?",
+    question: "How do I isolate a system with multiple inverters?",
     answer:
-      "Do not touch the casualty if they are still in contact with the electrical source. Isolate the supply if safe to do so, or move the casualty using insulated material. Call emergency services immediately. Administer CPR if needed and trained to do so. All electrical shock casualties should receive medical assessment.",
+      "Each inverter requires individual isolation. Isolate AC supplies first, then DC isolators for each string feeding that inverter. Use lockout devices on all isolators. Maintain clear labelling to track isolation status. Consider using a permit-to-work for complex systems.",
   },
   {
-    question: "How do I verify my isolation is effective?",
+    question: "What first aid training is required?",
     answer:
-      "Use an approved voltage indicator to test between all live conductors and earth at the point of work. The indicator must be proved working on a known live source before and after testing. Visual indication that isolators are open is not sufficient - always test.",
+      "Workers should have basic first aid training including treatment for electrical shock. For remote or rooftop work, consider enhanced first aid provision. Automated External Defibrillators (AEDs) are recommended for electrical work sites.",
   },
   {
-    question: "What training do I need for renewable energy system work?",
+    question: "Do I need to follow CDM Regulations for PV installation?",
     answer:
-      "Requirements include: electrical competence (appropriate qualifications), specific training on the equipment types, working at height training where relevant, manufacturer training for complex systems, and regular refresher training. Evidence of competence should be documented.",
+      "Yes - most PV installations fall under CDM (Construction Design and Management) Regulations 2015. This requires appointment of duty holders, construction phase plans, and appropriate welfare facilities. Domestic installations may have reduced requirements but safety obligations remain.",
   },
   {
-    question: "What fire risks exist with renewable energy systems?",
+    question: "How do I assess arc flash risk on PV systems?",
     answer:
-      "Key fire risks include: DC arc faults from loose connections, battery thermal runaway, inverter component failure, and cable damage. Mitigation includes proper installation, AFCI protection, regular inspection, and appropriate fire detection and suppression near battery systems.",
+      "Arc flash risk increases with available fault current and clearing time. PV DC systems present sustained arc hazard due to no natural current zero. Assess incident energy levels, select appropriate PPE rating, and implement engineering controls where possible.",
   },
 ];
 
@@ -230,439 +230,249 @@ const RenewableEnergyModule7Section6 = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/80">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link
-            to=".."
-            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Module Overview
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3 flex items-center gap-3">
+          <Link to="..">
+            <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
           </Link>
-          <span className="text-sm text-white">Module 7 • Section 6</span>
+          <span className="text-white font-medium truncate">Safety & Working Procedures</span>
         </div>
-      </header>
+      </div>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden py-12 sm:py-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/10 via-transparent to-transparent" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-elec-yellow/10 px-4 py-1.5 text-sm font-medium text-elec-yellow">
-              <Zap className="h-4 w-4" />
-              Operation and Maintenance
-            </div>
-            <h1 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-              Safety, Isolation, and Working Procedures
-            </h1>
-            <p className="text-lg text-white sm:text-xl">
-              Essential procedures for working safely on renewable energy systems including isolation, LOTO, and PPE requirements.
+      {/* Hero Section */}
+      <div className="px-4 py-6 text-center">
+        <div className="inline-flex items-center gap-2 bg-elec-yellow/10 border border-elec-yellow/30 rounded-full px-3 py-1 mb-3">
+          <Zap className="w-4 h-4 text-elec-yellow" />
+          <span className="text-elec-yellow text-sm font-medium">Module 7 - Section 6</span>
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+          Safety, Isolation & Working Procedures
+        </h1>
+        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+          Essential safety procedures for working safely on renewable energy systems
+        </p>
+      </div>
+
+      {/* Quick Summary */}
+      <div className="px-4 pb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">In 30 Seconds:</span> Isolate AC first, then DC; wait 5 minutes for capacitor discharge
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Spot it:</span> PV arrays generate voltage whenever exposed to light
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Use it:</span> LOTO (Lockout Tagout) prevents accidental re-energisation
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Key Risk:</span> DC arcs sustain indefinitely - no natural zero crossing
             </p>
           </div>
         </div>
-      </section>
-
-      {/* Quick Summary */}
-      <section className="py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-lg border-l-2 border-elec-yellow/50 bg-elec-yellow/5 p-4">
-              <h3 className="mb-2 font-semibold text-white">Isolation Procedures</h3>
-              <p className="text-sm text-white">
-                Systematic isolation following AC-first-then-DC sequence, with verification and lockout/tagout to prevent accidental re-energisation.
-              </p>
-            </div>
-            <div className="rounded-lg border-l-2 border-elec-yellow/50 bg-elec-yellow/5 p-4">
-              <h3 className="mb-2 font-semibold text-white">Hazard Awareness</h3>
-              <p className="text-sm text-white">
-                DC arc hazards, stored energy in batteries and capacitors, and working at height require specific safety measures and PPE.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Learning Outcomes */}
-      <section className="py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6">
-            <h2 className="mb-4 text-xl font-bold text-white">Learning Outcomes</h2>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                "Apply correct isolation procedures",
-                "Work safely around stored energy",
-                "Follow lockout/tagout practices",
-                "Select and use appropriate PPE",
-                "Conduct effective risk assessments",
-                "Respond appropriately to emergencies",
-              ].map((outcome, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-elec-yellow" />
-                  <span className="text-sm text-white">{outcome}</span>
-                </div>
-              ))}
+      <div className="px-4 pb-6">
+        <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
+        <div className="space-y-2">
+          {[
+            "Apply correct isolation procedures for PV systems",
+            "Understand DC-specific hazards and controls",
+            "Implement lockout/tagout procedures",
+            "Select appropriate PPE for renewable energy work",
+            "Conduct risk assessments for PV maintenance",
+            "Plan emergency response procedures",
+          ].map((outcome, index) => (
+            <div key={index} className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
+              <span className="text-white/80 text-sm">{outcome}</span>
             </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="px-4 space-y-6 pb-8">
+        {/* Section 01 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
+            <h2 className="text-xl font-semibold text-white">DC Hazards and Controls</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              PV systems present unique hazards compared to conventional AC installations. Understanding these hazards is essential for safe working.
+            </p>
+            <p>
+              <span className="text-white font-medium">Cannot De-Energise:</span> PV arrays generate voltage whenever exposed to light. Even on cloudy days significant voltage is present. Covering panels reduces but does not eliminate voltage. This fundamental characteristic affects all safety planning.
+            </p>
+            <p>
+              <span className="text-white font-medium">Arc Hazards:</span> DC arcs can sustain indefinitely because there is no natural zero crossing where current passes through zero. AC arcs naturally extinguish 100 times per second at 50Hz. This makes DC arc flash particularly dangerous and requires specific arc-rated PPE.
+            </p>
+            <p>
+              <span className="text-white font-medium">Shock Hazards:</span> PV system voltages (typically 400-1000V DC) exceed the extra-low voltage threshold. DC causes muscle tetany differently from AC, potentially making it harder to release grip. Touch voltage limits are lower for DC than AC.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[0]]} />
+
+        {/* Section 02 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
+            <h2 className="text-xl font-semibold text-white">Isolation Procedures</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Correct isolation procedures are critical for safe working on PV systems. The sequence and method of isolation affects safety.
+            </p>
+            <p>
+              <span className="text-white font-medium">Isolation Sequence:</span> First isolate AC supply (main switch or isolator). Then isolate DC strings (string isolators at inverter). Where possible, reduce load before DC isolation by waiting for low irradiance. Allow minimum 5 minutes for capacitor discharge before working on inverter.
+            </p>
+            <p>
+              <span className="text-white font-medium">Prove Dead:</span> After isolation, prove dead using an approved voltage indicator. Prove the indicator on a known live source before and after testing (prove-test-prove). Test at all accessible points where work will be performed. Remember DC side remains energised even when isolated.
+            </p>
+            <p>
+              <span className="text-white font-medium">Lockout Tagout (LOTO):</span> Apply personal locks to all isolation points. Attach tags identifying the person who applied the lock and the reason. Only the person who applied the lock should remove it. Use multi-lock hasps for work involving multiple people.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[1]]} />
+
+        {/* Section 03 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
+            <h2 className="text-xl font-semibold text-white">Personal Protective Equipment</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              PPE selection for PV work must address both electrical and other hazards present during installation and maintenance activities.
+            </p>
+            <p>
+              <span className="text-white font-medium">Electrical PPE:</span> Arc-rated clothing appropriate to incident energy level is essential. Voltage-rated insulated gloves match the system voltage (Class 0 for 1000V systems). Face shields or safety glasses with side protection are required. Insulated footwear provides additional protection.
+            </p>
+            <p>
+              <span className="text-white font-medium">Working at Height:</span> Full body harness with appropriate attachment points. Lanyards or fall arresters suitable for the work. Anchor points must be rated for fall arrest loads. Consider rescue equipment and procedures.
+            </p>
+            <p>
+              <span className="text-white font-medium">General PPE:</span> Hard hat for overhead hazards. High-visibility clothing where required. Appropriate gloves for manual handling. Sun protection for extended outdoor work. Weather-appropriate clothing for conditions.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[2]]} />
+
+        {/* Section 04 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
+            <h2 className="text-xl font-semibold text-white">Risk Assessment and Method Statements</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Formal risk assessment and method statements document hazards and controls, ensuring consistent safe working practices.
+            </p>
+            <p>
+              <span className="text-white font-medium">Risk Assessment Content:</span> Identify all hazards including electrical, working at height, manual handling, and environmental. Assess likelihood and severity of harm. Identify existing controls and additional measures required. Record findings and communicate to all workers.
+            </p>
+            <p>
+              <span className="text-white font-medium">Method Statement Content:</span> Step-by-step work procedure. Sequence of isolation and restoration. PPE requirements at each stage. Competency requirements for personnel. Emergency procedures.
+            </p>
+            <p>
+              <span className="text-white font-medium">Dynamic Risk Assessment:</span> Conditions may change during work such as weather, site access, or discovered issues. Workers should continuously assess conditions and stop work if new hazards arise. Authority to stop work should be clearly established.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[3]]} />
+
+        {/* Section 05 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
+            <h2 className="text-xl font-semibold text-white">Emergency Procedures</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Pre-planned emergency procedures enable rapid, effective response to incidents during PV system work.
+            </p>
+            <p>
+              <span className="text-white font-medium">Electrical Incidents:</span> Do not touch the casualty if they may still be in contact with live parts. Isolate supply where possible. Call emergency services (999). Provide first aid including CPR if qualified and required. AED availability is recommended for electrical work.
+            </p>
+            <p>
+              <span className="text-white font-medium">Falls and Rescue:</span> Plan rescue procedures before starting work at height. Ensure rescue equipment is available and personnel are trained. Suspension trauma is a serious risk if a fallen worker is suspended in a harness. Time is critical for rescue.
+            </p>
+            <p>
+              <span className="text-white font-medium">Fire Response:</span> Know location of fire extinguishers and their suitability. Be aware that PV systems may remain energised during fire. Communicate PV presence to fire services. Follow site-specific fire procedures.
+            </p>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <div className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/20 rounded-xl p-4">
+          <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+            <Zap className="w-4 h-4 text-elec-yellow" />
+            Practical Guidance
+          </h3>
+          <div className="space-y-2 text-white/80 text-sm">
+            <p>
+              <span className="text-white font-medium">Safety culture:</span> Safety is everyone's responsibility. Encourage speaking up about hazards. Never normalise shortcuts or unsafe practices. Learn from near-misses as well as incidents.
+            </p>
+            <p>
+              <span className="text-white font-medium">Competence development:</span> Ensure all workers have appropriate training for tasks assigned. Supervise less experienced workers appropriately. Maintain training records and refresher schedules.
+            </p>
+            <p>
+              <span className="text-white font-medium">Documentation:</span> Keep records of risk assessments, method statements, and training. Document all incidents and near-misses for learning. Review and update procedures based on experience.
+            </p>
           </div>
         </div>
-      </section>
 
-      {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          {/* Section 01 */}
-          <section className="mb-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                01
-              </span>
-              <h2 className="text-2xl font-bold text-white">Safe Isolation Procedures</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Proper isolation is fundamental to safe working on renewable energy systems. The sequence and verification steps are critical.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Five-Step Isolation Sequence</h4>
-                <ol className="list-inside list-decimal space-y-2">
-                  <li><strong>Isolate AC supply:</strong> Main switch first, then inverter AC isolator</li>
-                  <li><strong>Isolate DC sources:</strong> PV array disconnect, then string fuses/breakers</li>
-                  <li><strong>Discharge stored energy:</strong> Wait minimum 5 minutes for capacitors</li>
-                  <li><strong>Test for dead condition:</strong> Use approved proving unit on all circuits</li>
-                  <li><strong>Secure isolation:</strong> Lock out isolators and apply warning tags</li>
-                </ol>
+        {/* FAQs */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
+                <h3 className="text-white font-medium mb-2">{faq.question}</h3>
+                <p className="text-white/70 text-sm">{faq.answer}</p>
               </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">PV System Isolation</h4>
-                <div className="space-y-3">
-                  <div>
-                    <p className="font-medium">AC Side:</p>
-                    <ul className="list-inside list-disc space-y-1 text-sm">
-                      <li>Turn off main AC isolator at distribution board</li>
-                      <li>Switch inverter AC isolator to OFF position</li>
-                      <li>Verify grid supply is isolated using voltage tester</li>
-                      <li>Lock isolators in OFF position</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="font-medium">DC Side:</p>
-                    <ul className="list-inside list-disc space-y-1 text-sm">
-                      <li>Open DC isolator at inverter</li>
-                      <li>Open string fuses or DC breakers at combiner</li>
-                      <li>Cover panels with opaque material if accessible</li>
-                      <li>Test each string for zero voltage</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Battery Storage Isolation</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li>Access BMS interface (touchscreen or app)</li>
-                  <li>Initiate controlled shutdown sequence</li>
-                  <li>Wait for confirmation that contactors have opened</li>
-                  <li>Remove negative terminal first using insulated tools</li>
-                  <li>Store terminals safely to prevent reconnection</li>
-                  <li>Test for zero voltage across battery terminals</li>
-                </ul>
-              </div>
-            </div>
-          </section>
+            ))}
+          </div>
+        </section>
 
-          <InlineCheck
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
+        {/* Quiz */}
+        <Quiz
+          title="Safety & Working Procedures Quiz"
+          questions={quizQuestions}
+        />
 
-          {/* Section 02 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                02
-              </span>
-              <h2 className="text-2xl font-bold text-white">DC Hazards and Arc Flash</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Direct current presents unique hazards that require specific understanding and precautions beyond standard AC electrical safety.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Why DC is More Dangerous</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>No zero crossing:</strong> AC crosses zero 100 times per second; DC never does</li>
-                  <li><strong>Arc persistence:</strong> DC arcs can sustain indefinitely once established</li>
-                  <li><strong>Energy release:</strong> Continuous rather than pulsed energy in faults</li>
-                  <li><strong>Insulation stress:</strong> DC causes different insulation degradation patterns</li>
-                  <li><strong>Muscle contraction:</strong> DC may cause sustained grip making release difficult</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Arc Flash Protection</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Arc-rated clothing:</strong> Minimum 8 cal/cm² for low voltage work</li>
-                  <li><strong>Face protection:</strong> Arc-rated face shield or hood</li>
-                  <li><strong>Gloves:</strong> Class 0 (1000V) electrical gloves with leather protectors</li>
-                  <li><strong>Footwear:</strong> Electrical hazard rated safety boots</li>
-                  <li><strong>Eye protection:</strong> Safety glasses under face shield</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">PV-Specific Considerations</h4>
-                <p className="mb-2">
-                  PV systems present unique challenges:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Arrays cannot be fully de-energised in daylight</li>
-                  <li>String voltages can exceed 1000V DC</li>
-                  <li>Fault currents limited but still hazardous</li>
-                  <li>Arc faults can occur at any connection point</li>
-                  <li>Fire risk from sustained arcs is significant</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-
-          {/* Section 03 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                03
-              </span>
-              <h2 className="text-2xl font-bold text-white">Lockout/Tagout (LOTO) Procedures</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                LOTO procedures ensure equipment remains safely isolated during maintenance, preventing accidental re-energisation.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">LOTO Steps</h4>
-                <ol className="list-inside list-decimal space-y-2">
-                  <li><strong>Prepare:</strong> Identify all energy sources and isolation points</li>
-                  <li><strong>Notify:</strong> Inform all affected personnel of the shutdown</li>
-                  <li><strong>Shutdown:</strong> Follow proper sequence to de-energise equipment</li>
-                  <li><strong>Isolate:</strong> Physically disconnect or block energy sources</li>
-                  <li><strong>Lock:</strong> Apply locks to prevent re-energisation</li>
-                  <li><strong>Tag:</strong> Attach warning tags with contact information</li>
-                  <li><strong>Verify:</strong> Test equipment to confirm zero energy state</li>
-                </ol>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Lock and Tag Requirements</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Personal locks:</strong> Each worker applies their own lock</li>
-                  <li><strong>Unique keys:</strong> Only one key per lock, held by the worker</li>
-                  <li><strong>Durable tags:</strong> Withstand environment, clearly identify worker</li>
-                  <li><strong>Multi-lock hasps:</strong> Allow multiple workers to lock out same point</li>
-                  <li><strong>Removal:</strong> Only the person who applied the lock may remove it</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Returning to Service</h4>
-                <ol className="list-inside list-decimal space-y-1">
-                  <li>Verify all work is complete and tools/materials removed</li>
-                  <li>Ensure all guards and covers are replaced</li>
-                  <li>Check all workers are clear of equipment</li>
-                  <li>Remove locks and tags (by those who applied them)</li>
-                  <li>Notify affected personnel of re-energisation</li>
-                  <li>Re-energise following proper sequence</li>
-                </ol>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-
-          {/* Section 04 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                04
-              </span>
-              <h2 className="text-2xl font-bold text-white">Risk Assessment and Safe Systems</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Effective risk assessment underpins all safe working practices. Each job requires specific hazard identification and control measures.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Pre-Work Risk Assessment</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Hazard identification:</strong> Electrical, working at height, environmental</li>
-                  <li><strong>Risk evaluation:</strong> Likelihood and severity of potential harm</li>
-                  <li><strong>Control measures:</strong> Elimination, substitution, engineering controls, PPE</li>
-                  <li><strong>Emergency procedures:</strong> First aid, rescue, evacuation routes</li>
-                  <li><strong>Communication:</strong> How workers will stay in contact</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Pre-Work Safety Checklist</h4>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <ul className="list-inside list-disc space-y-1 text-sm">
-                    <li>Weather conditions assessment</li>
-                    <li>Equipment condition verification</li>
-                    <li>Personnel competency check</li>
-                    <li>Emergency procedure review</li>
-                  </ul>
-                  <ul className="list-inside list-disc space-y-1 text-sm">
-                    <li>Communication plan established</li>
-                    <li>Isolation points identified</li>
-                    <li>PPE requirements confirmed</li>
-                    <li>First aid arrangements in place</li>
-                  </ul>
-                </div>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Toolbox Talk Content</h4>
-                <p className="mb-2">
-                  Brief all workers before starting on:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Specific hazards for this job</li>
-                  <li>Control measures in place</li>
-                  <li>Isolation arrangements</li>
-                  <li>Emergency procedures and contacts</li>
-                  <li>Individual responsibilities</li>
-                  <li>Stop work authority - anyone can stop if unsafe</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[3].question}
-            options={quickCheckQuestions[3].options}
-            correctIndex={quickCheckQuestions[3].correctIndex}
-            explanation={quickCheckQuestions[3].explanation}
-          />
-
-          {/* Section 05 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                05
-              </span>
-              <h2 className="text-2xl font-bold text-white">Emergency Response</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Knowing how to respond to emergencies can save lives. Preparation and practice ensure effective response when needed.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Electric Shock Response</h4>
-                <ol className="list-inside list-decimal space-y-2">
-                  <li>Do not touch the casualty if still in contact with source</li>
-                  <li>Isolate supply if safe to do so</li>
-                  <li>If cannot isolate, use insulated material to separate</li>
-                  <li>Call emergency services immediately</li>
-                  <li>Administer CPR if needed and trained</li>
-                  <li>All shock victims need medical assessment</li>
-                </ol>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Fire Response</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Raise alarm:</strong> Alert others and call fire services</li>
-                  <li><strong>Isolate:</strong> If safe, isolate electrical supply</li>
-                  <li><strong>Evacuate:</strong> Do not attempt to fight unless trained and safe</li>
-                  <li><strong>Extinguisher:</strong> CO2 for electrical fires - never water</li>
-                  <li><strong>Battery fires:</strong> Do not use water; evacuate and contain</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Emergency Information</h4>
-                <p className="mb-2">
-                  Ensure the following is available at every site:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>System isolation procedures and locations</li>
-                  <li>Emergency service contact numbers</li>
-                  <li>Site address and access instructions</li>
-                  <li>First aid kit location</li>
-                  <li>Fire extinguisher locations</li>
-                  <li>Names and contact details of qualified personnel</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Practical Guidance */}
-          <section className="mb-12 mt-12">
-            <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/5 p-6">
-              <h2 className="mb-4 text-xl font-bold text-white">Practical Guidance</h2>
-              <div className="space-y-4 text-white">
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Safety Culture</h4>
-                  <p className="mt-1 text-sm">
-                    Safety is everyone's responsibility. Encourage reporting of near-misses and unsafe conditions. Never take shortcuts with isolation or PPE. If something feels unsafe, stop and reassess.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Maintaining Competence</h4>
-                  <p className="mt-1 text-sm">
-                    Stay current with safety training and first aid certification. Review procedures after any incident or near-miss. Learn from others' experiences through safety alerts and industry publications.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Leading by Example</h4>
-                  <p className="mt-1 text-sm">
-                    Experienced workers set the standard. Always follow procedures even when inconvenient. Support less experienced colleagues in developing safe habits. Challenge unsafe practices constructively.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* FAQs */}
-          <section className="mb-12">
-            <h2 className="mb-6 text-2xl font-bold text-white">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="rounded-lg border border-white/10 bg-white/5 p-4">
-                  <h3 className="mb-2 font-semibold text-elec-yellow">{faq.question}</h3>
-                  <p className="text-sm text-white">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Quiz Section */}
-          <section className="mb-12">
-            <Quiz
-              title="Safety and Isolation Quiz"
-              questions={quizQuestions}
-              onComplete={(score) => console.log("Quiz completed with score:", score)}
-            />
-          </section>
-
-          {/* Navigation */}
-          <nav className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:justify-between">
-            <Link to="/upskilling/renewable-energy/module-7/section-5">
-              <Button variant="outline" className="w-full gap-2 border-white/20 text-white hover:bg-white/10 sm:w-auto">
-                <ArrowLeft className="h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/upskilling/renewable-energy/module-8/section-1">
-              <Button className="w-full gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90 sm:w-auto">
-                Next Module
-                <ArrowLeft className="h-4 w-4 rotate-180" />
-              </Button>
-            </Link>
-          </nav>
+        {/* Bottom Navigation */}
+        <div className="flex justify-between items-center pt-4 border-t border-white/10">
+          <Link to="../section-5">
+            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Button>
+          </Link>
+          <Link to="/upskilling/renewable-energy/module-8/section-1">
+            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              Next Module
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

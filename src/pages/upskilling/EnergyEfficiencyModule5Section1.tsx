@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Quiz from '@/components/apprentice-courses/Quiz';
 import InlineCheck from '@/components/apprentice-courses/InlineCheck';
-import useSEO from '@/hooks/useSEO';
+import { useSEO } from '@/hooks/useSEO';
 import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
+  ArrowLeft,
+  ArrowRight,
   Gauge,
   Target,
   Settings,
@@ -25,9 +23,6 @@ import {
 } from 'lucide-react';
 
 const EnergyEfficiencyModule5Section1: React.FC = () => {
-  const navigate = useNavigate();
-  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
-
   useSEO({
     title: 'Sub-Metering Installation Strategy | Energy Efficiency Module 5 Section 1 | Elec-Mate',
     description: 'Learn sub-metering installation strategies including CIBSE TM39 guidance, CT selection, communication protocols, BMS integration, and tenant billing for UK buildings.',
@@ -188,63 +183,51 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
     }
   ];
 
-  const toggleFAQ = (index: number) => {
-    setExpandedFAQ(expandedFAQ === index ? null : index);
-  };
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
-      {/* Header */}
-      <div className="bg-[#1a1a1a]/95 border-b border-elec-yellow/20">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-3 mb-2">
-            <Gauge className="w-8 h-8 text-elec-yellow" />
-            <span className="text-elec-yellow text-sm font-medium">Module 5 - Section 1</span>
+    <div className="min-h-screen bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Button variant="ghost" size="sm" asChild className="text-white hover:text-elec-yellow hover:bg-transparent p-2">
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5" />
+            </Link>
+          </Button>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-white font-medium truncate">Sub-Metering Installation Strategy</h1>
+            <p className="text-white/60 text-sm">Module 5 - Section 1</p>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-            Sub-Metering Installation Strategy
-          </h1>
-          <p className="text-gray-400">
-            CIBSE TM39 guidance, metering hierarchies, and practical installation for UK buildings
-          </p>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
-        {/* Introduction */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-start gap-4">
-            <Info className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
-            <div>
-              <h2 className="text-xl font-semibold text-elec-yellow mb-3">Introduction</h2>
-              <p className="text-gray-300 leading-relaxed">
-                Sub-metering is essential for effective energy management in commercial and multi-tenant buildings.
-                This section covers the strategic approach to sub-metering installation following CIBSE TM39 guidance,
-                UK regulatory requirements including MID compliance for billing meters, and practical considerations
-                for electricians working on these systems. Proper sub-metering supports ESOS compliance, enables
-                accurate tenant billing, and provides the data foundation for energy efficiency improvements.
-              </p>
-            </div>
-          </div>
-        </section>
+      <div className="max-w-3xl mx-auto px-4 py-6 space-y-8">
+        {/* Quick Summary */}
+        <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
+          <p className="text-white/90 leading-relaxed">
+            Sub-metering is essential for effective energy management in commercial and multi-tenant buildings.
+            This section covers the strategic approach to sub-metering installation following CIBSE TM39 guidance,
+            UK regulatory requirements including MID compliance for billing meters, and practical considerations
+            for electricians working on these systems. Proper sub-metering supports ESOS compliance, enables
+            accurate tenant billing, and provides the data foundation for energy efficiency improvements.
+          </p>
+        </div>
 
         {/* Section 1: Sub-metering Hierarchy */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">1</span>
-            </div>
-            <h2 className="text-xl font-semibold text-white">Sub-Metering Hierarchy and Coverage Targets</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            <Target className="w-5 h-5 text-elec-yellow" />
+            Sub-Metering Hierarchy and Coverage Targets
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white/80">
             <p>
               CIBSE TM39 establishes a hierarchical approach to sub-metering that ensures comprehensive
               coverage while maintaining cost-effectiveness. Understanding this hierarchy is crucial for
               designing effective metering strategies.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                 <Target className="w-5 h-5" />
                 Metering Hierarchy Levels
@@ -256,7 +239,7 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white">Level 1 - Main Incoming Supply</p>
-                    <p className="text-sm text-gray-400">Fiscal utility meters at supply point - mandatory for all buildings</p>
+                    <p className="text-sm text-white/60">Fiscal utility meters at supply point - mandatory for all buildings</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -265,7 +248,7 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white">Level 2 - Distribution/Floor Level</p>
-                    <p className="text-sm text-gray-400">Main distribution boards, floor-level DBs, major plant rooms</p>
+                    <p className="text-sm text-white/60">Main distribution boards, floor-level DBs, major plant rooms</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -274,7 +257,7 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white">Level 3 - End Use Category</p>
-                    <p className="text-sm text-gray-400">HVAC, lighting, small power, lifts, major equipment</p>
+                    <p className="text-sm text-white/60">HVAC, lighting, small power, lifts, major equipment</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -283,18 +266,18 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white">Level 4 - Individual Circuits</p>
-                    <p className="text-sm text-gray-400">Individual tenant meters, specific high-consumption equipment</p>
+                    <p className="text-sm text-white/60">Individual tenant meters, specific high-consumption equipment</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-amber-900/20 border border-amber-600/30 rounded-lg p-4">
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-amber-400 mb-2 flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5" />
                 Coverage Target
               </h4>
-              <p className="text-gray-300">
+              <p className="text-white/80">
                 CIBSE TM39 recommends that sub-metering should account for at least <strong className="text-elec-yellow">90%
                 of anticipated energy consumption</strong>. The remaining 10% may be calculated or estimated.
                 This 90% threshold is also aligned with ESOS compliance requirements.
@@ -302,26 +285,26 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-green-600/30">
+              <div className="bg-white/5 rounded-lg p-4 border border-green-500/30">
                 <h4 className="font-semibold text-green-400 mb-2">Minimum Metering (Typical Office)</h4>
-                <ul className="text-sm space-y-1 text-gray-300">
-                  <li>• Main incoming supply (L1)</li>
-                  <li>• HVAC systems total (L2/L3)</li>
-                  <li>• Lighting circuits (L3)</li>
-                  <li>• Small power/receptacles (L3)</li>
-                  <li>• Lifts and escalators (L3)</li>
-                  <li>• Server rooms/IT (L3)</li>
+                <ul className="text-sm space-y-1 text-white/70">
+                  <li>- Main incoming supply (L1)</li>
+                  <li>- HVAC systems total (L2/L3)</li>
+                  <li>- Lighting circuits (L3)</li>
+                  <li>- Small power/receptacles (L3)</li>
+                  <li>- Lifts and escalators (L3)</li>
+                  <li>- Server rooms/IT (L3)</li>
                 </ul>
               </div>
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-blue-600/30">
+              <div className="bg-white/5 rounded-lg p-4 border border-blue-500/30">
                 <h4 className="font-semibold text-blue-400 mb-2">Enhanced Metering (Best Practice)</h4>
-                <ul className="text-sm space-y-1 text-gray-300">
-                  <li>• Floor-by-floor breakdown (L2)</li>
-                  <li>• Individual AHU/chiller metering</li>
-                  <li>• Tenant-specific metering (L4)</li>
-                  <li>• Common areas separately</li>
-                  <li>• Car park and external lighting</li>
-                  <li>• Renewable generation</li>
+                <ul className="text-sm space-y-1 text-white/70">
+                  <li>- Floor-by-floor breakdown (L2)</li>
+                  <li>- Individual AHU/chiller metering</li>
+                  <li>- Tenant-specific metering (L4)</li>
+                  <li>- Common areas separately</li>
+                  <li>- Car park and external lighting</li>
+                  <li>- Renewable generation</li>
                 </ul>
               </div>
             </div>
@@ -338,22 +321,21 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
         />
 
         {/* Section 2: Selecting Metering Points */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">2</span>
-            </div>
-            <h2 className="text-xl font-semibold text-white">Selecting Metering Points (80/20 Rule)</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            <Zap className="w-5 h-5 text-elec-yellow" />
+            Selecting Metering Points (80/20 Rule)
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white/80">
             <p>
               Strategic selection of metering points is crucial for cost-effective sub-metering. The Pareto
               principle (80/20 rule) helps prioritise metering investments where they will provide the
               greatest insight into energy consumption patterns.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                 <Zap className="w-5 h-5" />
                 Applying the 80/20 Rule
@@ -369,23 +351,23 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
                   <ul className="text-sm space-y-1">
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-green-400" />
-                      Chillers and cooling plant
+                      <span className="text-white/70">Chillers and cooling plant</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-green-400" />
-                      Air handling units
+                      <span className="text-white/70">Air handling units</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-green-400" />
-                      Heating systems (electric)
+                      <span className="text-white/70">Heating systems (electric)</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-green-400" />
-                      Lighting (especially older buildings)
+                      <span className="text-white/70">Lighting (especially older buildings)</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-green-400" />
-                      Server rooms and data centres
+                      <span className="text-white/70">Server rooms and data centres</span>
                     </li>
                   </ul>
                 </div>
@@ -394,58 +376,58 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
                   <ul className="text-sm space-y-1">
                     <li className="flex items-center gap-2">
                       <Info className="w-4 h-4 text-blue-400" />
-                      Lifts and escalators
+                      <span className="text-white/70">Lifts and escalators</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <Info className="w-4 h-4 text-blue-400" />
-                      Small power circuits
+                      <span className="text-white/70">Small power circuits</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <Info className="w-4 h-4 text-blue-400" />
-                      Kitchen equipment
+                      <span className="text-white/70">Kitchen equipment</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <Info className="w-4 h-4 text-blue-400" />
-                      External lighting
+                      <span className="text-white/70">External lighting</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <Info className="w-4 h-4 text-blue-400" />
-                      Domestic hot water
+                      <span className="text-white/70">Domestic hot water</span>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-elec-yellow font-semibold mb-3">Site Survey Checklist</h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Physical Assessment:</p>
-                  <ul className="space-y-1 text-gray-300">
-                    <li>☐ Distribution board space availability</li>
-                    <li>☐ CT mounting space around cables/busbars</li>
-                    <li>☐ Cable route options for comms wiring</li>
-                    <li>☐ Access for future maintenance</li>
-                    <li>☐ Environmental conditions (temperature, dust)</li>
+                  <ul className="space-y-1 text-white/70">
+                    <li>- Distribution board space availability</li>
+                    <li>- CT mounting space around cables/busbars</li>
+                    <li>- Cable route options for comms wiring</li>
+                    <li>- Access for future maintenance</li>
+                    <li>- Environmental conditions (temperature, dust)</li>
                   </ul>
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Electrical Assessment:</p>
-                  <ul className="space-y-1 text-gray-300">
-                    <li>☐ Maximum demand on each circuit</li>
-                    <li>☐ Cable sizes and current ratings</li>
-                    <li>☐ Existing meter infrastructure</li>
-                    <li>☐ Isolation switching arrangements</li>
-                    <li>☐ Earthing and bonding provisions</li>
+                  <ul className="space-y-1 text-white/70">
+                    <li>- Maximum demand on each circuit</li>
+                    <li>- Cable sizes and current ratings</li>
+                    <li>- Existing meter infrastructure</li>
+                    <li>- Isolation switching arrangements</li>
+                    <li>- Earthing and bonding provisions</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <div className="bg-blue-900/20 border border-blue-600/30 rounded-lg p-4">
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-blue-400 mb-2">Pro Tip: Metering Point Validation</h4>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white/80 text-sm">
                 Before finalising meter locations, verify that the sum of proposed sub-meters will account
                 for at least 90% of the main incoming meter reading. Create a simple spreadsheet listing each
                 proposed metering point with estimated annual kWh consumption to validate coverage.
@@ -455,21 +437,20 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
         </section>
 
         {/* Section 3: CT Selection and Installation */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">3</span>
-            </div>
-            <h2 className="text-xl font-semibold text-white">CT Selection and Installation Requirements</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            <Settings className="w-5 h-5 text-elec-yellow" />
+            CT Selection and Installation Requirements
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white/80">
             <p>
               Current transformers (CTs) are fundamental to most sub-metering installations. Correct
               selection and installation is critical for measurement accuracy and system safety.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                 <Settings className="w-5 h-5" />
                 CT Selection Criteria
@@ -477,24 +458,24 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-600">
+                    <tr className="border-b border-white/20">
                       <th className="text-left py-2 text-white">Parameter</th>
                       <th className="text-left py-2 text-white">Billing/MID</th>
                       <th className="text-left py-2 text-white">Monitoring</th>
                     </tr>
                   </thead>
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-700">
+                  <tbody className="text-white/70">
+                    <tr className="border-b border-white/10">
                       <td className="py-2">Accuracy Class</td>
                       <td className="py-2 text-green-400">Class 0.5S or Class 1</td>
                       <td className="py-2">Class 1 or Class 3</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2">Ratio Selection</td>
                       <td className="py-2">Max load at 100-120% of CT primary</td>
                       <td className="py-2">Max load at 60-120% of CT primary</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2">Output</td>
                       <td className="py-2">5A or 1A secondary (matched to meter)</td>
                       <td className="py-2">5A, 1A, or 333mV</td>
@@ -510,62 +491,62 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-green-600/30">
+              <div className="bg-white/5 rounded-lg p-4 border border-green-500/30">
                 <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
                   <Cable className="w-5 h-5" />
                   Solid-Core CTs
                 </h4>
-                <ul className="text-sm space-y-1 text-gray-300">
-                  <li>• Higher accuracy available</li>
-                  <li>• More cost-effective</li>
-                  <li>• Requires cable disconnection for installation</li>
-                  <li>• Best for new installations</li>
-                  <li>• Available in larger window sizes</li>
+                <ul className="text-sm space-y-1 text-white/70">
+                  <li>- Higher accuracy available</li>
+                  <li>- More cost-effective</li>
+                  <li>- Requires cable disconnection for installation</li>
+                  <li>- Best for new installations</li>
+                  <li>- Available in larger window sizes</li>
                 </ul>
               </div>
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-blue-600/30">
+              <div className="bg-white/5 rounded-lg p-4 border border-blue-500/30">
                 <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
                   <Cable className="w-5 h-5" />
                   Split-Core CTs
                 </h4>
-                <ul className="text-sm space-y-1 text-gray-300">
-                  <li>• Can install without disconnection</li>
-                  <li>• Ideal for retrofit applications</li>
-                  <li>• Higher cost per unit</li>
-                  <li>• Ensure proper closure and locking</li>
-                  <li>• Check accuracy after closing</li>
+                <ul className="text-sm space-y-1 text-white/70">
+                  <li>- Can install without disconnection</li>
+                  <li>- Ideal for retrofit applications</li>
+                  <li>- Higher cost per unit</li>
+                  <li>- Ensure proper closure and locking</li>
+                  <li>- Check accuracy after closing</li>
                 </ul>
               </div>
             </div>
 
-            <div className="bg-red-900/20 border border-red-600/30 rounded-lg p-4">
+            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-red-400 mb-2 flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5" />
                 Critical Safety Warning: CT Secondary Circuits
               </h4>
-              <p className="text-gray-300 text-sm mb-2">
+              <p className="text-white/80 text-sm mb-2">
                 <strong>NEVER open-circuit a CT secondary while the primary is energised.</strong> This causes
                 dangerous high voltages on the secondary terminals that can cause electric shock, burns, and
                 equipment damage.
               </p>
-              <ul className="text-sm text-gray-300 space-y-1">
-                <li>• Always short-circuit CT secondary before disconnecting meter</li>
-                <li>• Use CTs with built-in shorting switches where possible</li>
-                <li>• Install shorting terminal blocks for maintenance access</li>
-                <li>• Label all CT circuits clearly with warnings</li>
+              <ul className="text-sm text-white/70 space-y-1">
+                <li>- Always short-circuit CT secondary before disconnecting meter</li>
+                <li>- Use CTs with built-in shorting switches where possible</li>
+                <li>- Install shorting terminal blocks for maintenance access</li>
+                <li>- Label all CT circuits clearly with warnings</li>
               </ul>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-elec-yellow font-semibold mb-3">CT Installation Best Practices</h3>
-              <div className="space-y-2 text-sm text-gray-300">
-                <p>• Install CTs on all three phases - do not rely on multipliers for balanced loads</p>
-                <p>• Ensure CT orientation matches current flow (P1/K to supply, P2/L to load)</p>
-                <p>• Maintain minimum clearances from busbars and adjacent phases</p>
-                <p>• Use screened twisted-pair cable for CT secondary connections</p>
-                <p>• Calculate total burden: meter burden + cable resistance (use 0.017Ω/m for 2.5mm² cable)</p>
-                <p>• Provide cable support and strain relief - avoid tension on CT terminals</p>
-                <p>• Label all CTs with circuit reference and phase identification</p>
+              <div className="space-y-2 text-sm text-white/70">
+                <p>- Install CTs on all three phases - do not rely on multipliers for balanced loads</p>
+                <p>- Ensure CT orientation matches current flow (P1/K to supply, P2/L to load)</p>
+                <p>- Maintain minimum clearances from busbars and adjacent phases</p>
+                <p>- Use screened twisted-pair cable for CT secondary connections</p>
+                <p>- Calculate total burden: meter burden + cable resistance (use 0.017 ohm/m for 2.5mm² cable)</p>
+                <p>- Provide cable support and strain relief - avoid tension on CT terminals</p>
+                <p>- Label all CTs with circuit reference and phase identification</p>
               </div>
             </div>
           </div>
@@ -581,15 +562,14 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
         />
 
         {/* Section 4: Communication Protocols */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">4</span>
-            </div>
-            <h2 className="text-xl font-semibold text-white">Pulse Outputs vs Modbus vs M-Bus Communication</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            <Wifi className="w-5 h-5 text-elec-yellow" />
+            Pulse Outputs vs Modbus vs M-Bus Communication
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white/80">
             <p>
               Sub-meters require a means of communicating data to energy management systems or BMS.
               Understanding the strengths and limitations of each protocol is essential for system design.
@@ -597,7 +577,7 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
 
             <div className="space-y-4">
               {/* Pulse Output */}
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                   <Wifi className="w-5 h-5" />
                   Pulse Output
@@ -605,21 +585,21 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-white font-medium mb-2">Characteristics:</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• Simple, proven technology</li>
-                      <li>• One-way communication only</li>
-                      <li>• Typical: 1000 pulses/kWh or 100 pulses/kWh</li>
-                      <li>• Requires one cable per meter</li>
-                      <li>• Maximum distance: ~100m typical</li>
+                    <ul className="text-sm space-y-1 text-white/70">
+                      <li>- Simple, proven technology</li>
+                      <li>- One-way communication only</li>
+                      <li>- Typical: 1000 pulses/kWh or 100 pulses/kWh</li>
+                      <li>- Requires one cable per meter</li>
+                      <li>- Maximum distance: ~100m typical</li>
                     </ul>
                   </div>
                   <div>
                     <p className="text-white font-medium mb-2">Best Used For:</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• Simple BMS integration</li>
-                      <li>• Existing pulse-counting infrastructure</li>
-                      <li>• Budget-constrained projects</li>
-                      <li>• Small number of meters</li>
+                    <ul className="text-sm space-y-1 text-white/70">
+                      <li>- Simple BMS integration</li>
+                      <li>- Existing pulse-counting infrastructure</li>
+                      <li>- Budget-constrained projects</li>
+                      <li>- Small number of meters</li>
                     </ul>
                     <p className="text-red-400 text-sm mt-2">
                       Limitation: Pulses can be lost, no verification, kWh only
@@ -629,7 +609,7 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
               </div>
 
               {/* Modbus */}
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                   <Network className="w-5 h-5" />
                   Modbus RTU/TCP
@@ -637,35 +617,35 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-white font-medium mb-2">Characteristics:</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• Bi-directional communication</li>
-                      <li>• RS485 (RTU): up to 32 devices, 1200m</li>
-                      <li>• TCP/IP: unlimited devices via Ethernet</li>
-                      <li>• Multiple parameters: kWh, kW, V, A, PF</li>
-                      <li>• Industry standard protocol</li>
+                    <ul className="text-sm space-y-1 text-white/70">
+                      <li>- Bi-directional communication</li>
+                      <li>- RS485 (RTU): up to 32 devices, 1200m</li>
+                      <li>- TCP/IP: unlimited devices via Ethernet</li>
+                      <li>- Multiple parameters: kWh, kW, V, A, PF</li>
+                      <li>- Industry standard protocol</li>
                     </ul>
                   </div>
                   <div>
                     <p className="text-white font-medium mb-2">Best Used For:</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• BMS and SCADA integration</li>
-                      <li>• Multi-parameter monitoring</li>
-                      <li>• Existing Modbus infrastructure</li>
-                      <li>• Power quality monitoring</li>
+                    <ul className="text-sm space-y-1 text-white/70">
+                      <li>- BMS and SCADA integration</li>
+                      <li>- Multi-parameter monitoring</li>
+                      <li>- Existing Modbus infrastructure</li>
+                      <li>- Power quality monitoring</li>
                     </ul>
                     <p className="text-green-400 text-sm mt-2">
                       Widely supported, good documentation
                     </p>
                   </div>
                 </div>
-                <div className="mt-3 p-3 bg-[#2a2a2a] rounded border border-gray-700">
+                <div className="mt-3 p-3 bg-white/5 rounded border border-white/10">
                   <p className="text-sm"><strong className="text-elec-yellow">RS485 Wiring:</strong> Use shielded twisted pair,
-                  terminate both ends with 120Ω resistors, daisy-chain topology only (no star/spur connections).</p>
+                  terminate both ends with 120 ohm resistors, daisy-chain topology only (no star/spur connections).</p>
                 </div>
               </div>
 
               {/* M-Bus */}
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                   <Network className="w-5 h-5" />
                   M-Bus (EN 13757)
@@ -673,60 +653,60 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-white font-medium mb-2">Characteristics:</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• Designed specifically for utility metering</li>
-                      <li>• Up to 250 devices per master</li>
-                      <li>• Simple 2-wire connection</li>
-                      <li>• Bus-powered meters available</li>
-                      <li>• Free topology (star, daisy-chain, tree)</li>
+                    <ul className="text-sm space-y-1 text-white/70">
+                      <li>- Designed specifically for utility metering</li>
+                      <li>- Up to 250 devices per master</li>
+                      <li>- Simple 2-wire connection</li>
+                      <li>- Bus-powered meters available</li>
+                      <li>- Free topology (star, daisy-chain, tree)</li>
                     </ul>
                   </div>
                   <div>
                     <p className="text-white font-medium mb-2">Best Used For:</p>
-                    <ul className="text-sm space-y-1">
-                      <li>• Large-scale sub-metering</li>
-                      <li>• Multi-utility metering (elec, gas, water)</li>
-                      <li>• Remote/automatic meter reading</li>
-                      <li>• New-build projects</li>
+                    <ul className="text-sm space-y-1 text-white/70">
+                      <li>- Large-scale sub-metering</li>
+                      <li>- Multi-utility metering (elec, gas, water)</li>
+                      <li>- Remote/automatic meter reading</li>
+                      <li>- New-build projects</li>
                     </ul>
                     <p className="text-blue-400 text-sm mt-2">
                       Ideal for multi-tenant buildings
                     </p>
                   </div>
                 </div>
-                <div className="mt-3 p-3 bg-[#2a2a2a] rounded border border-gray-700">
+                <div className="mt-3 p-3 bg-white/5 rounded border border-white/10">
                   <p className="text-sm"><strong className="text-elec-yellow">M-Bus Masters:</strong> Required to convert
                   M-Bus to Modbus/TCP for BMS integration. Size master for total unit loads (each meter typically 1-4 units).</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-elec-yellow font-semibold mb-3">Protocol Comparison Summary</h3>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-600">
+                    <tr className="border-b border-white/20">
                       <th className="text-left py-2 text-white">Feature</th>
                       <th className="text-left py-2 text-white">Pulse</th>
                       <th className="text-left py-2 text-white">Modbus</th>
                       <th className="text-left py-2 text-white">M-Bus</th>
                     </tr>
                   </thead>
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-700">
+                  <tbody className="text-white/70">
+                    <tr className="border-b border-white/10">
                       <td className="py-2">Devices per bus</td>
                       <td className="py-2">1</td>
                       <td className="py-2">32 (RS485)</td>
                       <td className="py-2">250</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2">Max distance</td>
                       <td className="py-2">100m</td>
                       <td className="py-2">1200m</td>
                       <td className="py-2">1000m+</td>
                     </tr>
-                    <tr className="border-b border-gray-700">
+                    <tr className="border-b border-white/10">
                       <td className="py-2">Data richness</td>
                       <td className="py-2">kWh only</td>
                       <td className="py-2">Multi-parameter</td>
@@ -755,45 +735,44 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
         />
 
         {/* Section 5: BMS Integration */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">5</span>
-            </div>
-            <h2 className="text-xl font-semibold text-white">Integration with BMS and Energy Management Systems</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            <Building2 className="w-5 h-5 text-elec-yellow" />
+            Integration with BMS and Energy Management Systems
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white/80">
             <p>
               Effective sub-metering requires seamless integration with Building Management Systems (BMS)
               and dedicated Energy Management Systems (EMS) to enable monitoring, analysis, and automated
               reporting.
             </p>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                 <Building2 className="w-5 h-5" />
                 Integration Architecture Options
               </h3>
               <div className="space-y-3">
-                <div className="p-3 bg-[#2a2a2a] rounded border border-gray-700">
+                <div className="p-3 bg-white/5 rounded border border-white/10">
                   <p className="font-medium text-white">Option 1: Direct BMS Integration</p>
-                  <p className="text-sm mt-1">Meters → Modbus/M-Bus → BMS Controller → Central BMS</p>
-                  <p className="text-sm text-gray-400 mt-1">
+                  <p className="text-sm mt-1 text-white/70">Meters - Modbus/M-Bus - BMS Controller - Central BMS</p>
+                  <p className="text-sm text-white/60 mt-1">
                     Best when BMS already exists and has capacity. Energy data stored in BMS historian.
                   </p>
                 </div>
-                <div className="p-3 bg-[#2a2a2a] rounded border border-gray-700">
+                <div className="p-3 bg-white/5 rounded border border-white/10">
                   <p className="font-medium text-white">Option 2: Dedicated Energy Gateway</p>
-                  <p className="text-sm mt-1">Meters → Energy Gateway → BMS + Cloud EMS</p>
-                  <p className="text-sm text-gray-400 mt-1">
+                  <p className="text-sm mt-1 text-white/70">Meters - Energy Gateway - BMS + Cloud EMS</p>
+                  <p className="text-sm text-white/60 mt-1">
                     Gateway provides data logging, local storage, and forwards to multiple destinations.
                   </p>
                 </div>
-                <div className="p-3 bg-[#2a2a2a] rounded border border-gray-700">
+                <div className="p-3 bg-white/5 rounded border border-white/10">
                   <p className="font-medium text-white">Option 3: Cloud-Based EMS</p>
-                  <p className="text-sm mt-1">Meters → IoT Gateway → Cloud Platform → Dashboards/Alerts</p>
-                  <p className="text-sm text-gray-400 mt-1">
+                  <p className="text-sm mt-1 text-white/70">Meters - IoT Gateway - Cloud Platform - Dashboards/Alerts</p>
+                  <p className="text-sm text-white/60 mt-1">
                     Modern approach with remote access, automatic updates, and advanced analytics.
                   </p>
                 </div>
@@ -801,64 +780,64 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-white mb-2">Data Points to Integrate</h4>
-                <ul className="text-sm space-y-1 text-gray-300">
-                  <li>• Total kWh (import and export)</li>
-                  <li>• Instantaneous kW demand</li>
-                  <li>• Maximum demand (kW and kVA)</li>
-                  <li>• Voltage (per phase)</li>
-                  <li>• Current (per phase)</li>
-                  <li>• Power factor</li>
-                  <li>• kVArh (reactive energy)</li>
-                  <li>• Harmonics (THD) where relevant</li>
+                <ul className="text-sm space-y-1 text-white/70">
+                  <li>- Total kWh (import and export)</li>
+                  <li>- Instantaneous kW demand</li>
+                  <li>- Maximum demand (kW and kVA)</li>
+                  <li>- Voltage (per phase)</li>
+                  <li>- Current (per phase)</li>
+                  <li>- Power factor</li>
+                  <li>- kVArh (reactive energy)</li>
+                  <li>- Harmonics (THD) where relevant</li>
                 </ul>
               </div>
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-white mb-2">Logging Requirements (CIBSE TM39)</h4>
-                <ul className="text-sm space-y-1 text-gray-300">
-                  <li>• Interval: 15-minute minimum (half-hourly acceptable)</li>
-                  <li>• Retention: 3 years minimum recommended</li>
-                  <li>• Timestamp: Synchronise all meters to NTP</li>
-                  <li>• Backup: Daily automatic backup</li>
-                  <li>• Access: Secure with audit trail</li>
-                  <li>• Export: CSV/Excel capability</li>
+                <ul className="text-sm space-y-1 text-white/70">
+                  <li>- Interval: 15-minute minimum (half-hourly acceptable)</li>
+                  <li>- Retention: 3 years minimum recommended</li>
+                  <li>- Timestamp: Synchronise all meters to NTP</li>
+                  <li>- Backup: Daily automatic backup</li>
+                  <li>- Access: Secure with audit trail</li>
+                  <li>- Export: CSV/Excel capability</li>
                 </ul>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-elec-yellow font-semibold mb-3">Commissioning Checklist for BMS Integration</h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Communication Verification:</p>
-                  <ul className="space-y-1 text-gray-300">
-                    <li>☐ All meters responding on bus</li>
-                    <li>☐ Correct Modbus addresses assigned</li>
-                    <li>☐ No communication errors/timeouts</li>
-                    <li>☐ Data refresh rate acceptable</li>
-                    <li>☐ Backup communication tested</li>
+                  <ul className="space-y-1 text-white/70">
+                    <li>- All meters responding on bus</li>
+                    <li>- Correct Modbus addresses assigned</li>
+                    <li>- No communication errors/timeouts</li>
+                    <li>- Data refresh rate acceptable</li>
+                    <li>- Backup communication tested</li>
                   </ul>
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Data Validation:</p>
-                  <ul className="space-y-1 text-gray-300">
-                    <li>☐ Reading values are sensible</li>
-                    <li>☐ kWh accumulating correctly</li>
-                    <li>☐ CT polarity correct (positive values)</li>
-                    <li>☐ Timestamps aligned</li>
-                    <li>☐ Scaling factors correct</li>
+                  <ul className="space-y-1 text-white/70">
+                    <li>- Reading values are sensible</li>
+                    <li>- kWh accumulating correctly</li>
+                    <li>- CT polarity correct (positive values)</li>
+                    <li>- Timestamps aligned</li>
+                    <li>- Scaling factors correct</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <div className="bg-green-900/20 border border-green-600/30 rounded-lg p-4">
+            <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5" />
                 ESOS Compliance Benefits
               </h4>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white/80 text-sm">
                 Organisations qualifying for ESOS (energy consumption above 40 GWh or employing 250+ staff)
                 benefit significantly from comprehensive sub-metering. Quality metering data can reduce the
                 scope and cost of ESOS audits by providing direct measurement rather than requiring estimates.
@@ -869,26 +848,25 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
         </section>
 
         {/* Section 6: Tenant Billing */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-              <span className="text-elec-yellow font-bold">6</span>
-            </div>
-            <h2 className="text-xl font-semibold text-white">Metering for Tenant Billing and Cost Allocation</h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            <Receipt className="w-5 h-5 text-elec-yellow" />
+            Metering for Tenant Billing and Cost Allocation
+          </h2>
 
-          <div className="space-y-4 text-gray-300">
+          <div className="space-y-4 text-white/80">
             <p>
               Sub-metering for tenant billing in multi-occupied buildings has specific legal and technical
               requirements. Understanding MID regulations and fair allocation principles is essential.
             </p>
 
-            <div className="bg-red-900/20 border border-red-600/30 rounded-lg p-4">
+            <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-red-400 mb-2 flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5" />
                 Legal Requirement: MID Compliance
               </h4>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white/80 text-sm">
                 Any meter used for billing or resale of electricity <strong className="text-white">MUST</strong> be
                 MID-approved (Measuring Instruments Directive 2014/32/EU, retained in UK law). Using non-MID
                 meters for billing is illegal under trading standards legislation and renders invoices
@@ -896,7 +874,7 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-elec-yellow font-semibold mb-3 flex items-center gap-2">
                 <Receipt className="w-5 h-5" />
                 Tenant Billing Metering Requirements
@@ -906,87 +884,87 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
                   <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-white">MID-Approved Meters</p>
-                    <p className="text-gray-400">Class B or better accuracy, with tamper-evident seals intact</p>
+                    <p className="text-white/60">Class B or better accuracy, with tamper-evident seals intact</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-white">Accessible Display</p>
-                    <p className="text-gray-400">Tenants must be able to read their meter or receive regular statements</p>
+                    <p className="text-white/60">Tenants must be able to read their meter or receive regular statements</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-white">Clear Demarcation</p>
-                    <p className="text-gray-400">Each tenant area must have dedicated metering point(s)</p>
+                    <p className="text-white/60">Each tenant area must have dedicated metering point(s)</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-white">Calibration Records</p>
-                    <p className="text-gray-400">Maintain records of meter installation and any verification tests</p>
+                    <p className="text-white/60">Maintain records of meter installation and any verification tests</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-elec-yellow font-semibold mb-3">Common Area and Landlord Supply Allocation</h3>
-              <p className="mb-3">
+              <p className="mb-3 text-white/80">
                 Energy consumed in common areas (lobbies, corridors, car parks, plant rooms) must be fairly
                 allocated. Common methods include:
               </p>
               <div className="grid md:grid-cols-2 gap-3">
-                <div className="p-3 bg-[#2a2a2a] rounded border border-gray-700">
+                <div className="p-3 bg-white/5 rounded border border-white/10">
                   <p className="font-medium text-white text-sm">Pro-Rata by Floor Area</p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-white/60 mt-1">
                     Common costs split proportionally by NIA (Net Internal Area) of each tenancy
                   </p>
                 </div>
-                <div className="p-3 bg-[#2a2a2a] rounded border border-gray-700">
+                <div className="p-3 bg-white/5 rounded border border-white/10">
                   <p className="font-medium text-white text-sm">Pro-Rata by Metered Consumption</p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-white/60 mt-1">
                     Common costs allocated based on % of total tenant consumption
                   </p>
                 </div>
-                <div className="p-3 bg-[#2a2a2a] rounded border border-gray-700">
+                <div className="p-3 bg-white/5 rounded border border-white/10">
                   <p className="font-medium text-white text-sm">Fixed Service Charge</p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-white/60 mt-1">
                     Agreed fixed amount per tenancy for common area energy
                   </p>
                 </div>
-                <div className="p-3 bg-[#2a2a2a] rounded border border-gray-700">
+                <div className="p-3 bg-white/5 rounded border border-white/10">
                   <p className="font-medium text-white text-sm">Direct Metering</p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-white/60 mt-1">
                     Separate landlord supply meter with costs passed through service charge
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4 border border-gray-600">
+            <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-elec-yellow font-semibold mb-3">Reconciliation Process</h3>
-              <p className="text-sm mb-3">
+              <p className="text-sm mb-3 text-white/80">
                 Regular reconciliation ensures metering accuracy and identifies issues:
               </p>
-              <div className="bg-[#2a2a2a] p-3 rounded border border-gray-700">
-                <p className="font-mono text-sm text-center">
-                  Main Incoming (kWh) = Σ Tenant Meters + Common Areas + Distribution Losses
+              <div className="bg-white/5 p-3 rounded border border-white/10">
+                <p className="font-mono text-sm text-center text-white">
+                  Main Incoming (kWh) = Sum of Tenant Meters + Common Areas + Distribution Losses
                 </p>
               </div>
-              <p className="text-sm mt-3 text-gray-400">
+              <p className="text-sm mt-3 text-white/60">
                 <strong className="text-white">Acceptable variance:</strong> 2-5% typically accounts for
                 distribution losses and meter tolerances. Investigate variances exceeding 5% for meter
                 faults, bypassing, or unmeasured loads.
               </p>
             </div>
 
-            <div className="bg-blue-900/20 border border-blue-600/30 rounded-lg p-4">
+            <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-blue-400 mb-2">Heat Network Regulations Note</h4>
-              <p className="text-gray-300 text-sm">
+              <p className="text-white/80 text-sm">
                 If the building includes communal heating/cooling supplied to tenants, additional regulations
                 apply under the Heat Network (Metering and Billing) Regulations 2014. Heat meters must also
                 be MID-approved, and consumption information must be provided to customers at least annually
@@ -1005,103 +983,83 @@ const EnergyEfficiencyModule5Section1: React.FC = () => {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-semibold text-white mb-2">Key Standards & Regulations</h3>
-              <ul className="text-sm space-y-1 text-gray-300">
-                <li>• <strong className="text-elec-yellow">CIBSE TM39:</strong> Building energy metering guidance</li>
-                <li>• <strong className="text-elec-yellow">MID 2014/32/EU:</strong> Billing meter requirements</li>
-                <li>• <strong className="text-elec-yellow">EN 13757:</strong> M-Bus communication standard</li>
-                <li>• <strong className="text-elec-yellow">BS EN 61557-12:</strong> Power metering equipment</li>
-                <li>• <strong className="text-elec-yellow">ESOS:</strong> Energy Savings Opportunity Scheme</li>
+              <h3 className="font-semibold text-white mb-2">Key Standards and Regulations</h3>
+              <ul className="text-sm space-y-1 text-white/80">
+                <li>- <strong className="text-elec-yellow">CIBSE TM39:</strong> Building energy metering guidance</li>
+                <li>- <strong className="text-elec-yellow">MID 2014/32/EU:</strong> Billing meter requirements</li>
+                <li>- <strong className="text-elec-yellow">EN 13757:</strong> M-Bus communication standard</li>
+                <li>- <strong className="text-elec-yellow">BS EN 61557-12:</strong> Power metering equipment</li>
+                <li>- <strong className="text-elec-yellow">ESOS:</strong> Energy Savings Opportunity Scheme</li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-white mb-2">Critical Numbers</h3>
-              <ul className="text-sm space-y-1 text-gray-300">
-                <li>• <strong className="text-elec-yellow">90%</strong> - Minimum metering coverage target</li>
-                <li>• <strong className="text-elec-yellow">Class 1</strong> - CT accuracy for billing</li>
-                <li>• <strong className="text-elec-yellow">250</strong> - Max devices on M-Bus</li>
-                <li>• <strong className="text-elec-yellow">1200m</strong> - Max RS485 cable length</li>
-                <li>• <strong className="text-elec-yellow">15 min</strong> - Minimum logging interval</li>
+              <ul className="text-sm space-y-1 text-white/80">
+                <li>- <strong className="text-elec-yellow">90%</strong> - Minimum metering coverage target</li>
+                <li>- <strong className="text-elec-yellow">Class 1</strong> - CT accuracy for billing</li>
+                <li>- <strong className="text-elec-yellow">250</strong> - Max devices on M-Bus</li>
+                <li>- <strong className="text-elec-yellow">1200m</strong> - Max RS485 cable length</li>
+                <li>- <strong className="text-elec-yellow">15 min</strong> - Minimum logging interval</li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-white mb-2">CT Safety Reminders</h3>
-              <ul className="text-sm space-y-1 text-gray-300">
-                <li>• Never open-circuit energised CT secondary</li>
-                <li>• Use shorting blocks for maintenance</li>
-                <li>• Verify CT orientation (P1 to supply)</li>
-                <li>• Calculate total burden including cables</li>
-                <li>• Label all CT circuits clearly</li>
+              <ul className="text-sm space-y-1 text-white/80">
+                <li>- Never open-circuit energised CT secondary</li>
+                <li>- Use shorting blocks for maintenance</li>
+                <li>- Verify CT orientation (P1 to supply)</li>
+                <li>- Calculate total burden including cables</li>
+                <li>- Label all CT circuits clearly</li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-white mb-2">Billing Meter Checklist</h3>
-              <ul className="text-sm space-y-1 text-gray-300">
-                <li>• MID "M" marking present</li>
-                <li>• Seals intact and recorded</li>
-                <li>• Serial number documented</li>
-                <li>• Tenant access arranged</li>
-                <li>• Reconciliation procedure defined</li>
+              <ul className="text-sm space-y-1 text-white/80">
+                <li>- MID "M" marking present</li>
+                <li>- Seals intact and recorded</li>
+                <li>- Serial number documented</li>
+                <li>- Tenant access arranged</li>
+                <li>- Reconciliation procedure defined</li>
               </ul>
             </div>
           </div>
         </section>
 
         {/* Quiz Section */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
+        <section className="bg-white/5 rounded-lg p-6 border border-white/10">
           <h2 className="text-xl font-semibold text-elec-yellow mb-4">Section Quiz</h2>
-          <p className="text-gray-400 mb-6">
+          <p className="text-white/60 mb-6">
             Test your understanding of sub-metering installation strategy with this comprehensive quiz.
           </p>
           <Quiz questions={quizQuestions} moduleId="energy-efficiency-m5s1" />
         </section>
 
         {/* FAQs */}
-        <section className="bg-[#2a2a2a] rounded-lg p-6 border border-gray-700">
+        <section className="bg-white/5 rounded-lg p-6 border border-white/10">
           <h2 className="text-xl font-semibold text-elec-yellow mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border border-gray-700 rounded-lg overflow-hidden"
-              >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-4 text-left bg-[#1a1a1a] hover:bg-[#252525] transition-colors min-h-[44px] touch-manipulation active:scale-[0.98]"
-                >
-                  <span className="font-medium text-white pr-4">{faq.question}</span>
-                  {expandedFAQ === index ? (
-                    <ChevronUp className="w-5 h-5 text-elec-yellow flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-elec-yellow flex-shrink-0" />
-                  )}
-                </button>
-                {expandedFAQ === index && (
-                  <div className="p-4 bg-[#1a1a1a]/50 border-t border-gray-700">
-                    <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
-                  </div>
-                )}
+              <div key={index} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
+                <h3 className="font-medium text-white mb-2">{faq.question}</h3>
+                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row gap-4 justify-between pt-6">
-          <Button
-            onClick={() => navigate('/upskilling/energy-efficiency-module-4')}
-            variant="outline"
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-transparent border-gray-600 text-white hover:bg-gray-800 hover:border-elec-yellow"
-          >
-            <ChevronLeft className="w-5 h-5 mr-2" />
-            Previous: Module 4
+        <nav className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-white/10">
+          <Button variant="outline" asChild className="min-h-[44px] touch-manipulation bg-transparent border-white/20 text-white hover:bg-white/5 hover:border-elec-yellow">
+            <Link to="../../module-4">
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Previous: Module 4
+            </Link>
           </Button>
-          <Button
-            onClick={() => navigate('/upskilling/energy-efficiency-module-5-section-2')}
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90"
-          >
-            Next: Section 2
-            <ChevronRight className="w-5 h-5 ml-2" />
+          <Button asChild className="min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
+            <Link to="../section-2">
+              Next: Section 2
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Link>
           </Button>
         </nav>
       </div>

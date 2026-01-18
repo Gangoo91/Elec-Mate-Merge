@@ -1,4 +1,4 @@
-import { ArrowLeft, Thermometer, CheckCircle, Eye, HelpCircle, Lightbulb, AlertTriangle, Bookmark, ChevronRight, ChevronLeft, Flame, Shield, Ban, Search } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -49,104 +49,74 @@ const quickCheckQuestions = [
 
 const quizQuestions = [
   {
+    id: 1,
     question: "What is the most common cause of overheating at a plug terminal?",
-    options: [
-      "The plug being too old",
-      "A loose connection causing arcing",
-      "Using the appliance outdoors",
-      "The cable being too long"
-    ],
-    correctAnswer: 1
+    options: ["The plug being too old", "A loose connection causing arcing", "Using the appliance outdoors", "The cable being too long"],
+    correctAnswer: 1,
+    explanation: "Loose connections cause high resistance which generates heat. This is the most common cause of overheating at terminals."
   },
   {
+    id: 2,
     question: "Signs of thermal damage on a cable include:",
-    options: [
-      "The cable being slightly dusty",
-      "Hardened, cracked, or discoloured sheath",
-      "Minor surface scratches",
-      "The cable being coiled when stored"
-    ],
-    correctAnswer: 1
+    options: ["The cable being slightly dusty", "Hardened, cracked, or discoloured sheath", "Minor surface scratches", "The cable being coiled when stored"],
+    correctAnswer: 1,
+    explanation: "Hardened, cracked, or discoloured cable sheath indicates heat damage."
   },
   {
+    id: 3,
     question: "An appliance has had ventilation slots covered with tape. What is the correct action?",
-    options: [
-      "Pass - it keeps dust out",
-      "Remove the tape and pass",
-      "Fail - blocked ventilation could cause overheating",
-      "Only fail if the appliance feels warm"
-    ],
-    correctAnswer: 2
+    options: ["Pass - it keeps dust out", "Remove the tape and pass", "Fail - blocked ventilation could cause overheating", "Only fail if the appliance feels warm"],
+    correctAnswer: 2,
+    explanation: "Blocked ventilation is a modification that could cause dangerous overheating. The appliance should fail."
   },
   {
+    id: 4,
     question: "What does a burnt smell from an appliance indicate?",
-    options: [
-      "Normal operation for heating appliances",
-      "The appliance needs cleaning",
-      "Potential internal overheating or damage - investigate",
-      "The fuse needs replacing"
-    ],
-    correctAnswer: 2
+    options: ["Normal operation for heating appliances", "The appliance needs cleaning", "Potential internal overheating or damage - investigate", "The fuse needs replacing"],
+    correctAnswer: 2,
+    explanation: "A burnt smell requires investigation as it may indicate internal overheating or insulation damage."
   },
   {
+    id: 5,
     question: "Which of these is an acceptable modification?",
-    options: [
-      "Replacing a damaged plug with a correct replacement",
-      "Bypassing a thermal cut-out that keeps tripping",
-      "Removing the earth pin from a Class I plug",
-      "Taping over exposed wires"
-    ],
-    correctAnswer: 0
+    options: ["Replacing a damaged plug with a correct replacement", "Bypassing a thermal cut-out that keeps tripping", "Removing the earth pin from a Class I plug", "Taping over exposed wires"],
+    correctAnswer: 0,
+    explanation: "Replacing a damaged plug with the correct replacement is acceptable repair, not a problematic modification."
   },
   {
+    id: 6,
     question: "Melted plastic around a socket outlet connection point suggests:",
-    options: [
-      "The socket is too small",
-      "Poor connection causing arcing and heat buildup",
-      "Normal wear and tear",
-      "The appliance is too powerful"
-    ],
-    correctAnswer: 1
+    options: ["The socket is too small", "Poor connection causing arcing and heat buildup", "Normal wear and tear", "The appliance is too powerful"],
+    correctAnswer: 1,
+    explanation: "Melted plastic indicates significant heat from poor connections or arcing."
   },
   {
+    id: 7,
     question: "What should you check if plug pins show discolouration or pitting?",
-    options: [
-      "Nothing - this is normal with use",
-      "The socket outlets being used",
-      "Both the socket and any signs of arcing or overheating",
-      "Only the fuse rating"
-    ],
-    correctAnswer: 2
+    options: ["Nothing - this is normal with use", "The socket outlets being used", "Both the socket and any signs of arcing or overheating", "Only the fuse rating"],
+    correctAnswer: 2,
+    explanation: "Discoloured or pitted pins require investigation of both the plug and the sockets being used."
   },
   {
+    id: 8,
     question: "An electric heater has had its thermal cut-out bridged with wire. What is the result?",
-    options: [
-      "Pass - it will work better now",
-      "Pass if no other faults found",
-      "Immediate fail - critical safety device bypassed",
-      "Refer to manufacturer only"
-    ],
-    correctAnswer: 2
+    options: ["Pass - it will work better now", "Pass if no other faults found", "Immediate fail - critical safety device bypassed", "Refer to manufacturer only"],
+    correctAnswer: 2,
+    explanation: "Bypassing a thermal cut-out removes essential safety protection. This is an immediate fail."
   },
   {
+    id: 9,
     question: "Which is NOT a sign of previous overheating?",
-    options: [
-      "Brown staining around terminals",
-      "Bubbled or blistered plastic",
-      "Light dust accumulation",
-      "Charred or blackened areas"
-    ],
-    correctAnswer: 2
+    options: ["Brown staining around terminals", "Bubbled or blistered plastic", "Light dust accumulation", "Charred or blackened areas"],
+    correctAnswer: 2,
+    explanation: "Light dust accumulation is normal. The other options all indicate heat damage."
   },
   {
+    id: 10,
     question: "A user reports their kettle 'smells funny' when used. What should you do?",
-    options: [
-      "Tell them it's normal for kettles",
-      "Clean the kettle and pass it",
-      "Investigate for signs of overheating or insulation breakdown",
-      "Replace the fuse and pass"
-    ],
-    correctAnswer: 2
+    options: ["Tell them it's normal for kettles", "Clean the kettle and pass it", "Investigate for signs of overheating or insulation breakdown", "Replace the fuse and pass"],
+    correctAnswer: 2,
+    explanation: "Unusual smells require investigation for potential overheating or insulation problems."
   }
 ];
 
@@ -183,610 +153,316 @@ const PATTestingModule3Section3 = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="..">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="gap-1.5 text-white/70 hover:text-elec-yellow hover:bg-white/5 -ml-2 touch-manipulation active:scale-95 min-h-[44px]"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Module 3</span>
-            </Button>
-          </Link>
-          <span className="text-xs font-medium text-elec-yellow bg-elec-yellow/10 px-2.5 py-1 rounded-full">
-            Section 3 of 5
-          </span>
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
-      <main className="max-w-3xl mx-auto px-4 py-6 sm:py-8 pb-24">
-        {/* Title */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 text-elec-yellow mb-3">
-            <Thermometer className="w-5 h-5" />
-            <span className="text-sm font-semibold tracking-wide uppercase">Module 3.3</span>
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 3 Section 3</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight mb-3">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Signs of Overheating or Modification
           </h1>
-          <p className="text-white/60 text-base sm:text-lg">
-            Detecting thermal damage and unauthorized changes
+          <p className="text-white/80">
+            Detecting thermal damage and unauthorised changes
           </p>
-        </div>
+        </header>
 
-        {/* Quick Summary Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-          <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                <Lightbulb className="w-4 h-4 text-elec-yellow" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white text-sm mb-1">In 30 Seconds</h3>
-                <p className="text-white/70 text-sm leading-relaxed">
-                  Look for discolouration, melted plastic, burn marks, and unusual smells. Check for missing covers, bypassed safety devices, and DIY modifications.
-                </p>
-              </div>
-            </div>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Overheating:</strong> Discolouration, melted plastic, burn marks</li>
+              <li><strong>Causes:</strong> Loose connections, overloading, blocked vents</li>
+              <li><strong>Modifications:</strong> Missing covers, bypassed safety devices</li>
+              <li><strong>Action:</strong> Investigate unusual smells immediately</li>
+            </ul>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
-                <Eye className="w-4 h-4 text-white/70" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white text-sm mb-1">Spot It / Use It</h3>
-                <p className="text-white/70 text-sm leading-relaxed">
-                  Brown staining = past overheating. Missing guards = immediate fail. Bridged safety devices = critical failure. Always investigate unusual smells.
-                </p>
-              </div>
-            </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Brown staining around terminals = past overheating</li>
+              <li><strong>Spot:</strong> Missing guards = immediate fail</li>
+              <li><strong>Spot:</strong> Bridged safety devices = critical failure</li>
+            </ul>
           </div>
         </div>
 
         {/* Learning Outcomes */}
-        <section className="mb-10">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-elec-yellow" />
-            What You'll Learn
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {[
               "Recognise signs of previous overheating",
               "Identify thermal damage to components",
-              "Spot unauthorized modifications",
+              "Spot unauthorised modifications",
               "Assess missing or bypassed safety devices",
               "Evaluate improvised repairs",
               "Make appropriate pass/fail decisions"
-            ].map((outcome, idx) => (
-              <div key={idx} className="flex items-start gap-2 text-white/80 text-sm">
-                <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span>{outcome}</span>
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Section 01: Overheating Indicators */}
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 01: Recognising Overheating Signs */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl sm:text-4xl font-bold text-elec-yellow/30">01</span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Recognising Overheating Signs</h2>
-          </div>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Recognising Overheating Signs
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Overheating is one of the primary causes of electrical fires. Learning to spot the early warning signs can prevent serious incidents.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                <Flame className="w-4 h-4 text-orange-400" />
-                Visual Signs of Overheating
-              </h3>
-              <div className="space-y-3">
-                <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-                  <h4 className="text-red-400 font-semibold text-sm mb-2">Severe (Immediate Fail)</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
-                    <li>• Charring or blackening of components</li>
-                    <li>• Melted or deformed plastic</li>
-                    <li>• Visible burn marks or fire damage</li>
-                    <li>• Bubbling or blistering of surfaces</li>
-                    <li>• Evidence of arcing (pitting, carbon tracks)</li>
-                  </ul>
-                </div>
-                <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                  <h4 className="text-amber-400 font-semibold text-sm mb-2">Warning Signs (Investigate Further)</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
-                    <li>• Brown or yellow discolouration on white plastics</li>
-                    <li>• Localized colour changes around terminals</li>
-                    <li>• Hardened or brittle cable near heat sources</li>
-                    <li>• Unusual smell (burning, electrical, plastic)</li>
-                    <li>• Excessive warmth during normal operation</li>
-                  </ul>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Severe Signs (Immediate Fail):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Charring or blackening of components</li>
+                <li>Melted or deformed plastic</li>
+                <li>Visible burn marks or fire damage</li>
+                <li>Bubbling or blistering of surfaces</li>
+                <li>Evidence of arcing (pitting, carbon tracks)</li>
+              </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Common Overheating Locations</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium text-sm">Plug Terminals</p>
-                  <p className="text-white/60 text-xs">Loose connections cause arcing and heat</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium text-sm">Fuse Carrier</p>
-                  <p className="text-white/60 text-xs">Poor fuse contact generates heat</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium text-sm">Cable Entry Points</p>
-                  <p className="text-white/60 text-xs">Internal conductor damage creates resistance</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium text-sm">Appliance Connections</p>
-                  <p className="text-white/60 text-xs">Terminal blocks and internal wiring</p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Warning Signs (Investigate Further):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Brown or yellow discolouration on white plastics</li>
+                <li>Localised colour changes around terminals</li>
+                <li>Hardened or brittle cable near heat sources</li>
+                <li>Unusual smell (burning, electrical, plastic)</li>
+                <li>Excessive warmth during normal operation</li>
+              </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">What Causes Overheating?</h3>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-start gap-3">
-                  <span className="text-elec-yellow font-bold">1.</span>
-                  <div>
-                    <p className="text-white font-medium">Loose Connections</p>
-                    <p className="text-white/60">High resistance at poor contacts generates heat. The most common cause.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-elec-yellow font-bold">2.</span>
-                  <div>
-                    <p className="text-white font-medium">Overloading</p>
-                    <p className="text-white/60">Drawing more current than components are rated for.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-elec-yellow font-bold">3.</span>
-                  <div>
-                    <p className="text-white font-medium">Damaged Conductors</p>
-                    <p className="text-white/60">Broken strands reduce conductor area, increasing resistance.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-elec-yellow font-bold">4.</span>
-                  <div>
-                    <p className="text-white font-medium">Blocked Ventilation</p>
-                    <p className="text-white/60">Heat cannot escape, leading to thermal buildup.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-elec-yellow font-bold">5.</span>
-                  <div>
-                    <p className="text-white font-medium">Arcing</p>
-                    <p className="text-white/60">Electrical discharge across gaps generates intense localized heat.</p>
-                  </div>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Common Overheating Locations:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Plug terminals:</strong> Loose connections cause arcing and heat</li>
+                <li><strong>Fuse carrier:</strong> Poor fuse contact generates heat</li>
+                <li><strong>Cable entry points:</strong> Internal conductor damage creates resistance</li>
+                <li><strong>Appliance connections:</strong> Terminal blocks and internal wiring</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">What Causes Overheating?</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Loose connections:</strong> High resistance at poor contacts generates heat (most common)</li>
+                <li><strong>Overloading:</strong> Drawing more current than components are rated for</li>
+                <li><strong>Damaged conductors:</strong> Broken strands reduce conductor area, increasing resistance</li>
+                <li><strong>Blocked ventilation:</strong> Heat cannot escape, leading to thermal buildup</li>
+                <li><strong>Arcing:</strong> Electrical discharge across gaps generates intense localised heat</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 1 */}
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 02: Thermal Damage Assessment */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl sm:text-4xl font-bold text-elec-yellow/30">02</span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Thermal Damage Assessment</h2>
-          </div>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Thermal Damage Assessment
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Different materials show thermal damage in different ways. Understanding these signs helps you assess the severity of past overheating events.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Plastic and Insulation Damage</h3>
-              <div className="space-y-3">
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">Discolouration</p>
-                  <p className="text-white/60 text-sm">White plastics turn yellow/brown. Usually indicates temperatures above 60-80°C sustained over time.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">Softening/Deformation</p>
-                  <p className="text-white/60 text-sm">PVC softens around 80°C, deforms permanently. Indicates serious overheating event.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">Bubbling/Blistering</p>
-                  <p className="text-white/60 text-sm">Gas release from decomposing plastic. Indicates temperatures over 150°C.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">Brittleness/Cracking</p>
-                  <p className="text-white/60 text-sm">Repeated heating cycles damage plastic structure. May crumble when touched.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">Charring</p>
-                  <p className="text-white/60 text-sm">Black carbonised material. Indicates sustained temperatures over 300°C - fire risk.</p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Plastic and Insulation Damage:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Discolouration:</strong> White plastics turn yellow/brown. Indicates temperatures above 60-80°C sustained over time.</li>
+                <li><strong>Softening/Deformation:</strong> PVC softens around 80°C, deforms permanently. Indicates serious overheating.</li>
+                <li><strong>Bubbling/Blistering:</strong> Gas release from decomposing plastic. Indicates temperatures over 150°C.</li>
+                <li><strong>Brittleness/Cracking:</strong> Repeated heating cycles damage plastic structure. May crumble when touched.</li>
+                <li><strong>Charring:</strong> Black carbonised material. Indicates sustained temperatures over 300°C - fire risk.</li>
+              </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Metal Component Damage</h3>
-              <div className="space-y-3">
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">Discolouration (Heat Tint)</p>
-                  <p className="text-white/60 text-sm">Copper turns from bright to dull brown/black with oxidation. Brass may show rainbow colours.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">Pitting</p>
-                  <p className="text-white/60 text-sm">Small craters from arcing. Often seen on plug pins and socket contacts.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">Welding/Fusion</p>
-                  <p className="text-white/60 text-sm">Components stuck together from melting. Indicates very high temperatures from arcing.</p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Metal Component Damage:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Discolouration (Heat Tint):</strong> Copper turns from bright to dull brown/black with oxidation. Brass may show rainbow colours.</li>
+                <li><strong>Pitting:</strong> Small craters from arcing. Often seen on plug pins and socket contacts.</li>
+                <li><strong>Welding/Fusion:</strong> Components stuck together from melting. Indicates very high temperatures from arcing.</li>
+              </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Cable-Specific Heat Damage</h3>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  <Flame className="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Hardened sheath</strong> - Loss of flexibility indicates heat degradation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Flame className="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Cracked insulation</strong> - Often seen near appliance entry where heat builds up</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Flame className="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Fused conductors</strong> - Strands melted together from internal arcing</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Flame className="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                  <span><strong className="text-white">Sticky or tacky sheath</strong> - Plasticizers migrating out due to heat</span>
-                </li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Cable-Specific Heat Damage:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Hardened sheath:</strong> Loss of flexibility indicates heat degradation</li>
+                <li><strong>Cracked insulation:</strong> Often seen near appliance entry where heat builds up</li>
+                <li><strong>Fused conductors:</strong> Strands melted together from internal arcing</li>
+                <li><strong>Sticky or tacky sheath:</strong> Plasticisers migrating out due to heat</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 2 */}
         <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: Unauthorized Modifications */}
+        {/* Section 03: Identifying Unauthorised Modifications */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl sm:text-4xl font-bold text-elec-yellow/30">03</span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Identifying Unauthorized Modifications</h2>
-          </div>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Identifying Unauthorised Modifications
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Modifications to appliances can compromise their safety design. Some changes are acceptable; many are not.
             </p>
 
-            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 sm:p-5">
-              <h3 className="text-red-400 font-semibold mb-3 flex items-center gap-2">
-                <Ban className="w-4 h-4" />
-                Unacceptable Modifications (Immediate Fail)
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">1.</span>
-                  <div>
-                    <p className="text-white font-medium">Bypassed Safety Devices</p>
-                    <p className="text-white/60 text-sm">Thermal cut-outs, pressure switches, or interlocks bridged or removed</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">2.</span>
-                  <div>
-                    <p className="text-white font-medium">Removed Guards or Covers</p>
-                    <p className="text-white/60 text-sm">Safety covers, finger guards, or protective shields missing</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">3.</span>
-                  <div>
-                    <p className="text-white font-medium">Additional Holes or Openings</p>
-                    <p className="text-white/60 text-sm">Holes drilled for cables, ventilation, or access compromise IP rating and insulation</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">4.</span>
-                  <div>
-                    <p className="text-white font-medium">Non-Original Components</p>
-                    <p className="text-white/60 text-sm">Incorrect replacement parts that affect safety (wrong rating, size, type)</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">5. </span>
-                  <div>
-                    <p className="text-white font-medium">Disabled Earth Connection</p>
-                    <p className="text-white/60 text-sm">Earth conductor cut, disconnected, or removed from Class I appliances</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">6.</span>
-                  <div>
-                    <p className="text-white font-medium">Blocked Ventilation</p>
-                    <p className="text-white/60 text-sm">Vents covered with tape, labels, or other materials</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 sm:p-5">
-              <h3 className="text-green-400 font-semibold mb-3 flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
-                Potentially Acceptable Modifications
-              </h3>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span><strong className="text-white">Replacement plug</strong> - If correct type and properly wired</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span><strong className="text-white">Replacement cable</strong> - If correct specification and properly fitted</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span><strong className="text-white">User-serviceable parts</strong> - Fuses, filters, bags as per manufacturer instructions</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span><strong className="text-white">IT equipment upgrades</strong> - RAM, drives if not affecting power/safety</span>
-                </li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Unacceptable Modifications (Immediate Fail):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Bypassed safety devices:</strong> Thermal cut-outs, pressure switches, or interlocks bridged or removed</li>
+                <li><strong>Removed guards or covers:</strong> Safety covers, finger guards, or protective shields missing</li>
+                <li><strong>Additional holes or openings:</strong> Holes drilled for cables, ventilation, or access compromise IP rating and insulation</li>
+                <li><strong>Non-original components:</strong> Incorrect replacement parts that affect safety (wrong rating, size, type)</li>
+                <li><strong>Disabled earth connection:</strong> Earth conductor cut, disconnected, or removed from Class I appliances</li>
+                <li><strong>Blocked ventilation:</strong> Vents covered with tape, labels, or other materials</li>
               </ul>
-              <p className="text-white/60 text-sm mt-3 italic">
-                Note: Even acceptable modifications should be done by competent persons using correct components.
-              </p>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
-                <Search className="w-4 h-4 text-elec-yellow" />
-                Clues That Modifications Have Been Made
-              </h3>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Non-matching screws or fasteners</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Tool marks on case or components</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Broken or missing warranty seals</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Parts that don't match original specifications</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Evidence of glue, tape, or improvised repairs</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Components newer than the appliance age suggests</span>
-                </li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Potentially Acceptable Modifications:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Replacement plug:</strong> If correct type and properly wired</li>
+                <li><strong>Replacement cable:</strong> If correct specification and properly fitted</li>
+                <li><strong>User-serviceable parts:</strong> Fuses, filters, bags as per manufacturer instructions</li>
+                <li><strong>IT equipment upgrades:</strong> RAM, drives if not affecting power/safety</li>
+              </ul>
+              <p className="text-sm text-white mt-2">Note: Even acceptable modifications should be done by competent persons using correct components.</p>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Clues That Modifications Have Been Made:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Non-matching screws or fasteners</li>
+                <li>Tool marks on case or components</li>
+                <li>Broken or missing warranty seals</li>
+                <li>Parts that don't match original specifications</li>
+                <li>Evidence of glue, tape, or improvised repairs</li>
+                <li>Components newer than the appliance age suggests</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Section 04: Missing Safety Features */}
+        {/* Section 04: Missing or Bypassed Safety Features */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl sm:text-4xl font-bold text-elec-yellow/30">04</span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Missing or Bypassed Safety Features</h2>
-          </div>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Missing or Bypassed Safety Features
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Safety devices are built into appliances for good reason. Any missing or bypassed safety feature is a serious concern.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Common Safety Features to Check</h3>
-              <div className="space-y-3">
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium">Thermal Cut-outs</p>
-                  <p className="text-white/60 text-sm">Prevent overheating. Found in heaters, irons, kettles, hair dryers. Must operate freely - not bridged.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium">Interlocks</p>
-                  <p className="text-white/60 text-sm">Prevent operation when guards removed. Common on food processors, shredders, washing machines.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium">Guards and Covers</p>
-                  <p className="text-white/60 text-sm">Protect against contact with moving parts or live components. Must be present and secure.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium">Ventilation Grilles</p>
-                  <p className="text-white/60 text-sm">Allow cooling airflow. Must not be blocked, damaged, or missing.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium">Pressure Relief Devices</p>
-                  <p className="text-white/60 text-sm">Prevent dangerous pressure buildup. Found on steam appliances, pressure cookers.</p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Common Safety Features to Check:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Thermal cut-outs:</strong> Prevent overheating. Found in heaters, irons, kettles, hair dryers. Must operate freely - not bridged.</li>
+                <li><strong>Interlocks:</strong> Prevent operation when guards removed. Common on food processors, shredders, washing machines.</li>
+                <li><strong>Guards and covers:</strong> Protect against contact with moving parts or live components. Must be present and secure.</li>
+                <li><strong>Ventilation grilles:</strong> Allow cooling airflow. Must not be blocked, damaged, or missing.</li>
+                <li><strong>Pressure relief devices:</strong> Prevent dangerous pressure buildup. Found on steam appliances, pressure cookers.</li>
+              </ul>
             </div>
 
-            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-red-400 font-semibold text-sm">Signs of Bypassed Safety Devices</h4>
-                  <ul className="text-white/70 text-sm mt-2 space-y-1">
-                    <li>• Wires bridging across switch or thermostat terminals</li>
-                    <li>• Interlock switches taped or held in the 'on' position</li>
-                    <li>• Safety cut-out replaced with direct wire connection</li>
-                    <li>• Thermal fuses removed or replaced with wire links</li>
-                    <li>• Pressure relief valves blocked or sealed</li>
-                  </ul>
-                </div>
-              </div>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>Signs of Bypassed Safety Devices:</strong> Wires bridging across switch or thermostat terminals, interlock switches taped or held in 'on' position, safety cut-out replaced with direct wire connection, thermal fuses removed or replaced with wire links, pressure relief valves blocked or sealed.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 3 */}
         <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 05: Improvised Repairs */}
+        {/* Section 05: Recognising Improvised Repairs */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl sm:text-4xl font-bold text-elec-yellow/30">05</span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Recognising Improvised Repairs</h2>
-          </div>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Recognising Improvised Repairs
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Improvised or temporary repairs are common but rarely safe. Learn to spot them and understand why they're problematic.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Common Improvised Repairs (All = Fail)</h3>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <Ban className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-white font-medium">Tape repairs</p>
-                    <p className="text-white/60 text-sm">Electrical tape, insulating tape, duct tape, or any other tape covering damage or joints</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Ban className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-white font-medium">Wire wrapping</p>
-                    <p className="text-white/60 text-sm">Bare wires twisted together without proper termination</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Ban className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-white font-medium">Foil fuse bypass</p>
-                    <p className="text-white/60 text-sm">Kitchen foil, wire, or other conductor wrapped around fuse</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Ban className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-white font-medium">Cable ties as strain relief</p>
-                    <p className="text-white/60 text-sm">Cable ties used to hold damaged cables or replace proper grips</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Ban className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-white font-medium">Glued components</p>
-                    <p className="text-white/60 text-sm">Hot glue, superglue, or adhesives holding electrical components</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Ban className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-white font-medium">Cardboard/paper insulation</p>
-                    <p className="text-white/60 text-sm">Non-approved materials used as insulation or spacers</p>
-                  </div>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Common Improvised Repairs (All = Fail):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Tape repairs:</strong> Electrical tape, insulating tape, duct tape, or any other tape covering damage or joints</li>
+                <li><strong>Wire wrapping:</strong> Bare wires twisted together without proper termination</li>
+                <li><strong>Foil fuse bypass:</strong> Kitchen foil, wire, or other conductor wrapped around fuse</li>
+                <li><strong>Cable ties as strain relief:</strong> Cable ties used to hold damaged cables or replace proper grips</li>
+                <li><strong>Glued components:</strong> Hot glue, superglue, or adhesives holding electrical components</li>
+                <li><strong>Cardboard/paper insulation:</strong> Non-approved materials used as insulation or spacers</li>
+              </ul>
             </div>
 
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-amber-400 font-semibold text-sm">Why "Temporary" Repairs Are Dangerous</h4>
-                  <p className="text-white/70 text-sm mt-1">
-                    Temporary repairs often become permanent. Tape deteriorates over time, especially with heat. Improvised materials aren't rated for electrical use. What seems like a 'quick fix' can lead to fires, electric shock, or equipment damage. There is no such thing as an acceptable temporary electrical repair.
-                  </p>
-                </div>
-              </div>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>Why "Temporary" Repairs Are Dangerous:</strong> Temporary repairs often become permanent. Tape deteriorates over time, especially with heat. Improvised materials aren't rated for electrical use. What seems like a 'quick fix' can lead to fires, electric shock, or equipment damage. There is no such thing as an acceptable temporary electrical repair.
+              </p>
             </div>
           </div>
         </section>
 
         {/* Practical Guidance */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <Bookmark className="w-5 h-5 text-elec-yellow" />
-            <h2 className="text-xl font-bold text-white">Practical Guidance</h2>
-          </div>
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
 
-          <div className="space-y-4">
-            <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4">
-              <h3 className="text-green-400 font-semibold mb-3 flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
-                Overheating/Modification Checklist
-              </h3>
-              <ul className="space-y-2 text-white/80 text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">1.</span>
-                  <span>Check for discolouration around all connection points</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">2.</span>
-                  <span>Look for melted, bubbled, or charred plastic anywhere</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">3.</span>
-                  <span>Smell for burning or electrical odours</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">4.</span>
-                  <span>Verify all guards and covers are present and secure</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">5.</span>
-                  <span>Check ventilation is not blocked</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">6.</span>
-                  <span>Look for signs of modification or improvised repair</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">7.</span>
-                  <span>Check safety interlocks operate correctly</span>
-                </li>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Overheating/Modification Checklist</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>1. Check for discolouration around all connection points</li>
+                <li>2. Look for melted, bubbled, or charred plastic anywhere</li>
+                <li>3. Smell for burning or electrical odours</li>
+                <li>4. Verify all guards and covers are present and secure</li>
+                <li>5. Check ventilation is not blocked</li>
+                <li>6. Look for signs of modification or improvised repair</li>
+                <li>7. Check safety interlocks operate correctly</li>
               </ul>
             </div>
 
-            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
-              <h3 className="text-red-400 font-semibold mb-3 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4" />
-                Automatic Fail Conditions
-              </h3>
-              <ul className="space-y-2 text-white/80 text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Any charring, burn marks, or fire damage</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Melted or significantly deformed components</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Missing safety guards or interlocks</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Bypassed thermal or safety cut-outs</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Any improvised repair (tape, foil, wire wrapping)</span>
-                </li>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Automatic Fail Conditions</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Any charring, burn marks, or fire damage</strong></li>
+                <li><strong>Melted or significantly deformed components</strong></li>
+                <li><strong>Missing safety guards or interlocks</strong></li>
+                <li><strong>Bypassed thermal or safety cut-outs</strong></li>
+                <li><strong>Any improvised repair (tape, foil, wire wrapping)</strong></li>
               </ul>
             </div>
           </div>
@@ -794,79 +470,74 @@ const PATTestingModule3Section3 = () => {
 
         {/* FAQs */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <HelpCircle className="w-5 h-5 text-elec-yellow" />
-            <h2 className="text-xl font-bold text-white">Frequently Asked Questions</h2>
-          </div>
-          <div className="space-y-3">
-            {faqs.map((faq, idx) => (
-              <details key={idx} className="group bg-white/5 rounded-xl">
-                <summary className="flex items-center justify-between p-4 cursor-pointer list-none touch-manipulation">
-                  <span className="text-white font-medium text-sm sm:text-base pr-4">{faq.question}</span>
-                  <ChevronRight className="w-5 h-5 text-white/40 group-open:rotate-90 transition-transform flex-shrink-0" />
-                </summary>
-                <div className="px-4 pb-4">
-                  <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
-                </div>
-              </details>
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
             ))}
           </div>
         </section>
 
         {/* Quick Reference Card */}
         <section className="mb-10">
-          <div className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30 rounded-xl p-5">
-            <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-              <Bookmark className="w-5 h-5 text-elec-yellow" />
-              Quick Reference: Heat Damage Severity
-            </h3>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 p-2 bg-green-500/10 rounded-lg">
-                <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                <span className="text-white text-sm"><strong>Normal:</strong> Uniform slight yellowing with age (UV), light dust</span>
+          <div className="mt-6 p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference: Heat Damage Severity</h3>
+            <div className="grid sm:grid-cols-3 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">NORMAL</p>
+                <ul className="space-y-0.5">
+                  <li>Uniform slight yellowing (UV)</li>
+                  <li>Light dust accumulation</li>
+                  <li>No physical changes</li>
+                </ul>
               </div>
-              <div className="flex items-center gap-3 p-2 bg-amber-500/10 rounded-lg">
-                <div className="w-3 h-3 bg-amber-400 rounded-full"></div>
-                <span className="text-white text-sm"><strong>Investigate:</strong> Localised discolouration, slight warping, unusual smell</span>
+              <div>
+                <p className="font-medium text-white mb-1">INVESTIGATE</p>
+                <ul className="space-y-0.5">
+                  <li>Localised discolouration</li>
+                  <li>Slight warping</li>
+                  <li>Unusual smell</li>
+                </ul>
               </div>
-              <div className="flex items-center gap-3 p-2 bg-red-500/10 rounded-lg">
-                <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                <span className="text-white text-sm"><strong>Fail:</strong> Charring, melting, burn marks, bubbling, arcing damage</span>
+              <div>
+                <p className="font-medium text-white mb-1">FAIL</p>
+                <ul className="space-y-0.5">
+                  <li>Charring or melting</li>
+                  <li>Burn marks or bubbling</li>
+                  <li>Arcing damage</li>
+                </ul>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Quiz Section */}
+        {/* Quiz */}
         <section className="mb-10">
           <Quiz
-            title="Section 3 Quiz: Overheating and Modifications"
+            title="Test Your Knowledge"
             questions={quizQuestions}
-            moduleId="pat-m3s3"
           />
         </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-6 border-t border-white/10">
-          <Link to="../section-2" className="w-full sm:w-auto">
-            <Button
-              variant="outline"
-              className="w-full sm:w-auto gap-2 border-white/20 text-white hover:bg-white/5 hover:text-elec-yellow min-h-[48px] touch-manipulation active:scale-[0.98]"
-            >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Previous: Section 2</span>
-            </Button>
-          </Link>
-          <Link to="../section-4" className="w-full sm:w-auto">
-            <Button
-              className="w-full sm:w-auto gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold min-h-[48px] touch-manipulation active:scale-[0.98]"
-            >
-              <span>Next: Section 4</span>
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-          </Link>
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-2">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-4">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
         </nav>
-      </main>
+      </article>
     </div>
   );
 };

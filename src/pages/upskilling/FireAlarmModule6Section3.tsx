@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, Search, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Search, CheckCircle, AlertTriangle, HelpCircle, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
@@ -164,322 +163,275 @@ const FireAlarmModule6Section3 = () => {
     selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-6">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Module 6</span>
+    <div className="min-h-screen bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Module 6
             </Link>
           </Button>
-          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 3</span>
-          <div className="w-[60px]" />
         </div>
-      </header>
+      </div>
 
-      {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
-            <Search className="h-7 w-7 text-cyan-400" />
+      <div className="px-4 sm:px-6 py-6 max-w-3xl mx-auto space-y-8">
+        {/* Page Title */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
+              <Search className="h-5 w-5 text-elec-yellow" />
+            </div>
+            <span className="text-sm text-white/50">Section 3 of 6</span>
           </div>
-          <span className="text-[11px] font-medium text-cyan-400 uppercase tracking-wide">
-            Section 3 of 6
-          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">Fault Finding Techniques</h1>
+          <p className="text-white/70">Systematic diagnosis methods, common fault types and professional repair procedures.</p>
         </div>
-        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
-          Fault Finding Techniques
-        </h1>
-        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
-          Systematic diagnosis methods, common fault types and professional repair procedures.
-        </p>
-        <div className="flex items-center gap-4 text-[13px] text-white/50">
-          <span className="flex items-center gap-1">
-            <Target className="h-4 w-4" />
-            6 learning outcomes
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            30-35 mins
-          </span>
+
+        {/* Quick Summary */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+          <ul className="space-y-2 text-white/80 text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Start at the panel</strong> - check displays, fault LEDs, and event logs before investigating field devices</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Systematic isolation</strong> narrows down fault location - zone by zone, device by device</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Test equipment</strong> is essential - multimeter, insulation tester (500V DC), cable locator</span>
+            </li>
+          </ul>
         </div>
-      </section>
 
-      {/* In 30 Seconds Card */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-cyan-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[15px] font-semibold text-cyan-400 flex items-center gap-2">
-              <Lightbulb className="h-4 w-4" />
-              In 30 Seconds
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-[15px] text-white/80">
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Start at the panel</strong> - check displays, fault LEDs, and event logs before investigating field devices</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Systematic isolation</strong> narrows down fault location - zone by zone, device by device</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Test equipment</strong> is essential - multimeter, insulation tester (500V DC), cable locator</span>
-            </p>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Learning Outcomes */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            "Apply systematic fault finding methodology starting at the control panel",
-            "Diagnose earth faults using insulation resistance testing techniques",
-            "Identify and resolve open circuit and short circuit faults",
-            "Troubleshoot addressable loop communication problems",
-            "Use appropriate test equipment safely and effectively",
-            "Document fault diagnosis and repair actions professionally"
-          ].map((outcome, i) => (
-            <Card key={i} variant="ios" className="p-3">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-[11px] font-bold text-cyan-400">{i + 1}</span>
+        {/* Learning Outcomes */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Learning Outcomes</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              "Apply systematic fault finding methodology starting at the control panel",
+              "Diagnose earth faults using insulation resistance testing techniques",
+              "Identify and resolve open circuit and short circuit faults",
+              "Troubleshoot addressable loop communication problems",
+              "Use appropriate test equipment safely and effectively",
+              "Document fault diagnosis and repair actions professionally"
+            ].map((outcome, i) => (
+              <div key={i} className="p-3 rounded-lg bg-white/5 border border-white/10">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                    <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
+                  </div>
+                  <p className="text-sm text-white/80">{outcome}</p>
                 </div>
-                <p className="text-[13px] text-white/80">{outcome}</p>
               </div>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
-      </section>
 
-      {/* Main Content */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto space-y-6">
         {/* Section 01 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">01</span>
-              <h3 className="text-[17px] font-semibold text-white">Systematic Fault Finding Approach</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Systematic Fault Finding Approach
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Effective fault finding requires a <strong className="text-white">methodical approach</strong> that starts with information gathering before physical investigation.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Fault Finding Methodology:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Step 1: Check control panel - fault type, zone, event log</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Step 2: Gather information - when did it start, any changes?</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Step 3: Isolate and test - narrow down the location</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Step 4: Identify root cause - not just symptoms</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Step 5: Repair and verify - test before restoring service</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Effective fault finding requires a <strong className="text-white">methodical approach</strong> that starts with information gathering before physical investigation.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Fault Finding Methodology:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Step 1: Check control panel - fault type, zone, event log</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Step 2: Gather information - when did it start, any changes?</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Step 3: Isolate and test - narrow down the location</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Step 4: Identify root cause - not just symptoms</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Step 5: Repair and verify - test before restoring service</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Never assume - always verify each step before proceeding to the next.</p>
-            </div>
-          </CardContent>
-        </Card>
+            <p className="text-sm text-white/60 italic">Never assume - always verify each step before proceeding to the next.</p>
+          </div>
+        </div>
 
         {/* Section 02 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">02</span>
-              <h3 className="text-[17px] font-semibold text-white">Earth Fault Diagnosis</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Earth Fault Diagnosis
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Earth faults are among the most common issues and can cause <strong className="text-elec-yellow">intermittent problems</strong> or system instability.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Earth Fault Symptoms:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Earth fault LED illuminated on panel</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Intermittent zone or device faults</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Communication errors on addressable systems</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />System instability in damp conditions</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Earth faults are among the most common issues and can cause <strong className="text-cyan-400">intermittent problems</strong> or system instability.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Earth Fault Symptoms:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Earth fault LED illuminated on panel</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Intermittent zone or device faults</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Communication errors on addressable systems</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />System instability in damp conditions</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Common Earth Fault Causes:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Water ingress in junction boxes or devices</li>
-                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Cable damage from building works</li>
-                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Corroded terminals or connections</li>
-                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Insulation breakdown due to age or heat</li>
-                </ul>
-              </div>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Common Earth Fault Causes:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Water ingress in junction boxes or devices</li>
+                <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Cable damage from building works</li>
+                <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Corroded terminals or connections</li>
+                <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Insulation breakdown due to age or heat</li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 03 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">03</span>
-              <h3 className="text-[17px] font-semibold text-white">Insulation Resistance Testing</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Insulation Resistance Testing
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Insulation resistance testing at <strong className="text-white">500V DC</strong> identifies insulation breakdown between conductors and earth.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Test Procedure:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Isolate the circuit from the control panel</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Test between positive conductor and earth</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Test between negative conductor and earth</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Minimum acceptable: 0.5 megohms</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Insulation resistance testing at <strong className="text-white">500V DC</strong> identifies insulation breakdown between conductors and earth.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Test Procedure:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Isolate the circuit from the control panel</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Test between positive conductor and earth</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Test between negative conductor and earth</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Minimum acceptable: 0.5 megohms</li>
-                </ul>
-              </div>
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-amber-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  Disconnect all devices before testing - 500V can damage electronic components.
-                </p>
-              </div>
+            <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <p className="text-sm text-amber-300 flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                Disconnect all devices before testing - 500V can damage electronic components.
+              </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        {/* Inline Check 1 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">An earth fault appears intermittently, only during wet weather. Where would you focus your investigation?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Focus on external cable routes, junction boxes exposed to weather, devices in unheated areas, and any locations where water ingress is possible. Check seals, glands, and enclosure integrity.</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Quick Check 1 */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <span className="font-semibold text-elec-yellow">Quick Check</span>
+          </div>
+          <p className="text-white/80 mb-3">An earth fault appears intermittently, only during wet weather. Where would you focus your investigation?</p>
+          <div className="p-3 rounded-lg bg-white/5">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> Focus on external cable routes, junction boxes exposed to weather, devices in unheated areas, and any locations where water ingress is possible. Check seals, glands, and enclosure integrity.</p>
+          </div>
+        </div>
 
         {/* Section 04 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">04</span>
-              <h3 className="text-[17px] font-semibold text-white">Open Circuit Faults</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Open Circuit Faults
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Open circuit faults indicate a <strong className="text-elec-yellow">break in circuit continuity</strong>, preventing signal transmission.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Open Circuit Causes:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Broken or severed cables</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Loose or disconnected terminals</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Failed end-of-line resistor (conventional)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Removed or damaged device</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Open circuit faults indicate a <strong className="text-cyan-400">break in circuit continuity</strong>, preventing signal transmission.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Open Circuit Causes:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Broken or severed cables</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Loose or disconnected terminals</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Failed end-of-line resistor (conventional)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Removed or damaged device</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Diagnosis Method:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Measure resistance across circuit at panel</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Should read EOL value (typically 4.7 kohm)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Infinite reading confirms open circuit</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Half-split method to locate break point</li>
-                </ul>
-              </div>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Diagnosis Method:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Measure resistance across circuit at panel</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Should read EOL value (typically 4.7 kohm)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Infinite reading confirms open circuit</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Half-split method to locate break point</li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 05 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">05</span>
-              <h3 className="text-[17px] font-semibold text-white">Short Circuit Faults</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Short Circuit Faults
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Short circuits create <strong className="text-white">unintended connections</strong> between conductors, triggering fault conditions.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Short Circuit Indicators:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Very low or zero resistance reading</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Blown fuses or tripped protection</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Continuous alarm or fault condition</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Overheating at fault location</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Short circuits create <strong className="text-white">unintended connections</strong> between conductors, triggering fault conditions.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Short Circuit Indicators:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Very low or zero resistance reading</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Blown fuses or tripped protection</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Continuous alarm or fault condition</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Overheating at fault location</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Common Short Circuit Causes:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Cable damage exposing conductors</li>
-                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Incorrect wiring at device or junction</li>
-                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Water bridging terminals</li>
-                  <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Faulty device with internal short</li>
-                </ul>
-              </div>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Common Short Circuit Causes:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Cable damage exposing conductors</li>
+                <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Incorrect wiring at device or junction</li>
+                <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Water bridging terminals</li>
+                <li className="flex items-center gap-2"><AlertTriangle className="h-3 w-3 text-amber-400" />Faulty device with internal short</li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 06 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">06</span>
-              <h3 className="text-[17px] font-semibold text-white">Addressable Loop Faults</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Addressable Loop Faults
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Addressable systems have unique fault types related to <strong className="text-elec-yellow">digital communication</strong> between panel and devices.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Communication Fault Causes:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Voltage drop on long cable runs</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Electrical interference from other services</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Duplicate device addresses</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Incorrect device type programmed</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Poor connections causing data corruption</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Addressable systems have unique fault types related to <strong className="text-cyan-400">digital communication</strong> between panel and devices.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Communication Fault Causes:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Voltage drop on long cable runs</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Electrical interference from other services</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Duplicate device addresses</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Incorrect device type programmed</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Poor connections causing data corruption</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Use panel diagnostics to identify specific device communication issues.</p>
-            </div>
-          </CardContent>
-        </Card>
+            <p className="text-sm text-white/60 italic">Use panel diagnostics to identify specific device communication issues.</p>
+          </div>
+        </div>
 
-        {/* Inline Check 2 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A conventional zone shows a fault. Resistance measurement at the panel reads infinite. What does this indicate?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> An open circuit fault - the circuit continuity is broken somewhere between the panel and the end-of-line resistor. Check for broken cables, loose connections, or removed devices.</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Quick Check 2 */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <span className="font-semibold text-elec-yellow">Quick Check</span>
+          </div>
+          <p className="text-white/80 mb-3">A conventional zone shows a fault. Resistance measurement at the panel reads infinite. What does this indicate?</p>
+          <div className="p-3 rounded-lg bg-white/5">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> An open circuit fault - the circuit continuity is broken somewhere between the panel and the end-of-line resistor. Check for broken cables, loose connections, or removed devices.</p>
+          </div>
+        </div>
 
-        {/* Inline Check 3 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">Multiple devices at the far end of an addressable loop show communication errors. What is the likely cause?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Voltage drop - the loop is too long or cables are undersized. Check voltage at distant devices and compare with panel output. Solutions include upgrading cable size or installing a loop powered repeater.</p>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+        {/* Quick Check 3 */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <span className="font-semibold text-elec-yellow">Quick Check</span>
+          </div>
+          <p className="text-white/80 mb-3">Multiple devices at the far end of an addressable loop show communication errors. What is the likely cause?</p>
+          <div className="p-3 rounded-lg bg-white/5">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> Voltage drop - the loop is too long or cables are undersized. Check voltage at distant devices and compare with panel output. Solutions include upgrading cable size or installing a loop powered repeater.</p>
+          </div>
+        </div>
 
-      {/* Practical Guidance */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
-
-        <div className="space-y-3">
-          <Card variant="ios" className="border-green-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
+        {/* Practical Guidance */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Practical Guidance</h2>
+          <div className="space-y-3">
+            <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
+              <h4 className="font-semibold text-green-400 mb-2">Pro Tips</h4>
+              <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Always check the event log - it often shows when the fault first occurred and any patterns
@@ -493,13 +445,11 @@ const FireAlarmModule6Section3 = () => {
                   Keep a basic toolkit including multimeter, insulation tester, and cable locator
                 </li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card variant="ios" className="border-red-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
+            <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
+              <h4 className="font-semibold text-red-400 mb-2">Common Mistakes</h4>
+              <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Replacing components without finding the root cause - the fault often returns
@@ -513,147 +463,137 @@ const FireAlarmModule6Section3 = () => {
                   Not documenting the fault and repair - missing valuable diagnostic history
                 </li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
-      </section>
 
-      {/* FAQs */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
-        <div className="space-y-3">
-          {[
-            { q: "What is the half-split method?", a: "Disconnect the circuit at the midpoint and test each half. The faulty half will show abnormal readings. Repeat until you isolate the fault location." },
-            { q: "Why do faults sometimes appear and disappear?", a: "Intermittent faults are often caused by loose connections, temperature-related expansion/contraction, or moisture that comes and goes with environmental changes." },
-            { q: "Can I use a standard multimeter for fault finding?", a: "Yes for continuity and resistance, but you need a proper insulation tester for 500V DC testing. Some multimeters have this function built in." },
-            { q: "How do I find a fault in a concealed cable?", a: "Use a cable locator/toner to trace the route, then use time domain reflectometry (TDR) if available, or the half-split method at accessible junction points." },
-            { q: "What if I cannot find the fault?", a: "Document all tests performed, consider environmental factors, and if necessary escalate to manufacturer technical support with full diagnostic information." },
-            { q: "Should I replace a device that keeps causing faults?", a: "Only after eliminating wiring and environmental causes. If the device is genuinely faulty, replace with same type and document the change." }
-          ].map((faq, i) => (
-            <Card key={i} variant="ios">
-              <CardContent className="p-4">
-                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-[13px] text-white/70">{faq.a}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Quiz Section */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-cyan-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-cyan-400" />
-              Knowledge Check
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {!showQuiz ? (
-              <div className="text-center py-6">
-                <p className="text-[15px] text-white/70 mb-4">Test your understanding of fault finding techniques with 10 questions.</p>
-                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
-                  Start Quiz
-                </Button>
+        {/* FAQs */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {[
+              { q: "What is the half-split method?", a: "Disconnect the circuit at the midpoint and test each half. The faulty half will show abnormal readings. Repeat until you isolate the fault location." },
+              { q: "Why do faults sometimes appear and disappear?", a: "Intermittent faults are often caused by loose connections, temperature-related expansion/contraction, or moisture that comes and goes with environmental changes." },
+              { q: "Can I use a standard multimeter for fault finding?", a: "Yes for continuity and resistance, but you need a proper insulation tester for 500V DC testing. Some multimeters have this function built in." },
+              { q: "How do I find a fault in a concealed cable?", a: "Use a cable locator/toner to trace the route, then use time domain reflectometry (TDR) if available, or the half-split method at accessible junction points." },
+              { q: "What if I cannot find the fault?", a: "Document all tests performed, consider environmental factors, and if necessary escalate to manufacturer technical support with full diagnostic information." },
+              { q: "Should I replace a device that keeps causing faults?", a: "Only after eliminating wiring and environmental causes. If the device is genuinely faulty, replace with same type and document the change." }
+            ].map((faq, i) => (
+              <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-semibold text-white mb-2">{faq.q}</p>
+                <p className="text-sm text-white/70">{faq.a}</p>
               </div>
-            ) : showResults ? (
-              <div className="space-y-6">
-                <div className="text-center py-4">
-                  <p className="text-[34px] font-bold text-cyan-400">{calculateScore()}/{questions.length}</p>
-                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
-                </div>
+            ))}
+          </div>
+        </div>
 
-                <div className="space-y-4">
-                  {questions.map((q, i) => {
-                    const correct = selectedAnswers[i] === q.correctAnswer;
+        {/* Quiz Section */}
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-4">
+            <BookOpen className="h-5 w-5 text-elec-yellow" />
+            <h3 className="text-lg font-semibold text-white">Knowledge Check</h3>
+          </div>
+
+          {!showQuiz ? (
+            <div className="text-center py-6">
+              <p className="text-white/70 mb-4">Test your understanding of fault finding techniques with 10 questions.</p>
+              <Button onClick={() => setShowQuiz(true)} className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation">
+                Start Quiz
+              </Button>
+            </div>
+          ) : showResults ? (
+            <div className="space-y-6">
+              <div className="text-center py-4">
+                <p className="text-3xl font-bold text-elec-yellow">{calculateScore()}/{questions.length}</p>
+                <p className="text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+              </div>
+
+              <div className="space-y-4">
+                {questions.map((q, i) => {
+                  const correct = selectedAnswers[i] === q.correctAnswer;
+                  return (
+                    <div key={q.id} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                      <p className="font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                      <p className={`text-sm ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                        Your answer: {q.options[selectedAnswers[i]] ?? 'Not answered'} {correct ? '(Correct)' : '(Incorrect)'}
+                      </p>
+                      {!correct && (
+                        <p className="text-sm text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                      )}
+                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Button onClick={resetQuiz} variant="outline" className="w-full min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10">
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Restart Quiz
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+
+              <div>
+                <p className="font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                <div className="space-y-2">
+                  {questions[currentQuestion].options.map((opt, idx) => {
+                    const selected = selectedAnswers[currentQuestion] === idx;
                     return (
-                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
-                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
-                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
-                        </p>
-                        {!correct && (
-                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
-                        )}
-                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
-                      </div>
+                      <button
+                        key={idx}
+                        onClick={() => handleAnswerSelect(idx)}
+                        className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
+                          selected
+                            ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
+                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                        }`}
+                      >
+                        {opt}
+                      </button>
                     );
                   })}
                 </div>
+              </div>
 
-                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
-                  <RotateCcw className="h-4 w-4" />
-                  Restart Quiz
+              <div className="flex items-center justify-between gap-3">
+                <Button
+                  onClick={handlePrevious}
+                  disabled={currentQuestion === 0}
+                  variant="outline"
+                  className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10 disabled:opacity-50"
+                >
+                  Previous
+                </Button>
+                <Button
+                  onClick={handleNext}
+                  disabled={selectedAnswers[currentQuestion] === -1}
+                  className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+                >
+                  {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </div>
-            ) : (
-              <div className="space-y-6">
-                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+            </div>
+          )}
+        </div>
 
-                <div>
-                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-                  <div className="space-y-2">
-                    {questions[currentQuestion].options.map((opt, idx) => {
-                      const selected = selectedAnswers[currentQuestion] === idx;
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => handleAnswerSelect(idx)}
-                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
-                            selected
-                              ? 'bg-cyan-500/20 border-cyan-500/50 text-white'
-                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
-                          }`}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between gap-3">
-                  <Button
-                    variant="ios-secondary"
-                    onClick={handlePrevious}
-                    disabled={currentQuestion === 0}
-                    className="flex-1"
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="ios-primary"
-                    onClick={handleNext}
-                    disabled={selectedAnswers[currentQuestion] === -1}
-                    className="flex-1"
-                  >
-                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Navigation Footer */}
-      <section className="px-4 pb-safe max-w-3xl mx-auto">
-        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
-          <Button variant="ios-secondary" asChild className="flex-1">
+        {/* Navigation Footer */}
+        <div className="flex items-center justify-between gap-3 pt-6 border-t border-white/10">
+          <Button variant="outline" asChild className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10">
             <Link to="/study-centre/upskilling/fire-alarm-module-6-section-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Previous Section
+              Previous
             </Link>
           </Button>
-          <Button variant="ios-primary" asChild className="flex-1">
+          <Button asChild className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
             <Link to="/study-centre/upskilling/fire-alarm-module-6-section-4">
-              Next Section
+              Next
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>
           </Button>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

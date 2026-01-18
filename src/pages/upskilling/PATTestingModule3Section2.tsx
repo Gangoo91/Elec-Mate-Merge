@@ -1,4 +1,4 @@
-import { ArrowLeft, Eye, CheckCircle, HelpCircle, Lightbulb, AlertTriangle, Bookmark, ChevronRight, ChevronLeft, Wrench, Zap, Shield, Ban } from "lucide-react";
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Quiz } from "@/components/apprentice-courses/Quiz";
@@ -49,104 +49,74 @@ const quickCheckQuestions = [
 
 const quizQuestions = [
   {
+    id: 1,
     question: "What is the correct fuse rating for a 700W appliance at 230V?",
-    options: [
-      "3A",
-      "5A",
-      "10A",
-      "13A"
-    ],
-    correctAnswer: 0
+    options: ["3A", "5A", "10A", "13A"],
+    correctAnswer: 0,
+    explanation: "700W ÷ 230V = 3.04A. A 3A fuse is suitable as it's the next rating up from the calculated current."
   },
   {
+    id: 2,
     question: "Which colour conductor connects to the top terminal in a UK plug?",
-    options: [
-      "Brown (Live)",
-      "Blue (Neutral)",
-      "Green/Yellow (Earth)",
-      "Black (Old neutral)"
-    ],
-    correctAnswer: 2
+    options: ["Brown (Live)", "Blue (Neutral)", "Green/Yellow (Earth)", "Black (Old neutral)"],
+    correctAnswer: 2,
+    explanation: "The green/yellow earth conductor connects to the top terminal (earth pin) in a UK plug."
   },
   {
+    id: 3,
     question: "What should be gripped by the cord grip in a rewireable plug?",
-    options: [
-      "The individual conductor cores",
-      "The outer cable sheath only",
-      "Both the sheath and inner insulation",
-      "Nothing - it's only for decoration"
-    ],
-    correctAnswer: 1
+    options: ["The individual conductor cores", "The outer cable sheath only", "Both the sheath and inner insulation", "Nothing - it's only for decoration"],
+    correctAnswer: 1,
+    explanation: "The cord grip should grip the outer cable sheath only, not the inner cores."
   },
   {
+    id: 4,
     question: "A 2.5kW kettle requires which fuse rating?",
-    options: [
-      "3A",
-      "5A",
-      "10A",
-      "13A"
-    ],
-    correctAnswer: 3
+    options: ["3A", "5A", "10A", "13A"],
+    correctAnswer: 3,
+    explanation: "2500W ÷ 230V = 10.9A. The next fuse rating up is 13A."
   },
   {
+    id: 5,
     question: "What is the minimum current rating of a BS 1362 fuse?",
-    options: [
-      "1A",
-      "2A",
-      "3A",
-      "5A"
-    ],
-    correctAnswer: 2
+    options: ["1A", "2A", "3A", "5A"],
+    correctAnswer: 2,
+    explanation: "The minimum standard BS 1362 fuse rating is 3A."
   },
   {
+    id: 6,
     question: "Which of these is an acceptable repair to a damaged cable?",
-    options: [
-      "Wrapping the damaged area in electrical tape",
-      "Using a heat-shrink sleeve over the damage",
-      "Using a proper junction box designed for the purpose",
-      "None - the cable should be replaced entirely"
-    ],
-    correctAnswer: 3
+    options: ["Wrapping the damaged area in electrical tape", "Using a heat-shrink sleeve over the damage", "Using a proper junction box designed for the purpose", "None - the cable should be replaced entirely"],
+    correctAnswer: 3,
+    explanation: "Damaged flexible cables should be replaced entirely. Tape repairs, heat-shrink, and junction boxes are not acceptable for flex repairs."
   },
   {
+    id: 7,
     question: "What indicates that a terminal has been overtightened?",
-    options: [
-      "The screw is very secure",
-      "The conductor insulation is crushed or damaged",
-      "The connection passes the electrical test",
-      "The terminal is shiny"
-    ],
-    correctAnswer: 1
+    options: ["The screw is very secure", "The conductor insulation is crushed or damaged", "The connection passes the electrical test", "The terminal is shiny"],
+    correctAnswer: 1,
+    explanation: "Crushed or damaged insulation indicates overtightening."
   },
   {
+    id: 8,
     question: "If you find mixed old and new colour codes in a plug, what should you do?",
-    options: [
-      "Pass if connections are correct for either code",
-      "Fail immediately - this is always dangerous",
-      "Investigate the full cable and fail if colours are mixed throughout",
-      "Only fail if the appliance doesn't work"
-    ],
-    correctAnswer: 2
+    options: ["Pass if connections are correct for either code", "Fail immediately - this is always dangerous", "Investigate the full cable and fail if colours are mixed throughout", "Only fail if the appliance doesn't work"],
+    correctAnswer: 2,
+    explanation: "Mixed colour codes require investigation. If old and new colours are mixed throughout the cable, it indicates improper rewiring and should fail."
   },
   {
+    id: 9,
     question: "What is the purpose of sleeving on earth conductors in some plugs?",
-    options: [
-      "To make it look neater",
-      "To provide additional insulation over bare copper",
-      "To increase current capacity",
-      "It serves no purpose and should be removed"
-    ],
-    correctAnswer: 1
+    options: ["To make it look neater", "To provide additional insulation over bare copper", "To increase current capacity", "It serves no purpose and should be removed"],
+    correctAnswer: 1,
+    explanation: "Earth conductor sleeving provides additional insulation over the bare copper wire."
   },
   {
+    id: 10,
     question: "Which wire gauge (CSA) is typically used for standard 3A appliances?",
-    options: [
-      "0.5mm²",
-      "0.75mm²",
-      "1.0mm²",
-      "1.5mm²"
-    ],
-    correctAnswer: 1
+    options: ["0.5mm²", "0.75mm²", "1.0mm²", "1.5mm²"],
+    correctAnswer: 1,
+    explanation: "0.75mm² is typically used for standard 3A appliances like lamps and small electronics."
   }
 ];
 
@@ -183,77 +153,58 @@ const PATTestingModule3Section2 = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="..">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="gap-1.5 text-white/70 hover:text-elec-yellow hover:bg-white/5 -ml-2 touch-manipulation active:scale-95 min-h-[44px]"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Module 3</span>
-            </Button>
-          </Link>
-          <span className="text-xs font-medium text-elec-yellow bg-elec-yellow/10 px-2.5 py-1 rounded-full">
-            Section 2 of 5
-          </span>
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
-      <main className="max-w-3xl mx-auto px-4 py-6 sm:py-8 pb-24">
-        {/* Title */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 text-elec-yellow mb-3">
-            <Eye className="w-5 h-5" />
-            <span className="text-sm font-semibold tracking-wide uppercase">Module 3.2</span>
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 3 Section 2</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight mb-3">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Rewiring and Correct Fuse Ratings
           </h1>
-          <p className="text-white/60 text-base sm:text-lg">
-            Assessing wiring quality and fuse selection
+          <p className="text-white/80">
+            Assessing wiring quality and fuse selection in PAT testing
           </p>
-        </div>
+        </header>
 
-        {/* Quick Summary Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-          <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                <Lightbulb className="w-4 h-4 text-elec-yellow" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white text-sm mb-1">In 30 Seconds</h3>
-                <p className="text-white/70 text-sm leading-relaxed">
-                  Check wiring is correct (Brown-Right, Blue-Left, Earth-Top), sheath gripped, fuse rated correctly (3A up to 700W, 13A above). No joins in cables.
-                </p>
-              </div>
-            </div>
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Wiring:</strong> Brown-Right, Blue-Left, Earth-Top</li>
+              <li><strong>Earth:</strong> Must be longest conductor</li>
+              <li><strong>Fuse:</strong> 3A up to 700W, 13A above</li>
+              <li><strong>Sheath:</strong> Must be gripped by cord grip</li>
+            </ul>
           </div>
-          <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
-                <Wrench className="w-4 h-4 text-white/70" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white text-sm mb-1">Spot It / Use It</h3>
-                <p className="text-white/70 text-sm leading-relaxed">
-                  Mixed cable colours or tape repairs = immediate investigation. A 3000W kettle with 3A fuse = wrong. 60W lamp with 13A fuse = wrong.
-                </p>
-              </div>
-            </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Tape repairs, cable joints, mixed colours</li>
+              <li><strong>Use:</strong> Formula: Current = Power ÷ Voltage</li>
+              <li><strong>Remember:</strong> BLue-Left, BRown-Right</li>
+            </ul>
           </div>
         </div>
 
         {/* Learning Outcomes */}
-        <section className="mb-10">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-elec-yellow" />
-            What You'll Learn
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {[
               "Verify correct plug wiring and connections",
               "Calculate and select appropriate fuse ratings",
@@ -261,549 +212,244 @@ const PATTestingModule3Section2 = () => {
               "Assess wire gauge for current capacity",
               "Recognise both old and new colour codes",
               "Document wiring defects accurately"
-            ].map((outcome, idx) => (
-              <div key={idx} className="flex items-start gap-2 text-white/80 text-sm">
-                <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <span>{outcome}</span>
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
             ))}
           </div>
         </section>
 
+        <hr className="border-white/5 mb-12" />
+
         {/* Section 01: Correct Plug Wiring */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl sm:text-4xl font-bold text-elec-yellow/30">01</span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Correct Plug Wiring</h2>
-          </div>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Correct Plug Wiring
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Correct plug wiring is fundamental to electrical safety. Each conductor must be connected to the correct terminal, properly secured, and correctly routed.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                <Zap className="w-4 h-4 text-elec-yellow" />
-                Terminal Connections (Current UK Standard)
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-start gap-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                  <div className="w-10 h-10 rounded bg-amber-700 flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold text-sm">L</span>
-                  </div>
-                  <div>
-                    <h4 className="text-white font-semibold">BROWN - Live (Bottom Right)</h4>
-                    <p className="text-white/60 text-sm">Connects to the fused terminal. Should be the shortest conductor so it disconnects first if cable pulled.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                  <div className="w-10 h-10 rounded bg-blue-600 flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold text-sm">N</span>
-                  </div>
-                  <div>
-                    <h4 className="text-white font-semibold">BLUE - Neutral (Bottom Left)</h4>
-                    <p className="text-white/60 text-sm">Connects to the unfused terminal opposite live. Medium length conductor.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-                  <div className="w-10 h-10 rounded bg-gradient-to-r from-green-600 to-yellow-500 flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold text-sm">E</span>
-                  </div>
-                  <div>
-                    <h4 className="text-white font-semibold">GREEN/YELLOW - Earth (Top Centre)</h4>
-                    <p className="text-white/60 text-sm">Connects to earth pin terminal. Must be the longest conductor - last to disconnect if pulled.</p>
-                  </div>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Terminal Connections (Current UK Standard):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>BROWN - Live (Bottom Right):</strong> Connects to the fused terminal. Should be the shortest conductor so it disconnects first if cable pulled.</li>
+                <li><strong>BLUE - Neutral (Bottom Left):</strong> Connects to the unfused terminal opposite live. Medium length conductor.</li>
+                <li><strong>GREEN/YELLOW - Earth (Top Centre):</strong> Connects to earth pin terminal. Must be the longest conductor - last to disconnect if pulled.</li>
+              </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Memory Aid</h3>
-              <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
-                <p className="text-white font-medium text-center text-lg">
-                  "B<span className="text-blue-400">L</span>ue to the <span className="text-blue-400">L</span>eft, B<span className="text-amber-400">R</span>own to the <span className="text-amber-400">R</span>ight"
-                </p>
-              </div>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>Memory Aid:</strong> "BLue to the Left, BRown to the Right" - the first two letters match the direction.
+              </p>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Old Colour Codes (Pre-2006)</h3>
-              <p className="text-sm text-white/70 mb-3">
-                You may encounter older appliances with the previous colour standard:
-              </p>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="text-center p-2 bg-red-500/20 rounded-lg">
-                  <div className="w-6 h-6 rounded bg-red-600 mx-auto mb-1"></div>
-                  <p className="text-white text-sm font-medium">RED</p>
-                  <p className="text-white/60 text-xs">Live</p>
-                </div>
-                <div className="text-center p-2 bg-gray-500/20 rounded-lg">
-                  <div className="w-6 h-6 rounded bg-gray-800 mx-auto mb-1"></div>
-                  <p className="text-white text-sm font-medium">BLACK</p>
-                  <p className="text-white/60 text-xs">Neutral</p>
-                </div>
-                <div className="text-center p-2 bg-green-500/20 rounded-lg">
-                  <div className="w-6 h-6 rounded bg-green-600 mx-auto mb-1"></div>
-                  <p className="text-white text-sm font-medium">GREEN</p>
-                  <p className="text-white/60 text-xs">Earth</p>
-                </div>
-              </div>
-              <p className="text-sm text-white/60 mt-3 italic">
-                Old codes are acceptable if consistent throughout - but mixing old and new codes is a fail.
-              </p>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Old Colour Codes (Pre-2006):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>RED:</strong> Live</li>
+                <li><strong>BLACK:</strong> Neutral</li>
+                <li><strong>GREEN:</strong> Earth (later green/yellow)</li>
+              </ul>
+              <p className="text-sm text-white mt-2">Old codes are acceptable if consistent throughout - but mixing old and new codes is a fail.</p>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 1 */}
         <InlineCheck {...quickCheckQuestions[0]} />
 
         {/* Section 02: Fuse Rating Selection */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl sm:text-4xl font-bold text-elec-yellow/30">02</span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Fuse Rating Selection</h2>
-          </div>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Fuse Rating Selection
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               The plug fuse protects the flexible cable from overheating. Selecting the correct rating is essential - too high offers no protection, too low causes nuisance tripping.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">The Fuse Selection Formula</h3>
-              <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg mb-3">
-                <p className="text-center text-white">
-                  <span className="font-mono text-lg">Current (A) = Power (W) ÷ Voltage (V)</span>
-                </p>
-                <p className="text-center text-white/60 text-sm mt-2">
-                  Then select the next fuse rating UP from the calculated current
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Standard BS 1362 Fuse Ratings</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-white/20">
-                      <th className="text-left py-2 text-elec-yellow font-semibold">Fuse Rating</th>
-                      <th className="text-center py-2 text-elec-yellow font-semibold">Max Power</th>
-                      <th className="text-left py-2 text-elec-yellow font-semibold">Typical Uses</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white/80">
-                    <tr className="border-b border-white/10">
-                      <td className="py-3 font-semibold text-white">3A</td>
-                      <td className="py-3 text-center">Up to 700W</td>
-                      <td className="py-3 text-sm">Lamps, radios, phone chargers, laptops, TVs, clocks, small electronics</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-3 font-semibold text-white">5A</td>
-                      <td className="py-3 text-center">Up to 1150W</td>
-                      <td className="py-3 text-sm">Some power tools, floor lamps, small heaters (less common rating)</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-3 font-semibold text-white">10A</td>
-                      <td className="py-3 text-center">Up to 2300W</td>
-                      <td className="py-3 text-sm">Some vacuum cleaners, larger tools (less common rating)</td>
-                    </tr>
-                    <tr>
-                      <td className="py-3 font-semibold text-white">13A</td>
-                      <td className="py-3 text-center">Up to 3000W</td>
-                      <td className="py-3 text-sm">Kettles, toasters, irons, heaters, washing machines, dishwashers</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-white/60 text-xs mt-3">
-                Note: 5A and 10A fuses exist but 3A and 13A cover most common appliances.
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>The Formula:</strong> Current (A) = Power (W) ÷ Voltage (V). Then select the next fuse rating UP from the calculated current.
               </p>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Worked Examples</h3>
-              <div className="space-y-3">
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">60W Table Lamp</p>
-                  <p className="text-white/60 text-sm">60W ÷ 230V = 0.26A → Use <span className="text-green-400 font-semibold">3A fuse</span></p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">1000W Vacuum Cleaner</p>
-                  <p className="text-white/60 text-sm">1000W ÷ 230V = 4.35A → Use <span className="text-green-400 font-semibold">13A fuse</span> (next up from 3A)</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">3000W Kettle</p>
-                  <p className="text-white/60 text-sm">3000W ÷ 230V = 13A → Use <span className="text-green-400 font-semibold">13A fuse</span></p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-white font-medium">2000W Heater</p>
-                  <p className="text-white/60 text-sm">2000W ÷ 230V = 8.7A → Use <span className="text-green-400 font-semibold">13A fuse</span></p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Standard BS 1362 Fuse Ratings:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>3A (up to 700W):</strong> Lamps, radios, phone chargers, laptops, TVs, clocks, small electronics</li>
+                <li><strong>5A (up to 1150W):</strong> Some power tools, floor lamps, small heaters (less common)</li>
+                <li><strong>10A (up to 2300W):</strong> Some vacuum cleaners, larger tools (less common)</li>
+                <li><strong>13A (up to 3000W):</strong> Kettles, toasters, irons, heaters, washing machines, dishwashers</li>
+              </ul>
             </div>
 
-            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-red-400 font-semibold text-sm">Dangerous Practices</h4>
-                  <ul className="text-white/70 text-sm mt-2 space-y-1">
-                    <li>• <strong className="text-white">13A fuse in 60W lamp</strong> - Cable could overheat without fuse blowing</li>
-                    <li>• <strong className="text-white">Fuse wrapped in foil</strong> - Extremely dangerous, bypasses all protection</li>
-                    <li>• <strong className="text-white">Non-BS 1362 fuse</strong> - Wrong dimensions, unreliable operation</li>
-                    <li>• <strong className="text-white">No fuse fitted</strong> - Complete lack of cable protection</li>
-                  </ul>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Worked Examples:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>60W Table Lamp:</strong> 60W ÷ 230V = 0.26A → Use 3A fuse</li>
+                <li><strong>1000W Vacuum Cleaner:</strong> 1000W ÷ 230V = 4.35A → Use 13A fuse</li>
+                <li><strong>3000W Kettle:</strong> 3000W ÷ 230V = 13A → Use 13A fuse</li>
+                <li><strong>2000W Heater:</strong> 2000W ÷ 230V = 8.7A → Use 13A fuse</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 2 */}
         <InlineCheck {...quickCheckQuestions[1]} />
 
         {/* Section 03: Cable and Wire Assessment */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl sm:text-4xl font-bold text-elec-yellow/30">03</span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Cable and Wire Assessment</h2>
-          </div>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Cable and Wire Assessment
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               The cable must be suitable for the appliance current rating. Undersized cable is a fire risk; correct assessment is essential.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Common Flex Sizes and Ratings</h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-white/20">
-                      <th className="text-left py-2 text-elec-yellow font-semibold">CSA (mm²)</th>
-                      <th className="text-center py-2 text-elec-yellow font-semibold">Max Current</th>
-                      <th className="text-left py-2 text-elec-yellow font-semibold">Typical Applications</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white/80">
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 font-medium text-white">0.5mm²</td>
-                      <td className="py-2 text-center">3A</td>
-                      <td className="py-2 text-sm">Small lamps, clocks, very light loads</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 font-medium text-white">0.75mm²</td>
-                      <td className="py-2 text-center">6A</td>
-                      <td className="py-2 text-sm">Desk lamps, radios, small electronics</td>
-                    </tr>
-                    <tr className="border-b border-white/10">
-                      <td className="py-2 font-medium text-white">1.0mm²</td>
-                      <td className="py-2 text-center">10A</td>
-                      <td className="py-2 text-sm">Vacuum cleaners, power tools</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 font-medium text-white">1.25-1.5mm²</td>
-                      <td className="py-2 text-center">13A</td>
-                      <td className="py-2 text-sm">Kettles, heaters, high-power appliances</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Common Flex Sizes and Ratings:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>0.5mm² (3A max):</strong> Small lamps, clocks, very light loads</li>
+                <li><strong>0.75mm² (6A max):</strong> Desk lamps, radios, small electronics</li>
+                <li><strong>1.0mm² (10A max):</strong> Vacuum cleaners, power tools</li>
+                <li><strong>1.25-1.5mm² (13A max):</strong> Kettles, heaters, high-power appliances</li>
+              </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Cable Type Identification</h3>
-              <div className="space-y-3">
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium">PVC Flex (most common)</p>
-                  <p className="text-white/60 text-sm">Standard for most domestic appliances. Round or flat profile. Not suitable for high temperatures or outdoors.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium">Rubber Flex (H07RN-F)</p>
-                  <p className="text-white/60 text-sm">Heavy-duty for industrial, outdoor, and rough use. More flexible and durable than PVC.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium">Heat-Resistant Flex</p>
-                  <p className="text-white/60 text-sm">Required for heating appliances like kettles, irons, heaters. Usually braided outer covering.</p>
-                </div>
-                <div className="p-3 bg-white/5 rounded-lg">
-                  <p className="text-elec-yellow font-medium">Braided Flex</p>
-                  <p className="text-white/60 text-sm">Textile outer covering over insulation. Common on vintage-style appliances. Check for damage beneath braiding.</p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Cable Type Identification:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>PVC Flex:</strong> Standard for most domestic appliances. Not suitable for high temperatures.</li>
+                <li><strong>Rubber Flex (H07RN-F):</strong> Heavy-duty for industrial, outdoor, and rough use.</li>
+                <li><strong>Heat-Resistant Flex:</strong> Required for kettles, irons, heaters. Often braided.</li>
+                <li><strong>Braided Flex:</strong> Textile outer covering. Check for damage beneath braiding.</li>
+              </ul>
             </div>
 
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="text-amber-400 font-semibold text-sm">Mismatched Cable Warning</h4>
-                  <p className="text-white/70 text-sm mt-1">
-                    If a high-power appliance (e.g., 2kW heater) has thin 0.5mm² flex, the cable is undersized. Even with correct fuse, the cable may overheat before the fuse blows. This is a serious fire risk - <strong className="text-white">fail the appliance</strong>.
-                  </p>
-                </div>
-              </div>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-sm text-white">
+                <strong>Mismatched Cable Warning:</strong> If a high-power appliance has thin flex, the cable is undersized. Even with correct fuse, the cable may overheat before the fuse blows. This is a serious fire risk - fail the appliance.
+              </p>
             </div>
           </div>
         </section>
 
         {/* Section 04: Identifying Substandard Repairs */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl sm:text-4xl font-bold text-elec-yellow/30">04</span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Identifying Substandard Repairs</h2>
-          </div>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Identifying Substandard Repairs
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               DIY and amateur repairs are common and often dangerous. Learning to spot these is crucial for safety assessment.
             </p>
 
-            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 sm:p-5">
-              <h3 className="text-red-400 font-semibold mb-3 flex items-center gap-2">
-                <Ban className="w-4 h-4" />
-                Red Flags - Immediate Fail
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">1.</span>
-                  <div>
-                    <p className="text-white font-medium">Tape repairs on cable</p>
-                    <p className="text-white/60 text-sm">Any electrical tape, insulating tape, or other tape used to cover cable damage</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">2.</span>
-                  <div>
-                    <p className="text-white font-medium">Cable joints or splices</p>
-                    <p className="text-white/60 text-sm">Any junction in the flexible cable - it should run unbroken from plug to appliance</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">3.</span>
-                  <div>
-                    <p className="text-white font-medium">Mismatched cable types</p>
-                    <p className="text-white/60 text-sm">Different cable types joined together suggesting extension or replacement</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">4.</span>
-                  <div>
-                    <p className="text-white font-medium">Mixed colour codes</p>
-                    <p className="text-white/60 text-sm">Old and new colours in same plug indicating partial rewiring</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">5.</span>
-                  <div>
-                    <p className="text-white font-medium">Connector blocks in flex</p>
-                    <p className="text-white/60 text-sm">"Chocolate block" connectors used to join or extend cables</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-red-400 font-bold">6.</span>
-                  <div>
-                    <p className="text-white font-medium">Foil-wrapped fuse</p>
-                    <p className="text-white/60 text-sm">Fuse bypassed with foil - extremely dangerous fire hazard</p>
-                  </div>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Red Flags - Immediate Fail:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Tape repairs on cable:</strong> Any tape used to cover cable damage</li>
+                <li><strong>Cable joints or splices:</strong> Any junction in the flexible cable</li>
+                <li><strong>Mismatched cable types:</strong> Different cable types joined together</li>
+                <li><strong>Mixed colour codes:</strong> Old and new colours in same plug</li>
+                <li><strong>Connector blocks in flex:</strong> "Chocolate block" connectors used to join cables</li>
+                <li><strong>Foil-wrapped fuse:</strong> Fuse bypassed with foil - extremely dangerous</li>
+              </ul>
             </div>
 
-            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 sm:p-5">
-              <h3 className="text-amber-400 font-semibold mb-3">Signs Requiring Investigation</h3>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Non-original plug that doesn't match appliance age/style</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Cable that appears newer than the appliance</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Poor quality wiring work (loose strands, poor routing)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Incorrect conductor lengths in plug</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span>Outer sheath not reaching cord grip properly</span>
-                </li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Signs Requiring Investigation:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Non-original plug that doesn't match appliance age/style</li>
+                <li>Cable that appears newer than the appliance</li>
+                <li>Poor quality wiring work (loose strands, poor routing)</li>
+                <li>Incorrect conductor lengths in plug</li>
+                <li>Outer sheath not reaching cord grip properly</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 3 */}
         <InlineCheck {...quickCheckQuestions[2]} />
 
         {/* Section 05: Terminal Connection Quality */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl sm:text-4xl font-bold text-elec-yellow/30">05</span>
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Terminal Connection Quality</h2>
-          </div>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Terminal Connection Quality
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Even correctly wired plugs can have poor connections that cause overheating and failure. Assess terminal quality carefully.
             </p>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-400" />
-                Good Connection Indicators
-              </h3>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span>Conductor fully inserted into terminal</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span>Terminal screw tight (but not overtightened)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span>No loose strands outside terminal</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span>Insulation reaches close to terminal with minimal bare conductor</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span>Conductor not damaged or nicked</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span>Correct conductor in each terminal</span>
-                </li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Good Connection Indicators:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Conductor fully inserted into terminal</li>
+                <li>Terminal screw tight (but not overtightened)</li>
+                <li>No loose strands outside terminal</li>
+                <li>Insulation reaches close to terminal with minimal bare conductor</li>
+                <li>Conductor not damaged or nicked</li>
               </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-red-400" />
-                Poor Connection Indicators
-              </h3>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">✗</span>
-                  <span>Loose terminal - conductor can be pulled out</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">✗</span>
-                  <span>Strands of conductor outside terminal (short circuit risk)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">✗</span>
-                  <span>Crushed or damaged insulation from overtightening</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">✗</span>
-                  <span>Excessive bare conductor visible (flashover risk)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">✗</span>
-                  <span>Signs of arcing or burning at terminal</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">✗</span>
-                  <span>Insulation stripped back too far</span>
-                </li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Poor Connection Indicators:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Loose terminal - conductor can be pulled out</li>
+                <li>Strands of conductor outside terminal (short circuit risk)</li>
+                <li>Crushed or damaged insulation from overtightening</li>
+                <li>Excessive bare conductor visible (flashover risk)</li>
+                <li>Signs of arcing or burning at terminal</li>
               </ul>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-4 sm:p-5">
-              <h3 className="text-white font-semibold mb-3">Cord Grip Assessment</h3>
-              <div className="space-y-3">
-                <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-                  <p className="text-green-400 font-medium text-sm">Correct</p>
-                  <p className="text-white/70 text-sm">Outer sheath firmly gripped, pulling cable doesn't stress terminals</p>
-                </div>
-                <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-                  <p className="text-red-400 font-medium text-sm">Incorrect</p>
-                  <p className="text-white/70 text-sm">Grip on inner cores only, or sheath not reaching grip properly</p>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Cord Grip Assessment:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Correct:</strong> Outer sheath firmly gripped, pulling cable doesn't stress terminals</li>
+                <li><strong>Incorrect:</strong> Grip on inner cores only, or sheath not reaching grip properly</li>
+              </ul>
             </div>
           </div>
         </section>
 
         {/* Practical Guidance */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <Bookmark className="w-5 h-5 text-elec-yellow" />
-            <h2 className="text-xl font-bold text-white">Practical Guidance</h2>
-          </div>
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
 
-          <div className="space-y-4">
-            <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4">
-              <h3 className="text-green-400 font-semibold mb-3 flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
-                Rewiring Checklist
-              </h3>
-              <ul className="space-y-2 text-white/80 text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">1.</span>
-                  <span>Calculate required fuse rating from appliance wattage</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">2.</span>
-                  <span>Check cable is appropriate gauge for current</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">3.</span>
-                  <span>Verify correct colour to terminal connections</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">4.</span>
-                  <span>Confirm earth is longest, live is shortest</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">5.</span>
-                  <span>Check outer sheath is gripped by cord grip</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">6.</span>
-                  <span>Ensure all terminals are tight</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-green-400">7.</span>
-                  <span>Verify BS 1362 fuse of correct rating fitted</span>
-                </li>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Rewiring Checklist</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>1. Calculate required fuse rating from appliance wattage</li>
+                <li>2. Check cable is appropriate gauge for current</li>
+                <li>3. Verify correct colour to terminal connections</li>
+                <li>4. Confirm earth is longest, live is shortest</li>
+                <li>5. Check outer sheath is gripped by cord grip</li>
+                <li>6. Ensure all terminals are tight</li>
+                <li>7. Verify BS 1362 fuse of correct rating fitted</li>
               </ul>
             </div>
 
-            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
-              <h3 className="text-red-400 font-semibold mb-3 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4" />
-                Common Mistakes to Avoid
-              </h3>
-              <ul className="space-y-2 text-white/80 text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Assuming all appliances need 13A fuses</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Not checking inside rewireable plugs</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Ignoring signs of previous repairs</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Overtightening terminals and damaging insulation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-red-400">•</span>
-                  <span>Forgetting to check cord grip holds sheath</span>
-                </li>
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Assuming all appliances need 13A fuses</strong> — low-power appliances need 3A</li>
+                <li><strong>Not checking inside rewireable plugs</strong> — always inspect wiring</li>
+                <li><strong>Ignoring signs of previous repairs</strong> — investigate any anomalies</li>
+                <li><strong>Overtightening terminals</strong> — damages insulation</li>
+                <li><strong>Forgetting to check cord grip</strong> — must hold sheath, not cores</li>
               </ul>
             </div>
           </div>
@@ -811,82 +457,66 @@ const PATTestingModule3Section2 = () => {
 
         {/* FAQs */}
         <section className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <HelpCircle className="w-5 h-5 text-elec-yellow" />
-            <h2 className="text-xl font-bold text-white">Frequently Asked Questions</h2>
-          </div>
-          <div className="space-y-3">
-            {faqs.map((faq, idx) => (
-              <details key={idx} className="group bg-white/5 rounded-xl">
-                <summary className="flex items-center justify-between p-4 cursor-pointer list-none touch-manipulation">
-                  <span className="text-white font-medium text-sm sm:text-base pr-4">{faq.question}</span>
-                  <ChevronRight className="w-5 h-5 text-white/40 group-open:rotate-90 transition-transform flex-shrink-0" />
-                </summary>
-                <div className="px-4 pb-4">
-                  <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
-                </div>
-              </details>
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
             ))}
           </div>
         </section>
 
         {/* Quick Reference Card */}
         <section className="mb-10">
-          <div className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30 rounded-xl p-5">
-            <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
-              <Bookmark className="w-5 h-5 text-elec-yellow" />
-              Quick Reference: Fuse Selection
-            </h3>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 bg-white/10 rounded-lg">
-                <p className="text-elec-yellow font-bold text-xl text-center">3A</p>
-                <p className="text-white/70 text-center text-sm">Up to 700W</p>
-                <p className="text-white/50 text-center text-xs">Lamps, chargers, TVs</p>
+          <div className="mt-6 p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference: Fuse Selection</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">3A Fuse (up to 700W)</p>
+                <ul className="space-y-0.5">
+                  <li>Lamps, chargers, TVs</li>
+                  <li>Laptops, radios, clocks</li>
+                  <li>Small electronics</li>
+                </ul>
               </div>
-              <div className="p-3 bg-white/10 rounded-lg">
-                <p className="text-elec-yellow font-bold text-xl text-center">13A</p>
-                <p className="text-white/70 text-center text-sm">700W - 3000W</p>
-                <p className="text-white/50 text-center text-xs">Kettles, heaters, irons</p>
+              <div>
+                <p className="font-medium text-white mb-1">13A Fuse (700W - 3000W)</p>
+                <ul className="space-y-0.5">
+                  <li>Kettles, heaters, irons</li>
+                  <li>Vacuum cleaners, toasters</li>
+                  <li>Washing machines</li>
+                </ul>
               </div>
-            </div>
-            <div className="mt-4 p-3 bg-red-500/10 rounded-lg">
-              <p className="text-red-400 text-sm text-center font-medium">
-                Never use 13A fuse for low-power appliances - it won't protect the cable!
-              </p>
             </div>
           </div>
         </section>
 
-        {/* Quiz Section */}
+        {/* Quiz */}
         <section className="mb-10">
           <Quiz
-            title="Section 2 Quiz: Rewiring and Fuse Ratings"
+            title="Test Your Knowledge"
             questions={quizQuestions}
-            moduleId="pat-m3s2"
           />
         </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-6 border-t border-white/10">
-          <Link to="../section-1" className="w-full sm:w-auto">
-            <Button
-              variant="outline"
-              className="w-full sm:w-auto gap-2 border-white/20 text-white hover:bg-white/5 hover:text-elec-yellow min-h-[48px] touch-manipulation active:scale-[0.98]"
-            >
-              <ChevronLeft className="w-4 h-4" />
-              <span>Previous: Section 1</span>
-            </Button>
-          </Link>
-          <Link to="../section-3" className="w-full sm:w-auto">
-            <Button
-              className="w-full sm:w-auto gap-2 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold min-h-[48px] touch-manipulation active:scale-[0.98]"
-            >
-              <span>Next: Section 3</span>
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-          </Link>
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-1">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-3">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
         </nav>
-      </main>
+      </article>
     </div>
   );
 };

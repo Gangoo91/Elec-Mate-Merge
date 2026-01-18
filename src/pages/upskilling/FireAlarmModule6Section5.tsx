@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, Award, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Award, CheckCircle, AlertTriangle, HelpCircle, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
@@ -164,308 +163,249 @@ const FireAlarmModule6Section5 = () => {
     selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-6">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Module 6</span>
+    <div className="min-h-screen bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Module 6
             </Link>
           </Button>
-          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 5</span>
-          <div className="w-[60px]" />
         </div>
-      </header>
+      </div>
 
-      {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
-            <Award className="h-7 w-7 text-cyan-400" />
+      <div className="px-4 sm:px-6 py-6 max-w-3xl mx-auto space-y-8">
+        {/* Page Title */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
+              <Award className="h-5 w-5 text-elec-yellow" />
+            </div>
+            <span className="text-sm text-white/50">Section 5 of 6</span>
           </div>
-          <span className="text-[11px] font-medium text-cyan-400 uppercase tracking-wide">
-            Section 5 of 6
-          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">Verification & Certification</h1>
+          <p className="text-white/70">System verification, certificates of compliance and third-party approval processes.</p>
         </div>
-        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
-          Verification & Certification
-        </h1>
-        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
-          System verification, certificates of compliance and third-party approval processes.
-        </p>
-        <div className="flex items-center gap-4 text-[13px] text-white/50">
-          <span className="flex items-center gap-1">
-            <Target className="h-4 w-4" />
-            6 learning outcomes
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            25-30 mins
-          </span>
+
+        {/* Quick Summary */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+          <ul className="space-y-2 text-white/80 text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Verification</strong> confirms 100% of devices work correctly and system meets design spec</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Certificates</strong> are issued by competent persons with supporting documentation</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Third-party approval</strong> (BAFE) provides independent quality assurance</span>
+            </li>
+          </ul>
         </div>
-      </section>
 
-      {/* In 30 Seconds Card */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-cyan-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[15px] font-semibold text-cyan-400 flex items-center gap-2">
-              <Lightbulb className="h-4 w-4" />
-              In 30 Seconds
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-[15px] text-white/80">
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Verification</strong> confirms 100% of devices work correctly and system meets design spec</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Certificates</strong> are issued by competent persons with supporting documentation</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Third-party approval</strong> (BAFE) provides independent quality assurance</span>
-            </p>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Learning Outcomes */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            "Explain the purpose and scope of fire alarm system verification",
-            "Conduct comprehensive verification testing per BS 5839-1",
-            "Complete Certificates of Compliance accurately and completely",
-            "Understand the role and value of third-party certification",
-            "Compile documentation packages for system handover",
-            "Manage non-compliance findings during verification"
-          ].map((outcome, i) => (
-            <Card key={i} variant="ios" className="p-3">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-[11px] font-bold text-cyan-400">{i + 1}</span>
+        {/* Learning Outcomes */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Learning Outcomes</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              "Explain the purpose and scope of fire alarm system verification",
+              "Conduct comprehensive verification testing per BS 5839-1",
+              "Complete Certificates of Compliance accurately and completely",
+              "Understand the role and value of third-party certification",
+              "Compile documentation packages for system handover",
+              "Manage non-compliance findings during verification"
+            ].map((outcome, i) => (
+              <div key={i} className="p-3 rounded-lg bg-white/5 border border-white/10">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                    <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
+                  </div>
+                  <p className="text-sm text-white/80">{outcome}</p>
                 </div>
-                <p className="text-[13px] text-white/80">{outcome}</p>
               </div>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
-      </section>
 
-      {/* Main Content */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto space-y-6">
         {/* Section 01 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">01</span>
-              <h3 className="text-[17px] font-semibold text-white">Purpose of System Verification</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Purpose of System Verification
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Verification confirms that the installed fire alarm system <strong className="text-white">meets design requirements</strong> and complies with BS 5839-1.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Verification Objectives:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Confirm all devices installed and functioning correctly</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Verify coverage meets system category requirements</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Check cause-and-effect programming operates correctly</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Validate sound levels meet minimum requirements</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Confirm documentation is complete and accurate</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Verification confirms that the installed fire alarm system <strong className="text-white">meets design requirements</strong> and complies with BS 5839-1.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Verification Objectives:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Confirm all devices installed and functioning correctly</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Verify coverage meets system category requirements</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Check cause-and-effect programming operates correctly</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Validate sound levels meet minimum requirements</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Confirm documentation is complete and accurate</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Verification should be performed by someone independent of the installation team where possible.</p>
-            </div>
-          </CardContent>
-        </Card>
+            <p className="text-sm text-white/60 italic">Verification should be performed by someone independent of the installation team where possible.</p>
+          </div>
+        </div>
 
         {/* Section 02 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">02</span>
-              <h3 className="text-[17px] font-semibold text-white">Verification Testing Procedures</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Verification Testing Procedures
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Verification requires <strong className="text-elec-yellow">100% testing</strong> of all system components, unlike routine quarterly sampling.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Verification Test Checklist:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Every detector - functional test with appropriate stimulus</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Every manual call point - activation and reset</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Every sounder/beacon - operation and audibility/visibility</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Control panel - all functions and indications</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Power supplies - mains and standby battery</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Ancillary interfaces - door holders, dampers, lifts</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Verification requires <strong className="text-cyan-400">100% testing</strong> of all system components, unlike routine quarterly sampling.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Verification Test Checklist:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Every detector - functional test with appropriate stimulus</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Every manual call point - activation and reset</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Every sounder/beacon - operation and audibility/visibility</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Control panel - all functions and indications</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Power supplies - mains and standby battery</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Ancillary interfaces - door holders, dampers, lifts</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 03 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">03</span>
-              <h3 className="text-[17px] font-semibold text-white">Certificate of Compliance</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Certificate of Compliance
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">The Certificate of Compliance is a <strong className="text-white">formal declaration</strong> that the system meets BS 5839-1 requirements.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Certificate Contents:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Premises details and system description</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />System category and type (L1/L2/P1/P2 etc.)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Declaration of compliance with BS 5839-1</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Any departures from standard with justification</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Name and signature of competent person</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Company details and third-party certification</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>The Certificate of Compliance is a <strong className="text-white">formal declaration</strong> that the system meets BS 5839-1 requirements.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Certificate Contents:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Premises details and system description</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />System category and type (L1/L2/P1/P2 etc.)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Declaration of compliance with BS 5839-1</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Any departures from standard with justification</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Name and signature of competent person</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Company details and third-party certification</li>
-                </ul>
-              </div>
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-amber-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  Never issue a certificate if the system does not fully comply - document variations first.
-                </p>
-              </div>
+            <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <p className="text-sm text-amber-300 flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                Never issue a certificate if the system does not fully comply - document variations first.
+              </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        {/* Inline Check 1 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">During verification, you discover that sound levels in one area are below 65 dB(A). Can you still issue a certificate?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> No - sound levels not meeting the minimum is a non-compliance. You must either add sounders to achieve compliance, or document this as a departure from the standard with risk assessment justification. The certificate should not be issued until the issue is resolved or formally documented.</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Quick Check 1 */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <span className="font-semibold text-elec-yellow">Quick Check</span>
+          </div>
+          <p className="text-white/80 mb-3">During verification, you discover that sound levels in one area are below 65 dB(A). Can you still issue a certificate?</p>
+          <div className="p-3 rounded-lg bg-white/5">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> No - sound levels not meeting the minimum is a non-compliance. You must either add sounders to achieve compliance, or document this as a departure from the standard with risk assessment justification. The certificate should not be issued until the issue is resolved or formally documented.</p>
+          </div>
+        </div>
 
         {/* Section 04 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">04</span>
-              <h3 className="text-[17px] font-semibold text-white">Third-Party Certification</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Third-Party Certification
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Third-party certification schemes like <strong className="text-elec-yellow">BAFE</strong> provide independent assurance of company competence.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">BAFE Certification Requirements:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Quality management system (ISO 9001 or equivalent)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Competent personnel with verified qualifications</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Appropriate insurance and trading history</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Regular audits and inspections</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Complaints handling procedures</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Third-party certification schemes like <strong className="text-cyan-400">BAFE</strong> provide independent assurance of company competence.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">BAFE Certification Requirements:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Quality management system (ISO 9001 or equivalent)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Competent personnel with verified qualifications</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Appropriate insurance and trading history</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Regular audits and inspections</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Complaints handling procedures</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">BAFE SP203-1 covers design, installation, commissioning and maintenance of fire detection systems.</p>
-            </div>
-          </CardContent>
-        </Card>
+            <p className="text-sm text-white/60 italic">BAFE SP203-1 covers design, installation, commissioning and maintenance of fire detection systems.</p>
+          </div>
+        </div>
 
         {/* Section 05 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">05</span>
-              <h3 className="text-[17px] font-semibold text-white">Documentation Package</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Documentation Package
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">A comprehensive <strong className="text-white">documentation package</strong> must accompany the Certificate of Compliance.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Required Documentation:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />As-fitted drawings showing all device locations</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Zone chart with device schedules</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Cause-and-effect matrix</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Operating and maintenance instructions</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Verification test results</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Equipment data sheets and certificates</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>A comprehensive <strong className="text-white">documentation package</strong> must accompany the Certificate of Compliance.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Required Documentation:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />As-fitted drawings showing all device locations</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Zone chart with device schedules</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Cause-and-effect matrix</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Operating and maintenance instructions</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Verification test results</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Equipment data sheets and certificates</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 06 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">06</span>
-              <h3 className="text-[17px] font-semibold text-white">Managing Non-Compliance</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Managing Non-Compliance
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Non-compliance discovered during verification must be <strong className="text-elec-yellow">documented and resolved</strong> before certification.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Non-Compliance Management:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Document all deficiencies in detail</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Notify responsible person immediately</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Plan and implement remedial actions</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Re-test affected elements</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Update documentation to reflect changes</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Non-compliance discovered during verification must be <strong className="text-cyan-400">documented and resolved</strong> before certification.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Non-Compliance Management:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Document all deficiencies in detail</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Notify responsible person immediately</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Plan and implement remedial actions</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Re-test affected elements</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Update documentation to reflect changes</li>
-                </ul>
-              </div>
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-amber-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  Departures from standard require documented risk assessment and client agreement.
-                </p>
-              </div>
+            <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <p className="text-sm text-amber-300 flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                Departures from standard require documented risk assessment and client agreement.
+              </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        {/* Inline Check 2 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A client asks if third-party certification is legally required. How would you respond?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Third-party certification is not a legal requirement, but is often required by insurers and may be specified in lease agreements. It provides independent verification of competence and is increasingly expected for commercial premises. Some building control authorities also require it.</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Quick Check 2 */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <span className="font-semibold text-elec-yellow">Quick Check</span>
+          </div>
+          <p className="text-white/80 mb-3">A client asks if third-party certification is legally required. How would you respond?</p>
+          <div className="p-3 rounded-lg bg-white/5">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> Third-party certification is not a legal requirement, but is often required by insurers and may be specified in lease agreements. It provides independent verification of competence and is increasingly expected for commercial premises. Some building control authorities also require it.</p>
+          </div>
+        </div>
 
-        {/* Inline Check 3 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">What is the difference between the installation certificate and the Certificate of Compliance?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> The installation certificate confirms the work was carried out by the named company. The Certificate of Compliance specifically declares that the system meets BS 5839-1 requirements. Both are typically issued together but serve different purposes - one confirms who did the work, the other confirms it meets the standard.</p>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Practical Guidance */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
-
-        <div className="space-y-3">
-          <Card variant="ios" className="border-green-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
+        {/* Practical Guidance */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Practical Guidance</h2>
+          <div className="space-y-3">
+            <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
+              <h4 className="font-semibold text-green-400 mb-2">Pro Tips</h4>
+              <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Use a systematic checklist during verification to ensure nothing is missed
@@ -479,13 +419,11 @@ const FireAlarmModule6Section5 = () => {
                   Involve the client in cause-and-effect testing so they understand system operation
                 </li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card variant="ios" className="border-red-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
+            <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
+              <h4 className="font-semibold text-red-400 mb-2">Common Mistakes</h4>
+              <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Issuing certificates before completing all verification tests
@@ -499,147 +437,137 @@ const FireAlarmModule6Section5 = () => {
                   Providing incomplete documentation packages at handover
                 </li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
-      </section>
 
-      {/* FAQs */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
-        <div className="space-y-3">
-          {[
-            { q: "How long does verification typically take?", a: "Duration depends on system size. Allow approximately 1-2 days for small systems, proportionally longer for large installations. Plan adequately to avoid rushing." },
-            { q: "Can the installer verify their own work?", a: "Yes, but ideally verification should involve someone independent of the installation team to provide objectivity. Large organisations often have separate commissioning teams." },
-            { q: "What if modifications are made after certification?", a: "Significant modifications require re-verification of affected areas and potentially a new or amended certificate. Minor modifications should be documented in the logbook." },
-            { q: "Is there a standard certificate format?", a: "BS 5839-1 provides model certificates in the annexes. Third-party certified companies use approved formats. The content must meet standard requirements regardless of format." },
-            { q: "Who keeps the original certificate?", a: "The original certificate should be kept with the system logbook at the premises. Copies should be retained by the installing/maintaining company and may be required by insurers." },
-            { q: "Can certification be withdrawn?", a: "Third-party certification can be withdrawn if audits reveal non-compliance. This is serious and should be avoided through maintaining quality standards." }
-          ].map((faq, i) => (
-            <Card key={i} variant="ios">
-              <CardContent className="p-4">
-                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-[13px] text-white/70">{faq.a}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Quiz Section */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-cyan-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-cyan-400" />
-              Knowledge Check
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {!showQuiz ? (
-              <div className="text-center py-6">
-                <p className="text-[15px] text-white/70 mb-4">Test your understanding of verification and certification with 10 questions.</p>
-                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
-                  Start Quiz
-                </Button>
+        {/* FAQs */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {[
+              { q: "How long does verification typically take?", a: "Duration depends on system size. Allow approximately 1-2 days for small systems, proportionally longer for large installations. Plan adequately to avoid rushing." },
+              { q: "Can the installer verify their own work?", a: "Yes, but ideally verification should involve someone independent of the installation team to provide objectivity. Large organisations often have separate commissioning teams." },
+              { q: "What if modifications are made after certification?", a: "Significant modifications require re-verification of affected areas and potentially a new or amended certificate. Minor modifications should be documented in the logbook." },
+              { q: "Is there a standard certificate format?", a: "BS 5839-1 provides model certificates in the annexes. Third-party certified companies use approved formats. The content must meet standard requirements regardless of format." },
+              { q: "Who keeps the original certificate?", a: "The original certificate should be kept with the system logbook at the premises. Copies should be retained by the installing/maintaining company and may be required by insurers." },
+              { q: "Can certification be withdrawn?", a: "Third-party certification can be withdrawn if audits reveal non-compliance. This is serious and should be avoided through maintaining quality standards." }
+            ].map((faq, i) => (
+              <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-semibold text-white mb-2">{faq.q}</p>
+                <p className="text-sm text-white/70">{faq.a}</p>
               </div>
-            ) : showResults ? (
-              <div className="space-y-6">
-                <div className="text-center py-4">
-                  <p className="text-[34px] font-bold text-cyan-400">{calculateScore()}/{questions.length}</p>
-                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
-                </div>
+            ))}
+          </div>
+        </div>
 
-                <div className="space-y-4">
-                  {questions.map((q, i) => {
-                    const correct = selectedAnswers[i] === q.correctAnswer;
+        {/* Quiz Section */}
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-4">
+            <BookOpen className="h-5 w-5 text-elec-yellow" />
+            <h3 className="text-lg font-semibold text-white">Knowledge Check</h3>
+          </div>
+
+          {!showQuiz ? (
+            <div className="text-center py-6">
+              <p className="text-white/70 mb-4">Test your understanding of verification and certification with 10 questions.</p>
+              <Button onClick={() => setShowQuiz(true)} className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation">
+                Start Quiz
+              </Button>
+            </div>
+          ) : showResults ? (
+            <div className="space-y-6">
+              <div className="text-center py-4">
+                <p className="text-3xl font-bold text-elec-yellow">{calculateScore()}/{questions.length}</p>
+                <p className="text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+              </div>
+
+              <div className="space-y-4">
+                {questions.map((q, i) => {
+                  const correct = selectedAnswers[i] === q.correctAnswer;
+                  return (
+                    <div key={q.id} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                      <p className="font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                      <p className={`text-sm ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                        Your answer: {q.options[selectedAnswers[i]] ?? 'Not answered'} {correct ? '(Correct)' : '(Incorrect)'}
+                      </p>
+                      {!correct && (
+                        <p className="text-sm text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                      )}
+                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Button onClick={resetQuiz} variant="outline" className="w-full min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10">
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Restart Quiz
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+
+              <div>
+                <p className="font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                <div className="space-y-2">
+                  {questions[currentQuestion].options.map((opt, idx) => {
+                    const selected = selectedAnswers[currentQuestion] === idx;
                     return (
-                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
-                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
-                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
-                        </p>
-                        {!correct && (
-                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
-                        )}
-                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
-                      </div>
+                      <button
+                        key={idx}
+                        onClick={() => handleAnswerSelect(idx)}
+                        className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
+                          selected
+                            ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
+                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                        }`}
+                      >
+                        {opt}
+                      </button>
                     );
                   })}
                 </div>
+              </div>
 
-                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
-                  <RotateCcw className="h-4 w-4" />
-                  Restart Quiz
+              <div className="flex items-center justify-between gap-3">
+                <Button
+                  onClick={handlePrevious}
+                  disabled={currentQuestion === 0}
+                  variant="outline"
+                  className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10 disabled:opacity-50"
+                >
+                  Previous
+                </Button>
+                <Button
+                  onClick={handleNext}
+                  disabled={selectedAnswers[currentQuestion] === -1}
+                  className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+                >
+                  {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </div>
-            ) : (
-              <div className="space-y-6">
-                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+            </div>
+          )}
+        </div>
 
-                <div>
-                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-                  <div className="space-y-2">
-                    {questions[currentQuestion].options.map((opt, idx) => {
-                      const selected = selectedAnswers[currentQuestion] === idx;
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => handleAnswerSelect(idx)}
-                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
-                            selected
-                              ? 'bg-cyan-500/20 border-cyan-500/50 text-white'
-                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
-                          }`}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between gap-3">
-                  <Button
-                    variant="ios-secondary"
-                    onClick={handlePrevious}
-                    disabled={currentQuestion === 0}
-                    className="flex-1"
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="ios-primary"
-                    onClick={handleNext}
-                    disabled={selectedAnswers[currentQuestion] === -1}
-                    className="flex-1"
-                  >
-                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Navigation Footer */}
-      <section className="px-4 pb-safe max-w-3xl mx-auto">
-        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
-          <Button variant="ios-secondary" asChild className="flex-1">
+        {/* Navigation Footer */}
+        <div className="flex items-center justify-between gap-3 pt-6 border-t border-white/10">
+          <Button variant="outline" asChild className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10">
             <Link to="/study-centre/upskilling/fire-alarm-module-6-section-4">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Previous Section
+              Previous
             </Link>
           </Button>
-          <Button variant="ios-primary" asChild className="flex-1">
+          <Button asChild className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
             <Link to="/study-centre/upskilling/fire-alarm-module-6-section-6">
-              Next Section
+              Next
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>
           </Button>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

@@ -1,1010 +1,568 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { ArrowLeft, Zap, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import useSEO from '@/hooks/useSEO';
-import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
-  BarChart3,
-  Target,
-  Gauge,
-  Users,
-  RefreshCw,
-  TrendingUp,
-  Lightbulb,
-  ClipboardList,
-  Building2,
-  ThermometerSun,
-  Calculator,
-  LineChart,
-  PieChart,
-  Activity,
-  Zap,
-  CheckCircle2,
-} from 'lucide-react';
+
+const TITLE = 'Developing Energy KPI Dashboards - Energy Efficiency Module 6 Section 4';
+const DESCRIPTION = 'Learn to develop effective energy KPI dashboards including SMART KPI setting, degree day normalisation, CUSUM charts, ISO 50001 EnPIs, and practical dashboard design for UK buildings.';
+
+const quickCheckQuestions = [
+  {
+    id: 'ee-m6s4-qc1',
+    question: 'What does EUI (Energy Use Intensity) measure?',
+    options: [
+      'Total energy cost per year',
+      'Energy consumption per unit floor area (kWh/m²)',
+      'Percentage of renewable energy used',
+      'Carbon emissions per employee'
+    ],
+    correctIndex: 1,
+    explanation: 'Energy Use Intensity (EUI) measures energy consumption per unit of floor area, typically expressed as kWh/m²/year. It allows meaningful comparison between buildings of different sizes and is a fundamental energy KPI.'
+  },
+  {
+    id: 'ee-m6s4-qc2',
+    question: 'What is the purpose of degree day normalisation?',
+    options: [
+      'To calculate solar panel output',
+      'To adjust energy data for weather variations',
+      'To measure building insulation',
+      'To schedule maintenance activities'
+    ],
+    correctIndex: 1,
+    explanation: 'Degree day normalisation removes the effect of weather from energy consumption data, allowing fair comparison between different periods. A mild winter will show lower heating energy, but normalisation reveals true underlying performance.'
+  },
+  {
+    id: 'ee-m6s4-qc3',
+    question: 'In a CUSUM chart, what does an upward slope indicate?',
+    options: [
+      'Energy performance improving',
+      'Energy consumption lower than expected',
+      'Energy consumption higher than expected',
+      'No change in performance'
+    ],
+    correctIndex: 2,
+    explanation: 'CUSUM (Cumulative Sum) charts plot the running total of differences between actual and expected energy use. An upward slope means actual consumption consistently exceeds the target, indicating deteriorating performance.'
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: 'What does SMART stand for in SMART KPIs?',
+    options: [
+      'Standard, Measured, Accurate, Relevant, Timely',
+      'Specific, Measurable, Achievable, Relevant, Time-bound',
+      'Simple, Monitored, Actionable, Recorded, Tracked',
+      'Strategic, Managed, Aligned, Responsive, Targeted'
+    ],
+    correctAnswer: 1,
+    explanation: 'SMART KPIs are Specific, Measurable, Achievable, Relevant, and Time-bound - ensuring targets are clear, quantifiable, realistic, aligned with objectives, and have defined deadlines.'
+  },
+  {
+    id: 2,
+    question: 'What is the typical unit for heating degree days in the UK?',
+    options: ['°C·days', 'kWh/m²', 'BTU/hour', 'W/m²K'],
+    correctAnswer: 0,
+    explanation: 'Heating degree days are measured in °C·days, calculated as the sum of differences between the base temperature (typically 15.5°C in the UK) and the mean daily temperature for each day.'
+  },
+  {
+    id: 3,
+    question: 'Which ISO standard specifically addresses Energy Performance Indicators (EnPIs)?',
+    options: ['ISO 9001', 'ISO 14001', 'ISO 50001', 'ISO 45001'],
+    correctAnswer: 2,
+    explanation: 'ISO 50001 is the energy management standard that requires organisations to establish and monitor EnPIs as part of a systematic approach to improving energy performance.'
+  },
+  {
+    id: 4,
+    question: 'What is baseline energy consumption used for?',
+    options: [
+      'Setting minimum legal requirements',
+      'Providing a reference point to measure improvement',
+      'Calculating electricity tariffs',
+      'Determining building size'
+    ],
+    correctAnswer: 1,
+    explanation: 'A baseline establishes the starting point for measuring energy performance improvement. It captures energy use during a representative period before improvements are made.'
+  },
+  {
+    id: 5,
+    question: 'What does a flat CUSUM line indicate?',
+    options: [
+      'Increasing energy consumption',
+      'Decreasing energy consumption',
+      'No equipment running',
+      'Performance matching the target'
+    ],
+    correctAnswer: 3,
+    explanation: 'A flat (horizontal) CUSUM line indicates actual consumption matches expected consumption - performance is on target with no deviation.'
+  },
+  {
+    id: 6,
+    question: 'Which factor should NOT be included in a normalisation model for heating energy?',
+    options: ['Degree days', 'Building floor area', 'Electricity tariff', 'Occupancy levels'],
+    correctAnswer: 2,
+    explanation: 'Electricity tariff is a financial factor, not a physical driver of energy consumption. Normalisation should adjust for physical variables like weather, floor area, and occupancy that affect energy use.'
+  },
+  {
+    id: 7,
+    question: 'What is the typical EUI benchmark for UK offices?',
+    options: ['50-100 kWh/m²/year', '100-200 kWh/m²/year', '200-400 kWh/m²/year', '500-700 kWh/m²/year'],
+    correctAnswer: 1,
+    explanation: 'UK office buildings typically achieve EUIs of 100-200 kWh/m²/year depending on type and air conditioning. CIBSE TM46 provides detailed benchmarks by building type.'
+  },
+  {
+    id: 8,
+    question: 'In ISO 50001, what is an SEU?',
+    options: [
+      'Standard Energy Unit',
+      'Significant Energy Use',
+      'System Efficiency Upgrade',
+      'Strategic Energy Utility'
+    ],
+    correctAnswer: 1,
+    explanation: 'Significant Energy Use (SEU) identifies the equipment, processes, or facilities that account for substantial energy consumption and offer significant potential for improvement.'
+  },
+  {
+    id: 9,
+    question: 'What dashboard update frequency is typical for monthly management reports?',
+    options: ['Real-time', 'Daily', 'Monthly', 'Annually'],
+    correctAnswer: 2,
+    explanation: 'Monthly dashboards suit management review cycles, aligning with billing periods and providing enough time for meaningful trends. Real-time suits operational monitoring; annual suits strategic review.'
+  },
+  {
+    id: 10,
+    question: 'What is the Plan-Do-Check-Act (PDCA) cycle used for in energy management?',
+    options: [
+      'Calculating energy bills',
+      'Continuous improvement of energy performance',
+      'Scheduling equipment maintenance',
+      'Training new staff'
+    ],
+    correctAnswer: 1,
+    explanation: 'PDCA is a continuous improvement methodology central to ISO 50001. Plan establishes objectives, Do implements actions, Check monitors results, and Act takes corrective action for ongoing improvement.'
+  }
+];
+
+const faqs = [
+  {
+    question: 'How do I get started with energy KPIs if we have no monitoring?',
+    answer: 'Start simple with utility bill data. Calculate monthly kWh consumption and track trends. Divide by floor area to get EUI. Compare with CIBSE benchmarks. This basic approach can identify significant issues before investing in advanced monitoring. When ready, add sub-metering to major loads.'
+  },
+  {
+    question: 'What is the best software for energy dashboards?',
+    answer: 'Options range from spreadsheets for small sites to dedicated platforms for portfolios. Excel works well for basic tracking and CUSUM charts. Power BI and Tableau create professional dashboards from multiple sources. Dedicated energy management platforms like Stark, SystemsLink, or Coherent offer sector-specific features and automatic data collection.'
+  },
+  {
+    question: 'How accurate should energy data be?',
+    answer: 'Aim for ±2% accuracy on main meters for compliance and benchmarking. Sub-meters may be ±5% acceptable for internal monitoring. More important than absolute accuracy is consistency - the same meter measured the same way over time reveals trends even if slightly inaccurate. Document any known limitations.'
+  },
+  {
+    question: 'Should I normalise for occupancy as well as weather?',
+    answer: 'Yes, if occupancy varies significantly. Buildings with hybrid working may see large differences in energy use based on actual occupancy. Include occupancy hours or headcount in your normalisation model. This is especially important post-pandemic when comparing current performance to pre-2020 baselines.'
+  },
+  {
+    question: 'How often should we review KPIs and targets?',
+    answer: 'Review KPI data monthly for operational management. Review targets annually or after significant changes (new equipment, building modifications, occupancy changes). ISO 50001 requires management review at defined intervals covering EnPIs, objectives, and the energy management system effectiveness.'
+  },
+  {
+    question: 'What KPIs should electricians track for their own business?',
+    answer: 'Track your van fleet fuel consumption (mpg or kWh/mile for EVs), workshop energy use, tool charging costs, and carbon footprint per job. This demonstrates credibility when advising clients and helps identify your own efficiency improvements. Some clients specifically look for contractors monitoring their own environmental performance.'
+  }
+];
 
 const EnergyEfficiencyModule6Section4: React.FC = () => {
-  const navigate = useNavigate();
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
 
   useSEO({
-    title: 'Developing Energy KPI Dashboards | Energy Efficiency Module 6 Section 4 | Elec-Mate',
-    description:
-      'Learn to develop effective energy KPI dashboards including SMART KPI setting, degree day normalisation, CUSUM charts, ISO 50001 EnPIs, and practical dashboard design for UK buildings.',
-    keywords: [
-      'energy KPI',
-      'dashboard design',
-      'energy performance indicators',
-      'EUI',
-      'degree day normalisation',
-      'CUSUM charts',
-      'ISO 50001',
-      'EnPIs',
-      'energy management',
-      'UK buildings',
-    ],
-    canonicalUrl: '/upskilling/energy-efficiency/module-6/section-4',
+    title: TITLE,
+    description: DESCRIPTION,
+    keywords: ['energy KPI', 'dashboard', 'EUI', 'degree day normalisation', 'CUSUM', 'ISO 50001', 'EnPIs'],
+    canonicalUrl: '/study-centre/upskilling/energy-efficiency/module-6/section-4'
   });
 
-  const quickCheckQuestions = [
-    {
-      id: 'qc1',
-      question:
-        'What does the "M" in SMART KPIs stand for when setting energy performance targets?',
-      options: ['Meaningful', 'Measurable', 'Maximum', 'Monthly'],
-      correctIndex: 1,
-      explanation:
-        'SMART KPIs must be Measurable - you need to quantify the metric so progress can be tracked objectively. Without measurement capability, you cannot determine if targets are being met or improvements achieved.',
-    },
-    {
-      id: 'qc2',
-      question:
-        'Why is degree day normalisation important when comparing energy consumption across different periods?',
-      options: [
-        'It makes calculations simpler',
-        'It removes the effect of weather variations on heating/cooling demand',
-        'It converts energy units to standard measurements',
-        'It adjusts for electricity price changes',
-      ],
-      correctIndex: 1,
-      explanation:
-        'Degree day normalisation removes weather variations from energy data, allowing fair comparison between periods with different outdoor temperatures. This ensures genuine efficiency changes are identified rather than weather-driven consumption differences.',
-    },
-    {
-      id: 'qc3',
-      question:
-        'What does a rising CUSUM line indicate in energy performance monitoring?',
-      options: [
-        'Energy consumption is below the baseline',
-        'Energy consumption is matching the baseline exactly',
-        'Energy consumption is above the baseline - potential waste',
-        'The monitoring system has an error',
-      ],
-      correctIndex: 2,
-      explanation:
-        'A rising CUSUM (Cumulative Sum) line indicates that actual consumption is consistently exceeding the baseline prediction. This signals potential energy waste or system degradation requiring investigation and corrective action.',
-    },
-  ];
-
-  const quizQuestions = [
-    {
-      question:
-        'According to ISO 50001, what is the correct term for a quantifiable measure of energy performance?',
-      options: [
-        'Energy Use Indicator (EUI)',
-        'Energy Performance Indicator (EnPI)',
-        'Key Performance Index (KPI)',
-        'Energy Efficiency Ratio (EER)',
-      ],
-      correctAnswer: 'Energy Performance Indicator (EnPI)',
-    },
-    {
-      question:
-        'What is the typical unit for Energy Use Intensity (EUI) in UK commercial buildings?',
-      options: ['kW/m²', 'kWh/m²/year', 'MJ/ft²', 'BTU/m²/month'],
-      correctAnswer: 'kWh/m²/year',
-    },
-    {
-      question:
-        'When setting an energy baseline, what minimum period of data is typically recommended?',
-      options: ['1 month', '3 months', '12 months', '5 years'],
-      correctAnswer: '12 months',
-    },
-    {
-      question:
-        'Which dashboard element is most appropriate for showing energy consumption trends over time?',
-      options: ['Pie chart', 'Line graph', 'Data table', 'Single number display'],
-      correctAnswer: 'Line graph',
-    },
-    {
-      question:
-        'What does a Heating Degree Day (HDD) base temperature of 15.5°C mean?',
-      options: [
-        'The building requires heating when outside temperature is above 15.5°C',
-        'The building requires heating when outside temperature is below 15.5°C',
-        'The indoor temperature must be maintained at exactly 15.5°C',
-        'Energy consumption doubles at 15.5°C',
-      ],
-      correctAnswer:
-        'The building requires heating when outside temperature is below 15.5°C',
-    },
-    {
-      question:
-        'For executive-level stakeholders, which KPI presentation format is most effective?',
-      options: [
-        'Detailed hourly consumption data tables',
-        'Raw meter readings with technical annotations',
-        'High-level summary with cost implications and trends',
-        'Complex multi-variable scatter plots',
-      ],
-      correctAnswer: 'High-level summary with cost implications and trends',
-    },
-    {
-      question:
-        'What is the primary advantage of automated data collection for energy KPIs?',
-      options: [
-        'It eliminates the need for any human oversight',
-        'It reduces manual errors and enables real-time monitoring',
-        'It makes energy cheaper',
-        'It replaces the need for meters',
-      ],
-      correctAnswer: 'It reduces manual errors and enables real-time monitoring',
-    },
-    {
-      question:
-        'In CUSUM analysis, what does it mean when the cumulative sum line is flat and horizontal?',
-      options: [
-        'No energy is being consumed',
-        'Actual consumption matches the predicted baseline',
-        'The monitoring system has stopped working',
-        'Energy consumption is at maximum capacity',
-      ],
-      correctAnswer: 'Actual consumption matches the predicted baseline',
-    },
-    {
-      question:
-        'Which of these is NOT a relevant variable for normalising office building energy consumption?',
-      options: [
-        'Heating degree days',
-        'Occupied floor area',
-        'Number of occupants',
-        'Age of the energy manager',
-      ],
-      correctAnswer: 'Age of the energy manager',
-    },
-    {
-      question:
-        'What frequency of KPI review is recommended for operational energy management in most commercial buildings?',
-      options: [
-        'Annually only',
-        'Every 5 years',
-        'Monthly with weekly spot checks',
-        'Once at building handover',
-      ],
-      correctAnswer: 'Monthly with weekly spot checks',
-    },
-  ];
-
-  const faqs = [
-    {
-      question: 'How many KPIs should I track for effective energy management?',
-      answer:
-        'Focus on 5-8 key KPIs rather than tracking everything possible. Start with the essentials: total energy consumption, EUI (kWh/m²), cost per unit, and one or two process-specific metrics. Too many KPIs dilute attention and make it harder to identify genuine issues. As your energy management matures, you can add more specific indicators. ISO 50001 recommends selecting EnPIs that reflect significant energy uses (SEUs) - the 80/20 rule often applies where 20% of your systems consume 80% of energy.',
-    },
-    {
-      question: 'What is the difference between leading and lagging energy KPIs?',
-      answer:
-        'Lagging KPIs measure outcomes after they happen - like monthly energy bills or annual EUI figures. Leading KPIs predict future performance - such as equipment efficiency trends, maintenance compliance rates, or behaviour change metrics. Effective dashboards include both: lagging KPIs confirm results while leading KPIs enable proactive intervention. For example, tracking chiller COP weekly (leading) helps prevent the poor monthly consumption figures (lagging) that would result from degraded performance.',
-    },
-    {
-      question: 'How do I handle missing data when calculating energy KPIs?',
-      answer:
-        'Missing data is common and needs consistent handling. Options include: interpolation from adjacent readings (suitable for small gaps), using average values from equivalent periods (e.g., same day last week), or flagging the period as incomplete. Document your approach and apply it consistently. For automated systems, set up alerts for data gaps exceeding acceptable thresholds (typically 2-4 hours for half-hourly data). Never simply ignore gaps as this distorts trends and comparisons. Consider data quality as a KPI itself - percentage data availability should exceed 98% for reliable analysis.',
-    },
-    {
-      question:
-        'Should I use actual or normalised figures on my energy dashboard?',
-      answer:
-        "Include both, clearly labelled. Actual figures show real consumption and costs - essential for budgeting and billing verification. Normalised figures (adjusted for weather, occupancy, production) enable fair performance comparisons and genuine efficiency tracking. For executive dashboards, lead with normalised performance metrics but include actual cost summaries. For operational dashboards, show both alongside each other. Always explain the normalisation method used - stakeholders need to understand what 'good' and 'bad' really mean in context.",
-    },
-    {
-      question: 'How often should I update my energy baseline?',
-      answer:
-        "Review baselines annually and update when significant changes occur: major equipment replacements, building extensions, occupancy pattern changes, or operational shifts. ISO 50001 requires baseline adjustment for 'static factors' - changes that aren't reflected in your regression variables. Document all baseline changes with clear justification. A common approach is maintaining a rolling 3-year baseline that automatically accounts for gradual changes while requiring manual adjustment for step changes. Never change baselines simply because performance looks poor - that defeats the purpose.",
-    },
-    {
-      question: 'What tools can I use to create energy KPI dashboards?',
-      answer:
-        "Options range from simple to sophisticated. Excel/Google Sheets work for basic dashboards with manual data entry. Power BI, Tableau, or Google Data Studio offer more powerful visualisation with data connections. Dedicated energy management software (EMS) like SMAP, Stark, or Inspired provides automated meter data collection, degree day normalisation, and pre-built KPI templates. Building management systems (BMS) often include dashboard modules. For UK buildings, the CIBSE TM22 benchmarking tool and Display Energy Certificate (DEC) ratings provide standardised comparative KPIs. Start simple and upgrade as needs grow.",
-    },
-  ];
-
-  const toggleFAQ = (index: number) => {
-    setExpandedFAQ(expandedFAQ === index ? null : index);
-  };
-
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a] text-white">
-      <div className="max-w-3xl mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 text-elec-yellow mb-2">
-            <BarChart3 className="w-6 h-6" />
-            <span className="text-sm font-medium">Module 6 - Section 4</span>
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 6 Section 4</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Developing Energy KPI Dashboards
           </h1>
-          <p className="text-gray-300 text-lg">
-            Master the art of creating meaningful energy Key Performance Indicator
-            dashboards that drive real improvements. Learn SMART KPI setting, degree
-            day normalisation, CUSUM analysis, and ISO 50001 EnPIs for UK buildings.
+          <p className="text-white/80">
+            Measuring and visualising energy performance
           </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">Key KPIs</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>EUI:</strong> kWh per m² floor area</li>
+              <li><strong>EnPI:</strong> ISO 50001 performance indicators</li>
+              <li><strong>Degree Days:</strong> Weather normalisation</li>
+              <li><strong>CUSUM:</strong> Cumulative deviation tracking</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">PDCA Cycle</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Plan:</strong> Set targets and baselines</li>
+              <li><strong>Do:</strong> Implement improvements</li>
+              <li><strong>Check:</strong> Monitor KPIs</li>
+              <li><strong>Act:</strong> Correct and improve</li>
+            </ul>
+          </div>
         </div>
 
-        {/* Section 1: Selecting Meaningful Energy KPIs */}
+        {/* Learning Outcomes */}
         <section className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
-              1
-            </div>
-            <h2 className="text-2xl font-bold">Selecting Meaningful Energy KPIs</h2>
-          </div>
-          <div className="bg-[#242424] rounded-lg p-6 space-y-4">
-            <div className="flex items-start gap-3">
-              <Target className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-lg mb-2">The SMART Framework for Energy KPIs</h3>
-                <p className="text-gray-300 mb-4">
-                  Effective energy KPIs follow the SMART criteria, ensuring they deliver
-                  actionable insights rather than just data:
-                </p>
-                <ul className="space-y-2 text-gray-300">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span>
-                      <strong className="text-white">Specific:</strong> Clearly defined
-                      metrics tied to particular systems or processes (e.g., "HVAC electricity
-                      consumption" not just "energy use")
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span>
-                      <strong className="text-white">Measurable:</strong> Quantifiable values
-                      from reliable data sources - sub-meters, BMS points, or utility bills
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span>
-                      <strong className="text-white">Achievable:</strong> Targets within
-                      realistic bounds based on technical and financial constraints
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span>
-                      <strong className="text-white">Relevant:</strong> Aligned with
-                      organisational energy objectives and significant energy uses
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span>
-                      <strong className="text-white">Time-bound:</strong> Clear reporting
-                      periods and target dates for achievement
-                    </span>
-                  </li>
-                </ul>
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              'Set SMART energy performance targets',
+              'Calculate and use Energy Use Intensity (EUI)',
+              'Apply degree day normalisation',
+              'Create and interpret CUSUM charts',
+              'Design effective energy dashboards',
+              'Understand ISO 50001 EnPI requirements'
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
               </div>
-            </div>
-
-            <div className="bg-[#1a1a1a] rounded-lg p-4 mt-4">
-              <h4 className="font-semibold text-elec-yellow mb-3">
-                ISO 50001 Energy Performance Indicators (EnPIs)
-              </h4>
-              <p className="text-gray-300 mb-3">
-                ISO 50001 requires organisations to establish EnPIs that demonstrate
-                energy performance improvement. Common EnPI types include:
-              </p>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-[#242424] p-3 rounded">
-                  <p className="font-medium text-white">Absolute Metrics</p>
-                  <p className="text-sm text-gray-400">
-                    Total kWh, total cost, peak demand (kW)
-                  </p>
-                </div>
-                <div className="bg-[#242424] p-3 rounded">
-                  <p className="font-medium text-white">Ratio Metrics</p>
-                  <p className="text-sm text-gray-400">
-                    kWh/m², kWh/unit produced, kWh/occupant
-                  </p>
-                </div>
-                <div className="bg-[#242424] p-3 rounded">
-                  <p className="font-medium text-white">Regression Models</p>
-                  <p className="text-sm text-gray-400">
-                    kWh vs degree days, consumption vs production
-                  </p>
-                </div>
-                <div className="bg-[#242424] p-3 rounded">
-                  <p className="font-medium text-white">Statistical Models</p>
-                  <p className="text-sm text-gray-400">
-                    CUSUM, control charts, trend analysis
-                  </p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </section>
 
-        {/* Section 2: Energy Use Intensity and Normalisation */}
-        <section className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
-              2
-            </div>
-            <h2 className="text-2xl font-bold">
-              Energy Use Intensity (EUI) and Normalisation
-            </h2>
-          </div>
-          <div className="bg-[#242424] rounded-lg p-6 space-y-4">
-            <div className="flex items-start gap-3">
-              <Building2 className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-lg mb-2">Understanding EUI</h3>
-                <p className="text-gray-300">
-                  Energy Use Intensity (EUI) is the fundamental benchmark for building
-                  energy performance in the UK. Expressed as <strong>kWh/m²/year</strong>,
-                  it allows comparison between buildings of different sizes and enables
-                  benchmarking against CIBSE TM46 or Display Energy Certificate standards.
-                </p>
-              </div>
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 01: SMART KPIs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Setting SMART Energy KPIs
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Effective energy management requires clear, measurable targets. SMART criteria ensure your KPIs drive real improvement rather than vague aspirations. Each KPI should pass all five SMART tests.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">SMART criteria:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Specific:</strong> Clear definition of what is being measured</li>
+                <li><strong>Measurable:</strong> Quantifiable with available data</li>
+                <li><strong>Achievable:</strong> Realistic given resources and constraints</li>
+                <li><strong>Relevant:</strong> Aligned with business objectives</li>
+                <li><strong>Time-bound:</strong> Clear deadline for achievement</li>
+              </ul>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Calculator className="w-5 h-5 text-elec-yellow" />
-                <h4 className="font-semibold">EUI Calculation</h4>
-              </div>
-              <div className="bg-[#2a2a2a] p-4 rounded font-mono text-center text-lg">
-                EUI = Total Annual Energy (kWh) ÷ Gross Internal Area (m²)
-              </div>
-              <p className="text-sm text-gray-400 mt-2">
-                Note: Include all energy sources (electricity, gas, oil) converted to kWh
-                for a complete picture.
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Example SMART KPI:</p>
+              <p className="text-sm text-white ml-4 bg-white/5 p-3 rounded">
+                "Reduce electricity consumption in Building A by 10% (from 180 to 162 kWh/m²/year) by 31 December 2025, measured against 2023 baseline, normalised for degree days."
               </p>
             </div>
 
-            <div className="flex items-start gap-3">
-              <ThermometerSun className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-lg mb-2">Degree Day Normalisation</h3>
-                <p className="text-gray-300 mb-3">
-                  Degree days quantify heating or cooling demand based on outdoor
-                  temperature. The UK standard uses a base temperature of 15.5°C for
-                  Heating Degree Days (HDD).
-                </p>
-                <div className="bg-[#1a1a1a] rounded-lg p-4">
-                  <p className="text-sm text-gray-300 mb-2">
-                    <strong>Heating Degree Day (HDD):</strong> For each day where the
-                    mean temperature is below 15.5°C, the HDD value equals (15.5 - mean
-                    temperature).
-                  </p>
-                  <p className="text-sm text-gray-300">
-                    <strong>Example:</strong> A day with mean temperature of 10°C
-                    contributes 5.5 HDD. Monthly totals are summed for normalisation.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-400 mb-2">
-                Weather Normalisation Formula
-              </h4>
-              <p className="text-gray-300 text-sm mb-2">
-                To compare consumption between periods with different weather:
-              </p>
-              <div className="bg-[#1a1a1a] p-3 rounded font-mono text-sm">
-                Normalised Consumption = Actual Consumption × (Standard DD ÷ Actual DD)
-              </div>
-              <p className="text-gray-400 text-sm mt-2">
-                Standard DD typically uses a 20-year average for your location. UK
-                degree day data is available from{' '}
-                <span className="text-elec-yellow">degree-days.net</span> or the Carbon
-                Trust.
+            <div className="my-6">
+              <p className="text-sm font-medium text-red-400/80 mb-2">Poor KPI example:</p>
+              <p className="text-sm text-white ml-4 bg-white/5 p-3 rounded">
+                "Improve energy efficiency" - Not specific, not measurable, no target, no deadline
               </p>
             </div>
           </div>
         </section>
 
-        {/* Quick Check 1 */}
-        <div className="mb-12">
-          <InlineCheck
-            id={quickCheckQuestions[0].id}
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
-        </div>
+        <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 3: Setting Targets and Baselines */}
-        <section className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
-              3
-            </div>
-            <h2 className="text-2xl font-bold">Setting Targets and Baselines</h2>
-          </div>
-          <div className="bg-[#242424] rounded-lg p-6 space-y-4">
-            <div className="flex items-start gap-3">
-              <LineChart className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-lg mb-2">Establishing an Energy Baseline</h3>
-                <p className="text-gray-300 mb-3">
-                  A baseline is the reference point against which future performance is
-                  measured. ISO 50001 requires a minimum 12-month baseline period to
-                  capture seasonal variations and operational cycles.
-                </p>
-                <div className="space-y-2">
-                  <div className="bg-[#1a1a1a] p-3 rounded">
-                    <p className="font-medium text-white">Data Requirements</p>
-                    <p className="text-sm text-gray-400">
-                      Collect energy consumption data (minimum half-hourly for electricity),
-                      relevant variables (degree days, occupancy, production), and
-                      operational conditions during the baseline period.
-                    </p>
-                  </div>
-                  <div className="bg-[#1a1a1a] p-3 rounded">
-                    <p className="font-medium text-white">Regression Analysis</p>
-                    <p className="text-sm text-gray-400">
-                      Develop a mathematical model relating consumption to key variables.
-                      For heating: kWh = (a × HDD) + b, where 'a' is the gradient and 'b'
-                      is the base load.
-                    </p>
-                  </div>
-                </div>
-              </div>
+        {/* Section 02: Energy Use Intensity */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Energy Use Intensity (EUI)
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              EUI normalises energy consumption by building size, allowing fair comparison between different buildings. It is the most widely used building energy benchmark and forms the basis of Display Energy Certificates (DECs).
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Formula:</p>
+              <p className="text-sm text-white ml-4 font-mono bg-white/5 p-3 rounded">
+                EUI (kWh/m²/year) = Total Annual Energy (kWh) / Gross Internal Area (m²)
+              </p>
             </div>
 
-            <div className="flex items-start gap-3">
-              <Activity className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-lg mb-2">CUSUM Analysis</h3>
-                <p className="text-gray-300 mb-3">
-                  Cumulative Sum (CUSUM) charts are powerful tools for detecting
-                  performance changes over time. They plot the running total of
-                  differences between actual and expected consumption.
-                </p>
-                <div className="grid md:grid-cols-3 gap-3">
-                  <div className="bg-green-900/30 border border-green-500/50 p-3 rounded">
-                    <TrendingUp className="w-5 h-5 text-green-400 mb-2 rotate-180" />
-                    <p className="font-medium text-green-400">Falling Line</p>
-                    <p className="text-sm text-gray-300">
-                      Consumption below baseline - good performance
-                    </p>
-                  </div>
-                  <div className="bg-gray-700/30 border border-gray-500/50 p-3 rounded">
-                    <Activity className="w-5 h-5 text-gray-400 mb-2" />
-                    <p className="font-medium text-gray-400">Flat Line</p>
-                    <p className="text-sm text-gray-300">
-                      Matching baseline - stable performance
-                    </p>
-                  </div>
-                  <div className="bg-red-900/30 border border-red-500/50 p-3 rounded">
-                    <TrendingUp className="w-5 h-5 text-red-400 mb-2" />
-                    <p className="font-medium text-red-400">Rising Line</p>
-                    <p className="text-sm text-gray-300">
-                      Above baseline - investigate waste
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">UK benchmarks (CIBSE TM46):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>General office:</strong> 95-190 kWh/m²</li>
+                <li><strong>Retail:</strong> 120-340 kWh/m²</li>
+                <li><strong>Schools:</strong> 85-150 kWh/m²</li>
+                <li><strong>Hotels:</strong> 280-430 kWh/m²</li>
+                <li><strong>Hospitals:</strong> 340-660 kWh/m²</li>
+              </ul>
             </div>
 
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h4 className="font-semibold text-elec-yellow mb-3">
-                Target Setting Approaches
-              </h4>
-              <div className="space-y-3">
-                <div className="flex items-start gap-2">
-                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-sm font-medium">
-                    1
-                  </span>
-                  <p className="text-gray-300">
-                    <strong className="text-white">Historical improvement:</strong> Reduce
-                    EUI by X% from baseline (typically 2-5% annually for mature buildings)
-                  </p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-sm font-medium">
-                    2
-                  </span>
-                  <p className="text-gray-300">
-                    <strong className="text-white">Benchmark targets:</strong> Achieve
-                    CIBSE Guide F "good practice" or "best practice" levels for building type
-                  </p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-sm font-medium">
-                    3
-                  </span>
-                  <p className="text-gray-300">
-                    <strong className="text-white">Net zero pathway:</strong> Science-based
-                    targets aligned with UK carbon budgets and 2050 commitments
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quick Check 2 */}
-        <div className="mb-12">
-          <InlineCheck
-            id={quickCheckQuestions[1].id}
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-        </div>
-
-        {/* Section 4: Dashboard Design for Different Audiences */}
-        <section className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
-              4
-            </div>
-            <h2 className="text-2xl font-bold">
-              Dashboard Design for Different Audiences
-            </h2>
-          </div>
-          <div className="bg-[#242424] rounded-lg p-6 space-y-4">
-            <div className="flex items-start gap-3">
-              <Users className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-lg mb-2">
-                  Tailoring Dashboards to Stakeholders
-                </h3>
-                <p className="text-gray-300">
-                  Effective dashboards match complexity and detail to audience needs.
-                  A single dashboard rarely serves all users well - consider creating
-                  tiered views for different stakeholder groups.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid gap-4">
-              {/* Executive Dashboard */}
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border-l-4 border-purple-500">
-                <div className="flex items-center gap-2 mb-2">
-                  <PieChart className="w-5 h-5 text-purple-400" />
-                  <h4 className="font-semibold text-purple-400">
-                    Executive/Board Level
-                  </h4>
-                </div>
-                <p className="text-gray-300 text-sm mb-2">
-                  Focus: Strategic overview, costs, and compliance
-                </p>
-                <ul className="text-sm text-gray-400 space-y-1">
-                  <li>• Total energy cost vs budget (monthly/YTD)</li>
-                  <li>• Portfolio EUI with RAG status</li>
-                  <li>• Carbon emissions progress to targets</li>
-                  <li>• Key risks and compliance status (DEC, ESOS, SECR)</li>
-                </ul>
-              </div>
-
-              {/* Facility Manager Dashboard */}
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border-l-4 border-blue-500">
-                <div className="flex items-center gap-2 mb-2">
-                  <Gauge className="w-5 h-5 text-blue-400" />
-                  <h4 className="font-semibold text-blue-400">
-                    Facility/Energy Manager
-                  </h4>
-                </div>
-                <p className="text-gray-300 text-sm mb-2">
-                  Focus: Operational performance and trends
-                </p>
-                <ul className="text-sm text-gray-400 space-y-1">
-                  <li>• Daily/weekly consumption profiles</li>
-                  <li>• Weather-normalised performance vs baseline</li>
-                  <li>• CUSUM charts for major systems</li>
-                  <li>• Sub-meter breakdown by end use</li>
-                  <li>• Alerts for consumption anomalies</li>
-                </ul>
-              </div>
-
-              {/* Technical Dashboard */}
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border-l-4 border-green-500">
-                <div className="flex items-center gap-2 mb-2">
-                  <Activity className="w-5 h-5 text-green-400" />
-                  <h4 className="font-semibold text-green-400">
-                    Technical/Operations Team
-                  </h4>
-                </div>
-                <p className="text-gray-300 text-sm mb-2">
-                  Focus: Real-time monitoring and diagnostics
-                </p>
-                <ul className="text-sm text-gray-400 space-y-1">
-                  <li>• Live power demand and load profiles</li>
-                  <li>• Equipment efficiency metrics (COP, EER, SFP)</li>
-                  <li>• Half-hourly data with drilling capability</li>
-                  <li>• Peak demand tracking and alerts</li>
-                  <li>• Maintenance-linked performance flags</li>
-                </ul>
-              </div>
-
-              {/* Public Display */}
-              <div className="bg-[#1a1a1a] rounded-lg p-4 border-l-4 border-elec-yellow">
-                <div className="flex items-center gap-2 mb-2">
-                  <Zap className="w-5 h-5 text-elec-yellow" />
-                  <h4 className="font-semibold text-elec-yellow">
-                    Public/Occupant Display
-                  </h4>
-                </div>
-                <p className="text-gray-300 text-sm mb-2">
-                  Focus: Engagement and behaviour change
-                </p>
-                <ul className="text-sm text-gray-400 space-y-1">
-                  <li>• Simple, visual current consumption indicator</li>
-                  <li>• Comparison to typical/target levels</li>
-                  <li>• Tips for energy saving actions</li>
-                  <li>• Progress towards sustainability goals</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-amber-900/30 border border-amber-500/50 rounded-lg p-4">
-              <h4 className="font-semibold text-amber-400 mb-2">
-                Dashboard Design Best Practices
-              </h4>
-              <ul className="text-sm text-gray-300 space-y-1">
-                <li>• Use consistent colour coding (RAG status) across all views</li>
-                <li>• Place most critical KPIs in top-left (natural reading pattern)</li>
-                <li>• Limit each screen to 5-7 key metrics to avoid overload</li>
-                <li>• Include clear date/time stamps and data freshness indicators</li>
-                <li>• Provide context - show targets, benchmarks, and historical comparisons</li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Using EUI effectively:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Compare your building to sector benchmarks</li>
+                <li>Track year-on-year trends for the same building</li>
+                <li>Break down by fuel type (electricity EUI, gas EUI)</li>
+                <li>Consider separating base load from weather-dependent load</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Section 5: Automating Data Collection and Reporting */}
-        <section className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
-              5
-            </div>
-            <h2 className="text-2xl font-bold">
-              Automating Data Collection and Reporting
-            </h2>
-          </div>
-          <div className="bg-[#242424] rounded-lg p-6 space-y-4">
-            <div className="flex items-start gap-3">
-              <RefreshCw className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-lg mb-2">
-                  Building an Automated Data Pipeline
-                </h3>
-                <p className="text-gray-300">
-                  Manual data collection is error-prone and time-consuming. Automation
-                  enables real-time monitoring, consistent calculations, and timely
-                  alerts. A typical automated pipeline includes:
-                </p>
-              </div>
-            </div>
+        {/* Section 03: Degree Day Normalisation */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Degree Day Normalisation
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Weather significantly affects heating and cooling energy consumption. Degree day normalisation removes weather effects, revealing true underlying performance changes. This is essential for fair comparison between different time periods.
+            </p>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[#1a1a1a] p-4 rounded-lg">
-                <h4 className="font-semibold text-white mb-3">Data Sources</h4>
-                <ul className="text-sm text-gray-300 space-y-2">
-                  <li className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span>Smart meters via supplier API or AMR</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span>BMS points via BACnet/Modbus integration</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span>Sub-meters with pulse outputs or M-Bus</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span>Weather data APIs (Met Office, Open Weather)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-0.5" />
-                    <span>Occupancy systems and access control</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-[#1a1a1a] p-4 rounded-lg">
-                <h4 className="font-semibold text-white mb-3">Processing Steps</h4>
-                <ul className="text-sm text-gray-300 space-y-2">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span>Data validation and gap detection</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span>Unit conversion and aggregation</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span>Degree day normalisation</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span>KPI calculations and comparisons</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span>Alert generation for exceptions</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h4 className="font-semibold text-elec-yellow mb-3">
-                Automated Reporting Schedule
-              </h4>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-gray-600">
-                      <th className="text-left py-2 text-gray-400">Report Type</th>
-                      <th className="text-left py-2 text-gray-400">Frequency</th>
-                      <th className="text-left py-2 text-gray-400">Audience</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-gray-300">
-                    <tr className="border-b border-gray-700">
-                      <td className="py-2">Exception alerts</td>
-                      <td className="py-2">Real-time</td>
-                      <td className="py-2">Operations team</td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="py-2">Daily summary</td>
-                      <td className="py-2">Daily (AM)</td>
-                      <td className="py-2">Energy manager</td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="py-2">Performance review</td>
-                      <td className="py-2">Weekly</td>
-                      <td className="py-2">FM team</td>
-                    </tr>
-                    <tr className="border-b border-gray-700">
-                      <td className="py-2">KPI dashboard</td>
-                      <td className="py-2">Monthly</td>
-                      <td className="py-2">Management</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2">Strategic review</td>
-                      <td className="py-2">Quarterly</td>
-                      <td className="py-2">Executive/Board</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quick Check 3 */}
-        <div className="mb-12">
-          <InlineCheck
-            id={quickCheckQuestions[2].id}
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-        </div>
-
-        {/* Section 6: Continuous Improvement Using KPI Data */}
-        <section className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-black rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
-              6
-            </div>
-            <h2 className="text-2xl font-bold">
-              Continuous Improvement Using KPI Data
-            </h2>
-          </div>
-          <div className="bg-[#242424] rounded-lg p-6 space-y-4">
-            <div className="flex items-start gap-3">
-              <TrendingUp className="w-6 h-6 text-elec-yellow flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-lg mb-2">
-                  The Plan-Do-Check-Act Cycle
-                </h3>
-                <p className="text-gray-300">
-                  KPIs are only valuable if they drive action. The ISO 50001 PDCA cycle
-                  provides a framework for using KPI data to achieve continuous improvement
-                  in energy performance.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-blue-900/30 border border-blue-500/50 p-4 rounded-lg">
-                <h4 className="font-semibold text-blue-400 mb-2">Plan</h4>
-                <p className="text-sm text-gray-300">
-                  Analyse KPI trends to identify improvement opportunities. Set targets
-                  based on baseline data and benchmark comparisons. Develop action plans
-                  with resource requirements and timelines.
-                </p>
-              </div>
-              <div className="bg-green-900/30 border border-green-500/50 p-4 rounded-lg">
-                <h4 className="font-semibold text-green-400 mb-2">Do</h4>
-                <p className="text-sm text-gray-300">
-                  Implement improvement actions - operational changes, maintenance
-                  interventions, equipment upgrades. Document changes and expected
-                  impacts on relevant KPIs.
-                </p>
-              </div>
-              <div className="bg-amber-900/30 border border-amber-500/50 p-4 rounded-lg">
-                <h4 className="font-semibold text-amber-400 mb-2">Check</h4>
-                <p className="text-sm text-gray-300">
-                  Monitor KPIs to verify improvements. Use CUSUM to detect performance
-                  changes. Compare actual savings to predictions using M&V protocols
-                  (IPMVP).
-                </p>
-              </div>
-              <div className="bg-purple-900/30 border border-purple-500/50 p-4 rounded-lg">
-                <h4 className="font-semibold text-purple-400 mb-2">Act</h4>
-                <p className="text-sm text-gray-300">
-                  Standardise successful improvements. Investigate and correct
-                  underperformance. Update baselines and targets. Share learnings
-                  across the organisation.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-[#1a1a1a] rounded-lg p-4">
-              <h4 className="font-semibold text-elec-yellow mb-3">
-                Key Questions for KPI Review Meetings
-              </h4>
-              <ul className="text-gray-300 space-y-2">
-                <li className="flex items-start gap-2">
-                  <ClipboardList className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
-                  <span>
-                    Are we on track to meet our annual targets? If not, what corrective
-                    actions are needed?
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ClipboardList className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
-                  <span>
-                    What caused any significant deviations from expected performance this
-                    period?
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ClipboardList className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
-                  <span>
-                    Which buildings/systems are underperforming relative to peers or
-                    benchmarks?
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ClipboardList className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
-                  <span>
-                    What actions from previous meetings have been completed and what were
-                    the results?
-                  </span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <ClipboardList className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
-                  <span>
-                    Are there any data quality issues affecting KPI reliability?
-                  </span>
-                </li>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Understanding degree days:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Heating degree days (HDD):</strong> Sum of differences below base temperature (15.5°C UK)</li>
+                <li><strong>Cooling degree days (CDD):</strong> Sum of differences above base temperature (18°C typical)</li>
+                <li>Higher degree days = more heating/cooling required</li>
+                <li>UK regional data available from Degree Days Direct</li>
               </ul>
             </div>
 
-            <div className="bg-green-900/30 border border-green-500/50 rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Lightbulb className="w-5 h-5 text-green-400" />
-                <h4 className="font-semibold text-green-400">Pro Tip</h4>
-              </div>
-              <p className="text-gray-300 text-sm">
-                Create a "KPI action log" that links every identified issue to a
-                responsible owner, target completion date, and expected KPI impact.
-                Review this log at each meeting to ensure accountability and track
-                whether interventions delivered expected results. This closes the loop
-                between measurement and action.
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Simple normalisation formula:</p>
+              <p className="text-sm text-white ml-4 font-mono bg-white/5 p-3 rounded">
+                Normalised Energy = Actual Energy x (Standard DD / Actual DD)
               </p>
             </div>
-          </div>
-        </section>
 
-        {/* Quick Reference Card */}
-        <section className="mb-12">
-          <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-500/20 border border-elec-yellow/50 rounded-lg p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <ClipboardList className="w-6 h-6 text-elec-yellow" />
-              <h2 className="text-xl font-bold text-elec-yellow">
-                Quick Reference: Energy KPI Dashboard Essentials
-              </h2>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="font-semibold text-white mb-2">Essential KPIs</h3>
-                <ul className="text-sm text-gray-300 space-y-1">
-                  <li>• EUI (kWh/m²/year) - building efficiency</li>
-                  <li>• Total cost and cost/m² - financial tracking</li>
-                  <li>• Peak demand (kW) - capacity management</li>
-                  <li>• Carbon intensity (kgCO2e/m²) - sustainability</li>
-                  <li>• Weather-normalised consumption - true performance</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-2">UK Benchmarks (CIBSE TM46)</h3>
-                <ul className="text-sm text-gray-300 space-y-1">
-                  <li>• General office: 95 kWh/m² (typical)</li>
-                  <li>• School: 110 kWh/m² (typical)</li>
-                  <li>• Hospital: 420 kWh/m² (typical)</li>
-                  <li>• Retail: 165 kWh/m² (typical)</li>
-                  <li>• Hotel: 330 kWh/m² (typical)</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-2">CUSUM Interpretation</h3>
-                <ul className="text-sm text-gray-300 space-y-1">
-                  <li>• Rising line = consumption above baseline (investigate)</li>
-                  <li>• Falling line = consumption below baseline (success)</li>
-                  <li>• Flat line = matching baseline (stable)</li>
-                  <li>• Step change = sudden event (identify cause)</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-2">Review Frequencies</h3>
-                <ul className="text-sm text-gray-300 space-y-1">
-                  <li>• Real-time: Exception alerts, peak warnings</li>
-                  <li>• Daily: Consumption patterns, anomalies</li>
-                  <li>• Monthly: KPI performance vs targets</li>
-                  <li>• Annually: Baseline review, target setting</li>
-                </ul>
-              </div>
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Example:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Actual gas consumption: 45,000 kWh</li>
+                <li>Actual heating degree days: 1,800</li>
+                <li>20-year average (standard): 2,000 HDD</li>
+                <li>Normalised = 45,000 x (2,000/1,800) = 50,000 kWh</li>
+                <li>The mild weather saved energy, but performance was actually worse than it appeared</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        {/* Quiz Section */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4">Test Your Knowledge</h2>
-          <Quiz
-            questions={quizQuestions}
-            moduleId="energy-efficiency-m6s4"
-            sectionTitle="Developing Energy KPI Dashboards"
-          />
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 04: CUSUM Charts */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            CUSUM Charts
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              CUSUM (Cumulative Sum) charts are powerful tools for detecting performance changes over time. They plot the running total of differences between actual and expected energy use, making trends and step changes clearly visible.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">How CUSUM works:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Calculate expected consumption from baseline model</li>
+                <li>Find difference: Actual - Expected for each period</li>
+                <li>Calculate cumulative sum of these differences</li>
+                <li>Plot cumulative sum over time</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Interpreting CUSUM patterns:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Flat line:</strong> Performance matching target - on track</li>
+                <li><strong>Upward slope:</strong> Consuming more than expected - investigate</li>
+                <li><strong>Downward slope:</strong> Consuming less than expected - improvement</li>
+                <li><strong>Step change:</strong> Sudden shift indicates specific event or failure</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">When to use CUSUM:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Monthly energy management review</li>
+                <li>Detecting heating system faults</li>
+                <li>Verifying energy project savings</li>
+                <li>Identifying operational changes affecting consumption</li>
+              </ul>
+            </div>
+          </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
-          <div className="space-y-3">
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 05: ISO 50001 EnPIs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            ISO 50001 and EnPIs
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              ISO 50001 is the international standard for energy management systems. It requires organisations to establish Energy Performance Indicators (EnPIs) and Significant Energy Uses (SEUs) as part of a systematic approach to continuous improvement.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Key ISO 50001 concepts:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>EnPI:</strong> Energy Performance Indicator - quantitative measure of performance</li>
+                <li><strong>EnB:</strong> Energy Baseline - reference point for measuring change</li>
+                <li><strong>SEU:</strong> Significant Energy Use - major consumers offering improvement potential</li>
+                <li><strong>Energy review:</strong> Analysis to identify SEUs and improvement opportunities</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">PDCA cycle in ISO 50001:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Plan:</strong> Energy review, objectives, targets, action plans</li>
+                <li><strong>Do:</strong> Implement energy management programmes</li>
+                <li><strong>Check:</strong> Monitor EnPIs, audit compliance</li>
+                <li><strong>Act:</strong> Management review, continual improvement</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Benefits of ISO 50001 certification:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Typical 10-20% energy savings in first three years</li>
+                <li>Demonstrates commitment to sustainability</li>
+                <li>Meets ESOS compliance requirements</li>
+                <li>Supports tender and supply chain requirements</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 06: Dashboard Design */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Effective Dashboard Design
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              A well-designed energy dashboard communicates performance clearly to different audiences. The key is matching detail level to user needs - executives need headline figures while engineers need granular data.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Dashboard by audience:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Executive:</strong> 3-5 headline KPIs, traffic light status, cost focus</li>
+                <li><strong>Management:</strong> Monthly trends, comparisons, target progress</li>
+                <li><strong>Operations:</strong> Daily/hourly data, alerts, drill-down capability</li>
+                <li><strong>Public display:</strong> Simple visuals, real-time consumption, educational</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Essential dashboard elements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Current consumption vs target (gauge or bar chart)</li>
+                <li>Trend over time (line chart)</li>
+                <li>Comparison to baseline or benchmark</li>
+                <li>Cost impact (translated to financial terms)</li>
+                <li>Carbon footprint (tCO2e)</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Design principles:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>One screen, minimal scrolling</li>
+                <li>Clear visual hierarchy - most important data prominent</li>
+                <li>Consistent colour coding (green/amber/red)</li>
+                <li>Context provided (targets, comparisons, benchmarks)</li>
+                <li>Update frequency matched to decision cycle</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Getting started with KPIs</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Start with utility bill data - no monitoring required</li>
+                <li>Calculate basic EUI for each building</li>
+                <li>Compare to CIBSE benchmarks for your building type</li>
+                <li>Set up monthly tracking spreadsheet</li>
+                <li>Add normalisation when you have degree day data</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Data collection tips</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Automate meter reading where possible (smart meters, BMS)</li>
+                <li>Schedule manual reads at consistent times</li>
+                <li>Validate data - check for missing readings, outliers</li>
+                <li>Document any meter changes or resets</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common pitfalls</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Too many KPIs</strong> - Focus on 3-5 key metrics</li>
+                <li><strong>Comparing unadjusted data</strong> - Always normalise for weather</li>
+                <li><strong>Static baselines</strong> - Update when major changes occur</li>
+                <li><strong>Data without action</strong> - Ensure reviews lead to decisions</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-[#242424] rounded-lg overflow-hidden"
-              >
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-4 text-left min-h-[44px] touch-manipulation active:scale-[0.98]"
+                  onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
+                  className="w-full flex items-center justify-between text-left min-h-[44px] touch-manipulation"
                 >
-                  <span className="font-medium pr-4">{faq.question}</span>
+                  <h3 className="text-sm font-medium text-white pr-4">{faq.question}</h3>
                   {expandedFAQ === index ? (
                     <ChevronUp className="w-5 h-5 text-elec-yellow flex-shrink-0" />
                   ) : (
@@ -1012,40 +570,64 @@ const EnergyEfficiencyModule6Section4: React.FC = () => {
                   )}
                 </button>
                 {expandedFAQ === index && (
-                  <div className="px-4 pb-4">
-                    <p className="text-gray-300 text-sm leading-relaxed">
-                      {faq.answer}
-                    </p>
-                  </div>
+                  <p className="text-sm text-white/90 leading-relaxed mt-2">{faq.answer}</p>
                 )}
               </div>
             ))}
           </div>
         </section>
 
+        {/* Reference Card */}
+        <section className="mb-10">
+          <div className="mt-6 p-5 rounded-lg bg-transparent">
+            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+              <div>
+                <p className="font-medium text-white mb-1">Key Formulas</p>
+                <ul className="space-y-0.5">
+                  <li>EUI = kWh / m²</li>
+                  <li>HDD = Sum(15.5°C - Tmean) when positive</li>
+                  <li>Normalised = Actual x (Std DD / Actual DD)</li>
+                  <li>CUSUM = Running total of (Actual - Expected)</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium text-white mb-1">UK Benchmarks</p>
+                <ul className="space-y-0.5">
+                  <li>Office: 95-190 kWh/m²</li>
+                  <li>Retail: 120-340 kWh/m²</li>
+                  <li>Schools: 85-150 kWh/m²</li>
+                  <li>Base temp: 15.5°C heating</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between">
-          <Button
-            onClick={() =>
-              navigate('/upskilling/energy-efficiency/module-6/section-3')
-            }
-            variant="outline"
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-transparent border-gray-600 hover:border-elec-yellow hover:text-elec-yellow"
-          >
-            <ChevronLeft className="w-5 h-5 mr-2" />
-            Previous: Section 3
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
           </Button>
-          <Button
-            onClick={() =>
-              navigate('/upskilling/energy-efficiency/module-6/section-5')
-            }
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-yellow-400"
-          >
-            Next: Section 5
-            <ChevronRight className="w-5 h-5 ml-2" />
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-5">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
           </Button>
-        </div>
-      </div>
+        </nav>
+      </article>
     </div>
   );
 };

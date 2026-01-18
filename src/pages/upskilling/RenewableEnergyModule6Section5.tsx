@@ -191,7 +191,7 @@ const faqs = [
   {
     question: "How much can I earn from V2G services?",
     answer:
-      "Earnings vary based on vehicle availability, battery capacity, and services provided. Current UK trials show potential earnings of £300-£700 per year for domestic V2G, with higher returns possible for commercial fleet participation. As the market develops, revenue streams may increase.",
+      "Earnings vary based on vehicle availability, battery capacity, and services provided. Current UK trials show potential earnings of 300-700 pounds per year for domestic V2G, with higher returns possible for commercial fleet participation. As the market develops, revenue streams may increase.",
   },
   {
     question: "Do I need a special electricity tariff for smart charging?",
@@ -204,7 +204,7 @@ const faqs = [
       "Yes, V2H (Vehicle-to-Home) functionality can provide backup power during grid outages. A typical EV battery (40-70 kWh) could power essential home loads for 1-3 days. The charger must support islanded operation and appropriate changeover switching is required for safety.",
   },
   {
-    question: "What happens if I need my car but it is been discharged by V2G?",
+    question: "What happens if I need my car but it has been discharged by V2G?",
     answer:
       "V2G systems allow users to set minimum charge levels and departure times. The system ensures your vehicle has the required charge when needed. You can override V2G operation at any time if plans change.",
   },
@@ -220,419 +220,249 @@ const RenewableEnergyModule6Section5 = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/80">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link
-            to=".."
-            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Module Overview
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3 flex items-center gap-3">
+          <Link to="..">
+            <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
           </Link>
-          <span className="text-sm text-white">Module 6 • Section 5</span>
+          <span className="text-white font-medium truncate">V2G and Smart Charging</span>
         </div>
-      </header>
+      </div>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden py-12 sm:py-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/10 via-transparent to-transparent" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-elec-yellow/10 px-4 py-1.5 text-sm font-medium text-elec-yellow">
-              <Zap className="h-4 w-4" />
-              EV Charging Infrastructure
-            </div>
-            <h1 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-              V2G and Smart Charging
-            </h1>
-            <p className="text-lg text-white sm:text-xl">
-              Bidirectional charging technology and intelligent charging management for grid integration.
+      {/* Hero Section */}
+      <div className="px-4 py-6 text-center">
+        <div className="inline-flex items-center gap-2 bg-elec-yellow/10 border border-elec-yellow/30 rounded-full px-3 py-1 mb-3">
+          <Zap className="w-4 h-4 text-elec-yellow" />
+          <span className="text-elec-yellow text-sm font-medium">Module 6 - Section 5</span>
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+          V2G and Smart Charging
+        </h1>
+        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+          Bidirectional charging technology and intelligent charging management for grid integration
+        </p>
+      </div>
+
+      {/* Quick Summary */}
+      <div className="px-4 pb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">In 30 Seconds:</span> V2G enables EVs to export stored energy back to the grid for revenue
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Spot it:</span> CHAdeMO or CCS connectors with bidirectional capability
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Use it:</span> Frequency response and peak shaving grid services
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Key Standard:</span> ISO 15118-20 for bidirectional communication
             </p>
           </div>
         </div>
-      </section>
-
-      {/* Quick Summary */}
-      <section className="py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-lg border-l-2 border-elec-yellow/50 bg-elec-yellow/5 p-4">
-              <h3 className="mb-2 font-semibold text-white">Vehicle-to-Grid</h3>
-              <p className="text-sm text-white">
-                V2G technology enables EVs to export stored energy back to the grid, providing valuable services like frequency response and peak demand reduction.
-              </p>
-            </div>
-            <div className="rounded-lg border-l-2 border-elec-yellow/50 bg-elec-yellow/5 p-4">
-              <h3 className="mb-2 font-semibold text-white">Smart Charging</h3>
-              <p className="text-sm text-white">
-                Intelligent charging management optimises when vehicles charge based on electricity prices, grid demand, and renewable availability.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Learning Outcomes */}
-      <section className="py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6">
-            <h2 className="mb-4 text-xl font-bold text-white">Learning Outcomes</h2>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                "Understand V2G, V2H, and V2L technology differences",
-                "Explain grid services that EVs can provide",
-                "Describe smart charging communication protocols",
-                "Identify regulatory requirements for bidirectional charging",
-                "Apply solar and tariff integration strategies",
-                "Assess V2G business cases and deployment considerations",
-              ].map((outcome, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-elec-yellow" />
-                  <span className="text-sm text-white">{outcome}</span>
-                </div>
-              ))}
+      <div className="px-4 pb-6">
+        <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
+        <div className="space-y-2">
+          {[
+            "Understand V2G, V2H, and V2L technology differences",
+            "Explain grid services that EVs can provide",
+            "Describe smart charging communication protocols",
+            "Identify regulatory requirements for bidirectional charging",
+            "Apply solar and tariff integration strategies",
+            "Assess V2G business cases and deployment considerations",
+          ].map((outcome, index) => (
+            <div key={index} className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
+              <span className="text-white/80 text-sm">{outcome}</span>
             </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="px-4 space-y-6 pb-8">
+        {/* Section 01 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
+            <h2 className="text-xl font-semibold text-white">Bidirectional Charging Technologies</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Bidirectional charging transforms EVs from passive loads into active energy assets. Several related technologies enable different use cases for exporting stored battery energy.
+            </p>
+            <p>
+              <span className="text-white font-medium">V2G - Vehicle-to-Grid:</span> Exports power from the vehicle battery to the public electricity grid. Enables participation in grid balancing services and wholesale energy markets. Requires G98/G99 compliant inverter and DNO notification. The charger must synchronise with grid frequency and voltage.
+            </p>
+            <p>
+              <span className="text-white font-medium">V2H - Vehicle-to-Home:</span> Powers the home from the vehicle battery without exporting to the grid. Can operate during outages as backup power if appropriately configured. Has simpler regulatory requirements than V2G and reduces peak demand whilst maximising solar self-consumption.
+            </p>
+            <p>
+              <span className="text-white font-medium">V2L - Vehicle-to-Load:</span> Provides AC power output directly from the vehicle, typically via an outlet in the vehicle or a portable adapter. Useful for tools, camping, and emergency power. Built into some vehicles like Hyundai Ioniq 5 and Ford F-150 Lightning, typically offering 2-3 kW output capacity.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[0]]} />
+
+        {/* Section 02 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
+            <h2 className="text-xl font-semibold text-white">Grid Services and Revenue Streams</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              EVs can provide valuable services to the electricity grid, generating revenue for vehicle owners whilst helping to balance supply and demand across the network.
+            </p>
+            <p>
+              <span className="text-white font-medium">Frequency Response:</span> The grid frequency must remain close to 50Hz. EVs can rapidly inject or absorb power to help maintain frequency stability. Dynamic Containment provides sub-second response to frequency deviations. Payments are based on availability and energy delivered.
+            </p>
+            <p>
+              <span className="text-white font-medium">Peak Demand Reduction:</span> Reducing grid demand during peak periods (typically 4-7pm) eases network constraints. EVs can defer or pause charging during peak periods, export stored energy during high-demand periods, and participate in demand turn-up/turn-down programmes.
+            </p>
+            <p>
+              <span className="text-white font-medium">Arbitrage Opportunities:</span> Buying electricity when cheap and selling when expensive creates arbitrage value. Charge during overnight off-peak rates (5-10p/kWh), export during peak periods (15-30p/kWh). This requires time-of-use tariff and export agreement, automated by V2G platform algorithms.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[1]]} />
+
+        {/* Section 03 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
+            <h2 className="text-xl font-semibold text-white">Smart Charging Implementation</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Smart charging optimises when and how vehicles charge, balancing user needs, grid constraints, and cost considerations through automated scheduling and power management.
+            </p>
+            <p>
+              <span className="text-white font-medium">UK Regulatory Requirements:</span> The Electric Vehicles (Smart Charge Points) Regulations 2021 require private charge points to include off-peak default (8am-11pm charging disabled by default), demand response capability, user override option, randomised delay to prevent simultaneous charging spikes, and accurate metering.
+            </p>
+            <p>
+              <span className="text-white font-medium">Scheduling Strategies:</span> Time-of-use optimisation automatically schedules charging for cheapest periods. Solar matching charges when solar generation exceeds home load. Target SoC ensures vehicle is ready by departure time. Grid response adjusts charging based on external signals.
+            </p>
+            <p>
+              <span className="text-white font-medium">Communication Standards:</span> OCPP handles charger-to-backend communication. OpenADR enables demand response signalling. ISO 15118 manages vehicle-charger communication. OSCP (Open Smart Charging Protocol) provides load management coordination.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[2]]} />
+
+        {/* Section 04 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
+            <h2 className="text-xl font-semibold text-white">V2G Installation Requirements</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Installing V2G systems requires consideration of electrical infrastructure, regulatory compliance, and vehicle compatibility beyond standard EV charging requirements.
+            </p>
+            <p>
+              <span className="text-white font-medium">Electrical Requirements:</span> A bidirectional inverter with G98/G99 compliance is essential. Anti-islanding protection ensures grid safety. Export metering may require smart meter upgrade. Appropriate circuit protection for bidirectional power flow and earth fault monitoring for DC systems are required.
+            </p>
+            <p>
+              <span className="text-white font-medium">Regulatory Compliance:</span> DNO notification is required for any export capability. G98 applies to systems up to 16A per phase. G99 is required for larger systems with full application. An export tariff agreement with electricity supplier and grid services contract with aggregator or ESO are needed.
+            </p>
+            <p>
+              <span className="text-white font-medium">Vehicle Compatibility:</span> V2G requires vehicle support - not all EVs are capable. CHAdeMO vehicles include Nissan Leaf and Mitsubishi Outlander PHEV. CCS with V2G is available on growing list including some BMW and Hyundai models. Always check vehicle specification, software version, and confirm manufacturer warranty covers V2G operation.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[3]]} />
+
+        {/* Section 05 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
+            <h2 className="text-xl font-semibold text-white">Renewable Energy Integration</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              EVs and smart/bidirectional charging play a key role in maximising renewable energy utilisation, both at individual property level and across the wider grid.
+            </p>
+            <p>
+              <span className="text-white font-medium">Solar PV Integration:</span> Smart chargers can maximise solar self-consumption through CT clamp monitoring of solar generation and home load, automatic power adjustment to match surplus generation, minimum power thresholds for efficient charging, and integration with solar inverter for coordinated control.
+            </p>
+            <p>
+              <span className="text-white font-medium">Grid-Scale Renewable Support:</span> EVs help accommodate variable renewable generation at grid scale through demand shifting (charge when wind/solar generation is high), frequency support (balance second-by-second fluctuations), curtailment reduction (absorb excess renewable generation), and storage capacity (fleet batteries as distributed storage).
+            </p>
+            <p>
+              <span className="text-white font-medium">Future Outlook:</span> With millions of EVs expected in the UK by 2030, the combined battery capacity represents substantial flexible storage. Smart and bidirectional charging will be essential for integrating this demand with renewable generation, potentially providing significant grid balancing capacity.
+            </p>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <div className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/20 rounded-xl p-4">
+          <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+            <Zap className="w-4 h-4 text-elec-yellow" />
+            Practical Guidance
+          </h3>
+          <div className="space-y-2 text-white/80 text-sm">
+            <p>
+              <span className="text-white font-medium">Customer conversations:</span> Focus on practical benefits - reduced bills through smart charging, potential revenue from grid services, backup power capability. Be realistic about current limitations such as vehicle compatibility and charger availability.
+            </p>
+            <p>
+              <span className="text-white font-medium">Installation considerations:</span> V2G installations are more complex than standard EV charging. Ensure familiarity with G98/G99 requirements, coordinate with DNO early, and verify vehicle compatibility before committing to V2G-specific equipment.
+            </p>
+            <p>
+              <span className="text-white font-medium">Future-proofing:</span> Even where V2G is not immediately planned, install infrastructure that can support future upgrades - appropriate cable sizes, smart metering capability, and solar integration ready.
+            </p>
           </div>
         </div>
-      </section>
 
-      {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          {/* Section 01 */}
-          <section className="mb-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                01
-              </span>
-              <h2 className="text-2xl font-bold text-white">Bidirectional Charging Technologies</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Bidirectional charging transforms EVs from passive loads into active energy assets. Several related technologies enable different use cases for exporting stored battery energy.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">V2G - Vehicle-to-Grid</h4>
-                <p className="mb-2">
-                  Exports power from the vehicle battery to the public electricity grid. Enables participation in grid balancing services and wholesale energy markets.
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Requires G98/G99 compliant inverter and DNO notification</li>
-                  <li>Charger must synchronise with grid frequency and voltage</li>
-                  <li>Provides revenue through grid services contracts</li>
-                  <li>Currently limited vehicle and charger compatibility</li>
-                </ul>
+        {/* FAQs */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
+                <h3 className="text-white font-medium mb-2">{faq.question}</h3>
+                <p className="text-white/70 text-sm">{faq.answer}</p>
               </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">V2H - Vehicle-to-Home</h4>
-                <p className="mb-2">
-                  Powers the home from the vehicle battery without exporting to the grid. Can operate during outages as backup power if appropriately configured.
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Simpler regulatory requirements than V2G</li>
-                  <li>Reduces peak demand and grid import</li>
-                  <li>Provides backup power capability</li>
-                  <li>Maximises solar self-consumption</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">V2L - Vehicle-to-Load</h4>
-                <p className="mb-2">
-                  Provides AC power output directly from the vehicle, typically via an outlet in the vehicle or a portable adapter. Useful for tools, camping, and emergency power.
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Built into some vehicles (Hyundai Ioniq 5, Ford F-150 Lightning)</li>
-                  <li>Typically 2-3 kW output capacity</li>
-                  <li>No special installation required</li>
-                  <li>Immediate availability on compatible vehicles</li>
-                </ul>
-              </div>
-            </div>
-          </section>
+            ))}
+          </div>
+        </section>
 
-          <InlineCheck
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
+        {/* Quiz */}
+        <Quiz
+          title="V2G and Smart Charging Quiz"
+          questions={quizQuestions}
+        />
 
-          {/* Section 02 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                02
-              </span>
-              <h2 className="text-2xl font-bold text-white">Grid Services and Revenue Streams</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                EVs can provide valuable services to the electricity grid, generating revenue for vehicle owners whilst helping to balance supply and demand across the network.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Frequency Response</h4>
-                <p className="mb-2">
-                  The grid frequency must remain close to 50Hz. EVs can rapidly inject or absorb power to help maintain frequency stability:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li><strong>Dynamic Containment:</strong> Sub-second response to frequency deviations</li>
-                  <li><strong>Dynamic Moderation:</strong> Slower response for sustained imbalances</li>
-                  <li><strong>Dynamic Regulation:</strong> Continuous adjustment to track setpoints</li>
-                  <li>Payments based on availability and energy delivered</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Peak Demand Reduction</h4>
-                <p className="mb-2">
-                  Reducing grid demand during peak periods (typically 4-7pm) eases network constraints and reduces expensive peak generation:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Defer or pause charging during peak periods</li>
-                  <li>Export stored energy during high-demand periods</li>
-                  <li>Participate in demand turn-up/turn-down programmes</li>
-                  <li>Revenue from avoided peak pricing and incentive payments</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Arbitrage Opportunities</h4>
-                <p className="mb-2">
-                  Buying electricity when cheap and selling when expensive creates arbitrage value:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Charge during overnight off-peak rates (5-10p/kWh)</li>
-                  <li>Export during peak periods (15-30p/kWh)</li>
-                  <li>Requires time-of-use tariff and export agreement</li>
-                  <li>Automated by V2G platform algorithms</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-
-          {/* Section 03 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                03
-              </span>
-              <h2 className="text-2xl font-bold text-white">Smart Charging Implementation</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Smart charging optimises when and how vehicles charge, balancing user needs, grid constraints, and cost considerations through automated scheduling and power management.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Smart Charge Point Requirements</h4>
-                <p className="mb-2">
-                  UK regulations require private charge points to include:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Off-peak default: 8am-11pm charging disabled by default</li>
-                  <li>Demand response: Ability to respond to grid signals</li>
-                  <li>User override: Owners can charge immediately if needed</li>
-                  <li>Randomised delay: Prevents simultaneous charging spikes</li>
-                  <li>Metering: Accurate energy measurement</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Scheduling Strategies</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Time-of-use optimisation:</strong> Automatic scheduling for cheapest periods</li>
-                  <li><strong>Solar matching:</strong> Charge when solar generation exceeds home load</li>
-                  <li><strong>Target SoC:</strong> Ensure vehicle ready by departure time</li>
-                  <li><strong>Grid response:</strong> Adjust based on external signals</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Communication Standards</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>OCPP:</strong> Charger-to-backend communication</li>
-                  <li><strong>OpenADR:</strong> Demand response signalling</li>
-                  <li><strong>ISO 15118:</strong> Vehicle-charger communication</li>
-                  <li><strong>OSCP:</strong> Open Smart Charging Protocol for load management</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-
-          {/* Section 04 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                04
-              </span>
-              <h2 className="text-2xl font-bold text-white">V2G Installation Requirements</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Installing V2G systems requires consideration of electrical infrastructure, regulatory compliance, and vehicle compatibility beyond standard EV charging requirements.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Electrical Requirements</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li>Bidirectional inverter with G98/G99 compliance</li>
-                  <li>Anti-islanding protection for grid safety</li>
-                  <li>Export metering (may require smart meter upgrade)</li>
-                  <li>Appropriate circuit protection for bidirectional power flow</li>
-                  <li>Earth fault monitoring for DC systems</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Regulatory Compliance</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>DNO notification:</strong> Required for any export capability</li>
-                  <li><strong>G98:</strong> Applies to systems up to 16A per phase</li>
-                  <li><strong>G99:</strong> Required for larger systems (full application)</li>
-                  <li><strong>Export tariff:</strong> Agreement with electricity supplier</li>
-                  <li><strong>Grid services:</strong> Contract with aggregator or direct with ESO</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Vehicle Compatibility</h4>
-                <p className="mb-2">
-                  V2G requires vehicle support - not all EVs are V2G-capable:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li><strong>CHAdeMO:</strong> Nissan Leaf, Mitsubishi Outlander PHEV</li>
-                  <li><strong>CCS with V2G:</strong> Growing list including some BMW, Hyundai models</li>
-                  <li>Check vehicle specification and software version</li>
-                  <li>Confirm manufacturer warranty covers V2G operation</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[3].question}
-            options={quickCheckQuestions[3].options}
-            correctIndex={quickCheckQuestions[3].correctIndex}
-            explanation={quickCheckQuestions[3].explanation}
-          />
-
-          {/* Section 05 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                05
-              </span>
-              <h2 className="text-2xl font-bold text-white">Renewable Energy Integration</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                EVs and smart/bidirectional charging play a key role in maximising renewable energy utilisation, both at individual property level and across the wider grid.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Solar PV Integration</h4>
-                <p className="mb-2">
-                  Smart chargers can maximise solar self-consumption:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>CT clamp monitoring of solar generation and home load</li>
-                  <li>Automatic power adjustment to match surplus generation</li>
-                  <li>Minimum power thresholds for efficient charging</li>
-                  <li>Override options for urgent charging needs</li>
-                  <li>Integration with solar inverter for coordinated control</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Grid-Scale Renewable Support</h4>
-                <p className="mb-2">
-                  EVs help accommodate variable renewable generation at grid scale:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li><strong>Demand shifting:</strong> Charge when wind/solar generation is high</li>
-                  <li><strong>Frequency support:</strong> Balance second-by-second fluctuations</li>
-                  <li><strong>Curtailment reduction:</strong> Absorb excess renewable generation</li>
-                  <li><strong>Storage capacity:</strong> Fleet batteries as distributed storage</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Future Outlook</h4>
-                <p>
-                  With millions of EVs expected in the UK by 2030, the combined battery capacity represents substantial flexible storage. Smart and bidirectional charging will be essential for integrating this demand with renewable generation, potentially providing significant grid balancing capacity and enabling higher renewable penetration without corresponding grid reinforcement.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Practical Guidance */}
-          <section className="mb-12 mt-12">
-            <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/5 p-6">
-              <h2 className="mb-4 text-xl font-bold text-white">Practical Guidance</h2>
-              <div className="space-y-4 text-white">
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Customer Conversations</h4>
-                  <p className="mt-1 text-sm">
-                    When discussing V2G with customers, focus on practical benefits: reduced bills through smart charging, potential revenue from grid services, backup power capability. Be realistic about current limitations - vehicle compatibility and charger availability are still developing.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Installation Considerations</h4>
-                  <p className="mt-1 text-sm">
-                    V2G installations are more complex than standard EV charging. Ensure familiarity with G98/G99 requirements, coordinate with DNO early, and verify vehicle compatibility before committing to V2G-specific equipment.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Future-Proofing</h4>
-                  <p className="mt-1 text-sm">
-                    Even where V2G is not immediately planned, install infrastructure that can support future upgrades - appropriate cable sizes, smart metering capability, and solar integration ready. The market is evolving rapidly.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* FAQs */}
-          <section className="mb-12">
-            <h2 className="mb-6 text-2xl font-bold text-white">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="rounded-lg border border-white/10 bg-white/5 p-4">
-                  <h3 className="mb-2 font-semibold text-elec-yellow">{faq.question}</h3>
-                  <p className="text-sm text-white">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Quiz Section */}
-          <section className="mb-12">
-            <Quiz
-              title="V2G and Smart Charging Quiz"
-              questions={quizQuestions}
-              onComplete={(score) => console.log("Quiz completed with score:", score)}
-            />
-          </section>
-
-          {/* Navigation */}
-          <nav className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:justify-between">
-            <Link to="/upskilling/renewable-energy/module-6/section-4">
-              <Button variant="outline" className="w-full gap-2 border-white/20 text-white hover:bg-white/10 sm:w-auto">
-                <ArrowLeft className="h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/upskilling/renewable-energy/module-7/section-1">
-              <Button className="w-full gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90 sm:w-auto">
-                Next Module
-                <ArrowLeft className="h-4 w-4 rotate-180" />
-              </Button>
-            </Link>
-          </nav>
+        {/* Bottom Navigation */}
+        <div className="flex justify-between items-center pt-4 border-t border-white/10">
+          <Link to="../section-4">
+            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Button>
+          </Link>
+          <Link to="/upskilling/renewable-energy/module-7/section-1">
+            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              Next Module
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

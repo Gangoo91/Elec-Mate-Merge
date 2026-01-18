@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, Users, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Users, CheckCircle, AlertTriangle, HelpCircle, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
@@ -48,91 +47,91 @@ const FireAlarmModule6Section6 = () => {
         'Marketing materials'
       ],
       correctAnswer: 1,
-      explanation: 'A complete documentation package must be provided, including certificates, as-fitted drawings, zone charts, operating instructions, and maintenance requirements.'
+      explanation: 'A complete documentation package including certificates, as-fitted drawings, zone charts, and operating instructions must be provided.'
     },
     {
       id: 4,
-      question: 'What should basic user training include?',
+      question: 'What practical demonstration should be included in user training?',
       options: [
-        'Programming and configuration only',
-        'Panel operation, responding to alarms, silencing, resetting, and weekly testing',
-        'Fault diagnosis',
-        'System design principles'
+        'Only how to silence alarms',
+        'Panel operation, weekly testing, fault recognition and emergency procedures',
+        'Just how to call for service',
+        'Only fire drill procedures'
       ],
       correctAnswer: 1,
-      explanation: 'Basic training should cover panel operation, responding to different alarm types, silencing, resetting, conducting weekly tests, and when to call for help.'
+      explanation: 'Training should cover panel operation, weekly testing procedures, fault recognition and response, and emergency actions.'
     },
     {
       id: 5,
-      question: 'When should the handover process begin?',
+      question: 'When should handover training be conducted?',
       options: [
-        'After the building is occupied',
-        'During the design phase with planning, completed before occupation',
-        'Only when requested by the client',
-        'After the first fault occurs'
+        'After the warranty expires',
+        'Before the system is brought into service',
+        'Only if the client requests it',
+        'At the first annual service'
       ],
       correctAnswer: 1,
-      explanation: 'Handover planning should begin during design, with formal handover completed before building occupation to ensure safe operation from day one.'
+      explanation: 'Training must be completed before the system is brought into operational service to ensure safe and effective use from day one.'
     },
     {
       id: 6,
-      question: 'What ongoing support should typically be offered?',
+      question: 'What should happen if staff changes occur after handover?',
       options: [
-        'None after handover',
-        '24/7 emergency call-out, planned maintenance, and technical advice',
-        'Email support only',
-        'Annual inspections only'
+        'Nothing - original training is sufficient',
+        'New staff should receive appropriate training for their role',
+        'Training is only needed if there are system changes',
+        'Wait until the annual service'
       ],
       correctAnswer: 1,
-      explanation: 'Comprehensive ongoing support includes 24/7 emergency response, planned maintenance visits, technical advice, and system upgrades as needed.'
+      explanation: 'When staff with fire alarm responsibilities change, new personnel must receive appropriate training to maintain competent system management.'
     },
     {
       id: 7,
-      question: 'How should training effectiveness be verified?',
+      question: 'What level of training should security staff receive?',
       options: [
-        'Training is assumed effective if delivered',
-        'Practical demonstration by trainees and documented competency assessment',
-        'Written exam only',
-        'No verification needed'
+        'Basic awareness only',
+        'Comprehensive operator training including all panel functions',
+        'No training is needed for security',
+        'Engineering level training'
       ],
       correctAnswer: 1,
-      explanation: 'Training should be verified through practical demonstration where trainees show they can perform required tasks, with documented assessment.'
+      explanation: 'Security staff often serve as first responders to alarms and should receive comprehensive training on all relevant panel operations and emergency procedures.'
     },
     {
       id: 8,
-      question: 'What should be included in the emergency procedures handed over?',
+      question: 'What should be included in the operating instructions?',
       options: [
-        'Fire brigade phone number only',
-        'Response procedures for different alarm types, evacuation routes, assembly points, and escalation contacts',
-        'Basic panel location',
-        'Insurance contact'
+        'Sales information only',
+        'Panel controls, alarm response, testing, fault reporting and emergency contacts',
+        'Just manufacturer warranty',
+        'Building regulations'
       ],
       correctAnswer: 1,
-      explanation: 'Emergency procedures should cover response to different alarm types, evacuation procedures, assembly points, roles and responsibilities, and escalation contacts.'
+      explanation: 'Operating instructions should cover all aspects of day-to-day operation including controls, alarm response, testing procedures, and contact information.'
     },
     {
       id: 9,
-      question: 'How often should refresher training be conducted?',
+      question: 'How should training attendance be recorded?',
       options: [
-        'Never - initial training is sufficient',
-        'Annually or when staff change, system modifications occur, or procedures change',
-        'Every 5 years',
-        'Only if requested'
+        'No record is needed',
+        'Documented in the logbook with names, dates and topics covered',
+        'Just a verbal confirmation',
+        'Only if requested by insurers'
       ],
       correctAnswer: 1,
-      explanation: 'Refresher training should be conducted annually, when responsible persons change, after system modifications, or when procedures are updated.'
+      explanation: 'Training attendance should be documented in the logbook with attendee names, dates, and topics covered for compliance and liability purposes.'
     },
     {
       id: 10,
-      question: 'What is the significance of a signed handover acceptance?',
+      question: 'What ongoing support should be offered after handover?',
       options: [
-        'It has no significance',
-        'It confirms the client accepts responsibility and has received required training and documentation',
-        'It ends all warranties',
-        'It is only for filing'
+        'None - handover ends all responsibility',
+        '24-hour helpline, maintenance contract options and refresher training',
+        'Only emergency callout',
+        'Just annual service'
       ],
       correctAnswer: 1,
-      explanation: 'Signed acceptance formally confirms transfer of responsibility, receipt of documentation, completion of training, and acknowledgement of ongoing obligations.'
+      explanation: 'Ongoing support typically includes helpline access, maintenance contract options, and availability of refresher training as needed.'
     }
   ], []);
 
@@ -164,507 +163,419 @@ const FireAlarmModule6Section6 = () => {
     selectedAnswers.reduce((acc, ans, i) => (ans === questions[i].correctAnswer ? acc + 1 : acc), 0);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-6">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Module 6</span>
+    <div className="min-h-screen bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Module 6
             </Link>
           </Button>
-          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 6</span>
-          <div className="w-[60px]" />
         </div>
-      </header>
+      </div>
 
-      {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
-            <Users className="h-7 w-7 text-cyan-400" />
+      <div className="px-4 sm:px-6 py-6 max-w-3xl mx-auto space-y-8">
+        {/* Page Title */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
+              <Users className="h-5 w-5 text-elec-yellow" />
+            </div>
+            <span className="text-sm text-white/50">Section 6 of 6</span>
           </div>
-          <span className="text-[11px] font-medium text-cyan-400 uppercase tracking-wide">
-            Section 6 of 6
-          </span>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">Handover & Client Training</h1>
+          <p className="text-white/70">System handover procedures, user training delivery and ongoing support.</p>
         </div>
-        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
-          Handover & Client Training
-        </h1>
-        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
-          User training delivery, documentation packages and ongoing support procedures.
-        </p>
-        <div className="flex items-center gap-4 text-[13px] text-white/50">
-          <span className="flex items-center gap-1">
-            <Target className="h-4 w-4" />
-            6 learning outcomes
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            25-30 mins
-          </span>
+
+        {/* Quick Summary */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+          <ul className="space-y-2 text-white/80 text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Handover</strong> transfers responsibility and ensures users can operate the system safely</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Training</strong> must cover panel operation, weekly testing, fault response and emergencies</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Documentation</strong> should be complete and handed over before system goes live</span>
+            </li>
+          </ul>
         </div>
-      </section>
 
-      {/* In 30 Seconds Card */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-cyan-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[15px] font-semibold text-cyan-400 flex items-center gap-2">
-              <Lightbulb className="h-4 w-4" />
-              In 30 Seconds
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-[15px] text-white/80">
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Handover</strong> transfers responsibility with complete documentation and training</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Training</strong> ensures users can operate, test, and respond to alarms correctly</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Ongoing support</strong> maintains system effectiveness throughout its operational life</span>
-            </p>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Learning Outcomes */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            "Plan and execute professional system handover procedures",
-            "Deliver effective user training appropriate to audience roles",
-            "Compile comprehensive documentation packages for clients",
-            "Establish ongoing support and maintenance arrangements",
-            "Verify training effectiveness through practical assessment",
-            "Manage client relationships for long-term service delivery"
-          ].map((outcome, i) => (
-            <Card key={i} variant="ios" className="p-3">
-              <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-[11px] font-bold text-cyan-400">{i + 1}</span>
+        {/* Learning Outcomes */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Learning Outcomes</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              "Plan and conduct effective system handover procedures",
+              "Identify training needs for different user groups",
+              "Deliver comprehensive operator training sessions",
+              "Provide complete documentation packages at handover",
+              "Establish ongoing support arrangements with clients",
+              "Document training and handover activities appropriately"
+            ].map((outcome, i) => (
+              <div key={i} className="p-3 rounded-lg bg-white/5 border border-white/10">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                    <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
+                  </div>
+                  <p className="text-sm text-white/80">{outcome}</p>
                 </div>
-                <p className="text-[13px] text-white/80">{outcome}</p>
               </div>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
-      </section>
 
-      {/* Main Content */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto space-y-6">
         {/* Section 01 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">01</span>
-              <h3 className="text-[17px] font-semibold text-white">The Handover Process</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Handover Process Overview
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Handover is the <strong className="text-white">formal transfer of responsibility</strong> from installer to client, marking when the system becomes operational.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Handover Checklist:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Verification testing complete and documented</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />All documentation prepared and organised</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Training sessions scheduled with key personnel</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Logbook established and initial entries made</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Ongoing support arrangements confirmed</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Handover formally <strong className="text-white">transfers responsibility</strong> for the fire alarm system from installer to client, ensuring safe ongoing operation.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Handover Process Steps:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Complete all verification testing</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Prepare documentation package</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Conduct user training sessions</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Review emergency procedures</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Establish ongoing support arrangements</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Obtain signed acceptance</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Never hand over a system without completing all steps - incomplete handover creates safety and liability issues.</p>
-            </div>
-          </CardContent>
-        </Card>
+            <p className="text-sm text-white/60 italic">Never handover a system before training has been delivered and accepted.</p>
+          </div>
+        </div>
 
         {/* Section 02 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">02</span>
-              <h3 className="text-[17px] font-semibold text-white">Documentation Package Contents</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Documentation Package
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">A complete <strong className="text-elec-yellow">documentation package</strong> is essential for effective system management.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Required Documents:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Certificate of Compliance</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />As-fitted drawings and zone chart</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Operating and maintenance instructions</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Cause-and-effect matrix</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Device schedules and specifications</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Fire alarm logbook</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Warranty information and service contacts</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>A comprehensive <strong className="text-cyan-400">documentation package</strong> enables effective ongoing management and maintenance.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Essential Documentation:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Certificate of Compliance and installation certificate</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />As-fitted drawings with device locations</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Zone chart and cause-and-effect matrix</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Operating and maintenance instructions</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Fire alarm logbook</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Equipment data sheets and warranties</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Emergency contact information</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 03 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">03</span>
-              <h3 className="text-[17px] font-semibold text-white">User Training Requirements</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Identifying Training Needs
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Different personnel require <strong className="text-white">different levels of training</strong> based on their roles and responsibilities.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Training Levels by Role:</p>
+              <ul className="space-y-2 text-sm text-white/70">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-3 w-3 text-elec-yellow mt-1" />
+                  <span><strong className="text-white">Responsible Person:</strong> Full understanding of system, compliance requirements, management responsibilities</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-3 w-3 text-elec-yellow mt-1" />
+                  <span><strong className="text-white">Security/Reception:</strong> Panel operation, alarm response, fault recognition, emergency contacts</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-3 w-3 text-elec-yellow mt-1" />
+                  <span><strong className="text-white">Maintenance Staff:</strong> Weekly testing procedures, visual inspection, logbook entries</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-3 w-3 text-elec-yellow mt-1" />
+                  <span><strong className="text-white">General Staff:</strong> Awareness of system, call point operation, evacuation procedures</span>
+                </li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-white">Effective training</strong> ensures users can safely operate the system and respond appropriately to alarm events.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Basic User Training Topics:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Panel layout and indicator meanings</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Responding to fire alarms and fault conditions</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Silencing, acknowledging, and resetting</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Conducting weekly tests</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Making logbook entries</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />When to call for professional assistance</li>
-                </ul>
-              </div>
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-amber-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  Training should be role-appropriate - not everyone needs advanced knowledge.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        {/* Inline Check 1 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A trainee can explain what each panel button does but cannot demonstrate resetting after a test alarm. Is training complete?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> No - training must include practical demonstration of skills, not just theoretical knowledge. The trainee should practice resetting the panel until they can do it confidently and correctly.</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Quick Check 1 */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <span className="font-semibold text-elec-yellow">Quick Check</span>
+          </div>
+          <p className="text-white/80 mb-3">The security manager has changed since handover. What action is required?</p>
+          <div className="p-3 rounded-lg bg-white/5">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> The new security manager should receive comprehensive training appropriate to their role before assuming responsibility. This should be documented in the logbook and may be arranged through the maintaining company.</p>
+          </div>
+        </div>
 
         {/* Section 04 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">04</span>
-              <h3 className="text-[17px] font-semibold text-white">Emergency Procedures</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Operator Training Content
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Comprehensive operator training ensures staff can <strong className="text-elec-yellow">manage the system effectively</strong> in all situations.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Training Topics:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />System overview and zone layout</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Panel controls and displays</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Normal operating state recognition</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Fire alarm response procedures</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Fault condition recognition and response</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Silencing and resetting alarms</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Weekly testing procedures</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Logbook entries and record keeping</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Clear <strong className="text-cyan-400">emergency procedures</strong> ensure appropriate response to different alarm scenarios.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Emergency Procedure Elements:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Response to fire alarm activation</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Response to fault conditions</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Investigation before silencing</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />When to evacuate vs investigate</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Fire brigade notification criteria</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Escalation contacts and procedures</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Procedures should be tailored to the specific premises and its fire risk assessment.</p>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 05 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">05</span>
-              <h3 className="text-[17px] font-semibold text-white">Ongoing Support Arrangements</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Practical Demonstrations
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Hands-on practice is <strong className="text-white">essential for confidence</strong> in operating the system.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Practical Exercises:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Activate a detector and observe panel response</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Silence alarms using correct procedure</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Reset system after alarm condition</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Navigate through panel menus</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Conduct a weekly test with trainee leading</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Complete logbook entries</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-white">Ongoing support</strong> ensures the system remains effective throughout its operational life.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Support Services to Offer:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Planned maintenance contracts</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />24/7 emergency call-out service</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Technical helpline support</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />System modifications and extensions</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Refresher training sessions</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Spare parts supply</li>
-                </ul>
-              </div>
+            <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+              <p className="text-sm text-amber-300 flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                Always ensure building occupants are warned before any training that activates alarms.
+              </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 06 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-1 rounded">06</span>
-              <h3 className="text-[17px] font-semibold text-white">Training Verification and Records</h3>
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
+            Ongoing Support Arrangements
+          </h2>
+          <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+            <p className="text-white/70">Establishing <strong className="text-elec-yellow">ongoing support arrangements</strong> ensures continued effective system management.</p>
+            <div className="p-3 rounded-lg bg-white/5">
+              <p className="text-sm font-semibold text-white mb-2">Support Options to Discuss:</p>
+              <ul className="space-y-1 text-sm text-white/70">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Maintenance contract options and coverage</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Emergency callout arrangements</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Helpline availability for queries</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Refresher training availability</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />System extension or modification services</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Spare parts availability and ordering</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Training must be <strong className="text-cyan-400">verified and documented</strong> to demonstrate competence and compliance.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Training Record Contents:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Date and duration of training</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Name and signature of trainer</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Names and roles of trainees</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Topics covered</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Practical assessments completed</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-cyan-400" />Trainee signatures confirming understanding</li>
-                </ul>
-              </div>
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-amber-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  Training records should be kept for the duration of system operation.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        {/* Inline Check 2 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A building changes security company, resulting in all trained staff being replaced. What action is required?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> The new staff require full training on the fire alarm system before taking responsibility. Arrange training session covering panel operation, testing procedures, emergency response, and logbook completion. Document the training.</p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Quick Check 2 */}
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" />
+            <span className="font-semibold text-elec-yellow">Quick Check</span>
+          </div>
+          <p className="text-white/80 mb-3">A client wants to bring the system live immediately without training as they are short-staffed. How should you respond?</p>
+          <div className="p-3 rounded-lg bg-white/5">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> Explain that training is essential before handover - operating an unfamiliar system could result in incorrect responses to alarms or faults, potentially endangering life. Offer flexible training times or a phased approach, but do not compromise on training delivery.</p>
+          </div>
+        </div>
 
-        {/* Inline Check 3 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A client refuses to sign the handover acceptance, stating they need more time to review the documentation. How should you proceed?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Allow reasonable time for review, but clarify that formal responsibility transfer requires signed acceptance. Document that documentation was provided and training offered. Schedule a follow-up meeting to complete handover. Do not leave without a clear plan for completion.</p>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Practical Guidance */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
-
-        <div className="space-y-3">
-          <Card variant="ios" className="border-green-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
+        {/* Practical Guidance */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Practical Guidance</h2>
+          <div className="space-y-3">
+            <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
+              <h4 className="font-semibold text-green-400 mb-2">Pro Tips</h4>
+              <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Prepare a simple quick-reference card with key panel operations for day-to-day use
+                  Use the actual panel during training rather than just describing controls
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Conduct training during a quiet period when distractions are minimised
+                  Provide written quick reference guides for common operations
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Follow up after handover to address any questions that arise during initial operation
+                  Allow trainees to practise - hands-on experience builds confidence
                 </li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card variant="ios" className="border-red-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
+            <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
+              <h4 className="font-semibold text-red-400 mb-2">Common Mistakes</h4>
+              <ul className="space-y-2 text-sm text-white/70">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Rushing through training to meet time constraints - inadequate training creates safety risks
+                  Rushing through training to meet deadlines
                 </li>
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Assuming users will read the manual - most will rely on what they remember from training
+                  Failing to document who attended training and what was covered
                 </li>
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Not establishing ongoing support arrangements before leaving site
+                  Not providing contact details for ongoing support
                 </li>
               </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
-      </section>
 
-      {/* FAQs */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
-        <div className="space-y-3">
-          {[
-            { q: "How long should training sessions take?", a: "Allow 1-2 hours for basic user training, longer for complex systems. Quality is more important than speed - ensure understanding before completing." },
-            { q: "What if the responsible person is unavailable for training?", a: "Reschedule to ensure the key person receives training. Training deputies is important but should not replace training the main responsible person." },
-            { q: "Should training be repeated for night shift staff?", a: "Yes - all staff who may need to respond to alarms should receive appropriate training. Consider shift patterns when scheduling sessions." },
-            { q: "How do I handle language barriers during training?", a: "Use visual aids, practical demonstrations, and consider translated materials. Confirm understanding through practical demonstration rather than verbal confirmation alone." },
-            { q: "What if the client says they already know how to use fire alarms?", a: "Systems vary significantly. Provide system-specific training covering this particular installation's features, even if the person has general experience." },
-            { q: "Who pays for refresher training?", a: "This should be established in the maintenance contract. Initial training is typically included in installation cost; ongoing training may be charged separately." }
-          ].map((faq, i) => (
-            <Card key={i} variant="ios">
-              <CardContent className="p-4">
-                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-[13px] text-white/70">{faq.a}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Quiz Section */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-cyan-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-cyan-400" />
-              Knowledge Check
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {!showQuiz ? (
-              <div className="text-center py-6">
-                <p className="text-[15px] text-white/70 mb-4">Test your understanding of handover and client training with 10 questions.</p>
-                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
-                  Start Quiz
-                </Button>
+        {/* FAQs */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-white">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {[
+              { q: "How long should handover training take?", a: "Typically 1-2 hours for basic operator training, longer for responsible persons or complex systems. Allow sufficient time for questions and practice." },
+              { q: "What if the client refuses training?", a: "Document the refusal in writing and advise of the implications. Consider not completing handover until training is accepted, or obtain signed acknowledgment of risks." },
+              { q: "Should training be repeated for shift staff?", a: "Yes - all staff who may need to operate the system should receive training. Schedule sessions for different shifts as needed." },
+              { q: "Can we provide video training instead?", a: "Video can supplement but not replace hands-on training. Staff must have practical experience with the actual system before assuming responsibility." },
+              { q: "What if the client has questions after handover?", a: "This is normal - provide helpline contact details. Many queries can be resolved by phone. Schedule follow-up visits if complex issues arise." },
+              { q: "Should we test trainee understanding?", a: "Yes - ask questions during training and have trainees demonstrate operations. Ensure they can confidently perform key tasks before completing handover." }
+            ].map((faq, i) => (
+              <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                <p className="font-semibold text-white mb-2">{faq.q}</p>
+                <p className="text-sm text-white/70">{faq.a}</p>
               </div>
-            ) : showResults ? (
-              <div className="space-y-6">
-                <div className="text-center py-4">
-                  <p className="text-[34px] font-bold text-cyan-400">{calculateScore()}/{questions.length}</p>
-                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
-                </div>
+            ))}
+          </div>
+        </div>
 
-                <div className="space-y-4">
-                  {questions.map((q, i) => {
-                    const correct = selectedAnswers[i] === q.correctAnswer;
+        {/* Quiz Section */}
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-4">
+            <BookOpen className="h-5 w-5 text-elec-yellow" />
+            <h3 className="text-lg font-semibold text-white">Knowledge Check</h3>
+          </div>
+
+          {!showQuiz ? (
+            <div className="text-center py-6">
+              <p className="text-white/70 mb-4">Test your understanding of handover and client training with 10 questions.</p>
+              <Button onClick={() => setShowQuiz(true)} className="bg-elec-yellow text-black hover:bg-elec-yellow/90 min-h-[44px] touch-manipulation">
+                Start Quiz
+              </Button>
+            </div>
+          ) : showResults ? (
+            <div className="space-y-6">
+              <div className="text-center py-4">
+                <p className="text-3xl font-bold text-elec-yellow">{calculateScore()}/{questions.length}</p>
+                <p className="text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+              </div>
+
+              <div className="space-y-4">
+                {questions.map((q, i) => {
+                  const correct = selectedAnswers[i] === q.correctAnswer;
+                  return (
+                    <div key={q.id} className="p-4 rounded-lg bg-white/5 border border-white/10">
+                      <p className="font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                      <p className={`text-sm ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                        Your answer: {q.options[selectedAnswers[i]] ?? 'Not answered'} {correct ? '(Correct)' : '(Incorrect)'}
+                      </p>
+                      {!correct && (
+                        <p className="text-sm text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                      )}
+                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Button onClick={resetQuiz} variant="outline" className="w-full min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10">
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Restart Quiz
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+
+              <div>
+                <p className="font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                <div className="space-y-2">
+                  {questions[currentQuestion].options.map((opt, idx) => {
+                    const selected = selectedAnswers[currentQuestion] === idx;
                     return (
-                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
-                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
-                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
-                        </p>
-                        {!correct && (
-                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
-                        )}
-                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
-                      </div>
+                      <button
+                        key={idx}
+                        onClick={() => handleAnswerSelect(idx)}
+                        className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
+                          selected
+                            ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
+                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                        }`}
+                      >
+                        {opt}
+                      </button>
                     );
                   })}
                 </div>
+              </div>
 
-                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
-                  <RotateCcw className="h-4 w-4" />
-                  Restart Quiz
+              <div className="flex items-center justify-between gap-3">
+                <Button
+                  onClick={handlePrevious}
+                  disabled={currentQuestion === 0}
+                  variant="outline"
+                  className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10 disabled:opacity-50"
+                >
+                  Previous
+                </Button>
+                <Button
+                  onClick={handleNext}
+                  disabled={selectedAnswers[currentQuestion] === -1}
+                  className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
+                >
+                  {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </div>
-            ) : (
-              <div className="space-y-6">
-                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
-
-                <div>
-                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-                  <div className="space-y-2">
-                    {questions[currentQuestion].options.map((opt, idx) => {
-                      const selected = selectedAnswers[currentQuestion] === idx;
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => handleAnswerSelect(idx)}
-                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
-                            selected
-                              ? 'bg-cyan-500/20 border-cyan-500/50 text-white'
-                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
-                          }`}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between gap-3">
-                  <Button
-                    variant="ios-secondary"
-                    onClick={handlePrevious}
-                    disabled={currentQuestion === 0}
-                    className="flex-1"
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="ios-primary"
-                    onClick={handleNext}
-                    disabled={selectedAnswers[currentQuestion] === -1}
-                    className="flex-1"
-                  >
-                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Module Completion Card */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-green-500/20 bg-green-500/5">
-          <CardContent className="p-6 text-center">
-            <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="h-8 w-8 text-green-400" />
             </div>
-            <h3 className="text-[20px] font-bold text-white mb-2">Module 6 Complete</h3>
-            <p className="text-[15px] text-white/70 mb-4">
-              Congratulations! You have completed the Testing, Servicing & Certification module. You now understand BS 5839-1 testing requirements, servicing procedures, fault diagnosis, record keeping, certification, and client handover.
-            </p>
-            <Button variant="ios-primary" asChild>
-              <Link to="/study-centre/upskilling/fire-alarm-module-7">
-                Continue to Module 7
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </section>
+          )}
+        </div>
 
-      {/* Navigation Footer */}
-      <section className="px-4 pb-safe max-w-3xl mx-auto">
-        <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
-          <Button variant="ios-secondary" asChild className="flex-1">
+        {/* Navigation Footer */}
+        <div className="flex items-center justify-between gap-3 pt-6 border-t border-white/10">
+          <Button variant="outline" asChild className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10">
             <Link to="/study-centre/upskilling/fire-alarm-module-6-section-5">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Previous Section
+              Previous
             </Link>
           </Button>
-          <Button variant="ios-primary" asChild className="flex-1">
+          <Button asChild className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
             <Link to="/study-centre/upskilling/fire-alarm-module-7">
-              Next Module
+              Module 7
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>
           </Button>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

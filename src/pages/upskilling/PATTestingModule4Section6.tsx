@@ -1,6 +1,5 @@
-import { ArrowLeft, FileX, CheckCircle, AlertTriangle, Clock, Settings, Zap, Wrench, HelpCircle, ChevronRight, ChevronLeft, XCircle, Search, ThumbsUp } from 'lucide-react';
+import { ArrowLeft, FileX, CheckCircle, AlertTriangle, Clock, Zap, Wrench, HelpCircle, ChevronRight, ChevronLeft, XCircle, Search, ThumbsUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
@@ -60,55 +59,50 @@ const PATTestingModule4Section6 = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      <div className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="..">
-            <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]">
-              <ArrowLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">Back to Module 4</span>
-              <span className="sm:hidden">Back</span>
-            </Button>
-          </Link>
-          <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">Module 4.6</Badge>
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-6 sm:py-8 space-y-8 pb-24">
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30 mb-4">
-            <FileX className="h-8 w-8 text-elec-yellow" />
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8 pb-24">
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-elec-yellow/10">
+              <FileX className="h-6 w-6 text-elec-yellow" />
+            </div>
+            <span className="text-elec-yellow/80 text-sm font-medium">Module 4 - Section 6</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">Interpreting Results and Common Failures</h1>
-          <p className="text-white/60 text-base sm:text-lg max-w-2xl mx-auto">Understanding test results and failure modes</p>
-          <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-white/50">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">Interpreting Results and Common Failures</h1>
+          <p className="text-white/60 text-base">Understanding test results and failure modes</p>
+          <div className="flex items-center gap-4 text-sm text-white/50">
             <span className="flex items-center gap-1"><Clock className="h-4 w-4" /> 12 min read</span>
-            <span className="hidden sm:inline">-</span>
-            <span>Interactive quiz included</span>
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-2xl border border-elec-yellow/30 p-5">
-            <h3 className="text-elec-yellow font-semibold mb-2 flex items-center gap-2"><Zap className="h-5 w-5" /> In 30 Seconds</h3>
-            <p className="text-white/80 text-sm leading-relaxed">Interpret results by comparing to limits for the appliance class. Common failures include loose connections, moisture ingress, and cable damage. Document all results and investigate borderline readings.</p>
-          </div>
-          <div className="bg-gradient-to-br from-blue-500/20 to-blue-500/5 rounded-2xl border border-blue-500/30 p-5">
-            <h3 className="text-blue-400 font-semibold mb-2 flex items-center gap-2"><Settings className="h-5 w-5" /> Spot It / Use It</h3>
-            <ul className="text-white/80 text-sm space-y-1">
-              <li>- Always check appliance class first</li>
-              <li>- Investigate marginal results</li>
-              <li>- Label and withdraw failed items</li>
-              <li>- Document everything including failures</li>
-            </ul>
-          </div>
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+          <ul className="text-sm text-white space-y-1">
+            <li>- Interpret results by comparing to limits for the appliance class</li>
+            <li>- Common failures include loose connections, moisture ingress, and cable damage</li>
+            <li>- Document all results and investigate borderline readings</li>
+            <li>- Always check appliance class before applying limits</li>
+          </ul>
         </div>
 
-        <div className="bg-white/5 rounded-2xl border border-white/10 p-6">
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2"><CheckCircle className="h-5 w-5 text-green-400" /> Learning Outcomes</h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+        <div className="space-y-3">
+          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-green-400" /> Learning Outcomes
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-2">
             {['Correctly interpret test results against limits', 'Identify common failure modes and their causes', 'Take appropriate action on failed equipment', 'Handle borderline results appropriately', 'Document and record test outcomes', 'Recognise patterns indicating equipment problems'].map((outcome, i) => (
-              <div key={i} className="flex items-start gap-3 text-white/80 text-sm">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs flex items-center justify-center font-medium">{i + 1}</span>
+              <div key={i} className="flex items-start gap-2 text-white text-sm">
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs flex items-center justify-center font-medium">{i + 1}</span>
                 {outcome}
               </div>
             ))}
@@ -116,11 +110,11 @@ const PATTestingModule4Section6 = () => {
         </div>
 
         <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-elec-yellow font-mono text-sm">01</span>
-            <h2 className="text-xl font-bold text-white">Result Categories</h2>
-          </div>
-          <div className="bg-white/5 rounded-xl p-5 space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Result Categories
+          </h2>
+          <div className="space-y-4 text-white leading-relaxed">
             <p>Test results fall into three categories requiring different actions:</p>
             <div className="grid gap-4">
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
@@ -145,11 +139,11 @@ const PATTestingModule4Section6 = () => {
         <InlineCheck {...quickCheckQuestions[0]} />
 
         <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-elec-yellow font-mono text-sm">02</span>
-            <h2 className="text-xl font-bold text-white">Common Earth Continuity Failures</h2>
-          </div>
-          <div className="bg-white/5 rounded-xl p-5 space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Common Earth Continuity Failures
+          </h2>
+          <div className="space-y-4 text-white leading-relaxed">
             <p>High earth continuity readings are among the most common failures:</p>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse">
@@ -170,11 +164,11 @@ const PATTestingModule4Section6 = () => {
         </section>
 
         <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-elec-yellow font-mono text-sm">03</span>
-            <h2 className="text-xl font-bold text-white">Common Insulation Resistance Failures</h2>
-          </div>
-          <div className="bg-white/5 rounded-xl p-5 space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Common Insulation Resistance Failures
+          </h2>
+          <div className="space-y-4 text-white leading-relaxed">
             <p>Low insulation resistance indicates potential shock or fire hazards:</p>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
@@ -206,11 +200,11 @@ const PATTestingModule4Section6 = () => {
         <InlineCheck {...quickCheckQuestions[1]} />
 
         <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-elec-yellow font-mono text-sm">04</span>
-            <h2 className="text-xl font-bold text-white">Handling Failed Equipment</h2>
-          </div>
-          <div className="bg-white/5 rounded-xl p-5 space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Handling Failed Equipment
+          </h2>
+          <div className="space-y-4 text-white leading-relaxed">
             <p>When equipment fails testing, follow a clear process:</p>
             <div className="space-y-4">
               <div className="flex gap-4"><div className="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold">1</div><div><h4 className="text-white font-semibold">Immediate Actions</h4><p className="text-white/70 text-sm mt-1">Apply FAIL label clearly. Remove plug or disable so equipment cannot be used. Inform the user/owner.</p></div></div>
@@ -224,11 +218,11 @@ const PATTestingModule4Section6 = () => {
         <InlineCheck {...quickCheckQuestions[2]} />
 
         <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-elec-yellow font-mono text-sm">05</span>
-            <h2 className="text-xl font-bold text-white">Trend Analysis</h2>
-          </div>
-          <div className="bg-white/5 rounded-xl p-5 space-y-4 text-white/80 leading-relaxed">
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+            Trend Analysis
+          </h2>
+          <div className="space-y-4 text-white leading-relaxed">
             <p>Comparing results over time can identify problems before they cause failures:</p>
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="text-elec-yellow font-semibold mb-2">What to Look For</h4>
@@ -253,11 +247,13 @@ const PATTestingModule4Section6 = () => {
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2"><Wrench className="h-5 w-5 text-elec-yellow" /> Practical Guidance</h2>
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <Wrench className="h-5 w-5 text-elec-yellow" /> Practical Guidance
+          </h2>
           <div className="grid gap-4">
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-5">
               <h3 className="text-green-400 font-semibold mb-3">Best Practice Tips</h3>
-              <ul className="text-white/80 text-sm space-y-2">
+              <ul className="text-white text-sm space-y-2">
                 <li className="flex items-start gap-2"><CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" /><span>Record all results, including failures, for complete documentation</span></li>
                 <li className="flex items-start gap-2"><CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" /><span>Investigate borderline results rather than just passing them</span></li>
                 <li className="flex items-start gap-2"><CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" /><span>Compare current results to previous tests to identify trends</span></li>
@@ -266,7 +262,7 @@ const PATTestingModule4Section6 = () => {
             </div>
             <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-5">
               <h3 className="text-red-400 font-semibold mb-3">Common Mistakes to Avoid</h3>
-              <ul className="text-white/80 text-sm space-y-2">
+              <ul className="text-white text-sm space-y-2">
                 <li className="flex items-start gap-2"><AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" /><span>Passing borderline results without investigation</span></li>
                 <li className="flex items-start gap-2"><AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" /><span>Not recording failed test results</span></li>
                 <li className="flex items-start gap-2"><AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" /><span>Returning equipment to service after repair without full retest</span></li>
@@ -277,27 +273,26 @@ const PATTestingModule4Section6 = () => {
         </section>
 
         <section className="space-y-4">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2"><HelpCircle className="h-5 w-5 text-elec-yellow" /> Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <details key={i} className="group bg-white/5 rounded-xl border border-white/10 overflow-hidden">
-                <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-white/5 transition-colors list-none">
-                  <span className="text-white font-medium pr-4">{faq.question}</span>
-                  <ChevronRight className="h-5 w-5 text-white/50 group-open:rotate-90 transition-transform flex-shrink-0" />
-                </summary>
-                <div className="px-4 pb-4 text-white/70 text-sm leading-relaxed border-t border-white/10 pt-4">{faq.answer}</div>
-              </details>
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+            <HelpCircle className="h-5 w-5 text-elec-yellow" /> Frequently Asked Questions
+          </h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
             ))}
           </div>
         </section>
 
-        <section className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 rounded-2xl border border-elec-yellow/30 p-6">
+        <section className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2"><Zap className="h-5 w-5 text-elec-yellow" /> Quick Reference: Results Interpretation</h2>
           <div className="grid sm:grid-cols-2 gap-4 text-sm">
-            <div className="bg-black/20 rounded-lg p-4"><h4 className="text-green-400 font-semibold mb-2">PASS Actions</h4><ul className="text-white/80 space-y-1"><li>- Apply pass label</li><li>- Record result</li><li>- Schedule next test</li></ul></div>
-            <div className="bg-black/20 rounded-lg p-4"><h4 className="text-red-400 font-semibold mb-2">FAIL Actions</h4><ul className="text-white/80 space-y-1"><li>- Apply fail label</li><li>- Withdraw immediately</li><li>- Investigate and repair/replace</li></ul></div>
-            <div className="bg-black/20 rounded-lg p-4"><h4 className="text-elec-yellow font-semibold mb-2">Common Failures</h4><ul className="text-white/80 space-y-1"><li>- Loose plug terminals</li><li>- Moisture contamination</li><li>- Cable damage</li></ul></div>
-            <div className="bg-black/20 rounded-lg p-4"><h4 className="text-elec-yellow font-semibold mb-2">After Repair</h4><ul className="text-white/80 space-y-1"><li>- Full retest required</li><li>- Document the repair</li><li>- Apply new pass label</li></ul></div>
+            <div className="bg-black/20 rounded-lg p-4"><h4 className="text-green-400 font-semibold mb-2">PASS Actions</h4><ul className="text-white space-y-1"><li>- Apply pass label</li><li>- Record result</li><li>- Schedule next test</li></ul></div>
+            <div className="bg-black/20 rounded-lg p-4"><h4 className="text-red-400 font-semibold mb-2">FAIL Actions</h4><ul className="text-white space-y-1"><li>- Apply fail label</li><li>- Withdraw immediately</li><li>- Investigate and repair/replace</li></ul></div>
+            <div className="bg-black/20 rounded-lg p-4"><h4 className="text-elec-yellow font-semibold mb-2">Common Failures</h4><ul className="text-white space-y-1"><li>- Loose plug terminals</li><li>- Moisture contamination</li><li>- Cable damage</li></ul></div>
+            <div className="bg-black/20 rounded-lg p-4"><h4 className="text-elec-yellow font-semibold mb-2">After Repair</h4><ul className="text-white space-y-1"><li>- Full retest required</li><li>- Document the repair</li><li>- Apply new pass label</li></ul></div>
           </div>
         </section>
 

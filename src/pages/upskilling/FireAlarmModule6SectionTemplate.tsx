@@ -1,11 +1,8 @@
-import { useEffect, useMemo } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { ArrowLeft, CheckCircle, ChevronDown, ChevronUp, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import SingleQuestionQuiz from '@/components/upskilling/quiz/SingleQuestionQuiz';
-import { AccentPanel } from '@/components/upskilling/design/AccentPanel';
 import type { QuizQuestion } from '@/types/quiz';
 
 const FireAlarmModule6SectionTemplate = ({
@@ -39,9 +36,10 @@ const FireAlarmModule6SectionTemplate = ({
   blocksLayout?: 'grid' | 'stack' | 'article';
   duration?: string;
 }) => {
-  // SEO per section
+  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
+
   useEffect(() => {
-    document.title = `${title} | Fire Alarm Module 6 ${sectionNumber}`;
+    document.title = `${title} | Fire Alarm Module 6 Section ${sectionNumber} | Elec-Mate`;
     const desc = description;
     let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
     if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta); }
@@ -51,271 +49,235 @@ const FireAlarmModule6SectionTemplate = ({
     if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
     if (canonical) canonical.href = window.location.href;
 
-    const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: title, description: desc, about: [title, 'BS 5839-1', 'BS 7671'], author: { '@type': 'Organization', name: 'Training Module' } };
+    const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: title, description: desc, about: [title, 'BS 5839-1', 'BS 7671'], author: { '@type': 'Organization', name: 'Elec-Mate' } };
     const script = document.createElement('script'); script.type = 'application/ld+json'; script.text = JSON.stringify(ld); document.head.appendChild(script);
     return () => { if (script && script.parentNode) script.parentNode.removeChild(script); };
   }, [title, description, sectionNumber]);
 
   const sequentialQuestions = useMemo(() => quiz.map(q => ({ id: q.id, question: q.question, options: q.options, correct: q.correctAnswer, explanation: q.explanation })), [quiz]);
 
-  return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/fire-alarm-module-6">
-          <Button variant="ghost" className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 6
-          </Button>
-        </Link>
+  const summaryText = Array.isArray(summary) && summary.length > 0
+    ? summary.join(' ')
+    : typeof summary === 'string' && summary.trim().length > 0
+    ? summary
+    : 'Key points align with BS 5839-1 and BS 7671 requirements in the UK context.';
 
-        <div className="space-y-8 max-w-7xl mx-auto">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Icon className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-4xl font-bold text-white">{title}</h1>
-                <p className="text-xl text-gray-400">Module 6, Section {sectionNumber}</p>
-              </div>
+  const faqs = [
+    { q: `What are the key requirements covered in ${title}?`, a: intro },
+    { q: 'How does this relate to BS 5839-1 and BS 7671?', a: 'All fire alarm system commissioning and handover in the UK must comply with BS 5839-1 for fire detection systems and BS 7671 for electrical installation requirements. This section covers specific requirements that support compliant commissioning.' },
+    { q: 'What documentation is required for handover?', a: 'Full commissioning records, test certificates, as-built drawings, operation and maintenance manuals, and handover certificates are required. Keep records for ongoing maintenance and future modifications.' },
+  ];
+
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="px-4 sm:px-6 py-6 sm:py-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Title Header - Centered */}
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-4">
+              <Zap className="w-4 h-4 text-elec-yellow" />
+              <span className="text-elec-yellow text-sm font-medium">Module 6 • Section {sectionNumber}</span>
             </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Module 6.{sectionNumber}
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                {duration}
-              </Badge>
-              {badges.map((b) => (
-                <Badge key={b} variant="outline" className="border-gray-600 text-gray-300">{b}</Badge>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+              {title}
+            </h1>
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
+              {description}
+            </p>
+          </div>
+
+          {/* Quick Summary Boxes */}
+          <div className="grid sm:grid-cols-2 gap-4 mb-12">
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+              <ul className="text-sm text-white space-y-1">
+                {learnings.slice(0, 3).map((l, i) => (
+                  <li key={i}>• {l}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              <p className="text-elec-yellow text-sm font-medium mb-2">Spot it / Use it</p>
+              <ul className="text-sm text-white space-y-1">
+                <li>• Fire alarm commissioning</li>
+                <li>• System handover procedures</li>
+                <li>• BS 5839-1 compliance certification</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Learning Outcomes */}
+          <div className="mb-12">
+            <h2 className="text-xl font-semibold text-white mb-4">What You'll Learn</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {learnings.map((l, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  <span className="text-white text-sm">{l}</span>
+                </div>
               ))}
             </div>
           </div>
 
           {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Icon className="h-5 w-5 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              {typeof intro === 'string' ? intro.split('\n').map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
-              )) : <p>{intro}</p>}
-            </CardContent>
-          </Card>
-
-          {/* Learning Outcomes */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                Learning Outcomes
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="space-y-2">
-                {learnings.map((l) => (
-                  <li key={l} className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <span>{l}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+              Introduction
+            </h2>
+            {typeof intro === 'string' ? intro.split('\n').map((paragraph, i) => (
+              <p key={i} className="text-white leading-relaxed mb-3">{paragraph}</p>
+            )) : <p className="text-white leading-relaxed">{intro}</p>}
+          </section>
 
           {/* Content Blocks */}
-          {blocksLayout === 'grid' ? (
-            <section>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {blocks.map((block) => (
-                  <Card key={block.heading} className="bg-card border-transparent h-full">
-                    <CardHeader>
-                      <CardTitle className="text-yellow-400">{block.heading}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-gray-300">
-                      <div className="space-y-1">
-                        {block.points.map((p) => (
-                          <div key={p} className="flex items-start gap-2">
-                            <div className="w-1 h-1 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                            <span className="text-sm">{p}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </section>
-          ) : blocksLayout === 'stack' ? (
-            <section className="space-y-6">
-              {blocks.map((block, blockIndex) => (
-                <Card key={block.heading} className="bg-card border-transparent">
-                  <CardHeader>
-                    <CardTitle className="text-yellow-400 flex items-center gap-2">
-                      <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-black font-bold text-sm">
-                        {blockIndex + 1}
-                      </div>
-                      {block.heading}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6 text-gray-300">
-                      {/* Check if block contains step-by-step content */}
-                      {block.heading.toLowerCase().includes('step-by-step') ? (
-                        <div className="space-y-3">
-                          {block.points.map((point, i) => (
-                            <div key={point} className="flex items-start gap-3">
-                              <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                {i + 1}
-                              </div>
-                              <div>
-                                <p className="text-gray-300">{point}</p>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      ) : block.heading.toLowerCase().includes('overview') || block.heading.toLowerCase().includes('schedule') ? (
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                          {block.points.slice(0, 3).map((point, i) => {
-                            const colors = [
-                              { bg: 'bg-card', border: 'border-yellow-400/30', icon: 'text-yellow-400' },
-                              { bg: 'bg-card', border: 'border-orange-500/20', icon: 'text-orange-400' },
-                              { bg: 'bg-card', border: 'border-purple-500/20', icon: 'text-purple-400' }
-                            ];
-                            const colorSet = colors[i] || colors[0];
-                            const titles = point.split(':')[0];
-                            const content = point.split(':').slice(1).join(':');
-                            return (
-                              <div key={point} className={`${colorSet.bg} border ${colorSet.border} rounded-lg p-4`}>
-                                <div className="flex items-center gap-2 mb-3">
-                                  <div className={`h-5 w-5 ${colorSet.icon}`}>•</div>
-                                  <h3 className="font-semibold text-white">{titles}</h3>
-                                </div>
-                                <p className="text-sm text-gray-300">{content}</p>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      ) : block.heading.toLowerCase().includes('requirements') || block.heading.toLowerCase().includes('components') ? (
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-semibold text-white">{block.heading.replace('Requirements', 'Details').replace('Components', 'Items')}</h3>
-                            <div className="space-y-3">
-                              {block.points.slice(0, Math.ceil(block.points.length / 2)).map((point, i) => {
-                                const colors = ['border-yellow-400', 'border-red-500', 'border-green-500', 'border-purple-500', 'border-yellow-400', 'border-pink-500'];
-                                const colorClass = colors[i % colors.length];
-                                return (
-                                  <div key={point} className={`bg-card p-3 rounded border-l-4 ${colorClass}`}>
-                                    <p className="font-medium text-white">{point.split(':')[0]}</p>
-                                    {point.includes(':') && (
-                                      <p className="text-gray-400 text-sm">{point.split(':').slice(1).join(':')}</p>
-                                    )}
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-                          {block.points.length > 3 && (
-                            <div className="space-y-4">
-                              <h3 className="text-lg font-semibold text-white">Additional Details</h3>
-                              <div className="space-y-3">
-                                {block.points.slice(Math.ceil(block.points.length / 2)).map((point, i) => {
-                                  const colors = ['border-orange-500', 'border-cyan-500', 'border-lime-500', 'border-rose-500', 'border-indigo-500', 'border-amber-500'];
-                                  const colorClass = colors[i % colors.length];
-                                  return (
-                                    <div key={point} className={`bg-card p-3 rounded border-l-4 ${colorClass}`}>
-                                      <p className="font-medium text-white">{point.split(':')[0]}</p>
-                                      {point.includes(':') && (
-                                        <p className="text-gray-400 text-sm">{point.split(':').slice(1).join(':')}</p>
-                                      )}
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="rounded-md border p-4 border-[hsl(var(--border))]">
-                          <ul className="list-disc pl-6 space-y-1">
-                            {block.points.map((p) => (<li key={p}>{p}</li>))}
-                          </ul>
-                        </div>
-                      )}
+          {blocks.map((block, index) => (
+            <section key={block.heading} className="mb-10">
+              <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+                <span className="text-elec-yellow/80 text-sm font-normal">{String(index + 2).padStart(2, '0')}</span>
+                {block.heading}
+              </h2>
+              {blocksLayout === 'grid' && blocks.length > 2 ? (
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {block.points.map((p, i) => (
+                    <div key={i} className="p-3 rounded-lg bg-white/5 border border-white/10">
+                      <p className="text-white text-sm">{p}</p>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
+                  ))}
+                </div>
+              ) : block.heading.toLowerCase().includes('step') ? (
+                <div className="space-y-3">
+                  {block.points.map((point, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="w-6 h-6 bg-elec-yellow rounded-full flex items-center justify-center text-[#1a1a1a] font-bold text-sm flex-shrink-0">
+                        {i + 1}
+                      </div>
+                      <p className="text-white">{point}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <ul className="space-y-2">
+                  {block.points.map((p, i) => (
+                    <li key={i} className="flex items-start gap-3 text-white">
+                      <span className="text-elec-yellow mt-1">•</span>
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </section>
-          ) : (
-            <section>
-              <article className="space-y-8 text-gray-300">
-                {blocks.map((block, i) => (
-                  <section key={block.heading} className="space-y-3">
-                    <h2 className="text-xl font-semibold text-white">{block.heading}</h2>
-                    <ul className="list-disc pl-6 space-y-1">
-                      {block.points.map((p) => (<li key={p}>{p}</li>))}
-                    </ul>
-                    {i < blocks.length - 1 && (
-                      <div className="h-px bg-[hsl(var(--border))]/40 mt-4" />
-                    )}
-                  </section>
-                ))}
-              </article>
-            </section>
-          )}
+          ))}
 
           {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <AccentPanel tone="green" variant="subtle">
-                {Array.isArray(summary) && summary.length > 0 ? (
-                  <ul className="list-disc pl-6 space-y-1">
-                    {summary.map((s) => (<li key={s}>{s}</li>))}
-                  </ul>
-                ) : typeof summary === 'string' && summary.trim().length > 0 ? (
-                  <p>{summary}</p>
-                ) : (
-                  <p>Key points align with BS 5839-1 and BS 7671 requirements in the UK context.</p>
-                )}
-              </AccentPanel>
-            </CardContent>
-          </Card>
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+              <span className="text-elec-yellow/80 text-sm font-normal">{String(blocks.length + 2).padStart(2, '0')}</span>
+              Summary
+            </h2>
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+              {Array.isArray(summary) && summary.length > 0 ? (
+                <ul className="text-white space-y-2">
+                  {summary.map((s, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-elec-yellow">•</span>
+                      <span>{s}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-white">{summaryText}</p>
+              )}
+            </div>
+          </section>
 
-          <SingleQuestionQuiz questions={sequentialQuestions} title="Knowledge Check" />
+          {/* FAQs */}
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold text-white mb-4">Frequently Asked Questions</h2>
+            <div className="space-y-3">
+              {faqs.map((faq, index) => (
+                <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
+                  <button
+                    onClick={() => setExpandedFAQ(expandedFAQ === index ? null : index)}
+                    className="w-full px-4 py-3 flex items-center justify-between text-left bg-white/5 hover:bg-white/10 transition-colors"
+                  >
+                    <span className="text-white font-medium">{faq.q}</span>
+                    {expandedFAQ === index ? (
+                      <ChevronUp className="w-5 h-5 text-white flex-shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-white flex-shrink-0" />
+                    )}
+                  </button>
+                  {expandedFAQ === index && (
+                    <div className="px-4 py-3 bg-white/5">
+                      <p className="text-white">{faq.a}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
 
-          {/* Nav */}
-          <div className="flex justify-between mt-8">
-            {prev ? (
-              <Link to={prev}>
-                <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Previous Section
-                </Button>
+          {/* Quiz */}
+          <section className="mb-10">
+            <SingleQuestionQuiz questions={sequentialQuestions} title="Knowledge Check" />
+          </section>
+
+          {/* Bottom Navigation */}
+          <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+            <Button
+              variant="ghost"
+              size="lg"
+              className="min-h-[48px] px-6 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              asChild
+            >
+              <Link to="..">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Module
               </Link>
-            ) : <div />}
+            </Button>
             {next ? (
-              <Link to={next}>
-                <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
+              <Button
+                size="lg"
+                className="min-h-[48px] px-6 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+                asChild
+              >
+                <Link to={next}>
                   Next Section
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+                  <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+                </Link>
+              </Button>
             ) : (
-              <Link to="/study-centre/upskilling/fire-alarm-module-6">
-                <Button className="bg-yellow-400 text-black hover:bg-yellow-600">
-                  Module Overview
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <Button
+                size="lg"
+                className="min-h-[48px] px-6 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+                asChild
+              >
+                <Link to="..">
+                  Complete Module
+                  <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+                </Link>
+              </Button>
             )}
-          </div>
+          </nav>
         </div>
       </div>
     </div>

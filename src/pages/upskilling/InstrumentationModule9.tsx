@@ -1,44 +1,45 @@
-import { ArrowLeft, FileCheck } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import InstrumentationMockExam from '@/components/upskilling/InstrumentationMockExam';
 
 const InstrumentationModule9 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: "Mock Examination",
-      description: "Comprehensive 25-question examination covering all instrumentation modules with 70% pass rate required",
-      icon: FileCheck,
-      component: <InstrumentationMockExam />
-  }
-  ];
-
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-4 md:px-8 pt-4 pb-10">
-
-        <div className="space-y-4">
-          <div>
-            <h1 className="text-4xl font-bold text-white mb-4">
-              Module 9: Mock Exam
-            </h1>
-            <p className="text-xl text-gray-400 mb-3">
-              Comprehensive assessment covering all instrumentation course modules
-            </p>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05 }}
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
           >
-            <InstrumentationMockExam />
-          </motion.div>
+            <Link to="/study-centre/upskilling/instrumentation-course">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Instrumentation Course
+            </Link>
+          </Button>
         </div>
+      </div>
+
+      <div className="px-4 sm:px-6 py-6 sm:py-8">
+        {/* Module Header */}
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
+            <span className="text-elec-yellow text-xs font-semibold">MOCK EXAM</span>
+            <span className="text-white/40 text-xs">•</span>
+            <span className="text-white/60 text-xs">120 mins</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            Mock Exam
+          </h1>
+          <p className="text-white/60 text-sm sm:text-base">
+            Comprehensive assessment covering all instrumentation course modules
+          </p>
+        </div>
+
+        <InstrumentationMockExam />
       </div>
     </div>
   );

@@ -99,114 +99,114 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: "What is the recommended approach for managing spare parts?",
+    question: "What is condition-based maintenance?",
     options: [
-      "Order parts only when failures occur",
-      "Stock critical spares based on failure probability",
-      "Replace all components annually",
-      "Spare parts are not needed for renewable systems",
+      "Maintenance only when failures occur",
+      "Maintenance based on monitoring data and component condition",
+      "Fixed-schedule maintenance regardless of condition",
+      "Maintenance required by regulations",
     ],
     correctAnswer: 1,
     explanation:
-      "Critical spares should be stocked based on component criticality and failure probability, reducing downtime when failures occur.",
+      "Condition-based maintenance uses monitoring data and inspections to determine when maintenance is needed, optimising intervention timing based on actual component condition.",
   },
   {
     id: 6,
-    question: "What documentation should be maintained for maintenance activities?",
+    question: "What factor most affects the required cleaning frequency for PV modules?",
     options: [
-      "Invoices only",
-      "Comprehensive records of inspections, tests, and repairs",
-      "Photographs only",
-      "No documentation required",
+      "Module type",
+      "Inverter brand",
+      "Local environment (dust, pollen, bird activity)",
+      "System size",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
-      "Comprehensive maintenance records support warranty claims, track component history, identify recurring issues, and demonstrate compliance with O&M requirements.",
+      "Local environmental factors including dust, pollen, bird activity, proximity to trees, and rainfall patterns have the greatest impact on required cleaning frequency.",
   },
   {
     id: 7,
-    question: "What is condition-based maintenance?",
+    question: "How should spare parts inventory be managed?",
     options: [
-      "Maintenance on a fixed calendar schedule",
-      "Maintenance triggered by monitored condition indicators",
-      "Maintenance only after failure",
-      "Maintenance based on weather forecasts",
+      "No spare parts needed",
+      "Stock critical components with long lead times",
+      "Only order when failures occur",
+      "Stock one of everything",
     ],
     correctAnswer: 1,
     explanation:
-      "Condition-based maintenance uses monitoring data and inspections to trigger maintenance when conditions indicate it is needed, optimising resource use.",
+      "Effective spare parts management stocks critical components with long lead times (fuses, contactors, communication modules) to minimise downtime when failures occur.",
   },
   {
     id: 8,
-    question: "What should be checked on battery systems during routine maintenance?",
+    question: "What documentation should be maintained for preventive maintenance?",
     options: [
-      "Visual appearance only",
-      "Cell voltages, temperatures, and state of health",
-      "External dimensions",
-      "Colour of casing",
+      "None required",
+      "Schedules, completed tasks, findings, and recommendations",
+      "Photographs only",
+      "Energy production data only",
     ],
     correctAnswer: 1,
     explanation:
-      "Battery maintenance should include checking cell voltage balance, operating temperatures, state of health indicators, and any warning messages from the BMS.",
+      "Comprehensive documentation including schedules, completed tasks, findings, test results, parts used, and recommendations supports warranty claims and trend analysis.",
   },
   {
     id: 9,
-    question: "How should vegetation management be approached for ground-mount systems?",
+    question: "When should preventive maintenance schedules be reviewed?",
     options: [
-      "Remove all vegetation permanently",
-      "Regular scheduled cutting based on growth patterns",
-      "Ignore vegetation unless it touches panels",
-      "Plant fast-growing species",
+      "Never once established",
+      "Annually based on experience and performance data",
+      "Only when failures occur",
+      "Every 10 years",
     ],
     correctAnswer: 1,
     explanation:
-      "Regular vegetation management based on growth patterns prevents shading whilst maintaining ground stability. Some vegetation is beneficial for dust suppression.",
+      "Maintenance schedules should be reviewed annually, adjusting frequencies and tasks based on experience, performance trends, and any changes to site conditions.",
   },
   {
     id: 10,
-    question: "What is the purpose of torque checking electrical connections?",
+    question: "What is the benefit of manufacturer maintenance training?",
     options: [
-      "To make connections tighter",
-      "To verify connections meet specifications and prevent loosening",
-      "To test cable strength",
-      "To measure current flow",
+      "No benefit - general skills are sufficient",
+      "Equipment-specific knowledge and warranty compliance",
+      "Lower insurance premiums only",
+      "Required for all installations",
     ],
     correctAnswer: 1,
     explanation:
-      "Torque checking verifies connections meet manufacturer specifications and identifies loosening due to thermal cycling, preventing high-resistance joints and potential fire hazards.",
+      "Manufacturer training provides equipment-specific knowledge, access to technical support, and may be required for warranty compliance on complex systems.",
   },
 ];
 
 const faqs = [
   {
-    question: "How do I develop a maintenance schedule for a new system?",
+    question: "How do I develop a maintenance programme for a new installation?",
     answer:
-      "Start with manufacturer recommendations for all components, then adjust based on site conditions (environment, accessibility, criticality). Include visual inspections, electrical testing, cleaning assessments, and component-specific maintenance. Review and refine the schedule based on operational experience.",
+      "Start with manufacturer recommendations as a baseline. Consider local environmental factors (coastal, industrial, rural). Review similar site experience if available. Include initial more frequent inspections during the first year, then adjust based on findings. Document everything to refine the programme over time.",
   },
   {
-    question: "What is the cost-benefit of preventive maintenance?",
+    question: "What is the economic case for preventive maintenance?",
     answer:
-      "Studies show preventive maintenance typically costs 1-2% of system value annually but can increase energy yield by 5-10% and extend system life significantly. The return on investment typically exceeds 5:1 through avoided failures and optimised performance.",
+      "Preventive maintenance typically costs 1-2% of system value annually but prevents much more expensive reactive repairs and production losses. Studies show every pound spent on preventive maintenance saves three to five pounds in avoided failures and lost production.",
   },
   {
-    question: "Should I clean my solar panels after every dust storm?",
+    question: "How do I clean PV modules safely?",
     answer:
-      "Not necessarily. Assess the performance impact using monitoring data before committing to cleaning. Minor soiling may not justify cleaning costs. Develop site-specific thresholds based on historical cleaning response and cost-benefit analysis.",
+      "Clean during early morning or evening when modules are cool. Use deionised water and soft brushes or squeegees. Avoid high-pressure washers that can damage seals. Never walk on modules. Consider robotic cleaning for large arrays. Document cleaning dates and compare performance before/after.",
   },
   {
-    question: "How do I know when an inverter needs replacing rather than repairing?",
+    question: "What should be included in a maintenance contract?",
     answer:
-      "Consider age, repair cost vs replacement cost, availability of parts, efficiency compared to modern units, and remaining system life. Generally, if repair costs exceed 50% of replacement and the unit is over 10 years old, replacement may be more economical.",
+      "A good maintenance contract specifies visit frequency, tasks to be completed, response times for reactive calls, spare parts arrangements, reporting requirements, performance guarantees (availability, PR), and escalation procedures. Ensure it covers both routine maintenance and emergency response.",
   },
   {
-    question: "What qualifications are needed for maintenance technicians?",
+    question: "How do environmental conditions affect maintenance requirements?",
     answer:
-      "Technicians should hold relevant electrical qualifications (e.g., City & Guilds 2391), have manufacturer-specific training for the equipment installed, and maintain current competence through ongoing training. Additional certifications may be required for specific tasks like working at height.",
+      "Coastal sites need more frequent corrosion checks. Dusty or agricultural areas need more cleaning. Bird-prone sites may need deterrent measures. Areas with temperature extremes need connection torque checks. Sites with vegetation need regular shading assessment and clearance.",
   },
   {
-    question: "How do I handle maintenance on systems still under warranty?",
+    question: "When should I recommend inverter replacement rather than repair?",
     answer:
-      "Follow manufacturer maintenance requirements precisely to maintain warranty validity. Use approved parts and techniques. Document all maintenance thoroughly. For any issues potentially covered by warranty, contact the manufacturer before attempting repairs.",
+      "Consider replacement when repair costs exceed 50% of replacement cost, when parts are obsolete, when efficiency has declined significantly, or when the inverter is approaching end of life. Newer inverters often offer better efficiency and features that improve the business case.",
   },
 ];
 
@@ -215,461 +215,249 @@ const RenewableEnergyModule7Section2 = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/80">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link
-            to=".."
-            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Module Overview
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3 flex items-center gap-3">
+          <Link to="..">
+            <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
           </Link>
-          <span className="text-sm text-white">Module 7 • Section 2</span>
+          <span className="text-white font-medium truncate">Preventive Maintenance Programmes</span>
         </div>
-      </header>
+      </div>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden py-12 sm:py-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/10 via-transparent to-transparent" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-elec-yellow/10 px-4 py-1.5 text-sm font-medium text-elec-yellow">
-              <Zap className="h-4 w-4" />
-              Operation and Maintenance
-            </div>
-            <h1 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-              Preventive Maintenance Programmes
-            </h1>
-            <p className="text-lg text-white sm:text-xl">
-              Developing and implementing effective maintenance strategies to maximise system reliability and performance.
+      {/* Hero Section */}
+      <div className="px-4 py-6 text-center">
+        <div className="inline-flex items-center gap-2 bg-elec-yellow/10 border border-elec-yellow/30 rounded-full px-3 py-1 mb-3">
+          <Zap className="w-4 h-4 text-elec-yellow" />
+          <span className="text-elec-yellow text-sm font-medium">Module 7 - Section 2</span>
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+          Preventive Maintenance Programmes
+        </h1>
+        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+          Comprehensive maintenance planning for renewable energy system reliability and longevity
+        </p>
+      </div>
+
+      {/* Quick Summary */}
+      <div className="px-4 pb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">In 30 Seconds:</span> Preventive maintenance prevents failures and maintains optimal performance
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Spot it:</span> Quarterly visual inspections, annual thermal imaging
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Use it:</span> Condition-based cleaning rather than fixed schedules
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Key Component:</span> Inverters typically need replacement at 10-15 years
             </p>
           </div>
         </div>
-      </section>
-
-      {/* Quick Summary */}
-      <section className="py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-lg border-l-2 border-elec-yellow/50 bg-elec-yellow/5 p-4">
-              <h3 className="mb-2 font-semibold text-white">Scheduled Maintenance</h3>
-              <p className="text-sm text-white">
-                Regular inspections, cleaning, and testing at planned intervals prevent unexpected failures and maintain optimal performance.
-              </p>
-            </div>
-            <div className="rounded-lg border-l-2 border-elec-yellow/50 bg-elec-yellow/5 p-4">
-              <h3 className="mb-2 font-semibold text-white">Condition-Based Approach</h3>
-              <p className="text-sm text-white">
-                Using monitoring data and inspection findings to trigger maintenance when needed optimises resource allocation.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Learning Outcomes */}
-      <section className="py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6">
-            <h2 className="mb-4 text-xl font-bold text-white">Learning Outcomes</h2>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                "Develop comprehensive maintenance schedules",
-                "Specify appropriate inspection and testing intervals",
-                "Plan cleaning and vegetation management",
-                "Manage spare parts and component replacement",
-                "Document maintenance activities effectively",
-                "Optimise maintenance resource allocation",
-              ].map((outcome, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-elec-yellow" />
-                  <span className="text-sm text-white">{outcome}</span>
-                </div>
-              ))}
+      <div className="px-4 pb-6">
+        <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
+        <div className="space-y-2">
+          {[
+            "Design effective preventive maintenance programmes",
+            "Establish appropriate inspection frequencies",
+            "Develop condition-based cleaning strategies",
+            "Plan for component replacement cycles",
+            "Document maintenance activities effectively",
+            "Optimise maintenance costs versus reliability",
+          ].map((outcome, index) => (
+            <div key={index} className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
+              <span className="text-white/80 text-sm">{outcome}</span>
             </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="px-4 space-y-6 pb-8">
+        {/* Section 01 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
+            <h2 className="text-xl font-semibold text-white">Maintenance Programme Fundamentals</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              A well-designed preventive maintenance programme is essential for maximising system reliability, performance, and lifespan whilst minimising unexpected failures and costly repairs.
+            </p>
+            <p>
+              <span className="text-white font-medium">Programme Objectives:</span> The primary goals are to prevent unexpected failures that cause downtime, maintain optimal energy production through system cleanliness and tuning, extend equipment lifespan through proactive care, ensure continued compliance with safety requirements, and protect warranty entitlements through documented maintenance.
+            </p>
+            <p>
+              <span className="text-white font-medium">Maintenance Types:</span> Preventive maintenance includes scheduled inspections and servicing to prevent failures. Predictive maintenance uses monitoring data to anticipate issues before they cause problems. Corrective maintenance addresses faults and failures as they occur. A good programme balances all three, targeting 80% planned and 20% reactive maintenance.
+            </p>
+            <p>
+              <span className="text-white font-medium">Programme Development:</span> Start with manufacturer recommendations as a baseline. Adjust for local environmental conditions such as coastal, industrial, or agricultural settings. Consider system age and technology type, as newer systems may need less frequent attention. Review and refine annually based on experience and performance data.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[0]]} />
+
+        {/* Section 02 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
+            <h2 className="text-xl font-semibold text-white">Inspection Schedules and Procedures</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Regular inspections form the backbone of preventive maintenance, enabling early detection of developing issues before they cause system failures or safety hazards.
+            </p>
+            <p>
+              <span className="text-white font-medium">Visual Inspections (Quarterly):</span> Check module surfaces for soiling, damage, discolouration, or delamination. Inspect mounting structures for corrosion, loose fixings, and structural integrity. Verify cable management and protection. Check inverter and combiner enclosures for damage or water ingress. Assess vegetation growth and shading changes.
+            </p>
+            <p>
+              <span className="text-white font-medium">Thermal Imaging (Annual):</span> Conduct during high-irradiance conditions (minimum 500 W/m², ideally above 700 W/m²). Identify hot spots indicating cell defects, bypass diode failures, or loose connections. Document anomalies with location and severity. Compare year-on-year to track developing issues. Schedule repairs based on severity and safety risk.
+            </p>
+            <p>
+              <span className="text-white font-medium">Electrical Testing (Annual):</span> Insulation resistance testing confirms cable and connection integrity. Open circuit voltage verification checks module health. String current comparison identifies underperforming strings. Earth continuity testing verifies safety of exposed metalwork. Protection device testing confirms safety systems function correctly.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[1]]} />
+
+        {/* Section 03 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
+            <h2 className="text-xl font-semibold text-white">Cleaning Strategies</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Module cleaning should be based on actual soiling impact rather than fixed schedules, as optimal cleaning frequency varies significantly with local environmental conditions.
+            </p>
+            <p>
+              <span className="text-white font-medium">Soiling Assessment:</span> Monitor performance ratio trends to quantify soiling impact. Compare dirty versus clean module output during the same conditions. Consider seasonal patterns such as higher pollen in spring. Assess cost-benefit by comparing cleaning cost versus recovered production.
+            </p>
+            <p>
+              <span className="text-white font-medium">Cleaning Methods:</span> Use deionised water to prevent mineral deposits. Clean during cool periods such as early morning to avoid thermal shock. Use soft brushes or squeegees and avoid abrasive materials. Never use high-pressure washers that can damage seals and frames. Consider robotic cleaning systems for large commercial arrays.
+            </p>
+            <p>
+              <span className="text-white font-medium">Environmental Considerations:</span> Coastal sites may need salt deposit removal. Agricultural areas face seasonal pollen and dust challenges. Urban sites may accumulate traffic pollutants. Areas with bird activity may need more frequent cleaning. Sites with adequate rainfall may need minimal intervention.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[2]]} />
+
+        {/* Section 04 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
+            <h2 className="text-xl font-semibold text-white">Component Lifecycle Management</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Understanding component lifespans enables proactive replacement planning, avoiding unexpected failures and minimising system downtime.
+            </p>
+            <p>
+              <span className="text-white font-medium">PV Modules (25-30+ years):</span> Modules degrade gradually at 0.5-0.8% per year. Performance warranties typically guarantee 80% output at 25 years. Most module failures occur in first year (infant mortality) or late life. Plan financial provisions for eventual replacement.
+            </p>
+            <p>
+              <span className="text-white font-medium">Inverters (10-15 years):</span> String inverters typically last 10-15 years. Microinverters and optimisers may last longer but are harder to replace. Capacitor degradation is a common failure mode. Plan for at least one replacement during system lifetime. Consider extended warranties or service contracts.
+            </p>
+            <p>
+              <span className="text-white font-medium">Balance of System:</span> Mounting structures should last the system lifetime with proper maintenance. DC cables may degrade in harsh UV environments. Isolators and protection devices need periodic testing and eventual replacement. Combiner boxes and enclosures need seal maintenance.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[3]]} />
+
+        {/* Section 05 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
+            <h2 className="text-xl font-semibold text-white">Documentation and Continuous Improvement</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Comprehensive documentation supports warranty claims, enables trend analysis, and provides the foundation for continuous programme improvement.
+            </p>
+            <p>
+              <span className="text-white font-medium">Maintenance Records:</span> Document every maintenance visit with date, time, personnel, and conditions. Record all findings including both issues and confirmation of good condition. List actions taken and parts used with serial numbers where applicable. Note any recommendations for future attention.
+            </p>
+            <p>
+              <span className="text-white font-medium">Performance Tracking:</span> Maintain performance records to track degradation trends. Compare actual versus expected output over time. Document any performance changes following maintenance. Use data to justify maintenance investment and optimise schedules.
+            </p>
+            <p>
+              <span className="text-white font-medium">Programme Review:</span> Review maintenance programmes annually. Assess effectiveness of current schedules and tasks. Incorporate lessons learned from failures and near-misses. Update for any changes to site conditions or equipment. Benchmark against industry best practice.
+            </p>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <div className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/20 rounded-xl p-4">
+          <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+            <Zap className="w-4 h-4 text-elec-yellow" />
+            Practical Guidance
+          </h3>
+          <div className="space-y-2 text-white/80 text-sm">
+            <p>
+              <span className="text-white font-medium">Starting a maintenance programme:</span> Begin with manufacturer recommendations and adjust based on site experience. More frequent initial inspections help establish baseline condition and appropriate ongoing frequencies.
+            </p>
+            <p>
+              <span className="text-white font-medium">Cost optimisation:</span> Every pound spent on preventive maintenance typically saves three to five pounds in avoided failures. Focus resources on high-impact activities and use monitoring data to prioritise interventions.
+            </p>
+            <p>
+              <span className="text-white font-medium">Building customer relationships:</span> Regular maintenance visits provide opportunities to discuss system performance, identify upgrade opportunities, and build long-term customer relationships.
+            </p>
           </div>
         </div>
-      </section>
 
-      {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          {/* Section 01 */}
-          <section className="mb-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                01
-              </span>
-              <h2 className="text-2xl font-bold text-white">Maintenance Strategy Framework</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Effective maintenance combines scheduled activities, condition-based interventions, and rapid response to failures. The optimal mix depends on system characteristics and operational requirements.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Maintenance Types</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Preventive:</strong> Scheduled activities to prevent failures (inspections, cleaning, testing)</li>
-                  <li><strong>Condition-based:</strong> Triggered by monitoring data or inspection findings</li>
-                  <li><strong>Corrective:</strong> Response to identified faults or failures</li>
-                  <li><strong>Predictive:</strong> Using data analysis to forecast maintenance needs</li>
-                </ul>
+        {/* FAQs */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
+                <h3 className="text-white font-medium mb-2">{faq.question}</h3>
+                <p className="text-white/70 text-sm">{faq.answer}</p>
               </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Target Maintenance Ratio</h4>
-                <p className="mb-2">
-                  Well-managed systems typically achieve:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>80% planned maintenance (preventive + condition-based)</li>
-                  <li>20% unplanned maintenance (corrective response)</li>
-                </ul>
-                <p className="mt-2 text-sm">
-                  Higher unplanned ratios indicate insufficient preventive maintenance or underlying system issues.
-                </p>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Maintenance Planning Factors</h4>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Equipment manufacturer recommendations</li>
-                  <li>Site environmental conditions</li>
-                  <li>System criticality and revenue impact</li>
-                  <li>Access constraints and safety requirements</li>
-                  <li>Available resources and budget</li>
-                </ul>
-              </div>
-            </div>
-          </section>
+            ))}
+          </div>
+        </section>
 
-          <InlineCheck
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
+        {/* Quiz */}
+        <Quiz
+          title="Preventive Maintenance Quiz"
+          questions={quizQuestions}
+        />
 
-          {/* Section 02 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                02
-              </span>
-              <h2 className="text-2xl font-bold text-white">Inspection Schedules</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Regular inspections identify developing issues before they cause failures or significant performance losses.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Visual Inspection Schedule</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-white/20">
-                        <th className="py-2 text-left text-white">Frequency</th>
-                        <th className="py-2 text-left text-white">Scope</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-white">
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Monthly</td>
-                        <td className="py-2">Remote monitoring review, inverter indicators</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Quarterly</td>
-                        <td className="py-2">Site walkthrough, module condition, mounting systems</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Annually</td>
-                        <td className="py-2">Comprehensive inspection, all components</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Post-event</td>
-                        <td className="py-2">After storms, flooding, or other significant events</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Electrical Testing Schedule</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Annually:</strong> Insulation resistance, earth continuity, RCD operation</li>
-                  <li><strong>Annually:</strong> String Voc and Isc measurements (weather permitting)</li>
-                  <li><strong>Bi-annually:</strong> Thermal imaging inspection</li>
-                  <li><strong>Five-yearly:</strong> Full periodic inspection and test</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Thermal Imaging Best Practice</h4>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Conduct during high irradiance periods (ideally greater than 700 W/m²)</li>
-                  <li>Allow system to reach thermal equilibrium (minimum 1 hour operation)</li>
-                  <li>Inspect both front and rear of modules where accessible</li>
-                  <li>Document all anomalies with images and location reference</li>
-                  <li>Compare with previous inspections to track trends</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-
-          {/* Section 03 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                03
-              </span>
-              <h2 className="text-2xl font-bold text-white">Cleaning and Vegetation Management</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Soiling and vegetation shading are common causes of performance loss. Effective management balances costs against performance benefits.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Soiling Assessment</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li>Monitor performance ratio for soiling-related decline</li>
-                  <li>Consider local factors: dust, pollen, bird activity, industrial emissions</li>
-                  <li>Compare clean vs soiled module performance</li>
-                  <li>Establish site-specific cleaning thresholds</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Cleaning Methods</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Water only:</strong> Demineralised water to avoid mineral deposits</li>
-                  <li><strong>Soft brush:</strong> Non-abrasive cleaning tools</li>
-                  <li><strong>Specialist cleaners:</strong> For stubborn contamination (bird droppings, lichen)</li>
-                  <li><strong>Robotic systems:</strong> For large commercial installations</li>
-                </ul>
-                <p className="mt-2 text-sm text-elec-yellow">
-                  Never use abrasive materials, high-pressure water, or harsh chemicals that could damage anti-reflective coatings.
-                </p>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Vegetation Management</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li>Monitor for new shading from tree growth</li>
-                  <li>Schedule vegetation cutting before growth season</li>
-                  <li>Consider grazing animals for ground-mount sites</li>
-                  <li>Balance ground cover benefits against shading risk</li>
-                  <li>Address bird nesting and pest issues promptly</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-
-          {/* Section 04 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                04
-              </span>
-              <h2 className="text-2xl font-bold text-white">Component Replacement Planning</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Planning for component replacement ensures minimal system downtime and optimal lifecycle costs.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Expected Component Lifespans</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-white/20">
-                        <th className="py-2 text-left text-white">Component</th>
-                        <th className="py-2 text-left text-white">Typical Lifespan</th>
-                        <th className="py-2 text-left text-white">Planning Note</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-white">
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">PV Modules</td>
-                        <td className="py-2">25-30 years</td>
-                        <td className="py-2">Gradual degradation</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">String Inverters</td>
-                        <td className="py-2">10-15 years</td>
-                        <td className="py-2">Plan mid-life replacement</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Optimisers</td>
-                        <td className="py-2">25 years</td>
-                        <td className="py-2">Match module warranty</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Batteries (Li-ion)</td>
-                        <td className="py-2">10-15 years</td>
-                        <td className="py-2">Capacity-dependent</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Mounting Systems</td>
-                        <td className="py-2">25+ years</td>
-                        <td className="py-2">Material-dependent</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Spare Parts Strategy</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Critical spares:</strong> Hold on-site or ensure rapid availability (fuses, isolators)</li>
-                  <li><strong>Major components:</strong> Supplier agreements for rapid delivery (inverters)</li>
-                  <li><strong>Obsolete equipment:</strong> Plan ahead for discontinued models</li>
-                  <li><strong>Compatibility:</strong> Document specifications for future replacement</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Replacement Decision Factors</h4>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Repair cost vs replacement cost</li>
-                  <li>Component age and remaining useful life</li>
-                  <li>Availability of spare parts</li>
-                  <li>Performance improvement with newer technology</li>
-                  <li>System remaining operational life</li>
-                  <li>Warranty implications</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[3].question}
-            options={quickCheckQuestions[3].options}
-            correctIndex={quickCheckQuestions[3].correctIndex}
-            explanation={quickCheckQuestions[3].explanation}
-          />
-
-          {/* Section 05 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                05
-              </span>
-              <h2 className="text-2xl font-bold text-white">Documentation and Record Keeping</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Comprehensive maintenance records support warranty claims, enable trend analysis, and demonstrate compliance with O&M requirements.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Essential Records</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Installation records:</strong> Commissioning data, as-built drawings, equipment specifications</li>
-                  <li><strong>Inspection reports:</strong> Findings, photographs, recommendations</li>
-                  <li><strong>Test results:</strong> Electrical test data with dates and technician details</li>
-                  <li><strong>Work orders:</strong> Maintenance performed, parts used, time spent</li>
-                  <li><strong>Fault logs:</strong> Issues identified, root cause, resolution</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Documentation Best Practice</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li>Use standardised forms and checklists</li>
-                  <li>Include photographs with location references</li>
-                  <li>Record environmental conditions during testing</li>
-                  <li>Maintain equipment serial number tracking</li>
-                  <li>Store records securely with backup</li>
-                  <li>Make records accessible to authorised personnel</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Digital Maintenance Management</h4>
-                <p className="mb-2">
-                  Modern CMMS (Computerised Maintenance Management Systems) provide:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Automated scheduling and work order generation</li>
-                  <li>Mobile access for field technicians</li>
-                  <li>Integration with monitoring platforms</li>
-                  <li>KPI tracking and reporting</li>
-                  <li>Spare parts inventory management</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Practical Guidance */}
-          <section className="mb-12 mt-12">
-            <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/5 p-6">
-              <h2 className="mb-4 text-xl font-bold text-white">Practical Guidance</h2>
-              <div className="space-y-4 text-white">
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Building a Maintenance Schedule</h4>
-                  <p className="mt-1 text-sm">
-                    Start with manufacturer requirements for all components, then overlay site-specific needs. Create a calendar showing all scheduled activities and resource requirements. Review and adjust based on operational experience.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Cost-Effective Maintenance</h4>
-                  <p className="mt-1 text-sm">
-                    Combine maintenance activities to reduce site visits. Use monitoring data to prioritise interventions. Balance thoroughness against cost - not every site needs the same intensity of maintenance.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Continuous Improvement</h4>
-                  <p className="mt-1 text-sm">
-                    Track maintenance metrics (cost per kWh, fault rates, response times). Analyse failure patterns to improve preventive measures. Share learnings across similar systems to improve overall maintenance effectiveness.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* FAQs */}
-          <section className="mb-12">
-            <h2 className="mb-6 text-2xl font-bold text-white">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="rounded-lg border border-white/10 bg-white/5 p-4">
-                  <h3 className="mb-2 font-semibold text-elec-yellow">{faq.question}</h3>
-                  <p className="text-sm text-white">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Quiz Section */}
-          <section className="mb-12">
-            <Quiz
-              title="Preventive Maintenance Quiz"
-              questions={quizQuestions}
-              onComplete={(score) => console.log("Quiz completed with score:", score)}
-            />
-          </section>
-
-          {/* Navigation */}
-          <nav className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:justify-between">
-            <Link to="/upskilling/renewable-energy/module-7/section-1">
-              <Button variant="outline" className="w-full gap-2 border-white/20 text-white hover:bg-white/10 sm:w-auto">
-                <ArrowLeft className="h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/upskilling/renewable-energy/module-7/section-3">
-              <Button className="w-full gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90 sm:w-auto">
-                Next Section
-                <ArrowLeft className="h-4 w-4 rotate-180" />
-              </Button>
-            </Link>
-          </nav>
+        {/* Bottom Navigation */}
+        <div className="flex justify-between items-center pt-4 border-t border-white/10">
+          <Link to="../section-1">
+            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Button>
+          </Link>
+          <Link to="../section-3">
+            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,621 +1,460 @@
-import { ArrowLeft, ArrowRight, Wrench, Gauge, Activity, Book, CheckCircle2, Brain, Target, Zap, Settings } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import InstrumentationQuiz from '@/components/upskilling/quiz/InstrumentationQuiz';
+import { ArrowLeft, Wrench, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
+
+const TITLE = "Loop Testing Tools - Instrumentation Course";
+const DESCRIPTION = "Learn how to use loop calibrators, signal simulators, and multimeters for testing, commissioning, and troubleshooting 4-20mA current loops.";
+
+const quickCheckQuestions = [
+  {
+    id: "m7s6-qc1",
+    question: "What current value represents 50% of a 4-20mA signal?",
+    options: ["8mA", "10mA", "12mA", "14mA"],
+    correctIndex: 2,
+    explanation: "12mA represents 50% of the 4-20mA span. The calculation is: 4mA + (50% x 16mA span) = 4mA + 8mA = 12mA."
+  },
+  {
+    id: "m7s6-qc2",
+    question: "What is the typical voltage for a powered 4-20mA loop?",
+    options: ["12VDC", "24VDC", "48VDC", "5VDC"],
+    correctIndex: 1,
+    explanation: "24VDC is the industry standard for powered 4-20mA loops, providing adequate compliance voltage for transmitter operation and allowing for cable voltage drops."
+  },
+  {
+    id: "m7s6-qc3",
+    question: "When measuring loop current with a multimeter, how must the meter be connected?",
+    options: ["In parallel", "In series", "Across the power supply", "To ground only"],
+    correctIndex: 1,
+    explanation: "A multimeter must be connected in series with the loop to measure current. Breaking the loop and inserting the meter allows current to flow through the meter's internal shunt resistor."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What current should a loop simulator generate to simulate 50% signal?",
+    options: ["10.000mA", "12.000mA - midway between 4mA (0%) and 20mA (100%)", "16.000mA", "8.000mA"],
+    correctAnswer: 1,
+    explanation: "For 50% of a 4-20mA signal: 50% of (20-4) = 8mA, plus the 4mA offset = 12mA. This represents the exact midpoint of the measurement range."
+  },
+  {
+    id: 2,
+    question: "What's one key benefit of using a loop calibrator?",
+    options: ["It reduces cable costs", "Provides precise current source and measurement capability for accurate loop testing and commissioning", "It increases signal strength automatically", "It eliminates the need for documentation"],
+    correctAnswer: 1,
+    explanation: "Loop calibrators provide precise current sources and measurement capabilities, enabling accurate testing, commissioning, and troubleshooting of 4-20mA loops with traceable accuracy."
+  },
+  {
+    id: 3,
+    question: "How can you test a transmitter with a multimeter?",
+    options: ["Only by checking the power supply voltage", "Measure the output current in series with the loop while applying a known input to the transmitter", "Test the cable resistance only", "Check the device nameplate information"],
+    correctAnswer: 1,
+    explanation: "To test a transmitter with a multimeter, measure the output current by connecting the meter in series with the loop while applying a known input (pressure, temperature, etc.) to verify proper current output."
+  },
+  {
+    id: 4,
+    question: "What's the typical voltage range for a powered 4-20mA loop?",
+    options: ["12VDC", "24VDC plus or minus 10% (21.6V to 26.4V) for reliable transmitter operation", "48VDC", "5VDC"],
+    correctAnswer: 1,
+    explanation: "The industry standard for 4-20mA loops is 24VDC plus or minus 10%, providing a range of 21.6V to 26.4V to ensure adequate compliance voltage for proper transmitter operation across the full current range."
+  },
+  {
+    id: 5,
+    question: "Why is signal simulation useful during commissioning?",
+    options: ["It reduces equipment costs", "Allows testing of receivers and control systems with known, precise signals before connecting actual transmitters", "It eliminates the need for calibration", "It automatically configures all devices"],
+    correctAnswer: 1,
+    explanation: "Signal simulation allows systematic testing of receivers and control systems with known, precise current values, enabling verification of accuracy, scaling, and alarm functions before connecting actual transmitters."
+  },
+  {
+    id: 6,
+    question: "What is the purpose of a span check at 20mA?",
+    options: ["To test the power supply", "To verify the receiver shows maximum scale value and calculate span accuracy", "To check cable resistance", "To test alarm functions only"],
+    correctAnswer: 1,
+    explanation: "A span check at 20mA verifies the receiver shows the correct maximum scale value and allows calculation of span error percentage to ensure the full range is accurate."
+  },
+  {
+    id: 7,
+    question: "What accuracy is typical for a professional loop calibrator's current output?",
+    options: ["Plus or minus 1%", "Plus or minus 0.1%", "Plus or minus 0.02%", "Plus or minus 5%"],
+    correctAnswer: 2,
+    explanation: "Professional loop calibrators typically achieve plus or minus 0.02% accuracy for current output, providing the precision needed for calibrating and testing industrial instrumentation."
+  },
+  {
+    id: 8,
+    question: "What should you check before performing resistance measurements on a loop?",
+    options: ["That the display is working", "That power is removed from the circuit", "That cables are labelled", "That alarms are disabled"],
+    correctAnswer: 1,
+    explanation: "Power must be removed from the circuit before performing resistance measurements to avoid damaging the meter and to get accurate readings without interference from loop current."
+  },
+  {
+    id: 9,
+    question: "What is the minimum insulation resistance typically required for instrumentation cables?",
+    options: ["100 kohms", "500 kohms", "1 Megohm", "10 Megohms"],
+    correctAnswer: 2,
+    explanation: "A minimum of 1 Megohm insulation resistance is typically required for instrumentation cables, measured at 500V or 1000V DC between cores and between cores and earth/shield."
+  },
+  {
+    id: 10,
+    question: "What does HART communication capability in a calibrator allow?",
+    options: ["Only current measurement", "Digital configuration and diagnostics of smart transmitters", "Faster cable installation", "Automatic fault repair"],
+    correctAnswer: 1,
+    explanation: "HART capability allows digital configuration, diagnostics, and advanced testing of smart transmitters superimposed on the 4-20mA signal, enabling comprehensive device management."
+  }
+];
+
+const faqs = [
+  {
+    question: "Do I need an expensive calibrator for basic loop testing?",
+    answer: "For basic testing, a quality multimeter with milliamp range can measure loop current. However, for sourcing signals and comprehensive testing, a dedicated loop calibrator provides the accuracy and functionality needed for professional work."
+  },
+  {
+    question: "How often should loop calibrators be calibrated?",
+    answer: "Typically annually, or more frequently in critical applications. Check the manufacturer's recommendations and your site quality requirements. Keep calibration certificates current."
+  },
+  {
+    question: "Can I use a clamp meter for 4-20mA measurement?",
+    answer: "Yes, but with limitations. Process clamp meters for low current can measure without breaking the loop, but accuracy is typically plus or minus 0.1mA at best, less precise than series measurement."
+  },
+  {
+    question: "What's the difference between source and simulate modes?",
+    answer: "Source mode generates a signal regardless of loop conditions. Simulate mode acts like a transmitter, drawing current from an external power supply. Use simulate for testing powered loops."
+  },
+  {
+    question: "Why does my calibrator reading differ from the DCS reading?",
+    answer: "Differences can result from calibrator accuracy, input card accuracy, scaling configuration, or cable voltage drops. Test each element separately to identify the source of discrepancy."
+  },
+  {
+    question: "Should I test at 4mA or 20mA first?",
+    answer: "Start with 4mA (zero) as this is the baseline. Adjust zero first, then span at 20mA. Finally verify linearity at intermediate points. This sequence ensures systematic calibration."
+  }
+];
 
 const InstrumentationModule7Section6 = () => {
+  useSEO({
+    title: TITLE,
+    description: DESCRIPTION
+  });
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/instrumentation-module-7">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 7
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-8">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Wrench className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-4xl font-bold text-white">
-                  Loop Testing Tools (Loop Calibrators, Simulators, Multimeters)
-                </h1>
-                <p className="text-xl text-gray-400">
-                  Module 7, Section 6
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Section 7.6
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                30 minutes
-              </Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Book className="h-5 w-5 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Testing ensures loops function as intended before and during operation. Proper testing validates 
-                signal accuracy, loop integrity, and system performance whilst providing confidence in measurement 
-                reliability. This section covers the essential tools and techniques used to commission, maintain, 
-                and troubleshoot 4-20mA current loops.
-              </p>
-              <p>
-                Understanding how to use loop calibrators, signal simulators, and multimeters effectively enables 
-                rapid fault diagnosis and system verification, reducing downtime and ensuring accurate process 
-                measurements throughout the system lifecycle.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Identify tools for testing 4-20mA loops and their specific applications</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Understand how to simulate and measure signals accurately</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Learn how to validate loop functionality during commissioning</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Master best practices for zero checks, span checks, and integrity testing</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* Loop Calibrators */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Gauge className="h-5 w-5 text-yellow-400" />
-                Loop Calibrators and Process Signal Testing
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Understanding Loop Calibrator Functions</h4>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Source Functions (Simulate Transmitter)</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Current Output:</strong> Generate precise 4-20mA signals</li>
-                    <li>• <strong>Voltage Output:</strong> 1-5V, 0-10V, and custom ranges</li>
-                    <li>• <strong>Resistance Simulation:</strong> RTD and thermocouple values</li>
-                    <li>• <strong>Pressure Simulation:</strong> Generate calibrated pressure steps</li>
-                    <li>• <strong>Process Units:</strong> Display in engineering units</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Measure Functions (Test Receivers)</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Current Measurement:</strong> 4-20mA with high accuracy</li>
-                    <li>• <strong>Voltage Measurement:</strong> Loop supply and signal voltages</li>
-                    <li>• <strong>24V Loop Supply:</strong> Power externally powered devices</li>
-                    <li>• <strong>Pressure Measurement:</strong> Direct pressure input capability</li>
-                    <li>• <strong>Frequency/Pulse:</strong> Digital signal testing</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <h5 className="text-white font-semibold mb-2">Advanced Calibrator Features</h5>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="bg-card p-3 rounded border border-gray-600">
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-2">Automated Testing</h6>
-                    <ul className="text-xs space-y-1">
-                      <li>• Automatic step testing sequences</li>
-                      <li>• As-found and as-left documentation</li>
-                      <li>• Pass/fail criteria and tolerance checking</li>
-                      <li>• Data logging and certificate generation</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-card p-3 rounded border border-gray-600">
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-2">Communication Protocols</h6>
-                    <ul className="text-xs space-y-1">
-                      <li>• HART communication capability</li>
-                      <li>• Foundation Fieldbus testing</li>
-                      <li>• Profibus PA diagnostics</li>
-                      <li>• Device configuration and setup</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-card p-3 rounded border border-gray-600">
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-2">Safety Features</h6>
-                    <ul className="text-xs space-y-1">
-                      <li>• Intrinsically safe rated versions</li>
-                      <li>• Overload protection on all inputs</li>
-                      <li>• Isolation between measurement circuits</li>
-                      <li>• Low battery indicators and warnings</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <h5 className="text-white font-semibold mb-2">Typical Calibrator Specifications</h5>
-                <div className="bg-card p-3 rounded border border-gray-600">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Accuracy Specifications</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Current:</strong> ±0.02% of reading + 2μA</li>
-                        <li>• <strong>Voltage:</strong> ±0.01% of reading + 10μV</li>
-                        <li>• <strong>Pressure:</strong> ±0.05% of full scale</li>
-                        <li>• <strong>Temperature:</strong> ±0.5°C typical</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Operating Parameters</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Temperature Range:</strong> -10°C to +50°C</li>
-                        <li>• <strong>Battery Life:</strong> 8-16 hours continuous use</li>
-                        <li>• <strong>Display Resolution:</strong> 5-6 digit display</li>
-                        <li>• <strong>Update Rate:</strong> 2-4 readings per second</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Multimeters and Signal Measurement */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Activity className="h-5 w-5 text-yellow-400" />
-                Multimeters and Signal Measurement Techniques
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Using Multimeters for Loop Testing</h4>
-              
-              <div className="space-y-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Current Measurement Techniques</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Series Current Measurement</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Break Loop:</strong> Insert meter in series with signal</li>
-                        <li>• <strong>Burden Voltage:</strong> Consider meter voltage drop</li>
-                        <li>• <strong>Range Selection:</strong> Use 20mA or 200mA range</li>
-                        <li>• <strong>Auto-ranging:</strong> Be aware of range switching delays</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Clamp-on Current Measurement</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Non-intrusive:</strong> No loop interruption required</li>
-                        <li>• <strong>Single Conductor:</strong> Separate supply and return wires</li>
-                        <li>• <strong>AC/DC Capability:</strong> Use true RMS clamp meters</li>
-                        <li>• <strong>Resolution Limits:</strong> Typically ±0.1mA best case</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Voltage and Resistance Measurements</h5>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Supply Voltage</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Measure across power supply terminals</li>
-                        <li>• Check under load conditions</li>
-                        <li>• Verify polarity and stability</li>
-                        <li>• Monitor for ripple content</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Loop Resistance</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Power down before resistance tests</li>
-                        <li>• Measure total loop resistance</li>
-                        <li>• Check individual cable sections</li>
-                        <li>• Verify termination integrity</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Insulation Testing</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Use dedicated insulation tester</li>
-                        <li>• Test at 500V or 1000V DC</li>
-                        <li>• Check core-to-core and core-to-earth</li>
-                        <li>• Document readings and trends</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Signal Simulators */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 text-yellow-400" />
-                Signal Simulators and Loop Validation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Creating Known Current Values for Testing</h4>
-              
-              <div className="space-y-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Signal Simulator Applications</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Receiver Testing</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Accuracy Verification:</strong> Test input scaling and linearisation</li>
-                        <li>• <strong>Alarm Testing:</strong> Verify high/low alarm setpoints</li>
-                        <li>• <strong>Display Calibration:</strong> Check indication accuracy</li>
-                        <li>• <strong>Recording Verification:</strong> Validate data logging systems</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Control System Testing</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>PLC/DCS Inputs:</strong> Test analog input modules</li>
-                        <li>• <strong>Control Algorithm:</strong> Verify control loop response</li>
-                        <li>• <strong>Safety System:</strong> Test safety logic and interlocks</li>
-                        <li>• <strong>HMI Verification:</strong> Check operator interface displays</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Testing Procedures and Best Practices</h5>
-                  <div className="bg-card p-4 rounded border border-gray-600">
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-2">Standard Test Sequence</h6>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-sm font-medium mb-1">1. Zero Check (4mA Test)</p>
-                        <ul className="text-xs space-y-1 ml-4">
-                          <li>• Apply exactly 4.000mA signal</li>
-                          <li>• Verify receiver shows minimum scale value</li>
-                          <li>• Record as-found and as-left readings</li>
-                          <li>• Adjust zero if outside tolerance (typically ±0.25%)</li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <p className="text-sm font-medium mb-1">2. Span Check (20mA Test)</p>
-                        <ul className="text-xs space-y-1 ml-4">
-                          <li>• Apply exactly 20.000mA signal</li>
-                          <li>• Verify receiver shows maximum scale value</li>
-                          <li>• Calculate span error percentage</li>
-                          <li>• Adjust span if outside tolerance</li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <p className="text-sm font-medium mb-1">3. Mid-Scale Verification (12mA Test)</p>
-                        <ul className="text-xs space-y-1 ml-4">
-                          <li>• Apply exactly 12.000mA signal (50% of span)</li>
-                          <li>• Verify receiver shows mid-scale value</li>
-                          <li>• Check linearity across the range</li>
-                          <li>• Document any non-linearity issues</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Advanced Testing Techniques</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Dynamic Response Testing</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Step Response:</strong> Apply step changes and measure response time</li>
-                        <li>• <strong>Ramp Testing:</strong> Slow continuous changes to test hysteresis</li>
-                        <li>• <strong>Repeatability:</strong> Multiple measurements at same point</li>
-                        <li>• <strong>Drift Testing:</strong> Long-term stability measurements</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Environmental Testing</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Temperature Effects:</strong> Test at operating temperature extremes</li>
-                        <li>• <strong>Vibration Testing:</strong> Check performance under mechanical stress</li>
-                        <li>• <strong>EMI Susceptibility:</strong> Test near high-power electrical equipment</li>
-                        <li>• <strong>Power Supply Variation:</strong> Test at voltage limits</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Loop Troubleshooting */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 text-yellow-400" />
-                Loop Troubleshooting and Validation Procedures
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Systematic Approach to Loop Testing</h4>
-              
-              <div className="space-y-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Pre-Testing Verification</h5>
-                  <div className="bg-card p-3 rounded border border-gray-600">
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Documentation Review:</strong> Check loop drawings and device specifications</li>
-                      <li>• <strong>Safety Assessment:</strong> Verify safe isolation and permit requirements</li>
-                      <li>• <strong>Visual Inspection:</strong> Check connections, cable condition, and terminations</li>
-                      <li>• <strong>Power Supply Check:</strong> Verify correct voltage and polarity</li>
-                      <li>• <strong>Continuity Test:</strong> Confirm complete circuit before applying power</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Functional Testing Sequence</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Transmitter Testing</h6>
-                      <ol className="text-sm space-y-1 list-decimal list-inside">
-                        <li>Apply known input (pressure, temperature, etc.)</li>
-                        <li>Measure output current with calibrator</li>
-                        <li>Verify current matches expected value</li>
-                        <li>Test at 0%, 25%, 50%, 75%, 100% of range</li>
-                        <li>Check response time and stability</li>
-                      </ol>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Receiver Testing</h6>
-                      <ol className="text-sm space-y-1 list-decimal list-inside">
-                        <li>Inject known current with simulator</li>
-                        <li>Read displayed/recorded value</li>
-                        <li>Calculate accuracy percentage</li>
-                        <li>Test alarm setpoints and functions</li>
-                        <li>Verify data communication if applicable</li>
-                      </ol>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Wiring Integrity Verification</h5>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-card p-3 rounded border border-gray-600">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-2">Continuity Testing</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Test with power removed</li>
-                        <li>• Check end-to-end continuity</li>
-                        <li>• Verify no short circuits</li>
-                        <li>• Test shield continuity and isolation</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded border border-gray-600">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-2">Insulation Testing</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Use 500V or 1000V DC tester</li>
-                        <li>• Test core-to-core resistance</li>
-                        <li>• Test core-to-shield/earth</li>
-                        <li>• Minimum 1MΩ resistance required</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded border border-gray-600">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-2">Voltage Drop Testing</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Measure at 20mA current</li>
-                        <li>• Check cable voltage drop</li>
-                        <li>• Verify adequate compliance voltage</li>
-                        <li>• Document actual vs. calculated values</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Scenario */}
-          <Card className="bg-gradient-to-r from-elec-gray to-elec-dark border-yellow-400/30">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Brain className="h-5 w-5 text-yellow-400" />
-                Real World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p className="font-semibold text-yellow-400">
-                Commissioning Engineer Validates Control System Before Startup
-              </p>
-              <p>
-                A site engineer uses a loop calibrator to inject a 12mA signal and verify that a controller 
-                displays the correct value before commissioning a new reactor temperature control loop. 
-                The system must pass functional testing before being released to operations.
-              </p>
-              <div className="bg-card p-3 rounded border border-gray-600">
-                <h5 className="text-yellow-400 font-semibold text-sm mb-2">Test Setup:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Temperature transmitter: RTD input, 0-200°C range, 4-20mA output</li>
-                  <li>• DCS analog input: 250Ω load, 0.1% accuracy specification</li>
-                  <li>• Cable run: 150m multicore with shield</li>
-                  <li>• Expected reading at 12mA: 100°C (mid-scale)</li>
-                </ul>
-              </div>
-              <div className="bg-yellow-900/20 p-3 rounded border border-yellow-600/30">
-                <h5 className="text-yellow-400 font-semibold text-sm mb-2">Testing Procedure:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Disconnect transmitter and connect loop calibrator</li>
-                  <li>• Set calibrator to source exactly 12.000mA</li>
-                  <li>• Read DCS display: shows 100.2°C (within ±0.25% tolerance)</li>
-                  <li>• Test full range: 4mA = 0.1°C, 20mA = 199.8°C ✓</li>
-                  <li>• Test alarms: HH at 180°C, LL at 10°C - both trigger correctly</li>
-                </ul>
-              </div>
-              <div className="bg-green-900/20 p-3 rounded border border-green-600/30">
-                <h5 className="text-green-400 font-semibold text-sm mb-2">Results and Benefits:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Loop accuracy confirmed within specification limits</li>
-                  <li>• Control algorithm and safety interlocks validated</li>
-                  <li>• Documentation completed with calibration certificate</li>
-                  <li>• Confident handover to operations team</li>
-                  <li>• No measurement issues since commissioning 6 months ago</li>
-                </ul>
-              </div>
-              <p className="text-sm italic text-green-400">
-                Result: Systematic testing with proper tools ensures reliable operation and prevents 
-                costly startup delays. The loop calibrator provided confidence in system accuracy 
-                before the critical reactor was put into service.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p>
-                Testing with the right tools ensures reliability, accuracy, and faster fault diagnosis 
-                during setup or maintenance. Loop calibrators, signal simulators, and multimeters provide 
-                the foundation for systematic testing that validates loop performance and builds confidence 
-                in measurement systems throughout their operational life.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <InstrumentationQuiz 
-            questions={[
-              {
-                id: 1,
-                question: "What current should a loop simulator generate to simulate 50% signal?",
-                options: [
-                  "10.000mA",
-                  "12.000mA - midway between 4mA (0%) and 20mA (100%)",
-                  "16.000mA",
-                  "8.000mA"
-                ],
-                correctAnswer: 1,
-                explanation: "For 50% of a 4-20mA signal: 50% of (20-4) = 8mA, plus the 4mA offset = 12mA. This represents the exact midpoint of the measurement range."
-              },
-              {
-                id: 2,
-                question: "What's one key benefit of using a loop calibrator?",
-                options: [
-                  "It reduces cable costs",
-                  "Provides precise current source and measurement capability for accurate loop testing and commissioning",
-                  "It increases signal strength automatically",
-                  "It eliminates the need for documentation"
-                ],
-                correctAnswer: 1,
-                explanation: "Loop calibrators provide precise current sources and measurement capabilities, enabling accurate testing, commissioning, and troubleshooting of 4-20mA loops with traceable accuracy."
-              },
-              {
-                id: 3,
-                question: "How can you test a transmitter with a multimeter?",
-                options: [
-                  "Only by checking the power supply voltage",
-                  "Measure the output current in series with the loop while applying a known input to the transmitter",
-                  "Test the cable resistance only",
-                  "Check the device nameplate information"
-                ],
-                correctAnswer: 1,
-                explanation: "To test a transmitter with a multimeter, measure the output current by connecting the meter in series with the loop while applying a known input (pressure, temperature, etc.) to verify proper current output."
-              },
-              {
-                id: 4,
-                question: "What's the typical voltage range for a powered 4-20mA loop?",
-                options: [
-                  "12VDC",
-                  "24VDC ±10% (21.6V to 26.4V) for reliable transmitter operation",
-                  "48VDC",
-                  "5VDC"
-                ],
-                correctAnswer: 1,
-                explanation: "The industry standard for 4-20mA loops is 24VDC ±10%, providing a range of 21.6V to 26.4V to ensure adequate compliance voltage for proper transmitter operation across the full current range."
-              },
-              {
-                id: 5,
-                question: "Why is signal simulation useful during commissioning?",
-                options: [
-                  "It reduces equipment costs",
-                  "Allows testing of receivers and control systems with known, precise signals before connecting actual transmitters",
-                  "It eliminates the need for calibration",
-                  "It automatically configures all devices"
-                ],
-                correctAnswer: 1,
-                explanation: "Signal simulation allows systematic testing of receivers and control systems with known, precise current values, enabling verification of accuracy, scaling, and alarm functions before connecting actual transmitters."
-            }
-            ]}
-            title="Section 6 Knowledge Check"
-          />
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Link to="/study-centre/upskilling/instrumentation-module-7-section-5">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/study-centre/upskilling/instrumentation-module-7-section-7">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 touch-manipulation active:scale-[0.98]">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Wrench className="h-4 w-4" />
+            <span>Module 7 Section 6</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Loop Testing Tools
+          </h1>
+          <p className="text-white/80">
+            Loop calibrators, simulators, and multimeters for commissioning and troubleshooting
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Loop Calibrators:</strong> Source and measure precise 4-20mA signals</li>
+              <li><strong>Multimeters:</strong> Measure current, voltage, resistance in series</li>
+              <li><strong>Zero Check:</strong> 4mA = 0% scale value</li>
+              <li><strong>Span Check:</strong> 20mA = 100% scale value</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> 12mA = 50% signal (quick mid-scale check)</li>
+              <li><strong>Use:</strong> Always verify calibrator accuracy before critical tests</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Use loop calibrators for sourcing and measuring",
+              "Apply multimeter techniques for current measurement",
+              "Perform zero, span, and linearity checks",
+              "Test receivers with signal simulation",
+              "Verify wiring integrity and insulation",
+              "Understand advanced calibrator features"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 01 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Loop Calibrators and Process Signal Testing
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Loop calibrators are essential tools for commissioning, maintaining, and troubleshooting
+              4-20mA current loops. They combine signal source and measurement functions in a portable,
+              battery-powered instrument designed for field use.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Source Functions (Simulate Transmitter):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Current Output:</strong> Generate precise 4-20mA signals (typical accuracy plus or minus 0.02%)</li>
+                <li><strong>Voltage Output:</strong> 1-5V, 0-10V, and custom voltage ranges</li>
+                <li><strong>Resistance Simulation:</strong> RTD and potentiometer values</li>
+                <li><strong>Process Units:</strong> Display in engineering units (degrees C, bar, etc.)</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Measure Functions (Test Receivers):</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Current Measurement:</strong> 4-20mA with high accuracy</li>
+                <li><strong>Voltage Measurement:</strong> Loop supply and signal voltages</li>
+                <li><strong>24V Loop Supply:</strong> Power externally powered devices</li>
+                <li><strong>HART Communication:</strong> Digital configuration and diagnostics</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 02 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Multimeter Techniques for Loop Testing
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              A quality digital multimeter is fundamental for loop testing, providing current, voltage,
+              and resistance measurements. Understanding proper connection techniques ensures accurate
+              readings and prevents equipment damage.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Series Current Measurement:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Break Loop:</strong> Insert meter in series with signal path</li>
+                <li><strong>Burden Voltage:</strong> Consider meter voltage drop (typically 0.1-1V)</li>
+                <li><strong>Range Selection:</strong> Use 20mA or 200mA range for best resolution</li>
+                <li><strong>Auto-ranging:</strong> Be aware of range switching delays</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Voltage Measurements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Supply Voltage:</strong> Measure across power supply terminals under load</li>
+                <li><strong>Transmitter Terminal Voltage:</strong> Verify adequate compliance voltage</li>
+                <li><strong>Voltage Drop:</strong> Calculate cable and load voltage drops</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Resistance Testing:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Power Down:</strong> Always remove power before resistance tests</li>
+                <li><strong>Loop Resistance:</strong> Measure total cable resistance</li>
+                <li><strong>Insulation Testing:</strong> Use 500V or 1000V insulation tester, minimum 1 Megohm required</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 03 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Signal Simulation and Loop Validation
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Signal simulators allow testing of receivers and control systems with known, precise
+              current values. This enables verification of scaling, alarms, and control functions
+              before connecting actual transmitters.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Standard Test Sequence:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Zero Check (4mA):</strong> Verify receiver shows minimum scale value (0%)</li>
+                <li><strong>Mid-Scale (12mA):</strong> Verify 50% reading, check linearity</li>
+                <li><strong>Span Check (20mA):</strong> Verify receiver shows maximum scale value (100%)</li>
+                <li><strong>Alarm Testing:</strong> Verify high/low alarm setpoints trigger correctly</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Tolerance Checking:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Typical Tolerance:</strong> Plus or minus 0.25% of span for process loops</li>
+                <li><strong>As-Found Recording:</strong> Document readings before adjustment</li>
+                <li><strong>As-Left Recording:</strong> Document readings after calibration</li>
+                <li><strong>Pass/Fail Criteria:</strong> Compare against specification limits</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 04 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Wiring Integrity and Pre-Test Verification
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Before functional testing, verify wiring integrity to ensure safe and accurate results.
+              Systematic pre-test checks prevent damage to equipment and identify installation issues.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Pre-Testing Checklist:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Documentation Review:</strong> Check loop drawings and specifications</li>
+                <li><strong>Visual Inspection:</strong> Check connections, cable condition, terminations</li>
+                <li><strong>Continuity Test:</strong> Confirm complete circuit before applying power</li>
+                <li><strong>Insulation Test:</strong> Verify minimum 1 Megohm between cores and earth</li>
+                <li><strong>Power Supply Check:</strong> Verify correct voltage and polarity</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Common Test Points:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Transmitter Terminals:</strong> Current output and supply voltage</li>
+                <li><strong>Junction Boxes:</strong> Intermediate connection verification</li>
+                <li><strong>Control Room Terminals:</strong> Input card readings</li>
+                <li><strong>Shield Connections:</strong> Single-point earth verification</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Real World Example */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4">Real World Example</h2>
+          <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+            <h3 className="text-sm font-medium text-elec-yellow mb-2">Commissioning a Reactor Temperature Loop</h3>
+            <p className="text-sm text-white mb-3">
+              A site engineer uses a loop calibrator to validate a new reactor temperature control loop
+              before startup, ensuring accurate measurement and proper alarm function.
+            </p>
+            <div className="text-sm text-white space-y-2">
+              <p><strong>Setup:</strong> RTD temperature transmitter (0-200 degrees C, 4-20mA), DCS analog input with 250 ohm load, 150m cable run.</p>
+              <p><strong>Test Procedure:</strong> Disconnect transmitter, connect calibrator in simulate mode. Inject 4mA (expect 0 degrees C), 12mA (expect 100 degrees C), 20mA (expect 200 degrees C). Verify DCS reads within plus or minus 0.5 degrees C.</p>
+              <p><strong>Result:</strong> All readings within specification. Alarms tested and verified at HH=180 degrees C and LL=10 degrees C. Documentation completed with calibration certificate. Loop released for service.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Commissioning</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always verify calibrator calibration status before starting</li>
+                <li>Document as-found and as-left readings for every loop</li>
+                <li>Test full range including alarm setpoints</li>
+                <li>Verify control response if connected to control system</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">During Troubleshooting</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Start with visual inspection of connections</li>
+                <li>Measure current at multiple points to isolate faults</li>
+                <li>Compare readings to previous calibration data</li>
+                <li>Check power supply voltage under load conditions</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Wrong meter mode</strong> - connecting ammeter in parallel blows fuse</li>
+                <li><strong>Testing energised circuits</strong> - measure resistance with power removed</li>
+                <li><strong>Ignoring burden voltage</strong> - meter drop affects loop operation</li>
+                <li><strong>Missing documentation</strong> - always record test results</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-5">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-7">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

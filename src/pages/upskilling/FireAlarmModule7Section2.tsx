@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, Building, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Building, CheckCircle, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
@@ -165,37 +164,35 @@ const FireAlarmModule7Section2 = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-7">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Module 7</span>
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Module 7
             </Link>
           </Button>
-          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 2</span>
-          <div className="w-[60px]" />
         </div>
-      </header>
+      </div>
 
       {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pt-8 pb-6 max-w-3xl mx-auto">
         <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20">
-            <Building className="h-7 w-7 text-rose-400" />
+          <div className="p-3 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+            <Building className="h-7 w-7 text-elec-yellow" />
           </div>
-          <span className="text-[11px] font-medium text-rose-400 uppercase tracking-wide">
+          <span className="text-xs font-medium text-elec-yellow uppercase tracking-wide">
             Section 2 of 4
           </span>
         </div>
-        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
+        <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-3">
           Building Regulations
         </h1>
-        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
+        <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-4">
           Approved Document B requirements, Building Control notification and competent persons schemes for fire alarm compliance.
         </p>
-        <div className="flex items-center gap-4 text-[13px] text-white/50">
+        <div className="flex items-center gap-4 text-sm text-white/50">
           <span className="flex items-center gap-1">
             <Target className="h-4 w-4" />
             6 learning outcomes
@@ -207,35 +204,30 @@ const FireAlarmModule7Section2 = () => {
         </div>
       </section>
 
-      {/* In 30 Seconds Card */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-rose-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[15px] font-semibold text-rose-400 flex items-center gap-2">
-              <Lightbulb className="h-4 w-4" />
-              In 30 Seconds
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-[15px] text-white/80">
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Approved Document B</strong> provides guidance on fire safety for Building Regulations compliance</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Building Control notification</strong> required for fire alarm work forming part of building work</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Competent Person Schemes</strong> allow self-certification without separate notification</span>
-            </p>
-          </CardContent>
-        </Card>
+      {/* Quick Summary */}
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+          <ul className="space-y-2 text-white/80 text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Approved Document B</strong> provides guidance on fire safety for Building Regulations compliance</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Building Control notification</strong> required for fire alarm work forming part of building work</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Competent Person Schemes</strong> allow self-certification without separate notification</span>
+            </li>
+          </ul>
+        </div>
       </section>
 
       {/* Learning Outcomes */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
             "Explain the structure and purpose of Approved Document B",
@@ -245,274 +237,252 @@ const FireAlarmModule7Section2 = () => {
             "Differentiate between compliance routes for fire alarm work",
             "Apply Building Regulations requirements to installations"
           ].map((outcome, i) => (
-            <Card key={i} variant="ios" className="p-3">
+            <div key={i} className="p-3 rounded-lg bg-white/5 border border-white/10">
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-rose-500/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-[11px] font-bold text-rose-400">{i + 1}</span>
+                <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                 </div>
-                <p className="text-[13px] text-white/80">{outcome}</p>
+                <p className="text-sm text-white/80">{outcome}</p>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto space-y-6">
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto space-y-6">
         {/* Section 01 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">01</span>
-              <h3 className="text-[17px] font-semibold text-white">Approved Document B Overview</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">01</span>
+            <h3 className="text-lg font-semibold text-white">Approved Document B Overview</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p><strong className="text-white">Approved Document B (Fire Safety)</strong> provides practical guidance on meeting Building Regulations requirements for fire safety in buildings. It is published by the government and regularly updated.</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Approved Document B Structure:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" /><strong className="text-white">Volume 1:</strong> Dwelling houses, flats and maisonettes</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" /><strong className="text-white">Volume 2:</strong> Buildings other than dwellings</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-white">Approved Document B (Fire Safety)</strong> provides practical guidance on meeting Building Regulations requirements for fire safety in buildings. It is published by the government and regularly updated.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Approved Document B Structure:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Volume 1:</strong> Dwelling houses, flats and maisonettes</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Volume 2:</strong> Buildings other than dwellings</li>
-                </ul>
-              </div>
-              <p>The document covers five key areas: <strong className="text-rose-400">B1</strong> Means of warning and escape, <strong className="text-rose-400">B2</strong> Internal fire spread (linings), <strong className="text-rose-400">B3</strong> Internal fire spread (structure), <strong className="text-rose-400">B4</strong> External fire spread, and <strong className="text-rose-400">B5</strong> Access and facilities for the fire service.</p>
-            </div>
-          </CardContent>
-        </Card>
+            <p>The document covers five key areas: <strong className="text-elec-yellow">B1</strong> Means of warning and escape, <strong className="text-elec-yellow">B2</strong> Internal fire spread (linings), <strong className="text-elec-yellow">B3</strong> Internal fire spread (structure), <strong className="text-elec-yellow">B4</strong> External fire spread, and <strong className="text-elec-yellow">B5</strong> Access and facilities for the fire service.</p>
+          </div>
+        </div>
 
         {/* Section 02 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">02</span>
-              <h3 className="text-[17px] font-semibold text-white">Fire Detection Requirements for Dwellings</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">02</span>
+            <h3 className="text-lg font-semibold text-white">Fire Detection Requirements for Dwellings</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p>Section B1 of Approved Document B specifies minimum fire detection requirements for new-build dwellings. These requirements reference <strong className="text-elec-yellow">BS 5839-6</strong> for system grades and categories.</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Minimum Requirements for Houses:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Smoke alarm on every storey with habitable room</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Heat alarm in principal habitable room (if no separate kitchen)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Mains powered with integral standby supply (Grade D)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Interlinked throughout the property</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Section B1 of Approved Document B specifies minimum fire detection requirements for new-build dwellings. These requirements reference <strong className="text-rose-400">BS 5839-6</strong> for system grades and categories.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Minimum Requirements for Houses:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Smoke alarm on every storey with habitable room</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Heat alarm in principal habitable room (if no separate kitchen)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Mains powered with integral standby supply (Grade D)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Interlinked throughout the property</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Since October 2022, the regulations also require carbon monoxide alarms in rooms with fixed combustion appliances (excluding gas cookers).</p>
-            </div>
-          </CardContent>
-        </Card>
+            <p className="text-sm text-white/60 italic">Since October 2022, the regulations also require carbon monoxide alarms in rooms with fixed combustion appliances (excluding gas cookers).</p>
+          </div>
+        </div>
 
         {/* Section 03 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">03</span>
-              <h3 className="text-[17px] font-semibold text-white">Requirements for Flats and Maisonettes</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">03</span>
+            <h3 className="text-lg font-semibold text-white">Requirements for Flats and Maisonettes</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p>Flats and maisonettes have additional requirements due to the presence of common areas and multiple dwellings sharing a building.</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Within Individual Flats:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Grade D1 or D2 system (Category LD2 or LD3)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Smoke alarms in escape routes and principal habitable room</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Heat alarm in kitchen</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Flats and maisonettes have additional requirements due to the presence of common areas and multiple dwellings sharing a building.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Within Individual Flats:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Grade D1 or D2 system (Category LD2 or LD3)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Smoke alarms in escape routes and principal habitable room</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Heat alarm in kitchen</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-lg p-3 mt-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Common Areas:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Fire detection system may be required depending on building height and layout</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Typically BS 5839-1 Category L system in common areas</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Must be designed by competent fire engineer for complex buildings</li>
-                </ul>
-              </div>
+            <div className="bg-white/5 rounded-lg p-3 mt-3">
+              <p className="text-sm font-semibold text-white mb-2">Common Areas:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Fire detection system may be required depending on building height and layout</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Typically BS 5839-1 Category L system in common areas</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Must be designed by competent fire engineer for complex buildings</li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Quick Check 1 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A new-build three-storey house requires fire detection. What is the minimum system grade and where must detectors be located?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Minimum Grade D (mains with battery backup), with interlinked smoke alarms on all three storeys in circulation spaces. A heat alarm should be in the kitchen if it opens onto the escape route.</p>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-amber-400" />
+            <span className="text-base font-semibold text-amber-400">Quick Check</span>
+          </div>
+          <p className="text-sm text-white/80 mb-3">A new-build three-storey house requires fire detection. What is the minimum system grade and where must detectors be located?</p>
+          <div className="bg-white/5 rounded-lg p-3">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> Minimum Grade D (mains with battery backup), with interlinked smoke alarms on all three storeys in circulation spaces. A heat alarm should be in the kitchen if it opens onto the escape route.</p>
+          </div>
+        </div>
 
         {/* Section 04 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">04</span>
-              <h3 className="text-[17px] font-semibold text-white">Building Control Notification</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">04</span>
+            <h3 className="text-lg font-semibold text-white">Building Control Notification</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p>Fire alarm installation may require <strong className="text-white">Building Control notification</strong> depending on the circumstances of the work.</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">When Notification is Required:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />New building construction</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Material alterations to existing buildings</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Change of use requiring upgraded fire protection</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Loft conversions and extensions</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Fire alarm installation may require <strong className="text-white">Building Control notification</strong> depending on the circumstances of the work.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">When Notification is Required:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />New building construction</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Material alterations to existing buildings</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Change of use requiring upgraded fire protection</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Loft conversions and extensions</li>
-                </ul>
-              </div>
-              <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-rose-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  Standalone fire alarm installations in existing buildings (not part of building work) do not require Building Control notification but must still comply with relevant standards.
-                </p>
-              </div>
+            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+              <p className="text-sm text-red-300 flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                Standalone fire alarm installations in existing buildings (not part of building work) do not require Building Control notification but must still comply with relevant standards.
+              </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 05 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">05</span>
-              <h3 className="text-[17px] font-semibold text-white">Competent Person Schemes</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">05</span>
+            <h3 className="text-lg font-semibold text-white">Competent Person Schemes</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p><strong className="text-elec-yellow">Competent Person Schemes</strong> allow registered installers to self-certify that work complies with Building Regulations without requiring separate Building Control inspection.</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Key Features of Competent Person Schemes:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Registered installers assessed for competence</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Self-certification of Building Regulations compliance</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Notification to local authority by scheme operator</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Certificate issued to building owner</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-rose-400">Competent Person Schemes</strong> allow registered installers to self-certify that work complies with Building Regulations without requiring separate Building Control inspection.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Key Features of Competent Person Schemes:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Registered installers assessed for competence</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Self-certification of Building Regulations compliance</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Notification to local authority by scheme operator</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Certificate issued to building owner</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-lg p-3 mt-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Fire Detection Scheme Operators Include:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />NAPIT (National Association of Professional Inspectors and Testers)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />NICEIC (National Inspection Council for Electrical Installation Contracting)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />BAFE (British Approvals for Fire Equipment)</li>
-                </ul>
-              </div>
+            <div className="bg-white/5 rounded-lg p-3 mt-3">
+              <p className="text-sm font-semibold text-white mb-2">Fire Detection Scheme Operators Include:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />NAPIT (National Association of Professional Inspectors and Testers)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />NICEIC (National Inspection Council for Electrical Installation Contracting)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />BAFE (British Approvals for Fire Equipment)</li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Quick Check 2 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">An installer completes fire alarm work in a loft conversion but is not registered with a Competent Person Scheme. What must happen?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Building Control must be notified of the work. The local authority (or Approved Inspector) will inspect and issue a completion certificate if the work complies. Failure to notify is a breach of Building Regulations.</p>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-amber-400" />
+            <span className="text-base font-semibold text-amber-400">Quick Check</span>
+          </div>
+          <p className="text-sm text-white/80 mb-3">An installer completes fire alarm work in a loft conversion but is not registered with a Competent Person Scheme. What must happen?</p>
+          <div className="bg-white/5 rounded-lg p-3">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> Building Control must be notified of the work. The local authority (or Approved Inspector) will inspect and issue a completion certificate if the work complies. Failure to notify is a breach of Building Regulations.</p>
+          </div>
+        </div>
 
         {/* Section 06 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">06</span>
-              <h3 className="text-[17px] font-semibold text-white">Compliance Routes and Documentation</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">06</span>
+            <h3 className="text-lg font-semibold text-white">Compliance Routes and Documentation</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p>There are two main routes to demonstrate compliance with Building Regulations for fire alarm work.</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Route 1 - Building Control Application:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5" />Submit Building Notice or Full Plans application</li>
+                <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5" />Building Control inspects work at key stages</li>
+                <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5" />Completion Certificate issued on satisfactory completion</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>There are two main routes to demonstrate compliance with Building Regulations for fire alarm work.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Route 1 - Building Control Application:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />Submit Building Notice or Full Plans application</li>
-                  <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />Building Control inspects work at key stages</li>
-                  <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />Completion Certificate issued on satisfactory completion</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-lg p-3 mt-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Route 2 - Competent Person Scheme:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />Registered installer completes work</li>
-                  <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />Installer self-certifies compliance</li>
-                  <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />Scheme operator notifies local authority</li>
-                  <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-rose-400 mt-0.5" />Certificate of compliance issued to owner</li>
-                </ul>
-              </div>
+            <div className="bg-white/5 rounded-lg p-3 mt-3">
+              <p className="text-sm font-semibold text-white mb-2">Route 2 - Competent Person Scheme:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5" />Registered installer completes work</li>
+                <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5" />Installer self-certifies compliance</li>
+                <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5" />Scheme operator notifies local authority</li>
+                <li className="flex items-start gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5" />Certificate of compliance issued to owner</li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Quick Check 3 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">What documents should a homeowner receive after a Competent Person Scheme installer completes fire alarm work?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> The homeowner should receive a Building Regulations Compliance Certificate from the scheme operator, plus an installation certificate and operating instructions for the fire alarm system.</p>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-amber-400" />
+            <span className="text-base font-semibold text-amber-400">Quick Check</span>
+          </div>
+          <p className="text-sm text-white/80 mb-3">What documents should a homeowner receive after a Competent Person Scheme installer completes fire alarm work?</p>
+          <div className="bg-white/5 rounded-lg p-3">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> The homeowner should receive a Building Regulations Compliance Certificate from the scheme operator, plus an installation certificate and operating instructions for the fire alarm system.</p>
+          </div>
+        </div>
       </section>
 
       {/* Practical Guidance */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
 
         <div className="space-y-3">
-          <Card variant="ios" className="border-green-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Always check if work requires Building Control notification before starting - especially for extensions and conversions
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Keep up to date with Competent Person Scheme registration - lapsed registration means you cannot self-certify
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Provide clear documentation to the customer including system design, test certificates and operating instructions
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+          <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
+            <h4 className="text-base font-semibold text-green-400 mb-2">Pro Tips</h4>
+            <ul className="space-y-2 text-sm text-white/70">
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                Always check if work requires Building Control notification before starting - especially for extensions and conversions
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                Keep up to date with Competent Person Scheme registration - lapsed registration means you cannot self-certify
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                Provide clear documentation to the customer including system design, test certificates and operating instructions
+              </li>
+            </ul>
+          </div>
 
-          <Card variant="ios" className="border-red-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Assuming all fire alarm work is exempt from Building Regulations - it depends on the circumstances
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Failing to notify Building Control when required - this can cause problems for property sales
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Installing smoke alarms in kitchens - use heat alarms to avoid nuisance alarms from cooking
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+          <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
+            <h4 className="text-base font-semibold text-red-400 mb-2">Common Mistakes</h4>
+            <ul className="space-y-2 text-sm text-white/70">
+              <li className="flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                Assuming all fire alarm work is exempt from Building Regulations - it depends on the circumstances
+              </li>
+              <li className="flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                Failing to notify Building Control when required - this can cause problems for property sales
+              </li>
+              <li className="flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                Installing smoke alarms in kitchens - use heat alarms to avoid nuisance alarms from cooking
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 
       {/* FAQs */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
         <div className="space-y-3">
           {[
             { q: "Is Approved Document B legally binding?", a: "The Approved Document provides guidance - it is not mandatory. However, following it is the easiest way to demonstrate compliance. Alternative approaches are acceptable if they meet the functional requirements." },
@@ -522,124 +492,130 @@ const FireAlarmModule7Section2 = () => {
             { q: "How long must Building Regulations records be kept?", a: "Local authorities must keep Building Control records for at least 15 years. You should keep your own records indefinitely as they may be needed for property transactions." },
             { q: "What happens if work does not comply with Building Regulations?", a: "The local authority can require work to be altered or removed. In serious cases, prosecution is possible. Non-compliance can also affect property sales and insurance." }
           ].map((faq, i) => (
-            <Card key={i} variant="ios">
-              <CardContent className="p-4">
-                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-[13px] text-white/70">{faq.a}</p>
-              </CardContent>
-            </Card>
+            <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <p className="text-base font-semibold text-white mb-2">{faq.q}</p>
+              <p className="text-sm text-white/70">{faq.a}</p>
+            </div>
           ))}
         </div>
       </section>
 
       {/* Quiz Section */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-rose-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-rose-400" />
-              Knowledge Check
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {!showQuiz ? (
-              <div className="text-center py-6">
-                <p className="text-[15px] text-white/70 mb-4">Test your understanding of Building Regulations with 10 questions.</p>
-                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
-                  Start Quiz
-                </Button>
-              </div>
-            ) : showResults ? (
-              <div className="space-y-6">
-                <div className="text-center py-4">
-                  <p className="text-[34px] font-bold text-rose-400">{calculateScore()}/{questions.length}</p>
-                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
-                </div>
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+        <div className="p-4 rounded-lg bg-white/5 border border-elec-yellow/20">
+          <div className="flex items-center gap-2 mb-4">
+            <BookOpen className="h-5 w-5 text-elec-yellow" />
+            <h3 className="text-lg font-semibold text-white">Knowledge Check</h3>
+          </div>
 
-                <div className="space-y-4">
-                  {questions.map((q, i) => {
-                    const correct = selectedAnswers[i] === q.correctAnswer;
+          {!showQuiz ? (
+            <div className="text-center py-6">
+              <p className="text-sm text-white/70 mb-4">Test your understanding of Building Regulations with 10 questions.</p>
+              <Button
+                onClick={() => setShowQuiz(true)}
+                className="min-h-[44px] px-6 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+              >
+                Start Quiz
+              </Button>
+            </div>
+          ) : showResults ? (
+            <div className="space-y-6">
+              <div className="text-center py-4">
+                <p className="text-4xl font-bold text-elec-yellow">{calculateScore()}/{questions.length}</p>
+                <p className="text-sm text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+              </div>
+
+              <div className="space-y-4">
+                {questions.map((q, i) => {
+                  const correct = selectedAnswers[i] === q.correctAnswer;
+                  return (
+                    <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
+                      <p className="text-base font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                      <p className={`text-sm ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                        Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
+                      </p>
+                      {!correct && (
+                        <p className="text-sm text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                      )}
+                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Button
+                onClick={resetQuiz}
+                className="w-full min-h-[44px] gap-2 bg-white/10 text-white hover:bg-white/20 touch-manipulation active:scale-[0.98]"
+              >
+                <RotateCcw className="h-4 w-4" />
+                Restart Quiz
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+
+              <div>
+                <p className="text-lg font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                <div className="space-y-2">
+                  {questions[currentQuestion].options.map((opt, idx) => {
+                    const selected = selectedAnswers[currentQuestion] === idx;
                     return (
-                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
-                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
-                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
-                        </p>
-                        {!correct && (
-                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
-                        )}
-                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
-                      </div>
+                      <button
+                        key={idx}
+                        onClick={() => handleAnswerSelect(idx)}
+                        className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
+                          selected
+                            ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
+                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                        }`}
+                      >
+                        {opt}
+                      </button>
                     );
                   })}
                 </div>
+              </div>
 
-                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
-                  <RotateCcw className="h-4 w-4" />
-                  Restart Quiz
+              <div className="flex items-center justify-between gap-3">
+                <Button
+                  onClick={handlePrevious}
+                  disabled={currentQuestion === 0}
+                  className="flex-1 min-h-[44px] bg-white/10 text-white hover:bg-white/20 disabled:opacity-50 touch-manipulation active:scale-[0.98]"
+                >
+                  Previous
+                </Button>
+                <Button
+                  onClick={handleNext}
+                  disabled={selectedAnswers[currentQuestion] === -1}
+                  className="flex-1 min-h-[44px] bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.98]"
+                >
+                  {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </div>
-            ) : (
-              <div className="space-y-6">
-                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
-
-                <div>
-                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-                  <div className="space-y-2">
-                    {questions[currentQuestion].options.map((opt, idx) => {
-                      const selected = selectedAnswers[currentQuestion] === idx;
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => handleAnswerSelect(idx)}
-                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
-                            selected
-                              ? 'bg-rose-500/20 border-rose-500/50 text-white'
-                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
-                          }`}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between gap-3">
-                  <Button
-                    variant="ios-secondary"
-                    onClick={handlePrevious}
-                    disabled={currentQuestion === 0}
-                    className="flex-1"
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="ios-primary"
-                    onClick={handleNext}
-                    disabled={selectedAnswers[currentQuestion] === -1}
-                    className="flex-1"
-                  >
-                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Navigation Footer */}
-      <section className="px-4 pb-safe max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pb-8 max-w-3xl mx-auto">
         <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
-          <Button variant="ios-secondary" asChild className="flex-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-7-section-1">
+          <Button
+            variant="ghost"
+            asChild
+            className="flex-1 min-h-[44px] bg-white/5 text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+          >
+            <Link to="../fire-alarm-module-7-section-1">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button variant="ios-primary" asChild className="flex-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-7-section-3">
+          <Button
+            asChild
+            className="flex-1 min-h-[44px] bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+          >
+            <Link to="../fire-alarm-module-7-section-3">
               Next Section
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

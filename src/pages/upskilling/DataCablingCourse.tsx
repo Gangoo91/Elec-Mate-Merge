@@ -1,57 +1,65 @@
+import React from 'react';
 import { ArrowLeft, Cable, BookOpen, Wifi, Package, Wrench, FileCheck, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { ModuleCard } from '@/components/upskilling/cards';
 
 const DataCablingCourse = () => {
-  const modules = [
+  const modules: Array<{
+    id: number;
+    title: string;
+    description: string;
+    duration: string;
+    icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+    isExam?: boolean;
+  }> = [
     {
       id: 1,
       title: "Introduction to Structured Cabling Systems",
+      description: "Network infrastructure fundamentals",
       duration: "45 mins",
-      status: "available",
       icon: BookOpen
     },
     {
       id: 2,
       title: "Copper Cabling Standards (Cat5e, Cat6, etc.)",
+      description: "Copper cable types and performance",
       duration: "50 mins",
-      status: "available",
       icon: Cable
     },
     {
       id: 3,
       title: "Fibre Optics: Types, Termination, and Testing",
+      description: "Fibre optic systems and installation",
       duration: "60 mins",
-      status: "available",
       icon: Wifi
     },
     {
       id: 4,
       title: "Containment, Labelling, and Installation Best Practices",
+      description: "Cable management and standards",
       duration: "55 mins",
-      status: "available",
       icon: Package
     },
     {
       id: 5,
       title: "Termination and Certification Procedures",
+      description: "Testing and certification processes",
       duration: "50 mins",
-      status: "available",
       icon: Wrench
     },
     {
       id: 6,
       title: "TIA/EIA and ISO Cabling Standards Explained",
+      description: "Industry standards and compliance",
       duration: "40 mins",
-      status: "available",
       icon: FileCheck
     },
     {
-      id: "exam",
+      id: 7,
       title: "Mock Exam",
+      description: "Test your knowledge",
       duration: "75 mins",
-      status: "available",
       icon: GraduationCap,
       isExam: true
     }
@@ -59,75 +67,48 @@ const DataCablingCourse = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
+      {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Link to="/electrician/upskilling">
-            <Button variant="ghost" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]">
-              <ArrowLeft className="mr-2 h-4 w-4" />
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="/electrician/upskilling">
+              <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Courses
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
 
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        {/* Header */}
-        <div className="space-y-1 mb-8">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight">
+      <div className="px-4 sm:px-6 py-6 sm:py-8">
+        {/* Course Header */}
+        <div className="mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Data & Communications Cabling
           </h1>
-          <p className="text-sm sm:text-base text-white/70">
+          <p className="text-white/60 text-sm sm:text-base">
             Structured cabling systems, fiber optics, and network infrastructure
           </p>
         </div>
 
         {/* Module Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {modules.map((module, index) => (
-            <motion.div
+            <ModuleCard
               key={module.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-            >
-              <Link
-                to={module.isExam ? `../data-cabling-mock-exam` : `../data-cabling-module-${module.id}`}
-                className="block h-full"
-              >
-                <div className={`group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:bg-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/10 transition-all duration-300 cursor-pointer touch-manipulation active:scale-[0.98] h-full min-h-[160px] flex flex-col ${module.isExam ? 'ring-2 ring-elec-yellow/30' : ''}`}>
-                  {/* Accent line at top */}
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />
-
-                  {/* Hover glow */}
-                  <div className="absolute top-0 right-0 w-24 h-24 rounded-full blur-2xl bg-elec-yellow/20 opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
-
-                  <div className="relative text-center flex-grow flex flex-col justify-center">
-                    {/* Icon with gradient bg */}
-                    <div className="flex justify-center mb-3">
-                      <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/20 border border-white/10">
-                        <module.icon className="h-5 w-5 text-elec-yellow" strokeWidth={2} />
-                      </div>
-                    </div>
-
-                    {/* Module label */}
-                    <span className="text-[10px] font-semibold text-elec-yellow/70 uppercase tracking-wider mb-1">
-                      {module.isExam ? 'Mock Exam' : `Module ${module.id}`}
-                    </span>
-
-                    {/* Title */}
-                    <h3 className="text-sm font-semibold text-white leading-tight mb-2 line-clamp-2 group-hover:text-elec-yellow transition-colors">
-                      {module.title}
-                    </h3>
-
-                    {/* Duration */}
-                    <p className="text-white/50 text-xs">
-                      {module.duration}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
+              to={module.isExam ? `../data-cabling-mock-exam` : `../data-cabling-module-${module.id}`}
+              moduleNumber={module.id}
+              title={module.title}
+              description={module.description}
+              duration={module.duration}
+              icon={module.icon}
+              isExam={module.isExam}
+              index={index}
+            />
           ))}
         </div>
       </div>

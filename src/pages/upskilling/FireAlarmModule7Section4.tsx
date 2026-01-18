@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
-import { ArrowLeft, ArrowRight, Home, CheckCircle, Lightbulb, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Home, CheckCircle, AlertTriangle, HelpCircle, Target, Clock, BookOpen, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import QuizProgress from '@/components/upskilling/quiz/QuizProgress';
@@ -165,37 +164,35 @@ const FireAlarmModule7Section4 = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* iOS Header */}
-      <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center h-[56px] px-4 max-w-3xl mx-auto">
-          <Button variant="ios-ghost" size="ios-small" asChild className="gap-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-7">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="hidden sm:inline">Module 7</span>
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Module 7
             </Link>
           </Button>
-          <span className="flex-1 text-center text-[17px] font-semibold text-white">Section 4</span>
-          <div className="w-[60px]" />
         </div>
-      </header>
+      </div>
 
       {/* Hero Section */}
-      <section className="px-4 pt-8 pb-6 max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pt-8 pb-6 max-w-3xl mx-auto">
         <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20">
-            <Home className="h-7 w-7 text-rose-400" />
+          <div className="p-3 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+            <Home className="h-7 w-7 text-elec-yellow" />
           </div>
-          <span className="text-[11px] font-medium text-rose-400 uppercase tracking-wide">
+          <span className="text-xs font-medium text-elec-yellow uppercase tracking-wide">
             Section 4 of 4
           </span>
         </div>
-        <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
+        <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-3">
           BS 5839-6 Requirements
         </h1>
-        <p className="text-[17px] text-white/70 leading-relaxed mb-4">
+        <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-4">
           Domestic fire detection and alarm systems: grades, LD categories and requirements for dwellings.
         </p>
-        <div className="flex items-center gap-4 text-[13px] text-white/50">
+        <div className="flex items-center gap-4 text-sm text-white/50">
           <span className="flex items-center gap-1">
             <Target className="h-4 w-4" />
             6 learning outcomes
@@ -207,35 +204,30 @@ const FireAlarmModule7Section4 = () => {
         </div>
       </section>
 
-      {/* In 30 Seconds Card */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-rose-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[15px] font-semibold text-rose-400 flex items-center gap-2">
-              <Lightbulb className="h-4 w-4" />
-              In 30 Seconds
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-[15px] text-white/80">
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-              <span><strong>Grades A-F</strong> define system components and power arrangements</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-              <span><strong>LD categories</strong> (LD1-LD3) define extent of detection coverage</span>
-            </p>
-            <p className="flex items-start gap-2">
-              <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-              <span><strong>New-build houses</strong> typically require Grade D, Category LD2 minimum</span>
-            </p>
-          </CardContent>
-        </Card>
+      {/* Quick Summary */}
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+        <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+          <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+          <ul className="space-y-2 text-white/80 text-sm">
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">Grades A-F</strong> define system components and power arrangements</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">LD categories</strong> (LD1-LD3) define extent of detection coverage</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+              <span><strong className="text-white">New-build houses</strong> typically require Grade D, Category LD2 minimum</span>
+            </li>
+          </ul>
+        </div>
       </section>
 
       {/* Learning Outcomes */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">Learning Outcomes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
             "Explain the difference between system grades A-F",
@@ -245,313 +237,291 @@ const FireAlarmModule7Section4 = () => {
             "Apply BS 5839-6 requirements to domestic installations",
             "Select appropriate detector types for different rooms"
           ].map((outcome, i) => (
-            <Card key={i} variant="ios" className="p-3">
+            <div key={i} className="p-3 rounded-lg bg-white/5 border border-white/10">
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-rose-500/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-[11px] font-bold text-rose-400">{i + 1}</span>
+                <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                 </div>
-                <p className="text-[13px] text-white/80">{outcome}</p>
+                <p className="text-sm text-white/80">{outcome}</p>
               </div>
-            </Card>
+            </div>
           ))}
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto space-y-6">
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto space-y-6">
         {/* Section 01 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">01</span>
-              <h3 className="text-[17px] font-semibold text-white">Introduction to BS 5839-6</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">01</span>
+            <h3 className="text-lg font-semibold text-white">Introduction to BS 5839-6</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p><strong className="text-white">BS 5839-6</strong> is the code of practice for fire detection and fire alarm systems in <strong className="text-elec-yellow">domestic premises</strong>. It applies to dwelling houses, flats, maisonettes and similar residential properties.</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Key Scope of BS 5839-6:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Individual dwelling houses (detached, semi-detached, terraced)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Individual flats and maisonettes</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Sheltered housing individual units</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Houses in Multiple Occupation (HMOs) - individual units</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-white">BS 5839-6</strong> is the code of practice for fire detection and fire alarm systems in <strong className="text-rose-400">domestic premises</strong>. It applies to dwelling houses, flats, maisonettes and similar residential properties.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Key Scope of BS 5839-6:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Individual dwelling houses (detached, semi-detached, terraced)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Individual flats and maisonettes</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Sheltered housing individual units</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Houses in Multiple Occupation (HMOs) - individual units</li>
-                </ul>
-              </div>
-              <p className="text-[13px] text-white/60 italic">Common areas of blocks of flats are covered by BS 5839-1, not BS 5839-6.</p>
-            </div>
-          </CardContent>
-        </Card>
+            <p className="text-sm text-white/60 italic">Common areas of blocks of flats are covered by BS 5839-1, not BS 5839-6.</p>
+          </div>
+        </div>
 
         {/* Section 02 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">02</span>
-              <h3 className="text-[17px] font-semibold text-white">System Grades (A-F)</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">02</span>
+            <h3 className="text-lg font-semibold text-white">System Grades (A-F)</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p><strong className="text-elec-yellow">Grades</strong> define the <strong className="text-white">type of system components</strong> and how they are powered and interconnected.</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Grade Definitions:</p>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start gap-2">
+                  <span className="w-6 h-5 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-bold text-elec-yellow">A</span>
+                  <span><strong className="text-white">Control panel system:</strong> CIE panel + separate PSU + Category L type detectors (highest grade)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-6 h-5 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-bold text-elec-yellow">B</span>
+                  <span><strong className="text-white">Panel with mains alarms:</strong> Control panel + mains-powered domestic alarms with standby</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-6 h-5 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-bold text-elec-yellow">C</span>
+                  <span><strong className="text-white">Mains + central PSU:</strong> Mains-powered alarms connected to common central PSU</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-6 h-5 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-bold text-elec-yellow">D</span>
+                  <span><strong className="text-white">Mains + integral standby:</strong> Mains-powered alarms with built-in battery backup (most common)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-6 h-5 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-bold text-elec-yellow">E</span>
+                  <span><strong className="text-white">Mains only:</strong> Mains-powered alarms without standby supply</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-6 h-5 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-bold text-elec-yellow">F</span>
+                  <span><strong className="text-white">Battery only:</strong> Battery-powered alarms with no mains connection (lowest grade)</span>
+                </li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-rose-400">Grades</strong> define the <strong className="text-white">type of system components</strong> and how they are powered and interconnected.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Grade Definitions:</p>
-                <ul className="space-y-2 text-[13px]">
-                  <li className="flex items-start gap-2">
-                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">A</span>
-                    <span><strong className="text-white">Control panel system:</strong> CIE panel + separate PSU + Category L type detectors (highest grade)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">B</span>
-                    <span><strong className="text-white">Panel with mains alarms:</strong> Control panel + mains-powered domestic alarms with standby</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">C</span>
-                    <span><strong className="text-white">Mains + central PSU:</strong> Mains-powered alarms connected to common central PSU</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">D</span>
-                    <span><strong className="text-white">Mains + integral standby:</strong> Mains-powered alarms with built-in battery backup (most common)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">E</span>
-                    <span><strong className="text-white">Mains only:</strong> Mains-powered alarms without standby supply</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-6 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">F</span>
-                    <span><strong className="text-white">Battery only:</strong> Battery-powered alarms with no mains connection (lowest grade)</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 03 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">03</span>
-              <h3 className="text-[17px] font-semibold text-white">LD Categories (Coverage)</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">03</span>
+            <h3 className="text-lg font-semibold text-white">LD Categories (Coverage)</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p><strong className="text-elec-yellow">LD categories</strong> define the <strong className="text-white">extent of detection coverage</strong> within the dwelling. LD stands for "Life safety Detection".</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">LD Category Definitions:</p>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start gap-2">
+                  <span className="w-7 h-5 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-bold text-elec-yellow">LD1</span>
+                  <span><strong className="text-white">Full coverage:</strong> Detection in all circulation spaces AND all rooms where fire could start (excluding bathrooms/WCs)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-7 h-5 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-bold text-elec-yellow">LD2</span>
+                  <span><strong className="text-white">Circulation + high risk:</strong> All circulation spaces plus specified high-risk rooms (kitchens, main living room)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-7 h-5 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-bold text-elec-yellow">LD3</span>
+                  <span><strong className="text-white">Circulation only:</strong> Detection in escape routes only - hallways, stairs and landings (minimum protection)</span>
+                </li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p><strong className="text-rose-400">LD categories</strong> define the <strong className="text-white">extent of detection coverage</strong> within the dwelling. LD stands for "Life safety Detection".</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">LD Category Definitions:</p>
-                <ul className="space-y-2 text-[13px]">
-                  <li className="flex items-start gap-2">
-                    <span className="w-7 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">LD1</span>
-                    <span><strong className="text-white">Full coverage:</strong> Detection in all circulation spaces AND all rooms where fire could start (excluding bathrooms/WCs)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-7 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">LD2</span>
-                    <span><strong className="text-white">Circulation + high risk:</strong> All circulation spaces plus specified high-risk rooms (kitchens, main living room)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-7 h-5 rounded bg-rose-500/20 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-rose-400">LD3</span>
-                    <span><strong className="text-white">Circulation only:</strong> Detection in escape routes only - hallways, stairs and landings (minimum protection)</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-rose-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  LD3 is the minimum acceptable level for life safety. A dwelling should never have less protection than LD3.
-                </p>
-              </div>
+            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+              <p className="text-sm text-red-300 flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                LD3 is the minimum acceptable level for life safety. A dwelling should never have less protection than LD3.
+              </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Quick Check 1 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">A new three-bedroom house is being built. What minimum grade and category is required by Building Regulations?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Grade D (mains with integral standby battery) at Category LD2 (smoke alarms in hallway, landing and principal habitable room, plus heat alarm in kitchen). All alarms must be interlinked.</p>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-amber-400" />
+            <span className="text-base font-semibold text-amber-400">Quick Check</span>
+          </div>
+          <p className="text-sm text-white/80 mb-3">A new three-bedroom house is being built. What minimum grade and category is required by Building Regulations?</p>
+          <div className="bg-white/5 rounded-lg p-3">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> Grade D (mains with integral standby battery) at Category LD2 (smoke alarms in hallway, landing and principal habitable room, plus heat alarm in kitchen). All alarms must be interlinked.</p>
+          </div>
+        </div>
 
         {/* Section 04 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">04</span>
-              <h3 className="text-[17px] font-semibold text-white">Detector Selection and Positioning</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">04</span>
+            <h3 className="text-lg font-semibold text-white">Detector Selection and Positioning</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p>Correct <strong className="text-white">detector selection and positioning</strong> is critical for effective protection without excessive false alarms.</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Detector Type by Location:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" /><strong className="text-white">Hallways/Landings:</strong> Optical or ionisation smoke detectors</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" /><strong className="text-white">Living rooms:</strong> Optical smoke detectors (less affected by dust)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" /><strong className="text-white">Kitchens:</strong> Heat detectors only (to avoid cooking alarms)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" /><strong className="text-white">Bedrooms:</strong> Optical smoke detectors if LD1/LD2 coverage</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" /><strong className="text-white">Garages:</strong> Heat detectors (petrol fumes can affect smoke detectors)</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Correct <strong className="text-white">detector selection and positioning</strong> is critical for effective protection without excessive false alarms.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Detector Type by Location:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Hallways/Landings:</strong> Optical or ionisation smoke detectors</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Living rooms:</strong> Optical smoke detectors (less affected by dust)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Kitchens:</strong> Heat detectors only (to avoid cooking alarms)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Bedrooms:</strong> Optical smoke detectors if LD1/LD2 coverage</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Garages:</strong> Heat detectors (petrol fumes can affect smoke detectors)</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-lg p-3 mt-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Key Positioning Requirements:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />On ceiling, at least 300mm from walls/light fittings</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Within 3 metres of bedroom doors (on landing)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Within 7.5 metres of any part of the room</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Maximum 10.6m between smoke detectors on same level</li>
-                </ul>
-              </div>
+            <div className="bg-white/5 rounded-lg p-3 mt-3">
+              <p className="text-sm font-semibold text-white mb-2">Key Positioning Requirements:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />On ceiling, at least 300mm from walls/light fittings</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Within 3 metres of bedroom doors (on landing)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Within 7.5 metres of any part of the room</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Maximum 10.6m between smoke detectors on same level</li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Section 05 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">05</span>
-              <h3 className="text-[17px] font-semibold text-white">Interconnection and Power Supply</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">05</span>
+            <h3 className="text-lg font-semibold text-white">Interconnection and Power Supply</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p>All fire alarms in a dwelling must be <strong className="text-elec-yellow">interconnected</strong> so that when one activates, all alarms sound throughout the property.</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Interconnection Methods:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" /><strong className="text-white">Hardwired:</strong> Dedicated interconnection cable (3-core + earth typically)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" /><strong className="text-white">Wireless/Radio:</strong> RF link between compatible alarms</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" /><strong className="text-white">Mixed:</strong> Some hardwired with radio-linked extensions</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>All fire alarms in a dwelling must be <strong className="text-rose-400">interconnected</strong> so that when one activates, all alarms sound throughout the property.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Interconnection Methods:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Hardwired:</strong> Dedicated interconnection cable (3-core + earth typically)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Wireless/Radio:</strong> RF link between compatible alarms</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" /><strong className="text-white">Mixed:</strong> Some hardwired with radio-linked extensions</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-lg p-3 mt-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Grade D Power Requirements:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Mains supply via dedicated circuit or lighting circuit</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Integral battery standby (typically lithium 10-year or replaceable)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Minimum 72-hour standby after mains failure</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />4-minute alarm signal at end of standby period</li>
-                </ul>
-              </div>
+            <div className="bg-white/5 rounded-lg p-3 mt-3">
+              <p className="text-sm font-semibold text-white mb-2">Grade D Power Requirements:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Mains supply via dedicated circuit or lighting circuit</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Integral battery standby (typically lithium 10-year or replaceable)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Minimum 72-hour standby after mains failure</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />4-minute alarm signal at end of standby period</li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Quick Check 2 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">Why should a heat detector rather than smoke detector be used in a kitchen?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Smoke detectors in kitchens cause frequent false alarms from cooking fumes and steam. Heat detectors respond to temperature rise and are not affected by normal cooking activities, reducing nuisance alarms whilst still providing fire protection.</p>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-amber-400" />
+            <span className="text-base font-semibold text-amber-400">Quick Check</span>
+          </div>
+          <p className="text-sm text-white/80 mb-3">Why should a heat detector rather than smoke detector be used in a kitchen?</p>
+          <div className="bg-white/5 rounded-lg p-3">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> Smoke detectors in kitchens cause frequent false alarms from cooking fumes and steam. Heat detectors respond to temperature rise and are not affected by normal cooking activities, reducing nuisance alarms whilst still providing fire protection.</p>
+          </div>
+        </div>
 
         {/* Section 06 */}
-        <Card variant="ios">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded">06</span>
-              <h3 className="text-[17px] font-semibold text-white">Special Situations and HMOs</h3>
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded">06</span>
+            <h3 className="text-lg font-semibold text-white">Special Situations and HMOs</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white/70">
+            <p>Some dwellings have <strong className="text-white">special requirements</strong> beyond the standard Building Regulations minimum.</p>
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Houses in Multiple Occupation (HMOs):</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Higher risk due to multiple independent occupants</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Grade A or B system often required (fire alarm panel)</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />LD1 or LD2 coverage typically required</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Common areas may need BS 5839-1 system</li>
+              </ul>
             </div>
-            <div className="space-y-3 text-[15px] text-white/70">
-              <p>Some dwellings have <strong className="text-white">special requirements</strong> beyond the standard Building Regulations minimum.</p>
-              <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Houses in Multiple Occupation (HMOs):</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Higher risk due to multiple independent occupants</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Grade A or B system often required (fire alarm panel)</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />LD1 or LD2 coverage typically required</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Common areas may need BS 5839-1 system</li>
-                </ul>
-              </div>
-              <div className="bg-white/5 rounded-lg p-3 mt-3">
-                <p className="text-[13px] font-semibold text-white mb-2">Sheltered Housing and Care:</p>
-                <ul className="space-y-1 text-[13px]">
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />May require Grade A/B with remote monitoring</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Consideration for vulnerable/mobility-impaired occupants</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Visual alarm devices for hearing-impaired residents</li>
-                  <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-rose-400" />Link to warden/monitoring centre typically required</li>
-                </ul>
-              </div>
-              <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
-                <p className="text-[13px] text-rose-300 flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  HMO licensing often requires specific fire detection standards - always check local authority requirements.
-                </p>
-              </div>
+            <div className="bg-white/5 rounded-lg p-3 mt-3">
+              <p className="text-sm font-semibold text-white mb-2">Sheltered Housing and Care:</p>
+              <ul className="space-y-1 text-sm">
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />May require Grade A/B with remote monitoring</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Consideration for vulnerable/mobility-impaired occupants</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Visual alarm devices for hearing-impaired residents</li>
+                <li className="flex items-center gap-2"><CheckCircle className="h-3 w-3 text-elec-yellow" />Link to warden/monitoring centre typically required</li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
+            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+              <p className="text-sm text-red-300 flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                HMO licensing often requires specific fire detection standards - always check local authority requirements.
+              </p>
+            </div>
+          </div>
+        </div>
 
         {/* Quick Check 3 */}
-        <Card variant="ios-elevated" className="border-amber-500/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <HelpCircle className="h-5 w-5 text-amber-400" />
-              <span className="text-[15px] font-semibold text-amber-400">Quick Check</span>
-            </div>
-            <p className="text-[15px] text-white/80 mb-3">What is the key difference between Grade D and Grade F systems?</p>
-            <div className="bg-white/5 rounded-lg p-3">
-              <p className="text-[13px] text-white/70"><strong className="text-white">Answer:</strong> Grade D uses mains power with integral battery backup, providing reliable power with automatic standby. Grade F is battery-only with no mains connection, relying entirely on batteries which must be replaced periodically and offer less reliable long-term protection.</p>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+          <div className="flex items-center gap-2 mb-3">
+            <HelpCircle className="h-5 w-5 text-amber-400" />
+            <span className="text-base font-semibold text-amber-400">Quick Check</span>
+          </div>
+          <p className="text-sm text-white/80 mb-3">What is the key difference between Grade D and Grade F systems?</p>
+          <div className="bg-white/5 rounded-lg p-3">
+            <p className="text-sm text-white/70"><strong className="text-white">Answer:</strong> Grade D uses mains power with integral battery backup, providing reliable power with automatic standby. Grade F is battery-only with no mains connection, relying entirely on batteries which must be replaced periodically and offer less reliable long-term protection.</p>
+          </div>
+        </div>
       </section>
 
       {/* Practical Guidance */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">Practical Guidance</h2>
 
         <div className="space-y-3">
-          <Card variant="ios" className="border-green-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Always recommend 10-year sealed battery alarms for Grade D - eliminates battery replacement issues
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Test interconnection during installation - activate each alarm and verify all others sound
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  Leave clear written instructions for the householder including test procedures and replacement intervals
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+          <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
+            <h4 className="text-base font-semibold text-green-400 mb-2">Pro Tips</h4>
+            <ul className="space-y-2 text-sm text-white/70">
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                Always recommend 10-year sealed battery alarms for Grade D - eliminates battery replacement issues
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                Test interconnection during installation - activate each alarm and verify all others sound
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                Leave clear written instructions for the householder including test procedures and replacement intervals
+              </li>
+            </ul>
+          </div>
 
-          <Card variant="ios" className="border-red-500/20">
-            <CardContent className="p-4">
-              <h4 className="text-[15px] font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-[13px] text-white/70">
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Installing smoke detectors in kitchens - always use heat detectors to avoid nuisance alarms
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Placing detectors too close to walls or light fittings where dead air affects performance
-                </li>
-                <li className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                  Forgetting to test interconnection - each alarm must be tested to confirm all units sound
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+          <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
+            <h4 className="text-base font-semibold text-red-400 mb-2">Common Mistakes</h4>
+            <ul className="space-y-2 text-sm text-white/70">
+              <li className="flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                Installing smoke detectors in kitchens - always use heat detectors to avoid nuisance alarms
+              </li>
+              <li className="flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                Placing detectors too close to walls or light fittings where dead air affects performance
+              </li>
+              <li className="flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                Forgetting to test interconnection - each alarm must be tested to confirm all units sound
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 
       {/* FAQs */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-[13px] font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">Frequently Asked Questions</h2>
         <div className="space-y-3">
           {[
             { q: "Can I use Grade F (battery-only) alarms in a new-build house?", a: "No - Building Regulations require Grade D minimum for new-build houses. Grade F is only acceptable as a temporary measure or in existing properties where mains installation is not reasonably practicable." },
@@ -561,124 +531,130 @@ const FireAlarmModule7Section4 = () => {
             { q: "Can I install wireless alarms in a new-build?", a: "Yes - wireless (radio-linked) interconnection is acceptable for Grade D systems provided the alarms meet the relevant product standards and provide reliable interconnection." },
             { q: "What documentation should I provide after installing a domestic system?", a: "Provide an installation certificate, system layout drawing showing detector locations, operating and maintenance instructions, and details of the system grade and category installed." }
           ].map((faq, i) => (
-            <Card key={i} variant="ios">
-              <CardContent className="p-4">
-                <p className="text-[15px] font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-[13px] text-white/70">{faq.a}</p>
-              </CardContent>
-            </Card>
+            <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <p className="text-base font-semibold text-white mb-2">{faq.q}</p>
+              <p className="text-sm text-white/70">{faq.a}</p>
+            </div>
           ))}
         </div>
       </section>
 
       {/* Quiz Section */}
-      <section className="px-4 pb-6 max-w-3xl mx-auto">
-        <Card variant="ios-elevated" className="border-rose-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-[17px] font-semibold text-white flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-rose-400" />
-              Knowledge Check
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {!showQuiz ? (
-              <div className="text-center py-6">
-                <p className="text-[15px] text-white/70 mb-4">Test your understanding of BS 5839-6 with 10 questions.</p>
-                <Button variant="ios-primary" onClick={() => setShowQuiz(true)}>
-                  Start Quiz
-                </Button>
-              </div>
-            ) : showResults ? (
-              <div className="space-y-6">
-                <div className="text-center py-4">
-                  <p className="text-[34px] font-bold text-rose-400">{calculateScore()}/{questions.length}</p>
-                  <p className="text-[15px] text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
-                </div>
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+        <div className="p-4 rounded-lg bg-white/5 border border-elec-yellow/20">
+          <div className="flex items-center gap-2 mb-4">
+            <BookOpen className="h-5 w-5 text-elec-yellow" />
+            <h3 className="text-lg font-semibold text-white">Knowledge Check</h3>
+          </div>
 
-                <div className="space-y-4">
-                  {questions.map((q, i) => {
-                    const correct = selectedAnswers[i] === q.correctAnswer;
+          {!showQuiz ? (
+            <div className="text-center py-6">
+              <p className="text-sm text-white/70 mb-4">Test your understanding of BS 5839-6 with 10 questions.</p>
+              <Button
+                onClick={() => setShowQuiz(true)}
+                className="min-h-[44px] px-6 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+              >
+                Start Quiz
+              </Button>
+            </div>
+          ) : showResults ? (
+            <div className="space-y-6">
+              <div className="text-center py-4">
+                <p className="text-4xl font-bold text-elec-yellow">{calculateScore()}/{questions.length}</p>
+                <p className="text-sm text-white/70">({Math.round((calculateScore() / questions.length) * 100)}% correct)</p>
+              </div>
+
+              <div className="space-y-4">
+                {questions.map((q, i) => {
+                  const correct = selectedAnswers[i] === q.correctAnswer;
+                  return (
+                    <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
+                      <p className="text-base font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
+                      <p className={`text-sm ${correct ? 'text-green-400' : 'text-red-400'}`}>
+                        Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
+                      </p>
+                      {!correct && (
+                        <p className="text-sm text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
+                      )}
+                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Button
+                onClick={resetQuiz}
+                className="w-full min-h-[44px] gap-2 bg-white/10 text-white hover:bg-white/20 touch-manipulation active:scale-[0.98]"
+              >
+                <RotateCcw className="h-4 w-4" />
+                Restart Quiz
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
+
+              <div>
+                <p className="text-lg font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
+                <div className="space-y-2">
+                  {questions[currentQuestion].options.map((opt, idx) => {
+                    const selected = selectedAnswers[currentQuestion] === idx;
                     return (
-                      <div key={q.id} className="p-4 rounded-xl bg-white/5 border border-white/10">
-                        <p className="text-[15px] font-semibold text-white mb-2">Q{i + 1}. {q.question}</p>
-                        <p className={`text-[13px] ${correct ? 'text-green-400' : 'text-red-400'}`}>
-                          Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
-                        </p>
-                        {!correct && (
-                          <p className="text-[13px] text-white/50 mt-1">Correct: {q.options[q.correctAnswer]}</p>
-                        )}
-                        <p className="text-[13px] text-white/70 mt-2">{q.explanation}</p>
-                      </div>
+                      <button
+                        key={idx}
+                        onClick={() => handleAnswerSelect(idx)}
+                        className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
+                          selected
+                            ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
+                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                        }`}
+                      >
+                        {opt}
+                      </button>
                     );
                   })}
                 </div>
+              </div>
 
-                <Button variant="ios-secondary" onClick={resetQuiz} className="w-full gap-2">
-                  <RotateCcw className="h-4 w-4" />
-                  Restart Quiz
+              <div className="flex items-center justify-between gap-3">
+                <Button
+                  onClick={handlePrevious}
+                  disabled={currentQuestion === 0}
+                  className="flex-1 min-h-[44px] bg-white/10 text-white hover:bg-white/20 disabled:opacity-50 touch-manipulation active:scale-[0.98]"
+                >
+                  Previous
+                </Button>
+                <Button
+                  onClick={handleNext}
+                  disabled={selectedAnswers[currentQuestion] === -1}
+                  className="flex-1 min-h-[44px] bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 disabled:opacity-50 touch-manipulation active:scale-[0.98]"
+                >
+                  {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </div>
-            ) : (
-              <div className="space-y-6">
-                <QuizProgress currentQuestion={currentQuestion} totalQuestions={questions.length} />
-
-                <div>
-                  <p className="text-[17px] font-semibold text-white mb-4">Q{currentQuestion + 1}. {questions[currentQuestion].question}</p>
-                  <div className="space-y-2">
-                    {questions[currentQuestion].options.map((opt, idx) => {
-                      const selected = selectedAnswers[currentQuestion] === idx;
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => handleAnswerSelect(idx)}
-                          className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
-                            selected
-                              ? 'bg-rose-500/20 border-rose-500/50 text-white'
-                              : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
-                          }`}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between gap-3">
-                  <Button
-                    variant="ios-secondary"
-                    onClick={handlePrevious}
-                    disabled={currentQuestion === 0}
-                    className="flex-1"
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="ios-primary"
-                    onClick={handleNext}
-                    disabled={selectedAnswers[currentQuestion] === -1}
-                    className="flex-1"
-                  >
-                    {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Navigation Footer */}
-      <section className="px-4 pb-safe max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pb-8 max-w-3xl mx-auto">
         <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
-          <Button variant="ios-secondary" asChild className="flex-1">
-            <Link to="/study-centre/upskilling/fire-alarm-module-7-section-3">
+          <Button
+            variant="ghost"
+            asChild
+            className="flex-1 min-h-[44px] bg-white/5 text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+          >
+            <Link to="../fire-alarm-module-7-section-3">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous Section
             </Link>
           </Button>
-          <Button variant="ios-primary" asChild className="flex-1">
-            <Link to="/study-centre/upskilling/fire-alarm-course/mock-exam">
+          <Button
+            asChild
+            className="flex-1 min-h-[44px] bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+          >
+            <Link to="../fire-alarm-course/mock-exam">
               Mock Exam
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

@@ -1,635 +1,447 @@
-import { ArrowLeft, ArrowRight, Palette, Book, CheckCircle2, Cable, AlertTriangle, Brain, Target, Shield, Settings, Wrench } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import InstrumentationQuiz from '@/components/upskilling/quiz/InstrumentationQuiz';
+import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
+
+const TITLE = "Wiring Standards and Colour Coding - Instrumentation Course";
+const DESCRIPTION = "Learn international wiring standards, colour codes, cable types, labelling conventions, and the safety benefits of standardised wiring practices in industrial instrumentation.";
+
+const quickCheckQuestions = [
+  {
+    id: "m7s4-qc1",
+    question: "According to IEC standards, what colour is used for protective earth conductors?",
+    options: ["Blue", "Brown", "Green/Yellow stripes", "Black"],
+    correctIndex: 2,
+    explanation: "Green/Yellow stripes is the mandatory colour for protective earth (PE) conductors according to IEC 60757 and BS 7671."
+  },
+  {
+    id: "m7s4-qc2",
+    question: "In ISA-5.1 standards, what colour is typically used for the positive 4-20mA signal wire?",
+    options: ["Black", "Blue", "Red", "White"],
+    correctIndex: 2,
+    explanation: "Red is typically used for the positive 4-20mA signal wire according to ISA-5.1 instrumentation standards."
+  },
+  {
+    id: "m7s4-qc3",
+    question: "Why is LSZH (Low Smoke Zero Halogen) cable essential for enclosed spaces?",
+    options: ["It's cheaper", "It provides better signal quality", "It minimises toxic smoke in case of fire", "It has higher current capacity"],
+    correctIndex: 2,
+    explanation: "LSZH cable minimises toxic smoke and halogen gas emissions during fire, making it essential for enclosed spaces where personnel evacuation may be required."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What colour is typically used for 24V DC positive signal wires in instrumentation?",
+    options: ["Black", "Red for positive signal wires and blue for 24VDC positive supply", "Green", "Yellow"],
+    correctAnswer: 1,
+    explanation: "According to ISA-5.1 standards, red is used for positive 4-20mA signal wires, while blue is used for 24VDC positive supply wires in instrumentation applications."
+  },
+  {
+    id: 2,
+    question: "Why is consistent wire labelling important?",
+    options: ["It looks professional", "It enables rapid fault identification, prevents connection errors, ensures safety during maintenance, and facilitates troubleshooting", "It's required by insurance companies", "It reduces cable costs"],
+    correctAnswer: 1,
+    explanation: "Consistent wire labelling is critical for safety and efficiency - it enables rapid fault identification, prevents dangerous connection errors, ensures safe maintenance practices, and significantly reduces troubleshooting time."
+  },
+  {
+    id: 3,
+    question: "Name one international standard related to instrumentation wiring.",
+    options: ["ISA-5.1 (Instrumentation Symbols and Identification) or IEC 60757 (Code for designation of colours)", "ISO 9001", "ANSI Z87.1", "NEMA 4X"],
+    correctAnswer: 0,
+    explanation: "ISA-5.1 provides guidelines for instrumentation symbols and identification including wire colour coding, while IEC 60757 specifies the international standard for conductor colour designation."
+  },
+  {
+    id: 4,
+    question: "What hazard can incorrect colour coding cause?",
+    options: ["Higher installation costs", "Electrical shock, equipment damage, wrong connections leading to process safety incidents, and delayed emergency response", "Reduced signal quality", "Increased cable length requirements"],
+    correctAnswer: 1,
+    explanation: "Incorrect colour coding can cause serious safety hazards including electrical shock from touching live conductors, equipment damage from wrong connections, process safety incidents from faulty signals, and delayed emergency response due to misidentification."
+  },
+  {
+    id: 5,
+    question: "How does wire sizing affect signal transmission?",
+    options: ["Wire size doesn't affect signals", "Larger wires increase resistance", "Wire cross-sectional area affects resistance - larger wires have lower resistance, reducing voltage drop and improving signal integrity", "Wire size only affects current capacity"],
+    correctAnswer: 2,
+    explanation: "Wire sizing directly affects signal transmission through resistance. Larger cross-sectional areas have lower resistance, which reduces voltage drop along the cable run and improves signal integrity, especially important for long cable runs in 4-20mA loops."
+  },
+  {
+    id: 6,
+    question: "What is the typical resistance of 0.75mm squared instrumentation cable per kilometre?",
+    options: ["12 ohms/km", "18 ohms/km", "24 ohms/km", "36 ohms/km"],
+    correctAnswer: 2,
+    explanation: "0.75mm squared instrumentation cable has approximately 24 ohms per kilometre resistance. This must be considered in loop resistance calculations for 4-20mA circuits."
+  },
+  {
+    id: 7,
+    question: "What is the purpose of individual screening (IS) in multi-pair cables?",
+    options: ["Reduce cable weight", "Provide best noise immunity between pairs carrying different signals", "Make termination easier", "Reduce cable costs"],
+    correctAnswer: 1,
+    explanation: "Individual screening (IS) provides a shield around each pair separately, offering the best noise immunity when different signal types are carried in the same cable."
+  },
+  {
+    id: 8,
+    question: "What percentage of spare terminals should be included in terminal strip design?",
+    options: ["5%", "10%", "20%", "50%"],
+    correctAnswer: 2,
+    explanation: "Good engineering practice recommends 20% spare capacity in terminal strips to allow for future modifications, additions, and maintenance flexibility."
+  },
+  {
+    id: 9,
+    question: "What fire performance standard covers circuit integrity for emergency systems?",
+    options: ["IEC 60332-1", "IEC 61034", "BS 6387 CWZ", "IEC 60757"],
+    correctAnswer: 2,
+    explanation: "BS 6387 CWZ specifies circuit integrity requirements for cables in fire conditions, essential for emergency systems that must continue operating during a fire."
+  },
+  {
+    id: 10,
+    question: "What is the estimated reduction in troubleshooting time from implementing standardised colour coding?",
+    options: ["10-20%", "30-40%", "50-70%", "80-90%"],
+    correctAnswer: 2,
+    explanation: "Standardised colour coding can reduce troubleshooting time by 50-70% through immediate signal recognition, faster fault location, and prevention of connection mistakes."
+  }
+];
+
+const faqs = [
+  {
+    question: "Can I use any colour scheme as long as it's documented?",
+    answer: "While documentation is important, it's strongly recommended to follow international standards (IEC 60757, ISA-5.1). Non-standard schemes create confusion for maintenance personnel unfamiliar with the site and increase error risk during emergencies."
+  },
+  {
+    question: "Is it acceptable to mix cable screening types in the same installation?",
+    answer: "Yes, but carefully. Use individual screening (IS) for sensitive signals near noise sources and overall screening (OS) for general runs. Document the approach and ensure consistent termination practices throughout."
+  },
+  {
+    question: "How often should cable labels be inspected and replaced?",
+    answer: "Labels should be inspected during routine maintenance (typically annually) and replaced if damaged, faded, or illegible. UV-resistant and chemical-resistant labels last longer in harsh environments."
+  },
+  {
+    question: "What if existing installations don't follow current colour standards?",
+    answer: "Legacy installations can remain if well-documented. When making modifications, bring new work up to current standards. Consider a phased upgrade during major maintenance or when safety is compromised."
+  },
+  {
+    question: "Are there specific colour requirements for hazardous area (ATEX) installations?",
+    answer: "ATEX doesn't mandate specific colours beyond standard earth identification. However, intrinsically safe circuits are often run in blue-sheathed cable to distinguish them from non-IS circuits."
+  },
+  {
+    question: "What cable size should I use for a 300-metre 4-20mA loop?",
+    answer: "Calculate loop resistance including cable, transmitter, and load. For 300m runs, 1.0mm squared or 1.5mm squared is typically required to keep voltage drop within acceptable limits. Always verify with manufacturer specifications."
+  }
+];
 
 const InstrumentationModule7Section4 = () => {
+  useSEO({
+    title: TITLE,
+    description: DESCRIPTION
+  });
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/instrumentation-module-7">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 7
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-8">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Palette className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-4xl font-bold text-white">
-                  Wiring Standards and Colour Coding
-                </h1>
-                <p className="text-xl text-gray-400">
-                  Module 7, Section 4
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Section 7.4
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                18 minutes
-              </Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Book className="h-5 w-5 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                Proper wiring standards and colour coding are essential for safety, troubleshooting, 
-                and system identification in instrumentation installations. Consistent application 
-                of these standards reduces installation time, prevents errors, and ensures safe operation.
-              </p>
-              <p>
-                This section covers international standards for instrumentation wiring, cable selection 
-                criteria, labelling conventions, and the critical safety benefits of standardised 
-                wiring practices in industrial environments.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Learn standard wire colour codes used in instrumentation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Understand the role of cable labelling and documentation</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Identify risks of poor wiring practice</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Apply international standards for safe wiring installation</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* IEC and ISA Standards */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Shield className="h-5 w-5 text-yellow-400" />
-                IEC and ISA Standards for Wiring Colours
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">International Wiring Standards</h4>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">IEC 60757 Colour Coding</h5>
-                  <p className="text-sm mb-2">
-                    International Electrotechnical Commission standards for conductor identification:
-                  </p>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong className="text-green-400">Green/Yellow:</strong> Protective earth (mandatory)</li>
-                    <li>• <strong className="text-yellow-400">Blue:</strong> Neutral conductor</li>
-                    <li>• <strong className="text-red-400">Brown:</strong> Line/Live conductor (single phase)</li>
-                    <li>• <strong className="text-gray-300">Black:</strong> Line conductor L1 (three phase)</li>
-                    <li>• <strong className="text-yellow-400">Brown:</strong> Line conductor L2 (three phase)</li>
-                    <li>• <strong className="text-gray-400">Grey:</strong> Line conductor L3 (three phase)</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">ISA-5.1 Instrumentation Standards</h5>
-                  <p className="text-sm mb-2">
-                    Instrument Society of America guidelines for instrumentation identification:
-                  </p>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong className="text-red-400">Red (+):</strong> Positive 4-20mA signal wire</li>
-                    <li>• <strong className="text-black">Black (-):</strong> Negative 4-20mA return wire</li>
-                    <li>• <strong className="text-yellow-400">Blue:</strong> 24VDC positive supply</li>
-                    <li>• <strong className="text-white">White:</strong> 24VDC negative/common</li>
-                    <li>• <strong className="text-orange-400">Orange:</strong> Shield/drain wire termination</li>
-                    <li>• <strong className="text-purple-400">Purple:</strong> HART communication pairs</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <h5 className="text-white font-semibold mb-2">UK Specific Standards (BS 7671)</h5>
-                <div className="bg-card p-3 rounded border border-gray-600">
-                  <p className="text-sm mb-2">
-                    <strong>BS 7671 Requirements for Electrical Installations:</strong>
-                  </p>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Protective Conductors:</strong> Green/Yellow stripes (mandatory)</li>
-                    <li>• <strong>Functional Earth:</strong> Cream or light blue with green/yellow identification</li>
-                    <li>• <strong>Control Circuits:</strong> Black for switch wires, red for permanent live</li>
-                    <li>• <strong>Emergency Stop:</strong> Red conductors for emergency stop circuits</li>
-                    <li>• <strong>Instrumentation:</strong> Follow manufacturer specifications with clear labelling</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <h5 className="text-white font-semibold mb-2">Multi-Core Cable Standards</h5>
-                <div className="space-y-2">
-                  <div className="bg-blue-900/20 p-3 rounded border border-blue-600/30">
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-1">Two-Core Instrumentation Cable</h6>
-                    <ul className="text-xs space-y-1">
-                      <li>• Core 1: Red (positive signal)</li>
-                      <li>• Core 2: Black (negative/return)</li>
-                      <li>• Shield: Drain wire (orange/bare copper)</li>
-                      <li>• Overall shield: Connected to instrument earth</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-green-900/20 p-3 rounded border border-green-600/30">
-                    <h6 className="text-green-400 font-semibold text-sm mb-1">Multi-Pair Instrumentation Cable</h6>
-                    <ul className="text-xs space-y-1">
-                      <li>• Pair 1: Red/Black (primary signal)</li>
-                      <li>• Pair 2: Blue/White (secondary signal or power)</li>
-                      <li>• Pair 3: Orange/Orange-White (communications)</li>
-                      <li>• Pair 4: Green/Green-White (spare/auxiliary)</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Cable Types and Conductor Sizing */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Cable className="h-5 w-5 text-yellow-400" />
-                Cable Types and Conductor Sizing
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Instrumentation Cable Selection</h4>
-              
-              <div className="space-y-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Cable Construction Types</h5>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div>
-                      <h6 className="text-yellow-400 text-sm font-semibold mb-1">Individual Screen (IS)</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Each pair individually screened</li>
-                        <li>• Best noise immunity</li>
-                        <li>• Suitable for mixed signals</li>
-                        <li>• Higher cost option</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-yellow-400 text-sm font-semibold mb-1">Overall Screen (OS)</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Single screen over all pairs</li>
-                        <li>• Good general protection</li>
-                        <li>• Cost effective solution</li>
-                        <li>• Standard for most applications</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-yellow-400 text-sm font-semibold mb-1">Collective Screen (CS)</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Groups of pairs screened</li>
-                        <li>• Medium noise protection</li>
-                        <li>• Moderate cost increase</li>
-                        <li>• Specialised applications</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Conductor Sizing Considerations</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-semibold mb-1">Current Carrying Capacity</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>0.5mm²:</strong> Up to 50mA (not recommended for loops)</li>
-                        <li>• <strong>0.75mm²:</strong> Standard for 4-20mA loops up to 100mA</li>
-                        <li>• <strong>1.0mm²:</strong> Preferred for long runs and multiple loops</li>
-                        <li>• <strong>1.5mm²:</strong> Heavy duty applications and high current</li>
-                        <li>• <strong>2.5mm²:</strong> Power distribution to instruments</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-semibold mb-1">Voltage Drop Considerations</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Resistance:</strong> Inversely proportional to cross-sectional area</li>
-                        <li>• <strong>0.75mm²:</strong> ~24Ω/km resistance</li>
-                        <li>• <strong>1.0mm²:</strong> ~18Ω/km resistance</li>
-                        <li>• <strong>1.5mm²:</strong> ~12Ω/km resistance</li>
-                        <li>• <strong>Selection:</strong> Based on loop resistance calculations</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Environmental and Safety Requirements</h5>
-                  <div className="space-y-3">
-                    <div className="bg-card p-3 rounded border border-gray-600">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-1">Fire Performance</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>LSZH (Low Smoke Zero Halogen):</strong> Essential for enclosed spaces</li>
-                        <li>• <strong>Fire Retardant:</strong> IEC 60332-1 single cable flame test</li>
-                        <li>• <strong>Circuit Integrity:</strong> BS 6387 CWZ for emergency systems</li>
-                        <li>• <strong>Smoke Emission:</strong> IEC 61034 smoke density test</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded border border-gray-600">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-1">Chemical Resistance</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Oil Resistance:</strong> Required in industrial environments</li>
-                        <li>• <strong>UV Resistance:</strong> For outdoor installations</li>
-                        <li>• <strong>Chemical Compatibility:</strong> Specific to plant environment</li>
-                        <li>• <strong>Temperature Rating:</strong> -40°C to +105°C typical</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Labelling and Documentation */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 text-yellow-400" />
-                Labelling, Terminal Tags, and Control Panel Wiring Conventions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Systematic Labelling and Documentation</h4>
-              
-              <div className="space-y-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Cable and Wire Identification</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-semibold mb-1">Cable Labelling Standards</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Unique Identifier:</strong> Each cable requires unique designation</li>
-                        <li>• <strong>Source/Destination:</strong> Clear origin and termination points</li>
-                        <li>• <strong>Signal Type:</strong> 4-20mA, 24VDC, HART, etc.</li>
-                        <li>• <strong>Circuit Reference:</strong> P&ID tag or loop number</li>
-                        <li>• <strong>Installation Date:</strong> For maintenance records</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-semibold mb-1">Wire Marking Methods</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Heat Shrink Labels:</strong> Permanent, chemical resistant</li>
-                        <li>• <strong>Self-Adhesive Labels:</strong> Quick application, good adhesion</li>
-                        <li>• <strong>Wrap-Around Labels:</strong> Visible from any angle</li>
-                        <li>• <strong>Flag Labels:</strong> Easy to read in dense installations</li>
-                        <li>• <strong>Laser Engraving:</strong> Permanent marking, highest durability</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Terminal Block Organisation</h5>
-                  <div className="space-y-3">
-                    <div className="bg-blue-900/20 p-3 rounded border border-blue-600/30">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-1">Terminal Numbering Systems</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Sequential Numbering:</strong> 1, 2, 3... for simple systems</li>
-                        <li>• <strong>Function-Based:</strong> AI01+, AI01- for analog inputs</li>
-                        <li>• <strong>Location-Based:</strong> Panel-Row-Position format</li>
-                        <li>• <strong>Circuit Reference:</strong> Matching P&ID tag numbers</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-green-900/20 p-3 rounded border border-green-600/30">
-                      <h6 className="text-green-400 font-semibold text-sm mb-1">Terminal Strip Layout</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Functional Grouping:</strong> Power, signals, communications separate</li>
-                        <li>• <strong>Signal Direction:</strong> Inputs and outputs clearly separated</li>
-                        <li>• <strong>Spare Terminals:</strong> 20% spare capacity for modifications</li>
-                        <li>• <strong>Test Points:</strong> Easy access for maintenance and testing</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Documentation Requirements</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-semibold mb-1">Essential Documents</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Wiring Diagrams:</strong> Complete circuit documentation</li>
-                        <li>• <strong>Terminal Lists:</strong> Every connection detailed</li>
-                        <li>• <strong>Cable Schedules:</strong> Type, length, routing information</li>
-                        <li>• <strong>Loop Diagrams:</strong> Signal flow and device locations</li>
-                        <li>• <strong>As-Built Drawings:</strong> Final installation configuration</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-semibold mb-1">Maintenance Information</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Cable Routes:</strong> Physical routing and access points</li>
-                        <li>• <strong>Test Procedures:</strong> Commissioning and maintenance tests</li>
-                        <li>• <strong>Fault Finding:</strong> Troubleshooting guides and procedures</li>
-                        <li>• <strong>Modification Records:</strong> Change control documentation</li>
-                        <li>• <strong>Spare Parts Lists:</strong> Replacement component specifications</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Troubleshooting and Safety Benefits */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Wrench className="h-5 w-5 text-yellow-400" />
-                Troubleshooting and Safety Benefits of Standardisation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Operational and Safety Advantages</h4>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Troubleshooting Benefits</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Rapid Identification:</strong> Immediate signal recognition by colour</li>
-                      <li>• <strong>Reduced Downtime:</strong> Faster fault location and resolution</li>
-                      <li>• <strong>Error Prevention:</strong> Consistent coding prevents connection mistakes</li>
-                      <li>• <strong>Test Point Access:</strong> Clear identification of measurement points</li>
-                      <li>• <strong>Signal Tracing:</strong> Easy to follow signal paths through system</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Maintenance Efficiency</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Technician Training:</strong> Universal understanding across sites</li>
-                      <li>• <strong>Documentation Clarity:</strong> Drawings match physical installation</li>
-                      <li>• <strong>Spare Parts:</strong> Standardised components and cables</li>
-                      <li>• <strong>Modification Safety:</strong> Clear identification during alterations</li>
-                      <li>• <strong>Knowledge Transfer:</strong> Easier handover between personnel</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Safety Advantages</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Electrical Safety:</strong> Clear identification of live conductors</li>
-                      <li>• <strong>Earth Protection:</strong> Unmistakable green/yellow coding</li>
-                      <li>• <strong>Isolation Safety:</strong> Correct circuits identified for maintenance</li>
-                      <li>• <strong>Emergency Response:</strong> Rapid identification during emergencies</li>
-                      <li>• <strong>Regulatory Compliance:</strong> Meets safety standard requirements</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h5 className="text-white font-semibold mb-2">Risk Mitigation</h5>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Human Error:</strong> Reduced risk of incorrect connections</li>
-                      <li>• <strong>Cross-Wiring:</strong> Prevention of signal interference</li>
-                      <li>• <strong>Equipment Damage:</strong> Correct polarity and voltage levels</li>
-                      <li>• <strong>Process Safety:</strong> Reliable instrumentation operation</li>
-                      <li>• <strong>Legal Liability:</strong> Compliance with installation standards</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <h5 className="text-white font-semibold mb-2">Cost-Benefit Analysis</h5>
-                <div className="bg-card p-3 rounded border border-gray-600">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-green-400 font-semibold text-sm mb-1">Investment Costs</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• Initial training on standards</li>
-                        <li>• Quality labelling materials</li>
-                        <li>• Documentation time</li>
-                        <li>• Standard cable inventory</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-1">Long-term Savings</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• 50-70% reduction in troubleshooting time</li>
-                        <li>• Reduced equipment damage from errors</li>
-                        <li>• Lower maintenance and commissioning costs</li>
-                        <li>• Improved system reliability and uptime</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Scenario */}
-          <Card className="bg-gradient-to-r from-elec-gray to-elec-dark border-yellow-400/30">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Brain className="h-5 w-5 text-yellow-400" />
-                Real World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p className="font-semibold text-yellow-400">
-                Emergency Repair in Junction Box: Standardised Colour Coding Saves the Day
-              </p>
-              <p>
-                A technician receives an urgent call-out to a chemical processing plant where a critical 
-                temperature measurement has failed, threatening to shut down a £50,000 per hour production 
-                line. The instrument is located in a large junction box containing 40+ wire terminations 
-                from multiple loops.
-              </p>
-              <div className="bg-card p-3 rounded border border-gray-600">
-                <h5 className="text-yellow-400 font-semibold text-sm mb-2">Emergency Situation:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Plant shutdown imminent if temperature loop not restored within 30 minutes</li>
-                  <li>• Multiple instrumentation cables in congested junction box</li>
-                  <li>• Original installer no longer available for consultation</li>
-                  <li>• Limited lighting and cramped working conditions</li>
-                  <li>• High pressure environment with production manager present</li>
-                </ul>
-              </div>
-              <div className="bg-green-900/20 p-3 rounded border border-green-600/30">
-                <h5 className="text-green-400 font-semibold text-sm mb-2">Standard Colour Coding Benefits:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• <strong>Immediate Recognition:</strong> Red and black wires identified as 4-20mA signal</li>
-                  <li>• <strong>Cable Labels:</strong> Clear "TI-101" label matches P&ID documentation</li>
-                  <li>• <strong>Terminal Marking:</strong> Sequential numbering allows quick tracing</li>
-                  <li>• <strong>Shield Identification:</strong> Orange drain wire clearly visible</li>
-                  <li>• <strong>Safety First:</strong> Green/yellow earth wires avoided during testing</li>
-                </ul>
-              </div>
-              <div className="bg-red-900/20 p-3 rounded border border-red-600/30">
-                <h5 className="text-red-400 font-semibold text-sm mb-2">What Could Have Gone Wrong:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Non-standard colours could have led to wrong signal identification</li>
-                  <li>• Unlabelled cables would require extensive circuit tracing</li>
-                  <li>• Mixed numbering systems could cause connection errors</li>
-                  <li>• Poor documentation might necessitate plant shutdown for safety</li>
-                </ul>
-              </div>
-              <div className="bg-blue-900/20 p-3 rounded border border-blue-600/30">
-                <h5 className="text-yellow-400 font-semibold text-sm mb-2">Successful Resolution:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Fault located and isolated within 5 minutes using colour coding</li>
-                  <li>• Temporary repair implemented using spare cable with matching colours</li>
-                  <li>• Production maintained without shutdown, saving £25,000 in lost production</li>
-                  <li>• Permanent repair scheduled during next planned maintenance window</li>
-                </ul>
-              </div>
-              <p className="text-sm italic text-green-400">
-                Result: Standardised colour coding and labelling enabled rapid fault identification 
-                and repair, preventing costly production shutdown and demonstrating the critical 
-                importance of following wiring standards in industrial environments.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p>
-                Following wiring standards ensures clarity, safety, and ease of maintenance across 
-                the lifecycle of the system. Consistent colour coding, proper labelling, and thorough 
-                documentation reduce installation errors, accelerate troubleshooting, and enhance 
-                overall system safety and reliability in industrial environments.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <InstrumentationQuiz 
-            questions={[
-              {
-                id: 1,
-                question: "What colour is typically used for 24V DC positive signal wires in instrumentation?",
-                options: [
-                  "Black",
-                  "Red for positive signal wires and blue for 24VDC positive supply",
-                  "Green",
-                  "Yellow"
-                ],
-                correctAnswer: 1,
-                explanation: "According to ISA-5.1 standards, red is used for positive 4-20mA signal wires, while blue is used for 24VDC positive supply wires in instrumentation applications."
-              },
-              {
-                id: 2,
-                question: "Why is consistent wire labelling important?",
-                options: [
-                  "It looks professional",
-                  "It enables rapid fault identification, prevents connection errors, ensures safety during maintenance, and facilitates troubleshooting",
-                  "It's required by insurance companies",
-                  "It reduces cable costs"
-                ],
-                correctAnswer: 1,
-                explanation: "Consistent wire labelling is critical for safety and efficiency - it enables rapid fault identification, prevents dangerous connection errors, ensures safe maintenance practices, and significantly reduces troubleshooting time."
-              },
-              {
-                id: 3,
-                question: "Name one international standard related to instrumentation wiring.",
-                options: [
-                  "ISA-5.1 (Instrumentation Symbols and Identification) or IEC 60757 (Code for designation of colours)",
-                  "ISO 9001",
-                  "ANSI Z87.1",
-                  "NEMA 4X"
-                ],
-                correctAnswer: 0,
-                explanation: "ISA-5.1 provides guidelines for instrumentation symbols and identification including wire colour coding, while IEC 60757 specifies the international standard for conductor colour designation."
-              },
-              {
-                id: 4,
-                question: "What hazard can incorrect colour coding cause?",
-                options: [
-                  "Higher installation costs",
-                  "Electrical shock, equipment damage, wrong connections leading to process safety incidents, and delayed emergency response",
-                  "Reduced signal quality",
-                  "Increased cable length requirements"
-                ],
-                correctAnswer: 1,
-                explanation: "Incorrect colour coding can cause serious safety hazards including electrical shock from touching live conductors, equipment damage from wrong connections, process safety incidents from faulty signals, and delayed emergency response due to misidentification."
-              },
-              {
-                id: 5,
-                question: "How does wire sizing affect signal transmission?",
-                options: [
-                  "Wire size doesn't affect signals",
-                  "Larger wires increase resistance",
-                  "Wire cross-sectional area affects resistance - larger wires have lower resistance, reducing voltage drop and improving signal integrity",
-                  "Wire size only affects current capacity"
-                ],
-                correctAnswer: 2,
-                explanation: "Wire sizing directly affects signal transmission through resistance. Larger cross-sectional areas have lower resistance, which reduces voltage drop along the cable run and improves signal integrity, especially important for long cable runs in 4-20mA loops."
-            }
-            ]}
-            title="Section 4 Knowledge Check"
-          />
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Link to="/study-centre/upskilling/instrumentation-module-7-section-3">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/study-centre/upskilling/instrumentation-module-7-section-5">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 touch-manipulation active:scale-[0.98]">
-                Next Section
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <Zap className="h-4 w-4" />
+            <span>Module 7 Section 4</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Wiring Standards and Colour Coding
+          </h1>
+          <p className="text-white/80">
+            International standards, cable selection, and labelling conventions
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>IEC 60757:</strong> International conductor colour codes</li>
+              <li><strong>ISA-5.1:</strong> Instrumentation identification standards</li>
+              <li><strong>Green/Yellow:</strong> Always protective earth (mandatory)</li>
+              <li><strong>Red/Black:</strong> Typical 4-20mA signal pair</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Standardised colour coding reduces errors by 50-70%</li>
+              <li><strong>Use:</strong> Always label cables with source, destination, and signal type</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Apply IEC and ISA wiring colour standards",
+              "Select appropriate cable types and sizes",
+              "Implement professional labelling conventions",
+              "Design organised terminal strip layouts",
+              "Understand fire and environmental cable requirements",
+              "Maximise troubleshooting efficiency through standardisation"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 01 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            IEC and ISA Colour Standards
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              International wiring standards ensure consistent identification across installations worldwide.
+              The IEC 60757 standard defines conductor colours for general electrical work, whilst ISA-5.1
+              provides specific guidance for instrumentation systems.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">IEC 60757 Power Conductor Colours:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong className="text-green-400">Green/Yellow:</strong> Protective earth (mandatory)</li>
+                <li><strong className="text-blue-400">Blue:</strong> Neutral conductor</li>
+                <li><strong className="text-amber-400">Brown:</strong> Line/Live conductor (single phase)</li>
+                <li><strong className="text-white">Black/Brown/Grey:</strong> Three phase L1, L2, L3</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">ISA-5.1 Instrumentation Colours:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong className="text-red-400">Red (+):</strong> Positive 4-20mA signal wire</li>
+                <li><strong className="text-white">Black (-):</strong> Negative 4-20mA return wire</li>
+                <li><strong className="text-blue-400">Blue:</strong> 24VDC positive supply</li>
+                <li><strong className="text-white">White:</strong> 24VDC negative/common</li>
+                <li><strong className="text-orange-400">Orange:</strong> Shield/drain wire termination</li>
+                <li><strong className="text-purple-400">Purple:</strong> HART communication pairs</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 02 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Cable Types and Conductor Sizing
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Instrumentation cable selection depends on the application environment, signal type, and
+              required noise immunity. Understanding cable construction helps match the right product
+              to the installation requirements.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Cable Screening Types:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Individual Screen (IS):</strong> Each pair separately screened - best noise immunity</li>
+                <li><strong>Overall Screen (OS):</strong> Single screen over all pairs - cost effective</li>
+                <li><strong>Collective Screen (CS):</strong> Groups of pairs screened - moderate protection</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Conductor Sizing Guide:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>0.5mm squared:</strong> Up to 50mA - not recommended for loops</li>
+                <li><strong>0.75mm squared:</strong> Standard for 4-20mA loops up to 100m</li>
+                <li><strong>1.0mm squared:</strong> Preferred for long runs (100-300m)</li>
+                <li><strong>1.5mm squared:</strong> Heavy duty and very long runs</li>
+                <li><strong>2.5mm squared:</strong> Power distribution to instruments</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Environmental Requirements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>LSZH:</strong> Low Smoke Zero Halogen - essential for enclosed spaces</li>
+                <li><strong>Fire Retardant:</strong> IEC 60332-1 single cable flame test</li>
+                <li><strong>Circuit Integrity:</strong> BS 6387 CWZ for emergency systems</li>
+                <li><strong>Temperature Range:</strong> Typically -40 degrees C to +105 degrees C</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 03 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Labelling and Terminal Organisation
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Systematic labelling and terminal organisation are essential for safe maintenance and
+              efficient troubleshooting. Every cable and termination should be clearly identified
+              with unique designations that match system documentation.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Cable Labelling Requirements:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Unique Identifier:</strong> Each cable requires unique designation</li>
+                <li><strong>Source/Destination:</strong> Clear origin and termination points</li>
+                <li><strong>Signal Type:</strong> 4-20mA, 24VDC, HART, etc.</li>
+                <li><strong>Circuit Reference:</strong> P and ID tag or loop number</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Terminal Strip Best Practices:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Functional Grouping:</strong> Power, signals, communications separate</li>
+                <li><strong>Signal Direction:</strong> Inputs and outputs clearly separated</li>
+                <li><strong>Spare Capacity:</strong> 20% spare terminals for future modifications</li>
+                <li><strong>Test Points:</strong> Easy access for maintenance and testing</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 04 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Benefits of Standardisation
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Following wiring standards delivers significant operational and safety benefits throughout
+              the system lifecycle. The initial investment in proper documentation and standard
+              compliance pays dividends during maintenance and emergency situations.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Troubleshooting Benefits:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Rapid Identification:</strong> Immediate signal recognition by colour</li>
+                <li><strong>Reduced Downtime:</strong> 50-70% reduction in troubleshooting time</li>
+                <li><strong>Error Prevention:</strong> Consistent coding prevents connection mistakes</li>
+                <li><strong>Knowledge Transfer:</strong> Easier handover between personnel</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Safety Advantages:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Electrical Safety:</strong> Clear identification of live conductors</li>
+                <li><strong>Earth Protection:</strong> Unmistakable green/yellow coding</li>
+                <li><strong>Emergency Response:</strong> Rapid identification during emergencies</li>
+                <li><strong>Regulatory Compliance:</strong> Meets safety standard requirements</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Installing</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Follow IEC/ISA colour standards without deviation</li>
+                <li>Label every cable at both ends with permanent markers</li>
+                <li>Document as-built wiring in system drawings</li>
+                <li>Allow 20% spare capacity in terminal strips</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Fault Finding</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Use colour codes for rapid signal identification</li>
+                <li>Check labels match documentation before testing</li>
+                <li>Trace signals using standardised colour patterns</li>
+                <li>Update documentation with any discrepancies found</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Non-standard colours</strong> - creates confusion and safety hazards</li>
+                <li><strong>Missing labels</strong> - impossible to trace signals efficiently</li>
+                <li><strong>Inadequate cable size</strong> - voltage drop causes signal errors</li>
+                <li><strong>Shield earthed at both ends</strong> - creates ground loops</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-3">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-5">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

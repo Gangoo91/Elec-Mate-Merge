@@ -1,44 +1,39 @@
-import { ArrowLeft, Scale, FileText, Wrench, Shield, ClipboardList, Zap } from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { ArrowLeft, Scale, FileText, Wrench, Shield, ClipboardList } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { SectionCard } from '@/components/upskilling/cards';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: "Section 1",
+    id: 1,
     title: 'Purpose and Legal Requirements',
     description: 'Understanding why inspection and testing is essential, legal obligations under the Electricity at Work Regulations, and duty of care responsibilities.',
     icon: Scale,
-    href: 'section-1',
   },
   {
-    number: "Section 2",
+    id: 2,
     title: 'BS 7671 Testing Requirements Overview',
     description: 'Comprehensive overview of the testing requirements specified in BS 7671, including initial verification and periodic inspection.',
     icon: FileText,
-    href: 'section-2',
   },
   {
-    number: "Section 3",
+    id: 3,
     title: 'Test Equipment and Calibration',
     description: 'Essential test instruments, their specifications, calibration requirements, and how to verify equipment accuracy.',
     icon: Wrench,
-    href: 'section-3',
   },
   {
-    number: "Section 4",
+    id: 4,
     title: 'Safety During Testing',
     description: 'Safe isolation procedures, personal protective equipment, risk assessment, and safe working practices during electrical testing.',
     icon: Shield,
-    href: 'section-4',
   },
   {
-    number: "Section 5",
+    id: 5,
     title: 'Test Sequence and Documentation',
     description: 'The correct sequence for carrying out tests and how to properly document results on electrical installation certificates.',
     icon: ClipboardList,
-    href: 'section-5',
   }
 ];
 
@@ -52,7 +47,7 @@ export default function InspectionTestingModule1() {
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+        <div className="px-4 sm:px-6 py-2">
           <Button
             variant="ghost"
             size="lg"
@@ -61,45 +56,41 @@ export default function InspectionTestingModule1() {
           >
             <Link to="/study-centre/upskilling/inspection-testing">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Course
+              Back to Inspection & Testing
             </Link>
           </Button>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-3xl mx-auto">
-          {/* Hero Section */}
-          <header className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-              <Zap className="h-4 w-4" />
-              <span>Module 1</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-              Introduction to Inspection & Testing
-            </h1>
-            <p className="text-white/80 max-w-3xl mx-auto">
-              Master the foundational knowledge required for electrical inspection and testing, covering legal requirements, BS 7671 standards, equipment, safety procedures, and documentation practices.
-            </p>
-          </header>
+      <div className="px-4 sm:px-6 py-6 sm:py-8">
+        {/* Module Header */}
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
+            <span className="text-elec-yellow text-xs font-semibold">MODULE 1</span>
+            <span className="text-white/40 text-xs">•</span>
+            <span className="text-white/60 text-xs">5 Sections</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            Introduction to Inspection & Testing
+          </h1>
+          <p className="text-white/60 text-sm sm:text-base">
+            Master the foundational knowledge required for electrical inspection and testing
+          </p>
+        </div>
 
-          {/* Sections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Module Sections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {sections.map((section, index) => (
-                <ModuleCard
-                  key={index}
-                  number={section.number}
-                  title={section.title}
-                  description={section.description}
-                  icon={section.icon}
-                  href={section.href}
-                />
-              ))}
-            </div>
-          </section>
+        {/* Section Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {sections.map((section, index) => (
+            <SectionCard
+              key={section.id}
+              to={`../inspection-testing-module-1-section-${section.id}`}
+              sectionNumber={section.id}
+              title={section.title}
+              description={section.description}
+              icon={section.icon}
+              index={index}
+            />
+          ))}
         </div>
       </div>
     </div>

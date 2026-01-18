@@ -98,135 +98,135 @@ const quizQuestions = [
       "Normal operation",
       "Faulty AFCI device",
       "Potentially dangerous loose connection requiring investigation",
-      "Grid instability",
+      "Software glitch",
     ],
     correctAnswer: 2,
     explanation:
-      "Intermittent AFCI trips indicate arcing, often from loose connections. These must be investigated as arc faults can cause fires. Never bypass AFCI protection.",
+      "Intermittent AFCI trips often indicate loose connections that create arcing under certain conditions. These require urgent investigation as they can cause fires.",
   },
   {
     id: 4,
-    question: "What battery BMS fault requires immediate attention?",
+    question: "How should inverter error codes be used in fault-finding?",
     options: [
-      "Low state of charge",
-      "Cell voltage imbalance greater than 100mV",
-      "Normal temperature variation",
-      "Scheduled maintenance reminder",
+      "Ignored - they are unreliable",
+      "Used as a starting point for investigation, not definitive diagnosis",
+      "Taken as absolute confirmation of fault location",
+      "Only relevant for warranty claims",
     ],
     correctAnswer: 1,
     explanation:
-      "Cell voltage imbalance greater than 100mV indicates potential cell failure or balancing circuit issues, requiring investigation before continued operation.",
+      "Error codes provide valuable diagnostic information but indicate symptoms rather than root causes. Use them to guide investigation, not as definitive diagnosis.",
   },
   {
     id: 5,
-    question: "What does an inverter overvoltage fault typically indicate?",
+    question: "What does reduced string voltage (lower than expected Voc) typically indicate?",
     options: [
-      "PV array too small",
-      "Grid voltage too high or string Voc exceeds inverter limit",
-      "Low irradiance",
-      "Module degradation",
+      "Inverter fault",
+      "Shaded or bypassed cells, or failed bypass diodes",
+      "Grid voltage issue",
+      "Incorrect system design",
     ],
     correctAnswer: 1,
     explanation:
-      "Overvoltage faults occur when input voltage exceeds inverter limits, either from high grid voltage or cold-condition Voc exceeding DC input ratings.",
+      "Lower than expected Voc indicates some cells are bypassed (due to shading, cell failure, or stuck bypass diodes), reducing the string voltage.",
   },
   {
     id: 6,
-    question: "How should you approach a system with multiple simultaneous faults?",
+    question: "What should be checked if multiple strings show similar underperformance?",
     options: [
-      "Address all faults together",
-      "Prioritise safety faults, then isolate and address systematically",
-      "Replace all components",
-      "Ignore minor faults",
+      "Individual module faults",
+      "Common factors like inverter, irradiance measurement, or shading",
+      "Cable sizing",
+      "String fuse ratings",
     ],
     correctAnswer: 1,
     explanation:
-      "Prioritise safety-related faults first. Then isolate the system and address faults systematically, as some may be consequences of others rather than independent issues.",
+      "Consistent underperformance across multiple strings suggests common factors like inverter issues, soiling, environmental conditions, or incorrect baseline assumptions.",
   },
   {
     id: 7,
-    question: "What tool is most useful for identifying thermal anomalies?",
+    question: "What is the purpose of comparing measured values to commissioning records?",
     options: [
-      "Multimeter",
-      "Thermal imaging camera",
-      "Clamp meter",
-      "Oscilloscope",
+      "Regulatory requirement only",
+      "Identify degradation or changes from baseline",
+      "No practical purpose",
+      "Only for warranty claims",
     ],
     correctAnswer: 1,
     explanation:
-      "Thermal imaging cameras quickly identify hot spots from loose connections, failed bypass diodes, cell defects, and other thermal anomalies across the system.",
+      "Commissioning records provide baseline values for comparison, helping identify changes that indicate developing faults or degradation over time.",
   },
   {
     id: 8,
-    question: "What should be verified after replacing a failed inverter?",
+    question: "How should communication faults be approached?",
     options: [
-      "Visual appearance only",
-      "Grid settings, communication, and performance match specifications",
-      "Colour matches original",
-      "No verification needed",
+      "Always replace the inverter",
+      "Check physical connections, configuration, and network issues systematically",
+      "Ignore - they do not affect generation",
+      "Wait for automatic recovery",
     ],
     correctAnswer: 1,
     explanation:
-      "After inverter replacement, verify grid compliance settings match DNO requirements, communication links work, and measured performance matches expected values.",
+      "Communication faults require systematic checking of physical connections, network configuration, and software settings before assuming hardware failure.",
   },
   {
     id: 9,
-    question: "What causes repeated DC fuse failures?",
+    question: "What battery fault requires immediate system shutdown?",
     options: [
-      "Fuse ageing only",
-      "Overcurrent from short circuit, ground fault, or undersized fusing",
-      "Normal operation",
-      "Cold weather",
+      "Low state of charge",
+      "Signs of thermal runaway (swelling, smoke, unusual heat)",
+      "Communication errors",
+      "Slow charge rate",
     ],
     correctAnswer: 1,
     explanation:
-      "Repeated fuse failures indicate underlying issues: short circuits, ground faults, arc faults, or incorrect fuse sizing. Investigate the cause before replacing fuses.",
+      "Thermal runaway signs (swelling, smoke, extreme heat, unusual odours) require immediate isolation and evacuation - this is a fire and explosion hazard.",
   },
   {
     id: 10,
-    question: "When should manufacturer technical support be contacted?",
+    question: "What is the value of documenting fault-finding procedures and outcomes?",
     options: [
-      "Never - always solve problems independently",
-      "For warranty claims and complex faults beyond standard diagnostics",
-      "For every fault",
-      "Only for new equipment",
+      "No value",
+      "Building knowledge base for future similar faults",
+      "Warranty purposes only",
+      "Customer entertainment",
     ],
     correctAnswer: 1,
     explanation:
-      "Contact manufacturers for warranty issues, complex or unusual faults, access to diagnostic tools, and guidance on repairs that could affect warranties.",
+      "Documentation builds institutional knowledge, speeds diagnosis of recurring issues, supports training, and provides evidence for warranty claims.",
   },
 ];
 
 const faqs = [
   {
-    question: "How do I interpret inverter error codes?",
+    question: "How do I approach a complete system failure?",
     answer:
-      "Consult the manufacturer's documentation for specific error code meanings. Document the code, conditions when it occurred, and any patterns. Many manufacturers provide online databases or technical support for error code interpretation.",
+      "Start with the basics - verify AC supply is present, check all isolators are on, review monitoring for error codes. If no power, work backwards from the inverter to the array checking for open circuits. Verify grid connection status. Document findings systematically.",
   },
   {
-    question: "What causes intermittent faults that are hard to diagnose?",
+    question: "What causes ground fault indications that clear when tested?",
     answer:
-      "Common causes include loose connections that make contact intermittently, temperature-dependent component failures, moisture ingress during specific weather, and grid voltage fluctuations. Use data logging and thermal imaging to capture conditions during fault occurrence.",
+      "Intermittent ground faults are often caused by moisture ingress that dries out, damaged insulation that only makes contact under certain conditions, or loose connections. They require thorough investigation including insulation resistance testing in various conditions.",
   },
   {
-    question: "Should I reset an inverter that has faulted?",
+    question: "How do I diagnose inverter efficiency loss?",
     answer:
-      "Check error codes and documentation first. Some faults (grid events, temporary conditions) can be safely reset. Others (ground faults, arc faults, overcurrent) require investigation before resetting. Never repeatedly reset without understanding the cause.",
+      "Compare DC input to AC output power. Check for excess heat indicating internal issues. Review efficiency trends over time - gradual decline often indicates capacitor ageing. Compare to manufacturer specifications and similar units in the fleet.",
   },
   {
-    question: "How do I diagnose communication faults in monitoring systems?",
+    question: "What tools are essential for PV fault-finding?",
     answer:
-      "Check physical connections (cables, terminators), verify network settings (IP addresses, ports), test communication pathways independently, and review firewall settings. Use manufacturer diagnostic tools where available.",
+      "Essential tools include a CAT III/IV rated multimeter, DC clamp meter, insulation resistance tester, and thermal imaging camera. I-V curve tracers are valuable for detailed module diagnostics. Always ensure tools are rated for DC voltages present.",
   },
   {
-    question: "What documentation should I create during fault investigation?",
+    question: "How should I handle faults I cannot diagnose?",
     answer:
-      "Record initial symptoms, error codes, environmental conditions, test results, components checked, root cause determination, repairs performed, and verification tests. This supports warranty claims and helps identify recurring issues.",
+      "Document all observations and test results. Consult manufacturer technical support with specific error codes and measurements. Consider engaging specialist diagnostic services. Do not guess - incorrect repairs waste time and money.",
   },
   {
-    question: "How do I handle faults on systems under warranty?",
+    question: "What is the most common cause of underperformance?",
     answer:
-      "Document the fault thoroughly with photographs and data. Contact the manufacturer or installer before attempting repairs that could void warranty. Follow their guidance on diagnostic steps and approved repair procedures.",
+      "Soiling is the most common cause of underperformance, followed by shading (often from new vegetation or building changes), followed by component faults. Always check the simple causes first before assuming equipment failure.",
   },
 ];
 
@@ -235,415 +235,249 @@ const RenewableEnergyModule7Section4 = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/80">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link
-            to=".."
-            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Module Overview
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3 flex items-center gap-3">
+          <Link to="..">
+            <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
           </Link>
-          <span className="text-sm text-white">Module 7 • Section 4</span>
+          <span className="text-white font-medium truncate">Fault-Finding in Renewable Systems</span>
         </div>
-      </header>
+      </div>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden py-12 sm:py-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/10 via-transparent to-transparent" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-elec-yellow/10 px-4 py-1.5 text-sm font-medium text-elec-yellow">
-              <Zap className="h-4 w-4" />
-              Operation and Maintenance
-            </div>
-            <h1 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-              Fault-Finding in Renewable Systems
-            </h1>
-            <p className="text-lg text-white sm:text-xl">
-              Systematic diagnostics for PV, battery, and inverter systems to reduce downtime and prevent unnecessary repairs.
+      {/* Hero Section */}
+      <div className="px-4 py-6 text-center">
+        <div className="inline-flex items-center gap-2 bg-elec-yellow/10 border border-elec-yellow/30 rounded-full px-3 py-1 mb-3">
+          <Zap className="w-4 h-4 text-elec-yellow" />
+          <span className="text-elec-yellow text-sm font-medium">Module 7 - Section 4</span>
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+          Fault-Finding in Renewable Systems
+        </h1>
+        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+          Systematic diagnostic techniques for PV, battery, and inverter systems
+        </p>
+      </div>
+
+      {/* Quick Summary */}
+      <div className="px-4 pb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">In 30 Seconds:</span> Document symptoms first, then work backwards from the fault
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Spot it:</span> Zero current with voltage = open circuit; low voltage = bypassed cells
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Use it:</span> Compare to commissioning records and baseline performance
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Key Rule:</span> Test IR and verify protection before re-energising
             </p>
           </div>
         </div>
-      </section>
-
-      {/* Quick Summary */}
-      <section className="py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-lg border-l-2 border-elec-yellow/50 bg-elec-yellow/5 p-4">
-              <h3 className="mb-2 font-semibold text-white">Systematic Approach</h3>
-              <p className="text-sm text-white">
-                Following a logical fault-finding methodology prevents guesswork and ensures the actual root cause is identified and addressed.
-              </p>
-            </div>
-            <div className="rounded-lg border-l-2 border-elec-yellow/50 bg-elec-yellow/5 p-4">
-              <h3 className="mb-2 font-semibold text-white">Root Cause Analysis</h3>
-              <p className="text-sm text-white">
-                Distinguishing between equipment failures and site-related issues ensures appropriate repairs and prevents recurring faults.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Learning Outcomes */}
-      <section className="py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6">
-            <h2 className="mb-4 text-xl font-bold text-white">Learning Outcomes</h2>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                "Use logical steps for fault isolation",
-                "Interpret error codes and warning signals",
-                "Differentiate between hardware and configuration issues",
-                "Apply appropriate testing techniques",
-                "Document fault investigation findings",
-                "Determine when to escalate to manufacturer support",
-              ].map((outcome, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-elec-yellow" />
-                  <span className="text-sm text-white">{outcome}</span>
-                </div>
-              ))}
+      <div className="px-4 pb-6">
+        <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
+        <div className="space-y-2">
+          {[
+            "Apply systematic fault-finding methodology",
+            "Interpret common error codes and symptoms",
+            "Diagnose PV array, inverter, and battery faults",
+            "Distinguish equipment faults from installation issues",
+            "Document findings for warranty and knowledge building",
+            "Verify repairs before system re-energisation",
+          ].map((outcome, index) => (
+            <div key={index} className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
+              <span className="text-white/80 text-sm">{outcome}</span>
             </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="px-4 space-y-6 pb-8">
+        {/* Section 01 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
+            <h2 className="text-xl font-semibold text-white">Systematic Fault-Finding Approach</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Effective fault-finding follows a systematic approach rather than random component replacement, saving time and avoiding unnecessary costs.
+            </p>
+            <p>
+              <span className="text-white font-medium">Information Gathering:</span> Document all symptoms including error codes, performance data, and fault timing. Review monitoring history for patterns. Check recent weather events and maintenance activities. Note any changes to site conditions or equipment.
+            </p>
+            <p>
+              <span className="text-white font-medium">Fault Tree Analysis:</span> Start with the observed symptom and work backwards through possible causes. Test hypotheses systematically, ruling out possibilities until root cause is identified. Consider multiple simultaneous faults in complex situations.
+            </p>
+            <p>
+              <span className="text-white font-medium">Test and Verify:</span> Use appropriate test equipment to confirm hypotheses. Compare measurements to expected values and commissioning records. After repair, test to confirm the fault is resolved before full re-commissioning.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[0]]} />
+
+        {/* Section 02 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
+            <h2 className="text-xl font-semibold text-white">PV Array Fault Diagnosis</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Array faults can be identified through voltage and current measurements combined with visual inspection and thermal imaging.
+            </p>
+            <p>
+              <span className="text-white font-medium">Voltage Anomalies:</span> Low Voc indicates bypassed cells from shading, cell failure, or stuck bypass diodes. Very low or zero Voc suggests complete string open circuit. Inconsistent string voltages warrant individual string investigation.
+            </p>
+            <p>
+              <span className="text-white font-medium">Current Anomalies:</span> Zero current with normal voltage indicates open circuit such as blown fuse, open isolator, or loose connector. Low current suggests partial shading, soiling, or cell degradation. Use DC clamp meter to compare string currents.
+            </p>
+            <p>
+              <span className="text-white font-medium">Ground Faults:</span> Ground fault indications typically result from insulation breakdown. Check cables for damage, especially at penetrations and junction boxes. Water ingress is a common cause. Use insulation resistance testing to locate the fault.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[1]]} />
+
+        {/* Section 03 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
+            <h2 className="text-xl font-semibold text-white">Inverter Fault Diagnosis</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Inverters provide error codes and data that guide diagnosis, but symptoms must be interpreted in context rather than taken at face value.
+            </p>
+            <p>
+              <span className="text-white font-medium">Error Code Interpretation:</span> Codes indicate what the inverter detected, not necessarily the root cause. Grid voltage errors may result from DNO issues or internal sensing faults. Ground fault codes may indicate array problems or inverter sensor failures. Review manufacturer documentation for specific code meanings.
+            </p>
+            <p>
+              <span className="text-white font-medium">Efficiency Loss:</span> Compare DC input power to AC output power. Gradual efficiency decline often indicates capacitor degradation. Sudden drops may indicate failed components. Check for cooling system issues causing thermal derating.
+            </p>
+            <p>
+              <span className="text-white font-medium">Communication Failures:</span> Check physical connections first such as RS485, Ethernet, and WiFi. Verify network configuration and IP settings. Review firewall and port settings. Try manufacturer diagnostic tools before assuming hardware failure.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[2]]} />
+
+        {/* Section 04 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
+            <h2 className="text-xl font-semibold text-white">Battery System Fault Diagnosis</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Battery fault diagnosis requires particular care due to the safety hazards associated with battery systems.
+            </p>
+            <p>
+              <span className="text-white font-medium">Critical Safety Issues:</span> Signs of thermal runaway such as swelling, smoke, unusual heat, or strange odours require immediate isolation and evacuation. Do not attempt diagnosis. Contact fire services if necessary and manufacturer emergency support.
+            </p>
+            <p>
+              <span className="text-white font-medium">Performance Issues:</span> Check cell voltage balance as excessive imbalance indicates failing cells. Review temperature distribution and look for abnormal hot spots. Verify BMS operation and communication. Compare capacity tests to specifications.
+            </p>
+            <p>
+              <span className="text-white font-medium">Charging/Discharging Faults:</span> Verify inverter settings match battery requirements. Check communication between BMS and inverter. Review protection settings such as voltage limits and current limits. Confirm cooling system operation is adequate for ambient conditions.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[3]]} />
+
+        {/* Section 05 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
+            <h2 className="text-xl font-semibold text-white">Post-Repair Verification</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Thorough verification after repairs ensures the fault is fully resolved and the system can be safely returned to service.
+            </p>
+            <p>
+              <span className="text-white font-medium">Before Re-Energisation:</span> Perform insulation resistance testing on affected circuits. Verify all connections are correctly made and torqued. Confirm protection devices are functional. Remove all tools and temporary equipment.
+            </p>
+            <p>
+              <span className="text-white font-medium">Functional Testing:</span> Energise the system and observe initial operation. Verify error codes have cleared. Check performance metrics return to expected values. Monitor for any recurrence of symptoms.
+            </p>
+            <p>
+              <span className="text-white font-medium">Documentation:</span> Record fault symptoms, diagnosis process, and repair actions. Document test results before and after repair. Note any recommendations for preventing recurrence. Update maintenance records and commissioning data.
+            </p>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <div className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/20 rounded-xl p-4">
+          <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+            <Zap className="w-4 h-4 text-elec-yellow" />
+            Practical Guidance
+          </h3>
+          <div className="space-y-2 text-white/80 text-sm">
+            <p>
+              <span className="text-white font-medium">Check simple causes first:</span> Soiling, tripped isolators, and loose connections cause more problems than component failures. Always rule out the obvious before assuming major faults.
+            </p>
+            <p>
+              <span className="text-white font-medium">Use manufacturer resources:</span> Technical support lines, diagnostic software, and documentation can save significant time. Build relationships with manufacturer technical teams.
+            </p>
+            <p>
+              <span className="text-white font-medium">Build diagnostic skills over time:</span> Document every fault diagnosis to build personal and team knowledge. Patterns emerge that speed future diagnosis of similar issues.
+            </p>
           </div>
         </div>
-      </section>
 
-      {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          {/* Section 01 */}
-          <section className="mb-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                01
-              </span>
-              <h2 className="text-2xl font-bold text-white">Systematic Fault-Finding Methodology</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Effective fault-finding follows a structured approach that prevents wasted time and ensures the actual root cause is identified.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Fault Tree Approach</h4>
-                <ol className="list-inside list-decimal space-y-2">
-                  <li><strong>Document the symptom:</strong> What is the observed problem?</li>
-                  <li><strong>Gather information:</strong> Error codes, monitoring data, recent changes</li>
-                  <li><strong>List possible causes:</strong> What could produce this symptom?</li>
-                  <li><strong>Prioritise by likelihood:</strong> Most common causes first</li>
-                  <li><strong>Test hypotheses:</strong> Systematically eliminate possibilities</li>
-                  <li><strong>Identify root cause:</strong> Confirm with testing</li>
-                  <li><strong>Implement repair:</strong> Address the actual cause</li>
-                  <li><strong>Verify resolution:</strong> Confirm system operates correctly</li>
-                </ol>
+        {/* FAQs */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
+                <h3 className="text-white font-medium mb-2">{faq.question}</h3>
+                <p className="text-white/70 text-sm">{faq.answer}</p>
               </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Information Gathering</h4>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Review inverter display and error codes</li>
-                  <li>Check monitoring system for performance data</li>
-                  <li>Note environmental conditions (weather, temperature)</li>
-                  <li>Ask about recent events, changes, or maintenance</li>
-                  <li>Review historical fault logs for patterns</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Isolation Techniques</h4>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Test individual components separately</li>
-                  <li>Use bypass methods where safe</li>
-                  <li>Compare with known good references</li>
-                  <li>Validate findings with multiple test methods</li>
-                </ul>
-              </div>
-            </div>
-          </section>
+            ))}
+          </div>
+        </section>
 
-          <InlineCheck
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
+        {/* Quiz */}
+        <Quiz
+          title="Fault-Finding Quiz"
+          questions={quizQuestions}
+        />
 
-          {/* Section 02 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                02
-              </span>
-              <h2 className="text-2xl font-bold text-white">Common PV System Faults</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Understanding common fault patterns and their signatures enables rapid diagnosis and targeted repairs.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Complete String Failure</h4>
-                <p className="mb-2"><strong>Symptoms:</strong> Zero current, no voltage under load</p>
-                <p className="mb-2"><strong>Common causes:</strong></p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Blown string fuse (most common)</li>
-                  <li>Loose MC4 connector</li>
-                  <li>Cable damage from wildlife</li>
-                  <li>Failed DC isolator</li>
-                  <li>Module junction box failure</li>
-                </ul>
-                <p className="mt-2"><strong>Diagnosis:</strong> Check DC isolators and fuses first, then measure Voc at combiner box, trace cable route for damage.</p>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Module Mismatch/Underperformance</h4>
-                <p className="mb-2"><strong>Symptoms:</strong> Uneven string currents, reduced output, thermal hotspots</p>
-                <p className="mb-2"><strong>Common causes:</strong></p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Partial shading from new obstructions</li>
-                  <li>Uneven soiling accumulation</li>
-                  <li>Bypass diode failure</li>
-                  <li>Cell-level degradation</li>
-                  <li>Manufacturing defects</li>
-                </ul>
-                <p className="mt-2"><strong>Diagnosis:</strong> I-V curve tracing, thermal imaging during peak sunlight, string current comparison.</p>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Ground Fault Detection</h4>
-                <p className="mb-2"><strong>Symptoms:</strong> Ground fault alarm, reduced insulation resistance</p>
-                <p className="mb-2"><strong>Common causes:</strong></p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Water ingress into junction boxes</li>
-                  <li>Cable insulation damage</li>
-                  <li>Rodent damage</li>
-                  <li>UV degradation of cables</li>
-                  <li>Installation damage</li>
-                </ul>
-                <p className="mt-2"><strong>Diagnosis:</strong> Insulation resistance testing at 500V DC, systematic string isolation to locate fault.</p>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-
-          {/* Section 03 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                03
-              </span>
-              <h2 className="text-2xl font-bold text-white">Battery and Inverter Faults</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Battery storage and power electronics introduce additional complexity requiring specialised diagnostic approaches.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Battery Management System Faults</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Overvoltage protection:</strong> Cell voltage greater than 4.2V (Li-ion) - indicates charging issue</li>
-                  <li><strong>Undervoltage protection:</strong> Cell voltage less than 2.5V (Li-ion) - indicates over-discharge</li>
-                  <li><strong>Cell imbalance:</strong> Voltage variation greater than 100mV indicates balancing or cell failure</li>
-                  <li><strong>Temperature protection:</strong> Operating outside safe range requires cooling/heating review</li>
-                  <li><strong>Communication errors:</strong> BMS module communication failures</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Inverter Faults</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Grid voltage fault:</strong> Check utility supply, voltage may be outside acceptable range</li>
-                  <li><strong>Frequency fault:</strong> Grid frequency deviation triggering protection</li>
-                  <li><strong>Overcurrent:</strong> May indicate internal fault or excessive load</li>
-                  <li><strong>Overtemperature:</strong> Check ventilation, ambient temperature, cooling fans</li>
-                  <li><strong>Isolation fault:</strong> DC-side ground fault detection</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Internal Component Failures</h4>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>IGBT or MOSFET switching device failure</li>
-                  <li>DC bus capacitor degradation</li>
-                  <li>Cooling system malfunction</li>
-                  <li>Control board or sensor failure</li>
-                  <li>EMC filter component breakdown</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-
-          {/* Section 04 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                04
-              </span>
-              <h2 className="text-2xl font-bold text-white">Site vs Equipment Root Causes</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Determining whether faults originate from site conditions or equipment failure is crucial for effective repairs and warranty claims.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Site-Related Causes</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Earthing issues:</strong> Poor earthing or bonding causing protection trips</li>
-                  <li><strong>Cable sizing:</strong> Undersized cables causing voltage drop or overheating</li>
-                  <li><strong>Environmental:</strong> Excessive dust, moisture, salt spray, or animal damage</li>
-                  <li><strong>Grid quality:</strong> Voltage fluctuations, frequency issues, harmonics</li>
-                  <li><strong>Installation errors:</strong> Incorrect connections, torque, or configuration</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Equipment Failures</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Component wear:</strong> Capacitor ageing, fan bearing failure</li>
-                  <li><strong>Manufacturing defects:</strong> Cell defects, solder failures</li>
-                  <li><strong>Software bugs:</strong> Firmware issues causing incorrect behaviour</li>
-                  <li><strong>Design limitations:</strong> Equipment not suitable for conditions</li>
-                  <li><strong>Age-related:</strong> Normal end-of-life degradation</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Determination Approach</h4>
-                <ol className="list-inside list-decimal space-y-1">
-                  <li>Review installation records for compliance</li>
-                  <li>Check environmental conditions against specifications</li>
-                  <li>Verify grid supply quality</li>
-                  <li>Test replacement equipment to confirm equipment fault</li>
-                  <li>Document findings for warranty discussions</li>
-                </ol>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[3].question}
-            options={quickCheckQuestions[3].options}
-            correctIndex={quickCheckQuestions[3].correctIndex}
-            explanation={quickCheckQuestions[3].explanation}
-          />
-
-          {/* Section 05 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                05
-              </span>
-              <h2 className="text-2xl font-bold text-white">Safety During Fault Investigation</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Fault investigation on energised or recently active systems requires careful attention to safety procedures.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">High Voltage Hazards</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li>PV arrays remain energised in daylight - cannot be fully isolated</li>
-                  <li>Battery systems maintain voltage even when isolated</li>
-                  <li>Capacitors can store energy after disconnection</li>
-                  <li>Verify zero energy state before intrusive work</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Arc Flash Risk</h4>
-                <p className="mb-2">
-                  DC arc faults are particularly dangerous as they can be sustained indefinitely:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Use appropriate arc-rated PPE</li>
-                  <li>Maintain safe working distances</li>
-                  <li>Never work on suspected arc fault sources when energised</li>
-                  <li>Investigate AFCI trips thoroughly before re-energising</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Safe Testing Procedures</h4>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Use properly rated test equipment (CAT III minimum)</li>
-                  <li>Verify test lead integrity before use</li>
-                  <li>Follow GS38 guidance for test equipment</li>
-                  <li>Prove test equipment before and after testing</li>
-                  <li>Never assume - always verify isolation</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Practical Guidance */}
-          <section className="mb-12 mt-12">
-            <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/5 p-6">
-              <h2 className="mb-4 text-xl font-bold text-white">Practical Guidance</h2>
-              <div className="space-y-4 text-white">
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Building Diagnostic Skills</h4>
-                  <p className="mt-1 text-sm">
-                    Document every fault investigation including initial hypotheses and actual findings. Review cases to identify patterns and improve diagnostic efficiency over time.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">When to Seek Help</h4>
-                  <p className="mt-1 text-sm">
-                    Do not hesitate to contact manufacturer technical support for complex faults or unfamiliar error codes. Document your investigation thoroughly before calling to enable efficient support.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Avoiding Common Mistakes</h4>
-                  <p className="mt-1 text-sm">
-                    Do not jump to conclusions or replace components without testing. Always verify the repair has resolved the issue before leaving site. Document findings even when faults are quickly resolved.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* FAQs */}
-          <section className="mb-12">
-            <h2 className="mb-6 text-2xl font-bold text-white">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="rounded-lg border border-white/10 bg-white/5 p-4">
-                  <h3 className="mb-2 font-semibold text-elec-yellow">{faq.question}</h3>
-                  <p className="text-sm text-white">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Quiz Section */}
-          <section className="mb-12">
-            <Quiz
-              title="Fault-Finding Quiz"
-              questions={quizQuestions}
-              onComplete={(score) => console.log("Quiz completed with score:", score)}
-            />
-          </section>
-
-          {/* Navigation */}
-          <nav className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:justify-between">
-            <Link to="/upskilling/renewable-energy/module-7/section-3">
-              <Button variant="outline" className="w-full gap-2 border-white/20 text-white hover:bg-white/10 sm:w-auto">
-                <ArrowLeft className="h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/upskilling/renewable-energy/module-7/section-5">
-              <Button className="w-full gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90 sm:w-auto">
-                Next Section
-                <ArrowLeft className="h-4 w-4 rotate-180" />
-              </Button>
-            </Link>
-          </nav>
+        {/* Bottom Navigation */}
+        <div className="flex justify-between items-center pt-4 border-t border-white/10">
+          <Link to="../section-3">
+            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Button>
+          </Link>
+          <Link to="../section-5">
+            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

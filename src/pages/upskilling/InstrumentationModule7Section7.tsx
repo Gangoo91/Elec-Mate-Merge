@@ -1,645 +1,457 @@
-import { ArrowLeft, ArrowRight, AlertTriangle, Search, Zap, Book, CheckCircle2, Brain, Target, Settings, Activity } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
-import InstrumentationQuiz from '@/components/upskilling/quiz/InstrumentationQuiz';
+import { ArrowLeft, AlertTriangle, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
+import useSEO from "@/hooks/useSEO";
+
+const TITLE = "Common Wiring Faults and Loop Integrity Checks - Instrumentation Course";
+const DESCRIPTION = "Learn to identify and diagnose common wiring faults in 4-20mA loops including open circuits, short circuits, ground loops, and reversed polarity.";
+
+const quickCheckQuestions = [
+  {
+    id: "m7s7-qc1",
+    question: "What current reading indicates an open circuit in a 4-20mA loop?",
+    options: ["4mA", "12mA", "20mA", "0mA or less than 4mA"],
+    correctIndex: 3,
+    explanation: "An open circuit prevents current flow, resulting in 0mA reading. Any reading below 3.8mA typically indicates a break in the loop circuit."
+  },
+  {
+    id: "m7s7-qc2",
+    question: "What causes a ground loop in instrumentation systems?",
+    options: ["Too much current", "Multiple earth connections creating circulating currents", "High resistance cable", "Incorrect wire gauge"],
+    correctIndex: 1,
+    explanation: "Ground loops occur when a circuit has multiple earth connections at different potentials, allowing circulating currents that cause signal interference and measurement errors."
+  },
+  {
+    id: "m7s7-qc3",
+    question: "What is the correct way to terminate a cable shield?",
+    options: ["Earth at both ends", "Earth at single point only (usually control room end)", "Leave unconnected", "Connect to signal wire"],
+    correctIndex: 1,
+    explanation: "Cable shields should be earthed at a single point only, typically at the control room end, to provide EMI protection without creating ground loops."
+  }
+];
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "What symptom suggests an open circuit in a 4-20mA loop?",
+    options: ["Signal stuck at 20mA", "Signal reads 0mA or less than 4mA indicating no current flow", "Erratic fluctuating readings", "Normal operation"],
+    correctAnswer: 1,
+    explanation: "An open circuit prevents any current from flowing, resulting in 0mA or a reading below the 4mA minimum. This is often caused by broken wires, loose connections, or failed terminations."
+  },
+  {
+    id: 2,
+    question: "What's a sign of reversed polarity?",
+    options: ["Normal signal levels", "Transmitter fails to power up, or negative current indication", "Signal stuck at 12mA", "Improved accuracy"],
+    correctAnswer: 1,
+    explanation: "Reversed polarity prevents 2-wire transmitters from operating because they require correct polarity for their internal electronics. The transmitter won't power up and the loop shows no current."
+  },
+  {
+    id: 3,
+    question: "How can improper shielding cause problems?",
+    options: ["It reduces cable weight", "It allows electromagnetic interference to couple into signal wires, causing noise and unstable readings", "It increases current flow", "It has no effect"],
+    correctAnswer: 1,
+    explanation: "Improper shielding allows EMI from motors, VFDs, and other equipment to couple into signal wires, causing noise, unstable readings, and measurement errors."
+  },
+  {
+    id: 4,
+    question: "What fault might cause signal drift or offset errors?",
+    options: ["Open circuit", "High resistance connections, corrosion, or water ingress affecting terminations", "Reversed polarity", "Missing labels"],
+    correctAnswer: 1,
+    explanation: "High resistance connections from corrosion, loose terminations, or water ingress cause voltage drops that vary with current, leading to signal drift and offset errors."
+  },
+  {
+    id: 5,
+    question: "Why is insulation resistance important?",
+    options: ["For colour identification", "Low insulation resistance allows leakage currents causing measurement errors and potential safety hazards", "It affects cable weight", "It determines cable colour"],
+    correctAnswer: 1,
+    explanation: "Low insulation resistance allows leakage currents between conductors or to earth, causing measurement errors. Minimum 1 Megohm is typically required for reliable operation."
+  },
+  {
+    id: 6,
+    question: "What causes a short circuit in a 4-20mA loop?",
+    options: ["Open connections", "Conductors touching due to damaged insulation, water ingress, or incorrect termination", "Low battery", "Wrong cable type"],
+    correctAnswer: 1,
+    explanation: "Short circuits occur when conductors make unintended contact due to damaged insulation, water ingress, pinched cables, or crossed wires at terminations."
+  },
+  {
+    id: 7,
+    question: "What symptom indicates a ground loop problem?",
+    options: ["Zero current reading", "Signal noise, 50/60Hz interference pattern, or readings that shift when touching equipment", "Constant 20mA reading", "No power to transmitter"],
+    correctAnswer: 1,
+    explanation: "Ground loops cause circulating currents that appear as 50/60Hz noise, drifting signals, or readings that change when touching equipment due to body capacitance effects."
+  },
+  {
+    id: 8,
+    question: "What is the purpose of continuity testing before commissioning?",
+    options: ["To test insulation", "To verify the complete circuit path exists with no breaks before applying power", "To measure current", "To check cable colour"],
+    correctAnswer: 1,
+    explanation: "Continuity testing verifies the complete circuit path exists with no breaks in wiring, confirming all connections are made before applying power to the loop."
+  },
+  {
+    id: 9,
+    question: "What might cause intermittent signal faults?",
+    options: ["Permanent open circuit", "Loose connections that make and break contact due to vibration or temperature changes", "Correct installation", "Proper shielding"],
+    correctAnswer: 1,
+    explanation: "Intermittent faults are often caused by loose connections that make and break contact due to vibration, thermal expansion, or corroded terminals."
+  },
+  {
+    id: 10,
+    question: "How should you troubleshoot an erratic 4-20mA signal?",
+    options: ["Replace all cables immediately", "Systematically check for EMI sources, shield integrity, loose connections, and ground loops", "Ignore it", "Increase the supply voltage"],
+    correctAnswer: 1,
+    explanation: "Systematic troubleshooting involves checking EMI sources nearby, verifying shield continuity and earthing, inspecting connections, and testing for ground loops using isolation techniques."
+  }
+];
+
+const faqs = [
+  {
+    question: "How can I tell the difference between an open circuit and a faulty transmitter?",
+    answer: "Disconnect the transmitter and use a loop calibrator in source mode. If the receiver responds correctly to the calibrator, the transmitter is faulty. If not, the fault is in the wiring or receiver."
+  },
+  {
+    question: "What's the quickest way to find an intermittent connection?",
+    answer: "While monitoring the signal, systematically flex cables and tap on junction boxes and terminations. The fault location often becomes apparent when the signal drops out during manipulation."
+  },
+  {
+    question: "Why does my signal have 50Hz noise?",
+    answer: "50Hz noise typically indicates a ground loop, poor shielding, or cables routed too close to power cables. Check shield earthing, cable routing, and verify single-point grounding."
+  },
+  {
+    question: "Can water in a junction box cause signal problems?",
+    answer: "Yes. Water creates leakage paths between terminals, lowering insulation resistance and causing signal drift, noise, and potential short circuits. Inspect and dry boxes, then identify the water source."
+  },
+  {
+    question: "Should I earth the shield at both ends for long cable runs?",
+    answer: "No. Even for long runs, earth at one end only to prevent ground loops. For very long runs or high EMI environments, consider using optical isolation or digital protocols instead."
+  },
+  {
+    question: "How do I test for a ground loop without special equipment?",
+    answer: "Temporarily disconnect the earth at one end of the shield and observe the signal. If noise reduces significantly, a ground loop exists. Implement proper single-point earthing."
+  }
+];
 
 const InstrumentationModule7Section7 = () => {
+  useSEO({
+    title: TITLE,
+    description: DESCRIPTION
+  });
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in overflow-x-hidden bg-[#1a1a1a]">
-      <div className="px-8 pt-8 pb-12">
-        <Link to="/study-centre/upskilling/instrumentation-module-7">
-          <Button
-            variant="ghost"
-            className="text-foreground hover:bg-card hover:text-yellow-400 transition-all duration-200 mb-8 px-4 py-2 rounded-md touch-manipulation active:scale-[0.98]"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Module 7
+    <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
+      {/* Sticky Header */}
+      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
+        <div className="px-4 sm:px-6 py-2">
+          <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="..">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Link>
           </Button>
-        </Link>
-        
-        <div className="space-y-8">
-          {/* Header */}
-          <div>
-            <div className="flex items-center gap-4 mb-4">
-              <AlertTriangle className="h-8 w-8 text-yellow-400" />
-              <div>
-                <h1 className="text-4xl font-bold text-white">
-                  Common Wiring Faults and Loop Integrity Checks
-                </h1>
-                <p className="text-xl text-gray-400">
-                  Module 7, Section 7
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <Badge variant="secondary" className="bg-yellow-400 text-black">
-                Section 7.7
-              </Badge>
-              <Badge variant="outline" className="border-gray-600 text-gray-300">
-                25 minutes
-              </Badge>
-            </div>
-          </div>
-
-          {/* Introduction */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Book className="h-5 w-5 text-yellow-400" />
-                Introduction
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <p>
-                The final section focuses on practical fault finding—identifying common issues in loop 
-                wiring and validating integrity. Understanding typical failure modes and systematic 
-                troubleshooting approaches enables rapid diagnosis and repair, minimising downtime 
-                and maintaining process control reliability.
-              </p>
-              <p>
-                Effective fault diagnosis requires knowledge of how loops fail, the symptoms each 
-                fault produces, and the tools and techniques needed to locate and repair problems 
-                quickly. Documentation and systematic testing approaches are essential for success.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Learning Objectives */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-yellow-400" />
-                Learning Objectives
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Recognise typical loop wiring issues and their symptoms</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Learn how to verify wiring integrity systematically</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Understand fault diagnosis techniques and troubleshooting procedures</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-yellow-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Master documentation and loop drawing verification methods</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-
-          {/* Open Circuits */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Search className="h-5 w-5 text-yellow-400" />
-                Open Circuits and Connection Failures
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Identifying and Locating Open Circuits</h4>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Common Causes of Open Circuits</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Broken Connections:</strong> Loose terminal screws, wire pull-out</li>
-                    <li>• <strong>Cable Damage:</strong> Mechanical damage, corrosion, rodent damage</li>
-                    <li>• <strong>Poor Terminations:</strong> Insufficient wire strip, cold solder joints</li>
-                    <li>• <strong>Vibration Damage:</strong> Fatigue fractures in stranded wire</li>
-                    <li>• <strong>Environmental:</strong> Moisture ingress causing corrosion</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Symptoms of Open Circuits</h5>
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Zero Current:</strong> Loop current drops to 0mA</li>
-                    <li>• <strong>No Signal:</strong> Receiver shows minimum value or fault</li>
-                    <li>• <strong>Alarm Activation:</strong> Low signal or fault alarms trigger</li>
-                    <li>• <strong>Transmitter Indication:</strong> Smart devices show fault codes</li>
-                    <li>• <strong>Power Supply:</strong> Shows high voltage, low current</li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <h5 className="text-white font-semibold mb-2">Diagnostic Techniques for Open Circuits</h5>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="bg-card p-3 rounded border border-gray-600">
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-2">Continuity Testing</h6>
-                    <ul className="text-xs space-y-1">
-                      <li>• Power down the loop completely</li>
-                      <li>• Test end-to-end resistance</li>
-                      <li>• Should read transmitter resistance</li>
-                      <li>• Infinite resistance indicates open circuit</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-card p-3 rounded border border-gray-600">
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-2">Voltage Testing</h6>
-                    <ul className="text-xs space-y-1">
-                      <li>• Check supply voltage (should be 24V)</li>
-                      <li>• Open circuit shows full supply voltage</li>
-                      <li>• No voltage drop across load resistance</li>
-                      <li>• Confirm power supply is functioning</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-card p-3 rounded border border-gray-600">
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-2">Sectional Testing</h6>
-                    <ul className="text-xs space-y-1">
-                      <li>• Test cable sections individually</li>
-                      <li>• Check junction box connections</li>
-                      <li>• Verify termination integrity</li>
-                      <li>• Use time domain reflectometry (TDR)</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <h5 className="text-white font-semibold mb-2">Repair and Prevention Methods</h5>
-                <div className="bg-card p-3 rounded border border-gray-600">
-                  <ul className="text-sm space-y-1">
-                    <li>• <strong>Proper Termination:</strong> Correct wire strip length, torque specifications</li>
-                    <li>• <strong>Environmental Protection:</strong> Weatherproof enclosures, cable glands</li>
-                    <li>• <strong>Stress Relief:</strong> Adequate cable support and bend radius</li>
-                    <li>• <strong>Quality Materials:</strong> Tinned copper wire, marine-grade connections</li>
-                    <li>• <strong>Regular Inspection:</strong> Preventive maintenance schedules</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Short Circuits */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5 text-yellow-400" />
-                Short Circuits and Wiring Errors
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Detecting and Resolving Short Circuit Faults</h4>
-              
-              <div className="space-y-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Types of Short Circuits</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Core-to-Core Shorts</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Insulation Breakdown:</strong> Cable damage or deterioration</li>
-                        <li>• <strong>Incorrect Wiring:</strong> Wrong terminal connections</li>
-                        <li>• <strong>Metal Debris:</strong> Contaminants in junction boxes</li>
-                        <li>• <strong>Moisture Ingress:</strong> Water creating conductive paths</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Core-to-Earth Shorts</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Cable Damage:</strong> Crushed or nicked cable outer sheath</li>
-                        <li>• <strong>Poor Installation:</strong> Sharp edges damaging insulation</li>
-                        <li>• <strong>Environmental:</strong> Chemical attack on cable materials</li>
-                        <li>• <strong>Earthing Errors:</strong> Incorrect earth connections</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Symptoms and Detection Methods</h5>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-red-900/20 p-3 rounded border border-red-600/30">
-                      <h6 className="text-red-400 font-semibold text-sm mb-1">Core-to-Core Short</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Loop current at maximum (20mA+)</li>
-                        <li>• Receiver shows full scale</li>
-                        <li>• Power supply current limiting</li>
-                        <li>• Low loop resistance measurement</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-yellow-900/20 p-3 rounded border border-yellow-600/30">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-1">Core-to-Earth Short</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Erratic signal behaviour</li>
-                        <li>• Noise and interference</li>
-                        <li>• Ground fault alarms</li>
-                        <li>• Low insulation resistance</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-blue-900/20 p-3 rounded border border-blue-600/30">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-1">Detection Tools</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Insulation resistance tester</li>
-                        <li>• Time domain reflectometer</li>
-                        <li>• Current measurement</li>
-                        <li>• Loop resistance testing</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Fault Location Techniques</h5>
-                  <div className="bg-card p-4 rounded border border-gray-600">
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-2">Step-by-Step Location Process</h6>
-                    <ol className="text-sm space-y-2 list-decimal list-inside">
-                      <li><strong>Isolate the fault:</strong> Determine if fault is in transmitter, cable, or receiver</li>
-                      <li><strong>Section testing:</strong> Test cable sections between junction boxes</li>
-                      <li><strong>Resistance mapping:</strong> Measure resistance at multiple points</li>
-                      <li><strong>Insulation testing:</strong> Test each core individually to earth</li>
-                      <li><strong>Visual inspection:</strong> Check for obvious damage at fault location</li>
-                      <li><strong>Repair verification:</strong> Test complete loop after repair</li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Polarity and Ground Loop Issues */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Settings className="h-5 w-5 text-yellow-400" />
-                Polarity Reversal and Ground Loop Problems
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Understanding Polarity and Grounding Issues</h4>
-              
-              <div className="space-y-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Polarity Reversal in 2-Wire Devices</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Effects of Wrong Polarity</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>No Current Flow:</strong> Transmitter cannot operate</li>
-                        <li>• <strong>Receiver Shows Zero:</strong> No signal indication</li>
-                        <li>• <strong>Device Damage:</strong> Potential damage to electronics</li>
-                        <li>• <strong>Safety Circuits:</strong> May trigger fault conditions</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Polarity Identification</h6>
-                      <ul className="text-sm space-y-1">
-                        <li>• <strong>Cable Marking:</strong> Red/white or +/- identification</li>
-                        <li>• <strong>Terminal Labels:</strong> Check device terminal markings</li>
-                        <li>• <strong>Voltage Testing:</strong> Measure with respect to earth</li>
-                        <li>• <strong>Current Direction:</strong> Use clamp meter with direction</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Ground Loops and Signal Interference</h5>
-                  <div className="bg-card p-4 rounded border border-gray-600">
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-2">What Causes Ground Loops</h6>
-                    <ul className="text-sm space-y-1 mb-3">
-                      <li>• <strong>Multiple Earth Paths:</strong> Signal return via earth connections</li>
-                      <li>• <strong>Potential Differences:</strong> Voltage differences between earth points</li>
-                      <li>• <strong>Current Injection:</strong> Unwanted currents in signal path</li>
-                      <li>• <strong>Noise Pickup:</strong> Electromagnetic interference coupling</li>
-                    </ul>
-                    
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-2">Ground Loop Symptoms</h6>
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Signal Noise:</strong> Fluctuating or unstable readings</li>
-                      <li>• <strong>50/60Hz Interference:</strong> AC power frequency coupling</li>
-                      <li>• <strong>Offset Errors:</strong> Consistent bias in measurements</li>
-                      <li>• <strong>Intermittent Faults:</strong> Problems that come and go</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Ground Loop Prevention and Resolution</h5>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-card p-3 rounded border border-gray-600">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-2">Single Point Earthing</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Earth at one point only</li>
-                        <li>• Usually at control panel</li>
-                        <li>• Break earth loops in field</li>
-                        <li>• Document earth strategy</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded border border-gray-600">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-2">Cable Shielding</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Use screened cable pairs</li>
-                        <li>• Earth shield at one end only</li>
-                        <li>• Individual pair screening</li>
-                        <li>• Proper shield termination</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded border border-gray-600">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-2">Signal Isolation</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Galvanic isolators</li>
-                        <li>• Optical isolation</li>
-                        <li>• Isolation amplifiers</li>
-                        <li>• Separate power supplies</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Loop Testing and Documentation */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Activity className="h-5 w-5 text-yellow-400" />
-                Loop Testing Procedures and Documentation
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-4">
-              <h4 className="text-yellow-400 font-semibold mb-3">Systematic Loop Integrity Verification</h4>
-              
-              <div className="space-y-4">
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Pre-Test Documentation Review</h5>
-                  <div className="bg-card p-3 rounded border border-gray-600">
-                    <ul className="text-sm space-y-1">
-                      <li>• <strong>Loop Drawings:</strong> Verify current cable routing and connections</li>
-                      <li>• <strong>Device Specifications:</strong> Check operating parameters and limits</li>
-                      <li>• <strong>Installation Records:</strong> Review as-built documentation</li>
-                      <li>• <strong>Previous Test Results:</strong> Compare with historical data</li>
-                      <li>• <strong>Modification History:</strong> Identify recent changes or additions</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Comprehensive Testing Sequence</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Phase 1: Power-Off Testing</h6>
-                      <ol className="text-sm space-y-1 list-decimal list-inside">
-                        <li>Visual inspection of all accessible connections</li>
-                        <li>Continuity test (end-to-end resistance)</li>
-                        <li>Insulation resistance test (500V or 1000V)</li>
-                        <li>Cable shield continuity and isolation</li>
-                        <li>Polarity verification using ohmmeter</li>
-                      </ol>
-                    </div>
-                    
-                    <div>
-                      <h6 className="text-white font-medium mb-2">Phase 2: Powered Testing</h6>
-                      <ol className="text-sm space-y-1 list-decimal list-inside">
-                        <li>Power supply voltage verification</li>
-                        <li>Loop current measurement (static test)</li>
-                        <li>Signal injection testing (4, 12, 20mA)</li>
-                        <li>Dynamic response testing</li>
-                        <li>Alarm and interlock verification</li>
-                      </ol>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Test Result Documentation</h5>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-card p-3 rounded border border-gray-600">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-2">Required Test Records</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Date, time, and test engineer name</li>
-                        <li>• Environmental conditions during testing</li>
-                        <li>• Test equipment used and calibration dates</li>
-                        <li>• Actual measured values vs. expected values</li>
-                        <li>• Any deviations or non-conformances found</li>
-                        <li>• Corrective actions taken and verification</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-card p-3 rounded border border-gray-600">
-                      <h6 className="text-yellow-400 font-semibold text-sm mb-2">Acceptance Criteria</h6>
-                      <ul className="text-xs space-y-1">
-                        <li>• Loop resistance within calculated limits</li>
-                        <li>• Insulation resistance &gt;1MΩ minimum</li>
-                        <li>• Signal accuracy within ±0.25% typical</li>
-                        <li>• Response time within specification</li>
-                        <li>• No evidence of noise or interference</li>
-                        <li>• All safety functions operate correctly</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h5 className="text-white font-semibold mb-2">Troubleshooting Decision Tree</h5>
-                  <div className="bg-card p-4 rounded border border-gray-600">
-                    <h6 className="text-yellow-400 font-semibold text-sm mb-2">Systematic Fault Diagnosis</h6>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="text-sm font-medium">1. No Signal (0mA)</p>
-                        <ul className="text-xs ml-4 space-y-1">
-                          <li>• Check power supply voltage → If low, check supply and connections</li>
-                          <li>• Check loop continuity → If open, locate break and repair</li>
-                          <li>• Check transmitter operation → If failed, replace or repair</li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <p className="text-sm font-medium">2. Wrong Signal Level</p>
-                        <ul className="text-xs ml-4 space-y-1">
-                          <li>• Check calibration → Re-calibrate if outside tolerance</li>
-                          <li>• Check wiring polarity → Correct if reversed</li>
-                          <li>• Check for interference → Investigate noise sources</li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <p className="text-sm font-medium">3. Intermittent Signal</p>
-                        <ul className="text-xs ml-4 space-y-1">
-                          <li>• Check connections → Tighten loose terminals</li>
-                          <li>• Check for ground loops → Implement isolation</li>
-                          <li>• Check cable condition → Replace if damaged</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Real World Scenario */}
-          <Card className="bg-gradient-to-r from-elec-gray to-elec-dark border-yellow-400/30">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <Brain className="h-5 w-5 text-yellow-400" />
-                Real World Scenario
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300 space-y-3">
-              <p className="font-semibold text-yellow-400">
-                Tank Level Transmitter Failure Investigation
-              </p>
-              <p>
-                A tank level transmitter isn't reading properly, showing erratic values that jump 
-                between 30% and 90% randomly. A quick systematic check reveals the fault and 
-                prevents costly downtime. The plant cannot afford extended outage time.
-              </p>
-              <div className="bg-card p-3 rounded border border-gray-600">
-                <h5 className="text-yellow-400 font-semibold text-sm mb-2">Initial Symptoms:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Level indication jumping erratically on DCS</li>
-                  <li>• Values oscillating between 6.8mA and 16.4mA</li>
-                  <li>• No recent maintenance or modifications</li>
-                  <li>• Other tanks on same power supply working normally</li>
-                  <li>• Weather has been wet with high winds recently</li>
-                </ul>
-              </div>
-              <div className="bg-yellow-900/20 p-3 rounded border border-yellow-600/30">
-                <h5 className="text-yellow-400 font-semibold text-sm mb-2">Diagnostic Steps Taken:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Step 1: Check power supply - 24.1VDC stable ✓</li>
-                  <li>• Step 2: Continuity test - shows intermittent connection</li>
-                  <li>• Step 3: Insulation test - shows 0.3MΩ core-to-earth (should be {'>'}1MΩ)</li>
-                  <li>• Step 4: Visual inspection - water in junction box, corroded connections</li>
-                  <li>• Step 5: Cable section test - fault located in first 50m section</li>
-                </ul>
-              </div>
-              <div className="bg-green-900/20 p-3 rounded border border-green-600/30">
-                <h5 className="text-green-400 font-semibold text-sm mb-2">Resolution and Prevention:</h5>
-                <ul className="text-sm space-y-1">
-                  <li>• Fault: Water ingress through damaged cable gland</li>
-                  <li>• Repair: Replace 50m cable section and upgrade cable glands</li>
-                  <li>• Test results: Insulation resistance {'>'}50MΩ, stable 11.2mA signal</li>
-                  <li>• Total downtime: 4 hours (vs. potential days of investigation)</li>
-                  <li>• Prevention: Quarterly inspection of outdoor junction boxes</li>
-                </ul>
-              </div>
-              <p className="text-sm italic text-green-400">
-                Result: Systematic checks and documentation quickly located a broken cable caused by 
-                water ingress. Replacing the damaged run restored function and avoided costly downtime. 
-                Proper fault diagnosis prevented unnecessary component replacement.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Summary */}
-          <Card className="bg-card border-transparent">
-            <CardHeader>
-              <CardTitle className="text-white">Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="text-gray-300">
-              <p>
-                Systematic checks and documentation help quickly locate wiring faults, reduce downtime, 
-                and ensure signal reliability. Understanding common failure modes, proper diagnostic 
-                techniques, and maintaining good documentation enables rapid fault resolution and 
-                prevents costly process interruptions.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Quiz Section */}
-          <InstrumentationQuiz 
-            questions={[
-              {
-                id: 1,
-                question: "What's a common symptom of an open loop circuit?",
-                options: [
-                  "Maximum current reading (20mA)",
-                  "Zero current reading (0mA) and receiver shows minimum value or fault condition",
-                  "Fluctuating signal between 10-15mA",
-                  "Normal signal but with noise"
-                ],
-                correctAnswer: 1,
-                explanation: "An open circuit prevents current flow, resulting in 0mA current and receivers showing minimum scale or fault conditions. The power supply will show high voltage but zero current."
-              },
-              {
-                id: 2,
-                question: "How do you identify a short circuit in a current loop?",
-                options: [
-                  "Check if current exceeds normal range, often at maximum with low loop resistance",
-                  "Look for zero current readings",
-                  "Test the power supply voltage only",
-                  "Check for intermittent signals"
-                ],
-                correctAnswer: 0,
-                explanation: "Short circuits cause excessive current (often at maximum), low total loop resistance, and the power supply may enter current limiting mode. The receiver typically shows full scale reading."
-              },
-              {
-                id: 3,
-                question: "What is a ground loop and why is it a problem?",
-                options: [
-                  "A loop with good earthing connections",
-                  "Multiple earth paths creating unwanted current flows, causing signal noise and interference",
-                  "A loop installed underground",
-                  "A testing procedure for earth continuity"
-                ],
-                correctAnswer: 1,
-                explanation: "Ground loops occur when multiple earth paths exist, creating unwanted current flows between earth points. This causes signal noise, interference, and measurement errors due to voltage differences between earth points."
-              },
-              {
-                id: 4,
-                question: "Why does polarity matter in a 2-wire current loop?",
-                options: [
-                  "It affects the cable colour coding only",
-                  "Incorrect polarity prevents current flow and can damage the transmitter - current must flow in correct direction",
-                  "It only matters for digital communication",
-                  "Polarity doesn't matter in AC systems"
-                ],
-                correctAnswer: 1,
-                explanation: "In 2-wire loops, current must flow in the correct direction for the transmitter to operate. Reversed polarity prevents the transmitter from functioning and may cause damage to the device."
-              },
-              {
-                id: 5,
-                question: "What's the best first step when a signal is missing from a current loop?",
-                options: [
-                  "Replace the transmitter immediately",
-                  "Check power supply voltage and verify loop continuity to isolate the fault location",
-                  "Recalibrate all devices",
-                  "Check the cable colour coding"
-                ],
-                correctAnswer: 1,
-                explanation: "The systematic approach starts with checking power supply voltage and loop continuity to determine if the fault is in the power supply, wiring, or devices. This prevents unnecessary component replacement."
-            }
-            ]}
-            title="Section 7 Knowledge Check"
-          />
-
-          {/* Navigation */}
-          <div className="flex justify-between">
-            <Link to="/study-centre/upskilling/instrumentation-module-7-section-6">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-card touch-manipulation active:scale-[0.98]">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/study-centre/upskilling/instrumentation-module-8">
-              <Button className="bg-yellow-400 text-black hover:bg-yellow-600 touch-manipulation active:scale-[0.98]">
-                Next Module
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
+
+      {/* Main Content */}
+      <article className="px-4 sm:px-6 py-8 sm:py-12">
+        {/* Centered Title Header */}
+        <header className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
+            <AlertTriangle className="h-4 w-4" />
+            <span>Module 7 Section 7</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
+            Common Wiring Faults and Loop Integrity Checks
+          </h1>
+          <p className="text-white/80">
+            Identifying and diagnosing wiring problems in instrumentation loops
+          </p>
+        </header>
+
+        {/* Quick Summary Boxes */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-12">
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Open Circuit:</strong> 0mA reading, no current flow</li>
+              <li><strong>Short Circuit:</strong> Maximum current, damaged insulation</li>
+              <li><strong>Ground Loop:</strong> 50/60Hz noise, multiple earths</li>
+              <li><strong>High Resistance:</strong> Signal drift, loose connections</li>
+            </ul>
+          </div>
+          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
+            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <ul className="text-sm text-white space-y-1">
+              <li><strong>Spot:</strong> Signal below 4mA indicates wiring fault, not sensor issue</li>
+              <li><strong>Use:</strong> Earth shields at single point only to prevent ground loops</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Learning Outcomes */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
+          <div className="grid sm:grid-cols-2 gap-2">
+            {[
+              "Identify symptoms of common wiring faults",
+              "Diagnose open circuits and short circuits",
+              "Understand ground loop causes and prevention",
+              "Test insulation resistance and continuity",
+              "Troubleshoot intermittent connection faults",
+              "Verify shield integrity and termination"
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-white">
+                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <hr className="border-white/5 mb-12" />
+
+        {/* Section 01 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
+            Open Circuits and Connection Failures
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              An open circuit is one of the most common wiring faults, preventing current flow
+              through the loop. This results in a reading of 0mA or below the 4mA minimum,
+              clearly indicating a wiring problem rather than a process issue.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Common Causes:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Broken Conductors:</strong> Physical damage, strain, or fatigue failure</li>
+                <li><strong>Loose Terminations:</strong> Screws not tightened, ferrules pulled out</li>
+                <li><strong>Corroded Connections:</strong> Environmental damage at terminals</li>
+                <li><strong>Disconnected Wires:</strong> Maintenance work not restored</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Diagnostic Approach:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Visual Inspection:</strong> Check all visible connections and cable condition</li>
+                <li><strong>Continuity Test:</strong> Test end-to-end with power removed</li>
+                <li><strong>Section Testing:</strong> Divide loop into sections to isolate fault location</li>
+                <li><strong>Resistance Measurement:</strong> Compare to expected cable resistance</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[0]} />
+
+        {/* Section 02 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+            Ground Loops and EMI Problems
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Ground loops occur when a circuit has multiple connections to earth at different
+              potentials. Small voltage differences between earth points cause circulating
+              currents that interfere with the measurement signal.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Symptoms:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>50/60Hz Noise:</strong> Mains frequency interference pattern</li>
+                <li><strong>Drifting Signals:</strong> Readings that shift over time</li>
+                <li><strong>Touch Sensitivity:</strong> Signal changes when touching equipment</li>
+                <li><strong>Inconsistent Readings:</strong> Different values at transmitter vs receiver</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Prevention:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Single-Point Earthing:</strong> Earth shield at control room end only</li>
+                <li><strong>Galvanic Isolation:</strong> Use isolators where needed</li>
+                <li><strong>Proper Shield Termination:</strong> Continuous shield, single earth connection</li>
+                <li><strong>Cable Segregation:</strong> Separate instrument cables from power cables</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[1]} />
+
+        {/* Section 03 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
+            Short Circuits and Insulation Failures
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Short circuits occur when conductors make unintended contact, bypassing part
+              of the circuit. This can result from damaged insulation, water ingress, or
+              incorrect wiring at termination points.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Common Causes:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Damaged Insulation:</strong> Mechanical damage, rodent damage, UV degradation</li>
+                <li><strong>Water Ingress:</strong> Moisture in junction boxes or cable glands</li>
+                <li><strong>Crossed Wires:</strong> Incorrect termination or bare wire touching</li>
+                <li><strong>Pinched Cables:</strong> Cables trapped in enclosure doors or glands</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Insulation Testing:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Test Voltage:</strong> 500V or 1000V DC insulation tester</li>
+                <li><strong>Core-to-Core:</strong> Test between signal conductors</li>
+                <li><strong>Core-to-Shield:</strong> Test each conductor to cable shield</li>
+                <li><strong>Core-to-Earth:</strong> Test each conductor to earth</li>
+                <li><strong>Minimum Requirement:</strong> Greater than 1 Megohm for reliable operation</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <InlineCheck {...quickCheckQuestions[2]} />
+
+        {/* Section 04 */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
+            Systematic Troubleshooting Approach
+          </h2>
+          <div className="text-white space-y-4 leading-relaxed">
+            <p>
+              Effective troubleshooting requires a systematic approach that isolates the fault
+              location efficiently. Starting with simple checks and progressively testing each
+              component saves time and prevents unnecessary equipment replacement.
+            </p>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Diagnostic Sequence:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Step 1:</strong> Verify symptom and gather information from operators</li>
+                <li><strong>Step 2:</strong> Check power supply voltage and polarity</li>
+                <li><strong>Step 3:</strong> Measure loop current at multiple points</li>
+                <li><strong>Step 4:</strong> Test transmitter with calibrator substitution</li>
+                <li><strong>Step 5:</strong> Test receiver with signal injection</li>
+                <li><strong>Step 6:</strong> Check wiring continuity and insulation</li>
+              </ul>
+            </div>
+
+            <div className="my-6">
+              <p className="text-sm font-medium text-white mb-2">Documentation:</p>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Record Findings:</strong> Document all measurements and observations</li>
+                <li><strong>Update Records:</strong> Note repairs and modifications made</li>
+                <li><strong>Root Cause:</strong> Identify why the fault occurred</li>
+                <li><strong>Prevention:</strong> Recommend actions to prevent recurrence</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Real World Example */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-4">Real World Example</h2>
+          <div className="p-4 rounded-lg bg-card/50 border border-white/10">
+            <h3 className="text-sm font-medium text-elec-yellow mb-2">Intermittent Level Reading Fault</h3>
+            <p className="text-sm text-white mb-3">
+              A level transmitter reports erratic readings that occasionally drop to zero.
+              The operations team suspects a faulty transmitter, but systematic troubleshooting
+              reveals a different cause.
+            </p>
+            <div className="text-sm text-white space-y-2">
+              <p><strong>Investigation:</strong> Calibrator test at transmitter shows stable 4-20mA output tracking level changes correctly. Signal measured at DCS shows intermittent dropouts not present at transmitter.</p>
+              <p><strong>Finding:</strong> Junction box inspection reveals corroded terminal with green oxide deposits. Vibration from nearby pump causes intermittent loss of contact.</p>
+              <p><strong>Resolution:</strong> Cleaned terminals, replaced terminal block, applied corrosion inhibitor. Identified failed gland seal allowing moisture ingress. Replaced gland and verified IP rating restored.</p>
+              <p><strong>Lesson:</strong> Systematic testing isolated the fault to wiring, not the transmitter, avoiding unnecessary equipment replacement and identifying the root cause of moisture ingress.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
+
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Fault Diagnosis Steps</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Always check the simplest things first (power, fuses, connections)</li>
+                <li>Use substitution testing to isolate transmitter vs wiring faults</li>
+                <li>Measure at multiple points to locate fault position</li>
+                <li>Document findings for future reference</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Prevention Measures</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li>Regular visual inspection of junction boxes and terminations</li>
+                <li>Ensure proper IP rating of all enclosures</li>
+                <li>Apply corrosion inhibitor to outdoor terminals</li>
+                <li>Verify single-point shield earthing at installation</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
+              <ul className="text-sm text-white space-y-1 ml-4">
+                <li><strong>Assuming transmitter fault</strong> - always verify wiring first</li>
+                <li><strong>Earthing shields at both ends</strong> - creates ground loops</li>
+                <li><strong>Ignoring intermittent faults</strong> - they indicate developing problems</li>
+                <li><strong>Not testing insulation</strong> - low insulation causes subtle errors</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
+                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
+                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Quiz */}
+        <section className="mb-10">
+          <Quiz
+            title="Test Your Knowledge"
+            questions={quizQuestions}
+          />
+        </section>
+
+        {/* Bottom Navigation */}
+        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
+          <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="../section-6">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Section
+            </Link>
+          </Button>
+          <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="/study-centre/upskilling/instrumentation-module-8">
+              Complete Module 7
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Link>
+          </Button>
+        </nav>
+      </article>
     </div>
   );
 };

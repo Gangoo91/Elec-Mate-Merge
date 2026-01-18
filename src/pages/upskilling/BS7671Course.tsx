@@ -1,143 +1,128 @@
-import { ArrowLeft, FileText, CheckCircle, Clock, BookOpen, Book, Settings, Shield, Wrench, MapPin, GraduationCap } from 'lucide-react';
+import React from 'react';
+import { ArrowLeft, FileText, CheckCircle, BookOpen, Book, Settings, Shield, Wrench, MapPin, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { ModuleCard } from '@/components/upskilling/cards';
 
 const BS7671Course = () => {
-  const modules = [
+  const modules: Array<{
+    id: number;
+    title: string;
+    description: string;
+    duration: string;
+    icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+    isExam?: boolean;
+  }> = [
     {
       id: 1,
       title: "Scope, Object & Fundamental Principles",
+      description: "Foundational principles and legal framework",
       duration: "45 mins",
-      status: "available",
       icon: BookOpen
     },
     {
       id: 2,
       title: "Definitions & Key Terminology",
+      description: "Essential vocabulary and definitions",
       duration: "50 mins",
-      status: "available",
       icon: Book
     },
     {
       id: 3,
       title: "General Characteristics & Selection Criteria",
+      description: "System design and earthing arrangements",
       duration: "55 mins",
-      status: "available",
       icon: Settings
     },
     {
       id: 4,
       title: "Protection for Safety",
+      description: "Safety protection methods and devices",
       duration: "60 mins",
-      status: "available",
       icon: Shield
     },
     {
       id: 5,
       title: "Selection & Erection of Equipment",
+      description: "Equipment selection and installation",
       duration: "65 mins",
-      status: "available",
       icon: Wrench
     },
     {
       id: 6,
       title: "Inspection, Testing & Certification",
+      description: "Verification and certification processes",
       duration: "55 mins",
-      status: "available",
       icon: CheckCircle
     },
     {
       id: 7,
       title: "Special Installations & Locations",
+      description: "Requirements for special locations",
       duration: "50 mins",
-      status: "available",
       icon: MapPin
     },
     {
       id: 8,
       title: "Appendices & Latest Amendments",
+      description: "Reference materials and Amendment 3",
       duration: "45 mins",
-      status: "available",
       icon: FileText
     },
     {
       id: 9,
       title: "Mock Exam",
+      description: "Test your knowledge",
       duration: "90 mins",
-      status: "available",
-      icon: GraduationCap
+      icon: GraduationCap,
+      isExam: true
     }
   ];
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
+      {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
         <div className="px-4 sm:px-6 py-2">
-          <Link to="/electrician/upskilling">
-            <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]">
-              <ArrowLeft className="mr-2 h-4 w-4" />
+          <Button
+            variant="ghost"
+            size="lg"
+            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            asChild
+          >
+            <Link to="/electrician/upskilling">
+              <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Courses
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
 
-      <div className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
-        {/* Header */}
-        <div className="space-y-1 mb-8">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+      <div className="px-4 sm:px-6 py-6 sm:py-8">
+        {/* Course Header */}
+        <div className="mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             18th Edition (BS7671)
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground">
+          <p className="text-white/60 text-sm sm:text-base">
             Wiring regulations and electrical safety
           </p>
         </div>
 
         {/* Module Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {modules.map((module, index) => (
-            <motion.div
+            <ModuleCard
               key={module.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-            >
-              <Link to={`bs7671-module-${module.id}`} className="block h-full">
-                <div className="group relative overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:bg-white/10 hover:border-elec-yellow/30 hover:shadow-lg hover:shadow-elec-yellow/10 active:scale-[0.98] transition-all duration-300 cursor-pointer touch-manipulation h-full min-h-[160px] flex flex-col">
-                  {/* Accent line at top */}
-                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />
-
-                  {/* Hover glow */}
-                  <div className="absolute top-0 right-0 w-24 h-24 rounded-full blur-2xl bg-elec-yellow/20 opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
-
-                  <div className="relative text-center flex-grow flex flex-col justify-center">
-                    {/* Icon with gradient bg */}
-                    <div className="flex justify-center mb-3">
-                      <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/20 border border-white/10">
-                        <module.icon className="h-5 w-5 text-elec-yellow" strokeWidth={2} />
-                      </div>
-                    </div>
-
-                    {/* Module label */}
-                    <span className="text-[10px] font-semibold text-elec-yellow/70 uppercase tracking-wider mb-1">
-                      Module {module.id}
-                    </span>
-
-                    {/* Title */}
-                    <h3 className="text-sm font-semibold text-white leading-tight mb-2 line-clamp-2 group-hover:text-elec-yellow transition-colors">
-                      {module.title}
-                    </h3>
-
-                    {/* Duration */}
-                    <p className="text-white/50 text-xs">
-                      {module.duration}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
+              to={module.isExam ? `../bs7671-module-${module.id}` : `../bs7671-module-${module.id}`}
+              moduleNumber={module.id}
+              title={module.title}
+              description={module.description}
+              duration={module.duration}
+              icon={module.icon}
+              isExam={module.isExam}
+              index={index}
+            />
           ))}
         </div>
       </div>

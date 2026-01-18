@@ -215,450 +215,249 @@ const RenewableEnergyModule7Section1 = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#1a1a1a]">
-      {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#1a1a1a]/95 backdrop-blur supports-[backdrop-filter]:bg-[#1a1a1a]/80">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link
-            to=".."
-            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Module Overview
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
+        <div className="px-4 py-3 flex items-center gap-3">
+          <Link to="..">
+            <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
           </Link>
-          <span className="text-sm text-white">Module 7 • Section 1</span>
+          <span className="text-white font-medium truncate">System Monitoring & Performance</span>
         </div>
-      </header>
+      </div>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden py-12 sm:py-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/10 via-transparent to-transparent" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-elec-yellow/10 px-4 py-1.5 text-sm font-medium text-elec-yellow">
-              <Zap className="h-4 w-4" />
-              Operation and Maintenance
-            </div>
-            <h1 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-              System Monitoring and Performance Analysis
-            </h1>
-            <p className="text-lg text-white sm:text-xl">
-              Understanding monitoring systems, performance metrics, and data analysis for renewable energy installations.
+      {/* Hero Section */}
+      <div className="px-4 py-6 text-center">
+        <div className="inline-flex items-center gap-2 bg-elec-yellow/10 border border-elec-yellow/30 rounded-full px-3 py-1 mb-3">
+          <Zap className="w-4 h-4 text-elec-yellow" />
+          <span className="text-elec-yellow text-sm font-medium">Module 7 - Section 1</span>
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+          System Monitoring & Performance Analysis
+        </h1>
+        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+          Understanding monitoring systems, performance metrics, and data analysis for renewable energy installations
+        </p>
+      </div>
+
+      {/* Quick Summary */}
+      <div className="px-4 pb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">In 30 Seconds:</span> Performance Ratio compares actual vs theoretical output to assess system health
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Spot it:</span> PR above 80% indicates a well-designed and maintained system
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Use it:</span> String-level monitoring isolates faults to specific strings
+            </p>
+          </div>
+          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
+            <p className="text-white text-sm">
+              <span className="font-semibold text-elec-yellow">Key Metric:</span> Specific Yield (kWh/kWp/year) enables cross-system comparison
             </p>
           </div>
         </div>
-      </section>
-
-      {/* Quick Summary */}
-      <section className="py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-lg border-l-2 border-elec-yellow/50 bg-elec-yellow/5 p-4">
-              <h3 className="mb-2 font-semibold text-white">Performance Metrics</h3>
-              <p className="text-sm text-white">
-                Key indicators including Performance Ratio, Specific Yield, and availability enable objective assessment of system health and identification of issues.
-              </p>
-            </div>
-            <div className="rounded-lg border-l-2 border-elec-yellow/50 bg-elec-yellow/5 p-4">
-              <h3 className="mb-2 font-semibold text-white">Remote Monitoring</h3>
-              <p className="text-sm text-white">
-                Modern monitoring platforms provide real-time data access, automatic alerts, and trend analysis essential for proactive maintenance.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Learning Outcomes */}
-      <section className="py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-6">
-            <h2 className="mb-4 text-xl font-bold text-white">Learning Outcomes</h2>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                "Understand key performance metrics for renewable systems",
-                "Interpret monitoring data to identify issues",
-                "Configure and use remote monitoring platforms",
-                "Calculate Performance Ratio and Specific Yield",
-                "Apply weather normalisation techniques",
-                "Generate meaningful performance reports",
-              ].map((outcome, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-elec-yellow" />
-                  <span className="text-sm text-white">{outcome}</span>
-                </div>
-              ))}
+      <div className="px-4 pb-6">
+        <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
+        <div className="space-y-2">
+          {[
+            "Understand key performance metrics for renewable systems",
+            "Interpret monitoring data to identify issues",
+            "Configure and use remote monitoring platforms",
+            "Calculate Performance Ratio and Specific Yield",
+            "Apply weather normalisation techniques",
+            "Generate meaningful performance reports",
+          ].map((outcome, index) => (
+            <div key={index} className="flex items-start gap-2">
+              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
+              <span className="text-white/80 text-sm">{outcome}</span>
             </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="px-4 space-y-6 pb-8">
+        {/* Section 01 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
+            <h2 className="text-xl font-semibold text-white">Key Performance Metrics</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Effective system monitoring relies on understanding and tracking key performance indicators that reveal system health and highlight potential issues.
+            </p>
+            <p>
+              <span className="text-white font-medium">Performance Ratio (PR):</span> The ratio of actual energy output to theoretical maximum based on measured irradiance. Calculated as PR = (Actual Energy / (Irradiance x Capacity x Time)) x 100%. Well-designed systems achieve PR greater than 80%. This accounts for all losses including temperature, soiling, inverter, and wiring losses.
+            </p>
+            <p>
+              <span className="text-white font-medium">Specific Yield:</span> Annual energy production per unit of installed capacity (kWh/kWp/year). UK typical range is 800-1,100 kWh/kWp/year. Varies significantly with location and orientation, useful for comparing sites and validating designs. Track year-on-year to identify degradation.
+            </p>
+            <p>
+              <span className="text-white font-medium">System Availability:</span> Percentage of time the system was operational and able to generate. Target availability is greater than 98%. This excludes scheduled maintenance windows and tracks fault frequency and duration. Important for O&M contract KPIs.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[0]]} />
+
+        {/* Section 02 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
+            <h2 className="text-xl font-semibold text-white">Monitoring System Architecture</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Modern monitoring systems collect data from multiple sources to provide comprehensive visibility of system performance and health.
+            </p>
+            <p>
+              <span className="text-white font-medium">Data Collection Points:</span> Inverter data includes DC input, AC output, efficiency, temperatures, and fault codes. String monitoring provides individual string currents and voltages. Energy meters record generation, export, and import measurements. Environmental sensors capture irradiance, module temperature, and ambient temperature.
+            </p>
+            <p>
+              <span className="text-white font-medium">Communication Protocols:</span> Modbus RTU is serial communication over RS485, widely supported. Modbus TCP is Ethernet-based and standard for commercial systems. SunSpec provides standardised data models for interoperability. Manufacturer protocols are proprietary systems from SolarEdge, Enphase, and others.
+            </p>
+            <p>
+              <span className="text-white font-medium">Monitoring Levels:</span> System level provides total generation and export for basic monitoring. Inverter level shows per-inverter performance for fault isolation. String level enables detailed diagnosis through individual string data. Module level offers maximum visibility through per-panel optimisation.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[1]]} />
+
+        {/* Section 03 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
+            <h2 className="text-xl font-semibold text-white">Data Analysis Techniques</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Raw monitoring data must be processed and analysed to extract meaningful insights about system performance and identify developing issues.
+            </p>
+            <p>
+              <span className="text-white font-medium">Weather Normalisation:</span> Adjusting performance data for environmental conditions enables fair comparison. Irradiance correction normalises to standard 1000 W/m². Temperature correction applies module temperature coefficients. Reference cells provide calibrated irradiance measurements, whilst satellite data offers an alternative when sensors are unavailable.
+            </p>
+            <p>
+              <span className="text-white font-medium">Trend Analysis:</span> Rolling averages smooth daily variations for trend identification. Year-on-year comparison accounts for seasonal and weather variations. Degradation tracking monitors long-term performance decline, and anomaly detection identifies sudden changes requiring investigation.
+            </p>
+            <p>
+              <span className="text-white font-medium">Comparative Analysis:</span> String comparison identifies underperforming strings. Inverter comparison spots efficiency variations. Fleet benchmarking compares similar systems, and design validation compares actual versus predicted yield.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[2]]} />
+
+        {/* Section 04 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
+            <h2 className="text-xl font-semibold text-white">Alert Configuration and Response</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Effective alert systems provide early warning of issues without overwhelming operators with false alarms.
+            </p>
+            <p>
+              <span className="text-white font-medium">Alert Categories:</span> Critical alerts cover complete system failure and safety issues requiring immediate response. Warning alerts address significant underperformance and component faults requiring same-day response. Advisory alerts note minor issues and developing trends for scheduled review. Informational alerts provide status updates and scheduled events requiring no action.
+            </p>
+            <p>
+              <span className="text-white font-medium">Common Alert Thresholds:</span> Performance drop alerts trigger at greater than 10-20% below expected after weather normalisation. String current imbalance alerts at greater than 5% variation between parallel strings. Communication loss alerts after greater than 1 hour without data. Inverter efficiency alerts when below 95% of rated specification.
+            </p>
+            <p>
+              <span className="text-white font-medium">Response Procedures:</span> Acknowledge alert and review monitoring data. Check for obvious causes such as weather, grid outage, or scheduled work. Review historical data for patterns or previous occurrences. Attempt remote diagnosis or reset if applicable, then schedule site visit if issue cannot be resolved remotely.
+            </p>
+          </div>
+        </section>
+
+        <InlineCheck questions={[quickCheckQuestions[3]]} />
+
+        {/* Section 05 */}
+        <section className="space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
+            <h2 className="text-xl font-semibold text-white">Reporting and Documentation</h2>
+          </div>
+          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+            <p>
+              Regular performance reports provide stakeholders with system status information and support maintenance planning and warranty claims.
+            </p>
+            <p>
+              <span className="text-white font-medium">Report Contents:</span> Executive summary covers key metrics and highlights. Energy production section shows actual vs expected with variance analysis. Performance indicators include PR, availability, and efficiency trends. Environmental data provides irradiance, temperatures, and weather summary. Fault summary lists alarms raised with duration and resolution.
+            </p>
+            <p>
+              <span className="text-white font-medium">Report Frequency:</span> Operational reports are weekly or monthly focusing on production, faults, and actions. Performance reports are monthly or quarterly covering KPIs, trends, and analysis. Annual reports provide comprehensive yearly reviews.
+            </p>
+            <p>
+              <span className="text-white font-medium">Documentation Requirements:</span> Maintain calibration records for all sensors. Document any data quality issues affecting analysis. Keep historical data for warranty claims and long-term trend analysis. Ensure reports meet O&M contract requirements.
+            </p>
+          </div>
+        </section>
+
+        {/* Practical Guidance */}
+        <div className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/20 rounded-xl p-4">
+          <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+            <Zap className="w-4 h-4 text-elec-yellow" />
+            Practical Guidance
+          </h3>
+          <div className="space-y-2 text-white/80 text-sm">
+            <p>
+              <span className="text-white font-medium">Setting up effective monitoring:</span> Ensure sensors are correctly calibrated and positioned. Configure appropriate alert thresholds based on system characteristics. Establish clear escalation procedures and responsibilities for alert response.
+            </p>
+            <p>
+              <span className="text-white font-medium">Data quality management:</span> Regularly verify data against independent measurements such as meter readings. Address communication gaps promptly. Maintain calibration records for sensors and document any data quality issues affecting analysis.
+            </p>
+            <p>
+              <span className="text-white font-medium">Using data for maintenance planning:</span> Track component-level performance to identify degradation before failure. Use historical fault data to predict maintenance needs. Schedule preventive maintenance based on trends rather than just calendar intervals.
+            </p>
           </div>
         </div>
-      </section>
 
-      {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl">
-          {/* Section 01 */}
-          <section className="mb-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                01
-              </span>
-              <h2 className="text-2xl font-bold text-white">Key Performance Metrics</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Effective system monitoring relies on understanding and tracking key performance indicators that reveal system health and highlight potential issues.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Performance Ratio (PR)</h4>
-                <p className="mb-2">
-                  The ratio of actual energy output to theoretical maximum based on measured irradiance:
-                </p>
-                <p className="mb-2 font-mono text-sm">
-                  PR = (Actual Energy / (Irradiance x Capacity x Time)) x 100%
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Well-designed system: PR greater than 80%</li>
-                  <li>Accounts for all losses (temperature, soiling, inverter, wiring)</li>
-                  <li>Enables comparison between different systems and periods</li>
-                  <li>Declining PR indicates developing issues</li>
-                </ul>
+        {/* FAQs */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
+                <h3 className="text-white font-medium mb-2">{faq.question}</h3>
+                <p className="text-white/70 text-sm">{faq.answer}</p>
               </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Specific Yield</h4>
-                <p className="mb-2">
-                  Annual energy production per unit of installed capacity (kWh/kWp/year):
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>UK typical range: 800-1,100 kWh/kWp/year</li>
-                  <li>Varies significantly with location and orientation</li>
-                  <li>Useful for comparing sites and validating designs</li>
-                  <li>Track year-on-year to identify degradation</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">System Availability</h4>
-                <p className="mb-2">
-                  Percentage of time the system was operational and able to generate:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>Target availability: greater than 98%</li>
-                  <li>Excludes scheduled maintenance windows</li>
-                  <li>Track fault frequency and duration</li>
-                  <li>Important for O&M contract KPIs</li>
-                </ul>
-              </div>
-            </div>
-          </section>
+            ))}
+          </div>
+        </section>
 
-          <InlineCheck
-            question={quickCheckQuestions[0].question}
-            options={quickCheckQuestions[0].options}
-            correctIndex={quickCheckQuestions[0].correctIndex}
-            explanation={quickCheckQuestions[0].explanation}
-          />
+        {/* Quiz */}
+        <Quiz
+          title="System Monitoring Quiz"
+          questions={quizQuestions}
+        />
 
-          {/* Section 02 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                02
-              </span>
-              <h2 className="text-2xl font-bold text-white">Monitoring System Architecture</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Modern monitoring systems collect data from multiple sources to provide comprehensive visibility of system performance and health.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Data Collection Points</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Inverter data:</strong> DC input, AC output, efficiency, temperatures, fault codes</li>
-                  <li><strong>String monitoring:</strong> Individual string currents and voltages</li>
-                  <li><strong>Energy meters:</strong> Generation, export, import measurements</li>
-                  <li><strong>Environmental sensors:</strong> Irradiance, module temperature, ambient temperature</li>
-                  <li><strong>Battery systems:</strong> SoC, cell voltages, temperatures, charge/discharge power</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Communication Protocols</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Modbus RTU:</strong> Serial communication over RS485, widely supported</li>
-                  <li><strong>Modbus TCP:</strong> Ethernet-based, standard for commercial systems</li>
-                  <li><strong>SunSpec:</strong> Standardised data models for interoperability</li>
-                  <li><strong>Manufacturer protocols:</strong> Proprietary systems (SolarEdge, Enphase, etc.)</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Monitoring Levels</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-white/20">
-                        <th className="py-2 text-left text-white">Level</th>
-                        <th className="py-2 text-left text-white">Data</th>
-                        <th className="py-2 text-left text-white">Application</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-white">
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">System</td>
-                        <td className="py-2">Total generation, export</td>
-                        <td className="py-2">Basic monitoring</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Inverter</td>
-                        <td className="py-2">Per-inverter performance</td>
-                        <td className="py-2">Fault isolation</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">String</td>
-                        <td className="py-2">Individual string data</td>
-                        <td className="py-2">Detailed diagnosis</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Module</td>
-                        <td className="py-2">Per-panel optimisation</td>
-                        <td className="py-2">Maximum visibility</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[1].question}
-            options={quickCheckQuestions[1].options}
-            correctIndex={quickCheckQuestions[1].correctIndex}
-            explanation={quickCheckQuestions[1].explanation}
-          />
-
-          {/* Section 03 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                03
-              </span>
-              <h2 className="text-2xl font-bold text-white">Data Analysis Techniques</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Raw monitoring data must be processed and analysed to extract meaningful insights about system performance and identify developing issues.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Weather Normalisation</h4>
-                <p className="mb-2">
-                  Adjusting performance data for environmental conditions enables fair comparison:
-                </p>
-                <ul className="list-inside list-disc space-y-1">
-                  <li><strong>Irradiance correction:</strong> Normalise to standard 1000 W/m²</li>
-                  <li><strong>Temperature correction:</strong> Apply module temperature coefficients</li>
-                  <li><strong>Reference cells:</strong> Use calibrated irradiance sensors</li>
-                  <li><strong>Satellite data:</strong> Alternative when sensors unavailable</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Trend Analysis</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Rolling averages:</strong> Smooth daily variations for trend identification</li>
-                  <li><strong>Year-on-year comparison:</strong> Account for seasonal and weather variations</li>
-                  <li><strong>Degradation tracking:</strong> Monitor long-term performance decline</li>
-                  <li><strong>Anomaly detection:</strong> Identify sudden changes requiring investigation</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Comparative Analysis</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>String comparison:</strong> Identify underperforming strings</li>
-                  <li><strong>Inverter comparison:</strong> Spot efficiency variations</li>
-                  <li><strong>Fleet benchmarking:</strong> Compare similar systems</li>
-                  <li><strong>Design validation:</strong> Compare actual vs predicted yield</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[2].question}
-            options={quickCheckQuestions[2].options}
-            correctIndex={quickCheckQuestions[2].correctIndex}
-            explanation={quickCheckQuestions[2].explanation}
-          />
-
-          {/* Section 04 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                04
-              </span>
-              <h2 className="text-2xl font-bold text-white">Alert Configuration and Response</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Effective alert systems provide early warning of issues without overwhelming operators with false alarms.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Alert Categories</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Critical:</strong> Complete system failure, safety issues (immediate response)</li>
-                  <li><strong>Warning:</strong> Significant underperformance, component faults (same-day response)</li>
-                  <li><strong>Advisory:</strong> Minor issues, developing trends (scheduled review)</li>
-                  <li><strong>Informational:</strong> Status updates, scheduled events (no action required)</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Common Alert Thresholds</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li>Performance drop: greater than 10-20% below expected (after weather normalisation)</li>
-                  <li>String current imbalance: greater than 5% variation between parallel strings</li>
-                  <li>Communication loss: greater than 1 hour without data</li>
-                  <li>Inverter efficiency: below 95% of rated specification</li>
-                  <li>Zero production: during daylight hours with adequate irradiance</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Response Procedures</h4>
-                <ol className="list-inside list-decimal space-y-2">
-                  <li>Acknowledge alert and review monitoring data</li>
-                  <li>Check for obvious causes (weather, grid outage, scheduled work)</li>
-                  <li>Review historical data for patterns or previous occurrences</li>
-                  <li>Attempt remote diagnosis or reset if applicable</li>
-                  <li>Schedule site visit if issue cannot be resolved remotely</li>
-                  <li>Document findings and actions taken</li>
-                </ol>
-              </div>
-            </div>
-          </section>
-
-          <InlineCheck
-            question={quickCheckQuestions[3].question}
-            options={quickCheckQuestions[3].options}
-            correctIndex={quickCheckQuestions[3].correctIndex}
-            explanation={quickCheckQuestions[3].explanation}
-          />
-
-          {/* Section 05 */}
-          <section className="mb-12 mt-12">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-elec-yellow text-lg font-bold text-black">
-                05
-              </span>
-              <h2 className="text-2xl font-bold text-white">Reporting and Documentation</h2>
-            </div>
-            <div className="space-y-4 text-white">
-              <p>
-                Regular performance reports provide stakeholders with system status information and support maintenance planning and warranty claims.
-              </p>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Report Contents</h4>
-                <ul className="list-inside list-disc space-y-2">
-                  <li><strong>Executive summary:</strong> Key metrics and highlights</li>
-                  <li><strong>Energy production:</strong> Actual vs expected, with variance analysis</li>
-                  <li><strong>Performance indicators:</strong> PR, availability, efficiency trends</li>
-                  <li><strong>Environmental data:</strong> Irradiance, temperatures, weather summary</li>
-                  <li><strong>Fault summary:</strong> Alarms raised, duration, resolution</li>
-                  <li><strong>Maintenance log:</strong> Work completed, upcoming schedules</li>
-                  <li><strong>Recommendations:</strong> Actions to improve performance</li>
-                </ul>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-                <h4 className="mb-3 font-semibold text-elec-yellow">Report Frequency</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-white/20">
-                        <th className="py-2 text-left text-white">Type</th>
-                        <th className="py-2 text-left text-white">Frequency</th>
-                        <th className="py-2 text-left text-white">Content Focus</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-white">
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Operational</td>
-                        <td className="py-2">Weekly/Monthly</td>
-                        <td className="py-2">Production, faults, actions</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Performance</td>
-                        <td className="py-2">Monthly/Quarterly</td>
-                        <td className="py-2">KPIs, trends, analysis</td>
-                      </tr>
-                      <tr className="border-b border-white/10">
-                        <td className="py-2">Annual</td>
-                        <td className="py-2">Yearly</td>
-                        <td className="py-2">Comprehensive review</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Practical Guidance */}
-          <section className="mb-12 mt-12">
-            <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/5 p-6">
-              <h2 className="mb-4 text-xl font-bold text-white">Practical Guidance</h2>
-              <div className="space-y-4 text-white">
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Setting Up Effective Monitoring</h4>
-                  <p className="mt-1 text-sm">
-                    Ensure sensors are correctly calibrated and positioned. Configure appropriate alert thresholds based on system characteristics. Establish clear escalation procedures and responsibilities for alert response.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Data Quality Management</h4>
-                  <p className="mt-1 text-sm">
-                    Regularly verify data against independent measurements (e.g., meter readings). Address communication gaps promptly. Maintain calibration records for sensors. Document any data quality issues affecting analysis.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-elec-yellow">Using Data for Maintenance Planning</h4>
-                  <p className="mt-1 text-sm">
-                    Track component-level performance to identify degradation before failure. Use historical fault data to predict maintenance needs. Schedule preventive maintenance based on trends rather than just calendar intervals.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* FAQs */}
-          <section className="mb-12">
-            <h2 className="mb-6 text-2xl font-bold text-white">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="rounded-lg border border-white/10 bg-white/5 p-4">
-                  <h3 className="mb-2 font-semibold text-elec-yellow">{faq.question}</h3>
-                  <p className="text-sm text-white">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Quiz Section */}
-          <section className="mb-12">
-            <Quiz
-              title="System Monitoring Quiz"
-              questions={quizQuestions}
-              onComplete={(score) => console.log("Quiz completed with score:", score)}
-            />
-          </section>
-
-          {/* Navigation */}
-          <nav className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:justify-between">
-            <Link to="/upskilling/renewable-energy/module-6/section-5">
-              <Button variant="outline" className="w-full gap-2 border-white/20 text-white hover:bg-white/10 sm:w-auto">
-                <ArrowLeft className="h-4 w-4" />
-                Previous Section
-              </Button>
-            </Link>
-            <Link to="/upskilling/renewable-energy/module-7/section-2">
-              <Button className="w-full gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90 sm:w-auto">
-                Next Section
-                <ArrowLeft className="h-4 w-4 rotate-180" />
-              </Button>
-            </Link>
-          </nav>
+        {/* Bottom Navigation */}
+        <div className="flex justify-between items-center pt-4 border-t border-white/10">
+          <Link to="/upskilling/renewable-energy/module-6/section-5">
+            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Previous Module
+            </Button>
+          </Link>
+          <Link to="../section-2">
+            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              Next Section
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
