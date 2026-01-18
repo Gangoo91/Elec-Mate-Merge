@@ -57,6 +57,8 @@ const HelpBotTab = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const userScrolledRef = useRef(false);
   const wasAtBottomBeforeStreamRef = useRef(true);
+  const lastScrollTimeRef = useRef(0);
+  const SCROLL_THROTTLE_MS = 500; // Only scroll every 500ms during streaming
 
   // Smooth streaming hook - 60fps text animation
   const {
@@ -81,14 +83,22 @@ const HelpBotTab = () => {
     }
   }, [isLoading, isAtBottom]);
 
-  // Smooth scroll to bottom - only if user hasn't scrolled away
+  // Smooth scroll to bottom - only if user hasn't scrolled away, with throttling during streaming
   const scrollToBottom = useCallback((force = false) => {
+    const now = Date.now();
+
+    // During streaming, throttle scroll calls to prevent jumpiness
+    if (isLoading && !force) {
+      if (now - lastScrollTimeRef.current < SCROLL_THROTTLE_MS) return;
+      lastScrollTimeRef.current = now;
+    }
+
     if (force || (!userScrolledRef.current && wasAtBottomBeforeStreamRef.current)) {
       requestAnimationFrame(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
       });
     }
-  }, []);
+  }, [isLoading]);
 
   // Scroll to bottom when new message arrives (not during streaming)
   useEffect(() => {
@@ -96,6 +106,13 @@ const HelpBotTab = () => {
       scrollToBottom();
     }
   }, [chatMessages.length, scrollToBottom, isLoading]);
+
+  // Periodically scroll during streaming (throttled via scrollToBottom)
+  useEffect(() => {
+    if (isLoading && streamedContent && !userScrolledRef.current) {
+      scrollToBottom();
+    }
+  }, [streamedContent, isLoading, scrollToBottom]);
 
   const quickQuestionCategories: QuickQuestionCategory[] = [
     {
@@ -260,7 +277,7 @@ const HelpBotTab = () => {
     }]);
 
     // Scroll to show the new message
-    setTimeout(() => scrollToBottom(true), 50);
+    setTimeout(() => scrollToBottom(), 50);
 
     try {
       const { data: { session } } = await supabase.auth.getSession();
