@@ -404,7 +404,7 @@ const ElecIdExperience = () => {
       {/* Location */}
       <div className="space-y-2">
         <Label className="text-sm font-medium text-foreground">
-          Location <span className="text-muted-foreground font-normal">(optional)</span>
+          Location <span className="text-foreground/70 font-normal">(optional)</span>
         </Label>
         <Input
           value={formData.location}
@@ -457,7 +457,7 @@ const ElecIdExperience = () => {
       {/* Description */}
       <div className="space-y-2">
         <Label className="text-sm font-medium text-foreground">
-          Description <span className="text-muted-foreground font-normal">(optional)</span>
+          Description <span className="text-foreground/70 font-normal">(optional)</span>
         </Label>
         <Textarea
           value={formData.description}
@@ -502,7 +502,7 @@ const ElecIdExperience = () => {
               }}
               className="p-2 -mr-2 rounded-full hover:bg-white/[0.08] touch-manipulation"
             >
-              <X className="w-5 h-5 text-muted-foreground" />
+              <X className="w-5 h-5 text-foreground/70" />
             </button>
           </div>
 
@@ -650,7 +650,7 @@ const ElecIdExperience = () => {
       <div className="flex items-center justify-between px-1">
         <div>
           <h3 className="text-lg font-semibold text-foreground">Work History</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground/70">
             {workHistory.length} position{workHistory.length !== 1 ? "s" : ""} recorded
           </p>
         </div>
@@ -710,7 +710,7 @@ const ElecIdExperience = () => {
                     )}>
                       <Building2 className={cn(
                         "w-6 h-6",
-                        exp.isCurrent ? "text-elec-yellow" : "text-muted-foreground"
+                        exp.isCurrent ? "text-elec-yellow" : "text-foreground/70"
                       )} />
                     </div>
 
@@ -721,11 +721,11 @@ const ElecIdExperience = () => {
                           <h4 className="font-semibold text-foreground truncate">
                             {getJobTitleLabel(exp.jobTitle)}
                           </h4>
-                          <p className="text-sm text-muted-foreground truncate">
+                          <p className="text-sm text-foreground/70 truncate">
                             {exp.employerName}
                           </p>
                         </div>
-                        <ChevronRight className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <ChevronRight className="w-5 h-5 text-foreground/70 flex-shrink-0 mt-0.5" />
                       </div>
 
                       {/* Badges */}
@@ -744,7 +744,7 @@ const ElecIdExperience = () => {
                       </div>
 
                       {/* Meta info */}
-                      <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-3 mt-2 text-xs text-foreground/70">
                         <span className="flex items-center gap-1">
                           <Calendar className="h-3.5 w-3.5" />
                           {formatDateRange(exp.startDate, exp.endDate, exp.isCurrent)}
@@ -760,7 +760,7 @@ const ElecIdExperience = () => {
 
                       {/* Location */}
                       {exp.location && (
-                        <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                        <p className="text-xs text-foreground/70 mt-1 flex items-center gap-1">
                           <MapPin className="h-3 w-3" />
                           {exp.location}
                         </p>
@@ -803,10 +803,10 @@ const ElecIdExperience = () => {
           className="py-12 text-center"
         >
           <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center">
-            <Briefcase className="h-10 w-10 text-muted-foreground/50" />
+            <Briefcase className="h-10 w-10 text-foreground/70/50" />
           </div>
           <h4 className="text-lg font-medium text-foreground mb-2">No work history yet</h4>
-          <p className="text-muted-foreground max-w-xs mx-auto mb-6">
+          <p className="text-foreground/70 max-w-xs mx-auto mb-6">
             Add your work experience to build your professional timeline.
           </p>
           <Button

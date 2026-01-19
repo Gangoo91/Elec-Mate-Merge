@@ -33,7 +33,7 @@ export const DesignReasoningDisplay = ({
             <Lightbulb className="h-5 w-5 text-blue-400" />
             <h3 className="font-semibold text-lg">Design Reasoning</h3>
             {correctionApplied && (
-              <Badge variant="outline" className="bg-amber-500/20 text-amber-300 border-amber-500/30">
+              <Badge variant="outline" className="bg-orange-500/20 text-orange-300 border-orange-500/30">
                 Self-Corrected ({correctionAttempts} attempts)
               </Badge>
             )}
@@ -43,11 +43,11 @@ export const DesignReasoningDisplay = ({
         
         <CollapsibleContent className="mt-4 space-y-3">
           {correctionApplied && reasoning.correctionsApplied && (
-            <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+            <div className="p-3 bg-orange-500/10 border border-orange-500/30 rounded-lg">
               <div className="flex items-start gap-2">
-                <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5" />
+                <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-sm text-amber-300">Corrections Applied</p>
+                  <p className="font-semibold text-sm text-orange-300">Corrections Applied</p>
                   <p className="text-xs text-muted-foreground mt-1">{reasoning.correctionsApplied}</p>
                 </div>
               </div>

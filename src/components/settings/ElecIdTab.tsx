@@ -175,7 +175,7 @@ const ElecIdTab = () => {
               <IdCard className="h-6 w-6 text-elec-yellow" />
             </div>
           </div>
-          <p className="text-muted-foreground text-sm">Loading your Elec-ID...</p>
+          <p className="text-foreground/70 text-sm">Loading your Elec-ID...</p>
         </motion.div>
       </div>
     );
@@ -260,7 +260,7 @@ const ElecIdTab = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-foreground">{activeConfig?.label}</p>
-                  <p className="text-xs text-muted-foreground">{activeConfig?.description}</p>
+                  <p className="text-xs text-foreground/70">{activeConfig?.description}</p>
                 </div>
               </motion.div>
 
@@ -348,7 +348,7 @@ const ElecIdTab = () => {
                 ))}
               </div>
               <div className="flex justify-between mt-1.5">
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-foreground/70">
                   {activeIndex + 1} of {ELEC_ID_TABS.length}
                 </span>
                 <span className="text-xs text-elec-yellow font-medium">

@@ -159,13 +159,13 @@ export function PremiumTalentCard({
             {verificationTier === 'verified' && <Shield className="h-3 w-3 mr-1" />}
             {tier.label}
           </Badge>
-          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+          <div className="flex items-center gap-1 text-sm text-foreground/70">
             <Star className="h-3.5 w-3.5 text-warning fill-warning" />
             <span className="font-medium text-foreground">{rating.toFixed(1)}</span>
             {completedJobs > 0 && <span className="text-xs">({completedJobs})</span>}
           </div>
         </div>
-        <div className="flex items-center gap-1 text-sm text-muted-foreground">
+        <div className="flex items-center gap-1 text-sm text-foreground/70">
           <MapPin className="h-3.5 w-3.5" />
           <span>{distance}mi away</span>
         </div>
@@ -203,7 +203,7 @@ export function PremiumTalentCard({
             {currentRole && (
               <p className="text-sm text-foreground/80 truncate">{currentRole}</p>
             )}
-            <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
+            <div className="flex items-center gap-2 text-xs text-foreground/70 mt-0.5">
               {totalYearsExperience !== undefined && totalYearsExperience > 0 && (
                 <>
                   <span className="flex items-center gap-1">
@@ -243,7 +243,7 @@ export function PremiumTalentCard({
               </Badge>
             ))}
             {skills.length > 3 && (
-              <Badge variant="outline" className="text-xs text-muted-foreground">
+              <Badge variant="outline" className="text-xs text-foreground/70">
                 +{skills.length - 3} more
               </Badge>
             )}
@@ -263,7 +263,7 @@ export function PremiumTalentCard({
               </Badge>
             ))}
             {specialisms.length > 3 && (
-              <Badge variant="outline" className="text-xs text-muted-foreground">
+              <Badge variant="outline" className="text-xs text-foreground/70">
                 +{specialisms.length - 3} more
               </Badge>
             )}
@@ -271,7 +271,7 @@ export function PremiumTalentCard({
         )}
 
         {/* ECS Card & Credentials Row */}
-        <div className="flex items-center justify-between text-xs text-muted-foreground pt-1 border-t border-border/30">
+        <div className="flex items-center justify-between text-xs text-foreground/70 pt-1 border-t border-border/30">
           <div className="flex items-center gap-2">
             {/* ECS Card Badge */}
             <Badge variant="secondary" className={`text-xs px-2 py-0.5 ${ecsCard.bg} ${ecsCard.color} border-0`}>

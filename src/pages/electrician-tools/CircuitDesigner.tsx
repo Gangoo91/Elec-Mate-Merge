@@ -9,13 +9,13 @@ const CircuitDesigner = () => {
   const fromAgentSelector = location.state?.fromAgentSelector;
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background">
+    <div className="bg-elec-dark min-h-screen">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10 ">
-        <div className="px-4 py-2">
+      <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.08]">
+        <div className="px-2 py-2">
           <button
             onClick={() => navigate(fromAgentSelector ? "/electrician/agent-selector" : "/electrician")}
-            className="flex items-center gap-2 text-white active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
+            className="flex items-center gap-2 text-white active:scale-[0.98] transition-all touch-manipulation h-11 -ml-1 px-2 rounded-lg hover:bg-white/5"
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="text-sm font-medium">
@@ -25,27 +25,27 @@ const CircuitDesigner = () => {
         </div>
       </div>
 
-      <main className="px-4 py-4 space-y-5">
+      <main className="px-2 py-3 space-y-3">
         {/* Hero Header */}
         <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-amber-500/20 to-yellow-500/10 border border-amber-500/20">
-            <Zap className="h-6 w-6 text-amber-400" />
+          <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+            <Zap className="h-5 w-5 text-elec-yellow" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-white">AI Circuit Designer</h1>
-            <p className="text-sm text-white/50">BS 7671 compliant circuit design</p>
+            <h1 className="text-lg font-bold text-white">AI Circuit Designer</h1>
+            <p className="text-xs text-white/50">BS 7671 compliant circuit design</p>
           </div>
         </div>
 
         {/* Compliance Badge Card */}
-        <Card className="bg-[#1e1e1e] border border-amber-500/20 rounded-2xl">
-          <CardContent className="p-4">
+        <Card className="bg-white/[0.03] border border-white/[0.08] rounded-xl">
+          <CardContent className="p-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-sm font-medium text-white">BS 7671:2018+A3:2024 Compliant</span>
+                <span className="text-xs font-medium text-white">BS 7671:2018+A3:2024</span>
               </div>
-              <span className="px-2 py-1 text-xs bg-amber-500/10 text-amber-400 rounded-md border border-amber-500/20">
+              <span className="px-2 py-0.5 text-[10px] bg-elec-yellow/10 text-elec-yellow rounded-md border border-elec-yellow/20">
                 18th Edition
               </span>
             </div>

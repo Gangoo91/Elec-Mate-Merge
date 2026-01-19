@@ -368,7 +368,7 @@ const ElecIdSkills = () => {
                 <div className={cn("font-medium", isSelected ? colors.text : "text-foreground")}>
                   {level.label}
                 </div>
-                <div className="text-xs text-muted-foreground mt-0.5">
+                <div className="text-xs text-foreground/70 mt-0.5">
                   {level.description}
                 </div>
               </button>
@@ -426,7 +426,7 @@ const ElecIdSkills = () => {
               }}
               className="p-2 -mr-2 rounded-full hover:bg-white/[0.08] touch-manipulation"
             >
-              <X className="w-5 h-5 text-muted-foreground" />
+              <X className="w-5 h-5 text-foreground/70" />
             </button>
           </div>
 
@@ -580,7 +580,7 @@ const ElecIdSkills = () => {
       <div className="flex items-center justify-between px-1">
         <div>
           <h3 className="text-lg font-semibold text-foreground">Your Skills</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground/70">
             {skills.length} skill{skills.length !== 1 ? "s" : ""} recorded
           </p>
         </div>
@@ -614,11 +614,11 @@ const ElecIdSkills = () => {
                 >
                   <div className={cn(
                     "text-xl font-bold",
-                    count > 0 ? colors.text : "text-muted-foreground/50"
+                    count > 0 ? colors.text : "text-foreground/70/50"
                   )}>
                     {count}
                   </div>
-                  <div className="text-[10px] text-muted-foreground uppercase tracking-wide">
+                  <div className="text-[10px] text-foreground/70 uppercase tracking-wide">
                     {level.label}
                   </div>
                 </motion.div>
@@ -692,13 +692,13 @@ const ElecIdSkills = () => {
                             </span>
 
                             {/* Years */}
-                            <span className="text-xs text-muted-foreground flex items-center gap-0.5">
+                            <span className="text-xs text-foreground/70 flex items-center gap-0.5">
                               <TrendingUp className="h-3 w-3" />
                               {skill.yearsExperience}y
                             </span>
 
                             {/* Edit indicator */}
-                            <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <ChevronRight className="h-4 w-4 text-foreground/70 opacity-0 group-hover:opacity-100 transition-opacity" />
                           </motion.button>
                         );
                       })}
@@ -749,7 +749,7 @@ const ElecIdSkills = () => {
                           <span className={cn("text-xs font-medium px-1.5 py-0.5 rounded-md bg-white/10", colors.text)}>
                             {levelInfo?.label}
                           </span>
-                          <span className="text-xs text-muted-foreground flex items-center gap-0.5">
+                          <span className="text-xs text-foreground/70 flex items-center gap-0.5">
                             <TrendingUp className="h-3 w-3" />
                             {skill.yearsExperience}y
                           </span>
@@ -763,7 +763,7 @@ const ElecIdSkills = () => {
 
           {/* Quick Delete Section */}
           <div className="pt-4 border-t border-white/[0.06]">
-            <p className="text-xs text-muted-foreground mb-3 px-1">
+            <p className="text-xs text-foreground/70 mb-3 px-1">
               Tap a skill to edit. Long press or swipe to delete.
             </p>
             <div className="flex flex-wrap gap-2">
@@ -790,10 +790,10 @@ const ElecIdSkills = () => {
           className="py-12 text-center"
         >
           <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center">
-            <Wrench className="h-10 w-10 text-muted-foreground/50" />
+            <Wrench className="h-10 w-10 text-foreground/70/50" />
           </div>
           <h4 className="text-lg font-medium text-foreground mb-2">No skills yet</h4>
-          <p className="text-muted-foreground max-w-xs mx-auto mb-6">
+          <p className="text-foreground/70 max-w-xs mx-auto mb-6">
             Add your electrical skills to showcase your expertise.
           </p>
           <Button

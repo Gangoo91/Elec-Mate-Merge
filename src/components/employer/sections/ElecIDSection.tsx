@@ -85,7 +85,7 @@ const statusConfig = {
 };
 
 const skillLevelColors: Record<string, string> = {
-  "beginner": "bg-muted text-muted-foreground",
+  "beginner": "bg-muted text-foreground/70",
   "intermediate": "bg-blue-500/20 text-blue-400 border-blue-500/30",
   "advanced": "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
   "expert": "bg-success/20 text-success border-success/30",
@@ -201,13 +201,6 @@ export const ElecIDSection = () => {
     }
   };
 
-  const handleExportPDF = () => {
-    toast({
-      title: "Compliance Report Generated",
-      description: `${effectiveSelectedProfile?.employee?.name}'s credentials report is being downloaded.`,
-    });
-  };
-
   const handleRenewCert = (certName: string, workerName: string) => {
     toast({
       title: "Renewal Initiated",
@@ -315,10 +308,9 @@ export const ElecIDSection = () => {
 
     return (
       <div className="space-y-4">
-        <ElecIDCard 
-          profile={cardProfile} 
+        <ElecIDCard
+          profile={cardProfile}
           onShare={() => setShareDialogOpen(true)}
-          onExportPDF={handleExportPDF}
         />
 
         <div className="flex flex-wrap gap-2">
@@ -368,8 +360,8 @@ export const ElecIDSection = () => {
             {effectiveSelectedProfile.skills?.length === 0 ? (
               <Card className="bg-elec-gray border-border">
                 <CardContent className="p-6 text-center">
-                  <Star className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                  <p className="text-muted-foreground text-sm">No skills recorded yet</p>
+                  <Star className="h-10 w-10 text-foreground/70 mx-auto mb-3" />
+                  <p className="text-foreground/70 text-sm">No skills recorded yet</p>
                   <Button variant="outline" size="sm" className="mt-3 gap-2" onClick={() => setAddSkillDialogOpen(true)}>
                     <Plus className="h-4 w-4" />
                     Add Skill
@@ -397,7 +389,7 @@ export const ElecIDSection = () => {
                         className="h-2 flex-1"
                       />
                       {skill.years_experience > 0 && (
-                        <span className="text-xs text-muted-foreground whitespace-nowrap">
+                        <span className="text-xs text-foreground/70 whitespace-nowrap">
                           {skill.years_experience} yrs
                         </span>
                       )}
@@ -412,8 +404,8 @@ export const ElecIDSection = () => {
             {effectiveSelectedProfile.training?.length === 0 ? (
               <Card className="bg-elec-gray border-border">
                 <CardContent className="p-6 text-center">
-                  <BookOpen className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                  <p className="text-muted-foreground text-sm">No training records found</p>
+                  <BookOpen className="h-10 w-10 text-foreground/70 mx-auto mb-3" />
+                  <p className="text-foreground/70 text-sm">No training records found</p>
                   <Button variant="outline" size="sm" className="mt-3 gap-2" onClick={() => setAddTrainingDialogOpen(true)}>
                     <GraduationCap className="h-4 w-4" />
                     Add Training Record
@@ -432,7 +424,7 @@ export const ElecIDSection = () => {
                             <ShieldCheck className="h-4 w-4 text-success flex-shrink-0" />
                           )}
                         </div>
-                        <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground flex-wrap">
+                        <div className="flex items-center gap-3 mt-2 text-xs text-foreground/70 flex-wrap">
                           {train.provider && (
                             <span className="flex items-center gap-1">
                               <Building className="h-3 w-3" />
@@ -450,7 +442,7 @@ export const ElecIDSection = () => {
                       </div>
                       {train.completed_date && (
                         <div className="text-right text-sm flex-shrink-0">
-                          <p className="text-muted-foreground text-xs">Completed</p>
+                          <p className="text-foreground/70 text-xs">Completed</p>
                           <p className="text-foreground font-medium">
                             {new Date(train.completed_date).toLocaleDateString('en-GB')}
                           </p>
@@ -467,8 +459,8 @@ export const ElecIDSection = () => {
             {effectiveSelectedProfile.work_history?.length === 0 ? (
               <Card className="bg-elec-gray border-border">
                 <CardContent className="p-6 text-center">
-                  <Briefcase className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                  <p className="text-muted-foreground text-sm">No work history on record</p>
+                  <Briefcase className="h-10 w-10 text-foreground/70 mx-auto mb-3" />
+                  <p className="text-foreground/70 text-sm">No work history on record</p>
                   <Button variant="outline" size="sm" className="mt-3 gap-2" onClick={() => setAddWorkHistoryDialogOpen(true)}>
                     <Plus className="h-4 w-4" />
                     Add Work History
@@ -493,12 +485,12 @@ export const ElecIDSection = () => {
                             </Badge>
                           )}
                         </div>
-                        <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
+                        <p className="text-sm text-foreground/70 flex items-center gap-1 mt-1">
                           <Building className="h-3 w-3" />
                           {job.employer_name}
                         </p>
                         {job.description && (
-                          <p className="text-xs text-muted-foreground mt-2 line-clamp-2">{job.description}</p>
+                          <p className="text-xs text-foreground/70 mt-2 line-clamp-2">{job.description}</p>
                         )}
                         {job.projects && job.projects.length > 0 && (
                           <div className="flex flex-wrap gap-1 mt-2">
@@ -512,7 +504,7 @@ export const ElecIDSection = () => {
                         <p className="text-foreground font-medium">
                           {new Date(job.start_date).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
                         </p>
-                        <p className="text-muted-foreground">to</p>
+                        <p className="text-foreground/70">to</p>
                         <p className="text-foreground font-medium">
                           {job.is_current ? 'Present' : job.end_date ? new Date(job.end_date).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : 'N/A'}
                         </p>
@@ -528,8 +520,8 @@ export const ElecIDSection = () => {
             {effectiveSelectedProfile.qualifications?.length === 0 ? (
               <Card className="bg-elec-gray border-border">
                 <CardContent className="p-6 text-center">
-                  <GraduationCap className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                  <p className="text-muted-foreground text-sm">No qualifications recorded</p>
+                  <GraduationCap className="h-10 w-10 text-foreground/70 mx-auto mb-3" />
+                  <p className="text-foreground/70 text-sm">No qualifications recorded</p>
                 </CardContent>
               </Card>
             ) : (
@@ -539,7 +531,7 @@ export const ElecIDSection = () => {
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
                         <h4 className="font-medium text-foreground text-sm">{qual.qualification_name}</h4>
-                        <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
+                        <p className="text-xs text-foreground/70 flex items-center gap-1 mt-1">
                           <Building className="h-3 w-3" />
                           {qual.awarding_body || "Unknown"}
                         </p>
@@ -573,7 +565,7 @@ export const ElecIDSection = () => {
               </div>
               <div>
                 <p className="text-xl md:text-2xl font-bold text-destructive">{expiredItems.length}</p>
-                <p className="text-xs md:text-sm text-muted-foreground">Expired</p>
+                <p className="text-xs md:text-sm text-foreground/70">Expired</p>
               </div>
             </div>
           </CardContent>
@@ -586,7 +578,7 @@ export const ElecIDSection = () => {
               </div>
               <div>
                 <p className="text-xl md:text-2xl font-bold text-warning">{warningItems.length}</p>
-                <p className="text-xs md:text-sm text-muted-foreground">Expiring</p>
+                <p className="text-xs md:text-sm text-foreground/70">Expiring</p>
               </div>
             </div>
           </CardContent>
@@ -599,7 +591,7 @@ export const ElecIDSection = () => {
               </div>
               <div>
                 <p className="text-xl md:text-2xl font-bold text-success">{activeItems.length}</p>
-                <p className="text-xs md:text-sm text-muted-foreground">Active</p>
+                <p className="text-xs md:text-sm text-foreground/70">Active</p>
               </div>
             </div>
           </CardContent>
@@ -612,7 +604,7 @@ export const ElecIDSection = () => {
               </div>
               <div>
                 <p className="text-xl md:text-2xl font-bold text-elec-yellow">{profiles?.length || 0}</p>
-                <p className="text-xs md:text-sm text-muted-foreground">Profiles</p>
+                <p className="text-xs md:text-sm text-foreground/70">Profiles</p>
               </div>
             </div>
           </CardContent>
@@ -645,7 +637,7 @@ export const ElecIDSection = () => {
               <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between py-2 border-b border-border/50 last:border-0 gap-2">
                 <div className="min-w-0">
                   <p className="font-medium text-sm truncate">{item.training_name}</p>
-                  <p className="text-xs text-muted-foreground">{item.workerName}</p>
+                  <p className="text-xs text-foreground/70">{item.workerName}</p>
                 </div>
                 <Button 
                   size="sm" 
@@ -664,7 +656,7 @@ export const ElecIDSection = () => {
                 <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between py-2 border-b border-border/50 last:border-0 gap-2">
                   <div className="min-w-0">
                     <p className="font-medium text-sm truncate">{item.training_name}</p>
-                    <p className="text-xs text-muted-foreground">{item.workerName} - {daysLeft} days remaining</p>
+                    <p className="text-xs text-foreground/70">{item.workerName} - {daysLeft} days remaining</p>
                   </div>
                   <Button 
                     size="sm" 
@@ -710,39 +702,55 @@ export const ElecIDSection = () => {
   } : null;
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-xl md:text-2xl font-bold text-foreground flex items-center gap-2">
-            <CreditCard className="h-5 w-5 md:h-6 md:w-6 text-elec-yellow" />
-            Credentials & Compliance
-          </h1>
-          <p className="text-muted-foreground text-xs md:text-sm mt-1">
-            Monitor certifications, verify credentials, manage compliance
-          </p>
+    <div className="space-y-3 md:space-y-6 animate-fade-in -mx-4 px-4 sm:mx-0 sm:px-0">
+      {/* Mobile: Compact header */}
+      {isMobile ? (
+        <div className="flex items-center justify-between py-2">
+          <h1 className="text-lg font-semibold text-foreground">Credentials</h1>
+          <div className="flex items-center gap-2">
+            <Button onClick={() => refetch()} variant="ghost" size="icon" className="h-9 w-9 touch-manipulation">
+              <RefreshCw className="h-4 w-4" />
+            </Button>
+            <Button onClick={() => setScanDialogOpen(true)} size="sm" className="gap-2 h-9 touch-manipulation">
+              <QrCode className="h-4 w-4" />
+              Scan
+            </Button>
+          </div>
         </div>
-        <div className="flex items-center gap-2 flex-wrap">
-          <Button onClick={() => refetch()} variant="outline" size="sm" className="gap-2">
-            <RefreshCw className="h-4 w-4" />
-          </Button>
-          <Button onClick={() => setCreateElecIdSheetOpen(true)} variant="outline" className="gap-2">
-            <UserPlus className="h-4 w-4" />
-            Create Elec-ID
-          </Button>
-          <Button onClick={() => setScanDialogOpen(true)} className="gap-2">
-            <QrCode className="h-4 w-4" />
-            Scan Elec-ID
-          </Button>
+      ) : (
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-xl md:text-2xl font-bold text-foreground flex items-center gap-2">
+              <CreditCard className="h-5 w-5 md:h-6 md:w-6 text-elec-yellow" />
+              Credentials & Compliance
+            </h1>
+            <p className="text-foreground/70 text-xs md:text-sm mt-1">
+              Monitor certifications, verify credentials, manage compliance
+            </p>
+          </div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <Button onClick={() => refetch()} variant="outline" size="sm" className="gap-2">
+              <RefreshCw className="h-4 w-4" />
+            </Button>
+            <Button onClick={() => setCreateElecIdSheetOpen(true)} variant="outline" className="gap-2">
+              <UserPlus className="h-4 w-4" />
+              Create Elec-ID
+            </Button>
+            <Button onClick={() => setScanDialogOpen(true)} className="gap-2">
+              <QrCode className="h-4 w-4" />
+              Scan Elec-ID
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
 
       <Tabs value={mainTab} onValueChange={(v) => setMainTab(v as "workers" | "compliance")}>
-        <TabsList className="w-full md:w-auto">
-          <TabsTrigger value="workers" className="gap-2 flex-1 md:flex-none">
+        <TabsList className="w-full md:w-auto h-11">
+          <TabsTrigger value="workers" className="gap-2 flex-1 md:flex-none h-9 touch-manipulation">
             <User className="h-4 w-4" />
             Workers
           </TabsTrigger>
-          <TabsTrigger value="compliance" className="gap-2 flex-1 md:flex-none">
+          <TabsTrigger value="compliance" className="gap-2 flex-1 md:flex-none h-9 touch-manipulation">
             <BarChart3 className="h-4 w-4" />
             Compliance
             {(expiredItems.length + warningItems.length) > 0 && (
@@ -755,17 +763,29 @@ export const ElecIDSection = () => {
 
         <TabsContent value="workers" className="mt-4">
           <div className="grid lg:grid-cols-3 gap-4 md:gap-6">
-            <div className="space-y-4">
-              <div className="relative">
-                {!searchQuery && (
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <div className="space-y-3">
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  {!searchQuery && (
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground/70 pointer-events-none" />
+                  )}
+                  <Input
+                    placeholder="Search by name or Elec-ID..."
+                    className={cn("h-11 touch-manipulation", !searchQuery && "pl-10")}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+                {isMobile && (
+                  <Button
+                    onClick={() => setCreateElecIdSheetOpen(true)}
+                    variant="outline"
+                    size="icon"
+                    className="h-11 w-11 shrink-0 touch-manipulation"
+                  >
+                    <UserPlus className="h-4 w-4" />
+                  </Button>
                 )}
-                <Input
-                  placeholder="Search by name or Elec-ID..."
-                  className={cn(!searchQuery && "pl-10")}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
               </div>
 
               <div className="space-y-2">
@@ -793,7 +813,7 @@ export const ElecIDSection = () => {
                           <div className="flex items-center gap-3 min-w-0 flex-1">
                             <div className="relative flex-shrink-0">
                               <div className={`w-12 h-12 rounded-xl bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center ring-2 ${config.border.replace('border-', 'ring-')} ring-offset-1 ring-offset-card`}>
-                                <User className="h-5 w-5 text-muted-foreground/60" />
+                                <User className="h-5 w-5 text-foreground/60" />
                               </div>
                               <div className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full ${config.bg} ${config.border} border flex items-center justify-center`}>
                                 <StatusIcon className={`h-2.5 w-2.5 ${config.text}`} />
@@ -807,8 +827,8 @@ export const ElecIDSection = () => {
                                   <ShieldCheck className="h-3.5 w-3.5 text-success flex-shrink-0" />
                                 )}
                               </div>
-                              <p className="text-xs text-muted-foreground truncate">{profile.employee?.role || "Electrician"}</p>
-                              <p className="text-[10px] font-mono text-muted-foreground/70 mt-0.5">{profile.elec_id_number}</p>
+                              <p className="text-xs text-foreground/70 truncate">{profile.employee?.role || "Electrician"}</p>
+                              <p className="text-[10px] font-mono text-foreground/50 mt-0.5">{profile.elec_id_number}</p>
                             </div>
                           </div>
                           
@@ -824,7 +844,7 @@ export const ElecIDSection = () => {
                               </div>
                             )}
                             
-                            <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                            <div className="flex items-center gap-2 text-[10px] text-foreground/70">
                               <span className="flex items-center gap-0.5">
                                 <Star className="h-3 w-3" />
                                 {profile.skills?.length || 0}
@@ -836,7 +856,7 @@ export const ElecIDSection = () => {
                             </div>
                           </div>
                           
-                          {isMobile && <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0 group-hover:translate-x-0.5 transition-transform" />}
+                          {isMobile && <ChevronRight className="h-4 w-4 text-foreground/70 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" />}
                         </div>
                       </CardContent>
                     </Card>
@@ -846,8 +866,8 @@ export const ElecIDSection = () => {
                 {filteredProfiles.length === 0 && (
                   <Card className="bg-muted/30 border-dashed">
                     <CardContent className="p-6 text-center">
-                      <User className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                      <p className="text-muted-foreground text-sm">No profiles found</p>
+                      <User className="h-10 w-10 text-foreground/70 mx-auto mb-3" />
+                      <p className="text-foreground/70 text-sm">No profiles found</p>
                     </CardContent>
                   </Card>
                 )}
@@ -862,11 +882,12 @@ export const ElecIDSection = () => {
 
             {isMobile && (
               <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-                <SheetContent side="bottom" className="h-[90vh] p-0">
-                  <SheetHeader className="p-4 border-b border-border">
-                    <SheetTitle>Elec-ID Profile</SheetTitle>
+                <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-3xl border-t-0 bg-background">
+                  <div className="w-12 h-1.5 bg-foreground/20 rounded-full mx-auto mt-3 mb-2" />
+                  <SheetHeader className="px-4 pb-3 border-b border-border/50">
+                    <SheetTitle className="text-lg">Elec-ID Profile</SheetTitle>
                   </SheetHeader>
-                  <ScrollArea className="h-[calc(90vh-60px)] p-4">
+                  <ScrollArea className="h-[calc(92vh-70px)] px-4 py-4">
                     <ProfileDetail />
                   </ScrollArea>
                 </SheetContent>
@@ -932,7 +953,7 @@ export const ElecIDSection = () => {
                 <CardContent className="p-4 text-center">
                   <CheckCircle2 className="h-10 w-10 text-success mx-auto mb-3" />
                   <p className="text-foreground font-medium">All employees have Elec-IDs!</p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-foreground/70 mt-1">
                     All {employees?.length || 0} employees have Elec-ID profiles.
                   </p>
                 </CardContent>
@@ -940,7 +961,7 @@ export const ElecIDSection = () => {
             ) : (
               <>
                 <div className="flex items-center justify-between">
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-foreground/70">
                     {employeesWithoutElecId.length} employee{employeesWithoutElecId.length !== 1 ? 's' : ''} without Elec-ID
                   </p>
                   <Button
@@ -1004,13 +1025,13 @@ export const ElecIDSection = () => {
                       >
                         <CardContent className="p-3 flex items-center gap-3">
                           <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                            <User className="h-5 w-5 text-muted-foreground" />
+                            <User className="h-5 w-5 text-foreground/70" />
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="font-medium text-foreground truncate">{emp.name}</p>
-                            <p className="text-xs text-muted-foreground">{emp.role}</p>
+                            <p className="text-xs text-foreground/70">{emp.role}</p>
                           </div>
-                          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                          <ChevronRight className="h-4 w-4 text-foreground/70" />
                         </CardContent>
                       </Card>
                     ))}

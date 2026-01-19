@@ -70,7 +70,7 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
       passCriteria: 'All single-pole devices in phase conductor only',
       regulation: 'BS 7671 Reg 643.4',
       status: 'pass',
-      colorClass: 'border-amber-500/50 bg-amber-500/10'
+      colorClass: 'border-orange-500/50 bg-orange-500/10'
     });
 
     // RCD Test - Use expectedTests
@@ -146,7 +146,7 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
                   variant="outline" 
                   className={`ml-2 text-xs ${
                     result.status === 'pass' ? 'bg-green-500/10 text-green-400 border-green-500/30' :
-                    result.status === 'warning' ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' :
+                    result.status === 'warning' ? 'bg-orange-500/10 text-orange-400 border-orange-500/30' :
                     'bg-red-500/10 text-red-400 border-red-500/30'
                   }`}
                 >

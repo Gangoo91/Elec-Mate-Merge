@@ -125,15 +125,15 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
         <div
           className={cn(
             "flex items-start gap-3 p-4 rounded-xl border",
-            "bg-amber-500/10 border-amber-500/30"
+            "bg-orange-500/10 border-orange-500/30"
           )}
         >
-          <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
+          <AlertTriangle className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
           <div>
             <h4 className="text-sm font-semibold text-white mb-0.5">
               Warnings ({totalWarnings})
             </h4>
-            <p className="text-xs text-amber-200">
+            <p className="text-xs text-orange-200">
               Review warnings below - design will proceed with assumptions
             </p>
           </div>
@@ -208,8 +208,8 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
                 ))}
                 {validation.warnings.map((warning, i) => (
                   <div key={`warning-${i}`} className="flex items-start gap-2 text-xs">
-                    <AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-amber-400 shrink-0" />
-                    <span className="text-amber-200">{warning}</span>
+                    <AlertTriangle className="h-3.5 w-3.5 mt-0.5 text-orange-400 shrink-0" />
+                    <span className="text-orange-200">{warning}</span>
                   </div>
                 ))}
               </div>

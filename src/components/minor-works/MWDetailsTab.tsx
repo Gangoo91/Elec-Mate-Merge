@@ -5,9 +5,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Users, FileText, Zap, Calendar } from 'lucide-react';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { FieldTooltip } from '@/components/inspection-app/ui/field-tooltip';
+import { Users, FileText, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+  SUPPLY_VOLTAGES,
+  EARTHING_ARRANGEMENTS,
+  EARTHING_CONDUCTOR_SIZES,
+  WORK_TYPES,
+} from '@/constants/minorWorksOptions';
 
 interface MWDetailsTabProps {
   formData: any;
@@ -168,19 +175,14 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Type of Work *</Label>
-                  <Select value={formData.workType || ''} onValueChange={(v) => onUpdate('workType', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-blue-500 data-[state=open]:ring-2">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="addition">Addition to Existing Circuit</SelectItem>
-                      <SelectItem value="alteration">Alteration to Existing Circuit</SelectItem>
-                      <SelectItem value="replacement">Replacement of Equipment</SelectItem>
-                      <SelectItem value="new">New Circuit</SelectItem>
-                      <SelectItem value="repair">Repair</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.workType || ''}
+                    onValueChange={(v) => onUpdate('workType', v)}
+                    options={WORK_TYPES}
+                    placeholder="Select type"
+                    title="Type of Work"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Location of Work</Label>
@@ -270,16 +272,14 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Supply Voltage</Label>
-                  <Select value={formData.supplyVoltage || '230V'} onValueChange={(v) => onUpdate('supplyVoltage', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="230V">230V</SelectItem>
-                      <SelectItem value="400V">400V</SelectItem>
-                      <SelectItem value="110V">110V</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.supplyVoltage || '230V'}
+                    onValueChange={(v) => onUpdate('supplyVoltage', v)}
+                    options={SUPPLY_VOLTAGES}
+                    placeholder="Select"
+                    title="Supply Voltage"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Frequency</Label>
@@ -291,35 +291,56 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Phases</Label>
-                  <Select value={formData.supplyPhases || '1'} onValueChange={(v) => onUpdate('supplyPhases', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="1">Single Phase</SelectItem>
-                      <SelectItem value="3">Three Phase</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.supplyPhases || '1'}
+                    onValueChange={(v) => onUpdate('supplyPhases', v)}
+                    options={[
+                      { value: '1', label: 'Single Phase', description: 'Standard domestic supply' },
+                      { value: '3', label: 'Three Phase', description: 'Commercial/larger installations' },
+                    ]}
+                    placeholder="Select"
+                    title="Supply Phases"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-sm">Earthing Arrangement *</Label>
-                  <Select value={formData.earthingArrangement || ''} onValueChange={(v) => onUpdate('earthingArrangement', v)}>
-                    <SelectTrigger className={cn("h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500", !formData.earthingArrangement && "border-red-500/50")}>
-                      <SelectValue placeholder="Select earthing type" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="TN-C-S">TN-C-S (PME)</SelectItem>
-                      <SelectItem value="TN-S">TN-S</SelectItem>
-                      <SelectItem value="TT">TT</SelectItem>
-                      <SelectItem value="IT">IT</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="flex items-center">
+                    <Label className="text-sm">Earthing Arrangement *</Label>
+                    <FieldTooltip
+                      content="The type of earthing system determines how protective and neutral conductors are arranged between the supply and installation."
+                      regulation="411.4"
+                      example="Most UK domestic supplies are TN-C-S (PME). TT systems require an earth electrode."
+                    />
+                  </div>
+                  <MobileSelectPicker
+                    value={formData.earthingArrangement || ''}
+                    onValueChange={(v) => onUpdate('earthingArrangement', v)}
+                    options={EARTHING_ARRANGEMENTS}
+                    placeholder="Select earthing type"
+                    title="Earthing Arrangement"
+                    triggerClassName={cn(
+                      "bg-elec-gray border-white/30",
+                      !formData.earthingArrangement && "border-red-500/50"
+                    )}
+                  />
+                  {formData.earthingArrangement && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {EARTHING_ARRANGEMENTS.find(e => e.value === formData.earthingArrangement)?.description}
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-sm">Zdb - Earth fault loop at DB (Ω)</Label>
+                  <div className="flex items-center">
+                    <Label className="text-sm">Zdb - Earth fault loop at DB (Ω)</Label>
+                    <FieldTooltip
+                      content="External earth fault loop impedance measured at the distribution board. This value is used to verify circuit disconnection times."
+                      regulation="411.4.5"
+                      example="Typical values: TN-C-S: 0.20-0.35Ω, TN-S: 0.35-0.80Ω, TT: varies with electrode"
+                    />
+                  </div>
                   <Input
                     type="number"
                     step="0.01"
@@ -346,31 +367,25 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Main Earthing Conductor Size</Label>
-                  <Select value={formData.mainEarthingConductorSize || ''} onValueChange={(v) => onUpdate('mainEarthingConductorSize', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500">
-                      <SelectValue placeholder="Select size" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="10mm2">10mm2</SelectItem>
-                      <SelectItem value="16mm2">16mm2</SelectItem>
-                      <SelectItem value="25mm2">25mm2</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.mainEarthingConductorSize || ''}
+                    onValueChange={(v) => onUpdate('mainEarthingConductorSize', v)}
+                    options={EARTHING_CONDUCTOR_SIZES}
+                    placeholder="Select size"
+                    title="Main Earthing Conductor Size"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Main Bonding Conductor Size</Label>
-                  <Select value={formData.mainBondingConductorSize || ''} onValueChange={(v) => onUpdate('mainBondingConductorSize', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500">
-                      <SelectValue placeholder="Select size" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="6mm2">6mm2</SelectItem>
-                      <SelectItem value="10mm2">10mm2</SelectItem>
-                      <SelectItem value="16mm2">16mm2</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.mainBondingConductorSize || ''}
+                    onValueChange={(v) => onUpdate('mainBondingConductorSize', v)}
+                    options={EARTHING_CONDUCTOR_SIZES}
+                    placeholder="Select size"
+                    title="Main Bonding Conductor Size"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
               </div>
 
@@ -381,12 +396,12 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                   {['Water', 'Gas', 'Oil', 'Structural', 'Other'].map((item) => {
                     const fieldName = `bonding${item}`;
                     return (
-                      <div key={item} className="flex items-center gap-2">
+                      <div key={item} className="flex items-center gap-2 p-3 min-h-[44px] rounded-lg bg-card/50">
                         <Checkbox
                           id={fieldName}
                           checked={formData[fieldName] || false}
                           onCheckedChange={(c) => onUpdate(fieldName, c)}
-                          className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+                          className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation"
                         />
                         <Label htmlFor={fieldName} className="text-sm cursor-pointer">{item}</Label>
                       </div>

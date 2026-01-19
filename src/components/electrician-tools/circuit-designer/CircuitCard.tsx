@@ -66,7 +66,7 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
             variant={status === 'pass' ? 'default' : status === 'warning' ? 'outline' : 'destructive'}
             className={`${
               status === 'pass' ? 'bg-green-500/20 text-green-400 border-green-500/30 animate-pulse-subtle' :
-              status === 'warning' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' :
+              status === 'warning' ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' :
               'bg-red-500/20 text-red-400 border-red-500/30 animate-pulse-subtle'
             } h-7 shrink-0 transition-all duration-300`}
           >
@@ -90,9 +90,9 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
 
         {/* Also show warnings if present */}
         {status === 'warning' && circuit.warnings && circuit.warnings.length > 0 && !(circuit as any).validationIssues?.length && (
-          <div className="mt-2 bg-amber-500/10 border border-amber-500/20 rounded-lg p-2">
+          <div className="mt-2 bg-orange-500/10 border border-orange-500/20 rounded-lg p-2">
             {circuit.warnings.map((warning: string, idx: number) => (
-              <p key={idx} className="text-[10px] text-amber-300 mb-1">• {warning}</p>
+              <p key={idx} className="text-[10px] text-orange-300 mb-1">• {warning}</p>
             ))}
           </div>
         )}
@@ -130,7 +130,7 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
           </>
         ) : circuit.structuredOutput ? (
           <div className="text-center py-12 text-foreground/60">
-            <AlertTriangle className="h-8 w-8 text-amber-400 mx-auto mb-3" />
+            <AlertTriangle className="h-8 w-8 text-orange-400 mx-auto mb-3" />
             <p className="text-sm mb-2 text-foreground">Design data incomplete</p>
             <p className="text-xs text-foreground/60">Some circuit details may be missing - try regenerating</p>
           </div>

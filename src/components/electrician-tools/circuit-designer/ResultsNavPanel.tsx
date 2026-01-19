@@ -79,7 +79,7 @@ export const ResultsNavPanel = ({
                     {status === 'success' ? (
                       <CheckCircle2 className="h-4 w-4 text-primary" />
                     ) : (
-                      <AlertTriangle className="h-4 w-4 text-amber-500" />
+                      <AlertTriangle className="h-4 w-4 text-orange-500" />
                     )}
                   </div>
                   
@@ -124,7 +124,7 @@ export const ResultsNavPanel = ({
           </div>
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground flex items-center gap-1.5">
-              <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
+              <AlertTriangle className="h-3.5 w-3.5 text-orange-500" />
               With Warnings
             </span>
             <span className="font-semibold">

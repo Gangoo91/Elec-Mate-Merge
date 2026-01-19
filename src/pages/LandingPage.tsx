@@ -208,28 +208,28 @@ const LandingPage = () => {
           </div>
 
           <div className="grid sm:grid-cols-3 gap-4">
-            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] text-center">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-yellow-500/20 text-yellow-400">
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-yellow-500/15 via-amber-500/10 to-orange-500/5 border border-yellow-500/20 text-center hover:border-yellow-500/40 transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-yellow-500/25 text-yellow-400 border border-yellow-500/30">
                 <Mic className="w-6 h-6" />
               </div>
               <h3 className="font-semibold text-white mb-1">Voice quotes</h3>
-              <p className="text-sm text-white/50">Speak your quote, send in 2 mins</p>
+              <p className="text-sm text-white/60">Speak your quote, send in 2 mins</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] text-center">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-blue-500/20 text-blue-400">
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-blue-500/15 via-cyan-500/10 to-blue-600/5 border border-blue-500/20 text-center hover:border-blue-500/40 transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-blue-500/25 text-blue-400 border border-blue-500/30">
                 <Send className="w-6 h-6" />
               </div>
               <h3 className="font-semibold text-white mb-1">Instant invoices</h3>
-              <p className="text-sm text-white/50">Professional PDFs, one tap send</p>
+              <p className="text-sm text-white/60">Professional PDFs, one tap send</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] text-center">
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-green-500/20 text-green-400">
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-500/15 via-green-500/10 to-emerald-600/5 border border-emerald-500/20 text-center hover:border-emerald-500/40 transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 bg-emerald-500/25 text-emerald-400 border border-emerald-500/30">
                 <CreditCard className="w-6 h-6" />
               </div>
               <h3 className="font-semibold text-white mb-1">Payment links</h3>
-              <p className="text-sm text-white/50">Stripe-powered, get paid today</p>
+              <p className="text-sm text-white/60">Stripe-powered, get paid today</p>
             </div>
           </div>
         </div>
@@ -346,23 +346,23 @@ const AudienceCard = ({ icon, title, tagline, features, color, highlight, coming
 }) => {
   const colorConfig = {
     yellow: {
-      bg: 'bg-gradient-to-b from-yellow-500/10 to-amber-600/5',
-      border: 'border-yellow-500/30',
-      icon: 'bg-yellow-500/20 text-yellow-400',
+      bg: 'bg-gradient-to-br from-yellow-500/15 via-amber-500/10 to-yellow-600/5',
+      border: 'border-yellow-500/30 hover:border-yellow-500/50',
+      icon: 'bg-yellow-500/25 text-yellow-400 border border-yellow-500/40',
       badge: 'bg-yellow-500 text-black',
       dot: 'bg-yellow-400',
     },
     green: {
-      bg: 'bg-gradient-to-b from-green-500/5 to-emerald-600/5',
-      border: 'border-white/10 hover:border-green-500/30',
-      icon: 'bg-green-500/20 text-green-400',
-      badge: 'bg-green-500 text-black',
-      dot: 'bg-green-400',
+      bg: 'bg-gradient-to-br from-emerald-500/12 via-green-500/8 to-emerald-600/5',
+      border: 'border-emerald-500/20 hover:border-emerald-500/40',
+      icon: 'bg-emerald-500/25 text-emerald-400 border border-emerald-500/40',
+      badge: 'bg-emerald-500 text-black',
+      dot: 'bg-emerald-400',
     },
     purple: {
-      bg: 'bg-gradient-to-b from-purple-500/5 to-violet-600/5',
-      border: 'border-white/10 hover:border-purple-500/30',
-      icon: 'bg-purple-500/20 text-purple-400',
+      bg: 'bg-gradient-to-br from-purple-500/12 via-violet-500/8 to-purple-600/5',
+      border: 'border-purple-500/20 hover:border-purple-500/40',
+      icon: 'bg-purple-500/25 text-purple-400 border border-purple-500/40',
       badge: 'bg-purple-500 text-white',
       dot: 'bg-purple-400',
     },
@@ -371,7 +371,7 @@ const AudienceCard = ({ icon, title, tagline, features, color, highlight, coming
   const config = colorConfig[color];
 
   return (
-    <div className={`relative p-6 rounded-2xl border transition-all duration-300 ${config.bg} ${config.border} ${highlight ? 'ring-1 ring-yellow-500/30' : ''}`}>
+    <div className={`relative p-6 rounded-2xl border transition-all duration-300 ${config.bg} ${config.border} ${highlight ? 'ring-2 ring-yellow-500/40 shadow-lg shadow-yellow-500/10' : ''}`}>
       {comingSoon && (
         <span className={`absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold ${config.badge}`}>
           <Clock className="w-3 h-3" />
@@ -384,11 +384,11 @@ const AudienceCard = ({ icon, title, tagline, features, color, highlight, coming
       </div>
 
       <h3 className="font-bold text-white text-lg">{title}</h3>
-      <p className="text-white/50 text-sm mb-4">{tagline}</p>
+      <p className="text-white/60 text-sm mb-4">{tagline}</p>
 
       <div className="space-y-2">
         {features.map((feature) => (
-          <div key={feature} className="flex items-center gap-2 text-sm text-white/60">
+          <div key={feature} className="flex items-center gap-2 text-sm text-white/70">
             <div className={`w-1.5 h-1.5 rounded-full ${config.dot}`} />
             {feature}
           </div>
@@ -404,12 +404,12 @@ const AIAgentCard = ({ icon, name, desc }: {
   name: string;
   desc: string;
 }) => (
-  <div className="p-4 rounded-xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] hover:border-yellow-500/20 transition-colors">
-    <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 bg-yellow-500/10 text-yellow-400">
+  <div className="p-4 rounded-xl bg-gradient-to-br from-yellow-500/10 via-amber-500/5 to-yellow-600/5 border border-yellow-500/20 hover:border-yellow-500/40 hover:from-yellow-500/15 transition-all duration-300">
+    <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
       {icon}
     </div>
     <h4 className="font-semibold text-white text-sm mb-0.5">{name}</h4>
-    <p className="text-[11px] text-white/40">{desc}</p>
+    <p className="text-[11px] text-white/50">{desc}</p>
   </div>
 );
 
@@ -423,29 +423,32 @@ const FeatureCard = ({ icon, title, description, stat, color }: {
 }) => {
   const colorConfig = {
     yellow: {
-      icon: 'bg-gradient-to-br from-yellow-500/20 to-amber-600/20 text-yellow-400 border-yellow-500/20',
+      card: 'bg-gradient-to-br from-yellow-500/12 via-amber-500/8 to-yellow-600/5 border-yellow-500/20 hover:border-yellow-500/40',
+      icon: 'bg-yellow-500/25 text-yellow-400 border-yellow-500/30',
       stat: 'text-yellow-400',
     },
     blue: {
-      icon: 'bg-gradient-to-br from-blue-500/20 to-cyan-600/20 text-blue-400 border-blue-500/20',
+      card: 'bg-gradient-to-br from-blue-500/12 via-cyan-500/8 to-blue-600/5 border-blue-500/20 hover:border-blue-500/40',
+      icon: 'bg-blue-500/25 text-blue-400 border-blue-500/30',
       stat: 'text-blue-400',
     },
     green: {
-      icon: 'bg-gradient-to-br from-green-500/20 to-emerald-600/20 text-green-400 border-green-500/20',
-      stat: 'text-green-400',
+      card: 'bg-gradient-to-br from-emerald-500/12 via-green-500/8 to-emerald-600/5 border-emerald-500/20 hover:border-emerald-500/40',
+      icon: 'bg-emerald-500/25 text-emerald-400 border-emerald-500/30',
+      stat: 'text-emerald-400',
     },
   };
 
   const config = colorConfig[color];
 
   return (
-    <div className="group relative p-6 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] transition-all duration-300 hover:border-white/20">
+    <div className={`group relative p-6 rounded-2xl border transition-all duration-300 ${config.card}`}>
       <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 border ${config.icon}`}>
         {icon}
       </div>
       <div className={`text-xs font-bold mb-2 ${config.stat}`}>{stat}</div>
       <h3 className="font-semibold text-white text-lg mb-2">{title}</h3>
-      <p className="text-sm text-white/50 leading-relaxed">{description}</p>
+      <p className="text-sm text-white/60 leading-relaxed">{description}</p>
     </div>
   );
 };
@@ -462,24 +465,24 @@ const PricingCard = ({ name, price, description, features, popular, comingSoon, 
 }) => {
   const colorConfig = {
     yellow: {
-      bg: 'bg-gradient-to-b from-yellow-500/10 to-yellow-600/5',
-      border: 'border-yellow-500/30',
+      bg: 'bg-gradient-to-br from-yellow-500/15 via-amber-500/10 to-yellow-600/5',
+      border: 'border-yellow-500/30 hover:border-yellow-500/50',
       badge: 'bg-yellow-500 text-black',
       button: 'bg-yellow-500 hover:bg-yellow-400 text-black',
       check: 'text-yellow-400',
     },
     green: {
-      bg: 'bg-gradient-to-b from-green-500/5 to-emerald-600/5',
-      border: 'border-white/10',
-      badge: 'bg-green-500 text-black',
-      button: 'bg-white/10 hover:bg-white/15 text-white',
-      check: 'text-green-400',
+      bg: 'bg-gradient-to-br from-emerald-500/12 via-green-500/8 to-emerald-600/5',
+      border: 'border-emerald-500/20 hover:border-emerald-500/40',
+      badge: 'bg-emerald-500 text-black',
+      button: 'bg-white/10 hover:bg-white/20 text-white border border-white/10',
+      check: 'text-emerald-400',
     },
     purple: {
-      bg: 'bg-gradient-to-b from-purple-500/5 to-violet-600/5',
-      border: 'border-white/10',
+      bg: 'bg-gradient-to-br from-purple-500/12 via-violet-500/8 to-purple-600/5',
+      border: 'border-purple-500/20 hover:border-purple-500/40',
       badge: 'bg-purple-500 text-white',
-      button: 'bg-purple-500/20 text-purple-300 cursor-not-allowed',
+      button: 'bg-purple-500/20 text-purple-300 cursor-not-allowed border border-purple-500/30',
       check: 'text-purple-400',
     },
   };
@@ -487,7 +490,7 @@ const PricingCard = ({ name, price, description, features, popular, comingSoon, 
   const config = colorConfig[color || 'green'];
 
   return (
-    <div className={`relative p-6 rounded-2xl border transition-all duration-300 ${config.bg} ${config.border}`}>
+    <div className={`relative p-6 rounded-2xl border transition-all duration-300 ${config.bg} ${config.border} ${popular ? 'ring-2 ring-yellow-500/40 shadow-lg shadow-yellow-500/10' : ''}`}>
       {popular && (
         <span className={`absolute -top-3 left-1/2 -translate-x-1/2 inline-block px-3 py-1 rounded-full text-[11px] font-bold ${config.badge}`}>
           POPULAR
@@ -503,9 +506,9 @@ const PricingCard = ({ name, price, description, features, popular, comingSoon, 
       <h3 className="font-bold text-white text-lg mt-1">{name}</h3>
       <div className="flex items-baseline gap-1 mt-2 mb-1">
         <span className="text-3xl font-bold text-white">{price}</span>
-        {!comingSoon && <span className="text-sm text-white/40">/month</span>}
+        {!comingSoon && <span className="text-sm text-white/50">/month</span>}
       </div>
-      <p className="text-sm text-white/50 mb-5">{description}</p>
+      <p className="text-sm text-white/60 mb-5">{description}</p>
 
       {comingSoon ? (
         <Button disabled className={`w-full h-12 font-semibold rounded-xl ${config.button}`}>
@@ -521,7 +524,7 @@ const PricingCard = ({ name, price, description, features, popular, comingSoon, 
 
       <div className="mt-5 space-y-3">
         {features.map((feature) => (
-          <div key={feature} className="flex items-center gap-2.5 text-sm text-white/60">
+          <div key={feature} className="flex items-center gap-2.5 text-sm text-white/70">
             <Check className={`w-4 h-4 flex-shrink-0 ${config.check}`} />
             {feature}
           </div>

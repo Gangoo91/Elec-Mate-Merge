@@ -82,7 +82,7 @@ export const DesignProcessingViewDesktop = ({
   };
 
   return (
-    <div className="h-[100dvh] bg-gradient-to-b from-black via-[#0a0a0f] to-black flex flex-col overflow-hidden">
+    <div className="h-[100dvh] bg-elec-dark flex flex-col overflow-hidden">
       {/* Background Glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -104,8 +104,8 @@ export const DesignProcessingViewDesktop = ({
         }}
       />
 
-      {/* Main Content - Desktop optimized with max-w-xl */}
-      <div className="relative z-10 flex-1 flex flex-col justify-evenly px-6 py-8 max-w-xl mx-auto w-full">
+      {/* Main Content */}
+      <div className="relative z-10 flex-1 flex flex-col justify-evenly px-4 py-6 max-w-lg mx-auto w-full">
 
         {/* Header Section */}
         <div className="text-center space-y-4">
@@ -192,14 +192,14 @@ export const DesignProcessingViewDesktop = ({
           {/* Large Percentage */}
           <div className="text-center">
             <motion.span
-              className="text-6xl font-bold text-elec-yellow tabular-nums"
+              className="text-5xl font-bold text-elec-yellow tabular-nums"
               key={Math.round(currentPercent)}
               initial={{ scale: 1.05 }}
               animate={{ scale: 1 }}
             >
               {Math.round(currentPercent)}
             </motion.span>
-            <span className="text-3xl font-bold text-elec-yellow/60">%</span>
+            <span className="text-2xl font-bold text-elec-yellow/60">%</span>
           </div>
 
           {/* Progress Bar */}
@@ -296,8 +296,8 @@ export const DesignProcessingViewDesktop = ({
 
         {/* Tip Card */}
         <div className={cn(
-          "p-4 rounded-xl",
-          "bg-gradient-to-br from-amber-950/30 to-black/20 border border-amber-800/20"
+          "p-3 rounded-xl",
+          "bg-white/[0.03] border border-white/[0.08]"
         )}>
           <div className="flex items-start gap-3">
             <Sparkles className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
@@ -320,9 +320,9 @@ export const DesignProcessingViewDesktop = ({
           <motion.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20"
+            className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20"
           >
-            <p className="text-xs text-amber-200 text-center">{retryMessage}</p>
+            <p className="text-xs text-orange-300 text-center">{retryMessage}</p>
           </motion.div>
         )}
 

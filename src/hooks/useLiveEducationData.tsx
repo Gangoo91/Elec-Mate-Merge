@@ -426,11 +426,9 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
       
       const fetchWithTimeout = async (timeoutMs: number) => {
         return Promise.race([
-          supabase.functions.invoke('firecrawl-education-scraper', {
-            body: { 
-              category, 
-              refresh: forceRefresh, 
-              limit: 50 
+          supabase.functions.invoke('comprehensive-education-scraper', {
+            body: {
+              forceRefresh
             }
           }),
           new Promise((_, reject) => 

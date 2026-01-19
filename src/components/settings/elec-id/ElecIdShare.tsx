@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useElecIdProfile } from "@/hooks/useElecIdProfile";
 import { Drawer } from "vaul";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
@@ -72,6 +73,7 @@ const ShareSkeleton = () => (
 
 const ElecIdShare = () => {
   const { addNotification } = useNotifications();
+  const { profile } = useElecIdProfile();
   const isMobile = useIsMobile();
   const [isCreateLinkOpen, setIsCreateLinkOpen] = useState(false);
   const [selectedExpiry, setSelectedExpiry] = useState("7d");
@@ -90,15 +92,18 @@ const ElecIdShare = () => {
   const [isDeletingLink, setIsDeletingLink] = useState(false);
   const qrRef = useRef<HTMLDivElement>(null);
 
-  const elecIdNumber = "EM-ABC123";
+  // Get actual Elec-ID number from profile
+  const elecIdNumber = profile?.elec_id_number || "EM-XXXXXX";
   const shareUrl = `https://elec-mate.com/verify/${elecIdNumber}`;
 
-  // Mock user data - will come from database
+  // Get user data from profile
   const userData = {
-    name: "John Smith",
-    jobTitle: "Approved Electrician",
-    ecsCard: "ECS Gold Card",
-    ecsExpiry: "Dec 2026",
+    name: profile?.full_name || "Your Name",
+    jobTitle: profile?.bio || "Electrician",
+    ecsCard: profile?.ecs_card_type ? `ECS ${profile.ecs_card_type}` : "ECS Card",
+    ecsExpiry: profile?.ecs_expiry_date
+      ? new Date(profile.ecs_expiry_date).toLocaleDateString("en-GB", { month: "short", year: "numeric" })
+      : "N/A",
   };
 
   // Mock share links - will be from database
@@ -379,8 +384,8 @@ const ElecIdShare = () => {
                     : "bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]"
                 )}
               >
-                <Icon className={cn("h-5 w-5 mb-1", isSelected ? "text-elec-yellow" : "text-muted-foreground")} />
-                <div className={cn("text-sm font-medium", isSelected ? "text-foreground" : "text-muted-foreground")}>
+                <Icon className={cn("h-5 w-5 mb-1", isSelected ? "text-elec-yellow" : "text-foreground/70")} />
+                <div className={cn("text-sm font-medium", isSelected ? "text-foreground" : "text-foreground/70")}>
                   {section.label}
                 </div>
               </button>
@@ -408,7 +413,7 @@ const ElecIdShare = () => {
               onClick={() => setIsCreateLinkOpen(false)}
               className="p-2 -mr-2 rounded-full hover:bg-white/[0.08] touch-manipulation"
             >
-              <X className="w-5 h-5 text-muted-foreground" />
+              <X className="w-5 h-5 text-foreground/70" />
             </button>
           </div>
           <div className="flex-1 overflow-y-auto px-5 py-5">
@@ -525,7 +530,7 @@ const ElecIdShare = () => {
             <span className="text-lg font-bold text-foreground">{elecIdNumber}</span>
           </div>
 
-          <p className="text-sm text-muted-foreground mb-4 text-center">
+          <p className="text-sm text-foreground/70 mb-4 text-center">
             Scan to instantly verify your credentials
           </p>
 
@@ -537,7 +542,7 @@ const ElecIdShare = () => {
             <span className="font-mono text-xs text-foreground flex-1 truncate text-left">
               {shareUrl}
             </span>
-            <Copy className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+            <Copy className="h-4 w-4 text-foreground/70 flex-shrink-0" />
           </button>
 
           {/* Action Buttons */}
@@ -617,7 +622,7 @@ const ElecIdShare = () => {
                   "flex items-center gap-1.5 px-3 py-2 rounded-lg border transition-all touch-manipulation active:scale-[0.97]",
                   isSelected
                     ? "bg-elec-yellow/10 border-elec-yellow/30 text-foreground"
-                    : "bg-white/[0.02] border-white/[0.06] text-muted-foreground hover:bg-white/[0.06]"
+                    : "bg-white/[0.02] border-white/[0.06] text-foreground/70 hover:bg-white/[0.06]"
                 )}
               >
                 <Icon className={cn("h-4 w-4", isSelected && "text-elec-yellow")} />
@@ -686,13 +691,13 @@ const ElecIdShare = () => {
                       onClick={() => handleCopyLink(link.url)}
                       className="p-2 rounded-lg hover:bg-white/[0.08] touch-manipulation active:scale-[0.95]"
                     >
-                      <Copy className="h-4 w-4 text-muted-foreground" />
+                      <Copy className="h-4 w-4 text-foreground/70" />
                     </button>
                     <button
                       onClick={() => window.open(link.url, "_blank")}
                       className="p-2 rounded-lg hover:bg-white/[0.08] touch-manipulation active:scale-[0.95]"
                     >
-                      <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                      <ExternalLink className="h-4 w-4 text-foreground/70" />
                     </button>
                     <button
                       onClick={() => setDeleteConfirm({ open: true, id: link.id })}
@@ -702,7 +707,7 @@ const ElecIdShare = () => {
                     </button>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <div className="flex items-center gap-3 text-xs text-foreground/70">
                   <span className="flex items-center gap-1">
                     <Clock className="h-3 w-3" />
                     {link.expiresAt
@@ -733,8 +738,8 @@ const ElecIdShare = () => {
               animate={{ opacity: 1 }}
               className="py-8 text-center"
             >
-              <Link2 className="h-10 w-10 text-muted-foreground/50 mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground">No active links</p>
+              <Link2 className="h-10 w-10 text-foreground/70/50 mx-auto mb-2" />
+              <p className="text-sm text-foreground/70">No active links</p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -749,7 +754,7 @@ const ElecIdShare = () => {
         <Shield className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
         <div>
           <p className="font-medium text-foreground text-sm">Your data is protected</p>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-foreground/70">
             Only sections you choose will be visible to recipients.
           </p>
         </div>

@@ -175,7 +175,7 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
                 {circuit.specialLocation && circuit.specialLocation !== 'none' && (
                   <div>
                     <Badge
-                      className="bg-amber-500/20 text-amber-300 border-0 text-xs capitalize"
+                      className="bg-orange-500/20 text-orange-300 border-0 text-xs capitalize"
                     >
                       {circuit.specialLocation}
                     </Badge>
@@ -192,12 +192,12 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
         <div
           className={cn(
             "flex items-start gap-2 p-3 rounded-xl border",
-            "bg-amber-500/10 border-amber-500/30"
+            "bg-orange-500/10 border-orange-500/30"
           )}
         >
-          <AlertCircle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-          <p className="text-xs text-amber-200">
-            <span className="font-medium text-amber-300">Note:</span> {missingData.length} circuit{missingData.length > 1 ? 's' : ''} missing cable length.
+          <AlertCircle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />
+          <p className="text-xs text-orange-200">
+            <span className="font-medium text-orange-300">Note:</span> {missingData.length} circuit{missingData.length > 1 ? 's' : ''} missing cable length.
             AI will estimate based on typical installations.
           </p>
         </div>

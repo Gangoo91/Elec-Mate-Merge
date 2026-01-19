@@ -73,7 +73,7 @@ export const CircuitBuilderStep = ({
         <Badge
           variant="secondary"
           className={cn(
-            "bg-amber-950/40 border-0 px-3 py-1",
+            "bg-white/5 border-0 px-3 py-1",
             circuits.length > 0 ? "text-elec-yellow" : "text-white/60"
           )}
         >
@@ -113,8 +113,8 @@ export const CircuitBuilderStep = ({
               onClick={addBlankCircuit}
               className={cn(
                 "gap-2 h-10 px-4 rounded-xl",
-                "bg-gradient-to-br from-amber-950/30 to-black/20 border border-amber-800/20",
-                "hover:bg-amber-900/20 hover:border-amber-600/30",
+                "bg-white/5 border border-white/[0.08]",
+                "hover:bg-white/10 hover:border-white/15",
                 "transition-all duration-ios-fast",
                 "touch-manipulation"
               )}
@@ -156,11 +156,11 @@ export const CircuitBuilderStep = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className={cn(
-            "p-8 sm:p-12 text-center rounded-2xl",
-            "bg-gradient-to-br from-amber-950/20 to-black/10 backdrop-blur border-2 border-dashed border-amber-800/20"
+            "p-8 sm:p-12 text-center rounded-xl",
+            "bg-white/[0.03] border-2 border-dashed border-white/[0.08]"
           )}
         >
-          <div className="inline-flex p-4 rounded-2xl bg-amber-950/30 mb-4">
+          <div className="inline-flex p-4 rounded-xl bg-white/5 mb-4">
             <Zap className="h-10 w-10 sm:h-12 sm:w-12 text-white/40" />
           </div>
           <h3 className="text-base sm:text-lg font-semibold text-white mb-2">

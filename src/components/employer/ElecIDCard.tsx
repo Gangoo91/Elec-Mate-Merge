@@ -1,10 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
-  ShieldCheck, 
-  Download, 
-  Share2, 
+import {
+  ShieldCheck,
+  Share2,
   QrCode,
   CheckCircle2,
   AlertTriangle,
@@ -20,7 +19,6 @@ import type { ElecIdProfile } from "@/data/employerMockData";
 interface ElecIDCardProps {
   profile: ElecIdProfile;
   onShare?: () => void;
-  onExportPDF?: () => void;
   compact?: boolean;
 }
 
@@ -62,7 +60,7 @@ const statusConfig = {
   },
 };
 
-export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: ElecIDCardProps) => {
+export const ElecIDCard = ({ profile, onShare, compact = false }: ElecIDCardProps) => {
   const status = statusConfig[profile.ecsStatus as keyof typeof statusConfig] || statusConfig.Active;
   const StatusIcon = status.icon;
   
@@ -89,7 +87,7 @@ export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: E
             
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-foreground truncate">{profile.name}</p>
-              <p className="text-sm text-muted-foreground truncate">{profile.role}</p>
+              <p className="text-sm text-foreground/80 truncate">{profile.role}</p>
               <div className="flex items-center gap-2 mt-2">
                 <Badge variant="outline" className={`${status.bg} ${status.text} ${status.border} text-xs py-0.5`}>
                   {profile.ecsCardType}
@@ -99,16 +97,16 @@ export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: E
                 )}
               </div>
             </div>
-            
+
             {/* Quick stats */}
-            <div className="hidden sm:flex items-center gap-3 text-muted-foreground">
+            <div className="hidden sm:flex items-center gap-3 text-foreground/70">
               <div className="text-center">
                 <p className="text-lg font-bold text-elec-yellow">{profile.certifications.length}</p>
-                <p className="text-[10px] uppercase tracking-wide">Certs</p>
+                <p className="text-[10px] uppercase tracking-wide text-foreground/70">Certs</p>
               </div>
               <div className="text-center">
                 <p className="text-lg font-bold text-elec-yellow">{profile.training.length}</p>
-                <p className="text-[10px] uppercase tracking-wide">Training</p>
+                <p className="text-[10px] uppercase tracking-wide text-foreground/70">Training</p>
               </div>
             </div>
           </div>
@@ -136,7 +134,7 @@ export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: E
           <div className="flex items-center gap-3 bg-muted/50 px-3 py-2 rounded-lg border border-border/50">
             <QrCode className="h-5 w-5 text-elec-yellow" />
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Elec-ID</p>
+              <p className="text-[10px] uppercase tracking-wider text-foreground/70">Elec-ID</p>
               <span className="font-mono text-sm font-semibold text-foreground">{profile.elecIdNumber}</span>
             </div>
           </div>
@@ -155,7 +153,7 @@ export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: E
             {/* Premium Photo Placeholder */}
             <div className="relative flex-shrink-0">
               <div className={`w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center border-2 ${status.border} shadow-lg ${status.glow}`}>
-                <User className="h-12 w-12 text-muted-foreground/50" />
+                <User className="h-12 w-12 text-foreground/50" />
               </div>
               {/* Status indicator */}
               <div className={`absolute -bottom-2 -right-2 w-8 h-8 rounded-full ${status.bg} ${status.border} border-2 flex items-center justify-center shadow-lg`}>
@@ -165,18 +163,18 @@ export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: E
             
             <div className="flex-1">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">{profile.name}</h2>
-              <p className="text-lg text-muted-foreground mt-0.5">{profile.role}</p>
+              <p className="text-lg text-foreground/80 mt-0.5">{profile.role}</p>
               {profile.bio && (
-                <p className="text-sm text-muted-foreground/80 mt-2 line-clamp-2 max-w-md">{profile.bio}</p>
+                <p className="text-sm text-foreground/70 mt-2 line-clamp-2 max-w-md">{profile.bio}</p>
               )}
-              
+
               {/* ECS Card Badge - Premium Style */}
               <div className="flex items-center gap-3 mt-4">
                 <Badge className={`${status.bg} ${status.text} ${status.border} gap-1.5 py-1.5 px-3 text-sm font-medium`}>
                   <StatusIcon className="h-4 w-4" />
                   {profile.ecsCardType}
                 </Badge>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-foreground/70">
                   Expires {new Date(profile.ecsExpiry).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                 </span>
               </div>
@@ -188,15 +186,15 @@ export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: E
             <div className="bg-gradient-to-br from-muted/80 to-muted/40 p-4 rounded-xl border border-border/50 min-w-[200px]">
               <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/50">
                 <Award className="h-4 w-4 text-elec-yellow" />
-                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">ECS Card</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-foreground/70">ECS Card</span>
               </div>
               <div className="space-y-2">
                 <div>
-                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Card Number</p>
+                  <p className="text-[10px] uppercase tracking-wider text-foreground/70">Card Number</p>
                   <p className="font-mono text-sm text-foreground font-semibold">{profile.ecsCardNumber}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Valid Until</p>
+                  <p className="text-[10px] uppercase tracking-wider text-foreground/70">Valid Until</p>
                   <p className="text-sm text-foreground font-medium">{new Date(profile.ecsExpiry).toLocaleDateString('en-GB')}</p>
                 </div>
               </div>
@@ -217,7 +215,7 @@ export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: E
                 <stat.icon className="h-8 w-8" />
               </div>
               <p className="text-3xl font-bold text-elec-yellow">{stat.value}</p>
-              <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+              <p className="text-xs text-foreground/70 mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -227,13 +225,13 @@ export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: E
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <div className="h-1 w-1 rounded-full bg-elec-yellow" />
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Specialisms & Skills</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-foreground/70">Specialisms & Skills</p>
             </div>
             <div className="flex flex-wrap gap-2">
               {profile.skills.slice(0, 8).map((skill, idx) => (
-                <Badge 
-                  key={idx} 
-                  variant="secondary" 
+                <Badge
+                  key={idx}
+                  variant="secondary"
                   className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 hover:bg-elec-yellow/20 transition-colors py-1.5 px-3"
                 >
                   {skill.name}
@@ -243,7 +241,7 @@ export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: E
                 </Badge>
               ))}
               {profile.skills.length > 8 && (
-                <Badge variant="outline" className="text-muted-foreground py-1.5 px-3">
+                <Badge variant="outline" className="text-foreground/70 py-1.5 px-3">
                   +{profile.skills.length - 8} more
                 </Badge>
               )}
@@ -259,7 +257,7 @@ export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: E
             </div>
             <div>
               <p className="font-medium text-foreground">Portable Worker Credential</p>
-              <p className="text-sm text-muted-foreground mt-0.5">
+              <p className="text-sm text-foreground/70 mt-0.5">
                 This Elec-ID belongs to {profile.name.split(' ')[0]} and follows them throughout their career
               </p>
             </div>
@@ -267,18 +265,10 @@ export const ElecIDCard = ({ profile, onShare, onExportPDF, compact = false }: E
         </div>
         
         {/* Action Buttons - Premium Style */}
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Button 
-            onClick={onExportPDF} 
-            variant="outline" 
-            className="flex-1 gap-2 h-12 border-border/50 hover:border-elec-yellow/50 hover:bg-elec-yellow/5"
-          >
-            <Download className="h-4 w-4" />
-            Export as PDF
-          </Button>
-          <Button 
-            onClick={onShare} 
-            className="flex-1 gap-2 h-12 bg-gradient-to-r from-elec-yellow to-elec-yellow/80 hover:from-elec-yellow/90 hover:to-elec-yellow/70 shadow-lg shadow-elec-yellow/20 text-elec-dark"
+        <div className="flex gap-3">
+          <Button
+            onClick={onShare}
+            className="flex-1 gap-2 h-12 bg-gradient-to-r from-elec-yellow to-elec-yellow/80 hover:from-elec-yellow/90 hover:to-elec-yellow/70 shadow-lg shadow-elec-yellow/20 text-elec-dark touch-manipulation active:scale-[0.98]"
           >
             <Share2 className="h-4 w-4" />
             Share Profile

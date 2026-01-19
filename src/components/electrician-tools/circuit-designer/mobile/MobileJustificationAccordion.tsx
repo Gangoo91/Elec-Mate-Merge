@@ -101,9 +101,9 @@ export const buildJustificationSections = (circuit: any): JustificationSection[]
     sections.push({
       title: 'Diversity Applied',
       content: circuit.diversityJustification,
-      icon: <Zap className="h-5 w-5 text-amber-400" />,
+      icon: <Zap className="h-5 w-5 text-orange-400" />,
       badge: `${(circuit.diversityFactor * 100).toFixed(0)}% Diversity Factor`,
-      borderColor: 'border-amber-500/50'
+      borderColor: 'border-orange-500/50'
     });
   }
 
@@ -157,9 +157,9 @@ export const buildJustificationSections = (circuit: any): JustificationSection[]
       sections.push({
         title: 'Special Location',
         content: specialLocContent,
-        icon: <AlertTriangle className="h-5 w-5 text-amber-400" />,
+        icon: <AlertTriangle className="h-5 w-5 text-orange-400" />,
         badge: circuit.specialLocationCompliance.locationType || 'Required',
-        borderColor: 'border-amber-500/50'
+        borderColor: 'border-orange-500/50'
       });
     }
   }

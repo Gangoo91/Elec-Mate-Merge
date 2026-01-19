@@ -131,7 +131,7 @@ export const InstallationDetailsStep = ({ circuits, onUpdate, installationType }
               </div>
               {circuit.specialLocation && circuit.specialLocation !== 'none' && (
                 <Badge
-                  className="bg-amber-500/20 text-amber-300 border-0 text-xs capitalize shrink-0"
+                  className="bg-orange-500/20 text-orange-300 border-0 text-xs capitalize shrink-0"
                 >
                   <MapPin className="h-3 w-3 mr-1" />
                   {circuit.specialLocation}
@@ -231,11 +231,11 @@ export const InstallationDetailsStep = ({ circuits, onUpdate, installationType }
       {circuits.length === 0 && (
         <div
           className={cn(
-            "p-8 text-center rounded-2xl",
-            "bg-white/5 backdrop-blur border-2 border-dashed border-white/10"
+            "p-8 text-center rounded-xl",
+            "bg-white/[0.03] border-2 border-dashed border-white/[0.08]"
           )}
         >
-          <div className="inline-flex p-4 rounded-2xl bg-white/5 mb-4">
+          <div className="inline-flex p-4 rounded-xl bg-white/5 mb-4">
             <Wrench className="h-10 w-10 text-white/40" />
           </div>
           <h3 className="text-base font-semibold text-white mb-2">

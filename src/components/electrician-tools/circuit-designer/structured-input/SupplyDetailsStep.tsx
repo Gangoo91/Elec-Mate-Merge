@@ -143,14 +143,14 @@ export const SupplyDetailsStep = ({
     <div
       className={cn(
         "flex items-start gap-2 p-3 rounded-xl border",
-        "bg-gradient-to-br from-amber-950/20 to-black/10 backdrop-blur",
+        "bg-white/[0.03]",
         variant === 'warning'
-          ? "border-amber-500/30 text-amber-200"
+          ? "border-orange-500/30 text-orange-200"
           : "border-blue-500/30 text-blue-200"
       )}
     >
       {variant === 'warning' ? (
-        <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+        <AlertTriangle className="h-4 w-4 mt-0.5 flex-shrink-0 text-orange-400" />
       ) : (
         <Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
       )}
@@ -297,8 +297,8 @@ export const SupplyDetailsStep = ({
             variant="ghost"
             className={cn(
               "w-full justify-between h-12 px-4 rounded-xl",
-              "bg-gradient-to-br from-amber-950/30 to-black/20 border border-amber-800/20",
-              "hover:bg-amber-900/20 hover:border-amber-600/30",
+              "bg-white/5 border border-white/[0.08]",
+              "hover:bg-white/10 hover:border-white/15",
               "transition-all duration-ios-fast",
               "touch-manipulation"
             )}

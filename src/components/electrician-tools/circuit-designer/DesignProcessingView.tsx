@@ -120,7 +120,7 @@ export const DesignProcessingView = ({
   const estimatedTimeRemaining = Math.max(0, EXPECTED_TOTAL_SECONDS - elapsedTime);
 
   return (
-    <div className="h-[100dvh] bg-gradient-to-b from-black via-[#0a0a0f] to-black flex flex-col overflow-hidden">
+    <div className="h-[100dvh] bg-elec-dark flex flex-col overflow-hidden">
       {/* Background Glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -143,7 +143,7 @@ export const DesignProcessingView = ({
       />
 
       {/* Main Content */}
-      <div className="relative z-10 flex-1 flex flex-col justify-evenly px-4 py-6 max-w-md mx-auto w-full">
+      <div className="relative z-10 flex-1 flex flex-col justify-evenly px-3 py-4 w-full">
 
         {/* Header Section */}
         <div className="text-center space-y-3">
@@ -230,14 +230,14 @@ export const DesignProcessingView = ({
           {/* Large Percentage */}
           <div className="text-center">
             <motion.span
-              className="text-5xl font-bold text-elec-yellow tabular-nums"
+              className="text-4xl font-bold text-elec-yellow tabular-nums"
               key={Math.round(displayPercent)}
               initial={{ scale: 1.05 }}
               animate={{ scale: 1 }}
             >
               {Math.round(displayPercent)}
             </motion.span>
-            <span className="text-2xl font-bold text-elec-yellow/60">%</span>
+            <span className="text-xl font-bold text-elec-yellow/60">%</span>
           </div>
 
           {/* Progress Bar */}
@@ -332,10 +332,10 @@ export const DesignProcessingView = ({
           </div>
         </div>
 
-        {/* Tip Card - Compact */}
+        {/* Tip Card */}
         <div className={cn(
           "p-3 rounded-xl",
-          "bg-gradient-to-br from-amber-950/30 to-black/20 border border-amber-800/20"
+          "bg-white/[0.03] border border-white/[0.08]"
         )}>
           <div className="flex items-start gap-2">
             <Sparkles className="h-3 w-3 text-elec-yellow shrink-0 mt-0.5" />
@@ -358,9 +358,9 @@ export const DesignProcessingView = ({
           <motion.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20"
+            className="p-2 rounded-xl bg-orange-500/10 border border-orange-500/20"
           >
-            <p className="text-[10px] text-amber-200 text-center">
+            <p className="text-[10px] text-orange-300 text-center">
               {retryMessage || "Taking longer than usual. Complex installations may take up to 5 minutes."}
             </p>
           </motion.div>

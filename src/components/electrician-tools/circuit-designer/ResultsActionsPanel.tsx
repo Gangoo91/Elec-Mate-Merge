@@ -95,13 +95,13 @@ export const ResultsActionsPanel = ({
       {/* Compliance Status */}
       <Card className={
         selectedCircuit.warnings && selectedCircuit.warnings.length > 0
-          ? "bg-amber-50 border-amber-200 dark:bg-amber-950/20 dark:border-amber-900/50"
+          ? "bg-orange-50 border-orange-200 dark:bg-orange-950/20 dark:border-orange-900/50"
           : "bg-primary/5 border-primary/20"
       }>
         <CardHeader className="pb-3">
           <CardTitle className="text-base flex items-center gap-2">
             {selectedCircuit.warnings && selectedCircuit.warnings.length > 0 ? (
-              <AlertTriangle className="h-4 w-4 text-amber-500" />
+              <AlertTriangle className="h-4 w-4 text-orange-500" />
             ) : (
               <CheckCircle2 className="h-4 w-4 text-primary" />
             )}
@@ -111,7 +111,7 @@ export const ResultsActionsPanel = ({
         <CardContent>
           {selectedCircuit.warnings && selectedCircuit.warnings.length > 0 ? (
             <div className="space-y-2">
-              <p className="text-sm font-medium text-amber-900 dark:text-amber-100">
+              <p className="text-sm font-medium text-orange-900 dark:text-orange-100">
                 {selectedCircuit.warnings.length} Warning{selectedCircuit.warnings.length !== 1 ? 's' : ''}
               </p>
               <p className="text-xs text-muted-foreground">

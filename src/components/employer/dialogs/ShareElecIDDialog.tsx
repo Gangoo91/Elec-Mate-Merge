@@ -9,11 +9,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { useGenerateShareableLink } from "@/hooks/useElecId";
 import { ElecIdProfile } from "@/services/elecIdService";
-import { 
-  QrCode, 
-  Link2, 
-  Download, 
-  Copy, 
+import {
+  QrCode,
+  Link2,
+  Copy,
   Mail,
   Shield,
   Eye,
@@ -93,14 +92,6 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
     setRecipientEmail("");
   };
   
-  const handleExportPDF = () => {
-    toast({
-      title: "PDF Generated",
-      description: "Your Elec-ID profile PDF is being downloaded.",
-    });
-    onOpenChange(false);
-  };
-  
   const handleGenerateQR = () => {
     toast({
       title: "QR Code Generated",
@@ -123,17 +114,13 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
         
         <Tabs defaultValue="link" className="mt-4">
           <TabsList className="w-full">
-            <TabsTrigger value="link" className="flex-1 gap-1.5">
+            <TabsTrigger value="link" className="flex-1 gap-1.5 h-11 touch-manipulation">
               <Link2 className="h-4 w-4" />
               Link
             </TabsTrigger>
-            <TabsTrigger value="qr" className="flex-1 gap-1.5">
+            <TabsTrigger value="qr" className="flex-1 gap-1.5 h-11 touch-manipulation">
               <QrCode className="h-4 w-4" />
               QR Code
-            </TabsTrigger>
-            <TabsTrigger value="pdf" className="flex-1 gap-1.5">
-              <Download className="h-4 w-4" />
-              PDF
             </TabsTrigger>
           </TabsList>
           
@@ -152,7 +139,7 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
                 </Button>
               </div>
               {generateLink.isPending && (
-                <p className="text-xs text-muted-foreground flex items-center gap-1">
+                <p className="text-xs text-foreground/70 flex items-center gap-1">
                   <Loader2 className="h-3 w-3 animate-spin" />
                   Generating shareable link...
                 </p>
@@ -205,55 +192,20 @@ export const ShareElecIDDialog = ({ open, onOpenChange, profile }: ShareElecIDDi
                 <div className="w-48 h-48 bg-background rounded-lg border-2 border-dashed border-elec-yellow/30 flex items-center justify-center mb-4">
                   <div className="text-center">
                     <QrCode className="h-24 w-24 text-elec-yellow/50 mx-auto" />
-                    <p className="text-xs text-muted-foreground mt-2">QR Code Preview</p>
+                    <p className="text-xs text-foreground/70 mt-2">QR Code Preview</p>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground text-center">
+                <p className="text-sm text-foreground/70 text-center">
                   Scan to view {profile.employee?.name?.split(' ')[0] || 'worker'}'s Elec-ID profile
                 </p>
-                <Button onClick={handleGenerateQR} className="mt-4 gap-2">
-                  <Download className="h-4 w-4" />
+                <Button onClick={handleGenerateQR} className="mt-4 gap-2 h-11 touch-manipulation">
+                  <QrCode className="h-4 w-4" />
                   Download QR Code
                 </Button>
               </CardContent>
             </Card>
           </TabsContent>
           
-          <TabsContent value="pdf" className="mt-4 space-y-4">
-            {/* PDF Export */}
-            <Card className="bg-muted/50">
-              <CardContent className="p-4">
-                <p className="text-sm font-medium mb-3">Export includes:</p>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    Professional Elec-ID card
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    All certifications with expiry dates
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    Training records with providers
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    Work history (if enabled)
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    Skills and specialisms
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-            
-            <Button onClick={handleExportPDF} className="w-full gap-2">
-              <Download className="h-4 w-4" />
-              Generate & Download PDF
-            </Button>
-          </TabsContent>
         </Tabs>
         
         {/* Privacy Settings */}

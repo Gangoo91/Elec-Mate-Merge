@@ -95,7 +95,7 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
             </Badge>
           )}
           {complianceStats.warnings > 0 && (
-            <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 text-[10px] px-2 py-0.5">
+            <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30 text-[10px] px-2 py-0.5">
               <AlertTriangle className="h-3 w-3 mr-1" />
               {complianceStats.warnings} Warning
             </Badge>
@@ -110,8 +110,8 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
 
         {/* Circuits Needing Review - Simple list using same logic as badge counts */}
         {(complianceStats.fails > 0 || complianceStats.warnings > 0) && (
-          <div className="mt-2 bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-            <p className="text-xs text-amber-400 font-medium mb-2">Circuits Needing Review:</p>
+          <div className="mt-2 bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
+            <p className="text-xs text-orange-400 font-medium mb-2">Circuits Needing Review:</p>
             <div className="flex flex-wrap gap-2">
               {design.circuits
                 .map((c, idx) => {
@@ -126,7 +126,7 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
                   return (
                     <Badge 
                       key={idx}
-                      className={`${isWarning && isCompliant ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'} text-xs px-2 py-1`}
+                      className={`${isWarning && isCompliant ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'} text-xs px-2 py-1`}
                     >
                       C{c.circuitNumber || (idx + 1)}
                     </Badge>
@@ -181,7 +181,7 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
                       <StatPill 
                         label="PSCC" 
                         value={`${pscc}kA`}
-                        className="bg-amber-500/10 border-amber-500/20"
+                        className="bg-orange-500/10 border-orange-500/20"
                       />
                     </div>
 

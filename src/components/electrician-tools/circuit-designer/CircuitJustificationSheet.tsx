@@ -111,16 +111,16 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
             {circuit.diversityFactor && circuit.diversityFactor < 1.0 && circuit.diversityJustification && (
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400" />
+                  <AlertTriangle className="h-4 w-4 text-orange-400" />
                   <h3 className="text-sm font-semibold text-elec-light">Diversity Applied</h3>
                 </div>
-                <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
+                <div className="bg-orange-500/10 rounded-lg p-4 border border-orange-500/30">
                   <div className="mb-3">
-                    <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
+                    <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
                       {(circuit.diversityFactor * 100).toFixed(0)}% Diversity Factor
                     </Badge>
                   </div>
-                  <p className="text-sm text-amber-100/90 leading-relaxed whitespace-pre-wrap">
+                  <p className="text-sm text-orange-100/90 leading-relaxed whitespace-pre-wrap">
                     {circuit.diversityJustification}
                   </p>
                 </div>
@@ -234,7 +234,7 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                        Array.isArray((circuit.installationGuidance as any).safetyConsiderations) && 
                        (circuit.installationGuidance as any).safetyConsiderations.length > 0 && (
                         <div>
-                          <p className="font-semibold text-amber-400 mb-2">Safety Considerations:</p>
+                          <p className="font-semibold text-orange-400 mb-2">Safety Considerations:</p>
                           <ul className="list-disc list-inside space-y-1">
                             {(circuit.installationGuidance as any).safetyConsiderations.map((item: any, idx: number) => (
                               <li key={idx}>
@@ -399,32 +399,32 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
             {circuit.specialLocationCompliance?.isSpecialLocation && (
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400" />
+                  <AlertTriangle className="h-4 w-4 text-orange-400" />
                   <h3 className="text-sm font-semibold text-elec-light">Special Location</h3>
                 </div>
-                <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30 space-y-3">
+                <div className="bg-orange-500/10 rounded-lg p-4 border border-orange-500/30 space-y-3">
                   <div className="mb-2">
-                    <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
+                    <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
                       {circuit.specialLocationCompliance.locationType}
                     </Badge>
                   </div>
                   {circuit.specialLocationCompliance.zonesApplicable && (
-                    <div className="text-xs text-amber-100/80 mb-2">
+                    <div className="text-xs text-orange-100/80 mb-2">
                       {circuit.specialLocationCompliance.zonesApplicable}
                     </div>
                   )}
                   <div>
-                    <p className="text-xs text-amber-100/60 mb-2">Requirements</p>
+                    <p className="text-xs text-orange-100/60 mb-2">Requirements</p>
                     <ul className="space-y-1">
                       {circuit.specialLocationCompliance.requirements.map((req, idx) => (
-                        <li key={idx} className="text-xs text-amber-100/90 flex items-start gap-2">
-                          <span className="text-amber-400 mt-0.5">•</span>
+                        <li key={idx} className="text-xs text-orange-100/90 flex items-start gap-2">
+                          <span className="text-orange-400 mt-0.5">•</span>
                           <span className="flex-1">{req}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                  <Badge variant="outline" className="text-xs border-amber-500/30 text-amber-100/70 mt-2">
+                  <Badge variant="outline" className="text-xs border-orange-500/30 text-orange-100/70 mt-2">
                     {circuit.specialLocationCompliance.regulation}
                   </Badge>
                 </div>
@@ -435,14 +435,14 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
             {circuit.warnings && circuit.warnings.length > 0 && (
               <div className="space-y-3 pb-6">
                 <div className="flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400" />
+                  <AlertTriangle className="h-4 w-4 text-orange-400" />
                   <h3 className="text-sm font-semibold text-elec-light">Design Warnings</h3>
                 </div>
-                <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
+                <div className="bg-orange-500/10 rounded-lg p-4 border border-orange-500/30">
                   <ul className="space-y-2">
                     {circuit.warnings.map((warning, idx) => (
-                      <li key={idx} className="text-xs text-amber-100/90 flex items-start gap-2">
-                        <span className="text-amber-400 mt-0.5">⚠</span>
+                      <li key={idx} className="text-xs text-orange-100/90 flex items-start gap-2">
+                        <span className="text-orange-400 mt-0.5">⚠</span>
                         <span className="flex-1">{warning}</span>
                       </li>
                     ))}

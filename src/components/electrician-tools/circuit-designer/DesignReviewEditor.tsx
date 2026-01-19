@@ -1618,18 +1618,18 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </div>
 
               {/* Expected results checkbox with warning */}
-              <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+              <div className="flex items-start gap-3 p-3 bg-orange-500/10 border border-orange-500/30 rounded-lg">
                 <Checkbox
                   id="includeExpectedResultsMobile"
                   checked={includeExpectedResults}
                   onCheckedChange={(checked) => setIncludeExpectedResults(checked as boolean)}
-                  className="mt-0.5 border-amber-500/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                  className="mt-0.5 border-orange-500/50 data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
                 />
                 <div className="flex-1">
                   <label htmlFor="includeExpectedResultsMobile" className="text-sm font-medium cursor-pointer">
                     Include expected test results
                   </label>
-                  <p className="text-xs text-amber-400 mt-1 flex items-start gap-1">
+                  <p className="text-xs text-orange-400 mt-1 flex items-start gap-1">
                     <AlertTriangle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                     <span>All calculated values (R1+R2, Zs) must be verified on-site during testing</span>
                   </p>
@@ -1745,7 +1745,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 <Cable className="h-4 w-4 text-blue-400" />
                 <span className="font-semibold">{design.circuits.length} Circuits</span>
               </div>
-              <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full ${allCompliant ? 'bg-green-500/10 text-green-600' : 'bg-amber-500/10 text-amber-600'}`}>
+              <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full ${allCompliant ? 'bg-green-500/10 text-green-600' : 'bg-orange-500/10 text-orange-600'}`}>
                 {allCompliant ? <CheckCircle2 className="h-4 w-4" /> : <AlertTriangle className="h-4 w-4" />}
                 <span className="font-medium text-xs">{allCompliant ? 'Compliant' : 'Issues'}</span>
               </div>
@@ -1777,7 +1777,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </Badge>
             )}
             {design.consumerUnit?.incomingSupply?.earthingSystem && (
-              <Badge variant="outline" className="border-amber-500/30 text-amber-400">
+              <Badge variant="outline" className="border-orange-500/30 text-orange-400">
                 {design.consumerUnit.incomingSupply.earthingSystem}
               </Badge>
             )}
@@ -1911,7 +1911,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                           <span className="text-xs ml-1 opacity-70">3Ø</span>
                         )}
                       </span>
-                      {(hasWarnings || hasIssues) && <AlertTriangle className="h-4 w-4 text-amber-400" />}
+                      {(hasWarnings || hasIssues) && <AlertTriangle className="h-4 w-4 text-orange-400" />}
                     </div>
                     <div className="text-sm font-semibold">
                       {circuit.protectionDevice?.rating}A {circuit.protectionDevice?.curve}
@@ -2060,13 +2060,13 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
             {/* Special Location Alert */}
             {currentCircuit.specialLocationCompliance?.isSpecialLocation && (
-              <Alert className="border-amber-500/50 bg-amber-500/10">
-                <AlertTriangle className="h-5 w-5 text-amber-500" />
-                <AlertTitle className="text-amber-400 font-semibold">Special Location Requirements</AlertTitle>
+              <Alert className="border-orange-500/50 bg-orange-500/10">
+                <AlertTriangle className="h-5 w-5 text-orange-500" />
+                <AlertTitle className="text-orange-400 font-semibold">Special Location Requirements</AlertTitle>
                 <AlertDescription>
                   <div className="space-y-3 mt-2">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <Badge variant="outline" className="text-amber-400 border-amber-400/30 font-mono text-xs">
+                      <Badge variant="outline" className="text-orange-400 border-orange-400/30 font-mono text-xs">
                         {currentCircuit.specialLocationCompliance.regulation}
                       </Badge>
                       <span className="font-semibold text-foreground">
@@ -2084,8 +2084,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     </ul>
 
                     {currentCircuit.specialLocationCompliance.zonesApplicable && (
-                      <div className="py-2 px-3 bg-amber-500/10 rounded border border-amber-500/20">
-                        <p className="text-xs font-medium text-amber-400">Zones Applicable:</p>
+                      <div className="py-2 px-3 bg-orange-500/10 rounded border border-orange-500/20">
+                        <p className="text-xs font-medium text-orange-400">Zones Applicable:</p>
                         <p className="text-sm text-foreground text-left">{currentCircuit.specialLocationCompliance.zonesApplicable}</p>
                       </div>
                     )}
@@ -2418,12 +2418,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
             {/* 6. Special Location Compliance */}
             {currentCircuit.specialLocationCompliance?.isSpecialLocation && (
-              <div className="space-y-3 bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
+              <div className="space-y-3 bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-amber-600" />
-                  <h4 className="font-semibold text-amber-600">Special Location Requirements</h4>
+                  <MapPin className="h-4 w-4 text-orange-600" />
+                  <h4 className="font-semibold text-orange-600">Special Location Requirements</h4>
                 </div>
-                <Badge variant="secondary" className="bg-amber-500/20 text-amber-700">
+                <Badge variant="secondary" className="bg-orange-500/20 text-orange-700">
                   {currentCircuit.specialLocationCompliance.locationType}
                 </Badge>
                 <div className="space-y-2">
@@ -2431,7 +2431,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   <ul className="space-y-1">
                     {currentCircuit.specialLocationCompliance.requirements.map((req, idx) => (
                       <li key={idx} className="text-sm text-foreground flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-4 w-4 text-orange-600 flex-shrink-0 mt-0.5" />
                         <span>{req}</span>
                       </li>
                     ))}
@@ -2440,7 +2440,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 {currentCircuit.specialLocationCompliance.zonesApplicable && (
                   <p className="text-sm text-foreground text-left pl-6">{currentCircuit.specialLocationCompliance.zonesApplicable}</p>
                 )}
-                <Badge variant="outline" className="text-xs border-amber-500/30">{currentCircuit.specialLocationCompliance.regulation}</Badge>
+                <Badge variant="outline" className="text-xs border-orange-500/30">{currentCircuit.specialLocationCompliance.regulation}</Badge>
               </div>
             )}
 
@@ -2564,10 +2564,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </div>
 
                   {/* Polarity - Amber gradient */}
-                  <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 p-4 rounded-lg border border-amber-500/20 hover:border-amber-500/40 transition-colors">
+                  <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 p-4 rounded-lg border border-orange-500/20 hover:border-orange-500/40 transition-colors">
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
-                        <span className="text-amber-400 font-bold text-sm">P</span>
+                      <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center shrink-0">
+                        <span className="text-orange-400 font-bold text-sm">P</span>
                       </div>
                       <div className="flex-1">
                         <p className="text-sm font-semibold text-foreground mb-1">Polarity Test</p>
@@ -2609,7 +2609,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
             {/* Warnings */}
             {currentCircuit.warnings?.length > 0 && (
-              <div className="space-y-2 bg-amber-500/10 border border-amber-500/20 p-4 rounded-lg">
+              <div className="space-y-2 bg-orange-500/10 border border-orange-500/20 p-4 rounded-lg">
                 <h4 className="font-semibold flex items-center gap-2">
                   <AlertTriangle className="h-4 w-4" />
                   Notes & Warnings
@@ -2781,18 +2781,18 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </div>
 
               {/* Expected results checkbox with warning */}
-              <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+              <div className="flex items-start gap-3 p-3 bg-orange-500/10 border border-orange-500/30 rounded-lg">
                 <Checkbox
                   id="includeExpectedResults"
                   checked={includeExpectedResults}
                   onCheckedChange={(checked) => setIncludeExpectedResults(checked as boolean)}
-                  className="mt-0.5 border-amber-500/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                  className="mt-0.5 border-orange-500/50 data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
                 />
                 <div className="flex-1">
                   <label htmlFor="includeExpectedResults" className="text-sm font-medium cursor-pointer">
                     Include expected test results
                   </label>
-                  <p className="text-xs text-amber-400 mt-1 flex items-start gap-1">
+                  <p className="text-xs text-orange-400 mt-1 flex items-start gap-1">
                     <AlertTriangle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                     <span>All calculated values (R1+R2, Zs) must be verified on-site during testing</span>
                   </p>

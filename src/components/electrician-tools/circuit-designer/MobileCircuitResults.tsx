@@ -103,7 +103,7 @@ export const MobileCircuitResults = ({
             variant={overallStatus === 'pass' ? 'default' : overallStatus === 'warning' ? 'outline' : 'destructive'}
             className={`ml-3 flex-shrink-0 text-[10px] sm:text-xs ${
               overallStatus === 'pass' ? 'bg-green-500/20 text-green-400 border-green-500/30' :
-              overallStatus === 'warning' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' :
+              overallStatus === 'warning' ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' :
               'bg-red-500/20 text-red-400 border-red-500/30'
             }`}
           >
@@ -177,7 +177,7 @@ export const MobileCircuitResults = ({
                     )}
                   </span>
                   {status !== 'pass' && (
-                    <AlertTriangle className={`h-3 w-3 ${status === 'fail' ? 'text-red-400' : 'text-amber-400'}`} />
+                    <AlertTriangle className={`h-3 w-3 ${status === 'fail' ? 'text-red-400' : 'text-orange-400'}`} />
                   )}
                 </div>
               </button>

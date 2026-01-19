@@ -391,7 +391,7 @@ const ElecIdQualifications = () => {
           <Label className="text-foreground text-sm font-medium">
             Expiry Date
             {selectedQualInfo?.expiryYears && (
-              <span className="text-muted-foreground ml-2 font-normal">
+              <span className="text-foreground/70 ml-2 font-normal">
                 (renews every {selectedQualInfo.expiryYears} years)
               </span>
             )}
@@ -411,7 +411,7 @@ const ElecIdQualifications = () => {
       <div className="space-y-2">
         <Label className="text-foreground text-sm font-medium">
           Certificate Number
-          <span className="text-muted-foreground ml-2 font-normal">(optional)</span>
+          <span className="text-foreground/70 ml-2 font-normal">(optional)</span>
         </Label>
         <Input
           value={formData.certificateNumber}
@@ -489,7 +489,7 @@ const ElecIdQualifications = () => {
               </div>
               <div className="px-5 pb-2">
                 <h3 className="text-lg font-bold text-foreground">Add Qualification</h3>
-                <p className="text-sm text-muted-foreground">Add a new credential to your profile</p>
+                <p className="text-sm text-foreground/70">Add a new credential to your profile</p>
               </div>
               <div className="flex-1 overflow-y-auto px-5 pb-4">
                 <FormContent />
@@ -523,7 +523,7 @@ const ElecIdQualifications = () => {
               </div>
               <div className="px-5 pb-2">
                 <h3 className="text-lg font-bold text-foreground">Edit Qualification</h3>
-                <p className="text-sm text-muted-foreground">Update your credential details</p>
+                <p className="text-sm text-foreground/70">Update your credential details</p>
               </div>
               <div className="flex-1 overflow-y-auto px-5 pb-4">
                 <FormContent isEdit />
@@ -550,7 +550,7 @@ const ElecIdQualifications = () => {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-foreground">Qualifications</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground/70">
             {qualifications.length} credential{qualifications.length !== 1 ? "s" : ""} recorded
           </p>
         </div>
@@ -617,7 +617,7 @@ const ElecIdQualifications = () => {
                             )}
                           </div>
 
-                          <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
+                          <div className="flex items-center gap-3 text-xs text-foreground/70 mb-2">
                             <span className="flex items-center gap-1">
                               <Building2 className="h-3 w-3" />
                               {qual.awardingBody || "Unknown"}
@@ -683,7 +683,7 @@ const ElecIdQualifications = () => {
             <GraduationCap className="h-8 w-8 text-purple-400" />
           </div>
           <h4 className="text-lg font-semibold text-foreground mb-2">No qualifications yet</h4>
-          <p className="text-sm text-muted-foreground mb-6 max-w-xs mx-auto">
+          <p className="text-sm text-foreground/70 mb-6 max-w-xs mx-auto">
             Add your electrical qualifications to build your verified professional profile.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">

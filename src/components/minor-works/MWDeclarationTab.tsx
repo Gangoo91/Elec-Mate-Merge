@@ -5,10 +5,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { User, CheckSquare, PenTool } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { User, CheckSquare, PenTool, UserCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SignatureInput from '@/components/signature/SignatureInput';
+import {
+  QUALIFICATION_LEVELS,
+  SCHEME_PROVIDERS,
+} from '@/constants/minorWorksOptions';
 
 interface MWDeclarationTabProps {
   formData: any;
@@ -48,6 +53,23 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
     }
   };
 
+  // Handler to load user profile data (placeholder - integrate with actual profile system)
+  const handleUseMyProfile = () => {
+    // This would typically load from user context/store
+    // For now, show a toast or notification that this feature connects to profile
+    console.log('Use My Profile clicked - integrate with user profile system');
+    // Example integration:
+    // const userProfile = useUserProfile();
+    // if (userProfile) {
+    //   onUpdate('electricianName', userProfile.fullName);
+    //   onUpdate('forAndOnBehalfOf', userProfile.companyName);
+    //   onUpdate('position', userProfile.position);
+    //   onUpdate('qualificationLevel', userProfile.qualificationLevel);
+    //   onUpdate('schemeProvider', userProfile.schemeProvider);
+    //   onUpdate('registrationNumber', userProfile.registrationNumber);
+    // }
+  };
+
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Electrician Details */}
@@ -64,6 +86,17 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-4">
+              {/* Use My Profile Button */}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleUseMyProfile}
+                className="w-full h-12 border-dashed border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50 text-amber-400"
+              >
+                <UserCircle className="h-5 w-5 mr-2" />
+                Use My Profile Details
+              </Button>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Electrician Name *</Label>
@@ -98,34 +131,25 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Qualification Level</Label>
-                  <Select value={formData.qualificationLevel || ''} onValueChange={(v) => onUpdate('qualificationLevel', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-amber-500 focus:ring-amber-500">
-                      <SelectValue placeholder="Select level" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="nvq3">NVQ Level 3</SelectItem>
-                      <SelectItem value="city-guilds">City & Guilds 2382</SelectItem>
-                      <SelectItem value="eal">EAL Level 3</SelectItem>
-                      <SelectItem value="am2">AM2</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.qualificationLevel || ''}
+                    onValueChange={(v) => onUpdate('qualificationLevel', v)}
+                    options={QUALIFICATION_LEVELS}
+                    placeholder="Select level"
+                    title="Qualification Level"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Scheme Provider</Label>
-                  <Select value={formData.schemeProvider || ''} onValueChange={(v) => onUpdate('schemeProvider', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-amber-500 focus:ring-amber-500">
-                      <SelectValue placeholder="Select provider" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="niceic">NICEIC</SelectItem>
-                      <SelectItem value="napit">NAPIT</SelectItem>
-                      <SelectItem value="elecsa">ELECSA</SelectItem>
-                      <SelectItem value="stroma">Stroma</SelectItem>
-                      <SelectItem value="bpec">BPEC</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.schemeProvider || ''}
+                    onValueChange={(v) => onUpdate('schemeProvider', v)}
+                    options={SCHEME_PROVIDERS}
+                    placeholder="Select provider"
+                    title="Scheme Provider"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
               </div>
 
@@ -137,6 +161,30 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
                   placeholder="Scheme registration number"
                   className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
                 />
+              </div>
+
+              {/* Contact Details */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm">Contact Telephone</Label>
+                  <Input
+                    type="tel"
+                    value={formData.electricianPhone || ''}
+                    onChange={(e) => onUpdate('electricianPhone', e.target.value)}
+                    placeholder="e.g., 07123 456789"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm">Email Address</Label>
+                  <Input
+                    type="email"
+                    value={formData.electricianEmail || ''}
+                    onChange={(e) => onUpdate('electricianEmail', e.target.value)}
+                    placeholder="e.g., name@company.co.uk"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
+                  />
+                </div>
               </div>
             </div>
           </CollapsibleContent>
@@ -165,7 +213,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
                       id="bs7671Compliance"
                       checked={formData.bs7671Compliance || false}
                       onCheckedChange={(c) => onUpdate('bs7671Compliance', c)}
-                      className="mt-0.5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+                      className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation"
                     />
                     <Label htmlFor="bs7671Compliance" className="text-sm cursor-pointer leading-relaxed">
                       I certify that the work described above complies with BS 7671 (IET Wiring Regulations),
@@ -180,7 +228,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
                       id="testResultsAccurate"
                       checked={formData.testResultsAccurate || false}
                       onCheckedChange={(c) => onUpdate('testResultsAccurate', c)}
-                      className="mt-0.5 border-white/40 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
+                      className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500 touch-manipulation"
                     />
                     <Label htmlFor="testResultsAccurate" className="text-sm cursor-pointer leading-relaxed">
                       I confirm that the test results and inspection are an accurate record of the
@@ -195,7 +243,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
                       id="workSafety"
                       checked={formData.workSafety || false}
                       onCheckedChange={(c) => onUpdate('workSafety', c)}
-                      className="mt-0.5 border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                      className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 touch-manipulation"
                     />
                     <Label htmlFor="workSafety" className="text-sm cursor-pointer leading-relaxed">
                       I confirm that the work does not impair the safety of the existing installation. *
@@ -209,10 +257,24 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
                       id="partPNotification"
                       checked={formData.partPNotification || false}
                       onCheckedChange={(c) => onUpdate('partPNotification', c)}
-                      className="mt-0.5 border-white/40 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
+                      className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500 touch-manipulation"
                     />
                     <Label htmlFor="partPNotification" className="text-sm cursor-pointer leading-relaxed">
                       Part P Building Regulations notification has been made (where applicable).
+                    </Label>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-cyan-500/5 border border-cyan-500/20">
+                  <div className="flex items-start gap-3">
+                    <Checkbox
+                      id="copyProvided"
+                      checked={formData.copyProvided || false}
+                      onCheckedChange={(c) => onUpdate('copyProvided', c)}
+                      className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500 touch-manipulation"
+                    />
+                    <Label htmlFor="copyProvided" className="text-sm cursor-pointer leading-relaxed">
+                      A copy of this certificate has been provided to the person ordering the work.
                     </Label>
                   </div>
                 </div>
@@ -275,6 +337,17 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
                     Certificate signed by <span className="text-white font-medium">{formData.electricianName}</span>
                     {formData.position && <span> ({formData.position})</span>}
                     {' '}on <span className="text-white font-medium">{new Date(formData.signatureDate).toLocaleDateString('en-GB')}</span>
+                    {formData.schemeProvider && formData.schemeProvider !== 'none' && (
+                      <>
+                        {' '}
+                        <span className="text-white/60">
+                          registered with{' '}
+                          <span className="text-white font-medium">
+                            {SCHEME_PROVIDERS.find(s => s.value === formData.schemeProvider)?.label || formData.schemeProvider}
+                          </span>
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
               )}

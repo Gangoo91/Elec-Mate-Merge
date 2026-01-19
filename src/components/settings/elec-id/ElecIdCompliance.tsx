@@ -234,7 +234,7 @@ const ElecIdCompliance = () => {
               </Badge>
             </div>
             <div className="flex items-center gap-3 text-sm">
-              <span className="text-muted-foreground flex items-center gap-1">
+              <span className="text-foreground/70 flex items-center gap-1">
                 <Calendar className="h-3.5 w-3.5" />
                 {new Date(item.expiryDate).toLocaleDateString("en-GB", {
                   day: "numeric",
@@ -250,12 +250,12 @@ const ElecIdCompliance = () => {
 
           {/* Renew action */}
           {item.renewalUrl ? (
-            <div className="flex items-center gap-1 text-muted-foreground">
+            <div className="flex items-center gap-1 text-foreground/70">
               <RefreshCw className="h-4 w-4" />
               <ChevronRight className="h-4 w-4" />
             </div>
           ) : (
-            <ChevronRight className="h-5 w-5 text-muted-foreground/50" />
+            <ChevronRight className="h-5 w-5 text-foreground/70/50" />
           )}
         </div>
       </motion.button>
@@ -277,7 +277,7 @@ const ElecIdCompliance = () => {
           <AlertTriangle className="h-8 w-8 text-red-400" />
         </div>
         <h4 className="text-lg font-medium text-foreground mb-2">Failed to load compliance data</h4>
-        <p className="text-muted-foreground mb-4">{error}</p>
+        <p className="text-foreground/70 mb-4">{error}</p>
         <Button onClick={loadComplianceItems} className="gap-2">
           <RefreshCw className="h-4 w-4" />
           Try Again
@@ -338,7 +338,7 @@ const ElecIdCompliance = () => {
               <h3 className="text-lg font-semibold text-foreground">
                 {allClear ? "All Clear" : expiredItems.length > 0 ? "Action Required" : "Attention Needed"}
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-foreground/70">
                 {compliantItems} of {totalItems} items valid
               </p>
               {!allClear && (
@@ -389,10 +389,10 @@ const ElecIdCompliance = () => {
             green: stat.count > 0 ? "bg-green-500/10 border-green-500/30" : "bg-white/[0.02] border-white/[0.04]",
           };
           const textClasses = {
-            red: stat.count > 0 ? "text-red-400" : "text-muted-foreground/50",
-            orange: stat.count > 0 ? "text-orange-400" : "text-muted-foreground/50",
-            yellow: stat.count > 0 ? "text-yellow-400" : "text-muted-foreground/50",
-            green: stat.count > 0 ? "text-green-400" : "text-muted-foreground/50",
+            red: stat.count > 0 ? "text-red-400" : "text-foreground/70/50",
+            orange: stat.count > 0 ? "text-orange-400" : "text-foreground/70/50",
+            yellow: stat.count > 0 ? "text-yellow-400" : "text-foreground/70/50",
+            green: stat.count > 0 ? "text-green-400" : "text-foreground/70/50",
           };
           const Icon = stat.icon;
 
@@ -411,7 +411,7 @@ const ElecIdCompliance = () => {
               <div className={cn("text-lg font-bold", textClasses[stat.color as keyof typeof textClasses])}>
                 {stat.count}
               </div>
-              <div className="text-[10px] text-muted-foreground uppercase tracking-wide">
+              <div className="text-[10px] text-foreground/70 uppercase tracking-wide">
                 {stat.label}
               </div>
             </motion.div>
@@ -505,11 +505,11 @@ const ElecIdCompliance = () => {
         </div>
         <div className="flex-1 text-left">
           <p className="font-medium text-foreground">Expiry Reminders</p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground/70">
             Get notified before qualifications expire
           </p>
         </div>
-        <ChevronRight className="h-5 w-5 text-muted-foreground" />
+        <ChevronRight className="h-5 w-5 text-foreground/70" />
       </motion.button>
 
       {/* Empty State */}
@@ -520,10 +520,10 @@ const ElecIdCompliance = () => {
           className="py-12 text-center"
         >
           <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center">
-            <Shield className="h-10 w-10 text-muted-foreground/50" />
+            <Shield className="h-10 w-10 text-foreground/70/50" />
           </div>
           <h4 className="text-lg font-medium text-foreground mb-2">No compliance items yet</h4>
-          <p className="text-muted-foreground max-w-xs mx-auto">
+          <p className="text-foreground/70 max-w-xs mx-auto">
             Add qualifications with expiry dates to track your compliance status.
           </p>
         </motion.div>

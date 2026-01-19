@@ -4,9 +4,23 @@ import SectionHeader from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { CircuitBoard, Shield, Cable } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import MWSmartDefaults from './MWSmartDefaults';
+import {
+  PROTECTIVE_DEVICE_TYPES,
+  BS_EN_STANDARDS,
+  DEVICE_RATINGS,
+  BREAKING_CAPACITIES,
+  CABLE_TYPES,
+  INSTALLATION_METHODS,
+  REFERENCE_METHODS,
+  CONDUCTOR_SIZES,
+  RCD_RATINGS,
+  RCD_TYPES,
+  SmartDefault,
+} from '@/constants/minorWorksOptions';
 
 interface MWCircuitTabProps {
   formData: any;
@@ -46,8 +60,48 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
     }
   };
 
+  // Handle smart defaults application
+  const handleSmartDefaultApply = (values: SmartDefault['values']) => {
+    Object.entries(values).forEach(([key, value]) => {
+      if (value !== undefined) {
+        onUpdate(key, value);
+      }
+    });
+  };
+
+  // Auto-fill reference method based on installation method
+  const handleInstallationMethodChange = (value: string) => {
+    onUpdate('installationMethod', value);
+
+    // Auto-suggest reference method based on installation method
+    const methodMapping: { [key: string]: string } = {
+      'clipped-direct': 'C',
+      'surface-conduit': 'B',
+      'concealed-conduit': 'A',
+      'surface-trunking': 'B',
+      'flush-trunking': 'B',
+      'cable-tray': 'C',
+      'cable-basket': 'E',
+      'under-plaster': 'A',
+      'thermally-insulated': '100',
+      'accessible-floor': 'C',
+      'ceiling-void': 'C',
+      'buried-direct': 'D',
+      'in-duct': 'D',
+    };
+
+    if (methodMapping[value] && !formData.referenceMethod) {
+      onUpdate('referenceMethod', methodMapping[value]);
+    }
+  };
+
   return (
     <div className="space-y-4 sm:space-y-6">
+      {/* Smart Defaults Quick Fill */}
+      <div className="p-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20">
+        <MWSmartDefaults onApply={handleSmartDefaultApply} />
+      </div>
+
       {/* Circuit Details */}
       <div className="eicr-section-card">
         <Collapsible open={openSections.circuit} onOpenChange={() => toggleSection('circuit')}>
@@ -114,68 +168,53 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">BS (EN) Standard</Label>
-                  <Select value={formData.overcurrentDeviceBsEn || ''} onValueChange={(v) => onUpdate('overcurrentDeviceBsEn', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-red-500 focus:ring-red-500">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="BS EN 60898">BS EN 60898</SelectItem>
-                      <SelectItem value="BS EN 61009">BS EN 61009</SelectItem>
-                      <SelectItem value="BS 3036">BS 3036</SelectItem>
-                      <SelectItem value="BS 1361">BS 1361</SelectItem>
-                      <SelectItem value="BS 88">BS 88</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.overcurrentDeviceBsEn || ''}
+                    onValueChange={(v) => onUpdate('overcurrentDeviceBsEn', v)}
+                    options={BS_EN_STANDARDS}
+                    placeholder="Select"
+                    title="BS (EN) Standard"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Device Type *</Label>
-                  <Select value={formData.protectiveDeviceType || ''} onValueChange={(v) => onUpdate('protectiveDeviceType', v)}>
-                    <SelectTrigger className={cn("h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-red-500 focus:ring-red-500", !formData.protectiveDeviceType && "border-red-500/50")}>
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="mcb-type-b">MCB Type B</SelectItem>
-                      <SelectItem value="mcb-type-c">MCB Type C</SelectItem>
-                      <SelectItem value="mcb-type-d">MCB Type D</SelectItem>
-                      <SelectItem value="rcbo-type-a">RCBO Type A</SelectItem>
-                      <SelectItem value="rcbo-type-ac">RCBO Type AC</SelectItem>
-                      <SelectItem value="fuse-bs88">Fuse BS88</SelectItem>
-                      <SelectItem value="fuse-bs3036">Fuse BS3036</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.protectiveDeviceType || ''}
+                    onValueChange={(v) => onUpdate('protectiveDeviceType', v)}
+                    options={PROTECTIVE_DEVICE_TYPES}
+                    placeholder="Select type"
+                    title="Protective Device Type"
+                    triggerClassName={cn(
+                      "bg-elec-gray border-white/30",
+                      !formData.protectiveDeviceType && "border-red-500/50"
+                    )}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Rating (A) *</Label>
-                  <Select value={formData.protectiveDeviceRating || ''} onValueChange={(v) => onUpdate('protectiveDeviceRating', v)}>
-                    <SelectTrigger className={cn("h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-red-500 focus:ring-red-500", !formData.protectiveDeviceRating && "border-red-500/50")}>
-                      <SelectValue placeholder="Rating" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="6">6A</SelectItem>
-                      <SelectItem value="10">10A</SelectItem>
-                      <SelectItem value="16">16A</SelectItem>
-                      <SelectItem value="20">20A</SelectItem>
-                      <SelectItem value="25">25A</SelectItem>
-                      <SelectItem value="32">32A</SelectItem>
-                      <SelectItem value="40">40A</SelectItem>
-                      <SelectItem value="50">50A</SelectItem>
-                      <SelectItem value="63">63A</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.protectiveDeviceRating || ''}
+                    onValueChange={(v) => onUpdate('protectiveDeviceRating', v)}
+                    options={DEVICE_RATINGS}
+                    placeholder="Rating"
+                    title="Device Rating"
+                    triggerClassName={cn(
+                      "bg-elec-gray border-white/30",
+                      !formData.protectiveDeviceRating && "border-red-500/50"
+                    )}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Breaking Capacity (kA)</Label>
-                  <Select value={formData.protectiveDeviceKaRating || ''} onValueChange={(v) => onUpdate('protectiveDeviceKaRating', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-red-500 focus:ring-red-500">
-                      <SelectValue placeholder="kA rating" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="3">3kA</SelectItem>
-                      <SelectItem value="6">6kA</SelectItem>
-                      <SelectItem value="10">10kA</SelectItem>
-                      <SelectItem value="15">15kA</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.protectiveDeviceKaRating || ''}
+                    onValueChange={(v) => onUpdate('protectiveDeviceKaRating', v)}
+                    options={BREAKING_CAPACITIES}
+                    placeholder="kA rating"
+                    title="Breaking Capacity"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
               </div>
 
@@ -212,30 +251,29 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="space-y-2">
                       <Label className="text-sm">BS (EN) Standard</Label>
-                      <Select value={formData.rcdBsEn || ''} onValueChange={(v) => onUpdate('rcdBsEn', v)}>
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                          <SelectItem value="BS EN 61008">BS EN 61008</SelectItem>
-                          <SelectItem value="BS EN 61009">BS EN 61009</SelectItem>
-                          <SelectItem value="BS EN 62423">BS EN 62423</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={formData.rcdBsEn || ''}
+                        onValueChange={(v) => onUpdate('rcdBsEn', v)}
+                        options={[
+                          { value: 'BS EN 61008', label: 'BS EN 61008', description: 'RCDs without overcurrent protection' },
+                          { value: 'BS EN 61009', label: 'BS EN 61009', description: 'RCBOs' },
+                          { value: 'BS EN 62423', label: 'BS EN 62423', description: 'Type F and Type B RCDs' },
+                        ]}
+                        placeholder="Select"
+                        title="RCD BS (EN) Standard"
+                        triggerClassName="bg-elec-gray border-white/30"
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label className="text-sm">Type</Label>
-                      <Select value={formData.rcdType || ''} onValueChange={(v) => onUpdate('rcdType', v)}>
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                          <SelectItem value="AC">Type AC</SelectItem>
-                          <SelectItem value="A">Type A</SelectItem>
-                          <SelectItem value="F">Type F</SelectItem>
-                          <SelectItem value="B">Type B</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={formData.rcdType || ''}
+                        onValueChange={(v) => onUpdate('rcdType', v)}
+                        options={RCD_TYPES}
+                        placeholder="Select"
+                        title="RCD Type"
+                        triggerClassName="bg-elec-gray border-white/30"
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label className="text-sm">Rating (A)</Label>
@@ -249,17 +287,14 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     </div>
                     <div className="space-y-2">
                       <Label className="text-sm">IΔn (mA)</Label>
-                      <Select value={formData.rcdIdn || ''} onValueChange={(v) => onUpdate('rcdIdn', v)}>
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                          <SelectItem value="10">10mA</SelectItem>
-                          <SelectItem value="30">30mA</SelectItem>
-                          <SelectItem value="100">100mA</SelectItem>
-                          <SelectItem value="300">300mA</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={formData.rcdIdn || ''}
+                        onValueChange={(v) => onUpdate('rcdIdn', v)}
+                        options={RCD_RATINGS}
+                        placeholder="Select"
+                        title="RCD Rating (IΔn)"
+                        triggerClassName="bg-elec-gray border-white/30"
+                      />
                     </div>
                   </div>
                 </div>
@@ -275,14 +310,16 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label className="text-sm">BS (EN) Standard</Label>
-                      <Select value={formData.afddBsEn || ''} onValueChange={(v) => onUpdate('afddBsEn', v)}>
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                          <SelectItem value="BS EN 62606">BS EN 62606</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={formData.afddBsEn || ''}
+                        onValueChange={(v) => onUpdate('afddBsEn', v)}
+                        options={[
+                          { value: 'BS EN 62606', label: 'BS EN 62606', description: 'Arc Fault Detection Devices' },
+                        ]}
+                        placeholder="Select"
+                        title="AFDD BS (EN) Standard"
+                        triggerClassName="bg-elec-gray border-white/30"
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label className="text-sm">Rating (A)</Label>
@@ -308,29 +345,33 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label className="text-sm">BS (EN) Standard</Label>
-                      <Select value={formData.spdBsEn || ''} onValueChange={(v) => onUpdate('spdBsEn', v)}>
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                          <SelectItem value="BS EN 61643-11">BS EN 61643-11</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={formData.spdBsEn || ''}
+                        onValueChange={(v) => onUpdate('spdBsEn', v)}
+                        options={[
+                          { value: 'BS EN 61643-11', label: 'BS EN 61643-11', description: 'Surge Protective Devices' },
+                        ]}
+                        placeholder="Select"
+                        title="SPD BS (EN) Standard"
+                        triggerClassName="bg-elec-gray border-white/30"
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label className="text-sm">Type</Label>
-                      <Select value={formData.spdType || ''} onValueChange={(v) => onUpdate('spdType', v)}>
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                          <SelectItem value="1">Type 1</SelectItem>
-                          <SelectItem value="2">Type 2</SelectItem>
-                          <SelectItem value="3">Type 3</SelectItem>
-                          <SelectItem value="1+2">Type 1+2</SelectItem>
-                          <SelectItem value="2+3">Type 2+3</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <MobileSelectPicker
+                        value={formData.spdType || ''}
+                        onValueChange={(v) => onUpdate('spdType', v)}
+                        options={[
+                          { value: '1', label: 'Type 1', description: 'Lightning current arrestor' },
+                          { value: '2', label: 'Type 2', description: 'Overvoltage limiting device' },
+                          { value: '3', label: 'Type 3', description: 'Equipment protection' },
+                          { value: '1+2', label: 'Type 1+2', description: 'Combined Type 1 and 2' },
+                          { value: '2+3', label: 'Type 2+3', description: 'Combined Type 2 and 3' },
+                        ]}
+                        placeholder="Select"
+                        title="SPD Type"
+                        triggerClassName="bg-elec-gray border-white/30"
+                      />
                     </div>
                   </div>
                 </div>
@@ -357,76 +398,69 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Live Conductor Size *</Label>
-                  <Select value={formData.liveConductorSize || ''} onValueChange={(v) => onUpdate('liveConductorSize', v)}>
-                    <SelectTrigger className={cn("h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500", !formData.liveConductorSize && "border-red-500/50")}>
-                      <SelectValue placeholder="Size" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="1.0">1.0mm2</SelectItem>
-                      <SelectItem value="1.5">1.5mm2</SelectItem>
-                      <SelectItem value="2.5">2.5mm2</SelectItem>
-                      <SelectItem value="4.0">4.0mm2</SelectItem>
-                      <SelectItem value="6.0">6.0mm2</SelectItem>
-                      <SelectItem value="10.0">10.0mm2</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.liveConductorSize || ''}
+                    onValueChange={(v) => onUpdate('liveConductorSize', v)}
+                    options={CONDUCTOR_SIZES}
+                    placeholder="Size"
+                    title="Live Conductor Size"
+                    triggerClassName={cn(
+                      "bg-elec-gray border-white/30",
+                      !formData.liveConductorSize && "border-red-500/50"
+                    )}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">CPC Size</Label>
-                  <Select value={formData.cpcSize || ''} onValueChange={(v) => onUpdate('cpcSize', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500">
-                      <SelectValue placeholder="Size" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="1.0">1.0mm2</SelectItem>
-                      <SelectItem value="1.5">1.5mm2</SelectItem>
-                      <SelectItem value="2.5">2.5mm2</SelectItem>
-                      <SelectItem value="4.0">4.0mm2</SelectItem>
-                      <SelectItem value="6.0">6.0mm2</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.cpcSize || ''}
+                    onValueChange={(v) => onUpdate('cpcSize', v)}
+                    options={CONDUCTOR_SIZES.filter(o => parseFloat(o.value) <= 16)}
+                    placeholder="Size"
+                    title="CPC Size"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Cable Type</Label>
-                  <Select value={formData.cableType || ''} onValueChange={(v) => onUpdate('cableType', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500">
-                      <SelectValue placeholder="Type" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="twin-earth">Twin & Earth</SelectItem>
-                      <SelectItem value="swa">SWA</SelectItem>
-                      <SelectItem value="flex">Flex</SelectItem>
-                      <SelectItem value="singles">Singles</SelectItem>
-                      <SelectItem value="micc">MICC</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.cableType || ''}
+                    onValueChange={(v) => onUpdate('cableType', v)}
+                    options={CABLE_TYPES}
+                    placeholder="Type"
+                    title="Cable Type"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Installation Method</Label>
-                  <Select value={formData.installationMethod || ''} onValueChange={(v) => onUpdate('installationMethod', v)}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500">
-                      <SelectValue placeholder="Method" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="clipped-direct">Clipped Direct</SelectItem>
-                      <SelectItem value="conduit">In Conduit</SelectItem>
-                      <SelectItem value="trunking">In Trunking</SelectItem>
-                      <SelectItem value="buried">Buried</SelectItem>
-                      <SelectItem value="thermally-insulated">Thermally Insulated</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.installationMethod || ''}
+                    onValueChange={handleInstallationMethodChange}
+                    options={INSTALLATION_METHODS}
+                    placeholder="Method"
+                    title="Installation Method"
+                    triggerClassName="bg-elec-gray border-white/30"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Reference Method</Label>
-                  <Input
+                  <MobileSelectPicker
                     value={formData.referenceMethod || ''}
-                    onChange={(e) => onUpdate('referenceMethod', e.target.value)}
+                    onValueChange={(v) => onUpdate('referenceMethod', v)}
+                    options={REFERENCE_METHODS}
                     placeholder="e.g., A, B, C"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-green-500 focus:ring-green-500"
+                    title="Reference Method (BS 7671 Table 4A2)"
+                    triggerClassName="bg-elec-gray border-white/30"
                   />
+                  {formData.referenceMethod && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {REFERENCE_METHODS.find(r => r.value === formData.referenceMethod)?.description}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

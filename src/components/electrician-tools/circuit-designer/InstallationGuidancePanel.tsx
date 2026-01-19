@@ -67,7 +67,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                   className={cn(
                     "rounded-lg p-4 text-left border-l-4",
                     safety.priority === 'critical' && "border-l-red-500 bg-red-500/10",
-                    safety.priority === 'high' && "border-l-amber-500 bg-amber-500/10",
+                    safety.priority === 'high' && "border-l-orange-500 bg-orange-500/10",
                     safety.priority === 'medium' && "border-l-yellow-500 bg-yellow-500/10"
                   )}
                 >
@@ -76,7 +76,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                       className={cn(
                         "h-5 w-5 shrink-0 mt-0.5",
                         safety.priority === 'critical' && "text-red-500",
-                        safety.priority === 'high' && "text-amber-500",
+                        safety.priority === 'high' && "text-orange-500",
                         safety.priority === 'medium' && "text-yellow-500"
                       )}
                     />

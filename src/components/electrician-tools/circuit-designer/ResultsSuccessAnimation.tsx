@@ -170,7 +170,7 @@ export const ResultsSuccessAnimation = ({
         <motion.div
           className={cn(
             "fixed inset-0 z-50 flex items-center justify-center",
-            "bg-black/90 backdrop-blur-md"
+            "bg-elec-dark/95 backdrop-blur-md"
           )}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

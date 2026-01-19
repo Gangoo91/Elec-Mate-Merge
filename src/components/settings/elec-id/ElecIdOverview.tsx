@@ -73,7 +73,7 @@ interface ElecIdOverviewProps {
 const VERIFICATION_TIERS = {
   basic: {
     label: "Basic",
-    color: "text-muted-foreground",
+    color: "text-foreground/80",
     bgColor: "bg-white/10",
     borderColor: "border-white/20",
     icon: Shield,
@@ -403,11 +403,11 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       <div className="space-y-2">
         <Label className="text-foreground text-sm">
           Your Rate
-          <span className="text-muted-foreground ml-2">(shown in Talent Pool)</span>
+          <span className="text-foreground/70 ml-2">(shown in Talent Pool)</span>
         </Label>
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">£</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground/70">£</span>
             <Input
               type="number"
               inputMode="decimal"
@@ -443,7 +443,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       <div className="space-y-2">
         <Label className="text-foreground text-sm">
           Professional Bio
-          <span className="text-muted-foreground ml-2">(optional)</span>
+          <span className="text-foreground/70 ml-2">(optional)</span>
         </Label>
         <Textarea
           value={editFormData.bio}
@@ -470,7 +470,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               </div>
               <div className="px-4 pb-2">
                 <h3 className="text-lg font-bold text-foreground">Edit Profile</h3>
-                <p className="text-sm text-muted-foreground">Update your Elec-ID information</p>
+                <p className="text-sm text-foreground/70">Update your Elec-ID information</p>
               </div>
               <div className="flex-1 overflow-y-auto px-4 pb-4">
                 <EditFormContent />
@@ -611,11 +611,11 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                         <span className={cn(
                           "text-[10px] font-medium ml-auto",
                           expiryStatus.status === "expired" ? "text-red-400" :
-                          expiryStatus.status === "expiring" ? "text-orange-400" : "text-white/40"
+                          expiryStatus.status === "expiring" ? "text-orange-400" : "text-white/50"
                         )}>
                           {expiryStatus.status === "expired" ? "EXPIRED" :
-                           expiryStatus.status === "expiring" ? `${expiryStatus.daysRemaining}d` :
-                           new Date(elecIdData.ecsCardExpiry).toLocaleDateString("en-GB", { month: "short", year: "2-digit" })}
+                           expiryStatus.status === "expiring" && expiryStatus.daysRemaining != null ? `${expiryStatus.daysRemaining}d` :
+                           elecIdData.ecsCardExpiry ? new Date(elecIdData.ecsCardExpiry).toLocaleDateString("en-GB", { month: "short", year: "2-digit" }) : ""}
                         </span>
                       </div>
                     )}
@@ -700,14 +700,14 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   <h4 className={cn("font-semibold text-sm", VERIFICATION_TIERS[verificationTier].color)}>
                     {VERIFICATION_TIERS[verificationTier].label}
                   </h4>
-                  <p className="text-[10px] text-muted-foreground truncate">Verification Tier</p>
+                  <p className="text-[10px] text-foreground/70 truncate">Verification Tier</p>
                 </div>
               </div>
 
               {verificationTier !== "premium" ? (
                 <div>
                   <div className="flex items-center justify-between text-[10px] mb-1">
-                    <span className="text-muted-foreground">Progress</span>
+                    <span className="text-foreground/70">Progress</span>
                     <span className={VERIFICATION_TIERS[verificationTier].color}>
                       {verificationTier === "basic" ? "50%" : "75%"}
                     </span>
@@ -754,12 +754,12 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   )}>
                     <Users className={cn(
                       "h-5 w-5",
-                      availableForHire && !isOptedOut ? "text-emerald-400" : "text-muted-foreground"
+                      availableForHire && !isOptedOut ? "text-emerald-400" : "text-foreground/70"
                     )} />
                   </div>
                   <div className="min-w-0">
                     <h4 className="font-semibold text-sm text-foreground">Talent Pool</h4>
-                    <p className="text-[10px] text-muted-foreground truncate">
+                    <p className="text-[10px] text-foreground/70 truncate">
                       {isOptedOut ? "Disabled" : availableForHire ? "Active" : "Hidden"}
                     </p>
                   </div>
@@ -805,7 +805,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               )}
 
               {(!availableForHire || isOptedOut) && (
-                <p className="text-[10px] text-muted-foreground">
+                <p className="text-[10px] text-foreground/70">
                   {isOptedOut ? "Re-enable to join talent pool" : "Turn on to be discovered"}
                 </p>
               )}
@@ -824,7 +824,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               </div>
               <div className="flex-1">
                 <h4 className="font-semibold text-orange-400">Elec-ID Disabled</h4>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-foreground/70 mt-1">
                   Your Elec-ID is hidden from the Talent Pool. Employers cannot discover your profile.
                   Your credentials and data are still saved.
                 </p>
@@ -850,11 +850,11 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-white/10">
-                  <Power className="h-5 w-5 text-muted-foreground" />
+                  <Power className="h-5 w-5 text-foreground/70" />
                 </div>
                 <div>
                   <h4 className="font-medium text-foreground">Disable Elec-ID</h4>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-foreground/70">
                     Remove yourself from the Talent Pool completely
                   </p>
                 </div>
@@ -862,7 +862,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               <Button
                 variant="outline"
                 size="sm"
-                className="border-white/20 text-muted-foreground hover:text-red-400 hover:border-red-500/30"
+                className="border-white/20 text-foreground/70 hover:text-red-400 hover:border-red-500/30"
                 onClick={() => setIsOptOutDialogOpen(true)}
               >
                 Disable
@@ -880,7 +880,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               <AlertCircle className="h-5 w-5 text-orange-400" />
               Disable Elec-ID?
             </DialogTitle>
-            <DialogDescription className="text-muted-foreground">
+            <DialogDescription className="text-foreground/70">
               This will hide your profile from the Talent Pool. Employers will not be able
               to discover you through search.
             </DialogDescription>
@@ -888,7 +888,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           <div className="space-y-4 pt-4">
             <div className="p-3 rounded-lg bg-white/5 border border-white/10">
               <p className="text-sm text-foreground font-medium mb-2">What happens:</p>
-              <ul className="space-y-1.5 text-sm text-muted-foreground">
+              <ul className="space-y-1.5 text-sm text-foreground/70">
                 <li className="flex items-center gap-2">
                   <EyeOff className="h-4 w-4" />
                   Hidden from employer searches
@@ -941,7 +941,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               </div>
               <div className="flex items-center gap-1">
                 <span className="text-xl sm:text-2xl font-bold text-elec-yellow">{completeness.percentage}</span>
-                <span className="text-sm text-muted-foreground">%</span>
+                <span className="text-sm text-foreground/70">%</span>
               </div>
             </div>
 
@@ -949,7 +949,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
 
             {completeness.missingItems.length > 0 && (
               <div className="space-y-2">
-                <p className="text-xs sm:text-sm text-muted-foreground">To improve your profile:</p>
+                <p className="text-xs sm:text-sm text-foreground/70">To improve your profile:</p>
                 <div className="grid grid-cols-1 gap-1.5">
                   {completeness.missingItems.slice(0, 3).map((item, index) => (
                     <div
@@ -961,7 +961,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                     </div>
                   ))}
                   {completeness.missingItems.length > 3 && (
-                    <p className="text-xs text-muted-foreground text-center pt-1">
+                    <p className="text-xs text-foreground/70 text-center pt-1">
                       +{completeness.missingItems.length - 3} more items
                     </p>
                   )}
@@ -1014,13 +1014,13 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   <stat.icon className={cn("h-5 w-5 sm:h-6 sm:w-6", stat.iconColor)} />
                 </div>
                 <p className="text-2xl sm:text-3xl font-bold text-foreground">{stat.count}</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 sm:hidden">{stat.shortLabel}</p>
-                <p className="text-xs text-muted-foreground mt-0.5 hidden sm:block">{stat.label}</p>
+                <p className="text-[10px] sm:text-xs text-foreground/70 mt-0.5 sm:hidden">{stat.shortLabel}</p>
+                <p className="text-xs text-foreground/70 mt-0.5 hidden sm:block">{stat.label}</p>
               </div>
 
               {/* Chevron indicator */}
               <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
-                <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
+                <ChevronRight className="h-4 w-4 text-foreground/70/50" />
               </div>
             </motion.button>
           ))
