@@ -34,7 +34,7 @@ interface ProfileStrengthProps {
 const TIER_CONFIG = {
   basic: {
     label: "Basic",
-    color: "text-muted-foreground",
+    color: "text-foreground/70",
     bg: "bg-muted",
     icon: Shield,
     minPoints: 0,
@@ -111,7 +111,7 @@ export function ProfileStrength({
             </div>
             <div>
               <CardTitle className="text-lg">Profile Strength</CardTitle>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-foreground/70">
                 Complete actions to boost visibility
               </p>
             </div>
@@ -161,7 +161,7 @@ export function ProfileStrength({
               <span className="text-3xl font-bold text-foreground">
                 {earnedPoints}
               </span>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-foreground/70">
                 / {totalPoints} points
               </span>
             </div>
@@ -169,7 +169,7 @@ export function ProfileStrength({
             {nextMilestone && (
               <div className="flex items-center gap-2 text-sm">
                 <Gift className="h-4 w-4 text-elec-yellow" />
-                <span className="text-muted-foreground">
+                <span className="text-foreground/70">
                   {pointsToNext} points to{" "}
                   <span className="text-foreground font-medium">
                     {nextMilestone.label}
@@ -201,7 +201,7 @@ export function ProfileStrength({
                       : "border-muted-foreground"
                   )}
                 />
-                <span className="text-[10px] text-muted-foreground mt-1">
+                <span className="text-[10px] text-foreground/70 mt-1">
                   {milestone.points}
                 </span>
               </div>
@@ -211,7 +211,7 @@ export function ProfileStrength({
 
         {/* Checklist items */}
         <div className="space-y-2 pt-2">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          <p className="text-xs font-medium text-foreground/70 uppercase tracking-wider">
             Actions to boost your profile
           </p>
           {items.map((item) => (
@@ -227,7 +227,7 @@ export function ProfileStrength({
               {item.completed ? (
                 <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
               ) : (
-                <Circle className="h-5 w-5 text-muted-foreground shrink-0" />
+                <Circle className="h-5 w-5 text-foreground/70 shrink-0" />
               )}
 
               <div className="flex-1 min-w-0">
@@ -239,7 +239,7 @@ export function ProfileStrength({
                 >
                   {item.label}
                 </p>
-                <p className="text-xs text-muted-foreground truncate">
+                <p className="text-xs text-foreground/70 truncate">
                   {item.description}
                 </p>
               </div>

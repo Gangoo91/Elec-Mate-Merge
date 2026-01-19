@@ -88,7 +88,7 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
         <CardContent className="p-6 text-center">
           <AlertCircle className="h-10 w-10 text-red-400 mx-auto mb-3" />
           <h3 className="font-semibold text-foreground">Failed to Load CVs</h3>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-foreground/70 mt-1">
             Please refresh the page to try again.
           </p>
         </CardContent>
@@ -115,7 +115,7 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
                 <h2 className="text-xl sm:text-2xl font-bold text-foreground">
                   Create Your Professional CV
                 </h2>
-                <p className="text-muted-foreground mt-2 max-w-md">
+                <p className="text-foreground/70 mt-2 max-w-md">
                   Build a professional CV that showcases your electrical qualifications.
                   Import your credentials directly from your Elec-ID profile.
                 </p>
@@ -165,7 +165,7 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold text-foreground">My CVs</h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground/70">
             {sortedCVs.length} CV{sortedCVs.length !== 1 && "s"}
             {hasElecIdProfile && " • Synced with Elec-ID"}
           </p>
@@ -217,7 +217,7 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
             <Sparkles className="h-4 w-4 text-elec-yellow" />
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground/70">
               <span className="text-foreground font-medium">Pro tip:</span> Set your best CV as
               "Primary" to use it automatically when applying for jobs.
             </p>
@@ -246,7 +246,7 @@ const FeatureCard = ({
         <Icon className="h-5 w-5 text-white" />
       </div>
       <h3 className="font-medium text-foreground">{title}</h3>
-      <p className="text-xs text-muted-foreground mt-1">{description}</p>
+      <p className="text-xs text-foreground/70 mt-1">{description}</p>
     </CardContent>
   </Card>
 );

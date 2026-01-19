@@ -717,7 +717,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold text-foreground">Document Verification</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground/70">
             Upload and verify your credentials to increase your verification tier
           </p>
         </div>
@@ -765,7 +765,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+                    <p className="text-xs text-foreground/70 mt-0.5 line-clamp-2">
                       {docType.description}
                     </p>
 
@@ -809,7 +809,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                               )}
                               <button
                                 onClick={() => handleDeleteDocument(doc.id)}
-                                className="text-muted-foreground hover:text-red-400 transition-colors"
+                                className="text-foreground/70 hover:text-red-400 transition-colors"
                               >
                                 <X className="h-3 w-3" />
                               </button>
@@ -823,7 +823,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="mt-3 w-full h-8 text-xs border-white/20"
+                      className="mt-3 w-full h-11 text-sm border-white/20 touch-manipulation active:scale-[0.98]"
                       onClick={() => handleOpenUpload(docType.type)}
                     >
                       <Upload className="h-3 w-3 mr-1.5" />
@@ -868,7 +868,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                   <Lightbulb className="h-4 w-4 text-blue-400 mt-0.5" />
                   <div>
                     <p className="text-sm font-medium text-blue-400">Tips for best results</p>
-                    <ul className="text-xs text-muted-foreground mt-1 space-y-0.5">
+                    <ul className="text-xs text-foreground/70 mt-1 space-y-0.5">
                       {selectedDocConfig.tips.map((tip, i) => (
                         <li key={i}>• {tip}</li>
                       ))}
@@ -902,12 +902,12 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                     className="hidden"
                   />
                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-3">
-                    <Upload className="h-6 w-6 text-muted-foreground" />
+                    <Upload className="h-6 w-6 text-foreground/70" />
                   </div>
                   <p className="text-sm font-medium text-foreground">
                     {isDragActive ? "Drop your file here" : "Upload file"}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-foreground/70 mt-1">
                     PNG, JPG, PDF up to 10MB
                   </p>
                 </div>
@@ -923,7 +923,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                   <p className="text-sm font-medium text-foreground">
                     Take photo
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-foreground/70 mt-1">
                     Use camera for best results
                   </p>
                 </div>
@@ -998,12 +998,12 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                 {(isEditMode || verificationResult?.status === "needs_review") && (
                   <div className="space-y-3 p-4 rounded-lg bg-white/5 border border-white/10">
                     <div className="flex items-center gap-2 mb-2">
-                      <Edit3 className="h-4 w-4 text-muted-foreground" />
+                      <Edit3 className="h-4 w-4 text-foreground/70" />
                       <span className="text-sm font-medium">Verify or correct details</span>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="col-span-2">
-                        <Label className="text-xs text-muted-foreground">Document Name</Label>
+                        <Label className="text-xs text-foreground/70">Document Name</Label>
                         <Input
                           value={documentName}
                           onChange={(e) => setDocumentName(e.target.value)}
@@ -1012,7 +1012,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-muted-foreground">Issuing Body</Label>
+                        <Label className="text-xs text-foreground/70">Issuing Body</Label>
                         <Input
                           value={issuingBody}
                           onChange={(e) => setIssuingBody(e.target.value)}
@@ -1021,7 +1021,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-muted-foreground">Document/Card Number</Label>
+                        <Label className="text-xs text-foreground/70">Document/Card Number</Label>
                         <Input
                           value={documentNumber}
                           onChange={(e) => setDocumentNumber(e.target.value)}
@@ -1030,7 +1030,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-muted-foreground">Issue Date</Label>
+                        <Label className="text-xs text-foreground/70">Issue Date</Label>
                         <Input
                           type="date"
                           value={issueDate}
@@ -1039,7 +1039,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-muted-foreground">Expiry Date</Label>
+                        <Label className="text-xs text-foreground/70">Expiry Date</Label>
                         <Input
                           type="date"
                           value={expiryDate}
@@ -1162,7 +1162,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
               {/* Show rejection reason */}
               <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-400 mb-1">Rejection Reason:</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-foreground/70">
                   {rejectedDocument.rejection_reason || "Document could not be verified automatically."}
                 </p>
               </div>

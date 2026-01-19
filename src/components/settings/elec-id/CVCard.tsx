@@ -202,7 +202,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground mt-0.5">
+                    <p className="text-xs text-foreground/70 mt-0.5">
                       {templateStyle.label} template • Updated {lastUpdated}
                     </p>
                   </div>
@@ -213,7 +213,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground"
+                        className="h-10 w-10 shrink-0 text-foreground/70 hover:text-foreground touch-manipulation"
                       >
                         <MoreVertical className="h-4 w-4" />
                       </Button>
@@ -269,7 +269,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
                           : "bg-red-500"
                       )}
                     />
-                    <span className="text-xs text-muted-foreground">{completeness}% complete</span>
+                    <span className="text-xs text-foreground/70">{completeness}% complete</span>
                   </div>
 
                   {/* Sync status */}

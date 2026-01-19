@@ -159,7 +159,7 @@ export function ExpiryAlerts({
             </div>
             <div>
               <CardTitle className="text-lg">Document Renewals</CardTitle>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-foreground/70">
                 {expiredCount > 0
                   ? `${expiredCount} expired document${expiredCount > 1 ? "s" : ""}`
                   : criticalCount > 0
@@ -210,7 +210,7 @@ export function ExpiryAlerts({
 
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-sm truncate">{doc.name}</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-foreground/70">
                     {DOCUMENT_LABELS[doc.type]}
                   </p>
                 </div>
@@ -227,14 +227,14 @@ export function ExpiryAlerts({
                       {expiry.label}
                     </span>
                   </div>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-foreground/70">
                     {format(doc.expiryDate, "dd MMM yyyy")}
                   </p>
                 </div>
 
                 <ChevronRight
                   className={cn(
-                    "h-4 w-4 text-muted-foreground transition-transform",
+                    "h-4 w-4 text-foreground/70 transition-transform",
                     isExpanded && "rotate-90"
                   )}
                 />
@@ -244,7 +244,7 @@ export function ExpiryAlerts({
               {isExpanded && (
                 <div className="px-3 pb-3 pt-0 space-y-2 border-t border-white/10">
                   <div className="flex items-center justify-between py-2">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 text-sm text-foreground/70">
                       <Bell className="h-4 w-4" />
                       <span>Renewal reminders</span>
                     </div>
@@ -255,7 +255,7 @@ export function ExpiryAlerts({
                         "h-8",
                         doc.notificationsEnabled
                           ? "text-green-500"
-                          : "text-muted-foreground"
+                          : "text-foreground/70"
                       )}
                       onClick={(e) => {
                         e.stopPropagation();
@@ -310,7 +310,7 @@ export function ExpiryAlerts({
         })}
 
         {/* Summary footer */}
-        <div className="flex items-center justify-between pt-2 text-xs text-muted-foreground">
+        <div className="flex items-center justify-between pt-2 text-xs text-foreground/70">
           <span>
             {documents.length - alertDocuments.length} document
             {documents.length - alertDocuments.length !== 1 ? "s" : ""} up to date

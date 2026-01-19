@@ -773,7 +773,7 @@ const ElecIdSkills = () => {
                   variant="ghost"
                   size="sm"
                   onClick={() => setDeleteConfirm({ open: true, id: skill.id })}
-                  className="h-8 px-2 text-xs text-red-400/60 hover:text-red-400 hover:bg-red-500/10 rounded-lg"
+                  className="h-10 px-3 text-xs text-red-400/60 hover:text-red-400 hover:bg-red-500/10 rounded-lg touch-manipulation active:scale-95"
                 >
                   <Trash2 className="h-3 w-3 mr-1" />
                   {skill.skillName}

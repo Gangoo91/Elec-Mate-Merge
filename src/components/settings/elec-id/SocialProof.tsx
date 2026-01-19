@@ -81,7 +81,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
       case "contacted":
         return <MessageSquare className="h-3 w-3 text-blue-500" />;
       default:
-        return <Eye className="h-3 w-3 text-muted-foreground" />;
+        return <Eye className="h-3 w-3 text-foreground/70" />;
     }
   };
 
@@ -106,7 +106,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
             </div>
             <div>
               <CardTitle className="text-lg">Profile Activity</CardTitle>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-foreground/70">
                 Last 30 days
               </p>
             </div>
@@ -124,7 +124,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
           <div className="col-span-2 p-4 rounded-xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/20">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Profile Views</p>
+                <p className="text-sm text-foreground/70">Profile Views</p>
                 <div className="flex items-baseline gap-2">
                   <span className="text-4xl font-bold text-foreground">
                     {animatedViews}
@@ -186,7 +186,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
           <div className="p-3 rounded-xl bg-white/5 border border-white/10">
             <div className="flex items-center gap-2 mb-1">
               <Heart className="h-4 w-4 text-pink-500" />
-              <span className="text-xs text-muted-foreground">Saved</span>
+              <span className="text-xs text-foreground/70">Saved</span>
             </div>
             <p className="text-2xl font-bold">{stats.savedByEmployers}</p>
           </div>
@@ -195,7 +195,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
           <div className="p-3 rounded-xl bg-white/5 border border-white/10">
             <div className="flex items-center gap-2 mb-1">
               <MessageSquare className="h-4 w-4 text-blue-500" />
-              <span className="text-xs text-muted-foreground">Messages</span>
+              <span className="text-xs text-foreground/70">Messages</span>
             </div>
             <p className="text-2xl font-bold">{stats.contactRequests}</p>
           </div>
@@ -204,7 +204,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
           <div className="p-3 rounded-xl bg-white/5 border border-white/10">
             <div className="flex items-center gap-2 mb-1">
               <Zap className="h-4 w-4 text-elec-yellow" />
-              <span className="text-xs text-muted-foreground">In Searches</span>
+              <span className="text-xs text-foreground/70">In Searches</span>
             </div>
             <p className="text-2xl font-bold">{stats.searchAppearances}</p>
           </div>
@@ -213,11 +213,11 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
           <div className="p-3 rounded-xl bg-white/5 border border-white/10">
             <div className="flex items-center gap-2 mb-1">
               <Star className="h-4 w-4 text-amber-500" />
-              <span className="text-xs text-muted-foreground">Area Rank</span>
+              <span className="text-xs text-foreground/70">Area Rank</span>
             </div>
             <p className="text-2xl font-bold">
               #{stats.rankInArea}
-              <span className="text-sm text-muted-foreground font-normal">
+              <span className="text-sm text-foreground/70 font-normal">
                 /{stats.totalInArea}
               </span>
             </p>
@@ -227,7 +227,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
         {/* Recent viewers */}
         {recentViewers.length > 0 && (
           <div className="space-y-2 pt-2">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <p className="text-xs font-medium text-foreground/70 uppercase tracking-wider">
               Recent Activity
             </p>
             <div className="space-y-2">
@@ -256,7 +256,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
                       </p>
                       {getActionIcon(viewer.action)}
                     </div>
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1.5 text-xs text-foreground/70">
                       <MapPin className="h-3 w-3" />
                       <span className="truncate">{viewer.location}</span>
                       <span>•</span>
@@ -264,7 +264,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
                     </div>
                   </div>
 
-                  <span className="text-xs text-muted-foreground shrink-0">
+                  <span className="text-xs text-foreground/70 shrink-0">
                     {getActionLabel(viewer.action).split(" ")[0]}
                   </span>
                 </div>
@@ -282,11 +282,11 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
         {/* Empty state */}
         {recentViewers.length === 0 && (
           <div className="text-center py-6">
-            <Building2 className="h-10 w-10 text-muted-foreground mx-auto mb-2" />
-            <p className="text-sm text-muted-foreground">
+            <Building2 className="h-10 w-10 text-foreground/70 mx-auto mb-2" />
+            <p className="text-sm text-foreground/70">
               No recent activity yet
             </p>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-xs text-foreground/70 mt-1">
               Complete your profile to attract employers
             </p>
           </div>

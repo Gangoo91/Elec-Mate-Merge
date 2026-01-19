@@ -108,7 +108,7 @@ export function OCRPreview({
             </div>
             <div>
               <p className="font-medium">Document Analysis</p>
-              <p className="text-xs text-muted-foreground capitalize">
+              <p className="text-xs text-foreground/70 capitalize">
                 {documentType.replace(/_/g, " ")}
               </p>
             </div>
@@ -146,7 +146,7 @@ export function OCRPreview({
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <Loader2 className="h-8 w-8 text-purple-400 mx-auto animate-spin" />
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="text-sm text-foreground/70 mt-2">
                     Extracting text...
                   </p>
                 </div>
@@ -172,7 +172,7 @@ export function OCRPreview({
             {/* Confidence bar */}
             <div className="space-y-1">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-muted-foreground">Confidence</span>
+                <span className="text-foreground/70">Confidence</span>
                 <span className={getConfidenceColor(overallConfidence)}>
                   {Math.round(animatedConfidence)}%
                 </span>
@@ -215,15 +215,15 @@ export function OCRPreview({
                     style={{ transitionDelay: `${index * 50}ms` }}
                   >
                     <div className="p-1.5 rounded bg-white/10">
-                      <FieldIcon className="h-4 w-4 text-muted-foreground" />
+                      <FieldIcon className="h-4 w-4 text-foreground/70" />
                     </div>
 
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs text-muted-foreground">{field.label}</p>
+                      <p className="text-xs text-foreground/70">{field.label}</p>
                       {field.value ? (
                         <p className="font-medium truncate">{field.value}</p>
                       ) : (
-                        <p className="text-muted-foreground italic">Not detected</p>
+                        <p className="text-foreground/70 italic">Not detected</p>
                       )}
                     </div>
 
@@ -257,7 +257,7 @@ export function OCRPreview({
                   <p className="text-sm font-medium text-amber-500">
                     Low confidence detected
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-foreground/70">
                     Try retaking the photo with better lighting and ensure the
                     document is flat and in focus.
                   </p>
@@ -270,8 +270,8 @@ export function OCRPreview({
         {/* Empty state */}
         {!isProcessing && extractedFields.length === 0 && (
           <div className="text-center py-8">
-            <ScanLine className="h-10 w-10 text-muted-foreground mx-auto mb-2" />
-            <p className="text-sm text-muted-foreground">
+            <ScanLine className="h-10 w-10 text-foreground/70 mx-auto mb-2" />
+            <p className="text-sm text-foreground/70">
               Capture a document to analyze
             </p>
           </div>

@@ -101,7 +101,7 @@ const TIER_BENEFITS = [
     tier: "basic",
     icon: Shield,
     label: "Basic",
-    color: "text-muted-foreground",
+    color: "text-foreground/70",
     bg: "bg-white/10",
     benefits: ["Profile creation", "Basic visibility"],
   },
@@ -232,7 +232,7 @@ const ElecIdOnboarding = ({
               <h2 className="text-lg sm:text-2xl font-bold text-foreground mb-1 sm:mb-2">
                 Your Digital Professional Identity
               </h2>
-              <p className="text-sm sm:text-base text-muted-foreground max-w-md mx-auto px-2">
+              <p className="text-sm sm:text-base text-foreground/70 max-w-md mx-auto px-2">
                 Own and control your professional credentials. Share verified qualifications with employers instantly.
               </p>
             </div>
@@ -251,7 +251,7 @@ const ElecIdOnboarding = ({
                     <p className="font-medium text-foreground text-xs sm:text-sm">
                       {benefit.title}
                     </p>
-                    <p className="text-[10px] sm:text-xs text-muted-foreground truncate">
+                    <p className="text-[10px] sm:text-xs text-foreground/70 truncate">
                       {benefit.description}
                     </p>
                   </div>
@@ -265,7 +265,7 @@ const ElecIdOnboarding = ({
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <p className="text-muted-foreground">
+              <p className="text-foreground/70">
                 This helps employers understand your role and expertise.
               </p>
             </div>
@@ -308,7 +308,7 @@ const ElecIdOnboarding = ({
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <p className="text-muted-foreground">
+              <p className="text-foreground/70">
                 Your ECS card proves your competence to work in the electrical industry.
               </p>
             </div>
@@ -355,7 +355,7 @@ const ElecIdOnboarding = ({
 
               <div className="space-y-2">
                 <Label className="text-foreground">
-                  Card Number <span className="text-muted-foreground">(optional)</span>
+                  Card Number <span className="text-foreground/70">(optional)</span>
                 </Label>
                 <Input
                   value={formData.ecsCardNumber}
@@ -374,7 +374,7 @@ const ElecIdOnboarding = ({
         return (
           <div className="space-y-4 sm:space-y-6">
             <div className="text-center mb-4 sm:mb-6">
-              <p className="text-sm sm:text-base text-muted-foreground px-2">
+              <p className="text-sm sm:text-base text-foreground/70 px-2">
                 You can verify your credentials later to unlock extra features.
               </p>
             </div>
@@ -386,14 +386,14 @@ const ElecIdOnboarding = ({
                   <CheckCircle2 className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                   <div>
                     <p className="font-semibold text-foreground">Your Elec-ID is ready!</p>
-                    <p className="text-xs text-muted-foreground">Basic profile created</p>
+                    <p className="text-xs text-foreground/70">Basic profile created</p>
                   </div>
                 </div>
               </div>
 
               <div className="p-4 rounded-xl border border-white/10 bg-white/5">
-                <p className="text-sm text-muted-foreground mb-2">Optional next steps:</p>
-                <ul className="text-xs text-muted-foreground space-y-1">
+                <p className="text-sm text-foreground/70 mb-2">Optional next steps:</p>
+                <ul className="text-xs text-foreground/70 space-y-1">
                   <li>• Upload your ECS/CSCS card for verification</li>
                   <li>• Add qualifications & training</li>
                   <li>• Build your work history</li>
@@ -415,7 +415,7 @@ const ElecIdOnboarding = ({
               <h2 className="text-lg sm:text-2xl font-bold text-foreground mb-1 sm:mb-2">
                 Your Elec-ID is Ready!
               </h2>
-              <p className="text-sm sm:text-base text-muted-foreground max-w-md mx-auto px-2">
+              <p className="text-sm sm:text-base text-foreground/70 max-w-md mx-auto px-2">
                 You're now part of the UK's digital electrician verification network.
               </p>
             </div>
@@ -424,7 +424,7 @@ const ElecIdOnboarding = ({
             <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-white/5 border border-elec-yellow/30">
               <IdCard className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0" />
               <div className="text-left">
-                <p className="text-[10px] sm:text-xs text-muted-foreground">Your Elec-ID</p>
+                <p className="text-[10px] sm:text-xs text-foreground/70">Your Elec-ID</p>
                 <p className="font-mono font-bold text-base sm:text-xl text-foreground">
                   {elecIdNumber || 'Generating...'}
                 </p>
@@ -434,15 +434,15 @@ const ElecIdOnboarding = ({
             {/* Next steps */}
             <div className="grid grid-cols-1 gap-1.5 sm:gap-2 max-w-xs mx-auto text-left px-2">
               <p className="text-xs sm:text-sm font-medium text-foreground mb-0.5 sm:mb-1">Next steps:</p>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-foreground/70">
                 <FileCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-elec-yellow flex-shrink-0" />
                 <span>Upload your ECS card for verification</span>
               </div>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-foreground/70">
                 <GraduationCap className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-elec-yellow flex-shrink-0" />
                 <span>Add your qualifications</span>
               </div>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-foreground/70">
                 <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-elec-yellow flex-shrink-0" />
                 <span>Enable Talent Pool to get discovered</span>
               </div>
@@ -466,7 +466,7 @@ const ElecIdOnboarding = ({
         <h2 className="text-lg sm:text-xl font-bold text-foreground mb-2">
           Your Elec-ID Wasn't Created
         </h2>
-        <p className="text-sm sm:text-base text-muted-foreground max-w-sm mx-auto mb-6">
+        <p className="text-sm sm:text-base text-foreground/70 max-w-sm mx-auto mb-6">
           It looks like you opted for an Elec-ID during signup but it wasn't generated.
           This can happen if you confirmed your email on a different device.
         </p>
@@ -498,7 +498,7 @@ const ElecIdOnboarding = ({
         {onSkip && (
           <button
             onClick={onSkip}
-            className="mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="mt-4 text-sm text-foreground/70 hover:text-foreground transition-colors"
           >
             Skip for now
           </button>
@@ -518,14 +518,14 @@ const ElecIdOnboarding = ({
         <h2 className="text-lg sm:text-xl font-bold text-foreground mb-2">
           Your Elec-ID is Ready!
         </h2>
-        <p className="text-sm sm:text-base text-muted-foreground max-w-sm mx-auto mb-4">
+        <p className="text-sm sm:text-base text-foreground/70 max-w-sm mx-auto mb-4">
           Your digital credential has been created successfully.
         </p>
 
         <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-white/5 border border-elec-yellow/30 mb-6">
           <IdCard className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0" />
           <div className="text-left">
-            <p className="text-[10px] sm:text-xs text-muted-foreground">Your Elec-ID</p>
+            <p className="text-[10px] sm:text-xs text-foreground/70">Your Elec-ID</p>
             <p className="font-mono font-bold text-base sm:text-xl text-foreground">
               {generatedId}
             </p>
@@ -548,13 +548,13 @@ const ElecIdOnboarding = ({
       {/* Progress bar */}
       <div className="mb-4 sm:mb-6 md:mb-8">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs md:text-sm text-muted-foreground">
+          <span className="text-xs md:text-sm text-foreground/70">
             Step {currentStep + 1} of {STEPS.length}
           </span>
           {onSkip && currentStep < STEPS.length - 1 && (
             <button
               onClick={onSkip}
-              className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="text-xs md:text-sm text-foreground/70 hover:text-foreground transition-colors"
             >
               Skip setup
             </button>
@@ -566,7 +566,7 @@ const ElecIdOnboarding = ({
       {/* Step header */}
       <div className="text-center mb-4 sm:mb-6 md:mb-8">
         <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">{step.title}</h1>
-        <p className="text-xs sm:text-sm md:text-base text-muted-foreground">{step.subtitle}</p>
+        <p className="text-xs sm:text-sm md:text-base text-foreground/70">{step.subtitle}</p>
       </div>
 
       {/* Step content */}

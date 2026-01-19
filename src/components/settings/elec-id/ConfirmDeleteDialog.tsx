@@ -33,7 +33,7 @@ const ConfirmDeleteDialog = ({
       <AlertDialogContent className="bg-elec-gray border-white/20">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-foreground">{title}</AlertDialogTitle>
-          <AlertDialogDescription className="text-muted-foreground">
+          <AlertDialogDescription className="text-foreground/70">
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>

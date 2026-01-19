@@ -45,7 +45,7 @@ const TIER_CONFIG: Record<
   basic: {
     label: "Basic",
     icon: Shield,
-    color: "text-muted-foreground",
+    color: "text-foreground/70",
     bgGradient: "from-gray-500/20 to-gray-600/20",
     benefits: [
       { icon: Users, text: "Listed in Talent Pool" },
@@ -186,7 +186,7 @@ export function TierUpgradeCelebration({
               </span>
             </DialogTitle>
 
-            <p className="text-muted-foreground mt-2">
+            <p className="text-foreground/70 mt-2">
               <span
                 className={cn(
                   "transition-all duration-500",
@@ -243,7 +243,7 @@ export function TierUpgradeCelebration({
               animationStep >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             )}
           >
-            <p className="text-sm font-medium text-center text-muted-foreground mb-3">
+            <p className="text-sm font-medium text-center text-foreground/70 mb-3">
               New benefits unlocked:
             </p>
             <div className="space-y-2">

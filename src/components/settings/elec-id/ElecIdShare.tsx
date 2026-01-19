@@ -22,10 +22,8 @@ import {
   Link2,
   Copy,
   Share2,
-  FileText,
   Clock,
   Eye,
-  CheckCircle2,
   GraduationCap,
   Briefcase,
   Wrench,
@@ -35,13 +33,11 @@ import {
   Plus,
   Loader2,
   X,
-  ChevronRight,
   QrCode,
   Shield,
 } from "lucide-react";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
 import { QRCodeSVG } from "qrcode.react";
-import jsPDF from "jspdf";
 import ConfirmDeleteDialog from "./ConfirmDeleteDialog";
 
 interface ShareLink {
@@ -83,7 +79,6 @@ const ElecIdShare = () => {
     "experience",
   ]);
   const [isDownloadingQr, setIsDownloadingQr] = useState(false);
-  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [isCreatingLink, setIsCreatingLink] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<{ open: boolean; id: string | null }>({
     open: false,
@@ -231,92 +226,6 @@ const ElecIdShare = () => {
       }
     } else {
       handleCopyLink(shareUrl);
-    }
-  };
-
-  const handleDownloadPdf = async () => {
-    if (selectedSections.length === 0) return;
-
-    setIsGeneratingPdf(true);
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      const doc = new jsPDF();
-      const pageWidth = doc.internal.pageSize.getWidth();
-      let yPos = 20;
-
-      // Header
-      doc.setFillColor(26, 26, 46);
-      doc.rect(0, 0, pageWidth, 50, "F");
-
-      doc.setTextColor(255, 220, 0);
-      doc.setFontSize(24);
-      doc.setFont("helvetica", "bold");
-      doc.text("ELEC-iD", pageWidth / 2, 25, { align: "center" });
-
-      doc.setFontSize(12);
-      doc.setTextColor(255, 255, 255);
-      doc.text("Professional Credentials Certificate", pageWidth / 2, 35, { align: "center" });
-
-      yPos = 65;
-
-      doc.setTextColor(26, 26, 46);
-      doc.setFontSize(14);
-      doc.setFont("helvetica", "bold");
-      doc.text(`ELEC-iD: ${elecIdNumber}`, pageWidth / 2, yPos, { align: "center" });
-      yPos += 15;
-
-      if (selectedSections.includes("basics")) {
-        doc.setFontSize(16);
-        doc.setFont("helvetica", "bold");
-        doc.text("Personal Information", 20, yPos);
-        yPos += 8;
-        doc.setDrawColor(255, 220, 0);
-        doc.setLineWidth(2);
-        doc.line(20, yPos, 80, yPos);
-        yPos += 10;
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "normal");
-        doc.text(`Name: ${userData.name}`, 20, yPos);
-        yPos += 8;
-        doc.text(`Job Title: ${userData.jobTitle}`, 20, yPos);
-        yPos += 8;
-        doc.text(`ECS Card: ${userData.ecsCard}`, 20, yPos);
-        yPos += 20;
-      }
-
-      if (selectedSections.includes("qualifications")) {
-        doc.setFontSize(16);
-        doc.setFont("helvetica", "bold");
-        doc.text("Qualifications", 20, yPos);
-        yPos += 8;
-        doc.setDrawColor(255, 220, 0);
-        doc.line(20, yPos, 80, yPos);
-        yPos += 10;
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "normal");
-        ["NVQ Level 3", "18th Edition", "2391-52", "AM2"].forEach((q) => {
-          doc.text(`• ${q}`, 25, yPos);
-          yPos += 8;
-        });
-        yPos += 12;
-      }
-
-      doc.save(`elec-id-${elecIdNumber}.pdf`);
-
-      addNotification({
-        title: "PDF Downloaded",
-        message: "Your ELEC-iD PDF has been generated",
-        type: "success",
-      });
-    } catch (error) {
-      addNotification({
-        title: "PDF Failed",
-        message: "Could not generate PDF",
-        type: "info",
-      });
-    } finally {
-      setIsGeneratingPdf(false);
     }
   };
 
@@ -572,83 +481,30 @@ const ElecIdShare = () => {
       </motion.div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-3 gap-2">
-        {[
-          { icon: FileText, label: "PDF Export", action: handleDownloadPdf, loading: isGeneratingPdf },
-          { icon: Link2, label: "Create Link", action: () => setIsCreateLinkOpen(true), loading: false },
-          { icon: Copy, label: "Copy URL", action: () => handleCopyLink(shareUrl), loading: false },
-        ].map((item, index) => {
-          const Icon = item.icon;
-          return (
-            <motion.button
-              key={item.label}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              onClick={item.action}
-              disabled={item.loading}
-              className="flex flex-col items-center gap-2 p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.08] active:scale-[0.97] transition-all disabled:opacity-50"
-            >
-              {item.loading ? (
-                <Loader2 className="h-6 w-6 text-elec-yellow animate-spin" />
-              ) : (
-                <Icon className="h-6 w-6 text-elec-yellow" />
-              )}
-              <span className="text-xs font-medium text-foreground">{item.label}</span>
-            </motion.button>
-          );
-        })}
-      </div>
-
-      {/* PDF Export Section Selector */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]"
-      >
-        <div className="flex items-center gap-2 mb-3">
-          <FileText className="h-5 w-5 text-elec-yellow" />
-          <h4 className="font-medium text-foreground">PDF Export Sections</h4>
-        </div>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {sectionOptions.map((section) => {
-            const Icon = section.icon;
-            const isSelected = selectedSections.includes(section.id);
-            return (
-              <button
-                key={section.id}
-                onClick={() => toggleSection(section.id)}
-                className={cn(
-                  "flex items-center gap-1.5 px-3 py-2 rounded-lg border transition-all touch-manipulation active:scale-[0.97]",
-                  isSelected
-                    ? "bg-elec-yellow/10 border-elec-yellow/30 text-foreground"
-                    : "bg-white/[0.02] border-white/[0.06] text-foreground/70 hover:bg-white/[0.06]"
-                )}
-              >
-                <Icon className={cn("h-4 w-4", isSelected && "text-elec-yellow")} />
-                <span className="text-sm">{section.label}</span>
-              </button>
-            );
-          })}
-        </div>
-        <Button
-          onClick={handleDownloadPdf}
-          disabled={selectedSections.length === 0 || isGeneratingPdf}
-          className="w-full h-12 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.97]"
+      <div className="grid grid-cols-2 gap-3">
+        <motion.button
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          onClick={() => setIsCreateLinkOpen(true)}
+          className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.08] active:scale-[0.97] transition-all"
         >
-          {isGeneratingPdf ? (
-            <>
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              Generating...
-            </>
-          ) : (
-            <>
-              <Download className="h-4 w-4 mr-2" />
-              Download PDF
-            </>
-          )}
-        </Button>
-      </motion.div>
+          <Link2 className="h-7 w-7 text-elec-yellow" />
+          <span className="text-sm font-medium text-foreground">Create Link</span>
+          <span className="text-xs text-foreground/60">Generate shareable URL</span>
+        </motion.button>
+        <motion.button
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          onClick={() => handleCopyLink(shareUrl)}
+          className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.08] active:scale-[0.97] transition-all"
+        >
+          <Copy className="h-7 w-7 text-elec-yellow" />
+          <span className="text-sm font-medium text-foreground">Copy URL</span>
+          <span className="text-xs text-foreground/60">Quick share link</span>
+        </motion.button>
+      </div>
 
       {/* Shareable Links */}
       <motion.div

@@ -676,38 +676,45 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         </Card>
       </motion.div>
 
-      {/* Settings Cards - Aligned Grid */}
-      <div className="grid grid-cols-2 gap-3">
+      {/* Settings Cards - Responsive Grid */}
+      <div className="grid grid-cols-2 gap-2 sm:gap-3">
         {/* Verification Tier Card */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Card className="h-full border border-white/10 bg-white/[0.03] overflow-hidden">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2.5 mb-3">
+          <Card className={cn(
+            "h-full border overflow-hidden rounded-xl",
+            verificationTier === "premium"
+              ? "bg-elec-yellow/[0.05] border-elec-yellow/20"
+              : verificationTier === "verified"
+              ? "bg-blue-500/[0.05] border-blue-500/20"
+              : "bg-white/[0.03] border-white/10"
+          )}>
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center gap-2 mb-2">
                 <div className={cn(
-                  "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
+                  "w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0",
                   verificationTier === "premium" ? "bg-elec-yellow/20" :
                   verificationTier === "verified" ? "bg-blue-500/20" : "bg-white/10"
                 )}>
                   {React.createElement(VERIFICATION_TIERS[verificationTier].icon, {
-                    className: cn("h-5 w-5", VERIFICATION_TIERS[verificationTier].color),
+                    className: cn("h-4 w-4 sm:h-5 sm:w-5", VERIFICATION_TIERS[verificationTier].color),
                   })}
                 </div>
-                <div className="min-w-0">
-                  <h4 className={cn("font-semibold text-sm", VERIFICATION_TIERS[verificationTier].color)}>
+                <div className="min-w-0 flex-1">
+                  <h4 className={cn("font-semibold text-sm truncate", VERIFICATION_TIERS[verificationTier].color)}>
                     {VERIFICATION_TIERS[verificationTier].label}
                   </h4>
-                  <p className="text-[10px] text-foreground/70 truncate">Verification Tier</p>
+                  <p className="text-[10px] text-foreground/60 truncate">Verification Tier</p>
                 </div>
               </div>
 
               {verificationTier !== "premium" ? (
                 <div>
                   <div className="flex items-center justify-between text-[10px] mb-1">
-                    <span className="text-foreground/70">Progress</span>
+                    <span className="text-foreground/60">Progress</span>
                     <span className={VERIFICATION_TIERS[verificationTier].color}>
                       {verificationTier === "basic" ? "50%" : "75%"}
                     </span>
@@ -716,7 +723,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="w-full mt-2.5 h-9 text-[11px] bg-white/5 hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+                    className="w-full mt-2 h-9 text-[10px] sm:text-[11px] bg-white/5 hover:bg-white/10 touch-manipulation active:scale-[0.98]"
                     onClick={() => onNavigate?.("documents")}
                   >
                     <Sparkles className="h-3 w-3 mr-1" />
@@ -726,7 +733,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               ) : (
                 <div className="flex items-center gap-1.5 text-[10px] text-elec-yellow/70">
                   <Crown className="h-3 w-3" />
-                  <span>Maximum tier reached</span>
+                  <span>Max tier</span>
                 </div>
               )}
             </CardContent>
@@ -740,27 +747,31 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           transition={{ delay: 0.15 }}
         >
           <Card className={cn(
-            "h-full border overflow-hidden",
+            "h-full border overflow-hidden rounded-xl",
             availableForHire && !isOptedOut
-              ? "bg-emerald-500/[0.05] border-emerald-500/20"
+              ? "bg-emerald-500/[0.08] border-emerald-500/30"
               : "bg-white/[0.03] border-white/10"
           )}>
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2.5">
+            <CardContent className="p-3 sm:p-4">
+              {/* Header with toggle */}
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2 min-w-0 flex-1">
                   <div className={cn(
-                    "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
+                    "w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0",
                     availableForHire && !isOptedOut ? "bg-emerald-500/20" : "bg-white/10"
                   )}>
                     <Users className={cn(
-                      "h-5 w-5",
+                      "h-4 w-4 sm:h-5 sm:w-5",
                       availableForHire && !isOptedOut ? "text-emerald-400" : "text-foreground/70"
                     )} />
                   </div>
-                  <div className="min-w-0">
-                    <h4 className="font-semibold text-sm text-foreground">Talent Pool</h4>
-                    <p className="text-[10px] text-foreground/70 truncate">
-                      {isOptedOut ? "Disabled" : availableForHire ? "Active" : "Hidden"}
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-semibold text-sm text-foreground truncate">Talent Pool</h4>
+                    <p className={cn(
+                      "text-[10px] truncate",
+                      availableForHire && !isOptedOut ? "text-emerald-400" : "text-foreground/60"
+                    )}>
+                      {isOptedOut ? "Disabled" : availableForHire ? "Visible to employers" : "Hidden"}
                     </p>
                   </div>
                 </div>
@@ -768,33 +779,34 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   checked={availableForHire && !isOptedOut}
                   onCheckedChange={handleAvailabilityChange}
                   disabled={isOptedOut || isSaving}
-                  className="data-[state=checked]:bg-emerald-500 scale-90"
+                  className="data-[state=checked]:bg-emerald-500 shrink-0"
                 />
               </div>
 
+              {/* Visibility selector - shown when active */}
               {availableForHire && !isOptedOut && (
                 <Select
                   value={profileVisibility}
                   onValueChange={handleVisibilityChange}
                   disabled={isSaving}
                 >
-                  <SelectTrigger className="h-9 text-[11px] bg-white/5 border-white/10 rounded-lg">
+                  <SelectTrigger className="h-9 text-[10px] sm:text-[11px] bg-white/5 border-white/10 rounded-lg w-full touch-manipulation">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-white/20">
-                    <SelectItem value="public" className="text-xs">
+                  <SelectContent className="bg-elec-gray border-white/20 z-50">
+                    <SelectItem value="public" className="text-xs py-2.5 touch-manipulation">
                       <div className="flex items-center gap-2">
                         <Eye className="h-3 w-3" />
                         Public
                       </div>
                     </SelectItem>
-                    <SelectItem value="employers_only" className="text-xs">
+                    <SelectItem value="employers_only" className="text-xs py-2.5 touch-manipulation">
                       <div className="flex items-center gap-2">
                         <Users className="h-3 w-3" />
                         Employers Only
                       </div>
                     </SelectItem>
-                    <SelectItem value="private" className="text-xs">
+                    <SelectItem value="private" className="text-xs py-2.5 touch-manipulation">
                       <div className="flex items-center gap-2">
                         <EyeOff className="h-3 w-3" />
                         Private
@@ -804,9 +816,10 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                 </Select>
               )}
 
+              {/* Hint text when inactive */}
               {(!availableForHire || isOptedOut) && (
-                <p className="text-[10px] text-foreground/70">
-                  {isOptedOut ? "Re-enable to join talent pool" : "Turn on to be discovered"}
+                <p className="text-[10px] text-foreground/60">
+                  {isOptedOut ? "Re-enable to join" : "Turn on to be discovered"}
                 </p>
               )}
             </CardContent>

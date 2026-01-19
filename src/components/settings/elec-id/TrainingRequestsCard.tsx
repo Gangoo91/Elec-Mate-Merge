@@ -58,18 +58,18 @@ function TrainingRequestItem({ request, onApprove, onDecline, isProcessing }: Tr
           <div className="flex-1 min-w-0">
             <p className="font-medium text-foreground truncate">{request.training_name}</p>
             {request.provider && (
-              <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-0.5">
+              <div className="flex items-center gap-1.5 text-sm text-foreground/70 mt-0.5">
                 <Building2 className="h-3 w-3" />
                 <span className="truncate">{request.provider}</span>
               </div>
             )}
             {request.completed_date && (
-              <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-0.5">
+              <div className="flex items-center gap-1.5 text-sm text-foreground/70 mt-0.5">
                 <Calendar className="h-3 w-3" />
                 <span>{format(new Date(request.completed_date), "d MMM yyyy")}</span>
               </div>
             )}
-            <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-2">
+            <div className="flex items-center gap-1.5 text-xs text-foreground/70 mt-2">
               <Clock className="h-3 w-3" />
               <span>
                 {isPending
@@ -91,7 +91,7 @@ function TrainingRequestItem({ request, onApprove, onDecline, isProcessing }: Tr
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-8 border-red-500/30 text-red-500 hover:bg-red-500/10"
+                  className="h-10 border-red-500/30 text-red-500 hover:bg-red-500/10 touch-manipulation"
                   onClick={() => onDecline(request.id)}
                   disabled={isProcessing}
                 >
@@ -103,7 +103,7 @@ function TrainingRequestItem({ request, onApprove, onDecline, isProcessing }: Tr
                 </Button>
                 <Button
                   size="sm"
-                  className="h-8 bg-green-600 hover:bg-green-700"
+                  className="h-10 bg-green-600 hover:bg-green-700 touch-manipulation"
                   onClick={() => onApprove(request.id)}
                   disabled={isProcessing}
                 >
@@ -157,7 +157,7 @@ export function TrainingRequestsCard() {
     return (
       <Card className="bg-card border-border">
         <CardContent className="p-6">
-          <div className="flex items-center justify-center gap-2 text-muted-foreground">
+          <div className="flex items-center justify-center gap-2 text-foreground/70">
             <Loader2 className="h-5 w-5 animate-spin" />
             <span>Loading training requests...</span>
           </div>
@@ -220,7 +220,7 @@ export function TrainingRequestsCard() {
             <Button
               variant="ghost"
               size="sm"
-              className="w-full justify-between text-muted-foreground"
+              className="w-full justify-between text-foreground/70"
               onClick={() => setShowHistory(!showHistory)}
             >
               <span>Past Requests ({historyRequests.length})</span>
