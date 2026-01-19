@@ -15,7 +15,7 @@ interface StatItem {
   label: string;
   value: number;
   icon: typeof Shield;
-  color: "yellow" | "green" | "blue" | "purple";
+  color: "yellow" | "green" | "blue" | "purple" | "amber";
   suffix?: string;
 }
 
@@ -53,6 +53,7 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
     green: "from-emerald-500/20 to-emerald-500/5 border-emerald-500/30 text-emerald-500",
     blue: "from-blue-500/20 to-blue-500/5 border-blue-500/30 text-blue-500",
     purple: "from-purple-500/20 to-purple-500/5 border-purple-500/30 text-purple-500",
+    amber: "from-amber-500/20 to-amber-500/5 border-amber-500/30 text-amber-500",
   };
 
   const iconBgMap = {
@@ -60,6 +61,7 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
     green: "bg-emerald-500/20 text-emerald-500",
     blue: "bg-blue-500/20 text-blue-500",
     purple: "bg-purple-500/20 text-purple-500",
+    amber: "bg-amber-500/20 text-amber-500",
   };
 
   const Icon = stat.icon;
@@ -109,19 +111,19 @@ export function BriefingHeroCard({
       label: "This Week",
       value: thisWeek,
       icon: Clock,
-      color: "green",
+      color: "blue",
     },
     {
       label: "Pending",
       value: pendingSignatures,
       icon: Users,
-      color: "blue",
+      color: "amber",
     },
     {
       label: "Sign Rate",
       value: signatureRate,
       icon: FileCheck,
-      color: "purple",
+      color: "green",
       suffix: "%",
     },
   ];

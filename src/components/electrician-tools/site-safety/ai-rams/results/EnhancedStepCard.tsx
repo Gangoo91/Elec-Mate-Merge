@@ -237,7 +237,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                 ) : (
                   <div className="mt-2 flex flex-wrap gap-2">
                     {step.equipment?.map((item, i) => (
-                      <Badge key={i} variant="outline" className="border-white/10 text-white/70">
+                      <Badge key={i} variant="outline" className="border-white/[0.08] text-white/70">
                         <Wrench className="h-3 w-3 mr-1" />{item}
                       </Badge>
                     ))}
@@ -247,7 +247,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
             )}
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
                 <label className="text-xs font-medium text-white/50">Duration</label>
                 {isEditing ? (
                   <Input
@@ -260,7 +260,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                   <p className="mt-2 text-sm font-medium text-white">{step.duration || 'Not specified'}</p>
                 )}
               </div>
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
                 <label className="text-xs font-medium text-white/50">Risk Level</label>
                 {isEditing ? (
                   <Select
@@ -281,7 +281,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
             </div>
 
             {(step.personnelRequired || isEditing) && (
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/10">
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
                 <Users className="h-5 w-5 text-white/50" />
                 {isEditing ? (
                   <Input

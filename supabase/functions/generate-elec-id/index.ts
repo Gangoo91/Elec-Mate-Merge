@@ -52,24 +52,15 @@ serve(async (req: Request): Promise<Response> => {
       );
     }
 
-    // Generate sequential Elec-ID: EM-000001, EM-000002, etc.
-    // Get current max ID from profiles table
-    const { data: profiles } = await supabase
-      .from('profiles')
-      .select('elec_id_number')
-      .like('elec_id_number', 'EM-%')
-      .order('elec_id_number', { ascending: false })
-      .limit(1);
+    // Generate sequential Elec-ID using Postgres sequence (atomic, no race conditions)
+    const { data: seqResult, error: seqError } = await supabase.rpc('get_next_elec_id');
 
-    let nextNumber = 1;
-    if (profiles && profiles.length > 0 && profiles[0].elec_id_number) {
-      const currentNum = parseInt(profiles[0].elec_id_number.replace('EM-', ''), 10);
-      if (!isNaN(currentNum)) {
-        nextNumber = currentNum + 1;
-      }
+    if (seqError) {
+      console.error('Failed to get next Elec-ID from sequence:', seqError);
+      throw new Error('Failed to generate unique Elec-ID');
     }
 
-    const elecIdNumber = `EM-${String(nextNumber).padStart(6, '0')}`;
+    const elecIdNumber = `EM-${String(seqResult).padStart(6, '0')}`;
     console.log(`Generated new Elec-ID: ${elecIdNumber}`);
 
     // Update profile with Elec-ID

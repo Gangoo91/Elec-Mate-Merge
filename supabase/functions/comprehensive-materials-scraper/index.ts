@@ -130,7 +130,7 @@ const productDetailSchema = {
     },
     image: {
       type: "string",
-      description: "URL of the product image",
+      description: "URL of the product image - prefer high resolution (400px+ wide). Look for data-src, data-zoom, srcset attributes for larger versions. Avoid thumbnails.",
     },
     view_product_url: {
       type: "string",
@@ -190,9 +190,35 @@ async function batchScrapeProducts(categoryUrls: string[], category: string, fir
       },
       body: JSON.stringify({
         urls: categoryUrls,
+        onlyMainContent: true,  // Reduces processing - focus on product content
+        maxAge: 86400000,       // 24hr cache - reduces API costs by ~5x for unchanged pages
         formats: [
           {
             type: "json",
+            prompt: `Extract ALL electrical materials and supplies from this wholesaler product page.
+For each product extract:
+- Product name (exact title with brand and specifications)
+- Current selling price in GBP
+- Regular/RRP price if different (for sale items)
+- Product URL (direct link to product)
+- High resolution product image URL
+- Pack size/quantity if applicable
+- Product code/part number
+- Stock availability
+- Brand name
+
+Focus on electrical installation materials:
+- Cables (twin & earth, flex, SWA, data cable)
+- Consumer units and accessories
+- MCBs, RCBOs, RCDs
+- Wiring accessories (sockets, switches, plates)
+- Conduit, trunking, and containment
+- Junction boxes and enclosures
+- Lighting and lamps
+- EV charging equipment
+- Fire and security systems
+
+Skip unrelated products. Extract accurate prices in GBP.`,
             schema: {
               type: "object",
               properties: {

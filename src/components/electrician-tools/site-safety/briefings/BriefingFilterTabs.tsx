@@ -44,7 +44,7 @@ export function BriefingFilterTabs({
             {isActive && (
               <motion.div
                 layoutId="activeTabBg"
-                className="absolute inset-0 bg-white/10 rounded-lg"
+                className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-yellow-400/10 rounded-lg border border-yellow-400/30"
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               />
             )}

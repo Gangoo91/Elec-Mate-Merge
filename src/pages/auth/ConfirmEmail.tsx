@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Loader2, Zap, CheckCircle2, AlertTriangle, Mail, Sparkles } from 'lucide-react';
+import { Loader2, Zap, CheckCircle2, AlertTriangle, Mail, Sparkles, RefreshCw, ArrowRight } from 'lucide-react';
 
 type VerificationState = 'verifying' | 'success' | 'error';
 
@@ -12,13 +12,33 @@ const ConfirmEmail = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isResending, setIsResending] = useState(false);
   const [resendSuccess, setResendSuccess] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
   const [generatedElecId, setGeneratedElecId] = useState<string | null>(null);
+  const [showContinueButton, setShowContinueButton] = useState(false);
+  const redirectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   const tokenHash = searchParams.get('token_hash');
   const type = searchParams.get('type');
+
+  // Countdown timer for resend cooldown (same as CheckEmail)
+  useEffect(() => {
+    if (resendCooldown > 0) {
+      const timer = setTimeout(() => setResendCooldown(resendCooldown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [resendCooldown]);
+
+  // Cleanup redirect timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const verifyEmail = async () => {
@@ -56,13 +76,18 @@ const ConfirmEmail = () => {
           runPostConfirmationTasks(data.user.id, data.user.email || '');
         }
 
-        // Redirect to dashboard after 3 seconds
+        // Show "Continue" button after 2s for users who want to proceed immediately
         setTimeout(() => {
+          setShowContinueButton(true);
+        }, 2000);
+
+        // Auto-redirect to dashboard after 5s (extended from 3.5s)
+        redirectTimeoutRef.current = setTimeout(() => {
           // Clear localStorage items
           localStorage.removeItem('elec-mate-pending-email');
           localStorage.removeItem('elec-mate-pending-name');
           navigate('/dashboard');
-        }, 3500);
+        }, 5000);
       } catch (err: any) {
         console.error('Email verification exception:', err);
         setState('error');
@@ -73,40 +98,68 @@ const ConfirmEmail = () => {
     verifyEmail();
   }, [tokenHash, type, navigate]);
 
+  // Handler for manual navigation (Continue button)
+  const handleContinueToDashboard = () => {
+    // Cancel the auto-redirect timeout
+    if (redirectTimeoutRef.current) {
+      clearTimeout(redirectTimeoutRef.current);
+    }
+    // Clear localStorage items
+    localStorage.removeItem('elec-mate-pending-email');
+    localStorage.removeItem('elec-mate-pending-name');
+    navigate('/dashboard');
+  };
+
   const runPostConfirmationTasks = async (userId: string, email: string) => {
     try {
-      // 1. Get stored onboarding data
-      const onboardingData = localStorage.getItem('elec-mate-onboarding');
-      const pendingElecId = localStorage.getItem('elec-mate-pending-elecid');
+      // 1. Get stored onboarding data (with safe JSON parse)
+      const onboardingDataRaw = localStorage.getItem('elec-mate-onboarding');
+      const pendingElecIdRaw = localStorage.getItem('elec-mate-pending-elecid');
       const fullName = localStorage.getItem('elec-mate-pending-name') || '';
 
-      // 2. Apply onboarding data to profile
-      if (onboardingData) {
+      // 2. Apply onboarding data to profile (with safe JSON.parse)
+      if (onboardingDataRaw) {
+        let parsed = null;
         try {
-          const parsed = JSON.parse(onboardingData);
-          await supabase
-            .from('profiles')
-            .update({
-              role: parsed.role,
-              ecs_card_type: parsed.ecsCardType || null,
-              elec_id_enabled: parsed.createElecId || false,
-              onboarding_completed: true,
-              updated_at: new Date().toISOString(),
-            })
-            .eq('id', userId);
-
-          console.log('Profile updated with onboarding data');
-          localStorage.removeItem('elec-mate-onboarding');
+          parsed = JSON.parse(onboardingDataRaw);
         } catch (parseError) {
-          console.error('Error applying onboarding data:', parseError);
+          console.error('Corrupted onboarding data, clearing:', parseError);
+          localStorage.removeItem('elec-mate-onboarding');
+        }
+
+        if (parsed) {
+          try {
+            await supabase
+              .from('profiles')
+              .update({
+                role: parsed.role,
+                ecs_card_type: parsed.ecsCardType || null,
+                elec_id_enabled: parsed.createElecId || false,
+                onboarding_completed: true,
+                updated_at: new Date().toISOString(),
+              })
+              .eq('id', userId);
+
+            console.log('Profile updated with onboarding data');
+            localStorage.removeItem('elec-mate-onboarding');
+          } catch (updateError) {
+            console.error('Error updating profile:', updateError);
+          }
         }
       }
 
-      // 3. Generate Elec-ID if user opted for it
-      if (pendingElecId) {
+      // 3. Generate Elec-ID if user opted for it (with safe JSON.parse)
+      if (pendingElecIdRaw) {
+        let elecIdData = null;
         try {
-          const elecIdData = JSON.parse(pendingElecId);
-          if (elecIdData.createElecId) {
+          elecIdData = JSON.parse(pendingElecIdRaw);
+        } catch (parseError) {
+          console.error('Corrupted elec-id data, clearing:', parseError);
+          localStorage.removeItem('elec-mate-pending-elecid');
+        }
+
+        if (elecIdData?.createElecId) {
+          try {
             const { data: elecIdResult } = await supabase.functions.invoke('generate-elec-id', {
               body: {
                 user_id: userId,
@@ -117,11 +170,11 @@ const ConfirmEmail = () => {
               setGeneratedElecId(elecIdResult.elec_id_number);
               console.log('Elec-ID generated:', elecIdResult.elec_id_number);
             }
+          } catch (elecIdError) {
+            console.error('Error generating Elec-ID:', elecIdError);
           }
-          localStorage.removeItem('elec-mate-pending-elecid');
-        } catch (elecIdError) {
-          console.error('Error generating Elec-ID:', elecIdError);
         }
+        localStorage.removeItem('elec-mate-pending-elecid');
       }
 
       // 4. Send welcome email (non-blocking)
@@ -143,6 +196,9 @@ const ConfirmEmail = () => {
   };
 
   const handleResendEmail = async () => {
+    // Prevent resend if cooldown is active
+    if (resendCooldown > 0) return;
+
     const email = localStorage.getItem('elec-mate-pending-email');
     const fullName = localStorage.getItem('elec-mate-pending-name');
 
@@ -161,6 +217,7 @@ const ConfirmEmail = () => {
         setErrorMessage('Failed to resend email. Please try again.');
       } else {
         setResendSuccess(true);
+        setResendCooldown(60); // 60 second cooldown (same as CheckEmail)
       }
     } catch {
       setErrorMessage('Failed to resend email. Please try again.');
@@ -228,12 +285,25 @@ const ConfirmEmail = () => {
                     </div>
                   )}
 
-                  <p className="text-gray-400 text-sm mb-4">
-                    Redirecting to your dashboard...
-                  </p>
-                  <div className="flex justify-center">
-                    <Loader2 className="h-5 w-5 animate-spin text-yellow-400" />
-                  </div>
+                  {/* Continue button (appears after 2s) or auto-redirect indicator */}
+                  {showContinueButton ? (
+                    <Button
+                      onClick={handleContinueToDashboard}
+                      className="w-full h-12 text-base font-semibold bg-yellow-400 hover:bg-yellow-300 text-black transition-all duration-200 hover:scale-[1.02]"
+                    >
+                      Continue to Dashboard
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  ) : (
+                    <>
+                      <p className="text-gray-400 text-sm mb-4">
+                        Redirecting to your dashboard...
+                      </p>
+                      <div className="flex justify-center">
+                        <Loader2 className="h-5 w-5 animate-spin text-yellow-400" />
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
 
@@ -258,13 +328,18 @@ const ConfirmEmail = () => {
                   ) : (
                     <Button
                       onClick={handleResendEmail}
-                      disabled={isResending}
+                      disabled={isResending || resendCooldown > 0}
                       className="w-full h-12 text-base font-semibold bg-yellow-400 hover:bg-yellow-300 text-black transition-all duration-200 hover:scale-[1.02] disabled:opacity-50 mb-5"
                     >
                       {isResending ? (
                         <>
                           <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                           Sending...
+                        </>
+                      ) : resendCooldown > 0 ? (
+                        <>
+                          <RefreshCw className="mr-2 h-4 w-4" />
+                          Resend in {resendCooldown}s
                         </>
                       ) : (
                         'Resend confirmation email'

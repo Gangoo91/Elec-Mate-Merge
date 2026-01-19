@@ -93,19 +93,19 @@ export const ResultValue = ({
   const config = CALCULATOR_CONFIG[category];
 
   const sizeClasses = {
-    sm: { label: 'text-xs', value: 'text-lg', unit: 'text-xs' },
-    md: { label: 'text-sm', value: 'text-2xl', unit: 'text-sm' },
-    lg: { label: 'text-base', value: 'text-3xl', unit: 'text-base' },
+    sm: { label: 'text-xs', value: 'text-base sm:text-lg', unit: 'text-xs' },
+    md: { label: 'text-sm', value: 'text-xl sm:text-2xl', unit: 'text-sm' },
+    lg: { label: 'text-base', value: 'text-2xl sm:text-3xl', unit: 'text-base' },
   };
 
   const sizes = sizeClasses[size];
 
   return (
-    <div className={cn("space-y-0.5", className)}>
-      <p className={cn("text-white/60 font-medium", sizes.label)}>{label}</p>
-      <div className="flex items-baseline gap-2">
+    <div className={cn("space-y-1.5 min-w-0", className)}>
+      <p className={cn("text-white/60 font-medium truncate", sizes.label)}>{label}</p>
+      <div className="flex items-baseline gap-1.5 sm:gap-2 min-w-0">
         <span
-          className={cn("font-bold bg-clip-text text-transparent", sizes.value)}
+          className={cn("font-bold bg-clip-text text-transparent break-words min-w-0", sizes.value)}
           style={{
             backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
           }}
@@ -113,7 +113,7 @@ export const ResultValue = ({
           {typeof value === 'number' ? value.toLocaleString() : value}
         </span>
         {unit && (
-          <span className={cn("text-white/50 font-medium", sizes.unit)}>
+          <span className={cn("text-white/50 font-medium shrink-0", sizes.unit)}>
             {unit}
           </span>
         )}
@@ -136,8 +136,8 @@ export const ResultsGrid = ({
 }: ResultsGridProps) => {
   const gridClass = {
     1: "grid-cols-1",
-    2: "grid-cols-2",
-    3: "grid-cols-2 sm:grid-cols-3",
+    2: "grid-cols-1 sm:grid-cols-2",
+    3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
     4: "grid-cols-2 sm:grid-cols-4",
   }[columns];
 
@@ -170,7 +170,7 @@ export const ResultDetails = ({
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className={className}>
       <CollapsibleTrigger
-        className="flex items-center justify-between w-full py-2 text-sm font-medium text-white/60 hover:text-white/80 transition-colors"
+        className="flex items-center justify-between w-full min-h-11 py-2 text-sm font-medium text-white/60 hover:text-white/80 transition-colors touch-manipulation"
       >
         <span>{title}</span>
         <ChevronDown
@@ -217,7 +217,7 @@ export const ResultBadge = ({
   return (
     <span
       className={cn(
-        "inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border",
+        "inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold border",
         statusStyles[status],
         className
       )}

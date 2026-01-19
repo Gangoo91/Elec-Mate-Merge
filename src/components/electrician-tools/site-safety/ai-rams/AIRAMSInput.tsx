@@ -142,39 +142,36 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
   );
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10 pb-32 md:pb-8">
-      {/* Enhanced Header */}
+    <div className="px-2 py-3 pb-24 md:pb-6 bg-elec-dark min-h-screen">
+      {/* Compact Header */}
       <div
-        className="flex items-center justify-between mb-8 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
+        className="flex items-center justify-between mb-4 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
         style={{ animationDelay: '0ms' }}
       >
-        <div className="flex items-center gap-4">
-          <div className="h-12 w-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
-            <Sparkles className="h-7 w-7 md:h-8 md:w-8 text-elec-yellow" />
+        <div className="flex items-center gap-2.5">
+          <div className="h-9 w-9 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
+            <Sparkles className="h-5 w-5 text-elec-yellow" />
           </div>
-          <div className="flex-1">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+          <div>
+            <h2 className="text-lg font-bold text-white">
               AI RAMS Generator
             </h2>
-            <p className="text-sm sm:text-base text-white/70 mt-1">
-              Generate professional documentation
+            <p className="text-xs text-white/50">
+              Professional documentation
             </p>
           </div>
         </div>
 
-        {/* Enhanced Progress indicator */}
+        {/* Compact Progress indicator */}
         {completionPercentage > 0 && completionPercentage < 100 && (
-          <div className="space-y-2 p-4 rounded-xl bg-white/[0.03] border border-white/10">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-white/70">Form Completion</span>
-              <span className="text-lg font-bold text-elec-yellow tabular-nums">{completionPercentage}%</span>
-            </div>
-            <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+          <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/[0.08]">
+            <div className="h-1.5 w-16 bg-white/5 rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-elec-yellow to-amber-500 transition-all duration-700 ease-out rounded-full"
+                className="h-full bg-elec-yellow transition-all duration-700 ease-out rounded-full"
                 style={{ width: `${completionPercentage}%` }}
               />
             </div>
+            <span className="text-xs font-semibold text-elec-yellow tabular-nums">{completionPercentage}%</span>
           </div>
         )}
       </div>
@@ -193,7 +190,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
           onChange={(e) => setJobDescription(e.target.value)}
           placeholder="e.g., Install new consumer unit in 3-bed house with full rewire of kitchen..."
           disabled={isProcessing}
-          className="resize-none min-h-[120px] text-base bg-white/[0.03] border-white/10 focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 transition-all placeholder:text-white/30 rounded-xl"
+          className="resize-none min-h-[100px] text-sm bg-white/5 border-white/[0.08] focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 transition-all placeholder:text-white/30 rounded-xl"
           maxLength={1000}
         />
 
@@ -204,7 +201,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               key={idx}
               onClick={() => setJobDescription(prompt)}
               disabled={isProcessing}
-              className="flex-shrink-0 px-3 py-2 text-xs rounded-lg bg-white/[0.03] border border-white/10 hover:border-elec-yellow/30 hover:bg-elec-yellow/5 text-white/70 hover:text-white transition-all active:scale-[0.98] disabled:opacity-50 whitespace-nowrap"
+              className="flex-shrink-0 px-3 py-2 text-xs rounded-lg bg-white/[0.03] border border-white/[0.08] hover:border-elec-yellow/30 hover:bg-elec-yellow/5 text-white/70 hover:text-white transition-all active:scale-[0.98] disabled:opacity-50 whitespace-nowrap"
             >
               {prompt}
             </button>
@@ -227,23 +224,23 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       )}
 
       {/* Divider */}
-      <div className="h-px bg-white/5 my-6" />
+      <div className="h-px bg-white/[0.08] my-4" />
 
       {/* Project Details Section */}
       <div
-        className="space-y-4 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
+        className="space-y-3 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
         style={{ animationDelay: '150ms' }}
       >
-        <h3 className="text-sm font-medium text-white/70">Project Details</h3>
+        <h3 className="text-xs font-medium text-white/50">Project Details</h3>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <MobileInput
               label="Project Name"
               value={projectInfo.projectName}
               onChange={(e) => setProjectInfo(prev => ({ ...prev, projectName: e.target.value }))}
               placeholder="e.g., Warehouse Lighting Upgrade"
               disabled={isProcessing}
-              className="bg-white/[0.03] border-white/10 h-12 text-base focus-visible:border-elec-yellow/50"
+              className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
             />
 
             <MobileInput
@@ -252,7 +249,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               onChange={(e) => setProjectInfo(prev => ({ ...prev, location: e.target.value }))}
               placeholder="e.g., Unit 5, Industrial Estate"
               disabled={isProcessing}
-              className="bg-white/[0.03] border-white/10 h-12 text-base focus-visible:border-elec-yellow/50"
+              className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
             />
 
             <MobileInput
@@ -261,7 +258,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               onChange={(e) => setProjectInfo(prev => ({ ...prev, assessor: e.target.value }))}
               placeholder="Your name"
               disabled={isProcessing}
-              className="bg-white/[0.03] border-white/10 h-12 text-base focus-visible:border-elec-yellow/50"
+              className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
             />
 
             <MobileInput
@@ -270,7 +267,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               onChange={(e) => setProjectInfo(prev => ({ ...prev, contractor: e.target.value }))}
               placeholder="Company name"
               disabled={isProcessing}
-              className="bg-white/[0.03] border-white/10 h-12 text-base focus-visible:border-elec-yellow/50"
+              className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
             />
 
             <MobileInput
@@ -279,36 +276,36 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
               onChange={(e) => setProjectInfo(prev => ({ ...prev, supervisor: e.target.value }))}
               placeholder="Site supervisor"
               disabled={isProcessing}
-              className="sm:col-span-2 bg-white/[0.03] border-white/10 h-12 text-base focus-visible:border-elec-yellow/50"
+              className="sm:col-span-2 bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
             />
           </div>
 
-          {/* Enhanced Emergency Contacts Section */}
+          {/* Emergency Contacts Section */}
           <Collapsible open={showEmergencyContacts} onOpenChange={setShowEmergencyContacts}>
             <CollapsibleTrigger asChild>
               <button
                 type="button"
-                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-elec-yellow/30 transition-all touch-manipulation group"
+                className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/[0.08] hover:border-elec-yellow/30 transition-all touch-manipulation active:scale-[0.98]"
               >
-                <div className="flex items-center gap-3">
-                  <Shield className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                  <span className="text-sm font-medium text-white">Emergency Contacts</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-white/70 font-medium">
+                <div className="flex items-center gap-2">
+                  <Shield className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
+                  <span className="text-xs font-medium text-white">Emergency Contacts</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/5 text-white/50 font-medium">
                     Optional
                   </span>
                 </div>
-                <ChevronDown className={`h-4 w-4 text-white/70 transition-transform duration-300 ${showEmergencyContacts ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-3.5 w-3.5 text-white/50 transition-transform duration-300 ${showEmergencyContacts ? 'rotate-180' : ''}`} />
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="pt-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <CollapsibleContent className="pt-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <MobileInput
                   label="Site Manager Name"
                   value={projectInfo.siteManagerName}
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, siteManagerName: e.target.value }))}
                   placeholder="John Smith"
                   disabled={isProcessing}
-                  className="bg-white/[0.03] border-white/10 h-12 text-base"
+                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
                 />
                 <MobileInput
                   label="Site Manager Phone"
@@ -316,7 +313,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, siteManagerPhone: e.target.value }))}
                   placeholder="07XXX XXXXXX"
                   disabled={isProcessing}
-                  className="bg-white/[0.03] border-white/10 h-12 text-base"
+                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
                 />
                 <MobileInput
                   label="First Aider Name"
@@ -324,7 +321,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, firstAiderName: e.target.value }))}
                   placeholder="Jane Doe"
                   disabled={isProcessing}
-                  className="bg-white/[0.03] border-white/10 h-12 text-base"
+                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
                 />
                 <MobileInput
                   label="First Aider Phone"
@@ -332,7 +329,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, firstAiderPhone: e.target.value }))}
                   placeholder="07XXX XXXXXX"
                   disabled={isProcessing}
-                  className="bg-white/[0.03] border-white/10 h-12 text-base"
+                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
                 />
                 <MobileInput
                   label="H&S Officer Name"
@@ -340,7 +337,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, safetyOfficerName: e.target.value }))}
                   placeholder="Safety Officer"
                   disabled={isProcessing}
-                  className="bg-white/[0.03] border-white/10 h-12 text-base"
+                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
                 />
                 <MobileInput
                   label="H&S Officer Phone"
@@ -348,7 +345,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, safetyOfficerPhone: e.target.value }))}
                   placeholder="07XXX XXXXXX"
                   disabled={isProcessing}
-                  className="bg-white/[0.03] border-white/10 h-12 text-base"
+                  className="bg-white/5 border-white/[0.08] h-11 text-sm"
                 />
                 <MobileInput
                   label="Emergency Assembly Point"
@@ -356,7 +353,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
                   onChange={(e) => setProjectInfo(prev => ({ ...prev, assemblyPoint: e.target.value }))}
                   placeholder="e.g., Main car park, Site entrance"
                   disabled={isProcessing}
-                  className="sm:col-span-2 bg-white/[0.03] border-white/10 h-12 text-base"
+                  className="sm:col-span-2 bg-white/5 border-white/[0.08] h-11 text-sm"
                 />
               </div>
             </CollapsibleContent>
@@ -364,34 +361,34 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
       </div>
 
       {/* Divider */}
-      <div className="h-px bg-white/5 my-6" />
+      <div className="h-px bg-white/[0.08] my-4" />
 
       {/* Test Data Button */}
       <div
-        className="mt-6 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
+        className="mt-4 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
         style={{ animationDelay: '250ms' }}
       >
         <button
           onClick={loadMockData}
           disabled={isProcessing}
-          className="flex items-center gap-2 text-sm text-white/70 hover:text-white/60 transition-colors disabled:opacity-50"
+          className="flex items-center gap-1.5 text-xs text-white/50 hover:text-white/70 transition-colors disabled:opacity-50 touch-manipulation"
         >
-          <TestTube2 className="h-4 w-4" />
+          <TestTube2 className="h-3.5 w-3.5" />
           <span>Load test data</span>
         </button>
       </div>
 
       {/* Sticky Bottom CTA - Mobile */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[#1a1a1a]/95 backdrop-blur-sm border-t border-white/10 md:hidden z-50">
-        <div className="max-w-5xl mx-auto px-4 py-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.08] md:hidden z-50 safe-area-bottom">
+        <div className="px-2 py-3">
           <MobileButton
             onClick={handleSubmit}
             disabled={!isFormValid || isProcessing}
             loading={isProcessing}
             size="lg"
             variant="elec"
-            icon={<Sparkles className="h-5 w-5" />}
-            className="w-full text-base font-bold h-14 rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98]"
+            icon={<Sparkles className="h-4 w-4" />}
+            className="w-full text-sm font-semibold h-11 rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98]"
           >
             {isProcessing ? 'Generating RAMS...' : 'Generate RAMS'}
           </MobileButton>
@@ -400,7 +397,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
 
       {/* Desktop CTA */}
       <div
-        className="hidden md:block mt-8 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
+        className="hidden md:block mt-6 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
         style={{ animationDelay: '350ms' }}
       >
         <MobileButton
@@ -409,16 +406,16 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
           loading={isProcessing}
           size="lg"
           variant="elec"
-          icon={<Sparkles className="h-5 w-5" />}
-          className="w-full text-base font-bold h-14 rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98]"
+          icon={<Sparkles className="h-4 w-4" />}
+          className="w-full text-sm font-semibold h-11 rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98]"
         >
           {isProcessing ? 'Generating RAMS...' : 'Generate RAMS'}
         </MobileButton>
       </div>
 
       {!isFormValid && (
-        <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
-          <p className="text-sm text-white/70">
+        <div className="text-center p-2.5 rounded-lg bg-white/5 border border-white/[0.08]">
+          <p className="text-xs text-white/50">
             Please provide job description and project name to continue
           </p>
         </div>

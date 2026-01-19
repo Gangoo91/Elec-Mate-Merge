@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -201,10 +202,9 @@ const PricingStrategyCalculator = () => {
   );
 
   return (
-    <div className="bg-background  ">
-      <div className="space-y-4 px-4 py-6 animate-fade-in">
-        <Helmet>
-          <title>Pricing Strategy Calculator UK | Electrician Tools</title>
+    <div className="bg-gradient-to-b from-background via-background to-background">
+      <Helmet>
+        <title>Pricing Strategy Calculator UK | Electrician Tools</title>
         <meta
           name="description"
           content="Build profitable UK quotes with cost, overhead, margin and VAT handled. Mobile-friendly and fast."
@@ -212,12 +212,34 @@ const PricingStrategyCalculator = () => {
         <link rel="canonical" href="/electrician/business-development/tools/pricing-strategy" />
       </Helmet>
 
-      <CalculatorCard
-        category="business"
-        title="Pricing Strategy Calculator"
-        description="Build profitable quotes with cost, overhead, margin and VAT"
-        badge="Pricing"
-      >
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div
+              className="p-2.5 rounded-xl border"
+              style={{
+                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
+                borderColor: `${config.gradientFrom}30`,
+              }}
+            >
+              <Target className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Pricing Strategy Calculator
+              </h1>
+              <p className="text-sm text-white/70">Build profitable quotes with margins</p>
+            </div>
+          </div>
+          <SmartBackButton />
+        </header>
+
+        <CalculatorCard
+          category="business"
+          title="Pricing Strategy Calculator"
+          description="Build profitable quotes with cost, overhead, margin and VAT"
+          badge="Pricing"
+        >
         {/* Job Costs Section */}
         <div className="flex items-center gap-2 mb-3">
           <PoundSterling className="h-4 w-4 text-blue-400" />
@@ -415,7 +437,7 @@ const PricingStrategyCalculator = () => {
           </div>
 
           {/* Primary Result Cards */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <CalculatorResult category="business">
               <div className="text-center">
                 <p className="text-sm text-white mb-1">Net Price (ex VAT)</p>
@@ -765,7 +787,7 @@ const PricingStrategyCalculator = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
-      </div>
+      </main>
     </div>
   );
 };

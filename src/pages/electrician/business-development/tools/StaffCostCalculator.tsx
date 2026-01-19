@@ -16,6 +16,7 @@ import {
   BookOpen,
   Info,
 } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -100,10 +101,9 @@ const StaffCostCalculator: React.FC = () => {
   const isValid = basePayHrNum > 0 && weeklyHoursNum > 0;
 
   return (
-    <div className="bg-background  ">
-      <div className="space-y-4 px-4 py-6 animate-fade-in">
-        <Helmet>
-          <title>Fully Loaded Staff Cost Calculator UK</title>
+    <div className="bg-gradient-to-b from-background via-background to-background">
+      <Helmet>
+        <title>Fully Loaded Staff Cost Calculator UK</title>
         <meta
           name="description"
           content="Calculate fully loaded electrician staff cost: wages, NI, pension, holidays, van, tools and overheads."
@@ -111,7 +111,30 @@ const StaffCostCalculator: React.FC = () => {
         <link rel="canonical" href="/electrician/business-development/tools/staff-cost" />
       </Helmet>
 
-      <CalculatorCard
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div
+              className="p-2.5 rounded-xl border"
+              style={{
+                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
+                borderColor: `${config.gradientFrom}30`,
+              }}
+            >
+              <Users className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Staff Cost Calculator
+              </h1>
+              <p className="text-sm text-white/70">Calculate true employment costs</p>
+            </div>
+          </div>
+          <SmartBackButton />
+        </header>
+
+        <CalculatorCard
         category="business"
         title="Staff Cost Calculator"
         description="Calculate the true hourly cost of employing staff including all overheads"
@@ -123,7 +146,7 @@ const StaffCostCalculator: React.FC = () => {
           <span className="text-sm font-medium text-white/80">Basic Pay Details</span>
         </div>
 
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <CalculatorInput
             label="Base Pay"
             unit="£/hr"
@@ -364,7 +387,7 @@ const StaffCostCalculator: React.FC = () => {
       {calculated && isValid && (
         <div className="space-y-4 animate-fade-in">
           {/* Key Results */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <CalculatorResult category="business">
               <div className="text-center">
                 <p className="text-sm text-white mb-1">True Hourly Cost</p>
@@ -447,9 +470,9 @@ const StaffCostCalculator: React.FC = () => {
                   <h4 className="text-xs font-medium text-white uppercase tracking-wide mb-2">
                     Annual Costs
                   </h4>
-                  <div className="flex justify-between items-center py-2 border-b border-white/10">
-                    <span className="text-white/80">Base Pay ({basePayHrNum}/hr × {weeklyHoursNum}hrs × {paidWeeksNum}wks)</span>
-                    <span className="text-white font-mono">{currency(annualBase)}</span>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10 min-w-0 gap-2">
+                    <span className="text-white/80 truncate min-w-0">Base Pay ({basePayHrNum}/hr × {weeklyHoursNum}hrs × {paidWeeksNum}wks)</span>
+                    <span className="text-white font-mono shrink-0">{currency(annualBase)}</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-white/80">Employer NI ({niRateNum}%)</span>
@@ -483,9 +506,9 @@ const StaffCostCalculator: React.FC = () => {
                   <h4 className="text-xs font-medium text-white uppercase tracking-wide mb-2 mt-6 pt-4 border-t border-white/10">
                     Hourly Calculation
                   </h4>
-                  <div className="flex justify-between items-center py-2 border-b border-white/10">
-                    <span className="text-white/80">Total Hours ({weeklyHoursNum}hrs × {paidWeeksNum}wks)</span>
-                    <span className="text-white font-mono">{(weeklyHoursNum * paidWeeksNum).toFixed(0)} hrs</span>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10 min-w-0 gap-2">
+                    <span className="text-white/80 truncate min-w-0">Total Hours ({weeklyHoursNum}hrs × {paidWeeksNum}wks)</span>
+                    <span className="text-white font-mono shrink-0">{(weeklyHoursNum * paidWeeksNum).toFixed(0)} hrs</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
                     <span className="text-white/80">Billable at {utilisationNum}%</span>
@@ -574,7 +597,7 @@ const StaffCostCalculator: React.FC = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
-      </div>
+      </main>
     </div>
   );
 };

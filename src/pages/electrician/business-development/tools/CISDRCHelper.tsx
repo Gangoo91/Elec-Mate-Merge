@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import {
   Hammer,
   Package,
@@ -15,6 +16,7 @@ import {
   Building,
   FileText,
 } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -100,10 +102,40 @@ const CISDRCHelper = () => {
   const warnings = getConditionalWarnings();
 
   return (
-    <div className="bg-background  ">
-      <div className="space-y-4 px-4 py-6 animate-fade-in">
+    <div className="bg-gradient-to-b from-background via-background to-background">
+      <Helmet>
+        <title>CIS & DRC Helper for UK Electricians</title>
+        <meta
+          name="description"
+          content="Calculate CIS deductions and DRC VAT rules for UK construction invoices."
+        />
+        <link rel="canonical" href="/electrician/business-development/tools/cis-drc" />
+      </Helmet>
+
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div
+              className="p-2.5 rounded-xl border"
+              style={{
+                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
+                borderColor: `${config.gradientFrom}30`,
+              }}
+            >
+              <Receipt className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                CIS & DRC Helper
+              </h1>
+              <p className="text-sm text-white/70">Calculate CIS deductions & DRC VAT rules</p>
+            </div>
+          </div>
+          <SmartBackButton />
+        </header>
+
         {/* Educational Content */}
-      <div className="space-y-2">
+        <div className="space-y-2">
         <Collapsible open={showCISGuide} onOpenChange={setShowCISGuide}>
           <div
             className="calculator-card overflow-hidden"
@@ -555,7 +587,7 @@ const CISDRCHelper = () => {
           )}
 
           <div className="border-t border-white/10 pt-3">
-            <div className="flex items-center justify-between py-3 bg-green-500/10 border border-green-500/30 px-4 rounded-xl">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-3 bg-green-500/10 border border-green-500/30 px-4 rounded-xl">
               <span className="flex items-center gap-2 font-bold text-white">
                 <PoundSterling className="w-5 h-5 text-green-400" />
                 Cash you receive
@@ -672,7 +704,7 @@ const CISDRCHelper = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
-      </div>
+      </main>
     </div>
   );
 };

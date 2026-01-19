@@ -109,7 +109,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
 
   const stats = [
     {
-      icon: <Shield className="h-5 w-5" />,
+      icon: <Shield className="h-3.5 w-3.5" />,
       label: "Hazards",
       value: hazardCount,
       bgColor: "bg-red-500/10",
@@ -117,7 +117,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
       textColor: "text-red-400",
     },
     {
-      icon: <FileText className="h-5 w-5" />,
+      icon: <FileText className="h-3.5 w-3.5" />,
       label: "Controls",
       value: controlMeasuresCount,
       bgColor: "bg-blue-500/10",
@@ -125,7 +125,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
       textColor: "text-blue-400",
     },
     {
-      icon: <FileText className="h-5 w-5" />,
+      icon: <FileText className="h-3.5 w-3.5" />,
       label: "Steps",
       value: methodStepsCount,
       bgColor: "bg-purple-500/10",
@@ -133,7 +133,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
       textColor: "text-purple-400",
     },
     {
-      icon: <Clock className="h-5 w-5" />,
+      icon: <Clock className="h-3.5 w-3.5" />,
       label: "Time",
       value: formatGenerationTime(generationTimeSeconds),
       bgColor: "bg-green-500/10",
@@ -170,74 +170,74 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
         ))}
       </div>
 
-      {/* Celebration card */}
+      {/* Celebration card - Compact */}
       <div className={cn(
-        "relative w-full max-w-xl bg-elec-dark",
-        "rounded-3xl border border-green-500/30 shadow-2xl shadow-green-500/20",
+        "relative w-full mx-2 bg-elec-dark",
+        "rounded-xl border border-green-500/20 shadow-2xl shadow-green-500/20",
         "transform transition-all duration-500 ease-out overflow-hidden",
         phase !== 'enter'
           ? 'scale-100 translate-y-0 opacity-100'
           : 'scale-90 translate-y-8 opacity-0'
       )}>
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-transparent to-elec-yellow/10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-transparent to-elec-yellow/5 pointer-events-none" />
 
         {/* Radial glow behind icon */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-green-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 bg-green-500/15 rounded-full blur-3xl pointer-events-none" />
 
         {/* Close button */}
         <Button
           variant="ghost"
           size="icon"
           onClick={handleClose}
-          className="absolute top-4 right-4 text-white/40 hover:text-white hover:bg-white/10 z-10 h-11 w-11 rounded-xl touch-manipulation active:scale-[0.98]"
+          className="absolute top-2 right-2 text-white/40 hover:text-white hover:bg-white/10 z-10 h-9 w-9 rounded-lg touch-manipulation active:scale-[0.98]"
         >
-          <X className="h-5 w-5" />
+          <X className="h-4 w-4" />
         </Button>
 
-        <div className="relative p-6 sm:p-8 space-y-6">
-          {/* Success icon with spring animation */}
+        <div className="relative p-3 space-y-4">
+          {/* Success icon with spring animation - Smaller */}
           <div className="flex justify-center">
             <div className="relative">
               {/* Outer glow rings - animated */}
               <div className="absolute inset-0 scale-[2] bg-green-500/10 rounded-full blur-2xl animate-pulse-slow" />
               <div className="absolute inset-0 scale-150 bg-green-500/15 rounded-full blur-xl animate-pulse-slower" />
 
-              {/* Main icon container with spring */}
+              {/* Main icon container with spring - Smaller */}
               <div className={cn(
-                "relative w-24 h-24 rounded-3xl bg-gradient-to-br from-green-400 to-green-600",
+                "relative w-14 h-14 rounded-xl bg-gradient-to-br from-green-400 to-green-600",
                 "flex items-center justify-center shadow-xl shadow-green-500/40",
                 "icon-spring"
               )}>
-                <CheckCircle2 className="h-12 w-12 text-white drop-shadow-lg" />
+                <CheckCircle2 className="h-8 w-8 text-white drop-shadow-lg" />
               </div>
 
-              {/* Sparkle accents */}
-              <Sparkles className="absolute -top-3 -right-3 h-6 w-6 text-elec-yellow sparkle-1" />
-              <Sparkles className="absolute -bottom-2 -left-3 h-5 w-5 text-green-300 sparkle-2" />
-              <Sparkles className="absolute top-1/2 -right-4 h-4 w-4 text-amber-400 sparkle-3" />
+              {/* Sparkle accents - Smaller */}
+              <Sparkles className="absolute -top-2 -right-2 h-4 w-4 text-elec-yellow sparkle-1" />
+              <Sparkles className="absolute -bottom-1 -left-2 h-3 w-3 text-green-300 sparkle-2" />
+              <Sparkles className="absolute top-1/2 -right-3 h-3 w-3 text-amber-400 sparkle-3" />
             </div>
           </div>
 
-          {/* Title with fade-up */}
+          {/* Title with fade-up - Compact */}
           <div className={cn(
-            "text-center space-y-3 transition-all duration-500",
+            "text-center space-y-1 transition-all duration-500",
             phase !== 'enter' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           )} style={{ transitionDelay: '200ms' }}>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+            <h2 className="text-lg font-bold text-white">
               RAMS Generated!
             </h2>
-            <div className="flex items-center justify-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-              <p className="text-white/50 text-sm sm:text-base">
+            <div className="flex items-center justify-center gap-1.5">
+              <div className="h-1 w-1 rounded-full bg-green-500 animate-pulse" />
+              <p className="text-white/40 text-xs">
                 Professional safety documentation ready
               </p>
-              <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+              <div className="h-1 w-1 rounded-full bg-green-500 animate-pulse" />
             </div>
           </div>
 
-          {/* Statistics grid - sequential reveal */}
-          <div className="grid grid-cols-2 gap-3">
+          {/* Statistics grid - sequential reveal - Compact */}
+          <div className="grid grid-cols-4 gap-1.5">
             {stats.map((stat, index) => (
               <div
                 key={stat.label}
@@ -252,33 +252,33 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
             ))}
           </div>
 
-          {/* Time saved highlight */}
+          {/* Time saved highlight - Compact */}
           <div className={cn(
-            "relative p-4 rounded-2xl bg-white/[0.03] border border-elec-yellow/20 overflow-hidden",
+            "relative p-2.5 rounded-xl bg-white/5 border border-elec-yellow/20 overflow-hidden",
             "transition-all duration-500",
             phase === 'complete' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           )} style={{ transitionDelay: '400ms' }}>
-            <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/10 via-transparent to-green-500/10" />
-            <div className="relative flex items-center justify-center gap-4">
-              <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                <Zap className="h-6 w-6 text-elec-yellow" />
+            <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/5 via-transparent to-green-500/5" />
+            <div className="relative flex items-center justify-center gap-3">
+              <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                <Zap className="h-4 w-4 text-elec-yellow" />
               </div>
               <div className="text-center sm:text-left">
-                <p className="text-xs text-white/40 uppercase tracking-wider">Time Saved</p>
-                <p className="text-xl sm:text-2xl font-bold text-elec-yellow">
+                <p className="text-[9px] text-white/40 uppercase tracking-wider">Time Saved</p>
+                <p className="text-base font-bold text-elec-yellow">
                   ~{timeSavedHours} hours
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Action button */}
+          {/* Action button - Compact */}
           <Button
             onClick={handleClose}
             className={cn(
-              "w-full h-14 bg-gradient-to-r from-elec-yellow to-amber-500",
+              "w-full h-11 bg-gradient-to-r from-elec-yellow to-amber-500",
               "hover:from-elec-yellow/90 hover:to-amber-500/90",
-              "text-black font-bold text-base sm:text-lg rounded-xl",
+              "text-black font-semibold text-sm rounded-xl",
               "shadow-lg shadow-elec-yellow/25 group touch-manipulation active:scale-[0.98]",
               "transition-all duration-500 transform",
               phase === 'complete' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
@@ -286,7 +286,7 @@ export const CompletionCelebration: React.FC<CompletionCelebrationProps> = ({
             style={{ transitionDelay: '500ms' }}
           >
             View Your RAMS
-            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1.5 transition-transform" />
+            <ArrowRight className="ml-1.5 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </div>
@@ -398,20 +398,20 @@ interface StatCardProps {
 const StatCard: React.FC<StatCardProps> = ({ icon, label, value, bgColor, borderColor, textColor, isTime = false }) => {
   return (
     <div className={cn(
-      "p-4 rounded-xl border transition-all duration-300",
+      "p-2 rounded-lg border transition-all duration-300",
       bgColor,
       borderColor,
-      "hover:scale-[1.02]"
+      "active:scale-[0.98]"
     )}>
-      <div className="flex flex-col items-center text-center gap-2">
-        <div className={cn("p-2 rounded-lg", bgColor, textColor)}>
+      <div className="flex flex-col items-center text-center gap-1">
+        <div className={cn("p-1.5 rounded-md", bgColor, textColor)}>
           {icon}
         </div>
-        <p className="text-xs text-white/40 uppercase tracking-wider">{label}</p>
+        <p className="text-[8px] text-white/40 uppercase tracking-wider">{label}</p>
         <p className={cn(
           "font-bold tabular-nums",
           textColor,
-          isTime ? "text-lg" : "text-2xl"
+          isTime ? "text-xs" : "text-base"
         )}>
           {value}
         </p>

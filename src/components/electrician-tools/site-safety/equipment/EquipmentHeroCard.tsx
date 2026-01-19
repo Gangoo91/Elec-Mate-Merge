@@ -62,24 +62,22 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, type: "spring", stiffness: 200 }}
+      transition={{ delay: index * 0.05, type: "spring", stiffness: 200 }}
       className={cn(
-        "relative overflow-hidden rounded-xl p-4",
+        "relative overflow-hidden rounded-lg p-2.5",
         "bg-gradient-to-br border",
         "backdrop-blur-sm",
         colorMap[stat.color]
       )}
     >
-      <div className="flex items-center gap-3">
-        <div className={cn("p-2 rounded-lg", iconBgMap[stat.color])}>
-          <Icon className="h-4 w-4" />
+      <div className="flex flex-col items-center text-center gap-1">
+        <div className={cn("p-1.5 rounded-lg", iconBgMap[stat.color])}>
+          <Icon className="h-3.5 w-3.5" />
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-2xl font-bold text-white leading-none">
-            <AnimatedCounter value={stat.value} />
-          </p>
-          <p className="text-xs text-white/60 mt-1 truncate">{stat.label}</p>
-        </div>
+        <p className="text-lg font-bold text-white leading-none">
+          <AnimatedCounter value={stat.value} />
+        </p>
+        <p className="text-[9px] text-white/60 uppercase tracking-wide">{stat.label}</p>
       </div>
     </motion.div>
   );
@@ -124,79 +122,74 @@ export function EquipmentHeroCard({
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
-        "relative overflow-hidden rounded-2xl",
-        "bg-gradient-to-br from-elec-gray/90 via-elec-gray to-elec-dark",
-        "border border-white/10",
-        "p-5 md:p-8"
+        "relative overflow-hidden rounded-xl",
+        "bg-gradient-to-br from-white/5 via-white/[0.02] to-transparent",
+        "border border-white/[0.08]",
+        "p-3"
       )}
     >
-      {/* Background decoration */}
+      {/* Background decoration - subtle */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-elec-yellow/10 blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-emerald-500/10 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-amber-500/5 blur-3xl" />
+        <div className="absolute -top-24 -right-24 w-32 h-32 rounded-full bg-elec-yellow/5 blur-3xl" />
+        <div className="absolute -bottom-24 -left-24 w-32 h-32 rounded-full bg-emerald-500/5 blur-3xl" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 space-y-5">
-        {/* Header */}
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-center gap-3 md:gap-4">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
-              className="p-2.5 md:p-3 rounded-xl md:rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30"
+      <div className="relative z-10 space-y-3">
+        {/* Header - compact */}
+        <div className="flex items-center gap-2.5">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+            className="p-2 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30"
+          >
+            <Wrench className="h-5 w-5 text-elec-yellow" />
+          </motion.div>
+          <div className="flex-1 min-w-0">
+            <motion.h1
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-base font-bold text-white"
             >
-              <Wrench className="h-6 w-6 md:h-8 md:w-8 text-elec-yellow" />
-            </motion.div>
-            <div>
-              <motion.h1
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 }}
-                className="text-xl md:text-3xl font-bold text-white"
-              >
-                Equipment Tracker
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-white/60 text-sm md:text-base"
-              >
-                Track your safety equipment & PAT testing
-              </motion.p>
-            </div>
+              Equipment Tracker
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-white/50 text-[10px]"
+            >
+              Track PPE & safety equipment
+            </motion.p>
           </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-3">
+        {/* Stats Grid - 4 columns on mobile */}
+        <div className="grid grid-cols-4 gap-1.5">
           {stats.map((stat, index) => (
             <StatCard key={stat.label} stat={stat} index={index} />
           ))}
         </div>
 
-        {/* CTA Button */}
+        {/* CTA Button - compact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.3 }}
         >
           <Button
-            size="lg"
             onClick={onAddEquipment}
             className={cn(
-              "w-full h-14 text-base font-semibold",
+              "w-full h-10 text-sm font-semibold",
               "bg-elec-yellow text-black hover:bg-elec-yellow/90",
               "shadow-lg shadow-elec-yellow/20",
               "transition-all duration-300",
-              "hover:shadow-xl hover:shadow-elec-yellow/30",
               "active:scale-[0.98]"
             )}
           >
-            <Plus className="h-5 w-5 mr-2" />
+            <Plus className="h-4 w-4 mr-1.5" />
             Add Equipment
           </Button>
         </motion.div>

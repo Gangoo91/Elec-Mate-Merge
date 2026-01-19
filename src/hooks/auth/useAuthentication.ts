@@ -44,29 +44,44 @@ export function useAuthentication() {
 
       console.log('Sign in successful:', data?.user?.email);
 
-      // Check for pending onboarding data and apply to profile
+      // Check for pending onboarding data and apply ONLY if onboarding not completed
+      // This prevents race conditions with ConfirmEmail which is authoritative for initial setup
       if (data?.user) {
         const onboardingData = localStorage.getItem('elec-mate-onboarding');
         if (onboardingData) {
           try {
-            const parsed = JSON.parse(onboardingData);
-            // Update profile with onboarding data
-            await supabase
+            // First check if onboarding is already completed
+            const { data: profile } = await supabase
               .from('profiles')
-              .update({
-                role: parsed.role,
-                ecs_card_type: parsed.ecsCardType || null,
-                elec_id_enabled: parsed.createElecId || false,
-                onboarding_completed: true,
-                updated_at: new Date().toISOString(),
-              })
-              .eq('id', data.user.id);
+              .select('onboarding_completed')
+              .eq('id', data.user.id)
+              .single();
 
-            // Clear the localStorage after successful sync
+            // Only apply onboarding data if NOT already completed
+            // ConfirmEmail.tsx is the authoritative source for initial profile setup
+            if (!profile?.onboarding_completed) {
+              const parsed = JSON.parse(onboardingData);
+              // Update profile with onboarding data
+              await supabase
+                .from('profiles')
+                .update({
+                  role: parsed.role,
+                  ecs_card_type: parsed.ecsCardType || null,
+                  elec_id_enabled: parsed.createElecId || false,
+                  onboarding_completed: true,
+                  updated_at: new Date().toISOString(),
+                })
+                .eq('id', data.user.id);
+
+              console.log('Profile updated with onboarding data');
+            }
+
+            // Clear the localStorage regardless (to prevent stale data)
             localStorage.removeItem('elec-mate-onboarding');
-            console.log('Profile updated with onboarding data');
           } catch (parseError) {
             console.error('Error applying onboarding data:', parseError);
+            // Still try to clear potentially corrupted data
+            localStorage.removeItem('elec-mate-onboarding');
           }
         }
       }

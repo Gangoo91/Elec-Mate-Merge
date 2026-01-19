@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import BackButton from "@/components/common/BackButton";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import { useToast } from "@/hooks/use-toast";
 import { Calculator, Building, Download, Lightbulb, TrendingUp } from "lucide-react";
 import { Helmet } from "react-helmet";
@@ -200,19 +200,22 @@ const BusinessCostCalculator = () => {
   ];
 
   return (
-    <div className="bg-background  ">
-      <div className="container mx-auto px-4 py-8 max-w-7xl animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-8">
-        <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
-          <Building className="h-8 w-8 text-elec-yellow" />
-          Enhanced Business Cost Calculator
-        </h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-6">
-          Plan your electrical contracting business with intelligent cost analysis, 
-          interactive tools, and comprehensive scenario planning.
-        </p>
-        <BackButton customUrl="/electrician/business-development/tools" label="Back to Calculators" />
-      </div>
+    <div className="bg-gradient-to-b from-background via-background to-background">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl border bg-gradient-to-br from-elec-yellow/20 to-amber-600/20 border-elec-yellow/30">
+              <Building className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Business Cost Calculator
+              </h1>
+              <p className="text-sm text-white/70">Plan your contracting business costs</p>
+            </div>
+          </div>
+          <SmartBackButton />
+        </header>
 
       <WhyThisMatters
         points={[
@@ -260,7 +263,7 @@ const BusinessCostCalculator = () => {
           </CardContent>
         </Card>
       )}
-      </div>
+      </main>
     </div>
   );
 };

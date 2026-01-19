@@ -8,25 +8,28 @@ const corsHeaders = {
 };
 
 /**
- * JOBS DAILY REFRESH ORCHESTRATOR
+ * JOBS DAILY REFRESH ORCHESTRATOR v3
  *
- * Triggers all 9 job scraping batches covering the entire UK:
- * 1. London
+ * Triggers all 12 job scraping batches covering the ENTIRE UK:
+ * 1. London & Greater London
  * 2. Southeast (Brighton, Southampton, Reading, etc.)
  * 3. Midlands (Birmingham, Nottingham, Leicester, etc.)
- * 4. Northwest (Manchester, Liverpool, Preston, etc.)
- * 5. Yorkshire (Leeds, Sheffield, Bradford, etc.)
+ * 4. Northwest & Lancashire (Manchester, Liverpool, Preston, etc.)
+ * 5. Yorkshire & Humber (Leeds, Sheffield, Bradford, etc.)
  * 6. Scotland (Edinburgh, Glasgow, Aberdeen, etc.)
  * 7. Wales & Southwest (Cardiff, Bristol, Plymouth, etc.)
- * 8. East & Northeast (Norwich, Cambridge, Newcastle, etc.)
- * 9. Specialist Nationwide (Solar PV, EV Charger, Industrial, etc.)
+ * 8. East Anglia & Northeast (Norwich, Cambridge, Newcastle, etc.)
+ * 9. CUMBRIA & Rural North (Carlisle, Kendal, Penrith, Barrow, etc.)
+ * 10. Northern Ireland & Islands (Belfast, Jersey, Isle of Wight)
+ * 11. Specialist Nationwide (Solar PV, EV, Industrial, Data Centre)
+ * 12. Apprenticeships & Training
  *
- * Then merges all results into job_listings table (500 jobs max)
+ * Then merges all results into job_listings table (2000 jobs max)
  *
- * Schedule: Daily at 6am UK time via pg_cron
+ * Schedule: Twice daily at 6am and 6pm UK time via pg_cron
  */
 
-const TOTAL_BATCHES = 9;
+const TOTAL_BATCHES = 12;
 const BATCH_TIMEOUT_MS = 180000; // 3 minutes per batch
 
 serve(async (req) => {

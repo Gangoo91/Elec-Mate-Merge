@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import {
   Building,
   Users,
@@ -15,6 +16,7 @@ import {
   Calendar,
   Briefcase,
 } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -225,14 +227,44 @@ const CapacityPlanningTool = () => {
   const capacityStatus = getCapacityStatus();
 
   return (
-    <div className="bg-background  ">
-      <div className="space-y-4 px-4 py-6 animate-fade-in">
+    <div className="bg-gradient-to-b from-background via-background to-background">
+      <Helmet>
+        <title>Capacity Planning Tool for UK Electricians</title>
+        <meta
+          name="description"
+          content="Plan workforce capacity and analyze utilization to optimize productivity."
+        />
+        <link rel="canonical" href="/electrician/business-development/tools/capacity-planning" />
+      </Helmet>
+
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div
+              className="p-2.5 rounded-xl border"
+              style={{
+                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
+                borderColor: `${config.gradientFrom}30`,
+              }}
+            >
+              <Users className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Capacity Planning Tool
+              </h1>
+              <p className="text-sm text-white/70">Plan workforce capacity & utilisation</p>
+            </div>
+          </div>
+          <SmartBackButton />
+        </header>
+
         <CalculatorCard
-        category="business"
-        title="Capacity Planning Tool"
-        description="Plan workforce capacity and analyze utilization to optimize productivity"
-        badge="Business"
-      >
+          category="business"
+          title="Capacity Planning Tool"
+          description="Plan workforce capacity and analyze utilization to optimize productivity"
+          badge="Business"
+        >
         {/* Team Structure */}
         <div className="flex items-center gap-2 mb-3">
           <Users className="h-4 w-4 text-blue-400" />
@@ -325,7 +357,7 @@ const CapacityPlanningTool = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <CalculatorInput
             label="Holiday"
             type="text"
@@ -526,7 +558,7 @@ const CapacityPlanningTool = () => {
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
                   <p className="text-white text-xs font-medium">
                     Annual Hours
@@ -703,7 +735,7 @@ const CapacityPlanningTool = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
-      </div>
+      </main>
     </div>
   );
 };

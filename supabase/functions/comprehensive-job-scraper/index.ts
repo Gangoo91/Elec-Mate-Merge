@@ -7,20 +7,20 @@ const corsHeaders = {
 };
 
 /**
- * COMPREHENSIVE UK ELECTRICAL JOB SCRAPER v2
+ * COMPREHENSIVE UK ELECTRICAL JOB SCRAPER v3
  *
- * MASSIVELY EXPANDED - 500+ jobs per refresh
+ * MASSIVELY EXPANDED - 2000+ jobs per refresh
  *
  * Primary Sources (Official APIs - Reliable):
- * - Reed.co.uk API: 50+ UK locations × 100 jobs each
+ * - Reed.co.uk API: 100+ UK locations × 100 jobs each
  * - Adzuna API: UK-wide coverage
  *
  * Secondary Sources (Firecrawl - Where it works):
  * - Gumtree Jobs (works well)
  * - Indeed (partial extraction)
  *
- * Coverage: EVERY major UK city and town
- * Target: 500-1000 fresh electrical jobs daily
+ * Coverage: EVERY UK region including rural areas
+ * Target: 2000+ fresh electrical jobs daily
  */
 
 // ALL major UK locations for comprehensive coverage
@@ -88,59 +88,130 @@ const UK_LOCATIONS = {
   ],
 };
 
-// Batch configurations - OPTIMIZED for 150s timeout
-// Each batch: ~10 locations × 2 keywords = 20 Reed API calls (~60 seconds)
+// Batch configurations - EXPANDED for maximum coverage
+// Each batch: ~12-15 locations × 2 keywords = ~30 Reed API calls
 const BATCHES = [
   {
     batch: 1,
-    region: "London",
-    reedLocations: ["London", "Central London", "East London", "West London", "North London", "South London", "Croydon", "Bromley"],
+    region: "London & Greater London",
+    reedLocations: [
+      "London", "Central London", "East London", "West London", "North London", "South London",
+      "Croydon", "Bromley", "Enfield", "Barnet", "Hounslow", "Ealing", "Hillingdon",
+      "Harrow", "Brent", "Waltham Forest", "Redbridge", "Havering", "Kingston upon Thames"
+    ],
     gumtreeLocations: ["london"],
   },
   {
     batch: 2,
     region: "Southeast",
-    reedLocations: ["Brighton", "Southampton", "Portsmouth", "Reading", "Oxford", "Milton Keynes", "Guildford", "Maidstone"],
-    gumtreeLocations: ["brighton", "southampton"],
+    reedLocations: [
+      "Brighton", "Southampton", "Portsmouth", "Reading", "Oxford", "Milton Keynes",
+      "Guildford", "Maidstone", "Canterbury", "Crawley", "Slough", "Basingstoke",
+      "Woking", "Tunbridge Wells", "Hastings", "Eastbourne", "Worthing", "Chelmsford",
+      "High Wycombe", "Aylesbury", "Margate", "Dover", "Folkestone"
+    ],
+    gumtreeLocations: ["brighton", "southampton", "portsmouth"],
   },
   {
     batch: 3,
     region: "Midlands",
-    reedLocations: ["Birmingham", "Nottingham", "Leicester", "Coventry", "Derby", "Wolverhampton", "Stoke-on-Trent", "Northampton"],
-    gumtreeLocations: ["birmingham", "nottingham"],
+    reedLocations: [
+      "Birmingham", "Nottingham", "Leicester", "Coventry", "Derby", "Wolverhampton",
+      "Stoke-on-Trent", "Walsall", "Dudley", "Solihull", "Northampton", "Worcester",
+      "Telford", "Hereford", "Shrewsbury", "Lincoln", "Kettering", "Corby",
+      "Stafford", "Burton upon Trent", "Mansfield", "Chesterfield", "Loughborough"
+    ],
+    gumtreeLocations: ["birmingham", "nottingham", "leicester"],
   },
   {
     batch: 4,
-    region: "Northwest",
-    reedLocations: ["Manchester", "Liverpool", "Preston", "Blackpool", "Bolton", "Stockport", "Warrington", "Wigan"],
-    gumtreeLocations: ["manchester", "liverpool"],
+    region: "Northwest & Lancashire",
+    reedLocations: [
+      "Manchester", "Liverpool", "Preston", "Blackpool", "Bolton", "Stockport",
+      "Warrington", "Wigan", "Oldham", "Rochdale", "Salford", "Bury", "Burnley",
+      "Blackburn", "Chester", "Crewe", "Macclesfield", "Lancaster", "Morecambe",
+      "St Helens", "Southport", "Chorley", "Accrington", "Nelson"
+    ],
+    gumtreeLocations: ["manchester", "liverpool", "preston"],
   },
   {
     batch: 5,
-    region: "Yorkshire",
-    reedLocations: ["Leeds", "Sheffield", "Bradford", "Hull", "York", "Huddersfield", "Doncaster", "Wakefield"],
-    gumtreeLocations: ["leeds", "sheffield"],
+    region: "Yorkshire & Humber",
+    reedLocations: [
+      "Leeds", "Sheffield", "Bradford", "Hull", "York", "Huddersfield", "Doncaster",
+      "Wakefield", "Rotherham", "Barnsley", "Halifax", "Harrogate", "Scarborough",
+      "Grimsby", "Scunthorpe", "Dewsbury", "Keighley", "Skipton", "Bridlington",
+      "Selby", "Goole", "Pontefract", "Castleford"
+    ],
+    gumtreeLocations: ["leeds", "sheffield", "hull"],
   },
   {
     batch: 6,
     region: "Scotland",
-    reedLocations: ["Edinburgh", "Glasgow", "Aberdeen", "Dundee", "Inverness", "Stirling", "Perth", "Paisley"],
-    gumtreeLocations: ["glasgow", "edinburgh"],
+    reedLocations: [
+      "Edinburgh", "Glasgow", "Aberdeen", "Dundee", "Inverness", "Stirling",
+      "Perth", "Paisley", "East Kilbride", "Livingston", "Cumbernauld", "Falkirk",
+      "Ayr", "Kilmarnock", "Greenock", "Dunfermline", "Kirkcaldy", "Hamilton",
+      "Motherwell", "Coatbridge", "Dumfries", "Elgin", "Fort William"
+    ],
+    gumtreeLocations: ["glasgow", "edinburgh", "aberdeen"],
   },
   {
     batch: 7,
     region: "Wales & Southwest",
-    reedLocations: ["Cardiff", "Swansea", "Newport", "Bristol", "Plymouth", "Exeter", "Bath", "Bournemouth"],
-    gumtreeLocations: ["cardiff", "bristol"],
+    reedLocations: [
+      "Cardiff", "Swansea", "Newport", "Bristol", "Plymouth", "Exeter", "Bath",
+      "Bournemouth", "Swindon", "Gloucester", "Cheltenham", "Taunton", "Torquay",
+      "Poole", "Salisbury", "Yeovil", "Truro", "Penzance", "Barnstaple",
+      "Wrexham", "Barry", "Neath", "Bridgend", "Cwmbran", "Llanelli", "Merthyr Tydfil"
+    ],
+    gumtreeLocations: ["cardiff", "bristol", "plymouth"],
   },
   {
     batch: 8,
-    region: "East & Northeast",
-    reedLocations: ["Norwich", "Cambridge", "Ipswich", "Newcastle upon Tyne", "Sunderland", "Middlesbrough", "Peterborough", "Luton"],
-    gumtreeLocations: ["cambridge", "newcastle"],
+    region: "East Anglia & Northeast",
+    reedLocations: [
+      "Norwich", "Cambridge", "Ipswich", "Newcastle upon Tyne", "Sunderland", "Middlesbrough",
+      "Peterborough", "Luton", "Colchester", "Southend-on-Sea", "Bedford", "Stevenage",
+      "Watford", "St Albans", "Hertford", "Harlow", "Basildon", "Braintree",
+      "Gateshead", "Hartlepool", "Stockton-on-Tees", "South Shields", "Durham", "Darlington"
+    ],
+    gumtreeLocations: ["cambridge", "newcastle", "norwich"],
   },
   {
     batch: 9,
+    region: "Cumbria & Rural North",
+    reedLocations: [
+      // CUMBRIA - Full coverage
+      "Carlisle", "Kendal", "Penrith", "Barrow-in-Furness", "Whitehaven", "Workington",
+      "Ulverston", "Windermere", "Keswick", "Cockermouth", "Maryport", "Wigton",
+      // Lake District catchment
+      "Ambleside", "Grange-over-Sands",
+      // Surrounding areas
+      "Lancaster", "Morecambe", "Dumfries", "Hexham", "Haltwhistle",
+      // Isle of Man
+      "Douglas",
+      // Other rural North
+      "Appleby", "Kirkby Stephen", "Sedbergh"
+    ],
+    gumtreeLocations: ["carlisle"],
+  },
+  {
+    batch: 10,
+    region: "Northern Ireland & Islands",
+    reedLocations: [
+      // Northern Ireland
+      "Belfast", "Derry", "Lisburn", "Newry", "Bangor", "Craigavon", "Ballymena",
+      "Newtownabbey", "Carrickfergus", "Coleraine", "Omagh", "Enniskillen", "Armagh",
+      // Channel Islands
+      "Jersey", "Guernsey",
+      // Isle of Wight
+      "Newport Isle of Wight", "Ryde", "Cowes"
+    ],
+    gumtreeLocations: ["belfast"],
+  },
+  {
+    batch: 11,
     region: "Specialist Nationwide",
     reedLocations: ["United Kingdom"],
     reedKeywords: [
@@ -149,6 +220,25 @@ const BATCHES = [
       "industrial electrician",
       "data centre electrician",
       "commissioning engineer electrical",
+      "electrical project manager",
+      "fire alarm engineer",
+      "security systems engineer",
+      "building services electrician",
+      "marine electrician",
+    ],
+    gumtreeLocations: [],
+  },
+  {
+    batch: 12,
+    region: "Apprenticeships & Training",
+    reedLocations: ["United Kingdom"],
+    reedKeywords: [
+      "electrical apprentice",
+      "trainee electrician",
+      "electrical improver",
+      "electrician mate",
+      "junior electrician",
+      "electrical labourer",
     ],
     gumtreeLocations: [],
   },
@@ -665,10 +755,10 @@ Deno.serve(async (req) => {
           .not("source", "is", null)
           .neq("source", "internal");
 
-        // Insert top 500 jobs with proper UUIDs (9 batches × ~55 unique per region)
+        // Insert top 2000 jobs with proper UUIDs (12 batches × ~150 unique per region)
         // Filter out invalid jobs and provide defaults for NOT NULL columns
         const topJobs = merged.jobs
-          .slice(0, 500)
+          .slice(0, 2000)
           .filter((job) => job.title && job.company) // Must have title and company
           .map((job) => ({
             id: crypto.randomUUID(),

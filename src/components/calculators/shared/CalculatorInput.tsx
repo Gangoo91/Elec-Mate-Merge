@@ -37,7 +37,7 @@ export const CalculatorInput = forwardRef<HTMLInputElement, CalculatorInputProps
           onChange={(e) => onChange?.(e.target.value)}
           className={cn(
             "calculator-input h-12 bg-white/5 border-white/10 rounded-xl",
-            "text-base placeholder:text-white/30",
+            "text-base placeholder:text-white/30 touch-manipulation",
             "focus:border-white/20 focus:ring-1 focus:ring-white/10",
             "transition-all duration-200",
             error && "border-red-500/50 focus:border-red-500/50",
@@ -102,7 +102,7 @@ export const CalculatorSelect = ({
           id={selectId}
           className={cn(
             "calculator-input h-12 bg-white/5 border-white/10 rounded-xl",
-            "text-base",
+            "text-base touch-manipulation",
             "focus:ring-1 focus:ring-white/10",
             "transition-all duration-200",
             error && "border-red-500/50",
@@ -193,7 +193,7 @@ export const CalculatorNumberInput = ({
         step={step}
         className={cn(
           "calculator-input h-12 bg-white/5 border-white/10 rounded-xl",
-          "text-base placeholder:text-white/30",
+          "text-base placeholder:text-white/30 touch-manipulation",
           "focus:border-white/20 focus:ring-1 focus:ring-white/10",
           "transition-all duration-200",
           "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",

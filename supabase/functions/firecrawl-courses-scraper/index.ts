@@ -75,6 +75,21 @@ serve(async (req) => {
         formats: [
           {
             type: "json",
+            prompt: `Extract UK electrical training courses from this page. Focus on:
+- Course title (exact name as shown)
+- Training provider/organisation name
+- Course duration (days, weeks, hours)
+- Price or price range in GBP (£)
+- Skill level (Beginner, Intermediate, Advanced)
+- Course locations (UK cities/regions)
+- Upcoming dates if available
+- Accreditations (City & Guilds, EAL, NICEIC, etc.)
+- Learning mode (Classroom, Online, Blended)
+
+Only extract courses related to electrical work, including:
+BS7671/18th Edition, EV charging, solar/PV, Part P, testing & inspection, PAT testing, fire alarms, emergency lighting, domestic installer, commercial electrical, industrial electrical.
+
+Skip non-electrical courses, general education courses, or courses outside the UK.`,
             schema: {
               type: "object",
               properties: {
@@ -302,13 +317,17 @@ serve(async (req) => {
       lastUpdated: new Date().toISOString()
     };
 
-    // Cache the results
+    // Cache the results (24hr expiry)
+    const cacheExpiry = new Date();
+    cacheExpiry.setHours(cacheExpiry.getHours() + 24);
+
     await supabase
       .from('live_course_cache')
       .insert({
         source: 'firecrawl',
         search_query: cacheKey,
-        course_data: result
+        course_data: result,
+        expires_at: cacheExpiry.toISOString()
       });
 
     console.log(`✅ Returning ${courses.length} courses from Firecrawl (${source})`);

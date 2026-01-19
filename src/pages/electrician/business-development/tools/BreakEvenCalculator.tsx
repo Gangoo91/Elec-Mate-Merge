@@ -13,7 +13,9 @@ import {
   ChevronDown,
   BookOpen,
   RotateCcw,
+  Scale,
 } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -120,7 +122,7 @@ const BreakEvenCalculator: React.FC = () => {
   const isValid = overheadsNum > 0 && hoursNum > 0 && labourNum > 0;
 
   return (
-    <div className="px-4 py-8  ">
+    <div className="bg-gradient-to-b from-background via-background to-background">
       <Helmet>
         <title>Break-even & Margin Guard | Electrician UK</title>
         <meta
@@ -129,7 +131,29 @@ const BreakEvenCalculator: React.FC = () => {
         />
       </Helmet>
 
-      <div className="max-w-4xl mx-auto space-y-4">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div
+              className="p-2.5 rounded-xl border"
+              style={{
+                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
+                borderColor: `${config.gradientFrom}30`,
+              }}
+            >
+              <Scale className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Break-Even Calculator
+              </h1>
+              <p className="text-sm text-white/70">Calculate your minimum profitable rate</p>
+            </div>
+          </div>
+          <SmartBackButton />
+        </header>
+
         {/* Business Health Snapshot */}
         <div className="calculator-card p-4" style={{ borderColor: "#60a5fa20" }}>
           <div className="flex items-center gap-2 mb-4">
@@ -137,7 +161,7 @@ const BreakEvenCalculator: React.FC = () => {
             <span className="text-sm font-medium text-white">Business Health Snapshot</span>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {/* Margin Health */}
             <div className={cn("p-3 rounded-xl border", marginHealth.bg)}>
               <div className="flex items-center justify-between mb-1">
@@ -233,7 +257,7 @@ const BreakEvenCalculator: React.FC = () => {
               <span className="text-sm font-medium text-white">Labour & Materials</span>
             </div>
 
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <CalculatorInput
                 label="Labour Cost/Hour"
                 unit="£"
@@ -622,7 +646,7 @@ const BreakEvenCalculator: React.FC = () => {
             </CollapsibleContent>
           </div>
         </Collapsible>
-      </div>
+      </main>
     </div>
   );
 };

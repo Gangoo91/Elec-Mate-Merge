@@ -542,7 +542,7 @@ const HourlyRateCalculator = () => {
                 </CollapsibleTrigger>
 
                 <CollapsibleContent className="pt-4 space-y-3">
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <CalculatorInput
                       label="Call-out min hrs"
                       type="text"
@@ -694,7 +694,7 @@ const HourlyRateCalculator = () => {
                 </CalculatorResult>
 
                 {/* Premium Rates Results */}
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="p-3 rounded-xl border border-amber-400/20 bg-amber-400/5 text-center">
                     <p className="text-xs text-white mb-1">Call-out min</p>
                     <p className="text-lg font-bold text-amber-400">£{callOutFeeExVat.toFixed(0)}</p>

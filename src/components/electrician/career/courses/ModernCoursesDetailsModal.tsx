@@ -13,18 +13,19 @@ import {
   CheckCircle,
   GraduationCap,
   Building,
-  X,
   Share2,
   ArrowLeft,
   Zap,
   PoundSterling,
-  BookOpen
+  BookOpen,
+  MessageSquare
 } from "lucide-react";
 
 interface ModernCoursesDetailsModalProps {
   course: EnhancedCareerCourse | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onEnquire?: (course: EnhancedCareerCourse) => void;
 }
 
 const categoryColors: Record<string, { bg: string; text: string }> = {
@@ -58,7 +59,7 @@ const getCourseImage = (course: EnhancedCareerCourse) => {
   return categoryImages[course.category] || "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop";
 };
 
-const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCoursesDetailsModalProps) => {
+const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: ModernCoursesDetailsModalProps) => {
   if (!course) return null;
 
   const categoryStyle = categoryColors[course.category] || { bg: "bg-blue-500", text: "text-white" };
@@ -313,23 +314,35 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange }: ModernCourses
             </div>
 
             {/* Fixed Bottom CTA */}
-            <div className="absolute bottom-0 inset-x-0 p-4 bg-elec-gray/95 backdrop-blur-lg border-t border-white/10">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <div className="text-xs text-white mb-0.5">Price</div>
-                  <div className="text-lg font-bold text-white flex items-center gap-1">
-                    <PoundSterling className="h-4 w-4" />
+            <div className="absolute bottom-0 inset-x-0 p-4 bg-elec-gray/95 backdrop-blur-lg border-t border-white/10 safe-area-inset-bottom">
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0">
+                  <div className="text-[10px] text-white/60 mb-0.5">Price</div>
+                  <div className="text-base font-bold text-white flex items-center gap-0.5">
+                    <PoundSterling className="h-3.5 w-3.5" />
                     {course.price.replace(/[£$]/g, '')}
                   </div>
                 </div>
-                <Button
-                  onClick={handleExternalLink}
-                  disabled={!course.external_url}
-                  className="bg-blue-500 text-white hover:bg-blue-600 font-semibold gap-2 px-6"
-                >
-                  <span>Visit Provider</span>
-                  <ExternalLink className="h-4 w-4" />
-                </Button>
+                <div className="flex-1 flex gap-2">
+                  {onEnquire && (
+                    <Button
+                      onClick={() => onEnquire(course)}
+                      variant="outline"
+                      className="flex-1 h-11 bg-white/5 border-white/20 text-white hover:text-white hover:bg-white/10 font-medium gap-2 touch-manipulation"
+                    >
+                      <MessageSquare className="h-4 w-4" />
+                      <span className="hidden sm:inline">Enquire</span>
+                    </Button>
+                  )}
+                  <Button
+                    onClick={handleExternalLink}
+                    disabled={!course.external_url}
+                    className="flex-1 h-11 bg-blue-500 text-white hover:bg-blue-600 font-medium gap-2 touch-manipulation"
+                  >
+                    <span>Visit</span>
+                    <ExternalLink className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             </div>
           </motion.div>

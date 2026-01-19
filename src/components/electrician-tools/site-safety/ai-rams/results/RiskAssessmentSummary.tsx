@@ -35,27 +35,27 @@ export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) 
           Risk Assessment Summary
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-3 p-3">
         {/* Statistics */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="bg-elec-gray/30 border border-red-500/10 rounded-lg p-3 text-center">
-            <div className="text-2xl font-bold text-red-400">{hazardsCount}</div>
-            <div className="text-xs text-muted-foreground">Hazards Identified</div>
+        <div className="grid grid-cols-4 gap-1.5">
+          <div className="bg-elec-gray/30 border border-red-500/10 rounded-lg p-2 text-center">
+            <div className="text-lg font-bold text-red-400">{hazardsCount}</div>
+            <div className="text-[10px] text-muted-foreground">Hazards</div>
           </div>
-          
-          <div className="bg-elec-gray/30 border border-green-500/10 rounded-lg p-3 text-center">
-            <div className="text-2xl font-bold text-green-400">{controlsCount}</div>
-            <div className="text-xs text-muted-foreground">Control Measures</div>
+
+          <div className="bg-elec-gray/30 border border-green-500/10 rounded-lg p-2 text-center">
+            <div className="text-lg font-bold text-green-400">{controlsCount}</div>
+            <div className="text-[10px] text-muted-foreground">Controls</div>
           </div>
-          
-          <div className="bg-elec-gray/30 border border-red-500/10 rounded-lg p-3 text-center">
-            <div className="text-2xl font-bold text-red-400">{highRiskHazards.length}</div>
-            <div className="text-xs text-muted-foreground">High Risk</div>
+
+          <div className="bg-elec-gray/30 border border-red-500/10 rounded-lg p-2 text-center">
+            <div className="text-lg font-bold text-red-400">{highRiskHazards.length}</div>
+            <div className="text-[10px] text-muted-foreground">High</div>
           </div>
-          
-          <div className="bg-elec-gray/30 border border-amber-500/10 rounded-lg p-3 text-center">
-            <div className="text-2xl font-bold text-amber-400">{mediumRiskHazards.length}</div>
-            <div className="text-xs text-muted-foreground">Medium Risk</div>
+
+          <div className="bg-elec-gray/30 border border-amber-500/10 rounded-lg p-2 text-center">
+            <div className="text-lg font-bold text-amber-400">{mediumRiskHazards.length}</div>
+            <div className="text-[10px] text-muted-foreground">Medium</div>
           </div>
         </div>
 

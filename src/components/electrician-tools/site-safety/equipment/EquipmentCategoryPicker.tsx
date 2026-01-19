@@ -89,12 +89,12 @@ export function EquipmentCategoryPicker({
   error,
 }: EquipmentCategoryPickerProps) {
   return (
-    <div className="space-y-3">
-      <label className="block text-sm font-medium text-white/80">
+    <div className="space-y-2">
+      <label className="block text-xs font-medium text-white/80">
         Category
       </label>
 
-      <div className="grid grid-cols-3 gap-2.5">
+      <div className="grid grid-cols-3 gap-1.5">
         {equipmentCategories.map((category, index) => {
           const isSelected = value === category.id;
           const Icon = category.icon;
@@ -105,16 +105,16 @@ export function EquipmentCategoryPicker({
               type="button"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05, type: "spring", stiffness: 200 }}
+              transition={{ delay: index * 0.03, type: "spring", stiffness: 200 }}
               onClick={() => onChange(category.id)}
               className={cn(
-                "relative flex flex-col items-center gap-2 p-4 rounded-xl",
-                "border-2 transition-all duration-200",
-                "touch-manipulation min-h-[88px]",
+                "relative flex flex-col items-center gap-1.5 p-3 rounded-lg",
+                "border transition-all duration-200",
+                "touch-manipulation min-h-[76px]",
                 "active:scale-95",
                 isSelected
                   ? cn(category.bgColor, category.borderColor)
-                  : "bg-white/5 border-white/10 hover:border-white/20"
+                  : "bg-white/5 border-white/[0.08]"
               )}
             >
               {/* Selection indicator */}
@@ -122,7 +122,7 @@ export function EquipmentCategoryPicker({
                 <motion.div
                   layoutId="selectedCategoryIndicator"
                   className={cn(
-                    "absolute top-2 right-2 w-2 h-2 rounded-full",
+                    "absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full",
                     category.color.replace("text-", "bg-")
                   )}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -132,13 +132,13 @@ export function EquipmentCategoryPicker({
               {/* Icon */}
               <div
                 className={cn(
-                  "p-2.5 rounded-xl",
+                  "p-2 rounded-lg",
                   isSelected ? category.bgColor : "bg-white/5"
                 )}
               >
                 <Icon
                   className={cn(
-                    "h-6 w-6",
+                    "h-5 w-5",
                     isSelected ? category.color : "text-white/50"
                   )}
                 />
@@ -147,7 +147,7 @@ export function EquipmentCategoryPicker({
               {/* Label */}
               <span
                 className={cn(
-                  "text-xs font-medium text-center",
+                  "text-[10px] font-medium text-center",
                   isSelected ? "text-white" : "text-white/50"
                 )}
               >
@@ -159,7 +159,7 @@ export function EquipmentCategoryPicker({
       </div>
 
       {error && (
-        <p className="text-sm text-red-400">{error}</p>
+        <p className="text-xs text-red-400">{error}</p>
       )}
     </div>
   );

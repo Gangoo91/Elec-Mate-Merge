@@ -97,7 +97,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
           </SheetTitle>
         </SheetHeader>
 
-        <div className="space-y-6 py-6 pb-24">
+        <div className="space-y-4 py-4 pb-24">
           {/* Step Title */}
           <div className="space-y-2">
             <label className="text-sm font-semibold text-elec-light">

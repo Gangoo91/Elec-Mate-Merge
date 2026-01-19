@@ -72,24 +72,24 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
       whileTap={!comingSoon ? { scale: 0.98 } : {}}
       onClick={!comingSoon ? onClick : undefined}
       className={cn(
-        "relative glass-premium rounded-xl h-full min-h-[160px] cursor-pointer group overflow-hidden touch-manipulation",
+        "relative glass-premium rounded-xl h-full cursor-pointer group overflow-hidden touch-manipulation",
         comingSoon && "opacity-70 cursor-not-allowed"
       )}
     >
-      {/* Coming Soon Ribbon */}
+      {/* Coming Soon Badge - Mobile optimized */}
       {comingSoon && (
-        <div className="absolute top-0 right-0 overflow-hidden w-28 h-28 pointer-events-none z-10">
-          <div className="absolute top-5 right-[-28px] w-36 bg-gradient-to-br from-amber-500 to-yellow-600 text-black text-xs font-bold py-1 text-center transform rotate-45 shadow-lg">
-            Coming Soon
-          </div>
+        <div className="absolute top-2 right-2 z-10">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-500/20 text-amber-400">
+            Soon
+          </span>
         </div>
       )}
 
       {/* Badge */}
       {badge && !comingSoon && (
-        <div className="absolute top-3 right-3 z-10">
+        <div className="absolute top-2 right-2 z-10">
           <span className={cn(
-            "px-2 py-0.5 rounded-full text-xs font-medium",
+            "px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-medium",
             color === "purple" && "bg-purple-500/20 text-purple-300",
             color === "blue" && "bg-blue-500/20 text-blue-300",
             color === "green" && "bg-green-500/20 text-green-300",
@@ -101,9 +101,10 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
         </div>
       )}
 
-      <div className="p-5 flex flex-col h-full">
+      {/* Mobile: Horizontal row layout, Desktop: Vertical */}
+      <div className="p-3 sm:p-5 flex sm:flex-col gap-3 sm:gap-0 h-full">
         <div className={cn(
-          "p-2.5 rounded-lg w-fit mb-4 transition-colors",
+          "p-2 sm:p-2.5 rounded-lg w-fit sm:mb-4 flex-shrink-0 transition-colors",
           color === "purple" && "bg-purple-500/10 group-hover:bg-purple-500/20 group-active:bg-purple-500/25",
           color === "blue" && "bg-blue-500/10 group-hover:bg-blue-500/20 group-active:bg-blue-500/25",
           color === "green" && "bg-green-500/10 group-hover:bg-green-500/20 group-active:bg-green-500/25",
@@ -111,7 +112,7 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
           color === "orange" && "bg-orange-500/10 group-hover:bg-orange-500/20 group-active:bg-orange-500/25",
         )}>
           <Icon className={cn(
-            "h-6 w-6",
+            "h-5 w-5 sm:h-6 sm:w-6",
             color === "purple" && "text-purple-400",
             color === "blue" && "text-blue-400",
             color === "green" && "text-green-400",
@@ -120,22 +121,32 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
           )} />
         </div>
 
-        <h3 className={cn(
-          "text-base font-semibold text-white mb-2 transition-colors",
-          !comingSoon && color === "purple" && "group-hover:text-purple-400 group-active:text-purple-400",
-          !comingSoon && color === "blue" && "group-hover:text-blue-400 group-active:text-blue-400",
-          !comingSoon && color === "green" && "group-hover:text-green-400 group-active:text-green-400",
-          !comingSoon && color === "yellow" && "group-hover:text-elec-yellow group-active:text-elec-yellow",
-          !comingSoon && color === "orange" && "group-hover:text-orange-400 group-active:text-orange-400",
-        )}>
-          {title}
-        </h3>
-        <p className="text-sm text-white/60 leading-relaxed flex-1">
-          {description}
-        </p>
+        <div className="flex-1 min-w-0 flex flex-col justify-center sm:justify-start">
+          <h3 className={cn(
+            "text-sm sm:text-base font-semibold text-white sm:mb-2 transition-colors leading-tight",
+            !comingSoon && color === "purple" && "group-hover:text-purple-400 group-active:text-purple-400",
+            !comingSoon && color === "blue" && "group-hover:text-blue-400 group-active:text-blue-400",
+            !comingSoon && color === "green" && "group-hover:text-green-400 group-active:text-green-400",
+            !comingSoon && color === "yellow" && "group-hover:text-elec-yellow group-active:text-elec-yellow",
+            !comingSoon && color === "orange" && "group-hover:text-orange-400 group-active:text-orange-400",
+          )}>
+            {title}
+          </h3>
+          <p className="text-xs sm:text-sm text-white/60 leading-snug sm:leading-relaxed sm:flex-1 line-clamp-2 sm:line-clamp-none">
+            {description}
+          </p>
+        </div>
 
+        {/* Chevron - visible on mobile on the right */}
         {!comingSoon && (
-          <div className="flex items-center gap-1 mt-3 text-white/40 group-hover:text-white/70 group-active:text-white/80 transition-colors">
+          <div className="flex sm:hidden items-center text-white/40 group-active:text-white/80">
+            <ChevronRight className="h-5 w-5" />
+          </div>
+        )}
+
+        {/* Desktop explore text */}
+        {!comingSoon && (
+          <div className="hidden sm:flex items-center gap-1 mt-3 text-white/40 group-hover:text-white/70 group-active:text-white/80 transition-colors">
             <span className="text-xs font-medium">Explore</span>
             <ChevronRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
           </div>
@@ -161,11 +172,11 @@ function OpportunityCard({ title, description, icon: Icon, color, rate, requirem
     <motion.div
       variants={itemVariants}
       whileHover={{ y: -2 }}
-      className="glass-premium rounded-xl p-5 h-full"
+      className="glass-premium rounded-xl p-3 sm:p-5 h-full flex-shrink-0 w-[280px] sm:w-auto"
     >
-      <div className="flex items-start gap-3 mb-3">
+      <div className="flex items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
         <div className={cn(
-          "p-2 rounded-lg",
+          "p-1.5 sm:p-2 rounded-lg flex-shrink-0",
           color === "green" && "bg-green-500/10",
           color === "blue" && "bg-blue-500/10",
           color === "purple" && "bg-purple-500/10",
@@ -174,7 +185,7 @@ function OpportunityCard({ title, description, icon: Icon, color, rate, requirem
           color === "cyan" && "bg-cyan-500/10",
         )}>
           <Icon className={cn(
-            "h-5 w-5",
+            "h-4 w-4 sm:h-5 sm:w-5",
             color === "green" && "text-green-400",
             color === "blue" && "text-blue-400",
             color === "purple" && "text-purple-400",
@@ -183,9 +194,9 @@ function OpportunityCard({ title, description, icon: Icon, color, rate, requirem
             color === "cyan" && "text-cyan-400",
           )} />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <h4 className={cn(
-            "font-semibold text-base",
+            "font-semibold text-sm sm:text-base leading-tight",
             color === "green" && "text-green-400",
             color === "blue" && "text-blue-400",
             color === "purple" && "text-purple-400",
@@ -195,16 +206,29 @@ function OpportunityCard({ title, description, icon: Icon, color, rate, requirem
           )}>
             {title}
           </h4>
+          {/* Rate shown inline on mobile */}
+          <div className={cn(
+            "sm:hidden font-medium text-xs mt-0.5",
+            color === "green" && "text-green-300",
+            color === "blue" && "text-blue-300",
+            color === "purple" && "text-purple-300",
+            color === "orange" && "text-orange-300",
+            color === "red" && "text-red-300",
+            color === "cyan" && "text-cyan-300",
+          )}>
+            {rate}
+          </div>
         </div>
       </div>
 
-      <p className="text-sm text-white/70 mb-4 leading-relaxed">
+      <p className="text-xs sm:text-sm text-white/70 mb-2 sm:mb-4 leading-snug sm:leading-relaxed line-clamp-2 sm:line-clamp-none">
         {description}
       </p>
 
-      <div className="space-y-2 text-sm">
+      <div className="space-y-1 sm:space-y-2 text-sm">
+        {/* Rate hidden on mobile (shown above) */}
         <div className={cn(
-          "font-medium",
+          "hidden sm:block font-medium",
           color === "green" && "text-green-300",
           color === "blue" && "text-blue-300",
           color === "purple" && "text-purple-300",
@@ -214,23 +238,23 @@ function OpportunityCard({ title, description, icon: Icon, color, rate, requirem
         )}>
           {rate}
         </div>
-        <div className="text-white/60 text-xs">{requirement}</div>
-        <div className="text-white/40 text-[11px]">{growth}</div>
+        <div className="text-white/60 text-[11px] sm:text-xs line-clamp-1">{requirement}</div>
+        <div className="text-white/40 text-[10px] sm:text-[11px] line-clamp-1">{growth}</div>
       </div>
     </motion.div>
   );
 }
 
-// Stats Card Component
+// Stats Card Component - Mobile optimized
 function StatsCard({ label, value, icon: Icon, color }: { label: string; value: string | number; icon: typeof Zap; color: string }) {
   return (
     <motion.div
       variants={itemVariants}
-      className="glass-premium rounded-xl p-4"
+      className="glass-premium rounded-xl p-3 sm:p-4 flex-shrink-0 min-w-[140px] sm:min-w-0"
     >
-      <div className="flex items-start justify-between gap-2">
+      <div className="flex items-center gap-2 sm:gap-3">
         <div className={cn(
-          "p-2 rounded-lg",
+          "p-1.5 sm:p-2 rounded-lg",
           color === "yellow" && "bg-elec-yellow/10",
           color === "blue" && "bg-blue-500/10",
           color === "green" && "bg-green-500/10",
@@ -244,9 +268,9 @@ function StatsCard({ label, value, icon: Icon, color }: { label: string; value: 
             color === "purple" && "text-purple-400",
           )} />
         </div>
-        <div className="text-right">
+        <div>
           <div className={cn(
-            "text-xl font-bold",
+            "text-base sm:text-xl font-bold leading-tight",
             color === "yellow" && "text-elec-yellow",
             color === "blue" && "text-blue-400",
             color === "green" && "text-green-400",
@@ -254,7 +278,7 @@ function StatsCard({ label, value, icon: Icon, color }: { label: string; value: 
           )}>
             {value}
           </div>
-          <p className="text-xs text-white/60 mt-0.5">{label}</p>
+          <p className="text-[10px] sm:text-xs text-white/60">{label}</p>
         </div>
       </div>
     </motion.div>
@@ -411,7 +435,7 @@ const CareerProgression = () => {
         <link rel="canonical" href="/electrician/career-progression" />
       </Helmet>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8  ">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-5 sm:space-y-8">
         {/* Back Button Header */}
         <div className="flex items-center justify-between">
           {!activeSection ? (
@@ -435,62 +459,66 @@ const CareerProgression = () => {
 
         {activeSection === null ? (
           <>
-            {/* Hero Section */}
+            {/* Hero Section - Compact on mobile */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="relative overflow-hidden bg-elec-gray/50 border border-purple-500/20 rounded-2xl"
+              transition={{ duration: 0.3 }}
+              className="relative overflow-hidden bg-elec-gray/50 border border-purple-500/20 rounded-xl sm:rounded-2xl"
             >
               {/* Gradient accent line */}
               <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500" />
 
-              <div className="relative z-10 p-5 sm:p-6">
-                <div className="flex items-center gap-4">
-                  <div className="flex-shrink-0 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+              <div className="relative z-10 p-4 sm:p-6">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  {/* Hide icon on mobile, show on sm+ */}
+                  <div className="hidden sm:flex flex-shrink-0 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
                     <GraduationCap className="h-8 w-8 text-purple-400" />
+                  </div>
+                  {/* Small icon on mobile only */}
+                  <div className="sm:hidden flex-shrink-0 p-2 rounded-lg bg-purple-500/10">
+                    <GraduationCap className="h-5 w-5 text-purple-400" />
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <h1 className="text-xl sm:text-2xl font-semibold text-white leading-tight">
+                    <h1 className="text-lg sm:text-2xl font-semibold text-white leading-tight">
                       Career <span className="text-purple-400">Progression</span>
                     </h1>
-
-                    <p className="text-sm text-white/60 mt-1">
-                      JIB grades, professional training & specialist pathways
+                    <p className="text-xs sm:text-sm text-white/60 mt-0.5 sm:mt-1 line-clamp-1 sm:line-clamp-none">
+                      JIB grades & specialist pathways
                     </p>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Stats Bar */}
+            {/* Stats Bar - Horizontal scroll on mobile */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-2 sm:grid-cols-4 gap-3"
+              className="flex sm:grid sm:grid-cols-4 gap-2 sm:gap-3 overflow-x-auto pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide"
             >
               <StatsCard
-                label="Specialist Pathways"
+                label="Pathways"
                 value={marketData?.careerpathways || "15+"}
                 icon={Compass}
                 color="yellow"
               />
               <StatsCard
-                label="Training Courses"
+                label="Courses"
                 value={marketData?.totalCourses || "350+"}
                 icon={BookOpen}
                 color="blue"
               />
               <StatsCard
-                label="Salary Range"
-                value={marketData?.professionalRange || "£30k-£85k+"}
+                label="Salary"
+                value={marketData?.professionalRange || "£30-85k"}
                 icon={TrendingUp}
                 color="green"
               />
               <StatsCard
-                label="Growth Forecast"
+                label="Growth"
                 value="18%"
                 icon={Rocket}
                 color="purple"
@@ -499,16 +527,16 @@ const CareerProgression = () => {
 
             {/* Career Sections Grid */}
             <div>
-              <div className="flex items-center gap-2 px-1 mb-4">
+              <div className="flex items-center gap-2 px-1 mb-3 sm:mb-4">
                 <div className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                <h2 className="text-lg font-semibold text-white">Explore Career Options</h2>
+                <h2 className="text-base sm:text-lg font-semibold text-white">Explore Career Options</h2>
               </div>
 
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4"
               >
                 {careerSections.map((section) => (
                   <CareerCard
@@ -522,16 +550,17 @@ const CareerProgression = () => {
 
             {/* High-Demand Opportunities */}
             <div>
-              <div className="flex items-center gap-2 px-1 mb-4">
+              <div className="flex items-center gap-2 px-1 mb-3 sm:mb-4">
                 <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                <h2 className="text-lg font-semibold text-white">High-Demand Opportunities</h2>
+                <h2 className="text-base sm:text-lg font-semibold text-white">High-Demand Opportunities</h2>
               </div>
 
+              {/* Horizontal scroll on mobile, grid on desktop */}
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+                className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide"
               >
                 {opportunities.map((opp, index) => (
                   <OpportunityCard key={index} {...opp} />
@@ -541,34 +570,35 @@ const CareerProgression = () => {
 
             {/* Development Roadmap */}
             <div>
-              <div className="flex items-center gap-2 px-1 mb-4">
+              <div className="flex items-center gap-2 px-1 mb-3 sm:mb-4">
                 <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-                <h2 className="text-lg font-semibold text-white">Development Roadmap</h2>
+                <h2 className="text-base sm:text-lg font-semibold text-white">Development Roadmap</h2>
               </div>
 
+              {/* Horizontal scroll on mobile, grid on desktop */}
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                className="flex md:grid md:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide"
               >
                 {/* Immediate Actions */}
-                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-5">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-                      <Target className="h-4 w-4 text-elec-yellow" />
+                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-3 sm:p-5 flex-shrink-0 w-[260px] sm:w-[280px] md:w-auto">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                      <Target className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-elec-yellow" />
                     </div>
-                    <h3 className="font-semibold text-white">Immediate Actions</h3>
+                    <h3 className="font-semibold text-white text-sm sm:text-base">Immediate</h3>
                   </div>
-                  <ul className="space-y-2.5">
+                  <ul className="space-y-2 sm:space-y-2.5">
                     {[
-                      "Update CV with latest certifications",
-                      "Research emerging technology training",
-                      "Join professional networking groups",
-                      "Review JIB grade requirements",
-                      "Set up job alerts for specialist roles",
+                      "Update CV with certifications",
+                      "Research tech training",
+                      "Join networking groups",
+                      "Review JIB requirements",
+                      "Set up job alerts",
                     ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-white/70">
+                      <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-white/70">
                         <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
@@ -577,22 +607,22 @@ const CareerProgression = () => {
                 </motion.div>
 
                 {/* 3-Month Goals */}
-                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-5">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                      <Calendar className="h-4 w-4 text-blue-400" />
+                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-3 sm:p-5 flex-shrink-0 w-[260px] sm:w-[280px] md:w-auto">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                      <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-400" />
                     </div>
-                    <h3 className="font-semibold text-white">3-Month Goals</h3>
+                    <h3 className="font-semibold text-white text-sm sm:text-base">3-Month</h3>
                   </div>
-                  <ul className="space-y-2.5">
+                  <ul className="space-y-2 sm:space-y-2.5">
                     {[
-                      "Book specialist training courses",
-                      "Attend industry trade shows",
-                      "Research day rates vs salary",
-                      "Apply for professional membership",
-                      "Build portfolio of specialist work",
+                      "Book specialist courses",
+                      "Attend trade shows",
+                      "Research rates vs salary",
+                      "Apply for membership",
+                      "Build specialist portfolio",
                     ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-white/70">
+                      <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-white/70">
                         <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
@@ -601,22 +631,22 @@ const CareerProgression = () => {
                 </motion.div>
 
                 {/* Long-term Strategy */}
-                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-5">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                      <Rocket className="h-4 w-4 text-green-400" />
+                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-3 sm:p-5 flex-shrink-0 w-[260px] sm:w-[280px] md:w-auto">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                      <Rocket className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-400" />
                     </div>
-                    <h3 className="font-semibold text-white">Long-term Strategy</h3>
+                    <h3 className="font-semibold text-white text-sm sm:text-base">Long-term</h3>
                   </div>
-                  <ul className="space-y-2.5">
+                  <ul className="space-y-2 sm:space-y-2.5">
                     {[
-                      "Complete advanced qualifications",
-                      "Build subject matter expertise",
-                      "Consider HNC/HND/Degree pathway",
-                      "Evaluate contracting vs employment",
+                      "Complete qualifications",
+                      "Build expertise",
+                      "HNC/HND/Degree pathway",
+                      "Contracting vs employment",
                       "Explore business ownership",
                     ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-white/70">
+                      <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-white/70">
                         <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
@@ -628,34 +658,35 @@ const CareerProgression = () => {
 
             {/* Industry Insights */}
             <div>
-              <div className="flex items-center gap-2 px-1 mb-4">
+              <div className="flex items-center gap-2 px-1 mb-3 sm:mb-4">
                 <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-                <h2 className="text-lg font-semibold text-white">Industry Insights</h2>
+                <h2 className="text-base sm:text-lg font-semibold text-white">Industry Insights</h2>
               </div>
 
+              {/* Horizontal scroll on mobile, grid on desktop */}
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                className="flex md:grid md:grid-cols-2 gap-3 sm:gap-4 overflow-x-auto pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide"
               >
                 {/* Market Trends */}
-                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-5">
-                  <div className="flex items-center gap-2 mb-4">
-                    <TrendingUp className="h-5 w-5 text-green-400" />
-                    <h3 className="font-semibold text-white">Market Trends</h3>
+                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-3 sm:p-5 flex-shrink-0 w-[280px] sm:w-[320px] md:w-auto">
+                  <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                    <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
+                    <h3 className="font-semibold text-white text-sm sm:text-base">Market Trends</h3>
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-2 sm:space-y-3">
                     {[
-                      { label: "Net Zero Skills Premium", value: "+25%", color: "green" },
-                      { label: "EV Infrastructure Demand", value: "+300%", color: "green" },
-                      { label: "Smart Home Integration", value: "+180%", color: "blue" },
-                      { label: "Data Centre Growth", value: "+220%", color: "purple" },
+                      { label: "Net Zero Premium", value: "+25%", color: "green" },
+                      { label: "EV Infrastructure", value: "+300%", color: "green" },
+                      { label: "Smart Home", value: "+180%", color: "blue" },
+                      { label: "Data Centres", value: "+220%", color: "purple" },
                     ].map((item, i) => (
-                      <div key={i} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
-                        <span className="text-sm text-white/80">{item.label}</span>
+                      <div key={i} className="flex justify-between items-center p-2 sm:p-3 bg-white/5 rounded-lg">
+                        <span className="text-xs sm:text-sm text-white/80">{item.label}</span>
                         <span className={cn(
-                          "font-semibold text-sm",
+                          "font-semibold text-xs sm:text-sm",
                           item.color === "green" && "text-green-400",
                           item.color === "blue" && "text-blue-400",
                           item.color === "purple" && "text-purple-400",
@@ -668,21 +699,21 @@ const CareerProgression = () => {
                 </motion.div>
 
                 {/* Regional Rates */}
-                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-5">
-                  <div className="flex items-center gap-2 mb-4">
-                    <MapPin className="h-5 w-5 text-elec-yellow" />
-                    <h3 className="font-semibold text-white">Regional Day Rates</h3>
+                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-3 sm:p-5 flex-shrink-0 w-[280px] sm:w-[320px] md:w-auto">
+                  <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                    <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
+                    <h3 className="font-semibold text-white text-sm sm:text-base">Regional Rates</h3>
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-2 sm:space-y-3">
                     {[
-                      { region: "London & South East", rate: "£350-500/day" },
-                      { region: "Manchester & North West", rate: "£280-400/day" },
+                      { region: "London & SE", rate: "£350-500/day" },
+                      { region: "Manchester & NW", rate: "£280-400/day" },
                       { region: "Scotland", rate: "£300-420/day" },
-                      { region: "Wales & South West", rate: "£260-380/day" },
+                      { region: "Wales & SW", rate: "£260-380/day" },
                     ].map((item, i) => (
-                      <div key={i} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
-                        <span className="text-sm text-white/80">{item.region}</span>
-                        <span className="font-semibold text-sm text-elec-yellow">{item.rate}</span>
+                      <div key={i} className="flex justify-between items-center p-2 sm:p-3 bg-white/5 rounded-lg">
+                        <span className="text-xs sm:text-sm text-white/80">{item.region}</span>
+                        <span className="font-semibold text-xs sm:text-sm text-elec-yellow">{item.rate}</span>
                       </div>
                     ))}
                   </div>

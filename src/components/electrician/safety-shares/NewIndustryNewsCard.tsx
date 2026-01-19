@@ -58,8 +58,10 @@ const NewIndustryNewsCard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const ITEMS_PER_PAGE = 18;
+  const categories = ['All', 'Industry', 'Safety', 'Technical', 'BS7671', 'Projects'];
 
   // Filter articles
   const filteredArticles = useMemo(() => {
@@ -70,19 +72,20 @@ const NewIndustryNewsCard = () => {
         const matchesSearch = !searchTerm ||
           article.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
           article.summary?.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesSearch && isValidUrl(article.external_url);
+        const matchesCategory = selectedCategory === 'All' || article.category === selectedCategory;
+        return matchesSearch && matchesCategory && isValidUrl(article.external_url);
       })
       .sort((a, b) => {
         const dateA = new Date(a.date_published);
         const dateB = new Date(b.date_published);
         return dateB.getTime() - dateA.getTime();
       });
-  }, [articles, searchTerm]);
+  }, [articles, searchTerm, selectedCategory]);
 
-  // Reset page on search
+  // Reset page on search or category change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm]);
+  }, [searchTerm, selectedCategory]);
 
   // Pagination
   const totalPages = Math.ceil(filteredArticles.length / ITEMS_PER_PAGE);
@@ -265,6 +268,24 @@ const NewIndustryNewsCard = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
+            </div>
+
+            {/* Category filter pills */}
+            <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
+              {categories.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={cn(
+                    "px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all touch-manipulation",
+                    selectedCategory === cat
+                      ? "bg-elec-yellow text-black font-medium"
+                      : "bg-white/10 text-white/60 hover:bg-white/15"
+                  )}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
           </div>
         </motion.header>

@@ -9,6 +9,12 @@ interface DealsBannerProps {
   className?: string;
 }
 
+// Safe price formatting helper
+const formatPrice = (price: number | null | undefined): string => {
+  if (price === null || price === undefined) return '-.--';
+  return price.toFixed(2);
+};
+
 /**
  * Deals of the Day Banner
  * Rotating carousel showing active deals
@@ -158,11 +164,11 @@ function DealCard({ deal }: { deal: MarketplaceDeal }) {
       {/* Price & CTA */}
       <div className="text-center sm:text-right">
         <p className="text-2xl font-bold text-elec-yellow">
-          £{deal.deal_price.toFixed(2)}
+          £{formatPrice(deal.deal_price)}
         </p>
         {deal.original_price && (
           <p className="text-sm text-muted-foreground line-through">
-            £{deal.original_price.toFixed(2)}
+            £{formatPrice(deal.original_price)}
           </p>
         )}
         <Button

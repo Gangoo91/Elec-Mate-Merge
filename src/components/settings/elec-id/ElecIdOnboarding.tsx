@@ -26,8 +26,11 @@ import {
   Zap,
   FileCheck,
   GraduationCap,
+  Loader2,
+  AlertTriangle,
 } from "lucide-react";
 import { ECS_CARD_TYPES, UK_JOB_TITLES } from "@/data/uk-electrician-constants";
+import { supabase } from "@/integrations/supabase/client";
 
 // Exported form data type for parent component
 export interface OnboardingFormData {
@@ -41,6 +44,10 @@ interface ElecIdOnboardingProps {
   onComplete: (data: OnboardingFormData) => void;
   onSkip?: () => void;
   elecIdNumber?: string; // Pass actual Elec-ID from parent
+  needsRecovery?: boolean; // User opted in but doesn't have Elec-ID
+  userId?: string; // For generating Elec-ID
+  ecsCardType?: string; // Current ECS card type from profile
+  onRecoveryComplete?: (elecIdNumber: string) => void; // Called after successful recovery
 }
 
 const STEPS = [
@@ -116,7 +123,15 @@ const TIER_BENEFITS = [
   },
 ];
 
-const ElecIdOnboarding = ({ onComplete, onSkip, elecIdNumber }: ElecIdOnboardingProps) => {
+const ElecIdOnboarding = ({
+  onComplete,
+  onSkip,
+  elecIdNumber,
+  needsRecovery = false,
+  userId,
+  ecsCardType: initialEcsCardType,
+  onRecoveryComplete
+}: ElecIdOnboardingProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     jobTitle: "",
@@ -124,6 +139,49 @@ const ElecIdOnboarding = ({ onComplete, onSkip, elecIdNumber }: ElecIdOnboarding
     ecsCardExpiry: "",
     ecsCardNumber: "",
   });
+
+  // Recovery state
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [recoveryError, setRecoveryError] = useState<string | null>(null);
+  const [generatedId, setGeneratedId] = useState<string | null>(null);
+
+  // Handle Elec-ID generation for recovery
+  const handleGenerateElecId = async () => {
+    if (!userId) {
+      setRecoveryError('Unable to generate Elec-ID. Please try logging out and back in.');
+      return;
+    }
+
+    setIsGenerating(true);
+    setRecoveryError(null);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-elec-id', {
+        body: {
+          user_id: userId,
+          ecs_card_type: initialEcsCardType || null
+        }
+      });
+
+      if (error) {
+        console.error('Elec-ID generation failed:', error);
+        setRecoveryError('Failed to generate Elec-ID. Please try again.');
+        return;
+      }
+
+      if (data?.elec_id_number) {
+        setGeneratedId(data.elec_id_number);
+        onRecoveryComplete?.(data.elec_id_number);
+      } else {
+        setRecoveryError('Unexpected response. Please try again.');
+      }
+    } catch (err) {
+      console.error('Elec-ID generation exception:', err);
+      setRecoveryError('An error occurred. Please try again.');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   const progress = ((currentStep + 1) / STEPS.length) * 100;
   const step = STEPS[currentStep];
@@ -396,6 +454,94 @@ const ElecIdOnboarding = ({ onComplete, onSkip, elecIdNumber }: ElecIdOnboarding
         return null;
     }
   };
+
+  // Show recovery UI if user opted in but doesn't have Elec-ID
+  if (needsRecovery && !generatedId) {
+    return (
+      <div className="min-h-[300px] sm:min-h-[350px] flex flex-col items-center justify-center text-center px-4">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-elec-yellow/20 flex items-center justify-center mb-4 sm:mb-6">
+          <AlertTriangle className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
+        </div>
+
+        <h2 className="text-lg sm:text-xl font-bold text-foreground mb-2">
+          Your Elec-ID Wasn't Created
+        </h2>
+        <p className="text-sm sm:text-base text-muted-foreground max-w-sm mx-auto mb-6">
+          It looks like you opted for an Elec-ID during signup but it wasn't generated.
+          This can happen if you confirmed your email on a different device.
+        </p>
+
+        {recoveryError && (
+          <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 mb-4 max-w-sm">
+            <p className="text-sm text-red-400">{recoveryError}</p>
+          </div>
+        )}
+
+        <Button
+          onClick={handleGenerateElecId}
+          disabled={isGenerating}
+          className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base touch-manipulation active:scale-[0.98]"
+        >
+          {isGenerating ? (
+            <>
+              <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 mr-2 animate-spin" />
+              Generating...
+            </>
+          ) : (
+            <>
+              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+              Generate My Elec-ID Now
+            </>
+          )}
+        </Button>
+
+        {onSkip && (
+          <button
+            onClick={onSkip}
+            className="mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Skip for now
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  // Show success after recovery
+  if (generatedId) {
+    return (
+      <div className="min-h-[300px] sm:min-h-[350px] flex flex-col items-center justify-center text-center px-4">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-green-500/20 flex items-center justify-center mb-4 sm:mb-6">
+          <CheckCircle2 className="h-8 w-8 sm:h-10 sm:w-10 text-green-400" />
+        </div>
+
+        <h2 className="text-lg sm:text-xl font-bold text-foreground mb-2">
+          Your Elec-ID is Ready!
+        </h2>
+        <p className="text-sm sm:text-base text-muted-foreground max-w-sm mx-auto mb-4">
+          Your digital credential has been created successfully.
+        </p>
+
+        <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-white/5 border border-elec-yellow/30 mb-6">
+          <IdCard className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0" />
+          <div className="text-left">
+            <p className="text-[10px] sm:text-xs text-muted-foreground">Your Elec-ID</p>
+            <p className="font-mono font-bold text-base sm:text-xl text-foreground">
+              {generatedId}
+            </p>
+          </div>
+        </div>
+
+        <Button
+          onClick={() => onComplete(formData)}
+          className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base touch-manipulation active:scale-[0.98]"
+        >
+          <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+          Go to My Elec-ID
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[400px] sm:min-h-[500px] md:min-h-[550px] flex flex-col">

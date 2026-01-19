@@ -271,11 +271,14 @@ function PremiumHubCard({ hub, data }: { hub: HubConfig; data: ReturnType<typeof
 
 export function PremiumHubGrid() {
   const dashboardData = useDashboardData();
-  const { profile } = useAuth();
-  const userRole = profile?.role || 'visitor';
+  const { profile, isLoading } = useAuth();
+  const userRole = profile?.role || '';
 
   // Filter hubs based on user role
-  const filteredHubs = hubsConfig.filter(hub => hub.roles.includes(userRole));
+  // If no role set or still loading, show all hubs so user can explore
+  const filteredHubs = (!userRole || isLoading)
+    ? hubsConfig
+    : hubsConfig.filter(hub => hub.roles.includes(userRole));
 
   // Determine grid columns based on number of hubs
   const gridCols = filteredHubs.length === 1
@@ -283,6 +286,17 @@ export function PremiumHubGrid() {
     : filteredHubs.length === 2
     ? 'grid-cols-1 sm:grid-cols-2'
     : 'grid-cols-1 sm:grid-cols-3';
+
+  // Show loading skeleton while profile loads
+  if (isLoading) {
+    return (
+      <div className={cn('grid gap-3 sm:gap-4', 'grid-cols-1 sm:grid-cols-3')}>
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="glass-premium rounded-2xl h-[180px] animate-pulse" />
+        ))}
+      </div>
+    );
+  }
 
   if (filteredHubs.length === 0) {
     return null;

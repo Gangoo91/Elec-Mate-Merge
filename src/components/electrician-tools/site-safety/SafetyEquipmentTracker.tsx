@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Package, Loader2 } from "lucide-react";
+import { ArrowLeft, Package, Loader2, Search, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { useSafetyEquipment, SafetyEquipment } from "@/hooks/useSafetyEquipment";
 import {
   EquipmentHeroCard,
@@ -21,21 +22,28 @@ export const SafetyEquipmentTracker: React.FC = () => {
     updateEquipment,
     deleteEquipment,
     markInspected,
+    markCalibrated,
   } = useSafetyEquipment();
 
   const [activeFilter, setActiveFilter] = useState<EquipmentFilterId>("all");
   const [showForm, setShowForm] = useState(false);
   const [editingEquipment, setEditingEquipment] = useState<SafetyEquipment | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Filter equipment based on active tab
+  // Filter equipment based on active tab and search query
   const filteredEquipment = useMemo(() => {
+    let result = equipment;
+
+    // Filter by status tab
     switch (activeFilter) {
       case "good":
-        return equipment.filter((e) => e.status === "good");
+        result = result.filter((e) => e.status === "good");
+        break;
       case "attention":
-        return equipment.filter((e) => e.status === "needs_attention");
+        result = result.filter((e) => e.status === "needs_attention");
+        break;
       case "overdue":
-        return equipment.filter((e) => {
+        result = result.filter((e) => {
           if (e.next_inspection) {
             return new Date(e.next_inspection) < new Date();
           }
@@ -44,10 +52,22 @@ export const SafetyEquipmentTracker: React.FC = () => {
           }
           return e.status === "overdue";
         });
-      default:
-        return equipment;
+        break;
     }
-  }, [equipment, activeFilter]);
+
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(
+        (e) =>
+          e.name.toLowerCase().includes(query) ||
+          e.location?.toLowerCase().includes(query) ||
+          e.serial_number?.toLowerCase().includes(query)
+      );
+    }
+
+    return result;
+  }, [equipment, activeFilter, searchQuery]);
 
   // Tab configuration with counts
   const tabs = [
@@ -124,6 +144,10 @@ export const SafetyEquipmentTracker: React.FC = () => {
     markInspected.mutate(id);
   };
 
+  const handleMarkCalibrated = (id: string) => {
+    markCalibrated.mutate(id);
+  };
+
   const handleCloseForm = () => {
     setShowForm(false);
     setEditingEquipment(null);
@@ -142,10 +166,10 @@ export const SafetyEquipmentTracker: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-elec-dark pb-24">
+    <div className="min-h-screen bg-black pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-3">
+      <div className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-white/[0.08]">
+        <div className="px-2 py-2">
           <button
             onClick={() => navigate("/electrician-tools/site-safety")}
             className="flex items-center gap-2 text-white/70 hover:text-white transition-colors min-h-[44px] touch-manipulation"
@@ -156,7 +180,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
         </div>
       </div>
 
-      <div className="px-4 py-4 space-y-5">
+      <div className="px-2 py-2 space-y-3">
         {/* Hero Card with Stats */}
         <EquipmentHeroCard
           totalEquipment={stats.total}
@@ -166,6 +190,25 @@ export const SafetyEquipmentTracker: React.FC = () => {
           onAddEquipment={() => setShowForm(true)}
         />
 
+        {/* Compact Search */}
+        <div className="relative">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+          <Input
+            placeholder="Search equipment..."
+            className="pl-8 pr-8 h-9 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 hover:bg-white/10 rounded-full"
+              onClick={() => setSearchQuery("")}
+            >
+              <X className="h-3.5 w-3.5 text-white/40" />
+            </button>
+          )}
+        </div>
+
         {/* Filter Tabs */}
         <EquipmentFilterTabs
           tabs={tabs}
@@ -174,17 +217,17 @@ export const SafetyEquipmentTracker: React.FC = () => {
         />
 
         {/* Equipment List */}
-        <div className="space-y-3">
+        <div className="space-y-2">
           {isLoading ? (
-            <Card className="bg-[#1e1e1e] border border-white/10 rounded-2xl">
-              <CardContent className="py-16">
-                <div className="flex flex-col items-center justify-center gap-4">
-                  <div className="p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
-                    <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+            <Card className="bg-white/5 border border-white/[0.08] rounded-xl">
+              <CardContent className="py-12">
+                <div className="flex flex-col items-center justify-center gap-3">
+                  <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                    <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
                   </div>
                   <div className="text-center">
-                    <p className="text-white font-medium">Loading Equipment</p>
-                    <p className="text-sm text-white/50 mt-1">
+                    <p className="text-sm font-medium text-white">Loading Equipment</p>
+                    <p className="text-xs text-white/50 mt-0.5">
                       Fetching your safety equipment...
                     </p>
                   </div>
@@ -192,15 +235,15 @@ export const SafetyEquipmentTracker: React.FC = () => {
               </CardContent>
             </Card>
           ) : filteredEquipment.length === 0 ? (
-            <Card className="bg-[#1e1e1e] border border-white/10 border-dashed rounded-2xl">
-              <CardContent className="py-12 text-center">
-                <div className="p-4 mx-auto w-fit rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 mb-4">
-                  <Package className="h-8 w-8 text-elec-yellow" />
+            <Card className="bg-white/5 border border-white/[0.08] border-dashed rounded-xl">
+              <CardContent className="py-8 text-center">
+                <div className="p-3 mx-auto w-fit rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
+                  <Package className="h-6 w-6 text-elec-yellow" />
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">
+                <h3 className="text-base font-semibold text-white mb-1">
                   {activeFilter === "all" ? "No Equipment" : `No ${tabs.find(t => t.id === activeFilter)?.label} Equipment`}
                 </h3>
-                <p className="text-white/50 mb-6 max-w-[280px] mx-auto">
+                <p className="text-xs text-white/50 mb-4 max-w-[200px] mx-auto">
                   {activeFilter === "all"
                     ? "Add your first piece of equipment to start tracking"
                     : `No equipment in ${activeFilter} status`}
@@ -208,7 +251,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
                 {activeFilter === "all" && (
                   <button
                     onClick={() => setShowForm(true)}
-                    className="h-12 px-6 flex items-center justify-center gap-2 mx-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium rounded-xl touch-manipulation active:scale-[0.98] transition-all"
+                    className="h-10 px-5 flex items-center justify-center gap-2 mx-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium rounded-xl touch-manipulation active:scale-[0.98] transition-all"
                   >
                     Add Equipment
                   </button>
@@ -223,6 +266,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
                 onEdit={() => handleEdit(item)}
                 onDelete={() => handleDelete(item.id)}
                 onMarkInspected={() => handleMarkInspected(item.id)}
+                onMarkCalibrated={item.requires_calibration ? () => handleMarkCalibrated(item.id) : undefined}
                 index={index}
               />
             ))

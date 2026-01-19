@@ -87,7 +87,7 @@ export function TemplateCard({
         "relative overflow-hidden rounded-2xl",
         "bg-[#1e1e1e] border border-white/10",
         "hover:border-elec-yellow/30 transition-all duration-300",
-        "active:scale-[0.98]"
+        "touch-manipulation active:scale-[0.995] transition-transform duration-150"
       )}
     >
       <div className="p-4">
@@ -132,7 +132,7 @@ export function TemplateCard({
               variant="ghost"
               size="sm"
               onClick={(e) => { e.stopPropagation(); onEdit(); }}
-              className="flex-1 h-11 text-white/70 hover:text-white hover:bg-white/10 border border-white/10"
+              className="flex-1 h-11 text-yellow-400/80 hover:text-yellow-400 hover:bg-yellow-400/10 border border-yellow-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <FileText className="h-4 w-4 mr-1.5" />
               Edit
@@ -143,7 +143,7 @@ export function TemplateCard({
               variant="ghost"
               size="sm"
               onClick={(e) => { e.stopPropagation(); onDuplicate(); }}
-              className="flex-1 h-11 text-white/70 hover:text-white hover:bg-white/10 border border-white/10"
+              className="flex-1 h-11 text-blue-400/80 hover:text-blue-400 hover:bg-blue-400/10 border border-blue-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Copy className="h-4 w-4 mr-1.5" />
               Duplicate
@@ -194,7 +194,7 @@ export function HistoryCard({
         "bg-[#1e1e1e] border",
         isComplete ? "border-emerald-500/20" : "border-white/10",
         "hover:border-elec-yellow/30 transition-all duration-300",
-        "active:scale-[0.98]"
+        "touch-manipulation active:scale-[0.995] transition-transform duration-150"
       )}
     >
       <div className="p-4">
@@ -255,7 +255,7 @@ export function HistoryCard({
               variant="ghost"
               size="sm"
               onClick={(e) => { e.stopPropagation(); onView(); }}
-              className="flex-1 h-11 text-white/70 hover:text-white hover:bg-white/10 border border-white/10"
+              className="flex-1 h-11 text-blue-400/80 hover:text-blue-400 hover:bg-blue-400/10 border border-blue-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Eye className="h-4 w-4 mr-1.5" />
               View
@@ -266,7 +266,7 @@ export function HistoryCard({
               variant="ghost"
               size="sm"
               onClick={(e) => { e.stopPropagation(); onShare(); }}
-              className="flex-1 h-11 text-white/70 hover:text-white hover:bg-white/10 border border-white/10"
+              className="flex-1 h-11 text-emerald-400/80 hover:text-emerald-400 hover:bg-emerald-400/10 border border-emerald-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Share2 className="h-4 w-4 mr-1.5" />
               Share
@@ -277,7 +277,7 @@ export function HistoryCard({
               variant="ghost"
               size="sm"
               onClick={(e) => { e.stopPropagation(); onDownload(); }}
-              className="flex-1 h-11 text-white/70 hover:text-white hover:bg-white/10 border border-white/10"
+              className="flex-1 h-11 text-purple-400/80 hover:text-purple-400 hover:bg-purple-400/10 border border-purple-400/20 touch-manipulation active:scale-[0.97] transition-all duration-150"
             >
               <Download className="h-4 w-4 mr-1.5" />
               PDF
@@ -312,7 +312,7 @@ export function PendingCard({
         "relative overflow-hidden rounded-2xl",
         "bg-[#1e1e1e] border border-amber-500/20",
         "hover:border-elec-yellow/30 transition-all duration-300",
-        "active:scale-[0.98]"
+        "touch-manipulation active:scale-[0.995] transition-transform duration-150"
       )}
     >
       <div className="p-4">
@@ -355,7 +355,7 @@ export function PendingCard({
         {onContinue && (
           <Button
             onClick={onContinue}
-            className="w-full h-11 bg-amber-500 text-black hover:bg-amber-400"
+            className="w-full h-11 bg-emerald-500 text-black hover:bg-emerald-400 touch-manipulation active:scale-[0.97] transition-all duration-150"
           >
             <Play className="h-4 w-4 mr-1.5" />
             Continue Briefing

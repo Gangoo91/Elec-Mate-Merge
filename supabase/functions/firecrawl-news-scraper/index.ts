@@ -3,6 +3,7 @@ import { handleError, ValidationError } from "../_shared/errors.ts";
 import { withRetry, RetryPresets } from "../_shared/retry.ts";
 import { withTimeout, Timeouts } from "../_shared/timeout.ts";
 import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { startScraperRun } from "../_shared/scraper-health.ts";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -12,9 +13,12 @@ serve(async (req) => {
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'firecrawl-news-scraper' });
 
+  // Start health tracking
+  const healthTracker = await startScraperRun('firecrawl-news-scraper', { requestId });
+
   try {
     logger.info('Starting Firecrawl news scraping process');
-    
+
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
@@ -30,11 +34,20 @@ serve(async (req) => {
       
       const url = "https://api.firecrawl.dev/v2/batch/scrape";
       const urls = [
+        // Existing electrical
         "https://www.electricaltimes.co.uk/latest-news/",
         "https://professional-electrician.com/category/technical/",
         "https://electricalcontractingnews.com/category/safety-and-training/",
         "https://professional-electrician.com/category/18th-edition/",
-        "https://www.electricaltimes.co.uk/category/electrical-safety/"
+        "https://www.electricaltimes.co.uk/category/electrical-safety/",
+        // UK Construction & Building
+        "https://www.constructionenquirer.com/category/projects/",
+        "https://www.theconstructionindex.co.uk/news",
+        "https://www.building.co.uk/news",
+        // UK Building Services & HVAC
+        "https://www.bsria.com/uk/news/",
+        // UK Electrical Trade Community
+        "https://www.voltimum.co.uk/news",
       ];
 
       const options = {
@@ -51,7 +64,28 @@ serve(async (req) => {
           formats: [
             {
               type: "json",
-              prompt: "Extract only articles that are directly related to electricians or the electrical industry. Ignore unrelated articles. For each article, include the title, description, date, and url.",
+              prompt: `You are extracting UK electrical and construction industry news articles.
+
+STRICT REQUIREMENTS:
+1. ONLY include articles about the UK electrical industry, UK construction projects, or UK building services
+2. MUST be from UK publications or specifically about UK topics
+3. Extract: full article title, complete description/summary (2-3 sentences), publication date, article URL, and any image URL
+
+REJECT IMMEDIATELY:
+- Any articles about USA, India, Australia, Asia, Middle East, Europe (non-UK)
+- Stock market news, financial reports, quarterly earnings, IPO announcements
+- Product advertisements, sponsored content, press release distributions
+- Generic international news not specifically about UK
+
+ACCEPT:
+- UK electrical regulations (BS7671, 18th Edition, Part P, Building Regulations)
+- UK electrician news, training, apprenticeships (NICEIC, NAPIT, ECS, JIB)
+- UK construction projects, infrastructure, building contracts
+- UK electrical safety, HSE guidance, fire safety
+- UK renewable energy, EV charging, solar, heat pumps
+- UK building services, M&E, HVAC
+
+For each article, extract the complete title as written, a detailed summary capturing the key points, the exact publication date in ISO format, and the direct URL to the article.`,
               schema: {
                 type: "array",
                 items: {
@@ -148,7 +182,12 @@ serve(async (req) => {
             "https://professional-electrician.com/category/technical/": { category: "Technical", source: "Professional Electrician" },
             "https://electricalcontractingnews.com/category/safety-and-training/": { category: "Safety", source: "Electrical Contracting News" },
             "https://professional-electrician.com/category/18th-edition/": { category: "BS7671", source: "Professional Electrician" },
-            "https://www.electricaltimes.co.uk/category/electrical-safety/": { category: "Safety", source: "Electrical Times" }
+            "https://www.electricaltimes.co.uk/category/electrical-safety/": { category: "Safety", source: "Electrical Times" },
+            "https://www.constructionenquirer.com/category/projects/": { category: "Projects", source: "Construction Enquirer" },
+            "https://www.theconstructionindex.co.uk/news": { category: "Projects", source: "Construction Index" },
+            "https://www.building.co.uk/news": { category: "Projects", source: "Building" },
+            "https://www.bsria.com/uk/news/": { category: "Technical", source: "BSRIA" },
+            "https://www.voltimum.co.uk/news": { category: "Industry", source: "Voltimum UK" },
           };
 
           // UK Electrical Industry relevance keywords
@@ -168,15 +207,29 @@ serve(async (req) => {
             'electrical safety', 'fire safety', 'shock', 'arc fault', 'afdd',
             'electrical fire', 'installation', 'inspection', 'testing',
             // UK specific
-            'uk', 'england', 'scotland', 'wales', 'northern ireland', 'british'
+            'uk', 'england', 'scotland', 'wales', 'northern ireland', 'british',
+            // Construction & Infrastructure
+            'construction', 'infrastructure', 'building project', 'tender', 'contract award',
+            'nhs', 'school', 'hospital', 'housing', 'rail', 'hs2',
+            'm&e', 'mechanical electrical', 'building services', 'data centre'
           ];
 
           // Words that indicate non-UK or non-electrical content
           const EXCLUSION_KEYWORDS = [
+            // Non-UK geographic
             'nec code', 'nfpa', 'ul listed', 'american', 'usa', 'us market',
             'canadian', 'australian', 'india', 'asia pacific',
-            'stock market', 'share price', 'quarterly earnings', 'ipo',
-            'cryptocurrency', 'bitcoin', 'blockchain'
+            'indian', 'asian', 'china', 'chinese', 'japan', 'japanese',
+            'middle east', 'africa', 'south america', 'mexico', 'brazil',
+            'european union', 'germany', 'france', 'united states',
+            'mumbai', 'delhi', 'bangalore', 'singapore', 'dubai',
+            // Financial spam
+            'stock market', 'share price', 'quarterly earnings', 'ipo', 'nasdaq', 'nyse',
+            'cryptocurrency', 'bitcoin', 'blockchain',
+            'advertisement', 'sponsored', 'press release distribution',
+            'free shipping', 'buy now', 'discount code', 'promo',
+            // Non-UK regulatory
+            'ieee', 'ansi', 'csa', 'saa',
           ];
 
           const isRelevantArticle = (article: any): boolean => {
@@ -189,6 +242,25 @@ serve(async (req) => {
             return UK_ELECTRICAL_KEYWORDS.some(keyword => text.includes(keyword));
           };
 
+          const validateUKRelevance = (article: any): boolean => {
+            const text = `${article.title || ''} ${article.description || ''}`.toLowerCase();
+
+            // Strong UK indicators
+            const ukIndicators = [
+              'bs 7671', 'bs7671', '18th edition', 'iet', 'niceic', 'napit', 'elecsa',
+              'part p', 'building regulations', 'hse',
+              'uk', 'united kingdom', 'british', 'england', 'scotland', 'wales',
+              'northern ireland', 'london', 'manchester', 'birmingham', 'leeds',
+              'liverpool', 'glasgow', 'edinburgh', 'cardiff', 'belfast'
+            ];
+
+            // Check URL for UK domain
+            const url = (article.visit_link || article.url || '').toLowerCase();
+            const isUKDomain = url.includes('.co.uk') || url.includes('.gov.uk') || url.includes('.org.uk');
+
+            return ukIndicators.some(ind => text.includes(ind)) || isUKDomain;
+          };
+
             for (const result of status.data) {
             if (result.json && Array.isArray(result.json)) {
               const sourceInfo = sourceMap[result.url as keyof typeof sourceMap] || { category: "General", source: "Unknown" };
@@ -196,6 +268,7 @@ serve(async (req) => {
               const processedArticles = result.json
                 .filter((article: any) => article.title && article.title.length > 10)
                 .filter(isRelevantArticle)
+                .filter(validateUKRelevance)
                 .map((article: any) => ({
                   title: article.title,
                   description: article.description,
@@ -291,7 +364,20 @@ serve(async (req) => {
       };
     }));
 
-    // Check for existing articles to avoid duplicates
+    // Helper function to normalize titles for similarity comparison
+    const normalizeTitle = (title: string): string => {
+      return title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, '') // Remove punctuation
+        .replace(/\s+/g, ' ')         // Normalize whitespace
+        .trim()
+        .split(' ')
+        .filter(word => word.length > 2) // Remove short words
+        .slice(0, 8)                      // Take first 8 significant words
+        .join(' ');
+    };
+
+    // Check for existing articles to avoid duplicates (by hash)
     const existingHashes = await supabase
       .from('industry_news')
       .select('content_hash')
@@ -301,10 +387,42 @@ serve(async (req) => {
       existingHashes.data?.map(item => item.content_hash) || []
     );
 
-    // Filter out articles that already exist
-    const newArticles = transformedArticles.filter(
-      article => !existingHashSet.has(article.content_hash)
+    // Also check for similar titles in recent articles (last 7 days)
+    const recentTitles = await supabase
+      .from('industry_news')
+      .select('title')
+      .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString());
+
+    const existingNormalizedTitles = new Set(
+      (recentTitles.data || []).map(item => normalizeTitle(item.title))
     );
+
+    // Track normalized titles in current batch to avoid batch duplicates
+    const batchNormalizedTitles = new Set<string>();
+
+    // Filter out articles that already exist (by hash or similar title)
+    const newArticles = transformedArticles.filter(article => {
+      // Skip if hash already exists
+      if (existingHashSet.has(article.content_hash)) {
+        return false;
+      }
+
+      // Skip if similar title exists in database
+      const normalizedTitle = normalizeTitle(article.title);
+      if (existingNormalizedTitles.has(normalizedTitle)) {
+        logger.debug('Skipping similar title (exists in DB)', { title: article.title });
+        return false;
+      }
+
+      // Skip if similar title already in this batch
+      if (batchNormalizedTitles.has(normalizedTitle)) {
+        logger.debug('Skipping similar title (batch duplicate)', { title: article.title });
+        return false;
+      }
+
+      batchNormalizedTitles.add(normalizedTitle);
+      return true;
+    });
 
     logger.info('New articles to insert', { count: newArticles.length });
 
@@ -331,13 +449,20 @@ serve(async (req) => {
 
     logger.info('News scraping completed', { insertedCount });
 
+    // Log successful run
+    await healthTracker.completeRun({
+      itemsFound: articles.length,
+      itemsInserted: insertedCount,
+      itemsSkipped: articles.length - insertedCount
+    });
+
     return new Response(
-      JSON.stringify({ 
-        success: true, 
+      JSON.stringify({
+        success: true,
         message: `Successfully scraped and inserted ${insertedCount} new articles`,
         totalFound: articles.length,
         articlesInserted: insertedCount,
-        sources: ['Electrical Times', 'Professional Electrician', 'Electrical Contracting News'],
+        sources: ['Electrical Times', 'Professional Electrician', 'Electrical Contracting News', 'Construction Enquirer', 'Construction Index', 'Building', 'BSRIA', 'Voltimum UK'],
         timestamp: new Date().toISOString(),
         requestId
       }),
@@ -345,6 +470,9 @@ serve(async (req) => {
     );
 
   } catch (error) {
+    // Log failed run
+    await healthTracker.failRun(error instanceof Error ? error.message : String(error));
+
     logger.error('Firecrawl news scraping error', { error: error instanceof Error ? error.message : String(error) });
     return handleError(error);
   }

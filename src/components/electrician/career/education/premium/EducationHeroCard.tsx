@@ -65,8 +65,8 @@ const AnimatedCounter = ({
   );
 };
 
-// Stat card component - Premium design
-const StatCard = ({
+// Stat pill component for horizontal scroll on mobile
+const StatPill = ({
   icon: Icon,
   value,
   label,
@@ -82,18 +82,18 @@ const StatCard = ({
   iconColor?: string;
 }) => (
   <motion.div
-    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-    animate={{ opacity: 1, y: 0, scale: 1 }}
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
     transition={{ type: "spring", stiffness: 300, damping: 25 }}
-    className="group bg-white/[0.03] hover:bg-white/[0.08] rounded-2xl p-3 sm:p-4 text-center border border-white/5 hover:border-white/10 transition-all duration-300 backdrop-blur-sm"
+    className="flex-shrink-0 flex items-center gap-2 bg-white/5 hover:bg-white/10 rounded-full px-3 py-2 border border-white/10 transition-colors"
   >
-    <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-      <Icon className={cn("h-5 w-5", iconColor)} />
+    <div className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center">
+      <Icon className={cn("h-4 w-4", iconColor)} />
     </div>
-    <div className="text-xl sm:text-2xl font-bold text-white">
+    <div className="text-sm font-semibold text-white whitespace-nowrap">
       <AnimatedCounter value={value} suffix={suffix} decimals={decimals} />
     </div>
-    <div className="text-[10px] sm:text-xs text-white/50 uppercase tracking-wider font-medium mt-1">{label}</div>
+    <div className="text-xs text-white/50 whitespace-nowrap">{label}</div>
   </motion.div>
 );
 
@@ -124,27 +124,22 @@ const EducationHeroCard = ({
         <div className="absolute -left-10 top-10 w-40 h-40 rounded-full bg-violet-500/10 blur-3xl pointer-events-none" />
         <div className="absolute right-20 bottom-0 w-32 h-32 rounded-full bg-blue-500/10 blur-2xl pointer-events-none" />
 
-        <div className="relative z-10 p-5 sm:p-8">
-          {/* Header row */}
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-center gap-4">
-              {/* Premium Icon with glow */}
-              <div className="relative">
-                <div className="absolute inset-0 bg-purple-500/30 rounded-2xl blur-xl" />
-                <div className="relative p-4 rounded-2xl bg-gradient-to-br from-purple-500/30 to-purple-600/20 border border-purple-400/30 backdrop-blur-sm">
-                  <GraduationCap className="h-8 w-8 text-purple-300" />
-                </div>
+        <div className="relative z-10 p-4 sm:p-6">
+          {/* Compact Header row */}
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              {/* Compact Icon */}
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/30 to-purple-600/20 border border-purple-400/30">
+                <GraduationCap className="h-6 w-6 text-purple-300" />
               </div>
 
               {/* Title */}
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                <h1 className="text-lg sm:text-2xl font-semibold text-white">
                   Further{" "}
-                  <span className="bg-gradient-to-r from-purple-400 via-violet-400 to-purple-400 bg-clip-text text-transparent">
-                    Education
-                  </span>
+                  <span className="text-purple-400">Education</span>
                 </h1>
-                <p className="text-sm sm:text-base text-white/60 mt-1">
+                <p className="text-xs sm:text-sm text-white/60 hidden sm:block">
                   HNC, HND, degrees & apprenticeships
                 </p>
               </div>
@@ -157,10 +152,10 @@ const EducationHeroCard = ({
                 disabled={isRefreshing}
                 size="icon"
                 variant="ghost"
-                className="h-10 w-10 text-white/60 hover:text-white hover:bg-white/10 rounded-xl"
+                className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10 rounded-lg"
               >
                 <RefreshCw
-                  className={cn("h-5 w-5", isRefreshing && "animate-spin")}
+                  className={cn("h-4 w-4", isRefreshing && "animate-spin")}
                 />
               </Button>
             )}
@@ -184,29 +179,29 @@ const EducationHeroCard = ({
             </motion.div>
           )}
 
-          {/* Stats Grid - Enhanced */}
+          {/* Stats - Horizontal Scroll on Mobile */}
           {analytics && (
-            <div className="grid grid-cols-4 gap-3 sm:gap-4 mt-6">
-              <StatCard
+            <div className="flex gap-2 overflow-x-auto mt-4 -mx-5 px-5 pb-1 sm:mx-0 sm:px-0 scrollbar-hide">
+              <StatPill
                 icon={GraduationCap}
                 value={analytics.totalCourses}
                 label="Programmes"
                 iconColor="text-purple-300"
               />
-              <StatCard
+              <StatPill
                 icon={Users}
                 value={analytics.totalProviders}
                 label="Providers"
                 iconColor="text-emerald-300"
               />
-              <StatCard
+              <StatPill
                 icon={Star}
                 value={analytics.averageRating}
-                label="Avg Rating"
+                label="Rating"
                 decimals={1}
                 iconColor="text-amber-300"
               />
-              <StatCard
+              <StatPill
                 icon={TrendingUp}
                 value={analytics.averageEmploymentRate || 0}
                 label="Employed"
@@ -216,25 +211,25 @@ const EducationHeroCard = ({
             </div>
           )}
 
-          {/* Action Buttons - Premium */}
-          <div className="flex gap-3 mt-6">
+          {/* Action Buttons - Mobile-Optimized */}
+          <div className="flex gap-2 mt-4">
             {onFundingCalculator && (
               <Button
                 onClick={onFundingCalculator}
-                className="flex-1 sm:flex-none h-11 bg-gradient-to-r from-purple-500 to-violet-500 text-white hover:from-purple-400 hover:to-violet-400 gap-2 font-semibold shadow-lg shadow-purple-500/25 rounded-xl"
+                className="flex-1 h-11 bg-gradient-to-r from-purple-500 to-violet-500 text-white hover:from-purple-400 hover:to-violet-400 gap-2 font-medium rounded-xl touch-manipulation active:scale-[0.98]"
               >
                 <Calculator className="h-4 w-4" />
-                <span className="hidden sm:inline">Funding</span> Calculator
+                Funding
               </Button>
             )}
             {onBrowseAll && (
               <Button
                 onClick={onBrowseAll}
                 variant="outline"
-                className="flex-1 sm:flex-none h-11 border-white/20 text-white hover:text-white hover:bg-white/10 gap-2 font-semibold rounded-xl backdrop-blur-sm"
+                className="flex-1 h-11 border-white/20 text-white hover:text-white hover:bg-white/10 gap-2 font-medium rounded-xl touch-manipulation active:scale-[0.98]"
               >
                 <ChevronDown className="h-4 w-4" />
-                Browse <span className="hidden sm:inline">Programmes</span>
+                Browse
               </Button>
             )}
           </div>

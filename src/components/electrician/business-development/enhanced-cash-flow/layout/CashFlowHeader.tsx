@@ -8,6 +8,7 @@ import {
   AlertCircle,
   FileText,
 } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -68,6 +69,8 @@ export const CashFlowHeader = ({
 
         {/* Actions */}
         <div className="flex items-center gap-2 shrink-0">
+          <SmartBackButton />
+
           {/* Templates - Mobile only */}
           <button
             onClick={onLoadTemplates}

@@ -16,11 +16,11 @@ export const ProjectInfoHeader: React.FC<ProjectInfoHeaderProps> = ({
   location 
 }) => {
   return (
-    <Card className="bg-gradient-to-br from-elec-yellow/10 via-elec-gray to-elec-gray border-elec-yellow/40 mb-6 sticky top-0 z-10">
-      <CardContent className="p-4 md:p-6">
+    <Card className="bg-gradient-to-br from-elec-yellow/10 via-elec-gray to-elec-gray border-elec-yellow/20 mb-3 sticky top-0 z-10">
+      <CardContent className="p-3">
         {/* Project Title */}
-        <h2 className="text-xl md:text-2xl font-bold text-elec-light mb-4 flex items-center gap-2">
-          <span className="w-1.5 h-8 bg-elec-yellow rounded-full"></span>
+        <h2 className="text-base font-bold text-elec-light mb-3 flex items-center gap-2">
+          <span className="w-1 h-6 bg-elec-yellow rounded-full"></span>
           {methodData.jobTitle || projectName || 'Untitled Project'}
         </h2>
 

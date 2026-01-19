@@ -723,25 +723,24 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
   return (
     <div className={cn(
-      "max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-4 sm:space-y-6",
-      isMobile && keyboardVisible && "pb-[100px]",
-      isMobile && !keyboardVisible && "pb-[100px]"
+      "px-2 py-3 space-y-3 bg-elec-dark min-h-screen",
+      isMobile && "pb-20"
     )}>
-      <div className="bg-white/5 rounded-2xl overflow-hidden">
-        <div className="p-4 sm:p-6 border-b border-white/10">
+      <div className="bg-white/5 rounded-xl overflow-hidden border border-white/[0.08]">
+        <div className="p-3 border-b border-white/[0.08]">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <h2 className="text-lg sm:text-xl font-semibold text-white">
+            <div className="flex items-center gap-2">
+              <h2 className="text-base font-semibold text-white">
                 Review & Edit
               </h2>
-              <Badge className="bg-green-500/10 text-green-400 border border-green-500/20 text-xs font-medium px-2 py-0.5">
+              <Badge className="bg-green-500/10 text-green-400 border border-green-500/20 text-[10px] font-medium px-1.5 py-0.5">
                 AI Generated
               </Badge>
             </div>
             {!isMobile && (
               <div className="flex items-center gap-2">
                 {lastSaved && (
-                  <span className="text-xs text-white/40 mr-2">
+                  <span className="text-[10px] text-white/40 mr-2">
                     {isSaving ? 'Saving...' : `Saved ${lastSaved.toLocaleTimeString()}`}
                   </span>
                 )}
@@ -750,9 +749,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     onClick={onRegenerate}
                     size="sm"
                     variant="ghost"
-                    className="h-8 px-3 text-xs text-white/50 hover:text-orange-400 hover:bg-orange-500/10"
+                    className="h-9 px-2 text-xs text-white/50 hover:text-orange-400 hover:bg-orange-500/10 touch-manipulation"
                   >
-                    <Sparkles className="h-3.5 w-3.5 mr-1.5" />
+                    <Sparkles className="h-3 w-3 mr-1" />
                     Regenerate
                   </Button>
                 )}
@@ -760,7 +759,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             )}
           </div>
           {lastSaved && isMobile && (
-            <span className="text-xs text-white/40 mt-1">
+            <span className="text-[10px] text-white/40 mt-1">
               {isSaving ? 'Saving...' : `Saved ${lastSaved.toLocaleTimeString()}`}
             </span>
           )}
@@ -768,19 +767,19 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         
         {/* PHASE 4: Partial Completion Warning Banner */}
         {isPartial && (
-          <div className="p-4 bg-yellow-500/10 border-b border-yellow-500/30">
-            <Alert className="border-yellow-500/40 bg-yellow-500/5">
-              <AlertCircle className="h-5 w-5 text-yellow-500" />
-              <AlertTitle className="text-yellow-500 font-semibold">Partial Generation</AlertTitle>
-              <AlertDescription className="text-sm text-muted-foreground mt-2 space-y-2">
+          <div className="p-3 bg-yellow-500/10 border-b border-yellow-500/20">
+            <Alert className="border-yellow-500/30 bg-yellow-500/5">
+              <AlertCircle className="h-4 w-4 text-yellow-500" />
+              <AlertTitle className="text-yellow-500 font-semibold text-sm">Partial Generation</AlertTitle>
+              <AlertDescription className="text-xs text-muted-foreground mt-1.5 space-y-1.5">
                 <p>
                   {!ramsData && "⚠️ Risk assessment generation failed. "}
                   {!methodData && "⚠️ Method statement generation failed. "}
                   You can proceed with what's available or retry the failed section below.
                 </p>
                 {onRetry && (
-                  <Button onClick={onRetry} variant="outline" size="sm" className="mt-2 border-yellow-500/40 hover:border-yellow-500 hover:bg-yellow-500/10">
-                    <Sparkles className="h-4 w-4 mr-2" />
+                  <Button onClick={onRetry} variant="outline" size="sm" className="mt-1.5 h-9 text-xs border-yellow-500/30 hover:border-yellow-500 hover:bg-yellow-500/10 touch-manipulation">
+                    <Sparkles className="h-3 w-3 mr-1.5" />
                     Retry Failed Section
                   </Button>
                 )}
@@ -788,15 +787,15 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             </Alert>
           </div>
         )}
-        
+
         <div>
           <Tabs defaultValue="rams" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-14 bg-transparent rounded-none p-2 gap-2 border-b border-white/10">
+            <TabsList className="grid w-full grid-cols-2 h-12 bg-transparent rounded-none p-1.5 gap-1.5 border-b border-white/[0.08]">
               <TabsTrigger
                 value="rams"
                 className={cn(
-                  "h-full min-h-[48px] rounded-xl text-sm font-medium transition-all duration-200",
-                  "flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98]",
+                  "h-full min-h-[40px] rounded-lg text-xs font-medium transition-all duration-200",
+                  "flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]",
                   "bg-white/[0.03] border border-transparent",
                   "data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow",
                   "data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm",
@@ -804,14 +803,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   "data-[state=inactive]:hover:bg-white/[0.05]"
                 )}
               >
-                <Shield className="h-4 w-4" />
+                <Shield className="h-3.5 w-3.5" />
                 <span>Risk Assessment</span>
               </TabsTrigger>
               <TabsTrigger
                 value="method"
                 className={cn(
-                  "h-full min-h-[48px] rounded-xl text-sm font-medium transition-all duration-200",
-                  "flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98]",
+                  "h-full min-h-[40px] rounded-lg text-xs font-medium transition-all duration-200",
+                  "flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]",
                   "bg-white/[0.03] border border-transparent",
                   "data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow",
                   "data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm",
@@ -819,30 +818,30 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   "data-[state=inactive]:hover:bg-white/[0.05]"
                 )}
               >
-                <FileText className="h-4 w-4" />
+                <FileText className="h-3.5 w-3.5" />
                 <span>Method Statement</span>
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="rams" className="space-y-6 mt-0 p-4 md:p-6">
+            <TabsContent value="rams" className="space-y-4 mt-0 p-3">
               {ramsData ? (
                 <>
                   {/* Summary Stats Card */}
                   <SummaryStatsCard risks={ramsData.risks || []} />
-              
+
               {/* Enhanced Risks Section */}
-              <div className="space-y-4">
-                <div className="space-y-3">
-                  <h4 className="text-xl font-bold text-elec-light flex items-center gap-3">
-                    <AlertTriangle className="h-6 w-6 text-elec-yellow" />
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <h4 className="text-sm font-bold text-elec-light flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                     <span>Identified Hazards</span>
                   </h4>
-                  <Button 
-                    onClick={addRisk} 
-                    size="sm" 
-                    className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[44px] px-4 py-2 text-sm touch-manipulation"
+                  <Button
+                    onClick={addRisk}
+                    size="sm"
+                    className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[40px] px-3 py-1.5 text-xs touch-manipulation"
                   >
-                    <Plus className="h-4 w-4 mr-2" />
+                    <Plus className="h-3.5 w-3.5 mr-1.5" />
                     Add Hazard
                   </Button>
                 </div>
@@ -913,9 +912,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               )}
             </TabsContent>
 
-            <TabsContent value="method" className="space-y-0 mt-0 pb-20">
+            <TabsContent value="method" className="space-y-0 mt-0 pb-16">
               {methodData && Object.keys(methodData).length > 0 ? (
-                <div className="p-4 md:p-6 space-y-4">
+                <div className="p-3 space-y-3">
                   {/* Project Info Header */}
                   <ProjectInfoHeader 
                     methodData={methodData} 
@@ -1034,7 +1033,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
           </Tabs>
 
           {/* Export Section - Desktop */}
-          <div className="hidden sm:block p-4 sm:p-6 border-t border-white/10 bg-white/[0.02]">
+          <div className="hidden sm:block p-4 sm:p-6 border-t border-white/[0.08] bg-white/[0.02]">
             <div className="flex gap-3">
               <Button
                 onClick={handleSaveToLibrary}

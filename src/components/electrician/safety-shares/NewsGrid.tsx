@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import type { NewsArticle } from "@/hooks/useIndustryNews";
 import { motion } from "framer-motion";
+import { NEWS_SOURCE_BRANDING } from "@/lib/constants/news-sources";
 
 interface NewsGridProps {
   articles: NewsArticle[];
@@ -43,8 +44,21 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
       "Training": "bg-yellow-500/80 text-black",
       "Technical": "bg-indigo-500/80 text-white",
       "BS7671": "bg-purple-500/80 text-white",
+      "Projects": "bg-orange-500/80 text-white",
     };
     return colors[category] || "bg-white/20 text-white";
+  };
+
+  const SourceBadge = ({ source }: { source: string }) => {
+    const branding = NEWS_SOURCE_BRANDING[source] || { color: '#6B7280', shortName: source.slice(0, 2).toUpperCase() };
+    return (
+      <span
+        className="text-[9px] font-bold px-1.5 py-0.5 rounded"
+        style={{ backgroundColor: branding.color + '20', color: branding.color }}
+      >
+        {branding.shortName}
+      </span>
+    );
   };
 
   const getCategoryImage = (category: string) => {
@@ -91,7 +105,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
           onClick={() => window.open(article.external_url, '_blank', 'noopener,noreferrer')}
           className="group cursor-pointer"
         >
-          <div className="relative h-[220px] sm:h-[240px] rounded-xl overflow-hidden">
+          <div className="relative h-[260px] sm:h-[280px] rounded-xl overflow-hidden">
             {/* Image */}
             <img
               src={article.image_url || getCategoryImage(article.category)}
@@ -103,16 +117,19 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
               }}
             />
 
-            {/* Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
+            {/* Gradient - improved for better readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
 
             {/* Content */}
             <div className="absolute inset-0 p-4 flex flex-col">
-              {/* Top: Category */}
+              {/* Top: Category + Source */}
               <div className="flex items-start justify-between">
-                <Badge className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-md", getCategoryColor(article.category))}>
-                  {article.category}
-                </Badge>
+                <div className="flex items-center gap-1.5">
+                  <Badge className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-md", getCategoryColor(article.category))}>
+                    {article.category}
+                  </Badge>
+                  <SourceBadge source={article.source_name} />
+                </div>
                 <span className="text-[10px] text-white/50 bg-black/30 backdrop-blur-sm rounded-full px-2 py-0.5">
                   {getReadTime(article.content)} min
                 </span>
@@ -121,11 +138,16 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
               {/* Spacer */}
               <div className="flex-1" />
 
-              {/* Bottom: Title + Meta */}
+              {/* Bottom: Title + Summary + Meta */}
               <div className="space-y-2">
                 <h3 className="text-white font-medium text-sm leading-snug line-clamp-2 group-hover:text-elec-yellow transition-colors">
                   {article.title}
                 </h3>
+
+                {/* Summary */}
+                <p className="text-white/50 text-xs line-clamp-2">
+                  {article.summary}
+                </p>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-[10px] text-white/40">

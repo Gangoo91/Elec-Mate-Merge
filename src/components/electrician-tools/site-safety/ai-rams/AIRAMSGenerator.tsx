@@ -389,31 +389,31 @@ export const AIRAMSGenerator: React.FC = () => {
     : 0;
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-lg border-b border-white/10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-4">
+    <div className="min-h-screen bg-elec-dark">
+      {/* Header - Compact */}
+      <header className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-lg border-b border-white/[0.08]">
+        <div className="px-2 h-12 flex items-center gap-2">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="h-10 w-10 rounded-xl hover:bg-white/10"
+            className="h-9 w-9 rounded-lg hover:bg-white/10"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="h-4 w-4" />
           </Button>
-          <div className="flex-1">
-            <h1 className="text-xl font-bold text-white">AI RAMS Generator</h1>
-            <p className="text-sm text-white/60">Risk Assessment & Method Statement</p>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-base font-bold text-white truncate">AI RAMS Generator</h1>
+            <p className="text-[10px] text-white/50">Risk Assessment & Method Statement</p>
           </div>
           {showResults && status === 'complete' && (
             <Button
               variant="outline"
               size="sm"
               onClick={handleStartOver}
-              className="border-elec-yellow/40 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow"
+              className="h-9 text-xs border-elec-yellow/30 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow touch-manipulation"
             >
-              <Sparkles className="h-4 w-4 mr-2" />
-              New RAMS
+              <Sparkles className="h-3 w-3 mr-1" />
+              New
             </Button>
           )}
         </div>

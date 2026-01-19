@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { type NewsArticle } from "@/hooks/useIndustryNews";
 import { isValidUrl } from "@/utils/urlUtils";
 import { motion } from "framer-motion";
+import { NEWS_SOURCE_BRANDING } from "@/lib/constants/news-sources";
 
 interface NewsFeaturedCarouselProps {
   articles: NewsArticle[];
@@ -34,8 +35,21 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
       "Training": "bg-yellow-500/80 text-black",
       "Technical": "bg-indigo-500/80 text-white",
       "BS7671": "bg-purple-500/80 text-white",
+      "Projects": "bg-orange-500/80 text-white",
     };
     return colors[category] || "bg-white/20 text-white";
+  };
+
+  const SourceBadge = ({ source }: { source: string }) => {
+    const branding = NEWS_SOURCE_BRANDING[source] || { color: '#6B7280', shortName: source.slice(0, 2).toUpperCase() };
+    return (
+      <span
+        className="text-[9px] font-bold px-1.5 py-0.5 rounded"
+        style={{ backgroundColor: branding.color + '20', color: branding.color }}
+      >
+        {branding.shortName}
+      </span>
+    );
   };
 
   const getReadTime = (content: string) => {
@@ -104,11 +118,14 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
 
                 {/* Content */}
                 <div className="absolute inset-0 p-4 sm:p-5 flex flex-col">
-                  {/* Top row: Category + Read time */}
+                  {/* Top row: Category + Source + Read time */}
                   <div className="flex items-start justify-between">
-                    <Badge className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-md", getCategoryColor(article.category))}>
-                      {article.category}
-                    </Badge>
+                    <div className="flex items-center gap-1.5">
+                      <Badge className={cn("text-[10px] font-semibold px-2 py-0.5 rounded-md", getCategoryColor(article.category))}>
+                        {article.category}
+                      </Badge>
+                      <SourceBadge source={article.source_name} />
+                    </div>
                     <div className="flex items-center gap-1 text-white/60 text-[10px] bg-black/30 backdrop-blur-sm rounded-full px-2 py-1">
                       <Clock className="h-3 w-3" />
                       <span>{getReadTime(article.content)} min</span>

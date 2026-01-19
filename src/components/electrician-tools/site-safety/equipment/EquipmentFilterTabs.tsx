@@ -26,7 +26,8 @@ export function EquipmentFilterTabs({
   return (
     <div
       className={cn(
-        "flex p-1 bg-white/5 rounded-xl border border-white/10",
+        "flex gap-1.5 overflow-x-auto scrollbar-hide",
+        "-mx-2 px-2", // Edge bleed for native feel
         className
       )}
     >
@@ -37,29 +38,25 @@ export function EquipmentFilterTabs({
             key={tab.id}
             onClick={() => onChange(tab.id)}
             className={cn(
-              "relative flex-1 flex items-center justify-center gap-1.5",
-              "px-2 py-2.5 rounded-lg text-sm font-medium",
-              "transition-colors duration-200",
-              "touch-manipulation min-h-[44px]",
-              isActive ? "text-white" : "text-white/50 hover:text-white/70"
+              "relative flex items-center justify-center gap-1",
+              "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap",
+              "transition-all duration-200",
+              "touch-manipulation min-h-[36px]",
+              "active:scale-[0.96]",
+              isActive
+                ? "bg-elec-yellow text-black"
+                : "bg-white/5 text-white/60 border border-white/[0.08]"
             )}
           >
-            {isActive && (
-              <motion.div
-                layoutId="activeEquipmentTabBg"
-                className="absolute inset-0 bg-white/10 rounded-lg"
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              />
-            )}
-            <span className="relative z-10 truncate">{tab.label}</span>
+            <span>{tab.label}</span>
             {tab.count > 0 && (
               <span
                 className={cn(
-                  "relative z-10 min-w-[20px] h-5 flex items-center justify-center",
-                  "px-1.5 rounded-full text-xs font-bold",
+                  "min-w-[16px] h-4 flex items-center justify-center",
+                  "px-1 rounded-full text-[10px] font-bold",
                   isActive
-                    ? getActiveCountColor(tab.color)
-                    : "bg-white/10 text-white/60"
+                    ? "bg-black/20 text-black"
+                    : "bg-white/10 text-white/50"
                 )}
               >
                 {tab.count}

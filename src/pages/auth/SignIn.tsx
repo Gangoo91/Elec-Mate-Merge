@@ -64,7 +64,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col safe-top safe-bottom overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex flex-col safe-top safe-bottom overflow-hidden">
       {/* Animated background */}
       <div className="fixed inset-0 pointer-events-none">
         <motion.div

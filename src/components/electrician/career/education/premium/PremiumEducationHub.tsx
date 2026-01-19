@@ -410,13 +410,13 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Sticky Header */}
+      {/* Sticky Header - Mobile Optimized */}
       <motion.header
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="sticky top-0 z-40 bg-background/95 backdrop-blur-lg border-b border-white/10"
+        className="sticky top-0 z-40 bg-background/95 backdrop-blur-lg border-b border-white/10 safe-area-inset-top"
       >
-        <div className="flex items-center justify-between h-14 px-4">
+        <div className="flex items-center justify-between h-12 sm:h-14 px-3 sm:px-4">
           {/* Left: Back button */}
           {onBack && (
             <Button

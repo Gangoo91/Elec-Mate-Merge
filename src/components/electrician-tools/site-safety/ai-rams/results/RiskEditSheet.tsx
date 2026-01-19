@@ -85,7 +85,7 @@ export const RiskEditSheet: React.FC<RiskEditSheetProps> = ({
           </SheetTitle>
         </SheetHeader>
 
-        <div className="space-y-6 py-6 pb-24">
+        <div className="space-y-4 py-4 pb-24">
           {/* Risk Score Display */}
           <div className={cn(
             "flex items-center justify-center gap-3 p-4 rounded-lg",

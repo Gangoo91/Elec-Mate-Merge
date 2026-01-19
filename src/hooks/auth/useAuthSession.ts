@@ -1,8 +1,11 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { ProfileType } from './types';
+
+// Track Elec-ID generation attempts to avoid duplicate calls
+const elecIdGenerationAttempted = new Set<string>();
 
 export function useAuthSession() {
   const [session, setSession] = useState<Session | null>(null);
@@ -38,6 +41,32 @@ export function useAuthSession() {
 
       if (data) {
         setProfile(data);
+
+        // Check if user opted for Elec-ID but doesn't have one yet
+        // This handles cases where email was confirmed on a different device
+        if (data.elec_id_enabled && !data.elec_id_number && !elecIdGenerationAttempted.has(userId)) {
+          elecIdGenerationAttempted.add(userId);
+          console.log('User opted for Elec-ID but none exists - generating now...');
+
+          // Generate Elec-ID in background (non-blocking)
+          supabase.functions.invoke('generate-elec-id', {
+            body: { user_id: userId, ecs_card_type: data.ecs_card_type || null }
+          }).then(({ data: elecIdResult, error: elecIdError }) => {
+            if (elecIdError) {
+              console.error('Failed to generate Elec-ID on login:', elecIdError);
+              // Remove from attempted set so it can retry on next login
+              elecIdGenerationAttempted.delete(userId);
+            } else if (elecIdResult?.elec_id_number) {
+              console.log('Elec-ID generated on login:', elecIdResult.elec_id_number);
+              // Update local profile state with the new Elec-ID
+              setProfile(prev => prev ? { ...prev, elec_id_number: elecIdResult.elec_id_number } : prev);
+            }
+          }).catch(err => {
+            console.error('Exception generating Elec-ID on login:', err);
+            elecIdGenerationAttempted.delete(userId);
+          });
+        }
+
         return data;
       }
 
@@ -56,8 +85,14 @@ export function useAuthSession() {
 
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, currentSession) => {
+      async (event, currentSession) => {
         if (!mounted) return;
+
+        // Clear stale Elec-ID generation tracking on logout or user switch
+        // This prevents blocking generation after logout/login cycle
+        if (event === 'SIGNED_OUT') {
+          elecIdGenerationAttempted.clear();
+        }
 
         setSession(currentSession);
         setUser(currentSession?.user ?? null);

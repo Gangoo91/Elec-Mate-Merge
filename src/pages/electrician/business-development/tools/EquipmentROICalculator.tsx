@@ -14,6 +14,7 @@ import {
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -209,9 +210,8 @@ const EquipmentROICalculator = () => {
   const roiStatus = getROIStatus();
 
   return (
-    <div className="bg-background  ">
-      <div className="space-y-4 px-4 py-6 animate-fade-in">
-        <Helmet>
+    <div className="bg-gradient-to-b from-background via-background to-background">
+      <Helmet>
         <title>Equipment ROI Calculator UK | Electrician Tools</title>
         <meta
           name="description"
@@ -220,12 +220,34 @@ const EquipmentROICalculator = () => {
         <link rel="canonical" href="/electrician/business-development/tools/equipment-roi" />
       </Helmet>
 
-      <CalculatorCard
-        category="business"
-        title="Equipment ROI Calculator"
-        description="Analyse return on investment for equipment purchases"
-        badge="Investment"
-      >
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div
+              className="p-2.5 rounded-xl border"
+              style={{
+                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
+                borderColor: `${config.gradientFrom}30`,
+              }}
+            >
+              <BarChart3 className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Equipment ROI Calculator
+              </h1>
+              <p className="text-sm text-white/70">Analyse return on investment</p>
+            </div>
+          </div>
+          <SmartBackButton />
+        </header>
+
+        <CalculatorCard
+          category="business"
+          title="Equipment ROI Calculator"
+          description="Analyse return on investment for equipment purchases"
+          badge="Investment"
+        >
         {/* Investment Costs Section */}
         <div className="flex items-center gap-2 mb-3">
           <PoundSterling className="h-4 w-4 text-blue-400" />
@@ -383,7 +405,7 @@ const EquipmentROICalculator = () => {
           </div>
 
           {/* Key Metrics */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <CalculatorResult category="business">
               <div className="text-center">
                 <p className="text-sm text-white mb-1">NPV @ {discountRateNum}%</p>
@@ -614,7 +636,7 @@ const EquipmentROICalculator = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
-      </div>
+      </main>
     </div>
   );
 };

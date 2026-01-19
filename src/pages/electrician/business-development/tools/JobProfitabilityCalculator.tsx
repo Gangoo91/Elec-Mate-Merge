@@ -19,6 +19,7 @@ import {
   Percent,
   Settings,
 } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -577,7 +578,7 @@ const JobProfitabilityCalculator = () => {
   };
 
   return (
-    <div className="px-4 py-8  ">
+    <div className="bg-gradient-to-b from-background via-background to-background">
       <Helmet>
         <title>Job Profitability Calculator - Electrical Cost Analysis | ElecMate</title>
         <meta
@@ -586,7 +587,28 @@ const JobProfitabilityCalculator = () => {
         />
       </Helmet>
 
-      <div className="max-w-4xl mx-auto space-y-4">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div
+              className="p-2.5 rounded-xl border"
+              style={{
+                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
+                borderColor: `${config.gradientFrom}30`,
+              }}
+            >
+              <Calculator className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Job Profitability Calculator
+              </h1>
+              <p className="text-sm text-white/70">Analyse quote profitability & pricing</p>
+            </div>
+          </div>
+          <SmartBackButton />
+        </header>
+
         <CalculatorCard
           category="business"
           title="Job Profitability Calculator"
@@ -1200,7 +1222,7 @@ const JobProfitabilityCalculator = () => {
               {vatRegistered && vatAmount > 0 && (
                 <div className="pt-4 mt-4 border-t border-white/10">
                   <p className="text-xs text-white mb-3">VAT Breakdown</p>
-                  <div className="grid grid-cols-3 gap-3 text-center">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
                     <div>
                       <div className="text-xs text-blue-400 mb-1">Quote (ex VAT)</div>
                       <div className="text-white font-medium">
@@ -1424,7 +1446,7 @@ const JobProfitabilityCalculator = () => {
             </CollapsibleContent>
           </div>
         </Collapsible>
-      </div>
+      </main>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import {
   TrendingUp,
   TrendingDown,
@@ -12,6 +13,7 @@ import {
   FileText,
   CheckCircle,
 } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -105,14 +107,44 @@ const QuoteVarianceTracker = () => {
   const varianceStatus = getVarianceStatus();
 
   return (
-    <div className="bg-background  ">
-      <div className="space-y-4 px-4 py-6 animate-fade-in">
+    <div className="bg-gradient-to-b from-background via-background to-background">
+      <Helmet>
+        <title>Quote vs Actual Tracker for UK Electricians</title>
+        <meta
+          name="description"
+          content="Track quote variances to refine your pricing and protect margin."
+        />
+        <link rel="canonical" href="/electrician/business-development/tools/quote-variance" />
+      </Helmet>
+
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div
+              className="p-2.5 rounded-xl border"
+              style={{
+                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
+                borderColor: `${config.gradientFrom}30`,
+              }}
+            >
+              <TrendingUp className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Quote vs Actual Tracker
+              </h1>
+              <p className="text-sm text-white/70">Capture variances to refine your pricing</p>
+            </div>
+          </div>
+          <SmartBackButton />
+        </header>
+
         <CalculatorCard
-        category="business"
-        title="Quote vs Actual Tracker"
-        description="Capture variances to refine your pricing and protect margin"
-        badge="Finance"
-      >
+          category="business"
+          title="Quote vs Actual Tracker"
+          description="Capture variances to refine your pricing and protect margin"
+          badge="Finance"
+        >
         {/* Quote Details */}
         <div className="flex items-center gap-2 mb-3">
           <Clock className="h-4 w-4 text-blue-400" />
@@ -282,7 +314,7 @@ const QuoteVarianceTracker = () => {
           </div>
 
           {/* Total Variance */}
-          <div className="flex items-center justify-between py-3 bg-white/5 px-3 rounded-lg mt-2">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-3 bg-white/5 px-3 rounded-lg mt-2">
             <span className="font-semibold text-white">Total Job Variance</span>
             <div className="flex items-center gap-2">
               <span className={getVarianceColor(totalVar)}>
@@ -432,7 +464,7 @@ const QuoteVarianceTracker = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
-      </div>
+      </main>
     </div>
   );
 };

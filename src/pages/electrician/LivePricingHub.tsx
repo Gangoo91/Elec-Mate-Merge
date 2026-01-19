@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ArrowLeft, Search, Send, Recycle, BarChart3, RefreshCw, Zap } from "lucide-react";
+import { ArrowLeft, Search, Send, Recycle, BarChart3, RefreshCw, Zap, MapPin, X, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -173,6 +173,7 @@ const LivePricingHub = () => {
           <PricingSearchBar
             onSearch={handleSearch}
             isLoading={isSearching}
+            currentSearch={lastSearch}
           />
 
           {/* Results */}
@@ -181,14 +182,34 @@ const LivePricingHub = () => {
           ) : hasSearched ? (
             searchResults.length > 0 ? (
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm text-white">
-                    <span className="font-bold text-yellow-400">{searchResults.length}</span> results for{" "}
-                    <span className="font-semibold">{lastSearch?.postcode}</span>
-                    {lastSearch?.jobType && (
-                      <span className="text-yellow-400"> · {lastSearch.jobType}</span>
-                    )}
-                  </p>
+                {/* Results Summary Bar - Sticky on scroll */}
+                <div className="sticky top-14 z-30 -mx-4 px-4 py-3 bg-neutral-900/95 backdrop-blur-xl border-b border-white/10">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 flex-wrap min-w-0">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-yellow-400/20 text-yellow-400 text-sm font-bold shrink-0">
+                        <MapPin className="h-3.5 w-3.5" />
+                        {lastSearch?.postcode}
+                      </span>
+                      {lastSearch?.jobType && (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-400/20 text-blue-400 text-xs font-medium shrink-0">
+                          <Briefcase className="h-3 w-3" />
+                          {lastSearch.jobType}
+                        </span>
+                      )}
+                      <span className="text-white/60 text-sm">
+                        · <span className="font-semibold text-white">{searchResults.length}</span> results
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setHasSearched(false);
+                        setSearchResults([]);
+                      }}
+                      className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-all touch-manipulation active:scale-95 shrink-0"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
                 </div>
 
                 {searchResults.map((result) => (

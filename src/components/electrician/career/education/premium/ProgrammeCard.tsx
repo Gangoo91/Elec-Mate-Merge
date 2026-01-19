@@ -261,7 +261,7 @@ const ProgrammeCard = ({
           </div>
           <Button
             size="sm"
-            className="h-9 px-4 bg-purple-500 hover:bg-purple-400 text-white font-medium shadow-lg shadow-purple-500/25 group-hover:shadow-purple-500/40 transition-all"
+            className="h-9 px-4 bg-purple-500 hover:bg-purple-400 text-white font-medium shadow-lg shadow-purple-500/25 group-hover:shadow-purple-500/40 transition-all touch-manipulation active:scale-[0.95]"
             onClick={(e) => {
               e.stopPropagation();
               onSelect(programme);

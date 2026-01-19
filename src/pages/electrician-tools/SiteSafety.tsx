@@ -146,24 +146,35 @@ const SiteSafety = () => {
   };
 
   if (activeView) {
+    // Full-width views render without max-width container
+    const isFullWidth = activeView === "equipment" || activeView === "photo-docs" || activeView === "ai-rams" || activeView === "saved-rams";
+
     return (
       <RAMSProvider>
-        <div className="bg-elec-dark animate-fade-in  ">
-          <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6">
-            <div className="mb-4 sm:mb-6">
-              <Button
-                onClick={() => setActiveView(null)}
-                variant="outline"
-                className="h-11 border-white/10 hover:border-elec-yellow/30 text-white/60 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98] touch-manipulation"
-              >
-                <ArrowRight className="h-5 w-5 mr-2 rotate-180" />
-                Back to Site Safety
-              </Button>
-            </div>
+        <div className={`bg-elec-dark animate-fade-in`}>
+          {isFullWidth ? (
+            // Edge-to-edge layout for native mobile feel
             <Suspense fallback={<ToolLoader />}>
               {renderToolContent()}
             </Suspense>
-          </div>
+          ) : (
+            // Standard contained layout for other views
+            <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6">
+              <div className="mb-4 sm:mb-6">
+                <Button
+                  onClick={() => setActiveView(null)}
+                  variant="outline"
+                  className="h-11 border-white/10 hover:border-elec-yellow/30 text-white/60 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+                >
+                  <ArrowRight className="h-5 w-5 mr-2 rotate-180" />
+                  Back to Site Safety
+                </Button>
+              </div>
+              <Suspense fallback={<ToolLoader />}>
+                {renderToolContent()}
+              </Suspense>
+            </div>
+          )}
         </div>
       </RAMSProvider>
     );

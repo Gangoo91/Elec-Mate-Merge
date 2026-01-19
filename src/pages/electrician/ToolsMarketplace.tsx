@@ -13,6 +13,12 @@ import {
 } from '@/hooks/useMarketplaceSearch';
 import { cn } from '@/lib/utils';
 
+// Safe price formatting helper
+const formatPrice = (price: number | null | undefined): string => {
+  if (price === null || price === undefined) return '-.--';
+  return price.toFixed(2);
+};
+
 /**
  * Tools Marketplace Page
  * Clean, mobile-first marketplace with deals section
@@ -233,11 +239,11 @@ export default function ToolsMarketplace() {
                   {/* Price */}
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-bold text-green-400">
-                      £{product.current_price?.toFixed(2)}
+                      £{formatPrice(product.current_price)}
                     </span>
                     {product.regular_price && (
                       <span className="text-xs text-muted-foreground line-through">
-                        £{product.regular_price.toFixed(2)}
+                        £{formatPrice(product.regular_price)}
                       </span>
                     )}
                   </div>

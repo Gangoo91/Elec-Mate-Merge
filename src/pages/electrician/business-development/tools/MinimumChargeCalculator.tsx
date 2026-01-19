@@ -11,6 +11,7 @@ import {
   Info,
   Lightbulb,
 } from "lucide-react";
+import { SmartBackButton } from "@/components/ui/smart-back-button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -88,9 +89,8 @@ const MinimumChargeCalculator: React.FC = () => {
   const isValid = hourlyCostNum > 0;
 
   return (
-    <div className="bg-background  ">
-      <div className="space-y-4 px-4 py-6 animate-fade-in">
-        <Helmet>
+    <div className="bg-gradient-to-b from-background via-background to-background">
+      <Helmet>
         <title>Minimum Charge & First Hour Pricing UK</title>
         <meta
           name="description"
@@ -99,7 +99,30 @@ const MinimumChargeCalculator: React.FC = () => {
         <link rel="canonical" href="/electrician/business-development/tools/minimum-charge" />
       </Helmet>
 
-      <CalculatorCard
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div
+              className="p-2.5 rounded-xl border"
+              style={{
+                background: `linear-gradient(135deg, ${config.gradientFrom}20, ${config.gradientTo}20)`,
+                borderColor: `${config.gradientFrom}30`,
+              }}
+            >
+              <PoundSterling className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: config.gradientFrom }} />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Minimum Charge Calculator
+              </h1>
+              <p className="text-sm text-white/70">Set profitable call-out pricing</p>
+            </div>
+          </div>
+          <SmartBackButton />
+        </header>
+
+        <CalculatorCard
         category="business"
         title="Minimum Charge Calculator"
         description="Calculate profitable call-out pricing that covers travel, admin and setup costs"
@@ -497,7 +520,7 @@ const MinimumChargeCalculator: React.FC = () => {
           </CollapsibleContent>
         </div>
       </Collapsible>
-      </div>
+      </main>
     </div>
   );
 };

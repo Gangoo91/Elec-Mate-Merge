@@ -16,6 +16,12 @@ import { cn } from '@/lib/utils';
 /**
  * Format last updated time as relative string
  */
+// Safe price formatting helper
+const formatPrice = (price: number | null | undefined): string => {
+  if (price === null || price === undefined) return '-.--';
+  return price.toFixed(2);
+};
+
 function formatLastUpdated(dateString: string): string {
   const date = new Date(dateString);
   const now = new Date();
@@ -263,11 +269,11 @@ export default function MaterialsMarketplace() {
                   {/* Price */}
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-bold text-green-400">
-                      £{product.current_price?.toFixed(2)}
+                      £{formatPrice(product.current_price)}
                     </span>
                     {product.regular_price && (
                       <span className="text-xs text-muted-foreground line-through">
-                        £{product.regular_price.toFixed(2)}
+                        £{formatPrice(product.regular_price)}
                       </span>
                     )}
                   </div>
@@ -302,7 +308,7 @@ export default function MaterialsMarketplace() {
             {/* Deals Filter */}
             <button
               onClick={handleDealsToggle}
-              className={`h-9 px-4 rounded-full border text-sm font-medium whitespace-nowrap touch-manipulation active:scale-95 transition-all flex items-center gap-1.5 ${
+              className={`h-11 px-4 rounded-full border text-sm font-medium whitespace-nowrap touch-manipulation active:scale-[0.97] transition-all flex items-center gap-1.5 ${
                 filters.dealsOnly
                   ? 'bg-red-500 text-white border-red-500'
                   : 'bg-card border-border hover:border-red-500/50'

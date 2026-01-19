@@ -1,54 +1,123 @@
-import { useState, useEffect, useRef } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { IOSInput } from "@/components/ui/ios-input";
-import { IOSSelect, IOSSelectOption } from "@/components/ui/ios-select";
-import { Switch } from "@/components/ui/switch";
-import {
-  Camera,
-  Upload,
-  Download,
-  Trash2,
-  Eye,
-  MapPin,
-  Loader2,
-  X,
-  Zap,
-  FolderPlus,
-  Filter,
-  ChevronLeft,
-  ChevronRight,
-  Image as ImageIcon
-} from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
+import { useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Camera, Grid3X3, Folder, Download } from "lucide-react";
+import { useSafetyPhotos } from "@/hooks/useSafetyPhotos";
 
-interface PhotoDoc {
-  id: string;
-  filename: string;
-  file_url: string;
-  description: string;
-  category: string;
-  location: string;
-  tags: string[];
-  gps_latitude?: number;
-  gps_longitude?: number;
-  file_size?: number;
-  mime_type?: string;
-  folder_name?: string;
-  project_reference?: string;
-  created_at: string;
+// Tab components
+import GalleryTab from "./photo-docs/GalleryTab";
+import CameraTab from "./photo-docs/CameraTab";
+import ProjectsTab from "./photo-docs/ProjectsTab";
+import ExportTab from "./photo-docs/ExportTab";
+
+type TabId = "gallery" | "camera" | "projects" | "export";
+
+interface Tab {
+  id: TabId;
+  label: string;
+  icon: React.ReactNode;
+  badge?: number;
 }
 
-const categoryOptions: IOSSelectOption[] = [
-  { value: "safety", label: "Safety Hazard", description: "Document safety concerns" },
-  { value: "progress", label: "Progress", description: "Work progress photos" },
-  { value: "electrical", label: "Electrical", description: "Electrical installations" },
-  { value: "before", label: "Before", description: "Before work started" },
-  { value: "after", label: "After", description: "Completed work" },
-  { value: "issue", label: "Issue", description: "Problems found" },
-  { value: "inspection", label: "Inspection", description: "Inspection documentation" },
-  { value: "other", label: "Other", description: "Miscellaneous" }
-];
+export default function PhotoDocumentation() {
+  const [activeTab, setActiveTab] = useState<TabId>("gallery");
+  const { stats } = useSafetyPhotos();
 
-export default function PhotoDocumentation() { return (<div className="min-h-screen bg-gradient-to-b from-elec-dark to-black p-4"><p className="text-white">Full component - see plan</p></div>); }
+  const tabs: Tab[] = [
+    {
+      id: "gallery",
+      label: "Gallery",
+      icon: <Grid3X3 className="h-[22px] w-[22px]" />,
+      badge: stats.total > 0 ? stats.total : undefined,
+    },
+    {
+      id: "camera",
+      label: "Camera",
+      icon: <Camera className="h-[22px] w-[22px]" />,
+    },
+    {
+      id: "projects",
+      label: "Projects",
+      icon: <Folder className="h-[22px] w-[22px]" />,
+    },
+    {
+      id: "export",
+      label: "Export",
+      icon: <Download className="h-[22px] w-[22px]" />,
+    },
+  ];
+
+  const handlePhotoUploaded = useCallback(() => {
+    // Switch to gallery tab after upload
+    setActiveTab("gallery");
+  }, []);
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "gallery":
+        return <GalleryTab />;
+      case "camera":
+        return <CameraTab onPhotoUploaded={handlePhotoUploaded} />;
+      case "projects":
+        return <ProjectsTab />;
+      case "export":
+        return <ExportTab />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="flex flex-col h-[calc(100vh-80px)] bg-black">
+      {/* Tab content area - full height */}
+      <div className="flex-1 overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="h-full"
+          >
+            {renderTabContent()}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Bottom tab bar - true iOS style */}
+      <div className="flex-shrink-0 bg-black/90 backdrop-blur-xl border-t border-white/[0.08]">
+        <div className="flex items-stretch">
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-1 flex flex-col items-center justify-center py-2 touch-manipulation transition-colors ${
+                  isActive ? "text-elec-yellow" : "text-white/40 active:text-white/60"
+                }`}
+              >
+                {/* Icon with badge */}
+                <div className="relative">
+                  {tab.icon}
+                  {tab.badge !== undefined && tab.badge > 0 && (
+                    <span className="absolute -top-1 -right-2.5 min-w-[14px] h-[14px] px-0.5 rounded-full bg-elec-yellow text-black text-[9px] font-bold flex items-center justify-center">
+                      {tab.badge > 99 ? "99+" : tab.badge}
+                    </span>
+                  )}
+                </div>
+
+                {/* Label */}
+                <span className={`text-[9px] mt-0.5 font-medium tracking-tight ${isActive ? "text-elec-yellow" : ""}`}>
+                  {tab.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        {/* Safe area spacer */}
+        <div className="h-[env(safe-area-inset-bottom)]" />
+      </div>
+    </div>
+  );
+}

@@ -37,9 +37,9 @@ const fetchIndustryNews = async (): Promise<NewsArticle[]> => {
 };
 
 const refreshNewsFromFirecrawl = async (): Promise<{ success: boolean; message: string; articlesInserted: number }> => {
-  console.log('🔄 Refreshing news from comprehensive scraper...');
+  console.log('🔄 Refreshing news from Firecrawl scraper...');
 
-  const { data, error } = await supabase.functions.invoke('comprehensive-news-scraper', {
+  const { data, error } = await supabase.functions.invoke('firecrawl-news-scraper', {
     body: { action: 'refresh' }
   });
   

@@ -9,14 +9,23 @@ interface MarketplaceProductCardProps {
   className?: string;
 }
 
+// Safe price formatting helper
+const formatPrice = (price: number | null | undefined): string => {
+  if (price === null || price === undefined) return '-.--';
+  return price.toFixed(2);
+};
+
+const calculateSavings = (regular: number | null | undefined, current: number | null | undefined): string | null => {
+  if (!regular || !current || regular <= current) return null;
+  return (regular - current).toFixed(2);
+};
+
 /**
  * Mobile-first product card for marketplace grid
  * Based on ToolCard.tsx pattern with 150px images
  */
 export function MarketplaceProductCard({ product, className }: MarketplaceProductCardProps) {
-  const savings = product.regular_price
-    ? (product.regular_price - product.current_price).toFixed(2)
-    : null;
+  const savings = calculateSavings(product.regular_price, product.current_price);
 
   // Stock status info
   const getStockInfo = () => {
@@ -61,8 +70,9 @@ export function MarketplaceProductCard({ product, className }: MarketplaceProduc
   return (
     <div
       className={cn(
-        'group relative bg-card rounded-xl border border-border/50 overflow-hidden',
-        'transition-all duration-300 hover:border-primary/60 hover:shadow-lg hover:-translate-y-1',
+        'group relative bg-card rounded-xl border border-border/50 overflow-hidden touch-manipulation',
+        'transition-all duration-200 hover:border-primary/60 hover:shadow-lg',
+        'active:scale-[0.98] active:shadow-sm', // Native app press feedback
         className
       )}
     >
@@ -141,15 +151,15 @@ export function MarketplaceProductCard({ product, className }: MarketplaceProduc
         <div className="space-y-1 pt-1 border-t border-border/50">
           <div className="flex items-baseline gap-2">
             <span className="text-xl font-bold text-elec-yellow">
-              £{product.current_price.toFixed(2)}
+              £{formatPrice(product.current_price)}
             </span>
             <span className="text-xs text-muted-foreground">inc. VAT</span>
           </div>
 
-          {product.is_on_sale && product.regular_price && (
+          {product.is_on_sale && savings && (
             <div className="flex items-center gap-2 text-xs">
               <span className="text-muted-foreground line-through">
-                £{product.regular_price.toFixed(2)}
+                £{formatPrice(product.regular_price)}
               </span>
               <span className="text-green-500 font-medium">
                 Save £{savings}

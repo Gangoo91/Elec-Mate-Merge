@@ -9,14 +9,23 @@ interface SearchResultCardProps {
   className?: string;
 }
 
+// Safe price formatting helper
+const formatPrice = (price: number | null | undefined): string => {
+  if (price === null || price === undefined) return '-.--';
+  return price.toFixed(2);
+};
+
+const calculateSavings = (regular: number | null | undefined, current: number | null | undefined): string | null => {
+  if (!regular || !current || regular <= current) return null;
+  return (regular - current).toFixed(2);
+};
+
 /**
  * Horizontal search result card (Google Shopping / Amazon style)
  * Not a card - a list row
  */
 export function SearchResultCard({ product, className }: SearchResultCardProps) {
-  const savings = product.regular_price
-    ? (product.regular_price - product.current_price).toFixed(2)
-    : null;
+  const savings = calculateSavings(product.regular_price, product.current_price);
 
   // Stock status color
   const stockColor =
@@ -100,12 +109,12 @@ export function SearchResultCard({ product, className }: SearchResultCardProps) 
         {/* Price */}
         <div className="text-right">
           <p className="text-xl sm:text-2xl font-bold text-elec-yellow">
-            £{product.current_price.toFixed(2)}
+            £{formatPrice(product.current_price)}
           </p>
-          {product.is_on_sale && product.regular_price && (
+          {product.is_on_sale && savings && (
             <>
               <p className="text-sm text-muted-foreground line-through">
-                £{product.regular_price.toFixed(2)}
+                £{formatPrice(product.regular_price)}
               </p>
               <p className="text-sm text-green-500 font-medium">
                 Save £{savings}

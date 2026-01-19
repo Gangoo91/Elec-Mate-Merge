@@ -200,7 +200,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
 
             {/* Likelihood & Severity */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
                 <label className="text-xs font-medium text-white/50">Likelihood</label>
                 {isEditing ? (
                   <div className="mt-3 space-y-2">
@@ -220,7 +220,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                   </div>
                 )}
               </div>
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
                 <label className="text-xs font-medium text-white/50">Severity</label>
                 {isEditing ? (
                   <div className="mt-3 space-y-2">

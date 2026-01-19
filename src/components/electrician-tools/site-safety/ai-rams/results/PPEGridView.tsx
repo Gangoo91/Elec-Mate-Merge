@@ -69,10 +69,10 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({ ppeDetails, requiredPP
                 'inline-flex items-center gap-2 px-3 py-2 rounded-full border transition-all',
                 item.mandatory 
                   ? 'bg-red-500/10 border-red-500/30 text-red-400'
-                  : 'bg-white/[0.03] border-white/10 text-white/70'
+                  : 'bg-white/[0.03] border-white/[0.08] text-white/70'
               ].join(' ')}
             >
-              <Icon className="h-4 hw-4" />
+              <Icon className="h-4 w-4" />
               <span className="text-sm font-medium">{item.ppeType}</span>
               {item.mandatory && (
                 <span className="text-xs bg-red-500/20 px-1.5 py-0.5 rounded-full">Required</span>

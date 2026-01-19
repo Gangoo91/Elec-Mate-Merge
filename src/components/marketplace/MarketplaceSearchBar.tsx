@@ -12,6 +12,12 @@ interface MarketplaceSearchBarProps {
   autoFocus?: boolean;
 }
 
+// Safe price formatting helper
+const formatPrice = (price: number | null | undefined): string => {
+  if (price === null || price === undefined) return '-.--';
+  return price.toFixed(2);
+};
+
 export function MarketplaceSearchBar({
   initialQuery = '',
   onSearch,
@@ -229,11 +235,11 @@ export function MarketplaceSearchBar({
                   {/* Price */}
                   <div className="text-right flex-shrink-0">
                     <p className="font-semibold text-elec-yellow">
-                      £{product.current_price.toFixed(2)}
+                      £{formatPrice(product.current_price)}
                     </p>
                     {product.regular_price && product.is_on_sale && (
                       <p className="text-sm text-muted-foreground line-through">
-                        £{product.regular_price.toFixed(2)}
+                        £{formatPrice(product.regular_price)}
                       </p>
                     )}
                   </div>

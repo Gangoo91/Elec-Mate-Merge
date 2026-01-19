@@ -140,6 +140,7 @@ const SignUp = () => {
   });
   const [generatedElecId, setGeneratedElecId] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [submitPhase, setSubmitPhase] = useState<'idle' | 'creating' | 'sending-email'>('idle');
 
   const { signUp } = useAuth();
   const navigate = useNavigate();
@@ -192,6 +193,7 @@ const SignUp = () => {
       return;
     }
     setIsSubmitting(true);
+    setSubmitPhase('creating');
     setError(null);
 
     try {
@@ -213,7 +215,8 @@ const SignUp = () => {
       localStorage.setItem('elec-mate-pending-email', email);
       localStorage.setItem('elec-mate-pending-name', fullName);
 
-      await storeConsent({
+      // Store consent (GDPR compliance) - non-blocking, consent is also stored in localStorage
+      const consentResult = await storeConsent({
         email,
         full_name: fullName,
         terms_accepted: consent.termsAccepted,
@@ -222,6 +225,11 @@ const SignUp = () => {
         marketing_opt_in: consent.marketingOptIn,
         consent_timestamp: new Date().toISOString()
       });
+
+      if (!consentResult.success) {
+        // Log but don't block - consent is also stored in localStorage/onboarding data
+        console.warn('Consent DB storage failed (non-critical):', consentResult.error);
+      }
 
       // Store Elec-ID preference for later (after email confirmation)
       if (profile.createElecId && data?.user?.id) {
@@ -233,6 +241,7 @@ const SignUp = () => {
       }
 
       // Send branded confirmation email via Resend
+      setSubmitPhase('sending-email');
       try {
         await supabase.functions.invoke('send-confirmation-email', {
           body: { email, fullName },
@@ -248,6 +257,7 @@ const SignUp = () => {
       setError(err.message || 'An error occurred');
     } finally {
       setIsSubmitting(false);
+      setSubmitPhase('idle');
     }
   };
 
@@ -577,20 +587,24 @@ const SignUp = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
               >
-                <div className="text-center mb-6">
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <h1 className="text-[28px] font-bold text-white tracking-tight">Get Your Elec-ID</h1>
-                    <span className="px-2 py-0.5 text-[10px] font-bold bg-green-500 text-white rounded-full">FREE</span>
+                <div className="text-center mb-4 sm:mb-6">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-2">
+                    <h1 className="text-2xl sm:text-[28px] font-bold text-white tracking-tight">
+                      Get Your Elec-ID
+                    </h1>
+                    <span className="px-2.5 py-1 text-[10px] font-bold bg-green-500 text-white rounded-full">
+                      FREE
+                    </span>
                   </div>
-                  <p className="text-[15px] text-white/50">Your digital credential - no cost, ever</p>
+                  <p className="text-sm sm:text-[15px] text-white/50">Your digital credential - no cost, ever</p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 mb-4">
-                  <div className="grid grid-cols-2 gap-3">
+                <div className="p-3 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 mb-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                     {['Store qualifications', 'Share via QR', 'Find work', 'Verifiable credential'].map((item) => (
-                      <div key={item} className="flex items-center gap-2 text-[13px] text-white/70">
-                        <Check className="h-4 w-4 text-green-400" />
-                        {item}
+                      <div key={item} className="flex items-center gap-2 text-xs sm:text-[13px] text-white/70">
+                        <Check className="h-4 w-4 text-green-400 flex-shrink-0" />
+                        <span className="leading-snug">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -600,24 +614,24 @@ const SignUp = () => {
                   type="button"
                   onClick={() => setProfile({ ...profile, createElecId: !profile.createElecId })}
                   className={cn(
-                    "w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation mb-4",
+                    "w-full p-3 sm:p-4 rounded-2xl border-2 text-left transition-all touch-manipulation mb-4",
                     profile.createElecId
                       ? "border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]"
                       : "border-white/10 bg-white/[0.03]"
                   )}
                 >
                   <div className="flex items-center gap-3">
-                    <Checkbox checked={profile.createElecId} className="h-6 w-6 border-2 border-elec-yellow data-[state=checked]:bg-elec-yellow data-[state=checked]:text-black" />
+                    <Checkbox checked={profile.createElecId} className="h-5 w-5 sm:h-6 sm:w-6 border-2 border-elec-yellow data-[state=checked]:bg-elec-yellow data-[state=checked]:text-black flex-shrink-0" />
                     <div>
-                      <p className="font-semibold text-white text-[16px]">Yes, create my Elec-ID</p>
-                      <p className="text-[13px] text-white/50">It's free forever</p>
+                      <p className="font-semibold text-white text-[15px] sm:text-[16px]">Yes, create my Elec-ID</p>
+                      <p className="text-xs sm:text-[13px] text-white/50">It's free forever</p>
                     </div>
                   </div>
                 </button>
 
                 {profile.createElecId && (
-                  <div className="mb-6">
-                    <label className="block text-[13px] font-medium text-white/70 ml-1 mb-2">ECS Card Type (optional)</label>
+                  <div className="mb-4 sm:mb-6">
+                    <label className="block text-xs sm:text-[13px] font-medium text-white/70 ml-1 mb-2">ECS Card Type (optional)</label>
                     <MobileSelectPicker
                       value={profile.ecsCardType}
                       onValueChange={(value) => setProfile({ ...profile, ecsCardType: value })}
@@ -635,7 +649,7 @@ const SignUp = () => {
 
                 <Button
                   onClick={handleElecIdSubmit}
-                  className="w-full h-14 rounded-2xl text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-lg shadow-elec-yellow/25"
+                  className="w-full h-12 sm:h-14 rounded-2xl text-[15px] sm:text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-lg shadow-elec-yellow/25"
                 >
                   Continue <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -708,7 +722,11 @@ const SignUp = () => {
                   className="w-full h-14 rounded-2xl text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-lg shadow-elec-yellow/25 disabled:opacity-50"
                 >
                   {isSubmitting ? (
-                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Creating Account...</>
+                    submitPhase === 'sending-email' ? (
+                      <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Sending confirmation email...</>
+                    ) : (
+                      <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Creating Account...</>
+                    )
                   ) : (
                     <>Create Account <ArrowRight className="ml-2 h-5 w-5" /></>
                   )}
