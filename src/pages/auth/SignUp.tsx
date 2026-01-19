@@ -197,7 +197,8 @@ const SignUp = () => {
     try {
       const { error, data } = await signUp(email, password, fullName);
       if (error) {
-        setError(error.message);
+        console.error('Signup error:', error);
+        setError(error.message || 'Database error saving new user');
         setIsSubmitting(false);
         return;
       }
@@ -213,15 +214,21 @@ const SignUp = () => {
       localStorage.setItem('elec-mate-pending-email', email);
       localStorage.setItem('elec-mate-pending-name', fullName);
 
-      await storeConsent({
-        email,
-        full_name: fullName,
-        terms_accepted: consent.termsAccepted,
-        privacy_accepted: consent.privacyAccepted,
-        data_processing_accepted: consent.dataProcessingAccepted,
-        marketing_opt_in: consent.marketingOptIn,
-        consent_timestamp: new Date().toISOString()
-      });
+      // Store consent (non-blocking - log if it fails but don't block signup)
+      try {
+        await storeConsent({
+          email,
+          full_name: fullName,
+          terms_accepted: consent.termsAccepted,
+          privacy_accepted: consent.privacyAccepted,
+          data_processing_accepted: consent.dataProcessingAccepted,
+          marketing_opt_in: consent.marketingOptIn,
+          consent_timestamp: new Date().toISOString()
+        });
+        console.log('Consent stored successfully');
+      } catch (consentError) {
+        console.warn('Consent storage failed (non-critical):', consentError);
+      }
 
       // Store Elec-ID preference for later (after email confirmation)
       if (profile.createElecId && data?.user?.id) {

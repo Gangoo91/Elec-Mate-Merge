@@ -90,6 +90,8 @@ export function useAuthentication() {
 
   const signUp = async (email: string, password: string, fullName: string) => {
     try {
+      console.log('Starting signup process for:', email);
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -101,6 +103,7 @@ export function useAuthentication() {
       });
 
       if (error) {
+        console.error('Supabase auth.signUp error:', error);
         toast({
           title: 'Signup Failed',
           description: getFriendlyErrorMessage(error.message),
@@ -108,6 +111,8 @@ export function useAuthentication() {
         });
         return { error };
       }
+
+      console.log('Signup successful, user ID:', data?.user?.id);
 
       // Note: Welcome email is now sent after email confirmation
       // The confirmation email is sent from SignUp.tsx via send-confirmation-email edge function
@@ -118,8 +123,9 @@ export function useAuthentication() {
         description: 'Please check your email to confirm your account.',
       });
 
-      return { error: null, user: data?.user };
+      return { error: null, user: data?.user, data };
     } catch (error: any) {
+      console.error('Signup exception:', error);
       toast({
         title: 'Signup Error',
         description: getFriendlyErrorMessage(error.message || 'An unexpected error occurred'),
