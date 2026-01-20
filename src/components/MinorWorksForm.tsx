@@ -14,7 +14,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useSmartDefaults } from '@/hooks/useSmartDefaults';
 import { useFormValidation } from '@/hooks/useFormValidation';
 import { useMinorWorksTabs } from '@/hooks/useMinorWorksTabs';
+import { applyMinorWorksDevFill, clearMinorWorksForm } from '@/utils/minorWorksDevFill';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
+import { getZsLimitFromDeviceString } from '@/data/zsLimits';
 
 // New tab-based components
 import MWFormHeader from '@/components/minor-works/MWFormHeader';
@@ -24,18 +26,6 @@ import MWDetailsTab from '@/components/minor-works/MWDetailsTab';
 import MWCircuitTab from '@/components/minor-works/MWCircuitTab';
 import MWTestingTab from '@/components/minor-works/MWTestingTab';
 import MWDeclarationTab from '@/components/minor-works/MWDeclarationTab';
-
-interface ZsLimits {
-  [key: string]: { [rating: string]: number };
-}
-
-// BS 7671 Table 41.3 - MCBs to BS EN 60898 and RCBOs to BS EN 61009 (0.4s disconnection)
-const ZS_LIMITS: ZsLimits = {
-  'mcb-b': { '6': 7.28, '10': 4.37, '16': 2.73, '20': 2.19, '25': 1.75, '32': 1.37, '40': 1.09, '50': 0.87, '63': 0.69, '80': 0.55, '100': 0.44 },
-  'mcb-c': { '6': 3.64, '10': 2.19, '16': 1.37, '20': 1.09, '25': 0.87, '32': 0.68, '40': 0.55, '50': 0.44, '63': 0.35, '80': 0.27, '100': 0.22 },
-  'mcb-d': { '6': 1.82, '10': 1.09, '16': 0.68, '20': 0.55, '25': 0.44, '32': 0.34, '40': 0.27, '50': 0.22, '63': 0.17, '80': 0.14, '100': 0.11 },
-  'rcbo': { '6': 7.28, '10': 4.37, '16': 2.73, '20': 2.19, '25': 1.75, '32': 1.37, '40': 1.09, '50': 0.87, '63': 0.69, '80': 0.55, '100': 0.44 }
-};
 
 const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initialReportId?: string | null }) => {
   const location = useLocation();
@@ -55,6 +45,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     propertyAddress: '',
     postcode: '',
     clientName: '',
+    clientEmail: '',
     workDate: '',
     dateOfCompletion: '',
     personOrderingWork: '',
@@ -89,6 +80,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     distributionBoard: '',
     circuitDesignation: '',
     circuitDescription: '',
+    circuitType: 'radial',
     protectiveDeviceType: '',
     protectiveDeviceRating: '',
     protectiveDeviceKaRating: '',
@@ -131,7 +123,11 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     spdTestButton: '',
     spdVisualInspection: '',
 
-    // Ring Circuit Continuity Tests
+    // Ring Circuit Continuity Tests (IET Official fields)
+    ringR1: '',
+    ringRn: '',
+    ringR2: '',
+    // Legacy ring circuit fields
     ringR1EndToEnd: '',
     ringRnEndToEnd: '',
     ringR2EndToEnd: '',
@@ -169,10 +165,14 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     registrationNumber: '',
     signatureDate: '',
     signature: '',
+    // Consolidated IET declaration (replaces bs7671Compliance, testResultsAccurate, workSafety)
+    ietDeclaration: false,
+    // Legacy fields kept for backwards compatibility
     bs7671Compliance: false,
     testResultsAccurate: false,
     workSafety: false,
     partPNotification: false,
+    copyProvided: false,
     additionalNotes: ''
   });
 
@@ -247,26 +247,23 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     fetchUserId();
   }, []);
 
-  // Auto-fill Max Permitted Zs based on protective device
+  // Auto-fill Max Permitted Zs based on protective device using BS 7671 tables
   useEffect(() => {
     if (formData.protectiveDeviceType && formData.protectiveDeviceRating) {
-      const deviceType = formData.protectiveDeviceType.toLowerCase();
-      const rating = formData.protectiveDeviceRating;
+      const rating = parseInt(formData.protectiveDeviceRating, 10);
+      if (isNaN(rating)) return;
 
-      let zsKey = null;
-      if (deviceType.includes('mcb') && deviceType.includes('type b')) {
-        zsKey = 'mcb-b';
-      } else if (deviceType.includes('mcb') && deviceType.includes('type c')) {
-        zsKey = 'mcb-c';
-      } else if (deviceType.includes('rcbo')) {
-        zsKey = 'rcbo';
-      }
+      // Build device string for lookup
+      const deviceType = formData.protectiveDeviceType;
+      const circuitDesc = formData.circuitDescription || '';
 
-      if (zsKey && ZS_LIMITS[zsKey]?.[rating]) {
-        handleUpdate('maxPermittedZs', ZS_LIMITS[zsKey][rating].toString());
+      const zsResult = getZsLimitFromDeviceString(deviceType, rating, circuitDesc);
+
+      if (zsResult?.maxZs) {
+        handleUpdate('maxPermittedZs', zsResult.maxZs.toString());
       }
     }
-  }, [formData.protectiveDeviceType, formData.protectiveDeviceRating]);
+  }, [formData.protectiveDeviceType, formData.protectiveDeviceRating, formData.circuitDescription]);
 
   // Auto-set Phase Rotation based on supply phases
   useEffect(() => {
@@ -277,16 +274,22 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     }
   }, [formData.supplyPhases]);
 
-  // Track when authentication has been checked
+  // Track when authentication has been checked - wait for actual session check
   useEffect(() => {
-    if (isAuthenticated !== undefined) {
-      setAuthChecked(true);
+    // Only mark as checked after a brief delay to allow auth to resolve
+    // This prevents race conditions with the initial auth state
+    if (initialReportId) {
+      const timer = setTimeout(() => {
+        setAuthChecked(true);
+      }, 500); // Give auth time to resolve
+      return () => clearTimeout(timer);
     }
-  }, [isAuthenticated]);
+  }, [initialReportId]);
 
   // Load from cloud if initialReportId is provided
   useEffect(() => {
     if (initialReportId && authChecked) {
+      // If still not authenticated after delay, show error
       if (!isAuthenticated) {
         toast({
           title: 'Cannot load report',
@@ -388,6 +391,23 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     setShowStartNewDialog(true);
   };
 
+  // Dev fill handlers (only available in development)
+  const handleDevFill = () => {
+    applyMinorWorksDevFill(handleUpdate);
+    toast({
+      title: "Dev Fill Applied",
+      description: "Test data has been filled in all fields.",
+    });
+  };
+
+  const handleClearForm = () => {
+    clearMinorWorksForm(handleUpdate);
+    toast({
+      title: "Form Cleared",
+      description: "All fields have been reset.",
+    });
+  };
+
   const confirmStartNew = async () => {
     const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
     const certificateNumber = await generateCertificateNumber('minor-works');
@@ -397,6 +417,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       propertyAddress: '',
       postcode: '',
       clientName: '',
+      clientEmail: '',
       workDate: '',
       dateOfCompletion: '',
       personOrderingWork: '',
@@ -423,6 +444,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       distributionBoard: '',
       circuitDesignation: '',
       circuitDescription: '',
+      circuitType: 'radial',
       protectiveDeviceType: '',
       protectiveDeviceRating: '',
       protectiveDeviceKaRating: '',
@@ -454,6 +476,9 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       spdIndicatorStatus: '',
       spdTestButton: '',
       spdVisualInspection: '',
+      ringR1: '',
+      ringRn: '',
+      ringR2: '',
       ringR1EndToEnd: '',
       ringRnEndToEnd: '',
       ringR2EndToEnd: '',
@@ -483,10 +508,12 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       registrationNumber: '',
       signatureDate: '',
       signature: '',
+      ietDeclaration: false,
       bs7671Compliance: false,
       testResultsAccurate: false,
       workSafety: false,
       partPNotification: false,
+      copyProvided: false,
       additionalNotes: ''
     });
     setCurrentReportId(null);
@@ -529,7 +556,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       'propertyAddress', 'clientName', 'workDate', 'workDescription',
       'earthingArrangement', 'circuitDesignation', 'protectiveDeviceType',
       'protectiveDeviceRating', 'polarity', 'electricianName', 'position',
-      'signatureDate', 'bs7671Compliance', 'testResultsAccurate', 'workSafety'
+      'signatureDate', 'ietDeclaration'
     ];
 
     return required.every(field => {
@@ -693,6 +720,8 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
           hasUnsavedChanges={hasUnsavedChanges}
           onManualSave={handleSaveDraft}
           onStartNew={handleStartNew}
+          onDevFill={handleDevFill}
+          onClearForm={handleClearForm}
           formData={formData}
           syncState={syncState}
           isOnline={isOnline}
@@ -704,15 +733,17 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         {/* Main Content */}
         <div className="lg:pt-0 pt-0">
           <div className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-            {/* Step Indicator */}
-            <MWStepIndicator
-              currentTab={currentTab}
-              onTabChange={setTab}
-              isTabComplete={isTabComplete}
-            />
+            {/* Step Indicator - Sticky on scroll */}
+            <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm -mx-4 px-4 py-3 border-b border-white/5 sm:border-0 sm:bg-transparent sm:backdrop-blur-none sm:relative sm:mx-0 sm:px-0 sm:py-0">
+              <MWStepIndicator
+                currentTab={currentTab}
+                onTabChange={setTab}
+                isTabComplete={isTabComplete}
+              />
+            </div>
 
             {/* Tab Content */}
-            <div className="mt-6 pb-32">
+            <div className="mt-6 pb-40 sm:pb-32">
               <AnimatePresence mode="wait">
                 {renderTabContent()}
               </AnimatePresence>
@@ -720,8 +751,9 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
           </div>
         </div>
 
-        {/* Bottom Navigation */}
-        <MWTabNavigation
+        {/* Bottom Navigation - Fixed on mobile */}
+        <div className="fixed bottom-0 left-0 right-0 sm:relative sm:bottom-auto z-40">
+          <MWTabNavigation
           currentTab={currentTab}
           currentTabIndex={currentTabIndex}
           totalTabs={totalTabs}
@@ -737,6 +769,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
           canGenerateCertificate={canGenerateCertificate()}
           showGenerate={currentTab === 'declaration'}
         />
+        </div>
 
         <StartNewEICRDialog
           isOpen={showStartNewDialog}

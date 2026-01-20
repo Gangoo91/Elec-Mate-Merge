@@ -28,29 +28,31 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({ result, onUp
   return (
     <>
       {/* Column 13: BS (EN) - RCD */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-40 min-w-[140px] max-w-[140px]">
+      <TableCell className="p-0 h-8 align-middle w-40 min-w-[140px] max-w-[140px]">
         <MobileSelectPicker
           value={result.rcdBsStandard || ''}
           onValueChange={handleRcdBsStandardChange}
           options={rcdBsStandardOptions}
           placeholder="BS EN"
           title="RCD BS (EN) Standard"
+          triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
         />
       </TableCell>
 
       {/* Column 14: Type - RCD */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[105px] max-w-[105px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[105px] max-w-[105px]">
         <MobileSelectPicker
           value={result.rcdType || ''}
           onValueChange={handleRcdTypeChange}
           options={rcdTypeOptions}
           placeholder="Type"
           title="RCD Type"
+          triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
         />
       </TableCell>
 
       {/* Column 15: IΔn (mA) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
         <MobileSelectPicker
           value={result.rcdRating || ''}
           onValueChange={handleRcdRatingChange}
@@ -63,15 +65,16 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({ result, onUp
           ]}
           placeholder="mA"
           title="RCD Rating (mA)"
+          triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
         />
       </TableCell>
 
       {/* Column 16: Rating (A) - RCD */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-20 min-w-[75px] max-w-[75px]">
+      <TableCell className="p-0 h-8 align-middle w-20 min-w-[75px] max-w-[75px]">
         <ValidatedInput
           value={result.rcdRatingA || ''}
           onChange={(value) => onUpdate(result.id, 'rcdRatingA', value)}
-          className="h-4 text-xs text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50"
+          className="h-8 text-sm text-center px-1 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus-visible:ring-1 focus-visible:ring-elec-yellow/30"
           placeholder="A"
         />
       </TableCell>

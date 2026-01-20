@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -144,6 +144,18 @@ const SignUp = () => {
 
   const { signUp } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [offerCode, setOfferCode] = useState<string | null>(null);
+
+  // Capture offer code from URL and store for checkout
+  useEffect(() => {
+    const code = searchParams.get('offer');
+    if (code) {
+      localStorage.setItem('elec-mate-offer-code', code);
+      setOfferCode(code);
+      console.log('Offer code captured:', code);
+    }
+  }, [searchParams]);
 
   const roleOptions = [
     { value: 'apprentice', label: 'Apprentice', icon: GraduationCap },
@@ -387,6 +399,25 @@ const SignUp = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
               >
+                {/* Offer Banner */}
+                {offerCode && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-4 p-3 rounded-2xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                        <Gift className="h-5 w-5 text-green-400" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-green-400">Special Offer Applied</p>
+                        <p className="text-xs text-white/60">Your discount will be applied at checkout</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
                 {/* Title */}
                 <div className="text-center mb-6">
                   <motion.h1 className="text-[28px] font-bold text-white tracking-tight mb-2">

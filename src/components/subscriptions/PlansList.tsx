@@ -38,16 +38,24 @@ const PlansList = ({ billing }: PlansListProps) => {
     try {
       setIsLoading(prev => ({ ...prev, [planId]: true }));
 
+      // Check for stored offer code from signup
+      const offerCode = localStorage.getItem('elec-mate-offer-code');
+
       const { data, error } = await supabase.functions.invoke('create-checkout', {
-        body: { priceId, mode: 'subscription', planId }
+        body: { priceId, mode: 'subscription', planId, offerCode }
       });
 
       if (error) throw new Error(error.message);
 
       if (data?.url) {
+        // Clear offer code after successful checkout creation
+        if (offerCode) {
+          localStorage.removeItem('elec-mate-offer-code');
+        }
+
         toast({
           title: "Redirecting to checkout",
-          description: "Opening secure Stripe checkout page.",
+          description: offerCode ? "Your discount will be applied automatically." : "Opening secure Stripe checkout page.",
         });
 
         const newWindow = window.open(data.url, '_blank');

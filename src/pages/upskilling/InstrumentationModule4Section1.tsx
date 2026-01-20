@@ -383,7 +383,7 @@ const InstrumentationModule4Section1 = () => {
               Back
             </Button>
           </Link>
-          <Link to="../section-2">
+          <Link to="../instrumentation-module-4-section-2">
             <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
               Next Section
             </Button>

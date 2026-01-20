@@ -10,7 +10,7 @@ interface ReferenceMethodCellProps {
 
 export const ReferenceMethodCell: React.FC<ReferenceMethodCellProps> = ({ result, onUpdate }) => {
   return (
-    <TableCell className="p-0 bg-black h-5 align-middle">
+    <TableCell className="p-0 h-8 align-middle w-20 min-w-[70px] max-w-[70px]">
       <MobileSelectPicker
         value={result.referenceMethod || ''}
         onValueChange={(value) => onUpdate(result.id, 'referenceMethod', value)}
@@ -28,6 +28,7 @@ export const ReferenceMethodCell: React.FC<ReferenceMethodCellProps> = ({ result
         ]}
         placeholder="Ref"
         title="Reference Method"
+        triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
       />
     </TableCell>
   );

@@ -122,7 +122,7 @@ const FireAlarmModule3Section2 = () => {
       <header className="border-b border-white/10 bg-slate-950/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 h-14 flex items-center">
           <Button variant="ghost" size="sm" asChild>
-            <Link to="/electrician/upskilling/fire-alarm-module-3">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-3">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Module
             </Link>

@@ -14,7 +14,7 @@ const FunctionalTestCellComponent: React.FC<FunctionalTestCellProps> = ({ result
   }, [result.id, onUpdate]);
 
   return (
-    <TableCell className="p-0 bg-black h-5 align-middle">
+    <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
       <MobileSelectPicker
         value={result.functionalTesting || ''}
         onValueChange={handleChange}
@@ -25,6 +25,7 @@ const FunctionalTestCellComponent: React.FC<FunctionalTestCellProps> = ({ result
         ]}
         placeholder="Func"
         title="Functional Testing"
+        triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
       />
     </TableCell>
   );

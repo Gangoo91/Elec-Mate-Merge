@@ -1,15 +1,21 @@
+/**
+ * SimpleCircuitTable - Mobile-first circuit review table
+ *
+ * Redesigned with card-based layout for mobile devices.
+ * Each circuit is shown as an expandable card for easy editing.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { X, Check, AlertCircle, Trash2, Plus, GripVertical, ChevronUp, ChevronDown, ArrowLeftRight, User } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+  X, Check, AlertCircle, Trash2, Plus, ChevronUp, ChevronDown,
+  ArrowLeftRight, Zap, Cable, Settings2, ChevronRight, Pencil
+} from 'lucide-react';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import {
   DropdownMenu,
@@ -20,6 +26,7 @@ import {
 import { protectiveDeviceTypeOptions, protectiveDeviceRatingOptions, getDefaultKaRating } from '@/types/protectiveDeviceTypes';
 import { getRecommendedCpcSize } from '@/types/enhancedCircuitTypes';
 import { InsertPositionDialog } from './InsertPositionDialog';
+import { cn } from '@/lib/utils';
 
 interface Evidence {
   label?: string[];
@@ -41,7 +48,7 @@ interface Circuit {
   confidence: 'high' | 'medium' | 'low';
   evidence?: Evidence;
   notes?: string;
-  phase?: '1P' | '3P'; // Three-phase detection
+  phase?: '1P' | '3P';
   phases?: {
     L1?: { position: number; rating?: number; curve?: string };
     L2?: { position: number; rating?: number; curve?: string };
@@ -76,60 +83,133 @@ interface SimpleCircuitTableProps {
   onClose: () => void;
 }
 
-const ConfidenceBadge = ({ conf }: { conf: 'high' | 'medium' | 'low' }) => {
-  const variants = {
-    high: { label: 'High', variant: 'default' as const, color: 'bg-green-500/10 text-green-700 dark:text-green-400' },
-    medium: { label: 'Med', variant: 'secondary' as const, color: 'bg-amber-500/10 text-amber-700 dark:text-amber-400' },
-    low: { label: 'Low', variant: 'destructive' as const, color: 'bg-red-500/10 text-red-700 dark:text-red-400' },
+// Get pictogram emoji
+const getPictogramEmoji = (type: string): string => {
+  const map: Record<string, string> = {
+    'SHOWER': '🚿',
+    'SOCKETS': '🔌',
+    'LIGHTING': '💡',
+    'COOKER_OVEN': '🍳',
+    'HOB': '🔥',
+    'EV_CHARGER': '🚗',
+    'SMOKE_ALARM': '🔔',
+    'FIRE_ALARM': '🔔',
+    'BOILER': '🔧',
+    'HEATER': '🌡️',
+    'OUTDOOR': '🌳',
+    'GARDEN_ROOM': '🌳',
+    'GARAGE': '🏠',
   };
-  const { label, color } = variants[conf];
+  return map[type] || '⚡';
+};
+
+// Confidence badge component
+const ConfidenceBadge = ({ conf }: { conf: 'high' | 'medium' | 'low' }) => {
+  const config = {
+    high: { label: 'Verified', className: 'bg-green-500/10 text-green-500 border-green-500/30' },
+    medium: { label: 'Check', className: 'bg-amber-500/10 text-amber-500 border-amber-500/30' },
+    low: { label: 'Review', className: 'bg-red-500/10 text-red-500 border-red-500/30' },
+  };
+  const { label, className } = config[conf];
   return (
-    <Badge className={`text-xs font-medium ${color} border-0`}>
+    <Badge variant="outline" className={cn('text-xs font-medium', className)}>
       {label}
     </Badge>
   );
 };
 
-const EvidenceTooltip = ({ evidence }: { evidence?: string[] }) => {
-  if (!evidence || evidence.length === 0) return null;
-  
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <AlertCircle className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
-        </TooltipTrigger>
-        <TooltipContent side="top" className="max-w-xs">
-          <div className="text-xs space-y-1">
-            <div className="font-semibold text-foreground">Evidence:</div>
-            {evidence.map((e, i) => (
-              <div key={i} className="text-muted-foreground">• {e}</div>
-            ))}
-          </div>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  );
+// Detect circuit type from label
+const detectCircuitType = (label: string): string => {
+  const lower = label.toLowerCase();
+  if (lower.includes('light')) return 'lighting';
+  if (lower.includes('socket') || lower.includes('ring')) return 'ring-socket';
+  if (lower.includes('cooker') || lower.includes('oven')) return 'cooker';
+  if (lower.includes('shower')) return 'shower';
+  return 'radial-socket';
 };
+
+// Get smart defaults for cable sizes
+const getSmartDefaults = (rating: number | null, label: string): { live: string; cpc: string; ka: string } => {
+  if (!rating) return { live: '', cpc: '', ka: '' };
+
+  const circuitType = detectCircuitType(label);
+
+  if (circuitType === 'lighting') {
+    return { live: '1.5', cpc: '1.0', ka: '6' };
+  }
+  if (circuitType === 'shower') {
+    return { live: '10', cpc: '4.0', ka: '10' };
+  }
+  if (circuitType === 'cooker' && rating >= 32) {
+    return { live: '6.0', cpc: '2.5', ka: rating <= 40 ? '6' : '10' };
+  }
+  if (circuitType === 'ring-socket' && rating === 32) {
+    return { live: '2.5', cpc: '1.5', ka: '6' };
+  }
+
+  if (rating <= 10) return { live: '1.5', cpc: '1.0', ka: '6' };
+  if (rating <= 20) return { live: '2.5', cpc: '1.5', ka: '6' };
+  if (rating >= 40) return { live: '10', cpc: '4.0', ka: '10' };
+
+  return { live: '4.0', cpc: '1.5', ka: '6' };
+};
+
+// Cable size options
+const liveSizeOptions = [
+  { value: '1.0', label: '1.0mm²' },
+  { value: '1.5', label: '1.5mm²' },
+  { value: '2.5', label: '2.5mm²' },
+  { value: '4.0', label: '4.0mm²' },
+  { value: '6.0', label: '6.0mm²' },
+  { value: '10', label: '10mm²' },
+  { value: '16', label: '16mm²' },
+  { value: '25', label: '25mm²' },
+];
+
+const cpcSizeOptions = [
+  { value: '1.0', label: '1.0mm²' },
+  { value: '1.5', label: '1.5mm²' },
+  { value: '2.5', label: '2.5mm²' },
+  { value: '4.0', label: '4.0mm²' },
+  { value: '6.0', label: '6.0mm²' },
+  { value: '10', label: '10mm²' },
+  { value: '16', label: '16mm²' },
+];
+
+const curveOptions = [
+  { value: 'B', label: 'Type B' },
+  { value: 'C', label: 'Type C' },
+  { value: 'D', label: 'Type D' },
+  { value: 'K', label: 'Type K' },
+  { value: 'Z', label: 'Type Z' },
+];
+
+const kaOptions = [
+  { value: '3', label: '3kA' },
+  { value: '6', label: '6kA' },
+  { value: '10', label: '10kA' },
+  { value: '16', label: '16kA' },
+  { value: '16.5', label: '16.5kA' },
+];
 
 export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: SimpleCircuitTableProps) => {
   const [editedCircuits, setEditedCircuits] = useState<Circuit[]>(circuits);
   const [insertDialogOpen, setInsertDialogOpen] = useState(false);
-  
+  const [expandedId, setExpandedId] = useState<number | null>(null);
+
   const isThreePhase = board.boardLayout === '3P-vertical' || board.boardLayout === '3P-horizontal' || board.waysPerCircuit === 3;
+
+  // Count confidence levels
+  const lowCount = editedCircuits.filter(c => c.confidence === 'low').length;
+  const mediumCount = editedCircuits.filter(c => c.confidence === 'medium').length;
 
   // Auto-populate cable sizes when AI data loads
   useEffect(() => {
     const populatedCircuits = circuits.map(circuit => {
-      // Only populate if cable sizes are empty
       if (circuit.liveConductorSize || circuit.cpcSize) return circuit;
-      
-      const rating = circuit.rating;
-      const label = circuit.label || '';
-      
-      // Get smart defaults based on rating and label
-      const defaults = getSmartDefaults(rating, label);
-      
+
+      const defaults = getSmartDefaults(circuit.rating, circuit.label);
+
       return {
         ...circuit,
         liveConductorSize: defaults.live,
@@ -137,94 +217,17 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
         kaRating: defaults.ka
       };
     });
-    
+
     setEditedCircuits(populatedCircuits);
   }, [circuits]);
-
-  // Detect circuit type from label
-  const detectCircuitType = (label: string): string => {
-    const lower = label.toLowerCase();
-    if (lower.includes('light')) return 'lighting';
-    if (lower.includes('socket') || lower.includes('ring')) return 'ring-socket';
-    if (lower.includes('cooker') || lower.includes('oven')) return 'cooker';
-    if (lower.includes('shower')) return 'shower';
-    return 'radial-socket';
-  };
-
-  // Detect if rating seems wrong for the circuit type
-  const detectRatingMismatch = (rating: number | null, label: string): string | null => {
-    if (!rating) return null;
-    const circuitType = detectCircuitType(label);
-    
-    if (circuitType === 'lighting' && rating > 16) {
-      return `Lighting circuits typically use 6A or 10A, not ${rating}A`;
-    }
-    if (circuitType === 'ring-socket' && rating !== 32 && rating !== 20) {
-      return `Ring circuits typically use 32A or 20A, not ${rating}A`;
-    }
-    if (circuitType === 'shower' && rating < 32) {
-      return `Shower circuits typically use 40A-45A, not ${rating}A`;
-    }
-    if (circuitType === 'cooker' && rating < 20) {
-      return `Cooker circuits typically use 32A-50A, not ${rating}A`;
-    }
-    
-    return null;
-  };
-
-  // Get smart defaults - PRIORITISE circuit type over rating when they conflict
-  const getSmartDefaults = (rating: number | null, label: string): { live: string; cpc: string; ka: string } => {
-    if (!rating) return { live: '', cpc: '', ka: '' };
-    
-    const circuitType = detectCircuitType(label);
-    const ratingNum = rating;
-    
-    // PRIORITY 1: Circuit Type Overrides (label-based)
-    // These rules apply REGARDLESS of detected rating
-    
-    if (circuitType === 'lighting') {
-      // Lighting MUST be 1.5mm² live, even if rating says 32A (likely misread)
-      return { live: '1.5', cpc: '1.0', ka: '6' };
-    }
-    
-    if (circuitType === 'shower') {
-      // Showers are high-current, need 10mm²
-      return { live: '10', cpc: '4.0', ka: '10' };
-    }
-    
-    if (circuitType === 'cooker' && ratingNum >= 32) {
-      return { live: '6.0', cpc: '2.5', ka: ratingNum <= 40 ? '6' : '10' };
-    }
-    
-    if (circuitType === 'ring-socket' && ratingNum === 32) {
-      return { live: '2.5', cpc: '1.5', ka: '6' };
-    }
-    
-    // PRIORITY 2: Rating-based defaults (when label is ambiguous)
-    
-    if (ratingNum <= 10) {
-      return { live: '1.5', cpc: '1.0', ka: '6' };
-    }
-    
-    if (ratingNum <= 20) {
-      return { live: '2.5', cpc: '1.5', ka: '6' };
-    }
-    
-    if (ratingNum >= 40) {
-      return { live: '10', cpc: '4.0', ka: '10' };
-    }
-    
-    // Default for 25-32A radials
-    return { live: '4.0', cpc: '1.5', ka: '6' };
-  };
 
   const updateCircuit = (id: number, field: keyof Circuit, value: any) => {
     setEditedCircuits(prev =>
       prev.map(c => {
         if (c.id !== id) return c;
-        
+
         const updated = { ...c, [field]: value };
-        
+
         // Auto-update cable sizes when rating changes
         if (field === 'rating' && value) {
           const defaults = getSmartDefaults(Number(value), c.label);
@@ -232,31 +235,35 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
           updated.cpcSize = defaults.cpc || c.cpcSize;
           updated.kaRating = defaults.ka || c.kaRating;
         }
-        
+
         // Auto-update CPC when live conductor changes
         if (field === 'liveConductorSize' && value) {
           updated.cpcSize = getRecommendedCpcSize(value);
         }
-        
+
         // Auto-update kA when device type or rating changes
         if ((field === 'device' || field === 'rating') && updated.device && updated.rating) {
           updated.kaRating = getDefaultKaRating(updated.device, String(updated.rating));
         }
-        
+
         return updated;
       })
     );
   };
 
   const deleteCircuit = (id: number) => {
-    setEditedCircuits(prev => prev.filter(c => c.id !== id));
+    setEditedCircuits(prev => {
+      const filtered = prev.filter(c => c.id !== id);
+      return filtered.map((c, i) => ({ ...c, position: i + 1 }));
+    });
+    setExpandedId(null);
   };
 
   const addBlankCircuit = () => {
-    const newPosition = editedCircuits.length > 0 
-      ? Math.max(...editedCircuits.map(c => c.position)) + 1 
+    const newPosition = editedCircuits.length > 0
+      ? Math.max(...editedCircuits.map(c => c.position)) + 1
       : 1;
-    
+
     const newCircuit: Circuit = {
       id: Date.now(),
       position: newPosition,
@@ -270,8 +277,9 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
       confidence: 'low',
       notes: ''
     };
-    
+
     setEditedCircuits(prev => [...prev, newCircuit]);
+    setExpandedId(newCircuit.id);
   };
 
   const insertCircuitAtPosition = (position: number) => {
@@ -289,18 +297,17 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
       notes: '',
     };
 
-    // Renumber circuits at or after the insertion position
     const updatedCircuits = editedCircuits.map((circuit) => ({
       ...circuit,
       position: circuit.position >= position ? circuit.position + 1 : circuit.position,
     }));
 
-    // Insert the new circuit and sort by position
     const circuitsWithNew = [...updatedCircuits, newCircuit].sort(
       (a, b) => a.position - b.position
     );
 
     setEditedCircuits(circuitsWithNew);
+    setExpandedId(newCircuit.id);
   };
 
   const reverseCircuitOrder = () => {
@@ -314,415 +321,139 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
   const moveCircuit = (id: number, direction: 'up' | 'down') => {
     const index = editedCircuits.findIndex(c => c.id === id);
     if (index === -1) return;
-    
+
     if (direction === 'up' && index === 0) return;
     if (direction === 'down' && index === editedCircuits.length - 1) return;
-    
+
     const newCircuits = [...editedCircuits];
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
-    
+
     [newCircuits[index], newCircuits[targetIndex]] = [newCircuits[targetIndex], newCircuits[index]];
-    
-    // Update positions
+
     newCircuits.forEach((circuit, idx) => {
       circuit.position = idx + 1;
     });
-    
+
     setEditedCircuits(newCircuits);
   };
 
   const hasData = editedCircuits.length > 0;
 
   return (
-    <Card className="p-4 sm:p-6 max-w-7xl mx-auto shadow-xl">
+    <div className="flex flex-col h-full max-h-[90vh] bg-background">
       {/* Header */}
-      <div className="flex flex-col gap-4 mb-6">
-        <div className="flex items-start justify-between">
-          <h2 className="text-xl sm:text-2xl font-bold text-foreground">AI Circuit Detection Results</h2>
-          <div className="flex items-center gap-2">
-            {hasData && editedCircuits.length > 1 && (
-              <Button variant="outline" size="sm" onClick={reverseCircuitOrder}>
-                <ArrowLeftRight className="h-4 w-4 mr-2" />
-                Reverse Order
-              </Button>
-            )}
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X className="h-5 w-5" />
-            </Button>
+      <div className="flex-shrink-0 px-4 pt-4 pb-3 border-b border-border/30">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+              <Zap className="h-5 w-5 text-elec-yellow" />
+              AI Detection Results
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1">
+              {board.make} {board.model} • {board.mainSwitch}
+            </p>
           </div>
+          <Button variant="ghost" size="icon" onClick={onClose} className="flex-shrink-0">
+            <X className="h-5 w-5" />
+          </Button>
         </div>
-        
-        <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground bg-muted/30 p-3 rounded-lg">
+
+        {/* Stats row */}
+        <div className="flex items-center gap-2 mt-3 flex-wrap">
+          <Badge variant="secondary" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+            {editedCircuits.length} circuits
+          </Badge>
           {isThreePhase && (
-            <>
-              <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200 font-semibold">
-                Three-Phase Board
-              </Badge>
-              <div className="h-4 w-px bg-border hidden sm:block" />
-            </>
+            <Badge variant="secondary" className="bg-purple-500/10 text-purple-400 border-purple-500/30">
+              Three-Phase
+            </Badge>
           )}
-          <div className="flex items-center gap-1.5">
-            <span className="font-semibold text-foreground">Board:</span>
-            <span>{board.make} {board.model}</span>
-            <EvidenceTooltip evidence={[...(board.evidence?.brand || []), ...(board.evidence?.model || [])]} />
-          </div>
-          <div className="h-4 w-px bg-border hidden sm:block" />
-          <div className="flex items-center gap-1.5">
-            <span className="font-semibold text-foreground">Main Switch:</span>
-            <span>{board.mainSwitch}</span>
-            <EvidenceTooltip evidence={board.evidence?.mainSwitch} />
-          </div>
-          <div className="h-4 w-px bg-border hidden sm:block" />
-          <div className="flex items-center gap-1.5">
-            <span className="font-semibold text-foreground">SPD:</span>
-            <span>{board.spd}</span>
-            <EvidenceTooltip evidence={board.evidence?.spd} />
-          </div>
-          <div className="h-4 w-px bg-border hidden sm:block" />
-          <div>
-            <span className="font-semibold text-foreground">Ways:</span> {isThreePhase ? `${editedCircuits.length} (${editedCircuits.length * 3} MCB positions)` : board.totalWays}
-          </div>
+          {lowCount > 0 && (
+            <Badge variant="secondary" className="bg-red-500/10 text-red-400 border-red-500/30">
+              {lowCount} need review
+            </Badge>
+          )}
+          {mediumCount > 0 && (
+            <Badge variant="secondary" className="bg-amber-500/10 text-amber-400 border-amber-500/30">
+              {mediumCount} to check
+            </Badge>
+          )}
         </div>
+
+        {/* Quick actions */}
+        {hasData && editedCircuits.length > 1 && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={reverseCircuitOrder}
+            className="mt-3 h-9 gap-2 touch-manipulation border-white/30"
+          >
+            <ArrowLeftRight className="h-4 w-4" />
+            Reverse Order
+          </Button>
+        )}
       </div>
 
-      {/* Table Container - Mobile Scrollable */}
-      <div className="overflow-x-auto -mx-4 sm:mx-0">
-        <div className="inline-block min-w-full align-middle px-4 sm:px-0">
+      {/* Circuit list */}
+      <ScrollArea className="flex-1">
+        <div className="p-4 space-y-2">
           {hasData ? (
-            <table className="w-full border-collapse">
-              <thead className="sticky top-0 z-10 bg-muted/30">
-                <tr className="border-b-2 border-border">
-                  <th className="px-2 py-1.5 text-left text-[10px] font-semibold uppercase tracking-wider sticky left-0 bg-muted/30 z-20 w-[40px]">Cct</th>
-                  <th className="px-2 py-1.5 text-left text-[10px] font-semibold uppercase tracking-wider w-[60px]">Phase</th>
-                  <th className="px-2 py-1.5 text-left text-[10px] font-semibold uppercase tracking-wider min-w-[150px]">Description</th>
-                  <th className="px-2 py-1.5 text-left text-[10px] font-semibold uppercase tracking-wider border-l border-border w-[80px]">Device</th>
-                  <th className="px-2 py-1.5 text-left text-[10px] font-semibold uppercase tracking-wider w-[70px]">Curve</th>
-                  <th className="px-2 py-1.5 text-left text-[10px] font-semibold uppercase tracking-wider w-[80px]">Rating</th>
-                  <th className="px-2 py-1.5 text-left text-[10px] font-semibold uppercase tracking-wider border-l border-border w-[70px]">Live</th>
-                  <th className="px-2 py-1.5 text-left text-[10px] font-semibold uppercase tracking-wider w-[70px]">CPC</th>
-                  <th className="px-2 py-1.5 text-left text-[10px] font-semibold uppercase tracking-wider border-l border-border w-[70px]">kA</th>
-                  <th className="px-2 py-1.5 text-left text-[10px] font-semibold uppercase tracking-wider w-[60px]">Conf.</th>
-                  <th className="px-2 py-1.5 text-center text-[10px] font-semibold uppercase tracking-wider w-[90px]">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {editedCircuits.map((circuit, index) => {
-                  const isManuallyAdded = circuit.confidence === 'low' && !circuit.evidence;
-                  return (
-                  <tr key={circuit.id} className={`border-b border-border/50 hover:bg-accent/30 transition-colors ${
-                    circuit.confidence === 'low' 
-                      ? 'bg-red-500/5 border-l-4 border-l-red-500' 
-                      : circuit.confidence === 'medium'
-                      ? 'bg-amber-500/5 border-l-4 border-l-amber-500'
-                      : ''
-                  }`}>
-                    {/* Circuit Number */}
-                    <td className="px-2 py-1.5 sticky left-0 bg-background relative">
-                      <div className="flex items-center gap-1" title={circuit.confidence === 'low' ? '⚠️ Low confidence - verify manually' : circuit.confidence === 'medium' ? '⚠️ Medium confidence - check values' : '✓ High confidence'}>
-                        {isThreePhase && circuit.phases ? (
-                          <div className="flex flex-col">
-                            <span className="text-xs font-semibold">Way {circuit.position}</span>
-                            <span className="text-[10px] text-muted-foreground">
-                              ({circuit.phases.L1?.position}, {circuit.phases.L2?.position}, {circuit.phases.L3?.position})
-                            </span>
-                          </div>
-                        ) : (
-                          <span className="text-xs font-semibold">{circuit.position}</span>
-                        )}
-                        {isManuallyAdded && (
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger>
-                                <User className="h-3 w-3 text-blue-500" />
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p className="text-xs">Manually added</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        )}
-                      </div>
-                      {circuit.confidence === 'low' && (
-                        <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                        </span>
-                      )}
-                    </td>
-                    
-                    {/* Phase Selection */}
-                    <td className="px-2 py-1.5">
-                      <MobileSelectPicker
-                        value={circuit.phase || '1P'}
-                        onValueChange={(value) => updateCircuit(circuit.id, 'phase', value as '1P' | '3P')}
-                        options={[
-                          { value: '1P', label: '1P' },
-                          { value: '3P', label: '3P' },
-                        ]}
-                        placeholder="Phase"
-                        title="Phase Type"
-                        triggerClassName="h-7 text-xs"
-                      />
-                    </td>
-                    
-                    {/* Description with Tooltip */}
-                    <td className="px-2 py-1.5">
-                      <div className="flex items-center gap-1">
-                        {circuit.pictograms?.length > 0 && (
-                          <span className="text-base shrink-0" title={`Detected: ${circuit.pictograms.map((p: any) => p.type).join(', ')}`}>
-                            {circuit.pictograms[0].type === 'SHOWER' && '🚿'}
-                            {circuit.pictograms[0].type === 'SOCKETS' && '🔌'}
-                            {circuit.pictograms[0].type === 'LIGHTING' && '💡'}
-                            {circuit.pictograms[0].type === 'COOKER_OVEN' && '🍳'}
-                            {circuit.pictograms[0].type === 'HOB' && '🔥'}
-                            {circuit.pictograms[0].type === 'EV_CHARGER' && '🚗'}
-                            {circuit.pictograms[0].type === 'SMOKE_ALARM' && '🔔'}
-                            {circuit.pictograms[0].type === 'FIRE_ALARM' && '🔔'}
-                            {circuit.pictograms[0].type === 'BOILER' && '🔧'}
-                            {circuit.pictograms[0].type === 'HEATER' && '🌡️'}
-                            {circuit.pictograms[0].type === 'OUTDOOR' && '🌳'}
-                            {circuit.pictograms[0].type === 'GARDEN_ROOM' && '🌳'}
-                            {circuit.pictograms[0].type === 'GARAGE' && '🏠'}
-                          </span>
-                        )}
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <Input
-                                value={circuit.label}
-                                onChange={(e) => updateCircuit(circuit.id, 'label', e.target.value)}
-                                className="h-7 text-xs flex-1"
-                                placeholder="e.g., Kitchen Sockets"
-                                title={circuit.label}
-                              />
-                            </TooltipTrigger>
-                            {circuit.label && circuit.label.length > 15 && (
-                              <TooltipContent side="top">
-                                <p className="max-w-xs text-xs">{circuit.label}</p>
-                              </TooltipContent>
-                            )}
-                          </Tooltip>
-                        </TooltipProvider>
-                        <EvidenceTooltip evidence={circuit.evidence?.label} />
-                      </div>
-                    </td>
-                    
-                    {/* Device Type */}
-                    <td className="px-2 py-1.5 border-l border-border">
-                      <div className="flex items-center gap-1">
-                        <MobileSelectPicker
-                          value={circuit.device}
-                          onValueChange={(val) => updateCircuit(circuit.id, 'device', val)}
-                          options={protectiveDeviceTypeOptions}
-                          placeholder="-"
-                          title="Device Type"
-                          triggerClassName="h-7 text-xs w-[80px]"
-                        />
-                        <EvidenceTooltip evidence={circuit.evidence?.device} />
-                      </div>
-                    </td>
-                    
-                    {/* Curve */}
-                    <td className="px-2 py-1.5">
-                      <div className="flex items-center gap-1">
-                        <MobileSelectPicker
-                          value={circuit.curve || ''}
-                          onValueChange={(val) => updateCircuit(circuit.id, 'curve', val || null)}
-                          options={[
-                            { value: 'B', label: 'B' },
-                            { value: 'C', label: 'C' },
-                            { value: 'D', label: 'D' },
-                            { value: 'K', label: 'K' },
-                            { value: 'Z', label: 'Z' },
-                          ]}
-                          placeholder="-"
-                          title="Curve Type"
-                          triggerClassName="h-7 text-xs w-[80px]"
-                        />
-                        <EvidenceTooltip evidence={circuit.evidence?.curve} />
-                      </div>
-                    </td>
-                    
-                    {/* Rating */}
-                    <td className="px-2 py-1.5">
-                      <div className="flex items-center gap-1">
-                        {isThreePhase && circuit.phases ? (
-                          <div className="flex flex-col gap-0.5 text-[10px] text-muted-foreground">
-                            <span>L1: {circuit.phases.L1?.rating || '-'}A</span>
-                            <span>L2: {circuit.phases.L2?.rating || '-'}A</span>
-                            <span>L3: {circuit.phases.L3?.rating || '-'}A</span>
-                          </div>
-                        ) : (
-                          <>
-                            <MobileSelectPicker
-                              value={circuit.rating?.toString() || ''}
-                              onValueChange={(val) => updateCircuit(circuit.id, 'rating', val ? Number(val) : null)}
-                              options={protectiveDeviceRatingOptions}
-                              placeholder="-"
-                              title="Device Rating"
-                              triggerClassName="h-7 text-xs w-[80px]"
-                            />
-                            <EvidenceTooltip evidence={circuit.evidence?.rating} />
-                            {detectRatingMismatch(circuit.rating, circuit.label) && (
-                              <TooltipProvider>
-                                <Tooltip>
-                                  <TooltipTrigger>
-                                    <span className="text-amber-500 text-xs font-bold">⚠️</span>
-                                  </TooltipTrigger>
-                                  <TooltipContent className="bg-amber-50 dark:bg-amber-950 border-amber-200 dark:border-amber-800">
-                                    <p className="text-xs text-amber-900 dark:text-amber-100 max-w-xs">
-                                      {detectRatingMismatch(circuit.rating, circuit.label)}
-                                    </p>
-                                  </TooltipContent>
-                                </Tooltip>
-                              </TooltipProvider>
-                            )}
-                          </>
-                        )}
-                      </div>
-                    </td>
-                    
-                    {/* Live Conductor Size */}
-                    <td className="px-2 py-1.5 border-l border-border">
-                      <MobileSelectPicker
-                        value={circuit.liveConductorSize || ''}
-                        onValueChange={(val) => updateCircuit(circuit.id, 'liveConductorSize', val || null)}
-                        options={[
-                          { value: '1.0', label: '1.0' },
-                          { value: '1.5', label: '1.5' },
-                          { value: '2.5', label: '2.5' },
-                          { value: '4.0', label: '4.0' },
-                          { value: '6.0', label: '6.0' },
-                          { value: '10', label: '10' },
-                          { value: '16', label: '16' },
-                          { value: '25', label: '25' },
-                        ]}
-                        placeholder="-"
-                        title="Live Conductor Size (mm²)"
-                        triggerClassName="h-7 text-xs w-[80px]"
-                      />
-                    </td>
-
-                    {/* CPC Size */}
-                    <td className="px-2 py-1.5">
-                      <MobileSelectPicker
-                        value={circuit.cpcSize || ''}
-                        onValueChange={(val) => updateCircuit(circuit.id, 'cpcSize', val || null)}
-                        options={[
-                          { value: '1.0', label: '1.0' },
-                          { value: '1.5', label: '1.5' },
-                          { value: '2.5', label: '2.5' },
-                          { value: '4.0', label: '4.0' },
-                          { value: '6.0', label: '6.0' },
-                          { value: '10', label: '10' },
-                          { value: '16', label: '16' },
-                        ]}
-                        placeholder="-"
-                        title="CPC Size (mm²)"
-                        triggerClassName="h-7 text-xs w-[80px]"
-                      />
-                    </td>
-
-                    {/* kA Rating */}
-                    <td className="px-2 py-1.5 border-l border-border">
-                      <MobileSelectPicker
-                        value={circuit.kaRating || ''}
-                        onValueChange={(val) => updateCircuit(circuit.id, 'kaRating', val || null)}
-                        options={[
-                          { value: '3', label: '3kA' },
-                          { value: '6', label: '6kA' },
-                          { value: '10', label: '10kA' },
-                          { value: '16', label: '16kA' },
-                          { value: '16.5', label: '16.5kA' },
-                        ]}
-                        placeholder="-"
-                        title="kA Rating"
-                        triggerClassName="h-7 text-xs w-[80px]"
-                      />
-                    </td>
-                    
-                    {/* Confidence */}
-                    <td className="px-2 py-1.5">
-                      <ConfidenceBadge conf={circuit.confidence} />
-                    </td>
-                    
-                    {/* Actions */}
-                    <td className="px-2 py-1.5">
-                      <div className="flex items-center justify-center gap-0.5">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => moveCircuit(circuit.id, 'up')}
-                          disabled={index === 0}
-                          className="h-6 w-6 p-0"
-                        >
-                          <ChevronUp className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => moveCircuit(circuit.id, 'down')}
-                          disabled={index === editedCircuits.length - 1}
-                          className="h-6 w-6 p-0"
-                        >
-                          <ChevronDown className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => deleteCircuit(circuit.id)}
-                          className="h-6 w-6 p-0 text-destructive hover:text-destructive"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-                })}
-              </tbody>
-            </table>
+            editedCircuits.map((circuit) => (
+              <CircuitCard
+                key={circuit.id}
+                circuit={circuit}
+                isExpanded={expandedId === circuit.id}
+                onToggle={() => setExpandedId(expandedId === circuit.id ? null : circuit.id)}
+                onUpdate={(field, value) => updateCircuit(circuit.id, field, value)}
+                onDelete={() => deleteCircuit(circuit.id)}
+                onMove={(dir) => moveCircuit(circuit.id, dir)}
+                isFirst={editedCircuits[0]?.id === circuit.id}
+                isLast={editedCircuits[editedCircuits.length - 1]?.id === circuit.id}
+              />
+            ))
           ) : (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <AlertCircle className="h-12 w-12 text-muted-foreground mb-3" />
               <h3 className="text-lg font-semibold text-foreground mb-1">No Circuits Detected</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Try taking another photo with better lighting and angle
+                Try taking another photo with better lighting
               </p>
-              <Button onClick={addBlankCircuit} variant="outline" size="sm">
+              <Button onClick={addBlankCircuit} variant="outline" size="sm" className="touch-manipulation">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Circuit Manually
               </Button>
             </div>
           )}
         </div>
-      </div>
+      </ScrollArea>
 
       {/* Footer */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mt-6 pt-6 border-t">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="gap-2">
-              <Plus className="h-4 w-4" />
-              Add Circuit
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start">
-            <DropdownMenuItem onClick={addBlankCircuit}>
-              Add at End
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setInsertDialogOpen(true)}>
-              Insert at Position...
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <div className="flex gap-2 sm:gap-3">
-          <Button variant="outline" onClick={onClose} className="flex-1 sm:flex-none">
-            Cancel
-          </Button>
-          <Button onClick={() => onApply(editedCircuits)} disabled={editedCircuits.length === 0} className="flex-1 sm:flex-none">
+      <div className="flex-shrink-0 p-4 border-t border-border/30 bg-background safe-area-bottom">
+        <div className="flex gap-3">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="h-12 px-4 touch-manipulation border-white/30">
+                <Plus className="h-4 w-4 mr-2" />
+                Add
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="bg-elec-gray border-elec-gray">
+              <DropdownMenuItem onClick={addBlankCircuit} className="py-2.5">
+                Add at End
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setInsertDialogOpen(true)} className="py-2.5">
+                Insert at Position...
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Button
+            onClick={() => onApply(editedCircuits)}
+            disabled={editedCircuits.length === 0}
+            className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation font-medium"
+          >
             <Check className="h-4 w-4 mr-2" />
-            Apply to Schedule
+            Apply to Schedule ({editedCircuits.length})
           </Button>
         </div>
       </div>
@@ -734,6 +465,241 @@ export const SimpleCircuitTable = ({ circuits, board, onApply, onClose }: Simple
         circuits={editedCircuits}
         onInsert={insertCircuitAtPosition}
       />
+    </div>
+  );
+};
+
+// Individual circuit card component
+interface CircuitCardProps {
+  circuit: Circuit;
+  isExpanded: boolean;
+  onToggle: () => void;
+  onUpdate: (field: keyof Circuit, value: any) => void;
+  onDelete: () => void;
+  onMove: (direction: 'up' | 'down') => void;
+  isFirst: boolean;
+  isLast: boolean;
+}
+
+const CircuitCard: React.FC<CircuitCardProps> = ({
+  circuit,
+  isExpanded,
+  onToggle,
+  onUpdate,
+  onDelete,
+  onMove,
+  isFirst,
+  isLast,
+}) => {
+  const hasLowConfidence = circuit.confidence === 'low';
+  const hasMediumConfidence = circuit.confidence === 'medium';
+
+  return (
+    <Card className={cn(
+      "overflow-hidden transition-all duration-200",
+      hasLowConfidence && "border-red-500/30 bg-red-500/5",
+      hasMediumConfidence && "border-amber-500/30 bg-amber-500/5",
+      !hasLowConfidence && !hasMediumConfidence && "border-border/50"
+    )}>
+      {/* Card header - always visible */}
+      <button
+        onClick={onToggle}
+        className="w-full p-3 flex items-center gap-3 touch-manipulation text-left"
+      >
+        {/* Position number */}
+        <div className={cn(
+          "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm",
+          hasLowConfidence ? "bg-red-500/20 text-red-400" :
+          hasMediumConfidence ? "bg-amber-500/20 text-amber-400" :
+          "bg-elec-yellow/20 text-elec-yellow"
+        )}>
+          {circuit.position}
+        </div>
+
+        {/* Circuit info */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2">
+            {circuit.pictograms?.[0] && (
+              <span className="text-base">{getPictogramEmoji(circuit.pictograms[0].type)}</span>
+            )}
+            <span className="font-medium text-foreground truncate">
+              {circuit.label || 'Unnamed Circuit'}
+            </span>
+          </div>
+          <div className="flex items-center gap-2 mt-0.5 text-xs text-muted-foreground">
+            <span>{circuit.device}</span>
+            {circuit.curve && <span>Type {circuit.curve}</span>}
+            {circuit.rating && <span>{circuit.rating}A</span>}
+            {circuit.phase === '3P' && (
+              <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 bg-purple-500/10 text-purple-400 border-purple-500/30">
+                3P
+              </Badge>
+            )}
+          </div>
+        </div>
+
+        {/* Confidence and expand */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <ConfidenceBadge conf={circuit.confidence} />
+          <ChevronRight className={cn(
+            "h-4 w-4 text-muted-foreground transition-transform",
+            isExpanded && "rotate-90"
+          )} />
+        </div>
+      </button>
+
+      {/* Expanded content */}
+      {isExpanded && (
+        <div className="px-3 pb-3 pt-0 space-y-3 border-t border-border/30">
+          {/* Device section */}
+          <div className="grid grid-cols-2 gap-3 pt-3">
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-muted-foreground">Label</label>
+              <Input
+                value={circuit.label}
+                onChange={(e) => onUpdate('label', e.target.value)}
+                placeholder="Circuit name"
+                className="h-10 text-sm touch-manipulation"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-muted-foreground">Phase</label>
+              <MobileSelectPicker
+                value={circuit.phase || '1P'}
+                onValueChange={(value) => onUpdate('phase', value as '1P' | '3P')}
+                options={[
+                  { value: '1P', label: 'Single Phase (1P)' },
+                  { value: '3P', label: 'Three Phase (3P)' },
+                ]}
+                placeholder="Phase"
+                title="Phase Type"
+                triggerClassName="h-10 text-sm"
+              />
+            </div>
+          </div>
+
+          {/* Protective Device section */}
+          <div className="bg-muted/30 rounded-lg p-3 space-y-3">
+            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+              <Settings2 className="h-3.5 w-3.5" />
+              PROTECTIVE DEVICE
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-muted-foreground">Type</label>
+                <MobileSelectPicker
+                  value={circuit.device}
+                  onValueChange={(val) => onUpdate('device', val)}
+                  options={protectiveDeviceTypeOptions}
+                  placeholder="-"
+                  title="Device Type"
+                  triggerClassName="h-9 text-xs"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-muted-foreground">Curve</label>
+                <MobileSelectPicker
+                  value={circuit.curve || ''}
+                  onValueChange={(val) => onUpdate('curve', val || null)}
+                  options={curveOptions}
+                  placeholder="-"
+                  title="Curve Type"
+                  triggerClassName="h-9 text-xs"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-muted-foreground">Rating</label>
+                <MobileSelectPicker
+                  value={circuit.rating?.toString() || ''}
+                  onValueChange={(val) => onUpdate('rating', val ? Number(val) : null)}
+                  options={protectiveDeviceRatingOptions}
+                  placeholder="-"
+                  title="Rating"
+                  triggerClassName="h-9 text-xs"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Cable section */}
+          <div className="bg-muted/30 rounded-lg p-3 space-y-3">
+            <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+              <Cable className="h-3.5 w-3.5" />
+              CABLE SIZES
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-muted-foreground">Live</label>
+                <MobileSelectPicker
+                  value={circuit.liveConductorSize || ''}
+                  onValueChange={(val) => onUpdate('liveConductorSize', val || null)}
+                  options={liveSizeOptions}
+                  placeholder="-"
+                  title="Live Conductor"
+                  triggerClassName="h-9 text-xs"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-muted-foreground">CPC</label>
+                <MobileSelectPicker
+                  value={circuit.cpcSize || ''}
+                  onValueChange={(val) => onUpdate('cpcSize', val || null)}
+                  options={cpcSizeOptions}
+                  placeholder="-"
+                  title="CPC Size"
+                  triggerClassName="h-9 text-xs"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] uppercase text-muted-foreground">kA</label>
+                <MobileSelectPicker
+                  value={circuit.kaRating || ''}
+                  onValueChange={(val) => onUpdate('kaRating', val || null)}
+                  options={kaOptions}
+                  placeholder="-"
+                  title="kA Rating"
+                  triggerClassName="h-9 text-xs"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onMove('up')}
+                disabled={isFirst}
+                className="h-8 w-8 p-0"
+              >
+                <ChevronUp className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onMove('down')}
+                disabled={isLast}
+                className="h-8 w-8 p-0"
+              >
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onDelete}
+              className="h-8 px-3 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+            >
+              <Trash2 className="h-4 w-4 mr-1.5" />
+              Remove
+            </Button>
+          </div>
+        </div>
+      )}
     </Card>
   );
 };
+
+export default SimpleCircuitTable;

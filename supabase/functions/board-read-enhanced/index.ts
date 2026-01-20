@@ -1,10 +1,42 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
-// Note: Claude/Anthropic removed - using Gemini + OpenAI only
+const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+
+// Supabase client for RAG queries
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+// ============================================================================
+// OCR PREPROCESSING TYPES
+// ============================================================================
+
+interface CircuitOCRHint {
+  position_index: number;
+  detected_label: string | null;
+  detected_rating: string | null;
+  detected_curve: string | null;
+  detected_device_marking: string | null;
+  raw_texts: string[];
+}
+
+interface OCRResult {
+  success: boolean;
+  circuit_hints: CircuitOCRHint[];
+  board_hints: {
+    detected_brand: string | null;
+    detected_model: string | null;
+    detected_main_switch: string | null;
+    all_ratings_found: string[];
+    all_labels_found: string[];
+  };
+  raw_full_text: string;
+  processing_time_ms: number;
+}
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -143,18 +175,376 @@ const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs: nu
 };
 
 // ============================================================================
+// OCR PREPROCESSING
+// ============================================================================
+
+/**
+ * Call OCR preprocessor to extract text from board images
+ * Runs Google Cloud Vision API for high-accuracy text detection
+ */
+async function runOCRPreprocessing(images: string[]): Promise<OCRResult | null> {
+  try {
+    console.log('Running OCR preprocessing on images...');
+
+    const response = await fetchWithTimeout(
+      `${supabaseUrl}/functions/v1/board-ocr-preprocess`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseServiceKey}`,
+        },
+        body: JSON.stringify({ images }),
+      },
+      15000 // 15 second timeout for OCR
+    );
+
+    if (!response.ok) {
+      console.warn('OCR preprocessing failed:', response.status);
+      return null;
+    }
+
+    const result: OCRResult = await response.json();
+
+    if (result.success) {
+      console.log(`OCR completed in ${result.processing_time_ms}ms:`, {
+        circuitHints: result.circuit_hints.length,
+        ratingsFound: result.board_hints.all_ratings_found.length,
+        labelsFound: result.board_hints.all_labels_found.length,
+        detectedBrand: result.board_hints.detected_brand,
+      });
+    }
+
+    return result;
+  } catch (error) {
+    console.error('OCR preprocessing error:', error);
+    return null;
+  }
+}
+
+/**
+ * Build OCR hints section for Gemini prompt
+ */
+function buildOCRHintsPrompt(ocrResult: OCRResult | null): string {
+  if (!ocrResult || !ocrResult.success) {
+    return '';
+  }
+
+  let prompt = `
+
+### OCR PRE-SCAN RESULTS (High-Confidence Text Detection)
+
+**Detected Text Labels:** ${ocrResult.board_hints.all_labels_found.slice(0, 20).join(', ') || 'None detected'}
+
+**Detected Ratings:** ${ocrResult.board_hints.all_ratings_found.join(', ') || 'None detected'}
+
+**Raw Text Extracted:**
+${ocrResult.raw_full_text.slice(0, 500)}
+
+`;
+
+  // Add circuit-specific hints if available
+  if (ocrResult.circuit_hints.length > 0) {
+    prompt += `**Per-Position OCR Hints:**
+`;
+    for (const hint of ocrResult.circuit_hints.slice(0, 15)) {
+      const parts = [];
+      if (hint.detected_label) parts.push(`label:"${hint.detected_label}"`);
+      if (hint.detected_rating) parts.push(`rating:${hint.detected_rating}`);
+      if (hint.detected_curve) parts.push(`curve:${hint.detected_curve}`);
+      if (hint.detected_device_marking) parts.push(`device:${hint.detected_device_marking}`);
+
+      if (parts.length > 0) {
+        prompt += `Position ${hint.position_index}: ${parts.join(', ')}
+`;
+      }
+    }
+  }
+
+  prompt += `
+IMPORTANT: Use the OCR hints above to verify text that may be difficult to read in the image. The OCR has higher accuracy for small/faded text.
+`;
+
+  return prompt;
+}
+
+// ============================================================================
+// RAG: MANUFACTURER KNOWLEDGE BASE
+// ============================================================================
+
+interface ManufacturerKnowledge {
+  manufacturer: string;
+  model_pattern: string | null;
+  visual_cues: any;
+  circuit_numbering: string;
+  main_switch_position: string;
+  mcb_features: string | null;
+  rcbo_features: string | null;
+  rcd_features: string | null;
+  afdd_features: string | null;
+  abbreviations: any;
+  three_phase_layout: any;
+  content: string;
+}
+
+/**
+ * Query manufacturer knowledge base for brand-specific information
+ */
+async function getManufacturerKnowledge(brand: string): Promise<ManufacturerKnowledge | null> {
+  try {
+    const { data, error } = await supabase
+      .from('board_manufacturer_knowledge')
+      .select('*')
+      .ilike('manufacturer', `%${brand}%`)
+      .limit(1)
+      .single();
+
+    if (error || !data) {
+      console.log(`No manufacturer knowledge found for: ${brand}`);
+      return null;
+    }
+
+    console.log(`Found manufacturer knowledge for: ${data.manufacturer}`);
+    return data as ManufacturerKnowledge;
+  } catch (e) {
+    console.error('Error querying manufacturer knowledge:', e);
+    return null;
+  }
+}
+
+/**
+ * Fetch reference images for a brand to use as few-shot examples
+ * Returns up to 2 verified reference images for the detected brand
+ */
+async function getReferenceImages(brand: string): Promise<string[]> {
+  try {
+    // Get verified reference images for this brand (prioritize dirty/real-world)
+    const { data, error } = await supabase
+      .from('board_reference_images')
+      .select('image_url')
+      .ilike('manufacturer', `%${brand}%`)
+      .eq('verified', true)
+      .in('image_type', ['in_situ_dirty', 'in_situ_clean', 'product_catalogue'])
+      .order('image_type', { ascending: true }) // dirty first
+      .limit(2);
+
+    if (error || !data || data.length === 0) {
+      console.log(`No reference images found for: ${brand}`);
+      return [];
+    }
+
+    console.log(`Found ${data.length} reference images for: ${brand}`);
+    return data.map(d => d.image_url).filter(Boolean);
+  } catch (e) {
+    console.error('Error fetching reference images:', e);
+    return [];
+  }
+}
+
+interface TrainingExample {
+  image_url: string;
+  circuits: any[];
+  ratings_distribution: Record<string, number>;
+  total_ways: number;
+  devices: {
+    mcbs: number;
+    rcbos: number;
+    rcds: number;
+  };
+}
+
+/**
+ * Fetch verified training examples with full analysis context
+ * Returns up to 2 examples with circuit details for few-shot learning
+ */
+async function getTrainingExamples(brand: string): Promise<TrainingExample[]> {
+  try {
+    const { data, error } = await supabase
+      .from('board_training_analysis')
+      .select(`
+        circuits,
+        ratings_distribution,
+        total_ways,
+        mcb_count,
+        rcbo_count,
+        rcd_count_devices,
+        image_id,
+        board_reference_images!inner(image_url)
+      `)
+      .ilike('manufacturer', `%${brand}%`)
+      .eq('human_verified', true)
+      .not('circuits', 'is', null)
+      .limit(2);
+
+    if (error || !data || data.length === 0) {
+      console.log(`No training examples found for: ${brand}`);
+      return [];
+    }
+
+    console.log(`Found ${data.length} training examples for: ${brand}`);
+
+    return data.map(d => ({
+      image_url: (d.board_reference_images as any)?.image_url || '',
+      circuits: d.circuits || [],
+      ratings_distribution: d.ratings_distribution || {},
+      total_ways: d.total_ways || 0,
+      devices: {
+        mcbs: d.mcb_count || 0,
+        rcbos: d.rcbo_count || 0,
+        rcds: d.rcd_count_devices || 0,
+      },
+    })).filter(e => e.image_url);
+  } catch (e) {
+    console.error('Error fetching training examples:', e);
+    return [];
+  }
+}
+
+/**
+ * Build training examples context for Gemini prompt
+ */
+function buildTrainingExamplesPrompt(examples: TrainingExample[]): string {
+  if (examples.length === 0) return '';
+
+  let prompt = `\n\n### VERIFIED TRAINING EXAMPLES (same brand)\n`;
+
+  for (let i = 0; i < examples.length; i++) {
+    const ex = examples[i];
+    prompt += `\nExample ${i + 1}: ${ex.total_ways}-way board\n`;
+    prompt += `- Devices: ${ex.devices.mcbs} MCBs, ${ex.devices.rcbos} RCBOs, ${ex.devices.rcds} RCDs\n`;
+
+    const ratings = Object.entries(ex.ratings_distribution || {})
+      .filter(([_, count]) => count > 0)
+      .map(([rating, count]) => `${rating}x${count}`)
+      .join(', ');
+    if (ratings) {
+      prompt += `- Ratings seen: ${ratings}\n`;
+    }
+
+    // Show first few circuits as examples
+    if (ex.circuits && ex.circuits.length > 0) {
+      prompt += `- Sample circuits:\n`;
+      for (const circuit of ex.circuits.slice(0, 5)) {
+        const label = circuit.label_text ? ` "${circuit.label_text}"` : '';
+        prompt += `  * Pos ${circuit.position}: ${circuit.device_type} ${circuit.curve || ''}${circuit.rating_amps || '?'}A${label}\n`;
+      }
+    }
+  }
+
+  prompt += `\nUse these examples to understand typical circuit layouts and labelling patterns for this brand.\n`;
+  return prompt;
+}
+
+/**
+ * Build enhanced prompt with manufacturer-specific context
+ */
+function buildEnhancedPrompt(knowledge: ManufacturerKnowledge | null): string {
+  if (!knowledge) {
+    return '';
+  }
+
+  let prompt = `
+
+### MANUFACTURER CONTEXT: ${knowledge.manufacturer.toUpperCase()}
+
+**Visual Identification:**
+${knowledge.visual_cues?.distinctive || 'Standard board design'}
+
+**Circuit Numbering:** ${knowledge.circuit_numbering} from ${knowledge.main_switch_position} side
+
+**Device Identification for ${knowledge.manufacturer}:**
+- MCB: ${knowledge.mcb_features || 'Standard MCB features'}
+- RCBO: ${knowledge.rcbo_features || 'Has test button, combined RCD+MCB'}
+- RCD: ${knowledge.rcd_features || 'Two module width, large test button'}
+${knowledge.afdd_features ? `- AFDD: ${knowledge.afdd_features}` : ''}
+
+**Label Abbreviations (${knowledge.manufacturer} boards):**
+${Object.entries(knowledge.abbreviations || {}).map(([abbr, full]) => `- "${abbr}" = "${full}"`).join('\n')}
+
+**Three-Phase Layout:**
+${knowledge.three_phase_layout?.vertical_layout ? 'Vertical: L1 top, L2 middle, L3 bottom' : 'Check busbar labels for phase order'}
+`;
+
+  return prompt;
+}
+
+/**
+ * Quick brand detection pass using Gemini
+ */
+async function detectBrand(images: string[]): Promise<string | null> {
+  console.log('Running quick brand detection pass...');
+
+  const parts: any[] = [{
+    text: `Identify the manufacturer/brand of this UK consumer unit/distribution board. Return ONLY the brand name (e.g., "Hager", "MK", "Schneider", "Wylex", "Crabtree", "Contactum"). Look for logo, distinctive colours, or text. Return "Unknown" if unsure. Just the brand name, nothing else.`
+  }];
+
+  // Add first image only for quick detection
+  const { mimeType, data } = await urlToBase64(images[0]);
+  parts.push({ inlineData: { mimeType, data } });
+
+  try {
+    const response = await fetchWithTimeout(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts }],
+          generationConfig: {
+            maxOutputTokens: 50,
+            temperature: 0.1,
+          }
+        }),
+      },
+      10000 // 10 second timeout for quick detection
+    );
+
+    if (!response.ok) {
+      console.log('Brand detection failed, continuing without');
+      return null;
+    }
+
+    const responseData = await response.json();
+    const text = responseData.candidates?.[0]?.content?.parts?.find((p: any) => p.text)?.text;
+
+    if (text) {
+      const brand = text.trim().replace(/["\n]/g, '');
+      console.log(`Detected brand: ${brand}`);
+      return brand === 'Unknown' ? null : brand;
+    }
+  } catch (e) {
+    console.error('Brand detection error:', e);
+  }
+
+  return null;
+}
+
+// ============================================================================
 // AI MODEL CALLS
 // ============================================================================
 
 /**
  * Stage 1: Gemini Vision - Board Structure Analysis
- * OPTIMIZED: Focused prompt, fewer tokens, faster response
+ * ENHANCED: Includes manufacturer-specific RAG context + OCR hints + reference images + training examples
  */
-async function analyzeWithGemini(images: string[], hints: BoardReadRequest['hints']): Promise<{
+async function analyzeWithGemini(
+  images: string[],
+  hints: BoardReadRequest['hints'],
+  manufacturerKnowledge: ManufacturerKnowledge | null = null,
+  ocrResult: OCRResult | null = null,
+  referenceImageUrls: string[] = [],
+  trainingExamples: TrainingExample[] = []
+): Promise<{
   board: Partial<BoardStructure>;
   circuits: Partial<DetectedCircuit>[];
 }> {
   console.log('Stage 1: Gemini Vision - Board Structure Analysis');
+  if (referenceImageUrls.length > 0) {
+    console.log(`Including ${referenceImageUrls.length} reference images for few-shot learning`);
+  }
+  if (trainingExamples.length > 0) {
+    console.log(`Including ${trainingExamples.length} training examples with circuit context`);
+  }
 
   // OPTIMIZED PROMPT - Concise but comprehensive
   const systemPrompt = `UK electrician: Analyse consumer unit photo. Return JSON only.
@@ -178,12 +568,32 @@ CIRCUITS (left→right, top→bottom for 3P):
 JSON format:
 {"board":{...},"circuits":[{...}],"three_phase_groups":[{"circuit_indices":[5,6,7],"description":"Cooker 3P","rating":32}]}`;
 
-  const parts: any[] = [{ text: systemPrompt }];
+  // Build enhanced prompt with manufacturer-specific RAG context + OCR hints + training examples
+  const ragContext = buildEnhancedPrompt(manufacturerKnowledge);
+  const ocrHints = buildOCRHintsPrompt(ocrResult);
+  const trainingContext = buildTrainingExamplesPrompt(trainingExamples);
+  const fullPrompt = systemPrompt + ragContext + trainingContext + ocrHints;
 
-  // Add images
+  const parts: any[] = [{ text: fullPrompt }];
+
+  // Add user's images to analyze
   for (const imageUrl of images.slice(0, 4)) {
     const { mimeType, data } = await urlToBase64(imageUrl);
     parts.push({ inlineData: { mimeType, data } });
+  }
+
+  // Add reference images as few-shot examples (if available)
+  if (referenceImageUrls.length > 0) {
+    parts.push({ text: '\n\n### REFERENCE EXAMPLES (same brand - use as visual guide):' });
+    for (const refUrl of referenceImageUrls.slice(0, 2)) {
+      try {
+        const { mimeType, data } = await urlToBase64(refUrl);
+        parts.push({ inlineData: { mimeType, data } });
+      } catch (e) {
+        console.log('Failed to load reference image:', refUrl);
+      }
+    }
+    parts.push({ text: 'Use the reference images above to help identify device types and label styles for this brand.\n' });
   }
 
   // Add hints if provided
@@ -468,8 +878,47 @@ serve(async (req) => {
       fastMode: options?.fast_mode
     });
 
-    // Stage 1: Gemini - Board Structure (always runs)
-    const geminiResult = await analyzeWithGemini(images, hints);
+    // Stage 0: Run OCR + Brand Detection in parallel
+    let detectedBrand: string | null = null;
+    let manufacturerKnowledge: ManufacturerKnowledge | null = null;
+    let ocrResult: OCRResult | null = null;
+
+    if (!options?.fast_mode) {
+      // Run OCR and brand detection in parallel for speed
+      const [ocrRes, brandRes] = await Promise.all([
+        runOCRPreprocessing(images),
+        detectBrand(images),
+      ]);
+
+      ocrResult = ocrRes;
+      detectedBrand = brandRes;
+
+      // If OCR detected brand but Gemini didn't, use OCR's brand
+      if (!detectedBrand && ocrResult?.board_hints.detected_brand) {
+        detectedBrand = ocrResult.board_hints.detected_brand;
+        console.log(`Using OCR-detected brand: ${detectedBrand}`);
+      }
+
+      if (detectedBrand) {
+        manufacturerKnowledge = await getManufacturerKnowledge(detectedBrand);
+      }
+    }
+
+    // Fetch reference images and training examples for few-shot learning (if brand detected)
+    let referenceImageUrls: string[] = [];
+    let trainingExamples: TrainingExample[] = [];
+    if (detectedBrand && !options?.fast_mode) {
+      // Fetch both in parallel for speed
+      const [refImages, trainExamples] = await Promise.all([
+        getReferenceImages(detectedBrand),
+        getTrainingExamples(detectedBrand),
+      ]);
+      referenceImageUrls = refImages;
+      trainingExamples = trainExamples;
+    }
+
+    // Stage 1: Gemini - Board Structure (with RAG context + OCR hints + reference images + training examples)
+    const geminiResult = await analyzeWithGemini(images, hints, manufacturerKnowledge, ocrResult, referenceImageUrls, trainingExamples);
 
     // Stage 2: OpenAI Verification (optional enhancement)
     let openaiResult = { deviceCorrections: new Map<number, Partial<DetectedCircuit['device']>>() };
@@ -489,10 +938,36 @@ serve(async (req) => {
     // Add metadata
     result.metadata.analysisTime = Date.now() - startTime;
     result.metadata.imageCount = images.length;
+    (result.metadata as any).detectedBrand = detectedBrand;
+    (result.metadata as any).ragUsed = manufacturerKnowledge !== null;
+    (result.metadata as any).referenceImagesUsed = referenceImageUrls.length;
+    (result.metadata as any).trainingExamplesUsed = trainingExamples.length;
+    (result.metadata as any).ocrUsed = ocrResult?.success === true;
+    (result.metadata as any).ocrProcessingTimeMs = ocrResult?.processing_time_ms || 0;
+
+    // Add processing decisions
+    if (ocrResult?.success) {
+      result.decisions.unshift(`OCR preprocessing extracted ${ocrResult.board_hints.all_ratings_found.length} ratings, ${ocrResult.board_hints.all_labels_found.length} labels`);
+    }
+    if (trainingExamples.length > 0) {
+      result.decisions.unshift(`Using ${trainingExamples.length} verified training examples with circuit context`);
+    }
+    if (referenceImageUrls.length > 0) {
+      result.decisions.unshift(`Using ${referenceImageUrls.length} reference images for few-shot learning`);
+    }
+    if (detectedBrand && manufacturerKnowledge) {
+      result.decisions.unshift(`Detected ${detectedBrand} board - using manufacturer-specific identification rules`);
+    }
 
     console.log(`Analysis complete in ${result.metadata.analysisTime}ms:`, {
       circuits: result.circuits.length,
       modelsUsed: result.metadata.modelsUsed,
+      detectedBrand,
+      ragUsed: manufacturerKnowledge !== null,
+      referenceImagesUsed: referenceImageUrls.length,
+      trainingExamplesUsed: trainingExamples.length,
+      ocrUsed: ocrResult?.success === true,
+      ocrRatings: ocrResult?.board_hints.all_ratings_found.length || 0,
       decisions: result.decisions.length,
       warnings: result.warnings.length
     });

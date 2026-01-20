@@ -89,7 +89,7 @@ export default function InspectionTestingModule3() {
           {sections.map((section, index) => (
             <SectionCard
               key={section.id}
-              to={`../inspection-testing-module-3-section-${section.id}`}
+              to={`../inspection-testing/module-3/section-${section.id}`}
               sectionNumber={section.id}
               title={section.title}
               description={section.description}

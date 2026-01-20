@@ -15,14 +15,15 @@ const TypeOfWiringCellComponent: React.FC<TypeOfWiringCellProps> = ({ result, on
   }, [result.id, onUpdate]);
 
   return (
-    <TableCell className="p-0 bg-black h-5 align-middle min-w-[120px] max-w-[120px]">
+    <TableCell className="p-0 h-8 align-middle min-w-[120px] max-w-[120px]">
       <MobileSelectPicker
         value={result.typeOfWiring || ''}
         onValueChange={handleChange}
         options={wiringTypeOptions}
         placeholder="Type"
         title="Type of Wiring"
-              />
+        triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
+      />
     </TableCell>
   );
 };

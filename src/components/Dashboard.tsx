@@ -29,10 +29,10 @@ const Dashboard = ({ onNavigate }: { onNavigate: (section: string, reportId?: st
   return (
     <>
       <div className="min-h-screen bg-sidebar text-foreground">
-        {/* Compact Header */}
-        <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-sidebar/95 backdrop-blur supports-[backdrop-filter]:bg-sidebar/80">
+        {/* Header */}
+        <header className="sticky top-0 z-50 w-full border-b border-elec-yellow/20 bg-sidebar/95 backdrop-blur supports-[backdrop-filter]:bg-sidebar/80">
           <div className="px-3 sm:px-4">
-            <div className="flex h-12 items-center justify-between">
+            <div className="flex h-14 items-center justify-between">
               {/* Left - Back */}
               <Button
                 variant="ghost"
@@ -44,13 +44,15 @@ const Dashboard = ({ onNavigate }: { onNavigate: (section: string, reportId?: st
                 <span className="hidden sm:inline">Back</span>
               </Button>
 
-              {/* Center - Title */}
-              <div className="flex items-center gap-2">
-                <Zap className="h-5 w-5 text-elec-yellow" />
-                <span className="font-semibold">Inspection & Testing</span>
+              {/* Center - Title with yellow icon */}
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-elec-yellow/15">
+                  <Zap className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <span className="font-semibold text-foreground">Inspection & Testing</span>
               </div>
 
-              {/* Right - Help only */}
+              {/* Right - Help */}
               <Button
                 variant="ghost"
                 size="icon"

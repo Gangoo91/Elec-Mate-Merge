@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SectionHeader from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Power, Zap, Shield, Wrench, AlertCircle, CheckCircle } from 'lucide-react';
@@ -25,10 +26,114 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
     protection: true,
     equipment: true
   });
+  const [recentInstruments, setRecentInstruments] = useState<string[]>([]);
 
   const toggleSection = (section: keyof typeof openSections) => {
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
+
+  // Load recent instruments on mount
+  useEffect(() => {
+    const loadInstruments = async () => {
+      try {
+        const { offlineStorage } = await import('@/utils/offlineStorage');
+        const instruments = await offlineStorage.getRecentInstruments();
+        setRecentInstruments(instruments);
+      } catch (e) {
+        console.error('Failed to load recent instruments', e);
+      }
+    };
+    loadInstruments();
+  }, []);
+
+  // Auto-fill serial and calibration when instrument is selected
+  const loadInstrumentDetails = async (make: string) => {
+    if (!make || make === 'other') return;
+    try {
+      const { offlineStorage } = await import('@/utils/offlineStorage');
+      const details = await offlineStorage.getInstrumentDetails(make);
+      if (details) {
+        // Only auto-fill if fields are currently empty
+        if (!formData.testEquipmentSerial && details.serialNumber) {
+          onUpdate('testEquipmentSerial', details.serialNumber);
+        }
+        if (!formData.testEquipmentCalDate && details.calibrationDate) {
+          onUpdate('testEquipmentCalDate', details.calibrationDate);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load instrument details', e);
+    }
+  };
+
+  // Save instrument details when serial or calibration changes
+  useEffect(() => {
+    const saveInstrumentDetails = async () => {
+      const make = formData.testEquipmentModel;
+      if (!make || make === 'other') return;
+
+      const serial = formData.testEquipmentSerial;
+      const calibration = formData.testEquipmentCalDate;
+
+      // Only save if we have at least a serial number
+      if (serial) {
+        try {
+          const { offlineStorage } = await import('@/utils/offlineStorage');
+          await offlineStorage.saveInstrumentDetails(make, {
+            serialNumber: serial,
+            calibrationDate: calibration || ''
+          });
+        } catch (e) {
+          console.error('Failed to save instrument details', e);
+        }
+      }
+    };
+
+    const timer = setTimeout(() => {
+      saveInstrumentDetails();
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [formData.testEquipmentSerial, formData.testEquipmentCalDate, formData.testEquipmentModel]);
+
+  // Save instrument to recent list and load its details
+  const handleInstrumentSelect = async (value: string) => {
+    onUpdate('testEquipmentModel', value);
+
+    if (value && value !== 'other') {
+      // Save to recent list
+      const updated = [
+        value,
+        ...recentInstruments.filter(i => i !== value)
+      ].slice(0, 3);
+      setRecentInstruments(updated);
+
+      try {
+        const { offlineStorage } = await import('@/utils/offlineStorage');
+        await offlineStorage.saveRecentInstrument(value);
+      } catch (e) {
+        console.error('Failed to save recent instrument', e);
+      }
+
+      // Load saved details for this instrument
+      loadInstrumentDetails(value);
+    }
+  };
+
+  // Build options list with recent instruments at top
+  const instrumentOptions = useMemo(() => {
+    const recentOptions = recentInstruments.map(instrument => ({
+      value: instrument,
+      label: `⏱️ ${instrument}`,
+      description: 'Recently used'
+    }));
+
+    // Filter out recent instruments from main list to avoid duplicates
+    const mainOptions = TEST_EQUIPMENT.filter(
+      opt => !recentInstruments.includes(opt.value)
+    );
+
+    return [...recentOptions, ...mainOptions];
+  }, [recentInstruments]);
 
   const getCompletionPercentage = (section: string) => {
     switch (section) {
@@ -151,6 +256,59 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                   </div>
                 </div>
               </div>
+
+              {/* Ring Circuit Continuity - shown only for ring circuits */}
+              {formData.circuitType === 'ring' && (
+                <div className="space-y-4">
+                  <h4 className="text-sm font-semibold text-orange-400 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
+                    Ring Circuit Continuity (IET Required)
+                  </h4>
+                  <div className="p-4 bg-orange-50/30 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="space-y-2">
+                        <Label className="text-sm">(r1) Line-Line (Ω)</Label>
+                        <div className="relative">
+                          <Input
+                            value={formData.ringR1 || ''}
+                            onChange={(e) => onUpdate('ringR1', e.target.value)}
+                            placeholder="e.g., 0.52"
+                            className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500 pr-10"
+                          />
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">Ω</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground">End-to-end line conductors</p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-sm">(rn) Neutral-Neutral (Ω)</Label>
+                        <div className="relative">
+                          <Input
+                            value={formData.ringRn || ''}
+                            onChange={(e) => onUpdate('ringRn', e.target.value)}
+                            placeholder="e.g., 0.52"
+                            className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500 pr-10"
+                          />
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">Ω</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground">End-to-end neutral conductors</p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-sm">(r2) CPC-CPC (Ω)</Label>
+                        <div className="relative">
+                          <Input
+                            value={formData.ringR2 || ''}
+                            onChange={(e) => onUpdate('ringR2', e.target.value)}
+                            placeholder="e.g., 0.87"
+                            className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500 pr-10"
+                          />
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">Ω</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground">End-to-end CPC conductors</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Insulation Resistance */}
               <div className="space-y-4">
@@ -491,6 +649,18 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                         />
                       </div>
                     </div>
+                    {/* SPD Test Button - IET Required Checkbox */}
+                    <div className="flex items-center gap-3 p-4 min-h-[52px] rounded-lg bg-card/50">
+                      <Checkbox
+                        id="spdTestButton"
+                        checked={formData.spdTestButton || false}
+                        onCheckedChange={(c) => onUpdate('spdTestButton', c)}
+                        className="h-6 w-6 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation"
+                      />
+                      <Label htmlFor="spdTestButton" className="text-base cursor-pointer">
+                        SPD test button operates correctly
+                      </Label>
+                    </div>
                   </div>
                 )}
               </div>
@@ -518,19 +688,25 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                   <Label className="text-sm">Test Instrument</Label>
                   <MobileSelectPicker
                     value={formData.testEquipmentModel || ''}
-                    onValueChange={(v) => onUpdate('testEquipmentModel', v)}
-                    options={TEST_EQUIPMENT}
+                    onValueChange={handleInstrumentSelect}
+                    options={instrumentOptions}
                     placeholder="Select instrument"
                     title="Test Instrument"
                     triggerClassName="bg-elec-gray border-white/30"
                   />
+                  {formData.testEquipmentModel && formData.testEquipmentSerial && (
+                    <p className="text-xs text-green-400 flex items-center gap-1">
+                      <CheckCircle className="h-3 w-3" />
+                      Serial number saved for next time
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Serial Number</Label>
                   <Input
                     value={formData.testEquipmentSerial || ''}
                     onChange={(e) => onUpdate('testEquipmentSerial', e.target.value)}
-                    placeholder="Instrument serial"
+                    placeholder="Auto-fills if previously entered"
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </div>

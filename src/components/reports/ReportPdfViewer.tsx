@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Download, Edit, Loader2, FileText, AlertCircle, AlertTriangle } from 'lucide-react';
+import { Download, Edit, Loader2, FileText, AlertCircle, AlertTriangle, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { optimizeForPdfGeneration, formatSizeWarning } from '@/utils/pdfDataOptimizer';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -26,6 +27,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ReportPdfViewerProps {
   reportId: string;
@@ -52,7 +54,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
   const [sizeWarning, setSizeWarning] = useState<string | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const isMobile = window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   // Load report and versions
   useEffect(() => {
@@ -347,155 +349,219 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
     }
   };
 
+  // Shared content for both mobile and desktop
+  const renderPdfContent = () => (
+    <div className="flex-1 overflow-auto bg-muted/50 relative">
+      <div className="h-full flex flex-col">
+        {/* Size Warning Alert */}
+        {sizeWarning && (
+          <Alert variant="default" className="m-4 mb-0">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>Data Size Warning</AlertTitle>
+            <AlertDescription className="text-xs whitespace-pre-line mt-2">
+              {sizeWarning}
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {/* Error Alert */}
+        {generationError && (
+          <Alert variant="destructive" className="m-4 mb-0">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>PDF Generation Failed</AlertTitle>
+            <AlertDescription className="text-xs mt-2">
+              {generationError}
+              <br /><br />
+              <strong>Common causes:</strong>
+              <ul className="list-disc list-inside mt-1">
+                <li>Data size exceeds 1MB limit (check for large embedded images)</li>
+                <li>Network timeout or edge function error</li>
+                <li>Invalid data format</li>
+              </ul>
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {/* PDF Content */}
+        <div className="flex-1 flex items-center justify-center">
+          {isGenerating ? (
+            <div className="flex flex-col items-center justify-center p-6">
+              <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
+              <p className="text-muted-foreground">Generating PDF...</p>
+              <p className="text-xs text-muted-foreground mt-2">This may take a moment</p>
+            </div>
+          ) : pdfUrl ? (
+            isMobile ? (
+              <div className="flex flex-col items-center justify-center p-6">
+                <FileText className="h-16 w-16 text-primary mb-4" />
+                <p className="text-center mb-4 text-muted-foreground">PDF preview not available on mobile</p>
+                <Button onClick={handleDownload} className="h-12 px-6 touch-manipulation">
+                  <Download className="h-5 w-5 mr-2" />
+                  Open PDF
+                </Button>
+              </div>
+            ) : (
+              <iframe
+                src={pdfUrl}
+                className="w-full h-full border-0 absolute inset-0"
+                title="PDF Preview"
+              />
+            )
+          ) : !generationError ? (
+            <div className="flex flex-col items-center justify-center p-6">
+              <AlertCircle className="h-12 w-12 text-muted-foreground mb-4" />
+              <p className="text-muted-foreground">PDF not available</p>
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-6xl h-[90vh] flex flex-col p-0">
-          <DialogHeader className="px-6 pt-6 pb-4 border-b">
-            <DialogDescription className="sr-only">
-              View and manage certificate PDF versions
-            </DialogDescription>
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3 min-w-0 flex-1">
-                <FileText className="h-5 w-5 text-primary flex-shrink-0" />
-                <DialogTitle className="text-lg sm:text-xl truncate">
-                  {report?.certificate_number || 'Loading...'}
-                </DialogTitle>
-                {currentVersion && (
-                  <>
-                    {versions.length > 1 && (
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="outline" size="sm" className="flex-shrink-0">
-                            V{currentVersion.version} ▼
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          {versions.map((version) => (
-                            <DropdownMenuItem
-                              key={version.id}
-                              onClick={() => handleVersionChange(version.id)}
-                              className="flex items-center justify-between gap-4"
-                            >
-                              <span>V{version.version}</span>
-                              <span className="text-xs text-muted-foreground">
-                                {format(new Date(version.created_at), 'dd/MM/yyyy')}
-                              </span>
-                              {version.is_latest_version && (
-                                <Badge variant="default" className="ml-2">Latest</Badge>
-                              )}
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    )}
-                    {currentVersion.is_latest_version && (
-                      <Badge variant="default">Latest</Badge>
-                    )}
-                  </>
-                )}
-              </div>
-              <div className="flex items-center gap-2 flex-shrink-0">
-                {pdfUrl && (
+      {/* Mobile: Bottom Sheet */}
+      {isMobile && (
+        <Sheet open={open} onOpenChange={onOpenChange}>
+          <SheetContent side="bottom" className="h-[75vh] p-0 rounded-t-2xl flex flex-col">
+            <SheetHeader className="px-4 pt-4 pb-3 border-b flex-shrink-0">
+              <SheetDescription className="sr-only">
+                View and manage certificate PDF versions
+              </SheetDescription>
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0 flex-1">
+                  <FileText className="h-5 w-5 text-primary flex-shrink-0" />
+                  <SheetTitle className="text-base font-semibold truncate">
+                    {report?.certificate_number || 'Loading...'}
+                  </SheetTitle>
+                  {currentVersion?.is_latest_version && (
+                    <Badge variant="default" className="text-xs">Latest</Badge>
+                  )}
+                </div>
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  {pdfUrl && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => generatePdf(report)}
+                      disabled={isGenerating}
+                      className="h-10 w-10 touch-manipulation"
+                      title="Regenerate PDF"
+                    >
+                      <Loader2 className={cn("h-4 w-4", isGenerating && "animate-spin")} />
+                    </Button>
+                  )}
                   <Button
                     variant="ghost"
-                    size="sm"
-                    onClick={() => generatePdf(report)}
+                    size="icon"
+                    onClick={handleEdit}
                     disabled={isGenerating}
-                    title="Regenerate PDF"
+                    className="h-10 w-10 touch-manipulation"
                   >
-                    <Loader2 className={cn("h-4 w-4", isGenerating && "animate-spin")} />
+                    <Edit className="h-4 w-4" />
                   </Button>
-                )}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleEdit}
-                  disabled={isGenerating}
-                >
-                  <Edit className="h-4 w-4 mr-2" />
-                  Edit
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleDownload}
-                  disabled={!pdfUrl || isGenerating}
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Download
-                </Button>
+                  <Button
+                    variant="default"
+                    size="icon"
+                    onClick={handleDownload}
+                    disabled={!pdfUrl || isGenerating}
+                    className="h-10 w-10 touch-manipulation"
+                  >
+                    <Download className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
-            </div>
-          </DialogHeader>
+            </SheetHeader>
+            {renderPdfContent()}
+          </SheetContent>
+        </Sheet>
+      )}
 
-          <div className="flex-1 overflow-auto bg-muted/50 relative">
-            <div className="h-full flex flex-col">
-              {/* Size Warning Alert */}
-              {sizeWarning && (
-                <Alert variant="default" className="m-4 mb-0">
-                  <AlertTriangle className="h-4 w-4" />
-                  <AlertTitle>Data Size Warning</AlertTitle>
-                  <AlertDescription className="text-xs whitespace-pre-line mt-2">
-                    {sizeWarning}
-                  </AlertDescription>
-                </Alert>
-              )}
-
-              {/* Error Alert */}
-              {generationError && (
-                <Alert variant="destructive" className="m-4 mb-0">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>PDF Generation Failed</AlertTitle>
-                  <AlertDescription className="text-xs mt-2">
-                    {generationError}
-                    <br /><br />
-                    <strong>Common causes:</strong>
-                    <ul className="list-disc list-inside mt-1">
-                      <li>Data size exceeds 1MB limit (check for large embedded images)</li>
-                      <li>Network timeout or edge function error</li>
-                      <li>Invalid data format</li>
-                    </ul>
-                  </AlertDescription>
-                </Alert>
-              )}
-
-              {/* PDF Content */}
-              <div className="flex-1 flex items-center justify-center">
-                {isGenerating ? (
-                  <div className="flex flex-col items-center justify-center">
-                    <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-                    <p className="text-muted-foreground">Generating PDF...</p>
-                    <p className="text-xs text-muted-foreground mt-2">This may take a moment</p>
-                  </div>
-                ) : pdfUrl ? (
-                  isMobile ? (
-                    <div className="flex flex-col items-center justify-center p-6">
-                      <FileText className="h-16 w-16 text-primary mb-4" />
-                      <p className="text-center mb-4">PDF preview not available on mobile</p>
-                      <Button onClick={handleDownload}>
-                        <Download className="h-4 w-4 mr-2" />
-                        Open PDF
-                      </Button>
-                    </div>
-                  ) : (
-                    <iframe
-                      src={pdfUrl}
-                      className="w-full h-full border-0 absolute inset-0"
-                      title="PDF Preview"
-                    />
-                  )
-                ) : !generationError ? (
-                  <div className="flex flex-col items-center justify-center">
-                    <AlertCircle className="h-12 w-12 text-muted-foreground mb-4" />
-                    <p className="text-muted-foreground">PDF not available</p>
-                  </div>
-                ) : null}
+      {/* Desktop: Dialog */}
+      {!isMobile && (
+        <Dialog open={open} onOpenChange={onOpenChange}>
+          <DialogContent className="max-w-4xl h-[80vh] flex flex-col p-0">
+            <DialogHeader className="px-6 pt-6 pb-4 border-b">
+              <DialogDescription className="sr-only">
+                View and manage certificate PDF versions
+              </DialogDescription>
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <FileText className="h-5 w-5 text-primary flex-shrink-0" />
+                  <DialogTitle className="text-lg sm:text-xl truncate">
+                    {report?.certificate_number || 'Loading...'}
+                  </DialogTitle>
+                  {currentVersion && (
+                    <>
+                      {versions.length > 1 && (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="outline" size="sm" className="flex-shrink-0">
+                              V{currentVersion.version} ▼
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            {versions.map((version) => (
+                              <DropdownMenuItem
+                                key={version.id}
+                                onClick={() => handleVersionChange(version.id)}
+                                className="flex items-center justify-between gap-4"
+                              >
+                                <span>V{version.version}</span>
+                                <span className="text-xs text-muted-foreground">
+                                  {format(new Date(version.created_at), 'dd/MM/yyyy')}
+                                </span>
+                                {version.is_latest_version && (
+                                  <Badge variant="default" className="ml-2">Latest</Badge>
+                                )}
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      )}
+                      {currentVersion.is_latest_version && (
+                        <Badge variant="default">Latest</Badge>
+                      )}
+                    </>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  {pdfUrl && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => generatePdf(report)}
+                      disabled={isGenerating}
+                      title="Regenerate PDF"
+                    >
+                      <Loader2 className={cn("h-4 w-4", isGenerating && "animate-spin")} />
+                    </Button>
+                  )}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleEdit}
+                    disabled={isGenerating}
+                  >
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleDownload}
+                    disabled={!pdfUrl || isGenerating}
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download
+                  </Button>
+                </div>
               </div>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+            </DialogHeader>
+            {renderPdfContent()}
+          </DialogContent>
+        </Dialog>
+      )}
 
       {/* Edit Dialog - Create New Version */}
       <AlertDialog open={showEditDialog} onOpenChange={setShowEditDialog}>

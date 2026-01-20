@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SectionHeader from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
@@ -19,8 +19,15 @@ import {
   CONDUCTOR_SIZES,
   RCD_RATINGS,
   RCD_TYPES,
+  CIRCUIT_TYPES,
   SmartDefault,
 } from '@/constants/minorWorksOptions';
+import {
+  STANDARD_TO_DEVICE_TYPES,
+  DEVICE_TYPE_RATINGS,
+  DEVICE_TYPE_KA_RATINGS,
+  getDeviceCategory,
+} from '@/constants/deviceMappings';
 
 interface MWCircuitTabProps {
   formData: any;
@@ -95,6 +102,93 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
     }
   };
 
+  // ============================================================================
+  // Cascading Protective Device Selectors
+  // ============================================================================
+
+  // Get filtered device types based on selected BS EN standard
+  const filteredDeviceTypes = useMemo(() => {
+    if (!formData.overcurrentDeviceBsEn) return PROTECTIVE_DEVICE_TYPES;
+    const allowedTypes = STANDARD_TO_DEVICE_TYPES[formData.overcurrentDeviceBsEn];
+    if (!allowedTypes || allowedTypes.length === 0) return PROTECTIVE_DEVICE_TYPES;
+    return PROTECTIVE_DEVICE_TYPES.filter(d => allowedTypes.includes(d.value));
+  }, [formData.overcurrentDeviceBsEn]);
+
+  // Get filtered ratings based on selected device type
+  const filteredRatings = useMemo(() => {
+    if (!formData.protectiveDeviceType) return DEVICE_RATINGS;
+    const deviceKey = getDeviceCategory(formData.protectiveDeviceType);
+    const allowedRatings = DEVICE_TYPE_RATINGS[deviceKey];
+    if (!allowedRatings) return DEVICE_RATINGS;
+    return DEVICE_RATINGS.filter(r => allowedRatings.includes(parseInt(r.value, 10)));
+  }, [formData.protectiveDeviceType]);
+
+  // Get filtered kA ratings based on selected device type
+  const filteredKaRatings = useMemo(() => {
+    if (!formData.protectiveDeviceType) return BREAKING_CAPACITIES;
+    const deviceKey = getDeviceCategory(formData.protectiveDeviceType);
+    const allowedKa = DEVICE_TYPE_KA_RATINGS[deviceKey];
+    if (!allowedKa) return BREAKING_CAPACITIES;
+    return BREAKING_CAPACITIES.filter(k => allowedKa.includes(parseFloat(k.value)));
+  }, [formData.protectiveDeviceType]);
+
+  // Get filtered CPC sizes based on live conductor (BS 7671 Table 54.7)
+  // CPC size is typically related to live conductor size:
+  // - S ≤ 16mm²: CPC can equal S
+  // - 16 < S ≤ 35mm²: CPC minimum 16mm²
+  // - S > 35mm²: CPC minimum S/2
+  // We show all sizes up to and including live conductor size (plus minimum 16mm² floor)
+  const filteredCpcSizes = useMemo(() => {
+    if (!formData.liveConductorSize) return CONDUCTOR_SIZES;
+
+    const liveSize = parseFloat(formData.liveConductorSize);
+
+    // Allow CPC sizes up to the live conductor size
+    // But always show at least up to 16mm² as minimum practical range
+    const maxCpc = Math.max(liveSize, 16);
+
+    return CONDUCTOR_SIZES.filter(o => parseFloat(o.value) <= maxCpc);
+  }, [formData.liveConductorSize]);
+
+  // Handle BS EN standard change with cascading reset
+  const handleStandardChange = (value: string) => {
+    onUpdate('overcurrentDeviceBsEn', value);
+
+    // Check if current device type is still valid for the new standard
+    const allowedTypes = STANDARD_TO_DEVICE_TYPES[value];
+    if (allowedTypes && allowedTypes.length > 0 && formData.protectiveDeviceType) {
+      if (!allowedTypes.includes(formData.protectiveDeviceType)) {
+        // Reset device type and dependent fields
+        onUpdate('protectiveDeviceType', '');
+        onUpdate('protectiveDeviceRating', '');
+        onUpdate('protectiveDeviceKaRating', '');
+      }
+    }
+  };
+
+  // Handle device type change with cascading reset
+  const handleDeviceTypeChange = (value: string) => {
+    onUpdate('protectiveDeviceType', value);
+
+    const deviceKey = getDeviceCategory(value);
+
+    // Check if current rating is still valid for the new device type
+    const allowedRatings = DEVICE_TYPE_RATINGS[deviceKey];
+    if (allowedRatings && formData.protectiveDeviceRating) {
+      if (!allowedRatings.includes(parseInt(formData.protectiveDeviceRating, 10))) {
+        onUpdate('protectiveDeviceRating', '');
+      }
+    }
+
+    // Check if current kA rating is still valid for the new device type
+    const allowedKa = DEVICE_TYPE_KA_RATINGS[deviceKey];
+    if (allowedKa && formData.protectiveDeviceKaRating) {
+      if (!allowedKa.includes(parseFloat(formData.protectiveDeviceKaRating))) {
+        onUpdate('protectiveDeviceKaRating', '');
+      }
+    }
+  };
+
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Smart Defaults Quick Fill */}
@@ -127,6 +221,18 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   />
                 </div>
                 <div className="space-y-2">
+                  <Label className="text-sm">DB Location & Type</Label>
+                  <Input
+                    value={formData.dbLocationType || ''}
+                    onChange={(e) => onUpdate('dbLocationType', e.target.value)}
+                    placeholder="e.g., Under stairs, Split-load CU"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
                   <Label className="text-sm">Circuit Designation *</Label>
                   <Input
                     value={formData.circuitDesignation || ''}
@@ -135,15 +241,26 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                     className={cn("h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500", !formData.circuitDesignation && "border-red-500/50")}
                   />
                 </div>
+                <div className="space-y-2">
+                  <Label className="text-sm">Circuit Description</Label>
+                  <Input
+                    value={formData.circuitDescription || ''}
+                    onChange={(e) => onUpdate('circuitDescription', e.target.value)}
+                    placeholder="e.g., Kitchen sockets, Lighting circuit"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm">Circuit Description</Label>
-                <Input
-                  value={formData.circuitDescription || ''}
-                  onChange={(e) => onUpdate('circuitDescription', e.target.value)}
-                  placeholder="e.g., Kitchen sockets, Lighting circuit"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                <Label className="text-sm">Circuit Type</Label>
+                <MobileSelectPicker
+                  value={formData.circuitType || 'radial'}
+                  onValueChange={(v) => onUpdate('circuitType', v)}
+                  options={CIRCUIT_TYPES}
+                  placeholder="Select type"
+                  title="Circuit Type"
+                  triggerClassName="bg-elec-gray border-white/30"
                 />
               </div>
             </div>
@@ -170,7 +287,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   <Label className="text-sm">BS (EN) Standard</Label>
                   <MobileSelectPicker
                     value={formData.overcurrentDeviceBsEn || ''}
-                    onValueChange={(v) => onUpdate('overcurrentDeviceBsEn', v)}
+                    onValueChange={handleStandardChange}
                     options={BS_EN_STANDARDS}
                     placeholder="Select"
                     title="BS (EN) Standard"
@@ -181,8 +298,8 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   <Label className="text-sm">Device Type *</Label>
                   <MobileSelectPicker
                     value={formData.protectiveDeviceType || ''}
-                    onValueChange={(v) => onUpdate('protectiveDeviceType', v)}
-                    options={PROTECTIVE_DEVICE_TYPES}
+                    onValueChange={handleDeviceTypeChange}
+                    options={filteredDeviceTypes}
                     placeholder="Select type"
                     title="Protective Device Type"
                     triggerClassName={cn(
@@ -190,13 +307,18 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                       !formData.protectiveDeviceType && "border-red-500/50"
                     )}
                   />
+                  {formData.overcurrentDeviceBsEn && filteredDeviceTypes.length < PROTECTIVE_DEVICE_TYPES.length && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Filtered for {formData.overcurrentDeviceBsEn}
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Rating (A) *</Label>
                   <MobileSelectPicker
                     value={formData.protectiveDeviceRating || ''}
                     onValueChange={(v) => onUpdate('protectiveDeviceRating', v)}
-                    options={DEVICE_RATINGS}
+                    options={filteredRatings}
                     placeholder="Rating"
                     title="Device Rating"
                     triggerClassName={cn(
@@ -204,17 +326,27 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                       !formData.protectiveDeviceRating && "border-red-500/50"
                     )}
                   />
+                  {formData.protectiveDeviceType && filteredRatings.length < DEVICE_RATINGS.length && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      BS 7671 ratings for {PROTECTIVE_DEVICE_TYPES.find(d => d.value === formData.protectiveDeviceType)?.label || formData.protectiveDeviceType}
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Breaking Capacity (kA)</Label>
                   <MobileSelectPicker
                     value={formData.protectiveDeviceKaRating || ''}
                     onValueChange={(v) => onUpdate('protectiveDeviceKaRating', v)}
-                    options={BREAKING_CAPACITIES}
+                    options={filteredKaRatings}
                     placeholder="kA rating"
                     title="Breaking Capacity"
                     triggerClassName="bg-elec-gray border-white/30"
                   />
+                  {formData.protectiveDeviceType && filteredKaRatings.length < BREAKING_CAPACITIES.length && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Typical for {PROTECTIVE_DEVICE_TYPES.find(d => d.value === formData.protectiveDeviceType)?.label || formData.protectiveDeviceType}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -415,11 +547,16 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                   <MobileSelectPicker
                     value={formData.cpcSize || ''}
                     onValueChange={(v) => onUpdate('cpcSize', v)}
-                    options={CONDUCTOR_SIZES.filter(o => parseFloat(o.value) <= 16)}
+                    options={filteredCpcSizes}
                     placeholder="Size"
                     title="CPC Size"
                     triggerClassName="bg-elec-gray border-white/30"
                   />
+                  {formData.liveConductorSize && parseFloat(formData.liveConductorSize) > 16 && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Sizes shown up to {formData.liveConductorSize}mm² (per BS 7671)
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Cable Type</Label>

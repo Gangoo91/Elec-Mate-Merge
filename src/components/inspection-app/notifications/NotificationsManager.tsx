@@ -95,18 +95,23 @@ export const NotificationsManager = ({ onNavigate }: NotificationsManagerProps) 
         onOpenChange={setIsFormGuideOpen}
         className="mb-6"
       >
-        <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-card/50 hover:bg-card rounded-lg transition-colors border border-border">
-          <span className="text-sm font-medium text-foreground">
-            📋 What to Submit to Building Control
-          </span>
+        <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-card/80 hover:bg-card rounded-2xl transition-all border border-border/50 hover:border-primary/30 group">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+              <span className="text-base">📋</span>
+            </div>
+            <span className="text-sm font-semibold text-foreground">
+              What to Submit to Building Control
+            </span>
+          </div>
           <ChevronDown
-            className={`w-5 h-5 text-neutral-400 transition-transform duration-200 ${
+            className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${
               isFormGuideOpen ? 'rotate-180' : ''
             }`}
           />
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <ScrollArea className="h-[400px] mt-2 rounded-lg border border-border">
+          <ScrollArea className="h-[400px] mt-3 rounded-2xl border border-border/50 bg-card/50">
             <div className="p-4">
               <BuildingControlFormGuide />
             </div>

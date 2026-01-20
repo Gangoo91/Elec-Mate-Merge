@@ -18,10 +18,10 @@ serve(async (req) => {
 
     // Get request body
     const body = await req.json();
-    const { priceId, mode, planId } = body;
-    
-    logger.info('Request body received', { priceId, mode, planId });
-    
+    const { priceId, mode, planId, offerCode } = body;
+
+    logger.info('Request body received', { priceId, mode, planId, offerCode });
+
     if (!priceId || !mode || !planId) {
       throw new ValidationError("Missing required parameters: priceId, mode, or planId");
     }
@@ -108,9 +108,52 @@ serve(async (req) => {
       logger.info('New customer created', { customerId });
     }
 
+    // Look up offer code if provided
+    let discounts: { promotion_code: string }[] | undefined = undefined;
+    if (offerCode) {
+      logger.info('Looking up offer code', { offerCode });
+
+      // Create admin client for reading promo offers
+      const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+      if (supabaseServiceKey) {
+        const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+
+        const { data: offer, error: offerError } = await supabaseAdmin
+          .from('promo_offers')
+          .select('stripe_promotion_code_id, is_active, plan_id')
+          .eq('code', offerCode)
+          .single();
+
+        if (offerError) {
+          logger.warn('Offer lookup failed', { error: offerError.message });
+        } else if (offer?.is_active && offer.stripe_promotion_code_id) {
+          // Verify the offer matches the plan being purchased
+          // planId format: "apprentice-monthly" or "electrician-yearly"
+          // offer.plan_id format: "apprentice" or "electrician"
+          const planMatches = planId.startsWith(offer.plan_id);
+          if (planMatches) {
+            discounts = [{ promotion_code: offer.stripe_promotion_code_id }];
+            logger.info('Applying promotion code', {
+              stripePromoCodeId: offer.stripe_promotion_code_id
+            });
+          } else {
+            logger.warn('Offer plan mismatch', {
+              offerPlan: offer.plan_id,
+              requestedPlan: planId
+            });
+          }
+        } else {
+          logger.warn('Offer not active or missing Stripe ID', {
+            isActive: offer?.is_active,
+            hasStripeId: !!offer?.stripe_promotion_code_id
+          });
+        }
+      }
+    }
+
     // Create checkout options based on mode
     const origin = req.headers.get("origin") || "https://f214c814-3a85-4c4a-8139-3d81ec8b7efb.lovableproject.com";
-    
+
     const checkoutOptions: any = {
       customer: customerId,
       line_items: [
@@ -129,7 +172,8 @@ serve(async (req) => {
       },
       payment_method_types: ['card'],
       billing_address_collection: 'auto',
-      allow_promotion_codes: true,
+      // If we have a specific discount to apply, use that; otherwise allow manual promo codes
+      ...(discounts ? { discounts } : { allow_promotion_codes: true }),
     };
     
     logger.info('Creating checkout session with options', checkoutOptions);

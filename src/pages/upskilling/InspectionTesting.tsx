@@ -1,4 +1,4 @@
-import { ArrowLeft, BookOpen, Shield, Link2, Zap, CircleDot, FileCheck, ToggleRight, Eye } from 'lucide-react';
+import { ArrowLeft, BookOpen, Shield, Link2, Zap, CircleDot, FileCheck, ToggleRight, Eye, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -11,11 +11,12 @@ const InspectionTesting = () => {
   useSEO({ title: TITLE, description: DESCRIPTION });
 
   const modules: Array<{
-    id: number;
+    id: number | string;
     title: string;
     description: string;
     duration: string;
     icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+    isExam?: boolean;
   }> = [
     {
       id: 1,
@@ -72,6 +73,14 @@ const InspectionTesting = () => {
       description: "Inspection checklists, EICs, PIRs, Minor Works certificates",
       duration: "50 mins",
       icon: Eye,
+    },
+    {
+      id: "exam",
+      title: "Mock Exam",
+      description: "Test your knowledge with 30 questions from a bank of 300",
+      duration: "45 mins",
+      icon: GraduationCap,
+      isExam: true,
     }
   ];
 
@@ -110,12 +119,13 @@ const InspectionTesting = () => {
           {modules.map((module, index) => (
             <ModuleCard
               key={module.id}
-              to={`../inspection-testing-module-${module.id}`}
-              moduleNumber={module.id}
+              to={module.isExam ? `../inspection-testing-mock-exam` : `../inspection-testing/module-${module.id}`}
+              moduleNumber={typeof module.id === 'number' ? module.id : 0}
               title={module.title}
               description={module.description}
               duration={module.duration}
               icon={module.icon}
+              isExam={module.isExam}
               index={index}
             />
           ))}

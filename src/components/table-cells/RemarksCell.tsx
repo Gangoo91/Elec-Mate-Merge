@@ -23,12 +23,12 @@ const RemarksCellComponent: React.FC<RemarksCellProps> = ({ result, onUpdate }) 
   };
 
   return (
-    <TableCell className="p-0 bg-black h-5 align-middle">
+    <TableCell className="p-0 h-8 align-middle">
       <div className="flex items-center gap-1">
         <Input
           value={result.notes || ''}
           onChange={(e) => onUpdate(result.id, 'notes', e.target.value)}
-          className="h-4 text-xs px-0 pr-10 border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50 bg-transparent flex-1"
+          className="h-8 text-sm px-0 pr-10 border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30 bg-transparent flex-1"
           placeholder="Remarks"
         />
         {result.notes && (

@@ -84,7 +84,7 @@ const FireAlarmModule7 = () => {
           {sections.map((section, index) => (
             <SectionCard
               key={section.id}
-              to={`../fire-alarm-module-7-section-${section.id}`}
+              to={`section-${section.id}`}
               sectionNumber={section.id}
               title={section.title}
               description={section.description}

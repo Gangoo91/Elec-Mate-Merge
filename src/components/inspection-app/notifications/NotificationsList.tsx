@@ -3,7 +3,8 @@ import { NotificationCard } from './NotificationCard';
 import { NotificationFilters } from './NotificationFilters';
 import { Notification, NotificationStatus } from '@/hooks/useNotifications';
 import { getDaysUntilDeadline } from '@/utils/notificationHelper';
-import { AlertCircle } from 'lucide-react';
+import { Bell, FileCheck, ClipboardList, CheckCircle2, Zap } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface NotificationsListProps {
   notifications: Notification[];
@@ -104,13 +105,62 @@ export const NotificationsList = ({
 
   if (notifications.length === 0) {
     return (
-      <div className="text-center py-12">
-        <AlertCircle className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-        <h3 className="text-lg font-semibold mb-2">No notifications yet</h3>
-        <p className="text-muted-foreground">
-          Part P notifications will appear here when you complete notifiable electrical work.
-        </p>
-      </div>
+      <Card className="border-border/50 bg-gradient-to-br from-card/80 to-card/40">
+        <CardContent className="py-10">
+          {/* Animated Icon */}
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                <Bell className="w-10 h-10 text-primary/60" />
+              </div>
+              <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-green-500/20 flex items-center justify-center">
+                <CheckCircle2 className="w-4 h-4 text-green-500" />
+              </div>
+            </div>
+          </div>
+
+          <h3 className="text-xl font-bold text-center mb-2">All Clear!</h3>
+          <p className="text-muted-foreground text-center text-sm mb-8 max-w-sm mx-auto">
+            No Part P notifications pending. When you complete notifiable electrical work, it will appear here.
+          </p>
+
+          {/* How it works */}
+          <div className="max-w-md mx-auto">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide text-center mb-4">
+              How Part P Tracking Works
+            </p>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3 p-3 bg-card/50 rounded-xl border border-border/50">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <ClipboardList className="w-4 h-4 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Create EIC or Minor Works</p>
+                  <p className="text-xs text-muted-foreground">Tick "Part P notification required"</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-card/50 rounded-xl border border-border/50">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <FileCheck className="w-4 h-4 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Generate Certificate</p>
+                  <p className="text-xs text-muted-foreground">Notification auto-created with 30-day deadline</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-card/50 rounded-xl border border-border/50">
+                <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                  <Zap className="w-4 h-4 text-green-500" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Submit to Scheme/Building Control</p>
+                  <p className="text-xs text-muted-foreground">Track submissions & stay compliant</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     );
   }
 

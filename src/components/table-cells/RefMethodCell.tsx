@@ -15,13 +15,13 @@ const RefMethodCellComponent: React.FC<RefMethodCellProps> = ({ result, onUpdate
   }, [result.id, onUpdate]);
 
   return (
-    <TableCell className="p-0 bg-black h-5 align-middle min-w-[100px] max-w-[100px]">
+    <TableCell className="p-0 h-8 align-middle min-w-[100px] max-w-[100px]">
       <Select
         name={`referenceMethod-${result.id}`}
         value={result.referenceMethod || ''}
         onValueChange={handleChange}
       >
-        <SelectTrigger className="h-4 text-xs w-full px-0 bg-transparent border-0 rounded-none focus:ring-0">
+        <SelectTrigger className="h-8 text-sm w-full px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
           <SelectValue placeholder="Ref" />
         </SelectTrigger>
         <SelectContent key={`referenceMethod-content-${result.id}`} className="max-h-60 bg-background border border-border rounded-md z-[9999]">

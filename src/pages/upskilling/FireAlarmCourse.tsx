@@ -118,7 +118,7 @@ const FireAlarmCourse = () => {
           {modules.map((module, index) => (
             <ModuleCard
               key={module.id}
-              to={module.isExam ? `../fire-alarm-mock-exam` : `../fire-alarm-module-${module.id}`}
+              to={module.isExam ? `mock-exam` : `module-${module.id}`}
               moduleNumber={module.id}
               title={module.title}
               description={module.description}

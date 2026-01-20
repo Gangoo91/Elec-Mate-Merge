@@ -10,7 +10,7 @@ interface AfddTestCellProps {
 
 export const AfddTestCell: React.FC<AfddTestCellProps> = ({ result, onUpdate }) => {
   return (
-    <TableCell className="border-r-2 border-border px-2 py-0 bg-indigo-50/30 h-7 align-middle">
+    <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
       <MobileSelectPicker
         value={result.afddTest || ''}
         onValueChange={(value) => onUpdate(result.id, 'afddTest', value)}
@@ -21,6 +21,7 @@ export const AfddTestCell: React.FC<AfddTestCellProps> = ({ result, onUpdate }) 
         ]}
         placeholder="AFDD"
         title="AFDD Test"
+        triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
       />
     </TableCell>
   );

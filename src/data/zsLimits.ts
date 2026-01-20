@@ -279,6 +279,25 @@ export function getZsLimitFromDeviceString(
   const device = deviceType.toLowerCase();
   const disconnectionTime = getDisconnectionTimeForCircuit(circuitDescription);
 
+  // MCCB detection - treat similar to MCB Type C/D depending on context
+  if (device.includes('mccb') || device.includes('moulded case')) {
+    // MCCBs typically have adjustable trip characteristics
+    // Use Type C values as default (thermal-magnetic trip)
+    // For high inrush loads, Type D may be more appropriate
+    let curve: MCBCurve = 'typeC'; // Default for MCCBs
+    if (device.includes('type d') || device.includes('high inrush')) {
+      curve = 'typeD';
+    } else if (device.includes('type b')) {
+      curve = 'typeB';
+    }
+    const result = getMcbZsLimit(curve, rating, disconnectionTime);
+    if (result) {
+      result.source = result.source.replace('Table 41.3', 'Table 41.3 (MCCB)');
+      result.notes = 'MCCB - verify instantaneous trip setting matches assumed curve';
+    }
+    return result;
+  }
+
   // MCB/RCBO detection
   if (device.includes('mcb') || device.includes('rcbo') || device.includes('miniature')) {
     let curve: MCBCurve = 'typeB'; // Default
@@ -290,23 +309,28 @@ export function getZsLimitFromDeviceString(
     return getMcbZsLimit(curve, rating, disconnectionTime);
   }
 
-  // Fuse detection
-  if (device.includes('fuse')) {
+  // Fuse detection - handles both device type and BS standard formats
+  if (device.includes('fuse') || device.includes('bs 88') || device.includes('bs88') ||
+      device.includes('bs 3036') || device.includes('bs3036') || device.includes('bs 1361') ||
+      device.includes('bs1361') || device.includes('bs 1362') || device.includes('bs1362')) {
     let fuseType: FuseType = 'bs88_2'; // Default HRC
-    
-    if (device.includes('88-3') || device.includes('88.3') || device.includes('system c')) {
+
+    if (device.includes('88-3') || device.includes('88.3') || device.includes('bs88-3') ||
+        device.includes('system c') || device.includes('bs 88-3')) {
       fuseType = 'bs88_3';
-    } else if (device.includes('88-2') || device.includes('88.2') || device.includes('hrc') || device.includes('gg')) {
+    } else if (device.includes('88-2') || device.includes('88.2') || device.includes('bs88-2') ||
+               device.includes('hrc') || device.includes('gg') || device.includes('bs 88-2') ||
+               device === 'fuse-bs88' || device.includes('bs 88') || device.includes('bs88')) {
       fuseType = 'bs88_2';
     } else if (device.includes('3036') || device.includes('rewirable') || device.includes('semi-enclosed')) {
       fuseType = 'bs3036';
     } else if (device.includes('1362') || device.includes('plug')) {
       fuseType = 'bs1362';
     } else if (device.includes('1361') || device.includes('cartridge')) {
-      // BS 1361 was superseded, values similar to BS 88-3
+      // BS 1361 uses similar values to BS 88-3 (System C)
       fuseType = 'bs88_3';
     }
-    
+
     return getFuseZsLimit(fuseType, rating, disconnectionTime);
   }
 

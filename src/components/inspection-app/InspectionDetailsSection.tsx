@@ -225,17 +225,31 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
               </p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="limitationsOfInspection">Limitations of Inspection</Label>
+              <Label htmlFor="limitationsOfInspection">Agreed Limitations</Label>
               <Textarea
                 id="limitationsOfInspection"
                 value={formData.limitationsOfInspection || ''}
                 onChange={(e) => onUpdate('limitationsOfInspection', e.target.value)}
-                placeholder="Any areas not inspected or limitations encountered"
-                rows={4}
-                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-blue-500"
+                placeholder="Limitations agreed with client prior to inspection"
+                rows={3}
+                className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-blue-500"
               />
               <p className="text-xs text-muted-foreground mt-1">
-                Note any areas that could not be accessed or inspected
+                Limitations agreed with the client before work commenced
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="operationalLimitations">Operational Limitations</Label>
+              <Textarea
+                id="operationalLimitations"
+                value={formData.operationalLimitations || ''}
+                onChange={(e) => onUpdate('operationalLimitations', e.target.value)}
+                placeholder="e.g., Installation could not be isolated, areas inaccessible due to occupancy"
+                rows={3}
+                className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-blue-500"
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                Limitations encountered during the inspection that were not previously agreed
               </p>
             </div>
           </div>

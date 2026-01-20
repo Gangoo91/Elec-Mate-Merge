@@ -15,13 +15,14 @@ const RefMethodCellComponent: React.FC<RefMethodCellProps> = ({ result, onUpdate
   }, [result.id, onUpdate]);
 
   return (
-    <TableCell className="p-0 bg-black h-5 align-middle min-w-[100px] max-w-[100px]">
+    <TableCell className="p-0 h-8 align-middle min-w-[100px] max-w-[100px]">
       <MobileSelectPicker
         value={result.referenceMethod || ''}
         onValueChange={handleChange}
         options={referenceMethodOptions}
         placeholder="Ref"
         title="Reference Method"
+        triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
       />
     </TableCell>
   );

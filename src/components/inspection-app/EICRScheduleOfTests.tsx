@@ -3,12 +3,13 @@ import { useOptionalVoiceFormContext, FormField } from '@/contexts/VoiceFormCont
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
-import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Trash2, Grid, Pen, Mic } from 'lucide-react';
+import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Trash2, Grid, Pen, Mic, Hand } from 'lucide-react';
 import { toast } from 'sonner';
 import { TestResult } from '@/types/testResult';
 import EnhancedTestResultDesktopTable from './EnhancedTestResultDesktopTable';
 import MobileOptimizedTestTable from './mobile/MobileOptimizedTestTable';
 import { MobileHorizontalScrollTable } from './mobile/MobileHorizontalScrollTable';
+import SwipeableTestSchedule from './mobile/SwipeableTestSchedule';
 import MobileSmartAutoFill from './mobile/MobileSmartAutoFill';
 import QuickRcdPresets from './QuickRcdPresets';
 import QuickFillRcdPanel from './QuickFillRcdPanel';
@@ -54,7 +55,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
   const [showTestResultsScan, setShowTestResultsScan] = useState(false);
   const [extractedTestResults, setExtractedTestResults] = useState<any>(null);
   const [showTestResultsReview, setShowTestResultsReview] = useState(false);
-  const [mobileViewType, setMobileViewType] = useState<'table' | 'card'>('card'); // Default to card view for mobile-first experience
+  const [mobileViewType, setMobileViewType] = useState<'table' | 'card' | 'swipe'>('card'); // Default to card view for mobile-first experience
   const [isBulkUpdating, setIsBulkUpdating] = useState(false);
   const [showSmartAutoFillDialog, setShowSmartAutoFillDialog] = useState(false);
   const [showRcdPresetsDialog, setShowRcdPresetsDialog] = useState(false);
@@ -1505,117 +1506,45 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
   };
 
   const handleApplyAICircuits = (selectedCircuits: any[]) => {
-    // Find blank rows to fill first
-    const blankIndices: number[] = [];
-    testResults.forEach((result, idx) => {
-      if (isBlankRow(result)) {
-        blankIndices.push(idx);
-      }
-    });
-
-    const updatedResults = [...testResults];
-    const remainingCircuits: any[] = [];
-
-    selectedCircuits.forEach((circuit, circuitIdx) => {
+    // REPLACE all existing circuits with scanned circuits
+    // This fixes the C1 stuck bug - no more merging with blank slots
+    const newResults: TestResult[] = selectedCircuits.map((circuit, index) => {
       const normalisedCircuit = normaliseAICircuit(circuit);
-      
-      // If we have a blank slot, fill it
-      if (blankIndices.length > 0) {
-        const blankIdx = blankIndices.shift()!;
-        const existingResult = updatedResults[blankIdx];
-        const circuitNumber = existingResult.circuitNumber;
-        
-        const liveSize = normalisedCircuit.liveSize;
-        const circuitType = normalisedCircuit.circuitType || '';
-        const circuitDesc = normalisedCircuit.circuitDescription || '';
-        
-        // Circuit type detection
-        const isRingCircuit = circuitType.toLowerCase().includes('ring');
-        const isLightingCircuit = circuitType.toLowerCase().includes('lighting') || 
-                                   circuitDesc.toLowerCase().includes('light');
-        const isSocketCircuit = circuitType.toLowerCase().includes('socket');
-        const isBathroomCircuit = circuitDesc.toLowerCase().includes('bathroom');
-        const isOutdoorCircuit = circuitDesc.toLowerCase().includes('outdoor') || 
-                                  circuitDesc.toLowerCase().includes('garden');
-        
-        const isRCBOOrRCD = normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCD') || 
-                            normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCBO');
-        const requiresRCD = isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
-        
-        updatedResults[blankIdx] = {
-          ...existingResult,
-          circuitDescription: circuitDesc,
-          circuitType: circuitType,
-          type: circuitType,
-          referenceMethod: normalisedCircuit.referenceMethod,
-          liveSize: liveSize,
-          cpcSize: normalisedCircuit.cpcSize, // Already corrected by normaliseAICircuit
-          protectiveDeviceType: normalisedCircuit.protectiveDeviceType,
-          protectiveDeviceCurve: normalisedCircuit.protectiveDeviceCurve || '',
-          protectiveDeviceRating: normalisedCircuit.protectiveDeviceRating,
-          protectiveDeviceKaRating: normalisedCircuit.protectiveDeviceKaRating,
-          protectiveDeviceLocation: 'Consumer Unit',
-          bsStandard: normalisedCircuit.bsStandard,
-          cableSize: liveSize,
-          protectiveDevice: `${normalisedCircuit.protectiveDeviceType} ${normalisedCircuit.protectiveDeviceRating}`.trim(),
-          maxZs: calculateMaxZsForCircuit(
-            normalisedCircuit.bsStandard,
-            normalisedCircuit.protectiveDeviceCurve,
-            normalisedCircuit.protectiveDeviceRating
-          ),
-          ringContinuityLive: isRingCircuit ? '' : 'N/A',
-          ringContinuityNeutral: isRingCircuit ? '' : 'N/A',
-          insulationTestVoltage: '500V',
-          polarity: 'Satisfactory',
-          pointsServed: calculatePointsServed(circuitDesc, circuitType, normalisedCircuit.protectiveDeviceType),
-          rcdRating: requiresRCD ? '30mA' : '',
-          functionalTesting: 'Satisfactory',
-          notes: `AI detected (${circuit.confidence || 'unknown'} confidence) - Please verify all values`,
-          autoFilled: true
-        };
-      } else {
-        // No blank slots, add to remaining
-        remainingCircuits.push(normalisedCircuit);
-      }
-    });
+      const circuitNumber = (index + 1).toString();
 
-    // Append remaining circuits that didn't fit in blank slots
-    remainingCircuits.forEach((circuit, index) => {
-      const circuitNumber = (updatedResults.length + 1).toString();
-      const liveSize = circuit.liveSize;
-      const circuitType = circuit.circuitType || '';
-      const circuitDesc = circuit.circuitDescription || '';
-      
+      const liveSize = normalisedCircuit.liveSize;
+      const circuitType = normalisedCircuit.circuitType || '';
+      const circuitDesc = normalisedCircuit.circuitDescription || '';
+
+      // Circuit type detection
       const isRingCircuit = circuitType.toLowerCase().includes('ring');
-      const isLightingCircuit = circuitType.toLowerCase().includes('lighting') || 
-                                 circuitDesc.toLowerCase().includes('light');
       const isSocketCircuit = circuitType.toLowerCase().includes('socket');
       const isBathroomCircuit = circuitDesc.toLowerCase().includes('bathroom');
-      const isOutdoorCircuit = circuitDesc.toLowerCase().includes('outdoor') || 
+      const isOutdoorCircuit = circuitDesc.toLowerCase().includes('outdoor') ||
                                 circuitDesc.toLowerCase().includes('garden');
-      
-      const isRCBOOrRCD = circuit.protectiveDeviceType.toUpperCase().includes('RCD') || 
-                          circuit.protectiveDeviceType.toUpperCase().includes('RCBO');
+
+      const isRCBOOrRCD = normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
+                          normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCBO');
       const requiresRCD = isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
-      
-      const newResult: TestResult = {
+
+      return {
         id: crypto.randomUUID(),
         circuitNumber: circuitNumber,
         circuitDesignation: `C${circuitNumber}`,
         circuitDescription: circuitDesc,
         circuitType: circuitType,
         type: circuitType,
-        referenceMethod: circuit.referenceMethod,
+        referenceMethod: normalisedCircuit.referenceMethod,
         liveSize: liveSize,
-        cpcSize: circuit.cpcSize, // Already corrected by normaliseAICircuit
-        protectiveDeviceType: circuit.protectiveDeviceType,
-        protectiveDeviceCurve: circuit.protectiveDeviceCurve || '',
-        protectiveDeviceRating: circuit.protectiveDeviceRating,
-        protectiveDeviceKaRating: circuit.protectiveDeviceKaRating,
+        cpcSize: normalisedCircuit.cpcSize,
+        protectiveDeviceType: normalisedCircuit.protectiveDeviceType,
+        protectiveDeviceCurve: normalisedCircuit.protectiveDeviceCurve || '',
+        protectiveDeviceRating: normalisedCircuit.protectiveDeviceRating,
+        protectiveDeviceKaRating: normalisedCircuit.protectiveDeviceKaRating,
         protectiveDeviceLocation: 'Consumer Unit',
-        bsStandard: circuit.bsStandard,
+        bsStandard: normalisedCircuit.bsStandard,
         cableSize: liveSize,
-        protectiveDevice: `${circuit.protectiveDeviceType} ${circuit.protectiveDeviceRating}`.trim(),
+        protectiveDevice: `${normalisedCircuit.protectiveDeviceType} ${normalisedCircuit.protectiveDeviceRating}`.trim(),
         r1r2: '',
         r2: '',
         ringContinuityLive: isRingCircuit ? '' : 'N/A',
@@ -1631,11 +1560,11 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
         polarity: 'Satisfactory',
         zs: '',
         maxZs: calculateMaxZsForCircuit(
-          circuit.bsStandard,
-          circuit.protectiveDeviceCurve,
-          circuit.protectiveDeviceRating
+          normalisedCircuit.bsStandard,
+          normalisedCircuit.protectiveDeviceCurve,
+          normalisedCircuit.protectiveDeviceRating
         ),
-        pointsServed: calculatePointsServed(circuitDesc, circuitType, circuit.protectiveDeviceType),
+        pointsServed: calculatePointsServed(circuitDesc, circuitType, normalisedCircuit.protectiveDeviceType),
         rcdRating: requiresRCD ? '30mA' : '',
         rcdOneX: '',
         rcdTestButton: '',
@@ -1650,12 +1579,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
         rcdBsStandard: '',
         rcdType: '',
         rcdRatingA: ''
-      };
-      updatedResults.push(newResult);
+      } as TestResult;
     });
 
-    setTestResults(updatedResults);
-    onUpdate('scheduleOfTests', updatedResults);
+    // REPLACE - set the new circuits directly, removing the default C1
+    setTestResults(newResults);
+    onUpdate('scheduleOfTests', newResults);
     setShowAIReview(false);
     setDetectedCircuits([]);
   };
@@ -1685,28 +1614,54 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
                 <span className="text-sm font-medium">Add</span>
               </Button>
 
-              {/* View Toggle - Prominent on mobile */}
-              <Button
-                variant={mobileViewType === 'card' ? 'default' : 'outline'}
-                size="sm"
-                className={`h-9 px-3 shrink-0 transition-all duration-200 touch-manipulation ${
-                  mobileViewType === 'card'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'hover:bg-primary/10 hover:border-primary/30'
-                }`}
-                onClick={() => {
-                  const newView = mobileViewType === 'table' ? 'card' : 'table';
-                  setMobileViewType(newView);
-                  setTableViewPreference(newView);
-                }}
-                title={mobileViewType === 'card' ? 'Switch to Table View' : 'Switch to Card View'}
-              >
-                {mobileViewType === 'card' ? (
-                  <><LayoutGrid className="h-4 w-4 mr-1" /><span className="text-sm font-medium">Cards</span></>
-                ) : (
-                  <><Table2 className="h-4 w-4 mr-1" /><span className="text-sm font-medium">Table</span></>
-                )}
-              </Button>
+              {/* View Toggle - Segmented control for table/card/swipe */}
+              <div className="flex items-center h-9 rounded-lg border border-border/50 bg-muted/30 p-0.5">
+                <button
+                  onClick={() => {
+                    setMobileViewType('table');
+                    setTableViewPreference('table');
+                  }}
+                  className={`h-8 px-2.5 rounded-md text-xs font-medium transition-all touch-manipulation flex items-center gap-1 ${
+                    mobileViewType === 'table'
+                      ? 'bg-primary text-primary-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                  title="Table View"
+                >
+                  <Table2 className="h-3.5 w-3.5" />
+                  <span className="hidden xs:inline">Table</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setMobileViewType('card');
+                    setTableViewPreference('card');
+                  }}
+                  className={`h-8 px-2.5 rounded-md text-xs font-medium transition-all touch-manipulation flex items-center gap-1 ${
+                    mobileViewType === 'card'
+                      ? 'bg-primary text-primary-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                  title="Card View"
+                >
+                  <LayoutGrid className="h-3.5 w-3.5" />
+                  <span className="hidden xs:inline">Cards</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setMobileViewType('swipe');
+                    setTableViewPreference('swipe');
+                  }}
+                  className={`h-8 px-2.5 rounded-md text-xs font-medium transition-all touch-manipulation flex items-center gap-1 ${
+                    mobileViewType === 'swipe'
+                      ? 'bg-primary text-primary-foreground shadow-sm'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                  title="Swipe View"
+                >
+                  <Hand className="h-3.5 w-3.5" />
+                  <span className="hidden xs:inline">Swipe</span>
+                </button>
+              </div>
 
               <div className="w-px h-8 bg-border/50" />
 
@@ -1808,15 +1763,19 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56 bg-background z-50">
-                  <DropdownMenuItem 
+                  <DropdownMenuItem
                     onClick={() => {
-                      const newView = mobileViewType === 'table' ? 'card' : 'table';
+                      const views: Array<'table' | 'card' | 'swipe'> = ['table', 'card', 'swipe'];
+                      const currentIdx = views.indexOf(mobileViewType);
+                      const newView = views[(currentIdx + 1) % views.length];
                       setMobileViewType(newView);
                       setTableViewPreference(newView);
                     }}
                   >
                     {mobileViewType === 'table' ? (
                       <><Layout className="mr-2 h-4 w-4" /> Switch to Card View</>
+                    ) : mobileViewType === 'card' ? (
+                      <><Hand className="mr-2 h-4 w-4" /> Switch to Swipe View</>
                     ) : (
                       <><Table className="mr-2 h-4 w-4" /> Switch to Table View</>
                     )}
@@ -1846,6 +1805,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate }: EICRScheduleOfTestsProps) =
                 onRemove={removeTestResult}
                 onBulkUpdate={handleBulkUpdate}
                 onBulkFieldUpdate={handleBulkFieldUpdate}
+              />
+            ) : mobileViewType === 'swipe' ? (
+              <SwipeableTestSchedule
+                testResults={testResults}
+                onUpdate={updateTestResult}
+                onRemove={removeTestResult}
+                onAddCircuit={addTestResult}
               />
             ) : (
               <MobileOptimizedTestTable

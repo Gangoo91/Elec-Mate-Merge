@@ -114,7 +114,7 @@ const InstrumentationCourse = () => {
           {modules.map((module, index) => (
             <ModuleCard
               key={module.id}
-              to={module.isExam ? `../instrumentation-mock-exam` : `../instrumentation-module-${module.id}`}
+              to={`../instrumentation-module-${module.id}`}
               moduleNumber={module.id}
               title={module.title}
               description={module.description}

@@ -158,11 +158,11 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         className={`${getRowBgColor()} border-b border-border/30 transition-colors`}
       >
         {/* Circuit Number - Always visible */}
-        <TableCell className="sticky left-0 z-30 bg-black p-0 h-5 align-middle w-20 min-w-[80px] max-w-[80px]">
+        <TableCell className="sticky left-0 z-30 p-0 h-8 align-middle w-20 min-w-[80px] max-w-[80px]" style={{ backgroundColor: 'inherit' }}>
           <EnhancedValidatedInput
             value={result.circuitDesignation}
             onChange={(value) => onUpdate(result.id, 'circuitDesignation', value)}
-            className="h-4 text-xs text-center px-0 w-full bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-500/20"
+            className="h-8 text-sm text-center px-1 w-full"
             disabled={!!result.sourceCircuitId}
           />
         </TableCell>
@@ -173,12 +173,12 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         {/* Circuit Details */}
         {!isGroupCollapsed('circuit') && (
           <>
-            <TableCell className="sticky left-[80px] z-30 bg-black p-0 h-5 align-middle min-w-[220px] max-w-[220px]">
+            <TableCell className="sticky left-[80px] z-30 p-0 h-8 align-middle min-w-[220px] max-w-[220px]" style={{ backgroundColor: 'inherit' }}>
               <EnhancedValidatedInput
                 value={result.circuitDescription}
                 onChange={(value) => onUpdate(result.id, 'circuitDescription', value)}
                 placeholder="e.g. Kitchen Ring, Upstairs Lighting"
-                className="h-4 text-xs px-0 w-full bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-500/20"
+                className="h-8 text-sm px-2 w-full"
                 disabled={!!result.sourceCircuitId}
               />
             </TableCell>
@@ -239,21 +239,21 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
 
         {/* Regulation Status Column */}
         {showRegulationStatus && (
-          <TableCell className="text-center h-5 bg-black p-0">
+          <TableCell className="text-center h-8 p-1">
             {getRegulationStatusIcon()}
           </TableCell>
         )}
-        
+
         {/* Actions Column */}
-        <TableCell className="text-center h-5 bg-black p-0">
+        <TableCell className="text-center h-8 p-1">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onRemove(result.id)}
-            className="h-5 w-5 p-0 text-red-600 hover:text-red-700 hover:bg-red-500/20"
+            className="h-7 w-7 p-0 text-red-500 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors"
             title="Remove this circuit"
           >
-            <Trash2 className="h-3 w-3" />
+            <Trash2 className="h-4 w-4" />
           </Button>
         </TableCell>
       </TableRow>

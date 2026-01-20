@@ -9,6 +9,44 @@ const IndustrialElectricalModule1Section1 = React.lazy(() => import('@/pages/ups
 const IndustrialElectricalModule2 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule2'));
 const IndustrialElectricalModule3 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule3'));
 const IndustrialElectricalModule4 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule4'));
+
+// Industrial Electrical - Module 1 Sections
+const IndustrialElectricalModule1Section2 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule1Section2'));
+const IndustrialElectricalModule1Section3 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule1Section3'));
+const IndustrialElectricalModule1Section4 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule1Section4'));
+const IndustrialElectricalModule1Section5 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule1Section5'));
+
+// Industrial Electrical - Module 2 Sections
+const IndustrialElectricalModule2Section1 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule2Section1'));
+const IndustrialElectricalModule2Section2 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule2Section2'));
+const IndustrialElectricalModule2Section3 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule2Section3'));
+const IndustrialElectricalModule2Section4 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule2Section4'));
+const IndustrialElectricalModule2Section5 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule2Section5'));
+const IndustrialElectricalModule2Section6 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule2Section6'));
+
+// Industrial Electrical - Module 3 Sections
+const IndustrialElectricalModule3Section1 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule3Section1'));
+const IndustrialElectricalModule3Section2 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule3Section2'));
+const IndustrialElectricalModule3Section3 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule3Section3'));
+const IndustrialElectricalModule3Section4 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule3Section4'));
+const IndustrialElectricalModule3Section5 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule3Section5'));
+
+// Industrial Electrical - Module 4 Sections
+const IndustrialElectricalModule4Section1 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule4Section1'));
+const IndustrialElectricalModule4Section2 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule4Section2'));
+const IndustrialElectricalModule4Section3 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule4Section3'));
+const IndustrialElectricalModule4Section4 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule4Section4'));
+const IndustrialElectricalModule4Section5 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule4Section5'));
+const IndustrialElectricalModule4Section6 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule4Section6'));
+
+// Industrial Electrical - Module 5
+const IndustrialElectricalModule5 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule5'));
+const IndustrialElectricalModule5Section1 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule5Section1'));
+const IndustrialElectricalModule5Section2 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule5Section2'));
+const IndustrialElectricalModule5Section3 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule5Section3'));
+const IndustrialElectricalModule5Section4 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule5Section4'));
+const IndustrialElectricalModule5Section5 = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalModule5Section5'));
+
 const DataCablingCourse = React.lazy(() => import('@/pages/upskilling/DataCablingCourse'));
 const DataCablingModule1 = React.lazy(() => import('@/pages/upskilling/DataCablingModule1'));
 const DataCablingModule1Section1 = React.lazy(() => import('@/pages/upskilling/DataCablingModule1Section1'));
@@ -119,6 +157,23 @@ const FiberOpticsModule5Section5 = React.lazy(() => import('@/pages/upskilling/F
 const FiberOpticsModule5Section6 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule5Section6'));
 const FiberOpticsModule6 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule6'));
 const FiberOpticsModule7 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule7'));
+
+// Fiber Optics Module 6 Sections
+const FiberOpticsModule6Section1 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule6Section1'));
+const FiberOpticsModule6Section2 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule6Section2'));
+const FiberOpticsModule6Section3 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule6Section3'));
+const FiberOpticsModule6Section4 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule6Section4'));
+
+// Fiber Optics Module 7 Sections
+const FiberOpticsModule7Section1 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule7Section1'));
+const FiberOpticsModule7Section2 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule7Section2'));
+const FiberOpticsModule7Section3 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule7Section3'));
+const FiberOpticsModule7Section4 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule7Section4'));
+const FiberOpticsModule7Section5 = React.lazy(() => import('@/pages/upskilling/FiberOpticsModule7Section5'));
+
+// Fiber Optics Mock Exam
+const FiberOpticsMockExam = React.lazy(() => import('@/pages/upskilling/FiberOpticsMockExam'));
+
 const EmergencyLightingMockExam = React.lazy(() => import('@/pages/upskilling/EmergencyLightingMockExam'));
 
 export const industrialDataRoutes = (
@@ -129,6 +184,44 @@ export const industrialDataRoutes = (
   <Route path="industrial-electrical-module-2" element={<IndustrialElectricalModule2 />} />,
   <Route path="industrial-electrical-module-3" element={<IndustrialElectricalModule3 />} />,
   <Route path="industrial-electrical-module-4" element={<IndustrialElectricalModule4 />} />,
+
+  {/* Industrial Electrical Module 1 Sections */}
+  <Route path="industrial-electrical-module-1-section-2" element={<IndustrialElectricalModule1Section2 />} />,
+  <Route path="industrial-electrical-module-1-section-3" element={<IndustrialElectricalModule1Section3 />} />,
+  <Route path="industrial-electrical-module-1-section-4" element={<IndustrialElectricalModule1Section4 />} />,
+  <Route path="industrial-electrical-module-1-section-5" element={<IndustrialElectricalModule1Section5 />} />,
+
+  {/* Industrial Electrical Module 2 Sections */}
+  <Route path="industrial-electrical-module-2-section-1" element={<IndustrialElectricalModule2Section1 />} />,
+  <Route path="industrial-electrical-module-2-section-2" element={<IndustrialElectricalModule2Section2 />} />,
+  <Route path="industrial-electrical-module-2-section-3" element={<IndustrialElectricalModule2Section3 />} />,
+  <Route path="industrial-electrical-module-2-section-4" element={<IndustrialElectricalModule2Section4 />} />,
+  <Route path="industrial-electrical-module-2-section-5" element={<IndustrialElectricalModule2Section5 />} />,
+  <Route path="industrial-electrical-module-2-section-6" element={<IndustrialElectricalModule2Section6 />} />,
+
+  {/* Industrial Electrical Module 3 Sections */}
+  <Route path="industrial-electrical-module-3-section-1" element={<IndustrialElectricalModule3Section1 />} />,
+  <Route path="industrial-electrical-module-3-section-2" element={<IndustrialElectricalModule3Section2 />} />,
+  <Route path="industrial-electrical-module-3-section-3" element={<IndustrialElectricalModule3Section3 />} />,
+  <Route path="industrial-electrical-module-3-section-4" element={<IndustrialElectricalModule3Section4 />} />,
+  <Route path="industrial-electrical-module-3-section-5" element={<IndustrialElectricalModule3Section5 />} />,
+
+  {/* Industrial Electrical Module 4 Sections */}
+  <Route path="industrial-electrical-module-4-section-1" element={<IndustrialElectricalModule4Section1 />} />,
+  <Route path="industrial-electrical-module-4-section-2" element={<IndustrialElectricalModule4Section2 />} />,
+  <Route path="industrial-electrical-module-4-section-3" element={<IndustrialElectricalModule4Section3 />} />,
+  <Route path="industrial-electrical-module-4-section-4" element={<IndustrialElectricalModule4Section4 />} />,
+  <Route path="industrial-electrical-module-4-section-5" element={<IndustrialElectricalModule4Section5 />} />,
+  <Route path="industrial-electrical-module-4-section-6" element={<IndustrialElectricalModule4Section6 />} />,
+
+  {/* Industrial Electrical Module 5 */}
+  <Route path="industrial-electrical-module-5" element={<IndustrialElectricalModule5 />} />,
+  <Route path="industrial-electrical-module-5-section-1" element={<IndustrialElectricalModule5Section1 />} />,
+  <Route path="industrial-electrical-module-5-section-2" element={<IndustrialElectricalModule5Section2 />} />,
+  <Route path="industrial-electrical-module-5-section-3" element={<IndustrialElectricalModule5Section3 />} />,
+  <Route path="industrial-electrical-module-5-section-4" element={<IndustrialElectricalModule5Section4 />} />,
+  <Route path="industrial-electrical-module-5-section-5" element={<IndustrialElectricalModule5Section5 />} />,
+
   <Route path="data-cabling-course" element={<DataCablingCourse />} />,
   <Route path="data-cabling-module-1" element={<DataCablingModule1 />} />,
   <Route path="data-cabling-module-1-section-1" element={<DataCablingModule1Section1 />} />,
@@ -240,6 +333,22 @@ export const industrialDataRoutes = (
   <Route path="fiber-optics-module-5-section-5" element={<FiberOpticsModule5Section5 />} />,
   <Route path="fiber-optics-module-5-section-6" element={<FiberOpticsModule5Section6 />} />,
   <Route path="fiber-optics-module-6" element={<FiberOpticsModule6 />} />,
-  <Route path="fiber-optics-module-7" element={<FiberOpticsModule7 />} />
+  <Route path="fiber-optics-module-7" element={<FiberOpticsModule7 />} />,
+
+  {/* Fiber Optics Module 6 Sections */}
+  <Route path="fiber-optics-module-6-section-1" element={<FiberOpticsModule6Section1 />} />,
+  <Route path="fiber-optics-module-6-section-2" element={<FiberOpticsModule6Section2 />} />,
+  <Route path="fiber-optics-module-6-section-3" element={<FiberOpticsModule6Section3 />} />,
+  <Route path="fiber-optics-module-6-section-4" element={<FiberOpticsModule6Section4 />} />,
+
+  {/* Fiber Optics Module 7 Sections */}
+  <Route path="fiber-optics-module-7-section-1" element={<FiberOpticsModule7Section1 />} />,
+  <Route path="fiber-optics-module-7-section-2" element={<FiberOpticsModule7Section2 />} />,
+  <Route path="fiber-optics-module-7-section-3" element={<FiberOpticsModule7Section3 />} />,
+  <Route path="fiber-optics-module-7-section-4" element={<FiberOpticsModule7Section4 />} />,
+  <Route path="fiber-optics-module-7-section-5" element={<FiberOpticsModule7Section5 />} />,
+
+  {/* Fiber Optics Mock Exam */}
+  <Route path="fiber-optics-mock-exam" element={<FiberOpticsMockExam />} />
   </>
 );

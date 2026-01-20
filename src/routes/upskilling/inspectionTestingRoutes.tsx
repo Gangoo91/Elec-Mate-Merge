@@ -73,6 +73,9 @@ const InspectionTestingModule8Section3 = lazy(() => withTimeout(() => trackImpor
 const InspectionTestingModule8Section4 = lazy(() => withTimeout(() => trackImport('InspectionTestingModule8Section4', () => import('@/pages/upskilling/InspectionTestingModule8Section4'))));
 const InspectionTestingModule8Section5 = lazy(() => withTimeout(() => trackImport('InspectionTestingModule8Section5', () => import('@/pages/upskilling/InspectionTestingModule8Section5'))));
 
+// Mock Exam (Module 9)
+const InspectionTestingMockExam = lazy(() => withTimeout(() => trackImport('InspectionTestingMockExam', () => import('@/pages/upskilling/InspectionTestingMockExam'))));
+
 // Testing Guides
 const VisualInspectionGuide = lazy(() => withTimeout(() => trackImport('VisualInspectionGuide', () => import('@/pages/upskilling/VisualInspectionGuide'))));
 const SafeIsolationGuide = lazy(() => withTimeout(() => trackImport('SafeIsolationGuide', () => import('@/pages/upskilling/SafeIsolationGuide'))));
@@ -157,6 +160,9 @@ export const inspectionTestingRoutes = (
     <Route path="inspection-testing/module-8/section-3" element={<InspectionTestingModule8Section3 />} />
     <Route path="inspection-testing/module-8/section-4" element={<InspectionTestingModule8Section4 />} />
     <Route path="inspection-testing/module-8/section-5" element={<InspectionTestingModule8Section5 />} />
+
+    {/* Mock Exam (Module 9) */}
+    <Route path="inspection-testing-mock-exam" element={<InspectionTestingMockExam />} />
 
     {/* Testing Guides */}
     <Route path="visual-inspection-guide" element={<VisualInspectionGuide />} />

@@ -13,7 +13,7 @@ const CircuitNumberCellComponent: React.FC<CircuitNumberCellProps> = ({ result, 
     <EnhancedValidatedInput
       value={result.circuitDesignation}
       onChange={(value) => onUpdate(result.id, 'circuitDesignation', value)}
-      className="h-4 text-xs text-center px-0 w-full bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50"
+      className="h-8 text-sm text-center px-0 w-full bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
       disabled={!!result.sourceCircuitId}
     />
   );

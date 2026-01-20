@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CheckCircle, Download, AlertTriangle, FileCheck, Bell } from 'lucide-react';
+import { CheckCircle, Download, AlertTriangle, FileCheck, Bell, Mail, Loader2, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -35,6 +35,12 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [currentMethod, setCurrentMethod] = useState<'cloud' | 'local' | null>(null);
   const [canRetryCloud, setCanRetryCloud] = useState(false);
+
+  // Email state
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [emailRecipient, setEmailRecipient] = useState('');
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+
   const { toast } = useToast();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -62,15 +68,8 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         return;
       }
 
-      // Validate signature is present before creating notification
-      if (!formData.signature) {
-        toast({
-          title: "Signature Required",
-          description: "Digital signature must be completed before Part P notification can be created.",
-          variant: "destructive",
-        });
-        return;
-      }
+      // Note: Signature is NOT required for Part P notification tracking
+      // The notification tracks the 30-day submission deadline regardless of signature status
 
       console.log('Creating Part P notification for Minor Works certificate...');
 
@@ -423,25 +422,113 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
     setCanRetryCloud(false);
   };
 
+  // Email certificate handler
+  const handleEmailCertificate = () => {
+    // Pre-fill with client email if available
+    if (formData.clientEmail) {
+      setEmailRecipient(formData.clientEmail);
+    }
+    setShowEmailDialog(true);
+  };
+
+  const handleSendEmail = async () => {
+    if (!emailRecipient || !emailRecipient.includes('@')) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Check if report has been saved first
+    const currentReportId = reportId || formData.certificateNumber;
+    if (!reportId) {
+      toast({
+        title: "Save Required",
+        description: "Please save the certificate first before emailing. Click 'Save Draft' then try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSendingEmail(true);
+
+    try {
+      // Call the Resend-based edge function to generate PDF and send email
+
+      const { data: result, error: fnError } = await supabase.functions.invoke('send-certificate-resend', {
+        body: {
+          reportId: currentReportId,
+          recipientEmail: emailRecipient,
+        }
+      });
+
+      if (fnError) {
+        let errorMessage = fnError.message;
+        try {
+          const parsed = JSON.parse(fnError.message);
+          errorMessage = parsed.error || parsed.message || fnError.message;
+        } catch {
+          // Keep original message
+        }
+        throw new Error(errorMessage);
+      }
+
+      if (!result?.success) {
+        throw new Error(result?.error || 'Failed to send certificate email');
+      }
+
+      toast({
+        title: "Certificate Sent",
+        description: `Minor Works certificate sent successfully to ${emailRecipient}`,
+      });
+
+      setShowEmailDialog(false);
+      setEmailRecipient('');
+
+    } catch (error) {
+      toast({
+        title: "Email Failed",
+        description: error instanceof Error ? error.message : "Failed to send certificate email.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
 
   return (
     <>
-      <div className="flex flex-col gap-2">
-        <Button 
-          onClick={() => handleGeneratePdf()}
-          className="w-full h-12"
-          disabled={!isFormValid || isGenerating}
-        >
-          <FileCheck className="h-4 w-4 mr-2" />
-          {isGenerating ? 'Generating...' : 'Generate Certificate'}
-        </Button>
-        
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button
+            onClick={() => handleGeneratePdf()}
+            className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation"
+            disabled={!isFormValid || isGenerating}
+          >
+            <FileCheck className="h-4 w-4 mr-2" />
+            {isGenerating ? 'Generating...' : 'Generate PDF'}
+          </Button>
+
+          <Button
+            onClick={handleEmailCertificate}
+            variant="outline"
+            className="w-full h-12 touch-manipulation"
+            disabled={!isFormValid || isGenerating}
+          >
+            <Mail className="h-4 w-4 mr-2" />
+            Email Certificate
+          </Button>
+        </div>
+
         {isPdfMonkeyConfigured() && (
           <p className="text-xs text-center text-muted-foreground">
             Using custom PDF template
           </p>
         )}
-        
+
         {!isPdfMonkeyConfigured() && (
           <p className="text-xs text-center text-muted-foreground">
             Using local template • Configure custom templates in Settings
@@ -521,6 +608,72 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
               </div>
             )}
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Email Dialog */}
+      <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Mail className="h-5 w-5 text-elec-yellow" />
+              Email Minor Works Certificate
+            </DialogTitle>
+            <DialogDescription>
+              Enter the recipient's email address. The certificate will be generated and sent as a PDF attachment.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Recipient Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="client@example.com"
+                value={emailRecipient}
+                onChange={(e) => setEmailRecipient(e.target.value)}
+                disabled={isSendingEmail}
+                className="h-11 text-base touch-manipulation"
+              />
+            </div>
+            {formData.clientEmail && emailRecipient !== formData.clientEmail && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setEmailRecipient(formData.clientEmail)}
+                className="w-full"
+              >
+                Use Client Email: {formData.clientEmail}
+              </Button>
+            )}
+          </div>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setShowEmailDialog(false)}
+              disabled={isSendingEmail}
+              className="w-full sm:w-auto"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSendEmail}
+              disabled={isSendingEmail || !emailRecipient}
+              className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+            >
+              {isSendingEmail ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Send className="h-4 w-4 mr-2" />
+                  Send Certificate
+                </>
+              )}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
 

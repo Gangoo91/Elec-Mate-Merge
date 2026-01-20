@@ -30,6 +30,7 @@ import {
   PoundSterling,
   Crown,
   FileCheck,
+  Camera,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -63,6 +64,7 @@ const adminToolItems = [
   { name: "Audit", path: "/admin/audit", icon: History },
   { name: "Emails", path: "/admin/emails", icon: Mail },
   { name: "Export", path: "/admin/export", icon: Download },
+  { name: "Training", path: "/admin/training-upload", icon: Camera },
   { name: "System", path: "/admin/system", icon: Activity },
 ];
 

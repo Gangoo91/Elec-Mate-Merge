@@ -14,13 +14,13 @@ const FunctionalTestCellComponent: React.FC<FunctionalTestCellProps> = ({ result
   }, [result.id, onUpdate]);
 
   return (
-    <TableCell className="p-0 bg-black h-5 align-middle">
+    <TableCell className="p-0 h-8 align-middle">
       <Select
         name={`functionalTesting-${result.id}`}
         value={result.functionalTesting || ''}
         onValueChange={handleChange}
       >
-        <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
+        <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
           <SelectValue placeholder="Func" />
         </SelectTrigger>
         <SelectContent key={`functionalTesting-content-${result.id}`} className="bg-background border border-border rounded-md z-[100]">

@@ -67,7 +67,7 @@ const FireAlarmMockExam = () => {
   };
 
   const handleBackToCourse = () => {
-    navigate('/fire-alarm-course');
+    navigate('/electrician/upskilling/fire-alarm-course');
   };
 
   const calculateScore = () => {

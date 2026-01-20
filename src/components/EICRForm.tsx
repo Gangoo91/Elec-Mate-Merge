@@ -2,7 +2,7 @@ import React, { Suspense, useState, useCallback } from 'react';
 import { EICRFormProvider, useEICRForm } from './eicr/EICRFormProvider';
 import EICRFormHeader from './eicr/EICRFormHeader';
 import EICRFormContent from './eicr/EICRFormContent';
-import { BoardScanFlow } from './testing/BoardScanFlow';
+import { BoardScannerOverlay } from './inspection-app/testing/BoardScannerOverlay';
 import { getCableSizeForRating, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 
@@ -29,16 +29,19 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   const [returnToTestingTab, setReturnToTestingTab] = useState(false);
 
   // Handle board scan completion - populate circuits
+  // BoardPhotoCapture returns: { circuits, board, metadata, warnings, decisions }
   const handleBoardScanComplete = useCallback((data: {
     board: any;
     circuits: any[];
-    images: string[];
+    metadata?: any;
+    warnings?: string[];
   }) => {
     // Convert detected circuits to test results format matching TestResult type
+    // BoardPhotoCapture already transforms circuits to: { position, label, device, rating, curve, ... }
     const newCircuits = data.circuits.map((circuit, index) => {
-      const ratingAmps = circuit.device?.rating_amps || null;
-      const deviceCategory = circuit.device?.category || 'MCB';
-      const deviceCurve = circuit.device?.curve || 'B';
+      const ratingAmps = circuit.rating || null;
+      const deviceCategory = circuit.device || 'MCB';
+      const deviceCurve = circuit.curve || 'B';
 
       // Get cable size from detected rating
       const liveSize = getCableSizeForRating(ratingAmps) || '2.5mm';
@@ -52,16 +55,16 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         bsStandard,
         deviceCurve,
         ratingAmps?.toString() || '',
-        circuit.label_text || ''
+        circuit.label || ''
       );
 
       return {
         id: `circuit-${Date.now()}-${index}`,
-        circuitNumber: circuit.index?.toString() || String(index + 1),
-        circuitDesignation: `C${circuit.index?.toString() || String(index + 1)}`,
-        circuitDescription: circuit.label_text || `Circuit ${index + 1}`,
-        circuitType: circuit.circuit_type || '',
-        type: circuit.circuit_type || '',
+        circuitNumber: circuit.position?.toString() || String(index + 1),
+        circuitDesignation: `C${circuit.position?.toString() || String(index + 1)}`,
+        circuitDescription: circuit.label || `Circuit ${index + 1}`,
+        circuitType: '',
+        type: '',
         // Use DETECTED device values
         protectiveDeviceType: deviceCategory,
         protectiveDeviceRating: ratingAmps?.toString() || '',
@@ -87,7 +90,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         insulationLiveEarth: '',
         rcdOneX: '',
         autoFilled: true,
-        notes: '',
+        notes: circuit.notes || '',
       };
     });
 
@@ -95,17 +98,12 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     const existingCircuits = formData.scheduleOfTests || [];
     updateFormData('scheduleOfTests', [...existingCircuits, ...newCircuits]);
 
-    // Store board info
+    // Store board info - BoardPhotoCapture returns: { make, model, mainSwitch, spd, totalWays, ... }
     if (data.board) {
-      updateFormData('boardBrand', data.board.brand || '');
+      updateFormData('boardBrand', data.board.make || '');
       updateFormData('boardModel', data.board.model || '');
-      updateFormData('mainSwitchRating', data.board.main_switch_rating || '');
-      updateFormData('spdStatus', data.board.spd_status || '');
-    }
-
-    // Store board images
-    if (data.images?.length > 0) {
-      updateFormData('boardImages', data.images);
+      updateFormData('mainSwitchRating', data.board.mainSwitch || '');
+      updateFormData('spdStatus', data.board.spd || '');
     }
 
     setShowBoardScan(false);
@@ -144,16 +142,13 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   if (formData.scheduleOfTests?.length > 0) completedSections.add(2);
   if (formData.inspectorName && formData.inspectorSignature) completedSections.add(3);
 
-  // If board scan is open, render full-screen scanner
+  // If board scan is open, render full-screen scanner overlay
   if (showBoardScan) {
     return (
-      <BoardScanFlow
-        onComplete={handleBoardScanComplete}
-        onCancel={() => setShowBoardScan(false)}
-        hints={{
-          board_type: formData.installationType === 'commercial' ? 'commercial' : 'domestic',
-          is_three_phase: formData.supplyType === 'TN-S' || formData.phases === 'three',
-        }}
+      <BoardScannerOverlay
+        onAnalysisComplete={handleBoardScanComplete}
+        onClose={() => setShowBoardScan(false)}
+        title="Scan Distribution Board"
       />
     );
   }

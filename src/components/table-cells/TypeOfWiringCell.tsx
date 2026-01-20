@@ -15,13 +15,13 @@ const TypeOfWiringCellComponent: React.FC<TypeOfWiringCellProps> = ({ result, on
   }, [result.id, onUpdate]);
 
   return (
-    <TableCell className="p-0 bg-black h-5 align-middle min-w-[120px] max-w-[120px]">
+    <TableCell className="p-0 h-8 align-middle min-w-[120px] max-w-[120px]">
       <Select
         name={`typeOfWiring-${result.id}`}
         value={result.typeOfWiring || ''}
         onValueChange={handleChange}
       >
-        <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
+        <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
           <SelectValue placeholder="Type" />
         </SelectTrigger>
         <SelectContent key={`typeOfWiring-content-${result.id}`} className="max-h-60 max-w-[calc(100vw-2rem)] w-auto bg-background border border-border rounded-md z-[9999]">

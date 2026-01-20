@@ -39,9 +39,8 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
         return Math.round((filled / fields.length) * 100);
       }
       case 'compliance': {
-        const fields = ['bs7671Compliance', 'testResultsAccurate', 'workSafety'];
-        const filled = fields.filter(f => formData[f]).length;
-        return Math.round((filled / fields.length) * 100);
+        // Single IET declaration replaces 3 checkboxes
+        return formData.ietDeclaration ? 100 : 0;
       }
       case 'signature': {
         const fields = ['signatureDate', 'signature'];
@@ -163,6 +162,18 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
                 />
               </div>
 
+              {/* Contractor Address - IET Required */}
+              <div className="space-y-2">
+                <Label className="text-sm">Contractor Address</Label>
+                <Textarea
+                  value={formData.contractorAddress || ''}
+                  onChange={(e) => onUpdate('contractorAddress', e.target.value)}
+                  placeholder="Business address"
+                  rows={2}
+                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-amber-500 focus:ring-amber-500"
+                />
+              </div>
+
               {/* Contact Details */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
@@ -205,77 +216,54 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              {/* Compliance Checkboxes */}
+              {/* IET Official Declaration - Consolidated */}
               <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-green-500/5 border border-green-500/20">
-                  <div className="flex items-start gap-3">
-                    <Checkbox
-                      id="bs7671Compliance"
-                      checked={formData.bs7671Compliance || false}
-                      onCheckedChange={(c) => onUpdate('bs7671Compliance', c)}
-                      className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation"
-                    />
-                    <Label htmlFor="bs7671Compliance" className="text-sm cursor-pointer leading-relaxed">
-                      I certify that the work described above complies with BS 7671 (IET Wiring Regulations),
-                      subject to any departures detailed and agreed with the person ordering the work. *
-                    </Label>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20">
-                  <div className="flex items-start gap-3">
-                    <Checkbox
-                      id="testResultsAccurate"
-                      checked={formData.testResultsAccurate || false}
-                      onCheckedChange={(c) => onUpdate('testResultsAccurate', c)}
-                      className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500 touch-manipulation"
-                    />
-                    <Label htmlFor="testResultsAccurate" className="text-sm cursor-pointer leading-relaxed">
-                      I confirm that the test results and inspection are an accurate record of the
-                      electrical installation work carried out. *
-                    </Label>
-                  </div>
-                </div>
-
                 <div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20">
                   <div className="flex items-start gap-3">
                     <Checkbox
-                      id="workSafety"
-                      checked={formData.workSafety || false}
-                      onCheckedChange={(c) => onUpdate('workSafety', c)}
-                      className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 touch-manipulation"
+                      id="ietDeclaration"
+                      checked={formData.ietDeclaration || false}
+                      onCheckedChange={(c) => onUpdate('ietDeclaration', c)}
+                      className="mt-0.5 h-6 w-6 border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 touch-manipulation"
                     />
-                    <Label htmlFor="workSafety" className="text-sm cursor-pointer leading-relaxed">
-                      I confirm that the work does not impair the safety of the existing installation. *
+                    <Label htmlFor="ietDeclaration" className="text-sm cursor-pointer leading-relaxed">
+                      I/We CERTIFY that the work does not impair the safety of the existing installation
+                      and that the work has been designed, constructed, inspected and tested in accordance
+                      with BS 7671:2018+A2:2022 (IET Wiring Regulations), subject to the departures detailed
+                      above if any. The work is to the best of my/our knowledge and belief safe to be put
+                      into service. *
                     </Label>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20">
-                  <div className="flex items-start gap-3">
-                    <Checkbox
-                      id="partPNotification"
-                      checked={formData.partPNotification || false}
-                      onCheckedChange={(c) => onUpdate('partPNotification', c)}
-                      className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500 touch-manipulation"
-                    />
-                    <Label htmlFor="partPNotification" className="text-sm cursor-pointer leading-relaxed">
-                      Part P Building Regulations notification has been made (where applicable).
-                    </Label>
+                {/* Optional Additional Declarations */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20">
+                    <div className="flex items-start gap-3">
+                      <Checkbox
+                        id="partPNotification"
+                        checked={formData.partPNotification || false}
+                        onCheckedChange={(c) => onUpdate('partPNotification', c)}
+                        className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500 touch-manipulation"
+                      />
+                      <Label htmlFor="partPNotification" className="text-sm cursor-pointer leading-relaxed">
+                        Part P notification made (where applicable)
+                      </Label>
+                    </div>
                   </div>
-                </div>
 
-                <div className="p-4 rounded-xl bg-cyan-500/5 border border-cyan-500/20">
-                  <div className="flex items-start gap-3">
-                    <Checkbox
-                      id="copyProvided"
-                      checked={formData.copyProvided || false}
-                      onCheckedChange={(c) => onUpdate('copyProvided', c)}
-                      className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500 touch-manipulation"
-                    />
-                    <Label htmlFor="copyProvided" className="text-sm cursor-pointer leading-relaxed">
-                      A copy of this certificate has been provided to the person ordering the work.
-                    </Label>
+                  <div className="p-4 rounded-xl bg-cyan-500/5 border border-cyan-500/20">
+                    <div className="flex items-start gap-3">
+                      <Checkbox
+                        id="copyProvided"
+                        checked={formData.copyProvided || false}
+                        onCheckedChange={(c) => onUpdate('copyProvided', c)}
+                        className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500 touch-manipulation"
+                      />
+                      <Label htmlFor="copyProvided" className="text-sm cursor-pointer leading-relaxed">
+                        Copy provided to person ordering work
+                      </Label>
+                    </div>
                   </div>
                 </div>
               </div>

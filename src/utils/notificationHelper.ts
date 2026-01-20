@@ -133,20 +133,20 @@ export const createNotificationFromCertificate = async (
   userId: string
 ): Promise<{ success: boolean; notificationId?: string; error?: string }> => {
   try {
-    // For minor-works, allow notification if explicitly requested via checkbox
-    const isUserRequested = reportType === 'minor-works' && formData.partPNotification === true;
-    
+    // Allow notification if explicitly requested via checkbox (minor-works or EIC)
+    const isUserRequested = (reportType === 'minor-works' || reportType === 'eic') && formData.partPNotification === true;
+
     const isAutoNotifiable = isNotifiableWork(
-      formData.workType || formData.workDescription || '',
+      formData.workType || formData.workDescription || formData.description || '',
       formData.installationAddress || formData.location || '',
       formData.isNewCircuit
     );
 
     // Create notification if either user requested OR automatically notifiable
     if (!isUserRequested && !isAutoNotifiable) {
-      return { 
-        success: false, 
-        error: 'This work is not notifiable under Part P of the Building Regulations' 
+      return {
+        success: false,
+        error: 'This work is not notifiable under Part P of the Building Regulations'
       };
     }
 

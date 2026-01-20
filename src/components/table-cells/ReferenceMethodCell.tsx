@@ -10,12 +10,12 @@ interface ReferenceMethodCellProps {
 
 export const ReferenceMethodCell: React.FC<ReferenceMethodCellProps> = ({ result, onUpdate }) => {
   return (
-    <TableCell className="p-0 bg-black h-5 align-middle">
+    <TableCell className="p-0 h-8 align-middle">
       <Select
         value={result.referenceMethod || ''}
         onValueChange={(value) => onUpdate(result.id, 'referenceMethod', value)}
       >
-        <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
+        <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
           <SelectValue placeholder="Ref" />
         </SelectTrigger>
         <SelectContent className="max-h-60 bg-background border border-border rounded-md z-[100]">

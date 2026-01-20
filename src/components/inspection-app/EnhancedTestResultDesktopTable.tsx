@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Table, TableBody } from '@/components/ui/table';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { TestResult } from '@/types/testResult';
-import { Zap, BookOpen, FileSpreadsheet } from 'lucide-react';
+import { Zap, BookOpen, Camera, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import EnhancedTestResultDesktopTableHeader from './EnhancedTestResultDesktopTableHeader';
 import EnhancedTestResultDesktopTableRow from './EnhancedTestResultDesktopTableRow';
@@ -18,15 +18,17 @@ interface EnhancedTestResultDesktopTableProps {
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
   onAddCircuit: () => void;
   onBulkFieldUpdate?: (field: keyof TestResult, value: string) => void;
+  onScanBoard?: () => void;
 }
 
-const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTableProps> = ({ 
-  testResults, 
-  onUpdate, 
+const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTableProps> = ({
+  testResults,
+  onUpdate,
   onRemove,
   onBulkUpdate,
   onAddCircuit,
-  onBulkFieldUpdate
+  onBulkFieldUpdate,
+  onScanBoard
 }) => {
   const [showRegulationStatus, setShowRegulationStatus] = useState(false);
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
@@ -180,26 +182,32 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
       {/* Table - Full width edge-to-edge */}
       <div className="w-full">
         {isEmpty ? (
-          <div className="border-2 border-dashed border-border rounded-lg bg-background/50 p-12 text-center">
-            <Zap className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
-            <h3 className="text-lg font-medium mb-2">No Circuits Added Yet</h3>
-            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-              Start by adding your first circuit using the "+ Add Circuit" button above. 
-              You can also auto-fill from existing circuit schedules.
+          <div className="flex flex-col items-center justify-center py-16 px-8 border-2 border-dashed border-border/60 rounded-xl bg-gradient-to-b from-background to-muted/20">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+              <Zap className="h-8 w-8 text-primary" />
+            </div>
+            <h3 className="text-xl font-semibold text-foreground mb-2">No Circuits Yet</h3>
+            <p className="text-muted-foreground mb-8 text-center max-w-md leading-relaxed">
+              Scan your distribution board to auto-detect circuits, or add them manually one by one.
             </p>
-            <div className="flex justify-center gap-4">
-              <Button variant="outline" size="sm" onClick={() => window.open('/learning', '_blank')}>
-                <BookOpen className="h-4 w-4 mr-2" />
-                View Tutorial
-              </Button>
-              <Button onClick={onAddCircuit}>
-                <Zap className="h-4 w-4 mr-2" />
-                Add First Circuit
+            <div className="flex gap-4">
+              {onScanBoard && (
+                <Button onClick={onScanBoard} size="lg" className="h-12 px-6">
+                  <Camera className="mr-2 h-5 w-5" />
+                  Scan Board
+                </Button>
+              )}
+              <Button variant="outline" size="lg" onClick={onAddCircuit} className="h-12 px-6">
+                <Plus className="mr-2 h-5 w-5" />
+                Add Manually
               </Button>
             </div>
+            <p className="text-xs text-muted-foreground/60 mt-6">
+              Board scanning uses AI to detect circuit details from photos
+            </p>
           </div>
         ) : (
-        <div className="bg-background shadow-sm border-2 border-border overflow-hidden">
+        <div className="bg-background rounded-lg shadow-md border border-border/80 overflow-hidden">
           <ScrollArea className="w-full h-[calc(100vh-140px)] enhanced-table-scroll" style={{ overscrollBehaviorX: 'contain' }}>
             <div className="min-w-max enhanced-table-scroll">
               <Table useWrapper={false} className="text-sm border-separate border-spacing-0 w-full">

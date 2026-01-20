@@ -29,12 +29,12 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
   return (
     <>
       {/* Column 21: Test voltage (V) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-20 min-w-[80px] max-w-[80px]">
+      <TableCell className="p-0 h-8 align-middle w-20 min-w-[80px] max-w-[80px]">
         <Select
           value={result.insulationTestVoltage || ''}
           onValueChange={(value) => onUpdate(result.id, 'insulationTestVoltage', value)}
         >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
+          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="Test V" />
           </SelectTrigger>
           <SelectContent className="bg-background border border-border rounded-md z-[100]">
@@ -48,12 +48,12 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
       </TableCell>
       
       {/* Column 22: Live - Live (MΩ) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-20 min-w-[80px] max-w-[80px]">
+      <TableCell className="p-0 h-8 align-middle w-20 min-w-[80px] max-w-[80px]">
         <div className="flex items-center gap-1">
           <EnhancedValidatedInput
             value={liveLiveValue}
             onChange={(value) => onUpdate(result.id, 'insulationLiveNeutral', value)}
-            className="h-4 text-xs text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50"
+            className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
             validation={validation.insulationLiveNeutral}
             placeholder="MΩ"
           />
@@ -70,12 +70,12 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
       </TableCell>
       
       {/* Column 23: Live - Earth (MΩ) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-20 min-w-[80px] max-w-[80px]">
+      <TableCell className="p-0 h-8 align-middle w-20 min-w-[80px] max-w-[80px]">
         <div className="flex items-center gap-1">
           <EnhancedValidatedInput
             value={liveEarthValue}
             onChange={(value) => onUpdate(result.id, 'insulationLiveEarth', value)}
-            className="h-4 text-xs text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50"
+            className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
             validation={validation.insulationLiveEarth}
             placeholder="MΩ"
           />

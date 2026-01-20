@@ -10,18 +10,18 @@ interface AfddTestCellProps {
 
 export const AfddTestCell: React.FC<AfddTestCellProps> = ({ result, onUpdate }) => {
   return (
-    <TableCell className="border-r-2 border-border px-2 py-0 bg-indigo-50/30 h-7 align-middle">
+    <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
       <Select
         value={result.afddTest || ''}
         onValueChange={(value) => onUpdate(result.id, 'afddTest', value)}
       >
-        <SelectTrigger className="h-7 text-sm border border-input bg-transparent px-4 text-center">
+        <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
           <SelectValue placeholder="AFDD" />
         </SelectTrigger>
-        <SelectContent className="bg-elec-gray border-elec-gray text-foreground shadow-lg z-[60]">
-          <SelectItem value="✓" className="text-sm text-green-600 font-medium">✓ Pass</SelectItem>
-          <SelectItem value="✗" className="text-sm text-red-600 font-medium">✗ Fail</SelectItem>
-          <SelectItem value="N/A" className="text-sm text-gray-600">N/A</SelectItem>
+        <SelectContent className="bg-background border border-border rounded-md z-[100]">
+          <SelectItem value="✓" className="text-sm text-green-400 font-medium">✓ Pass</SelectItem>
+          <SelectItem value="✗" className="text-sm text-red-400 font-medium">✗ Fail</SelectItem>
+          <SelectItem value="N/A" className="text-sm">N/A</SelectItem>
         </SelectContent>
       </Select>
     </TableCell>

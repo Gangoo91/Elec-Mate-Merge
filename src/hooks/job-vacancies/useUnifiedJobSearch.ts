@@ -76,14 +76,42 @@ const isElectricalJob = (job: UnifiedJob): boolean => {
   const descLower = (job.description || '').toLowerCase();
   const combined = `${titleLower} ${descLower}`;
 
-  // First check exclusions - if title contains excluded terms, reject
+  // Check if title starts with or primarily mentions electrical
+  const hasElectricalInTitle = titleLower.includes('electric') ||
+                               titleLower.includes('sparky') ||
+                               titleLower.startsWith('ev ') ||
+                               titleLower.includes('solar') ||
+                               titleLower.includes('fire alarm') ||
+                               titleLower.includes('security engineer');
+
+  // If title clearly starts with electrical term, include it even if other trades mentioned
+  if (hasElectricalInTitle) {
+    // Find position of electrical term vs excluded term
+    const electricPos = Math.min(
+      titleLower.indexOf('electric') >= 0 ? titleLower.indexOf('electric') : 999,
+      titleLower.indexOf('sparky') >= 0 ? titleLower.indexOf('sparky') : 999,
+      titleLower.indexOf('solar') >= 0 ? titleLower.indexOf('solar') : 999
+    );
+
+    // Check if any excluded term comes BEFORE the electrical term
+    for (const excluded of EXCLUDED_TITLES) {
+      const excludedPos = titleLower.indexOf(excluded);
+      if (excludedPos >= 0 && excludedPos < electricPos) {
+        // Excluded term comes first - this is primarily a non-electrical job
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // For jobs without clear electrical title, check exclusions strictly
   for (const excluded of EXCLUDED_TITLES) {
     if (titleLower.includes(excluded)) {
       return false;
     }
   }
 
-  // Then check if it contains electrical keywords
+  // Then check if it contains electrical keywords in title or description
   for (const keyword of ELECTRICAL_KEYWORDS) {
     if (combined.includes(keyword)) {
       return true;

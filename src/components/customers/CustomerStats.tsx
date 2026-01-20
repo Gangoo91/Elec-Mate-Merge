@@ -1,8 +1,8 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Users, Clock, ChevronRight } from 'lucide-react';
+import { Users, ChevronRight } from 'lucide-react';
 import { Customer } from '@/hooks/useCustomers';
-import { format, isThisMonth, parseISO } from 'date-fns';
+import { isThisMonth, parseISO } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -13,7 +13,7 @@ interface CustomerStatsProps {
 
 export const CustomerStats = ({ customers, onNavigateToCustomers }: CustomerStatsProps) => {
   const isMobile = useIsMobile();
-  
+
   // Calculate stats
   const totalCustomers = customers.length;
   const recentCustomers = customers.filter(c => {
@@ -26,11 +26,11 @@ export const CustomerStats = ({ customers, onNavigateToCustomers }: CustomerStat
 
   return (
     <div className="mb-6">
-      <Card 
-        className={onNavigateToCustomers 
-          ? "bg-card/80 border-elec-yellow/30 hover:border-elec-yellow/50 transition-all duration-300 cursor-pointer hover:scale-[1.01] hover:shadow-lg hover:shadow-elec-yellow/10 active:scale-[0.99] touch-manipulation"
-          : "bg-card/80 border-elec-yellow/30"
-        }
+      <Card
+        className={cn(
+          "bg-card/80 border-elec-yellow/30",
+          onNavigateToCustomers && "hover:border-elec-yellow/50 transition-all duration-200 cursor-pointer hover:scale-[1.01] active:scale-[0.99] touch-manipulation"
+        )}
         onClick={onNavigateToCustomers}
       >
         <CardContent className={cn(isMobile ? "p-3" : "p-4")}>

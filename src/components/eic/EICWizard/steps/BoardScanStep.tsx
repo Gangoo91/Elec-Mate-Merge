@@ -86,19 +86,16 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
   // Show scanner overlay if active
   if (showScanner) {
     return (
-      <div className="fixed inset-0 z-50 bg-background">
-        {/* Import BoardScanFlow dynamically to avoid circular deps */}
-        <React.Suspense fallback={
-          <div className="flex items-center justify-center h-full">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow" />
-          </div>
-        }>
-          <BoardScanFlowWrapper
-            onComplete={handleScanComplete}
-            onClose={() => setShowScanner(false)}
-          />
-        </React.Suspense>
-      </div>
+      <React.Suspense fallback={
+        <div className="fixed inset-0 z-50 bg-background flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow" />
+        </div>
+      }>
+        <BoardScannerOverlayWrapper
+          onComplete={handleScanComplete}
+          onClose={() => setShowScanner(false)}
+        />
+      </React.Suspense>
     );
   }
 
@@ -232,26 +229,33 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
   );
 };
 
-// Wrapper to lazy load BoardScanFlow
-const BoardScanFlowWrapper: React.FC<{
+// Wrapper to lazy load BoardScannerOverlay
+const BoardScannerOverlayWrapper: React.FC<{
   onComplete: (circuits: any[]) => void;
   onClose: () => void;
 }> = ({ onComplete, onClose }) => {
-  const [BoardScanFlow, setBoardScanFlow] = useState<React.ComponentType<any> | null>(null);
+  const [BoardScannerOverlay, setBoardScannerOverlay] = useState<React.ComponentType<any> | null>(null);
 
   React.useEffect(() => {
-    import('@/components/testing/BoardScanFlow').then((mod) => {
-      setBoardScanFlow(() => mod.default || mod.BoardScanFlow);
+    import('@/components/inspection-app/testing/BoardScannerOverlay').then((mod) => {
+      setBoardScannerOverlay(() => mod.BoardScannerOverlay);
     }).catch(() => {
-      // Fallback if component doesn't exist yet
-      console.warn('BoardScanFlow not available');
+      console.warn('BoardScannerOverlay not available');
       onClose();
     });
   }, [onClose]);
 
-  if (!BoardScanFlow) {
+  // Transform BoardScannerOverlay data format to wizard format
+  const handleAnalysisComplete = (data: any) => {
+    // BoardScannerOverlay returns: { circuits, board, metadata, warnings }
+    // Wizard expects array of circuits with position, label, device, rating, etc.
+    const circuits = data.circuits || [];
+    onComplete(circuits);
+  };
+
+  if (!BoardScannerOverlay) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="fixed inset-0 z-50 bg-background flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow mx-auto" />
           <p className="text-muted-foreground">Loading scanner...</p>
@@ -261,9 +265,11 @@ const BoardScanFlowWrapper: React.FC<{
   }
 
   return (
-    <BoardScanFlow
-      onComplete={onComplete}
-      onCancel={onClose}
+    <BoardScannerOverlay
+      onAnalysisComplete={handleAnalysisComplete}
+      onClose={onClose}
+      title="Scan Distribution Board"
+      isWizard={true}
     />
   );
 };

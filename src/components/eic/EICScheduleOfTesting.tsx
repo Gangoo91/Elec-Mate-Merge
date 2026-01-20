@@ -20,7 +20,7 @@ import TestMethodInfo from '../TestMethodInfo';
 import TestAnalytics from '../TestAnalytics';
 import SmartAutoFillPromptDialog from '../SmartAutoFillPromptDialog';
 
-import { BoardPhotoCapture } from '../testing/BoardPhotoCapture';
+import { BoardPhotoCapture } from '@/components/inspection-app/testing/BoardPhotoCapture';
 import { SimpleCircuitTable } from '../testing/SimpleCircuitTable';
 import TestResultsPhotoCapture from '../testing/TestResultsPhotoCapture';
 import TestResultsReviewDialog from '../testing/TestResultsReviewDialog';

@@ -38,7 +38,7 @@ const MWTabNavigation: React.FC<MWTabNavigationProps> = ({
   showGenerate = false
 }) => {
   return (
-    <div className="bg-background border-t border-white/10 py-4 px-4 mt-6 -mx-4 sm:mx-0 sm:rounded-xl sm:border">
+    <div className="bg-background/95 backdrop-blur-sm border-t border-white/10 py-4 px-4 sm:mt-6 sm:-mx-4 sm:mx-0 sm:rounded-xl sm:border sm:bg-background sm:backdrop-blur-none safe-area-bottom">
       <div className="flex items-center justify-between gap-4 max-w-5xl mx-auto">
         {/* Previous Button */}
         <Button

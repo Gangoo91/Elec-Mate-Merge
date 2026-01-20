@@ -118,6 +118,7 @@ const RenewableEnergyModule9Section4 = React.lazy(() => import('@/pages/upskilli
 const RenewableEnergyModule9Section5 = React.lazy(() => import('@/pages/upskilling/RenewableEnergyModule9Section5'));
 const RenewableEnergyModule9Section6 = React.lazy(() => import('@/pages/upskilling/RenewableEnergyModule9Section6'));
 const RenewableEnergyModule10 = React.lazy(() => import('@/pages/upskilling/RenewableEnergyModule10'));
+const RenewableEnergyMockExam = React.lazy(() => import('@/pages/upskilling/RenewableEnergyMockExam'));
 const SmartHomeCourse = React.lazy(() => import('@/pages/upskilling/SmartHomeCourse'));
 const SmartHomeModule1 = React.lazy(() => import('@/pages/upskilling/SmartHomeModule1'));
 const SmartHomeModule2 = React.lazy(() => import('@/pages/upskilling/SmartHomeModule2'));
@@ -336,6 +337,7 @@ export const specializedCoursesRoutes = (
   <Route path="renewable-energy-module-9-section-6" element={<RenewableEnergyModule9Section6 />} />,
   <Route path="renewable-energy-module-9" element={<RenewableEnergyModule9 />} />,
   <Route path="renewable-energy-module-10" element={<RenewableEnergyModule10 />} />,
+  <Route path="renewable-energy-mock-exam" element={<RenewableEnergyMockExam />} />,
   <Route path="smart-home-course" element={<SmartHomeCourse />} />,
   <Route path="smart-home-module-1" element={<SmartHomeModule1 />} />,
   <Route path="smart-home-module-2" element={<SmartHomeModule2 />} />,

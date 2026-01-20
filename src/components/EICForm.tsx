@@ -17,7 +17,7 @@ import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import EICFormHeader from './eic/EICFormHeader';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
-import { BoardScanFlow } from './testing/BoardScanFlow';
+import { BoardScannerOverlay } from './inspection-app/testing/BoardScannerOverlay';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -396,16 +396,19 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
   };
 
   // Handle board scan completion - populate circuits
+  // BoardPhotoCapture returns: { circuits, board, metadata, warnings, decisions }
   const handleBoardScanComplete = useCallback((data: {
     board: any;
     circuits: any[];
-    images: string[];
+    metadata?: any;
+    warnings?: string[];
   }) => {
     // Convert detected circuits to test results format
+    // BoardPhotoCapture already transforms circuits to: { position, label, device, rating, curve, ... }
     const newCircuits = data.circuits.map((circuit, index) => {
-      const ratingAmps = circuit.device?.rating_amps || null;
-      const deviceCategory = circuit.device?.category || 'MCB';
-      const deviceCurve = circuit.device?.curve || 'B';
+      const ratingAmps = circuit.rating || null;
+      const deviceCategory = circuit.device || 'MCB';
+      const deviceCurve = circuit.curve || 'B';
 
       // Get cable size from detected rating
       const liveSize = getCableSizeForRating(ratingAmps) || '2.5mm';
@@ -419,16 +422,16 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         bsStandard,
         deviceCurve,
         ratingAmps?.toString() || '',
-        circuit.label_text || ''
+        circuit.label || ''
       );
 
       return {
         id: `circuit-${Date.now()}-${index}`,
-        circuitNumber: circuit.index?.toString() || String(index + 1),
-        circuitDesignation: `C${circuit.index?.toString() || String(index + 1)}`,
-        circuitDescription: circuit.label_text || `Circuit ${index + 1}`,
-        circuitType: circuit.circuit_type || '',
-        type: circuit.circuit_type || '',
+        circuitNumber: circuit.position?.toString() || String(index + 1),
+        circuitDesignation: `C${circuit.position?.toString() || String(index + 1)}`,
+        circuitDescription: circuit.label || `Circuit ${index + 1}`,
+        circuitType: '',
+        type: '',
         // Use DETECTED device values
         protectiveDeviceType: deviceCategory,
         protectiveDeviceRating: ratingAmps?.toString() || '',
@@ -454,7 +457,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         insulationLiveEarth: '',
         rcdOneX: '',
         autoFilled: true,
-        notes: '',
+        notes: circuit.notes || '',
       };
     });
 
@@ -462,16 +465,11 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     const existingCircuits = formData.scheduleOfTests || [];
     handleUpdate('scheduleOfTests', [...existingCircuits, ...newCircuits]);
 
-    // Store board info
+    // Store board info - BoardPhotoCapture returns: { make, model, mainSwitch, spd, totalWays, ... }
     if (data.board) {
-      handleUpdate('boardBrand', data.board.brand || '');
+      handleUpdate('boardBrand', data.board.make || '');
       handleUpdate('boardModel', data.board.model || '');
-      handleUpdate('mainSwitchRating', data.board.main_switch_rating || '');
-    }
-
-    // Store board images
-    if (data.images?.length > 0) {
-      handleUpdate('boardImages', data.images);
+      handleUpdate('mainSwitchRating', data.board.mainSwitch || '');
     }
 
     setShowBoardScan(false);
@@ -684,19 +682,10 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       );
 
       if (isNotifiable) {
-        // Validate signatures are present before creating notification
-        const hasAllSignatures = formData.designerSignature && 
-                                 formData.constructorSignature && 
-                                 formData.inspectorSignature;
-        
-        if (!hasAllSignatures) {
-          toast({
-            title: "Signatures Required",
-            description: "All designer, constructor, and inspector signatures must be completed before Part P notification can be created.",
-            variant: "destructive",
-          });
-        } else {
-          // Check BS7671 compliance before creating Part P notification
+        // Note: Signature is NOT required for Part P notification tracking
+        // The notification tracks the 30-day submission deadline regardless of signature status
+
+        // Check BS7671 compliance before creating Part P notification
           let complianceWarning = false;
           if (formData.scheduleOfTests && Array.isArray(formData.scheduleOfTests) && formData.scheduleOfTests.length > 0) {
             const { checkAllResultsCompliance } = require('@/utils/autoRegChecker');
@@ -759,7 +748,6 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
               description: "Certificate created successfully, but notification creation failed. You can create it manually from the Notifications page.",
             });
           }
-        }
       } else {
         // Invalidate dashboard queries to show updated status
         queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
@@ -904,16 +892,13 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     completedSections.add(3);
   }
 
-  // If board scan is open, render full-screen scanner
+  // If board scan is open, render full-screen scanner overlay
   if (showBoardScan) {
     return (
-      <BoardScanFlow
-        onComplete={handleBoardScanComplete}
-        onCancel={() => setShowBoardScan(false)}
-        hints={{
-          board_type: formData.installationType === 'commercial' ? 'commercial' : 'domestic',
-          is_three_phase: formData.phases === '3' || formData.phases === 'three',
-        }}
+      <BoardScannerOverlay
+        onAnalysisComplete={handleBoardScanComplete}
+        onClose={() => setShowBoardScan(false)}
+        title="Scan Distribution Board"
       />
     );
   }

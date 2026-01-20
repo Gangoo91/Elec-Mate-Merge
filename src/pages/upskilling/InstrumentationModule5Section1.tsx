@@ -377,7 +377,7 @@ const InstrumentationModule5Section1 = () => {
               Back
             </Button>
           </Link>
-          <Link to="../section-2">
+          <Link to="../instrumentation-module-5-section-2">
             <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/80">
               Next Section
               <ArrowLeft className="h-4 w-4 ml-2 rotate-180" />

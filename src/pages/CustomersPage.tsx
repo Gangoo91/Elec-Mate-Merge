@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useCustomers, Customer, SortField, SortDirection } from '@/hooks/inspection/useCustomers';
 import { CustomerListRow } from '@/components/inspection-app/customers/CustomerListRow';
 import { CustomerForm } from '@/components/inspection-app/customers/CustomerForm';
@@ -18,7 +19,6 @@ import {
   Users,
   ArrowLeft,
   Loader2,
-  ArrowUpDown,
   ArrowUp,
   ArrowDown,
 } from 'lucide-react';
@@ -40,6 +40,33 @@ const sortOptions: { value: SortField; label: string }[] = [
   { value: 'createdAt', label: 'Date Added' },
   { value: 'certificateCount', label: 'Certificates' },
 ];
+
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06 }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring', stiffness: 300, damping: 24 }
+  }
+};
+
+const emptyStateVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: { type: 'spring', stiffness: 300, damping: 24 }
+  }
+};
 
 export default function CustomersPage() {
   const navigate = useNavigate();
@@ -102,10 +129,10 @@ export default function CustomersPage() {
   };
 
   return (
-    <div className="bg-background">
-      {/* Sticky Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="flex items-center gap-3 px-4 h-14">
+    <div className="min-h-screen bg-background">
+      {/* Glassmorphic Header */}
+      <header className="sticky top-0 z-50 w-full bg-white/[0.02] backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center gap-3 px-4 h-16">
           <Button
             variant="ghost"
             size="icon"
@@ -114,28 +141,26 @@ export default function CustomersPage() {
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <div className="flex items-center gap-2 flex-1">
-            <Users className="h-6 w-6 text-elec-yellow" />
-            <h1 className="text-xl font-bold">Customers</h1>
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+            <Users className="h-5 w-5 text-white" />
           </div>
-          <Badge variant="outline">
+          <h1 className="text-xl font-bold flex-1">Customers</h1>
+          <Badge className="bg-white/10 border-white/20 text-foreground px-3 py-1">
             {customers.length}
           </Badge>
         </div>
       </header>
 
       <main className="p-4 pb-24 space-y-4 max-w-4xl mx-auto">
-        {/* Search and Actions */}
+        {/* Search and Actions - Glassmorphic */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            {!searchTerm && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-            )}
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
             <Input
               placeholder="Search customers..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={cn("h-11 touch-manipulation", !searchTerm && "pl-9")}
+              className="h-12 !pl-12 touch-manipulation bg-white/[0.02] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
             />
           </div>
           <div className="flex gap-2">
@@ -143,7 +168,7 @@ export default function CustomersPage() {
               variant="outline"
               size="icon"
               onClick={() => setShowImportDialog(true)}
-              className="h-11 w-11 touch-manipulation active:scale-[0.98]"
+              className="h-12 w-12 touch-manipulation active:scale-[0.98] bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.04] rounded-xl"
               title="Import CSV"
             >
               <Upload className="h-4 w-4" />
@@ -153,18 +178,17 @@ export default function CustomersPage() {
               size="icon"
               onClick={exportCustomers}
               disabled={customers.length === 0}
-              className="h-11 w-11 touch-manipulation active:scale-[0.98]"
+              className="h-12 w-12 touch-manipulation active:scale-[0.98] bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.04] rounded-xl"
               title="Export CSV"
             >
               <Download className="h-4 w-4" />
             </Button>
             <Button
-              variant="accent"
               onClick={() => {
                 setEditingCustomer(null);
                 setShowAddDialog(true);
               }}
-              className="h-11 gap-2 touch-manipulation active:scale-[0.98]"
+              className="h-12 gap-2 touch-manipulation active:scale-[0.98] bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 border-0 rounded-xl shadow-lg shadow-blue-500/20"
             >
               <Plus className="h-4 w-4" />
               <span className="hidden sm:inline">Add Customer</span>
@@ -172,8 +196,8 @@ export default function CustomersPage() {
           </div>
         </div>
 
-        {/* Sort Controls */}
-        <div className="flex items-center gap-2 text-sm">
+        {/* Sort Controls - Glassmorphic */}
+        <div className="flex items-center gap-2 text-sm p-3 rounded-xl bg-white/[0.02] border border-white/10">
           <span className="text-muted-foreground">Sort by:</span>
           <MobileSelectPicker
             value={sortField}
@@ -181,13 +205,13 @@ export default function CustomersPage() {
             options={sortOptions}
             placeholder="Sort by..."
             title="Sort Customers"
-            triggerClassName="w-[140px] h-9"
+            triggerClassName="w-[140px] h-9 bg-white/[0.04] border-white/10 rounded-lg"
           />
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleSortDirection}
-            className="h-9 w-9 touch-manipulation active:scale-[0.98]"
+            className="h-9 w-9 touch-manipulation active:scale-[0.98] bg-white/[0.04] border border-white/10 rounded-lg hover:bg-white/[0.08]"
             title={sortDirection === 'asc' ? 'Ascending' : 'Descending'}
           >
             {sortDirection === 'asc' ? (
@@ -201,45 +225,68 @@ export default function CustomersPage() {
         {/* Customer List */}
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
           </div>
         ) : filteredCustomers.length === 0 ? (
-          <div className="text-center py-12 space-y-4">
-            <Users className="h-12 w-12 mx-auto text-muted-foreground" />
-            <div>
-              <p className="text-lg font-medium">
+          <motion.div
+            variants={emptyStateVariants}
+            initial="hidden"
+            animate="show"
+            className="text-center py-12"
+          >
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 max-w-sm mx-auto">
+              <motion.div
+                className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/10 flex items-center justify-center"
+                animate={{ scale: [1, 1.05, 1], opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                <Users className="h-10 w-10 text-white/40" />
+              </motion.div>
+              <p className="text-lg font-medium mb-1">
                 {searchTerm ? 'No customers found' : 'No customers yet'}
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground mb-5">
                 {searchTerm
                   ? 'Try a different search term'
                   : 'Add your first customer to get started'}
               </p>
+              {!searchTerm && (
+                <Button
+                  onClick={() => setShowAddDialog(true)}
+                  className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 border-0 shadow-lg shadow-blue-500/20"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Customer
+                </Button>
+              )}
             </div>
-            {!searchTerm && (
-              <Button
-                variant="accent"
-                onClick={() => setShowAddDialog(true)}
-                className="gap-2"
-              >
-                <Plus className="h-4 w-4" />
-                Add Customer
-              </Button>
-            )}
-          </div>
+          </motion.div>
         ) : (
-          <div className="space-y-3">
-            {filteredCustomers.map((customer) => (
-              <CustomerListRow
-                key={customer.id}
-                customer={customer}
-                onEdit={handleEdit}
-                onDelete={(id) => setDeleteConfirmId(id)}
-                onStartCertificate={(c) => setCertificateCustomer(c)}
-                onQuickNote={(c) => setQuickNoteCustomer(c)}
-              />
-            ))}
-          </div>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="space-y-3"
+          >
+            <AnimatePresence mode="popLayout">
+              {filteredCustomers.map((customer) => (
+                <motion.div
+                  key={customer.id}
+                  variants={cardVariants}
+                  layout
+                  exit={{ opacity: 0, scale: 0.95 }}
+                >
+                  <CustomerListRow
+                    customer={customer}
+                    onEdit={handleEdit}
+                    onDelete={(id) => setDeleteConfirmId(id)}
+                    onStartCertificate={(c) => setCertificateCustomer(c)}
+                    onQuickNote={(c) => setQuickNoteCustomer(c)}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
         )}
       </main>
 
@@ -280,7 +327,7 @@ export default function CustomersPage() {
 
       {/* Delete Confirmation */}
       <AlertDialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
-        <AlertDialogContent className="max-w-[90vw] sm:max-w-md">
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-card/95 backdrop-blur-xl border-white/10">
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Customer?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -289,7 +336,7 @@ export default function CustomersPage() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="min-h-[44px]">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="min-h-[44px] bg-white/[0.02] border-white/10">Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               className="bg-red-600 hover:bg-red-700 min-h-[44px]"

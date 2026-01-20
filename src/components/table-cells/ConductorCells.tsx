@@ -22,13 +22,13 @@ const ConductorCellsComponent: React.FC<ConductorCellsProps> = ({ result, onUpda
   return (
     <>
       {/* Column 8: Live (mm²) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-24 min-w-[90px] max-w-[90px]">
+      <TableCell className="p-0 h-8 align-middle w-24 min-w-[90px] max-w-[90px]">
         <Select
           name={`liveSize-${result.id}`}
           value={result.liveSize || ''}
           onValueChange={handleLiveSizeChange}
         >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
+          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="Live" />
           </SelectTrigger>
           <SelectContent key={`liveSize-content-${result.id}`} className="bg-background border border-border rounded-md z-[100]">
@@ -42,13 +42,13 @@ const ConductorCellsComponent: React.FC<ConductorCellsProps> = ({ result, onUpda
       </TableCell>
 
       {/* Column 9: CPC (mm²) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-24 min-w-[90px] max-w-[90px]">
+      <TableCell className="p-0 h-8 align-middle w-24 min-w-[90px] max-w-[90px]">
         <Select
           name={`cpcSize-${result.id}`}
           value={result.cpcSize || ''}
           onValueChange={handleCpcSizeChange}
         >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
+          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="CPC" />
           </SelectTrigger>
           <SelectContent key={`cpcSize-content-${result.id}`} className="bg-background border border-border rounded-md z-[100]">

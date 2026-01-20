@@ -535,13 +535,13 @@ const InstrumentationModule3Section4 = () => {
 
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row justify-between gap-3 pt-6 border-t border-border">
-          <Link to="/upskilling/instrumentation-module-3-section-3" className="w-full sm:w-auto">
+          <Link to="/electrician/upskilling/instrumentation-module-3-section-3" className="w-full sm:w-auto">
             <Button variant="outline" className="w-full sm:w-auto">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
             </Button>
           </Link>
-          <Link to="/upskilling/instrumentation-module-3-section-5" className="w-full sm:w-auto">
+          <Link to="/electrician/upskilling/instrumentation-module-3-section-5" className="w-full sm:w-auto">
             <Button className="w-full sm:w-auto bg-elec-yellow text-black hover:bg-elec-yellow/90">
               Next Section
             </Button>

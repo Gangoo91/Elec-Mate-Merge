@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minor Electrical Installation Works Certificate</title>
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --primary: #1a365d;
+      --primary-light: #2c5282;
+      --accent: #d69e2e;
+      --accent-light: #ecc94b;
+      --success: #38a169;
+      --text: #1a202c;
+      --text-light: #4a5568;
+      --border: #cbd5e0;
+      --border-light: #e2e8f0;
+      --bg-light: #f7fafc;
+      --bg-header: #edf2f7;
+      --white: #ffffff;
+    }
+
+    /* ===== BASE STYLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    @page {
+      size: A4;
+      margin: 10mm 12mm;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      font-size: 9pt;
+      line-height: 1.4;
+      color: var(--text);
+      background: var(--white);
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .header-left {
+      flex: 1;
+    }
+
+    .header-title {
+      font-size: 16pt;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 2px;
+      letter-spacing: -0.5px;
+    }
+
+    .header-subtitle {
+      font-size: 10pt;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .header-standard {
+      font-size: 8pt;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    .cert-number-box {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: var(--white);
+      padding: 10px 16px;
+      border-radius: 6px;
+      text-align: center;
+      min-width: 180px;
+    }
+
+    .cert-number-label {
+      font-size: 7pt;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.9;
+      margin-bottom: 2px;
+    }
+
+    .cert-number-value {
+      font-size: 13pt;
+      font-weight: 700;
+      font-family: 'Consolas', 'Monaco', monospace;
+      letter-spacing: 0.5px;
+    }
+
+    .cert-date {
+      font-size: 7.5pt;
+      color: var(--text-light);
+      margin-top: 6px;
+      text-align: center;
+    }
+
+    /* ===== COMPANY LOGO AREA ===== */
+    .company-logo {
+      margin-bottom: 8px;
+    }
+
+    .company-logo img {
+      max-height: 40px;
+      max-width: 150px;
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      page-break-inside: avoid;
+    }
+
+    .section-header {
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      color: var(--white);
+      padding: 6px 10px;
+      font-size: 9pt;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-header .part-num {
+      background: rgba(255,255,255,0.2);
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 8pt;
+    }
+
+    .section-body {
+      padding: 10px;
+      background: var(--white);
+    }
+
+    /* ===== GRID SYSTEM ===== */
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -5px;
+    }
+
+    .col-12 { width: 100%; padding: 0 5px; }
+    .col-6 { width: 50%; padding: 0 5px; }
+    .col-4 { width: 33.333%; padding: 0 5px; }
+    .col-3 { width: 25%; padding: 0 5px; }
+    .col-2 { width: 16.666%; padding: 0 5px; }
+
+    /* ===== FIELD GROUPS ===== */
+    .field {
+      margin-bottom: 8px;
+    }
+
+    .field-label {
+      font-size: 7pt;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    .field-value {
+      font-size: 9pt;
+      color: var(--text);
+      padding: 4px 6px;
+      background: var(--bg-light);
+      border: 1px solid var(--border-light);
+      border-radius: 3px;
+      min-height: 22px;
+    }
+
+    .field-value.large {
+      min-height: 50px;
+    }
+
+    .field-value.empty {
+      color: var(--text-light);
+      font-style: italic;
+    }
+
+    /* ===== INLINE FIELDS ===== */
+    .inline-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .inline-field {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .inline-label {
+      font-size: 8pt;
+      color: var(--text-light);
+    }
+
+    .inline-value {
+      font-size: 9pt;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--bg-light);
+      padding: 2px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--border-light);
+    }
+
+    /* ===== CHECKBOXES ===== */
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 6px 0;
+    }
+
+    .cb-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .cb {
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--white);
+      background: var(--white);
+    }
+
+    .cb.checked {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    .cb-label {
+      font-size: 8pt;
+      color: var(--text);
+    }
+
+    /* ===== TABLES ===== */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8pt;
+      margin: 6px 0;
+    }
+
+    .data-table th {
+      background: var(--bg-header);
+      color: var(--text);
+      font-weight: 600;
+      padding: 5px 6px;
+      text-align: left;
+      border: 1px solid var(--border);
+      font-size: 7.5pt;
+    }
+
+    .data-table td {
+      padding: 4px 6px;
+      border: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .data-table .center {
+      text-align: center;
+    }
+
+    .data-table .header-row th {
+      background: var(--primary);
+      color: var(--white);
+      font-size: 8pt;
+    }
+
+    /* ===== TEST RESULTS TABLE ===== */
+    .test-table th {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .test-table .sub-header th {
+      background: var(--bg-header);
+      color: var(--text);
+    }
+
+    .result-pass {
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    .result-fail {
+      color: #e53e3e;
+      font-weight: 600;
+    }
+
+    /* ===== DIVIDERS ===== */
+    .divider {
+      border-top: 1px solid var(--border-light);
+      margin: 8px 0;
+    }
+
+    .divider-thick {
+      border-top: 2px solid var(--border);
+      margin: 10px 0;
+    }
+
+    /* ===== SUBSECTION HEADERS ===== */
+    .subsection-title {
+      font-size: 8pt;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 8px 0 6px 0;
+      padding-bottom: 3px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .subsection-title::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    /* ===== SIGNATURE BOX ===== */
+    .signature-box {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      min-height: 60px;
+      background: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+    }
+
+    .signature-box img {
+      max-height: 50px;
+      max-width: 200px;
+    }
+
+    .signature-placeholder {
+      color: var(--text-light);
+      font-size: 8pt;
+      font-style: italic;
+    }
+
+    /* ===== DECLARATION BOX ===== */
+    .declaration-box {
+      background: linear-gradient(to right, var(--bg-light), var(--white));
+      border: 1px solid var(--accent);
+      border-left: 4px solid var(--accent);
+      border-radius: 4px;
+      padding: 10px 12px;
+      margin: 8px 0;
+    }
+
+    .declaration-text {
+      font-size: 8pt;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    /* ===== GUIDANCE SECTION ===== */
+    .guidance {
+      margin-top: 12px;
+      padding: 10px;
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      page-break-before: auto;
+    }
+
+    .guidance-title {
+      font-size: 8pt;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .guidance ul {
+      margin: 0;
+      padding-left: 16px;
+      font-size: 7.5pt;
+      color: var(--text-light);
+    }
+
+    .guidance li {
+      margin-bottom: 3px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 7pt;
+      color: var(--text-light);
+    }
+
+    /* ===== UTILITIES ===== */
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .font-bold { font-weight: 600; }
+    .font-mono { font-family: 'Consolas', 'Monaco', monospace; }
+    .text-small { font-size: 7.5pt; }
+    .text-muted { color: var(--text-light); }
+    .mt-1 { margin-top: 4px; }
+    .mt-2 { margin-top: 8px; }
+    .mb-1 { margin-bottom: 4px; }
+    .mb-2 { margin-bottom: 8px; }
+
+    /* ===== PAGE BREAKS ===== */
+    .page-break { page-break-before: always; }
+    .no-break { page-break-inside: avoid; }
+  </style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<div class="header">
+  <div class="header-left">
+    {% if company.logo_url %}
+    <div class="company-logo">
+      <img src="{{ company.logo_url }}" alt="{{ company.name }}">
+    </div>
+    {% endif %}
+    <div class="header-title">Minor Electrical Installation Works Certificate</div>
+    <div class="header-subtitle">Requirements for Electrical Installations - IET Wiring Regulations</div>
+    <div class="header-standard">BS 7671:2018+A3:2024 (18th Edition)</div>
+  </div>
+  <div class="header-right">
+    <div class="cert-number-box">
+      <div class="cert-number-label">Certificate Number</div>
+      <div class="cert-number-value">{{ certificate_number }}</div>
+    </div>
+    <div class="cert-date">Issued: {{ generated_at }}</div>
+  </div>
+</div>
+
+<!-- ========== PART 1: DESCRIPTION OF WORK ========== -->
+<div class="section">
+  <div class="section-header">
+    <span>Description of the Minor Works</span>
+    <span class="part-num">Part 1</span>
+  </div>
+  <div class="section-body">
+    <!-- Client & Installation Details -->
+    <div class="row">
+      <div class="col-6">
+        <div class="field">
+          <span class="field-label">Client Name</span>
+          <div class="field-value">{{ client.name | default: "—" }}</div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="field">
+          <span class="field-label">Person Ordering Work (if different)</span>
+          <div class="field-value">{{ person_ordering_work | default: "—" }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="field">
+          <span class="field-label">Installation Address</span>
+          <div class="field-value">{{ installation.address | default: "—" }}</div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="field">
+          <span class="field-label">Postcode</span>
+          <div class="field-value">{{ installation.postcode | default: "—" }}</div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="field">
+          <span class="field-label">Date of Work</span>
+          <div class="field-value">{{ work_date | default: "—" }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Work Details -->
+    <div class="row">
+      <div class="col-4">
+        <div class="field">
+          <span class="field-label">Type of Work</span>
+          <div class="field-value">{{ work_type | default: "—" }}</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="field">
+          <span class="field-label">Location of Work</span>
+          <div class="field-value">{{ work_location | default: "—" }}</div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="field">
+          <span class="field-label">Next Inspection Due</span>
+          <div class="field-value">{{ next_inspection_due | default: "—" }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="field-label">Description of Minor Works</span>
+      <div class="field-value large">{{ work_description | default: "—" }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="field">
+          <span class="field-label">Details of Departures from BS 7671 (Reg 120.3, 133.1.3, 133.5)</span>
+          <div class="field-value">{{ departures | default: "None" }}</div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="field">
+          <span class="field-label">Details of Permitted Exceptions (Reg 411.3.3)</span>
+          <div class="field-value">{{ permitted_exceptions | default: "None" }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="checkbox-group">
+          <div class="cb-item">
+            <span class="cb {% if risk_assessment_attached %}checked{% endif %}">{% if risk_assessment_attached %}&#10003;{% endif %}</span>
+            <span class="cb-label">Risk assessment attached</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="field">
+          <span class="field-label">Comments on Existing Installation (Reg 644.1.2)</span>
+          <div class="field-value">{{ existing_installation_comments | default: "—" }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PART 2: SUPPLY & EARTHING ========== -->
+<div class="section">
+  <div class="section-header">
+    <span>Supply Characteristics, Earthing & Bonding Arrangements</span>
+    <span class="part-num">Part 2</span>
+  </div>
+  <div class="section-body">
+    <!-- Supply Characteristics -->
+    <div class="subsection-title">Supply Characteristics</div>
+    <div class="inline-group">
+      <div class="inline-field">
+        <span class="inline-label">Voltage:</span>
+        <span class="inline-value">{{ supply.voltage | default: "230" }} V</span>
+      </div>
+      <div class="inline-field">
+        <span class="inline-label">Frequency:</span>
+        <span class="inline-value">{{ supply.frequency | default: "50" }} Hz</span>
+      </div>
+      <div class="inline-field">
+        <span class="inline-label">No. of Phases:</span>
+        <span class="inline-value">{{ supply.phases | default: "1" }}</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Earthing -->
+    <div class="subsection-title">System Earthing</div>
+    <div class="row">
+      <div class="col-6">
+        <div class="inline-group">
+          <span class="inline-label font-bold">Earthing arrangement:</span>
+          <div class="checkbox-group">
+            <div class="cb-item">
+              <span class="cb {% if earthing.type == 'TN-S' %}checked{% endif %}">{% if earthing.type == 'TN-S' %}&#10003;{% endif %}</span>
+              <span class="cb-label">TN-S</span>
+            </div>
+            <div class="cb-item">
+              <span class="cb {% if earthing.type == 'TN-C-S' or earthing.type == 'TN-C-S/PME' %}checked{% endif %}">{% if earthing.type == 'TN-C-S' or earthing.type == 'TN-C-S/PME' %}&#10003;{% endif %}</span>
+              <span class="cb-label">TN-C-S (PME)</span>
+            </div>
+            <div class="cb-item">
+              <span class="cb {% if earthing.type == 'TT' %}checked{% endif %}">{% if earthing.type == 'TT' %}&#10003;{% endif %}</span>
+              <span class="cb-label">TT</span>
+            </div>
+            <div class="cb-item">
+              <span class="cb {% if earthing.type == 'IT' %}checked{% endif %}">{% if earthing.type == 'IT' %}&#10003;{% endif %}</span>
+              <span class="cb-label">IT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="inline-field">
+          <span class="inline-label">Z<sub>db</sub> at DB:</span>
+          <span class="inline-value">{{ earthing.zdb | default: "—" }} &#937;</span>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="checkbox-group">
+          <div class="cb-item">
+            <span class="cb {% if earthing.conductor_present %}checked{% endif %}">{% if earthing.conductor_present %}&#10003;{% endif %}</span>
+            <span class="cb-label">Earthing conductor present</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-1">
+      <div class="col-3">
+        <div class="inline-field">
+          <span class="inline-label">Main earthing conductor:</span>
+          <span class="inline-value">{{ earthing.conductor_size | default: "—" }} mm&sup2;</span>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="inline-field">
+          <span class="inline-label">Main bonding conductor:</span>
+          <span class="inline-value">{{ bonding.size | default: "—" }} mm&sup2;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Bonding -->
+    <div class="subsection-title">Main Protective Bonding Connections</div>
+    <div class="checkbox-group">
+      <div class="cb-item">
+        <span class="cb {% if bonding.water %}checked{% endif %}">{% if bonding.water %}&#10003;{% endif %}</span>
+        <span class="cb-label">Water</span>
+      </div>
+      <div class="cb-item">
+        <span class="cb {% if bonding.gas %}checked{% endif %}">{% if bonding.gas %}&#10003;{% endif %}</span>
+        <span class="cb-label">Gas</span>
+      </div>
+      <div class="cb-item">
+        <span class="cb {% if bonding.oil %}checked{% endif %}">{% if bonding.oil %}&#10003;{% endif %}</span>
+        <span class="cb-label">Oil</span>
+      </div>
+      <div class="cb-item">
+        <span class="cb {% if bonding.structural %}checked{% endif %}">{% if bonding.structural %}&#10003;{% endif %}</span>
+        <span class="cb-label">Structural Steel</span>
+      </div>
+      <div class="cb-item">
+        <span class="cb {% if bonding.other %}checked{% endif %}">{% if bonding.other %}&#10003;{% endif %}</span>
+        <span class="cb-label">Other: {{ bonding.other_specify | default: "—" }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PART 3: CIRCUIT DETAILS ========== -->
+<div class="section">
+  <div class="section-header">
+    <span>Details of Circuit(s) to which Minor Works Relate</span>
+    <span class="part-num">Part 3</span>
+  </div>
+  <div class="section-body">
+    <table class="data-table">
+      <tr class="header-row">
+        <th colspan="8">Circuit Identification</th>
+      </tr>
+      <tr>
+        <th style="width:15%">DB Reference</th>
+        <th style="width:20%">DB Location & Type</th>
+        <th style="width:12%">Circuit No.</th>
+        <th style="width:20%">Circuit Description</th>
+        <th style="width:10%">Circuit Type</th>
+        <th style="width:23%" colspan="3">Cable Details</th>
+      </tr>
+      <tr>
+        <td>{{ circuit.db_ref | default: "—" }}</td>
+        <td>{{ circuit.db_location_type | default: "—" }}</td>
+        <td class="center">{{ circuit.number | default: "—" }}</td>
+        <td>{{ circuit.description | default: "—" }}</td>
+        <td class="center">{{ circuit.type | default: "Radial" }}</td>
+        <td colspan="3">
+          <span class="text-small">Live:</span> {{ circuit.live_size | default: "—" }}mm&sup2; |
+          <span class="text-small">CPC:</span> {{ circuit.cpc_size | default: "—" }}mm&sup2; |
+          <span class="text-small">Type:</span> {{ circuit.cable_type | default: "—" }}
+        </td>
+      </tr>
+    </table>
+
+    <!-- Protective Device -->
+    <table class="data-table mt-1">
+      <tr class="header-row">
+        <th colspan="8">Overcurrent Protective Device</th>
+      </tr>
+      <tr>
+        <th>BS (EN)</th>
+        <th>Type</th>
+        <th>Rating (A)</th>
+        <th>Breaking Capacity (kA)</th>
+        <th>Ref Method</th>
+        <th>Installation Method</th>
+      </tr>
+      <tr>
+        <td class="center">{{ circuit.ocpd.bs_en | default: "—" }}</td>
+        <td class="center">{{ circuit.ocpd.type | default: "—" }}</td>
+        <td class="center font-bold">{{ circuit.ocpd.rating | default: "—" }}</td>
+        <td class="center">{{ circuit.ocpd.breaking_capacity | default: "—" }}</td>
+        <td class="center">{{ circuit.reference_method | default: "—" }}</td>
+        <td>{{ circuit.installation_method | default: "—" }}</td>
+      </tr>
+    </table>
+
+    <!-- Additional Protection -->
+    <div class="subsection-title mt-2">Additional Protection Installed</div>
+    <div class="checkbox-group mb-1">
+      <div class="cb-item">
+        <span class="cb {% if circuit.protection.rcd %}checked{% endif %}">{% if circuit.protection.rcd %}&#10003;{% endif %}</span>
+        <span class="cb-label">RCD</span>
+      </div>
+      <div class="cb-item">
+        <span class="cb {% if circuit.protection.rcbo %}checked{% endif %}">{% if circuit.protection.rcbo %}&#10003;{% endif %}</span>
+        <span class="cb-label">RCBO</span>
+      </div>
+      <div class="cb-item">
+        <span class="cb {% if circuit.protection.afdd %}checked{% endif %}">{% if circuit.protection.afdd %}&#10003;{% endif %}</span>
+        <span class="cb-label">AFDD</span>
+      </div>
+      <div class="cb-item">
+        <span class="cb {% if circuit.protection.spd %}checked{% endif %}">{% if circuit.protection.spd %}&#10003;{% endif %}</span>
+        <span class="cb-label">SPD</span>
+      </div>
+    </div>
+
+    {% if circuit.protection.rcd or circuit.protection.rcbo %}
+    <table class="data-table">
+      <tr>
+        <th colspan="4" style="background: var(--bg-header);">RCD/RCBO Details</th>
+      </tr>
+      <tr>
+        <th>BS (EN)</th>
+        <th>Type</th>
+        <th>Rating (A)</th>
+        <th>I&#916;n (mA)</th>
+      </tr>
+      <tr>
+        <td class="center">{{ circuit.rcd.bs_en | default: "—" }}</td>
+        <td class="center">{{ circuit.rcd.type | default: "—" }}</td>
+        <td class="center">{{ circuit.rcd.rating | default: "—" }}</td>
+        <td class="center font-bold">{{ circuit.rcd.idn | default: "—" }}</td>
+      </tr>
+    </table>
+    {% endif %}
+
+    {% if circuit.protection.afdd %}
+    <div class="inline-group mt-1">
+      <span class="text-small font-bold">AFDD:</span>
+      <span class="inline-field">
+        <span class="inline-label">BS (EN):</span>
+        <span class="inline-value">{{ circuit.afdd.bs_en | default: "BS EN 62606" }}</span>
+      </span>
+      <span class="inline-field">
+        <span class="inline-label">Rating:</span>
+        <span class="inline-value">{{ circuit.afdd.rating | default: "—" }} A</span>
+      </span>
+    </div>
+    {% endif %}
+
+    {% if circuit.protection.spd %}
+    <div class="inline-group mt-1">
+      <span class="text-small font-bold">SPD:</span>
+      <span class="inline-field">
+        <span class="inline-label">BS (EN):</span>
+        <span class="inline-value">{{ circuit.spd.bs_en | default: "BS EN 61643-11" }}</span>
+      </span>
+      <span class="inline-field">
+        <span class="inline-label">Type:</span>
+        <span class="inline-value">{{ circuit.spd.type | default: "—" }}</span>
+      </span>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- ========== PART 4: TEST RESULTS ========== -->
+<div class="section">
+  <div class="section-header">
+    <span>Test Results</span>
+    <span class="part-num">Part 4</span>
+  </div>
+  <div class="section-body">
+    <!-- Continuity & Insulation -->
+    <table class="data-table test-table">
+      <tr>
+        <th colspan="6">Continuity & Insulation Resistance Tests</th>
+      </tr>
+      <tr class="sub-header">
+        <th style="width:25%">Test</th>
+        <th style="width:15%">Result</th>
+        <th style="width:15%">Test</th>
+        <th style="width:15%">Result</th>
+        <th style="width:15%">Test</th>
+        <th style="width:15%">Result</th>
+      </tr>
+      <tr>
+        <td>Continuity (R<sub>1</sub>+R<sub>2</sub>)</td>
+        <td class="center font-bold">{{ tests.r1_r2 | default: "—" }} &#937;</td>
+        <td>Continuity (R<sub>2</sub>)</td>
+        <td class="center">{{ tests.r2 | default: "—" }} &#937;</td>
+        <td>Polarity</td>
+        <td class="center {% if tests.polarity == 'correct' %}result-pass{% endif %}">{{ tests.polarity | default: "—" }}</td>
+      </tr>
+      <tr>
+        <td>IR Live-Live (@ {{ tests.insulation_voltage | default: "500" }}V)</td>
+        <td class="center">{{ tests.ir_live_live | default: "—" }} M&#937;</td>
+        <td>IR Live-Earth</td>
+        <td class="center">{{ tests.ir_live_earth | default: "—" }} M&#937;</td>
+        <td>IR Live-Neutral</td>
+        <td class="center">{{ tests.ir_live_neutral | default: "—" }} M&#937;</td>
+      </tr>
+    </table>
+
+    {% if circuit.type == 'Ring' or circuit.type == 'ring' %}
+    <!-- Ring Circuit Tests -->
+    <table class="data-table test-table mt-1">
+      <tr>
+        <th colspan="5">Ring Final Circuit Continuity</th>
+      </tr>
+      <tr class="sub-header">
+        <th>Test</th>
+        <th>r<sub>1</sub> (L)</th>
+        <th>r<sub>n</sub> (N)</th>
+        <th>r<sub>2</sub> (CPC)</th>
+        <th>R<sub>1</sub>+R<sub>2</sub></th>
+      </tr>
+      <tr>
+        <td>End-to-End</td>
+        <td class="center">{{ tests.ring_r1_end | default: tests.ring_ll | default: "—" }} &#937;</td>
+        <td class="center">{{ tests.ring_rn_end | default: tests.ring_nn | default: "—" }} &#937;</td>
+        <td class="center">{{ tests.ring_r2_end | default: tests.ring_cpc | default: "—" }} &#937;</td>
+        <td class="center font-bold" rowspan="2">{{ tests.ring_final | default: tests.r1_r2 | default: "—" }} &#937;</td>
+      </tr>
+      <tr>
+        <td>Cross-Connection</td>
+        <td class="center">{{ tests.ring_r1_cross | default: "—" }} &#937;</td>
+        <td class="center">{{ tests.ring_rn_cross | default: "—" }} &#937;</td>
+        <td class="center">{{ tests.ring_r2_cross | default: "—" }} &#937;</td>
+      </tr>
+    </table>
+    {% endif %}
+
+    <!-- Earth Fault Loop & PFC -->
+    <table class="data-table test-table mt-1">
+      <tr>
+        <th colspan="6">Earth Fault Loop Impedance & Prospective Fault Current</th>
+      </tr>
+      <tr class="sub-header">
+        <th>Z<sub>s</sub> Measured</th>
+        <th>Z<sub>s</sub> Max Permitted</th>
+        <th>Result</th>
+        <th>PFC (kA)</th>
+        <th>Functional Test</th>
+        {% if earthing.type == 'TT' %}<th>R<sub>A</sub> (&#937;)</th>{% endif %}
+      </tr>
+      <tr>
+        <td class="center font-bold">{{ tests.zs | default: "—" }} &#937;</td>
+        <td class="center">{{ tests.max_zs | default: "—" }} &#937;</td>
+        <td class="center {% if tests.zs and tests.max_zs %}{% if tests.zs <= tests.max_zs %}result-pass{% else %}result-fail{% endif %}{% endif %}">
+          {% if tests.zs and tests.max_zs %}{% if tests.zs <= tests.max_zs %}PASS{% else %}FAIL{% endif %}{% else %}—{% endif %}
+        </td>
+        <td class="center">{{ tests.pfc | default: "—" }}</td>
+        <td class="center {% if tests.functional_test == 'pass' %}result-pass{% endif %}">{{ tests.functional_test | default: "—" }}</td>
+        {% if earthing.type == 'TT' %}<td class="center">{{ tests.earth_electrode | default: "—" }}</td>{% endif %}
+      </tr>
+    </table>
+
+    {% if supply.phases == '3' or supply.phases == 3 %}
+    <div class="inline-group mt-1">
+      <span class="font-bold text-small">Phase Rotation:</span>
+      <span class="inline-value">{{ tests.phase_rotation | default: "—" }}</span>
+    </div>
+    {% endif %}
+
+    <!-- RCD/RCBO/AFDD/SPD Tests -->
+    {% if circuit.protection.rcd or circuit.protection.rcbo or circuit.protection.afdd or circuit.protection.spd %}
+    <table class="data-table test-table mt-1">
+      <tr>
+        <th colspan="8">Protection Device Testing</th>
+      </tr>
+      <tr class="sub-header">
+        <th>RCD Rating</th>
+        <th>1&times; I&#916;n (ms)</th>
+        <th>5&times; I&#916;n (ms)</th>
+        <th>&frac12;&times; I&#916;n</th>
+        <th>Test Button</th>
+        <th>AFDD Test</th>
+        <th>SPD Visual</th>
+        <th>SPD Status</th>
+      </tr>
+      <tr>
+        <td class="center">{{ tests.rcd_rating | default: "—" }} mA</td>
+        <td class="center {% if tests.rcd_time and tests.rcd_time <= 300 %}result-pass{% endif %}">{{ tests.rcd_time | default: "—" }}</td>
+        <td class="center {% if tests.rcd_5x_time and tests.rcd_5x_time <= 40 %}result-pass{% endif %}">{{ tests.rcd_5x_time | default: "—" }}</td>
+        <td class="center {% if tests.rcd_half_x == 'pass' %}result-pass{% endif %}">{{ tests.rcd_half_x | default: "—" }}</td>
+        <td class="center {% if tests.rcd_test_button == 'pass' %}result-pass{% endif %}">{{ tests.rcd_test_button | default: "—" }}</td>
+        <td class="center {% if tests.afdd_test_button == 'pass' %}result-pass{% endif %}">{{ tests.afdd_test_button | default: "N/A" }}</td>
+        <td class="center">{{ tests.spd_visual | default: "N/A" }}</td>
+        <td class="center {% if tests.spd_indicator == 'green' %}result-pass{% elsif tests.spd_indicator == 'red' %}result-fail{% endif %}">{{ tests.spd_indicator | default: "N/A" }}</td>
+      </tr>
+    </table>
+    {% endif %}
+
+    <!-- Test Equipment -->
+    <div class="divider"></div>
+    <div class="subsection-title">Test Equipment Used</div>
+    <div class="inline-group">
+      <span class="inline-field">
+        <span class="inline-label">Instrument:</span>
+        <span class="inline-value">{{ test_equipment.model | default: "—" }}</span>
+      </span>
+      <span class="inline-field">
+        <span class="inline-label">Serial No:</span>
+        <span class="inline-value font-mono">{{ test_equipment.serial | default: "—" }}</span>
+      </span>
+      <span class="inline-field">
+        <span class="inline-label">Calibration:</span>
+        <span class="inline-value">{{ test_equipment.calibration_date | default: "—" }}</span>
+      </span>
+      <span class="inline-field">
+        <span class="inline-label">Ambient Temp:</span>
+        <span class="inline-value">{{ tests.temperature | default: "20&deg;C" }}</span>
+      </span>
+    </div>
+    {% if test_equipment.custom %}
+    <div class="inline-group mt-1">
+      <span class="inline-label text-muted">Additional equipment:</span>
+      <span class="inline-value">{{ test_equipment.custom }}</span>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- ========== PART 5: DECLARATION ========== -->
+<div class="section no-break">
+  <div class="section-header">
+    <span>Declaration</span>
+    <span class="part-num">Part 5</span>
+  </div>
+  <div class="section-body">
+    <!-- IET Declaration -->
+    <div class="declaration-box">
+      <div class="checkbox-group mb-1">
+        <div class="cb-item">
+          <span class="cb {% if declaration.iet_declaration %}checked{% endif %}">{% if declaration.iet_declaration %}&#10003;{% endif %}</span>
+          <span class="cb-label font-bold">I/We CERTIFY that:</span>
+        </div>
+      </div>
+      <div class="declaration-text">
+        The minor electrical installation work to which this certificate relates has been designed, constructed,
+        inspected and tested in accordance with <strong>BS 7671:2018+A3:2024</strong> (IET Wiring Regulations),
+        subject to the departures detailed above if any. The work does not impair the safety of the existing
+        installation and is to the best of my/our knowledge and belief safe to be put into service.
+      </div>
+    </div>
+
+    <!-- Compliance Checkboxes -->
+    <div class="checkbox-group mt-2">
+      <div class="cb-item">
+        <span class="cb {% if declaration.bs7671_compliance %}checked{% endif %}">{% if declaration.bs7671_compliance %}&#10003;{% endif %}</span>
+        <span class="cb-label">BS 7671 Compliance</span>
+      </div>
+      <div class="cb-item">
+        <span class="cb {% if declaration.test_results_accurate %}checked{% endif %}">{% if declaration.test_results_accurate %}&#10003;{% endif %}</span>
+        <span class="cb-label">Test Results Accurate</span>
+      </div>
+      <div class="cb-item">
+        <span class="cb {% if declaration.work_safety %}checked{% endif %}">{% if declaration.work_safety %}&#10003;{% endif %}</span>
+        <span class="cb-label">Work Safety Declaration</span>
+      </div>
+      <div class="cb-item">
+        <span class="cb {% if declaration.part_p_notification %}checked{% endif %}">{% if declaration.part_p_notification %}&#10003;{% endif %}</span>
+        <span class="cb-label">Part P Notification (where applicable)</span>
+      </div>
+      <div class="cb-item">
+        <span class="cb {% if declaration.copy_provided %}checked{% endif %}">{% if declaration.copy_provided %}&#10003;{% endif %}</span>
+        <span class="cb-label">Copy provided to client</span>
+      </div>
+    </div>
+
+    <div class="divider-thick"></div>
+
+    <!-- Electrician Details & Signature -->
+    <div class="row">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-12">
+            <div class="field">
+              <span class="field-label">Name (CAPITALS)</span>
+              <div class="field-value font-bold">{{ declaration.name | default: "—" }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="field">
+              <span class="field-label">For and on behalf of</span>
+              <div class="field-value">{{ declaration.company | default: "—" }}</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="field">
+              <span class="field-label">Position</span>
+              <div class="field-value">{{ declaration.position | default: "—" }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="field">
+              <span class="field-label">Qualification</span>
+              <div class="field-value">{{ declaration.qualification | default: "—" }}</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="field">
+              <span class="field-label">Date</span>
+              <div class="field-value">{{ declaration.date | default: "—" }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="field">
+              <span class="field-label">Scheme Provider</span>
+              <div class="field-value">{{ declaration.scheme_provider | default: "—" }}</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="field">
+              <span class="field-label">Registration Number</span>
+              <div class="field-value font-mono">{{ declaration.registration_number | default: "—" }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">Address</span>
+          <div class="field-value">{{ declaration.address | default: contractor.address | default: "—" }}</div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="field">
+              <span class="field-label">Telephone</span>
+              <div class="field-value">{{ declaration.phone | default: company.phone | default: "—" }}</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="field">
+              <span class="field-label">Email</span>
+              <div class="field-value">{{ declaration.email | default: company.email | default: "—" }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="field">
+          <span class="field-label">Signature</span>
+          <div class="signature-box">
+            {% if declaration.signature %}
+              <img src="{{ declaration.signature }}" alt="Signature">
+            {% else %}
+              <span class="signature-placeholder">Digital signature</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if declaration.additional_notes %}
+    <div class="divider"></div>
+    <div class="field">
+      <span class="field-label">Additional Notes / Comments</span>
+      <div class="field-value">{{ declaration.additional_notes }}</div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- ========== GUIDANCE ========== -->
+<div class="guidance">
+  <div class="guidance-title">Guidance for Recipients (BS 7671 Regulation 132.15)</div>
+  <ul>
+    <li>This certificate confirms the minor electrical installation work complies with BS 7671:2018+A3:2024</li>
+    <li>You should have received an 'original' certificate - the contractor retains a duplicate</li>
+    <li>If you were the person ordering the work, please pass this certificate to the property owner</li>
+    <li>Retain this certificate with the property deeds and show to any future inspector</li>
+    <li><strong>RCDs:</strong> Test six-monthly using the 'T' or 'Test' button - the device should trip immediately</li>
+    <li><strong>AFDDs:</strong> Test six-monthly using the test button if fitted - not all AFDDs have test buttons</li>
+    <li><strong>SPDs:</strong> Check the status indicator regularly confirms operational condition (green = OK, red = replace)</li>
+    <li>Any alterations or additions to the installation should be carried out by a competent person</li>
+  </ul>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<div class="footer">
+  <span>{{ company.name | default: "—" }} | {{ company.phone | default: "" }} | {{ company.email | default: "" }}</span>
+  <span>Certificate: {{ certificate_number }} | Page 1 of 1</span>
+</div>
+
+<div class="elec-mate-footer">
+  <span class="em-icon">&#9889;</span>
+  <span class="em-text">Generated with <strong>Elec-Mate</strong></span>
+  <span class="em-divider">|</span>
+  <span class="em-url">www.elec-mate.com</span>
+</div>
+
+<style>
+  .elec-mate-footer {
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 7pt;
+    color: #718096;
+  }
+
+  .em-icon {
+    color: #d69e2e;
+    font-size: 8pt;
+  }
+
+  .em-text {
+    color: #718096;
+  }
+
+  .em-text strong {
+    color: #4a5568;
+    font-weight: 600;
+  }
+
+  .em-divider {
+    color: #cbd5e0;
+  }
+
+  .em-url {
+    color: #4a5568;
+  }
+</style>
+
+</body>
+</html>

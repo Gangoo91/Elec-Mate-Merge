@@ -105,18 +105,19 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ 
   return (
     <>
       {/* Column 8: BS (EN) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-36 min-w-[140px] max-w-[140px]">
+      <TableCell className="p-0 h-8 align-middle w-36 min-w-[140px] max-w-[140px]">
         <MobileSelectPicker
           value={result.bsStandard || ''}
           onValueChange={handleBsStandardChange}
           options={bsStandardOptions}
           placeholder="BS EN"
           title="BS (EN) Standard"
+          triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
         />
       </TableCell>
 
       {/* Column 9: Type (Curve) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
         <MobileSelectPicker
           value={result.protectiveDeviceCurve || ''}
           onValueChange={handleCurveChange}
@@ -124,40 +125,42 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ 
           placeholder="Type"
           title="Protective Device Curve"
           disabled={!showCurveSelector}
+          triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
         />
       </TableCell>
 
       {/* Column 10: Rating (A) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[95px] max-w-[95px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[95px] max-w-[95px]">
         <MobileSelectPicker
           value={result.protectiveDeviceRating || ''}
           onValueChange={handleRatingChange}
           options={protectiveDeviceRatingOptions}
           placeholder="A"
           title="Device Rating (A)"
+          triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
         />
       </TableCell>
 
       {/* Column 11: Breaking capacity (kA) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
         <EnhancedValidatedInput
           value={result.protectiveDeviceKaRating}
           onChange={(value) => onUpdate(result.id, 'protectiveDeviceKaRating', value)}
-          className="h-4 text-xs text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50"
+          className="h-8 text-sm text-center px-1"
           placeholder="kA"
         />
       </TableCell>
 
       {/* Column 12: Maximum permitted Zs (Ω)§ */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
         <div className="flex items-center gap-1">
           <EnhancedValidatedInput
             value={result.maxZs || ''}
             onChange={(value) => onUpdate(result.id, 'maxZs', value)}
-            className="h-4 text-xs text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50"
+            className="h-8 text-sm text-center px-1"
             placeholder="Ω"
           />
-          <FieldTooltip 
+          <FieldTooltip
             content="Maximum Zs values from BS 7671 Tables 41.2, 41.3, 41.4. These are the maximum permitted values - the tables already account for Cmin (0.95)."
             regulation="BS 7671 Chapter 41"
           />

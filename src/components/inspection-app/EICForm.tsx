@@ -659,19 +659,10 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       );
 
       if (isNotifiable) {
-        // Validate signatures are present before creating notification
-        const hasAllSignatures = formData.designerSignature && 
-                                 formData.constructorSignature && 
-                                 formData.inspectorSignature;
-        
-        if (!hasAllSignatures) {
-          toast({
-            title: "Signatures Required",
-            description: "All designer, constructor, and inspector signatures must be completed before Part P notification can be created.",
-            variant: "destructive",
-          });
-        } else {
-          // Check BS7671 compliance before creating Part P notification
+        // Note: Signature is NOT required for Part P notification tracking
+        // The notification tracks the 30-day submission deadline regardless of signature status
+
+        // Check BS7671 compliance before creating Part P notification
           let complianceWarning = false;
           if (formData.scheduleOfTests && Array.isArray(formData.scheduleOfTests) && formData.scheduleOfTests.length > 0) {
             const { checkAllResultsCompliance } = require('@/utils/autoRegChecker');
@@ -733,7 +724,6 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
               description: "Certificate created successfully, but notification creation failed. You can create it manually from the Notifications page.",
             });
           }
-        }
       } else {
         // Invalidate dashboard queries to show updated status
         queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });

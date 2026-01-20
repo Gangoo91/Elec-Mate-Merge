@@ -105,13 +105,13 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ 
   return (
     <>
       {/* Column 8: BS (EN) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-36 min-w-[140px] max-w-[140px]">
+      <TableCell className="p-0 h-8 align-middle w-36 min-w-[140px] max-w-[140px]">
         <Select
           name={`bsStandard-${result.id}`}
           value={result.bsStandard || ''}
           onValueChange={handleBsStandardChange}
         >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
+          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="BS EN" className="truncate" />
           </SelectTrigger>
           <SelectContent 
@@ -130,14 +130,14 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ 
       </TableCell>
 
       {/* Column 9: Type (Curve) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
         <Select
           name={`protectiveDeviceCurve-${result.id}`}
           value={result.protectiveDeviceCurve || ''}
           onValueChange={handleCurveChange}
           disabled={!showCurveSelector}
         >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0 disabled:opacity-50">
+          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 disabled:opacity-50">
             <SelectValue placeholder="Type" className="truncate" />
           </SelectTrigger>
           <SelectContent 
@@ -156,13 +156,13 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ 
       </TableCell>
 
       {/* Column 10: Rating (A) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[95px] max-w-[95px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[95px] max-w-[95px]">
         <Select
           name={`protectiveDeviceRating-${result.id}`}
           value={result.protectiveDeviceRating || ''}
           onValueChange={handleRatingChange}
         >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0">
+          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="A" className="truncate" />
           </SelectTrigger>
           <SelectContent 
@@ -181,22 +181,22 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({ 
       </TableCell>
 
       {/* Column 11: Breaking capacity (kA) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
         <EnhancedValidatedInput
           value={result.protectiveDeviceKaRating}
           onChange={(value) => onUpdate(result.id, 'protectiveDeviceKaRating', value)}
-          className="h-4 text-xs text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50"
+          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
           placeholder="kA"
         />
       </TableCell>
 
       {/* Column 12: Maximum permitted Zs (Ω)§ */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
         <div className="flex items-center gap-1">
           <EnhancedValidatedInput
             value={result.maxZs || ''}
             onChange={(value) => onUpdate(result.id, 'maxZs', value)}
-            className="h-4 text-xs text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50"
+            className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
             placeholder="Ω"
           />
           <FieldTooltip 

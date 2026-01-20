@@ -13,6 +13,9 @@ import { validateMinorWorksFormData, formatFieldForPdf } from '@/utils/minorWork
 import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 import { useNavigate } from 'react-router-dom';
 
+// Default PDF Monkey template ID for Minor Works Certificate
+const DEFAULT_MINOR_WORKS_TEMPLATE_ID = 'E6A82A45-09FE-46EC-9E6E-0D20B1E81D0D';
+
 interface MinorWorksPdfGeneratorProps {
   formData: any;
   isFormValid: boolean;
@@ -41,8 +44,11 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
 
   // Handle automatic Part P notification creation
   const handleNotificationCreation = async () => {
+    console.log('[MinorWorks] handleNotificationCreation called, partPNotification:', formData.partPNotification);
+
     // Only create notification if Part P checkbox is ticked
     if (!formData.partPNotification) {
+      console.log('[MinorWorks] Part P notification not requested, skipping');
       return;
     }
 
@@ -51,47 +57,61 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       let currentUserId = userId;
       if (!currentUserId) {
         const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return;
+        if (!user) {
+          console.error('[MinorWorks] No authenticated user for notification');
+          return;
+        }
         currentUserId = user.id;
       }
+      console.log('[MinorWorks] User ID:', currentUserId);
 
       // Get report ID (use certificate number as fallback)
       const currentReportId = reportId || formData.certificateNumber;
       if (!currentReportId) {
-        console.warn('No report ID available for notification');
-        return;
-      }
-
-      // Validate signature is present before creating notification
-      if (!formData.signature) {
+        console.error('[MinorWorks] No report ID available for notification');
         toast({
-          title: "Signature Required",
-          description: "Digital signature must be completed before Part P notification can be created.",
+          title: "Notification Warning",
+          description: "Could not create Part P notification - no certificate ID available.",
           variant: "destructive",
         });
         return;
       }
+      console.log('[MinorWorks] Report ID:', currentReportId);
 
+      // Note: Signature is NOT required for Part P notification tracking
+      // The notification tracks the 30-day submission deadline regardless of signature status
+
+      console.log('[MinorWorks] Creating notification with data:', {
+        reportId: currentReportId,
+        workType: formData.workType || formData.workDescription,
+        installationAddress: formData.installationAddress || formData.propertyAddress
+      });
 
       // Create notification - user explicitly requested it via checkbox
       const result = await createNotificationFromCertificate(
         currentReportId,
         'minor-works',
-        formData,
+        {
+          ...formData,
+          workType: formData.workType || formData.workDescription || 'Minor electrical works',
+          installationAddress: formData.installationAddress || formData.propertyAddress,
+          partPNotification: true // Explicitly set for helper function
+        },
         currentUserId
       );
 
+      console.log('[MinorWorks] Notification creation result:', result);
+
       if (result.success) {
-        
         // Invalidate notifications query to update dashboard
         queryClient.invalidateQueries({ queryKey: ['notifications'] });
-        
+
         toast({
           title: "Part P Notification Created",
           description: "Notification created successfully. Submission required within 30 days.",
           action: (
-            <Button 
-              size="sm" 
+            <Button
+              size="sm"
               variant="outline"
               onClick={() => navigate('/?section=notifications')}
             >
@@ -101,7 +121,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           ),
         });
       } else {
-        
+        console.error('[MinorWorks] Notification creation failed:', result.error);
         toast({
           title: "Notification Creation Failed",
           description: result.error || "Unable to create Part P notification.",
@@ -109,6 +129,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         });
       }
     } catch (error) {
+      console.error('[MinorWorks] Notification error:', error);
       toast({
         title: "Notification Error",
         description: "An error occurred while creating the notification.",
@@ -228,7 +249,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       // Get saved template ID from settings
       const { offlineStorage: offlineStorageModule } = await import('@/utils/offlineStorage');
       const credentials = await offlineStorageModule.getApiCredentials('pdfMonkey');
-      const savedTemplateId = credentials.templateId;
+      const savedTemplateId = credentials.templateId || DEFAULT_MINOR_WORKS_TEMPLATE_ID;
       
       // Try PDF Monkey via edge function
       setProgress(30);

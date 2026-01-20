@@ -180,10 +180,7 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className={cn(
-                "p-2.5 rounded-xl",
-                "bg-elec-yellow/10 border border-elec-yellow/20"
-              )}>
+              <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
                 <CircuitBoard className="h-5 w-5 text-elec-yellow" />
               </div>
               <div>

@@ -79,7 +79,7 @@ const FireAlarmModule6SectionTemplate = ({
             className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="/electrician/upskilling/fire-alarm-module-6">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
@@ -249,7 +249,7 @@ const FireAlarmModule6SectionTemplate = ({
               className="min-h-[48px] px-6 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
-              <Link to="/electrician/upskilling/fire-alarm-module-6">
+              <Link to="/electrician/upskilling/fire-alarm-course/module-6">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Module
               </Link>
@@ -271,7 +271,7 @@ const FireAlarmModule6SectionTemplate = ({
                 className="min-h-[48px] px-6 bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
                 asChild
               >
-                <Link to="/electrician/upskilling/fire-alarm-module-6">
+                <Link to="/electrician/upskilling/fire-alarm-course/module-6">
                   Complete Module
                   <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
                 </Link>

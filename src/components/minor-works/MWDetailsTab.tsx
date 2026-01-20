@@ -10,7 +10,6 @@ import { FieldTooltip } from '@/components/inspection-app/ui/field-tooltip';
 import { Users, FileText, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
-  SUPPLY_VOLTAGES,
   EARTHING_ARRANGEMENTS,
   EARTHING_CONDUCTOR_SIZES,
   WORK_TYPES,
@@ -91,14 +90,25 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-sm">Person Ordering Work</Label>
+                  <Label className="text-sm">Client Email</Label>
                   <Input
-                    value={formData.personOrderingWork || ''}
-                    onChange={(e) => onUpdate('personOrderingWork', e.target.value)}
-                    placeholder="If different from client"
+                    type="email"
+                    value={formData.clientEmail || ''}
+                    onChange={(e) => onUpdate('clientEmail', e.target.value)}
+                    placeholder="client@email.com"
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-sm">Person Ordering Work</Label>
+                <Input
+                  value={formData.personOrderingWork || ''}
+                  onChange={(e) => onUpdate('personOrderingWork', e.target.value)}
+                  placeholder="If different from client"
+                  className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                />
               </div>
 
               <div className="space-y-2">
@@ -133,25 +143,14 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm">Contractor Name</Label>
-                  <Input
-                    value={formData.contractorName || ''}
-                    onChange={(e) => onUpdate('contractorName', e.target.value)}
-                    placeholder="Company name"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Next Inspection Due</Label>
-                  <Input
-                    type="date"
-                    value={formData.nextInspectionDue || ''}
-                    onChange={(e) => onUpdate('nextInspectionDue', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
+              <div className="space-y-2">
+                <Label className="text-sm">Contractor Name</Label>
+                <Input
+                  value={formData.contractorName || ''}
+                  onChange={(e) => onUpdate('contractorName', e.target.value)}
+                  placeholder="Company name"
+                  className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                />
               </div>
             </div>
           </CollapsibleContent>
@@ -228,15 +227,16 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                 />
               </div>
 
-              <div className="flex items-center space-x-3 p-4 min-h-[48px] rounded-lg bg-muted/30">
+              {/* Risk Assessment Attached - IET Required */}
+              <div className="flex items-center gap-3 p-4 min-h-[48px] rounded-lg bg-amber-500/5 border border-amber-500/20">
                 <Checkbox
                   id="riskAssessmentAttached"
                   checked={formData.riskAssessmentAttached || false}
-                  onCheckedChange={(checked) => onUpdate('riskAssessmentAttached', checked)}
-                  className="h-5 w-5 border-gray-500 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow touch-manipulation"
+                  onCheckedChange={(c) => onUpdate('riskAssessmentAttached', c)}
+                  className="h-6 w-6 border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 touch-manipulation"
                 />
-                <Label htmlFor="riskAssessmentAttached" className="text-base font-medium cursor-pointer">
-                  Risk assessment attached
+                <Label htmlFor="riskAssessmentAttached" className="text-sm cursor-pointer">
+                  Risk assessment attached (where applicable)
                 </Label>
               </div>
 
@@ -269,42 +269,6 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm">Supply Voltage</Label>
-                  <MobileSelectPicker
-                    value={formData.supplyVoltage || '230V'}
-                    onValueChange={(v) => onUpdate('supplyVoltage', v)}
-                    options={SUPPLY_VOLTAGES}
-                    placeholder="Select"
-                    title="Supply Voltage"
-                    triggerClassName="bg-elec-gray border-white/30"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Frequency</Label>
-                  <Input
-                    value={formData.frequency || '50Hz'}
-                    onChange={(e) => onUpdate('frequency', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Phases</Label>
-                  <MobileSelectPicker
-                    value={formData.supplyPhases || '1'}
-                    onValueChange={(v) => onUpdate('supplyPhases', v)}
-                    options={[
-                      { value: '1', label: 'Single Phase', description: 'Standard domestic supply' },
-                      { value: '3', label: 'Three Phase', description: 'Commercial/larger installations' },
-                    ]}
-                    placeholder="Select"
-                    title="Supply Phases"
-                    triggerClassName="bg-elec-gray border-white/30"
-                  />
-                </div>
-              </div>
-
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <div className="flex items-center">
@@ -408,6 +372,19 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                     );
                   })}
                 </div>
+
+                {/* Other Bonding Specification - IET Required when Other is checked */}
+                {formData.bondingOther && (
+                  <div className="space-y-2 mt-2">
+                    <Label className="text-sm">Other Bonding - Specify</Label>
+                    <Input
+                      value={formData.bondingOtherSpecify || ''}
+                      onChange={(e) => onUpdate('bondingOtherSpecify', e.target.value)}
+                      placeholder="e.g., Incoming metallic services, extraneous conductive parts"
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-green-500 focus:ring-green-500"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </CollapsibleContent>

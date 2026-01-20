@@ -4,17 +4,23 @@ import { Button } from '@/components/ui/button';
 import { Camera, X, Check, Loader2, Upload, Info } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
+import { v4 as uuidv4 } from 'uuid';
+
+type AnalysisStage = 'idle' | 'uploading' | 'detecting' | 'reading' | 'verifying' | 'complete';
 
 interface BoardPhotoCaptureProps {
   onAnalysisComplete: (data: any) => void;
   onClose: () => void;
   renderContentOnly?: boolean; // When true, skip Card wrapper (used when parent provides container)
+  /** Callback for progress updates during analysis - includes photo URL on first call */
+  onProgressUpdate?: (stage: AnalysisStage, progress: number, circuitsFound?: number, photoUrl?: string) => void;
 }
 
 export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
   onAnalysisComplete,
   onClose,
-  renderContentOnly = false
+  renderContentOnly = false,
+  onProgressUpdate,
 }) => {
   const [capturedImages, setCapturedImages] = useState<Array<{ url: string; status: 'compressing' | 'ready' }>>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -28,6 +34,81 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
   // Aggressive target size for faster upload/processing
   const calculateTargetSizePerPhoto = (photoCount: number): number => {
     return 2.0; // 2MB max per image - balance of quality and speed
+  };
+
+  /**
+   * Auto-save photo for training data pipeline
+   * Runs in background after successful analysis - doesn't block UI
+   */
+  const autoSaveForTraining = async (
+    photoDataUrl: string,
+    analysisResult: any,
+    scanSessionId: string
+  ) => {
+    try {
+      // Convert data URL to blob
+      const response = await fetch(photoDataUrl);
+      const blob = await response.blob();
+
+      // Upload to training folder
+      const fileName = `training/auto/${scanSessionId}.jpg`;
+      const { error: uploadError } = await supabase.storage
+        .from('board-reference-images')
+        .upload(fileName, blob, {
+          contentType: 'image/jpeg',
+          upsert: false,
+        });
+
+      if (uploadError) {
+        console.log('Training photo upload skipped:', uploadError.message);
+        return; // Don't throw - this is background, non-critical
+      }
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('board-reference-images')
+        .getPublicUrl(fileName);
+
+      // Determine image characteristics from analysis
+      const hasLowConfidence = analysisResult.circuits?.some(
+        (c: any) => c.confidence === 'low' || c.conf === 'low'
+      );
+      const circuitCount = analysisResult.circuits?.length || 0;
+      const brand = analysisResult.brand || analysisResult.board?.brand || 'Unknown';
+
+      // Insert metadata for training pipeline
+      await supabase.from('board_reference_images').insert({
+        manufacturer: brand,
+        model_series: analysisResult.model || null,
+        image_type: hasLowConfidence ? 'in_situ_dirty' : 'in_situ_clean',
+        image_url: publicUrl,
+        source_type: 'user_contributed',
+        description: `Auto-captured: ${brand} board, ${circuitCount} circuits detected`,
+        device_types_shown: [...new Set(
+          analysisResult.circuits?.map((c: any) => c.device?.category || c.device || 'MCB') || []
+        )],
+        ratings_visible: [...new Set(
+          analysisResult.circuits
+            ?.map((c: any) => c.device?.rating_amps || c.rating)
+            .filter(Boolean)
+            .map((r: number) => `${r}A`) || []
+        )],
+        lighting_conditions: hasLowConfidence ? 'moderate' : 'good',
+        verified: false, // Needs human verification
+        metadata: {
+          scan_session_id: scanSessionId,
+          auto_captured: true,
+          circuit_count: circuitCount,
+          low_confidence_circuits: hasLowConfidence,
+          captured_at: new Date().toISOString(),
+        },
+      });
+
+      console.log(`Training photo auto-saved: ${scanSessionId}`);
+    } catch (error) {
+      // Silent fail - training capture is non-critical
+      console.log('Training auto-save skipped:', error);
+    }
   };
 
   // Utility to calculate base64 image size in MB
@@ -358,22 +439,29 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
     }
 
     setIsAnalyzing(true);
-    
+
+    // Notify parent of progress start - include first photo URL for display during analysis
+    const firstPhotoUrl = capturedImages[0]?.url || null;
+    onProgressUpdate?.('uploading', 5, undefined, firstPhotoUrl || undefined);
     toast.loading('📤 Preparing images for AI analysis...', { id: 'analysis' });
 
     const stage2Timer = setTimeout(() => {
+      onProgressUpdate?.('uploading', 15);
       toast.loading(`📤 Uploading ${capturedImages.length} photo(s) to AI...`, { id: 'analysis' });
     }, 1000);
 
     const stage3Timer = setTimeout(() => {
+      onProgressUpdate?.('detecting', 30);
       toast.loading('🤖 AI reading protective devices (MCBs/RCBOs)...', { id: 'analysis' });
     }, 3000);
 
     const stage4Timer = setTimeout(() => {
+      onProgressUpdate?.('reading', 50);
       toast.loading('🔍 Extracting circuit labels and ratings...', { id: 'analysis' });
     }, 6000);
 
     const stage5Timer = setTimeout(() => {
+      onProgressUpdate?.('verifying', 75);
       toast.loading('✅ Verifying board configuration...', { id: 'analysis' });
     }, 9000);
     
@@ -423,6 +511,15 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
       }
       
       if (data.circuits && data.circuits.length > 0) {
+        // Notify parent of completion with circuit count
+        onProgressUpdate?.('complete', 100, data.circuits.length);
+
+        // Auto-save photo for training pipeline (background, non-blocking)
+        const scanSessionId = uuidv4();
+        if (capturedImages.length > 0) {
+          autoSaveForTraining(capturedImages[0].url, data, scanSessionId);
+        }
+
         const photoText = capturedImages.length > 1 ? `${capturedImages.length} photos` : 'image';
         
         // Check for circuit count mismatch
@@ -500,9 +597,10 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
         const transformedData = {
           circuits: transformedCircuits,
           board: transformedBoard,
-          metadata: { ...data?.metadata, boardSize: resolvedWays },
+          metadata: { ...data?.metadata, boardSize: resolvedWays, scanSessionId },
           warnings: data?.warnings,
-          decisions: data?.decisions
+          decisions: data?.decisions,
+          photoUrl: capturedImages[0]?.url || null, // Pass photo for training
         };
         
         toast.success(`Found ${data.circuits.length} circuits from ${photoText}`);

@@ -4,25 +4,29 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  FileText, 
-  Download, 
-  Save, 
-  Mail, 
-  AlertTriangle, 
-  CheckCircle, 
+import {
+  FileText,
+  Download,
+  Save,
+  Mail,
+  AlertTriangle,
+  CheckCircle,
   Clock,
   Shield,
   Printer,
   Copy,
   Code,
-  Loader2
+  Loader2,
+  Bell
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import PDFExportProgress from '@/components/PDFExportProgress';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 
 interface EICCertificateActionsProps {
   formData: any;
@@ -38,6 +42,8 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   onSaveDraft
 }) => {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
   const [exportStatus, setExportStatus] = useState<'preparing' | 'generating' | 'complete' | 'error'>('preparing');
@@ -45,6 +51,70 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [emailRecipient, setEmailRecipient] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
+
+  // Handle Part P notification creation
+  const handleNotificationCreation = async () => {
+    // Only create notification if Part P checkbox is ticked
+    if (!formData.partPNotification) {
+      return;
+    }
+
+    try {
+      // Get current user
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      // Note: Signature is NOT required for Part P notification tracking
+      // The notification tracks the 30-day submission deadline regardless of signature status
+
+      // Create notification
+      const result = await createNotificationFromCertificate(
+        reportId,
+        'eic',
+        {
+          ...formData,
+          workType: formData.description || formData.installationType || 'Electrical installation',
+          installationAddress: formData.installationAddress,
+          inspectionDate: formData.inspectorDate || formData.installationDate,
+          partPNotification: true // Explicitly requested
+        },
+        user.id
+      );
+
+      if (result.success) {
+        // Invalidate notifications query to update dashboard
+        queryClient.invalidateQueries({ queryKey: ['notifications'] });
+
+        toast({
+          title: "Part P Notification Created",
+          description: "Notification created successfully. Submission required within 30 days.",
+          action: (
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => navigate('/?section=notifications')}
+            >
+              <Bell className="h-3 w-3 mr-1" />
+              View
+            </Button>
+          ),
+        });
+      } else {
+        toast({
+          title: "Notification Failed",
+          description: result.error || "Unable to create Part P notification.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error creating Part P notification:', error);
+      toast({
+        title: "Notification Error",
+        description: "An error occurred while creating the notification.",
+        variant: "destructive",
+      });
+    }
+  };
 
   // Validation checks
   const hasRequiredInstallationDetails = formData.clientName && formData.installationAddress && formData.installationDate;
@@ -133,7 +203,14 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         title: "EIC Generated Successfully",
         description: "Your Electrical Installation Certificate has been generated and downloaded.",
       });
-      
+
+      // Create Part P notification if requested
+      await handleNotificationCreation();
+
+      // Invalidate dashboard queries
+      queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
+      queryClient.invalidateQueries({ queryKey: ['my-reports'] });
+
       // Also call the original handler for any additional processing
       onGenerateCertificate();
       
@@ -189,34 +266,38 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
     setIsSendingEmail(true);
 
     try {
-      // First generate the PDF
-      
-      const pdfData = await generateTestJSON(reportId);
-      
-      const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-eic-pdf', {
-        body: { 
-          formData: pdfData,
-          templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947'
+      // Call the Resend-based edge function to generate PDF and send email
+      const { data: result, error: fnError } = await supabase.functions.invoke('send-certificate-resend', {
+        body: {
+          reportId: reportId,
+          recipientEmail: emailRecipient,
         }
       });
-      
-      if (pdfError || !pdfResult?.success || !pdfResult?.pdfUrl) {
-        throw new Error(pdfError?.message || 'Failed to generate PDF');
+
+      if (fnError) {
+        let errorMessage = fnError.message;
+        try {
+          const parsed = JSON.parse(fnError.message);
+          errorMessage = parsed.error || parsed.message || fnError.message;
+        } catch {
+          // Keep original message
+        }
+        throw new Error(errorMessage);
       }
 
-      // Email functionality removed - PDF generation successful
-      
+      if (!result?.success) {
+        throw new Error(result?.error || 'Failed to send certificate email');
+      }
 
       toast({
-        title: "Certificate Generated Successfully",
-        description: "EIC certificate PDF has been generated",
+        title: "Certificate Sent",
+        description: `EIC certificate sent successfully to ${emailRecipient}`,
       });
 
       setShowEmailDialog(false);
       setEmailRecipient('');
 
     } catch (error) {
-      
       toast({
         title: "Email Failed",
         description: error instanceof Error ? error.message : "Failed to send certificate email.",

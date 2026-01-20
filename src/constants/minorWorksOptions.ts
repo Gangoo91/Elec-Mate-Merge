@@ -21,7 +21,8 @@ export const PROTECTIVE_DEVICE_TYPES: SelectOption[] = [
   { value: 'rcbo-type-f', label: 'RCBO Type F', description: 'For VFDs/inverters (high frequency)' },
   { value: 'rcbo-type-b', label: 'RCBO Type B', description: 'All residual currents incl. smooth DC' },
   // Fuses
-  { value: 'fuse-bs88', label: 'Fuse BS 88', description: 'HRC fuse - industrial/commercial' },
+  { value: 'fuse-bs88', label: 'Fuse BS 88-2', description: 'HRC fuse - industrial/commercial (gG)' },
+  { value: 'fuse-bs88-3', label: 'Fuse BS 88-3', description: 'HRC fuse - domestic (System C)' },
   { value: 'fuse-bs3036', label: 'Fuse BS 3036', description: 'Rewireable fuse (semi-enclosed)' },
   { value: 'fuse-bs1361', label: 'Fuse BS 1361', description: 'Cartridge fuse - cut-out/consumer unit' },
   { value: 'fuse-bs1362', label: 'Fuse BS 1362', description: 'Plug-top cartridge fuse' },
@@ -55,13 +56,20 @@ export const PROTECTIVE_DEVICE_GROUPS = {
 // ============================================================================
 
 export const BS_EN_STANDARDS: SelectOption[] = [
+  // MCBs
   { value: 'BS EN 60898', label: 'BS EN 60898', description: 'MCBs for household and similar' },
+  // RCDs/RCBOs
   { value: 'BS EN 61009', label: 'BS EN 61009', description: 'RCBOs' },
   { value: 'BS EN 61008', label: 'BS EN 61008', description: 'RCDs without overcurrent protection' },
+  { value: 'BS EN 62423', label: 'BS EN 62423', description: 'Type F and Type B RCDs' },
+  // MCCBs
+  { value: 'BS EN 60947-2', label: 'BS EN 60947-2', description: 'MCCBs (circuit-breakers)' },
+  // Fuses
+  { value: 'BS 88-2', label: 'BS 88-2', description: 'HRC fuses (gG industrial)' },
+  { value: 'BS 88-3', label: 'BS 88-3', description: 'HRC fuses (System C domestic)' },
   { value: 'BS 3036', label: 'BS 3036', description: 'Semi-enclosed (rewireable) fuses' },
   { value: 'BS 1361', label: 'BS 1361', description: 'Cartridge fuses for AC circuits' },
-  { value: 'BS 88', label: 'BS 88', description: 'HRC fuses' },
-  { value: 'BS EN 62423', label: 'BS EN 62423', description: 'Type F and Type B RCDs' },
+  { value: 'BS 1362', label: 'BS 1362', description: 'Plug-top cartridge fuses' },
 ];
 
 // ============================================================================
@@ -69,22 +77,37 @@ export const BS_EN_STANDARDS: SelectOption[] = [
 // ============================================================================
 
 export const DEVICE_RATINGS: SelectOption[] = [
-  { value: '3', label: '3A', description: 'Lighting/small loads' },
-  { value: '5', label: '5A', description: 'Lighting circuits' },
+  // Low ratings (fuses, lighting)
+  { value: '2', label: '2A', description: 'BS 88 fuse' },
+  { value: '3', label: '3A', description: 'BS 1362 plug fuse / small MCB' },
+  { value: '4', label: '4A', description: 'BS 88 fuse' },
+  { value: '5', label: '5A', description: 'BS 3036/BS 88-3 fuse' },
   { value: '6', label: '6A', description: 'Lighting circuits' },
   { value: '10', label: '10A', description: 'Small power circuits' },
-  { value: '13', label: '13A', description: 'Ring final/radial' },
+  { value: '13', label: '13A', description: 'BS 1362 plug fuse' },
+  { value: '15', label: '15A', description: 'BS 3036 rewirable fuse' },
   { value: '16', label: '16A', description: 'Immersion/small appliances' },
   { value: '20', label: '20A', description: 'Radial/water heater' },
   { value: '25', label: '25A', description: 'Storage heater' },
+  { value: '30', label: '30A', description: 'BS 3036 rewirable fuse' },
   { value: '32', label: '32A', description: 'Cooker/ring final/EV charger' },
   { value: '40', label: '40A', description: 'Cooker/shower 9.5kW' },
-  { value: '45', label: '45A', description: 'Cooker/shower 10.5kW' },
+  { value: '45', label: '45A', description: 'BS 88-3/BS 3036 fuse' },
   { value: '50', label: '50A', description: 'Large cooker/shower' },
+  { value: '60', label: '60A', description: 'BS 3036 rewirable fuse' },
   { value: '63', label: '63A', description: 'Sub-main/large loads' },
   { value: '80', label: '80A', description: 'Main switch/sub-main' },
   { value: '100', label: '100A', description: 'Main switch/large sub-main' },
   { value: '125', label: '125A', description: 'Main incomer' },
+  // Higher ratings (MCCBs, large fuses)
+  { value: '160', label: '160A', description: 'MCCB/large sub-main' },
+  { value: '200', label: '200A', description: 'MCCB/main incomer' },
+  { value: '250', label: '250A', description: 'MCCB/commercial' },
+  { value: '315', label: '315A', description: 'MCCB/industrial' },
+  { value: '400', label: '400A', description: 'MCCB/industrial' },
+  { value: '500', label: '500A', description: 'MCCB/industrial' },
+  { value: '630', label: '630A', description: 'MCCB/industrial' },
+  { value: '800', label: '800A', description: 'MCCB/large industrial' },
 ];
 
 // Common ratings highlighted for quick selection
@@ -95,14 +118,28 @@ export const COMMON_DEVICE_RATINGS = ['6', '16', '20', '32', '40'];
 // ============================================================================
 
 export const BREAKING_CAPACITIES: SelectOption[] = [
+  // Low capacity - Rewireable fuses (BS 3036)
+  { value: '1', label: '1kA', description: 'BS 3036 rewireable fuse' },
+  { value: '1.5', label: '1.5kA', description: 'BS 3036 rewireable fuse' },
+  { value: '2', label: '2kA', description: 'BS 3036 rewireable fuse' },
   { value: '3', label: '3kA', description: 'Residential (far from transformer)' },
-  { value: '6', label: '6kA', description: 'Standard domestic' },
+  { value: '4', label: '4kA', description: 'BS 3036 rewireable fuse' },
+  // Standard MCB/RCBO range
+  { value: '6', label: '6kA', description: 'Standard domestic MCB/RCBO' },
   { value: '10', label: '10kA', description: 'Enhanced domestic/light commercial' },
-  { value: '15', label: '15kA', description: 'Commercial' },
-  { value: '16', label: '16kA', description: 'Commercial' },
+  { value: '15', label: '15kA', description: 'Commercial MCB/RCBO' },
+  { value: '16', label: '16kA', description: 'Commercial MCCB' },
+  { value: '16.5', label: '16.5kA', description: 'BS 1361 cartridge fuse' },
+  // Commercial/Industrial MCCB range
   { value: '20', label: '20kA', description: 'Industrial/near transformer' },
-  { value: '25', label: '25kA', description: 'Industrial' },
-  { value: '50', label: '50kA', description: 'Heavy industrial' },
+  { value: '25', label: '25kA', description: 'Industrial MCCB/RCBO' },
+  { value: '36', label: '36kA', description: 'Industrial MCCB' },
+  { value: '50', label: '50kA', description: 'Heavy industrial MCCB' },
+  { value: '65', label: '65kA', description: 'Heavy industrial MCCB' },
+  { value: '70', label: '70kA', description: 'Heavy industrial MCCB' },
+  // HRC Fuses - very high breaking capacity
+  { value: '80', label: '80kA', description: 'BS 88 HRC fuse' },
+  { value: '100', label: '100kA', description: 'Large industrial MCCB' },
 ];
 
 // ============================================================================
@@ -222,6 +259,11 @@ export const CONDUCTOR_SIZES: SelectOption[] = [
   { value: '70.0', label: '70.0mm²', description: 'Large installation mains' },
   { value: '95.0', label: '95.0mm²', description: 'Commercial mains' },
   { value: '120.0', label: '120.0mm²', description: 'Large commercial mains' },
+  { value: '150.0', label: '150.0mm²', description: 'Large commercial mains' },
+  { value: '185.0', label: '185.0mm²', description: 'Industrial mains' },
+  { value: '240.0', label: '240.0mm²', description: 'Large industrial' },
+  { value: '300.0', label: '300.0mm²', description: 'Major infrastructure' },
+  { value: '400.0', label: '400.0mm²', description: 'HV/LV substations' },
 ];
 
 // Grouped by typical use
@@ -281,24 +323,46 @@ export const TEST_EQUIPMENT: SelectOption[] = [
   { value: 'Fluke 1664 FC', label: 'Fluke 1664 FC', description: 'Full MFT with wireless' },
   { value: 'Fluke 1663', label: 'Fluke 1663', description: 'Full MFT' },
   { value: 'Fluke 1662', label: 'Fluke 1662', description: 'Basic MFT' },
+  { value: 'Fluke 1654B', label: 'Fluke 1654B', description: 'Multifunction Tester' },
+  { value: 'Fluke 1653B', label: 'Fluke 1653B', description: 'Multifunction Tester' },
   // Megger
+  { value: 'Megger MFT-X1', label: 'Megger MFT-X1', description: 'Advanced MFT with touchscreen' },
+  { value: 'Megger MFT1845', label: 'Megger MFT1845', description: 'Premium MFT with Bluetooth' },
+  { value: 'Megger MFT1835', label: 'Megger MFT1835', description: 'Advanced MFT' },
+  { value: 'Megger MFT1825', label: 'Megger MFT1825', description: 'Full MFT' },
   { value: 'Megger MFT1741', label: 'Megger MFT1741', description: 'Premium MFT' },
   { value: 'Megger MFT1730', label: 'Megger MFT1730', description: 'Standard MFT' },
   { value: 'Megger MFT1721', label: 'Megger MFT1721', description: 'Basic MFT' },
-  { value: 'Megger MFT1835', label: 'Megger MFT1835', description: 'Advanced MFT' },
+  { value: 'Megger MFT1720', label: 'Megger MFT1720', description: 'Entry-level MFT' },
   // Kewtech
+  { value: 'Kewtech KT67DL', label: 'Kewtech KT67DL', description: 'Premium MFT with wireless' },
   { value: 'Kewtech KT66DL', label: 'Kewtech KT66DL', description: 'Premium MFT with Bluetooth' },
   { value: 'Kewtech KT65DL', label: 'Kewtech KT65DL', description: 'Full MFT' },
   { value: 'Kewtech KT64DL', label: 'Kewtech KT64DL', description: 'Standard MFT' },
   { value: 'Kewtech KT63DL', label: 'Kewtech KT63DL', description: 'Basic MFT' },
   // Metrel
-  { value: 'Metrel MI 3152', label: 'Metrel MI 3152', description: 'EurotestXC' },
   { value: 'Metrel MI 3155', label: 'Metrel MI 3155', description: 'EurotestXD' },
+  { value: 'Metrel MI 3152', label: 'Metrel MI 3152', description: 'EurotestXC' },
+  { value: 'Metrel MI 3102H', label: 'Metrel MI 3102H', description: 'EurotestXE' },
   // Seaward
   { value: 'Seaward Apollo 600', label: 'Seaward Apollo 600', description: 'Full MFT' },
   { value: 'Seaward Apollo 500', label: 'Seaward Apollo 500', description: 'Standard MFT' },
+  { value: 'Seaward Supernova', label: 'Seaward Supernova', description: 'Full MFT' },
+  // Di-Log
+  { value: 'Di-Log DL9118', label: 'Di-Log DL9118', description: 'Premium MFT with Bluetooth' },
+  { value: 'Di-Log DL9110', label: 'Di-Log DL9110', description: 'Full MFT' },
+  { value: 'Di-Log DL9117', label: 'Di-Log DL9117', description: 'Standard MFT' },
+  // TIS
+  { value: 'TIS MFT1552', label: 'TIS MFT1552', description: 'Full MFT' },
+  { value: 'TIS MFT1550', label: 'TIS MFT1550', description: 'Standard MFT' },
+  // Robin / Amprobe
+  { value: 'Robin KMP450', label: 'Robin KMP450', description: 'Full MFT' },
+  { value: 'Amprobe Telaris 0100', label: 'Amprobe Telaris 0100', description: 'Full MFT' },
+  // Martindale
+  { value: 'Martindale VI13700', label: 'Martindale VI13700', description: '18th Edition Tester' },
+  { value: 'Martindale HPAT600', label: 'Martindale HPAT600', description: 'PAT Tester' },
   // Other
-  { value: 'other', label: 'Other', description: 'Specify model in serial number field' },
+  { value: 'other', label: 'Other', description: 'Specify model in notes' },
 ];
 
 export const TEST_EQUIPMENT_GROUPS = {
@@ -321,6 +385,22 @@ export const TEST_EQUIPMENT_GROUPS = {
   seaward: {
     label: 'Seaward',
     options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Seaward')),
+  },
+  dilog: {
+    label: 'Di-Log',
+    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Di-Log')),
+  },
+  tis: {
+    label: 'TIS',
+    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('TIS')),
+  },
+  robin: {
+    label: 'Robin / Amprobe',
+    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Robin') || o.value.startsWith('Amprobe')),
+  },
+  martindale: {
+    label: 'Martindale',
+    options: TEST_EQUIPMENT.filter(o => o.value.startsWith('Martindale')),
   },
   other: {
     label: 'Other',
@@ -349,7 +429,20 @@ export const EARTHING_CONDUCTOR_SIZES: SelectOption[] = [
   { value: '16', label: '16mm²', description: 'Main earthing (PME)' },
   { value: '25', label: '25mm²', description: 'Large installation earthing' },
   { value: '35', label: '35mm²', description: 'Commercial installation' },
+  { value: '50', label: '50mm²', description: 'Large commercial' },
+  { value: '70', label: '70mm²', description: 'Industrial' },
+  { value: '95', label: '95mm²', description: 'Large industrial' },
+  { value: '120', label: '120mm²', description: 'Major installation' },
   { value: 'other', label: 'Other', description: 'Specify in notes' },
+];
+
+// ============================================================================
+// Circuit Types (Radial vs Ring)
+// ============================================================================
+
+export const CIRCUIT_TYPES: SelectOption[] = [
+  { value: 'radial', label: 'Radial Circuit', description: 'Single feed circuit from DB to final point' },
+  { value: 'ring', label: 'Ring Final Circuit', description: 'Loop from DB returning to same way (sockets)' },
 ];
 
 // ============================================================================

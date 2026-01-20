@@ -187,30 +187,38 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
     setIsSendingEmail(true);
 
     try {
-      // First generate the PDF
-      const pdfData = await generateTestJSON(reportId);
-      
-      const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-eic-pdf', {
-        body: { 
-          formData: pdfData,
-          templateId: 'B39538E9-8FF1-4882-BC13-70B1C0D30947'
+      // Call the Resend-based edge function to generate PDF and send email
+      const { data: result, error: fnError } = await supabase.functions.invoke('send-certificate-resend', {
+        body: {
+          reportId: reportId,
+          recipientEmail: emailRecipient,
         }
       });
-      
-      if (pdfError || !pdfResult?.success || !pdfResult?.pdfUrl) {
-        throw new Error(pdfError?.message || 'Failed to generate PDF');
+
+      if (fnError) {
+        let errorMessage = fnError.message;
+        try {
+          const parsed = JSON.parse(fnError.message);
+          errorMessage = parsed.error || parsed.message || fnError.message;
+        } catch {
+          // Keep original message
+        }
+        throw new Error(errorMessage);
+      }
+
+      if (!result?.success) {
+        throw new Error(result?.error || 'Failed to send certificate email');
       }
 
       toast({
-        title: "Certificate Generated Successfully",
-        description: "EIC certificate PDF has been generated",
+        title: "Certificate Sent",
+        description: `EIC certificate sent successfully to ${emailRecipient}`,
       });
 
       setShowEmailDialog(false);
       setEmailRecipient('');
 
     } catch (error) {
-      console.error('Email error:', error);
       toast({
         title: "Email Failed",
         description: error instanceof Error ? error.message : "Failed to send certificate email.",

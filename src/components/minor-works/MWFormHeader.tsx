@@ -7,13 +7,16 @@ import {
   Plus,
   MoreHorizontal,
   Loader2,
-  Wrench
+  Wrench,
+  FlaskConical,
+  Trash2
 } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { SyncStatusIndicator } from '@/components/ui/sync-status-indicator';
 import { SyncStatus } from '@/hooks/useCloudSync';
@@ -24,6 +27,8 @@ interface MWFormHeaderProps {
   hasUnsavedChanges?: boolean;
   onManualSave?: () => void;
   onStartNew?: () => void;
+  onDevFill?: () => void;
+  onClearForm?: () => void;
   formData?: any;
   syncState?: { status: SyncStatus; lastSyncTime?: number; errorMessage?: string };
   isOnline?: boolean;
@@ -38,6 +43,8 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
   hasUnsavedChanges = false,
   onManualSave,
   onStartNew,
+  onDevFill,
+  onClearForm,
   formData,
   syncState,
   isOnline = true,
@@ -45,6 +52,8 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
   currentTabLabel = 'Minor Works',
   progressPercentage = 0
 }) => {
+  // Check if in development mode
+  const isDev = import.meta.env.DEV;
   // Get display name - client name or default
   const displayName = formData?.clientName?.trim() || 'Minor Works Certificate';
 
@@ -107,6 +116,21 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
                   )}
                   Save Now
                 </DropdownMenuItem>
+                {isDev && onDevFill && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={onDevFill} className="gap-2 text-purple-400">
+                      <FlaskConical className="h-4 w-4" />
+                      Dev Fill (Test Data)
+                    </DropdownMenuItem>
+                    {onClearForm && (
+                      <DropdownMenuItem onClick={onClearForm} className="gap-2 text-orange-400">
+                        <Trash2 className="h-4 w-4" />
+                        Clear Form
+                      </DropdownMenuItem>
+                    )}
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -125,8 +149,17 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
       <header className="hidden lg:block">
         <div className="card-premium-yellow rounded-2xl p-6 mb-6">
           <div className="flex items-center justify-between">
-            {/* Left: Icon + Title */}
+            {/* Left: Back button + Icon + Title */}
             <div className="flex items-center gap-4">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={onBack}
+                className="h-10 w-10 border-white/20 hover:bg-white/10"
+                title="Back to Inspection & Testing Hub"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
               <div className="p-3 rounded-xl bg-elec-yellow/15 icon-glow-yellow">
                 <Wrench className="h-7 w-7 text-elec-yellow" />
               </div>
@@ -181,14 +214,18 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
                 )}
                 Save
               </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={onBack}
-                className="h-10 w-10 border-white/20 hover:bg-white/10"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </Button>
+              {isDev && onDevFill && (
+                <Button
+                  size="sm"
+                  onClick={onDevFill}
+                  className="h-10 gap-2 border-purple-500/50 hover:bg-purple-500/20 text-purple-400"
+                  variant="outline"
+                  title="Fill with test data (dev only)"
+                >
+                  <FlaskConical className="h-4 w-4" />
+                  Dev Fill
+                </Button>
+              )}
             </div>
           </div>
 

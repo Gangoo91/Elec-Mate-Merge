@@ -188,6 +188,32 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
             Installation History
           </h3>
           <div className="space-y-6">
+            {/* Records Available - IET Model Form Section C */}
+            <div className="space-y-2">
+              <Label>Records/Documentation Available</Label>
+              <RadioGroup
+                value={formData.recordsAvailable || 'no'}
+                onValueChange={(value) => onUpdate('recordsAvailable', value)}
+                className="space-y-3"
+              >
+                <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-card/50 transition-colors">
+                  <RadioGroupItem value="yes" id="records-yes" className="border-white/30" />
+                  <Label htmlFor="records-yes" className="cursor-pointer">Yes - Previous records available</Label>
+                </div>
+                <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-card/50 transition-colors">
+                  <RadioGroupItem value="no" id="records-no" className="border-white/30" />
+                  <Label htmlFor="records-no" className="cursor-pointer">No - No previous records available</Label>
+                </div>
+                <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-card/50 transition-colors">
+                  <RadioGroupItem value="partial" id="records-partial" className="border-white/30" />
+                  <Label htmlFor="records-partial" className="cursor-pointer">Partial - Some records available</Label>
+                </div>
+              </RadioGroup>
+              <p className="text-xs text-muted-foreground">
+                Previous EICRs, EICs, or installation documentation
+              </p>
+            </div>
+
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label>Estimated Age of Installation</Label>

@@ -238,6 +238,116 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
 
         <Separator className="my-6" />
 
+        {/* Supply Measurements at Origin - IET Model Form Section I */}
+        <div className="space-y-3 sm:space-y-4">
+          <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 rounded-lg px-4 py-3">
+            <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-red-400"></div>
+              Supply Measurements at Origin
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="zeAtOrigin">External Earth Loop Impedance (Ze) *</Label>
+              <div className="relative">
+                <Input
+                  id="zeAtOrigin"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={formData.zeAtOrigin || ''}
+                  onChange={(e) => onUpdate('zeAtOrigin', e.target.value)}
+                  placeholder="e.g., 0.35"
+                  className="h-11 text-base touch-manipulation border-white/10 focus:border-red-500 focus:ring-red-500 pr-8"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">Ω</span>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Measured at origin before installation. Typical: TN-S 0.35Ω, TN-C-S 0.35Ω, TT varies
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="ipfAtOrigin">Prospective Fault Current (Ipf) at Origin *</Label>
+              <div className="relative">
+                <Input
+                  id="ipfAtOrigin"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={formData.ipfAtOrigin || ''}
+                  onChange={(e) => onUpdate('ipfAtOrigin', e.target.value)}
+                  placeholder="e.g., 2.5"
+                  className="h-11 text-base touch-manipulation border-white/10 focus:border-red-500 focus:ring-red-500 pr-10"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">kA</span>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Maximum prospective fault current at the origin of the installation
+              </p>
+            </div>
+          </div>
+          {formData.zeAtOrigin && parseFloat(formData.zeAtOrigin) > 0.8 && (
+            <div className="p-3 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-md">
+              <div className="flex items-start gap-2">
+                <AlertCircle className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5" />
+                <div>
+                  <p className="text-sm text-amber-800 dark:text-amber-300 font-medium">High Ze Value</p>
+                  <p className="text-xs text-amber-700 dark:text-amber-400 mt-1">
+                    Ze above 0.8Ω may indicate a TT system or supply issues. Verify earthing arrangement.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <Separator className="my-6" />
+
+        {/* Other Sources of Supply - IET Model Form Section I */}
+        <div className="space-y-3 sm:space-y-4">
+          <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
+            Other Sources of Supply
+          </h3>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="otherSourceOfSupply">Other Source Present</Label>
+              <MobileSelectPicker
+                value={formData.otherSourceOfSupply || ''}
+                onValueChange={(value) => onUpdate('otherSourceOfSupply', value)}
+                options={[
+                  { value: 'none', label: 'None' },
+                  { value: 'solar-pv', label: 'Solar PV' },
+                  { value: 'battery-storage', label: 'Battery Storage' },
+                  { value: 'generator', label: 'Generator' },
+                  { value: 'wind', label: 'Wind Turbine' },
+                  { value: 'ev-charger-v2g', label: 'EV Charger (V2G)' },
+                  { value: 'other', label: 'Other' },
+                ]}
+                placeholder="Select if applicable"
+                title="Other Source of Supply"
+              />
+            </div>
+            {formData.otherSourceOfSupply && formData.otherSourceOfSupply !== 'none' && (
+              <div className="space-y-2">
+                <Label htmlFor="otherSourceDetails">Other Source Details</Label>
+                <Input
+                  id="otherSourceDetails"
+                  value={formData.otherSourceDetails || ''}
+                  onChange={(e) => onUpdate('otherSourceDetails', e.target.value)}
+                  placeholder="e.g., 4kW Solar PV with 5kWh battery storage"
+                  className="h-11 text-base touch-manipulation border-white/10 focus:border-cyan-500 focus:ring-cyan-500"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Include capacity, type, and any relevant installation details
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <Separator className="my-6" />
+
         <div className="space-y-4">
           <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>

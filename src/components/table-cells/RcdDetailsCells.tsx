@@ -28,13 +28,13 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({ result, onUp
   return (
     <>
       {/* Column 13: BS (EN) - RCD */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-40 min-w-[140px] max-w-[140px]">
+      <TableCell className="p-0 h-8 align-middle w-40 min-w-[140px] max-w-[140px]">
         <Select
           name={`rcdBsStandard-${result.id}`}
           value={result.rcdBsStandard || ''}
           onValueChange={handleRcdBsStandardChange}
         >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0 focus:bg-transparent data-[state=open]:bg-transparent">
+          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
             <SelectValue placeholder="BS EN" />
           </SelectTrigger>
           <SelectContent 
@@ -53,13 +53,13 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({ result, onUp
       </TableCell>
 
       {/* Column 14: Type - RCD */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[105px] max-w-[105px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[105px] max-w-[105px]">
         <Select
           name={`rcdType-${result.id}`}
           value={result.rcdType || ''}
           onValueChange={handleRcdTypeChange}
         >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0 focus:bg-transparent data-[state=open]:bg-transparent">
+          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
             <SelectValue placeholder="Type" />
           </SelectTrigger>
           <SelectContent 
@@ -78,13 +78,13 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({ result, onUp
       </TableCell>
 
       {/* Column 15: IΔn (mA) */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-28 min-w-[100px] max-w-[100px]">
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
         <Select
           name={`rcdRating-${result.id}`}
           value={result.rcdRating || ''}
           onValueChange={handleRcdRatingChange}
         >
-          <SelectTrigger className="h-4 text-xs px-0 bg-transparent border-0 rounded-none focus:ring-0 focus:bg-transparent data-[state=open]:bg-transparent">
+          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
             <SelectValue placeholder="mA" />
           </SelectTrigger>
           <SelectContent 
@@ -103,11 +103,11 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({ result, onUp
       </TableCell>
 
       {/* Column 16: Rating (A) - RCD */}
-      <TableCell className="p-0 bg-black h-5 align-middle w-20 min-w-[75px] max-w-[75px]">
+      <TableCell className="p-0 h-8 align-middle w-20 min-w-[75px] max-w-[75px]">
         <ValidatedInput
           value={result.rcdRatingA || ''}
           onChange={(value) => onUpdate(result.id, 'rcdRatingA', value)}
-          className="h-4 text-xs text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50"
+          className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
           placeholder="A"
         />
       </TableCell>

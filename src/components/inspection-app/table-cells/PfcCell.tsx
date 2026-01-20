@@ -13,7 +13,7 @@ const PfcCellComponent: React.FC<PfcCellProps> = ({ result, onUpdate }) => {
   const pfcValue = result.pfc || result.pfcLiveNeutral || '';
   
   return (
-    <TableCell className="p-0 bg-black h-5 align-middle">
+    <TableCell className="p-0 h-8 align-middle w-20 min-w-[75px] max-w-[75px]">
       <ValidatedInput
         value={pfcValue}
         onChange={(value) => {
@@ -21,7 +21,7 @@ const PfcCellComponent: React.FC<PfcCellProps> = ({ result, onUpdate }) => {
           // Also update legacy field for backward compatibility
           onUpdate(result.id, 'pfcLiveNeutral', value);
         }}
-        className="h-4 text-xs text-center px-0 border-0 rounded-none focus-visible:ring-0 focus:bg-blue-50 bg-transparent"
+        className="h-8 text-sm text-center px-1 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus-visible:ring-1 focus-visible:ring-elec-yellow/30"
         placeholder="kA"
       />
     </TableCell>

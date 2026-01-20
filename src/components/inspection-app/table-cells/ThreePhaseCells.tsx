@@ -25,19 +25,19 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
     // Return N/A cells if not three-phase
     return (
       <>
-        <TableCell className="px-2 py-0 bg-purple-50/40 h-10 align-middle text-center text-xs text-muted-foreground">
+        <TableCell className="px-2 py-0 bg-purple-500/10 h-10 align-middle text-center text-xs text-muted-foreground">
           N/A
         </TableCell>
-        <TableCell className="px-2 py-0 bg-purple-50/40 h-10 align-middle text-center text-xs text-muted-foreground">
+        <TableCell className="px-2 py-0 bg-purple-500/10 h-10 align-middle text-center text-xs text-muted-foreground">
           N/A
         </TableCell>
-        <TableCell className="px-2 py-0 bg-purple-50/40 h-10 align-middle text-center text-xs text-muted-foreground">
+        <TableCell className="px-2 py-0 bg-purple-500/10 h-10 align-middle text-center text-xs text-muted-foreground">
           N/A
         </TableCell>
-        <TableCell className="px-2 py-0 bg-purple-50/40 h-10 align-middle text-center text-xs text-muted-foreground">
+        <TableCell className="px-2 py-0 bg-purple-500/10 h-10 align-middle text-center text-xs text-muted-foreground">
           N/A
         </TableCell>
-        <TableCell className="px-2 py-0 bg-purple-50/40 h-10 align-middle text-center text-xs text-muted-foreground">
+        <TableCell className="px-2 py-0 bg-purple-500/10 h-10 align-middle text-center text-xs text-muted-foreground">
           N/A
         </TableCell>
       </>
@@ -47,7 +47,7 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
   return (
     <>
       {/* Phase Rotation (L1-L2-L3 sequence) */}
-      <TableCell className="px-2 py-0 bg-purple-50/40 h-10 align-middle">
+      <TableCell className="px-2 py-0 bg-purple-500/10 h-10 align-middle">
         <div className="flex items-center gap-1">
           <MobileSelectPicker
             value={result.phaseRotation || ''}
@@ -61,6 +61,7 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
             ]}
             placeholder="Select..."
             title="Phase Rotation"
+            triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
           />
           <TooltipProvider>
             <Tooltip>
@@ -80,7 +81,7 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
       </TableCell>
 
       {/* Phase Balance L1 */}
-      <TableCell className="px-2 py-0 bg-purple-50/40 h-10 align-middle">
+      <TableCell className="px-2 py-0 bg-purple-500/10 h-10 align-middle">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -105,7 +106,7 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
       </TableCell>
 
       {/* Phase Balance L2 */}
-      <TableCell className="px-2 py-0 bg-purple-50/40 h-10 align-middle">
+      <TableCell className="px-2 py-0 bg-purple-500/10 h-10 align-middle">
         <ValidatedInput
           value={result.phaseBalanceL2 || ''}
           onChange={(value) => onUpdate(result.id, 'phaseBalanceL2', value)}
@@ -115,7 +116,7 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
       </TableCell>
 
       {/* Phase Balance L3 */}
-      <TableCell className="px-2 py-0 bg-purple-50/40 h-10 align-middle">
+      <TableCell className="px-2 py-0 bg-purple-500/10 h-10 align-middle">
         <ValidatedInput
           value={result.phaseBalanceL3 || ''}
           onChange={(value) => onUpdate(result.id, 'phaseBalanceL3', value)}
@@ -125,7 +126,7 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
       </TableCell>
 
       {/* Line-to-Line Voltage */}
-      <TableCell className="px-2 py-0 bg-purple-50/40 h-10 align-middle">
+      <TableCell className="px-2 py-0 bg-purple-500/10 h-10 align-middle">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -157,14 +158,14 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
 export const PhaseTypeBadge: React.FC<{ phaseType?: '1P' | '3P' | '' }> = ({ phaseType }) => {
   if (!phaseType || phaseType === '1P') {
     return (
-      <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+      <Badge variant="outline" className="text-xs bg-blue-500/20 text-blue-400 border-blue-500/30">
         1P
       </Badge>
     );
   }
 
   return (
-    <Badge variant="outline" className="text-xs bg-purple-50 text-purple-700 border-purple-200">
+    <Badge variant="outline" className="text-xs bg-purple-500/20 text-purple-400 border-purple-500/30">
       3P
     </Badge>
   );

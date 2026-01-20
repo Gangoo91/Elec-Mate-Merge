@@ -416,13 +416,13 @@ const InstrumentationModule7Section2 = () => {
 
         {/* Bottom Navigation */}
         <div className="flex justify-between items-center pt-4 border-t border-white/10">
-          <Link to="../section-1">
+          <Link to="../instrumentation-module-7-section-1">
             <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Button>
           </Link>
-          <Link to="../section-3">
+          <Link to="../instrumentation-module-7-section-3">
             <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />

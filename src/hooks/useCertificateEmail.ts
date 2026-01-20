@@ -1,8 +1,9 @@
 /**
  * useCertificateEmail
  *
- * Hook for sending certificates via email using connected email accounts.
- * Integrates with the send-certificate-email edge function.
+ * Hook for sending certificates via email using Resend.
+ * Integrates with the send-certificate-resend edge function.
+ * No Gmail/Outlook connection required - works immediately.
  */
 
 import { useState, useCallback } from 'react';
@@ -10,7 +11,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 export interface CertificateEmailData {
-  certificateType: 'EICR' | 'EIC';
+  certificateType: 'EICR' | 'EIC' | 'minor-works';
   reportId: string;
   certificateNumber?: string;
   clientName?: string;
@@ -42,38 +43,23 @@ export const useCertificateEmail = (data: CertificateEmailData): UseCertificateE
   const [isLoading, setIsLoading] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [hasEmailConfig, setHasEmailConfig] = useState(false);
+  // Always true for Resend - no user email config needed
+  const [hasEmailConfig] = useState(true);
 
   /**
-   * Check if user has an active email configuration
+   * Check if email can be sent - always true with Resend
    */
   const checkEmailConfig = useCallback(async (): Promise<boolean> => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return false;
-
-      const { data: configs, error: configError } = await supabase
-        .from('user_email_configs')
-        .select('id, provider, is_active')
-        .eq('user_id', user.id)
-        .eq('is_active', true)
-        .limit(1);
-
-      const hasConfig = !configError && configs && configs.length > 0;
-      setHasEmailConfig(hasConfig);
-      return hasConfig;
-    } catch (err) {
-      console.error('Error checking email config:', err);
-      setHasEmailConfig(false);
-      return false;
-    }
+    // With Resend, we don't need user email configuration
+    // Email is sent from the platform's Resend account
+    return true;
   }, []);
 
   /**
-   * Send certificate via email
+   * Send certificate via email using Resend
    */
   const sendCertificateEmail = useCallback(async (params: SendEmailParams): Promise<void> => {
-    const { recipientEmail, cc, customMessage } = params;
+    const { recipientEmail, customMessage } = params;
 
     // Validate email
     if (!recipientEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipientEmail)) {
@@ -85,28 +71,12 @@ export const useCertificateEmail = (data: CertificateEmailData): UseCertificateE
     setIsSent(false);
 
     try {
-      // First check if email config exists
-      const hasConfig = await checkEmailConfig();
-      if (!hasConfig) {
-        throw new Error('No email account connected. Please connect Gmail or Outlook in Settings.');
-      }
-
-      // Call the edge function
-      const { data: result, error: fnError } = await supabase.functions.invoke('send-certificate-email', {
+      // Call the Resend-based edge function
+      const { data: result, error: fnError } = await supabase.functions.invoke('send-certificate-resend', {
         body: {
-          certificateType: data.certificateType,
           reportId: data.reportId,
           recipientEmail,
-          cc: cc?.filter(e => e.trim()),
           customMessage,
-          certificateData: {
-            certificateNumber: data.certificateNumber,
-            clientName: data.clientName,
-            installationAddress: data.installationAddress,
-            inspectionDate: data.inspectionDate,
-            overallAssessment: data.overallAssessment,
-            companyName: data.companyName,
-          }
         }
       });
 
@@ -143,7 +113,7 @@ export const useCertificateEmail = (data: CertificateEmailData): UseCertificateE
     } finally {
       setIsLoading(false);
     }
-  }, [data, checkEmailConfig, toast]);
+  }, [data, toast]);
 
   /**
    * Reset state

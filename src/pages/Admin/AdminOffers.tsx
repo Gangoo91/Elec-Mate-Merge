@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import {
   Select,
@@ -44,6 +45,8 @@ import {
   User,
   Loader2,
   AlertTriangle,
+  Mail,
+  Send,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
@@ -73,6 +76,13 @@ interface Redemption {
   } | null;
 }
 
+interface SentEmail {
+  id: string;
+  email: string;
+  sent_at: string;
+  status: string;
+}
+
 export default function AdminOffers() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
@@ -80,6 +90,8 @@ export default function AdminOffers() {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
   const [deleteOfferId, setDeleteOfferId] = useState<string | null>(null);
+  const [sendOffer, setSendOffer] = useState<Offer | null>(null);
+  const [sendEmail, setSendEmail] = useState("");
 
   // Form state
   const [newOffer, setNewOffer] = useState({
@@ -209,6 +221,57 @@ export default function AdminOffers() {
     },
   });
 
+  // Fetch sent emails for selected offer
+  const { data: sentEmails } = useQuery({
+    queryKey: ["offer-sent-emails", sendOffer?.id],
+    queryFn: async () => {
+      if (!sendOffer?.id) return [];
+      const { data, error } = await supabase.functions.invoke("send-promo-offer", {
+        body: { action: "get_sent", offerId: sendOffer.id },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return (data?.emails || []) as SentEmail[];
+    },
+    enabled: !!sendOffer?.id,
+    staleTime: 30 * 1000, // 30 seconds
+  });
+
+  // Send promo email mutation
+  const sendEmailMutation = useMutation({
+    mutationFn: async ({ offerId, emails }: { offerId: string; emails: string[] }) => {
+      if (emails.length === 1) {
+        const { data, error } = await supabase.functions.invoke("send-promo-offer", {
+          body: { action: "send_single", offerId, email: emails[0] },
+        });
+        if (error) throw error;
+        if (data?.error) throw new Error(data.error);
+        return data;
+      } else {
+        const { data, error } = await supabase.functions.invoke("send-promo-offer", {
+          body: { action: "send_bulk", offerId, emails },
+        });
+        if (error) throw error;
+        if (data?.error) throw new Error(data.error);
+        return data;
+      }
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["offer-sent-emails", sendOffer?.id] });
+      setSendEmail("");
+      const message = data.sent !== undefined
+        ? `Sent to ${data.sent} recipient${data.sent !== 1 ? "s" : ""}${data.failed ? ` (${data.failed} failed)` : ""}`
+        : `Email sent successfully`;
+      toast({
+        title: "Offer sent",
+        description: message,
+      });
+    },
+    onError: (error) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
   const copyToClipboard = (code: string) => {
     const url = `${window.location.origin}/auth/signup?offer=${code}`;
     navigator.clipboard.writeText(url);
@@ -218,6 +281,27 @@ export default function AdminOffers() {
       title: "Link copied",
       description: "Offer link copied to clipboard.",
     });
+  };
+
+  const handleSendOffer = () => {
+    if (!sendOffer?.id || !sendEmail.trim()) return;
+
+    // Parse emails (comma, semicolon, or newline separated)
+    const emails = sendEmail
+      .split(/[,;\n]/)
+      .map((e) => e.trim().toLowerCase())
+      .filter((e) => e && e.includes("@"));
+
+    if (emails.length === 0) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    sendEmailMutation.mutate({ offerId: sendOffer.id, emails });
   };
 
   const getPlanColor = (planId: string) => {
@@ -339,6 +423,16 @@ export default function AdminOffers() {
                   </div>
 
                   <div className="flex items-center gap-2">
+                    {offer.is_active && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setSendOffer(offer)}
+                      >
+                        <Mail className="h-4 w-4 mr-1.5" />
+                        Send
+                      </Button>
+                    )}
                     <Button
                       variant="outline"
                       size="sm"
@@ -570,6 +664,103 @@ export default function AdminOffers() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Send Offer Sheet */}
+      <Sheet open={!!sendOffer} onOpenChange={() => { setSendOffer(null); setSendEmail(""); }}>
+        <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
+          <div className="flex flex-col h-full">
+            {/* Drag Handle */}
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+            </div>
+
+            <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetTitle className="text-left flex items-center gap-2">
+                <Mail className="h-5 w-5 text-orange-400" />
+                Send {sendOffer?.name}
+              </SheetTitle>
+              <p className="text-sm text-muted-foreground text-left">
+                Send this offer to users via email. They'll receive a link to sign up with the discount.
+              </p>
+            </SheetHeader>
+
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {/* Email Input */}
+              <div className="space-y-2">
+                <Label htmlFor="send-email">Email Address(es)</Label>
+                <Textarea
+                  id="send-email"
+                  placeholder="Enter email addresses (one per line or comma-separated)"
+                  value={sendEmail}
+                  onChange={(e) => setSendEmail(e.target.value)}
+                  className="min-h-[100px] touch-manipulation text-base"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Separate multiple emails with commas, semicolons, or new lines
+                </p>
+              </div>
+
+              {/* Send Button */}
+              <Button
+                className="w-full h-12 touch-manipulation bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600"
+                onClick={handleSendOffer}
+                disabled={!sendEmail.trim() || sendEmailMutation.isPending}
+              >
+                {sendEmailMutation.isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-4 w-4 mr-2" />
+                    Send Offer
+                  </>
+                )}
+              </Button>
+
+              {/* Previously Sent Section */}
+              <div className="pt-4 border-t border-border">
+                <h4 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                  <Users className="h-4 w-4 text-muted-foreground" />
+                  Previously Sent ({sentEmails?.length || 0})
+                </h4>
+                {sentEmails?.length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-4">
+                    No emails sent for this offer yet
+                  </p>
+                ) : (
+                  <div className="space-y-2 max-h-[200px] overflow-y-auto">
+                    {sentEmails?.map((sent) => (
+                      <div
+                        key={sent.id}
+                        className="flex items-center justify-between p-3 rounded-xl bg-muted/50"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center shrink-0">
+                            <Mail className="h-4 w-4 text-orange-400" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium truncate max-w-[180px]">
+                              {sent.email}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {formatDistanceToNow(new Date(sent.sent_at), { addSuffix: true })}
+                            </p>
+                          </div>
+                        </div>
+                        <Badge className="bg-green-500/20 text-green-400 text-xs">
+                          {sent.status}
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

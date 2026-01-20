@@ -65,6 +65,7 @@ const AdminDataExport = lazy(() => import("@/pages/Admin/AdminDataExport"));
 const AdminPricingModeration = lazy(() => import("@/pages/Admin/AdminPricingModeration"));
 const AdminDocumentReview = lazy(() => import("@/pages/Admin/AdminDocumentReview"));
 const AdminFounders = lazy(() => import("@/pages/Admin/AdminFounders"));
+const TrainingPhotoUpload = lazy(() => import("@/pages/Admin/TrainingPhotoUpload"));
 const FounderClaim = lazy(() => import("@/pages/founder/FounderClaim"));
 const FounderSignup = lazy(() => import("@/pages/founder/FounderSignup"));
 const FounderSuccess = lazy(() => import("@/pages/founder/FounderSuccess"));
@@ -170,6 +171,7 @@ const AppRouter = () => {
           <Route path="export" element={<LazyRoute><AdminDataExport /></LazyRoute>} />
           <Route path="founders" element={<LazyRoute><AdminFounders /></LazyRoute>} />
           <Route path="system" element={<LazyRoute><AdminSystem /></LazyRoute>} />
+          <Route path="training-upload" element={<LazyRoute><TrainingPhotoUpload /></LazyRoute>} />
         </Route>
 
         {/* Top level routes for shared features */}

@@ -9,7 +9,7 @@ interface RcdTestButtonCellProps {
 
 const RcdTestButtonCellComponent = ({ value, onChange }: RcdTestButtonCellProps) => {
   return (
-    <TableCell className="text-center">
+    <TableCell className="p-0 h-8 align-middle text-center">
       <MobileSelectPicker
         value={value}
         onValueChange={onChange}
@@ -20,6 +20,7 @@ const RcdTestButtonCellComponent = ({ value, onChange }: RcdTestButtonCellProps)
         ]}
         placeholder="Select"
         title="RCD Test Button"
+        triggerClassName="h-8 bg-transparent border-0 hover:bg-muted/20 focus:bg-muted/30"
       />
     </TableCell>
   );

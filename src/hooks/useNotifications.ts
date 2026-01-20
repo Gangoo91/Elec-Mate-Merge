@@ -18,11 +18,17 @@ export interface Notification {
   created_at: string;
   submitted_at: string | null;
   reports?: {
+    id: string;
+    report_id: string;
     certificate_number: string;
     client_name: string | null;
     installation_address: string | null;
     report_type: string;
     status: string;
+    data: {
+      clientEmail?: string;
+      [key: string]: any;
+    } | null;
   };
 }
 
@@ -52,7 +58,7 @@ export const useNotifications = () => {
       if (reportIds.length > 0) {
         const { data: reportsData } = await supabase
           .from('reports')
-          .select('report_id, certificate_number, client_name, installation_address, report_type, status')
+          .select('id, report_id, certificate_number, client_name, installation_address, report_type, status, data')
           .in('report_id', reportIds);
         
         if (reportsData) {

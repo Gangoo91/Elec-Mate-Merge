@@ -24,21 +24,21 @@ export const PhaseTypeCell: React.FC<PhaseTypeCellProps> = ({ result, onUpdate }
   };
 
   return (
-    <TableCell className="px-1 py-0 h-10 align-middle w-14">
+    <TableCell className="p-0 h-8 align-middle w-16 min-w-[60px] max-w-[60px]" style={{ backgroundColor: 'inherit' }}>
       <Select
         value={result.phaseType || '1P'}
         onValueChange={handlePhaseChange}
       >
         <SelectTrigger
-          className="h-7 w-full text-xs bg-transparent border-white/20 hover:border-white/40 focus:border-elec-yellow focus:ring-elec-yellow/20"
+          className="h-8 w-full text-sm bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30"
         >
           <SelectValue placeholder="1P" />
         </SelectTrigger>
-        <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-[100]">
-          <SelectItem value="1P" className="text-xs">
+        <SelectContent className="bg-background border border-border rounded-md z-[100]">
+          <SelectItem value="1P" className="text-sm">
             <span className="font-medium">1P</span>
           </SelectItem>
-          <SelectItem value="3P" className="text-xs">
+          <SelectItem value="3P" className="text-sm">
             <span className="font-medium text-amber-400">3P</span>
           </SelectItem>
         </SelectContent>

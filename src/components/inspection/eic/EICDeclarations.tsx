@@ -676,6 +676,50 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               </div>
             </div>
           </div>
+
+          {/* Part P Notification */}
+          <div className="space-y-3 pt-4 border-t border-border">
+            <div className="space-y-1.5">
+              <h3 className="text-base sm:text-lg font-semibold text-elec-gray flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+                Part P Building Regulations
+              </h3>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                Under Part P of the Building Regulations, notifiable electrical work must be submitted to your
+                Competent Person Scheme (NICEIC/NAPIT) or Local Authority Building Control within 30 days of completion.
+              </p>
+            </div>
+
+            <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+              <div className="flex items-start gap-3">
+                <Checkbox
+                  id="partPNotification"
+                  checked={formData.partPNotification || false}
+                  onCheckedChange={(checked) => onUpdate('partPNotification', checked)}
+                  className="border-amber-500/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 data-[state=checked]:text-black h-6 w-6"
+                />
+                <div className="flex-1">
+                  <Label htmlFor="partPNotification" className="text-base font-medium cursor-pointer leading-relaxed">
+                    This work requires Part P notification
+                  </Label>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Tick this if the work includes: new circuits, consumer unit replacement, work in bathrooms/kitchens,
+                    outdoor installations, or any other notifiable work under Building Regulations.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {formData.partPNotification && (
+              <Alert className="border-amber-500/30 bg-amber-500/5">
+                <AlertTriangle className="h-4 w-4 text-amber-500" />
+                <AlertDescription className="text-amber-300 text-xs">
+                  <strong>Reminder:</strong> A Part P notification will be created when you generate this certificate.
+                  You can track and submit it via Part P Notifications in the app.
+                </AlertDescription>
+              </Alert>
+            )}
+          </div>
         </CardContent>
       </Card>
 

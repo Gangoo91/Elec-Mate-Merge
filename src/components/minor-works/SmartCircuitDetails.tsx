@@ -3,13 +3,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Separator } from '@/components/ui/separator';
 import { Checkbox } from '@/components/ui/checkbox';
 import { SectionHeader } from '@/components/ui/section-header';
-import { Shield, Zap } from 'lucide-react';
-import { 
-  protectiveDeviceTypes, 
+import { Shield } from 'lucide-react';
+import {
+  protectiveDeviceTypes,
   protectiveDeviceRatings,
   cableTypeOptions,
   referenceMethodOptions
@@ -84,58 +84,44 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
               </div>
               
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="protectiveDeviceType">Type *</Label>
-                  <Select value={formData.protectiveDeviceType} onValueChange={(value) => handleUpdate('protectiveDeviceType', value)}>
-                    <SelectTrigger className="justify-start text-left">
-                      <SelectValue placeholder="Select type" className="text-left" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border z-50">
-                      {protectiveDeviceTypes.map(device => (
-                        <SelectItem key={device.value} value={device.value} className="text-left">
-                          <div className="text-left">
-                            <div className="font-medium">{device.label}</div>
-                            <div className="text-xs text-muted-foreground">{device.description}</div>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.protectiveDeviceType}
+                    onValueChange={(value) => handleUpdate('protectiveDeviceType', value)}
+                    options={protectiveDeviceTypes.map(d => ({ value: d.value, label: d.label, description: d.description }))}
+                    placeholder="Select type"
+                    title="Protective Device Type"
+                    triggerClassName="h-11 touch-manipulation bg-elec-gray border-white/30"
+                  />
                 </div>
-                
-                <div>
+
+                <div className="space-y-2">
                   <Label htmlFor="protectiveDeviceRating">Rating (A) *</Label>
-                  <Select value={formData.protectiveDeviceRating} onValueChange={(value) => handleUpdate('protectiveDeviceRating', value)}>
-                    <SelectTrigger className="justify-start text-left">
-                      <SelectValue placeholder="Rating" className="text-left" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border z-50">
-                      {protectiveDeviceRatings.map(rating => (
-                        <SelectItem key={rating.value} value={rating.value} className="text-left">
-                          <div className="text-left">
-                            <div className="font-medium">{rating.label}</div>
-                            <div className="text-xs text-muted-foreground">
-                              Typical: {rating.typical.join(', ')}
-                            </div>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.protectiveDeviceRating}
+                    onValueChange={(value) => handleUpdate('protectiveDeviceRating', value)}
+                    options={protectiveDeviceRatings.map(r => ({ value: r.value, label: r.label, description: `Typical: ${r.typical.join(', ')}` }))}
+                    placeholder="Rating"
+                    title="Device Rating"
+                    triggerClassName="h-11 touch-manipulation bg-elec-gray border-white/30"
+                  />
                 </div>
-                
-                <div>
+
+                <div className="space-y-2">
                   <Label htmlFor="protectiveDeviceKaRating">Short Circuit Capacity (kA)</Label>
-                  <Select value={formData.protectiveDeviceKaRating} onValueChange={(value) => handleUpdate('protectiveDeviceKaRating', value)}>
-                    <SelectTrigger className="justify-start text-left">
-                      <SelectValue placeholder="kA Rating" className="text-left" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border z-50">
-                      <SelectItem value="6" className="text-left">6kA</SelectItem>
-                      <SelectItem value="10" className="text-left">10kA</SelectItem>
-                      <SelectItem value="16" className="text-left">16kA</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.protectiveDeviceKaRating}
+                    onValueChange={(value) => handleUpdate('protectiveDeviceKaRating', value)}
+                    options={[
+                      { value: '6', label: '6kA', description: 'Standard domestic' },
+                      { value: '10', label: '10kA', description: 'Enhanced domestic/light commercial' },
+                      { value: '16', label: '16kA', description: 'Commercial' },
+                    ]}
+                    placeholder="kA Rating"
+                    title="Breaking Capacity"
+                    triggerClassName="h-11 touch-manipulation bg-elec-gray border-white/30"
+                  />
                 </div>
               </div>
               
@@ -193,91 +179,67 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
               </div>
               
               <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-                <div>
+                <div className="space-y-2">
                   <Label htmlFor="liveConductorSize" className="text-sm font-semibold">Live Conductor (mm²) *</Label>
-                  <Select value={formData.liveConductorSize} onValueChange={(value) => handleUpdate('liveConductorSize', value)}>
-                    <SelectTrigger className="justify-start text-left h-12 min-h-[48px]">
-                      <SelectValue placeholder="Select size" className="text-left" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border z-50">
-                      {cableSizeOptions.map(size => (
-                        <SelectItem key={size.value} value={size.value.replace('mm', '')} className="text-left">
-                          {size.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.liveConductorSize}
+                    onValueChange={(value) => handleUpdate('liveConductorSize', value)}
+                    options={cableSizeOptions.map(s => ({ value: s.value.replace('mm', ''), label: s.label }))}
+                    placeholder="Select size"
+                    title="Live Conductor Size"
+                    triggerClassName="h-12 min-h-[48px] touch-manipulation bg-elec-gray border-white/30"
+                  />
                 </div>
-                
-                <div>
+
+                <div className="space-y-2">
                   <Label htmlFor="cpcSize" className="text-sm font-semibold">CPC Size (mm²) *</Label>
-                  <Select value={formData.cpcSize} onValueChange={(value) => handleUpdate('cpcSize', value)}>
-                    <SelectTrigger className="justify-start text-left h-12 min-h-[48px]">
-                      <SelectValue placeholder="Select size" className="text-left" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border z-50">
-                      {cableSizeOptions.map(size => (
-                        <SelectItem key={size.value} value={size.value.replace('mm', '')} className="text-left">
-                          {size.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.cpcSize}
+                    onValueChange={(value) => handleUpdate('cpcSize', value)}
+                    options={cableSizeOptions.map(s => ({ value: s.value.replace('mm', ''), label: s.label }))}
+                    placeholder="Select size"
+                    title="CPC Size"
+                    triggerClassName="h-12 min-h-[48px] touch-manipulation bg-elec-gray border-white/30"
+                  />
                 </div>
-                
-                <div>
+
+                <div className="space-y-2">
                   <Label htmlFor="cableType" className="text-sm font-semibold">Cable Type *</Label>
-                  <Select value={formData.cableType} onValueChange={(value) => handleUpdate('cableType', value)}>
-                    <SelectTrigger className="justify-start text-left h-12 min-h-[48px]">
-                      <SelectValue placeholder="Select type" className="text-left" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border z-50">
-                      {cableTypeOptions.map(cable => (
-                        <SelectItem key={cable.value} value={cable.value} className="text-left">
-                          <div className="text-left">
-                            <div className="font-medium">{cable.label}</div>
-                            <div className="text-xs text-muted-foreground">{cable.description}</div>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.cableType}
+                    onValueChange={(value) => handleUpdate('cableType', value)}
+                    options={cableTypeOptions.map(c => ({ value: c.value, label: c.label, description: c.description }))}
+                    placeholder="Select type"
+                    title="Cable Type"
+                    triggerClassName="h-12 min-h-[48px] touch-manipulation bg-elec-gray border-white/30"
+                  />
                 </div>
-                
-                <div>
+
+                <div className="space-y-2">
                   <Label htmlFor="installationMethod" className="text-sm font-semibold">Installation Method</Label>
-                  <Select value={formData.installationMethod} onValueChange={(value) => handleUpdate('installationMethod', value)}>
-                    <SelectTrigger className="justify-start text-left h-12 min-h-[48px]">
-                      <SelectValue placeholder="Method" className="text-left" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border z-50">
-                      {installationMethods.map(method => (
-                        <SelectItem key={method.value} value={method.value} className="text-left">{method.label}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <MobileSelectPicker
+                    value={formData.installationMethod}
+                    onValueChange={(value) => handleUpdate('installationMethod', value)}
+                    options={installationMethods.map(m => ({ value: m.value, label: m.label }))}
+                    placeholder="Method"
+                    title="Installation Method"
+                    triggerClassName="h-12 min-h-[48px] touch-manipulation bg-elec-gray border-white/30"
+                  />
                 </div>
               </div>
             </div>
 
             {/* Reference Method */}
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="referenceMethod">Reference Method (for rating) *</Label>
-              <Select value={formData.referenceMethod} onValueChange={(value) => handleUpdate('referenceMethod', value)}>
-                <SelectTrigger className="justify-start text-left">
-                  <SelectValue placeholder="Select method" className="text-left" />
-                </SelectTrigger>
-                <SelectContent className="bg-card border-border z-50">
-                  {referenceMethodOptions.map(method => (
-                    <SelectItem key={method.value} value={method.value} className="text-left">
-                      <div className="text-left">
-                        <div className="font-medium">{method.label}</div>
-                        <div className="text-xs text-muted-foreground">{method.description}</div>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={formData.referenceMethod}
+                onValueChange={(value) => handleUpdate('referenceMethod', value)}
+                options={referenceMethodOptions.map(m => ({ value: m.value, label: m.label, description: m.description }))}
+                placeholder="Select method"
+                title="Reference Method (BS 7671)"
+                triggerClassName="h-11 touch-manipulation bg-elec-gray border-white/30"
+              />
             </div>
 
           </CardContent>
