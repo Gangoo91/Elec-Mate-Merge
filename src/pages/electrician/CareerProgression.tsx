@@ -76,20 +76,20 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
         comingSoon && "opacity-70 cursor-not-allowed"
       )}
     >
-      {/* Coming Soon Badge - Mobile optimized */}
+      {/* Coming Soon Badge */}
       {comingSoon && (
-        <div className="absolute top-2 right-2 z-10">
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-amber-500/20 text-amber-400">
-            Soon
+        <div className="absolute top-3 right-3 z-10">
+          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/20 text-amber-400">
+            Coming Soon
           </span>
         </div>
       )}
 
       {/* Badge */}
       {badge && !comingSoon && (
-        <div className="absolute top-2 right-2 z-10">
+        <div className="absolute top-3 right-3 z-10">
           <span className={cn(
-            "px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-medium",
+            "px-2.5 py-1 rounded-full text-xs font-medium",
             color === "purple" && "bg-purple-500/20 text-purple-300",
             color === "blue" && "bg-blue-500/20 text-blue-300",
             color === "green" && "bg-green-500/20 text-green-300",
@@ -101,10 +101,11 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
         </div>
       )}
 
-      {/* Mobile: Horizontal row layout, Desktop: Vertical */}
-      <div className="p-3 sm:p-5 flex sm:flex-col gap-3 sm:gap-0 h-full">
+      {/* Card Content - Always vertical layout for better readability */}
+      <div className="p-4 sm:p-5 flex flex-col h-full">
+        {/* Icon */}
         <div className={cn(
-          "p-2 sm:p-2.5 rounded-lg w-fit sm:mb-4 flex-shrink-0 transition-colors",
+          "p-3 rounded-xl w-fit mb-4 transition-colors",
           color === "purple" && "bg-purple-500/10 group-hover:bg-purple-500/20 group-active:bg-purple-500/25",
           color === "blue" && "bg-blue-500/10 group-hover:bg-blue-500/20 group-active:bg-blue-500/25",
           color === "green" && "bg-green-500/10 group-hover:bg-green-500/20 group-active:bg-green-500/25",
@@ -112,7 +113,7 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
           color === "orange" && "bg-orange-500/10 group-hover:bg-orange-500/20 group-active:bg-orange-500/25",
         )}>
           <Icon className={cn(
-            "h-5 w-5 sm:h-6 sm:w-6",
+            "h-6 w-6 sm:h-7 sm:w-7",
             color === "purple" && "text-purple-400",
             color === "blue" && "text-blue-400",
             color === "green" && "text-green-400",
@@ -121,33 +122,27 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
           )} />
         </div>
 
-        <div className="flex-1 min-w-0 flex flex-col justify-center sm:justify-start">
-          <h3 className={cn(
-            "text-sm sm:text-base font-semibold text-white sm:mb-2 transition-colors leading-tight",
-            !comingSoon && color === "purple" && "group-hover:text-purple-400 group-active:text-purple-400",
-            !comingSoon && color === "blue" && "group-hover:text-blue-400 group-active:text-blue-400",
-            !comingSoon && color === "green" && "group-hover:text-green-400 group-active:text-green-400",
-            !comingSoon && color === "yellow" && "group-hover:text-elec-yellow group-active:text-elec-yellow",
-            !comingSoon && color === "orange" && "group-hover:text-orange-400 group-active:text-orange-400",
-          )}>
-            {title}
-          </h3>
-          <p className="text-xs sm:text-sm text-white/60 leading-snug sm:leading-relaxed sm:flex-1 line-clamp-2 sm:line-clamp-none">
-            {description}
-          </p>
-        </div>
+        {/* Title */}
+        <h3 className={cn(
+          "text-base sm:text-lg font-semibold text-white mb-2 transition-colors leading-tight",
+          !comingSoon && color === "purple" && "group-hover:text-purple-400 group-active:text-purple-400",
+          !comingSoon && color === "blue" && "group-hover:text-blue-400 group-active:text-blue-400",
+          !comingSoon && color === "green" && "group-hover:text-green-400 group-active:text-green-400",
+          !comingSoon && color === "yellow" && "group-hover:text-elec-yellow group-active:text-elec-yellow",
+          !comingSoon && color === "orange" && "group-hover:text-orange-400 group-active:text-orange-400",
+        )}>
+          {title}
+        </h3>
 
-        {/* Chevron - visible on mobile on the right */}
-        {!comingSoon && (
-          <div className="flex sm:hidden items-center text-white/40 group-active:text-white/80">
-            <ChevronRight className="h-5 w-5" />
-          </div>
-        )}
+        {/* Description - Full text shown */}
+        <p className="text-sm text-white/60 leading-relaxed flex-1">
+          {description}
+        </p>
 
-        {/* Desktop explore text */}
+        {/* Explore CTA */}
         {!comingSoon && (
-          <div className="hidden sm:flex items-center gap-1 mt-3 text-white/40 group-hover:text-white/70 group-active:text-white/80 transition-colors">
-            <span className="text-xs font-medium">Explore</span>
+          <div className="flex items-center gap-1.5 mt-4 text-white/50 group-hover:text-white/80 group-active:text-white/80 transition-colors">
+            <span className="text-sm font-medium">Explore</span>
             <ChevronRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
           </div>
         )}
@@ -536,7 +531,7 @@ const CareerProgression = () => {
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4"
+                className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
               >
                 {careerSections.map((section) => (
                   <CareerCard

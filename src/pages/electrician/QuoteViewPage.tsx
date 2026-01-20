@@ -419,39 +419,42 @@ const QuoteViewPage = () => {
         </div>
       </div>
 
-      {/* Hero Card */}
-      <div className={`mx-4 mt-4 rounded-2xl bg-gradient-to-br ${statusInfo?.gradient} border p-6`}>
-        <div className="text-center space-y-2">
-          <p className="text-sm text-muted-foreground font-medium">Quote Total</p>
-          <p className="text-4xl font-bold text-foreground">{formatCurrency(quote.total)}</p>
-          <p className="text-lg text-muted-foreground">{quote.quoteNumber}</p>
-          {quote.acceptance_status === 'accepted' && (
-            <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 mt-2">
-              <CheckCircle className="mr-1 h-3 w-3" />
-              Accepted {quote.accepted_at && format(new Date(quote.accepted_at), 'dd MMM yyyy')}
-            </Badge>
-          )}
-          {isExpired && quote.acceptance_status !== 'accepted' && (
-            <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 mt-2">
-              <AlertTriangle className="mr-1 h-3 w-3" />
-              Expired {Math.abs(daysUntilExpiry || 0)} days ago
-            </Badge>
-          )}
-          {!isExpired && daysUntilExpiry !== null && daysUntilExpiry <= 7 && quote.acceptance_status !== 'accepted' && (
-            <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 mt-2">
-              <Clock className="mr-1 h-3 w-3" />
-              Expires in {daysUntilExpiry} days
-            </Badge>
-          )}
+      {/* Hero Card - Compact on mobile */}
+      <div className={`mx-4 mt-4 rounded-2xl bg-gradient-to-br ${statusInfo?.gradient} border p-5 sm:p-6`}>
+        <div className="text-center space-y-1">
+          <p className="text-xs sm:text-sm text-muted-foreground font-medium uppercase tracking-wider">Quote Total</p>
+          <p className="text-3xl sm:text-4xl font-bold text-foreground">{formatCurrency(quote.total)}</p>
+          <p className="text-sm sm:text-base text-muted-foreground font-mono">{quote.quoteNumber}</p>
+          <div className="pt-2 flex flex-wrap justify-center gap-2">
+            {quote.acceptance_status === 'accepted' && (
+              <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+                <CheckCircle className="mr-1 h-3 w-3" />
+                Accepted {quote.accepted_at && format(new Date(quote.accepted_at), 'dd MMM')}
+              </Badge>
+            )}
+            {isExpired && quote.acceptance_status !== 'accepted' && (
+              <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
+                <AlertTriangle className="mr-1 h-3 w-3" />
+                Expired {Math.abs(daysUntilExpiry || 0)}d ago
+              </Badge>
+            )}
+            {!isExpired && daysUntilExpiry !== null && daysUntilExpiry <= 7 && quote.acceptance_status !== 'accepted' && (
+              <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
+                <Clock className="mr-1 h-3 w-3" />
+                {daysUntilExpiry}d left
+              </Badge>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Action Buttons Grid */}
-      <div className="grid grid-cols-2 gap-3 mx-4 mt-4">
+      {/* Action Buttons - Stack on mobile, 2x2 on larger screens */}
+      <div className="mx-4 mt-4 space-y-2 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-3">
+        {/* Primary action - always full width on mobile */}
         <Button
           onClick={handleDownloadPDF}
           disabled={isDownloading}
-          className="h-14 bg-primary hover:bg-primary/90 rounded-xl touch-manipulation"
+          className="w-full h-12 sm:h-11 bg-primary hover:bg-primary/90 rounded-xl touch-manipulation active:scale-[0.98] font-semibold"
         >
           {isDownloading ? (
             <Loader2 className="h-5 w-5 animate-spin" />
@@ -466,12 +469,12 @@ const QuoteViewPage = () => {
           quote={quote}
           onSuccess={() => toast({ title: "Quote sent", variant: "success" })}
           disabled={!quote.client?.email || !quote.id}
-          className="h-14 rounded-xl"
+          className="w-full h-12 sm:h-11 rounded-xl"
         />
         <Button
           variant="outline"
           onClick={() => navigate(`/electrician/quote-builder/${quote.id}`)}
-          className="h-14 rounded-xl touch-manipulation"
+          className="w-full h-12 sm:h-11 rounded-xl touch-manipulation active:scale-[0.98]"
         >
           <Edit className="h-5 w-5 mr-2" />
           Edit Quote
@@ -479,7 +482,7 @@ const QuoteViewPage = () => {
         <Button
           variant="outline"
           onClick={() => setShowDeleteDialog(true)}
-          className="h-14 rounded-xl text-destructive hover:text-destructive hover:bg-destructive/10 touch-manipulation"
+          className="w-full h-12 sm:h-11 rounded-xl text-destructive hover:text-destructive hover:bg-destructive/10 touch-manipulation active:scale-[0.98]"
         >
           <Trash2 className="h-5 w-5 mr-2" />
           Delete
@@ -524,58 +527,62 @@ const QuoteViewPage = () => {
       {/* Email Tracking - Show for sent quotes awaiting response */}
       {quote.status === 'sent' && quote.acceptance_status === 'pending' && emailTracking?.first_sent_at && (
         <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-          <h3 className="text-sm font-semibold text-muted-foreground mb-3 flex items-center gap-2">
-            <Mail className="h-4 w-4" />
-            Email Tracking
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+              <Mail className="h-4 w-4 text-muted-foreground" />
+              Email Tracking
+            </h3>
             {emailTracking.email_opened_at && (
-              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 ml-2">
+              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
                 <MailOpen className="h-3 w-3 mr-1" />
                 Viewed
               </Badge>
             )}
-          </h3>
+          </div>
 
-          <div className="grid grid-cols-2 gap-3 text-sm mb-4">
-            <div className="p-3 rounded-xl bg-muted/30">
-              <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
-                <Send className="h-3 w-3" />
-                Sent
-              </div>
-              <p className="font-medium">
-                {format(new Date(emailTracking.first_sent_at), 'dd MMM yyyy')}
+          {/* Compact stats row */}
+          <div className="grid grid-cols-4 gap-2 text-center mb-4">
+            <div className="p-2 rounded-lg bg-muted/30">
+              <Send className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground">Sent</p>
+              <p className="text-sm font-semibold">
+                {format(new Date(emailTracking.first_sent_at), 'dd MMM')}
               </p>
             </div>
 
-            <div className="p-3 rounded-xl bg-muted/30">
-              <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
-                <Eye className="h-3 w-3" />
-                Email Opens
-              </div>
-              <p className={`font-medium ${emailTracking.email_opened_at ? 'text-blue-400' : 'text-muted-foreground'}`}>
-                {emailTracking.email_opened_at ? (emailTracking.email_open_count || 1) : 'Not opened'}
+            <div className="p-2 rounded-lg bg-muted/30">
+              <Eye className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground">Opens</p>
+              <p className={`text-sm font-semibold ${emailTracking.email_opened_at ? 'text-blue-400' : 'text-muted-foreground'}`}>
+                {emailTracking.email_opened_at ? (emailTracking.email_open_count || 1) : '—'}
               </p>
             </div>
 
-            <div className="p-3 rounded-xl bg-muted/30">
-              <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
-                <Bell className="h-3 w-3" />
-                Reminders Sent
-              </div>
-              <p className={`font-medium ${(emailTracking.reminder_count || 0) > 0 ? 'text-purple-400' : ''}`}>
-                {emailTracking.reminder_count || 0} of 2
+            <div className="p-2 rounded-lg bg-muted/30">
+              <Bell className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground">Reminders</p>
+              <p className={`text-sm font-semibold ${(emailTracking.reminder_count || 0) > 0 ? 'text-purple-400' : ''}`}>
+                {emailTracking.reminder_count || 0}/2
               </p>
             </div>
 
-            <div className="p-3 rounded-xl bg-muted/30">
-              <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
-                <Clock className="h-3 w-3" />
-                Expires
-              </div>
-              <p className={`font-medium ${isExpired ? 'text-destructive' : daysUntilExpiry !== null && daysUntilExpiry <= 3 ? 'text-amber-400' : ''}`}>
-                {isExpired ? 'Expired' : daysUntilExpiry === 0 ? 'Today' : `${daysUntilExpiry} days`}
+            <div className="p-2 rounded-lg bg-muted/30">
+              <Clock className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
+              <p className="text-xs text-muted-foreground">Expires</p>
+              <p className={`text-sm font-semibold ${isExpired ? 'text-destructive' : daysUntilExpiry !== null && daysUntilExpiry <= 3 ? 'text-amber-400' : ''}`}>
+                {isExpired ? 'Expired' : daysUntilExpiry === 0 ? 'Today' : `${daysUntilExpiry}d`}
               </p>
             </div>
           </div>
+
+          {/* Status message */}
+          <p className="text-xs text-center mb-3 px-2">
+            {emailTracking.email_opened_at ? (
+              <span className="text-blue-400">Client viewed your quote — awaiting decision</span>
+            ) : (
+              <span className="text-muted-foreground">Auto-reminders at 3 & 7 days if no response</span>
+            )}
+          </p>
 
           {/* Send Reminder Button */}
           {!isExpired && (emailTracking.reminder_count || 0) < 2 && (
@@ -583,25 +590,16 @@ const QuoteViewPage = () => {
               onClick={handleSendReminder}
               disabled={isSendingReminder}
               variant="outline"
-              className="w-full h-12 rounded-xl touch-manipulation"
+              className="w-full h-11 rounded-xl touch-manipulation active:scale-[0.98]"
             >
               {isSendingReminder ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : (
                 <Bell className="h-4 w-4 mr-2" />
               )}
-              Send Reminder to Client
+              Send Reminder
             </Button>
           )}
-
-          {/* Status Message */}
-          <div className="mt-3 text-xs text-muted-foreground">
-            {emailTracking.email_opened_at ? (
-              <span className="text-blue-400">Client has viewed your quote - awaiting their decision</span>
-            ) : (
-              <span>Automated reminders sent at 3 days and 7 days if no response</span>
-            )}
-          </div>
         </div>
       )}
 

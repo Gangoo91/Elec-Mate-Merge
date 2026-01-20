@@ -21,6 +21,17 @@ export interface UploadOptions {
   gpsLongitude?: number;
 }
 
+export interface CopyFromInspectionOptions {
+  sourceUrl: string;           // inspection photo URL
+  projectReference: string;    // auto-generated from cert
+  description: string;         // from observation
+  category: string;            // mapped from defect code
+  defectCode?: string;         // C1, C2, C3, etc.
+  location?: string;           // installation address
+  certificateNumber?: string;  // for tags
+  certificateType?: string;    // for tags
+}
+
 export function useSafetyPhotoUpload() {
   const { session } = useAuth();
   const queryClient = useQueryClient();
@@ -285,9 +296,142 @@ export function useSafetyPhotoUpload() {
     });
   }, []);
 
+  // Copy a photo from inspection/certificate to safety photo documentation
+  const copyFromInspection = useCallback(
+    async (options: CopyFromInspectionOptions) => {
+      if (!session?.user?.id) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to copy photos",
+          variant: "destructive",
+        });
+        return null;
+      }
+
+      try {
+        setUploadProgress({
+          status: "uploading",
+          progress: 20,
+          message: "Fetching photo...",
+        });
+
+        // Fetch the image from the source URL
+        const response = await fetch(options.sourceUrl);
+        if (!response.ok) {
+          throw new Error("Failed to fetch source photo");
+        }
+        const blob = await response.blob();
+
+        setUploadProgress({
+          status: "uploading",
+          progress: 50,
+          message: "Copying to Photo Docs...",
+        });
+
+        // Generate filename
+        const fileExt = options.sourceUrl.split(".").pop()?.split("?")[0] || "jpg";
+        const fileName = `${uuidv4()}.${fileExt}`;
+        const filePath = `${session.user.id}/${fileName}`;
+
+        // Upload to safety-photos bucket
+        const { error: uploadError } = await supabase.storage
+          .from("safety-photos")
+          .upload(filePath, blob, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: blob.type || "image/jpeg",
+          });
+
+        if (uploadError) {
+          throw new Error(`Upload failed: ${uploadError.message}`);
+        }
+
+        setUploadProgress({
+          status: "saving",
+          progress: 75,
+          message: "Saving photo details...",
+        });
+
+        // Get public URL
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from("safety-photos").getPublicUrl(filePath);
+
+        // Build tags array
+        const tags: string[] = [];
+        if (options.defectCode) tags.push(options.defectCode);
+        if (options.certificateType) tags.push(options.certificateType);
+        if (options.certificateNumber) tags.push(options.certificateNumber);
+
+        // Create database record
+        const { data: photoData, error: dbError } = await supabase
+          .from("safety_photos")
+          .insert({
+            user_id: session.user.id,
+            filename: fileName,
+            file_url: publicUrl,
+            description: options.description,
+            category: options.category,
+            location: options.location || null,
+            tags: tags.length > 0 ? tags : null,
+            project_reference: options.projectReference,
+            file_size: blob.size,
+            mime_type: blob.type || "image/jpeg",
+          })
+          .select()
+          .single();
+
+        if (dbError) {
+          // Clean up uploaded file if database insert fails
+          await supabase.storage.from("safety-photos").remove([filePath]);
+          throw new Error(`Failed to save photo: ${dbError.message}`);
+        }
+
+        setUploadProgress({
+          status: "complete",
+          progress: 100,
+          message: "Photo copied!",
+        });
+
+        // Invalidate queries to refresh lists
+        queryClient.invalidateQueries({ queryKey: ["safety-photos"] });
+        queryClient.invalidateQueries({ queryKey: ["safety-photo-stats"] });
+        queryClient.invalidateQueries({ queryKey: ["safety-photo-projects"] });
+
+        // Reset progress after short delay
+        setTimeout(() => {
+          setUploadProgress({
+            status: "idle",
+            progress: 0,
+            message: "",
+          });
+        }, 1500);
+
+        return photoData;
+      } catch (error: any) {
+        console.error("Copy from inspection error:", error);
+        setUploadProgress({
+          status: "error",
+          progress: 0,
+          message: error.message || "Copy failed",
+        });
+
+        toast({
+          title: "Copy failed",
+          description: error.message || "Failed to copy photo to Photo Docs",
+          variant: "destructive",
+        });
+
+        return null;
+      }
+    },
+    [session, queryClient]
+  );
+
   return {
     uploadPhoto,
     uploadMultiple,
+    copyFromInspection,
     uploadProgress,
     resetProgress,
     isUploading: uploadProgress.status !== "idle" && uploadProgress.status !== "complete" && uploadProgress.status !== "error",

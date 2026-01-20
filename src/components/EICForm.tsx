@@ -13,6 +13,7 @@ import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { checkAllResultsCompliance } from '@/utils/autoRegChecker';
 import { getCableSizeForRating, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
+import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import EICFormHeader from './eic/EICFormHeader';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
@@ -935,63 +936,70 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
   }
 
   return (
-    <>
-      <div className="p-2 sm:p-4 space-y-3 sm:space-y-6">
-        {/* Design Source Banner */}
-        {(formData as any).designSourceId && (
-          <Alert className="bg-elec-yellow/10 border-elec-yellow/30">
-            <Zap className="h-4 w-4 text-elec-yellow" />
-            <AlertDescription className="text-elec-yellow">
-              <span className="font-medium">Circuit Designer Integration:</span>{' '}
-              {formData.scheduleOfTests?.length || 0} circuits pre-filled with expected test values. Enter actual readings on-site.
-            </AlertDescription>
-          </Alert>
-        )}
+    <CertificatePhotoProvider
+      certificateNumber={formData.certificateNumber || ''}
+      certificateType="eic"
+      clientName={formData.clientName || ''}
+      installationAddress={formData.installationAddress || formData.clientAddress || ''}
+    >
+      <>
+        <div className="p-2 sm:p-4 space-y-3 sm:space-y-6">
+          {/* Design Source Banner */}
+          {(formData as any).designSourceId && (
+            <Alert className="bg-elec-yellow/10 border-elec-yellow/30">
+              <Zap className="h-4 w-4 text-elec-yellow" />
+              <AlertDescription className="text-elec-yellow">
+                <span className="font-medium">Circuit Designer Integration:</span>{' '}
+                {formData.scheduleOfTests?.length || 0} circuits pre-filled with expected test values. Enter actual readings on-site.
+              </AlertDescription>
+            </Alert>
+          )}
 
-        <EICFormHeader
-          onBack={onBack}
-          isSaving={isSaving}
-          hasUnsavedChanges={hasUnsavedChanges}
-          onManualSave={handleSaveDraft}
-          onStartNew={handleStartNew}
-          formData={formData}
-          syncState={syncState}
-          isOnline={isOnline}
-          isAuthenticated={isAuthenticated}
-          currentTab={currentTabIndex}
-          currentTabLabel={getCurrentTabLabel ? getCurrentTabLabel() : ''}
-          progressPercentage={getProgressPercentage()}
-          completedSections={completedSections}
-          onOpenBoardScan={() => setShowBoardScan(true)}
-        />
-        
-        <div className="px-2 md:px-4">
-          <EICFormTabs
-            currentTab={currentTab}
-            onTabChange={handleTabChange}
-            canAccessTab={canAccessTab}
-            isTabComplete={isTabComplete}
+          <EICFormHeader
+            onBack={onBack}
+            isSaving={isSaving}
+            hasUnsavedChanges={hasUnsavedChanges}
+            onManualSave={handleSaveDraft}
+            onStartNew={handleStartNew}
             formData={formData}
-            onUpdate={handleUpdate}
-            tabNavigationProps={tabNavigationProps}
-            observationsProps={observationsProps}
-            onGenerateCertificate={handleGenerateCertificate}
-            onSaveDraft={handleSaveDraft}
-            canGenerateCertificate={canGenerateCertificate()}
+            syncState={syncState}
+            isOnline={isOnline}
+            isAuthenticated={isAuthenticated}
+            currentTab={currentTabIndex}
+            currentTabLabel={getCurrentTabLabel ? getCurrentTabLabel() : ''}
+            progressPercentage={getProgressPercentage()}
+            completedSections={completedSections}
+            onOpenBoardScan={() => setShowBoardScan(true)}
           />
-        </div>
-      </div>
 
-      {/* Auto-save dialog removed - use Save Points instead */}
-      
-      <StartNewEICRDialog
-        isOpen={showStartNewDialog}
-        onClose={() => setShowStartNewDialog(false)}
-        onConfirm={confirmStartNew}
-        onDuplicate={handleDuplicate}
-        hasUnsavedChanges={hasUnsavedChanges}
-      />
-    </>
+          <div className="px-2 md:px-4">
+            <EICFormTabs
+              currentTab={currentTab}
+              onTabChange={handleTabChange}
+              canAccessTab={canAccessTab}
+              isTabComplete={isTabComplete}
+              formData={formData}
+              onUpdate={handleUpdate}
+              tabNavigationProps={tabNavigationProps}
+              observationsProps={observationsProps}
+              onGenerateCertificate={handleGenerateCertificate}
+              onSaveDraft={handleSaveDraft}
+              canGenerateCertificate={canGenerateCertificate()}
+            />
+          </div>
+        </div>
+
+        {/* Auto-save dialog removed - use Save Points instead */}
+
+        <StartNewEICRDialog
+          isOpen={showStartNewDialog}
+          onClose={() => setShowStartNewDialog(false)}
+          onConfirm={confirmStartNew}
+          onDuplicate={handleDuplicate}
+          hasUnsavedChanges={hasUnsavedChanges}
+        />
+      </>
+    </CertificatePhotoProvider>
   );
 };
 

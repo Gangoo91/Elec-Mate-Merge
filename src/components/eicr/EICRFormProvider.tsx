@@ -9,10 +9,11 @@ import { useQueryClient } from '@tanstack/react-query';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import OfflineBanner from '@/components/OfflineBanner';
 import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
-import { 
-  findCustomerByName, 
-  createCustomerFromCertificate, 
-  linkCustomerToReport 
+import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
+import {
+  findCustomerByName,
+  createCustomerFromCertificate,
+  linkCustomerToReport
 } from '@/utils/customerHelper';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -674,25 +675,32 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
 
   return (
     <EICRFormContext.Provider value={contextValue}>
-      {syncState.queuedChanges > 0 && (
-        <OfflineBanner 
-          queuedChanges={syncState.queuedChanges} 
-          isOnline={isOnline}
-          onRetry={processOfflineQueue}
+      <CertificatePhotoProvider
+        certificateNumber={formData.certificateNumber || ''}
+        certificateType="eicr"
+        clientName={formData.clientName || ''}
+        installationAddress={formData.installationAddress || formData.clientAddress || ''}
+      >
+        {syncState.queuedChanges > 0 && (
+          <OfflineBanner
+            queuedChanges={syncState.queuedChanges}
+            isOnline={isOnline}
+            onRetry={processOfflineQueue}
+          />
+        )}
+        {children}
+        <CreateCustomerDialog
+          open={showCustomerDialog}
+          onOpenChange={setShowCustomerDialog}
+          onConfirm={handleCreateCustomer}
+          prefillData={{
+            name: formData.clientName || '',
+            email: formData.clientEmail || '',
+            phone: formData.clientPhone || '',
+            address: formData.installationAddress || formData.clientAddress || '',
+          }}
         />
-      )}
-      {children}
-      <CreateCustomerDialog
-        open={showCustomerDialog}
-        onOpenChange={setShowCustomerDialog}
-        onConfirm={handleCreateCustomer}
-        prefillData={{
-          name: formData.clientName || '',
-          email: formData.clientEmail || '',
-          phone: formData.clientPhone || '',
-          address: formData.installationAddress || formData.clientAddress || '',
-        }}
-      />
+      </CertificatePhotoProvider>
     </EICRFormContext.Provider>
   );
 };

@@ -33,6 +33,66 @@ export interface SearchProgress {
   isSearching: boolean;
 }
 
+// Keywords that indicate electrical industry jobs (case-insensitive matching)
+const ELECTRICAL_KEYWORDS = [
+  // Core electrical roles
+  'electrician', 'electrical', 'sparky', 'spark',
+  // Specific electrical work
+  'wiring', 'rewire', 'cable', 'cabling',
+  // Green/renewable
+  'ev ', 'ev-', 'solar', 'renewable', 'battery storage', 'heat pump',
+  // Testing & compliance
+  'commissioning', 'testing', 'inspection', 'eicr', 'eic', '18th edition', 'bs7671',
+  // Design & engineering
+  'electrical design', 'electrical engineer', 'building services', 'm&e', 'mep',
+  // Installation types
+  'fire alarm', 'security system', 'intruder alarm', 'cctv', 'access control',
+  'data install', 'network install', 'fibre',
+  // Sectors
+  'industrial electric', 'commercial electric', 'domestic electric',
+  // Apprenticeships
+  'electrical apprentice', 'apprentice electric',
+  // Maintenance
+  'electrical maintenance', 'building maintenance electric',
+  // Management/progression roles
+  'electrical project', 'electrical supervisor', 'electrical manager', 'contracts manager electric',
+  'site manager electric', 'foreman electric',
+  // Related trades that electricians do
+  'pat testing', 'emergency lighting', 'led', 'lighting',
+];
+
+// Titles to explicitly exclude (non-electrical trades)
+const EXCLUDED_TITLES = [
+  'joiner', 'carpenter', 'plumber', 'plumbing', 'gas engineer', 'gas fitter',
+  'bricklayer', 'plasterer', 'painter', 'decorator', 'roofer', 'scaffolder',
+  'groundworker', 'labourer', 'cleaner', 'driver', 'warehouse', 'forklift',
+  'chef', 'cook', 'retail', 'sales assistant', 'receptionist', 'admin',
+  'nurse', 'carer', 'teacher', 'accountant', 'solicitor',
+];
+
+// Check if a job is electrical-related
+const isElectricalJob = (job: UnifiedJob): boolean => {
+  const titleLower = (job.title || '').toLowerCase();
+  const descLower = (job.description || '').toLowerCase();
+  const combined = `${titleLower} ${descLower}`;
+
+  // First check exclusions - if title contains excluded terms, reject
+  for (const excluded of EXCLUDED_TITLES) {
+    if (titleLower.includes(excluded)) {
+      return false;
+    }
+  }
+
+  // Then check if it contains electrical keywords
+  for (const keyword of ELECTRICAL_KEYWORDS) {
+    if (combined.includes(keyword)) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 export const useUnifiedJobSearch = () => {
   const [jobs, setJobs] = useState<UnifiedJob[]>([]);
   const [loading, setLoading] = useState(false);
@@ -47,31 +107,38 @@ export const useUnifiedJobSearch = () => {
     isSearching: false
   });
 
-  // Fetch initial jobs on mount - no search required
+  // Fetch initial jobs on mount - filtered to electrical industry only
   const fetchInitialJobs = async () => {
     try {
       setLoading(true);
-      console.log('📋 Fetching initial jobs from job_listings...');
+      console.log('📋 Fetching electrical jobs from job_listings...');
 
+      // Fetch more jobs initially since we'll filter client-side
+      // Use database-level filter for common electrical terms to reduce data transfer
       const { data, error } = await supabase
         .from('job_listings')
         .select('*')
+        .or('title.ilike.%electric%,title.ilike.%sparky%,title.ilike.%wiring%,title.ilike.%solar%,title.ilike.%ev %,title.ilike.%commissioning%,title.ilike.%fire alarm%,title.ilike.%cable%,title.ilike.%testing%,description.ilike.%electrician%,description.ilike.%electrical%')
         .order('posted_date', { ascending: false })
-        .limit(100);
+        .limit(500);
 
       if (error) throw error;
 
-      const initialJobs = data?.map(job => ({
-        ...job,
-        is_fresh: isJobFresh(job.updated_at)
-      })) || [];
+      // Apply additional client-side filtering for precision
+      const electricalJobs = (data || [])
+        .map(job => ({
+          ...job,
+          is_fresh: isJobFresh(job.updated_at)
+        }))
+        .filter(isElectricalJob)
+        .slice(0, 150); // Limit final results
 
-      console.log(`✅ Loaded ${initialJobs.length} initial jobs`);
-      setJobs(initialJobs);
+      console.log(`✅ Loaded ${electricalJobs.length} electrical jobs (filtered from ${data?.length || 0})`);
+      setJobs(electricalJobs);
 
       setSearchProgress({
-        sources: [{ source: 'Database', status: 'completed', jobCount: initialJobs.length }],
-        totalJobsFound: initialJobs.length,
+        sources: [{ source: 'Database', status: 'completed', jobCount: electricalJobs.length }],
+        totalJobsFound: electricalJobs.length,
         completedSources: 1,
         totalSources: 1,
         isSearching: false
@@ -105,14 +172,19 @@ export const useUnifiedJobSearch = () => {
         query = query.ilike('location', `%${location}%`);
       }
 
-      const { data, error } = await query.limit(200);
+      const { data, error } = await query.limit(500);
 
       if (error) throw error;
 
-      return data?.map(job => ({
-        ...job,
-        is_fresh: isJobFresh(job.updated_at)
-      })) || [];
+      // Filter to electrical jobs only and apply freshness indicator
+      const electricalJobs = (data || [])
+        .map(job => ({
+          ...job,
+          is_fresh: isJobFresh(job.updated_at)
+        }))
+        .filter(isElectricalJob);
+
+      return electricalJobs;
     } catch (error) {
       console.error('Error searching database jobs:', error);
       return [];

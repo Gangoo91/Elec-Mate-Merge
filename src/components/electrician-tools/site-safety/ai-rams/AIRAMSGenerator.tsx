@@ -396,7 +396,7 @@ export const AIRAMSGenerator: React.FC = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/electrician/site-safety')}
             className="h-9 w-9 rounded-lg hover:bg-white/10"
           >
             <ArrowLeft className="h-4 w-4" />

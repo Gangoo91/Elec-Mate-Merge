@@ -10,6 +10,7 @@ import { sanitizeTextInput } from '@/utils/inputSanitization';
 import OfflineBanner from '@/components/OfflineBanner';
 import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
 import { DraftRecoveryDialog } from '@/components/ui/DraftRecoveryDialog';
+import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import {
   findCustomerByName,
   createCustomerFromCertificate,
@@ -724,31 +725,38 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
 
   return (
     <EICRFormContext.Provider value={contextValue}>
-      {syncState.queuedChanges > 0 && (
-        <OfflineBanner
-          queuedChanges={syncState.queuedChanges}
-          isOnline={isOnline}
+      <CertificatePhotoProvider
+        certificateNumber={formData.certificateNumber || ''}
+        certificateType="eicr"
+        clientName={formData.clientName || ''}
+        installationAddress={formData.installationAddress || formData.clientAddress || ''}
+      >
+        {syncState.queuedChanges > 0 && (
+          <OfflineBanner
+            queuedChanges={syncState.queuedChanges}
+            isOnline={isOnline}
+          />
+        )}
+        {children}
+        <CreateCustomerDialog
+          open={showCustomerDialog}
+          onOpenChange={setShowCustomerDialog}
+          onConfirm={handleCreateCustomer}
+          prefillData={{
+            name: formData.clientName || '',
+            email: formData.clientEmail || '',
+            phone: formData.clientPhone || '',
+            address: formData.installationAddress || formData.clientAddress || '',
+          }}
         />
-      )}
-      {children}
-      <CreateCustomerDialog
-        open={showCustomerDialog}
-        onOpenChange={setShowCustomerDialog}
-        onConfirm={handleCreateCustomer}
-        prefillData={{
-          name: formData.clientName || '',
-          email: formData.clientEmail || '',
-          phone: formData.clientPhone || '',
-          address: formData.installationAddress || formData.clientAddress || '',
-        }}
-      />
-      <DraftRecoveryDialog
-        open={showDraftRecovery}
-        reportType="eicr"
-        draftPreview={draftPreview}
-        onRecover={handleRecoverDraft}
-        onDiscard={handleDiscardDraft}
-      />
+        <DraftRecoveryDialog
+          open={showDraftRecovery}
+          reportType="eicr"
+          draftPreview={draftPreview}
+          onRecover={handleRecoverDraft}
+          onDiscard={handleDiscardDraft}
+        />
+      </CertificatePhotoProvider>
     </EICRFormContext.Provider>
   );
 };

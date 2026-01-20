@@ -1,10 +1,12 @@
 import { useCallback, useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Trash2, Share2, MapPin, Folder, Calendar, MoreVertical, Download, AlertTriangle } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Trash2, Share2, MapPin, Folder, Calendar, MoreVertical, Download, AlertTriangle, Tag, FolderPlus, Edit2 } from "lucide-react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Input } from "@/components/ui/input";
 import { SafetyPhoto, getCategoryColor, getCategoryLabel } from "@/hooks/useSafetyPhotos";
 import { useSwipeable } from "react-swipeable";
 import { format } from "date-fns";
+import { toast } from "@/hooks/use-toast";
 
 interface PhotoViewerProps {
   photo: SafetyPhoto;
@@ -30,6 +32,11 @@ export default function PhotoViewer({
   const [showDetails, setShowDetails] = useState(false);
   const [showEditSheet, setShowEditSheet] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showActionMenu, setShowActionMenu] = useState(false);
+  const [showTagInput, setShowTagInput] = useState(false);
+  const [showProjectInput, setShowProjectInput] = useState(false);
+  const [newTag, setNewTag] = useState("");
+  const [newProject, setNewProject] = useState(photo.project_reference || "");
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const imageRef = useRef<HTMLDivElement>(null);
@@ -124,6 +131,43 @@ export default function PhotoViewer({
     }
   }, [photo]);
 
+  // Handle add tag
+  const handleAddTag = useCallback(() => {
+    if (!newTag.trim() || !onEdit) return;
+
+    const existingTags = photo.tags || [];
+    if (existingTags.includes(newTag.trim())) {
+      toast({
+        title: "Tag already exists",
+        description: `"${newTag.trim()}" is already added to this photo`,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    onEdit(photo, { tags: [...existingTags, newTag.trim()] });
+    setNewTag("");
+    setShowTagInput(false);
+    toast({
+      title: "Tag added",
+      description: `Added "${newTag.trim()}" to photo`,
+    });
+  }, [newTag, photo, onEdit]);
+
+  // Handle update project
+  const handleUpdateProject = useCallback(() => {
+    if (!onEdit) return;
+
+    onEdit(photo, { project_reference: newProject.trim() || null });
+    setShowProjectInput(false);
+    toast({
+      title: newProject.trim() ? "Project updated" : "Removed from project",
+      description: newProject.trim()
+        ? `Photo added to "${newProject.trim()}"`
+        : "Photo removed from project",
+    });
+  }, [newProject, photo, onEdit]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -146,7 +190,7 @@ export default function PhotoViewer({
           </span>
 
           <button
-            onClick={() => setShowDetails(!showDetails)}
+            onClick={() => setShowActionMenu(true)}
             className="w-10 h-10 flex items-center justify-center rounded-full active:bg-white/10 transition-colors touch-manipulation"
           >
             <MoreVertical className="h-5 w-5 text-white" />
@@ -302,6 +346,206 @@ export default function PhotoViewer({
                 className="flex-1 h-11 rounded-xl bg-red-500 text-sm font-semibold text-white touch-manipulation active:bg-red-600 disabled:opacity-50"
               >
                 {isDeleting ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+          <div className="h-[env(safe-area-inset-bottom)]" />
+        </SheetContent>
+      </Sheet>
+
+      {/* Action Menu Sheet */}
+      <Sheet open={showActionMenu} onOpenChange={setShowActionMenu}>
+        <SheetContent side="bottom" className="h-auto rounded-t-2xl p-0">
+          <div className="p-3">
+            <div className="w-8 h-1 bg-white/20 rounded-full mx-auto mb-4" />
+            <h3 className="text-sm font-semibold text-white text-center mb-4">Photo Actions</h3>
+
+            <div className="space-y-1">
+              {/* Add Tag */}
+              <button
+                onClick={() => {
+                  setShowActionMenu(false);
+                  setShowTagInput(true);
+                }}
+                disabled={!onEdit}
+                className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/10 transition-colors touch-manipulation disabled:opacity-40"
+              >
+                <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center">
+                  <Tag className="h-5 w-5 text-blue-400" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-medium text-white">Add Tag</p>
+                  <p className="text-xs text-white/50">
+                    {photo.tags?.length ? `${photo.tags.length} tags` : "No tags yet"}
+                  </p>
+                </div>
+              </button>
+
+              {/* Add to Project */}
+              <button
+                onClick={() => {
+                  setShowActionMenu(false);
+                  setNewProject(photo.project_reference || "");
+                  setShowProjectInput(true);
+                }}
+                disabled={!onEdit}
+                className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/10 transition-colors touch-manipulation disabled:opacity-40"
+              >
+                <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
+                  <FolderPlus className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-medium text-white">
+                    {photo.project_reference ? "Change Project" : "Add to Project"}
+                  </p>
+                  <p className="text-xs text-white/50">
+                    {photo.project_reference || "Not in a project"}
+                  </p>
+                </div>
+              </button>
+
+              {/* Share */}
+              <button
+                onClick={() => {
+                  setShowActionMenu(false);
+                  handleShare();
+                }}
+                className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/10 transition-colors touch-manipulation"
+              >
+                <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                  <Share2 className="h-5 w-5 text-emerald-400" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-medium text-white">Share</p>
+                  <p className="text-xs text-white/50">Share or copy link</p>
+                </div>
+              </button>
+
+              {/* Download */}
+              <button
+                onClick={() => {
+                  setShowActionMenu(false);
+                  handleDownload();
+                }}
+                className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/10 transition-colors touch-manipulation"
+              >
+                <div className="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center">
+                  <Download className="h-5 w-5 text-purple-400" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-medium text-white">Download</p>
+                  <p className="text-xs text-white/50">Save to device</p>
+                </div>
+              </button>
+
+              {/* Delete */}
+              <button
+                onClick={() => {
+                  setShowActionMenu(false);
+                  setShowDeleteConfirm(true);
+                }}
+                className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-red-500/10 active:bg-red-500/10 transition-colors touch-manipulation"
+              >
+                <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
+                  <Trash2 className="h-5 w-5 text-red-400" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-medium text-red-400">Delete Photo</p>
+                  <p className="text-xs text-white/50">Permanently remove</p>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div className="h-[env(safe-area-inset-bottom)]" />
+        </SheetContent>
+      </Sheet>
+
+      {/* Add Tag Sheet */}
+      <Sheet open={showTagInput} onOpenChange={setShowTagInput}>
+        <SheetContent side="bottom" className="h-auto rounded-t-2xl p-0">
+          <div className="p-3">
+            <div className="w-8 h-1 bg-white/20 rounded-full mx-auto mb-4" />
+            <h3 className="text-sm font-semibold text-white text-center mb-4">Add Tag</h3>
+
+            {/* Existing tags */}
+            {photo.tags && photo.tags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {photo.tags.map((tag, i) => (
+                  <span
+                    key={i}
+                    className="px-2.5 py-1 rounded-full bg-white/10 text-xs text-white/70"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <Input
+              placeholder="Enter tag name..."
+              value={newTag}
+              onChange={(e) => setNewTag(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleAddTag()}
+              autoFocus
+              className="h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-elec-yellow/50 text-sm touch-manipulation mb-3"
+            />
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowTagInput(false)}
+                className="flex-1 h-11 rounded-xl bg-white/10 text-sm font-medium text-white touch-manipulation active:bg-white/15"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleAddTag}
+                disabled={!newTag.trim()}
+                className="flex-1 h-11 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:bg-yellow-400 disabled:opacity-50"
+              >
+                Add Tag
+              </button>
+            </div>
+          </div>
+          <div className="h-[env(safe-area-inset-bottom)]" />
+        </SheetContent>
+      </Sheet>
+
+      {/* Add to Project Sheet */}
+      <Sheet open={showProjectInput} onOpenChange={setShowProjectInput}>
+        <SheetContent side="bottom" className="h-auto rounded-t-2xl p-0">
+          <div className="p-3">
+            <div className="w-8 h-1 bg-white/20 rounded-full mx-auto mb-4" />
+            <h3 className="text-sm font-semibold text-white text-center mb-4">
+              {photo.project_reference ? "Change Project" : "Add to Project"}
+            </h3>
+
+            <Input
+              placeholder="Project name or reference..."
+              value={newProject}
+              onChange={(e) => setNewProject(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleUpdateProject()}
+              autoFocus
+              className="h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-elec-yellow/50 text-sm touch-manipulation mb-3"
+            />
+
+            {photo.project_reference && (
+              <p className="text-xs text-white/50 text-center mb-3">
+                Leave empty to remove from project
+              </p>
+            )}
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowProjectInput(false)}
+                className="flex-1 h-11 rounded-xl bg-white/10 text-sm font-medium text-white touch-manipulation active:bg-white/15"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleUpdateProject}
+                className="flex-1 h-11 rounded-xl bg-elec-yellow text-sm font-semibold text-black touch-manipulation active:bg-yellow-400"
+              >
+                {newProject.trim() ? "Save" : "Remove"}
               </button>
             </div>
           </div>

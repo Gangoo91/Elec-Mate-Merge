@@ -148,8 +148,8 @@ const PremiumJobsHub = () => {
     location: searchLocation || undefined,
   });
 
-  // Track if we've done an external search
-  const [hasSearched, setHasSearched] = useState(false);
+  // Track if we've done an active search (jobs auto-load now)
+  const [hasSearched, setHasSearched] = useState(true); // Default true since jobs auto-load
 
   // Track refresh state
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -358,7 +358,7 @@ const PremiumJobsHub = () => {
     >
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-white/5">
-        <div className="flex items-center justify-between px-4 py-3">
+        <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
@@ -408,7 +408,7 @@ const PremiumJobsHub = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 px-4 pb-3">
+        <div className="flex gap-1 px-3 sm:px-4 pb-2 sm:pb-3">
           {TABS.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -447,7 +447,7 @@ const PremiumJobsHub = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
-              className="p-4 space-y-4"
+              className="px-3 sm:px-4 py-3 space-y-3"
             >
               {/* Hero Card */}
               <JobsHeroCard
@@ -566,24 +566,11 @@ const PremiumJobsHub = () => {
                 {/* External Job Cards */}
                 {isLoadingExternal ? (
                   <JobCardSkeleton count={5} />
-                ) : !hasSearched && filteredExternalJobs.length === 0 ? (
-                  <div className="text-center py-8 bg-white/[0.02] rounded-2xl border border-white/5">
-                    <Search className="h-10 w-10 mx-auto text-white/20 mb-3" />
-                    <p className="text-white/60 mb-2">Search for jobs from job boards</p>
-                    <p className="text-xs text-white/40 mb-4">Use Smart Search to find jobs from Reed, Indeed, and more</p>
-                    <Button
-                      onClick={handleSmartSearch}
-                      className="bg-blue-500 hover:bg-blue-400 text-white"
-                    >
-                      <Search className="h-4 w-4 mr-2" />
-                      Smart Search
-                    </Button>
-                  </div>
-                ) : filteredExternalJobs.length === 0 && hasSearched ? (
-                  <div className="text-center py-8">
-                    <Briefcase className="h-10 w-10 mx-auto text-white/20 mb-3" />
-                    <p className="text-white/60 mb-2">No external jobs found</p>
-                    <p className="text-xs text-white/40">Try different search terms or filters</p>
+                ) : filteredExternalJobs.length === 0 ? (
+                  <div className="text-center py-6 bg-white/[0.02] rounded-xl border border-white/5">
+                    <Briefcase className="h-8 w-8 mx-auto text-white/20 mb-2" />
+                    <p className="text-white/60 text-sm mb-1">No jobs match your filters</p>
+                    <p className="text-xs text-white/40">Try adjusting filters or search for something specific</p>
                   </div>
                 ) : (
                   <motion.div

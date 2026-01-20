@@ -123,41 +123,49 @@ const JobsHeroCard = ({
       variants={heroCardVariants}
       initial="initial"
       animate="animate"
-      className={cn("space-y-4", className)}
+      className={cn("space-y-3", className)}
     >
-      {/* Main Hero Card */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-800/60 via-background to-background border border-slate-600/30">
-        {/* Animated gradient accent line */}
-        <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-blue-600 via-cyan-400 to-blue-600" />
+      {/* Compact Hero Card - Mobile Optimised */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800/60 via-background to-background border border-slate-600/30">
+        {/* Gradient accent line */}
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-600 via-cyan-400 to-blue-600" />
 
-        {/* Multiple decorative gradient blobs */}
-        <div className="absolute -right-20 -top-20 w-60 h-60 rounded-full bg-blue-500/15 blur-3xl pointer-events-none" />
-        <div className="absolute -left-10 top-10 w-40 h-40 rounded-full bg-slate-500/10 blur-3xl pointer-events-none" />
-        <div className="absolute right-20 bottom-0 w-32 h-32 rounded-full bg-cyan-500/10 blur-2xl pointer-events-none" />
+        {/* Single decorative blob - reduced for performance */}
+        <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-blue-500/10 blur-2xl pointer-events-none" />
 
-        <div className="relative z-10 p-5 sm:p-8">
-          {/* Header row */}
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-center gap-4">
-              {/* Premium Icon with glow */}
-              <div className="relative">
-                <div className="absolute inset-0 bg-blue-500/30 rounded-2xl blur-xl" />
-                <div className="relative p-4 rounded-2xl bg-gradient-to-br from-blue-500/30 to-cyan-500/20 border border-blue-400/30 backdrop-blur-sm">
-                  <Briefcase className="h-8 w-8 text-blue-300" />
+        <div className="relative z-10 p-4">
+          {/* Compact Header - Single row on mobile */}
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+              {/* Smaller Icon */}
+              <div className="relative flex-shrink-0">
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500/30 to-cyan-500/20 border border-blue-400/20">
+                  <Briefcase className="h-5 w-5 text-blue-300" />
                 </div>
               </div>
 
-              {/* Title */}
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              {/* Title - truncated on mobile */}
+              <div className="min-w-0">
+                <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight truncate">
                   Job{" "}
-                  <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                     Vacancies
                   </span>
                 </h1>
-                <p className="text-sm sm:text-base text-white/60 mt-1">
-                  Live electrical jobs from top recruiters
-                </p>
+                {/* Status badge inline with title on mobile */}
+                {isSearching ? (
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
+                    <span className="text-[10px] font-medium text-blue-300">Searching...</span>
+                  </div>
+                ) : totalJobs > 0 ? (
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
+                    <span className="text-[10px] font-medium text-emerald-300">
+                      {totalJobs.toLocaleString()} live jobs
+                    </span>
+                  </div>
+                ) : null}
               </div>
             </div>
 
@@ -168,125 +176,91 @@ const JobsHeroCard = ({
                 disabled={isRefreshing}
                 size="icon"
                 variant="ghost"
-                className="h-10 w-10 text-white/60 hover:text-white hover:bg-white/10 rounded-xl"
+                className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10 rounded-lg flex-shrink-0 touch-manipulation"
               >
-                <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
+                <RefreshCw className={cn("h-4 w-4", isRefreshing && "animate-spin")} />
               </Button>
             )}
           </div>
 
-          {/* Search Status */}
-          {isSearching ? (
-            <motion.div
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20"
-            >
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-              <span className="text-xs font-medium text-blue-300">
-                Searching across job boards...
-              </span>
-            </motion.div>
-          ) : lastUpdated ? (
-            <motion.div
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20"
-            >
-              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              <span className="text-xs font-medium text-emerald-300">
-                Live results • {lastUpdated}
-              </span>
-            </motion.div>
-          ) : null}
-
-          {/* Stats Grid */}
-          <div className="grid grid-cols-4 gap-3 sm:gap-4 mt-6">
-            <StatCard
+          {/* Compact Stats Row - Horizontal scroll on mobile */}
+          <div className="flex gap-2 mt-3 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
+            <StatPill
               icon={Briefcase}
               value={totalJobs}
-              label="Jobs Found"
+              label="Jobs"
               iconColor="text-blue-300"
             />
-            <StatCard
+            <StatPill
               icon={Zap}
               value={newJobsToday}
-              label="New Today"
+              label="New"
               iconColor="text-emerald-300"
             />
-            <StatCard
+            <StatPill
               icon={TrendingUp}
               value={Math.round(avgSalaryValue / 1000)}
-              label="Avg Salary"
+              label="Avg £k"
               prefix="£"
               suffix="k"
-              iconColor="text-blue-300"
+              iconColor="text-amber-300"
             />
-            <StatCard
-              icon={Sparkles}
-              value={matchPercentage || 0}
-              label="Match Rate"
-              suffix="%"
-              iconColor="text-purple-300"
-            />
+            {matchPercentage !== undefined && matchPercentage > 0 && (
+              <StatPill
+                icon={Sparkles}
+                value={matchPercentage}
+                label="Match"
+                suffix="%"
+                iconColor="text-purple-300"
+              />
+            )}
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-3 mt-6">
+          {/* Action Buttons - Full width on mobile */}
+          <div className="flex gap-2 mt-3">
             {onSmartSearch && (
               <Button
                 onClick={onSmartSearch}
-                className="flex-1 sm:flex-none h-11 bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-400 hover:to-cyan-400 gap-2 font-semibold shadow-lg shadow-blue-500/25 rounded-xl"
+                className="flex-1 h-11 bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-400 hover:to-cyan-400 gap-2 font-semibold shadow-lg shadow-blue-500/25 rounded-xl touch-manipulation active:scale-[0.98]"
               >
                 <Search className="h-4 w-4" />
-                Smart Search
+                <span>Search Jobs</span>
               </Button>
             )}
             {onUploadCV && (
               <Button
                 onClick={onUploadCV}
                 variant="outline"
-                className="flex-1 sm:flex-none h-11 border-white/20 text-white hover:text-white hover:bg-white/10 gap-2 font-semibold rounded-xl backdrop-blur-sm"
+                size="icon"
+                className="h-11 w-11 border-white/20 text-white hover:text-white hover:bg-white/10 rounded-xl touch-manipulation active:scale-[0.98] flex-shrink-0"
               >
                 <FileText className="h-4 w-4" />
-                <span className="hidden sm:inline">Build</span> CV
               </Button>
             )}
           </div>
         </div>
       </div>
 
-      {/* Quick Filter Chips */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-xl p-4"
-      >
-        <div className="flex items-center gap-2 mb-3">
-          <Search className="h-4 w-4 text-blue-400" />
-          <h3 className="text-sm font-medium text-white">Popular Searches</h3>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {["Electrician", "Solar Installer", "EV Technician", "Apprentice", "Site Manager"].map(
-            (term, index) => (
-              <motion.div
-                key={term}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.15 + index * 0.05 }}
+      {/* Quick Filter Chips - Compact */}
+      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+        {["Electrician", "Solar", "EV Tech", "Apprentice", "Site Manager"].map(
+          (term, index) => (
+            <motion.div
+              key={term}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1 + index * 0.03 }}
+            >
+              <Badge
+                variant="secondary"
+                className="bg-white/5 text-white/80 border-white/10 hover:bg-blue-500/20 hover:text-blue-300 hover:border-blue-500/30 transition-colors cursor-pointer whitespace-nowrap touch-manipulation"
               >
-                <Badge
-                  variant="secondary"
-                  className="bg-white/10 text-white border-white/10 hover:bg-blue-500/20 hover:text-blue-300 hover:border-blue-500/30 transition-colors cursor-pointer"
-                >
-                  {term}
-                </Badge>
-              </motion.div>
-            )
-          )}
-        </div>
-      </motion.div>
+                {term}
+              </Badge>
+            </motion.div>
+          )
+        )}
+      </div>
     </motion.div>
   );
 };

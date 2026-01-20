@@ -5,6 +5,9 @@ import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { JobTypeConfig } from "@/hooks/useJobTypes";
+import JobTypeSelector from "./JobTypeSelector";
+import JobTypeAttributeFields from "./JobTypeAttributeFields";
 
 interface QuickSubmitFormProps {
   onSuccess?: () => void;
@@ -23,7 +26,10 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
 
   const [formData, setFormData] = useState({
     postcode: "",
-    jobDescription: "",
+    jobType: null as string | null,
+    jobTypeConfig: null as JobTypeConfig | null,
+    jobAttributes: {} as Record<string, string | number>,
+    customJobDescription: "",
     price: "",
   });
 
@@ -60,10 +66,23 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
   }, [formData.price, averagePrice]);
 
   const handleSubmit = async () => {
-    if (!formData.postcode || !formData.jobDescription || !formData.price) {
+    // Validate required fields
+    const hasJobType = formData.jobType !== null;
+    const hasCustomDescription = formData.jobType === "Other" && formData.customJobDescription.trim();
+
+    if (!formData.postcode || !hasJobType || !formData.price) {
       toast({
         title: "Missing Fields",
         description: "Please fill in all fields",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (formData.jobType === "Other" && !hasCustomDescription) {
+      toast({
+        title: "Missing Description",
+        description: "Please describe the job when using 'Other'",
         variant: "destructive"
       });
       return;
@@ -77,12 +96,20 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
       // Extract postcode district
       const postcodeDistrict = formData.postcode.split(' ')[0].toUpperCase();
 
+      // Prepare job description - either attributes JSON or custom text
+      const jobDescription = formData.jobType === "Other"
+        ? formData.customJobDescription
+        : Object.keys(formData.jobAttributes).length > 0
+          ? JSON.stringify(formData.jobAttributes)
+          : null;
+
       const { error } = await supabase
         .from('community_pricing_submissions')
         .insert({
           user_id: isAnonymous ? null : user?.id,
           postcode_district: postcodeDistrict,
-          job_type: formData.jobDescription,
+          job_type: formData.jobType,
+          job_description: jobDescription,
           actual_price: parseFloat(formData.price),
           completion_date: new Date().toISOString().split('T')[0],
         });
@@ -104,13 +131,19 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
     }
   };
 
-  const canSubmit = formData.postcode && formData.jobDescription && formData.price;
+  const canSubmit = formData.postcode &&
+    formData.jobType &&
+    formData.price &&
+    (formData.jobType !== "Other" || formData.customJobDescription.trim());
 
   const handleReset = () => {
     setShowSuccess(false);
     setFormData({
       postcode: "",
-      jobDescription: "",
+      jobType: null,
+      jobTypeConfig: null,
+      jobAttributes: {},
+      customJobDescription: "",
       price: "",
     });
   };
@@ -201,28 +234,58 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
         </div>
       </div>
 
-      {/* Job Description Field */}
+      {/* Job Type Selector */}
       <div>
         <label className="text-sm font-semibold text-white mb-2 block">
-          Job Description
+          Job Type
         </label>
-        <div className="relative">
-          <FileText className="absolute left-4 top-4 h-5 w-5 text-yellow-400 pointer-events-none" />
-          <textarea
-            value={formData.jobDescription}
-            onChange={(e) => setFormData({ ...formData, jobDescription: e.target.value })}
-            placeholder="e.g. Install 3 double sockets in kitchen"
-            rows={3}
-            className={cn(
-              "w-full pl-12 pr-4 py-4 rounded-xl resize-none",
-              "bg-neutral-800 border-2 border-white/10",
-              "text-white text-base placeholder:text-white/30",
-              "focus:outline-none focus:border-yellow-400/50",
-              "transition-all duration-200"
-            )}
-          />
-        </div>
+        <JobTypeSelector
+          value={formData.jobType}
+          onChange={(jobType, config) => {
+            setFormData({
+              ...formData,
+              jobType,
+              jobTypeConfig: config,
+              jobAttributes: {}, // Reset attributes when job type changes
+              customJobDescription: "", // Reset custom description
+            });
+          }}
+        />
       </div>
+
+      {/* Dynamic Attribute Fields */}
+      {formData.jobTypeConfig?.attributes && formData.jobTypeConfig.attributes.length > 0 && (
+        <JobTypeAttributeFields
+          config={formData.jobTypeConfig}
+          values={formData.jobAttributes}
+          onChange={(attrs) => setFormData({ ...formData, jobAttributes: attrs })}
+        />
+      )}
+
+      {/* Custom Description for "Other" */}
+      {formData.jobType === "Other" && (
+        <div>
+          <label className="text-sm font-semibold text-white mb-2 block">
+            Job Description
+          </label>
+          <div className="relative">
+            <FileText className="absolute left-4 top-4 h-5 w-5 text-yellow-400 pointer-events-none" />
+            <textarea
+              value={formData.customJobDescription}
+              onChange={(e) => setFormData({ ...formData, customJobDescription: e.target.value })}
+              placeholder="Describe the job in detail..."
+              rows={3}
+              className={cn(
+                "w-full pl-12 pr-4 py-4 rounded-xl resize-none",
+                "bg-neutral-800 border-2 border-white/10",
+                "text-white text-base placeholder:text-white/30",
+                "focus:outline-none focus:border-yellow-400/50",
+                "transition-all duration-200"
+              )}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Price Field - Big and Clear */}
       <div>

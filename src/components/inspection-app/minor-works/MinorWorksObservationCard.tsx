@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { AlertTriangle, Info, Minus, Search, Trash2 } from 'lucide-react';
+import { AlertTriangle, Info, Minus, Search, Trash2, FolderPlus, Loader2, Check } from 'lucide-react';
+import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
+import { useSafetyPhotoUpload } from '@/hooks/useSafetyPhotoUpload';
+import { useCertificatePhoto, generateProjectRef, mapDefectCodeToCategory } from '@/contexts/CertificatePhotoContext';
+import { toast } from '@/hooks/use-toast';
+import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
+import InspectionPhotoGallery from '@/components/inspection/InspectionPhotoGallery';
 
 export interface MinorWorksObservation {
   id: string;
@@ -15,6 +21,7 @@ export interface MinorWorksObservation {
 
 interface MinorWorksObservationCardProps {
   observation: MinorWorksObservation;
+  reportId: string;
   index: number;
   onUpdate: (id: string, field: keyof MinorWorksObservation, value: any) => void;
   onRemove: (id: string) => void;
@@ -90,10 +97,89 @@ const getDefectDescription = (code: string) => {
 
 const MinorWorksObservationCard: React.FC<MinorWorksObservationCardProps> = ({
   observation,
+  reportId,
   index,
   onUpdate,
   onRemove
 }) => {
+  const [isSendingToPhotoDocs, setIsSendingToPhotoDocs] = useState(false);
+  const [sentToPhotoDocs, setSentToPhotoDocs] = useState(false);
+
+  // Get certificate context for project reference generation
+  const certificateContext = useCertificatePhoto();
+  const { copyFromInspection } = useSafetyPhotoUpload();
+
+  // Initialize photo management
+  const {
+    photos,
+    isUploading,
+    isScanning,
+    uploadPhoto,
+    deletePhoto,
+    scanPhotoWithAI,
+  } = useInspectionPhotos({
+    reportId: reportId || '',
+    reportType: 'minor-works',
+    itemId: observation.id,
+    observationId: observation.id,
+    observationContext: {
+      classification: observation.defectCode,
+      itemLocation: 'Minor Works',
+      description: observation.description || 'No description provided',
+      recommendation: observation.recommendation,
+    },
+  });
+
+  // Handler for sending photos to Photo Docs
+  const handleSendToPhotoDocs = async () => {
+    if (photos.length === 0) return;
+
+    setIsSendingToPhotoDocs(true);
+
+    try {
+      // Generate project reference from certificate context or fallback
+      const projectRef = generateProjectRef({
+        certificateNumber: certificateContext?.certificateNumber || reportId,
+        clientName: certificateContext?.clientName,
+        installationAddress: certificateContext?.installationAddress,
+      });
+
+      // Copy each photo
+      let successCount = 0;
+      for (const photo of photos) {
+        const result = await copyFromInspection({
+          sourceUrl: photo.file_url,
+          projectReference: projectRef,
+          description: `${observation.description || 'Observation'} - ${observation.recommendation || ''}`.trim(),
+          category: mapDefectCodeToCategory(observation.defectCode),
+          defectCode: observation.defectCode,
+          location: certificateContext?.installationAddress,
+          certificateNumber: certificateContext?.certificateNumber || reportId,
+          certificateType: certificateContext?.certificateType || 'minor-works',
+        });
+
+        if (result) successCount++;
+      }
+
+      if (successCount > 0) {
+        setSentToPhotoDocs(true);
+        toast({
+          title: "Photos sent to Photo Docs",
+          description: `${successCount} photo${successCount > 1 ? 's' : ''} copied to project "${projectRef}"`,
+        });
+      }
+    } catch (error) {
+      console.error('Error sending to photo docs:', error);
+      toast({
+        title: "Failed to send photos",
+        description: "Could not copy photos to Photo Docs",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSendingToPhotoDocs(false);
+    }
+  };
+
   const borderColor = getBorderColor(observation.defectCode);
   
   const handleQuickSelect = (selectedText: string) => {
@@ -183,6 +269,68 @@ const MinorWorksObservationCard: React.FC<MinorWorksObservationCardProps> = ({
             onChange={(e) => onUpdate(observation.id, 'recommendation', e.target.value)}
             rows={3}
             className="resize-none text-base"
+          />
+        </div>
+
+        {/* Photo Evidence Section */}
+        <div className="space-y-3 pt-4 border-t border-border">
+          <div className="flex items-center justify-between">
+            <Label className="text-sm font-medium">Photo Evidence</Label>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">
+                {photos.length} photo{photos.length !== 1 ? 's' : ''}
+              </span>
+              {photos.length > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleSendToPhotoDocs}
+                  disabled={isSendingToPhotoDocs || sentToPhotoDocs}
+                  className="h-7 px-2 text-xs text-emerald-400/80 hover:text-emerald-400 hover:bg-emerald-400/10"
+                >
+                  {isSendingToPhotoDocs ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 mr-1 animate-spin" />
+                      Sending...
+                    </>
+                  ) : sentToPhotoDocs ? (
+                    <>
+                      <Check className="h-3.5 w-3.5 mr-1" />
+                      Sent
+                    </>
+                  ) : (
+                    <>
+                      <FolderPlus className="h-3.5 w-3.5 mr-1" />
+                      Send to Photo Docs
+                    </>
+                  )}
+                </Button>
+              )}
+            </div>
+          </div>
+
+          <InspectionPhotoUpload
+            onPhotoCapture={async (file) => {
+              await uploadPhoto(
+                file,
+                observation.defectCode,
+                observation.description
+              );
+            }}
+            isUploading={isUploading}
+          />
+
+          <InspectionPhotoGallery
+            photos={photos}
+            onDeletePhoto={deletePhoto}
+            onScanPhoto={scanPhotoWithAI}
+            isScanning={isScanning}
+            inspectorContext={{
+              classification: observation.defectCode,
+              itemLocation: 'Minor Works',
+              description: observation.description || 'No description provided',
+              recommendation: observation.recommendation,
+            }}
           />
         </div>
       </div>

@@ -5,6 +5,7 @@ import MinorWorksObservationCard, { MinorWorksObservation } from './MinorWorksOb
 
 interface MinorWorksObservationsListProps {
   observations: MinorWorksObservation[];
+  reportId: string;
   onAddObservation: () => void;
   onUpdateObservation: (id: string, field: keyof MinorWorksObservation, value: any) => void;
   onRemoveObservation: (id: string) => void;
@@ -13,6 +14,7 @@ interface MinorWorksObservationsListProps {
 
 const MinorWorksObservationsList: React.FC<MinorWorksObservationsListProps> = ({
   observations,
+  reportId,
   onAddObservation,
   onUpdateObservation,
   onRemoveObservation,
@@ -60,6 +62,7 @@ const MinorWorksObservationsList: React.FC<MinorWorksObservationsListProps> = ({
         <MinorWorksObservationCard
           key={observation.id}
           observation={observation}
+          reportId={reportId}
           index={index}
           onUpdate={onUpdateObservation}
           onRemove={onRemoveObservation}

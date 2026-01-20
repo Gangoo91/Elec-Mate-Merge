@@ -14,6 +14,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useSmartDefaults } from '@/hooks/useSmartDefaults';
 import { useFormValidation } from '@/hooks/useFormValidation';
 import { useMinorWorksTabs } from '@/hooks/useMinorWorksTabs';
+import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 
 // New tab-based components
 import MWFormHeader from '@/components/minor-works/MWFormHeader';
@@ -678,67 +679,74 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   };
 
   return (
-    <div className="min-h-screen bg-background prevent-shortcuts">
-      {/* Header */}
-      <MWFormHeader
-        onBack={onBack}
-        isSaving={isSaving}
-        hasUnsavedChanges={hasUnsavedChanges}
-        onManualSave={handleSaveDraft}
-        onStartNew={handleStartNew}
-        formData={formData}
-        syncState={syncState}
-        isOnline={isOnline}
-        isAuthenticated={isAuthenticated}
-        currentTabLabel={getCurrentTabLabel()}
-        progressPercentage={getProgressPercentage()}
-      />
+    <CertificatePhotoProvider
+      certificateNumber={formData.certificateNumber || ''}
+      certificateType="minor-works"
+      clientName={formData.clientName || ''}
+      installationAddress={formData.installationAddress || formData.clientAddress || ''}
+    >
+      <div className="min-h-screen bg-background prevent-shortcuts">
+        {/* Header */}
+        <MWFormHeader
+          onBack={onBack}
+          isSaving={isSaving}
+          hasUnsavedChanges={hasUnsavedChanges}
+          onManualSave={handleSaveDraft}
+          onStartNew={handleStartNew}
+          formData={formData}
+          syncState={syncState}
+          isOnline={isOnline}
+          isAuthenticated={isAuthenticated}
+          currentTabLabel={getCurrentTabLabel()}
+          progressPercentage={getProgressPercentage()}
+        />
 
-      {/* Main Content */}
-      <div className="lg:pt-0 pt-0">
-        <div className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-          {/* Step Indicator */}
-          <MWStepIndicator
-            currentTab={currentTab}
-            onTabChange={setTab}
-            isTabComplete={isTabComplete}
-          />
+        {/* Main Content */}
+        <div className="lg:pt-0 pt-0">
+          <div className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+            {/* Step Indicator */}
+            <MWStepIndicator
+              currentTab={currentTab}
+              onTabChange={setTab}
+              isTabComplete={isTabComplete}
+            />
 
-          {/* Tab Content */}
-          <div className="mt-6 pb-32">
-            <AnimatePresence mode="wait">
-              {renderTabContent()}
-            </AnimatePresence>
+            {/* Tab Content */}
+            <div className="mt-6 pb-32">
+              <AnimatePresence mode="wait">
+                {renderTabContent()}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
+
+        {/* Bottom Navigation */}
+        <MWTabNavigation
+          currentTab={currentTab}
+          currentTabIndex={currentTabIndex}
+          totalTabs={totalTabs}
+          canNavigateNext={canNavigateNext}
+          canNavigatePrevious={canNavigatePrevious}
+          navigateNext={navigateNext}
+          navigatePrevious={navigatePrevious}
+          getProgressPercentage={getProgressPercentage}
+          isCurrentTabComplete={isTabComplete(currentTab)}
+          currentTabHasRequiredFields={currentTabHasRequiredFields()}
+          onToggleComplete={() => {}}
+          onGenerateCertificate={() => {}}
+          canGenerateCertificate={canGenerateCertificate()}
+          showGenerate={currentTab === 'declaration'}
+        />
+
+        <StartNewEICRDialog
+          isOpen={showStartNewDialog}
+          onClose={() => setShowStartNewDialog(false)}
+          onConfirm={confirmStartNew}
+          onDuplicate={handleDuplicate}
+          hasUnsavedChanges={hasUnsavedChanges}
+        />
       </div>
-
-      {/* Bottom Navigation */}
-      <MWTabNavigation
-        currentTab={currentTab}
-        currentTabIndex={currentTabIndex}
-        totalTabs={totalTabs}
-        canNavigateNext={canNavigateNext}
-        canNavigatePrevious={canNavigatePrevious}
-        navigateNext={navigateNext}
-        navigatePrevious={navigatePrevious}
-        getProgressPercentage={getProgressPercentage}
-        isCurrentTabComplete={isTabComplete(currentTab)}
-        currentTabHasRequiredFields={currentTabHasRequiredFields()}
-        onToggleComplete={() => {}}
-        onGenerateCertificate={() => {}}
-        canGenerateCertificate={canGenerateCertificate()}
-        showGenerate={currentTab === 'declaration'}
-      />
-
-      <StartNewEICRDialog
-        isOpen={showStartNewDialog}
-        onClose={() => setShowStartNewDialog(false)}
-        onConfirm={confirmStartNew}
-        onDuplicate={handleDuplicate}
-        hasUnsavedChanges={hasUnsavedChanges}
-      />
-    </div>
+    </CertificatePhotoProvider>
   );
 };
 

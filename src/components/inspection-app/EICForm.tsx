@@ -11,6 +11,7 @@ import { isNotifiableWork, createNotificationFromCertificate } from '@/utils/not
 import { useLinkDesignToCertificate, useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { checkAllResultsCompliance } from '@/utils/autoRegChecker';
+import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import EICFormHeader from './eic/EICFormHeader';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
@@ -854,60 +855,67 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
   };
 
   return (
-    <>
-      <div className="min-h-screen mobile-safe-area">
-        <div className="space-y-6 md:space-y-8 animate-fade-in px-4 sm:px-6 md:px-8 pb-8 md:pb-12 max-w-7xl mx-auto pt-4 md:pt-6">
-        <EICFormHeader
-          onBack={onBack}
-          isSaving={isSaving}
-          hasUnsavedChanges={hasUnsavedChanges}
-          onManualSave={handleSaveDraft}
-          onStartNew={handleStartNew}
-          formData={formData}
-          syncState={syncState}
-          isOnline={isOnline}
-          isAuthenticated={isAuthenticated}
-        />
+    <CertificatePhotoProvider
+      certificateNumber={formData.certificateNumber || ''}
+      certificateType="eic"
+      clientName={formData.clientName || ''}
+      installationAddress={formData.installationAddress || formData.clientAddress || ''}
+    >
+      <>
+        <div className="min-h-screen mobile-safe-area">
+          <div className="space-y-6 md:space-y-8 animate-fade-in px-4 sm:px-6 md:px-8 pb-8 md:pb-12 max-w-7xl mx-auto pt-4 md:pt-6">
+          <EICFormHeader
+            onBack={onBack}
+            isSaving={isSaving}
+            hasUnsavedChanges={hasUnsavedChanges}
+            onManualSave={handleSaveDraft}
+            onStartNew={handleStartNew}
+            formData={formData}
+            syncState={syncState}
+            isOnline={isOnline}
+            isAuthenticated={isAuthenticated}
+          />
 
-        {/* Customer Selection */}
-        <CustomerSelector
-          selectedCustomerId={selectedCustomerId}
-          onCustomerSelect={handleCustomerSelect}
-        />
+          {/* Customer Selection */}
+          <CustomerSelector
+            selectedCustomerId={selectedCustomerId}
+            onCustomerSelect={handleCustomerSelect}
+          />
 
-        <EICFormTabs
-          currentTab={currentTab}
-          onTabChange={handleTabChange}
-          canAccessTab={canAccessTab}
-          formData={formData}
-          onUpdate={handleUpdate}
-          tabNavigationProps={tabNavigationProps}
-          observationsProps={observationsProps}
-          onGenerateCertificate={handleGenerateCertificate}
-          onSaveDraft={handleSaveDraft}
-          canGenerateCertificate={canGenerateCertificate()}
-        />
+          <EICFormTabs
+            currentTab={currentTab}
+            onTabChange={handleTabChange}
+            canAccessTab={canAccessTab}
+            formData={formData}
+            onUpdate={handleUpdate}
+            tabNavigationProps={tabNavigationProps}
+            observationsProps={observationsProps}
+            onGenerateCertificate={handleGenerateCertificate}
+            onSaveDraft={handleSaveDraft}
+            canGenerateCertificate={canGenerateCertificate()}
+          />
+          </div>
         </div>
-      </div>
 
-      {/* Auto-save dialog removed - use Save Points instead */}
-      
-      <StartNewEICRDialog
-        isOpen={showStartNewDialog}
-        onClose={() => setShowStartNewDialog(false)}
-        onConfirm={confirmStartNew}
-        onDuplicate={handleDuplicate}
-        hasUnsavedChanges={hasUnsavedChanges}
-      />
+        {/* Auto-save dialog removed - use Save Points instead */}
 
-      <DraftRecoveryDialog
-        open={showDraftRecovery}
-        reportType="eic"
-        draftPreview={draftPreview}
-        onRecover={handleRecoverDraft}
-        onDiscard={handleDiscardDraft}
-      />
-    </>
+        <StartNewEICRDialog
+          isOpen={showStartNewDialog}
+          onClose={() => setShowStartNewDialog(false)}
+          onConfirm={confirmStartNew}
+          onDuplicate={handleDuplicate}
+          hasUnsavedChanges={hasUnsavedChanges}
+        />
+
+        <DraftRecoveryDialog
+          open={showDraftRecovery}
+          reportType="eic"
+          draftPreview={draftPreview}
+          onRecover={handleRecoverDraft}
+          onDiscard={handleDiscardDraft}
+        />
+      </>
+    </CertificatePhotoProvider>
   );
 };
 
