@@ -18,6 +18,7 @@ import TrialBanner from '@/components/dashboard/TrialBanner';
 import WelcomeModal from '@/components/onboarding/WelcomeModal';
 import { DesignedCircuitsCard } from '@/components/dashboard/DesignedCircuitsCard';
 import { useAuth } from '@/contexts/AuthContext';
+import useSEO from '@/hooks/useSEO';
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -35,6 +36,13 @@ const sectionVariants = {
 const Dashboard = () => {
   const { profile, isLoading } = useAuth();
   const [showWelcome, setShowWelcome] = useState(false);
+
+  // Private page - don't index
+  useSEO({
+    title: 'Dashboard',
+    description: 'Your Elec-Mate dashboard - manage training, tools, and business',
+    noindex: true,
+  });
 
   // Show welcome modal for first-time users
   useEffect(() => {

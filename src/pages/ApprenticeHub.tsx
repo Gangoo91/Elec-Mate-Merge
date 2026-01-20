@@ -10,6 +10,7 @@ import React, { useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import useSEO, { SEOSchemas } from '@/hooks/useSEO';
 import {
   GraduationCap,
   Clock,
@@ -473,6 +474,21 @@ const additionalResources: ToolCardProps[] = [
 
 const ApprenticeHub = () => {
   const { refetch, isRefetching } = useApprenticeData();
+
+  // SEO for apprentice hub - high priority for Google ranking
+  useSEO({
+    title: 'Apprentice Hub | Level 2 & 3 Electrical Training',
+    description: 'Complete electrical apprenticeship training platform. Level 2 and Level 3 courses, AM2 exam prep, 2,000+ practice questions, OJT tracking, and industry-recognised qualifications.',
+    schema: {
+      '@type': 'CollectionPage',
+      name: 'Electrical Apprentice Training Hub',
+      description: 'Training hub for UK electrical apprentices pursuing Level 2 and Level 3 qualifications',
+      provider: {
+        '@type': 'Organization',
+        name: 'Elec-Mate',
+      },
+    },
+  });
 
   const handleRefresh = useCallback(async () => {
     await refetch?.();

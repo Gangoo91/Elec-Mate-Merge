@@ -115,7 +115,7 @@ serve(async (req: Request) => {
         const webpush = await import('https://esm.sh/web-push@3.6.7');
 
         webpush.setVapidDetails(
-          'mailto:support@elec-mate.co.uk',
+          'mailto:support@elec-mate.com',
           vapidPublicKey,
           vapidPrivateKey
         );

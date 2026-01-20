@@ -59,7 +59,7 @@ const PrivacyPolicy = () => {
               Elec-Mate is an electrical career platform designed for UK electrical professionals, including apprentices, qualified electricians, and employers. We are the data controller for your personal information.
             </p>
             <p className="text-gray-400 text-sm">
-              Contact: privacy@elec-mate.co.uk
+              Contact: privacy@elec-mate.com
             </p>
           </section>
 
@@ -162,7 +162,7 @@ const PrivacyPolicy = () => {
               <li><strong className="text-white">Withdraw consent</strong> — Withdraw any consent previously given</li>
             </ul>
             <p className="text-gray-400 text-sm mt-4">
-              To exercise these rights, contact us at privacy@elec-mate.co.uk. We will respond within 30 days.
+              To exercise these rights, contact us at privacy@elec-mate.com. We will respond within 30 days.
             </p>
           </section>
 
@@ -185,7 +185,7 @@ const PrivacyPolicy = () => {
             </p>
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <p className="text-white font-medium">Elec-Mate Data Protection</p>
-              <p className="text-gray-400 text-sm">Email: privacy@elec-mate.co.uk</p>
+              <p className="text-gray-400 text-sm">Email: privacy@elec-mate.com</p>
             </div>
             <p className="text-gray-400 text-sm mt-4">
               You also have the right to lodge a complaint with the Information Commissioner's Office (ICO) at ico.org.uk.

@@ -9,6 +9,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import useSEO from '@/hooks/useSEO';
 import {
   Zap,
   Brain,
@@ -522,6 +523,21 @@ const additionalResources: ToolCardProps[] = [
 
 const ElectricalHub = () => {
   const [showSetupWizard, setShowSetupWizard] = useState(false);
+
+  // SEO for electrician hub - high priority for Google ranking
+  useSEO({
+    title: 'Electrician Tools & Certificates | BS 7671 Compliant',
+    description: 'Professional tools for UK electricians: cable calculators, voltage drop, EICR/EIC/Minor Works certificates, 5 AI specialists, cost engineering, and 60+ electrical calculators. BS 7671 18th Edition compliant.',
+    schema: {
+      '@type': 'CollectionPage',
+      name: 'Electrician Professional Tools',
+      description: 'Suite of professional electrical tools and certification software for UK electricians',
+      provider: {
+        '@type': 'Organization',
+        name: 'Elec-Mate',
+      },
+    },
+  });
 
   // Check if onboarding is complete
   const { data: profile } = useQuery({

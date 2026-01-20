@@ -3,6 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import useSEO from "@/hooks/useSEO";
 import {
   User,
   IdCard,
@@ -62,6 +63,13 @@ const SettingsPage = () => {
   const isMobile = useIsMobile();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryClient = useQueryClient();
+
+  // Private page - don't index
+  useSEO({
+    title: 'Settings',
+    description: 'Manage your Elec-Mate account, billing, notifications, and preferences',
+    noindex: true,
+  });
 
   // Handle Stripe Connect return
   useEffect(() => {

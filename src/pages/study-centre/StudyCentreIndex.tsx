@@ -5,12 +5,28 @@ import { cn } from "@/lib/utils";
 import { useStudyStreak } from "@/hooks/useStudyStreak";
 import { useQuizResults } from "@/hooks/useQuizResults";
 import { useAuth } from "@/contexts/AuthContext";
+import useSEO from "@/hooks/useSEO";
 
 export default function StudyCentreIndex() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const studyStreakData = useStudyStreak();
   const quizData = useQuizResults();
+
+  // SEO for study centre - high priority for Google ranking
+  useSEO({
+    title: 'Study Centre | Electrical Training & CPD Courses',
+    description: 'Comprehensive electrical training for apprentices and qualified electricians. Level 2 & 3 courses, 18th Edition BS 7671, inspection & testing, EV charging, solar PV, and 2,000+ practice questions.',
+    schema: {
+      '@type': 'CollectionPage',
+      name: 'Elec-Mate Study Centre',
+      description: 'Educational hub for UK electrical professionals - apprenticeship training and CPD courses',
+      provider: {
+        '@type': 'Organization',
+        name: 'Elec-Mate',
+      },
+    },
+  });
 
   const currentStreak = studyStreakData?.streak?.currentStreak || 0;
   const quizResults = quizData?.quizResults || [];
