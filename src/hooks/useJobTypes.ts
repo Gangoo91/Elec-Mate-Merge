@@ -182,9 +182,57 @@ const jobTypeConfigs: JobTypeConfig[] = [
       ], required: true }
     ]
   },
-  { job_type: 'Smoke/Heat Alarm Install', job_category: 'Installation & Wiring', unit: 'each' },
-  { job_type: 'Extractor Fan Installation', job_category: 'Installation & Wiring', unit: 'per job' },
-  { job_type: 'Oven/Hob Connection', job_category: 'Installation & Wiring', unit: 'per job' },
+  {
+    job_type: 'Smoke/Heat Alarm Install',
+    job_category: 'Installation & Wiring',
+    unit: 'each',
+    attributes: [
+      { key: 'alarm_type', label: 'Alarm type', type: 'select', options: [
+        { value: 'smoke', label: 'Smoke detector' },
+        { value: 'heat', label: 'Heat detector' },
+        { value: 'combined', label: 'Combined smoke/heat' },
+        { value: 'co', label: 'Carbon monoxide' }
+      ], required: true },
+      { key: 'interlinked', label: 'Interlinked?', type: 'select', options: [
+        { value: 'yes', label: 'Yes - interlinked' },
+        { value: 'no', label: 'No - standalone' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Extractor Fan Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per job',
+    attributes: [
+      { key: 'room_type', label: 'Room', type: 'select', options: [
+        { value: 'bathroom', label: 'Bathroom' },
+        { value: 'kitchen', label: 'Kitchen' },
+        { value: 'utility', label: 'Utility room' }
+      ], required: true },
+      { key: 'fan_type', label: 'Fan type', type: 'select', options: [
+        { value: 'axial', label: 'Axial (wall/window)' },
+        { value: 'centrifugal', label: 'Centrifugal (inline)' },
+        { value: 'ceiling', label: 'Ceiling mounted' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Oven/Hob Connection',
+    job_category: 'Installation & Wiring',
+    unit: 'per job',
+    attributes: [
+      { key: 'appliance_type', label: 'Appliance type', type: 'select', options: [
+        { value: 'electric_oven', label: 'Electric oven' },
+        { value: 'induction_hob', label: 'Induction hob' },
+        { value: 'ceramic_hob', label: 'Ceramic hob' },
+        { value: 'range_cooker', label: 'Range cooker' }
+      ], required: true },
+      { key: 'existing_circuit', label: 'Existing circuit?', type: 'select', options: [
+        { value: 'yes', label: 'Yes - existing circuit' },
+        { value: 'no', label: 'No - new circuit needed' }
+      ], required: true }
+    ]
+  },
   { 
     job_type: 'Cooker Circuit Install', 
     job_category: 'Installation & Wiring', 
@@ -281,9 +329,9 @@ const jobTypeConfigs: JobTypeConfig[] = [
       ], required: true }
     ]
   },
-  { 
-    job_type: 'Garage Supply Installation', 
-    job_category: 'Installation & Wiring', 
+  {
+    job_type: 'Garage Supply Installation',
+    job_category: 'Installation & Wiring',
     unit: 'per job',
     attributes: [
       { key: 'cable_length', label: 'Cable run length', type: 'number', unit: 'metres', min: 1, max: 50, required: true },
@@ -294,11 +342,251 @@ const jobTypeConfigs: JobTypeConfig[] = [
       ], required: true }
     ]
   },
-  
+  // Additional Socket Installations
+  {
+    job_type: 'Single Socket Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per socket',
+    attributes: [
+      { key: 'location', label: 'Location', type: 'select', options: [
+        { value: 'spur_off_ring', label: 'Spur off ring (nearby)' },
+        { value: 'new_spur', label: 'New spur (extended run)' },
+        { value: 'back_to_back', label: 'Back-to-back existing' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Double Socket Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per socket',
+    attributes: [
+      { key: 'location', label: 'Location', type: 'select', options: [
+        { value: 'spur_off_ring', label: 'Spur off ring (nearby)' },
+        { value: 'new_spur', label: 'New spur (extended run)' },
+        { value: 'back_to_back', label: 'Back-to-back existing' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'USB Socket Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per socket',
+    attributes: [
+      { key: 'usb_type', label: 'USB type', type: 'select', options: [
+        { value: 'usb_a', label: 'USB-A only' },
+        { value: 'usb_c', label: 'USB-C only' },
+        { value: 'both', label: 'USB-A + USB-C' }
+      ], required: true }
+    ]
+  },
+  // Light Fittings
+  {
+    job_type: 'Pendant Light Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per fitting',
+    attributes: [
+      { key: 'weight', label: 'Fitting weight', type: 'select', options: [
+        { value: 'light', label: 'Light (under 5kg)' },
+        { value: 'medium', label: 'Medium (5-15kg)' },
+        { value: 'heavy', label: 'Heavy (15kg+, chandelier)' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Wall Light Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per fitting',
+    attributes: [
+      { key: 'wiring', label: 'Wiring situation', type: 'select', options: [
+        { value: 'existing', label: 'Existing wiring point' },
+        { value: 'new_chase', label: 'New (requires chasing)' },
+        { value: 'surface', label: 'Surface wiring acceptable' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Track Lighting Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per track',
+    attributes: [
+      { key: 'track_length', label: 'Track length', type: 'select', options: [
+        { value: '1m', label: '1m track' },
+        { value: '2m', label: '2m track' },
+        { value: '3m', label: '3m+ track' }
+      ], required: true },
+      { key: 'spot_count', label: 'Number of spots', type: 'number', min: 2, max: 10, required: true }
+    ]
+  },
+  {
+    job_type: 'LED Strip Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per metre',
+    attributes: [
+      { key: 'location', label: 'Location', type: 'select', options: [
+        { value: 'under_cabinet', label: 'Under cabinet' },
+        { value: 'cove_lighting', label: 'Cove/coffer lighting' },
+        { value: 'stair_lighting', label: 'Stair lighting' },
+        { value: 'outdoor', label: 'Outdoor (IP rated)' }
+      ], required: true }
+    ]
+  },
+  // Heating & Hot Water
+  {
+    job_type: 'Heated Towel Rail Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per job',
+    attributes: [
+      { key: 'power_type', label: 'Power type', type: 'select', options: [
+        { value: 'fused_spur', label: 'Fused spur (hardwired)' },
+        { value: 'plug_in', label: 'Plug-in element' },
+        { value: 'timer_spur', label: 'With timer switch' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Immersion Heater Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per job',
+    attributes: [
+      { key: 'rating', label: 'Immersion rating', type: 'select', options: [
+        { value: '3kW', label: '3kW standard' },
+        { value: 'dual', label: 'Dual element' }
+      ], required: true },
+      { key: 'timer', label: 'Timer required?', type: 'select', options: [
+        { value: 'yes', label: 'Yes - with timer' },
+        { value: 'no', label: 'No - switch only' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Storage Heater Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per heater',
+    attributes: [
+      { key: 'output', label: 'Heat output', type: 'select', options: [
+        { value: 'small', label: 'Small (1.7kW)' },
+        { value: 'medium', label: 'Medium (2.5kW)' },
+        { value: 'large', label: 'Large (3.4kW)' }
+      ], required: true },
+      { key: 'economy_7', label: 'Economy 7 meter?', type: 'select', options: [
+        { value: 'yes', label: 'Yes - existing E7' },
+        { value: 'no', label: 'No - standard meter' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Underfloor Heating Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per sqm',
+    attributes: [
+      { key: 'room_size', label: 'Room size', type: 'number', unit: 'sqm', min: 1, max: 100, required: true },
+      { key: 'floor_type', label: 'Floor type', type: 'select', options: [
+        { value: 'tile', label: 'Tile/stone floor' },
+        { value: 'laminate', label: 'Laminate/wood' },
+        { value: 'carpet', label: 'Carpet' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Electric Panel Heater Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per heater',
+    attributes: [
+      { key: 'wattage', label: 'Heater wattage', type: 'select', options: [
+        { value: '1000W', label: '1000W' },
+        { value: '1500W', label: '1500W' },
+        { value: '2000W', label: '2000W' }
+      ], required: true }
+    ]
+  },
+  // Smart Home
+  {
+    job_type: 'Smart Doorbell Installation',
+    job_category: 'Smart Home',
+    unit: 'per job',
+    attributes: [
+      { key: 'brand', label: 'Doorbell type', type: 'select', options: [
+        { value: 'ring', label: 'Ring' },
+        { value: 'nest', label: 'Nest/Google' },
+        { value: 'eufy', label: 'Eufy' },
+        { value: 'other', label: 'Other brand' }
+      ], required: true },
+      { key: 'transformer', label: 'Transformer required?', type: 'select', options: [
+        { value: 'yes', label: 'Yes - new transformer' },
+        { value: 'existing', label: 'Existing transformer OK' },
+        { value: 'battery', label: 'Battery powered' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Wired Doorbell Installation',
+    job_category: 'Installation & Wiring',
+    unit: 'per job',
+    attributes: [
+      { key: 'cable_run', label: 'Cable run length', type: 'number', unit: 'metres', min: 1, max: 30, required: true }
+    ]
+  },
+  {
+    job_type: 'Smart Thermostat Installation',
+    job_category: 'Smart Home',
+    unit: 'per job',
+    attributes: [
+      { key: 'brand', label: 'Thermostat type', type: 'select', options: [
+        { value: 'hive', label: 'Hive' },
+        { value: 'nest', label: 'Nest' },
+        { value: 'tado', label: 'Tado' },
+        { value: 'other', label: 'Other' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Smart Switch Installation',
+    job_category: 'Smart Home',
+    unit: 'per switch',
+    attributes: [
+      { key: 'neutral_required', label: 'Neutral wire present?', type: 'select', options: [
+        { value: 'yes', label: 'Yes - neutral available' },
+        { value: 'no', label: 'No - needs workaround' }
+      ], required: true }
+    ]
+  },
+  {
+    job_type: 'Home Automation Hub Setup',
+    job_category: 'Smart Home',
+    unit: 'per job',
+    attributes: [
+      { key: 'hub_type', label: 'Hub type', type: 'select', options: [
+        { value: 'apple', label: 'Apple HomeKit' },
+        { value: 'alexa', label: 'Amazon Alexa' },
+        { value: 'google', label: 'Google Home' },
+        { value: 'smartthings', label: 'SmartThings' }
+      ], required: true },
+      { key: 'device_count', label: 'Devices to integrate', type: 'number', min: 1, max: 50, required: true }
+    ]
+  },
+
   // Emergency & Call-outs
   { job_type: 'Emergency Call-out (first hour)', job_category: 'Emergency & Call-outs', unit: 'per hour' },
   { job_type: 'Out of Hours Call-out', job_category: 'Emergency & Call-outs', unit: 'per hour' },
-  { job_type: 'Fault Finding', job_category: 'Emergency & Call-outs', unit: 'per hour' },
+  {
+    job_type: 'Fault Finding',
+    job_category: 'Emergency & Call-outs',
+    unit: 'per hour',
+    attributes: [
+      { key: 'fault_type', label: 'Fault type', type: 'select', options: [
+        { value: 'no_power', label: 'No power/lights' },
+        { value: 'tripping', label: 'Tripping RCD/MCB' },
+        { value: 'flickering', label: 'Flickering lights' },
+        { value: 'burning_smell', label: 'Burning smell' },
+        { value: 'other', label: 'Other electrical fault' }
+      ], required: true }
+    ]
+  },
+  { job_type: 'RCD Tripping Investigation', job_category: 'Emergency & Call-outs', unit: 'per job' },
+  { job_type: 'No Power Investigation', job_category: 'Emergency & Call-outs', unit: 'per job' },
+  { job_type: 'Flickering Lights Repair', job_category: 'Emergency & Call-outs', unit: 'per job' },
+  { job_type: 'Burning Smell Investigation', job_category: 'Emergency & Call-outs', unit: 'per job' },
+  { job_type: 'Circuit Repair', job_category: 'Emergency & Call-outs', unit: 'per circuit' },
   
   // Consumer Units & Boards
   { 
@@ -322,7 +610,29 @@ const jobTypeConfigs: JobTypeConfig[] = [
   },
   { job_type: 'Additional Circuit Installation', job_category: 'Consumer Units & Boards', unit: 'per circuit' },
   { job_type: 'RCD Protection Upgrade', job_category: 'Consumer Units & Boards', unit: 'per job' },
-  
+  { job_type: 'RCBO Upgrade', job_category: 'Consumer Units & Boards', unit: 'per way' },
+  { job_type: 'MCB Replacement', job_category: 'Consumer Units & Boards', unit: 'per MCB' },
+  { job_type: 'Surge Protection Device', job_category: 'Consumer Units & Boards', unit: 'per job' },
+
+  // Earthing & Bonding
+  {
+    job_type: 'Earthing Upgrade',
+    job_category: 'Earthing & Bonding',
+    unit: 'per job',
+    attributes: [
+      { key: 'current_system', label: 'Current system', type: 'select', options: [
+        { value: 'tncs', label: 'TN-C-S (PME)' },
+        { value: 'tns', label: 'TN-S' },
+        { value: 'tt', label: 'TT system' }
+      ], required: true }
+    ]
+  },
+  { job_type: 'Main Bonding Installation', job_category: 'Earthing & Bonding', unit: 'per service' },
+  { job_type: 'Supplementary Bonding (Bathroom)', job_category: 'Earthing & Bonding', unit: 'per job' },
+  { job_type: 'Supplementary Bonding (Kitchen)', job_category: 'Earthing & Bonding', unit: 'per job' },
+  { job_type: 'Earth Rod Installation', job_category: 'Earthing & Bonding', unit: 'per rod' },
+  { job_type: 'Earth Electrode Testing', job_category: 'Earthing & Bonding', unit: 'per test' },
+
   // Repairs & Maintenance
   { 
     job_type: 'Socket Replacement', 

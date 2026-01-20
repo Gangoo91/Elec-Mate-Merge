@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   Clock, Star, Calendar, MapPin, Users, BookOpen,
   TrendingUp, PoundSterling, Award, Target,
-  CheckCircle, AlertCircle, Briefcase, GraduationCap
+  CheckCircle, AlertCircle, Briefcase, GraduationCap, ChevronRight
 } from "lucide-react";
 import { EnhancedCareerCourse } from "./enhancedCoursesData";
 
@@ -229,27 +229,40 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="flex justify-between items-center mt-auto pt-3 border-t border-white/10">
-          <div className="space-y-1">
-            <p className="text-sm text-green-400 flex items-center gap-1.5 font-medium">
-              <PoundSterling className="h-3.5 w-3.5" />
-              {course.price}
-            </p>
-            {course.employerSupport && (
-              <div className="flex items-center gap-1.5 text-xs text-emerald-400">
-                <Briefcase className="h-3 w-3" />
-                <span>Employer Support</span>
-              </div>
-            )}
+        {/* Footer - stacked on mobile */}
+        <div className="flex flex-col gap-3 mt-auto pt-3 border-t border-white/10">
+          {/* Price row */}
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <p className="text-base sm:text-sm text-green-400 flex items-center gap-1.5 font-semibold">
+                <PoundSterling className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
+                {course.price}
+              </p>
+              {course.employerSupport && (
+                <div className="flex items-center gap-1.5 text-xs text-emerald-400">
+                  <Briefcase className="h-3 w-3" />
+                  <span>Employer Support</span>
+                </div>
+              )}
+            </div>
+            {/* Desktop button */}
+            <Button
+              variant="outline"
+              size="sm"
+              className="hidden sm:flex h-10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
+              onClick={() => onViewDetails(course)}
+            >
+              View Details
+            </Button>
           </div>
+          {/* Mobile full-width button */}
           <Button
             variant="outline"
-            size="sm"
-            className="h-10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation active:scale-95 transition-all"
+            className="sm:hidden w-full h-12 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 font-semibold touch-manipulation active:scale-[0.98]"
             onClick={() => onViewDetails(course)}
           >
             View Details
+            <ChevronRight className="h-5 w-5 ml-2" />
           </Button>
         </div>
       </CardContent>

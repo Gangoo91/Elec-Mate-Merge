@@ -21,6 +21,7 @@ import { getExpiryStatus, getDaysUntilExpiry, isExpired, isExpiringWithin } from
 import { useElecIdProfile } from "@/hooks/useElecIdProfile";
 import { getQualificationsByProfileId, getTrainingByProfileId } from "@/services/elecIdService";
 import { getECSCardType } from "@/data/uk-electrician-constants";
+import { toast } from "@/hooks/use-toast";
 
 interface ComplianceItem {
   id: string;
@@ -498,6 +499,12 @@ const ElecIdCompliance = () => {
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
+        onClick={() => {
+          toast({
+            title: "Coming Soon",
+            description: "Expiry reminders will be available in a future update.",
+          });
+        }}
         className="w-full p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center gap-4 touch-manipulation active:bg-white/[0.06] active:scale-[0.99] transition-all"
       >
         <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center">

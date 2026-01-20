@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, MapPin, Clock, Users, TrendingUp, Zap } from "lucide-react";
+import { ChevronDown, MapPin, Clock, Users, TrendingUp, Zap, BadgeCheck, Sparkles, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ConfidenceMeter from "../ui/ConfidenceMeter";
 import TrendArrow from "../ui/TrendArrow";
@@ -17,9 +17,17 @@ interface PriceCardProps {
   lastUpdated: string;
   trend?: number;
   complexityLevel?: "simple" | "medium" | "complex";
+  dataSource?: "community" | "market" | "estimated";
   onSubmitPrice?: () => void;
   className?: string;
 }
+
+// Convert snake_case to Title Case
+const formatJobType = (jobType: string): string => {
+  return jobType
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+};
 
 const PriceCard = ({
   jobType,
@@ -34,10 +42,46 @@ const PriceCard = ({
   lastUpdated,
   trend = 0,
   complexityLevel = "medium",
+  dataSource = "market",
   onSubmitPrice,
   className
 }: PriceCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // Check if this is an empty state (no price data)
+  const hasNoPriceData = sampleSize === 0 || (avgPrice === 0 && minPrice === 0 && maxPrice === 0);
+
+  const getDataSourceBadge = () => {
+    switch (dataSource) {
+      case "community":
+        return {
+          icon: BadgeCheck,
+          label: "Community Verified",
+          bg: "bg-emerald-500/20",
+          text: "text-emerald-400",
+          border: "border-emerald-500/30"
+        };
+      case "market":
+        return {
+          icon: TrendingUp,
+          label: "Market Data",
+          bg: "bg-blue-500/20",
+          text: "text-blue-400",
+          border: "border-blue-500/30"
+        };
+      case "estimated":
+      default:
+        return {
+          icon: Sparkles,
+          label: "Estimated",
+          bg: "bg-purple-500/20",
+          text: "text-purple-400",
+          border: "border-purple-500/30"
+        };
+    }
+  };
+
+  const dataSourceBadge = getDataSourceBadge();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-GB', {
@@ -90,15 +134,72 @@ const PriceCard = ({
   const range = maxPrice - minPrice;
   const avgPosition = range > 0 ? ((avgPrice - minPrice) / range) * 100 : 50;
 
+  // Empty state card - different styling to encourage submissions
+  if (hasNoPriceData) {
+    return (
+      <div
+        className={cn(
+          "rounded-xl overflow-hidden transition-all duration-300",
+          "bg-elec-dark/50",
+          "border-2 border-dashed border-white/20",
+          "hover:border-elec-yellow/40",
+          "touch-manipulation",
+          className
+        )}
+      >
+        <div className="p-5">
+          {/* Header */}
+          <div className="flex items-start justify-between gap-4 mb-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap mb-2">
+                <h3 className="text-lg font-bold text-white leading-tight">{formatJobType(jobType)}</h3>
+                <span className={cn(
+                  "px-2.5 py-1 text-xs font-semibold rounded-lg border",
+                  complexity.bg, complexity.text, complexity.border
+                )}>
+                  {complexity.label}
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-white/70">
+                <MapPin className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <span>{postcodeDistrict || region}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Empty State Message */}
+          <div className="text-center py-6 px-4 rounded-xl bg-white/5 border border-dashed border-white/10 mb-4">
+            <div className="flex items-center justify-center w-12 h-12 mx-auto mb-3 rounded-full bg-elec-yellow/10">
+              <PlusCircle className="h-6 w-6 text-elec-yellow" />
+            </div>
+            <p className="text-base font-semibold text-white mb-1">No prices yet</p>
+            <p className="text-sm text-white/60">Be the first to submit a price for this job in {postcodeDistrict || region}!</p>
+          </div>
+
+          {/* Submit CTA - Prominent for empty state */}
+          {onSubmitPrice && (
+            <button
+              onClick={onSubmitPrice}
+              className="w-full p-4 bg-elec-yellow text-black font-bold rounded-xl hover:bg-elec-yellow/90 transition-all touch-manipulation active:scale-[0.99] flex items-center justify-center gap-2"
+            >
+              <Zap className="h-5 w-5" />
+              Submit Your Price
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn(
-        "rounded-2xl overflow-hidden transition-all duration-300",
-        "bg-gradient-to-br from-neutral-900 to-neutral-950",
-        "border-2 border-white/10",
-        "hover:border-yellow-400/40 active:scale-[0.99]",
+        "rounded-xl overflow-hidden transition-all duration-300",
+        "bg-elec-dark",
+        "border border-white/[0.08]",
+        "hover:border-elec-yellow/40 active:scale-[0.99]",
         "touch-manipulation",
-        isExpanded && "border-yellow-400/30",
+        isExpanded && "border-elec-yellow/30",
         className
       )}
     >
@@ -107,12 +208,29 @@ const PriceCard = ({
         onClick={() => setIsExpanded(!isExpanded)}
         className="w-full text-left p-5"
       >
+        {/* Data Source Badge - Top */}
+        <div className="flex items-center justify-between mb-3">
+          <div className={cn(
+            "inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border",
+            dataSourceBadge.bg, dataSourceBadge.text, dataSourceBadge.border
+          )}>
+            <dataSourceBadge.icon className="h-3.5 w-3.5" />
+            {dataSourceBadge.label}
+          </div>
+          {sampleSize > 0 && (
+            <div className="flex items-center gap-1 text-xs text-white/50">
+              <Users className="h-3 w-3" />
+              {sampleSize} quotes
+            </div>
+          )}
+        </div>
+
         {/* Header Row */}
         <div className="flex items-start justify-between gap-4 mb-4">
           <div className="flex-1 min-w-0">
             {/* Job Type & Badge */}
             <div className="flex items-center gap-2 flex-wrap mb-2">
-              <h3 className="text-lg font-bold text-white leading-tight">{jobType}</h3>
+              <h3 className="text-lg font-bold text-white leading-tight">{formatJobType(jobType)}</h3>
               <span className={cn(
                 "px-2.5 py-1 text-xs font-semibold rounded-lg border",
                 complexity.bg, complexity.text, complexity.border
@@ -123,14 +241,14 @@ const PriceCard = ({
 
             {/* Location */}
             <div className="flex items-center gap-2 text-sm text-white/70">
-              <MapPin className="h-4 w-4 text-yellow-400 flex-shrink-0" />
+              <MapPin className="h-4 w-4 text-elec-yellow flex-shrink-0" />
               <span>{postcodeDistrict || region}</span>
             </div>
           </div>
 
           {/* Average Price - Hero Display */}
           <div className="text-right flex-shrink-0">
-            <div className="text-3xl font-black text-yellow-400 tracking-tight">
+            <div className="text-3xl font-black text-elec-yellow tracking-tight">
               {formatPrice(avgPrice)}
             </div>
             <div className="text-xs text-white/60 font-medium mt-1">
@@ -163,8 +281,8 @@ const PriceCard = ({
               style={{ left: `${Math.max(25, Math.min(75, avgPosition))}%`, transform: 'translate(-50%, -50%)' }}
             >
               <div className="flex flex-col items-center">
-                <div className="w-1 h-6 bg-yellow-400 rounded-full shadow-lg shadow-yellow-400/50" />
-                <div className="mt-1 px-2 py-0.5 bg-yellow-400 rounded-md">
+                <div className="w-1 h-6 bg-elec-yellow rounded-full shadow-lg shadow-elec-yellow/50" />
+                <div className="mt-1 px-2 py-0.5 bg-elec-yellow rounded-md">
                   <span className="text-[10px] font-bold text-black uppercase">Avg</span>
                 </div>
               </div>
@@ -176,11 +294,7 @@ const PriceCard = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-sm text-white/80">
-              <Users className="h-4 w-4 text-yellow-400/80" />
-              <span className="font-medium">{sampleSize} quotes</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-sm text-white/80">
-              <Clock className="h-4 w-4 text-yellow-400/80" />
+              <Clock className="h-4 w-4 text-elec-yellow/80" />
               <span className="font-medium">{formatDate(lastUpdated)}</span>
             </div>
           </div>
@@ -189,11 +303,11 @@ const PriceCard = ({
             {trend !== 0 && <TrendArrow value={trend} size="sm" />}
             <div className={cn(
               "flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300",
-              isExpanded ? "bg-yellow-400/20 rotate-180" : "bg-white/10"
+              isExpanded ? "bg-elec-yellow/20 rotate-180" : "bg-white/10"
             )}>
               <ChevronDown className={cn(
                 "h-5 w-5 transition-colors",
-                isExpanded ? "text-yellow-400" : "text-white/60"
+                isExpanded ? "text-elec-yellow" : "text-white/60"
               )} />
             </div>
           </div>
@@ -244,19 +358,19 @@ const PriceCard = ({
                 e.stopPropagation();
                 onSubmitPrice();
               }}
-              className="w-full p-4 bg-gradient-to-r from-yellow-400/15 to-amber-500/15 border border-yellow-400/30 rounded-xl hover:from-yellow-400/25 hover:to-amber-500/25 transition-all touch-manipulation active:scale-[0.99]"
+              className="w-full p-4 bg-gradient-to-r from-elec-yellow/15 to-amber-500/15 border border-elec-yellow/30 rounded-xl hover:from-elec-yellow/25 hover:to-amber-500/25 transition-all touch-manipulation active:scale-[0.99]"
             >
               <div className="flex items-start gap-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-yellow-400/20 flex-shrink-0">
-                  <TrendingUp className="h-5 w-5 text-yellow-400" />
+                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-elec-yellow/20 flex-shrink-0">
+                  <TrendingUp className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="text-sm font-bold text-yellow-400">Help Improve Pricing Data</p>
+                  <p className="text-sm font-bold text-elec-yellow">Help Improve Pricing Data</p>
                   <p className="text-xs text-white/70 mt-1 leading-relaxed">
                     Submit your actual job prices to help fellow sparkies get accurate market rates
                   </p>
                 </div>
-                <Zap className="h-5 w-5 text-yellow-400/50 flex-shrink-0" />
+                <Zap className="h-5 w-5 text-elec-yellow/50 flex-shrink-0" />
               </div>
             </button>
           )}

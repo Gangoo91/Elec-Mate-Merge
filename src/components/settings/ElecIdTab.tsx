@@ -227,7 +227,7 @@ const ElecIdTab = () => {
   return (
     <div className="space-y-4">
       {/* iOS-Style Navigation Bar */}
-      <div className="sticky top-0 z-30 -mx-4 px-4 sm:mx-0 sm:px-0 sm:static">
+      <div className="z-30 -mx-4 px-4 sm:sticky sm:top-0 sm:mx-0 sm:px-0">
         <div className="relative bg-background/80 backdrop-blur-xl sm:bg-transparent sm:backdrop-blur-none rounded-2xl sm:rounded-none">
           {/* Mobile: Compact horizontal scroll with active indicator */}
           <div className="sm:hidden">

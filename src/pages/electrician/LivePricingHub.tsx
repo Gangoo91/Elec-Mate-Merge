@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ArrowLeft, Search, Send, Recycle, BarChart3, RefreshCw, Zap, MapPin, X, Briefcase } from "lucide-react";
+import { ArrowLeft, Search, Send, Recycle, BarChart3, RefreshCw, Zap, MapPin, X, Briefcase, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +20,7 @@ import CompactScrapMerchantFinder from "@/components/electrician-pricing/Compact
 
 // Hooks
 import { supabase } from "@/integrations/supabase/client";
+import { useJobTypes } from "@/hooks/useJobTypes";
 
 interface PricingResult {
   id: string;
@@ -34,6 +35,7 @@ interface PricingResult {
   sampleSize: number;
   lastUpdated: string;
   complexityLevel: "simple" | "medium" | "complex";
+  dataSource: "community" | "market" | "estimated";
 }
 
 const tabs = [
@@ -53,6 +55,10 @@ const LivePricingHub = () => {
   const [lastSearch, setLastSearch] = useState<{ postcode: string; jobType?: string } | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [showAllJobs, setShowAllJobs] = useState(false);
+
+  // Get master job types list
+  const { data: jobTypesData } = useJobTypes();
 
   const handleSearch = async (postcode: string, jobType?: string) => {
     setIsSearching(true);
@@ -91,6 +97,7 @@ const LivePricingHub = () => {
         sampleSize: item.sample_size || 1,
         lastUpdated: item.updated_at || item.created_at,
         complexityLevel: item.complexity_level || 'medium',
+        dataSource: item.data_source === 'community' ? 'community' : item.sample_size > 3 ? 'market' : 'estimated',
       }));
 
       setSearchResults(results);
@@ -121,6 +128,43 @@ const LivePricingHub = () => {
       setIsRefreshing(false);
     }
   };
+
+  // Merge search results with master job list to show all jobs (even with zero prices)
+  const getMergedResults = (): PricingResult[] => {
+    if (!lastSearch || !showAllJobs || !jobTypesData?.all) {
+      return searchResults;
+    }
+
+    const existingJobTypes = new Set(searchResults.map(r => r.jobType.toLowerCase()));
+    const postcodeDistrict = lastSearch.postcode.split(' ')[0].toUpperCase();
+
+    // Create empty placeholders for jobs without data
+    const emptyPlaceholders: PricingResult[] = jobTypesData.all
+      .filter(job => !existingJobTypes.has(job.job_type.toLowerCase()))
+      .filter(job => !lastSearch.jobType || job.job_type.toLowerCase().includes(lastSearch.jobType.toLowerCase()))
+      .map((job, index) => ({
+        id: `empty-${index}`,
+        jobType: job.job_type,
+        jobCategory: job.job_category,
+        minPrice: 0,
+        maxPrice: 0,
+        avgPrice: 0,
+        region: 'UK',
+        postcodeDistrict: postcodeDistrict,
+        confidenceScore: 0,
+        sampleSize: 0,
+        lastUpdated: new Date().toISOString(),
+        complexityLevel: 'medium' as const,
+        dataSource: 'estimated' as const,
+      }));
+
+    // Real results first, then empty placeholders
+    return [...searchResults, ...emptyPlaceholders];
+  };
+
+  const displayResults = getMergedResults();
+  const hasRealResults = searchResults.length > 0;
+  const emptyJobsCount = displayResults.length - searchResults.length;
 
   return (
     <div className="bg-neutral-900 flex flex-col   animate-fade-in">
@@ -180,13 +224,13 @@ const LivePricingHub = () => {
           {isSearching ? (
             <SearchResultsSkeleton />
           ) : hasSearched ? (
-            searchResults.length > 0 ? (
+            displayResults.length > 0 || showAllJobs ? (
               <div className="space-y-4">
                 {/* Results Summary Bar - Sticky on scroll */}
                 <div className="sticky top-14 z-30 -mx-4 px-4 py-3 bg-neutral-900/95 backdrop-blur-xl border-b border-white/10">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2 flex-wrap min-w-0">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-yellow-400/20 text-yellow-400 text-sm font-bold shrink-0">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-elec-yellow/20 text-elec-yellow text-sm font-bold shrink-0">
                         <MapPin className="h-3.5 w-3.5" />
                         {lastSearch?.postcode}
                       </span>
@@ -197,13 +241,17 @@ const LivePricingHub = () => {
                         </span>
                       )}
                       <span className="text-white/60 text-sm">
-                        · <span className="font-semibold text-white">{searchResults.length}</span> results
+                        · <span className="font-semibold text-white">{searchResults.length}</span> with prices
+                        {showAllJobs && emptyJobsCount > 0 && (
+                          <span className="text-white/40"> + {emptyJobsCount} need prices</span>
+                        )}
                       </span>
                     </div>
                     <button
                       onClick={() => {
                         setHasSearched(false);
                         setSearchResults([]);
+                        setShowAllJobs(false);
                       }}
                       className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-all touch-manipulation active:scale-95 shrink-0"
                     >
@@ -212,7 +260,27 @@ const LivePricingHub = () => {
                   </div>
                 </div>
 
-                {searchResults.map((result) => (
+                {/* Show All Jobs Toggle */}
+                {jobTypesData?.all && (
+                  <button
+                    onClick={() => setShowAllJobs(!showAllJobs)}
+                    className={cn(
+                      "w-full p-3 rounded-xl border transition-all touch-manipulation active:scale-[0.99]",
+                      showAllJobs
+                        ? "bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
+                        : "bg-white/5 border-white/10 text-white/70 hover:border-white/20"
+                    )}
+                  >
+                    <div className="flex items-center justify-center gap-2">
+                      <Users className="h-4 w-4" />
+                      <span className="text-sm font-medium">
+                        {showAllJobs ? 'Showing all job types' : 'Show all job types (help add prices!)'}
+                      </span>
+                    </div>
+                  </button>
+                )}
+
+                {displayResults.map((result) => (
                   <PriceCard
                     key={result.id}
                     jobType={result.jobType}
@@ -226,25 +294,63 @@ const LivePricingHub = () => {
                     sampleSize={result.sampleSize}
                     lastUpdated={result.lastUpdated}
                     complexityLevel={result.complexityLevel}
+                    dataSource={result.dataSource}
                     onSubmitPrice={() => setActiveTab("submit")}
                   />
                 ))}
+
+                {/* Encourage submissions banner at bottom */}
+                {hasRealResults && (
+                  <div className="p-4 rounded-xl bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/20">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-lg bg-elec-yellow/20 flex-shrink-0">
+                        <Zap className="h-5 w-5 text-elec-yellow" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white mb-1">Help fellow sparkies!</p>
+                        <p className="text-xs text-white/60 mb-3">
+                          Submit your real job prices to help electricians across the UK get accurate market rates.
+                        </p>
+                        <Button
+                          onClick={() => setActiveTab("submit")}
+                          size="sm"
+                          className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold h-9"
+                        >
+                          Submit a Price
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="text-center py-16">
                 <div className="w-20 h-20 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
                   <Search className="h-10 w-10 text-white/30" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">No results found</h3>
+                <h3 className="text-xl font-bold text-white mb-2">No prices found for this area</h3>
                 <p className="text-white/70 text-sm max-w-xs mx-auto mb-6">
-                  Try a different postcode or broader search. You can also help by submitting prices for this area.
+                  Be the first to submit prices for {lastSearch?.postcode}! Help build pricing data for your area.
                 </p>
-                <Button
-                  onClick={() => setActiveTab("submit")}
-                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-black font-bold px-6 h-12 rounded-xl"
-                >
-                  Submit a Price
-                </Button>
+                <div className="flex flex-col gap-3 items-center">
+                  <Button
+                    onClick={() => setActiveTab("submit")}
+                    className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold px-6 h-12 rounded-xl"
+                  >
+                    <Zap className="h-5 w-5 mr-2" />
+                    Submit a Price
+                  </Button>
+                  {jobTypesData?.all && (
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowAllJobs(true)}
+                      className="border-white/20 text-white/70 hover:text-white h-11"
+                    >
+                      <Users className="h-4 w-4 mr-2" />
+                      Browse all job types
+                    </Button>
+                  )}
+                </div>
               </div>
             )
           ) : (

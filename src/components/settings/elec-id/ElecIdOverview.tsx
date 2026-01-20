@@ -537,21 +537,21 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
 
           <CardContent className="p-0">
-            {/* Header */}
-            <div className="flex items-center justify-between px-5 pt-5 pb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-elec-yellow to-amber-500 flex items-center justify-center">
-                  <Zap className="h-5 w-5 text-elec-dark" />
+            {/* Header - Compact on mobile */}
+            <div className="flex items-center justify-between px-4 pt-4 pb-3 sm:px-5 sm:pt-5 sm:pb-4">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-elec-yellow to-amber-500 flex items-center justify-center">
+                  <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-elec-dark" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-white tracking-wide">ELEC-iD</h2>
-                  <p className="text-[11px] text-white/40 tracking-wider uppercase">Verified Professional</p>
+                  <h2 className="text-base sm:text-lg font-bold text-white tracking-wide">ELEC-iD</h2>
+                  <p className="text-[10px] sm:text-[11px] text-white/40 tracking-wider uppercase">Verified Professional</p>
                 </div>
               </div>
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-11 w-11 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 touch-manipulation active:scale-95"
+                className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 touch-manipulation active:scale-95"
                 onClick={() => isMobile ? setIsEditSheetOpen(true) : handleOpenEdit()}
               >
                 <Edit2 className="h-4 w-4 text-white/60" />
@@ -559,31 +559,31 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             </div>
 
             {/* Main Content Row */}
-            <div className="px-5 pb-5">
-              <div className="flex gap-4">
+            <div className="px-4 pb-4 sm:px-5 sm:pb-5">
+              <div className="flex gap-3 sm:gap-4">
                 {/* Photo Column */}
                 <div className="relative flex-shrink-0">
                   {elecIdData.photoUrl ? (
                     <img
                       src={elecIdData.photoUrl}
                       alt="Profile"
-                      className="w-[100px] h-[120px] sm:w-[110px] sm:h-[132px] rounded-2xl object-cover border-2 border-white/20"
+                      className="w-[72px] h-[90px] sm:w-[100px] sm:h-[120px] rounded-xl sm:rounded-2xl object-cover border-2 border-white/20"
                     />
                   ) : (
-                    <div className="w-[100px] h-[120px] sm:w-[110px] sm:h-[132px] rounded-2xl bg-gradient-to-br from-elec-yellow via-amber-400 to-amber-500 flex items-center justify-center border-2 border-white/20">
-                      <span className="text-elec-dark font-bold text-4xl">{userInitials}</span>
+                    <div className="w-[72px] h-[90px] sm:w-[100px] sm:h-[120px] rounded-xl sm:rounded-2xl bg-gradient-to-br from-elec-yellow via-amber-400 to-amber-500 flex items-center justify-center border-2 border-white/20">
+                      <span className="text-elec-dark font-bold text-2xl sm:text-4xl">{userInitials}</span>
                     </div>
                   )}
 
                   {/* Camera overlay */}
-                  <button className="absolute -bottom-2 -right-2 w-9 h-9 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center shadow-lg active:scale-95 transition-transform touch-manipulation border-2 border-[#1a1a2e]">
-                    <Camera className="h-4 w-4" />
+                  <button className="absolute -bottom-1.5 -right-1.5 sm:-bottom-2 sm:-right-2 w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center shadow-lg active:scale-95 transition-transform touch-manipulation border-2 border-[#1a1a2e]">
+                    <Camera className="h-3 w-3 sm:h-4 sm:w-4" />
                   </button>
 
                   {/* Verified badge */}
                   {elecIdData.isVerified && (
-                    <div className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center border-2 border-[#1a1a2e]">
-                      <CheckCircle2 className="h-4 w-4 text-white" />
+                    <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-emerald-500 flex items-center justify-center border-2 border-[#1a1a2e]">
+                      <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
                     </div>
                   )}
                 </div>
@@ -592,24 +592,24 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                 <div className="flex-1 min-w-0 flex flex-col justify-between">
                   {/* Name & Job */}
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white truncate">{userName}</h3>
-                    <p className="text-elec-yellow font-semibold text-sm mt-1">{elecIdData.jobTitleLabel}</p>
+                    <h3 className="text-lg sm:text-xl font-bold text-white truncate">{userName}</h3>
+                    <p className="text-elec-yellow font-medium text-xs sm:text-sm mt-0.5">{elecIdData.jobTitleLabel}</p>
                   </div>
 
                   {/* Info Grid */}
-                  <div className="mt-3 space-y-2">
+                  <div className="mt-2 sm:mt-3 space-y-1.5 sm:space-y-2">
                     {/* ECS Card Row */}
                     {ecsCard && (
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1.5 sm:gap-2">
                         <div
-                          className="w-8 h-5 rounded flex items-center justify-center text-[7px] font-bold text-white"
+                          className="w-7 h-4 sm:w-8 sm:h-5 rounded flex items-center justify-center text-[6px] sm:text-[7px] font-bold text-white"
                           style={{ backgroundColor: ecsCard.color }}
                         >
                           ECS
                         </div>
-                        <span className="text-white/80 text-xs font-medium">{ecsCard.label}</span>
+                        <span className="text-white/80 text-[11px] sm:text-xs font-medium truncate">{ecsCard.label}</span>
                         <span className={cn(
-                          "text-[10px] font-medium ml-auto",
+                          "text-[9px] sm:text-[10px] font-medium ml-auto shrink-0",
                           expiryStatus.status === "expired" ? "text-red-400" :
                           expiryStatus.status === "expiring" ? "text-orange-400" : "text-white/50"
                         )}>
@@ -621,17 +621,17 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                     )}
 
                     {/* Tier Badge Row */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
                       <Badge className={cn(
-                        "text-[10px] font-semibold px-2 py-0.5 border",
+                        "text-[9px] sm:text-[10px] font-semibold px-1.5 sm:px-2 py-0.5 border",
                         VERIFICATION_TIERS[verificationTier].bgColor,
                         VERIFICATION_TIERS[verificationTier].color,
                         VERIFICATION_TIERS[verificationTier].borderColor
                       )}>
-                        {React.createElement(VERIFICATION_TIERS[verificationTier].icon, { className: "h-3 w-3 mr-1" })}
+                        {React.createElement(VERIFICATION_TIERS[verificationTier].icon, { className: "h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" })}
                         {VERIFICATION_TIERS[verificationTier].label}
                       </Badge>
-                      <span className="text-[10px] text-white/30">Verification</span>
+                      <span className="text-[9px] sm:text-[10px] text-white/30">Verification</span>
                     </div>
                   </div>
                 </div>
@@ -643,33 +643,33 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               <motion.button
                 whileTap={{ scale: 0.99 }}
                 onClick={copyElecId}
-                className="w-full px-5 py-4 flex items-center justify-between touch-manipulation active:bg-white/[0.03] transition-colors"
+                className="w-full px-4 py-3 sm:px-5 sm:py-4 flex items-center justify-between touch-manipulation active:bg-white/[0.03] transition-colors"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center">
-                    <QrCode className="h-6 w-6 text-[#1a1a2e]" />
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-white flex items-center justify-center">
+                    <QrCode className="h-5 w-5 sm:h-6 sm:w-6 text-[#1a1a2e]" />
                   </div>
                   <div className="text-left">
-                    <p className="text-[9px] uppercase tracking-[0.2em] text-white/30 font-medium">ELEC-iD</p>
-                    <p className="font-mono font-bold text-white text-lg tracking-wider">{elecIdData.elecIdNumber}</p>
+                    <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/30 font-medium">ELEC-iD</p>
+                    <p className="font-mono font-bold text-white text-base sm:text-lg tracking-wider">{elecIdData.elecIdNumber}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 text-white/40">
-                  <span className="text-[10px] uppercase tracking-wide">Tap to copy</span>
+                <div className="flex items-center gap-1.5 sm:gap-2 text-white/40">
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wide hidden xs:inline">Tap to copy</span>
                   <Copy className="h-4 w-4" />
                 </div>
               </motion.button>
             </div>
 
             {/* Footer Status */}
-            <div className="px-5 py-2.5 border-t border-white/[0.06] bg-white/[0.01] flex items-center justify-between">
-              <div className="flex items-center gap-2 text-[10px] text-white/25">
-                <Shield className="h-3 w-3" />
+            <div className="px-4 py-2 sm:px-5 sm:py-2.5 border-t border-white/[0.06] bg-white/[0.01] flex items-center justify-between">
+              <div className="flex items-center gap-1.5 sm:gap-2 text-[9px] sm:text-[10px] text-white/25">
+                <Shield className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                 <span>VERIFIED BY ELEC-MATE</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1 sm:gap-1.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] text-emerald-400/60 font-medium">ACTIVE</span>
+                <span className="text-[9px] sm:text-[10px] text-emerald-400/60 font-medium">ACTIVE</span>
               </div>
             </div>
           </CardContent>

@@ -7,4 +7,12 @@ export const NEWS_SOURCE_BRANDING: Record<string, { color: string; shortName: st
   'Building': { color: '#0369A1', shortName: 'BLD' },
   'BSRIA': { color: '#0891B2', shortName: 'BSR' },
   'Voltimum UK': { color: '#EA580C', shortName: 'VLT' },
+  'IET': { color: '#7C3AED', shortName: 'IET' },
+  'NICEIC': { color: '#2563EB', shortName: 'NIC' },
+  'NAPIT': { color: '#059669', shortName: 'NAP' },
+  'HSE': { color: '#DC2626', shortName: 'HSE' },
+  'Electrical Review': { color: '#0891B2', shortName: 'ER' },
+  'Eandt': { color: '#6366F1', shortName: 'E&T' },
+  'Industry News': { color: '#6B7280', shortName: 'IN' },
+  'UK Industry News': { color: '#6B7280', shortName: 'UK' },
 };

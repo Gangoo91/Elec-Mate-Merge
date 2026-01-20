@@ -225,69 +225,106 @@ function processMaterialsData(materials: MaterialItem[]): ProcessedCategoryData[
   });
 }
 
+// Material categories in marketplace_products (excludes tool categories)
+const MATERIAL_CATEGORIES = [
+  'lighting', 'circuit-protection', 'wiring-accessories', 'containment',
+  'cables', 'fixings', 'ppe', 'fire-security', 'data-networking',
+  'consumer-units', 'ev-charging', 'earthing'
+];
+
+// Map marketplace_products categories to our display categories
+const marketplaceToCategoryMap: Record<string, string> = {
+  'cables': 'cables',
+  'lighting': 'lighting',
+  'fixings': 'fixings',
+  'fire-security': 'fire-security',
+  'data-networking': 'data-networking',
+  'ev-charging': 'ev-charging',
+  'circuit-protection': 'protection',
+  'wiring-accessories': 'accessories',
+  'containment': 'cable-management',
+  'consumer-units': 'components',
+  'ppe': 'protection',
+  'earthing': 'components'
+};
+
 export const useMaterialsData = () => {
   const rawQuery = useQuery({
     queryKey: ['comprehensive-materials'],
     queryFn: async () => {
-      console.log('🔍 Fetching materials from cache...');
-      
+      console.log('🔍 Fetching materials from marketplace_products...');
+
       try {
-        // First, try to fetch from materials_weekly_cache table
-        const { data: cachedData, error: cacheError } = await supabase
-          .from('materials_weekly_cache')
-          .select('*');
+        // Fetch MATERIALS from marketplace_products (filter by material categories)
+        const { data, error } = await supabase
+          .from('marketplace_products')
+          .select('id, name, brand, category, current_price, regular_price, is_on_sale, discount_percentage, image_url, product_url, stock_status, description, highlights')
+          .in('category', MATERIAL_CATEGORIES)
+          .order('current_price', { ascending: true });
 
-        if (cacheError) {
-          console.warn('⚠️ Cache fetch error:', cacheError);
-        }
-
-        // Check if cache has valid data
-        if (cachedData && cachedData.length > 0) {
-          console.log(`✅ Found ${cachedData.length} categories in cache`);
-          
-          // Flatten all materials_data arrays from all categories
-          const allMaterials = cachedData.flatMap(entry => 
-            ensureStockStatus((entry.materials_data as unknown as MaterialItem[]) || [])
-          );
-          
-          const totalFound = cachedData.reduce((sum, entry) => sum + (entry.total_products || 0), 0);
-          
-          console.log(`✅ Loaded ${allMaterials.length} materials from ${cachedData.length} categories`);
-          
-          const processedData = processMaterialsData(allMaterials);
-          
-          return {
-            data: processedData,
-            rawMaterials: allMaterials,
-            fromCache: true,
-            totalMaterials: totalFound
-          };
-        }
-
-        // If cache is empty/expired, call the edge function to populate it
-        console.log('📡 Cache empty, calling edge function...');
-        const { data, error } = await supabase.functions.invoke('comprehensive-materials-scraper', {
-          body: { mergeAll: true }
-        });
-        
         if (error) {
           console.error('❌ Error fetching materials:', error);
           throw error;
         }
 
-        // Map tools array to materials (same data structure)
-        const materials = ensureStockStatus(data?.tools || []);
-        const totalFound = data?.totalFound || materials.length;
-        
-        console.log(`✅ Received ${materials.length} materials from edge function`);
-        
+        if (!data || data.length === 0) {
+          console.log('📊 No materials found in marketplace_products');
+          return {
+            data: defaultCategoryData,
+            rawMaterials: [],
+            fromCache: false,
+            totalMaterials: 0
+          };
+        }
+
+        console.log(`✅ Found ${data.length} materials in marketplace_products`);
+
+        // Transform marketplace_products to MaterialItem format
+        const materials: MaterialItem[] = data.map((product: any, index: number) => {
+          // Derive supplier from product URL
+          const supplier = product.product_url?.includes('toolstation') ? 'Toolstation'
+                         : product.product_url?.includes('screwfix') ? 'Screwfix'
+                         : product.product_url?.includes('cef') ? 'CEF'
+                         : product.product_url?.includes('edmundson') ? 'Edmundson'
+                         : 'Unknown';
+
+          // Format price as string with £
+          const formatPrice = (price: number | string | null) => {
+            if (!price) return '£0.00';
+            const num = typeof price === 'string' ? parseFloat(price) : price;
+            return `£${num.toFixed(2)}`;
+          };
+
+          // Map to our display category
+          const displayCategory = Object.entries(categoryMapping).find(
+            ([, id]) => id === marketplaceToCategoryMap[product.category]
+          )?.[0] || product.category;
+
+          return {
+            id: index + 1,
+            name: product.name || 'Unknown Product',
+            category: displayCategory,
+            price: formatPrice(product.current_price),
+            supplier,
+            image: product.image_url || '/placeholder.svg',
+            productUrl: product.product_url,
+            view_product_url: product.product_url,
+            highlights: product.highlights || [],
+            description: product.description,
+            isOnSale: product.is_on_sale || false,
+            salePrice: product.is_on_sale ? formatPrice(product.current_price) : undefined,
+            stockStatus: product.stock_status || 'In Stock',
+            inStock: product.stock_status !== 'Out of Stock'
+          };
+        });
+
         const processedData = processMaterialsData(materials);
-        
+
         return {
           data: processedData,
           rawMaterials: materials,
-          fromCache: false,
-          totalMaterials: totalFound
+          fromCache: true,
+          totalMaterials: materials.length
         };
       } catch (error) {
         console.error('❌ Error in fetchMaterialsData:', error);

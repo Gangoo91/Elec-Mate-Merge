@@ -67,8 +67,8 @@ const AnimatedCounter = ({
   );
 };
 
-// Stat card component
-const StatCard = ({
+// Compact stat pill for mobile
+const StatPill = ({
   icon: Icon,
   value,
   label,
@@ -84,19 +84,20 @@ const StatCard = ({
   iconColor?: string;
 }) => (
   <motion.div
-    initial={{ opacity: 0, y: 10, scale: 0.95 }}
-    animate={{ opacity: 1, y: 0, scale: 1 }}
-    transition={{ type: "spring", stiffness: 300, damping: 25 }}
-    className="group bg-white/[0.03] hover:bg-white/[0.08] rounded-2xl p-3 sm:p-4 text-center border border-white/5 hover:border-white/10 transition-all duration-300 backdrop-blur-sm"
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    className="flex items-center gap-2 bg-white/[0.05] rounded-xl px-3 py-2 border border-white/5"
   >
-    <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-      <Icon className={cn("h-5 w-5", iconColor)} />
+    <div className={cn("p-1.5 rounded-lg bg-white/5", iconColor.replace('text-', 'bg-').replace('300', '500/20'))}>
+      <Icon className={cn("h-4 w-4", iconColor)} />
     </div>
-    <div className="text-xl sm:text-2xl font-bold text-white">
-      <AnimatedCounter value={value} suffix={suffix} prefix={prefix} />
-    </div>
-    <div className="text-[10px] sm:text-xs text-white/50 uppercase tracking-wider font-medium mt-1">
-      {label}
+    <div className="flex flex-col">
+      <span className="text-sm font-bold text-white leading-tight">
+        <AnimatedCounter value={value} suffix={suffix} prefix={prefix} />
+      </span>
+      <span className="text-[9px] text-white/50 uppercase tracking-wide leading-tight">
+        {label}
+      </span>
     </div>
   </motion.div>
 );

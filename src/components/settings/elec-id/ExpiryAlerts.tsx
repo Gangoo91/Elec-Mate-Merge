@@ -252,7 +252,7 @@ export function ExpiryAlerts({
                       variant="ghost"
                       size="sm"
                       className={cn(
-                        "h-8",
+                        "h-11 px-3 touch-manipulation active:scale-[0.98]",
                         doc.notificationsEnabled
                           ? "text-green-500"
                           : "text-foreground/70"

@@ -142,14 +142,13 @@ const PremiumCourseCard = ({ course, onClick, index = 0 }: PremiumCourseCardProp
           </Badge>
         </div>
 
-        {/* View Details Button */}
+        {/* View Details Button - proper touch target */}
         <Button
           variant="ghost"
-          size="sm"
-          className="w-full justify-between text-white hover:text-white hover:bg-white/10 group/btn mt-1"
+          className="w-full h-11 justify-between text-white hover:text-white hover:bg-white/10 group/btn mt-1 touch-manipulation active:scale-[0.98]"
         >
-          <span className="text-xs font-medium">View Details</span>
-          <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+          <span className="text-sm font-medium">View Details</span>
+          <ChevronRight className="h-5 w-5 transition-transform group-hover/btn:translate-x-1" />
         </Button>
       </div>
     </motion.div>

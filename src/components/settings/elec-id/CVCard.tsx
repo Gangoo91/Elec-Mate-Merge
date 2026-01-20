@@ -297,17 +297,17 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-8 text-xs border-white/10 bg-white/5 hover:bg-white/10"
+                    className="h-11 text-xs border-white/10 bg-white/5 hover:bg-white/10 touch-manipulation active:scale-[0.98]"
                     onClick={() => onEdit(cv)}
                   >
-                    <Edit2 className="h-3 w-3 mr-1.5" />
+                    <Edit2 className="h-3.5 w-3.5 mr-1.5" />
                     Edit
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     className={cn(
-                      "h-8 text-xs border-white/10 bg-white/5 hover:bg-white/10",
+                      "h-11 text-xs border-white/10 bg-white/5 hover:bg-white/10 touch-manipulation active:scale-[0.98]",
                       templateStyle.color
                     )}
                     onClick={handleDownload}

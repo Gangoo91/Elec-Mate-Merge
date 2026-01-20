@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
@@ -46,6 +46,47 @@ export const useUnifiedJobSearch = () => {
     totalSources: 0,
     isSearching: false
   });
+
+  // Fetch initial jobs on mount - no search required
+  const fetchInitialJobs = async () => {
+    try {
+      setLoading(true);
+      console.log('📋 Fetching initial jobs from job_listings...');
+
+      const { data, error } = await supabase
+        .from('job_listings')
+        .select('*')
+        .order('posted_date', { ascending: false })
+        .limit(100);
+
+      if (error) throw error;
+
+      const initialJobs = data?.map(job => ({
+        ...job,
+        is_fresh: isJobFresh(job.updated_at)
+      })) || [];
+
+      console.log(`✅ Loaded ${initialJobs.length} initial jobs`);
+      setJobs(initialJobs);
+
+      setSearchProgress({
+        sources: [{ source: 'Database', status: 'completed', jobCount: initialJobs.length }],
+        totalJobsFound: initialJobs.length,
+        completedSources: 1,
+        totalSources: 1,
+        isSearching: false
+      });
+    } catch (error) {
+      console.error('Error fetching initial jobs:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Auto-load jobs on mount
+  useEffect(() => {
+    fetchInitialJobs();
+  }, []);
 
   const searchDatabaseJobs = async (keywords: string, location?: string) => {
     try {
@@ -251,6 +292,7 @@ export const useUnifiedJobSearch = () => {
     searchProgress,
     searchAllJobs,
     triggerJobUpdate,
+    refetch: fetchInitialJobs,
     currentPage,
     jobsPerPage,
     paginate,

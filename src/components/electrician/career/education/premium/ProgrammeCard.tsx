@@ -169,22 +169,22 @@ const ProgrammeCard = ({
           {programme.level}
         </Badge>
 
-        {/* Special indicators - bottom left */}
+        {/* Special indicators - bottom left - HIGH CONTRAST */}
         <div className="absolute bottom-3 left-3 flex gap-2">
           {isHighDemand && (
-            <Badge className="bg-gradient-to-r from-amber-500/30 to-orange-500/30 border-amber-400/40 text-amber-300 text-[10px] font-semibold backdrop-blur-sm">
-              <TrendingUp className="h-3 w-3 mr-1" />
+            <Badge className="bg-amber-500/90 border-amber-400 text-white text-xs font-bold shadow-lg shadow-amber-500/40 backdrop-blur-sm">
+              <TrendingUp className="h-3.5 w-3.5 mr-1" />
               High Demand
             </Badge>
           )}
           {isTopRated && !isHighDemand && (
-            <Badge className="bg-gradient-to-r from-emerald-500/30 to-green-500/30 border-emerald-400/40 text-emerald-300 text-[10px] font-semibold backdrop-blur-sm">
-              <Star className="h-3 w-3 mr-1 fill-current" />
+            <Badge className="bg-emerald-500/90 border-emerald-400 text-white text-xs font-bold shadow-lg shadow-emerald-500/40 backdrop-blur-sm">
+              <Star className="h-3.5 w-3.5 mr-1 fill-white" />
               Top Rated
             </Badge>
           )}
           {isFunded && !isHighDemand && !isTopRated && (
-            <Badge className="bg-gradient-to-r from-blue-500/30 to-cyan-500/30 border-blue-400/40 text-blue-300 text-[10px] font-semibold backdrop-blur-sm">
+            <Badge className="bg-blue-500/90 border-blue-400 text-white text-xs font-bold shadow-lg shadow-blue-500/40 backdrop-blur-sm">
               Funding Available
             </Badge>
           )}
@@ -251,24 +251,40 @@ const ProgrammeCard = ({
           )}
         </div>
 
-        {/* Footer */}
-        <div className="flex items-center justify-between pt-3 border-t border-white/5">
-          <div>
-            <span className="text-xs text-white/40 block">From</span>
-            <span className="text-base font-bold text-white">
-              {programme.tuitionFees}
-            </span>
+        {/* Footer - stacked on mobile */}
+        <div className="flex flex-col gap-3 pt-3 border-t border-white/5">
+          {/* Price row */}
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-xs text-white/40 block">From</span>
+              <span className="text-lg font-bold text-white">
+                {programme.tuitionFees}
+              </span>
+            </div>
+            {/* Desktop button - hidden on mobile */}
+            <Button
+              size="sm"
+              className="hidden sm:flex h-10 px-4 bg-purple-500 hover:bg-purple-400 text-white font-medium shadow-lg shadow-purple-500/25 group-hover:shadow-purple-500/40 transition-all touch-manipulation active:scale-[0.95]"
+              onClick={(e) => {
+                e.stopPropagation();
+                onSelect(programme);
+              }}
+            >
+              <span className="text-sm">View Details</span>
+              <ChevronRight className="h-4 w-4 ml-1 group-hover:translate-x-0.5 transition-transform" />
+            </Button>
           </div>
+          {/* Full width button on mobile only */}
           <Button
-            size="sm"
-            className="h-9 px-4 bg-purple-500 hover:bg-purple-400 text-white font-medium shadow-lg shadow-purple-500/25 group-hover:shadow-purple-500/40 transition-all touch-manipulation active:scale-[0.95]"
+            size="lg"
+            className="sm:hidden w-full h-12 bg-purple-500 hover:bg-purple-400 text-white font-semibold shadow-lg shadow-purple-500/25 touch-manipulation active:scale-[0.98]"
             onClick={(e) => {
               e.stopPropagation();
               onSelect(programme);
             }}
           >
-            <span className="text-sm">View Details</span>
-            <ChevronRight className="h-4 w-4 ml-1 group-hover:translate-x-0.5 transition-transform" />
+            <span>View Details</span>
+            <ChevronRight className="h-5 w-5 ml-2" />
           </Button>
         </div>
       </div>

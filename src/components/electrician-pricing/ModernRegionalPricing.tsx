@@ -46,6 +46,13 @@ interface PostcodeDistrict {
   local_authority: string;
 }
 
+// Convert snake_case to Title Case
+const formatJobType = (jobType: string): string => {
+  return jobType
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+};
+
 const ModernRegionalPricing = () => {
   const { data: jobTypes, isLoading: jobTypesLoading } = useJobTypes();
   const [searchLocation, setSearchLocation] = useState("");
@@ -260,7 +267,7 @@ const ModernRegionalPricing = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                    {item.job_type}
+                    {formatJobType(item.job_type)}
                   </h3>
                   <p className="text-sm text-muted-foreground mt-1">{item.job_category}</p>
                 </div>
@@ -490,7 +497,7 @@ const ModernRegionalPricing = () => {
                             </div>
                             {jobs.map((job) => (
                               <SelectItem key={job.job_type} value={job.job_type}>
-                                {job.job_type}
+                                {formatJobType(job.job_type)}
                               </SelectItem>
                             ))}
                           </div>

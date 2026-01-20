@@ -22,51 +22,63 @@ export interface ToolItem {
   reviews?: string;
 }
 
+// Tool categories in marketplace_products
+const TOOL_CATEGORIES = ['power-tools', 'hand-tools', 'test-equipment', 'tool-storage'];
+
 const fetchToolsData = async (): Promise<ToolItem[]> => {
-  console.log('🔧 Fetching tools data from all category caches...');
-  
-  // Fetch ALL categories from the cache
+  console.log('🔧 Fetching tools data from marketplace_products...');
+
+  // Fetch only TOOLS from marketplace_products (filter by tool categories)
   const { data, error } = await supabase
-    .from('tools_weekly_cache' as any)
-    .select('tools_data, total_products, category, update_status, created_at, expires_at')
-    .order('created_at', { ascending: false });
-  
+    .from('marketplace_products')
+    .select('id, name, brand, category, current_price, regular_price, is_on_sale, discount_percentage, image_url, product_url, stock_status, description, highlights')
+    .in('category', TOOL_CATEGORIES)
+    .order('current_price', { ascending: true });
+
   if (error) {
-    console.error('❌ Error fetching cached tools:', error);
-    throw new Error(error.message || 'Failed to fetch cached tools data');
+    console.error('❌ Error fetching marketplace products:', error);
+    throw new Error(error.message || 'Failed to fetch marketplace products');
   }
 
   if (!data || data.length === 0) {
-    console.log('📊 No cached tools data found');
+    console.log('📊 No marketplace products found');
     return [];
   }
 
-  console.log(`✅ Found ${data.length} category caches`);
+  console.log(`✅ Found ${data.length} products in marketplace`);
 
-  // Merge all tools from all categories
-  const allTools: ToolItem[] = [];
-  
-  data.forEach((categoryCache: any) => {
-    if (categoryCache?.tools_data && Array.isArray(categoryCache.tools_data)) {
-      const transformedTools = categoryCache.tools_data.map((tool: any, index: number) => ({
-        id: tool.id || index + 1000,
-        name: tool.name || 'Unknown Tool',
-        category: tool.category || categoryCache.category || 'Tools',
-        price: tool.price || '£0.00',
-        supplier: tool.supplier || 'Screwfix',
-        brand: tool.brand,
-        image: tool.image || '/placeholder.svg',
-        stockStatus: tool.stockStatus || 'In Stock' as const,
-        isOnSale: tool.isOnSale || false,
-        salePrice: tool.salePrice,
-        highlights: tool.highlights || [],
-        productUrl: tool.view_product_url || tool.productUrl,
-        description: tool.description,
-        reviews: tool.reviews
-      }));
+  // Transform marketplace_products to ToolItem format
+  const allTools: ToolItem[] = data.map((product: any, index: number) => {
+    // Derive supplier from product URL
+    const supplier = product.product_url?.includes('toolstation') ? 'Toolstation'
+                   : product.product_url?.includes('screwfix') ? 'Screwfix'
+                   : product.product_url?.includes('cef') ? 'CEF'
+                   : product.product_url?.includes('edmundson') ? 'Edmundson'
+                   : 'Unknown';
 
-      allTools.push(...transformedTools);
-    }
+    // Format price as string with £
+    const formatPrice = (price: number | string | null) => {
+      if (!price) return '£0.00';
+      const num = typeof price === 'string' ? parseFloat(price) : price;
+      return `£${num.toFixed(2)}`;
+    };
+
+    return {
+      id: index + 1,
+      name: product.name || 'Unknown Product',
+      category: product.category || 'Tools',
+      price: formatPrice(product.current_price),
+      supplier,
+      brand: product.brand,
+      image: product.image_url || '/placeholder.svg',
+      stockStatus: (product.stock_status || 'In Stock') as 'In Stock' | 'Out of Stock' | 'Low Stock',
+      isOnSale: product.is_on_sale || false,
+      salePrice: product.is_on_sale ? formatPrice(product.current_price) : undefined,
+      originalPrice: product.regular_price ? formatPrice(product.regular_price) : undefined,
+      highlights: product.highlights || [],
+      productUrl: product.product_url,
+      description: product.description,
+    };
   });
 
   console.log(`✅ Total tools loaded: ${allTools.length}`);

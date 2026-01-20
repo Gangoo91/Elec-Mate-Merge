@@ -261,27 +261,72 @@ For each article, extract the complete title as written, a detailed summary capt
             return ukIndicators.some(ind => text.includes(ind)) || isUKDomain;
           };
 
+            // Helper to detect source from URL
+            const getSourceFromUrl = (url: string): { category: string; source: string } => {
+              const urlLower = (url || '').toLowerCase();
+
+              // Check against known UK sources
+              if (urlLower.includes('electricaltimes.co.uk')) return { category: "Industry", source: "Electrical Times" };
+              if (urlLower.includes('professional-electrician.com')) return { category: "Technical", source: "Professional Electrician" };
+              if (urlLower.includes('electricalcontractingnews.com')) return { category: "Safety", source: "Electrical Contracting News" };
+              if (urlLower.includes('constructionenquirer.com')) return { category: "Projects", source: "Construction Enquirer" };
+              if (urlLower.includes('theconstructionindex.co.uk')) return { category: "Projects", source: "Construction Index" };
+              if (urlLower.includes('building.co.uk')) return { category: "Projects", source: "Building" };
+              if (urlLower.includes('bsria.com')) return { category: "Technical", source: "BSRIA" };
+              if (urlLower.includes('voltimum.co.uk')) return { category: "Industry", source: "Voltimum UK" };
+              if (urlLower.includes('iet.org')) return { category: "Technical", source: "IET" };
+              if (urlLower.includes('niceic.com')) return { category: "Industry", source: "NICEIC" };
+              if (urlLower.includes('napit.org')) return { category: "Industry", source: "NAPIT" };
+              if (urlLower.includes('hse.gov.uk')) return { category: "Safety", source: "HSE" };
+
+              // REJECT non-UK domains
+              const nonUkDomains = ['.in', '.com.au', '.us', '.ca', '.de', '.fr', '.jp', '.cn', 'thehindu', 'shiksha', 'jagranjosh', 'india'];
+              if (nonUkDomains.some(d => urlLower.includes(d))) {
+                return { category: "REJECT", source: "REJECT" };
+              }
+
+              // Extract domain name as source for UK domains
+              if (urlLower.includes('.co.uk') || urlLower.includes('.org.uk') || urlLower.includes('.gov.uk')) {
+                const match = urlLower.match(/https?:\/\/(?:www\.)?([^\/\.]+)/);
+                const domainName = match ? match[1].charAt(0).toUpperCase() + match[1].slice(1) : "UK News";
+                return { category: "Industry", source: domainName };
+              }
+
+              return { category: "General", source: "Industry News" };
+            };
+
             for (const result of status.data) {
             if (result.json && Array.isArray(result.json)) {
-              const sourceInfo = sourceMap[result.url as keyof typeof sourceMap] || { category: "General", source: "Unknown" };
+              // Get source from the scraped URL first
+              const baseSourceInfo = getSourceFromUrl(result.url);
 
               const processedArticles = result.json
                 .filter((article: any) => article.title && article.title.length > 10)
                 .filter(isRelevantArticle)
                 .filter(validateUKRelevance)
-                .map((article: any) => ({
-                  title: article.title,
-                  description: article.description,
-                  url: article.visit_link || article.url,
-                  date: article.date,
-                  imageUrl: article.imageUrl,
-                  source_category: sourceInfo.category,
-                  source_name: sourceInfo.source,
-                  source_url: result.url
-                }));
+                .map((article: any) => {
+                  // Get source from article URL if available, otherwise use base
+                  const articleUrl = article.visit_link || article.url || result.url;
+                  const sourceInfo = getSourceFromUrl(articleUrl);
+
+                  // Skip rejected (non-UK) sources
+                  if (sourceInfo.source === "REJECT") return null;
+
+                  return {
+                    title: article.title,
+                    description: article.description,
+                    url: articleUrl,
+                    date: article.date,
+                    imageUrl: article.imageUrl,
+                    source_category: sourceInfo.category !== "General" ? sourceInfo.category : baseSourceInfo.category,
+                    source_name: sourceInfo.source !== "Industry News" ? sourceInfo.source : baseSourceInfo.source,
+                    source_url: result.url
+                  };
+                })
+                .filter(Boolean);
               
               allArticles.push(...processedArticles);
-              logger.info(`Processed articles from ${sourceInfo.source}`, { count: processedArticles.length });
+              logger.info(`Processed articles from ${baseSourceInfo.source}`, { count: processedArticles.length });
             }
           }
         }
