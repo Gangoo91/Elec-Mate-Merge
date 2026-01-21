@@ -2,9 +2,13 @@ import React, { Suspense, useState, useCallback } from 'react';
 import { EICRFormProvider, useEICRForm } from './eicr/EICRFormProvider';
 import EICRFormHeader from './eicr/EICRFormHeader';
 import EICRFormContent from './eicr/EICRFormContent';
-import { BoardScannerOverlay } from './inspection-app/testing/BoardScannerOverlay';
+import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
 import { getCableSizeForRating, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
+
+// Tab value type
+type TabValue = 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
+const TAB_ORDER: TabValue[] = ['details', 'inspection', 'testing', 'inspector', 'certificate'];
 
 const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   const {
@@ -27,6 +31,23 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   // Board scan state
   const [showBoardScan, setShowBoardScan] = useState(false);
   const [returnToTestingTab, setReturnToTestingTab] = useState(false);
+
+  // Lifted tab state - controlled from header
+  const [currentTab, setCurrentTab] = useState<TabValue>('details');
+  const currentTabIndex = TAB_ORDER.indexOf(currentTab);
+
+  // Handle tab change from header clicks
+  const handleTabChange = useCallback((index: number) => {
+    if (index >= 0 && index < TAB_ORDER.length) {
+      setCurrentTab(TAB_ORDER[index]);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
+
+  // Handle tab change from SmartTabs
+  const handleTabValueChange = useCallback((value: string) => {
+    setCurrentTab(value as TabValue);
+  }, []);
 
   // Handle board scan completion - populate circuits
   // BoardPhotoCapture returns: { circuits, board, metadata, warnings, decisions }
@@ -138,8 +159,12 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   // Calculate section completion for progress
   const completedSections = new Set<number>();
   if (formData.clientName && formData.installationAddress) completedSections.add(0);
-  if (formData.inspectionItems?.length > 0) completedSections.add(1);
-  if (formData.scheduleOfTests?.length > 0) completedSections.add(2);
+  if (formData.inspectionItems?.some((item: any) => item.outcome && item.outcome !== '')) completedSections.add(1);
+  // Tests tab is complete only if circuits have actual test data filled in
+  const hasCompletedTests = formData.scheduleOfTests?.some((test: any) =>
+    test.zs || test.polarity || test.insulationResistance || test.insulationLiveEarth
+  );
+  if (hasCompletedTests) completedSections.add(2);
   if (formData.inspectorName && formData.inspectorSignature) completedSections.add(3);
 
   // If board scan is open, render full-screen scanner overlay
@@ -169,9 +194,10 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
           lastSyncTime={syncState.lastSyncTime}
           isOnline={isOnline}
           isAuthenticated={isAuthenticated}
-          currentTab={0}
+          currentTab={currentTabIndex}
           completedSections={completedSections}
           onOpenBoardScan={() => setShowBoardScan(true)}
+          onTabChange={handleTabChange}
         />
 
         <EICRFormContent
@@ -187,7 +213,8 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
           onConfirmStartNew={confirmStartNew}
           onConfirmDuplicate={confirmDuplicate}
           onOpenBoardScan={() => setShowBoardScan(true)}
-          initialTab={returnToTestingTab ? 'testing' : undefined}
+          currentTab={currentTab}
+          onTabChange={handleTabValueChange}
         />
       </div>
     </div>

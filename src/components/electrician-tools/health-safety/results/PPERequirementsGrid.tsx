@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
+import { cn } from '@/lib/utils';
 
 interface PPERequirementsGridProps {
   ppeItems: any[];
@@ -23,6 +25,7 @@ const getPPEIcon = (ppeType: string) => {
 };
 
 export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridProps) => {
+  const { isMobile } = useMobileEnhanced();
   const [isEditing, setIsEditing] = useState(false);
   const [localPPE, setLocalPPE] = useState(ppeItems);
 
@@ -71,7 +74,10 @@ export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridP
               <Button
                 size="sm"
                 onClick={handleSave}
-                className="bg-green-600 hover:bg-green-700 text-foreground"
+                className={cn(
+                  "bg-green-600 hover:bg-green-700 text-foreground touch-manipulation active:scale-[0.98]",
+                  isMobile && "min-h-[44px] px-4"
+                )}
               >
                 <Save className="h-4 w-4 mr-1" />
                 Save
@@ -80,6 +86,10 @@ export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridP
                 size="sm"
                 variant="outline"
                 onClick={handleCancel}
+                className={cn(
+                  "touch-manipulation active:scale-[0.98]",
+                  isMobile && "min-h-[44px] px-4"
+                )}
               >
                 <X className="h-4 w-4 mr-1" />
                 Cancel
@@ -90,6 +100,10 @@ export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridP
               size="sm"
               variant="outline"
               onClick={() => setIsEditing(true)}
+              className={cn(
+                "touch-manipulation active:scale-[0.98]",
+                isMobile && "min-h-[44px] px-4"
+              )}
             >
               <Edit2 className="h-4 w-4 mr-1" />
               Edit
@@ -112,9 +126,12 @@ export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridP
                   size="icon"
                   variant="ghost"
                   onClick={() => handlePPEDelete(idx)}
-                  className="absolute top-2 right-2 h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-100 touch-manipulation"
+                  className={cn(
+                    "absolute top-2 right-2 text-red-500 hover:text-red-700 hover:bg-red-100 touch-manipulation active:scale-[0.95]",
+                    isMobile ? "h-11 w-11" : "h-8 w-8"
+                  )}
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className={isMobile ? "h-5 w-5" : "h-4 w-4"} />
                 </Button>
                 <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-start">
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 text-blue-500 flex items-center justify-center">
@@ -126,7 +143,10 @@ export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridP
                         <Input
                           value={item.ppeType}
                           onChange={(e) => handlePPEUpdate(idx, 'ppeType', e.target.value)}
-                          className="flex-1 w-full"
+                          className={cn(
+                            "flex-1 w-full touch-manipulation",
+                            isMobile && "min-h-[48px] text-base"
+                          )}
                         />
                       ) : (
                         <span className="flex-1">{item.ppeType}</span>
@@ -161,7 +181,10 @@ export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridP
                             value={item.standard}
                             onChange={(e) => handlePPEUpdate(idx, 'standard', e.target.value)}
                             placeholder="e.g., BS EN 397"
-                            className="text-xs"
+                            className={cn(
+                              "touch-manipulation",
+                              isMobile ? "min-h-[48px] text-base" : "text-xs"
+                            )}
                           />
                         ) : (
                           <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-800">
@@ -176,7 +199,10 @@ export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridP
                             value={item.purpose}
                             onChange={(e) => handlePPEUpdate(idx, 'purpose', e.target.value)}
                             placeholder="Enter purpose..."
-                            className="mt-1"
+                            className={cn(
+                              "mt-1 touch-manipulation",
+                              isMobile && "min-h-[48px] text-base"
+                            )}
                           />
                         ) : (
                           item.purpose
@@ -191,10 +217,13 @@ export const PPERequirementsGrid = ({ ppeItems, onUpdate }: PPERequirementsGridP
         </div>
 
         {isEditing && (
-          <Button 
+          <Button
             onClick={handleAddPPE}
             variant="outline"
-            className="w-full mt-3"
+            className={cn(
+              "w-full mt-3 touch-manipulation active:scale-[0.98]",
+              isMobile && "min-h-[48px]"
+            )}
           >
             <Plus className="h-4 w-4 mr-2" />
             Add PPE Item

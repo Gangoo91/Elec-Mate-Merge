@@ -16,6 +16,8 @@ import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
 import InspectionPhotoGallery from '@/components/inspection/InspectionPhotoGallery';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptics } from '@/hooks/useHaptics';
 
 interface EICDefectObservationCardProps {
   observation: EICObservation;
@@ -35,6 +37,8 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
   onSyncToInspectionItem
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
+  const isMobile = useIsMobile();
+  const haptics = useHaptics();
 
   // Initialize photo management
   const {
@@ -95,8 +99,14 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
     >
       {/* Header - Always Visible */}
       <div
-        className="flex items-center justify-between p-4 cursor-pointer touch-manipulation"
-        onClick={() => setIsExpanded(!isExpanded)}
+        className={cn(
+          "flex items-center justify-between p-4 cursor-pointer touch-manipulation",
+          isMobile && "min-h-[60px]"
+        )}
+        onClick={() => {
+          haptics.tap();
+          setIsExpanded(!isExpanded);
+        }}
       >
         <div className="flex items-center gap-3 flex-1 min-w-0">
           {/* Number Badge */}
@@ -135,14 +145,15 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
           <button
             onClick={(e) => {
               e.stopPropagation();
+              haptics.warning();
               onRemove(observation.id);
             }}
-            className="h-8 w-8 flex items-center justify-center rounded-lg text-red-400/70 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
+            className="h-10 w-10 flex items-center justify-center rounded-lg text-red-400/70 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
           >
             <Trash2 className="w-4 h-4" />
           </button>
-          <div className="h-8 w-8 flex items-center justify-center text-foreground/40">
-            {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          <div className="h-10 w-10 flex items-center justify-center text-foreground/40">
+            {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
           </div>
         </div>
       </div>
@@ -168,7 +179,8 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
                   placeholder="e.g., Consumer unit, Kitchen socket"
                   value={observation.item}
                   onChange={(e) => onUpdate(observation.id, 'item', e.target.value)}
-                  className="h-11 text-sm bg-white/[0.03] border-white/[0.08] focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50"
+                  className="h-11 text-base bg-white/[0.03] border-white/[0.08] focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50 touch-manipulation"
+                  style={{ fontSize: '16px' }}
                 />
               </div>
 
@@ -180,6 +192,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
                     <button
                       key={code.code}
                       onClick={() => {
+                        haptics.tap();
                         onUpdate(observation.id, 'defectCode', code.code);
                         if (observation.inspectionItemId && onSyncToInspectionItem) {
                           onSyncToInspectionItem(observation.inspectionItemId, code.code);
@@ -218,7 +231,8 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
                   }
                   value={observation.description}
                   onChange={(e) => onUpdate(observation.id, 'description', e.target.value)}
-                  className="min-h-[80px] text-sm bg-white/[0.03] border-white/[0.08] resize-none focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50"
+                  className="min-h-[80px] text-base bg-white/[0.03] border-white/[0.08] resize-none focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50 touch-manipulation"
+                  style={{ fontSize: '16px' }}
                 />
               </div>
 
@@ -235,7 +249,8 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
                     }
                     value={observation.recommendation}
                     onChange={(e) => onUpdate(observation.id, 'recommendation', e.target.value)}
-                    className="min-h-[60px] text-sm bg-white/[0.03] border-white/[0.08] resize-none focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50"
+                    className="min-h-[60px] text-base bg-white/[0.03] border-white/[0.08] resize-none focus:ring-1 focus:ring-orange-500/50 focus:border-orange-500/50 touch-manipulation"
+                    style={{ fontSize: '16px' }}
                   />
                 </div>
               )}

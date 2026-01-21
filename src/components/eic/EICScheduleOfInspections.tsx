@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { bs7671EICInspectionItems, EICInspectionItem } from '@/data/bs7671EICChecklistData';
 import EICInspectionChecklistCard from './EICInspectionChecklistCard';
 import EICInspectionStatsSummary from './EICInspectionStatsSummary';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 interface EICScheduleOfInspectionsProps {
   formData: any;
@@ -12,6 +14,8 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   formData,
   onUpdate
 }) => {
+  const isMobile = useIsMobile();
+
   const getInspectionItems = (): EICInspectionItem[] => {
     // Check if we have valid inspection items in formData
     if (formData.inspectionItems && Array.isArray(formData.inspectionItems) && formData.inspectionItems.length > 0) {
@@ -51,9 +55,11 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   }, []);
 
   return (
-    <div className="space-y-2">
+    <div className={cn("space-y-2", isMobile && "-mx-4")}>
       {/* Stats and Cards are now combined in EICInspectionChecklistCard */}
-      <EICInspectionStatsSummary inspectionItems={inspectionItems} />
+      <div className={cn(isMobile && "px-4")}>
+        <EICInspectionStatsSummary inspectionItems={inspectionItems} />
+      </div>
       <EICInspectionChecklistCard
         inspectionItems={inspectionItems}
         onUpdateItem={updateInspectionItem}

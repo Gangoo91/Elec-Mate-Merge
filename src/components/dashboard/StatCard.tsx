@@ -95,60 +95,48 @@ export function StatCard({
   const trendDirection = trend === undefined ? null : trend > 0 ? 'up' : trend < 0 ? 'down' : 'neutral';
 
   return (
-    <motion.div
-      whileHover={isClickable ? { y: -2, scale: 1.02 } : undefined}
-      whileTap={isClickable ? { scale: 0.96 } : undefined}
+    <div
       onClick={onClick}
       className={cn(
         // Base styling
-        'relative overflow-hidden h-full',
-        // Responsive border radius
-        'rounded-xl',
-        // Glass morphism
-        'glass-premium',
+        'relative h-full',
+        // Simple flat background
+        'bg-white/5 rounded-xl',
         // Padding
         'p-3 sm:p-4',
         // Fixed height for consistency
-        'h-[80px] sm:h-[100px]',
+        'min-h-[80px] sm:min-h-[100px]',
         // Cursor for clickable
-        isClickable && 'cursor-pointer',
+        isClickable && 'cursor-pointer active:bg-white/10',
         // Touch optimization
-        'touch-manipulation active:scale-[0.97] transition-transform duration-150',
+        'touch-manipulation transition-colors duration-150',
         className
       )}
     >
-      {/* Content - centered vertically */}
-      <div className="flex flex-col justify-center h-full">
-        {/* Top row: Icon + Value */}
-        <div className="flex items-center gap-2">
-          {/* Icon - small accent */}
-          <div className={cn(
-            'flex-shrink-0 p-1.5 rounded-lg',
-            styles.iconBg
-          )}>
-            <Icon className={cn('h-4 w-4', styles.iconColor)} />
-          </div>
-
-          {/* Value - prominent */}
-          <AnimatedCounter
-            value={value}
-            prefix={prefix}
-            suffix={suffix}
-            decimals={decimals}
-            formatAsCurrency={formatAsCurrency}
-            className={cn(
-              'text-xl sm:text-2xl font-bold tracking-tight',
-              styles.accentColor
-            )}
-          />
+      {/* Content - left-aligned */}
+      <div className="flex flex-col h-full">
+        {/* Icon + Label row */}
+        <div className="flex items-center gap-1.5 mb-1">
+          <Icon className={cn('h-4 w-4', styles.iconColor)} />
+          <p className="text-[11px] sm:text-xs text-white/50 truncate">{label}</p>
         </div>
 
-        {/* Label */}
-        <p className="text-[11px] sm:text-xs text-white/70 mt-1.5 truncate">{label}</p>
+        {/* Value - prominent, left-aligned */}
+        <AnimatedCounter
+          value={value}
+          prefix={prefix}
+          suffix={suffix}
+          decimals={decimals}
+          formatAsCurrency={formatAsCurrency}
+          className={cn(
+            'text-xl sm:text-2xl font-bold tracking-tight',
+            styles.accentColor
+          )}
+        />
 
-        {/* Subtitle - shown on all sizes if present */}
+        {/* Subtitle */}
         {subtitle && (
-          <p className="text-[10px] text-white/50 mt-0.5 truncate">{subtitle}</p>
+          <p className="text-[10px] text-white/40 mt-1 truncate">{subtitle}</p>
         )}
 
         {/* Trend indicator */}
@@ -182,7 +170,7 @@ export function StatCard({
           </div>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }
 

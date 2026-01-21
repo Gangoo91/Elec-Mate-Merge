@@ -111,14 +111,14 @@ const ForgotPassword = () => {
                     <div className="space-y-2">
                       <Label htmlFor="email" className="text-sm font-medium text-gray-300">Email address</Label>
                       <div className="relative group">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400" />
+                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 transition-colors group-focus-within:text-yellow-400 pointer-events-none" />
                         <Input
                           id="email"
                           type="email"
                           placeholder="you@example.com"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="pl-10 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200"
+                          className="pl-11 h-12 text-base bg-black border-white/10 text-white placeholder:text-gray-500 focus:border-yellow-400/50 transition-all duration-200"
                           autoComplete="email"
                           required
                         />

@@ -6,12 +6,14 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertTriangle, Shield, FileCheck, User, PenTool, Hammer, Search, Calendar, MapPin, Phone, Building2, FileWarning, ClipboardCheck } from 'lucide-react';
+import { AlertTriangle, Shield, FileCheck, User, PenTool, Hammer, Search, Calendar, MapPin, Phone, Building2, FileWarning, ClipboardCheck, ChevronDown, Wrench, UserCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptics } from '@/hooks/useHaptics';
 
 interface EICDeclarationsProps {
   formData: any;
@@ -51,6 +53,8 @@ const SubSectionHeader = ({ icon: Icon, title, color }: { icon: any; title: stri
 );
 
 const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate }) => {
+  const isMobile = useIsMobile();
+  const haptics = useHaptics();
   const { getDefaultProfile } = useInspectorProfiles();
   const { toast } = useToast();
   const [isInitialMount, setIsInitialMount] = useState(true);
@@ -61,6 +65,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
   });
 
   const toggleSection = (section: keyof typeof openSections) => {
+    haptics.tap();
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
 
@@ -127,58 +132,81 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
   };
 
   return (
-    <div className="space-y-5">
+    <div className={cn("space-y-4", isMobile && "-mx-4")}>
       {/* Legal Notice */}
-      <GlassCard color="amber" className="border-amber-500/30 bg-amber-500/5">
-        <div className="flex gap-3">
-          <div className="p-2 rounded-lg bg-amber-500/10 h-fit">
-            <Shield className="h-5 w-5 text-amber-400" />
+      <div className={cn(isMobile && "px-4")}>
+        <GlassCard color="amber" className="border-amber-500/30 bg-amber-500/5">
+          <div className="flex gap-3">
+            <div className="p-2 rounded-lg bg-amber-500/10 h-fit">
+              <Shield className="h-5 w-5 text-amber-400" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-amber-300 mb-1">Legal Requirement</p>
+              <p className="text-sm text-white leading-relaxed">
+                This EIC must be completed by competent persons responsible for the design, construction,
+                and inspection & testing of the electrical installation per BS 7671.
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="text-sm font-medium text-amber-300 mb-1">Legal Requirement</p>
-            <p className="text-sm text-white leading-relaxed">
-              This EIC must be completed by competent persons responsible for the design, construction,
-              and inspection & testing of the electrical installation per BS 7671.
-            </p>
-          </div>
-        </div>
-      </GlassCard>
+        </GlassCard>
+      </div>
 
       {/* Use Saved Profile Button */}
       {getDefaultProfile() && (
-        <Button
-          onClick={() => {
-            const profile = getDefaultProfile();
-            if (profile) {
-              loadProfileToSection('designer', profile);
-              loadProfileToSection('constructor', profile);
-              loadProfileToSection('inspector', profile);
-              toast({
-                title: "Profile Loaded",
-                description: "Your saved profile has been applied to all declaration sections.",
-              });
-            }
-          }}
-          className="h-12 w-full touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl active:scale-[0.98] transition-transform"
-          size="lg"
-        >
-          <User className="h-5 w-5 mr-2" />
-          Use Saved Profile for All
-        </Button>
+        <div className={cn(isMobile && "px-4")}>
+          <Button
+            onClick={() => {
+              haptics.tap();
+              const profile = getDefaultProfile();
+              if (profile) {
+                loadProfileToSection('designer', profile);
+                loadProfileToSection('constructor', profile);
+                loadProfileToSection('inspector', profile);
+                toast({
+                  title: "Profile Loaded",
+                  description: "Your saved profile has been applied to all declaration sections.",
+                });
+              }
+            }}
+            className="h-14 w-full touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl active:scale-[0.98] transition-transform"
+            size="lg"
+          >
+            <User className="h-5 w-5 mr-2" />
+            Load My Saved Details
+          </Button>
+        </div>
       )}
 
       {/* Designer Declaration */}
-      <div className="eicr-section-card">
+      <div className={cn(isMobile ? "" : "eicr-section-card")}>
         <Collapsible open={openSections.designer} onOpenChange={() => toggleSection('designer')}>
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Designer Declaration"
-              icon={PenTool}
-              isOpen={openSections.designer}
-              color="blue-500"
-              completionPercentage={getCompletionPercentage('designer')}
-            />
-          </CollapsibleTrigger>
+          {isMobile ? (
+            <CollapsibleTrigger className="w-full">
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
+                  <PenTool className="h-5 w-5 text-blue-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Designer Declaration</h3>
+                  <span className="text-xs text-muted-foreground">{getCompletionPercentage('designer')}% complete</span>
+                </div>
+                <ChevronDown className={cn(
+                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
+                  openSections.designer && "rotate-180"
+                )} />
+              </div>
+            </CollapsibleTrigger>
+          ) : (
+            <CollapsibleTrigger className="w-full">
+              <SectionHeader
+                title="Designer Declaration"
+                icon={PenTool}
+                isOpen={openSections.designer}
+                color="blue-500"
+                completionPercentage={getCompletionPercentage('designer')}
+              />
+            </CollapsibleTrigger>
+          )}
           <CollapsibleContent>
             <div className="p-4 sm:p-5 space-y-5">
               {/* Declaration Text */}
@@ -338,19 +366,37 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       </div>
 
       {/* Constructor Declaration */}
-      <div className="eicr-section-card">
+      <div className={cn(isMobile ? "" : "eicr-section-card")}>
         <Collapsible open={openSections.constructor} onOpenChange={() => toggleSection('constructor')}>
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Constructor Declaration"
-              icon={Hammer}
-              isOpen={openSections.constructor}
-              color="green-500"
-              completionPercentage={getCompletionPercentage('constructor')}
-            />
-          </CollapsibleTrigger>
+          {isMobile ? (
+            <CollapsibleTrigger className="w-full">
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-orange-500/20 flex items-center justify-center shrink-0">
+                  <Wrench className="h-5 w-5 text-orange-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Constructor Declaration</h3>
+                  <span className="text-xs text-muted-foreground">{getCompletionPercentage('constructor')}% complete</span>
+                </div>
+                <ChevronDown className={cn(
+                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
+                  openSections.constructor && "rotate-180"
+                )} />
+              </div>
+            </CollapsibleTrigger>
+          ) : (
+            <CollapsibleTrigger className="w-full">
+              <SectionHeader
+                title="Constructor Declaration"
+                icon={Hammer}
+                isOpen={openSections.constructor}
+                color="green-500"
+                completionPercentage={getCompletionPercentage('constructor')}
+              />
+            </CollapsibleTrigger>
+          )}
           <CollapsibleContent>
-            <div className="p-4 sm:p-5 space-y-5">
+            <div className={cn("space-y-5", isMobile ? "px-4 py-4" : "p-4 sm:p-5")}>
               {/* Same as Designer Toggle */}
               <label className="flex items-center gap-3 p-4 rounded-xl bg-green-500/10 border border-green-500/30 cursor-pointer touch-manipulation active:scale-[0.99] transition-transform">
                 <Checkbox
@@ -517,19 +563,37 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       </div>
 
       {/* Inspector Declaration */}
-      <div className="eicr-section-card">
+      <div className={cn(isMobile ? "" : "eicr-section-card")}>
         <Collapsible open={openSections.inspector} onOpenChange={() => toggleSection('inspector')}>
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Inspector Declaration"
-              icon={Search}
-              isOpen={openSections.inspector}
-              color="amber-500"
-              completionPercentage={getCompletionPercentage('inspector')}
-            />
-          </CollapsibleTrigger>
+          {isMobile ? (
+            <CollapsibleTrigger className="w-full">
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-green-500/20 flex items-center justify-center shrink-0">
+                  <UserCheck className="h-5 w-5 text-green-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Inspector Declaration</h3>
+                  <span className="text-xs text-muted-foreground">{getCompletionPercentage('inspector')}% complete</span>
+                </div>
+                <ChevronDown className={cn(
+                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
+                  openSections.inspector && "rotate-180"
+                )} />
+              </div>
+            </CollapsibleTrigger>
+          ) : (
+            <CollapsibleTrigger className="w-full">
+              <SectionHeader
+                title="Inspector Declaration"
+                icon={Search}
+                isOpen={openSections.inspector}
+                color="amber-500"
+                completionPercentage={getCompletionPercentage('inspector')}
+              />
+            </CollapsibleTrigger>
+          )}
           <CollapsibleContent>
-            <div className="p-4 sm:p-5 space-y-5">
+            <div className={cn("space-y-5", isMobile ? "px-4 py-4" : "p-4 sm:p-5")}>
               {/* Same as Constructor Toggle */}
               <label className="flex items-center gap-3 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 cursor-pointer touch-manipulation active:scale-[0.99] transition-transform">
                 <Checkbox

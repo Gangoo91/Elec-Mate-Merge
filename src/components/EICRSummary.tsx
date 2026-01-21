@@ -8,7 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { AlertTriangle, CheckCircle, XCircle, FileText, FileDown, Save, Beaker, Copy, ChevronDown, ChevronUp, Loader2, User } from 'lucide-react';
+import { AlertTriangle, CheckCircle, XCircle, FileText, FileDown, Save, Beaker, Copy, ChevronDown, ChevronUp, Loader2, User, Mail, PenTool, Code } from 'lucide-react';
 import { exportCompleteEICRToPDF } from '@/utils/pdfExport';
 import { cn } from '@/lib/utils';
 
@@ -21,7 +21,11 @@ import SignatureInput from '@/components/signature/SignatureInput';
 import { useEICRForm } from './eicr/EICRFormProvider';
 import { useQueryClient } from '@tanstack/react-query';
 import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
+import { useCertificateEmail } from '@/hooks/useCertificateEmail';
+import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 import { useCustomers } from '@/hooks/useCustomers';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptics } from '@/hooks/useHaptics';
 
 interface EICRSummaryProps {
   formData: any;
@@ -36,6 +40,8 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const onUpdate = updateFormData; // Use context updateFormData for all operations
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const isMobile = useIsMobile();
+  const haptics = useHaptics();
   const [isJsonOpen, setIsJsonOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
@@ -45,6 +51,24 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const [showCustomerDialog, setShowCustomerDialog] = useState(false);
   const [savedReportIdForCustomer, setSavedReportIdForCustomer] = useState<string | null>(null);
   const { saveCustomer, customers } = useCustomers();
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+
+  // Collapsible sections for mobile
+  const [inspectedByOpen, setInspectedByOpen] = useState(true);
+  const [authorisedByOpen, setAuthorisedByOpen] = useState(false);
+
+  // Email hook for sending certificates via Resend
+  const { sendCertificateEmail, isLoading: isEmailSending } = useCertificateEmail({
+    certificateType: 'EICR',
+    reportId: effectiveReportId,
+    certificateNumber: formData.reportReference,
+    clientName: formData.clientName,
+    clientEmail: formData.clientEmail,
+    installationAddress: formData.installationAddress,
+    inspectionDate: formData.inspectionDate,
+    overallAssessment: formData.overallAssessment,
+    companyName: formData.companyName,
+  });
 
   // Ref to always access the latest formData in async callbacks
   // This solves React closure issues where callbacks capture stale state
@@ -349,6 +373,49 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     toast({
       title: "Saved to cloud",
       description: "Your EICR is automatically saved to the cloud.",
+    });
+  };
+
+  // Email send handler - ensures report is saved before emailing
+  const handleSendEmail = async (email: string, cc?: string[], message?: string) => {
+    // First, ensure report is saved to database
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('Please log in to send certificates.');
+      }
+
+      const { reportCloud } = await import('@/utils/reportCloud');
+
+      // Check if report exists, if not save it first
+      const existingReport = await reportCloud.getReportByReportId(effectiveReportId, user.id);
+      if (!existingReport) {
+        console.log('[Email] Report not found in database, saving first...');
+        const createResult = await reportCloud.createReport(user.id, 'eicr', formData);
+        if (!createResult.success) {
+          throw new Error('Failed to save report before emailing. Please try again.');
+        }
+        console.log('[Email] Report saved:', createResult.reportId);
+      } else {
+        // Update existing report with latest data
+        await reportCloud.updateReport(effectiveReportId, user.id, formData);
+        console.log('[Email] Report updated before emailing');
+      }
+    } catch (saveError) {
+      console.error('[Email] Failed to save report before emailing:', saveError);
+      toast({
+        title: 'Save Error',
+        description: 'Please save your certificate before emailing. Try generating the PDF first.',
+        variant: 'destructive',
+      });
+      throw saveError;
+    }
+
+    // Now send the email
+    await sendCertificateEmail({
+      recipientEmail: email,
+      cc,
+      customMessage: message,
     });
   };
 
@@ -885,119 +952,204 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   };
 
   return (
-    <div className="space-y-8 md:max-w-6xl mx-auto">
-      <Card className="overflow-hidden rounded-xl shadow-lg shadow-black/10 border border-border bg-card">
-        <CardHeader className="p-6 lg:p-8 bg-gradient-to-r from-neutral-800 to-neutral-900 border-b border-border/50">
-          <div className="flex items-center gap-3">
-            {getAssessmentIcon()}
-            <div>
-              <CardTitle className="text-xl font-bold text-elec-yellow">Overall Assessment</CardTitle>
-              <CardDescription className="text-sm text-muted-foreground mt-1">
-                Final assessment and recommendations per BS 7671
-              </CardDescription>
+    <div className={cn("space-y-6", isMobile && "-mx-4")}>
+      {/* Overall Assessment Section - Edge to Edge */}
+      <div>
+        <Collapsible defaultOpen={true}>
+          <CollapsibleTrigger className="w-full" asChild>
+            <button
+              onClick={() => haptics.tap()}
+              className={cn(
+                "w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors",
+                "bg-card/50 border-y border-border/30",
+                "active:bg-card/80"
+              )}
+            >
+              <div className={cn(
+                "h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0",
+                formData.overallAssessment === 'satisfactory' ? "bg-green-500/20" :
+                formData.overallAssessment === 'unsatisfactory' ? "bg-red-500/20" :
+                "bg-elec-yellow/20"
+              )}>
+                {formData.overallAssessment === 'satisfactory' ? (
+                  <CheckCircle className="h-5 w-5 text-green-400" />
+                ) : formData.overallAssessment === 'unsatisfactory' ? (
+                  <XCircle className="h-5 w-5 text-red-400" />
+                ) : (
+                  <AlertTriangle className="h-5 w-5 text-elec-yellow" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground">Overall Assessment</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {formData.overallAssessment === 'satisfactory' ? 'Installation Satisfactory' :
+                   formData.overallAssessment === 'unsatisfactory' ? 'Installation Unsatisfactory' :
+                   'Select assessment status'}
+                </p>
+              </div>
+              <ChevronDown className="h-5 w-5 text-muted-foreground" />
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn("p-4 space-y-4", isMobile ? "" : "px-6")}>
+              {/* Assessment Toggle Buttons */}
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-foreground/80">Overall Assessment *</Label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptics.tap();
+                      onUpdate('overallAssessment', 'satisfactory');
+                      haptics.success();
+                    }}
+                    className={cn(
+                      "h-14 rounded-xl font-semibold transition-all touch-manipulation",
+                      "flex flex-col items-center justify-center gap-1 active:scale-95",
+                      formData.overallAssessment === 'satisfactory'
+                        ? "bg-green-500 text-white ring-2 ring-green-500/50 ring-offset-2 ring-offset-background"
+                        : "bg-green-500/10 text-green-400 border border-green-500/30 hover:bg-green-500/20"
+                    )}
+                  >
+                    <CheckCircle className="h-5 w-5" />
+                    <span className="text-sm">Satisfactory</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptics.tap();
+                      onUpdate('overallAssessment', 'unsatisfactory');
+                      haptics.warning();
+                    }}
+                    className={cn(
+                      "h-14 rounded-xl font-semibold transition-all touch-manipulation",
+                      "flex flex-col items-center justify-center gap-1 active:scale-95",
+                      formData.overallAssessment === 'unsatisfactory'
+                        ? "bg-red-500 text-white ring-2 ring-red-500/50 ring-offset-2 ring-offset-background"
+                        : "bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20"
+                    )}
+                  >
+                    <XCircle className="h-5 w-5" />
+                    <span className="text-sm">Unsatisfactory</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Continued Use Toggle Buttons */}
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-foreground/80">Satisfactory for Continued Use *</Label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { value: 'yes', label: 'Yes' },
+                    { value: 'no', label: 'No' },
+                    { value: 'yes-with-recommendations', label: 'With Cond.' },
+                  ].map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => {
+                        haptics.tap();
+                        onUpdate('satisfactoryForContinuedUse', option.value);
+                      }}
+                      className={cn(
+                        "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
+                        "active:scale-95",
+                        formData.satisfactoryForContinuedUse === option.value
+                          ? "bg-elec-yellow text-black"
+                          : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                      )}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Additional Comments */}
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-foreground/80">Additional Comments</Label>
+                <textarea
+                  className="w-full p-3 border border-border/30 bg-card/50 rounded-lg resize-none touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow/50"
+                  style={{ fontSize: '16px' }}
+                  rows={3}
+                  placeholder="Enter any additional comments or observations..."
+                  value={formData.additionalComments || ''}
+                  onChange={(e) => onUpdate('additionalComments', e.target.value)}
+                />
+              </div>
             </div>
-          </div>
-        </CardHeader>
-        <CardContent className="p-6 lg:p-8 space-y-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <Label className="text-sm font-medium">Overall Assessment</Label>
-            <Select
-              value={formData.overallAssessment} 
-              onValueChange={(value) => onUpdate('overallAssessment', value)}
-            >
-              <SelectTrigger className="h-11 text-base touch-manipulation">
-                <SelectValue placeholder="Select overall assessment" />
-              </SelectTrigger>
-              <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]" position="popper">
-                <SelectItem value="satisfactory">Satisfactory</SelectItem>
-                <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div className="space-y-2">
-            <Label className="text-sm font-medium">Satisfactory for Continued Use</Label>
-            <Select
-              value={formData.satisfactoryForContinuedUse} 
-              onValueChange={(value) => onUpdate('satisfactoryForContinuedUse', value)}
-            >
-              <SelectTrigger className="h-11 text-base touch-manipulation">
-                <SelectValue placeholder="Yes/No" />
-              </SelectTrigger>
-              <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]" position="popper">
-                <SelectItem value="yes">Yes</SelectItem>
-                <SelectItem value="no">No</SelectItem>
-                <SelectItem value="yes-with-recommendations">Yes, subject to recommendations</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
+      {/* Authorisation Signatures Section - Edge to Edge on Mobile */}
+      <div>
+        {/* Copy from Inspector Details - Quick Action */}
+        <div className={cn("p-4 bg-blue-500/10 border-y border-blue-500/20", isMobile ? "" : "mx-4 rounded-lg border")}>
+          <Button
+            onClick={() => {
+              haptics.tap();
+              onUpdate('inspectedByName', formData.inspectorName);
+              onUpdate('inspectedBySignature', formData.inspectorSignature);
+              onUpdate('inspectedByForOnBehalfOf', formData.companyName);
+              onUpdate('inspectedByPosition', 'Inspector');
+              onUpdate('inspectedByAddress', formData.companyAddress);
+              onUpdate('inspectedByCpScheme', formData.registrationScheme);
+              haptics.success();
+              toast({
+                title: "Details copied",
+                description: "Inspector details copied to 'Inspected By' section"
+              });
+            }}
+            className="w-full h-12 touch-manipulation text-base bg-blue-500/20 border-blue-500/30 text-blue-300 hover:bg-blue-500/30"
+            variant="outline"
+          >
+            <User className="h-4 w-4 mr-2" />
+            Copy from Inspector Details
+          </Button>
         </div>
 
-        <div className="space-y-2">
-          <Label className="text-sm font-medium">Additional Comments</Label>
-          <textarea
-            className="w-full max-w-full p-3 border border-input rounded-md resize-none overflow-auto touch-manipulation text-base min-h-[100px] sm:min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20"
-            rows={4}
-            placeholder="Enter any additional comments or observations..."
-            value={formData.additionalComments || ''}
-            onChange={(e) => onUpdate('additionalComments', e.target.value)}
-          />
-        </div>
-
-        {/* Authorisation Signatures Section */}
-        <div className="space-y-4 sm:space-y-6 md:space-y-8 pt-6 sm:pt-8 border-t-2 border-border/50">
-          <div className="space-y-1.5 sm:space-y-2">
-            <h3 className="text-lg sm:text-xl font-bold text-elec-yellow">Authorisation Signatures</h3>
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              Both signatures are required per BS 7671 regulations to authorise this EICR for issue.
-            </p>
-          </div>
-
-          {/* Copy from Inspector Details Button */}
-          <div className="p-3 sm:p-4 bg-blue-500/5 sm:bg-blue-500/10 border border-blue-500/20 sm:border-blue-500/30 rounded-lg">
-            <Button 
-              onClick={() => {
-                onUpdate('inspectedByName', formData.inspectorName);
-                onUpdate('inspectedBySignature', formData.inspectorSignature);
-                onUpdate('inspectedByForOnBehalfOf', formData.companyName);
-                onUpdate('inspectedByPosition', 'Inspector');
-                onUpdate('inspectedByAddress', formData.companyAddress);
-                onUpdate('inspectedByCpScheme', formData.registrationScheme);
-                toast({
-                  title: "Details copied",
-                  description: "Inspector details copied to 'Inspected By' section"
-                });
-              }}
-              className="w-full h-11 touch-manipulation text-sm sm:text-base"
-              variant="outline"
-            >
-              <User className="h-4 w-4 sm:mr-2" />
-              <span className="ml-2 sm:ml-0">Copy from Inspector Details</span>
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* INSPECTED BY Section */}
-            <Card className="p-4 sm:p-6 space-y-6 bg-card/50 border border-border/50 rounded-lg">
-              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
-                <User className="h-4 w-4" />
-                INSPECTED BY:
-              </h4>
-              
-              <div>
-                <Label htmlFor="inspectedByName">Name (Capitals): *</Label>
+        {/* INSPECTED BY Section - Collapsible */}
+        <Collapsible open={inspectedByOpen} onOpenChange={(open) => { haptics.tap(); setInspectedByOpen(open); }}>
+          <CollapsibleTrigger className="w-full" asChild>
+            <button className={cn(
+              "w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors",
+              "bg-card/50 border-y border-border/30",
+              inspectedByOpen && "bg-card/80",
+              "active:bg-card/90"
+            )}>
+              <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                <PenTool className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground">Inspected By</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {formData.inspectedByName || 'Inspector signature required'}
+                </p>
+              </div>
+              {formData.inspectedBySignature && (
+                <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
+              )}
+              <ChevronDown className={cn(
+                "h-5 w-5 text-muted-foreground transition-transform duration-200",
+                inspectedByOpen && "rotate-180"
+              )} />
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn("p-4 space-y-4 bg-card/30", isMobile ? "" : "px-6")}>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-foreground/80">Name (Capitals) *</Label>
                 <Input
-                  id="inspectedByName"
                   value={formData.inspectedByName || ''}
                   onChange={(e) => onUpdate('inspectedByName', e.target.value.toUpperCase())}
                   placeholder="FULL NAME IN CAPITALS"
-                  className="uppercase h-11 text-base touch-manipulation"
+                  className="uppercase h-11 text-base touch-manipulation bg-card/50 border-border/30"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="inspectedBySignature">Signature: *</Label>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-foreground/80">Signature *</Label>
                 <SignatureInput
                   value={formData.inspectedBySignature || ''}
                   onChange={(value) => onUpdate('inspectedBySignature', value || '')}
@@ -1006,34 +1158,33 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                 />
               </div>
 
-              <div>
-                <Label htmlFor="inspectedByForOnBehalfOf">For/on behalf of:</Label>
-                <Input
-                  id="inspectedByForOnBehalfOf"
-                  value={formData.inspectedByForOnBehalfOf || ''}
-                  onChange={(e) => onUpdate('inspectedByForOnBehalfOf', e.target.value)}
-                  placeholder="Company or organisation name"
-                  className="h-11 text-base touch-manipulation"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground/80">For/on behalf of</Label>
+                  <Input
+                    value={formData.inspectedByForOnBehalfOf || ''}
+                    onChange={(e) => onUpdate('inspectedByForOnBehalfOf', e.target.value)}
+                    placeholder="Company name"
+                    className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground/80">Position</Label>
+                  <Input
+                    value={formData.inspectedByPosition || ''}
+                    onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
+                    placeholder="Job title"
+                    className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                  />
+                </div>
               </div>
 
-              <div>
-                <Label htmlFor="inspectedByPosition">Position:</Label>
-                <Input
-                  id="inspectedByPosition"
-                  value={formData.inspectedByPosition || ''}
-                  onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
-                  placeholder="Job title or position"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="inspectedByAddress">Address:</Label>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-foreground/80">Address</Label>
                 <textarea
-                  id="inspectedByAddress"
-                  className="w-full max-w-full p-3 border border-input rounded-md resize-none overflow-auto touch-manipulation text-base min-h-[100px] sm:min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20"
-                  rows={3}
+                  className="w-full p-3 border border-border/30 bg-card/50 rounded-lg resize-none touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow/50"
+                  style={{ fontSize: '16px' }}
+                  rows={2}
                   value={formData.inspectedByAddress || ''}
                   onChange={(e) => onUpdate('inspectedByAddress', e.target.value)}
                   placeholder="Full address"
@@ -1041,80 +1192,126 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="inspectedByCpScheme">CP Scheme:</Label>
-                <div className="flex items-center gap-2">
+                <Label className="text-sm font-medium text-foreground/80">CP Scheme</Label>
+                <div className="flex items-center gap-3">
                   <Input
-                    id="inspectedByCpScheme"
                     value={formData.inspectedByCpScheme || ''}
                     onChange={(e) => onUpdate('inspectedByCpScheme', e.target.value)}
                     placeholder="Competent Person Scheme"
                     disabled={formData.inspectedByCpSchemeNA}
-                    className={cn("h-11 text-base touch-manipulation", formData.inspectedByCpSchemeNA && 'opacity-50')}
+                    className={cn("flex-1 h-11 text-base touch-manipulation bg-card/50 border-border/30", formData.inspectedByCpSchemeNA && 'opacity-50')}
                   />
-                  <div className="flex items-center gap-2 whitespace-nowrap">
-                    <Checkbox
-                      id="inspectedByCpSchemeNA"
-                      checked={formData.inspectedByCpSchemeNA || false}
-                      onCheckedChange={(checked) => {
-                        onUpdate('inspectedByCpSchemeNA', checked);
-                        if (checked) onUpdate('inspectedByCpScheme', '');
-                      }}
-                    />
-                    <Label htmlFor="inspectedByCpSchemeNA" className="cursor-pointer">N/A</Label>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            {/* REPORT AUTHORISED FOR ISSUE BY Section */}
-            <Card className="p-4 sm:p-6 space-y-6 bg-card/50 border border-border/50 rounded-lg">
-              {/* Same as Inspected By Checkbox */}
-              <div className="p-3 sm:p-4 bg-purple-500/5 sm:bg-purple-500/10 border border-purple-500/20 sm:border-purple-500/30 rounded-lg">
-                <div className="flex items-start gap-2 sm:gap-3">
-                  <Checkbox
-                    id="sameAsInspectedBy"
-                    checked={formData.sameAsInspectedBy || false}
-                    onCheckedChange={(checked) => {
-                      onUpdate('sameAsInspectedBy', checked);
-                      if (checked) {
-                        onUpdate('reportAuthorisedByName', formData.inspectedByName);
-                        onUpdate('reportAuthorisedBySignature', formData.inspectedBySignature);
-                        onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
-                        onUpdate('reportAuthorisedByForOnBehalfOf', formData.inspectedByForOnBehalfOf);
-                        onUpdate('reportAuthorisedByPosition', formData.inspectedByPosition);
-                        onUpdate('reportAuthorisedByAddress', formData.inspectedByAddress);
-                        onUpdate('reportAuthorisedByMembershipNo', formData.inspectedByCpScheme);
-                        toast({
-                          title: "Details copied",
-                          description: "Copied from 'Inspected By' section"
-                        });
-                      }
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptics.tap();
+                      const newValue = !formData.inspectedByCpSchemeNA;
+                      onUpdate('inspectedByCpSchemeNA', newValue);
+                      if (newValue) onUpdate('inspectedByCpScheme', '');
                     }}
+                    className={cn(
+                      "h-11 px-4 rounded-lg font-medium transition-all touch-manipulation",
+                      formData.inspectedByCpSchemeNA
+                        ? "bg-gray-500 text-white"
+                        : "bg-gray-500/10 text-gray-400 border border-gray-500/30"
+                    )}
+                  >
+                    N/A
+                  </button>
+                </div>
+              </div>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+
+        {/* REPORT AUTHORISED BY Section - Collapsible */}
+        <Collapsible open={authorisedByOpen} onOpenChange={(open) => { haptics.tap(); setAuthorisedByOpen(open); }}>
+          <CollapsibleTrigger className="w-full" asChild>
+            <button className={cn(
+              "w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors",
+              "bg-card/50 border-y border-border/30",
+              authorisedByOpen && "bg-card/80",
+              "active:bg-card/90"
+            )}>
+              <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                <User className="h-5 w-5 text-purple-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground">Report Authorised By</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {formData.reportAuthorisedByName || 'Authorisation required'}
+                </p>
+              </div>
+              {formData.reportAuthorisedBySignature && (
+                <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
+              )}
+              <ChevronDown className={cn(
+                "h-5 w-5 text-muted-foreground transition-transform duration-200",
+                authorisedByOpen && "rotate-180"
+              )} />
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn("p-4 space-y-4 bg-card/30", isMobile ? "" : "px-6")}>
+              {/* Same as Inspected By Quick Action */}
+              <button
+                type="button"
+                onClick={() => {
+                  haptics.tap();
+                  const newValue = !formData.sameAsInspectedBy;
+                  onUpdate('sameAsInspectedBy', newValue);
+                  if (newValue) {
+                    onUpdate('reportAuthorisedByName', formData.inspectedByName);
+                    onUpdate('reportAuthorisedBySignature', formData.inspectedBySignature);
+                    onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
+                    onUpdate('reportAuthorisedByForOnBehalfOf', formData.inspectedByForOnBehalfOf);
+                    onUpdate('reportAuthorisedByPosition', formData.inspectedByPosition);
+                    onUpdate('reportAuthorisedByAddress', formData.inspectedByAddress);
+                    onUpdate('reportAuthorisedByMembershipNo', formData.inspectedByCpScheme);
+                    haptics.success();
+                    toast({
+                      title: "Details copied",
+                      description: "Copied from 'Inspected By' section"
+                    });
+                  }
+                }}
+                className={cn(
+                  "w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all touch-manipulation",
+                  formData.sameAsInspectedBy
+                    ? "border-purple-500 bg-purple-500/10"
+                    : "border-border/30 bg-card/30"
+                )}
+              >
+                <Checkbox
+                  checked={formData.sameAsInspectedBy || false}
+                  className="h-5 w-5 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
+                />
+                <span className="text-sm font-medium">Same person as Inspected By</span>
+              </button>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground/80">Name (Capitals) *</Label>
+                  <Input
+                    value={formData.reportAuthorisedByName || ''}
+                    onChange={(e) => onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())}
+                    placeholder="FULL NAME"
+                    className="uppercase h-11 text-base touch-manipulation bg-card/50 border-border/30"
                   />
-                  <Label htmlFor="sameAsInspectedBy" className="text-sm sm:text-base font-medium cursor-pointer leading-relaxed">
-                    Same person as Inspected By (auto-populate fields)
-                  </Label>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground/80">Date *</Label>
+                  <Input
+                    type="date"
+                    value={formData.reportAuthorisedByDate || ''}
+                    onChange={(e) => onUpdate('reportAuthorisedByDate', e.target.value)}
+                    className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                  />
                 </div>
               </div>
 
-              <h4 className="text-base font-semibold text-elec-yellow flex items-center gap-2">
-                <User className="h-4 w-4" />
-                REPORT AUTHORISED FOR ISSUE BY:
-              </h4>
-              
-              <div>
-                <Label htmlFor="reportAuthorisedByName">Name (Capitals): *</Label>
-                <Input
-                  id="reportAuthorisedByName"
-                  value={formData.reportAuthorisedByName || ''}
-                  onChange={(e) => onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())}
-                  placeholder="FULL NAME IN CAPITALS"
-                  className="uppercase h-11 text-base touch-manipulation"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="reportAuthorisedBySignature">Signature: *</Label>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-foreground/80">Signature *</Label>
                 <SignatureInput
                   value={formData.reportAuthorisedBySignature || ''}
                   onChange={(value) => onUpdate('reportAuthorisedBySignature', value || '')}
@@ -1123,263 +1320,204 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                 />
               </div>
 
-              <div>
-                <Label htmlFor="reportAuthorisedByDate">Date: *</Label>
-                <Input
-                  id="reportAuthorisedByDate"
-                  type="date"
-                  value={formData.reportAuthorisedByDate || ''}
-                  onChange={(e) => onUpdate('reportAuthorisedByDate', e.target.value)}
-                  className="h-11 text-base touch-manipulation"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground/80">For/on behalf of</Label>
+                  <Input
+                    value={formData.reportAuthorisedByForOnBehalfOf || ''}
+                    onChange={(e) => onUpdate('reportAuthorisedByForOnBehalfOf', e.target.value)}
+                    placeholder="Company name"
+                    className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground/80">Position</Label>
+                  <Input
+                    value={formData.reportAuthorisedByPosition || ''}
+                    onChange={(e) => onUpdate('reportAuthorisedByPosition', e.target.value)}
+                    placeholder="Job title"
+                    className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                  />
+                </div>
               </div>
 
-              <div>
-                <Label htmlFor="reportAuthorisedByForOnBehalfOf">For/on behalf of:</Label>
-                <Input
-                  id="reportAuthorisedByForOnBehalfOf"
-                  value={formData.reportAuthorisedByForOnBehalfOf || ''}
-                  onChange={(e) => onUpdate('reportAuthorisedByForOnBehalfOf', e.target.value)}
-                  placeholder="Company or organisation name"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="reportAuthorisedByPosition">Position:</Label>
-                <Input
-                  id="reportAuthorisedByPosition"
-                  value={formData.reportAuthorisedByPosition || ''}
-                  onChange={(e) => onUpdate('reportAuthorisedByPosition', e.target.value)}
-                  placeholder="Job title or position"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="reportAuthorisedByAddress">Address:</Label>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-foreground/80">Address</Label>
                 <textarea
-                  id="reportAuthorisedByAddress"
-                  className="w-full max-w-full p-3 border border-input rounded-md resize-none overflow-auto touch-manipulation text-base min-h-[100px] sm:min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20"
-                  rows={3}
+                  className="w-full p-3 border border-border/30 bg-card/50 rounded-lg resize-none touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow/50"
+                  style={{ fontSize: '16px' }}
+                  rows={2}
                   value={formData.reportAuthorisedByAddress || ''}
                   onChange={(e) => onUpdate('reportAuthorisedByAddress', e.target.value)}
                   placeholder="Full address"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="reportAuthorisedByMembershipNo">Membership No:</Label>
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-foreground/80">Membership No</Label>
                 <Input
-                  id="reportAuthorisedByMembershipNo"
                   value={formData.reportAuthorisedByMembershipNo || ''}
                   onChange={(e) => onUpdate('reportAuthorisedByMembershipNo', e.target.value)}
-                  placeholder="Membership or registration number"
-                  className="h-11 text-base touch-manipulation"
+                  placeholder="Registration number"
+                  className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
                 />
               </div>
-            </Card>
-          </div>
-        </div>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
 
-        <div className={`p-8 rounded-xl border-2 transition-all duration-300 backdrop-blur-sm ${
-          formData.overallAssessment === 'satisfactory' 
-            ? 'border-green-500/40 bg-gradient-to-br from-green-500/10 to-green-600/5 shadow-lg shadow-green-500/10' 
+      {/* Generate Certificate - Fixed Bottom Bar on Mobile */}
+      <div className={cn(
+        "border-y border-border/30 bg-card/50",
+        isMobile ? "p-4" : "p-6 mx-4 rounded-xl border"
+      )}>
+        {/* Status Summary */}
+        <div className={cn(
+          "flex items-center gap-3 mb-4 p-3 rounded-lg",
+          formData.overallAssessment === 'satisfactory'
+            ? 'bg-green-500/10 border border-green-500/20'
             : formData.overallAssessment === 'unsatisfactory'
-            ? 'border-red-500/40 bg-gradient-to-br from-red-500/10 to-red-600/5 shadow-lg shadow-red-500/10'
-            : 'border-elec-yellow/40 bg-gradient-to-br from-elec-yellow/10 to-amber-500/5 shadow-lg shadow-elec-yellow/10'
-        }`}>
-          <div className="flex items-start gap-4">
-            <div className={`p-3 rounded-lg ${
-              formData.overallAssessment === 'satisfactory' 
-                ? 'bg-green-500/20 ring-2 ring-green-500/30' 
-                : formData.overallAssessment === 'unsatisfactory'
-                ? 'bg-red-500/20 ring-2 ring-red-500/30'
-                : 'bg-elec-yellow/20 ring-2 ring-elec-yellow/30'
-            }`}>
-              {React.cloneElement(getAssessmentIcon(), { className: 'h-7 w-7' })}
-            </div>
-            <div className="flex-1 space-y-2">
-              <span className={`text-xl font-semibold tracking-tight ${getOverallAssessmentColor()}`}>
-                {formData.overallAssessment === 'satisfactory' && 'Installation is Satisfactory'}
-                {formData.overallAssessment === 'unsatisfactory' && 'Installation is Unsatisfactory'}
-                {!formData.overallAssessment && 'Assessment Pending'}
-              </span>
-              <p className={`text-sm leading-relaxed ${
-                formData.overallAssessment === 'satisfactory' ? 'text-green-100/90' :
-                formData.overallAssessment === 'unsatisfactory' ? 'text-red-100/90' :
-                'text-amber-100/80'
-              }`}>
-                {formData.overallAssessment === 'satisfactory' && 
-                  'The electrical installation is in a satisfactory condition for continued service.'}
-                {formData.overallAssessment === 'unsatisfactory' && 
-                  'The electrical installation requires attention. Refer to observations and recommendations.'}
-                {!formData.overallAssessment && 
-                  'Complete the inspection and select an overall assessment to proceed with certificate generation.'}
-              </p>
-              {formData.overallAssessment && (
-                <div className="flex items-center gap-2 mt-3 pt-3 border-t border-current/10">
-                  <span className="text-xs font-medium opacity-70">BS 7671 Compliant</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Form completion status */}
-        <div className={`p-6 rounded-xl border-2 backdrop-blur-sm transition-all duration-300 ${
-          isFormComplete() 
-            ? 'border-green-500/40 bg-gradient-to-br from-green-500/10 to-green-600/5 shadow-lg shadow-green-500/10' 
-            : 'border-border/50 bg-gradient-to-br from-neutral-800/50 to-neutral-900/30'
-        }`}>
-          <div className="flex items-start gap-4">
-            <div className={`p-2.5 rounded-lg ${
-              isFormComplete() 
-                ? 'bg-green-500/20 ring-2 ring-green-500/30' 
-                : 'bg-muted/30 ring-2 ring-neutral-600/20'
-            }`}>
-              <FileText className={`h-6 w-6 ${isFormComplete() ? 'text-green-400' : 'text-elec-yellow'}`} />
-            </div>
-            <div className="flex-1 space-y-3">
-              <div>
-                <span className="text-lg font-semibold text-foreground tracking-tight">Form Completion Status</span>
-                <p className={`text-sm mt-1.5 ${isFormComplete() ? 'text-green-100/80' : 'text-muted-foreground'}`}>
-                  {isFormComplete() 
-                    ? 'All required fields completed. Ready to generate certificate.'
-                    : 'Complete all required fields before generating the final certificate.'}
-                </p>
-              </div>
-              
-              {!isFormComplete() && (
-                <div className="space-y-2 pt-2 border-t border-border/30">
-                  <p className="text-xs font-medium text-neutral-400 uppercase tracking-wide">Required Fields:</p>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground">
-                    <li className="flex items-center gap-2">
-                      <div className="h-1 w-1 rounded-full bg-elec-yellow" />
-                      Client name and installation address
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <div className="h-1 w-1 rounded-full bg-elec-yellow" />
-                      Inspection date
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <div className="h-1 w-1 rounded-full bg-elec-yellow" />
-                      Inspector details and signatures
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <div className="h-1 w-1 rounded-full bg-elec-yellow" />
-                      Overall assessment selection
-                    </li>
-                  </ul>
-                </div>
-              )}
-              
-              {isFormComplete() && (
-                <div className="flex items-center gap-2 text-green-400 text-sm">
-                  <CheckCircle className="h-4 w-4" />
-                  <span className="font-medium">Form validated and ready</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        
-        <div className="p-8 rounded-xl border-2 border-elec-yellow/40 bg-gradient-to-br from-elec-yellow/10 via-amber-500/5 to-neutral-800/50 backdrop-blur-sm shadow-xl shadow-elec-yellow/10">
-          <div className="space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-elec-yellow/20 ring-2 ring-elec-yellow/30">
-                <FileText className="h-7 w-7 text-elec-yellow" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold text-foreground tracking-tight">Generate Certificate</h3>
-                <p className="text-sm text-neutral-300 mt-1">
-                  Create your professional EICR certificate compliant with BS 7671
-                </p>
-                {formData.reportReference && (
-                  <div className="mt-3 flex flex-wrap items-center gap-4 text-xs">
-                    <span className="flex items-center gap-1.5 text-neutral-400">
-                      <span className="font-medium">Certificate No:</span>
-                      <span className="text-elec-yellow font-mono">{formData.reportReference}</span>
-                    </span>
-                    <span className="flex items-center gap-1.5 text-neutral-400">
-                      <span className="font-medium">Date:</span>
-                      <span className="text-foreground">{formData.inspectionDate || new Date().toLocaleDateString('en-GB')}</span>
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <Button
-                className="h-12 px-6 gap-2.5 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold shadow-lg shadow-elec-yellow/20 transition-all duration-200 hover:shadow-elec-yellow/30 hover:scale-[1.02]"
-                onClick={handleGenerateCertificate}
-                disabled={!isFormComplete()}
-              >
-                <FileDown className="h-5 w-5" />
-                Generate PDF
-              </Button>
-              <Button
-                variant="outline"
-                className="h-12 px-6 gap-2.5 border-border bg-card/50 hover:bg-muted/50 transition-all duration-200 hover:border-neutral-500"
-                onClick={handleSaveDraft}
-              >
-                <Save className="h-5 w-5" />
-                Save Draft
-              </Button>
-            </div>
-
-            {/* DEV ONLY: Quick fill button for testing */}
-            {import.meta.env.DEV && (
-              <div className="pt-3 border-t border-elec-yellow/20">
-                <Button
-                  variant="outline"
-                  className="w-full h-10 gap-2 border-purple-500/50 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 hover:text-purple-200"
-                  onClick={handleDevFillAllFields}
-                >
-                  <Beaker className="h-4 w-4" />
-                  DEV: Fill All Fields for Testing
-                </Button>
-              </div>
-            )}
-            
-            {!isFormComplete() && (
-              <div className="pt-4 border-t border-elec-yellow/10">
-                <p className="text-xs text-amber-300/70 flex items-center gap-2">
-                  <AlertTriangle className="h-3.5 w-3.5" />
-                  Complete all required fields to enable certificate generation
-                </p>
-              </div>
+            ? 'bg-red-500/10 border border-red-500/20'
+            : 'bg-elec-yellow/10 border border-elec-yellow/20'
+        )}>
+          <div className={cn(
+            "h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0",
+            formData.overallAssessment === 'satisfactory' ? 'bg-green-500/20' :
+            formData.overallAssessment === 'unsatisfactory' ? 'bg-red-500/20' :
+            'bg-elec-yellow/20'
+          )}>
+            {formData.overallAssessment === 'satisfactory' ? (
+              <CheckCircle className="h-5 w-5 text-green-400" />
+            ) : formData.overallAssessment === 'unsatisfactory' ? (
+              <XCircle className="h-5 w-5 text-red-400" />
+            ) : (
+              <AlertTriangle className="h-5 w-5 text-elec-yellow" />
             )}
           </div>
+          <div className="flex-1 min-w-0">
+            <p className={cn(
+              "font-semibold",
+              formData.overallAssessment === 'satisfactory' ? 'text-green-400' :
+              formData.overallAssessment === 'unsatisfactory' ? 'text-red-400' :
+              'text-elec-yellow'
+            )}>
+              {formData.overallAssessment === 'satisfactory' && 'Satisfactory'}
+              {formData.overallAssessment === 'unsatisfactory' && 'Unsatisfactory'}
+              {!formData.overallAssessment && 'Assessment Pending'}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {isFormComplete() ? 'Ready to generate certificate' : 'Complete all required fields'}
+            </p>
+          </div>
+          {formData.reportReference && (
+            <span className="text-xs font-mono text-muted-foreground hidden sm:block">
+              {formData.reportReference}
+            </span>
+          )}
         </div>
 
-        {/* JSON Data Viewer */}
-        <div className="mt-6 pt-6 border-t border-border/50">
-          <Collapsible open={isJsonOpen} onOpenChange={handleToggleJsonPreview}>
-            <div className="flex items-center justify-between p-4 rounded-lg bg-card/30 border border-border/50 hover:border-border/50 transition-colors">
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm" className="flex items-center gap-2 hover:bg-muted/50">
-                  {isJsonOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                  <span className="font-medium">Developer Tools: Raw JSON Data</span>
-                  <span className="text-xs text-muted-foreground ml-2">
-                    ({formattedJsonPreview ? `${Math.round(formattedJsonPreview.length / 1024)}KB` : '...'})
-                  </span>
-                </Button>
-              </CollapsibleTrigger>
-              {isJsonOpen && (
+        {/* Action Buttons */}
+        <div className="space-y-3">
+          <Button
+            className="w-full h-14 gap-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-bold text-base shadow-lg shadow-elec-yellow/20 transition-all duration-200 active:scale-95 touch-manipulation"
+            onClick={() => {
+              haptics.tap();
+              handleGenerateCertificate();
+            }}
+            disabled={!isFormComplete()}
+          >
+            <FileDown className="h-5 w-5" />
+            Generate PDF Certificate
+          </Button>
+
+          <div className="grid grid-cols-2 gap-3">
+            <Button
+              variant="outline"
+              className="h-12 gap-2 bg-card/50 border-border/30 hover:bg-card transition-all duration-200 active:scale-95 touch-manipulation"
+              onClick={() => {
+                haptics.tap();
+                setShowEmailDialog(true);
+              }}
+              disabled={!isFormComplete()}
+            >
+              <Mail className="h-4 w-4" />
+              Email
+            </Button>
+            <Button
+              variant="outline"
+              className="h-12 gap-2 bg-card/50 border-border/30 hover:bg-card transition-all duration-200 active:scale-95 touch-manipulation"
+              onClick={() => {
+                haptics.tap();
+                handleSaveDraft();
+              }}
+            >
+              <Save className="h-4 w-4" />
+              Save Draft
+            </Button>
+          </div>
+
+          {/* DEV ONLY: Quick fill button for testing */}
+          {import.meta.env.DEV && (
+            <Button
+              variant="outline"
+              className="w-full h-10 gap-2 border-purple-500/50 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 touch-manipulation"
+              onClick={handleDevFillAllFields}
+            >
+              <Beaker className="h-4 w-4" />
+              DEV: Fill All Fields
+            </Button>
+          )}
+
+          {!isFormComplete() && (
+            <p className="text-xs text-amber-300/70 flex items-center justify-center gap-2 pt-2">
+              <AlertTriangle className="h-3.5 w-3.5" />
+              Complete all required fields
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* JSON Data Viewer - Hidden on Mobile */}
+      <div className={cn("hidden sm:block", isMobile ? "px-4" : "")}>
+        <Collapsible open={isJsonOpen} onOpenChange={handleToggleJsonPreview}>
+          <CollapsibleTrigger className="w-full" asChild>
+            <button
+              onClick={() => haptics.tap()}
+              className={cn(
+                "w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors",
+                "bg-card/30 border-y border-border/30",
+                "active:bg-card/50"
+              )}
+            >
+              <div className="h-10 w-10 rounded-xl bg-gray-500/20 flex items-center justify-center flex-shrink-0">
+                <Code className="h-5 w-5 text-gray-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground">Developer Tools</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Raw JSON Data ({formattedJsonPreview ? `${Math.round(formattedJsonPreview.length / 1024)}KB` : '...'})
+                </p>
+              </div>
+              <ChevronDown className={cn(
+                "h-5 w-5 text-muted-foreground transition-transform duration-200",
+                isJsonOpen && "rotate-180"
+              )} />
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn("p-4 bg-card/30", isMobile ? "" : "px-6")}>
+              <div className="flex justify-end mb-3">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={handleCopyJson}
-                  className="flex items-center gap-2 border-elec-yellow/30 hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+                  className="h-9 gap-2 border-elec-yellow/30 hover:bg-elec-yellow/10 touch-manipulation"
                 >
                   <Copy className="h-4 w-4" />
                   Copy JSON
                 </Button>
-              )}
-            </div>
-            <CollapsibleContent className="mt-3">
+              </div>
               <div className="bg-background/50 rounded-xl border border-border/50 overflow-hidden">
                 <div className="bg-card/50 px-4 py-2 border-b border-border/50 flex items-center justify-between">
                   <span className="text-xs font-mono text-elec-yellow">form_data.json</span>
@@ -1391,11 +1529,10 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                   </pre>
                 </div>
               </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </div>
-      </CardContent>
-      </Card>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
 
       {/* PDF Generation Dialog */}
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
@@ -1486,6 +1623,22 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           phone: formData.clientPhone || '',
           address: formData.installationAddress || '',
         }}
+      />
+
+      {/* Email Certificate Dialog */}
+      <EmailCertificateDialog
+        open={showEmailDialog}
+        onOpenChange={setShowEmailDialog}
+        certificateType="EICR"
+        certificateNumber={formData.reportReference}
+        clientName={formData.clientName}
+        clientEmail={formData.clientEmail}
+        installationAddress={formData.installationAddress}
+        inspectionDate={formData.inspectionDate}
+        overallAssessment={formData.overallAssessment}
+        companyName={formData.companyName}
+        onSend={handleSendEmail}
+        isLoading={isEmailSending}
       />
     </div>
   );

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Camera, Eye } from 'lucide-react';
+import { Camera, Eye, Check, X, AlertTriangle, AlertCircle, ChevronRight } from 'lucide-react';
 import { InspectionItem as BaseInspectionItem } from '@/data/bs7671ChecklistData';
-import EnhancedInspectionOutcomeSelect from './EnhancedInspectionOutcomeSelect';
 import { cn } from '@/lib/utils';
+import { useHaptics } from '@/hooks/useHaptics';
 
 interface InspectionItem {
   id: string;
@@ -24,6 +25,16 @@ interface EnhancedInspectionItemCardProps {
   onNavigateToObservations?: () => void;
 }
 
+// Outcome options for quick selection
+const outcomeOptions = [
+  { value: 'satisfactory' as const, label: 'OK', icon: Check, color: 'green' },
+  { value: 'C1' as const, label: 'C1', icon: X, color: 'red' },
+  { value: 'C2' as const, label: 'C2', icon: AlertCircle, color: 'orange' },
+  { value: 'C3' as const, label: 'C3', icon: AlertTriangle, color: 'yellow' },
+  { value: 'not-applicable' as const, label: 'N/A', icon: null, color: 'gray' },
+  { value: 'limitation' as const, label: 'LIM', icon: null, color: 'purple' },
+];
+
 const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
   sectionItem,
   inspectionItem,
@@ -31,8 +42,12 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
   onOutcomeChange,
   onNavigateToObservations
 }) => {
-  const [localNotes, setLocalNotes] = React.useState(inspectionItem?.notes || '');
-  const [debounceTimer, setDebounceTimer] = React.useState<NodeJS.Timeout | null>(null);
+  const haptics = useHaptics();
+  const [localNotes, setLocalNotes] = useState(inspectionItem?.notes || '');
+  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+  const [swipeOffset, setSwipeOffset] = useState(0);
+  const [showNotes, setShowNotes] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const currentOutcome = inspectionItem?.outcome || '';
 
@@ -54,20 +69,6 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
     setDebounceTimer(newTimer);
   };
 
-  // Get outcome-based styling class
-  const getOutcomeClass = () => {
-    switch (currentOutcome) {
-      case 'satisfactory': return 'eicr-inspection-item-ok';
-      case 'C1': return 'eicr-inspection-item-c1';
-      case 'C2': return 'eicr-inspection-item-c2';
-      case 'C3': return 'eicr-inspection-item-c3';
-      case 'limitation': return 'eicr-inspection-item-lim';
-      case 'not-verified': return 'eicr-inspection-item-nv';
-      case 'not-applicable': return 'eicr-inspection-item-na';
-      default: return '';
-    }
-  };
-
   React.useEffect(() => {
     return () => {
       if (debounceTimer) {
@@ -76,105 +77,237 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
     };
   }, [debounceTimer]);
 
-  const isCriticalOutcome = ['C1', 'C2', 'C3'].includes(currentOutcome);
+  // Swipe handlers
+  const swipeHandlers = useSwipeable({
+    onSwiping: (e) => {
+      // Limit swipe distance
+      const maxSwipe = 80;
+      const offset = Math.max(-maxSwipe, Math.min(maxSwipe, e.deltaX));
+      setSwipeOffset(offset);
+    },
+    onSwipedRight: () => {
+      if (swipeOffset > 40) {
+        haptics.success();
+        onOutcomeChange(sectionItem.id, 'satisfactory');
+      }
+      setSwipeOffset(0);
+    },
+    onSwipedLeft: () => {
+      if (swipeOffset < -40) {
+        haptics.tap();
+        setIsExpanded(true);
+      }
+      setSwipeOffset(0);
+    },
+    onTouchEndOrOnMouseUp: () => {
+      setSwipeOffset(0);
+    },
+    trackMouse: false,
+    trackTouch: true,
+    delta: 10,
+    preventScrollOnSwipe: false,
+  });
 
-  // Format clause for display
-  const formatClause = (clause: string | undefined) => {
-    if (!clause) return null;
-    if (clause.includes('Visual') || clause.includes('Reserved') ||
-        clause.includes('Part') || clause.includes('Chapter')) {
-      return clause;
+  const handleOutcomeClick = (outcome: InspectionItem['outcome']) => {
+    haptics.tap();
+    if (currentOutcome === outcome) {
+      onOutcomeChange(sectionItem.id, '');
+    } else {
+      onOutcomeChange(sectionItem.id, outcome);
+      if (outcome === 'C1') haptics.warning();
+      else if (outcome === 'C2' || outcome === 'C3') haptics.impact();
+      else if (outcome === 'satisfactory') haptics.success();
     }
-    return `Regulation ${clause}`;
   };
 
-  return (
-    <div className={cn(
-      "eicr-inspection-item",
-      getOutcomeClass(),
-      "active:scale-[0.995] touch-manipulation transition-transform duration-150"
-    )}>
-      {/* Section 1: Header - Item Number, Title, Clause */}
-      <div className="p-4 pb-3">
-        <div className="flex items-start gap-3">
-          {/* Item Number */}
-          <span className="flex-shrink-0 text-elec-yellow font-mono text-sm font-semibold mt-0.5">
-            {sectionItem.number}
-          </span>
+  // Get outcome-based styling
+  const getOutcomeStyles = () => {
+    switch (currentOutcome) {
+      case 'satisfactory': return { border: 'border-l-green-500', bg: 'bg-green-500/5' };
+      case 'C1': return { border: 'border-l-red-500', bg: 'bg-red-500/5' };
+      case 'C2': return { border: 'border-l-orange-500', bg: 'bg-orange-500/5' };
+      case 'C3': return { border: 'border-l-yellow-500', bg: 'bg-yellow-500/5' };
+      case 'limitation': return { border: 'border-l-purple-500', bg: 'bg-purple-500/5' };
+      case 'not-applicable': return { border: 'border-l-gray-500', bg: 'bg-gray-500/5' };
+      default: return { border: 'border-l-border/50', bg: '' };
+    }
+  };
 
-          {/* Item Title & Clause */}
-          <div className="flex-1 min-w-0">
-            <p className="text-base text-white leading-relaxed font-medium">
-              {sectionItem.item}
-            </p>
-            {sectionItem.clause && (
-              <span className="text-xs text-white/50 font-mono mt-1 block">
-                {formatClause(sectionItem.clause)}
-              </span>
-            )}
-          </div>
+  const styles = getOutcomeStyles();
+  const isCriticalOutcome = ['C1', 'C2', 'C3'].includes(currentOutcome);
+
+  return (
+    <div className="relative overflow-hidden">
+      {/* Swipe background indicators */}
+      <div className="absolute inset-0 flex">
+        {/* Left swipe - show options */}
+        <div className={cn(
+          "flex-1 flex items-center justify-end px-4 transition-opacity",
+          swipeOffset < -20 ? "opacity-100" : "opacity-0",
+          "bg-elec-yellow/20"
+        )}>
+          <span className="text-sm font-medium text-elec-yellow">Options</span>
+        </div>
+        {/* Right swipe - mark OK */}
+        <div className={cn(
+          "flex-1 flex items-center justify-start px-4 transition-opacity",
+          swipeOffset > 20 ? "opacity-100" : "opacity-0",
+          "bg-green-500/20"
+        )}>
+          <Check className="h-5 w-5 text-green-500 mr-2" />
+          <span className="text-sm font-medium text-green-500">OK</span>
         </div>
       </div>
 
-      {/* Section 2: Outcome Selection */}
-      <div className="px-4 pb-4">
-        <p className="eicr-section-label">Outcome</p>
-        <EnhancedInspectionOutcomeSelect
-          itemId={sectionItem.id}
-          currentOutcome={currentOutcome}
-          onOutcomeChange={onOutcomeChange}
-        />
-      </div>
-
-      {/* Divider */}
-      <div className="mx-4 border-t border-white/5" />
-
-      {/* Section 3: Notes - Always visible */}
-      <div className="p-4">
-        <p className="eicr-section-label">Notes</p>
-        <Textarea
-          placeholder="Add inspection notes..."
-          value={localNotes}
-          onChange={(e) => handleNotesChange(e.target.value)}
-          rows={2}
-          style={{ fontSize: '16px' }} // Prevent iOS zoom
-          className="text-base bg-white/5 border-white/10 focus:border-elec-yellow/50
-                     placeholder:text-white/30 resize-none min-h-[80px]"
-        />
-      </div>
-
-      {/* Section 4: Actions - 44px touch targets */}
-      <div className="px-4 pb-4 flex gap-3">
-        {/* Photo Button */}
-        <Button
-          variant="outline"
-          className={cn(
-            "flex-1 h-11 text-sm font-medium",
-            "bg-white/5 border-white/10 text-white/70",
-            "hover:bg-white/10 hover:text-white",
-            "active:scale-95 touch-manipulation"
-          )}
+      {/* Main card content */}
+      <div
+        {...swipeHandlers}
+        style={{ transform: `translateX(${swipeOffset}px)` }}
+        className={cn(
+          "relative border-l-4 rounded-lg transition-transform",
+          "bg-card/50 border border-border/30",
+          styles.border,
+          styles.bg
+        )}
+      >
+        {/* Compact header - always visible */}
+        <button
+          type="button"
+          onClick={() => { haptics.tap(); setIsExpanded(!isExpanded); }}
+          className="w-full p-3 flex items-center gap-3 text-left touch-manipulation"
         >
-          <Camera className="h-4 w-4 mr-2" />
-          Photo
-        </Button>
+          {/* Item Number */}
+          <span className={cn(
+            "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold",
+            currentOutcome === 'satisfactory' ? "bg-green-500/20 text-green-400" :
+            currentOutcome === 'C1' ? "bg-red-500/20 text-red-400" :
+            currentOutcome === 'C2' ? "bg-orange-500/20 text-orange-400" :
+            currentOutcome === 'C3' ? "bg-yellow-500/20 text-yellow-400" :
+            currentOutcome === 'not-applicable' ? "bg-gray-500/20 text-gray-400" :
+            "bg-elec-yellow/20 text-elec-yellow"
+          )}>
+            {currentOutcome === 'satisfactory' ? <Check className="h-4 w-4" /> :
+             currentOutcome === 'C1' ? 'C1' :
+             currentOutcome === 'C2' ? 'C2' :
+             currentOutcome === 'C3' ? 'C3' :
+             sectionItem.number}
+          </span>
 
-        {/* Observation Button - Only for critical outcomes */}
-        {isCriticalOutcome && onNavigateToObservations && (
-          <Button
-            variant="outline"
-            onClick={onNavigateToObservations}
-            className={cn(
-              "flex-1 h-11 text-sm font-medium",
-              "active:scale-95 touch-manipulation",
-              currentOutcome === 'C1' && "bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20",
-              currentOutcome === 'C2' && "bg-orange-500/10 border-orange-500/30 text-orange-400 hover:bg-orange-500/20",
-              currentOutcome === 'C3' && "bg-yellow-500/10 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20"
+          {/* Item Title */}
+          <div className="flex-1 min-w-0">
+            <p className="text-sm text-foreground font-medium leading-tight line-clamp-2">
+              {sectionItem.item}
+            </p>
+            {sectionItem.clause && (
+              <span className="text-xs text-muted-foreground font-mono">
+                {sectionItem.clause}
+              </span>
             )}
-          >
-            <Eye className="h-4 w-4 mr-2" />
-            Observation
-          </Button>
+          </div>
+
+          {/* Expand indicator */}
+          <ChevronRight className={cn(
+            "h-4 w-4 text-muted-foreground transition-transform",
+            isExpanded && "rotate-90"
+          )} />
+        </button>
+
+        {/* Inline outcome buttons - always visible */}
+        <div className="px-3 pb-3 flex gap-1.5">
+          {outcomeOptions.slice(0, 5).map((option) => {
+            const isActive = currentOutcome === option.value;
+            const Icon = option.icon;
+            return (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => handleOutcomeClick(option.value)}
+                className={cn(
+                  "flex-1 h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation",
+                  "flex items-center justify-center gap-1",
+                  "active:scale-95",
+                  isActive ? (
+                    option.color === 'green' ? "bg-green-500 text-white" :
+                    option.color === 'red' ? "bg-red-500 text-white" :
+                    option.color === 'orange' ? "bg-orange-500 text-white" :
+                    option.color === 'yellow' ? "bg-yellow-500 text-black" :
+                    option.color === 'gray' ? "bg-gray-500 text-white" :
+                    "bg-purple-500 text-white"
+                  ) : (
+                    option.color === 'green' ? "bg-green-500/10 text-green-400 border border-green-500/30" :
+                    option.color === 'red' ? "bg-red-500/10 text-red-400 border border-red-500/30" :
+                    option.color === 'orange' ? "bg-orange-500/10 text-orange-400 border border-orange-500/30" :
+                    option.color === 'yellow' ? "bg-yellow-500/10 text-yellow-400 border border-yellow-500/30" :
+                    option.color === 'gray' ? "bg-white/5 text-white/50 border border-white/10" :
+                    "bg-purple-500/10 text-purple-400 border border-purple-500/30"
+                  )
+                )}
+              >
+                {Icon && <Icon className="h-3.5 w-3.5" />}
+                <span>{option.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Expanded content */}
+        {isExpanded && (
+          <div className="px-3 pb-3 space-y-3 border-t border-border/20 pt-3">
+            {/* Notes */}
+            <div>
+              <Textarea
+                placeholder="Add inspection notes..."
+                value={localNotes}
+                onChange={(e) => handleNotesChange(e.target.value)}
+                rows={2}
+                style={{ fontSize: '16px' }}
+                className="text-base bg-white/5 border-white/10 focus:border-elec-yellow/50 placeholder:text-white/30 resize-none min-h-[70px]"
+              />
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                className="flex-1 h-11 text-sm bg-white/5 border-white/10 text-white/70 hover:bg-white/10 active:scale-95 touch-manipulation"
+              >
+                <Camera className="h-4 w-4 mr-2" />
+                Photo
+              </Button>
+
+              {isCriticalOutcome && onNavigateToObservations && (
+                <Button
+                  variant="outline"
+                  onClick={onNavigateToObservations}
+                  className={cn(
+                    "flex-1 h-11 text-sm active:scale-95 touch-manipulation",
+                    currentOutcome === 'C1' && "bg-red-500/10 border-red-500/30 text-red-400",
+                    currentOutcome === 'C2' && "bg-orange-500/10 border-orange-500/30 text-orange-400",
+                    currentOutcome === 'C3' && "bg-yellow-500/10 border-yellow-500/30 text-yellow-400"
+                  )}
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  View
+                </Button>
+              )}
+            </div>
+
+            {/* LIM option if not in main row */}
+            <button
+              type="button"
+              onClick={() => handleOutcomeClick('limitation')}
+              className={cn(
+                "w-full h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation",
+                "flex items-center justify-center",
+                "active:scale-95",
+                currentOutcome === 'limitation'
+                  ? "bg-purple-500 text-white"
+                  : "bg-purple-500/10 text-purple-400 border border-purple-500/30"
+              )}
+            >
+              Mark as Limitation (LIM)
+            </button>
+          </div>
         )}
       </div>
     </div>

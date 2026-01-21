@@ -181,7 +181,7 @@ export function LiveStatsBar() {
         {[...Array(filteredStats.length || 3)].map((_, i) => (
           <div
             key={i}
-            className="h-20 sm:h-24 rounded-xl glass-premium animate-pulse"
+            className="h-20 sm:h-24 rounded-xl bg-white/5 animate-pulse"
           />
         ))}
       </div>
@@ -215,16 +215,13 @@ export function LiveStatsBar() {
         )}
       />
 
-      <motion.div
+      <div
         ref={scrollRef}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
         className={cn(
-          // Mobile: premium horizontal scroll with carousel feel
-          'flex gap-3 overflow-x-auto pb-1 -mx-4 px-4',
+          // Mobile: horizontal scroll with proper padding
+          'flex gap-3 overflow-x-auto pb-2 -mx-4 px-4',
           'snap-x snap-mandatory scroll-smooth',
-          'scrollbar-hide momentum-scroll-x',
+          'scrollbar-hide',
           // Desktop: grid layout
           'sm:grid sm:grid-cols-3 lg:grid-cols-5 sm:gap-4',
           'sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0'
@@ -237,20 +234,15 @@ export function LiveStatsBar() {
           const subtitle = config.getSubtitle?.(dashboardData);
 
           return (
-            <motion.div
+            <div
               key={config.id}
-              variants={itemVariants}
-              whileTap={{ scale: 0.97 }}
               className={cn(
-                // Mobile: compact cards with snap - larger touch targets
-                'flex-shrink-0 w-[130px] snap-start touch-manipulation',
-                // First/last card snap alignment
-                index === 0 && 'snap-start',
-                index === filteredStats.length - 1 && 'snap-end mr-4 sm:mr-0',
+                // Mobile: fixed width cards with padding
+                'flex-shrink-0 w-[140px] snap-center touch-manipulation',
+                // Last card needs extra right margin for scroll padding
+                index === filteredStats.length - 1 && 'mr-4 sm:mr-0',
                 // Desktop: equal width columns
-                'sm:w-full sm:flex-shrink',
-                // Transform hint for smooth animations
-                'will-change-transform'
+                'sm:w-full sm:flex-shrink'
               )}
             >
               <StatCard
@@ -264,36 +256,24 @@ export function LiveStatsBar() {
                 formatAsCurrency={config.formatAsCurrency}
                 onClick={config.path ? () => navigate(config.path!) : undefined}
               />
-            </motion.div>
+            </div>
           );
         })}
-      </motion.div>
+      </div>
 
-      {/* Pagination dots - mobile only */}
-      <div className="flex justify-center gap-0.5 mt-3 sm:hidden">
-        {filteredStats.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => {
-              const el = scrollRef.current;
-              if (el) {
-                const cardWidth = 130 + 12; // width + gap
-                el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
-              }
-            }}
-            className="min-h-11 min-w-8 flex items-center justify-center touch-manipulation active:scale-95"
-            aria-label={`View stat ${i + 1}`}
-          >
-            <span
+      {/* Scroll hint - mobile only */}
+      <div className="flex justify-center mt-2 sm:hidden">
+        <div className="flex gap-1">
+          {filteredStats.map((_, i) => (
+            <div
+              key={i}
               className={cn(
-                'transition-all duration-200',
-                i === 0
-                  ? 'w-5 h-2 rounded-full bg-elec-yellow'
-                  : 'w-2 h-2 rounded-full bg-white/20'
+                'w-1.5 h-1.5 rounded-full transition-colors',
+                i === 0 ? 'bg-white/40' : 'bg-white/15'
               )}
             />
-          </button>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

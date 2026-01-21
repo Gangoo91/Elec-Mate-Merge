@@ -11,6 +11,8 @@ import { AlertTriangle, Plus, FileWarning, Info } from 'lucide-react';
 import EICDefectObservationsList from './EICDefectObservationsList';
 import { EICObservation } from '@/hooks/useEICObservations';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptics } from '@/hooks/useHaptics';
 
 interface EICObservationsSectionProps {
   observations: EICObservation[];
@@ -31,18 +33,30 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
   onSyncToInspectionItem,
   className
 }) => {
+  const isMobile = useIsMobile();
+  const haptics = useHaptics();
   const unsatisfactoryCount = observations.filter(obs => obs.defectCode === 'unsatisfactory').length;
   const limitationsCount = observations.filter(obs => obs.defectCode === 'limitation').length;
 
+  const handleAddObservation = () => {
+    haptics.tap();
+    onAddObservation();
+  };
+
   return (
-    <div className={cn("space-y-3", className)} id="eic-observations-section">
+    <div className={cn("space-y-3", isMobile && "-mx-4", className)} id="eic-observations-section">
       {/* Section Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-orange-500" />
-          <h3 className="font-semibold text-foreground text-sm sm:text-base">
-            Observations & Limitations
-          </h3>
+      <div className={cn(
+        "flex items-center justify-between",
+        isMobile ? "px-4 py-4 bg-card/30 border-y border-border/20" : "pb-3 border-b border-border/30"
+      )}>
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl bg-orange-500/20 flex items-center justify-center shrink-0">
+            <AlertTriangle className="h-5 w-5 text-orange-400" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-foreground">Observations & Limitations</h3>
+          </div>
         </div>
 
         {/* Badges */}
@@ -62,37 +76,42 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
         </div>
       </div>
 
-      {/* Add Observation Button - Always Visible */}
-      <motion.button
-        onClick={onAddObservation}
-        whileTap={{ scale: 0.98 }}
-        className={cn(
-          "w-full h-12 rounded-xl font-medium text-sm",
-          "bg-orange-500/10 text-orange-400 border border-orange-500/20",
-          "hover:bg-orange-500/15 transition-colors duration-200",
-          "flex items-center justify-center gap-2",
-          "touch-manipulation"
-        )}
-      >
-        <Plus className="w-4 h-4" />
-        Add Observation
-      </motion.button>
+      {/* Content Area */}
+      <div className={cn(isMobile && "px-4")}>
+        {/* Add Observation Button - Always Visible */}
+        <motion.button
+          onClick={handleAddObservation}
+          whileTap={{ scale: 0.98 }}
+          className={cn(
+            "w-full h-12 rounded-xl font-medium text-sm",
+            "bg-orange-500/10 text-orange-400 border border-orange-500/20",
+            "hover:bg-orange-500/15 transition-colors duration-200",
+            "flex items-center justify-center gap-2",
+            "touch-manipulation"
+          )}
+        >
+          <Plus className="w-4 h-4" />
+          Add Observation
+        </motion.button>
+      </div>
 
       {/* Observations List */}
       {observations.length > 0 && (
-        <EICDefectObservationsList
-          observations={observations}
-          reportId={reportId}
-          onAddObservation={onAddObservation}
-          onUpdateObservation={onUpdateObservation}
-          onRemoveObservation={onRemoveObservation}
-          onSyncToInspectionItem={onSyncToInspectionItem}
-        />
+        <div className={cn(isMobile && "px-4")}>
+          <EICDefectObservationsList
+            observations={observations}
+            reportId={reportId}
+            onAddObservation={handleAddObservation}
+            onUpdateObservation={onUpdateObservation}
+            onRemoveObservation={onRemoveObservation}
+            onSyncToInspectionItem={onSyncToInspectionItem}
+          />
+        </div>
       )}
 
       {/* Empty State */}
       {observations.length === 0 && (
-        <div className="text-center py-6 text-muted-foreground/60">
+        <div className={cn("text-center py-6 text-muted-foreground/60", isMobile && "px-4")}>
           <FileWarning className="w-8 h-8 mx-auto mb-2 opacity-40" />
           <p className="text-sm">No observations recorded</p>
           <p className="text-xs mt-1">Tap above to add any defects or limitations</p>

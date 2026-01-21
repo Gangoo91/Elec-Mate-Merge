@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import {
   isPushSupported,
   getPermissionStatus,
@@ -69,7 +70,24 @@ export function usePushNotifications(): UsePushNotificationsReturn {
    * Subscribe to push notifications
    */
   const subscribe = useCallback(async (): Promise<boolean> => {
+    console.log('[Push] Starting subscription...');
+    console.log('[Push] isSupported:', isSupported);
+    console.log('[Push] VAPID key present:', !!VAPID_PUBLIC_KEY);
+    console.log('[Push] VAPID key value:', VAPID_PUBLIC_KEY ? VAPID_PUBLIC_KEY.substring(0, 20) + '...' : 'MISSING');
+    console.log('[Push] User ID:', user?.id);
+
+    if (!VAPID_PUBLIC_KEY) {
+      console.error('[Push] VAPID_PUBLIC_KEY is not configured!');
+      toast({
+        title: 'Configuration Error',
+        description: 'Push notifications are not properly configured.',
+        variant: 'destructive',
+      });
+      return false;
+    }
+
     if (!isSupported || !user?.id) {
+      console.warn('[Push] Not supported or no user:', { isSupported, userId: user?.id });
       toast({
         title: 'Not Supported',
         description: 'Push notifications are not supported on this device.',
@@ -82,7 +100,9 @@ export function usePushNotifications(): UsePushNotificationsReturn {
 
     try {
       // Request permission
+      console.log('[Push] Requesting permission...');
       const perm = await requestPermission();
+      console.log('[Push] Permission result:', perm);
       setPermission(perm);
 
       if (perm !== 'granted') {
@@ -95,24 +115,46 @@ export function usePushNotifications(): UsePushNotificationsReturn {
       }
 
       // Register service worker
+      console.log('[Push] Registering service worker...');
       const registration = await registerServiceWorker();
       if (!registration) {
         throw new Error('Failed to register service worker');
       }
+      console.log('[Push] Service worker registered:', registration.scope);
 
       // Wait for service worker to be ready
+      console.log('[Push] Waiting for service worker to be ready...');
       await navigator.serviceWorker.ready;
+      console.log('[Push] Service worker ready');
 
       // Subscribe to push
+      console.log('[Push] Subscribing to push manager...');
       const subscription = await subscribeToPush(registration, VAPID_PUBLIC_KEY);
       if (!subscription) {
         throw new Error('Failed to create push subscription');
       }
+      console.log('[Push] Push subscription created:', subscription.endpoint);
 
       // Save to database
+      console.log('[Push] Saving subscription to database...');
       const saved = await savePushSubscription(user.id, subscription);
       if (!saved) {
         throw new Error('Failed to save subscription');
+      }
+      console.log('[Push] Subscription saved to database');
+
+      // Verify the subscription was saved
+      const { data: verifyData, error: verifyError } = await supabase
+        .from('push_subscriptions')
+        .select('id, is_active, endpoint')
+        .eq('user_id', user.id)
+        .eq('endpoint', subscription.endpoint)
+        .single();
+
+      if (verifyError || !verifyData) {
+        console.error('[Push] Subscription verification failed:', verifyError);
+      } else {
+        console.log('[Push] Subscription verified in database:', verifyData.id, 'active:', verifyData.is_active);
       }
 
       setIsSubscribed(true);
@@ -123,7 +165,7 @@ export function usePushNotifications(): UsePushNotificationsReturn {
 
       return true;
     } catch (error) {
-      console.error('Failed to subscribe to push:', error);
+      console.error('[Push] Failed to subscribe:', error);
       toast({
         title: 'Subscription Failed',
         description: 'Could not enable notifications. Please try again.',

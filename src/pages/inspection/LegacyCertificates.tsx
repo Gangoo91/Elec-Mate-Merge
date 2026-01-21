@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useLegacyCertificates, LegacyCertificate, CertificateType, UpdateLegacyCertificateInput } from '@/hooks/useLegacyCertificates';
 import { useCustomers } from '@/hooks/inspection/useCustomers';
-import { LegacyCertificateUpload } from '@/components/inspection-app/LegacyCertificateUpload';
+import { LegacyCertificateUpload } from '@/components/LegacyCertificateUpload';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';

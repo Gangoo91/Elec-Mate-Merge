@@ -20,26 +20,26 @@ import { CircuitList } from './CircuitList';
 import { ProgressDashboard } from './ProgressDashboard';
 
 // Existing components (will migrate later)
-import EnhancedTestResultDesktopTable from '@/components/inspection-app/EnhancedTestResultDesktopTable';
-import MobileOptimizedTestTable from '@/components/inspection-app/mobile/MobileOptimizedTestTable';
-import { MobileHorizontalScrollTable } from '@/components/inspection-app/mobile/MobileHorizontalScrollTable';
-import TestAnalytics from '@/components/inspection-app/TestAnalytics';
+import EnhancedTestResultDesktopTable from '@/components/EnhancedTestResultDesktopTable';
+import MobileOptimizedTestTable from '@/components/mobile/MobileOptimizedTestTable';
+import { MobileHorizontalScrollTable } from '@/components/mobile/MobileHorizontalScrollTable';
+import TestAnalytics from '@/components/TestAnalytics';
 
 // Dialogs (will extract later)
-import { BoardPhotoCapture } from '@/components/inspection-app/testing/BoardPhotoCapture';
-import TestResultsPhotoCapture from '@/components/inspection-app/testing/TestResultsPhotoCapture';
-import { SimpleCircuitTable } from '@/components/inspection-app/testing/SimpleCircuitTable';
-import TestResultsReviewDialog from '@/components/inspection-app/testing/TestResultsReviewDialog';
-import ScribbleToTableDialog from '@/components/inspection-app/mobile/ScribbleToTableDialog';
-import SmartAutoFillPromptDialog from '@/components/inspection-app/SmartAutoFillPromptDialog';
-import MobileSmartAutoFill from '@/components/inspection-app/mobile/MobileSmartAutoFill';
-import QuickRcdPresets from '@/components/inspection-app/QuickRcdPresets';
-import BulkInfillDialog from '@/components/inspection-app/BulkInfillDialog';
+import { BoardPhotoCapture } from '@/components/testing/BoardPhotoCapture';
+import TestResultsPhotoCapture from '@/components/testing/TestResultsPhotoCapture';
+import { SimpleCircuitTable } from '@/components/testing/SimpleCircuitTable';
+import TestResultsReviewDialog from '@/components/testing/TestResultsReviewDialog';
+import ScribbleToTableDialog from '@/components/mobile/ScribbleToTableDialog';
+import SmartAutoFillPromptDialog from '@/components/SmartAutoFillPromptDialog';
+import MobileSmartAutoFill from '@/components/mobile/MobileSmartAutoFill';
+import QuickRcdPresets from '@/components/QuickRcdPresets';
+import BulkInfillDialog from '@/components/BulkInfillDialog';
 
 // Info sections
-import TestInstrumentInfo from '@/components/inspection-app/TestInstrumentInfo';
-import TestMethodInfo from '@/components/inspection-app/TestMethodInfo';
-import DistributionBoardVerificationSection from '@/components/inspection-app/testing/DistributionBoardVerificationSection';
+import TestInstrumentInfo from '@/components/TestInstrumentInfo';
+import TestMethodInfo from '@/components/TestMethodInfo';
+import DistributionBoardVerificationSection from '@/components/testing/DistributionBoardVerificationSection';
 
 import { Button } from '@/components/ui/button';
 import { BarChart3, Wrench, Zap, FileText, X, Camera } from 'lucide-react';

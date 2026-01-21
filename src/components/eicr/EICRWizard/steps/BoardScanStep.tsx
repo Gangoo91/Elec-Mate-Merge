@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Camera, Plus, Sparkles, Check, Zap, ArrowRight, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DistributionBoard, MAIN_BOARD_ID, createMainBoard } from '@/types/distributionBoard';
-import { BoardScannerOverlay } from '@/components/inspection-app/testing/BoardScannerOverlay';
+import { BoardScannerOverlay } from '@/components/testing/BoardScannerOverlay';
 
 interface BoardScanStepProps {
   data: Record<string, any>;

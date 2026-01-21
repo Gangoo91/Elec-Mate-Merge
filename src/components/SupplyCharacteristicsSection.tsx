@@ -1,26 +1,31 @@
 
-import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
-import { SectionHeader } from '@/components/ui/section-header';
+import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
-import { AlertCircle, Info, Zap } from 'lucide-react';
+import { AlertCircle, Info, Zap, Building2, Plug, Shield, Globe } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptics } from '@/hooks/useHaptics';
 
 interface SupplyCharacteristicsSectionProps {
   formData: any;
   onUpdate: (field: string, value: string) => void;
 }
 
+/**
+ * SupplyCharacteristicsSection - Best-in-class mobile form for supply & earthing details
+ * Edge-to-edge design with large touch targets and native app feel
+ */
 const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacteristicsSectionProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const isMobile = useIsMobile();
+  const haptics = useHaptics();
+
   // Auto-set common voltage based on phases
   const handlePhasesChange = (value: string) => {
+    haptics.tap();
     onUpdate('phases', value);
-    
+
     // Auto-suggest common voltages
     if (value === '1' && !formData.supplyVoltage) {
       onUpdate('supplyVoltage', '230');
@@ -36,16 +41,17 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
     } else if (formData.earthingArrangement && formData.earthingArrangement !== 'TN-C-S' && formData.supplyPME === 'yes') {
       onUpdate('supplyPME', 'no');
     }
-    
+
     // Auto-set earth electrode type to N/A for TN systems
-    if ((formData.earthingArrangement === 'TN-S' || formData.earthingArrangement === 'TN-C-S') && 
-        formData.earthElectrodeType !== 'n/a') {
+    if ((formData.earthingArrangement === 'TN-S' || formData.earthingArrangement === 'TN-C-S') &&
+      formData.earthElectrodeType !== 'n/a') {
       onUpdate('earthElectrodeType', 'n/a');
     }
   }, [formData.earthingArrangement]);
 
   // Auto-set earthing arrangement when PME is set to Yes
   const handleSupplyPMEChange = (value: string) => {
+    haptics.tap();
     onUpdate('supplyPME', value);
     if (value === 'yes' && formData.earthingArrangement !== 'TN-C-S') {
       onUpdate('earthingArrangement', 'TN-C-S');
@@ -57,6 +63,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
 
   // Handle main protective device selection
   const handleMainProtectiveDeviceChange = (value: string) => {
+    haptics.tap();
     if (value === 'other') {
       onUpdate('mainProtectiveDevice', '');
       onUpdate('mainProtectiveDeviceCustom', 'true');
@@ -67,330 +74,373 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
   };
 
   // Check if custom input should be shown
-  const showCustomProtectiveDevice = formData.mainProtectiveDeviceCustom === 'true' || 
+  const showCustomProtectiveDevice = formData.mainProtectiveDeviceCustom === 'true' ||
     (formData.mainProtectiveDevice && !['100A BS 88 Fuse', '80A BS 88 Fuse', '63A BS 88 Fuse', '32A BS 1361 Fuse', '100A MCCB', '80A MCCB', '63A MCCB', '100A MCB Type B', '80A MCB Type B', '63A MCB Type B', '100A MCB Type C', '80A MCB Type C', '63A MCB Type C'].includes(formData.mainProtectiveDevice));
 
   // Get earthing arrangement info
   const getEarthingInfo = (arrangement: string) => {
     const info: { [key: string]: string } = {
-      'TN-S': 'Separate neutral and protective conductors throughout',
-      'TN-C-S': 'Combined neutral and protective conductor in supply, separate in installation (PME)',
-      'TT': 'Installation earth electrode independent of supply earth',
-      'IT': 'Isolated or impedance earthed supply with installation earth electrode'
+      'TN-S': 'Separate neutral and protective conductors',
+      'TN-C-S': 'Combined neutral and protective conductor (PME)',
+      'TT': 'Installation earth electrode independent of supply',
+      'IT': 'Isolated or impedance earthed supply'
     };
     return info[arrangement] || '';
   };
 
+  // Section header component
+  const SectionTitle = ({ icon: Icon, title, color = "purple" }: { icon: React.ElementType; title: string; color?: string }) => (
+    <div className={cn(
+      "flex items-center gap-3 py-3",
+      isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
+    )}>
+      <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center", `bg-${color}-500/20`)}>
+        <Icon className={cn("h-4 w-4", `text-${color}-400`)} />
+      </div>
+      <h3 className="font-semibold text-foreground">{title}</h3>
+    </div>
+  );
+
+  // Input field wrapper with proper mobile styling
+  const FormField = ({
+    label,
+    required,
+    hint,
+    children
+  }: {
+    label: string;
+    required?: boolean;
+    hint?: string;
+    children: React.ReactNode;
+  }) => (
+    <div className="space-y-2">
+      <Label className="text-sm text-foreground/80">
+        {label}
+        {required && <span className="text-elec-yellow ml-1">*</span>}
+      </Label>
+      {children}
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+    </div>
+  );
+
+  // Common DNO options
+  const dnoOptions = [
+    'UK Power Networks',
+    'Western Power Distribution',
+    'Scottish Power Energy Networks',
+    'Northern Powergrid',
+    'Electricity North West',
+    'SSE Networks (SSEN)',
+    'National Grid Electricity Distribution',
+  ];
+
+  // Earthing arrangement options
+  const earthingOptions = [
+    { value: 'TN-S', label: 'TN-S' },
+    { value: 'TN-C-S', label: 'TN-C-S (PME)' },
+    { value: 'TT', label: 'TT' },
+    { value: 'IT', label: 'IT' },
+  ];
+
   return (
-    <Card className="border border-border/30 bg-card overflow-hidden">
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <SectionHeader
-          title="Supply & Earthing Characteristics"
-          icon={Zap}
-          isOpen={isOpen}
-          color="purple-500"
-        />
-        <CollapsibleContent>
-          <CardContent className="p-4 space-y-6">
-            {/* DNO / Supply Authority Details */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
-                <div className="w-1 h-1 rounded-full bg-blue-400"></div>
-                Supply Authority
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="dnoName">DNO (Distribution Network Operator)</Label>
-                  <Select value={formData.dnoName || ''} onValueChange={(value) => onUpdate('dnoName', value)}>
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select DNO" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="UK Power Networks">UK Power Networks</SelectItem>
-                      <SelectItem value="Western Power Distribution">Western Power Distribution</SelectItem>
-                      <SelectItem value="Scottish Power Energy Networks">Scottish Power Energy Networks</SelectItem>
-                      <SelectItem value="Northern Powergrid">Northern Powergrid</SelectItem>
-                      <SelectItem value="Electricity North West">Electricity North West</SelectItem>
-                      <SelectItem value="SSE Networks">SSE Networks (SSEN)</SelectItem>
-                      <SelectItem value="National Grid Electricity Distribution">National Grid Electricity Distribution</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="mpan">MPAN (Meter Point Admin Number)</Label>
-                  <Input
-                    id="mpan"
-                    value={formData.mpan || ''}
-                    onChange={(e) => onUpdate('mpan', e.target.value)}
-                    placeholder="e.g., 12 345 678 901 234"
-                    className="h-11 text-base touch-manipulation"
-                  />
-                  <p className="text-xs text-muted-foreground">Found on electricity bill (optional)</p>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="cutoutLocation">Cutout Location</Label>
-                  <Input
-                    id="cutoutLocation"
-                    value={formData.cutoutLocation || ''}
-                    onChange={(e) => onUpdate('cutoutLocation', e.target.value)}
-                    placeholder="e.g., Under stairs cupboard"
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="serviceEntry">Service Entry Point</Label>
-                  <Input
-                    id="serviceEntry"
-                    value={formData.serviceEntry || ''}
-                    onChange={(e) => onUpdate('serviceEntry', e.target.value)}
-                    placeholder="e.g., Front of property"
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-              </div>
-            </div>
+    <div className={cn("space-y-6", isMobile && "-mx-4")}>
+      {/* Supply Authority Section */}
+      <div>
+        <SectionTitle icon={Building2} title="Supply Authority" color="blue" />
+        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <FormField label="DNO (Distribution Network Operator)">
+            <Select value={formData.dnoName || ''} onValueChange={(value) => { haptics.tap(); onUpdate('dnoName', value); }}>
+              <SelectTrigger className="h-11 touch-manipulation">
+                <SelectValue placeholder="Select DNO" />
+              </SelectTrigger>
+              <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
+                {dnoOptions.map((dno) => (
+                  <SelectItem key={dno} value={dno}>{dno}</SelectItem>
+                ))}
+                <SelectItem value="other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          </FormField>
 
-            <Separator />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <FormField label="MPAN" hint="Found on electricity bill (optional)">
+              <Input
+                value={formData.mpan || ''}
+                onChange={(e) => onUpdate('mpan', e.target.value)}
+                placeholder="e.g., 12 345 678 901 234"
+                className="h-11 text-base touch-manipulation"
+              />
+            </FormField>
+            <FormField label="Cutout Location">
+              <Input
+                value={formData.cutoutLocation || ''}
+                onChange={(e) => onUpdate('cutoutLocation', e.target.value)}
+                placeholder="e.g., Under stairs cupboard"
+                className="h-11 text-base touch-manipulation"
+              />
+            </FormField>
+          </div>
+        </div>
+      </div>
 
-            {/* Supply Details */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
-                <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                Supply Details
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="phases">Number of Phases <span className="text-elec-yellow">*</span></Label>
-                  <Select value={formData.phases || ''} onValueChange={handlePhasesChange}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">Single Phase</SelectItem>
-                      <SelectItem value="3">Three Phase</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="supplyVoltage">Supply Voltage <span className="text-elec-yellow">*</span></Label>
-                  <Select value={formData.supplyVoltage || ''} onValueChange={(value) => onUpdate('supplyVoltage', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select voltage" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="230">230V (Single Phase)</SelectItem>
-                      <SelectItem value="400">400V (Three Phase)</SelectItem>
-                      <SelectItem value="230/400">230/400V (Both)</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              {formData.supplyVoltage === 'other' && (
-                <div className="space-y-1.5">
-                  <Label htmlFor="supplyVoltageCustom">Custom Voltage</Label>
-                  <Input
-                    id="supplyVoltageCustom"
-                    value={formData.supplyVoltageCustom || ''}
-                    onChange={(e) => onUpdate('supplyVoltageCustom', e.target.value)}
-                    placeholder="Enter custom voltage (e.g., 240V)"
-                  />
-                </div>
-              )}
-              <p className="text-xs text-elec-yellow/70 flex items-center gap-1">
-                <span className="w-1 h-1 rounded-full bg-elec-yellow"></span>
-                {formData.phases === '1' ? 'Typically 230V for single phase' :
-                 formData.phases === '3' ? 'Typically 400V for three phase' :
-                 'Select nominal voltage'}
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="supplyFrequency">Frequency (Hz)</Label>
-                  <Input
-                    id="supplyFrequency"
-                    value={formData.supplyFrequency || '50'}
-                    onChange={(e) => onUpdate('supplyFrequency', e.target.value)}
-                    placeholder="50"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="supplyPME">Supply PME</Label>
-                  <Select value={formData.supplyPME || ''} onValueChange={handleSupplyPMEChange}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Yes/No" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {formData.supplyPME === 'yes' && formData.earthingArrangement === 'TN-C-S' && (
-                    <p className="text-xs text-green-500 flex items-center gap-1">
-                      <Info className="h-3 w-3" />
-                      Correct - PME typically uses TN-C-S
-                    </p>
+      {/* Supply Details Section */}
+      <div>
+        <SectionTitle icon={Plug} title="Supply Details" color="yellow" />
+        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <FormField label="Number of Phases" required>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: '1', label: 'Single Phase' },
+                { value: '3', label: 'Three Phase' },
+              ].map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => handlePhasesChange(option.value)}
+                  className={cn(
+                    "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                    formData.phases === option.value
+                      ? "bg-elec-yellow text-black"
+                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
                   )}
-                </div>
-              </div>
-            </div>
-
-            <Separator className="bg-border/30" />
-
-            {/* Main Protective Device */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
-                <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                Main Protective Device
-              </h3>
-              <div className="space-y-1.5">
-                <Label htmlFor="mainProtectiveDevice">Main Protective Device <span className="text-elec-yellow">*</span></Label>
-                <Select
-                  value={showCustomProtectiveDevice ? 'other' : (formData.mainProtectiveDevice || '')}
-                  onValueChange={handleMainProtectiveDeviceChange}
                 >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select protective device" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="100A BS 88 Fuse">100A BS 88 Fuse</SelectItem>
-                    <SelectItem value="80A BS 88 Fuse">80A BS 88 Fuse</SelectItem>
-                    <SelectItem value="63A BS 88 Fuse">63A BS 88 Fuse</SelectItem>
-                    <SelectItem value="32A BS 1361 Fuse">32A BS 1361 Fuse</SelectItem>
-                    <SelectItem value="100A MCCB">100A MCCB</SelectItem>
-                    <SelectItem value="80A MCCB">80A MCCB</SelectItem>
-                    <SelectItem value="63A MCCB">63A MCCB</SelectItem>
-                    <SelectItem value="100A MCB Type B">100A MCB Type B</SelectItem>
-                    <SelectItem value="80A MCB Type B">80A MCB Type B</SelectItem>
-                    <SelectItem value="63A MCB Type B">63A MCB Type B</SelectItem>
-                    <SelectItem value="100A MCB Type C">100A MCB Type C</SelectItem>
-                    <SelectItem value="80A MCB Type C">80A MCB Type C</SelectItem>
-                    <SelectItem value="63A MCB Type C">63A MCB Type C</SelectItem>
-                    <SelectItem value="other">Other (specify)</SelectItem>
-                  </SelectContent>
-                </Select>
-                <p className="text-xs text-muted-foreground">Common protective devices per BS 7671</p>
-              </div>
-              {showCustomProtectiveDevice && (
-                <div className="space-y-1.5">
-                  <Label htmlFor="mainProtectiveDeviceCustomValue">Custom Device</Label>
-                  <Input
-                    id="mainProtectiveDeviceCustomValue"
-                    value={formData.mainProtectiveDevice || ''}
-                    onChange={(e) => onUpdate('mainProtectiveDevice', e.target.value)}
-                    placeholder="e.g. 125A BS 88 Fuse"
-                  />
-                  <p className="text-xs text-muted-foreground">Include rating, type, and standard</p>
-                </div>
-              )}
+                  {option.label}
+                </button>
+              ))}
             </div>
+          </FormField>
 
-            <Separator className="bg-border/30" />
-
-            {/* Earthing System */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
-                <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                Earthing System
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="earthingArrangement">Earthing Arrangement <span className="text-elec-yellow">*</span></Label>
-                  <Select value={formData.earthingArrangement || ''} onValueChange={(value) => onUpdate('earthingArrangement', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="TN-S">TN-S</SelectItem>
-                      <SelectItem value="TN-C-S">TN-C-S</SelectItem>
-                      <SelectItem value="TT">TT</SelectItem>
-                      <SelectItem value="IT">IT</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {formData.earthingArrangement && (
-                    <p className="text-xs text-muted-foreground">
-                      {getEarthingInfo(formData.earthingArrangement)}
-                    </p>
+          <FormField label="Supply Voltage" required>
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { value: '230', label: '230V' },
+                { value: '400', label: '400V' },
+                { value: '230/400', label: '230/400V' },
+              ].map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => { haptics.tap(); onUpdate('supplyVoltage', option.value); }}
+                  className={cn(
+                    "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                    formData.supplyVoltage === option.value
+                      ? "bg-elec-yellow text-black"
+                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
                   )}
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="earthElectrodeType">Earth Electrode Type</Label>
-                  <Select value={formData.earthElectrodeType || ''} onValueChange={(value) => onUpdate('earthElectrodeType', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="rod">Rod</SelectItem>
-                      <SelectItem value="tape">Tape</SelectItem>
-                      <SelectItem value="plate">Plate</SelectItem>
-                      <SelectItem value="structural">Structural Steel</SelectItem>
-                      <SelectItem value="water-pipe">Water Pipe</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                      <SelectItem value="n/a">N/A (TN-S/TN-C-S)</SelectItem>
-                    </SelectContent>
-                  </Select>
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+            <p className="text-xs text-elec-yellow/70 flex items-center gap-1 mt-2">
+              <span className="w-1 h-1 rounded-full bg-elec-yellow"></span>
+              {formData.phases === '1' ? 'Typically 230V for single phase' :
+                formData.phases === '3' ? 'Typically 400V for three phase' :
+                  'Select nominal voltage'}
+            </p>
+          </FormField>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <FormField label="Frequency (Hz)">
+              <Input
+                value={formData.supplyFrequency || '50'}
+                onChange={(e) => onUpdate('supplyFrequency', e.target.value)}
+                placeholder="50"
+                className="h-11 text-base touch-manipulation"
+              />
+            </FormField>
+            <FormField label="Supply PME">
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { value: 'yes', label: 'Yes' },
+                  { value: 'no', label: 'No' },
+                ].map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => handleSupplyPMEChange(option.value)}
+                    className={cn(
+                      "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                      formData.supplyPME === option.value
+                        ? "bg-elec-yellow text-black"
+                        : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                    )}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </FormField>
+          </div>
+
+          {formData.supplyPME === 'yes' && formData.earthingArrangement === 'TN-C-S' && (
+            <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+              <div className="flex items-center gap-2">
+                <Info className="h-4 w-4 text-green-400 shrink-0" />
+                <p className="text-sm text-green-400">Correct - PME typically uses TN-C-S</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Main Protective Device Section */}
+      <div>
+        <SectionTitle icon={Shield} title="Main Protective Device" color="orange" />
+        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <FormField label="Main Protective Device" required hint="Common protective devices per BS 7671">
+            <Select
+              value={showCustomProtectiveDevice ? 'other' : (formData.mainProtectiveDevice || '')}
+              onValueChange={handleMainProtectiveDeviceChange}
+            >
+              <SelectTrigger className="h-11 touch-manipulation">
+                <SelectValue placeholder="Select protective device" />
+              </SelectTrigger>
+              <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
+                <SelectItem value="100A BS 88 Fuse">100A BS 88 Fuse</SelectItem>
+                <SelectItem value="80A BS 88 Fuse">80A BS 88 Fuse</SelectItem>
+                <SelectItem value="63A BS 88 Fuse">63A BS 88 Fuse</SelectItem>
+                <SelectItem value="32A BS 1361 Fuse">32A BS 1361 Fuse</SelectItem>
+                <SelectItem value="100A MCCB">100A MCCB</SelectItem>
+                <SelectItem value="80A MCCB">80A MCCB</SelectItem>
+                <SelectItem value="63A MCCB">63A MCCB</SelectItem>
+                <SelectItem value="100A MCB Type B">100A MCB Type B</SelectItem>
+                <SelectItem value="80A MCB Type B">80A MCB Type B</SelectItem>
+                <SelectItem value="63A MCB Type B">63A MCB Type B</SelectItem>
+                <SelectItem value="100A MCB Type C">100A MCB Type C</SelectItem>
+                <SelectItem value="80A MCB Type C">80A MCB Type C</SelectItem>
+                <SelectItem value="63A MCB Type C">63A MCB Type C</SelectItem>
+                <SelectItem value="other">Other (specify)</SelectItem>
+              </SelectContent>
+            </Select>
+          </FormField>
+
+          {showCustomProtectiveDevice && (
+            <FormField label="Custom Device" hint="Include rating, type, and standard">
+              <Input
+                value={formData.mainProtectiveDevice || ''}
+                onChange={(e) => onUpdate('mainProtectiveDevice', e.target.value)}
+                placeholder="e.g. 125A BS 88 Fuse"
+                className="h-11 text-base touch-manipulation"
+              />
+            </FormField>
+          )}
+        </div>
+      </div>
+
+      {/* Earthing System Section */}
+      <div>
+        <SectionTitle icon={Globe} title="Earthing System" color="green" />
+        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <FormField label="Earthing Arrangement" required>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {earthingOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => { haptics.tap(); onUpdate('earthingArrangement', option.value); }}
+                  className={cn(
+                    "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
+                    formData.earthingArrangement === option.value
+                      ? "bg-elec-yellow text-black"
+                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                  )}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+            {formData.earthingArrangement && (
+              <p className="text-xs text-muted-foreground mt-2">
+                {getEarthingInfo(formData.earthingArrangement)}
+              </p>
+            )}
+          </FormField>
+
+          <FormField label="Earth Electrode Type">
+            <Select value={formData.earthElectrodeType || ''} onValueChange={(value) => { haptics.tap(); onUpdate('earthElectrodeType', value); }}>
+              <SelectTrigger className="h-11 touch-manipulation">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="rod">Rod</SelectItem>
+                <SelectItem value="tape">Tape</SelectItem>
+                <SelectItem value="plate">Plate</SelectItem>
+                <SelectItem value="structural">Structural Steel</SelectItem>
+                <SelectItem value="water-pipe">Water Pipe</SelectItem>
+                <SelectItem value="other">Other</SelectItem>
+                <SelectItem value="n/a">N/A (TN-S/TN-C-S)</SelectItem>
+              </SelectContent>
+            </Select>
+          </FormField>
+        </div>
+      </div>
+
+      {/* RCD Protection Section */}
+      <div>
+        <SectionTitle icon={Shield} title="RCD Protection" color="purple" />
+        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <FormField label="RCD Main Switch">
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: 'yes', label: 'Yes' },
+                { value: 'no', label: 'No' },
+              ].map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => { haptics.tap(); onUpdate('rcdMainSwitch', option.value); }}
+                  className={cn(
+                    "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                    formData.rcdMainSwitch === option.value
+                      ? "bg-elec-yellow text-black"
+                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                  )}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </FormField>
+
+          {showRCDFields && (
+            <FormField label="RCD Rating" required hint="30mA typical for domestic">
+              <div className="grid grid-cols-4 gap-2">
+                {['30mA', '100mA', '300mA', '500mA'].map((rating) => (
+                  <button
+                    key={rating}
+                    type="button"
+                    onClick={() => { haptics.tap(); onUpdate('rcdRating', rating); }}
+                    className={cn(
+                      "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
+                      formData.rcdRating === rating
+                        ? "bg-elec-yellow text-black"
+                        : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                    )}
+                  >
+                    {rating}
+                  </button>
+                ))}
+              </div>
+            </FormField>
+          )}
+
+          {formData.rcdMainSwitch === 'no' && (
+            <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+              <div className="flex items-start gap-2">
+                <AlertCircle className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-sm text-amber-400 font-medium">No RCD Main Switch</p>
+                  <p className="text-xs text-amber-400/70 mt-1">
+                    Consider if additional RCD protection is provided at circuit level for BS 7671 compliance
+                  </p>
                 </div>
               </div>
             </div>
-
-            <Separator className="bg-border/30" />
-
-            {/* RCD Protection */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
-                <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                RCD Protection
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="rcdMainSwitch">RCD Main Switch</Label>
-                  <Select value={formData.rcdMainSwitch || ''} onValueChange={(value) => onUpdate('rcdMainSwitch', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Yes/No" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                {showRCDFields && (
-                  <div className="space-y-1.5">
-                    <Label htmlFor="rcdRating">RCD Rating <span className="text-elec-yellow">*</span></Label>
-                    <Select value={formData.rcdRating || ''} onValueChange={(value) => onUpdate('rcdRating', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select rating" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="30mA">30mA</SelectItem>
-                        <SelectItem value="100mA">100mA</SelectItem>
-                        <SelectItem value="300mA">300mA</SelectItem>
-                        <SelectItem value="500mA">500mA</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <p className="text-xs text-elec-yellow/70">30mA typical for domestic</p>
-                  </div>
-                )}
-              </div>
-
-              {formData.rcdMainSwitch === 'no' && (
-                <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                  <div className="flex items-start gap-2">
-                    <AlertCircle className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
-                    <div>
-                      <p className="text-sm text-amber-400 font-medium">No RCD Main Switch</p>
-                      <p className="text-xs text-amber-400/70 mt-1">
-                        Consider if additional RCD protection is provided at circuit level for BS 7671 compliance
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </CollapsibleContent>
-      </Collapsible>
-    </Card>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

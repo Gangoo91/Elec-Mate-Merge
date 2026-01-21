@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from '@/components/ui/mobile-accordion';
 import { getRiskColors } from '@/utils/risk-level-helpers';
 import { useState } from 'react';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
+import { HazardEditSheet } from './HazardEditSheet';
 
 interface EnhancedHazardCardProps {
   hazard: any;
@@ -15,9 +17,20 @@ interface EnhancedHazardCardProps {
 }
 
 export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: EnhancedHazardCardProps) => {
+  const { isMobile } = useMobileEnhanced();
   const [isEditing, setIsEditing] = useState(false);
+  const [showEditSheet, setShowEditSheet] = useState(false);
   const riskScore = hazard.riskScore || (hazard.likelihood * hazard.severity);
   const riskColors = getRiskColors(riskScore);
+
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isMobile && onUpdate) {
+      setShowEditSheet(true);
+    } else {
+      setIsEditing(!isEditing);
+    }
+  };
 
   // Create likelihood dots
   const likelihoodDots = Array.from({ length: 5 }, (_, i) => i < hazard.likelihood);
@@ -57,24 +70,23 @@ export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: Enhanc
                  <Button
                    size="icon"
                    variant="ghost"
-                   onClick={(e) => {
-                     e.stopPropagation();
-                     setIsEditing(!isEditing);
-                   }}
-                   className="h-8 w-8 touch-manipulation"
+                   onClick={handleEditClick}
+                   className="h-11 w-11 touch-manipulation active:scale-[0.95]"
                  >
-                   <Edit2 className="h-4 w-4" />
+                   <Edit2 className="h-5 w-5" />
                  </Button>
                  <Button
                    size="icon"
                    variant="ghost"
                    onClick={(e) => {
                      e.stopPropagation();
-                     onDelete?.(index);
+                     if (confirm('Delete this hazard?')) {
+                       onDelete?.(index);
+                     }
                    }}
-                   className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-100 touch-manipulation"
+                   className="h-11 w-11 text-red-500 hover:text-red-700 hover:bg-red-100 touch-manipulation active:scale-[0.95]"
                  >
-                   <Trash2 className="h-4 w-4" />
+                   <Trash2 className="h-5 w-5" />
                  </Button>
                </div>
              </div>
@@ -202,6 +214,18 @@ export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: Enhanc
           </MobileAccordionContent>
         </MobileAccordionItem>
       </MobileAccordion>
+
+      {/* Mobile Edit Sheet */}
+      {onUpdate && (
+        <HazardEditSheet
+          hazard={hazard}
+          index={index}
+          open={showEditSheet}
+          onOpenChange={setShowEditSheet}
+          onUpdate={onUpdate}
+          onDelete={onDelete}
+        />
+      )}
     </div>
   );
 };

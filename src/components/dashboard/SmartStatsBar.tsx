@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card } from "@/components/ui/card";
 import { FileText, PoundSterling, BookOpen, Award, Clock } from "lucide-react";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
@@ -60,33 +59,24 @@ function StatItem({ icon, value, label, color = "text-elec-yellow", path }: Stat
   };
 
   return (
-    <div className="flex-shrink-0 min-w-[100px] sm:min-w-0 group">
-      <Card
+    <div className="flex-shrink-0 w-[140px] sm:w-full sm:flex-shrink">
+      <div
         className={`
-          h-full
-          hover:border-elec-yellow/40 hover:bg-[#242424]
-          active:scale-[0.97] active:opacity-90
-          ${path ? "cursor-pointer" : ""}
+          h-full p-3 sm:p-4 rounded-xl bg-white/5
+          ${path ? "cursor-pointer active:bg-white/10" : ""}
+          touch-manipulation transition-colors
         `}
         onClick={handleClick}
       >
-        <div className="p-2.5 sm:p-3.5 flex flex-col items-center text-center">
-          <div className={`
-            p-1.5 sm:p-2 rounded-lg mb-1.5
-            bg-white/[0.05] ${color}
-            transition-transform duration-200
-            group-hover:scale-105
-          `}>
-            {icon}
-          </div>
-
-          <span className="text-lg sm:text-xl md:text-2xl font-semibold text-white tracking-tight">
-            {formattedValue}
-          </span>
-
-          <p className="text-[10px] sm:text-xs text-white/50 mt-0.5 whitespace-nowrap font-medium">{label}</p>
+        <div className="flex items-center gap-1.5 mb-1">
+          <span className={color}>{icon}</span>
+          <p className="text-[11px] sm:text-xs text-white/50 truncate">{label}</p>
         </div>
-      </Card>
+
+        <span className={`text-xl sm:text-2xl font-bold tracking-tight ${color}`}>
+          {formattedValue}
+        </span>
+      </div>
     </div>
   );
 }
@@ -152,17 +142,17 @@ export function SmartStatsBar() {
   return (
     <div className="relative">
       <div className="
-        flex gap-2.5 sm:gap-3
-        overflow-x-auto overscroll-x-contain
-        pb-1 -mx-3 px-3
-        sm:mx-0 sm:px-0
+        flex gap-3
+        overflow-x-auto
+        pb-2 -mx-4 px-4
+        sm:mx-0 sm:px-0 sm:pb-0
         scrollbar-hide
-        sm:grid sm:grid-cols-5
+        sm:grid sm:grid-cols-5 sm:gap-4
         snap-x snap-mandatory sm:snap-none
         scroll-smooth
       ">
         {stats.map((stat, index) => (
-          <div key={index} className="snap-center first:snap-start last:snap-end">
+          <div key={index} className={`snap-center ${index === stats.length - 1 ? 'mr-4 sm:mr-0' : ''}`}>
             <StatItem {...stat} />
           </div>
         ))}

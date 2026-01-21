@@ -18,12 +18,15 @@ import {
   Calendar,
   BadgeCheck,
   ClipboardCheck,
-  FileWarning
+  FileWarning,
+  ChevronDown
 } from 'lucide-react';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import EICCertificateActions from './EICCertificateActions';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptics } from '@/hooks/useHaptics';
 
 interface EICCertificateTabProps {
   formData: any;
@@ -72,6 +75,8 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   onSaveDraft,
   canGenerateCertificate
 }) => {
+  const isMobile = useIsMobile();
+  const haptics = useHaptics();
   const { toast } = useToast();
   const [openSections, setOpenSections] = useState({
     reportAuthorised: true,
@@ -79,6 +84,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   });
 
   const toggleSection = (section: keyof typeof openSections) => {
+    haptics.tap();
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
 

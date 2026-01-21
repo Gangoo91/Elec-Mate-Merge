@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import { AlertTriangle, Sparkles } from 'lucide-react';
-import DiagnosticWizard from '@/components/inspection-app/fault-finding/DiagnosticWizard';
+import DiagnosticWizard from '@/components/fault-finding/DiagnosticWizard';
 
 interface FaultFinderSheetProps {
   open: boolean;

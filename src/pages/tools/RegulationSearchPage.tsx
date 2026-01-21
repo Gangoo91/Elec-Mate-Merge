@@ -1,7 +1,7 @@
 import { ArrowLeft, Search, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import AISearchInterface from "@/components/inspection-app/regulation-search/AISearchInterface";
+import AISearchInterface from "@/components/regulation-search/AISearchInterface";
 
 const RegulationSearchPage = () => {
   const navigate = useNavigate();

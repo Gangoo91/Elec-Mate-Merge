@@ -274,8 +274,63 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               </label>
             </div>
 
-            {/* AI Tools Toolbar */}
-            {showTools && tools && (
+            {/* Mobile Action Bar - Above table */}
+            {isMobile && showTools && tools && (
+              <div className="py-3 border-t border-white/10">
+                <div className="flex items-center gap-2">
+                  {/* AI Scan Button - Primary action */}
+                  {tools.onScanBoard && (
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="flex-1 h-11 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
+                      onClick={tools.onScanBoard}
+                    >
+                      <Camera className="h-4 w-4 mr-2" />
+                      AI Scan
+                    </Button>
+                  )}
+
+                  {/* Add Circuit Button */}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1 h-11 border-white/20 hover:bg-white/5 font-medium touch-manipulation active:scale-[0.98]"
+                    onClick={onAddCircuit}
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Circuit
+                  </Button>
+
+                  {/* Voice Button */}
+                  {tools.onVoiceToggle && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={cn(
+                        "h-11 w-11 p-0 flex-shrink-0 touch-manipulation active:scale-[0.98] transition-all duration-200",
+                        tools.voiceActive
+                          ? "bg-green-500/20 border-green-500 ring-2 ring-green-500/30"
+                          : tools.voiceConnecting
+                          ? "bg-yellow-500/20 border-yellow-500 animate-pulse"
+                          : "bg-purple-500/20 border-purple-500/50 hover:bg-purple-500/30"
+                      )}
+                      onClick={tools.onVoiceToggle}
+                      disabled={tools.voiceConnecting}
+                    >
+                      <Mic className={cn(
+                        "h-5 w-5",
+                        tools.voiceActive ? "text-green-500 animate-pulse" :
+                        tools.voiceConnecting ? "text-yellow-500" : "text-purple-400"
+                      )} />
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* AI Tools Toolbar - Desktop only */}
+            {showTools && tools && !isMobile && (
               <div className="flex items-center gap-2 py-3 border-t border-white/10">
                 {/* Primary: AI Board Scanner */}
                 {tools.onScanBoard && (
@@ -392,18 +447,21 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               "flex items-center justify-between pt-2 border-t border-white/10",
               isMobile && "pt-3"
             )}>
-              <Button
-                variant="ghost"
-                size="sm"
-                className={cn(
-                  "h-9 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10",
-                  isMobile && "h-10 text-sm"
-                )}
-                onClick={onAddCircuit}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Circuit
-              </Button>
+              {/* Add Circuit - only show on desktop (mobile has it above table) */}
+              {!isMobile && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-9 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10"
+                  onClick={onAddCircuit}
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Circuit
+                </Button>
+              )}
+
+              {/* Spacer on mobile */}
+              {isMobile && <div />}
 
               {!isMainBoard && (
                 <Button

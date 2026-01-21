@@ -94,21 +94,31 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   // Save notifications to localStorage when they change
   useEffect(() => {
-    if (user && notifications.length > 0) {
+    if (user) {
       localStorage.setItem(`notifications_${user.id}`, JSON.stringify(notifications));
     }
   }, [notifications, user]);
 
   const markAsRead = (id: string) => {
-    setNotifications(prev => 
-      prev.map(n => n.id === id ? { ...n, read: true } : n)
-    );
+    setNotifications(prev => {
+      const updated = prev.map(n => n.id === id ? { ...n, read: true } : n);
+      // Save immediately to localStorage
+      if (user) {
+        localStorage.setItem(`notifications_${user.id}`, JSON.stringify(updated));
+      }
+      return updated;
+    });
   };
 
   const markAllAsRead = () => {
-    setNotifications(prev =>
-      prev.map(n => ({ ...n, read: true }))
-    );
+    setNotifications(prev => {
+      const updated = prev.map(n => ({ ...n, read: true }));
+      // Save immediately to localStorage
+      if (user) {
+        localStorage.setItem(`notifications_${user.id}`, JSON.stringify(updated));
+      }
+      return updated;
+    });
   };
 
   const deleteNotification = (id: string) => {

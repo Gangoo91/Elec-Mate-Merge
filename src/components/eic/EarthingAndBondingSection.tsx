@@ -4,11 +4,12 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Zap, CheckCircle2 } from 'lucide-react';
+import { Zap, CheckCircle2, Shield, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
 import InputWithValidation from './InputWithValidation';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface EarthingAndBondingSectionProps {
   formData: any;
@@ -18,6 +19,7 @@ interface EarthingAndBondingSectionProps {
 }
 
 const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ formData, onUpdate, isOpen, onToggle }) => {
+  const isMobile = useIsMobile();
   const isPMESelected = formData.earthElectrodeType === 'pme';
   const isSupplementaryBondingNotRequired = formData.supplementaryBondingSize === 'not-required';
 
@@ -91,16 +93,34 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
   };
 
   return (
-    <Card className="border border-border bg-card overflow-hidden">
+    <div className={cn(isMobile ? "" : "border border-border bg-card overflow-hidden rounded-lg")}>
       <Collapsible open={isOpen} onOpenChange={onToggle}>
-        <SectionHeader 
-          title="Earthing & Bonding" 
-          icon={Zap}
-          isOpen={isOpen}
-          color="amber-500"
-        />
+        {isMobile ? (
+          <button onClick={onToggle} className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20 w-full text-left">
+            <div className="h-10 w-10 rounded-xl bg-green-500/20 flex items-center justify-center shrink-0">
+              <Shield className="h-5 w-5 text-green-400" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-foreground">Earthing & Bonding</h3>
+            </div>
+            <ChevronDown className={cn(
+              "h-5 w-5 text-muted-foreground transition-transform shrink-0",
+              isOpen && "rotate-180"
+            )} />
+          </button>
+        ) : (
+          <SectionHeader
+            title="Earthing & Bonding"
+            icon={Zap}
+            isOpen={isOpen}
+            color="amber-500"
+          />
+        )}
         <CollapsibleContent>
-          <CardContent className="space-y-6 p-4 sm:p-6">
+          <div className={cn(
+            "space-y-6",
+            isMobile ? "px-4 py-4" : "p-4 sm:p-6"
+          )}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="earthElectrodeType" className="font-medium text-sm">Earth Electrode Type</Label>
@@ -114,10 +134,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
                 }
               }}
             >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
+              <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                 <SelectValue placeholder="Select electrode type" />
               </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+              <SelectContent className="bg-background border-border text-foreground z-50">
                 <SelectItem value="rod">Earth Rod</SelectItem>
                 <SelectItem value="plate">Earth Plate</SelectItem>
                 <SelectItem value="tape">Earth Tape</SelectItem>
@@ -206,7 +226,8 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
               value={formData.maximumDemand || ''}
               onChange={(e) => onUpdate('maximumDemand', e.target.value)}
               placeholder="e.g., 60"
-              className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+              className="h-11 text-base touch-manipulation bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow"
+              style={{ fontSize: '16px' }}
             />
           </div>
           <div className="space-y-2">
@@ -215,10 +236,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
               value={formData.maximumDemandUnit || 'amps'}
               onValueChange={(value) => onUpdate('maximumDemandUnit', value)}
             >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
+              <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                 <SelectValue placeholder="Select unit" />
               </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+              <SelectContent className="bg-background border-border text-foreground z-50">
                 <SelectItem value="kva">kVA</SelectItem>
                 <SelectItem value="amps">Amps</SelectItem>
               </SelectContent>
@@ -235,7 +256,8 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
               value={formData.earthElectrodeLocation || ''}
               onChange={(e) => onUpdate('earthElectrodeLocation', e.target.value)}
               placeholder="e.g., Garden adjacent to main building"
-              className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+              className="h-11 text-base touch-manipulation bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow"
+              style={{ fontSize: '16px' }}
             />
           </div>
         )}
@@ -257,10 +279,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
                   value={formData.earthingConductorMaterial || ''}
                   onValueChange={(value) => onUpdate('earthingConductorMaterial', value)}
                 >
-                  <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-purple-500 focus:ring-purple-500 h-11">
+                  <SelectTrigger className="bg-background border-border focus:border-purple-500 focus:ring-purple-500 h-11">
                     <SelectValue placeholder="Select material" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                  <SelectContent className="bg-background border-border text-foreground z-50">
                     <SelectItem value="copper">Copper</SelectItem>
                     <SelectItem value="aluminium">Aluminium</SelectItem>
                     <SelectItem value="steel">Steel</SelectItem>
@@ -277,7 +299,8 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
                   value={formData.earthingConductorCsa || ''}
                   onChange={(e) => onUpdate('earthingConductorCsa', e.target.value)}
                   placeholder="e.g., 16"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                  className="h-11 text-base touch-manipulation bg-background border-border focus:border-purple-500 focus:ring-purple-500"
+                  style={{ fontSize: '16px' }}
                 />
               </div>
               <div className="flex items-end">
@@ -306,10 +329,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
                   value={formData.mainBondingMaterial || ''}
                   onValueChange={(value) => onUpdate('mainBondingMaterial', value)}
                 >
-                  <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-purple-500 focus:ring-purple-500 h-11">
+                  <SelectTrigger className="bg-background border-border focus:border-purple-500 focus:ring-purple-500 h-11">
                     <SelectValue placeholder="Select material" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                  <SelectContent className="bg-background border-border text-foreground z-50">
                     <SelectItem value="copper">Copper</SelectItem>
                     <SelectItem value="aluminium">Aluminium</SelectItem>
                     <SelectItem value="steel">Steel</SelectItem>
@@ -323,10 +346,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
                   value={formData.mainBondingSize || ''}
                   onValueChange={(value) => onUpdate('mainBondingSize', value)}
                 >
-                  <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-purple-500 focus:ring-purple-500 h-11">
+                  <SelectTrigger className="bg-background border-border focus:border-purple-500 focus:ring-purple-500 h-11">
                     <SelectValue placeholder="Select size" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                  <SelectContent className="bg-background border-border text-foreground z-50">
                     <SelectItem value="6mm">6mm²</SelectItem>
                     <SelectItem value="10mm">10mm²</SelectItem>
                     <SelectItem value="16mm">16mm²</SelectItem>
@@ -462,10 +485,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
               value={formData.supplementaryBondingSize || ''}
               onValueChange={(value) => onUpdate('supplementaryBondingSize', value)}
             >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
+              <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                 <SelectValue placeholder="Select conductor size" />
               </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+              <SelectContent className="bg-background border-border text-foreground z-50">
                 <SelectItem value="2.5mm">2.5mm²</SelectItem>
                 <SelectItem value="4mm">4mm²</SelectItem>
                 <SelectItem value="6mm">6mm²</SelectItem>
@@ -496,10 +519,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
               value={formData.equipotentialBonding || ''}
               onValueChange={(value) => onUpdate('equipotentialBonding', value)}
             >
-              <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
+              <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
-              <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+              <SelectContent className="bg-background border-border text-foreground z-50">
                 <SelectItem value="satisfactory">Satisfactory</SelectItem>
                 <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
                 <SelectItem value="not-applicable">Not Applicable</SelectItem>
@@ -507,10 +530,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
             </Select>
           </div>
         </div>
-          </CardContent>
+          </div>
         </CollapsibleContent>
       </Collapsible>
-    </Card>
+    </div>
   );
 };
 

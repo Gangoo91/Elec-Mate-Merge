@@ -3,13 +3,12 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
+// Using hardcoded key for Gemini 3 Flash Preview testing - REGENERATE AFTER TESTING
+const geminiApiKey = 'AIzaSyB5M1dZAxJjyndEjCBy_C28gWMaK_gUQBU';
 const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
-const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-// Supabase client for RAG queries
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+// NOTE: Supabase client is created inside the request handler to ensure
+// environment variables are available (they may not be during cold start)
 
 // ============================================================================
 // OCR PREPROCESSING TYPES
@@ -182,7 +181,7 @@ const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs: nu
  * Call OCR preprocessor to extract text from board images
  * Runs Google Cloud Vision API for high-accuracy text detection
  */
-async function runOCRPreprocessing(images: string[]): Promise<OCRResult | null> {
+async function runOCRPreprocessing(images: string[], supabaseUrl: string, supabaseServiceKey: string): Promise<OCRResult | null> {
   try {
     console.log('Running OCR preprocessing on images...');
 
@@ -290,7 +289,7 @@ interface ManufacturerKnowledge {
 /**
  * Query manufacturer knowledge base for brand-specific information
  */
-async function getManufacturerKnowledge(brand: string): Promise<ManufacturerKnowledge | null> {
+async function getManufacturerKnowledge(brand: string, supabase: any): Promise<ManufacturerKnowledge | null> {
   try {
     const { data, error } = await supabase
       .from('board_manufacturer_knowledge')
@@ -316,7 +315,7 @@ async function getManufacturerKnowledge(brand: string): Promise<ManufacturerKnow
  * Fetch reference images for a brand to use as few-shot examples
  * Returns up to 2 verified reference images for the detected brand
  */
-async function getReferenceImages(brand: string): Promise<string[]> {
+async function getReferenceImages(brand: string, supabase: any): Promise<string[]> {
   try {
     // Get verified reference images for this brand (prioritize dirty/real-world)
     const { data, error } = await supabase
@@ -357,7 +356,7 @@ interface TrainingExample {
  * Fetch verified training examples with full analysis context
  * Returns up to 2 examples with circuit details for few-shot learning
  */
-async function getTrainingExamples(brand: string): Promise<TrainingExample[]> {
+async function getTrainingExamples(brand: string, supabase: any): Promise<TrainingExample[]> {
   try {
     const { data, error } = await supabase
       .from('board_training_analysis')
@@ -491,21 +490,27 @@ async function detectBrand(images: string[]): Promise<string | null> {
         body: JSON.stringify({
           contents: [{ role: 'user', parts }],
           generationConfig: {
-            maxOutputTokens: 50,
+            maxOutputTokens: 500,
             temperature: 0.1,
           }
         }),
       },
-      10000 // 10 second timeout for quick detection
+      25000 // 25 second timeout for brand detection
     );
 
     if (!response.ok) {
-      console.log('Brand detection failed, continuing without');
+      const errorText = await response.text();
+      console.warn('Brand detection failed:', {
+        status: response.status,
+        body: errorText.slice(0, 200)
+      });
       return null;
     }
 
     const responseData = await response.json();
-    const text = responseData.candidates?.[0]?.content?.parts?.find((p: any) => p.text)?.text;
+    // Filter for text parts only (handle Gemini 3 thinking blocks)
+    const textParts = responseData.candidates?.[0]?.content?.parts?.filter((p: any) => p.text);
+    const text = textParts?.[0]?.text;
 
     if (text) {
       const brand = text.trim().replace(/["\n]/g, '');
@@ -613,25 +618,42 @@ JSON format:
       body: JSON.stringify({
         contents: [{ role: 'user', parts }],
         generationConfig: {
-          maxOutputTokens: 4000,
+          maxOutputTokens: 8000,
           temperature: 0.2,
           responseMimeType: 'application/json'
         }
       }),
     },
-    45000
+    90000  // 90 second timeout for Gemini 3 with thinking
   );
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('Gemini error:', errorText);
-    throw new Error(`Gemini API error: ${response.status}`);
+    console.error('Gemini API error details:', {
+      status: response.status,
+      statusText: response.statusText,
+      body: errorText.slice(0, 500)
+    });
+    throw new Error(`Gemini API error: ${response.status} - ${errorText.slice(0, 200)}`);
   }
 
   const data = await response.json();
-  const text = data.candidates?.[0]?.content?.parts?.find((p: any) => p.text)?.text;
+
+  // Log response structure for debugging
+  console.log('Gemini response structure:', {
+    hasCandidates: !!data.candidates,
+    candidatesLength: data.candidates?.length,
+    hasContent: !!data.candidates?.[0]?.content,
+    partsLength: data.candidates?.[0]?.content?.parts?.length,
+    partTypes: data.candidates?.[0]?.content?.parts?.map((p: any) => Object.keys(p)).flat()
+  });
+
+  // Handle potential Gemini 3 thinking output - filter for text parts only
+  const textParts = data.candidates?.[0]?.content?.parts?.filter((p: any) => p.text);
+  const text = textParts?.map((p: any) => p.text).join('\n');
 
   if (!text) {
+    console.error('No text in Gemini response. Full response:', JSON.stringify(data).slice(0, 1000));
     throw new Error('No response from Gemini');
   }
 
@@ -872,6 +894,26 @@ serve(async (req) => {
       throw new Error('Gemini API key not configured');
     }
 
+    // DIAGNOSTIC: Log masked API key to verify which key is active
+    console.log('GEMINI_API_KEY check:', geminiApiKey.slice(0, 12) + '...' + geminiApiKey.slice(-4));
+
+    // Initialize Supabase client inside request handler (env vars may not be available at module init)
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+
+    if (!supabaseUrl || !supabaseServiceKey) {
+      throw new Error('Supabase configuration missing');
+    }
+
+    console.log('Environment check:', {
+      hasGeminiKey: !!geminiApiKey,
+      hasOpenaiKey: !!openaiApiKey,
+      hasSupabaseUrl: !!supabaseUrl,
+      hasServiceKey: !!supabaseServiceKey,
+    });
+
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
     console.log(`Processing ${images.length} image(s)`, {
       hints,
       options,
@@ -879,16 +921,19 @@ serve(async (req) => {
     });
 
     // Stage 0: Run OCR + Brand Detection in parallel
+    console.log('[STAGE 0] Starting OCR + Brand Detection...');
     let detectedBrand: string | null = null;
     let manufacturerKnowledge: ManufacturerKnowledge | null = null;
     let ocrResult: OCRResult | null = null;
 
     if (!options?.fast_mode) {
       // Run OCR and brand detection in parallel for speed
+      console.log('[STAGE 0] Running OCR and brand detection in parallel...');
       const [ocrRes, brandRes] = await Promise.all([
-        runOCRPreprocessing(images),
+        runOCRPreprocessing(images, supabaseUrl, supabaseServiceKey),
         detectBrand(images),
       ]);
+      console.log('[STAGE 0] OCR and brand detection completed');
 
       ocrResult = ocrRes;
       detectedBrand = brandRes;
@@ -900,7 +945,9 @@ serve(async (req) => {
       }
 
       if (detectedBrand) {
-        manufacturerKnowledge = await getManufacturerKnowledge(detectedBrand);
+        console.log(`[STAGE 0] Fetching manufacturer knowledge for: ${detectedBrand}`);
+        manufacturerKnowledge = await getManufacturerKnowledge(detectedBrand, supabase);
+        console.log(`[STAGE 0] Manufacturer knowledge: ${manufacturerKnowledge ? 'found' : 'not found'}`);
       }
     }
 
@@ -908,29 +955,26 @@ serve(async (req) => {
     let referenceImageUrls: string[] = [];
     let trainingExamples: TrainingExample[] = [];
     if (detectedBrand && !options?.fast_mode) {
+      console.log('[STAGE 0] Fetching reference images and training examples...');
       // Fetch both in parallel for speed
       const [refImages, trainExamples] = await Promise.all([
-        getReferenceImages(detectedBrand),
-        getTrainingExamples(detectedBrand),
+        getReferenceImages(detectedBrand, supabase),
+        getTrainingExamples(detectedBrand, supabase),
       ]);
       referenceImageUrls = refImages;
       trainingExamples = trainExamples;
+      console.log(`[STAGE 0] Reference images: ${referenceImageUrls.length}, Training examples: ${trainingExamples.length}`);
     }
 
     // Stage 1: Gemini - Board Structure (with RAG context + OCR hints + reference images + training examples)
+    console.log('[STAGE 1] Starting Gemini analysis...');
     const geminiResult = await analyzeWithGemini(images, hints, manufacturerKnowledge, ocrResult, referenceImageUrls, trainingExamples);
+    console.log(`[STAGE 1] Gemini completed, detected ${geminiResult.circuits?.length || 0} circuits`);
 
-    // Stage 2: OpenAI Verification (optional enhancement)
-    let openaiResult = { deviceCorrections: new Map<number, Partial<DetectedCircuit['device']>>() };
-
-    if (!options?.fast_mode && options?.use_openai_components !== false && openaiApiKey) {
-      console.log('Running OpenAI device verification...');
-      try {
-        openaiResult = await verifyWithOpenAI(images, geminiResult.circuits);
-      } catch (e) {
-        console.error('OpenAI verification error:', e);
-      }
-    }
+    // Stage 2: OpenAI Verification
+    console.log('[STAGE 2] Starting OpenAI verification...');
+    const openaiResult = await verifyWithOpenAI(images, geminiResult.circuits || []);
+    console.log(`[STAGE 2] OpenAI completed, ${openaiResult.deviceCorrections.size} corrections`);
 
     // Merge results
     const result = mergeResults(geminiResult, openaiResult, hints);

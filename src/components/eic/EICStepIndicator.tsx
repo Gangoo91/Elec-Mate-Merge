@@ -2,6 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { CheckCircle, FileText, Search, TestTube, PenTool, Award } from 'lucide-react';
 import { EICTabValue } from '@/hooks/useEICTabs';
+import { useHaptics } from '@/hooks/useHaptics';
 
 interface StepConfig {
   id: EICTabValue;
@@ -31,7 +32,13 @@ const EICStepIndicator: React.FC<EICStepIndicatorProps> = ({
   isTabComplete,
   className,
 }) => {
+  const haptics = useHaptics();
   const currentIndex = steps.findIndex(s => s.id === currentTab);
+
+  const handleStepClick = (stepId: EICTabValue) => {
+    haptics.tap();
+    onTabChange(stepId);
+  };
 
   return (
     <>
@@ -46,9 +53,9 @@ const EICStepIndicator: React.FC<EICStepIndicatorProps> = ({
               return (
                 <button
                   key={step.id}
-                  onClick={() => onTabChange(step.id)}
+                  onClick={() => handleStepClick(step.id)}
                   className={cn(
-                    "flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 touch-manipulation whitespace-nowrap",
+                    "flex items-center gap-2 px-4 h-11 rounded-full text-sm font-medium transition-all duration-200 touch-manipulation whitespace-nowrap active:scale-95",
                     isActive && "eicr-step-pill-active",
                     !isActive && isComplete && "bg-green-500/15 text-green-400 border border-green-500/30",
                     !isActive && !isComplete && "bg-white/5 text-white/60 border border-white/10 hover:bg-white/10 hover:text-white/80"
@@ -84,7 +91,7 @@ const EICStepIndicator: React.FC<EICStepIndicatorProps> = ({
               <React.Fragment key={step.id}>
                 {/* Step node */}
                 <button
-                  onClick={() => onTabChange(step.id)}
+                  onClick={() => handleStepClick(step.id)}
                   className="flex flex-col items-center gap-2 group touch-manipulation"
                 >
                   {/* Circle */}

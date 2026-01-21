@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Trash2, Grid, Pen, ChevronDown, TestTube, Mic } from 'lucide-react';
+import { Plus, BarChart3, Zap, Camera, LayoutGrid, Table2, Shield, X, PenTool, FileText, Wrench, ClipboardList, ClipboardCheck, Wand2, Sparkles, MoreVertical, Layout, Table, Trash2, Grid, Pen, ChevronDown, TestTube, Mic, Check, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { TestResult } from '@/types/testResult';
 import { DistributionBoard, MAIN_BOARD_ID, createDefaultBoard, generateBoardId, getNextSubBoardName } from '@/types/distributionBoard';
@@ -23,7 +23,7 @@ import TestAnalytics from './TestAnalytics';
 import SmartAutoFillPromptDialog from './SmartAutoFillPromptDialog';
 import { ThreePhaseScheduleOfTests } from './eicr/ThreePhaseScheduleOfTests';
 
-import { BoardPhotoCapture } from '@/components/inspection-app/testing/BoardPhotoCapture';
+import { BoardPhotoCapture } from '@/components/testing/BoardPhotoCapture';
 import { SimpleCircuitTable } from './testing/SimpleCircuitTable';
 import TestResultsPhotoCapture from './testing/TestResultsPhotoCapture';
 import TestResultsReviewDialog from './testing/TestResultsReviewDialog';
@@ -1308,250 +1308,344 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
   return (
     <div className="pb-20 lg:pb-4">
-      {/* MOBILE FULL-WIDTH LAYOUT - Native iOS Feel */}
+      {/* MOBILE FULL-WIDTH LAYOUT - Clean Edge-to-Edge Design */}
       {useMobileView ? (
-        <div className="min-h-screen bg-background">
-          {/* Hero Section with Progress */}
-          <div className="testing-hero mx-2 mt-2 p-4">
-            <div className="relative z-10">
-              {/* Title Row */}
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-elec-yellow/20 border border-elec-yellow/30">
-                    <TestTube className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <h2 className="text-lg font-bold text-white">Circuit Testing</h2>
-                    <p className="text-xs text-white/50">
-                      {testResults.length} circuits • {completedCount} complete
-                    </p>
-                  </div>
-                </div>
-                {/* Settings Menu */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="h-9 w-9 p-0 text-white/60 hover:text-white hover:bg-white/10">
-                      <MoreVertical className="h-5 w-5" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56 bg-card border-border">
-                    <DropdownMenuItem onClick={() => setShowQuickFillPanel(true)}>
-                      <Zap className="mr-2 h-4 w-4" />
-                      Quick Fill RCD
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={removeAllTestResults} className="text-destructive">
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      Clear All Circuits
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-
-              {/* Progress Bar */}
-              <div className="testing-progress-bar mt-3">
-                <div className="testing-progress-fill" style={{ width: `${progressPercent}%` }} />
-              </div>
-              <div className="flex justify-between mt-1.5 text-xs">
-                <span className="text-white/40">Progress</span>
-                <span className="font-semibold text-elec-yellow">{progressPercent}%</span>
+        <div className="min-h-screen bg-background -mx-4">
+          {/* Voice Status Indicator - Shows at top when active */}
+          {voiceActive && (
+            <div className="p-4 bg-green-500/20 border-b border-green-500/30">
+              <div className="flex items-center justify-center gap-2">
+                <Mic className="h-4 w-4 text-green-400 animate-pulse" />
+                <span className="text-sm text-green-400 font-medium">Voice Active - Say "Add circuit" or test values</span>
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Primary Actions */}
-          <div className="px-4 py-3 space-y-2">
-            {/* Main Action Row */}
-            <div className="grid grid-cols-2 gap-2">
-              <Button
-                className="testing-action-primary"
-                onClick={() => onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true)}
-              >
-                <Camera className="h-4 w-4 mr-2" />
-                AI Scan
-              </Button>
-              <Button className="testing-action-secondary" onClick={addTestResult}>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Circuit
-              </Button>
-            </div>
-            {/* Voice Assistant - Prominent */}
-            <Button
-              className={`w-full h-12 rounded-lg font-medium transition-all duration-200 text-white shadow-lg border ${
-                voiceActive
-                  ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 shadow-green-500/30 border-green-400/30'
-                  : voiceConnecting
-                  ? 'bg-gradient-to-r from-yellow-600 to-amber-600 animate-pulse shadow-yellow-500/30 border-yellow-400/30'
-                  : 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-purple-500/30 border-purple-400/30'
-              }`}
-              onClick={toggleVoice}
-              disabled={voiceConnecting}
-            >
-              <Mic className={`h-5 w-5 mr-2 ${voiceActive ? 'animate-pulse' : ''}`} />
-              {voiceActive ? 'Voice Active - Tap to Stop' : voiceConnecting ? 'Connecting...' : 'Voice Assistant'}
-            </Button>
-          </div>
-
-          {/* Segmented Control for Tools */}
-          <div className="px-4 pb-3">
-            <div className="testing-segment-control">
-              <button
-                className="testing-segment-button"
-                data-active={activeToolPanel === 'ai'}
-                onClick={() => setActiveToolPanel(activeToolPanel === 'ai' ? null : 'ai')}
-              >
-                <Wand2 className="h-3.5 w-3.5" />
-                AI
-              </button>
-              <button
-                className="testing-segment-button"
-                data-active={activeToolPanel === 'smart'}
-                onClick={() => setActiveToolPanel(activeToolPanel === 'smart' ? null : 'smart')}
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                Smart
-              </button>
-              <button
-                className="testing-segment-button"
-                data-active={showAnalytics}
-                onClick={() => setShowAnalytics(!showAnalytics)}
-              >
-                <BarChart3 className="h-3.5 w-3.5" />
-                Stats
-              </button>
-            </div>
-
-            {/* AI Tools Panel */}
-            {activeToolPanel === 'ai' && (
-              <div className="testing-tool-panel">
-                <Button
-                  variant="ghost"
-                  className="testing-tool-button"
-                  onClick={() => { setShowTestResultsScan(true); setActiveToolPanel(null); }}
-                >
-                  <FileText className="h-4 w-4 mr-3" />
-                  AI Scan Test Results
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="testing-tool-button"
-                  onClick={() => { setShowScribbleDialog(true); setActiveToolPanel(null); }}
-                >
-                  <Pen className="h-4 w-4 mr-3" />
-                  Scribble to Table
-                </Button>
-              </div>
-            )}
-
-            {/* Smart Tools Panel */}
-            {activeToolPanel === 'smart' && (
-              <div className="testing-tool-panel">
-                <Button
-                  variant="ghost"
-                  className="testing-tool-button"
-                  onClick={() => { setShowSmartAutoFillDialog(true); setActiveToolPanel(null); }}
-                >
-                  <Zap className="h-4 w-4 mr-3" />
-                  Smart Auto-Fill
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="testing-tool-button"
-                  onClick={() => { setShowRcdPresetsDialog(true); setActiveToolPanel(null); }}
-                >
-                  <Shield className="h-4 w-4 mr-3" />
-                  Quick RCD Presets
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="testing-tool-button"
-                  onClick={() => { setShowBulkInfillDialog(true); setActiveToolPanel(null); }}
-                >
-                  <Grid className="h-4 w-4 mr-3" />
-                  Bulk Infill
-                </Button>
-              </div>
-            )}
-
-            {/* Analytics Panel */}
-            {showAnalytics && testResults.length > 0 && (
-              <div className="testing-tool-panel">
-                <TestAnalytics testResults={testResults} />
-              </div>
-            )}
-          </div>
-
-          {/* View Toggle + Circuit Count */}
-          <div className="px-4 pb-2 flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">
-              {testResults.length} {testResults.length === 1 ? 'circuit' : 'circuits'}
-              {distributionBoards.length > 1 && ` • ${distributionBoards.length} boards`}
-            </span>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleAddBoard}
-                className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
-              >
-                <Plus className="h-3.5 w-3.5" />
-                Board
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={toggleMobileView}
-                className="h-8 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
-              >
-                {mobileViewType === 'table' ? <Layout className="h-3.5 w-3.5" /> : <Table className="h-3.5 w-3.5" />}
-                {mobileViewType === 'table' ? 'Cards' : 'Table'}
-              </Button>
-            </div>
-          </div>
-
-          {/* Distribution Boards with Circuit Lists */}
-          <div className="px-2 pb-4 space-y-3">
+          {/* Distribution Boards - Edge to Edge */}
+          <div className="pb-4">
             {distributionBoards
               .sort((a, b) => a.order - b.order)
               .map(board => {
                 const boardCircuits = getCircuitsForBoard(testResults, board.id);
+                const boardCompletedCount = boardCircuits.filter(r =>
+                  r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
+                ).length;
+                const boardProgressPercent = boardCircuits.length > 0
+                  ? Math.round((boardCompletedCount / boardCircuits.length) * 100)
+                  : 0;
+                const isComplete = boardProgressPercent === 100;
+
                 return (
-                  <BoardSection
+                  <Collapsible
                     key={board.id}
-                    board={board}
-                    isExpanded={expandedBoards.has(board.id)}
-                    onToggleExpanded={() => toggleBoardExpanded(board.id)}
-                    onUpdateBoard={handleUpdateBoard}
-                    onRemoveBoard={handleRemoveBoard}
-                    onAddCircuit={() => addCircuitToBoard(board.id)}
-                    circuitCount={boardCircuits.length}
-                    completedCount={boardCircuits.filter(r =>
-                      r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
-                    ).length}
-                    isMobile={true}
-                    showTools={true}
-                    tools={createBoardTools(board.id)}
+                    open={expandedBoards.has(board.id)}
+                    onOpenChange={() => toggleBoardExpanded(board.id)}
                   >
-                    {mobileViewType === 'table' ? (
-                      <MobileHorizontalScrollTable
-                        testResults={boardCircuits}
-                        onUpdate={updateTestResult}
-                        onRemove={removeTestResult}
-                        onBulkUpdate={handleBulkUpdate}
-                        onBulkFieldUpdate={handleBulkFieldUpdate}
-                      />
-                    ) : (
-                      <CircuitList
-                        circuits={boardCircuits}
-                        onUpdate={updateTestResult}
-                        onRemove={removeTestResult}
-                        onBulkUpdate={handleBulkUpdate}
-                        viewMode="card"
-                        className="px-0"
-                      />
-                    )}
-                  </BoardSection>
+                    {/* Board Header */}
+                    <CollapsibleTrigger className="w-full" asChild>
+                      <button className="w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors bg-card/50 border-y border-border/30 active:bg-card/90">
+                        {/* Progress Ring */}
+                        <div className="relative flex-shrink-0">
+                          <svg className="w-12 h-12 -rotate-90">
+                            <circle
+                              cx="24"
+                              cy="24"
+                              r="20"
+                              strokeWidth="3"
+                              stroke="currentColor"
+                              fill="none"
+                              className="text-border/30"
+                            />
+                            <circle
+                              cx="24"
+                              cy="24"
+                              r="20"
+                              strokeWidth="3"
+                              stroke="currentColor"
+                              fill="none"
+                              strokeDasharray={`${boardProgressPercent * 1.26} 126`}
+                              strokeLinecap="round"
+                              className={isComplete ? "text-green-500" : "text-elec-yellow"}
+                            />
+                          </svg>
+                          <div className={`absolute inset-0 flex items-center justify-center text-sm font-bold ${isComplete ? "text-green-400" : "text-elec-yellow"}`}>
+                            {isComplete ? <CheckCircle className="h-5 w-5" /> : <Zap className="h-5 w-5" />}
+                          </div>
+                        </div>
+
+                        {/* Board Info */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className={`font-semibold text-base ${isComplete ? "text-green-400" : "text-foreground"}`}>
+                            {board.name}
+                          </h3>
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
+                            <span>{boardCircuits.length} circuit{boardCircuits.length !== 1 ? 's' : ''}</span>
+                            <span>·</span>
+                            <span className={isComplete ? "text-green-400 font-medium" : boardProgressPercent > 0 ? "text-elec-yellow font-medium" : ""}>
+                              {boardProgressPercent}% complete
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Chevron */}
+                        <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${expandedBoards.has(board.id) ? 'rotate-180' : ''}`} />
+                      </button>
+                    </CollapsibleTrigger>
+
+                    <CollapsibleContent>
+                      {/* Board Details */}
+                      <div className="p-4 bg-card/30 border-b border-border/20 space-y-3">
+                        {/* Board Reference & Location */}
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">Reference</label>
+                            <input
+                              type="text"
+                              value={board.reference || ''}
+                              onChange={(e) => handleUpdateBoard(board.id, 'reference', e.target.value)}
+                              placeholder={board.name}
+                              className="w-full h-10 px-3 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                              style={{ fontSize: '16px' }}
+                            />
+                          </div>
+                          <div>
+                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">Location</label>
+                            <input
+                              type="text"
+                              value={board.location || ''}
+                              onChange={(e) => handleUpdateBoard(board.id, 'location', e.target.value)}
+                              placeholder="e.g., Garage, Kitchen"
+                              className="w-full h-10 px-3 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                              style={{ fontSize: '16px' }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* ZDB & IPF Row */}
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">Z<sub>DB</sub> (Ω)</label>
+                            <div className="relative">
+                              <input
+                                type="text"
+                                inputMode="decimal"
+                                value={board.zdb || ''}
+                                onChange={(e) => handleUpdateBoard(board.id, 'zdb', e.target.value)}
+                                placeholder="0.00"
+                                className="w-full h-10 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                                style={{ fontSize: '16px' }}
+                              />
+                              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">Ω</span>
+                            </div>
+                          </div>
+                          <div>
+                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">I<sub>PF</sub> (kA)</label>
+                            <div className="relative">
+                              <input
+                                type="text"
+                                inputMode="decimal"
+                                value={board.ipf || ''}
+                                onChange={(e) => handleUpdateBoard(board.id, 'ipf', e.target.value)}
+                                placeholder="0.0"
+                                className="w-full h-10 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                                style={{ fontSize: '16px' }}
+                              />
+                              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">kA</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Quick Checks */}
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={() => handleUpdateBoard(board.id, 'polarityCorrect', !board.polarityCorrect)}
+                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 ${
+                              board.polarityCorrect
+                                ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                                : 'bg-card border border-border/50 text-muted-foreground'
+                            }`}
+                          >
+                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.polarityCorrect ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
+                              {board.polarityCorrect && <Check className="h-3 w-3 text-white" />}
+                            </div>
+                            <span className="flex-1 text-left">Polarity</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleUpdateBoard(board.id, 'phaseSequenceCorrect', !board.phaseSequenceCorrect)}
+                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 ${
+                              board.phaseSequenceCorrect
+                                ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                                : 'bg-card border border-border/50 text-muted-foreground'
+                            }`}
+                          >
+                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.phaseSequenceCorrect ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
+                              {board.phaseSequenceCorrect && <Check className="h-3 w-3 text-white" />}
+                            </div>
+                            <span className="flex-1 text-left">Phase Seq</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleUpdateBoard(board.id, 'spdOperational', !board.spdOperational)}
+                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 ${
+                              board.spdOperational
+                                ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                                : 'bg-card border border-border/50 text-muted-foreground'
+                            }`}
+                          >
+                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.spdOperational ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
+                              {board.spdOperational && <Check className="h-3 w-3 text-white" />}
+                            </div>
+                            <span className="flex-1 text-left">SPD OK</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleUpdateBoard(board.id, 'spdNotApplicable', !board.spdNotApplicable)}
+                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 ${
+                              board.spdNotApplicable
+                                ? 'bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow'
+                                : 'bg-card border border-border/50 text-muted-foreground'
+                            }`}
+                          >
+                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.spdNotApplicable ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground'}`}>
+                              {board.spdNotApplicable && <Check className="h-3 w-3 text-black" />}
+                            </div>
+                            <span className="flex-1 text-left">SPD N/A</span>
+                          </button>
+                        </div>
+
+                      </div>
+
+                      {/* Tools Bar - Above Circuit Table */}
+                      <div className="flex items-center gap-2 p-4 bg-background border-y border-border/30">
+                        <Button
+                          className="flex-1 h-12 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-95 flex items-center justify-center"
+                          onClick={() => { setActiveBoardId(board.id); onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true); }}
+                        >
+                          <Camera className="h-5 w-5 mr-2" />
+                          AI Scan
+                        </Button>
+                        <Button
+                          className="flex-1 h-12 rounded-xl bg-card border border-border/50 text-foreground font-semibold hover:bg-card/80 touch-manipulation active:scale-95 flex items-center justify-center"
+                          onClick={() => addCircuitToBoard(board.id)}
+                        >
+                          <Plus className="h-5 w-5 mr-2" />
+                          Add Circuit
+                        </Button>
+                        <Button
+                          className={`h-12 w-12 rounded-xl touch-manipulation active:scale-95 flex items-center justify-center flex-shrink-0 ${
+                            voiceActive
+                              ? 'bg-green-500 text-white'
+                              : voiceConnecting
+                              ? 'bg-yellow-500 text-black animate-pulse'
+                              : 'bg-purple-600 text-white'
+                          }`}
+                          onClick={toggleVoice}
+                          disabled={voiceConnecting}
+                        >
+                          <Mic className={`h-5 w-5 ${voiceActive ? 'animate-pulse' : ''}`} />
+                        </Button>
+                      </div>
+
+                      {/* Circuit Table */}
+                      <div className="bg-background">
+                        {boardCircuits.length === 0 ? (
+                          <div className="p-8 text-center">
+                            <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mx-auto mb-3">
+                              <Zap className="h-6 w-6 text-white/30" />
+                            </div>
+                            <p className="text-sm text-white/50 mb-3">No circuits yet</p>
+                            <Button
+                              onClick={() => addCircuitToBoard(board.id)}
+                              className="h-11 bg-elec-yellow text-black font-medium hover:bg-elec-yellow/90 touch-manipulation"
+                            >
+                              <Plus className="h-4 w-4 mr-2" />
+                              Add First Circuit
+                            </Button>
+                          </div>
+                        ) : mobileViewType === 'table' ? (
+                          <MobileHorizontalScrollTable
+                            testResults={boardCircuits}
+                            onUpdate={updateTestResult}
+                            onRemove={removeTestResult}
+                            onBulkUpdate={handleBulkUpdate}
+                            onBulkFieldUpdate={handleBulkFieldUpdate}
+                          />
+                        ) : (
+                          <div className="p-4">
+                            <CircuitList
+                              circuits={boardCircuits}
+                              onUpdate={updateTestResult}
+                              onRemove={removeTestResult}
+                              onBulkUpdate={handleBulkUpdate}
+                              viewMode="card"
+                              className="px-0"
+                            />
+                          </div>
+                        )}
+
+                        {/* Add Circuit to This Board */}
+                        {boardCircuits.length > 0 && (
+                          <div className="p-4 border-t border-border/20">
+                            <Button
+                              onClick={() => addCircuitToBoard(board.id)}
+                              variant="outline"
+                              className="w-full h-11 border-dashed border-white/20 text-white/60 hover:bg-white/5 touch-manipulation"
+                            >
+                              <Plus className="h-4 w-4 mr-2" />
+                              Add Circuit to {board.name}
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Board Actions Footer */}
+                      {board.id !== MAIN_BOARD_ID && (
+                        <div className="p-3 bg-card/30 border-t border-border/20 flex justify-between items-center">
+                          <span className="text-xs text-muted-foreground">
+                            {boardCircuits.length} circuit{boardCircuits.length !== 1 ? 's' : ''} in this board
+                          </span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleRemoveBoard(board.id)}
+                            className="h-8 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                          >
+                            <Trash2 className="h-3.5 w-3.5 mr-1" />
+                            Remove Board
+                          </Button>
+                        </div>
+                      )}
+                    </CollapsibleContent>
+                  </Collapsible>
                 );
               })}
+
+            {/* Add Board Button */}
+            <div className="p-4">
+              <Button
+                onClick={handleAddBoard}
+                variant="outline"
+                className="w-full h-12 border-dashed border-white/20 text-white/60 hover:bg-white/5 touch-manipulation"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Distribution Board
+              </Button>
+            </div>
+
+            {/* View Toggle */}
+            <div className="px-4 pb-2 flex items-center justify-center">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleMobileView}
+                className="h-9 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
+              >
+                {mobileViewType === 'table' ? <Layout className="h-3.5 w-3.5" /> : <Table className="h-3.5 w-3.5" />}
+                Switch to {mobileViewType === 'table' ? 'Card' : 'Table'} View
+              </Button>
+            </div>
           </div>
         </div>
       ) : (
@@ -1746,43 +1840,49 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
       {/* SHARED INFO SECTIONS - Responsive Layout */}
       {useMobileView ? (
-        /* Mobile: Collapsible Accordions */
-        <div className="px-4 pb-24 space-y-2 mt-4">
+        /* Mobile: Edge-to-Edge Collapsible Sections */
+        <div className="-mx-4 pb-24 mt-4">
           {/* Test Instrument Info */}
-          <div className="testing-info-section">
-            <Collapsible>
-              <CollapsibleTrigger asChild>
-                <button className="testing-info-header">
-                  <span className="flex items-center gap-2">
-                    <Wrench className="h-4 w-4 text-elec-yellow" />
-                    Test Instruments
-                  </span>
-                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                </button>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="px-4 pb-4">
+          <Collapsible>
+            <CollapsibleTrigger className="w-full" asChild>
+              <button className="w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors bg-card/50 border-y border-border/30 active:bg-card/90">
+                <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                  <Wrench className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-foreground">Test Instruments</h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">Equipment details & calibration</p>
+                </div>
+                <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="p-4 bg-card/30">
                 <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
 
           {/* Test Method & Notes */}
-          <div className="testing-info-section">
-            <Collapsible>
-              <CollapsibleTrigger asChild>
-                <button className="testing-info-header">
-                  <span className="flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-elec-yellow" />
-                    Test Method & Notes
-                  </span>
-                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                </button>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="px-4 pb-4">
+          <Collapsible>
+            <CollapsibleTrigger className="w-full" asChild>
+              <button className="w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors bg-card/50 border-b border-border/30 active:bg-card/90">
+                <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                  <FileText className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-foreground">Test Method & Notes</h3>
+                  <p className="text-xs text-muted-foreground mt-0.5">Method applied & observations</p>
+                </div>
+                <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="p-4 bg-card/30">
                 <TestMethodInfo formData={formData} onUpdate={onUpdate} />
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
         </div>
       ) : (
         /* Desktop: Horizontal Card Grid */

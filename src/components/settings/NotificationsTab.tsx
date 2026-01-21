@@ -3,6 +3,8 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import {
   Bell,
   BellRing,
@@ -18,6 +20,7 @@ import {
   VolumeX,
   Loader2,
   Smartphone,
+  Send,
 } from "lucide-react";
 
 interface NotificationSetting {
@@ -36,9 +39,11 @@ interface NotificationCategory {
 }
 
 const NotificationsTab = () => {
+  const { user } = useAuth();
   const { addNotification } = useNotifications();
   const [isSaving, setIsSaving] = useState(false);
   const [allMuted, setAllMuted] = useState(false);
+  const [isTestingSend, setIsTestingSend] = useState(false);
 
   // Push notifications
   const {
@@ -48,6 +53,47 @@ const NotificationsTab = () => {
     subscribe: subscribeToPush,
     unsubscribe: unsubscribeFromPush
   } = usePushNotifications();
+
+  // Send test notification
+  const handleTestNotification = async () => {
+    if (!user?.id) return;
+    setIsTestingSend(true);
+    try {
+      console.log('[Push Test] Sending test notification to user:', user.id);
+      const { data, error } = await supabase.functions.invoke('send-push-notification', {
+        body: {
+          userId: user.id,
+          title: 'Test Notification',
+          body: 'Push notifications are working correctly! 🎉',
+          type: 'job',
+          data: {}
+        }
+      });
+      console.log('[Push Test] Response:', data, 'Error:', error);
+      if (error) {
+        addNotification({
+          title: 'Test Failed',
+          message: error.message || 'Failed to send test notification',
+          type: 'error'
+        });
+      } else {
+        addNotification({
+          title: 'Test Sent',
+          message: `Check your device for the notification (sent: ${data?.sent || 0})`,
+          type: 'success'
+        });
+      }
+    } catch (err) {
+      console.error('[Push Test] Error:', err);
+      addNotification({
+        title: 'Test Failed',
+        message: 'An error occurred while sending the test notification',
+        type: 'error'
+      });
+    } finally {
+      setIsTestingSend(false);
+    }
+  };
 
   const handlePushToggle = async () => {
     try {
@@ -305,6 +351,32 @@ const NotificationsTab = () => {
               <p className="mt-3 text-xs text-muted-foreground bg-white/5 rounded-lg px-3 py-2">
                 💡 Enable push notifications to never miss a message from clients or Mental Health Mates
               </p>
+            )}
+            {isPushSubscribed && (
+              <div className="mt-3 flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleTestNotification}
+                  disabled={isTestingSend}
+                  className="h-10 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/5"
+                >
+                  {isTestingSend ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-4 w-4 mr-2" />
+                      Send Test Notification
+                    </>
+                  )}
+                </Button>
+                <span className="text-xs text-muted-foreground">
+                  Verify your device receives notifications
+                </span>
+              </div>
             )}
           </div>
         </div>

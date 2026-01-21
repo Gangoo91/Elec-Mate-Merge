@@ -7,11 +7,9 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   CircuitBoard,
   Zap,
@@ -135,35 +133,25 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
   // Loading state
   if (isLoading) {
     return (
-      <Card className="bg-card/50 backdrop-blur border-white/10">
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-3">
-            <Skeleton className="h-10 w-10 rounded-xl" />
-            <div className="space-y-2">
-              <Skeleton className="h-5 w-32" />
-              <Skeleton className="h-4 w-48" />
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <Skeleton className="h-20 w-full rounded-xl" />
-          <Skeleton className="h-20 w-full rounded-xl" />
-        </CardContent>
-      </Card>
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <Skeleton className="h-5 w-5 rounded" />
+          <Skeleton className="h-5 w-32" />
+        </div>
+        <Skeleton className="h-10 w-full rounded-lg" />
+        <Skeleton className="h-16 w-full rounded-lg" />
+        <Skeleton className="h-16 w-full rounded-lg" />
+      </div>
     );
   }
 
   // Error state
   if (error) {
     return (
-      <Card className="bg-card/50 backdrop-blur border-red-500/20">
-        <CardContent className="py-6">
-          <div className="flex items-center gap-3 text-red-400">
-            <AlertCircle className="h-5 w-5" />
-            <p className="text-sm">Failed to load designed circuits</p>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="flex items-center gap-3 p-4 bg-red-500/10 rounded-xl text-red-400">
+        <AlertCircle className="h-5 w-5 flex-shrink-0" />
+        <p className="text-sm">Failed to load designed circuits</p>
+      </div>
     );
   }
 
@@ -171,104 +159,91 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
 
   return (
     <>
-      <Card className={cn(
-        "overflow-hidden",
-        "bg-gradient-to-br from-card/80 to-card/40",
-        "backdrop-blur border-white/10",
-        "transition-all duration-ios-normal"
-      )}>
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                <CircuitBoard className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div>
-                <h3 className="text-base font-semibold text-white">Designed Circuits</h3>
-                <p className="text-xs text-white/50">From AI Circuit Designer</p>
-              </div>
-            </div>
-            {pendingDesigns.length > 0 && (
-              <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
-                {pendingDesigns.length} pending
-              </Badge>
-            )}
+      <div className="space-y-4">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CircuitBoard className="h-4 w-4 text-elec-yellow" />
+            <span className="text-sm font-semibold text-white">Designed Circuits</span>
+            <span className="text-xs text-white/40">AI Designer</span>
           </div>
-
-          {/* Status Tabs */}
-          {totalCount > 0 && (
-            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as StatusTab)} className="mt-4">
-              <TabsList className="w-full bg-white/5 border border-white/10">
-                <TabsTrigger
-                  value="pending"
-                  className="flex-1 text-xs data-[state=active]:bg-amber-500/20 data-[state=active]:text-amber-300"
-                >
-                  Pending {pendingDesigns.length > 0 && `(${pendingDesigns.length})`}
-                </TabsTrigger>
-                <TabsTrigger
-                  value="completed"
-                  className="flex-1 text-xs data-[state=active]:bg-green-500/20 data-[state=active]:text-green-300"
-                >
-                  Completed {completedDesigns.length > 0 && `(${completedDesigns.length})`}
-                </TabsTrigger>
-                <TabsTrigger
-                  value="archived"
-                  className="flex-1 text-xs data-[state=active]:bg-gray-500/20 data-[state=active]:text-gray-300"
-                >
-                  Archived {archivedDesigns.length > 0 && `(${archivedDesigns.length})`}
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
+          {pendingDesigns.length > 0 && (
+            <Badge className="bg-elec-yellow/15 text-elec-yellow border-0 text-xs font-semibold px-2 py-0.5">
+              {pendingDesigns.length} pending
+            </Badge>
           )}
-        </CardHeader>
+        </div>
 
-        <CardContent className="space-y-3">
-          {/* Empty State */}
-          {currentDesigns.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+        {/* Native Segmented Control Tabs */}
+        {totalCount > 0 && (
+          <div className="flex bg-white/5 rounded-lg p-1">
+            <button
+              onClick={() => setActiveTab('pending')}
               className={cn(
-                "p-6 rounded-xl text-center",
-                "bg-white/5 border border-dashed border-white/10"
+                "flex-1 py-2 px-3 text-xs font-medium rounded-md transition-all touch-manipulation",
+                activeTab === 'pending'
+                  ? "bg-amber-500/20 text-amber-300"
+                  : "text-white/50 hover:text-white/70"
               )}
             >
-              <div className="inline-flex p-3 rounded-xl bg-white/5 mb-3">
+              Pending {pendingDesigns.length > 0 && `(${pendingDesigns.length})`}
+            </button>
+            <button
+              onClick={() => setActiveTab('completed')}
+              className={cn(
+                "flex-1 py-2 px-3 text-xs font-medium rounded-md transition-all touch-manipulation",
+                activeTab === 'completed'
+                  ? "bg-green-500/20 text-green-300"
+                  : "text-white/50 hover:text-white/70"
+              )}
+            >
+              Completed {completedDesigns.length > 0 && `(${completedDesigns.length})`}
+            </button>
+            <button
+              onClick={() => setActiveTab('archived')}
+              className={cn(
+                "flex-1 py-2 px-3 text-xs font-medium rounded-md transition-all touch-manipulation",
+                activeTab === 'archived'
+                  ? "bg-gray-500/20 text-gray-300"
+                  : "text-white/50 hover:text-white/70"
+              )}
+            >
+              Archived {archivedDesigns.length > 0 && `(${archivedDesigns.length})`}
+            </button>
+          </div>
+        )}
+
+        {/* Content */}
+        <div className="space-y-2">
+          {/* Empty State */}
+          {currentDesigns.length === 0 && (
+            <div className="py-8 text-center">
+              <div className="text-white/30 mb-2">
                 {activeTab === 'archived' ? (
-                  <Archive className="h-6 w-6 text-white/40" />
+                  <Archive className="h-8 w-8 mx-auto" />
                 ) : activeTab === 'completed' ? (
-                  <FileCheck className="h-6 w-6 text-white/40" />
+                  <FileCheck className="h-8 w-8 mx-auto" />
                 ) : (
-                  <Zap className="h-6 w-6 text-white/40" />
+                  <Zap className="h-8 w-8 mx-auto" />
                 )}
               </div>
-              <h4 className="text-sm font-medium text-white mb-1">
-                {activeTab === 'pending' && 'No Pending Designs'}
-                {activeTab === 'completed' && 'No Completed Designs'}
-                {activeTab === 'archived' && 'No Archived Designs'}
-              </h4>
-              <p className="text-xs text-white/50 mb-4">
-                {activeTab === 'pending' && 'Create circuit designs in the Electrical Hub to pre-populate EIC forms'}
-                {activeTab === 'completed' && 'Completed designs will appear here after their EIC certificates are saved'}
-                {activeTab === 'archived' && 'Archive completed designs to keep your workspace tidy'}
+              <p className="text-sm text-white/50 mb-4">
+                {activeTab === 'pending' && 'No pending designs'}
+                {activeTab === 'completed' && 'No completed designs'}
+                {activeTab === 'archived' && 'No archived designs'}
               </p>
               {activeTab === 'pending' && (
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => navigate('/electrician/circuit-designer')}
-                  className={cn(
-                    "gap-2",
-                    "bg-elec-yellow/10 border-elec-yellow/30",
-                    "hover:bg-elec-yellow/20 hover:border-elec-yellow/50",
-                    "text-elec-yellow"
-                  )}
+                  className="gap-2 bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow h-11 touch-manipulation"
                 >
                   <Plus className="h-4 w-4" />
                   Create Design
                 </Button>
               )}
-            </motion.div>
+            </div>
           )}
 
           {/* Design List */}
@@ -277,154 +252,83 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
               const circuitCount = design.schedule_data?.circuits?.length || 0;
               const projectName = design.schedule_data?.projectInfo?.projectName || design.installation_address;
               const isClickable = design.status === 'pending' || design.status === 'in-progress';
+              const borderColor = design.status === 'archived' ? 'border-l-gray-500' :
+                                  design.status === 'completed' ? 'border-l-green-500' :
+                                  'border-l-amber-500';
 
               return (
-                <motion.div
+                <motion.button
                   key={design.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ delay: index * 0.05 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ delay: index * 0.03 }}
                   className={cn(
-                    "group relative p-4 rounded-xl",
-                    isClickable && "cursor-pointer",
-                    "bg-white/5 hover:bg-white/10",
-                    "border border-white/10",
-                    isClickable && "hover:border-elec-yellow/30",
-                    "transition-all duration-ios-fast"
+                    "w-full flex items-center gap-3 p-4 min-h-[64px]",
+                    "bg-white/5 border-l-4 rounded-lg",
+                    borderColor,
+                    "text-left touch-manipulation",
+                    isClickable ? "active:bg-white/10" : "cursor-default"
                   )}
                   onClick={() => isClickable && handleUseDesign(design)}
+                  disabled={!isClickable}
                 >
-                  {/* Main Content */}
-                  <div className="flex items-start gap-3">
-                    <div className={cn(
-                      "p-2 rounded-lg shrink-0",
-                      design.status === 'archived' ? "bg-gray-500/10" :
-                      design.status === 'completed' ? "bg-green-500/10" :
-                      "bg-elec-yellow/10"
-                    )}>
-                      {design.status === 'archived' ? (
-                        <Archive className="h-4 w-4 text-gray-400" />
-                      ) : design.status === 'completed' ? (
-                        <FileCheck className="h-4 w-4 text-green-400" />
-                      ) : (
-                        <Zap className="h-4 w-4 text-elec-yellow" />
-                      )}
+                  {/* Icon */}
+                  <div className={cn(
+                    "flex-shrink-0",
+                    design.status === 'archived' ? "text-gray-400" :
+                    design.status === 'completed' ? "text-green-400" :
+                    "text-elec-yellow"
+                  )}>
+                    {design.status === 'archived' ? (
+                      <Archive className="h-5 w-5" />
+                    ) : design.status === 'completed' ? (
+                      <FileCheck className="h-5 w-5" />
+                    ) : (
+                      <Zap className="h-5 w-5" />
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <h4 className="text-sm font-semibold text-white truncate">
+                        {projectName}
+                      </h4>
+                      <Badge className={cn("shrink-0 text-[10px] border-0", getStatusBadgeClasses(design.status))}>
+                        {design.status === 'in-progress' ? 'in progress' : design.status}
+                      </Badge>
                     </div>
 
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="text-sm font-semibold text-white truncate">
-                          {projectName}
-                        </h4>
-                        <Badge className={cn("shrink-0 text-[10px]", getStatusBadgeClasses(design.status))}>
-                          {design.status === 'in-progress' ? 'in progress' : design.status}
-                        </Badge>
-                      </div>
-
-                      <div className="flex items-center gap-3 text-xs text-white/50">
-                        <div className="flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          <span className="truncate max-w-[120px]">{design.installation_address}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          <span>{formatDate(design.created_at)}</span>
-                        </div>
-                      </div>
-
-                      {/* Circuit Count & Certificate Link */}
-                      <div className="flex items-center gap-2 mt-2">
-                        <Badge
-                          variant="outline"
-                          className="text-[10px] bg-white/5 border-white/10 text-white/70"
-                        >
-                          {circuitCount} circuit{circuitCount !== 1 ? 's' : ''}
-                        </Badge>
-                        {design.schedule_data?.supply?.earthingSystem && (
-                          <Badge
-                            variant="outline"
-                            className="text-[10px] bg-white/5 border-white/10 text-white/70"
-                          >
-                            {design.schedule_data.supply.earthingSystem}
-                          </Badge>
-                        )}
-                        {design.certificate_id && (
-                          <Badge
-                            variant="outline"
-                            className="text-[10px] bg-green-500/10 border-green-500/30 text-green-300 gap-1"
-                          >
-                            <ExternalLink className="h-2.5 w-2.5" />
-                            Certificate linked
-                          </Badge>
-                        )}
-                      </div>
+                    <div className="flex items-center gap-2 text-xs text-white/50">
+                      <span className="flex items-center gap-1">
+                        <MapPin className="h-3 w-3" />
+                        <span className="truncate max-w-[100px]">{design.installation_address}</span>
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {formatDate(design.created_at)}
+                      </span>
                     </div>
 
-                    {/* Action Buttons */}
-                    <div className="flex items-center gap-2 shrink-0">
-                      {/* Archive button for completed designs */}
-                      {design.status === 'completed' && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className={cn(
-                            "h-8 w-8 rounded-lg opacity-0 group-hover:opacity-100",
-                            "bg-gray-500/10 hover:bg-gray-500/20",
-                            "text-gray-400 hover:text-gray-300",
-                            "transition-all duration-ios-fast"
-                          )}
-                          onClick={(e) => handleArchive(e, design.id)}
-                          title="Archive design"
-                        >
-                          <Archive className="h-4 w-4" />
-                        </Button>
-                      )}
-
-                      {/* Delete button (only for pending/in-progress) */}
-                      {(design.status === 'pending' || design.status === 'in-progress') && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className={cn(
-                            "h-8 w-8 rounded-lg opacity-0 group-hover:opacity-100",
-                            "bg-red-500/10 hover:bg-red-500/20",
-                            "text-red-400 hover:text-red-300",
-                            "transition-all duration-ios-fast"
-                          )}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setDeleteId(design.id);
-                          }}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      )}
-
-                      {/* Chevron for clickable items */}
-                      {isClickable && (
-                        <div className={cn(
-                          "p-1.5 rounded-lg",
-                          "bg-elec-yellow/10 group-hover:bg-elec-yellow/20",
-                          "transition-all duration-ios-fast"
-                        )}>
-                          <ChevronRight className="h-4 w-4 text-elec-yellow" />
-                        </div>
+                    {/* Tags */}
+                    <div className="flex items-center gap-1.5 mt-1.5">
+                      <span className="text-[10px] px-1.5 py-0.5 bg-white/10 rounded text-white/60">
+                        {circuitCount} circuits
+                      </span>
+                      {design.schedule_data?.supply?.earthingSystem && (
+                        <span className="text-[10px] px-1.5 py-0.5 bg-white/10 rounded text-white/60">
+                          {design.schedule_data.supply.earthingSystem}
+                        </span>
                       )}
                     </div>
                   </div>
 
-                  {/* Use in EIC hint */}
+                  {/* Chevron */}
                   {isClickable && (
-                    <div className={cn(
-                      "absolute bottom-1 right-3",
-                      "text-[10px] text-white/30 opacity-0 group-hover:opacity-100",
-                      "transition-opacity duration-ios-fast"
-                    )}>
-                      Click to use in EIC
-                    </div>
+                    <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0" />
                   )}
-                </motion.div>
+                </motion.button>
               );
             })}
           </AnimatePresence>
@@ -433,15 +337,15 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
           {currentDesigns.length > 5 && (
             <Button
               variant="ghost"
-              className="w-full text-white/50 hover:text-white hover:bg-white/5"
+              className="w-full text-white/50 hover:text-white hover:bg-white/5 h-11 touch-manipulation"
               onClick={() => navigate('/electrician/circuit-designer')}
             >
               View All ({currentDesigns.length})
               <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>

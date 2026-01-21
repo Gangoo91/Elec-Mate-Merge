@@ -178,8 +178,8 @@ const PRICE_TO_TIER: Record<string, string> = {
   'price_1SlyAT2RKw5t5RAmUmTRGimH': 'employer', // £29.99/month (current)
   'price_1SlyB82RKw5t5RAmN447YJUW': 'employer_yearly', // £299.99/year (current)
 
-  // Founders Offer - £3.99/month (Founder tier)
-  'price_1SPK8c2RKw5t5RAmRGJxXfjc': 'Founder', // £3.99/month founders offer
+  // Founders Offer - £3.99/month (gets Employer access - full access to all areas)
+  'price_1SPK8c2RKw5t5RAmRGJxXfjc': 'Employer', // £3.99/month founders offer (employer access)
 
   // Legacy prices (for existing subscribers)
   'price_1RhtdT2RKw5t5RAmv6b2xE6p': 'apprentice', // £6.99/month (legacy)
@@ -328,7 +328,9 @@ serve(async (req) => {
         await updateSubscriptionStatus(userId, isActive, customerId, tier, periodEnd);
 
         // Handle founder invite completion (mark as claimed)
-        if (event.type === 'customer.subscription.created' && isActive && tier === 'Founder') {
+        // Check if this is a founder subscription by looking at the price ID
+        const isFounderSubscription = priceId === 'price_1SPK8c2RKw5t5RAmRGJxXfjc';
+        if (event.type === 'customer.subscription.created' && isActive && isFounderSubscription) {
           try {
             // Get the checkout session to find founder invite ID
             const sessions = await stripe.checkout.sessions.list({

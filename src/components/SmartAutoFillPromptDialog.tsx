@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Zap, Lightbulb, Plug, ChefHat, Droplets, Car, Flame, Home, Building2, Tv, Server, Wind, Cpu, Factory, Wrench, DoorOpen, Shield } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import CircuitTypeListPanel from './CircuitTypeListPanel';
@@ -109,36 +109,18 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
           <div>
             <label className="text-xs sm:text-sm font-medium mb-2 block">Select Circuit Type:</label>
             
-            {/* Mobile: Use Select dropdown */}
+            {/* Mobile: Use MobileSelectPicker */}
             <div className="md:hidden">
-              <Select value={selectedCircuitType} onValueChange={setSelectedCircuitType}>
-                <SelectTrigger className="h-9 text-sm bg-muted border-border touch-manipulation">
-                  <SelectValue placeholder="Choose a circuit type..." />
-                </SelectTrigger>
-                <SelectContent className="bg-muted border-border shadow-lg z-50">
-                  {circuitTypes.reduce((acc, circuit) => {
-                    const categoryHeader = acc.find(item => item.category === circuit.category);
-                    if (!categoryHeader) {
-                      acc.push({ category: circuit.category, isHeader: true });
-                    }
-                    acc.push(circuit);
-                    return acc;
-                  }, [] as any[]).map((item, index) => 
-                    item.isHeader ? (
-                      <div key={item.category} className="px-2 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                        {item.category}
-                      </div>
-                    ) : (
-                      <SelectItem key={item.type} value={item.type} className="min-h-[44px] py-3 text-sm data-[highlighted]:bg-neutral-600 focus:bg-neutral-600 touch-manipulation">
-                        <div className="flex items-center gap-2">
-                          <item.icon className="h-4 w-4" />
-                          {item.type}
-                        </div>
-                      </SelectItem>
-                    )
-                  )}
-                </SelectContent>
-              </Select>
+              <MobileSelectPicker
+                value={selectedCircuitType}
+                onValueChange={setSelectedCircuitType}
+                options={circuitTypes.map(circuit => ({
+                  value: circuit.type,
+                  label: `${circuit.category}: ${circuit.type}`,
+                }))}
+                placeholder="Choose a circuit type..."
+                title="Circuit Type"
+              />
             </div>
 
             {/* Desktop: Use scrollable list panel */}

@@ -71,6 +71,8 @@ export const useCertificateEmail = (data: CertificateEmailData): UseCertificateE
     setIsSent(false);
 
     try {
+      console.log('[CertificateEmail] Sending email for report:', data.reportId, 'to:', recipientEmail);
+
       // Call the Resend-based edge function
       const { data: result, error: fnError } = await supabase.functions.invoke('send-certificate-resend', {
         body: {
@@ -80,20 +82,42 @@ export const useCertificateEmail = (data: CertificateEmailData): UseCertificateE
         }
       });
 
+      console.log('[CertificateEmail] Response:', result, 'Error:', fnError);
+
       if (fnError) {
-        // Parse error message if it's JSON
-        let errorMessage = fnError.message;
+        // Parse error message - could be in various formats
+        let errorMessage = fnError.message || 'Unknown error';
+
+        // Check if error message is JSON
         try {
           const parsed = JSON.parse(fnError.message);
           errorMessage = parsed.error || parsed.message || fnError.message;
         } catch {
           // Keep original message
         }
+
+        // Check if there's error context with more details
+        if (fnError.context?.body) {
+          try {
+            const bodyError = typeof fnError.context.body === 'string'
+              ? JSON.parse(fnError.context.body)
+              : fnError.context.body;
+            if (bodyError.error) {
+              errorMessage = bodyError.error;
+            }
+          } catch {
+            // Keep original message
+          }
+        }
+
+        console.error('[CertificateEmail] Error details:', errorMessage, fnError);
         throw new Error(errorMessage);
       }
 
       if (!result?.success) {
-        throw new Error(result?.error || 'Failed to send certificate email');
+        const errorMsg = result?.error || result?.hint || 'Failed to send certificate email';
+        console.error('[CertificateEmail] Function returned error:', result);
+        throw new Error(errorMsg);
       }
 
       setIsSent(true);

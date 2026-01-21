@@ -3,8 +3,10 @@ import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { insulationTestVoltageOptions } from '@/types/testOptions';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 interface TestMethodInfoProps {
   formData: any;
@@ -12,47 +14,46 @@ interface TestMethodInfoProps {
 }
 
 const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
+  const isMobile = useIsMobile();
+
   return (
-    <div className="space-y-4 md:space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-gradient-to-r from-elec-gray/10 to-elec-gray/5 rounded-xl border border-elec-yellow/30 shadow-lg">
+    <div className="space-y-4">
+      <div className={cn(
+        "grid gap-4",
+        isMobile ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 p-4 bg-gradient-to-r from-elec-gray/10 to-elec-gray/5 rounded-xl border border-elec-yellow/30"
+      )}>
         <div className="space-y-2">
-          <Label htmlFor="testMethod" className="text-sm">Test Method Applied</Label>
+          <Label htmlFor="testMethod" className="text-sm font-medium text-foreground/80">Test Method Applied</Label>
           <Input
             id="testMethod"
             value={formData.testMethod || ''}
             onChange={(e) => onUpdate('testMethod', e.target.value)}
             placeholder="BS 7671 Method 1, 2, or 3"
-            className="h-10 text-sm"
+            className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+            style={{ fontSize: '16px' }}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="testVoltage" className="text-sm">Test Voltage Applied</Label>
-          <Select 
-            value={formData.testVoltage || ''} 
+          <Label htmlFor="testVoltage" className="text-sm font-medium text-foreground/80">Test Voltage Applied</Label>
+          <MobileSelectPicker
+            value={formData.testVoltage || ''}
             onValueChange={(value) => onUpdate('testVoltage', value)}
-          >
-            <SelectTrigger className="h-10">
-              <SelectValue placeholder="Select test voltage..." />
-            </SelectTrigger>
-            <SelectContent className="bg-background z-50 max-h-[200px] overflow-y-auto">
-              {insulationTestVoltageOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            options={insulationTestVoltageOptions}
+            placeholder="Select test voltage..."
+            title="Test Voltage"
+          />
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="testNotes" className="text-sm">Test Notes & Observations</Label>
+        <Label htmlFor="testNotes" className="text-sm font-medium text-foreground/80">Test Notes & Observations</Label>
         <Textarea
           id="testNotes"
           value={formData.testNotes || ''}
           onChange={(e) => onUpdate('testNotes', e.target.value)}
           placeholder="Record any deviations from standard test procedures, limitations encountered, or additional observations..."
-          className="min-h-[80px] md:min-h-[120px] resize-none text-sm"
+          className="min-h-[100px] resize-none text-base touch-manipulation bg-card/50 border-border/30"
+          style={{ fontSize: '16px' }}
         />
       </div>
     </div>

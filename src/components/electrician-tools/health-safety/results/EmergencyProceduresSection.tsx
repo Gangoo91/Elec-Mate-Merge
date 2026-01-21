@@ -3,6 +3,8 @@ import { AlertCircle, Trash2, ChevronUp, ChevronDown, Edit2, Plus } from 'lucide
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
+import { cn } from '@/lib/utils';
 
 interface EmergencyProceduresSectionProps {
   procedures: string[];
@@ -21,6 +23,7 @@ export const EmergencyProceduresSection = ({
   onMove, 
   onAdd 
 }: EmergencyProceduresSectionProps) => {
+  const { isMobile } = useMobileEnhanced();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editValue, setEditValue] = useState('');
 
@@ -66,12 +69,19 @@ export const EmergencyProceduresSection = ({
                   <Textarea
                     value={editValue}
                     onChange={(e) => setEditValue(e.target.value)}
-                    className="min-h-[60px]"
+                    className={cn(
+                      "min-h-[60px] touch-manipulation",
+                      isMobile && "min-h-[100px] text-base"
+                    )}
                   />
                   <div className="flex gap-2">
                     <Button
                       size="sm"
                       onClick={() => handleSaveEdit(idx)}
+                      className={cn(
+                        "touch-manipulation active:scale-[0.98]",
+                        isMobile && "min-h-[44px] px-4"
+                      )}
                     >
                       Save
                     </Button>
@@ -79,6 +89,10 @@ export const EmergencyProceduresSection = ({
                       size="sm"
                       variant="outline"
                       onClick={handleCancelEdit}
+                      className={cn(
+                        "touch-manipulation active:scale-[0.98]",
+                        isMobile && "min-h-[44px] px-4"
+                      )}
                     >
                       Cancel
                     </Button>
@@ -92,17 +106,23 @@ export const EmergencyProceduresSection = ({
                       size="icon"
                       variant="ghost"
                       onClick={() => handleStartEdit(idx, procedure)}
-                      className="h-8 w-8 touch-manipulation"
+                      className={cn(
+                        "touch-manipulation active:scale-[0.95]",
+                        isMobile ? "h-11 w-11" : "h-8 w-8"
+                      )}
                     >
-                      <Edit2 className="h-4 w-4" />
+                      <Edit2 className={isMobile ? "h-5 w-5" : "h-4 w-4"} />
                     </Button>
                     <Button
                       size="icon"
                       variant="ghost"
                       onClick={() => onDelete?.(idx)}
-                      className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-100 touch-manipulation"
+                      className={cn(
+                        "text-red-500 hover:text-red-700 hover:bg-red-100 touch-manipulation active:scale-[0.95]",
+                        isMobile ? "h-11 w-11" : "h-8 w-8"
+                      )}
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className={isMobile ? "h-5 w-5" : "h-4 w-4"} />
                     </Button>
                   </div>
                 </>
@@ -111,10 +131,13 @@ export const EmergencyProceduresSection = ({
           ))}
         </div>
 
-        <Button 
+        <Button
           onClick={onAdd}
           variant="outline"
-          className="w-full mt-3"
+          className={cn(
+            "w-full mt-3 touch-manipulation active:scale-[0.98]",
+            isMobile && "min-h-[48px]"
+          )}
         >
           <Plus className="h-4 w-4 mr-2" />
           Add Procedure

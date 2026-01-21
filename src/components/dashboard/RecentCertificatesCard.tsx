@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { reportCloud, CloudReport } from '@/utils/reportCloud';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface RecentCertificatesCardProps {
   onNavigate: (section: string, reportId?: string, reportType?: string) => void;
@@ -73,6 +74,7 @@ const emptyStateVariants = {
 
 const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => {
   const [user, setUser] = useState<any>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
@@ -136,15 +138,18 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
   if (isLoading) {
     return (
       <div className="bg-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden">
-        <div className="p-4 md:p-5 lg:p-6 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center">
-              <FileText className="h-5 w-5 text-white" />
+        <div className={cn("border-b border-white/10", isMobile ? "p-3" : "p-4 md:p-5 lg:p-6")}>
+          <div className={cn("flex items-center", isMobile ? "gap-2" : "gap-3")}>
+            <div className={cn(
+              "rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center",
+              isMobile ? "w-9 h-9" : "w-10 h-10"
+            )}>
+              <FileText className={cn(isMobile ? "h-4 w-4" : "h-5 w-5", "text-white")} />
             </div>
-            <span className="text-base md:text-lg font-semibold">Recent Certificates</span>
+            <span className={cn("font-semibold", isMobile ? "text-sm" : "text-base md:text-lg")}>Recent Certificates</span>
           </div>
         </div>
-        <div className="p-4 md:p-5 lg:p-6">
+        <div className={cn(isMobile ? "p-3" : "p-4 md:p-5 lg:p-6")}>
           <LoadingSkeleton type="list" count={3} />
         </div>
       </div>
@@ -155,25 +160,31 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
   if (reports.length === 0) {
     return (
       <div className="bg-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden">
-        <div className="p-4 md:p-5 lg:p-6 border-b border-white/10">
+        <div className={cn("border-b border-white/10", isMobile ? "p-3" : "p-4 md:p-5 lg:p-6")}>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center">
-                <FileText className="h-5 w-5 text-white" />
+            <div className={cn("flex items-center", isMobile ? "gap-2" : "gap-3")}>
+              <div className={cn(
+                "rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center",
+                isMobile ? "w-9 h-9" : "w-10 h-10"
+              )}>
+                <FileText className={cn(isMobile ? "h-4 w-4" : "h-5 w-5", "text-white")} />
               </div>
-              <span className="text-base md:text-lg font-semibold">Recent Certificates</span>
+              <span className={cn("font-semibold", isMobile ? "text-sm" : "text-base md:text-lg")}>Recent Certificates</span>
             </div>
           </div>
         </div>
-        <div className="p-4 md:p-5 lg:p-6">
+        <div className={cn(isMobile ? "p-3" : "p-4 md:p-5 lg:p-6")}>
           <motion.div
             variants={emptyStateVariants}
             initial="hidden"
             animate="show"
-            className="text-center py-8 md:py-10"
+            className={cn("text-center", isMobile ? "py-6" : "py-8 md:py-10")}
           >
             <motion.div
-              className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/10 flex items-center justify-center"
+              className={cn(
+                "mx-auto mb-4 rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/10 flex items-center justify-center",
+                isMobile ? "w-16 h-16" : "w-20 h-20"
+              )}
               animate={{
                 scale: [1, 1.05, 1],
                 opacity: [0.7, 1, 0.7]
@@ -184,10 +195,10 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
                 ease: "easeInOut"
               }}
             >
-              <FileText className="h-10 w-10 text-white/40" />
+              <FileText className={cn(isMobile ? "h-8 w-8" : "h-10 w-10", "text-white/40")} />
             </motion.div>
-            <p className="text-base font-medium text-foreground mb-1">No certificates yet</p>
-            <p className="text-sm text-muted-foreground mb-5">Create your first certificate to get started</p>
+            <p className={cn("font-medium text-foreground mb-1", isMobile ? "text-sm" : "text-base")}>No certificates yet</p>
+            <p className={cn("text-muted-foreground mb-5", isMobile ? "text-xs" : "text-sm")}>Create your first certificate to get started</p>
             <Button
               onClick={() => onNavigate('minor-works')}
               className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold rounded-xl h-11 px-5 touch-manipulation"
@@ -204,28 +215,34 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
   return (
     <div className="bg-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className="p-4 md:p-5 lg:p-6 border-b border-white/10">
+      <div className={cn("border-b border-white/10", isMobile ? "p-3" : "p-4 md:p-5 lg:p-6")}>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center">
-              <FileText className="h-5 w-5 text-white" />
+          <div className={cn("flex items-center", isMobile ? "gap-2" : "gap-3")}>
+            <div className={cn(
+              "rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center",
+              isMobile ? "w-9 h-9" : "w-10 h-10"
+            )}>
+              <FileText className={cn(isMobile ? "h-4 w-4" : "h-5 w-5", "text-white")} />
             </div>
-            <span className="text-base md:text-lg font-semibold">Recent Certificates</span>
+            <span className={cn("font-semibold", isMobile ? "text-sm" : "text-base md:text-lg")}>Recent Certificates</span>
           </div>
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onNavigate('my-reports')}
-            className="rounded-full px-4 h-9 bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium touch-manipulation"
+            className={cn(
+              "rounded-full bg-white/5 hover:bg-white/10 border border-white/10 font-medium touch-manipulation",
+              isMobile ? "px-3 h-8 text-xs" : "px-4 h-9 text-sm"
+            )}
           >
-            View All <ArrowRight className="h-3.5 w-3.5 ml-1.5" />
+            View All <ArrowRight className={cn(isMobile ? "h-3 w-3 ml-1" : "h-3.5 w-3.5 ml-1.5")} />
           </Button>
         </div>
       </div>
 
       {/* Certificate Cards */}
       <motion.div
-        className="p-4 md:p-5 lg:p-6 space-y-3"
+        className={cn(isMobile ? "p-3 space-y-2" : "p-4 md:p-5 lg:p-6 space-y-3")}
         variants={containerVariants}
         initial="hidden"
         animate="show"
@@ -241,56 +258,78 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
                 variants={cardVariants}
                 layout
                 className={cn(
-                  'p-4 rounded-2xl border cursor-pointer group transition-all touch-manipulation active:scale-[0.98]',
+                  'rounded-2xl border cursor-pointer group transition-all touch-manipulation active:scale-[0.98]',
                   'hover:shadow-lg',
                   style.card,
-                  `hover:border-opacity-40 hover:shadow-${report.status === 'completed' ? 'green' : report.status === 'in-progress' ? 'blue' : 'amber'}-500/5`
+                  `hover:border-opacity-40 hover:shadow-${report.status === 'completed' ? 'green' : report.status === 'in-progress' ? 'blue' : 'amber'}-500/5`,
+                  isMobile ? 'p-3' : 'p-4'
                 )}
                 onClick={() => handleOpenCertificate(report)}
               >
-                <div className="flex items-center gap-3">
+                <div className={cn("flex items-center", isMobile ? "gap-2.5" : "gap-3")}>
                   {/* Type Icon Badge */}
                   <div className={cn(
-                    'w-12 h-12 rounded-2xl bg-gradient-to-br flex items-center justify-center flex-shrink-0',
-                    typeInfo.color
+                    'rounded-xl bg-gradient-to-br flex items-center justify-center flex-shrink-0',
+                    typeInfo.color,
+                    isMobile ? 'w-10 h-10' : 'w-12 h-12 rounded-2xl'
                   )}>
-                    <span className="text-white font-bold text-sm">{typeInfo.label}</span>
+                    <span className={cn("text-white font-bold", isMobile ? "text-xs" : "text-sm")}>{typeInfo.label}</span>
                   </div>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     {/* Type and Status Row */}
-                    <div className="flex items-center gap-2 flex-wrap mb-1.5">
-                      <span className="text-sm font-semibold text-foreground">{typeInfo.fullLabel}</span>
+                    <div className={cn("flex items-center gap-2 flex-wrap", isMobile ? "mb-1" : "mb-1.5")}>
+                      <span className={cn("font-semibold text-foreground", isMobile ? "text-xs" : "text-sm")}>{typeInfo.fullLabel}</span>
                       <span className={cn(
-                        'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium',
-                        style.badge
+                        'inline-flex items-center gap-1 rounded-full font-medium',
+                        style.badge,
+                        isMobile ? 'px-2 py-0.5 text-[10px]' : 'px-2.5 py-0.5 text-xs gap-1.5'
                       )}>
-                        <span className={cn('w-1.5 h-1.5 rounded-full', style.dot)} />
+                        <span className={cn('rounded-full', style.dot, isMobile ? 'w-1 h-1' : 'w-1.5 h-1.5')} />
                         {getStatusLabel(report.status)}
                       </span>
                     </div>
 
                     {/* Client Name */}
-                    <p className="font-medium text-sm text-foreground truncate mb-1">
+                    <p className={cn("font-medium text-foreground truncate", isMobile ? "text-xs mb-0.5" : "text-sm mb-1")}>
                       {report.client_name || 'Untitled'}
                     </p>
 
-                    {/* Address */}
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1.5">
-                      <MapPin className="w-3 h-3 flex-shrink-0" />
-                      <span className="truncate">{report.installation_address || 'No address'}</span>
-                    </div>
+                    {/* Address & Time - Stack on mobile */}
+                    {isMobile ? (
+                      <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
+                        <div className="flex items-center gap-1 min-w-0 flex-1">
+                          <MapPin className="w-2.5 h-2.5 flex-shrink-0" />
+                          <span className="truncate">{report.installation_address || 'No address'}</span>
+                        </div>
+                        <div className="flex items-center gap-1 flex-shrink-0">
+                          <Clock className="w-2.5 h-2.5" />
+                          <span>{formatTimeAgo(report.updated_at)}</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        {/* Address */}
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1.5">
+                          <MapPin className="w-3 h-3 flex-shrink-0" />
+                          <span className="truncate">{report.installation_address || 'No address'}</span>
+                        </div>
 
-                    {/* Time */}
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <Clock className="w-3 h-3 flex-shrink-0" />
-                      <span>{formatTimeAgo(report.updated_at)}</span>
-                    </div>
+                        {/* Time */}
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                          <Clock className="w-3 h-3 flex-shrink-0" />
+                          <span>{formatTimeAgo(report.updated_at)}</span>
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   {/* Chevron */}
-                  <ChevronRight className="w-5 h-5 text-white/30 group-hover:text-white/60 transition-colors flex-shrink-0" />
+                  <ChevronRight className={cn(
+                    "text-white/30 group-hover:text-white/60 transition-colors flex-shrink-0",
+                    isMobile ? "w-4 h-4" : "w-5 h-5"
+                  )} />
                 </div>
               </motion.div>
             );

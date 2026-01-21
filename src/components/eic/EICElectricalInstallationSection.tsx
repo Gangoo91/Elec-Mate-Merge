@@ -6,10 +6,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
-import { Cable } from 'lucide-react';
+import { Cable, ChevronDown } from 'lucide-react';
 import { cableSizeOptions } from '@/types/cableTypes';
 import MultiboardSetup from '@/components/testing/MultiboardSetup';
 import { DistributionBoard, createMainBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 interface EICElectricalInstallationSectionProps {
   formData: any;
@@ -19,6 +21,7 @@ interface EICElectricalInstallationSectionProps {
 }
 
 const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle }: EICElectricalInstallationSectionProps) => {
+  const isMobile = useIsMobile();
   const hasRCDProtection = formData.rcdMainSwitch === 'yes' || formData.rcdMainSwitch === 'rcbo';
   const showRCDFields = formData.rcdMainSwitch && formData.rcdMainSwitch !== 'no';
 
@@ -63,16 +66,34 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
   };
 
   return (
-    <Card className="border border-border bg-card overflow-hidden">
+    <div className={cn(isMobile ? "" : "border border-border bg-card overflow-hidden rounded-lg")}>
       <Collapsible open={isOpen} onOpenChange={onToggle}>
-        <SectionHeader 
-          title="Electrical Installation Details" 
-          icon={Cable}
-          isOpen={isOpen}
-          color="amber-500"
-        />
+        {isMobile ? (
+          <button onClick={onToggle} className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20 w-full text-left">
+            <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
+              <Cable className="h-5 w-5 text-purple-400" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-semibold text-foreground">Electrical Installation Details</h3>
+            </div>
+            <ChevronDown className={cn(
+              "h-5 w-5 text-muted-foreground transition-transform shrink-0",
+              isOpen && "rotate-180"
+            )} />
+          </button>
+        ) : (
+          <SectionHeader
+            title="Electrical Installation Details"
+            icon={Cable}
+            isOpen={isOpen}
+            color="amber-500"
+          />
+        )}
         <CollapsibleContent>
-          <CardContent className="space-y-6 p-4 sm:p-6">
+          <div className={cn(
+            "space-y-6",
+            isMobile ? "px-4 py-4" : "p-4 sm:p-6"
+          )}>
         {/* Main Switch / Switch-fuse / Circuit-breaker / RCD (IET Form) */}
         <div className="space-y-4">
           <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 flex items-center gap-2">
@@ -96,10 +117,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             <div>
               <Label htmlFor="mainProtectiveDevice" className="font-medium text-sm">Device Type *</Label>
               <Select value={formData.mainProtectiveDevice || ''} onValueChange={(value) => onUpdate('mainProtectiveDevice', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                   <SelectValue placeholder="Select device type" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                <SelectContent className="bg-background border-border text-foreground z-50">
                   <SelectItem value="main-switch">Main Switch</SelectItem>
                   <SelectItem value="switch-fuse">Switch Fuse</SelectItem>
                   <SelectItem value="circuit-breaker">Circuit-breaker</SelectItem>
@@ -124,10 +145,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             <div>
               <Label htmlFor="mainSwitchPoles" className="font-medium text-sm">No. of Poles</Label>
               <Select value={formData.mainSwitchPoles || ''} onValueChange={(value) => onUpdate('mainSwitchPoles', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                   <SelectValue placeholder="Select poles" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                <SelectContent className="bg-background border-border text-foreground z-50">
                   <SelectItem value="1">1 Pole</SelectItem>
                   <SelectItem value="2">2 Pole</SelectItem>
                   <SelectItem value="3">3 Pole</SelectItem>
@@ -141,10 +162,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             <div>
               <Label htmlFor="mainSwitchRating" className="font-medium text-sm">Current Rating (A) *</Label>
               <Select value={formData.mainSwitchRating || ''} onValueChange={(value) => onUpdate('mainSwitchRating', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                   <SelectValue placeholder="Select rating" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                <SelectContent className="bg-background border-border text-foreground z-50">
                   <SelectItem value="16">16A</SelectItem>
                   <SelectItem value="20">20A</SelectItem>
                   <SelectItem value="25">25A</SelectItem>
@@ -174,10 +195,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             <div>
               <Label htmlFor="mainSwitchVoltageRating" className="font-medium text-sm">Voltage Rating (V)</Label>
               <Select value={formData.mainSwitchVoltageRating || ''} onValueChange={(value) => onUpdate('mainSwitchVoltageRating', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                   <SelectValue placeholder="Select voltage" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                <SelectContent className="bg-background border-border text-foreground z-50">
                   <SelectItem value="230">230V</SelectItem>
                   <SelectItem value="400">400V</SelectItem>
                   <SelectItem value="other">Other</SelectItem>
@@ -187,10 +208,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             <div>
               <Label htmlFor="breakingCapacity" className="font-medium text-sm">Breaking Capacity (kA)</Label>
               <Select value={formData.breakingCapacity || ''} onValueChange={(value) => onUpdate('breakingCapacity', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                   <SelectValue placeholder="Select capacity" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                <SelectContent className="bg-background border-border text-foreground z-50">
                   <SelectItem value="3">3kA</SelectItem>
                   <SelectItem value="6">6kA</SelectItem>
                   <SelectItem value="10">10kA</SelectItem>
@@ -214,10 +235,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             <div>
               <Label htmlFor="rcdMainSwitch" className="font-medium text-sm">RCD Main Switch</Label>
               <Select value={formData.rcdMainSwitch || ''} onValueChange={handleRCDMainSwitchChange}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select RCD type" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                <SelectContent className="bg-background border-border text-foreground z-50">
                   <SelectItem value="yes">Yes</SelectItem>
                   <SelectItem value="no">No</SelectItem>
                   <SelectItem value="rcbo">RCBO</SelectItem>
@@ -230,10 +251,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
                 <div>
                   <Label htmlFor="rcdRating" className="font-medium text-sm">I<sub>Δn</sub> Rating (mA)</Label>
                   <Select value={formData.rcdRating || ''} onValueChange={(value) => onUpdate('rcdRating', value)}>
-                    <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                       <SelectValue placeholder="Select rating" />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                    <SelectContent className="bg-background border-border text-foreground z-50">
                       <SelectItem value="30">30mA</SelectItem>
                       <SelectItem value="100">100mA</SelectItem>
                       <SelectItem value="300">300mA</SelectItem>
@@ -243,10 +264,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
                 <div>
                   <Label htmlFor="rcdType" className="font-medium text-sm">RCD Type</Label>
                   <Select value={formData.rcdType || ''} onValueChange={(value) => onUpdate('rcdType', value)}>
-                    <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                    <SelectContent className="bg-background border-border text-foreground z-50">
                       <SelectItem value="ac">AC Type</SelectItem>
                       <SelectItem value="a">A Type</SelectItem>
                       <SelectItem value="b">B Type</SelectItem>
@@ -272,10 +293,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
               <div>
                 <Label htmlFor="rcdTimeDelay" className="font-medium text-sm">Rated Time Delay (ms)</Label>
                 <Select value={formData.rcdTimeDelay || ''} onValueChange={(value) => onUpdate('rcdTimeDelay', value)}>
-                  <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-blue-500 focus:ring-blue-500 h-11">
+                  <SelectTrigger className="bg-background border-border focus:border-blue-500 focus:ring-blue-500 h-11">
                     <SelectValue placeholder="Select delay" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                  <SelectContent className="bg-background border-border text-foreground z-50">
                     <SelectItem value="0">0ms (No delay)</SelectItem>
                     <SelectItem value="40">40ms</SelectItem>
                     <SelectItem value="150">150ms</SelectItem>
@@ -322,10 +343,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             <div>
               <Label htmlFor="intakeCableSize" className="font-medium text-sm">Intake Cable Size</Label>
               <Select value={formData.intakeCableSize || ''} onValueChange={(value) => onUpdate('intakeCableSize', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select cable size" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                <SelectContent className="bg-background border-border text-foreground z-50">
                   {cableSizeOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
@@ -338,10 +359,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             <div>
               <Label htmlFor="intakeCableType" className="font-medium text-sm">Intake Cable Type</Label>
               <Select value={formData.intakeCableType || ''} onValueChange={(value) => onUpdate('intakeCableType', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select cable type" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                <SelectContent className="bg-background border-border text-foreground z-50">
                   <SelectItem value="pvc">PVC</SelectItem>
                   <SelectItem value="xlpe">XLPE</SelectItem>
                   <SelectItem value="paper">Paper Insulated</SelectItem>
@@ -354,10 +375,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             <div>
               <Label htmlFor="tailsSize" className="font-medium text-sm">Meter Tails Size</Label>
               <Select value={formData.tailsSize || ''} onValueChange={(value) => onUpdate('tailsSize', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select tails size" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                <SelectContent className="bg-background border-border text-foreground z-50">
                   <SelectItem value="16mm">16mm²</SelectItem>
                   <SelectItem value="25mm">25mm²</SelectItem>
                   <SelectItem value="35mm">35mm²</SelectItem>
@@ -369,10 +390,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             <div>
               <Label htmlFor="tailsLength" className="font-medium text-sm">Meter Tails Length</Label>
               <Select value={formData.tailsLength || ''} onValueChange={(value) => onUpdate('tailsLength', value)}>
-                <SelectTrigger className="bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select length" />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
+                <SelectContent className="bg-background border-border text-foreground z-50">
                   <SelectItem value="1m">1m</SelectItem>
                   <SelectItem value="1.5m">1.5m</SelectItem>
                   <SelectItem value="2m">2m</SelectItem>
@@ -386,10 +407,10 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             </div>
           </div>
         </div>
-          </CardContent>
+          </div>
         </CollapsibleContent>
       </Collapsible>
-    </Card>
+    </div>
   );
 };
 

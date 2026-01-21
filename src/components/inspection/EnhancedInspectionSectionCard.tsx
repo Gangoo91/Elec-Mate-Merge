@@ -7,6 +7,8 @@ import { InspectionSection } from '@/data/bs7671ChecklistData';
 import EnhancedInspectionItemRow from './EnhancedInspectionItemRow';
 import EnhancedInspectionItemCard from './EnhancedInspectionItemCard';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptics } from '@/hooks/useHaptics';
 
 interface InspectionItem {
   id: string;
@@ -43,6 +45,9 @@ const EnhancedInspectionSectionCard = ({
   onBulkClearSection,
   onBulkMarkNotApplicable
 }: EnhancedInspectionSectionCardProps) => {
+  const isMobile = useIsMobile();
+  const haptics = useHaptics();
+
   const handleOutcomeChange = (itemId: string, outcome: InspectionItem['outcome']) => {
     const currentInspectionItem = inspectionItems.find(item => item.id === itemId);
 
@@ -72,6 +77,27 @@ const EnhancedInspectionSectionCard = ({
     }
   };
 
+  const handleBulkAction = (action: 'satisfactory' | 'na' | 'clear') => {
+    haptics.tap();
+    if (action === 'satisfactory' && onBulkMarkSatisfactory) {
+      onBulkMarkSatisfactory(section.id);
+      haptics.success();
+    } else if (action === 'na') {
+      if (onBulkMarkNotApplicable) {
+        onBulkMarkNotApplicable(section.id);
+      } else {
+        const allItems = inspectionItems.map(item =>
+          section.items.some(si => si.id === item.id)
+            ? { ...item, outcome: 'not-applicable' as const, inspected: false }
+            : item
+        );
+        onUpdateItem('__BULK_UPDATE__', '__BULK_UPDATE__', allItems);
+      }
+    } else if (action === 'clear' && onBulkClearSection) {
+      onBulkClearSection(section.id);
+    }
+  };
+
   const sectionItems = section.items;
   const completedItems = sectionItems.filter(sItem => {
     const inspectionItem = inspectionItems.find(item => item.id === sItem.id);
@@ -82,22 +108,48 @@ const EnhancedInspectionSectionCard = ({
   const isComplete = progressPercent === 100;
 
   return (
-    <div className="eicr-section-card">
-      <Collapsible open={isExpanded} onOpenChange={onToggle}>
-        {/* Golden accent line */}
-        <div className={cn(
-          "h-0.5 w-full transition-all duration-300",
-          isComplete ? "eicr-section-accent-complete" : "eicr-section-accent"
-        )} />
-
-        {/* Section Header */}
+    <div className={cn(isMobile && "-mx-4")}>
+      <Collapsible open={isExpanded} onOpenChange={() => { haptics.tap(); onToggle(); }}>
+        {/* Section Header - Edge to edge on mobile */}
         <CollapsibleTrigger className="w-full" asChild>
-          <button className="eicr-inspection-section-header">
-            <div className="flex items-center gap-3 flex-1 min-w-0">
-              {/* Section Number Badge */}
+          <button className={cn(
+            "w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors",
+            "bg-card/50 border-y border-border/30",
+            isExpanded && "bg-card/80",
+            "active:bg-card/90"
+          )}>
+            {/* Section Number Badge with Progress Ring */}
+            <div className="relative flex-shrink-0">
+              {/* Progress ring background */}
+              <svg className="w-12 h-12 -rotate-90">
+                <circle
+                  cx="24"
+                  cy="24"
+                  r="20"
+                  strokeWidth="3"
+                  stroke="currentColor"
+                  fill="none"
+                  className="text-border/30"
+                />
+                <circle
+                  cx="24"
+                  cy="24"
+                  r="20"
+                  strokeWidth="3"
+                  stroke="currentColor"
+                  fill="none"
+                  strokeDasharray={`${progressPercent * 1.26} 126`}
+                  strokeLinecap="round"
+                  className={cn(
+                    "transition-all duration-500",
+                    isComplete ? "text-green-500" : "text-elec-yellow"
+                  )}
+                />
+              </svg>
+              {/* Center content */}
               <div className={cn(
-                "eicr-section-number flex-shrink-0",
-                isComplete && "bg-green-500/15 text-green-400"
+                "absolute inset-0 flex items-center justify-center text-sm font-bold",
+                isComplete ? "text-green-400" : "text-elec-yellow"
               )}>
                 {isComplete ? (
                   <CheckCircle className="h-5 w-5" />
@@ -105,134 +157,89 @@ const EnhancedInspectionSectionCard = ({
                   section.sectionNumber
                 )}
               </div>
+            </div>
 
-              {/* Title and Meta */}
-              <div className="flex-1 min-w-0 text-left">
-                <h3 className={cn(
-                  "font-semibold text-sm sm:text-base truncate transition-colors",
-                  isComplete ? "text-green-400" : "text-white"
+            {/* Title and Meta */}
+            <div className="flex-1 min-w-0">
+              <h3 className={cn(
+                "font-semibold text-base truncate transition-colors",
+                isComplete ? "text-green-400" : "text-foreground"
+              )}>
+                {section.title}
+              </h3>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
+                <span>{completedCount}/{sectionItems.length} items</span>
+                <span>·</span>
+                <span className={cn(
+                  "font-medium",
+                  isComplete ? "text-green-400" : progressPercent > 0 ? "text-elec-yellow" : ""
                 )}>
-                  {section.title}
-                </h3>
-                <div className="flex items-center gap-2 text-xs text-white/50 mt-0.5">
-                  <span>{completedCount}/{sectionItems.length} items</span>
-                  {section.specialNote && (
-                    <>
-                      <span className="text-white/30">·</span>
-                      <span className="text-elec-yellow/70 truncate">{section.specialNote}</span>
-                    </>
-                  )}
-                </div>
+                  {progressPercent}%
+                </span>
               </div>
             </div>
 
-            {/* Right side: Progress + Chevron */}
-            <div className="flex items-center gap-3 flex-shrink-0">
-              {/* Progress percentage (desktop) */}
-              <span className={cn(
-                "hidden sm:block text-lg font-bold tabular-nums",
-                isComplete ? "text-green-400" : progressPercent > 0 ? "text-elec-yellow" : "text-white/40"
-              )}>
-                {progressPercent}%
-              </span>
-
-              {/* Chevron */}
-              <div className={cn(
-                "p-1.5 rounded-lg transition-all duration-200",
-                "group-hover:bg-white/10"
-              )}>
-                <ChevronDown className={cn(
-                  "h-5 w-5 text-white/50 transition-all duration-300",
-                  isExpanded && "rotate-180 text-elec-yellow"
-                )} />
-              </div>
-            </div>
+            {/* Chevron */}
+            <ChevronDown className={cn(
+              "h-5 w-5 text-muted-foreground transition-transform duration-200",
+              isExpanded && "rotate-180"
+            )} />
           </button>
         </CollapsibleTrigger>
 
-        {/* Progress bar (mobile) */}
-        {!isExpanded && (
-          <div className="sm:hidden px-4 pb-3">
-            <div className="flex items-center justify-between text-xs mb-1.5">
-              <span className="text-white/50">Progress</span>
-              <span className={cn(
-                "font-semibold",
-                isComplete ? "text-green-400" : "text-elec-yellow"
-              )}>{progressPercent}%</span>
-            </div>
-            <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className={cn(
-                  "h-full transition-all duration-500 rounded-full",
-                  isComplete ? "bg-green-500" : "bg-elec-yellow"
-                )}
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
-          </div>
-        )}
-
         <CollapsibleContent>
           {/* Quick Actions Bar */}
-          <div className="px-4 py-3 border-t border-white/5">
-            <div className="flex flex-wrap gap-2">
-              {onBulkMarkSatisfactory && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onBulkMarkSatisfactory(section.id);
-                  }}
-                  className="h-9 bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20 hover:border-green-500/50"
-                >
-                  <CheckCheck className="h-4 w-4 mr-1.5" />
-                  All OK
-                </Button>
-              )}
+          <div className={cn(
+            "flex gap-2 p-3 bg-card/30 border-b border-border/20",
+            isMobile ? "px-4 overflow-x-auto" : ""
+          )}>
+            {onBulkMarkSatisfactory && (
               <Button
                 variant="outline"
                 size="sm"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  if (onBulkMarkNotApplicable) {
-                    onBulkMarkNotApplicable(section.id);
-                  } else {
-                    const allItems = inspectionItems.map(item =>
-                      section.items.some(si => si.id === item.id)
-                        ? { ...item, outcome: 'not-applicable' as const, inspected: false }
-                        : item
-                    );
-                    onUpdateItem('__BULK_UPDATE__', '__BULK_UPDATE__', allItems);
-                  }
+                  handleBulkAction('satisfactory');
                 }}
-                className="h-9 bg-gray-500/10 border-gray-500/30 text-gray-400 hover:bg-gray-500/20 hover:border-gray-500/50"
+                className="h-10 px-3 bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20 touch-manipulation whitespace-nowrap"
               >
-                <Ban className="h-4 w-4 mr-1.5" />
-                All N/A
+                <CheckCheck className="h-4 w-4 mr-1.5" />
+                All OK
               </Button>
-              {onBulkClearSection && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onBulkClearSection(section.id);
-                  }}
-                  className="h-9 bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:text-white"
-                >
-                  <RotateCcw className="h-4 w-4 mr-1.5" />
-                  Clear
-                </Button>
-              )}
-            </div>
+            )}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleBulkAction('na');
+              }}
+              className="h-10 px-3 bg-gray-500/10 border-gray-500/30 text-gray-400 hover:bg-gray-500/20 touch-manipulation whitespace-nowrap"
+            >
+              <Ban className="h-4 w-4 mr-1.5" />
+              All N/A
+            </Button>
+            {onBulkClearSection && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleBulkAction('clear');
+                }}
+                className="h-10 px-3 bg-white/5 border-white/10 text-white/60 hover:bg-white/10 touch-manipulation whitespace-nowrap"
+              >
+                <RotateCcw className="h-4 w-4 mr-1.5" />
+                Clear
+              </Button>
+            )}
           </div>
 
           {/* Inspection Items */}
-          <div className="px-4 pb-4">
+          <div className={cn(isMobile ? "px-4 py-3" : "p-4")}>
             {/* Desktop Table View */}
             <div className="hidden md:block rounded-xl border border-white/10 overflow-hidden">
               <Table>
@@ -263,7 +270,7 @@ const EnhancedInspectionSectionCard = ({
               </Table>
             </div>
 
-            {/* Mobile Card View */}
+            {/* Mobile Card View - Compact with swipe */}
             <div className="md:hidden space-y-2">
               {section.items.map((sectionItem) => {
                 const inspectionItem = inspectionItems.find(item => item.id === sectionItem.id);
@@ -279,6 +286,15 @@ const EnhancedInspectionSectionCard = ({
                 );
               })}
             </div>
+
+            {/* Swipe hint for first section */}
+            {isMobile && section.sectionNumber === '1' && (
+              <div className="mt-4 p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg">
+                <p className="text-xs text-elec-yellow text-center">
+                  💡 Swipe right on items to mark OK, tap to expand for more options
+                </p>
+              </div>
+            )}
           </div>
         </CollapsibleContent>
       </Collapsible>

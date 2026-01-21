@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, PanInfo } from 'framer-motion';
 import { User, Trash2, FileEdit, Send, CheckCircle, XCircle, Clock, Eye, Edit, Calendar, MailOpen, AlertTriangle, Bell } from 'lucide-react';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import { Quote } from '@/types/quote';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -22,8 +23,32 @@ export function SwipeableQuoteCard({
   onView,
   delay = 0
 }: SwipeableQuoteCardProps) {
+  const { isMobile, touchSupport } = useMobileEnhanced();
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const isTouchEvent = useRef(false);
+
+  // Only enable swipe on touch devices - not desktop mouse
+  const enableSwipe = touchSupport || isMobile;
+
+  const handleDragStart = (event: MouseEvent | TouchEvent | PointerEvent) => {
+    // Track if this drag started from touch
+    isTouchEvent.current = 'touches' in event || (event as PointerEvent).pointerType === 'touch';
+    if (isTouchEvent.current || enableSwipe) {
+      setIsDragging(true);
+    }
+  };
+
+  const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    setIsDragging(false);
+    // Only process swipe if it was a touch interaction or on mobile
+    if ((isTouchEvent.current || enableSwipe) && info.offset.x < -80) {
+      onDelete();
+    } else {
+      setSwipeOffset(0);
+    }
+    isTouchEvent.current = false;
+  };
 
   const statusConfig = {
     draft: {
@@ -118,18 +143,12 @@ export function SwipeableQuoteCard({
         )}
         animate={{ x: swipeOffset }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        drag="x"
+        drag={enableSwipe ? "x" : false}
         dragConstraints={{ left: -100, right: 0 }}
-        dragElastic={0.1}
-        onDragStart={() => setIsDragging(true)}
-        onDragEnd={(_, info) => {
-          setIsDragging(false);
-          if (info.offset.x < -80) {
-            onDelete();
-          } else {
-            setSwipeOffset(0);
-          }
-        }}
+        dragElastic={0.05}
+        dragSnapToOrigin
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
         onClick={() => !isDragging && onView()}
       >
         {/* Header: Quote Number + Status Badge */}

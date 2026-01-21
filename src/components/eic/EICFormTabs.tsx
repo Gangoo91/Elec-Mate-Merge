@@ -11,6 +11,8 @@ import EICTabNavigation from './EICTabNavigation';
 import EICObservationsSection from './EICObservationsSection';
 import EICValidationPanel from './EICValidationPanel';
 import { EICObservation } from '@/hooks/useEICObservations';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 interface EICFormTabsProps {
   currentTab: EICTabValue;
@@ -62,6 +64,8 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
   onSaveDraft,
   canGenerateCertificate = true
 }) => {
+  const isMobile = useIsMobile();
+
   const handleTabChange = (tab: EICTabValue) => {
     onTabChange(tab);
   };
@@ -71,14 +75,14 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
     switch (currentTab) {
       case 'details':
         return (
-          <div className="md:max-w-5xl mx-auto space-y-6">
+          <div className={cn("space-y-6", isMobile ? "" : "md:max-w-5xl mx-auto")}>
             <EICInstallationDetails formData={formData} onUpdate={onUpdate} />
             <EICTabNavigation {...tabNavigationProps} />
           </div>
         );
       case 'inspection':
         return (
-          <div className="md:max-w-6xl mx-auto space-y-6">
+          <div className={cn("space-y-6", isMobile ? "" : "md:max-w-6xl mx-auto")}>
             <EICScheduleOfInspections
               formData={formData}
               onUpdate={onUpdate}
@@ -104,14 +108,14 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
         );
       case 'declarations':
         return (
-          <div className="md:max-w-5xl mx-auto space-y-6">
+          <div className={cn("space-y-6", isMobile ? "" : "md:max-w-5xl mx-auto")}>
             <EICDeclarations formData={formData} onUpdate={onUpdate} />
             <EICTabNavigation {...tabNavigationProps} />
           </div>
         );
       case 'certificate':
         return (
-          <div className="md:max-w-5xl mx-auto space-y-6">
+          <div className={cn("space-y-6", isMobile ? "" : "md:max-w-5xl mx-auto")}>
             <EICCertificateTab
               formData={formData}
               onUpdate={onUpdate}
@@ -130,15 +134,17 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className={cn("space-y-4 sm:space-y-6", isMobile && "-mx-4")}>
       {/* Step Indicator */}
-      <EICStepIndicator
-        currentTab={currentTab}
-        onTabChange={handleTabChange}
-        isTabComplete={isTabComplete}
-      />
+      <div className={cn(isMobile && "px-4")}>
+        <EICStepIndicator
+          currentTab={currentTab}
+          onTabChange={handleTabChange}
+          isTabComplete={isTabComplete}
+        />
+      </div>
 
-      {/* Tab Content with Animation */}
+      {/* Tab Content with Animation - edge-to-edge on mobile */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentTab}
@@ -146,6 +152,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
+          className={cn(isMobile && "px-4")}
         >
           {renderTabContent()}
         </motion.div>

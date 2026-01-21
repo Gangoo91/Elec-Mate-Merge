@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 interface TestInstrumentInfoProps {
   formData: any;
@@ -35,6 +37,7 @@ const commonTestInstruments = [
 const RECENT_INSTRUMENTS_KEY = 'recent-test-instruments';
 
 const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => {
+  const isMobile = useIsMobile();
   const [recentInstruments, setRecentInstruments] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -133,120 +136,99 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
   };
 
   return (
-    <div className="space-y-4">
-      {/* Instrument Selection - Full Width */}
-      <div className="space-y-2">
-        <Label htmlFor="testInstrumentMake" className="text-xs font-medium text-white/70 uppercase tracking-wide">
-          Test Instrument
-        </Label>
-        {!isOtherSelected ? (
-          <Select
-            value={formData.testInstrumentMake || ""}
-            onValueChange={(value) => {
-              onUpdate("testInstrumentMake", value);
-              saveToRecent(value);
-              loadInstrumentDetails(value); // Auto-fill serial & calibration
-              setSearchTerm('');
-            }}
-          >
-            <SelectTrigger className="h-11 bg-white/5 border-white/10 text-white focus:border-elec-yellow/50">
-              <SelectValue placeholder="Select test instrument..." />
-            </SelectTrigger>
-            <SelectContent className="bg-card border-border z-50 max-h-[300px] overflow-y-auto">
-              {recentInstruments.length > 0 && (
-                <>
-                  <div className="px-2 py-1.5 text-xs font-semibold text-elec-yellow/80">
-                    Recently Used
-                  </div>
-                  {recentInstruments.map((instrument) => (
-                    <SelectItem key={`recent-${instrument}`} value={instrument}>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-elec-yellow">⏱</span>
-                        {instrument}
-                      </div>
-                    </SelectItem>
-                  ))}
-                  <div className="my-1 border-t border-white/10" />
-                </>
-              )}
-              <div className="px-2 py-1.5 text-xs font-semibold text-white/50">
-                All Instruments
-              </div>
-              {filteredInstruments.map((instrument) => (
-                <SelectItem key={instrument.value} value={instrument.value}>
-                  {instrument.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        ) : (
-          <div className="space-y-2">
-            <Input
-              className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
-              placeholder="Enter make/model"
-              value={formData.customTestInstrument || ''}
-              onChange={(e) => onUpdate('customTestInstrument', e.target.value)}
-              autoComplete="test-equipment"
-              list="instrument-suggestions"
-            />
-            <datalist id="instrument-suggestions">
-              {commonTestInstruments.map((instrument) => (
-                <option key={instrument.value} value={instrument.value} />
-              ))}
-            </datalist>
-            <button
-              type="button"
-              onClick={() => handleInstrumentChange('')}
-              className="text-xs text-elec-yellow hover:text-elec-yellow/80 underline"
-            >
-              Back to dropdown selection
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Three Column Grid for Remaining Fields */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <div className={cn(
+      "space-y-4",
+      isMobile ? "" : "p-4 bg-gradient-to-r from-elec-gray/10 to-elec-gray/5 rounded-xl border border-elec-yellow/30"
+    )}>
+      <div className={cn(
+        "grid gap-4",
+        isMobile ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+      )}>
         <div className="space-y-2">
-          <Label htmlFor="testInstrumentSerial" className="text-xs font-medium text-white/70 uppercase tracking-wide">
-            Serial No.
-          </Label>
+          <Label htmlFor="testInstrumentMake" className="text-sm font-medium text-foreground/80">Test Instrument</Label>
+          {!isOtherSelected ? (
+            <MobileSelectPicker
+              value={formData.testInstrumentMake || ""}
+              onValueChange={(value) => {
+                onUpdate("testInstrumentMake", value);
+                saveToRecent(value);
+                loadInstrumentDetails(value);
+                setSearchTerm('');
+              }}
+              options={[
+                ...recentInstruments.map((instrument) => ({
+                  value: instrument,
+                  label: `⏱️ ${instrument}`,
+                })),
+                ...filteredInstruments.map((instrument) => ({
+                  value: instrument.value,
+                  label: instrument.label,
+                })),
+              ]}
+              placeholder="Select test instrument..."
+              title="Test Instrument"
+            />
+          ) : (
+            <div className="space-y-2">
+              <Input
+                className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                style={{ fontSize: '16px' }}
+                placeholder="Enter make/model"
+                value={formData.customTestInstrument || ''}
+                onChange={(e) => onUpdate('customTestInstrument', e.target.value)}
+                autoComplete="test-equipment"
+                list="instrument-suggestions"
+              />
+              <datalist id="instrument-suggestions">
+                {commonTestInstruments.map((instrument) => (
+                  <option key={instrument.value} value={instrument.value} />
+                ))}
+              </datalist>
+              <button
+                type="button"
+                onClick={() => handleInstrumentChange('')}
+                className="text-xs text-elec-yellow hover:text-elec-yellow/80 underline touch-manipulation"
+              >
+                Back to dropdown selection
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="testInstrumentSerial" className="text-sm font-medium text-foreground/80">Serial Number</Label>
           <Input
             id="testInstrumentSerial"
             value={formData.testInstrumentSerial || ''}
             onChange={(e) => onUpdate('testInstrumentSerial', e.target.value)}
             placeholder="Serial number"
-            className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+            className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+            style={{ fontSize: '16px' }}
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="calibrationDate" className="text-xs font-medium text-white/70 uppercase tracking-wide">
-            Calibration
-          </Label>
+          <Label htmlFor="calibrationDate" className="text-sm font-medium text-foreground/80">Calibration Date</Label>
           <Input
             id="calibrationDate"
             type="date"
             value={formData.calibrationDate || ''}
             onChange={(e) => onUpdate('calibrationDate', e.target.value)}
-            className="h-11 bg-white/5 border-white/10 text-white focus:border-elec-yellow/50 [color-scheme:dark]"
+            className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+            style={{ fontSize: '16px' }}
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="testTemperature" className="text-xs font-medium text-white/70 uppercase tracking-wide">
-            Temperature
-          </Label>
-          <div className="relative">
-            <Input
-              id="testTemperature"
-              value={formData.testTemperature || ''}
-              onChange={(e) => onUpdate('testTemperature', e.target.value)}
-              placeholder="20"
-              className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50 pr-8"
-            />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">°C</span>
-          </div>
+          <Label htmlFor="testTemperature" className="text-sm font-medium text-foreground/80">Test Temperature (°C)</Label>
+          <Input
+            id="testTemperature"
+            value={formData.testTemperature || ''}
+            onChange={(e) => onUpdate('testTemperature', e.target.value)}
+            placeholder="20°C"
+            className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+            style={{ fontSize: '16px' }}
+          />
         </div>
       </div>
     </div>

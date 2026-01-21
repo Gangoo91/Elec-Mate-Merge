@@ -139,7 +139,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
           touchAction: 'pan-x',
         }}
       >
-        <Table className="sot-mobile-table border-collapse">
+        <Table className="relative border-collapse w-full">
           <MobileHorizontalScrollTableHeader 
             onFillAllRcdTestButton={handleFillAllRcdTestButton}
             onFillAllAfdd={handleFillAllAfdd}

@@ -1,56 +1,62 @@
 
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-import { Calendar, Calculator, ClipboardList } from 'lucide-react';
-import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
-import { SectionHeader } from '@/components/ui/section-header';
+import { Calendar, Calculator, ClipboardList, CalendarCheck, Telescope } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptics } from '@/hooks/useHaptics';
 
 interface InspectionDetailsSectionProps {
   formData: any;
   onUpdate: (field: string, value: string) => void;
 }
 
+/**
+ * InspectionDetailsSection - Best-in-class mobile form for inspection purpose and dates
+ * Edge-to-edge design with large touch targets and native app feel
+ */
 const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSectionProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const isMobile = useIsMobile();
+  const haptics = useHaptics();
   const { toast } = useToast();
+
   // Auto-calculate next inspection date based on interval
   const calculateNextInspectionDate = () => {
     if (!formData.inspectionDate || !formData.inspectionInterval) return;
-    
+
     const inspectionDate = new Date(formData.inspectionDate);
     const intervalYears = parseInt(formData.inspectionInterval);
-    
+
     if (isNaN(intervalYears)) return;
-    
+
     const nextDate = new Date(inspectionDate);
     nextDate.setFullYear(nextDate.getFullYear() + intervalYears);
-    
+
+    haptics.success();
     onUpdate('nextInspectionDate', nextDate.toISOString().split('T')[0]);
   };
 
   // Set today's date for inspection
   const setTodaysDate = () => {
+    haptics.tap();
     const today = new Date().toISOString().split('T')[0];
     onUpdate('inspectionDate', today);
   };
 
-  // Get recommended interval based on property type (updated for simplified types)
+  // Get recommended interval based on property type
   const getRecommendedInterval = (propertyType: string) => {
     const recommendations: { [key: string]: string } = {
       'domestic': '10',
       'commercial': '5',
       'industrial': '1',
-      // Legacy support for existing forms
       'domestic-dwelling': '10',
       'commercial-office': '5',
-      'retail-shop': '5', 
+      'retail-shop': '5',
       'industrial-unit': '1',
       'healthcare-facility': '1',
       'hotel-accommodation': '1',
@@ -63,14 +69,13 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
   React.useEffect(() => {
     if (formData.description && !formData.inspectionInterval) {
       const recommended = getRecommendedInterval(formData.description);
-            onUpdate('inspectionInterval', recommended);
-            
-            // Show user notification about recommended interval
-            toast({
-              title: "Recommended Interval Set",
-              description: `${recommended} years is recommended for ${formData.description?.replace('-', ' ')} properties according to BS7671`,
-              duration: 3000,
-            });
+      onUpdate('inspectionInterval', recommended);
+
+      toast({
+        title: "Recommended Interval Set",
+        description: `${recommended} years is recommended for ${formData.description?.replace('-', ' ')} properties according to BS7671`,
+        duration: 3000,
+      });
     }
   }, [formData.description]);
 
@@ -83,164 +88,207 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
 
   const isOtherPurposeRequired = formData.purposeOfInspection === 'other';
 
+  // Section header component
+  const SectionTitle = ({ icon: Icon, title }: { icon: React.ElementType; title: string }) => (
+    <div className={cn(
+      "flex items-center gap-3 py-3",
+      isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
+    )}>
+      <div className="h-8 w-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+        <Icon className="h-4 w-4 text-blue-400" />
+      </div>
+      <h3 className="font-semibold text-foreground">{title}</h3>
+    </div>
+  );
+
+  // Input field wrapper with proper mobile styling
+  const FormField = ({
+    label,
+    required,
+    hint,
+    children
+  }: {
+    label: string;
+    required?: boolean;
+    hint?: string;
+    children: React.ReactNode;
+  }) => (
+    <div className="space-y-2">
+      <Label className="text-sm text-foreground/80">
+        {label}
+        {required && <span className="text-elec-yellow ml-1">*</span>}
+      </Label>
+      {children}
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+    </div>
+  );
+
+  // Purpose option buttons
+  const purposeOptions = [
+    { value: 'periodic', label: 'Periodic', shortLabel: 'Periodic' },
+    { value: 'change-of-occupancy', label: 'Change of Occupancy', shortLabel: 'Occupancy' },
+    { value: 'change-of-use', label: 'Change of Use', shortLabel: 'Use Change' },
+    { value: 'extension', label: 'Extension', shortLabel: 'Extension' },
+    { value: 'other', label: 'Other', shortLabel: 'Other' },
+  ];
+
+  // Interval options
+  const intervalOptions = [
+    { value: '1', label: '1 Year' },
+    { value: '3', label: '3 Years' },
+    { value: '5', label: '5 Years' },
+    { value: '10', label: '10 Years' },
+  ];
+
   return (
-    <Card className="border border-border/30 bg-card overflow-hidden">
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <SectionHeader
-          title="Purpose & Inspection Details"
-          icon={ClipboardList}
-          isOpen={isOpen}
-          color="blue-500"
-        />
-        <CollapsibleContent>
-          <CardContent className="p-4 space-y-6">
-            {/* Purpose */}
-            <div className="space-y-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="purposeOfInspection">Purpose of Inspection <span className="text-elec-yellow">*</span></Label>
-                <Select value={formData.purposeOfInspection || ''} onValueChange={(value) => onUpdate('purposeOfInspection', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select purpose" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="periodic">Periodic Inspection</SelectItem>
-                    <SelectItem value="change-of-occupancy">Change of Occupancy</SelectItem>
-                    <SelectItem value="change-of-use">Change of Use</SelectItem>
-                    <SelectItem value="extension">Extension to Installation</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              {isOtherPurposeRequired && (
-                <div className="space-y-1.5">
-                  <Label htmlFor="otherPurpose">Other Purpose <span className="text-elec-yellow">*</span></Label>
-                  <Input
-                    id="otherPurpose"
-                    value={formData.otherPurpose || ''}
-                    onChange={(e) => onUpdate('otherPurpose', e.target.value)}
-                    placeholder="Please specify the purpose"
-                  />
-                </div>
-              )}
-            </div>
-
-            <Separator className="bg-border/30" />
-
-            {/* Inspection Dates */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
-                <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                Inspection Dates
-              </h3>
-              <div className="space-y-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="inspectionDate">Date of Inspection <span className="text-elec-yellow">*</span></Label>
-                  <div className="flex gap-2">
-                    <Input
-                      id="inspectionDate"
-                      type="date"
-                      value={formData.inspectionDate || ''}
-                      onChange={(e) => onUpdate('inspectionDate', e.target.value)}
-                      className="flex-1"
-                    />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="icon"
-                      onClick={setTodaysDate}
-                      title="Set today's date"
-                    >
-                      <Calendar className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="inspectionInterval">Inspection Interval (Years) <span className="text-elec-yellow">*</span></Label>
-                  <Select value={formData.inspectionInterval || ''} onValueChange={(value) => onUpdate('inspectionInterval', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select interval" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">1 Year</SelectItem>
-                      <SelectItem value="3">3 Years</SelectItem>
-                      <SelectItem value="5">5 Years</SelectItem>
-                      <SelectItem value="10">10 Years</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {formData.description && (
-                    <p className="text-xs text-elec-yellow/80 flex items-center gap-1">
-                      <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                      Recommended: {getRecommendedInterval(formData.description)} years for this property type
-                    </p>
+    <div className={cn("space-y-6", isMobile && "-mx-4")}>
+      {/* Purpose of Inspection Section */}
+      <div>
+        <SectionTitle icon={ClipboardList} title="Purpose of Inspection" />
+        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <FormField label="Purpose" required>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {purposeOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => {
+                    haptics.tap();
+                    onUpdate('purposeOfInspection', option.value);
+                  }}
+                  className={cn(
+                    "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm px-2",
+                    formData.purposeOfInspection === option.value
+                      ? "bg-elec-yellow text-black"
+                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
                   )}
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="nextInspectionDate">Next Inspection Date</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      id="nextInspectionDate"
-                      type="date"
-                      value={formData.nextInspectionDate || ''}
-                      onChange={(e) => onUpdate('nextInspectionDate', e.target.value)}
-                      className="flex-1"
-                    />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="icon"
-                      onClick={calculateNextInspectionDate}
-                      title="Auto-calculate"
-                      disabled={!formData.inspectionDate || !formData.inspectionInterval}
-                    >
-                      <Calculator className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
+                >
+                  {isMobile ? option.shortLabel : option.label}
+                </button>
+              ))}
             </div>
+          </FormField>
 
-            <Separator className="bg-border/30" />
+          {isOtherPurposeRequired && (
+            <FormField label="Other Purpose" required>
+              <Input
+                value={formData.otherPurpose || ''}
+                onChange={(e) => onUpdate('otherPurpose', e.target.value)}
+                placeholder="Please specify the purpose"
+                className="h-11 text-base touch-manipulation"
+              />
+            </FormField>
+          )}
+        </div>
+      </div>
 
-            {/* Inspection Scope */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
+      {/* Inspection Dates Section */}
+      <div>
+        <SectionTitle icon={Calendar} title="Inspection Dates" />
+        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <FormField label="Date of Inspection" required>
+            <div className="flex gap-2">
+              <Input
+                type="date"
+                value={formData.inspectionDate || ''}
+                onChange={(e) => onUpdate('inspectionDate', e.target.value)}
+                className="flex-1 h-11 text-base touch-manipulation"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                onClick={setTodaysDate}
+                className="h-11 px-4 touch-manipulation border-border/50"
+              >
+                <CalendarCheck className="h-4 w-4" />
+                <span className="ml-2 hidden sm:inline">Today</span>
+              </Button>
+            </div>
+          </FormField>
+
+          <FormField label="Inspection Interval" required>
+            <div className="grid grid-cols-4 gap-2">
+              {intervalOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => {
+                    haptics.tap();
+                    onUpdate('inspectionInterval', option.value);
+                  }}
+                  className={cn(
+                    "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
+                    formData.inspectionInterval === option.value
+                      ? "bg-elec-yellow text-black"
+                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                  )}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+            {formData.description && (
+              <p className="text-xs text-elec-yellow/80 flex items-center gap-1 mt-2">
                 <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                Inspection Scope
-              </h3>
-              <div className="space-y-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="extentOfInspection">Extent of Inspection <span className="text-elec-yellow">*</span></Label>
-                  <Textarea
-                    id="extentOfInspection"
-                    value={formData.extentOfInspection || ''}
-                    onChange={(e) => onUpdate('extentOfInspection', e.target.value)}
-                    placeholder="Describe what areas/circuits/systems were inspected"
-                    rows={4}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Include specific areas, circuits, and systems inspected
-                  </p>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="limitationsOfInspection">Limitations of Inspection</Label>
-                  <Textarea
-                    id="limitationsOfInspection"
-                    value={formData.limitationsOfInspection || ''}
-                    onChange={(e) => onUpdate('limitationsOfInspection', e.target.value)}
-                    placeholder="Any areas not inspected or limitations encountered"
-                    rows={4}
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Note any areas that could not be accessed or inspected
-                  </p>
-                </div>
-              </div>
+                Recommended: {getRecommendedInterval(formData.description)} years for this property type
+              </p>
+            )}
+          </FormField>
+
+          <FormField label="Next Inspection Date">
+            <div className="flex gap-2">
+              <Input
+                type="date"
+                value={formData.nextInspectionDate || ''}
+                onChange={(e) => onUpdate('nextInspectionDate', e.target.value)}
+                className="flex-1 h-11 text-base touch-manipulation"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                onClick={calculateNextInspectionDate}
+                disabled={!formData.inspectionDate || !formData.inspectionInterval}
+                className="h-11 px-4 touch-manipulation border-border/50"
+              >
+                <Calculator className="h-4 w-4" />
+                <span className="ml-2 hidden sm:inline">Calc</span>
+              </Button>
             </div>
-          </CardContent>
-        </CollapsibleContent>
-      </Collapsible>
-    </Card>
+          </FormField>
+        </div>
+      </div>
+
+      {/* Inspection Scope Section */}
+      <div>
+        <SectionTitle icon={Telescope} title="Inspection Scope" />
+        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <FormField
+            label="Extent of Inspection"
+            required
+            hint="Include specific areas, circuits, and systems inspected"
+          >
+            <Textarea
+              value={formData.extentOfInspection || ''}
+              onChange={(e) => onUpdate('extentOfInspection', e.target.value)}
+              placeholder="Describe what areas/circuits/systems were inspected"
+              className="min-h-[100px] text-base touch-manipulation resize-none"
+            />
+          </FormField>
+
+          <FormField
+            label="Limitations of Inspection"
+            hint="Note any areas that could not be accessed or inspected"
+          >
+            <Textarea
+              value={formData.limitationsOfInspection || ''}
+              onChange={(e) => onUpdate('limitationsOfInspection', e.target.value)}
+              placeholder="Any areas not inspected or limitations encountered"
+              className="min-h-[100px] text-base touch-manipulation resize-none"
+            />
+          </FormField>
+        </div>
+      </div>
+    </div>
   );
 };
 

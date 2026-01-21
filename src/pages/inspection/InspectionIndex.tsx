@@ -2,7 +2,7 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import { NotificationsManager } from '@/components/inspection-app/notifications/NotificationsManager';
+import { NotificationsManager } from '@/components/notifications/NotificationsManager';
 
 // Lazy-loaded components for code splitting
 const Dashboard = lazy(() => import('@/components/Dashboard'));

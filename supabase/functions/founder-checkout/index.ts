@@ -360,12 +360,13 @@ Deno.serve(async (req) => {
           .eq("id", invite.id);
 
         // If user exists, update their profile
+        // Founders get Employer tier = full access to all areas
         if (userId) {
           await supabaseAdmin
             .from("profiles")
             .update({
               subscribed: true,
-              subscription_tier: "Founder",
+              subscription_tier: "Employer",
               subscription_start: new Date().toISOString(),
               updated_at: new Date().toISOString(),
             })

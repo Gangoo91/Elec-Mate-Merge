@@ -263,6 +263,31 @@ export const useMarkAllAsRead = () => {
         .update({ [unreadField]: 0 })
         .eq('id', conversationId);
     },
+    onMutate: async ({ conversationId, userType }) => {
+      // Cancel any outgoing refetches
+      await queryClient.cancelQueries({ queryKey: CONVERSATIONS_KEY });
+
+      // Snapshot the previous value
+      const previousConversations = queryClient.getQueryData(CONVERSATIONS_KEY);
+
+      // Optimistically update the conversation's unread count to 0
+      const unreadField = userType === 'employer' ? 'unread_employer' : 'unread_electrician';
+      queryClient.setQueryData(CONVERSATIONS_KEY, (old: any[] | undefined) => {
+        if (!old) return old;
+        return old.map(c => c.id === conversationId
+          ? { ...c, [unreadField]: 0 }
+          : c
+        );
+      });
+
+      return { previousConversations };
+    },
+    onError: (err, variables, context) => {
+      // Rollback on error
+      if (context?.previousConversations) {
+        queryClient.setQueryData(CONVERSATIONS_KEY, context.previousConversations);
+      }
+    },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: [...MESSAGES_KEY, variables.conversationId] });
       queryClient.invalidateQueries({ queryKey: CONVERSATIONS_KEY });

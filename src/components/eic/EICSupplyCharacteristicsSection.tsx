@@ -3,10 +3,11 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Zap, AlertCircle, Shield, Plug } from 'lucide-react';
+import { Zap, AlertCircle, Shield, Plug, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SectionHeader from '@/components/ui/section-header';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface EICSupplyCharacteristicsSectionProps {
   formData: any;
@@ -16,6 +17,8 @@ interface EICSupplyCharacteristicsSectionProps {
 }
 
 const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionProps> = ({ formData, onUpdate, isOpen, onToggle }) => {
+  const isMobile = useIsMobile();
+
   const handlePhasesChange = (value: string) => {
     onUpdate('phases', value);
 
@@ -46,19 +49,38 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
   };
 
   return (
-    <div className="eicr-section-card">
+    <div className={cn(isMobile ? "" : "eicr-section-card")}>
       <Collapsible open={isOpen} onOpenChange={onToggle}>
         <CollapsibleTrigger className="w-full">
-          <SectionHeader
-            title="Supply Characteristics"
-            icon={Zap}
-            isOpen={isOpen}
-            color="yellow-500"
-            completionPercentage={getCompletionPercentage()}
-          />
+          {isMobile ? (
+            <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
+              <div className="h-10 w-10 rounded-xl bg-yellow-500/20 flex items-center justify-center shrink-0">
+                <Zap className="h-5 w-5 text-yellow-400" />
+              </div>
+              <div className="flex-1 text-left min-w-0">
+                <h3 className="font-semibold text-foreground">Supply Characteristics</h3>
+                <span className="text-xs text-muted-foreground">{getCompletionPercentage()}% complete</span>
+              </div>
+              <ChevronDown className={cn(
+                "h-5 w-5 text-muted-foreground transition-transform shrink-0",
+                isOpen && "rotate-180"
+              )} />
+            </div>
+          ) : (
+            <SectionHeader
+              title="Supply Characteristics"
+              icon={Zap}
+              isOpen={isOpen}
+              color="yellow-500"
+              completionPercentage={getCompletionPercentage()}
+            />
+          )}
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="p-4 sm:p-5 md:p-6 space-y-5 sm:space-y-6">
+          <div className={cn(
+            "space-y-5 sm:space-y-6",
+            isMobile ? "px-4 py-4" : "p-4 sm:p-5 md:p-6"
+          )}>
             {/* Voltage & Frequency */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="space-y-2">
@@ -70,7 +92,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                     <SelectValue placeholder="Select voltage" />
                   </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                  <SelectContent className="z-[100] bg-background border-border text-foreground">
                     <SelectItem value="230V">230V (Single Phase)</SelectItem>
                     <SelectItem value="400V">400V (Three Phase)</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
@@ -100,7 +122,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                     <SelectValue placeholder="Select phases" />
                   </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                  <SelectContent className="z-[100] bg-background border-border text-foreground">
                     <SelectItem value="single">Single Phase</SelectItem>
                     <SelectItem value="three">Three Phase</SelectItem>
                   </SelectContent>
@@ -124,7 +146,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500 data-[state=open]:border-green-500 data-[state=open]:ring-2">
                       <SelectValue placeholder="Select earthing type" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                    <SelectContent className="z-[100] bg-background border-border text-foreground">
                       <SelectItem value="tncs">TN-C-S (PME)</SelectItem>
                       <SelectItem value="tns">TN-S</SelectItem>
                       <SelectItem value="tt">TT</SelectItem>
@@ -142,7 +164,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500 data-[state=open]:border-green-500 data-[state=open]:ring-2">
                       <SelectValue placeholder="PME status" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                    <SelectContent className="z-[100] bg-background border-border text-foreground">
                       <SelectItem value="yes">Yes</SelectItem>
                       <SelectItem value="no">No</SelectItem>
                       <SelectItem value="unknown">Unknown</SelectItem>
@@ -173,7 +195,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-blue-500 data-[state=open]:ring-2">
                     <SelectValue placeholder="Select configuration" />
                   </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                  <SelectContent className="z-[100] bg-background border-border text-foreground">
                     <SelectItem value="ac-1ph-2w">AC: 1-phase, 2-wire</SelectItem>
                     <SelectItem value="ac-2ph-3w">AC: 2-phase, 3-wire</SelectItem>
                     <SelectItem value="ac-3ph-3w">AC: 3-phase, 3-wire</SelectItem>
@@ -292,7 +314,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-orange-500 focus:ring-orange-500 data-[state=open]:border-orange-500 data-[state=open]:ring-2">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                    <SelectContent className="z-[100] bg-background border-border text-foreground">
                       <SelectItem value="B">Type B</SelectItem>
                       <SelectItem value="C">Type C</SelectItem>
                       <SelectItem value="D">Type D</SelectItem>

@@ -237,7 +237,7 @@ const BoardScannerOverlayWrapper: React.FC<{
   const [BoardScannerOverlay, setBoardScannerOverlay] = useState<React.ComponentType<any> | null>(null);
 
   React.useEffect(() => {
-    import('@/components/inspection-app/testing/BoardScannerOverlay').then((mod) => {
+    import('@/components/testing/BoardScannerOverlay').then((mod) => {
       setBoardScannerOverlay(() => mod.BoardScannerOverlay);
     }).catch(() => {
       console.warn('BoardScannerOverlay not available');

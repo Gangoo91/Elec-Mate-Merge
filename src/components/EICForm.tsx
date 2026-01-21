@@ -17,7 +17,7 @@ import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import EICFormHeader from './eic/EICFormHeader';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
-import { BoardScannerOverlay } from './inspection-app/testing/BoardScannerOverlay';
+import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';

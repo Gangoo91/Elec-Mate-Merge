@@ -87,7 +87,6 @@ const TestResultsPhotoCapture = ({ onAnalysisComplete, onClose }: TestResultsPho
         description: `${images.length + 1} of ${MAX_IMAGES} photos captured`,
       });
     } catch (error) {
-      console.error('Image compression error:', error);
       toast({
         title: "Error",
         description: "Failed to process image. Please try again.",
@@ -157,7 +156,6 @@ const TestResultsPhotoCapture = ({ onAnalysisComplete, onClose }: TestResultsPho
 
       onAnalysisComplete(data);
     } catch (error) {
-      console.error('Test results scan error:', error);
       toast({
         title: "Analysis Failed",
         description: error instanceof Error ? error.message : "Failed to analyse test results",

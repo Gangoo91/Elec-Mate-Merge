@@ -171,7 +171,6 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
       });
 
       if (error) {
-        console.error('Search error:', error);
         throw new Error(error.message || 'Failed to search regulations');
       }
 
@@ -187,7 +186,6 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
       }
 
     } catch (error) {
-      console.error('Search failed:', error);
       toast({
         title: "Search Failed",
         description: "Search is temporarily unavailable. Please try again later.",
@@ -250,7 +248,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                         setQuery(historyQuery);
                         searchInputRef.current?.focus();
                       }}
-                      className="text-xs h-7 border-gray-600 text-foreground hover:bg-gray-700"
+                      className="text-xs h-7 border-white/20 text-foreground hover:bg-white/10"
                     >
                       {historyQuery.length > 30 ? historyQuery.substring(0, 30) + '...' : historyQuery}
                     </Button>
@@ -399,7 +397,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleQueryChange(example)}
-                      className="text-xs border-gray-600 text-foreground hover:bg-gray-700 justify-start h-auto py-2 px-2 sm:px-3 whitespace-normal text-left"
+                      className="text-xs border-white/20 text-foreground hover:bg-white/10 justify-start h-auto py-2 px-2 sm:px-3 whitespace-normal text-left"
                       disabled={isSearching}
                     >
                       {example}
@@ -424,7 +422,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-100 leading-relaxed text-sm sm:text-base">{searchResult.aiSummary}</p>
+              <p className="text-white/90 leading-relaxed text-sm sm:text-base">{searchResult.aiSummary}</p>
             </CardContent>
           </Card>
 
@@ -433,7 +431,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
             <Card className="bg-card/50 border-border">
               <CardContent className="py-8 sm:py-12 text-center">
                 <div className="mx-auto w-16 h-16 sm:w-24 sm:h-24 bg-muted/50 rounded-full flex items-center justify-center mb-4">
-                  <Search className="h-8 w-8 sm:h-12 sm:w-12 text-gray-500" />
+                  <Search className="h-8 w-8 sm:h-12 sm:w-12 text-white/60" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">No Exact Matches Found</h3>
                 <p className="text-foreground/80 text-sm sm:text-base mb-6 max-w-md mx-auto px-4">
@@ -447,7 +445,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                         variant="outline"
                         size="sm"
                         onClick={() => handleSuggestedQuery(suggestion)}
-                        className="border-gray-600 text-foreground hover:bg-gray-700 text-xs sm:text-sm h-auto py-2 px-3 whitespace-normal"
+                        className="border-white/20 text-foreground hover:bg-white/10 text-xs sm:text-sm h-auto py-2 px-3 whitespace-normal"
                       >
                         {suggestion}
                       </Button>
@@ -497,7 +495,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="flex-1 sm:flex-none h-10 sm:h-8 sm:w-8 p-0 text-gray-400 hover:text-green-400"
+                                  className="flex-1 sm:flex-none h-10 sm:h-8 sm:w-8 p-0 text-white/70 hover:text-green-400"
                                   onClick={(e) => e.stopPropagation()}
                                 >
                                   {isExpanded ? (
@@ -516,7 +514,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                               <Button
                                 variant="outline"
                                 size="sm"
-                                className="flex-1 sm:flex-none h-10 sm:h-8 text-gray-400 hover:text-green-400 hover:bg-green-500/20 border-green-500/30"
+                                className="flex-1 sm:flex-none h-10 sm:h-8 text-white/70 hover:text-green-400 hover:bg-green-500/20 border-green-500/30"
                                 onClick={() => onRegulationSelect(reg.number)}
                               >
                                 <ArrowRight className="h-4 w-4 sm:mr-0 mr-2" />

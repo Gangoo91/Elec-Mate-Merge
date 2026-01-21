@@ -324,11 +324,23 @@ export function useMarkPeerMessagesAsRead() {
       // Cancel any outgoing refetches
       await queryClient.cancelQueries({ queryKey: PEER_CONVERSATIONS_KEY });
 
+      // Snapshot previous value for rollback
+      const previousConversations = queryClient.getQueryData<PeerConversation[]>(PEER_CONVERSATIONS_KEY);
+
       // Optimistically update unread_count to 0 for instant badge clearing
       queryClient.setQueryData<PeerConversation[]>(
         PEER_CONVERSATIONS_KEY,
         (old) => old?.map(c => c.id === conversationId ? { ...c, unread_count: 0 } : c)
       );
+
+      return { previousConversations, conversationId };
+    },
+    onError: (err, conversationId, context) => {
+      console.error('[usePeerChat] Failed to mark messages as read:', err);
+      // Rollback on error
+      if (context?.previousConversations) {
+        queryClient.setQueryData(PEER_CONVERSATIONS_KEY, context.previousConversations);
+      }
     },
     onSuccess: (_, conversationId) => {
       // Update local cache to mark messages as read

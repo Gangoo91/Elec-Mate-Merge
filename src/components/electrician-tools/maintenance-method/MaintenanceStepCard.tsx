@@ -4,10 +4,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { 
-  AlertTriangle, 
-  Wrench, 
-  Clock, 
+import {
+  AlertTriangle,
+  Wrench,
+  Clock,
   ShieldCheck,
   CheckCircle2,
   BookOpen,
@@ -30,6 +30,7 @@ import { MaintenanceStep } from '@/types/maintenance-method';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { StepEditSheet } from './StepEditSheet';
 
 interface MaintenanceStepCardProps {
   step: MaintenanceStep;
@@ -49,6 +50,15 @@ export const MaintenanceStepCard = ({
   const { isMobile } = useMobileEnhanced();
   const [isEditing, setIsEditing] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showEditSheet, setShowEditSheet] = useState(false);
+
+  const handleEditClick = () => {
+    if (isMobile) {
+      setShowEditSheet(true);
+    } else {
+      setIsEditing(true);
+    }
+  };
   
   // Editing state
   const [editedTitle, setEditedTitle] = useState(step.title);
@@ -255,8 +265,9 @@ export const MaintenanceStepCard = ({
         <button
           onClick={() => toggleSection(key)}
           className={cn(
-            'w-full flex items-center justify-between p-3 transition-colors',
-            headerColorClasses[color]
+            'w-full flex items-center justify-between p-3 transition-colors touch-manipulation',
+            headerColorClasses[color],
+            isMobile && 'min-h-[48px] active:opacity-80'
           )}
         >
           <div className="flex items-center gap-2 text-sm font-medium">
@@ -494,10 +505,13 @@ export const MaintenanceStepCard = ({
               <>
                 {onUpdate && (
                   <Button
-                    onClick={() => setIsEditing(true)}
+                    onClick={handleEditClick}
                     variant="outline"
                     size={isMobile ? "default" : "sm"}
-                    className={cn(isMobile && "w-full")}
+                    className={cn(
+                      "touch-manipulation active:scale-[0.98]",
+                      isMobile && "w-full min-h-[48px]"
+                    )}
                   >
                     <Edit className="h-4 w-4 mr-2" />
                     Edit
@@ -511,7 +525,10 @@ export const MaintenanceStepCard = ({
                         onClick={onMoveUp}
                         variant="outline"
                         size={isMobile ? "default" : "sm"}
-                        className={cn(isMobile && "flex-1")}
+                        className={cn(
+                          "touch-manipulation active:scale-[0.98]",
+                          isMobile && "flex-1 min-h-[48px]"
+                        )}
                       >
                         <ArrowUp className="h-4 w-4" />
                       </Button>
@@ -521,7 +538,10 @@ export const MaintenanceStepCard = ({
                         onClick={onMoveDown}
                         variant="outline"
                         size={isMobile ? "default" : "sm"}
-                        className={cn(isMobile && "flex-1")}
+                        className={cn(
+                          "touch-manipulation active:scale-[0.98]",
+                          isMobile && "flex-1 min-h-[48px]"
+                        )}
                       >
                         <ArrowDown className="h-4 w-4" />
                       </Button>
@@ -537,7 +557,10 @@ export const MaintenanceStepCard = ({
                           onClick={handleDelete}
                           variant="destructive"
                           size={isMobile ? "default" : "sm"}
-                          className={cn(isMobile && "w-full")}
+                          className={cn(
+                            "touch-manipulation active:scale-[0.98]",
+                            isMobile && "w-full min-h-[48px]"
+                          )}
                         >
                           Confirm Delete
                         </Button>
@@ -545,7 +568,10 @@ export const MaintenanceStepCard = ({
                           onClick={() => setShowDeleteConfirm(false)}
                           variant="outline"
                           size={isMobile ? "default" : "sm"}
-                          className={cn(isMobile && "w-full")}
+                          className={cn(
+                            "touch-manipulation active:scale-[0.98]",
+                            isMobile && "w-full min-h-[48px]"
+                          )}
                         >
                           Cancel
                         </Button>
@@ -556,8 +582,8 @@ export const MaintenanceStepCard = ({
                         variant="outline"
                         size={isMobile ? "default" : "sm"}
                         className={cn(
-                          "text-destructive hover:bg-destructive/10 border-destructive/30",
-                          isMobile && "w-full"
+                          "text-destructive hover:bg-destructive/10 border-destructive/30 touch-manipulation active:scale-[0.98]",
+                          isMobile && "w-full min-h-[48px]"
                         )}
                       >
                         <Trash2 className="h-4 w-4 mr-2" />
@@ -571,6 +597,17 @@ export const MaintenanceStepCard = ({
           </div>
         )}
       </CardContent>
+
+      {/* Mobile Edit Sheet */}
+      {onUpdate && (
+        <StepEditSheet
+          step={step}
+          open={showEditSheet}
+          onOpenChange={setShowEditSheet}
+          onSave={onUpdate}
+          onDelete={onDelete}
+        />
+      )}
     </Card>
   );
 };

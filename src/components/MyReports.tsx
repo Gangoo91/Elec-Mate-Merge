@@ -26,15 +26,15 @@ import { EmptyState } from '@/components/ui/empty-state';
 import { cn } from '@/lib/utils';
 import { CertificateImportDialog } from '@/components/certificates/CertificateImportDialog';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
-import { ExportToEICDialog } from '@/components/inspection-app/ExportToEICDialog';
-import { ExportToEICRDialog } from '@/components/inspection-app/ExportToEICRDialog';
+import { ExportToEICDialog } from '@/components/ExportToEICDialog';
+import { ExportToEICRDialog } from '@/components/ExportToEICRDialog';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCustomers } from '@/hooks/useCustomers';
 import { linkCustomerToReport } from '@/utils/customerHelper';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
-import { SegmentedControl, SegmentOption } from './inspection-app/certificates/SegmentedControl';
-import { CertificateCard, CertificateData } from './inspection-app/certificates/CertificateCard';
-import { CertificateActionSheet } from './inspection-app/certificates/CertificateActionSheet';
+import { SegmentedControl, SegmentOption } from './certificates/SegmentedControl';
+import { CertificateCard, CertificateData } from './certificates/CertificateCard';
+import { CertificateActionSheet } from './certificates/CertificateActionSheet';
 import {
   Dialog,
   DialogContent,

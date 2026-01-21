@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { EnhancedStepContent } from "./EnhancedStepContent";
 import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 import { motion, AnimatePresence } from "framer-motion";
+import { StepEditSheet } from "./StepEditSheet";
 
 interface InstallationStepCardProps {
   step: InstallationStep;
@@ -40,7 +41,16 @@ export const InstallationStepCard = ({
   const [editedHazards, setEditedHazards] = useState<string[]>((step as any).linkedHazards || []);
   const [editedDuration, setEditedDuration] = useState(step.estimatedDuration || '');
   const [editedRiskLevel, setEditedRiskLevel] = useState<'low' | 'medium' | 'high'>(step.riskLevel || 'low');
+  const [showEditSheet, setShowEditSheet] = useState(false);
   const { isMobile } = useMobileEnhanced();
+
+  const handleEditClick = () => {
+    if (isMobile) {
+      setShowEditSheet(true);
+    } else {
+      setIsEditing(true);
+    }
+  };
 
   const [sectionsExpanded, setSectionsExpanded] = useState({
     safety: !isMobile,
@@ -263,7 +273,7 @@ export const InstallationStepCard = ({
                     <button
                       onClick={() => toggleSection('hazards')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-amber-500/10 transition-colors",
+                        "w-full flex items-center justify-between p-4 bg-amber-500/10 transition-colors touch-manipulation active:bg-amber-500/20",
                         isMobile && "min-h-[56px]"
                       )}
                     >
@@ -338,7 +348,7 @@ export const InstallationStepCard = ({
                     <button
                       onClick={() => toggleSection('references')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-blue-500/10 transition-colors",
+                        "w-full flex items-center justify-between p-4 bg-blue-500/10 transition-colors touch-manipulation active:bg-blue-500/20",
                         isMobile && "min-h-[56px]"
                       )}
                     >
@@ -410,7 +420,7 @@ export const InstallationStepCard = ({
                     <button
                       onClick={() => toggleSection('safety')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-destructive/10 transition-colors",
+                        "w-full flex items-center justify-between p-4 bg-destructive/10 transition-colors touch-manipulation active:bg-destructive/20",
                         isMobile && "min-h-[56px]"
                       )}
                     >
@@ -495,7 +505,7 @@ export const InstallationStepCard = ({
                     <button
                       onClick={() => toggleSection('tools')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-elec-yellow/10 transition-colors",
+                        "w-full flex items-center justify-between p-4 bg-elec-yellow/10 transition-colors touch-manipulation active:bg-elec-yellow/20",
                         isMobile && "min-h-[56px]"
                       )}
                     >
@@ -570,7 +580,7 @@ export const InstallationStepCard = ({
                     <button
                       onClick={() => toggleSection('materials')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-green-500/10 transition-colors",
+                        "w-full flex items-center justify-between p-4 bg-green-500/10 transition-colors touch-manipulation active:bg-green-500/20",
                         isMobile && "min-h-[56px]"
                       )}
                     >
@@ -645,7 +655,7 @@ export const InstallationStepCard = ({
                     <button
                       onClick={() => toggleSection('checkpoints')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-purple-500/10 transition-colors",
+                        "w-full flex items-center justify-between p-4 bg-purple-500/10 transition-colors touch-manipulation active:bg-purple-500/20",
                         isMobile && "min-h-[56px]"
                       )}
                     >
@@ -720,7 +730,7 @@ export const InstallationStepCard = ({
                     <button
                       onClick={() => toggleSection('qualifications')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-amber-500/10 transition-colors",
+                        "w-full flex items-center justify-between p-4 bg-amber-500/10 transition-colors touch-manipulation active:bg-amber-500/20",
                         isMobile && "min-h-[56px]"
                       )}
                     >
@@ -803,9 +813,9 @@ export const InstallationStepCard = ({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setIsEditing(true)}
+                onClick={handleEditClick}
                 className={cn(
-                  "gap-2",
+                  "gap-2 touch-manipulation active:scale-[0.98]",
                   isMobile && "min-h-[48px] w-full"
                 )}
               >
@@ -818,7 +828,7 @@ export const InstallationStepCard = ({
                   size="sm"
                   onClick={onMoveUp}
                   className={cn(
-                    "gap-2",
+                    "gap-2 touch-manipulation active:scale-[0.98]",
                     isMobile && "min-h-[48px] w-full"
                   )}
                 >
@@ -832,7 +842,7 @@ export const InstallationStepCard = ({
                   size="sm"
                   onClick={onMoveDown}
                   className={cn(
-                    "gap-2",
+                    "gap-2 touch-manipulation active:scale-[0.98]",
                     isMobile && "min-h-[48px] w-full"
                   )}
                 >
@@ -845,7 +855,7 @@ export const InstallationStepCard = ({
                 size="sm"
                 onClick={onDelete}
                 className={cn(
-                  "text-destructive hover:text-destructive gap-2",
+                  "text-destructive hover:text-destructive gap-2 touch-manipulation active:scale-[0.98]",
                   isMobile && "min-h-[48px] w-full"
                 )}
               >
@@ -856,6 +866,15 @@ export const InstallationStepCard = ({
           )}
         </div>
       </div>
+
+      {/* Mobile Edit Sheet */}
+      <StepEditSheet
+        step={step}
+        open={showEditSheet}
+        onOpenChange={setShowEditSheet}
+        onSave={onUpdate}
+        onDelete={onDelete}
+      />
     </Card>
   );
 };

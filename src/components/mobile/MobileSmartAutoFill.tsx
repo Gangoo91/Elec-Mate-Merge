@@ -195,7 +195,7 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
                 <span className="text-elec-yellow font-bold">{selectedCircuit.circuitDesignation || 'Circuit'}</span>
               </span>
             ) : (
-              <span className="text-gray-400">Tap a circuit below</span>
+              <span className="text-white/70">Tap a circuit below</span>
             )}
           </div>
           
@@ -217,7 +217,7 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
                         {result.circuitDesignation || `Circuit ${result.circuitNumber}`}
                       </div>
                       {result.circuitDescription && (
-                        <div className="text-sm text-gray-400 mt-1 truncate">
+                        <div className="text-sm text-white/70 mt-1 truncate">
                           {result.circuitDescription}
                         </div>
                       )}
@@ -252,7 +252,7 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
                     className={`h-20 flex-col gap-2 text-sm touch-manipulation border-2 transition-all ${
                       selectedCategory === preset.category 
                         ? 'bg-elec-gray-light border-elec-yellow text-foreground shadow-[0_0_15px_rgba(255,204,0,0.3)]' 
-                        : 'bg-elec-gray border-elec-gray-light text-gray-300 hover:border-elec-yellow hover:text-foreground hover:bg-elec-gray-light'
+                        : 'bg-elec-gray border-elec-gray-light text-white/80 hover:border-elec-yellow hover:text-foreground hover:bg-elec-gray-light'
                     }`}
                   >
                     <Icon className="h-6 w-6" />
@@ -294,7 +294,7 @@ const MobileSmartAutoFill: React.FC<MobileSmartAutoFillProps> = ({ testResults, 
             <Lightbulb className="h-4 w-4 text-elec-yellow mt-0.5 shrink-0" />
             <div>
               <p className="text-foreground font-semibold mb-1">Auto-Reg Checker:</p>
-              <p className="text-gray-300">All configurations are checked against BS 7671. Any issues will be flagged for review.</p>
+              <p className="text-white/80">All configurations are checked against BS 7671. Any issues will be flagged for review.</p>
             </div>
           </div>
         </div>

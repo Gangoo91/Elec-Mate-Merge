@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,6 +21,9 @@ import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 import PDFExportProgress from '@/components/PDFExportProgress';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptics } from '@/hooks/useHaptics';
+import { cn } from '@/lib/utils';
 
 interface EICCertificateActionsProps {
   formData: any;
@@ -38,6 +40,8 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   onSaveDraft,
   onUpdate
 }) => {
+  const isMobile = useIsMobile();
+  const haptics = useHaptics();
   const { toast } = useToast();
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);

@@ -47,7 +47,6 @@ const ScribbleToTableDialog = ({ onCircuitsAdded, onClose }: ScribbleToTableDial
         });
       }
     } catch (error) {
-      console.error('Parse error:', error);
       toast({
         title: "Parse Failed",
         description: error instanceof Error ? error.message : "Failed to parse circuits",

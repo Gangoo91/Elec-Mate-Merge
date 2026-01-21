@@ -6,10 +6,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SectionHeader from '@/components/ui/section-header';
-import { Users, Calendar, FileText, ClipboardList } from 'lucide-react';
+import { Users, Calendar, FileText, ClipboardList, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import ClientSelector from '@/components/inspection-app/ClientSelector';
+import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface EICClientDetailsSectionProps {
   formData: any;
@@ -19,6 +20,8 @@ interface EICClientDetailsSectionProps {
 }
 
 const EICClientDetailsSection = ({ formData, onUpdate, isOpen, onToggle }: EICClientDetailsSectionProps) => {
+  const isMobile = useIsMobile();
+
   const handleSameAddressToggle = (checked: boolean) => {
     if (checked && formData.clientAddress) {
       onUpdate('installationAddress', formData.clientAddress);
@@ -55,19 +58,41 @@ const EICClientDetailsSection = ({ formData, onUpdate, isOpen, onToggle }: EICCl
   };
 
   return (
-    <div className="eicr-section-card">
+    <div className={cn(
+      isMobile ? "" : "eicr-section-card"
+    )}>
       <Collapsible open={isOpen} onOpenChange={onToggle}>
         <CollapsibleTrigger className="w-full">
-          <SectionHeader
-            title="Client & Installation Details"
-            icon={Users}
-            isOpen={isOpen}
-            color="amber-500"
-            completionPercentage={getCompletionPercentage()}
-          />
+          {isMobile ? (
+            // Mobile: Flat section header - no card wrapper
+            <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
+              <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
+                <Users className="h-5 w-5 text-blue-400" />
+              </div>
+              <div className="flex-1 text-left min-w-0">
+                <h3 className="font-semibold text-foreground">Client & Installation Details</h3>
+                <span className="text-xs text-muted-foreground">{getCompletionPercentage()}% complete</span>
+              </div>
+              <ChevronDown className={cn(
+                "h-5 w-5 text-muted-foreground transition-transform shrink-0",
+                isOpen && "rotate-180"
+              )} />
+            </div>
+          ) : (
+            <SectionHeader
+              title="Client & Installation Details"
+              icon={Users}
+              isOpen={isOpen}
+              color="amber-500"
+              completionPercentage={getCompletionPercentage()}
+            />
+          )}
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="p-4 sm:p-5 md:p-6 space-y-5 sm:space-y-6">
+          <div className={cn(
+            "space-y-5 sm:space-y-6",
+            isMobile ? "px-4 py-4" : "p-4 sm:p-5 md:p-6"
+          )}>
             {/* Certificate Number (Read-only) */}
             <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <div className="flex items-center gap-2 mb-2">
@@ -210,7 +235,7 @@ const EICClientDetailsSection = ({ formData, onUpdate, isOpen, onToggle }: EICCl
                     <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                    <SelectContent className="z-[100] bg-background border-border text-foreground">
                       <SelectItem value="domestic">Domestic</SelectItem>
                       <SelectItem value="commercial">Commercial</SelectItem>
                       <SelectItem value="industrial">Industrial</SelectItem>

@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { FieldTooltip } from '@/components/inspection-app/ui/field-tooltip';
+import { FieldTooltip } from '@/components/ui/field-tooltip';
 import { Users, FileText, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -14,7 +14,7 @@ import {
   EARTHING_CONDUCTOR_SIZES,
   WORK_TYPES,
 } from '@/constants/minorWorksOptions';
-import ClientSelector from '@/components/inspection-app/ClientSelector';
+import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface MWDetailsTabProps {

@@ -4,7 +4,6 @@ import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { useEICRTabs } from '@/hooks/useEICRTabs';
 import { useIsMobile } from '@/hooks/use-mobile';
 import EICRTabContent from './EICRTabContent';
-import { FileText, Search, TestTube, User, FileCheck } from 'lucide-react';
 
 interface EICRFormTabsProps {
   formData: any;
@@ -73,48 +72,45 @@ const EICRFormTabs = ({ formData, onUpdate, onOpenBoardScan, initialTab }: EICRF
   const smartTabs: SmartTab[] = [
     {
       value: "details",
-      label: "Installation Details", 
-      icon: <FileText className="h-4 w-4" />,
+      label: "Details",
+      shortLabel: "Details",
       content: <EICRTabContent tabValue="details" {...tabContentProps} />
     },
     {
       value: "inspection",
       label: "Inspection",
-      icon: <Search className="h-4 w-4" />,
+      shortLabel: "Inspect",
       content: <EICRTabContent tabValue="inspection" {...tabContentProps} />
     },
     {
-      value: "testing", 
+      value: "testing",
       label: "Testing",
-      icon: <TestTube className="h-4 w-4" />,
+      shortLabel: "Tests",
       content: <EICRTabContent tabValue="testing" {...tabContentProps} />
     },
     {
       value: "inspector",
-      label: "Inspector Details",
-      icon: <User className="h-4 w-4" />,
+      label: "Inspector",
+      shortLabel: "Inspector",
       content: <EICRTabContent tabValue="inspector" {...tabContentProps} />
     },
     {
       value: "certificate",
       label: "Certificate",
-      icon: <FileCheck className="h-4 w-4" />,
+      shortLabel: "Cert",
       content: <EICRTabContent tabValue="certificate" {...tabContentProps} />
     }
   ];
 
   return (
-    <div className="space-y-2 sm:space-y-4">
-      <SmartTabs
-        tabs={smartTabs}
-        value={currentTab}
-        onValueChange={handleTabChange}
-        className="w-full"
-        breakpoint={4} // Use dropdown when more than 4 tabs
-        completedTabs={completedTabs}
-        showProgress={true}
-      />
-    </div>
+    <SmartTabs
+      tabs={smartTabs}
+      value={currentTab}
+      onValueChange={handleTabChange}
+      className="w-full"
+      completedTabs={completedTabs}
+      showProgress={true}
+    />
   );
 };
 

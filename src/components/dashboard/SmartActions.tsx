@@ -92,62 +92,34 @@ const ActionCard = forwardRef<HTMLDivElement, { action: DashboardActionItem }>(
     const Icon = styles.icon;
 
     return (
-      <motion.div
-        ref={ref}
+      <motion.button
+        ref={ref as any}
         variants={itemVariants}
+        onClick={() => navigate(action.path)}
         className={cn(
-          // Base - relative for absolute button positioning on tablet+
-          'relative group',
-          // Glass morphism
-          'glass-premium rounded-xl',
-          // Left border accent
-          'border-l-2',
+          'w-full flex items-center gap-3 p-4 min-h-[56px]',
+          'bg-white/5 border-l-4 rounded-lg',
           styles.borderColor,
-          // Touch optimization + transform hint
-          'touch-manipulation will-change-transform'
+          'text-left touch-manipulation',
+          'active:bg-white/10 transition-colors'
         )}
       >
-        <div className="p-3 sm:p-4 sm:pr-28 flex items-start gap-3">
-          {/* Icon */}
-          <div className={cn('flex-shrink-0 p-2 rounded-lg', styles.iconBg)}>
-            <Icon className={cn('h-4 w-4 sm:h-5 sm:w-5', styles.iconColor)} />
-          </div>
+        {/* Icon */}
+        <Icon className={cn('h-5 w-5 flex-shrink-0', styles.iconColor)} />
 
-          {/* Content - stacks vertically on mobile */}
-          <div className="flex-1 min-w-0">
-            {/* Title and description */}
-            <div className="min-w-0">
-              <p className="text-sm font-medium text-white line-clamp-1">
-                {action.title}
-              </p>
-              <p className="text-xs text-white/70 mt-0.5 line-clamp-1">
-                {action.description}
-              </p>
-            </div>
-
-            {/* Action button - full width on mobile, absolute on tablet+ */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate(action.path)}
-              className={cn(
-                // Mobile: full width below text
-                'mt-2 w-full h-11 text-sm font-medium',
-                // Tablet+: absolute positioned right
-                'sm:absolute sm:right-3 sm:top-1/2 sm:-translate-y-1/2',
-                'sm:w-auto sm:mt-0 sm:px-3',
-                // Styling
-                'bg-white/[0.05] hover:bg-white/[0.1] active:bg-white/[0.15]',
-                'text-white hover:text-white',
-                'transition-colors touch-manipulation'
-              )}
-            >
-              {action.action}
-              <ChevronRight className="h-3 w-3 ml-1" />
-            </Button>
-          </div>
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold text-white truncate">
+            {action.title}
+          </p>
+          <p className="text-xs text-white/50 truncate">
+            {action.description}
+          </p>
         </div>
-      </motion.div>
+
+        {/* Chevron */}
+        <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0" />
+      </motion.button>
     );
   }
 );
@@ -155,22 +127,13 @@ ActionCard.displayName = 'ActionCard';
 
 function EmptyState() {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className={cn(
-        'glass-premium rounded-xl',
-        'p-6 sm:p-8 text-center'
-      )}
-    >
-      <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-500/10 mb-3">
-        <CheckCircle2 className="h-6 w-6 text-green-500" />
+    <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
+      <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0" />
+      <div className="min-w-0">
+        <p className="text-sm font-medium text-white">All caught up!</p>
+        <p className="text-xs text-white/50">No urgent actions required</p>
       </div>
-      <h3 className="text-base font-medium text-white mb-1">All caught up!</h3>
-      <p className="text-sm text-white/70">
-        No urgent actions required. Great work!
-      </p>
-    </motion.div>
+    </div>
   );
 }
 
@@ -219,38 +182,25 @@ export function SmartActions() {
   const sortedActions = [...urgentActions, ...warningActions, ...infoActions];
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-3"
-    >
+    <div className="space-y-3">
       {/* Section header */}
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-sm font-medium text-white">Action Required</h2>
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          {urgentActions.length > 0 && (
-            <span className="inline-flex items-center gap-1 text-[10px] font-medium text-red-400 bg-red-500/10 px-2 py-0.5 rounded-full">
-              <AlertCircle className="h-3 w-3" />
-              {urgentActions.length} urgent
-            </span>
-          )}
-          {warningActions.length > 0 && (
-            <span className="inline-flex items-center gap-1 text-[10px] font-medium text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
-              <AlertTriangle className="h-3 w-3" />
-              {warningActions.length}
-            </span>
-          )}
+          <AlertTriangle className="h-4 w-4 text-amber-400" />
+          <span className="text-sm font-semibold text-white">Action Required</span>
         </div>
+        <span className="bg-amber-500/15 text-amber-400 border-0 text-xs font-semibold px-2 py-0.5 rounded">
+          {sortedActions.length}
+        </span>
       </div>
 
       {/* Action cards */}
-      <AnimatePresence mode="popLayout">
+      <div className="space-y-2">
         {sortedActions.map((action) => (
           <ActionCard key={action.id} action={action} />
         ))}
-      </AnimatePresence>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 

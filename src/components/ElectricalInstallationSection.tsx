@@ -1,17 +1,12 @@
 
-import React, { useState, useEffect, useMemo } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
-import { SectionHeader } from '@/components/ui/section-header';
+import React, { useState, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
-import { Plus, Trash2, Copy, Palette, Calculator, Cable } from 'lucide-react';
-import CircuitTemplateSelector from './CircuitTemplateSelector';
+import { Cable, Gauge, CircuitBoard } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useHaptics } from '@/hooks/useHaptics';
 import MultiboardSetup from '@/components/testing/MultiboardSetup';
 import { DistributionBoard, createMainBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
 
@@ -20,9 +15,13 @@ interface ElectricalInstallationSectionProps {
   onUpdate: (field: string, value: any) => void;
 }
 
+/**
+ * ElectricalInstallationSection - Best-in-class mobile form for electrical installation details
+ * Edge-to-edge design with large touch targets and native app feel
+ */
 const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstallationSectionProps) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [showTemplateDialog, setShowTemplateDialog] = useState(false);
+  const isMobile = useIsMobile();
+  const haptics = useHaptics();
 
   // Migrate legacy single-board data to multi-board format
   const boards: DistributionBoard[] = useMemo(() => {
@@ -57,176 +56,144 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
     }
   };
 
-  const addCircuit = () => {
-    const circuits = formData.circuits || [];
-    const nextCircuitNumber = circuits.length > 0 
-      ? String(Math.max(...circuits.map((c: any) => parseInt(c.circuitNumber) || 0)) + 1)
-      : '1';
-    
-    const newCircuit = {
-      id: Date.now(),
-      circuitNumber: nextCircuitNumber,
-      cableSize: '',
-      cableType: '',
-      protectiveDeviceRating: '',
-      circuitDescription: ''
-    };
-    onUpdate('circuits', [...circuits, newCircuit]);
-  };
+  // Section header component
+  const SectionTitle = ({ icon: Icon, title, color = "orange" }: { icon: React.ElementType; title: string; color?: string }) => (
+    <div className={cn(
+      "flex items-center gap-3 py-3",
+      isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
+    )}>
+      <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center", `bg-${color}-500/20`)}>
+        <Icon className={cn("h-4 w-4", `text-${color}-400`)} />
+      </div>
+      <h3 className="font-semibold text-foreground">{title}</h3>
+    </div>
+  );
 
-  const duplicateCircuit = (circuitToDuplicate: any) => {
-    const circuits = formData.circuits || [];
-    const nextCircuitNumber = String(Math.max(...circuits.map((c: any) => parseInt(c.circuitNumber) || 0)) + 1);
-    
-    const newCircuit = {
-      ...circuitToDuplicate,
-      id: Date.now(),
-      circuitNumber: nextCircuitNumber,
-    };
-    onUpdate('circuits', [...circuits, newCircuit]);
-  };
+  // Input field wrapper with proper mobile styling
+  const FormField = ({
+    label,
+    required,
+    hint,
+    children
+  }: {
+    label: string;
+    required?: boolean;
+    hint?: string;
+    children: React.ReactNode;
+  }) => (
+    <div className="space-y-2">
+      <Label className="text-sm text-foreground/80">
+        {label}
+        {required && <span className="text-elec-yellow ml-1">*</span>}
+      </Label>
+      {children}
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+    </div>
+  );
 
-  const removeCircuit = (circuitId: number) => {
-    const circuits = formData.circuits || [];
-    onUpdate('circuits', circuits.filter((circuit: any) => circuit.id !== circuitId));
-  };
+  // Cable size options
+  const intakeCableSizes = ['16mm', '25mm', '35mm', '50mm', '70mm', '95mm'];
+  const tailsSizes = ['16mm', '25mm', '35mm'];
 
-  const updateCircuit = (circuitId: number, field: string, value: string) => {
-    const circuits = formData.circuits || [];
-    const updatedCircuits = circuits.map((circuit: any) => 
-      circuit.id === circuitId ? { ...circuit, [field]: value } : circuit
-    );
-    onUpdate('circuits', updatedCircuits);
-  };
-
-  const handleTemplateSelect = (templateCircuits: any[]) => {
-    onUpdate('circuits', templateCircuits);
-  };
-
-  // Auto-suggest board size based on number of circuits
-  const suggestedBoardSize = () => {
-    const circuitCount = (formData.circuits || []).length;
-    if (circuitCount <= 4) return '6-way';
-    if (circuitCount <= 6) return '8-way';
-    if (circuitCount <= 8) return '10-way';
-    if (circuitCount <= 10) return '12-way';
-    if (circuitCount <= 14) return '16-way';
-    if (circuitCount <= 16) return '18-way';
-    return '24-way';
-  };
-
-  // Get cable size recommendations
-  const getCableSizeRecommendation = (deviceRating: string) => {
-    const rating = parseInt(deviceRating);
-    if (rating <= 6) return '1.5mm';
-    if (rating <= 16) return '2.5mm';
-    if (rating <= 25) return '4.0mm';
-    if (rating <= 32) return '6.0mm';
-    if (rating <= 40) return '10mm';
-    return '16mm';
-  };
+  // Cable type options
+  const cableTypes = [
+    { value: 'swa', label: 'Steel Wire Armoured (SWA)' },
+    { value: 'pvc-singles', label: 'PVC Singles' },
+    { value: 'xlpe', label: 'XLPE' },
+    { value: 'concentric', label: 'Concentric Cable' },
+    { value: 'other', label: 'Other' },
+  ];
 
   return (
-    <Card className="border border-border/30 bg-card overflow-hidden">
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <SectionHeader
-          title="Electrical Installation Details"
-          icon={Cable}
-          isOpen={isOpen}
-          color="orange-500"
-        />
-        <CollapsibleContent>
-          <CardContent className="p-4 space-y-6">
-            {/* Distribution Boards - Multi-board support */}
-            <MultiboardSetup
-              boards={boards}
-              onBoardsChange={handleBoardsChange}
+    <div className={cn("space-y-6", isMobile && "-mx-4")}>
+      {/* Distribution Boards Section */}
+      <div>
+        <SectionTitle icon={CircuitBoard} title="Distribution Boards" color="orange" />
+        <div className={cn("py-4", isMobile ? "px-4" : "")}>
+          <MultiboardSetup
+            boards={boards}
+            onBoardsChange={handleBoardsChange}
+          />
+        </div>
+      </div>
+
+      {/* Intake Cable Section */}
+      <div>
+        <SectionTitle icon={Cable} title="Intake Cable" color="blue" />
+        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <FormField label="Intake Cable Size" required>
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+              {intakeCableSizes.map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => { haptics.tap(); onUpdate('intakeCableSize', size); }}
+                  className={cn(
+                    "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
+                    formData.intakeCableSize === size
+                      ? "bg-elec-yellow text-black"
+                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                  )}
+                >
+                  {size}²
+                </button>
+              ))}
+            </div>
+          </FormField>
+
+          <FormField label="Intake Cable Type" required>
+            <Select value={formData.intakeCableType || ''} onValueChange={(value) => { haptics.tap(); onUpdate('intakeCableType', value); }}>
+              <SelectTrigger className="h-11 touch-manipulation">
+                <SelectValue placeholder="Select cable type" />
+              </SelectTrigger>
+              <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
+                {cableTypes.map((type) => (
+                  <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </FormField>
+        </div>
+      </div>
+
+      {/* Meter Tails Section */}
+      <div>
+        <SectionTitle icon={Gauge} title="Meter Tails" color="green" />
+        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <FormField label="Tails Size" required>
+            <div className="grid grid-cols-3 gap-2">
+              {tailsSizes.map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => { haptics.tap(); onUpdate('tailsSize', size); }}
+                  className={cn(
+                    "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
+                    formData.tailsSize === size
+                      ? "bg-elec-yellow text-black"
+                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                  )}
+                >
+                  {size}²
+                </button>
+              ))}
+            </div>
+          </FormField>
+
+          <FormField label="Approximate Length (m)">
+            <Input
+              value={formData.tailsLength || ''}
+              onChange={(e) => onUpdate('tailsLength', e.target.value)}
+              placeholder="e.g., 3"
+              type="number"
+              min="0"
+              step="0.1"
+              className="h-11 text-base touch-manipulation"
             />
-
-            <Separator className="bg-border/30" />
-
-            {/* Intake Cable Details */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
-                <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                Intake Cable
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="intakeCableSize">Intake Cable Size <span className="text-elec-yellow">*</span></Label>
-                  <Select value={formData.intakeCableSize || ''} onValueChange={(value) => onUpdate('intakeCableSize', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select cable size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="16mm">16mm²</SelectItem>
-                      <SelectItem value="25mm">25mm²</SelectItem>
-                      <SelectItem value="35mm">35mm²</SelectItem>
-                      <SelectItem value="50mm">50mm²</SelectItem>
-                      <SelectItem value="70mm">70mm²</SelectItem>
-                      <SelectItem value="95mm">95mm²</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="intakeCableType">Intake Cable Type <span className="text-elec-yellow">*</span></Label>
-                  <Select value={formData.intakeCableType || ''} onValueChange={(value) => onUpdate('intakeCableType', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select cable type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="swa">Steel Wire Armoured (SWA)</SelectItem>
-                      <SelectItem value="pvc-singles">PVC Singles</SelectItem>
-                      <SelectItem value="xlpe">XLPE</SelectItem>
-                      <SelectItem value="concentric">Concentric Cable</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
-
-            <Separator className="bg-border/30" />
-
-            {/* Tails Information */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-foreground/80 uppercase tracking-wide flex items-center gap-2">
-                <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                Meter Tails
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="tailsSize">Tails Size <span className="text-elec-yellow">*</span></Label>
-                  <Select value={formData.tailsSize || ''} onValueChange={(value) => onUpdate('tailsSize', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select tails size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="16mm">16mm²</SelectItem>
-                      <SelectItem value="25mm">25mm²</SelectItem>
-                      <SelectItem value="35mm">35mm²</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="tailsLength">Approximate Length (m)</Label>
-                  <Input
-                    id="tailsLength"
-                    value={formData.tailsLength || ''}
-                    onChange={(e) => onUpdate('tailsLength', e.target.value)}
-                    placeholder="e.g., 3"
-                    type="number"
-                    min="0"
-                    step="0.1"
-                  />
-                </div>
-              </div>
-            </div>
-
-          </CardContent>
-        </CollapsibleContent>
-      </Collapsible>
-    </Card>
+          </FormField>
+        </div>
+      </div>
+    </div>
   );
 };
 

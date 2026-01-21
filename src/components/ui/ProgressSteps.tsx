@@ -45,6 +45,7 @@ export const ProgressSteps: React.FC<ProgressStepsProps> = ({
         steps={steps}
         currentStep={currentStep}
         completedSteps={completedSteps}
+        onStepClick={onStepClick}
         className={className}
       />
     );
@@ -223,32 +224,52 @@ const VerticalSteps: React.FC<Omit<ProgressStepsProps, 'orientation' | 'compact'
 
 /**
  * Compact progress indicator for mobile
- * Shows "Step X of Y" with progress bar
+ * Shows tappable step dots with current step label
  */
 const CompactProgressSteps: React.FC<{
   steps: Step[];
   currentStep: number;
   completedSteps?: Set<number>;
+  onStepClick?: (stepIndex: number) => void;
   className?: string;
-}> = ({ steps, currentStep, completedSteps, className }) => {
-  const progress = ((currentStep + 1) / steps.length) * 100;
+}> = ({ steps, currentStep, completedSteps, onStepClick, className }) => {
   const currentStepData = steps[currentStep];
 
   return (
     <div className={cn('space-y-2', className)}>
-      <div className="flex items-center justify-between text-sm">
+      {/* Current step label and position */}
+      <div className="flex items-center justify-between text-sm px-1">
         <span className="font-medium text-foreground">
           {currentStepData?.label}
         </span>
-        <span className="text-muted-foreground">
-          Step {currentStep + 1} of {steps.length}
+        <span className="text-muted-foreground text-xs">
+          {currentStep + 1}/{steps.length}
         </span>
       </div>
-      <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-        <div
-          className="h-full bg-elec-yellow transition-all duration-300 rounded-full"
-          style={{ width: `${progress}%` }}
-        />
+
+      {/* Tappable step indicators */}
+      <div className="flex items-center gap-1.5">
+        {steps.map((step, index) => {
+          const isCompleted = completedSteps?.has(index) || index < currentStep;
+          const isCurrent = index === currentStep;
+
+          return (
+            <button
+              key={step.id}
+              onClick={() => onStepClick?.(index)}
+              disabled={!onStepClick}
+              className={cn(
+                'flex-1 h-2 rounded-full transition-all duration-200 touch-manipulation',
+                isCurrent && 'bg-elec-yellow',
+                isCompleted && !isCurrent && 'bg-elec-yellow/60',
+                !isCompleted && !isCurrent && 'bg-muted',
+                onStepClick && 'active:scale-95 cursor-pointer',
+                !onStepClick && 'cursor-default'
+              )}
+              aria-label={`${step.label} - Step ${index + 1}`}
+            />
+          );
+        })}
       </div>
     </div>
   );
