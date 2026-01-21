@@ -135,6 +135,9 @@ Deno.serve(async (req: Request) => {
     const completedDocument = await waitForPDFGeneration(document.id);
     console.log('[generate-eicr-pdf] PDF generated successfully');
 
+    // Calculate expiry (PDF Monkey URLs typically expire after 7 days)
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+
     return new Response(
       JSON.stringify({
         success: true,
@@ -142,6 +145,7 @@ Deno.serve(async (req: Request) => {
         pdfUrl: completedDocument.download_url,
         downloadUrl: completedDocument.download_url,
         previewUrl: completedDocument.preview_url,
+        expiresAt,
       }),
       {
         headers: {

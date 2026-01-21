@@ -16,14 +16,13 @@ import {
   Printer,
   Copy,
   Code,
-  Loader2,
   Wand2
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import PDFExportProgress from '@/components/PDFExportProgress';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
+import { EmailCertificateDialog } from '@/components/certificate-completion';
+import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 
 interface EICCertificateActionsProps {
   formData: any;
@@ -46,8 +45,18 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   const [exportStatus, setExportStatus] = useState<'preparing' | 'generating' | 'complete' | 'error'>('preparing');
   const [jsonPreview, setJsonPreview] = useState<string>('{}');
   const [showEmailDialog, setShowEmailDialog] = useState(false);
-  const [emailRecipient, setEmailRecipient] = useState('');
-  const [isSendingEmail, setIsSendingEmail] = useState(false);
+
+  // Certificate email hook for professional email dialog
+  const certificateEmail = useCertificateEmail({
+    certificateType: 'EIC',
+    reportId,
+    certificateNumber: formData.certificateNumber,
+    clientName: formData.clientName,
+    clientEmail: formData.clientEmail,
+    installationAddress: formData.installationAddress,
+    inspectionDate: formData.installationDate,
+    companyName: formData.companyName,
+  });
 
   // Validation checks
   const hasRequiredInstallationDetails = formData.clientName && formData.installationAddress && formData.installationDate;
@@ -519,9 +528,38 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       if (!functionData?.success || !functionData?.pdfUrl) {
         throw new Error(functionData?.error || 'No PDF URL returned');
       }
-      
+
+      setExportProgress(80);
+
+      // Save PDF URL to database for later preview/retrieval
+      const updateData: Record<string, any> = {
+        pdf_url: functionData.pdfUrl,
+        pdf_generated_at: new Date().toISOString(),
+      };
+
+      if (functionData.documentId) {
+        updateData.pdf_document_id = functionData.documentId;
+      }
+
+      if (functionData.expiresAt) {
+        updateData.pdf_expires_at = functionData.expiresAt;
+      }
+
+      // Update by report_id (the string ID)
+      const { error: updateError } = await supabase
+        .from('reports')
+        .update(updateData)
+        .eq('report_id', reportId);
+
+      if (updateError) {
+        console.error('[EIC PDF] Failed to save PDF URL to database:', updateError);
+        // Don't throw - still allow download even if save fails
+      } else {
+        console.log('[EIC PDF] PDF URL saved to database successfully');
+      }
+
       setExportProgress(90);
-      
+
       // Download the PDF with professional filename
       const { generatePdfFilename } = await import('@/utils/pdfFilenameGenerator');
       const filename = generatePdfFilename(
@@ -586,68 +624,17 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       });
       return;
     }
-    
-    // Pre-fill with client email if available
-    if (formData.clientEmail) {
-      setEmailRecipient(formData.clientEmail);
-    }
-    
+
+    certificateEmail.reset();
     setShowEmailDialog(true);
   };
 
-  const handleSendEmail = async () => {
-    if (!emailRecipient || !emailRecipient.includes('@')) {
-      toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email address.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsSendingEmail(true);
-
-    try {
-      // Call the Resend-based edge function to generate PDF and send email
-      const { data: result, error: fnError } = await supabase.functions.invoke('send-certificate-resend', {
-        body: {
-          reportId: reportId,
-          recipientEmail: emailRecipient,
-        }
-      });
-
-      if (fnError) {
-        let errorMessage = fnError.message;
-        try {
-          const parsed = JSON.parse(fnError.message);
-          errorMessage = parsed.error || parsed.message || fnError.message;
-        } catch {
-          // Keep original message
-        }
-        throw new Error(errorMessage);
-      }
-
-      if (!result?.success) {
-        throw new Error(result?.error || 'Failed to send certificate email');
-      }
-
-      toast({
-        title: "Certificate Sent",
-        description: `EIC certificate sent successfully to ${emailRecipient}`,
-      });
-
-      setShowEmailDialog(false);
-      setEmailRecipient('');
-
-    } catch (error) {
-      toast({
-        title: "Email Failed",
-        description: error instanceof Error ? error.message : "Failed to send certificate email.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSendingEmail(false);
-    }
+  const handleSendEmail = async (email: string, cc?: string[], message?: string) => {
+    await certificateEmail.sendCertificateEmail({
+      recipientEmail: email,
+      cc,
+      customMessage: message,
+    });
   };
 
   const generateTestJSON = async (reportId: string) => {
@@ -1111,67 +1098,20 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         status={exportStatus}
       />
 
-      {/* Email Dialog */}
-      <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Email EIC Certificate</DialogTitle>
-            <DialogDescription>
-              Enter the recipient's email address. The certificate will be generated and sent as a PDF attachment.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
-                Recipient Email
-              </label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="client@example.com"
-                value={emailRecipient}
-                onChange={(e) => setEmailRecipient(e.target.value)}
-                disabled={isSendingEmail}
-              />
-            </div>
-            {formData.clientEmail && emailRecipient !== formData.clientEmail && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setEmailRecipient(formData.clientEmail)}
-                className="w-full"
-              >
-                Use Client Email: {formData.clientEmail}
-              </Button>
-            )}
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setShowEmailDialog(false)}
-              disabled={isSendingEmail}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleSendEmail}
-              disabled={isSendingEmail || !emailRecipient}
-            >
-              {isSendingEmail ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <Mail className="h-4 w-4 mr-2" />
-                  Send Certificate
-                </>
-              )}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* Professional Email Dialog */}
+      <EmailCertificateDialog
+        open={showEmailDialog}
+        onOpenChange={setShowEmailDialog}
+        certificateType="EIC"
+        certificateNumber={formData.certificateNumber}
+        clientName={formData.clientName}
+        clientEmail={formData.clientEmail}
+        installationAddress={formData.installationAddress}
+        inspectionDate={formData.installationDate}
+        companyName={formData.companyName}
+        onSend={handleSendEmail}
+        isLoading={certificateEmail.isLoading}
+      />
     </>
   );
 };

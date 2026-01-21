@@ -8,6 +8,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import SectionHeader from '@/components/ui/section-header';
 import { Users, Calendar, FileText, ClipboardList } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import ClientSelector from '@/components/inspection-app/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface EICClientDetailsSectionProps {
   formData: any;
@@ -22,6 +24,18 @@ const EICClientDetailsSection = ({ formData, onUpdate, isOpen, onToggle }: EICCl
       onUpdate('installationAddress', formData.clientAddress);
     }
     onUpdate('sameAsClientAddress', checked ? 'true' : 'false');
+  };
+
+  const handleSelectCustomer = (customer: Customer | null) => {
+    if (customer) {
+      onUpdate('clientName', customer.name || '');
+      onUpdate('clientEmail', customer.email || '');
+      onUpdate('clientPhone', customer.phone || '');
+      onUpdate('clientAddress', customer.address || '');
+      if (formData.sameAsClientAddress === 'true' && customer.address) {
+        onUpdate('installationAddress', customer.address);
+      }
+    }
   };
 
   // Calculate completion percentage
@@ -76,6 +90,10 @@ const EICClientDetailsSection = ({ formData, onUpdate, isOpen, onToggle }: EICCl
                 <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
                 Client Information
               </h4>
+
+              {/* Client Selector */}
+              <ClientSelector onSelectCustomer={handleSelectCustomer} />
+
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="clientName" className="text-sm">Client Name *</Label>

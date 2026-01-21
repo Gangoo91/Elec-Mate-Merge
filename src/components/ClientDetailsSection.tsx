@@ -11,6 +11,8 @@ import { Separator } from '@/components/ui/separator';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Users } from 'lucide-react';
+import ClientSelector from '@/components/inspection-app/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface ClientDetailsSectionProps {
   formData: any;
@@ -25,6 +27,18 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
       onUpdate('installationAddress', formData.clientAddress);
     }
     onUpdate('sameAsClientAddress', checked ? 'true' : 'false');
+  };
+
+  const handleSelectCustomer = (customer: Customer | null) => {
+    if (customer) {
+      onUpdate('clientName', customer.name || '');
+      onUpdate('clientEmail', customer.email || '');
+      onUpdate('clientPhone', customer.phone || '');
+      onUpdate('clientAddress', customer.address || '');
+      if (formData.sameAsClientAddress === 'true' && customer.address) {
+        onUpdate('installationAddress', customer.address);
+      }
+    }
   };
 
   const handleLastInspectionChange = (value: string) => {
@@ -58,6 +72,10 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                 <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
                 Client Information
               </h3>
+
+              {/* Client Selector */}
+              <ClientSelector onSelectCustomer={handleSelectCustomer} />
+
               <div className="space-y-4">
                 <div className="space-y-1.5">
                   <Label htmlFor="clientName">Client Name <span className="text-elec-yellow">*</span></Label>

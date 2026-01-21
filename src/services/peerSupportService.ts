@@ -132,9 +132,9 @@ export const peerSupporterService = {
 
     if (error && error.code !== 'PGRST116') throw error;
 
-    // RPC returns an array, get first item
-    const profile = Array.isArray(data) ? data[0] : data;
-    return profile as unknown as PeerSupporter | null;
+    // RPC returns an array, get first item - ensure we return null not undefined
+    const profile = Array.isArray(data) && data.length > 0 ? data[0] : data;
+    return (profile ?? null) as PeerSupporter | null;
   },
 
   /**
@@ -260,9 +260,9 @@ export const peerConversationService = {
       `)
       .order('last_message_at', { ascending: false });
 
-    // If user is a supporter, get conversations where they are the supporter
+    // If user is a supporter with a valid ID, get conversations where they are the supporter
     // Otherwise, get conversations where they are the seeker
-    if (supporterProfile) {
+    if (supporterProfile?.id) {
       query = query.or(`seeker_id.eq.${user.id},supporter_id.eq.${supporterProfile.id}`);
     } else {
       query = query.eq('seeker_id', user.id);

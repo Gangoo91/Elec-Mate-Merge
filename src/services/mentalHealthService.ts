@@ -111,13 +111,28 @@ export const journalService = {
       .order('time', { ascending: false })
       .limit(100);
 
-    if (error) throw error;
+    if (error) {
+      console.error('[journalService.getAll] Error:', error);
+      throw error;
+    }
     return data || [];
   },
 
   async create(entry: JournalEntry): Promise<JournalEntry> {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('Not authenticated');
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError) {
+      console.error('[journalService.create] Auth error:', authError);
+      throw new Error(`Authentication failed: ${authError.message}`);
+    }
+
+    if (!user) {
+      console.error('[journalService.create] No user found');
+      throw new Error('Not authenticated');
+    }
+
+    console.log('[journalService.create] Creating entry for user:', user.id);
+    console.log('[journalService.create] Entry data:', { date: entry.date, time: entry.time, mood: entry.mood });
 
     const { data, error } = await supabase
       .from('mental_health_journal_entries')
@@ -136,7 +151,14 @@ export const journalService = {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('[journalService.create] Insert error:', error);
+      console.error('[journalService.create] Error code:', error.code);
+      console.error('[journalService.create] Error details:', error.details);
+      throw error;
+    }
+
+    console.log('[journalService.create] Successfully created entry:', data?.id);
     return data;
   },
 
@@ -207,13 +229,27 @@ export const safetyPlanService = {
       .select('*')
       .single();
 
-    if (error && error.code !== 'PGRST116') throw error; // PGRST116 = no rows
+    if (error && error.code !== 'PGRST116') {
+      console.error('[safetyPlanService.get] Error:', error);
+      throw error;
+    }
     return data;
   },
 
   async upsert(plan: SafetyPlan): Promise<SafetyPlan> {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('Not authenticated');
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError) {
+      console.error('[safetyPlanService.upsert] Auth error:', authError);
+      throw new Error(`Authentication failed: ${authError.message}`);
+    }
+
+    if (!user) {
+      console.error('[safetyPlanService.upsert] No user found');
+      throw new Error('Not authenticated');
+    }
+
+    console.log('[safetyPlanService.upsert] Saving plan for user:', user.id);
 
     const { data, error } = await supabase
       .from('mental_health_safety_plans')
@@ -230,7 +266,14 @@ export const safetyPlanService = {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('[safetyPlanService.upsert] Upsert error:', error);
+      console.error('[safetyPlanService.upsert] Error code:', error.code);
+      console.error('[safetyPlanService.upsert] Error details:', error.details);
+      throw error;
+    }
+
+    console.log('[safetyPlanService.upsert] Successfully saved plan:', data?.id);
     return data;
   }
 };

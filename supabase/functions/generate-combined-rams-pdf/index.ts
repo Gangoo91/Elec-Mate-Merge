@@ -5,7 +5,96 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const COMBINED_RAMS_TEMPLATE_ID = '5BF63AF1-015E-4D45-BE84-574634897B01';
+const COMBINED_RAMS_TEMPLATE_ID = '5EE6A088-63C9-49C6-8FF0-C637CEAA17CA';
+
+/**
+ * Format control measures with proper line breaks between sections
+ */
+function formatControls(controls: string): string {
+  if (!controls) return '';
+
+  const sections = [
+    'PRIMARY ACTION:',
+    'ELIMINATE:',
+    'SUBSTITUTE:',
+    'ENGINEERING CONTROLS:',
+    'ENGINEER CONTROLS:',
+    'ADMINISTRATIVE CONTROLS:',
+    'PPE REQUIREMENTS:',
+    'PPE:',
+    'VERIFICATION:',
+    'COMPETENCY REQUIREMENT:',
+    'EQUIPMENT STANDARDS:',
+    'REGULATION:',
+  ];
+
+  let formatted = controls;
+
+  sections.forEach(section => {
+    formatted = formatted.replace(
+      new RegExp(section, 'gi'),
+      `\n\n${section}`
+    );
+  });
+
+  formatted = formatted.replace(/\n{3,}/g, '\n\n');
+
+  return formatted.trim();
+}
+
+/**
+ * Format step descriptions with proper line breaks between numbered items
+ */
+function formatDescription(description: string): string {
+  if (!description) return '';
+
+  let formatted = description;
+
+  // Add line breaks before numbered items (1., 2., 3., etc.)
+  formatted = formatted.replace(/(\d+\.)\s/g, '\n\n$1 ');
+
+  // Add line breaks before bullet points
+  formatted = formatted.replace(/([•\-])\s/g, '\n\n$1 ');
+
+  // Clean up multiple consecutive line breaks
+  formatted = formatted.replace(/\n{3,}/g, '\n\n');
+
+  return formatted.trim();
+}
+
+/**
+ * Format safety requirements with proper line breaks between categories
+ */
+function formatSafetyText(text: string): string {
+  if (!text) return '';
+
+  let formatted = text;
+
+  // Add line breaks before safety category keywords
+  const safetyKeywords = [
+    'administrative control',
+    'engineering control',
+    'engineering:',
+    'PPE:',
+    'elimination',
+    'substitution',
+    'always follow',
+    'verify',
+    'record'
+  ];
+
+  safetyKeywords.forEach(keyword => {
+    formatted = formatted.replace(
+      new RegExp(`(;\\s*)(${keyword})`, 'gi'),
+      `\n\n$2`
+    );
+  });
+
+  // Clean up multiple consecutive line breaks
+  formatted = formatted.replace(/\n{3,}/g, '\n\n');
+
+  return formatted.trim();
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -77,7 +166,7 @@ serve(async (req) => {
           likelihood: risk.likelihood,
           severity: risk.severity,
           riskRating: risk.riskRating,
-          controls: risk.controls,
+          controls: formatControls(risk.controls),
           residualRisk: risk.residualRisk,
           furtherAction: risk.furtherAction || "",
           responsible: risk.responsible || ramsData.assessor,
@@ -118,10 +207,10 @@ serve(async (req) => {
           id: step.id || `step-${step.stepNumber}`,
           stepNumber: step.stepNumber,
           title: step.title,
-          description: step.description,
+          description: formatDescription(step.description),
           estimatedDuration: step.estimatedDuration,
           riskLevel: step.riskLevel,
-          safetyRequirements: step.safetyRequirements || [],
+          safetyRequirements: (step.safetyRequirements || []).map((req: string) => formatSafetyText(req)),
           equipmentNeeded: step.equipmentNeeded || [],
           qualifications: step.qualifications || [],
           isCompleted: step.isCompleted || false,

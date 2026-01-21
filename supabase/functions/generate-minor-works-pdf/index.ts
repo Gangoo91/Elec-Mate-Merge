@@ -109,13 +109,17 @@ serve(async (req) => {
 
         if (documentStatus === 'success') {
           console.log('[MINOR-WORKS-PDF] PDF generated successfully');
+          // Calculate expiry (PDF Monkey URLs typically expire after 7 days)
+          const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+
           return new Response(
             JSON.stringify({
               success: true,
               pdfUrl: statusData.document.download_url,
               documentId: statusData.document.id,
               previewUrl: statusData.document.preview_url,
-              status: statusData.document.status
+              status: statusData.document.status,
+              expiresAt,
             }),
             {
               headers: { ...corsHeaders, 'Content-Type': 'application/json' }

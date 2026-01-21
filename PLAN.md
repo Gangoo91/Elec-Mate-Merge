@@ -1,143 +1,75 @@
-# Cost Engineer Business Settings - Input Clearing Fix
+# Client Selector Implementation Plan
 
-## Problem
+## Problem Identified
 
-In the Business Settings dialog, users cannot clear the first digit or zero from number input fields. When they try to delete all characters, the field immediately reverts to `0`.
+The original implementation modified the WRONG files:
+- Modified `src/components/inspection-app/eic/EICClientDetailsSection.tsx` but EIC uses `src/components/inspection/eic/EICClientDetailsSection.tsx`
+- Modified `src/components/inspection-app/minor-works/WorkDetailsSection.tsx` but Minor Works uses `src/components/minor-works/MWDetailsTab.tsx`
 
-**Root Cause:** The onChange handlers use `Number(e.target.value) || 0` which:
-- Converts empty string `""` to `0` (since `Number("") === 0` is falsy)
-- Prevents users from having a temporarily empty field while typing
+## Correct Files to Modify
 
-**Affected File:** `src/components/electrician-tools/cost-engineer/BusinessSettingsDialog.tsx`
-
-**All 14 affected fields:**
-- Van Costs, Tool Depreciation, Business Insurance, Admin Costs, Marketing
-- Electrician Rate, Apprentice Rate, Target Personal Income
-- Minimum/Target/Premium Profit Margins
-- Travel per Job, Permits/Parking, Waste Disposal
-
----
-
-## Solution
-
-Use string state for input display values and only convert to numbers when valid. This allows empty fields while typing.
-
-### Approach: Track raw input strings separately
-
-1. **Add string state for input values:**
-```tsx
-const [inputValues, setInputValues] = useState<Record<string, string>>({});
-```
-
-2. **Initialize from settings on mount/open:**
-```tsx
-useEffect(() => {
-  if (open) {
-    setInputValues({
-      'monthlyOverheads.vanCosts': settings.monthlyOverheads.vanCosts.toString(),
-      'monthlyOverheads.toolDepreciation': settings.monthlyOverheads.toolDepreciation.toString(),
-      // ... etc for all 14 fields
-    });
-  }
-}, [open, settings]);
-```
-
-3. **Create helper for input props:**
-```tsx
-const getInputProps = (path: string, category: keyof BusinessSettings, field: string) => ({
-  value: inputValues[path] ?? (settings[category] as any)[field].toString(),
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    // Allow empty string for typing
-    setInputValues(prev => ({ ...prev, [path]: val }));
-    // Update settings only if valid number
-    const num = parseFloat(val);
-    if (!isNaN(num)) {
-      setSettings(prev => ({
-        ...prev,
-        [category]: { ...(prev[category] as any), [field]: num }
-      }));
-    }
-  },
-  onBlur: () => {
-    // Normalize empty/invalid to 0 on blur
-    const val = inputValues[path];
-    if (val === '' || val === undefined || isNaN(parseFloat(val))) {
-      setInputValues(prev => ({ ...prev, [path]: '0' }));
-      setSettings(prev => ({
-        ...prev,
-        [category]: { ...(prev[category] as any), [field]: 0 }
-      }));
-    }
-  }
-});
-```
-
-4. **Update each MobileInput:**
-
-**Before:**
-```tsx
-<MobileInput
-  label="Van Costs"
-  hint="Lease, fuel, insurance"
-  type="number"
-  inputMode="decimal"
-  unit="£"
-  value={settings.monthlyOverheads.vanCosts.toString()}
-  onChange={(e) => setSettings({
-    ...settings,
-    monthlyOverheads: { ...settings.monthlyOverheads, vanCosts: Number(e.target.value) || 0 }
-  })}
-/>
-```
-
-**After:**
-```tsx
-<MobileInput
-  label="Van Costs"
-  hint="Lease, fuel, insurance"
-  type="number"
-  inputMode="decimal"
-  unit="£"
-  {...getInputProps('monthlyOverheads.vanCosts', 'monthlyOverheads', 'vanCosts')}
-/>
-```
-
----
-
-## Files to Modify
-
-| File | Changes |
-|------|---------|
-| `src/components/electrician-tools/cost-engineer/BusinessSettingsDialog.tsx` | Add inputValues state, getInputProps helper, update all 14 inputs |
+| Form | Correct File Path |
+|------|------------------|
+| **EICR** | `src/components/inspection-app/ClientDetailsSection.tsx` |
+| **EIC** | `src/components/inspection/eic/EICClientDetailsSection.tsx` |
+| **Minor Works** | `src/components/minor-works/MWDetailsTab.tsx` |
 
 ---
 
 ## Implementation Steps
 
-1. Add `inputValues` state after existing state declarations
-2. Add `useEffect` to initialize inputValues when dialog opens
-3. Add `getInputProps` helper function
-4. Update all 14 MobileInput components to use the helper
-5. Test all fields can be cleared and typed into
+### Step 1: Create ClientSelector Component
+**File:** `src/components/inspection-app/ClientSelector.tsx`
+
+A reusable component that:
+- Shows toggle: "New Client" | "Existing Client"
+- When "Existing Client" selected, opens mobile-first bottom sheet (85vh)
+- Fetches customers via `useCustomers()` hook with debounced search
+- Shows selected customer card with clear/change options
+- Emits selected customer to parent for pre-fill
+
+### Step 2: Modify EICR Client Details Section
+**File:** `src/components/inspection-app/ClientDetailsSection.tsx`
+
+Changes:
+1. Import `ClientSelector` and `Customer` type
+2. Add `handleCustomerSelect` function after `handleAlterationsChange`
+3. Add `ClientSelector` component after "Client Information" header (line ~59)
+4. Pre-fill fields: clientName, clientEmail, clientPhone, clientAddress
+
+### Step 3: Modify EIC Client Details Section
+**File:** `src/components/inspection/eic/EICClientDetailsSection.tsx`
+
+Changes:
+1. Import `ClientSelector` and `Customer` type
+2. Add `handleCustomerSelect` function after `handleSameAddressToggle`
+3. Add `ClientSelector` component after "Client Information" header (line ~67)
+4. Pre-fill fields: clientName, clientEmail, clientPhone, clientAddress
+
+### Step 4: Modify Minor Works Details Tab
+**File:** `src/components/minor-works/MWDetailsTab.tsx`
+
+Changes:
+1. Import `ClientSelector` and `Customer` type
+2. Add `handleCustomerSelect` function after `getCompletionPercentage`
+3. Add `ClientSelector` component after Certificate Number display (line ~80-81)
+4. Pre-fill fields: clientName, clientEmail, propertyAddress
 
 ---
 
-## Testing
+## Client Field Mappings
 
-1. Open Cost Engineer → Business Settings
-2. Click on "Van Costs" field (default: 450)
-3. Select all text and delete - should allow empty field
-4. Type new number - should update
-5. Click away (blur) - empty field should become 0
-6. Repeat for all 14 fields
-7. Save and reload - values should persist correctly
+| Customer Field | EICR | EIC | Minor Works |
+|---------------|------|-----|-------------|
+| `name` | clientName | clientName | clientName |
+| `email` | clientEmail | clientEmail | clientEmail |
+| `phone` | clientPhone | clientPhone | *(not used)* |
+| `address` | clientAddress | clientAddress | propertyAddress |
 
 ---
 
-## Verification
+## Verification Steps
 
-```bash
-npm run build  # No TypeScript errors
-npm run dev    # Test manually
-```
+1. **EIC Form:** Navigate to Inspection > EIC, toggle "Existing Client", search and select a customer, verify fields pre-fill
+2. **EICR Form:** Navigate to Inspection > EICR, same test
+3. **Minor Works Form:** Navigate to Inspection > Minor Works, same test (note: uses propertyAddress not clientAddress)

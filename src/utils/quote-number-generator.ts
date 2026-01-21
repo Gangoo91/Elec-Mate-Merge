@@ -7,38 +7,31 @@ import { supabase } from '@/integrations/supabase/client';
 export const generateSequentialQuoteNumber = async (): Promise<string> => {
   const currentYear = new Date().getFullYear();
   const yearPrefix = currentYear.toString();
-  
-  try {
-    // Query existing quotes for the current year to find the highest sequence number
-    const { data: existingQuotes, error } = await supabase
-      .from('quotes')
-      .select('quote_number')
-      .like('quote_number', `${yearPrefix}/%`)
-      .order('quote_number', { ascending: false })
-      .limit(1);
 
-    if (error) {
-      console.warn('Error querying existing quotes, using fallback:', error);
-      // Fallback to timestamp-based if database query fails
+  try {
+    // Get user ID for user-specific counting
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      console.warn('No authenticated user, using timestamp fallback');
       return `${yearPrefix}/T${Date.now().toString().slice(-6)}`;
     }
 
-    let nextSequence = 1;
+    // Count ALL quotes for this user (any format: YYYY/XXX, QTE-YYMM-XXX, etc.)
+    // This ensures we don't restart numbering when quotes come from different sources
+    const { count, error: countError } = await supabase
+      .from('quotes')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id);
 
-    if (existingQuotes && existingQuotes.length > 0) {
-      const lastQuoteNumber = existingQuotes[0].quote_number;
-      
-      // Extract the sequence number from the last quote (e.g., "2025/023" -> 23)
-      const sequenceMatch = lastQuoteNumber.match(/\/(\d+)$/);
-      if (sequenceMatch) {
-        const lastSequence = parseInt(sequenceMatch[1], 10);
-        nextSequence = lastSequence + 1;
-      }
+    if (countError) {
+      console.warn('Error counting quotes:', countError);
+      return `${yearPrefix}/T${Date.now().toString().slice(-6)}`;
     }
 
-    // Format sequence number with leading zeros (e.g., 001, 002, 023)
+    // Next number is total count + 1
+    const nextSequence = (count || 0) + 1;
     const sequenceString = nextSequence.toString().padStart(3, '0');
-    
+
     return `${yearPrefix}/${sequenceString}`;
   } catch (error) {
     console.warn('Error generating sequential quote number, using fallback:', error);

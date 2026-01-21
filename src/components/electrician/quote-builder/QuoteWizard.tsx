@@ -263,7 +263,8 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }:
           </div>
         );
       default:
-        return null;
+        console.warn('[QuoteWizard] Unexpected step:', currentStep);
+        return <div className="p-4 text-center text-muted-foreground">Loading...</div>;
     }
   };
 
@@ -316,7 +317,7 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }:
       </div>
 
       {/* Step Content */}
-      <div className="min-h-[50vh]">
+      <div className="min-h-[50vh]" key={`step-${currentStep}`}>
         {renderStep()}
       </div>
 

@@ -121,16 +121,16 @@ Deno.serve(async (req: Request) => {
     // Wait for generation to complete
     const completedDocument = await waitForPDFGeneration(document.id);
 
+    // Calculate expiry (PDF Monkey URLs typically expire after 7 days)
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+
     return new Response(
       JSON.stringify({
         success: true,
         pdfUrl: completedDocument.download_url,
         previewUrl: completedDocument.preview_url,
         documentId: completedDocument.id,
-        // DEBUG: Return what we received
-        debug_flat_keys: flatInspKeys,
-        debug_insp_1: formData.insp_1,
-        debug_insp_2: formData.insp_2,
+        expiresAt,
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

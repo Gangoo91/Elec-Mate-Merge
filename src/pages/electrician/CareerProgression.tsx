@@ -59,12 +59,11 @@ interface CareerCardProps {
   description: string;
   icon: typeof GraduationCap;
   color: string;
-  badge?: string;
   comingSoon?: boolean;
   onClick: () => void;
 }
 
-function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, onClick }: CareerCardProps) {
+function CareerCard({ title, description, icon: Icon, color, comingSoon, onClick }: CareerCardProps) {
   return (
     <motion.div
       variants={itemVariants}
@@ -73,68 +72,49 @@ function CareerCard({ title, description, icon: Icon, color, badge, comingSoon, 
       onClick={!comingSoon ? onClick : undefined}
       className={cn(
         "relative glass-premium rounded-xl h-full cursor-pointer group overflow-hidden touch-manipulation",
-        comingSoon && "opacity-70 cursor-not-allowed"
+        comingSoon && "opacity-60 cursor-not-allowed"
       )}
     >
-      {/* Coming Soon Badge */}
-      {comingSoon && (
-        <div className="absolute top-3 right-3 z-10">
-          <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/20 text-amber-400">
-            Coming Soon
-          </span>
-        </div>
-      )}
-
-      {/* Badge */}
-      {badge && !comingSoon && (
-        <div className="absolute top-3 right-3 z-10">
-          <span className={cn(
-            "px-2.5 py-1 rounded-full text-xs font-medium",
-            color === "purple" && "bg-purple-500/20 text-purple-300",
-            color === "blue" && "bg-blue-500/20 text-blue-300",
-            color === "green" && "bg-green-500/20 text-green-300",
-            color === "yellow" && "bg-elec-yellow/20 text-elec-yellow",
-            color === "orange" && "bg-orange-500/20 text-orange-300",
-          )}>
-            {badge}
-          </span>
-        </div>
-      )}
-
-      {/* Card Content - Always vertical layout for better readability */}
+      {/* Card Content - Horizontal layout with icon and content side by side */}
       <div className="p-4 sm:p-5 flex flex-col h-full">
-        {/* Icon */}
-        <div className={cn(
-          "p-3 rounded-xl w-fit mb-4 transition-colors",
-          color === "purple" && "bg-purple-500/10 group-hover:bg-purple-500/20 group-active:bg-purple-500/25",
-          color === "blue" && "bg-blue-500/10 group-hover:bg-blue-500/20 group-active:bg-blue-500/25",
-          color === "green" && "bg-green-500/10 group-hover:bg-green-500/20 group-active:bg-green-500/25",
-          color === "yellow" && "bg-elec-yellow/10 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25",
-          color === "orange" && "bg-orange-500/10 group-hover:bg-orange-500/20 group-active:bg-orange-500/25",
-        )}>
-          <Icon className={cn(
-            "h-6 w-6 sm:h-7 sm:w-7",
-            color === "purple" && "text-purple-400",
-            color === "blue" && "text-blue-400",
-            color === "green" && "text-green-400",
-            color === "yellow" && "text-elec-yellow",
-            color === "orange" && "text-orange-400",
-          )} />
+        {/* Icon + Title Row */}
+        <div className="flex items-start gap-3 mb-3">
+          <div className={cn(
+            "p-2.5 rounded-xl flex-shrink-0 transition-colors",
+            color === "purple" && "bg-purple-500/10 group-hover:bg-purple-500/20 group-active:bg-purple-500/25",
+            color === "blue" && "bg-blue-500/10 group-hover:bg-blue-500/20 group-active:bg-blue-500/25",
+            color === "green" && "bg-green-500/10 group-hover:bg-green-500/20 group-active:bg-green-500/25",
+            color === "yellow" && "bg-elec-yellow/10 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25",
+            color === "orange" && "bg-orange-500/10 group-hover:bg-orange-500/20 group-active:bg-orange-500/25",
+          )}>
+            <Icon className={cn(
+              "h-5 w-5 sm:h-6 sm:w-6",
+              color === "purple" && "text-purple-400",
+              color === "blue" && "text-blue-400",
+              color === "green" && "text-green-400",
+              color === "yellow" && "text-elec-yellow",
+              color === "orange" && "text-orange-400",
+            )} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className={cn(
+              "text-base sm:text-lg font-semibold text-white transition-colors leading-tight",
+              !comingSoon && color === "purple" && "group-hover:text-purple-400 group-active:text-purple-400",
+              !comingSoon && color === "blue" && "group-hover:text-blue-400 group-active:text-blue-400",
+              !comingSoon && color === "green" && "group-hover:text-green-400 group-active:text-green-400",
+              !comingSoon && color === "yellow" && "group-hover:text-elec-yellow group-active:text-elec-yellow",
+              !comingSoon && color === "orange" && "group-hover:text-orange-400 group-active:text-orange-400",
+            )}>
+              {title}
+            </h3>
+            {/* Subtle Coming Soon text below title */}
+            {comingSoon && (
+              <p className="text-xs text-amber-400/80 mt-1">Coming Soon</p>
+            )}
+          </div>
         </div>
 
-        {/* Title */}
-        <h3 className={cn(
-          "text-base sm:text-lg font-semibold text-white mb-2 transition-colors leading-tight",
-          !comingSoon && color === "purple" && "group-hover:text-purple-400 group-active:text-purple-400",
-          !comingSoon && color === "blue" && "group-hover:text-blue-400 group-active:text-blue-400",
-          !comingSoon && color === "green" && "group-hover:text-green-400 group-active:text-green-400",
-          !comingSoon && color === "yellow" && "group-hover:text-elec-yellow group-active:text-elec-yellow",
-          !comingSoon && color === "orange" && "group-hover:text-orange-400 group-active:text-orange-400",
-        )}>
-          {title}
-        </h3>
-
-        {/* Description - Full text shown */}
+        {/* Description */}
         <p className="text-sm text-white/60 leading-relaxed flex-1">
           {description}
         </p>
@@ -288,7 +268,6 @@ const careerSections = [
     description: "Explore specialisations from EV charging to data centres",
     icon: Compass,
     color: "yellow",
-    badge: "Most Popular",
   },
   {
     id: "courses",
@@ -296,7 +275,6 @@ const careerSections = [
     description: "Professional qualifications and certifications",
     icon: BookOpen,
     color: "blue",
-    badge: "350+ Courses",
   },
   {
     id: "accreditation",

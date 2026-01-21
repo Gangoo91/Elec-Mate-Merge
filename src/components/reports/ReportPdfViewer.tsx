@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
 import { Download, Edit, Loader2, FileText, AlertCircle, AlertTriangle, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { optimizeForPdfGeneration, formatSizeWarning } from '@/utils/pdfDataOptimizer';
@@ -44,8 +44,10 @@ interface ReportVersion {
 }
 
 export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewerProps) => {
-  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null); // Original PDF Monkey URL
+  const [blobUrl, setBlobUrl] = useState<string | null>(null); // Blob URL for iframe preview
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isLoadingPreview, setIsLoadingPreview] = useState(false);
   const [report, setReport] = useState<any>(null);
   const [versions, setVersions] = useState<ReportVersion[]>([]);
   const [currentVersion, setCurrentVersion] = useState<ReportVersion | null>(null);
@@ -56,20 +58,173 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
+  // Clean up blob URL when component unmounts or dialog closes
+  useEffect(() => {
+    if (!open && blobUrl) {
+      URL.revokeObjectURL(blobUrl);
+      setBlobUrl(null);
+      setPdfUrl(null);
+    }
+  }, [open]);
+
+  // Also clean up on unmount
+  useEffect(() => {
+    return () => {
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl);
+      }
+    };
+  }, []);
+
+  const [previewError, setPreviewError] = useState<string | null>(null);
+
+  /**
+   * Fetch PDF via proxy and create blob URL for iframe preview
+   * Uses edge function to bypass CORS restrictions
+   */
+  const createBlobUrlForPreview = async (url: string): Promise<string | null> => {
+    try {
+      setIsLoadingPreview(true);
+      setPreviewError(null);
+      console.log('[ReportPdfViewer] Fetching PDF via proxy:', url.substring(0, 60) + '...');
+
+      // Get auth token for the edge function
+      const { data: sessionData } = await supabase.auth.getSession();
+      const accessToken = sessionData?.session?.access_token;
+
+      // Use our proxy edge function to fetch the PDF (bypasses CORS)
+      const proxyUrl = `${SUPABASE_URL}/functions/v1/proxy-pdf`;
+
+      const response = await fetch(proxyUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+          'apikey': SUPABASE_PUBLISHABLE_KEY,
+        },
+        body: JSON.stringify({ pdfUrl: url }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('[ReportPdfViewer] Proxy error:', response.status, errorText);
+        throw new Error(`Proxy failed: ${response.status}`);
+      }
+
+      const contentType = response.headers.get('content-type');
+      console.log('[ReportPdfViewer] Response content-type:', contentType);
+
+      const blob = await response.blob();
+      console.log('[ReportPdfViewer] Blob size:', blob.size, 'type:', blob.type);
+
+      if (blob.size === 0) {
+        throw new Error('PDF file is empty');
+      }
+
+      // Ensure correct MIME type for PDF
+      const pdfBlob = blob.type === 'application/pdf'
+        ? blob
+        : new Blob([blob], { type: 'application/pdf' });
+
+      const newBlobUrl = URL.createObjectURL(pdfBlob);
+      console.log('[ReportPdfViewer] Blob URL created:', newBlobUrl);
+
+      return newBlobUrl;
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+      console.error('[ReportPdfViewer] Failed to create blob URL:', errorMsg);
+      setPreviewError(errorMsg);
+      return null;
+    } finally {
+      setIsLoadingPreview(false);
+    }
+  };
+
+  /**
+   * Check if a PDF URL is still valid (not expired and accessible)
+   */
+  const isPdfUrlValid = async (url: string, expiresAt?: string): Promise<boolean> => {
+    // First check if expired based on stored expiry
+    if (expiresAt) {
+      const expiryDate = new Date(expiresAt);
+      if (new Date() > expiryDate) {
+        console.log('[ReportPdfViewer] PDF expired at:', expiresAt);
+        return false;
+      }
+    }
+
+    // Validate URL actually works with a HEAD request
+    try {
+      const response = await fetch(url, { method: 'HEAD' });
+      return response.ok;
+    } catch (error) {
+      console.log('[ReportPdfViewer] PDF URL validation failed:', error);
+      return false;
+    }
+  };
+
+  /**
+   * Get a valid PDF URL, regenerating if necessary
+   */
+  const getValidPdfUrl = async (reportData: any): Promise<string | null> => {
+    const pdfUrl = reportData.pdf_url;
+    const pdfExpiresAt = reportData.pdf_expires_at;
+    const pdfGeneratedAt = reportData.pdf_generated_at ? new Date(reportData.pdf_generated_at) : null;
+    const dataUpdatedAt = new Date(reportData.updated_at);
+
+    // Check if data has been updated since PDF was generated
+    const isPdfStale = pdfGeneratedAt && dataUpdatedAt > pdfGeneratedAt;
+
+    if (pdfUrl && !isPdfStale) {
+      // Check if URL is still valid
+      const isValid = await isPdfUrlValid(pdfUrl, pdfExpiresAt);
+      if (isValid) {
+        console.log('[ReportPdfViewer] Using cached PDF (valid until:', pdfExpiresAt || 'unknown', ')');
+        return pdfUrl;
+      }
+      console.log('[ReportPdfViewer] Cached PDF URL is invalid, regenerating...');
+    } else if (isPdfStale) {
+      console.log('[ReportPdfViewer] PDF is stale (data updated after generation), regenerating...');
+    }
+
+    // Need to regenerate
+    return null;
+  };
+
   // Load report and versions
   useEffect(() => {
     if (!open || !reportId) return;
 
     const loadReport = async () => {
       try {
-        // Fetch current report
-        const { data: reportData, error } = await supabase
+        // Try to fetch by report_id first (the string ID like EICR-1768...)
+        // Then fall back to UUID id
+        let reportData = null;
+        let error = null;
+
+        // First try by report_id (the string ID we use throughout the app)
+        const { data: byReportId, error: reportIdError } = await supabase
           .from('reports')
           .select('*')
-          .eq('id', reportId)
+          .eq('report_id', reportId)
           .single();
 
-        if (error) throw error;
+        if (byReportId) {
+          reportData = byReportId;
+        } else {
+          // Fall back to UUID id
+          const { data: byId, error: idError } = await supabase
+            .from('reports')
+            .select('*')
+            .eq('id', reportId)
+            .single();
+          reportData = byId;
+          error = idError;
+        }
+
+        if (!reportData) {
+          throw new Error('Report not found');
+        }
 
         setReport(reportData);
         setCurrentVersion({
@@ -92,19 +247,16 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
           setVersions(versionData);
         }
 
-        // Check if PDF exists and is still valid (not stale)
-        const pdfExists = reportData.pdf_url;
-        const pdfGeneratedAt = reportData.pdf_generated_at ? new Date(reportData.pdf_generated_at) : null;
-        const dataUpdatedAt = new Date(reportData.updated_at);
-        const isPdfStale = pdfGeneratedAt && dataUpdatedAt > pdfGeneratedAt;
-        
-        if (pdfExists && !isPdfStale) {
-          console.log('[ReportPdfViewer] Using cached PDF from:', reportData.pdf_generated_at);
-          setPdfUrl(reportData.pdf_url);
-        } else {
-          if (isPdfStale) {
-            console.log('[ReportPdfViewer] PDF is stale, regenerating...');
+        // Smart PDF retrieval - check validity before using cached URL
+        const validUrl = await getValidPdfUrl(reportData);
+        if (validUrl) {
+          setPdfUrl(validUrl);
+          // Create blob URL for iframe preview (bypasses CORS)
+          const previewUrl = await createBlobUrlForPreview(validUrl);
+          if (previewUrl) {
+            setBlobUrl(previewUrl);
           }
+        } else {
           await generatePdf(reportData);
         }
       } catch (error) {
@@ -197,13 +349,31 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       console.log('PDF generated successfully:', pdfResult.pdfUrl);
       setPdfUrl(pdfResult.pdfUrl);
 
-      // Update report with PDF URL
+      // Create blob URL for iframe preview (bypasses CORS)
+      const previewUrl = await createBlobUrlForPreview(pdfResult.pdfUrl);
+      if (previewUrl) {
+        setBlobUrl(previewUrl);
+      }
+
+      // Update report with PDF URL, document ID, and expiry
+      const updateData: Record<string, any> = {
+        pdf_url: pdfResult.pdfUrl,
+        pdf_generated_at: new Date().toISOString(),
+      };
+
+      // Store document ID for potential regeneration
+      if (pdfResult.documentId) {
+        updateData.pdf_document_id = pdfResult.documentId;
+      }
+
+      // Store expiry date
+      if (pdfResult.expiresAt) {
+        updateData.pdf_expires_at = pdfResult.expiresAt;
+      }
+
       await supabase
         .from('reports')
-        .update({ 
-          pdf_url: pdfResult.pdfUrl,
-          pdf_generated_at: new Date().toISOString()
-        })
+        .update(updateData)
         .eq('id', reportData.id);
 
       toast({
@@ -226,8 +396,30 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
     }
   };
 
-  const handleDownload = () => {
-    if (pdfUrl) {
+  const handleDownload = async () => {
+    if (!pdfUrl || !report) return;
+
+    try {
+      // First try to open the URL directly
+      const response = await fetch(pdfUrl, { method: 'HEAD' });
+
+      if (response.ok) {
+        window.open(pdfUrl, '_blank');
+      } else {
+        // PDF URL has expired, regenerate
+        toast({
+          title: "Regenerating PDF",
+          description: "The PDF link has expired, generating a fresh one...",
+        });
+        await generatePdf(report);
+        // After regeneration, open the new URL
+        if (pdfUrl) {
+          window.open(pdfUrl, '_blank');
+        }
+      }
+    } catch (error) {
+      console.error('Download error:', error);
+      // If fetch fails (CORS, etc.), try opening directly as fallback
       window.open(pdfUrl, '_blank');
     }
   };
@@ -333,9 +525,20 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
 
       setReport(versionReport);
       setCurrentVersion(selectedVersion);
-      
+
+      // Clean up old blob URL
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl);
+        setBlobUrl(null);
+      }
+
       if (versionReport.pdf_url) {
         setPdfUrl(versionReport.pdf_url);
+        // Create blob URL for preview
+        const previewUrl = await createBlobUrlForPreview(versionReport.pdf_url);
+        if (previewUrl) {
+          setBlobUrl(previewUrl);
+        }
       } else {
         await generatePdf(versionReport);
       }
@@ -384,13 +587,15 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
 
         {/* PDF Content */}
         <div className="flex-1 flex items-center justify-center">
-          {isGenerating ? (
+          {isGenerating || isLoadingPreview ? (
             <div className="flex flex-col items-center justify-center p-6">
               <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
-              <p className="text-muted-foreground">Generating PDF...</p>
+              <p className="text-muted-foreground">
+                {isGenerating ? 'Generating PDF...' : 'Loading preview...'}
+              </p>
               <p className="text-xs text-muted-foreground mt-2">This may take a moment</p>
             </div>
-          ) : pdfUrl ? (
+          ) : blobUrl ? (
             isMobile ? (
               <div className="flex flex-col items-center justify-center p-6">
                 <FileText className="h-16 w-16 text-primary mb-4" />
@@ -402,15 +607,49 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
               </div>
             ) : (
               <iframe
-                src={pdfUrl}
+                src={blobUrl}
                 className="w-full h-full border-0 absolute inset-0"
                 title="PDF Preview"
               />
             )
-          ) : !generationError ? (
+          ) : pdfUrl && !blobUrl ? (
+            <div className="flex flex-col items-center justify-center p-6">
+              <AlertCircle className="h-12 w-12 text-amber-500 mb-4" />
+              <p className="text-muted-foreground mb-2">Preview unavailable</p>
+              {previewError && (
+                <p className="text-xs text-red-400 mb-4 max-w-md text-center">
+                  Error: {previewError}
+                </p>
+              )}
+              <Button onClick={handleDownload} className="h-11 touch-manipulation">
+                <Download className="h-4 w-4 mr-2" />
+                Download PDF Instead
+              </Button>
+            </div>
+          ) : !generationError && !pdfUrl ? (
             <div className="flex flex-col items-center justify-center p-6">
               <AlertCircle className="h-12 w-12 text-muted-foreground mb-4" />
-              <p className="text-muted-foreground">PDF not available</p>
+              <p className="text-muted-foreground mb-2">No PDF generated yet</p>
+              <p className="text-xs text-muted-foreground mb-4">
+                Generate a PDF from the certificate form first
+              </p>
+              <Button
+                onClick={() => report && generatePdf(report)}
+                disabled={!report || isGenerating}
+                className="h-11 touch-manipulation"
+              >
+                {isGenerating ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <FileText className="h-4 w-4 mr-2" />
+                    Generate PDF Now
+                  </>
+                )}
+              </Button>
             </div>
           ) : null}
         </div>

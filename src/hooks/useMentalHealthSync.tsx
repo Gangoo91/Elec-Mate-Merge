@@ -208,11 +208,17 @@ export const useJournalData = () => {
 
     if (user) {
       try {
-        await journalService.create(entry);
-      } catch (err) {
-        console.error('Error syncing journal entry:', err);
-        toast.error('Entry saved locally. Cloud sync will retry when online.');
+        console.log('[Journal] Saving entry to cloud for user:', user.id);
+        const savedEntry = await journalService.create(entry);
+        console.log('[Journal] Entry saved successfully:', savedEntry?.id);
+        toast.success('Journal entry saved');
+      } catch (err: any) {
+        console.error('[Journal] Error syncing journal entry:', err);
+        console.error('[Journal] Error details:', err?.message, err?.code, err?.details);
+        toast.error(`Entry saved locally. Cloud sync failed: ${err?.message || 'Unknown error'}`);
       }
+    } else {
+      console.log('[Journal] No user logged in, entry saved to localStorage only');
     }
   }, [user]);
 
@@ -351,10 +357,17 @@ export const useSafetyPlan = () => {
 
     if (user) {
       try {
-        await safetyPlanService.upsert(updatedPlan);
-      } catch (err) {
-        console.error('Error syncing safety plan:', err);
+        console.log('[SafetyPlan] Saving plan to cloud for user:', user.id);
+        const savedPlan = await safetyPlanService.upsert(updatedPlan);
+        console.log('[SafetyPlan] Plan saved successfully:', savedPlan?.id);
+        toast.success('Safety plan saved');
+      } catch (err: any) {
+        console.error('[SafetyPlan] Error syncing safety plan:', err);
+        console.error('[SafetyPlan] Error details:', err?.message, err?.code, err?.details);
+        toast.error(`Safety plan saved locally. Cloud sync failed: ${err?.message || 'Unknown error'}`);
       }
+    } else {
+      console.log('[SafetyPlan] No user logged in, plan saved to localStorage only');
     }
   }, [user]);
 

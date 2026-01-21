@@ -14,6 +14,8 @@ import {
   EARTHING_CONDUCTOR_SIZES,
   WORK_TYPES,
 } from '@/constants/minorWorksOptions';
+import ClientSelector from '@/components/inspection-app/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface MWDetailsTabProps {
   formData: any;
@@ -29,6 +31,14 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
 
   const toggleSection = (section: keyof typeof openSections) => {
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
+  };
+
+  const handleSelectCustomer = (customer: Customer | null) => {
+    if (customer) {
+      onUpdate('clientName', customer.name || '');
+      onUpdate('clientEmail', customer.email || '');
+      onUpdate('propertyAddress', customer.address || '');
+    }
   };
 
   const getCompletionPercentage = (section: string) => {
@@ -78,6 +88,9 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                   </div>
                 </div>
               )}
+
+              {/* Client Selector */}
+              <ClientSelector onSelectCustomer={handleSelectCustomer} />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">

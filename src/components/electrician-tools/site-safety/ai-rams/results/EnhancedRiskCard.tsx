@@ -152,7 +152,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
             ) : (
               <>
                 <h4 className="font-semibold text-white text-base leading-snug line-clamp-2">{risk.hazard || 'Untitled Hazard'}</h4>
-                <p className="text-sm text-white/50 line-clamp-2 mt-1.5 leading-relaxed">
+                <p className="text-sm text-white line-clamp-2 mt-1.5 leading-relaxed">
                   {risk.controls || 'No control measures specified'}
                 </p>
               </>
@@ -165,7 +165,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
           <div className="px-4 pb-4 space-y-4 border-t border-white/5 animate-slide-down">
             {/* Risk Description */}
             <div className="pt-4">
-              <label className="text-xs font-medium text-white/50 uppercase tracking-wide">Risk Description</label>
+              <label className="text-xs font-medium text-white/60 uppercase tracking-wide text-left block">Risk Description</label>
               {isEditing ? (
                 <Textarea
                   value={editedRisk.risk}
@@ -174,13 +174,13 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                   placeholder="Describe the risk"
                 />
               ) : (
-                <p className="mt-2 text-sm text-white/70 leading-relaxed">{risk.risk}</p>
+                <p className="mt-2 text-sm text-white leading-relaxed text-left">{risk.risk}</p>
               )}
             </div>
 
             {/* Control Measures */}
             <div className="p-4 rounded-xl bg-amber-500/5 border-l-4 border-amber-500">
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-3">
                 <Shield className="h-5 w-5 text-amber-500" />
                 <span className="text-sm font-bold text-amber-500">Control Measures</span>
               </div>
@@ -192,16 +192,22 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                   placeholder="List control measures"
                 />
               ) : (
-                <p className="text-sm text-white/80 leading-relaxed whitespace-pre-wrap">
-                  {risk.controls || 'No control measures specified'}
-                </p>
+                <div className="text-sm text-white leading-relaxed space-y-3 text-left">
+                  {(risk.controls || 'No control measures specified')
+                    .split(/(?=PRIMARY ACTION:|ELIMINATE:|SUBSTITUTE:|ENGINEER(?:ING)? CONTROLS?:|ADMINISTRATIVE CONTROLS?:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS?:|REGULATION:|PPE:|TRAINING:|MONITORING:|EMERGENCY:)/gi)
+                    .filter(section => section.trim())
+                    .map((section, idx) => (
+                      <p key={idx} className="leading-relaxed text-left">{section.trim()}</p>
+                    ))
+                  }
+                </div>
               )}
             </div>
 
             {/* Likelihood & Severity */}
             <div className="grid grid-cols-2 gap-4">
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <label className="text-xs font-medium text-white/50">Likelihood</label>
+                <label className="text-xs font-medium text-white/60">Likelihood</label>
                 {isEditing ? (
                   <div className="mt-3 space-y-2">
                     <Slider
@@ -221,7 +227,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                 )}
               </div>
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <label className="text-xs font-medium text-white/50">Severity</label>
+                <label className="text-xs font-medium text-white/60">Severity</label>
                 {isEditing ? (
                   <div className="mt-3 space-y-2">
                     <Slider

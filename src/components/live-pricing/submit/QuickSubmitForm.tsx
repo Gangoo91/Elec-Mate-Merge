@@ -46,6 +46,51 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
     getUser();
   }, []);
 
+  // Fetch average price when job type and postcode change
+  useEffect(() => {
+    const fetchAveragePrice = async () => {
+      if (!formData.jobType || !formData.postcode) {
+        setAveragePrice(null);
+        return;
+      }
+
+      const postcodeDistrict = formData.postcode.split(' ')[0].toUpperCase();
+
+      try {
+        // First try enhanced_regional_pricing for local market data
+        const { data: regionalData, error: regionalError } = await supabase
+          .from('enhanced_regional_pricing')
+          .select('average_price')
+          .eq('job_type', formData.jobType)
+          .eq('postcode_district', postcodeDistrict)
+          .maybeSingle();
+
+        if (!regionalError && regionalData?.average_price) {
+          setAveragePrice(regionalData.average_price);
+          return;
+        }
+
+        // Fallback to job_pricing_baseline if no regional data
+        const { data: baselineData, error: baselineError } = await supabase
+          .from('job_pricing_baseline')
+          .select('average_price')
+          .eq('job_type', formData.jobType)
+          .maybeSingle();
+
+        if (!baselineError && baselineData?.average_price) {
+          setAveragePrice(baselineData.average_price);
+        } else {
+          setAveragePrice(null);
+        }
+      } catch (error) {
+        console.error('Error fetching average price:', error);
+        setAveragePrice(null);
+      }
+    };
+
+    fetchAveragePrice();
+  }, [formData.jobType, formData.postcode]);
+
   // Check price against average
   useEffect(() => {
     if (!formData.price || !averagePrice) {
@@ -54,6 +99,12 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
     }
 
     const price = parseFloat(formData.price);
+
+    if (isNaN(price)) {
+      setPriceWarning(null);
+      return;
+    }
+
     const percentDiff = ((price - averagePrice) / averagePrice) * 100;
 
     if (percentDiff < -50) {
@@ -301,6 +352,8 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
             value={formData.price}
             onChange={(e) => setFormData({ ...formData, price: e.target.value })}
             placeholder="0"
+            step="0.01"
+            min="0"
             className={cn(
               "w-full h-20 pl-20 pr-4 rounded-xl",
               "bg-neutral-800 border-2 border-white/10",
@@ -310,6 +363,42 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
             )}
           />
         </div>
+
+        {/* Real-time Price Preview */}
+        {formData.price && parseFloat(formData.price) > 0 && !isNaN(parseFloat(formData.price)) && (
+          <div className="mt-3 p-4 bg-white/5 border border-white/10 rounded-xl">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-white/60">Your price</p>
+                <p className="text-2xl font-bold text-white">
+                  £{parseFloat(formData.price).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </p>
+              </div>
+              {averagePrice && (
+                <div className="text-right">
+                  <p className="text-sm text-white/60">Market average</p>
+                  <p className="text-lg font-semibold text-white/80">
+                    £{averagePrice.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </p>
+                  {(() => {
+                    const price = parseFloat(formData.price);
+                    const diff = ((price - averagePrice) / averagePrice) * 100;
+                    const isAbove = diff > 0;
+                    const absPercentage = Math.abs(diff).toFixed(0);
+                    return (
+                      <p className={cn(
+                        "text-xs font-medium mt-1",
+                        isAbove ? "text-amber-400" : "text-green-400"
+                      )}>
+                        {isAbove ? `${absPercentage}% above` : `${absPercentage}% below`} market
+                      </p>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Price Warning */}
         {priceWarning && (

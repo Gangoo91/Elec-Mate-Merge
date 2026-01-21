@@ -4,6 +4,33 @@ import { RAMSData, RAMSRisk, PPEItem } from '@/types/rams';
 import { MethodStatementData, MethodStep } from '@/types/method-statement';
 import { safeText, safeDate, getRiskLevel, getRiskColor, safeNumber } from './rams-pdf-helpers';
 
+/**
+ * Format control measures text with proper paragraph breaks for PDF readability
+ */
+function formatControlMeasures(text: string): string {
+  if (!text) return '';
+
+  // Split by keywords and add line breaks
+  return text
+    .replace(/(PRIMARY ACTION:|ELIMINATE:|SUBSTITUTE:|ENGINEER(?:ING)? CONTROLS?:|ADMINISTRATIVE CONTROLS?:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS?:|REGULATION:|PPE:|TRAINING:|MONITORING:|EMERGENCY:)/gi, '\n\n$1')
+    .trim()
+    .replace(/\n{3,}/g, '\n\n'); // Normalize multiple line breaks
+}
+
+/**
+ * Format step description with proper paragraph breaks for PDF readability
+ */
+function formatDescription(text: string): string {
+  if (!text) return '';
+
+  // Split by numbered items or keywords
+  return text
+    .replace(/(\d+\.\s)/g, '\n\n$1')
+    .replace(/([A-Z]{2,}:)/g, '\n\n$1')
+    .trim()
+    .replace(/\n{3,}/g, '\n\n');
+}
+
 interface CombinedRAMSOptions {
   companyName?: string;
   logoUrl?: string;
@@ -111,7 +138,7 @@ export async function generateCombinedRAMSPDF(
     safeNumber(risk.severity).toString(),
     safeNumber(risk.riskRating).toString(),
     getRiskLevel(risk.riskRating),
-    safeText(risk.controls),
+    formatControlMeasures(safeText(risk.controls)),
     safeNumber(risk.residualRisk).toString()
   ]);
 
@@ -313,9 +340,9 @@ export async function generateCombinedRAMSPDF(
   const methodTableData = methodData.steps.map((step: MethodStep) => [
     step.stepNumber.toString(),
     safeText(step.title),
-    safeText(step.description),
+    formatDescription(safeText(step.description)),
     step.safetyRequirements && step.safetyRequirements.length > 0
-      ? step.safetyRequirements.join(', ')
+      ? step.safetyRequirements.map(r => `• ${r}`).join('\n')
       : 'N/A',
     step.riskLevel.toUpperCase(),
     safeText(step.estimatedDuration)

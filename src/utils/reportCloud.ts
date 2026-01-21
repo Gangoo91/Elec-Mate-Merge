@@ -89,15 +89,42 @@ export const reportCloud = {
    */
   createReport: async (userId: string, reportType: 'eicr' | 'eic' | 'minor-works', data: any, customerId?: string): Promise<{ success: boolean; reportId?: string; error?: any }> => {
     try {
+      // Calculate status based on form data - handles all report types including Minor Works
+      const calculateStatus = (): 'draft' | 'in-progress' | 'completed' => {
+        // Explicit status takes precedence
+        if (data.status === 'completed') return 'completed';
+        // Certificate generated means completed
+        if (data.certificateGenerated) return 'completed';
+        // EICR specific completion check
+        if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
+        // Minor Works specific: check for signature and work completion
+        if (reportType === 'minor-works' && data.signature && data.workDate) return 'completed';
+        // Check for any meaningful data entry (works for all report types)
+        const hasContent = data.clientName ||
+                          data.inspectionDate ||
+                          data.workDate ||  // Minor Works date field
+                          data.dateOfInspection ||  // EICR date field
+                          data.installationAddress ||
+                          data.propertyAddress;
+        return hasContent ? 'in-progress' : 'draft';
+      };
+
+      const status = calculateStatus();
+
+      console.log('[reportCloud] Creating report:', {
+        type: reportType,
+        calculatedStatus: status,
+        hasClientName: !!data.clientName,
+        hasInspectionDate: !!data.inspectionDate,
+        hasWorkDate: !!data.workDate,
+      });
+
       const reportData = {
         user_id: userId,
         report_type: reportType,
         certificate_number: data.certificateNumber || `${reportType.toUpperCase()}-${Date.now()}`,
         report_id: `${reportType.toUpperCase()}-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
-        status: data.status === 'completed' ? 'completed' :
-                data.certificateGenerated ? 'completed' :
-                data.satisfactoryForContinuedUse && data.inspectorSignature ? 'completed' :
-                (data.clientName || data.inspectionDate || data.workDate) ? 'in-progress' : 'draft',
+        status,
         customer_id: customerId || null,
         client_name: data.clientName || null,
         installation_address: data.installationAddress || data.propertyAddress || null,
@@ -152,11 +179,35 @@ export const reportCloud = {
    */
   updateReport: async (reportId: string, userId: string, data: any, customerId?: string): Promise<{ success: boolean; error?: any }> => {
     try {
+      // Determine report type from reportId prefix
+      const reportType = reportId.toLowerCase().startsWith('minor-works') ? 'minor-works' :
+                        reportId.toLowerCase().startsWith('eic-') ? 'eic' : 'eicr';
+
+      // Calculate status - same logic as createReport
+      const calculateStatus = (): 'draft' | 'in-progress' | 'completed' => {
+        if (data.status === 'completed') return 'completed';
+        if (data.certificateGenerated) return 'completed';
+        if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
+        if (reportType === 'minor-works' && data.signature && data.workDate) return 'completed';
+        const hasContent = data.clientName ||
+                          data.inspectionDate ||
+                          data.workDate ||
+                          data.dateOfInspection ||
+                          data.installationAddress ||
+                          data.propertyAddress;
+        return hasContent ? 'in-progress' : 'draft';
+      };
+
+      const status = calculateStatus();
+
+      console.log('[reportCloud] Updating report:', {
+        reportId,
+        reportType,
+        calculatedStatus: status,
+      });
+
       const updateData: any = {
-        status: data.status === 'completed' ? 'completed' :
-                data.certificateGenerated ? 'completed' :
-                data.satisfactoryForContinuedUse && data.inspectorSignature ? 'completed' :
-                (data.clientName || data.inspectionDate || data.workDate) ? 'in-progress' : 'draft',
+        status,
         client_name: data.clientName || null,
         installation_address: data.installationAddress || data.propertyAddress || null,
         inspection_date: data.inspectionDate || data.workDate || null,

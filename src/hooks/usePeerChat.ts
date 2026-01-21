@@ -138,7 +138,11 @@ export function usePeerSupporterProfile() {
 
   return useQuery({
     queryKey: PEER_PROFILE_KEY,
-    queryFn: () => peerSupporterService.getMyProfile(),
+    queryFn: async () => {
+      const profile = await peerSupporterService.getMyProfile();
+      // React Query requires non-undefined return - ensure null not undefined
+      return profile ?? null;
+    },
     enabled: !!user,
     staleTime: 60000, // Cache for 1 minute
     gcTime: 5 * 60 * 1000, // Keep in cache for 5 minutes

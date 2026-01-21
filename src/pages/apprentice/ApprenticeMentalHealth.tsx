@@ -127,9 +127,17 @@ const MentalHealthContent = () => {
     }
   }, []);
 
-  // Handle quick mood selection
+  // Handle quick mood selection - now saves to database!
   const handleQuickMood = (mood: number) => {
     setSelectedQuickMood(mood);
+
+    // Save the mood entry to database
+    const today = new Date().toISOString().split('T')[0];
+    addMoodEntry({
+      date: today,
+      mood: mood,
+    });
+
     // If mood is low, suggest resources
     if (mood <= 2) {
       setTimeout(() => {
