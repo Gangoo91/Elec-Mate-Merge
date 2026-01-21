@@ -9,6 +9,50 @@ import { JobTypeConfig } from "@/hooks/useJobTypes";
 import JobTypeSelector from "./JobTypeSelector";
 import JobTypeAttributeFields from "./JobTypeAttributeFields";
 
+// Price Preview Component - extracted to avoid render issues
+function PricePreview({ price, averagePrice }: { price: string; averagePrice: number | null }) {
+  const numPrice = parseFloat(price);
+
+  if (!price || isNaN(numPrice) || numPrice <= 0) {
+    return null;
+  }
+
+  const formattedPrice = numPrice.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  let comparison = null;
+  if (averagePrice && averagePrice > 0) {
+    const diff = ((numPrice - averagePrice) / averagePrice) * 100;
+    const isAbove = diff > 0;
+    const absPercentage = Math.abs(diff).toFixed(0);
+    const formattedAvg = averagePrice.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    comparison = (
+      <div className="text-right">
+        <p className="text-sm text-white/60">Market average</p>
+        <p className="text-lg font-semibold text-white/80">£{formattedAvg}</p>
+        <p className={cn(
+          "text-xs font-medium mt-1",
+          isAbove ? "text-amber-400" : "text-green-400"
+        )}>
+          {isAbove ? `${absPercentage}% above` : `${absPercentage}% below`} market
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-3 p-4 bg-white/5 border border-white/10 rounded-xl">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm text-white/60">Your price</p>
+          <p className="text-2xl font-bold text-white">£{formattedPrice}</p>
+        </div>
+        {comparison}
+      </div>
+    </div>
+  );
+}
+
 interface QuickSubmitFormProps {
   onSuccess?: () => void;
   onNavigateToInsights?: () => void;
@@ -49,12 +93,19 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
   // Fetch average price when job type and postcode change
   useEffect(() => {
     const fetchAveragePrice = async () => {
-      if (!formData.jobType || !formData.postcode) {
+      // Need at least 2 characters for postcode district (e.g. "SW", "M1")
+      if (!formData.jobType || !formData.postcode || formData.postcode.length < 2) {
         setAveragePrice(null);
         return;
       }
 
       const postcodeDistrict = formData.postcode.split(' ')[0].toUpperCase();
+
+      // Must have at least 2 chars for valid district
+      if (postcodeDistrict.length < 2) {
+        setAveragePrice(null);
+        return;
+      }
 
       try {
         // First try enhanced_regional_pricing for local market data
@@ -365,40 +416,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
         </div>
 
         {/* Real-time Price Preview */}
-        {formData.price && parseFloat(formData.price) > 0 && !isNaN(parseFloat(formData.price)) && (
-          <div className="mt-3 p-4 bg-white/5 border border-white/10 rounded-xl">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-white/60">Your price</p>
-                <p className="text-2xl font-bold text-white">
-                  £{parseFloat(formData.price).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </p>
-              </div>
-              {averagePrice && (
-                <div className="text-right">
-                  <p className="text-sm text-white/60">Market average</p>
-                  <p className="text-lg font-semibold text-white/80">
-                    £{averagePrice.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                  </p>
-                  {(() => {
-                    const price = parseFloat(formData.price);
-                    const diff = ((price - averagePrice) / averagePrice) * 100;
-                    const isAbove = diff > 0;
-                    const absPercentage = Math.abs(diff).toFixed(0);
-                    return (
-                      <p className={cn(
-                        "text-xs font-medium mt-1",
-                        isAbove ? "text-amber-400" : "text-green-400"
-                      )}>
-                        {isAbove ? `${absPercentage}% above` : `${absPercentage}% below`} market
-                      </p>
-                    );
-                  })()}
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+        <PricePreview price={formData.price} averagePrice={averagePrice} />
 
         {/* Price Warning */}
         {priceWarning && (

@@ -27,6 +27,7 @@ import ElecIdCVTab from "./elec-id/ElecIdCVTab";
 import ElecIdOnboarding, { type OnboardingFormData } from "./elec-id/ElecIdOnboarding";
 import { useElecIdProfile } from "@/hooks/useElecIdProfile";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ELEC_ID_TABS = [
   {
@@ -106,11 +107,13 @@ const ELEC_ID_TABS = [
 const ElecIdTab = () => {
   const [activeSubTab, setActiveSubTab] = useState("overview");
   const { profile, isLoading, isActivated, activateProfile, refetch } = useElecIdProfile();
+  const { user } = useAuth();
   const isMobile = useIsMobile();
   const { toast } = useToast();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
+  const [generatedElecId, setGeneratedElecId] = useState<string | null>(null);
 
   const activeIndex = ELEC_ID_TABS.findIndex((tab) => tab.id === activeSubTab);
   const activeConfig = ELEC_ID_TABS[activeIndex];
@@ -183,20 +186,36 @@ const ElecIdTab = () => {
 
   // Show onboarding if not activated
   if (!isActivated) {
-    const handleOnboardingComplete = async (data: OnboardingFormData) => {
-      await activateProfile({
+    // Determine if user needs recovery (has profile but no elec_id_number)
+    const needsRecovery = profile !== null && !profile.elec_id_number;
+
+    const handleOnboardingComplete = async (data: OnboardingFormData, preGeneratedElecId?: string) => {
+      const result = await activateProfile({
         ecs_card_type: data.ecsCardType,
         ecs_card_number: data.ecsCardNumber || null,
         ecs_expiry_date: data.ecsCardExpiry,
         bio: data.jobTitle,
-      });
+      }, preGeneratedElecId);
+
+      if (result.success && result.elecIdNumber) {
+        setGeneratedElecId(result.elecIdNumber);
+      } else if (!result.success) {
+        toast({
+          title: "Error",
+          description: result.error || "Failed to activate Elec-ID. Please try again.",
+          variant: "destructive",
+        });
+      }
       await refetch();
     };
 
     const handleSkip = async () => {
       // Activate profile with minimal data - user can complete details later
-      const success = await activateProfile({});
-      if (success) {
+      const result = await activateProfile({});
+      if (result.success) {
+        if (result.elecIdNumber) {
+          setGeneratedElecId(result.elecIdNumber);
+        }
         toast({
           title: "Elec-ID Activated",
           description: "You can complete your profile details anytime from this page.",
@@ -205,10 +224,15 @@ const ElecIdTab = () => {
       } else {
         toast({
           title: "Error",
-          description: "Failed to activate Elec-ID. Please try again.",
+          description: result.error || "Failed to activate Elec-ID. Please try again.",
           variant: "destructive",
         });
       }
+    };
+
+    const handleRecoveryComplete = async (elecIdNumber: string) => {
+      setGeneratedElecId(elecIdNumber);
+      await refetch();
     };
 
     return (
@@ -217,6 +241,11 @@ const ElecIdTab = () => {
           <ElecIdOnboarding
             onComplete={handleOnboardingComplete}
             onSkip={handleSkip}
+            elecIdNumber={generatedElecId || profile?.elec_id_number}
+            userId={user?.id}
+            needsRecovery={needsRecovery}
+            ecsCardType={profile?.ecs_card_type || undefined}
+            onRecoveryComplete={handleRecoveryComplete}
           />
         </CardContent>
       </Card>

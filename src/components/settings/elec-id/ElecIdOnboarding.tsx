@@ -41,7 +41,7 @@ export interface OnboardingFormData {
 }
 
 interface ElecIdOnboardingProps {
-  onComplete: (data: OnboardingFormData) => void;
+  onComplete: (data: OnboardingFormData, preGeneratedElecId?: string) => void;
   onSkip?: () => void;
   elecIdNumber?: string; // Pass actual Elec-ID from parent
   needsRecovery?: boolean; // User opted in but doesn't have Elec-ID
@@ -145,6 +145,10 @@ const ElecIdOnboarding = ({
   const [recoveryError, setRecoveryError] = useState<string | null>(null);
   const [generatedId, setGeneratedId] = useState<string | null>(null);
 
+  // Local Elec-ID generated during onboarding (before completion step)
+  const [localElecId, setLocalElecId] = useState<string | null>(elecIdNumber || null);
+  const [generationError, setGenerationError] = useState<string | null>(null);
+
   // Handle Elec-ID generation for recovery
   const handleGenerateElecId = async () => {
     if (!userId) {
@@ -186,11 +190,49 @@ const ElecIdOnboarding = ({
   const progress = ((currentStep + 1) / STEPS.length) * 100;
   const step = STEPS[currentStep];
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    // About to move to complete step - generate Elec-ID first
+    if (currentStep === STEPS.length - 2 && !localElecId && !elecIdNumber && userId) {
+      setIsGenerating(true);
+      setGenerationError(null);
+
+      try {
+        const { data, error } = await supabase.functions.invoke('generate-elec-id', {
+          body: {
+            user_id: userId,
+            ecs_card_type: formData.ecsCardType || initialEcsCardType || null
+          }
+        });
+
+        if (error) {
+          console.error('Elec-ID generation failed:', error);
+          setGenerationError('Failed to generate Elec-ID. Please try again.');
+          setIsGenerating(false);
+          return;
+        }
+
+        if (data?.elec_id_number) {
+          setLocalElecId(data.elec_id_number);
+        } else {
+          setGenerationError('Unexpected response. Please try again.');
+          setIsGenerating(false);
+          return;
+        }
+      } catch (err) {
+        console.error('Elec-ID generation exception:', err);
+        setGenerationError('An error occurred. Please try again.');
+        setIsGenerating(false);
+        return;
+      } finally {
+        setIsGenerating(false);
+      }
+    }
+
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      onComplete(formData);
+      // Final step - pass the pre-generated ID to parent
+      onComplete(formData, localElecId || elecIdNumber || undefined);
     }
   };
 
@@ -379,6 +421,16 @@ const ElecIdOnboarding = ({
               </p>
             </div>
 
+            {/* Generation error feedback */}
+            {generationError && (
+              <div className="max-w-sm mx-auto p-3 rounded-xl bg-red-500/10 border border-red-500/30">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0" />
+                  <p className="text-sm text-red-400">{generationError}</p>
+                </div>
+              </div>
+            )}
+
             {/* Simple verification info */}
             <div className="max-w-sm mx-auto space-y-3">
               <div className="p-4 rounded-xl border border-elec-yellow/30 bg-elec-yellow/10">
@@ -404,6 +456,8 @@ const ElecIdOnboarding = ({
         );
 
       case "complete":
+        // Use local ID first, then prop, then placeholder
+        const displayElecId = localElecId || elecIdNumber || 'EM-XXXXXX';
         return (
           <div className="text-center space-y-4 sm:space-y-6">
             {/* Success animation */}
@@ -426,7 +480,7 @@ const ElecIdOnboarding = ({
               <div className="text-left">
                 <p className="text-[10px] sm:text-xs text-foreground/70">Your Elec-ID</p>
                 <p className="font-mono font-bold text-base sm:text-xl text-foreground">
-                  {elecIdNumber || 'Generating...'}
+                  {displayElecId}
                 </p>
               </div>
             </div>
@@ -591,6 +645,7 @@ const ElecIdOnboarding = ({
             variant="outline"
             className="h-12 md:h-14 px-4 md:px-5 border-white/20 touch-manipulation active:scale-[0.97]"
             onClick={handleBack}
+            disabled={isGenerating}
           >
             <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
           </Button>
@@ -598,9 +653,14 @@ const ElecIdOnboarding = ({
         <Button
           className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold h-12 md:h-14 text-sm sm:text-base md:text-lg touch-manipulation active:scale-[0.98]"
           onClick={handleNext}
-          disabled={!canProceed()}
+          disabled={!canProceed() || isGenerating}
         >
-          {currentStep === STEPS.length - 1 ? (
+          {isGenerating ? (
+            <>
+              <Loader2 className="h-4 w-4 md:h-5 md:w-5 mr-2 animate-spin" />
+              Generating ID...
+            </>
+          ) : currentStep === STEPS.length - 1 ? (
             <>
               <Sparkles className="h-4 w-4 md:h-5 md:w-5 mr-2" />
               Go to My Elec-ID

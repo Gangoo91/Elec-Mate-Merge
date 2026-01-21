@@ -1,4 +1,4 @@
-import { TrendingUp, CheckCircle2, AlertTriangle, BarChart3 } from "lucide-react";
+import { TrendingUp, CheckCircle2, AlertTriangle } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface QuickMetricsCardProps {
@@ -35,85 +35,65 @@ const QuickMetricsCard = ({
   const complexityColors = complexity ? getComplexityColor(complexity.rating) : null;
 
   return (
-    <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-xl">
-      {/* Header */}
-      <div className="p-4 sm:p-5 border-b border-white/5">
-        <div className="flex items-center gap-3">
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center shadow-md"
-          >
-            <BarChart3 className="h-5 w-5 text-blue-400" />
-          </motion.div>
-          <div>
-            <h3 className="text-base sm:text-lg text-white font-bold">Job Snapshot</h3>
-            <p className="text-xs sm:text-sm text-white/60">Key project metrics at a glance</p>
+    <div className="grid grid-cols-3 gap-4">
+      {/* Complexity */}
+      {complexity && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="min-h-[44px] text-left"
+        >
+          <div className="flex items-center gap-1.5 mb-1">
+            <TrendingUp className={`h-4 w-4 ${complexityColors?.text}`} />
+            <span className="text-xs text-white/50">Complexity</span>
           </div>
-        </div>
-      </div>
+          <div className={`text-2xl font-bold ${complexityColors?.text}`}>
+            {complexity.rating}/10
+          </div>
+          <p className="text-xs text-white/50 mt-0.5">{complexity.label}</p>
+        </motion.div>
+      )}
 
-      {/* Metrics Grid */}
-      <div className="grid grid-cols-3 gap-px bg-white/5">
-        {/* Complexity */}
-        {complexity && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="p-4 bg-black/20 text-center"
-          >
-            <div className="flex items-center justify-center gap-1.5 mb-2">
-              <TrendingUp className={`h-4 w-4 ${complexityColors?.text}`} />
-              <span className="text-xs text-white/60">Complexity</span>
-            </div>
-            <div className={`inline-block text-2xl font-bold px-3 py-1 rounded-lg ${complexityColors?.bg} ${complexityColors?.text} ${complexityColors?.border} border`}>
-              {complexity.rating}/10
-            </div>
-            <p className="text-xs text-white/60 mt-1">{complexity.label}</p>
-          </motion.div>
-        )}
+      {/* Confidence */}
+      {confidence && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="min-h-[44px] text-left"
+        >
+          <div className="flex items-center gap-1.5 mb-1">
+            <CheckCircle2 className={`h-4 w-4 ${getConfidenceColor(avgConfidence)}`} />
+            <span className="text-xs text-white/50">Confidence</span>
+          </div>
+          <div className={`text-2xl font-bold ${getConfidenceColor(avgConfidence)}`}>
+            {avgConfidence}%
+          </div>
+          <p className="text-xs text-white/50 mt-0.5">Accuracy</p>
+        </motion.div>
+      )}
 
-        {/* Confidence */}
-        {confidence && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="p-4 bg-black/20 text-center"
-          >
-            <div className="flex items-center justify-center gap-1.5 mb-2">
-              <CheckCircle2 className={`h-4 w-4 ${getConfidenceColor(avgConfidence)}`} />
-              <span className="text-xs text-white/60">Confidence</span>
-            </div>
-            <div className={`text-2xl font-bold ${getConfidenceColor(avgConfidence)}`}>
-              {avgConfidence}%
-            </div>
-            <p className="text-xs text-white/60 mt-1">Accuracy</p>
-          </motion.div>
-        )}
-
-        {/* Risk Level */}
-        {riskAssessment && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="p-4 bg-black/20 text-center"
-          >
-            <div className="flex items-center justify-center gap-1.5 mb-2">
-              <AlertTriangle className={`h-4 w-4 ${highRisks > 0 ? 'text-red-400' : 'text-emerald-400'}`} />
-              <span className="text-xs text-white/60">Risk Level</span>
-            </div>
-            <div className={`text-2xl font-bold ${highRisks > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
-              {highRisks > 0 ? 'High' : 'Low'}
-            </div>
-            <p className="text-xs text-white/60 mt-1">
-              {highRisks > 0 ? `${highRisks} Risk${highRisks > 1 ? 's' : ''}` : 'Clear'}
-            </p>
-          </motion.div>
-        )}
-      </div>
+      {/* Risk Level */}
+      {riskAssessment && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="min-h-[44px] text-left"
+        >
+          <div className="flex items-center gap-1.5 mb-1">
+            <AlertTriangle className={`h-4 w-4 ${highRisks > 0 ? 'text-red-400' : 'text-emerald-400'}`} />
+            <span className="text-xs text-white/50">Risk Level</span>
+          </div>
+          <div className={`text-2xl font-bold ${highRisks > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+            {highRisks > 0 ? 'High' : 'Low'}
+          </div>
+          <p className="text-xs text-white/50 mt-0.5">
+            {highRisks > 0 ? `${highRisks} Risk${highRisks > 1 ? 's' : ''}` : 'Clear'}
+          </p>
+        </motion.div>
+      )}
     </div>
   );
 };

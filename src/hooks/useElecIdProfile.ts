@@ -36,13 +36,19 @@ export interface ElecIdProfile {
   updated_at: string;
 }
 
+interface ActivateResult {
+  success: boolean;
+  elecIdNumber?: string;
+  error?: string;
+}
+
 interface UseElecIdProfileReturn {
   profile: ElecIdProfile | null;
   isLoading: boolean;
   error: string | null;
   isActivated: boolean;
   isOptedOut: boolean;
-  activateProfile: (data: Partial<ElecIdProfile>) => Promise<boolean>;
+  activateProfile: (data: Partial<ElecIdProfile>, preGeneratedElecId?: string) => Promise<ActivateResult>;
   updateProfile: (data: Partial<ElecIdProfile>) => Promise<boolean>;
   setOptOut: (optOut: boolean) => Promise<boolean>;
   refetch: () => Promise<void>;
@@ -102,34 +108,52 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
     fetchProfile();
   }, [fetchProfile]);
 
-  // Generate a unique Elec-ID number
-  const generateElecIdNumber = () => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let result = "EM-";
-    for (let i = 0; i < 6; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-  };
-
   // Activate profile (complete onboarding)
-  const activateProfile = async (data: Partial<ElecIdProfile>): Promise<boolean> => {
-    if (!user?.id) return false;
+  // If preGeneratedElecId is provided, use it; otherwise call the edge function
+  const activateProfile = async (data: Partial<ElecIdProfile>, preGeneratedElecId?: string): Promise<ActivateResult> => {
+    if (!user?.id) return { success: false, error: "User not authenticated" };
 
     try {
-      const elecIdNumber = generateElecIdNumber();
       const now = new Date().toISOString();
+      let elecIdNumber = preGeneratedElecId;
+
+      // If no pre-generated ID and no existing profile with ID, generate via edge function
+      if (!elecIdNumber && !profile?.elec_id_number) {
+        const { data: idData, error: idError } = await supabase.functions.invoke('generate-elec-id', {
+          body: {
+            user_id: user.id,
+            ecs_card_type: data.ecs_card_type || null
+          }
+        });
+
+        if (idError) {
+          console.error("Error generating Elec-ID:", idError);
+          throw new Error("Failed to generate Elec-ID. Please try again.");
+        }
+
+        elecIdNumber = idData?.elec_id_number;
+        if (!elecIdNumber) {
+          throw new Error("Failed to generate Elec-ID number.");
+        }
+      }
 
       if (profile) {
         // Update existing profile
+        const updateData: Record<string, any> = {
+          ...data,
+          activated: true,
+          activated_at: profile.activated_at || now,
+          updated_at: now,
+        };
+
+        // Add elec_id_number if we generated one and profile doesn't have one
+        if (elecIdNumber && !profile.elec_id_number) {
+          updateData.elec_id_number = elecIdNumber;
+        }
+
         const { error: updateError } = await supabase
           .from("employer_elec_id_profiles")
-          .update({
-            ...data,
-            activated: true,
-            activated_at: now,
-            updated_at: now,
-          })
+          .update(updateData)
           .eq("id", profile.id);
 
         if (updateError) throw updateError;
@@ -189,11 +213,12 @@ export function useElecIdProfile(): UseElecIdProfileReturn {
       }
 
       await fetchProfile();
-      return true;
+      return { success: true, elecIdNumber: elecIdNumber || profile?.elec_id_number };
     } catch (err: any) {
       console.error("Error activating Elec-ID:", err);
-      setError(err.message || "Failed to activate profile");
-      return false;
+      const errorMessage = err.message || "Failed to activate profile";
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     }
   };
 

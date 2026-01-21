@@ -97,9 +97,9 @@ const QuoteHeroCard = ({
   const tierConfig = getTierConfig(tier);
 
   return (
-    <div className="bg-gradient-to-br from-white/[0.08] to-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+    <div className="space-y-3">
       {/* Hero Section */}
-      <div className={`relative p-6 bg-gradient-to-br ${tierConfig.gradient}`}>
+      <div className={`relative p-6 bg-gradient-to-br ${tierConfig.gradient} rounded-2xl overflow-hidden`}>
         {/* Confetti Animation */}
         {showConfetti && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -185,26 +185,22 @@ const QuoteHeroCard = ({
         </div>
       </div>
 
-      {/* Metrics Grid - Mobile First */}
-      <div className="grid grid-cols-2 gap-0.5 bg-white/5 p-0.5">
+      {/* Metrics Grid - Mobile First, Left Aligned */}
+      <div className="grid grid-cols-2 gap-4 pt-2">
         {/* Profit */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-gradient-to-br from-white/[0.06] to-white/[0.03] p-5 rounded-lg"
+          className="min-h-[44px]"
         >
-          <div className="flex flex-col space-y-2.5">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center shadow-md">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-              </div>
-              <span className="text-xs font-bold text-white uppercase tracking-wide">Profit</span>
-            </div>
-            <p className="text-3xl font-black text-emerald-400 tabular-nums tracking-tight">
-              {formatCurrency(displayProfit)}
-            </p>
+          <div className="flex items-center gap-2 mb-1">
+            <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+            <span className="text-xs font-medium text-white/50 uppercase tracking-wide">Profit</span>
           </div>
+          <p className="text-2xl font-black text-emerald-400 tabular-nums tracking-tight">
+            {formatCurrency(displayProfit)}
+          </p>
         </motion.div>
 
         {/* Margin */}
@@ -212,19 +208,15 @@ const QuoteHeroCard = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45 }}
-          className="bg-gradient-to-br from-white/[0.06] to-white/[0.03] p-5 rounded-lg"
+          className="min-h-[44px]"
         >
-          <div className="flex flex-col space-y-2.5">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-elec-yellow/20 flex items-center justify-center shadow-md">
-                <TrendingUp className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <span className="text-xs font-bold text-white uppercase tracking-wide">Margin</span>
-            </div>
-            <p className="text-3xl font-black text-elec-yellow tabular-nums tracking-tight">
-              {margin.toFixed(1)}%
-            </p>
+          <div className="flex items-center gap-2 mb-1">
+            <TrendingUp className="h-4 w-4 text-elec-yellow" />
+            <span className="text-xs font-medium text-white/50 uppercase tracking-wide">Margin</span>
           </div>
+          <p className="text-2xl font-black text-elec-yellow tabular-nums tracking-tight">
+            {margin.toFixed(1)}%
+          </p>
         </motion.div>
 
         {/* Profit Per Hour */}
@@ -232,19 +224,15 @@ const QuoteHeroCard = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-gradient-to-br from-white/[0.06] to-white/[0.03] p-5 rounded-lg"
+          className="min-h-[44px]"
         >
-          <div className="flex flex-col space-y-2.5">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 flex items-center justify-center shadow-md">
-                <Clock className="h-5 w-5 text-emerald-400" />
-              </div>
-              <span className="text-xs font-bold text-white uppercase tracking-wide">Per Hour</span>
-            </div>
-            <p className="text-2xl font-black text-emerald-400 tabular-nums tracking-tight">
-              {formatCurrency(profitPerHour)}/hr
-            </p>
+          <div className="flex items-center gap-2 mb-1">
+            <Clock className="h-4 w-4 text-emerald-400" />
+            <span className="text-xs font-medium text-white/50 uppercase tracking-wide">Per Hour</span>
           </div>
+          <p className="text-2xl font-black text-emerald-400 tabular-nums tracking-tight">
+            {formatCurrency(profitPerHour)}/hr
+          </p>
         </motion.div>
 
         {/* Confidence */}
@@ -252,19 +240,15 @@ const QuoteHeroCard = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55 }}
-          className="bg-gradient-to-br from-white/[0.06] to-white/[0.03] p-5 rounded-lg"
+          className="min-h-[44px]"
         >
-          <div className="flex flex-col space-y-2.5">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl bg-blue-500/20 flex items-center justify-center shadow-md">
-                <Target className="h-5 w-5 text-blue-400" />
-              </div>
-              <span className="text-xs font-bold text-white uppercase tracking-wide">Confidence</span>
-            </div>
-            <p className="text-2xl font-black text-blue-400 tabular-nums tracking-tight">
-              {confidence}%
-            </p>
+          <div className="flex items-center gap-2 mb-1">
+            <Target className="h-4 w-4 text-blue-400" />
+            <span className="text-xs font-medium text-white/50 uppercase tracking-wide">Confidence</span>
           </div>
+          <p className="text-2xl font-black text-blue-400 tabular-nums tracking-tight">
+            {confidence}%
+          </p>
         </motion.div>
       </div>
     </div>

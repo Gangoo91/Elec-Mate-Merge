@@ -1,5 +1,4 @@
 import { AlertTriangle, Shield, AlertCircle, TrendingUp } from 'lucide-react';
-import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { getRiskColors, getHighestRiskScore } from '@/utils/risk-level-helpers';
 
@@ -49,37 +48,29 @@ export const RiskSummaryStats = ({ hazards, ppeItems, emergencyProcedures }: Ris
   ];
 
   return (
-    <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-gray/50">
-      <div className="p-4 sm:p-6">
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-          <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-          Risk Assessment Summary
-        </h3>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          {stats.map((stat, idx) => {
-            const Icon = stat.icon;
-            return (
-              <div
-                key={idx}
-                className={`${stat.bgColor} p-4 rounded-lg border border-current/20 hover:scale-105 transition-transform`}
-              >
-                <div className="flex flex-col items-center gap-2 text-center">
-                  <Icon className={`h-6 w-6 ${stat.color}`} />
-                  <div className="text-2xl sm:text-3xl font-bold">{stat.value}</div>
-                  <div className="text-xs sm:text-sm text-foreground font-medium">
-                    {stat.label}
-                  </div>
-                  {stat.badge && (
-                    <Badge className={stat.badge}>
-                      {stat.value <= 4 ? 'LOW' : stat.value <= 12 ? 'MED' : 'HIGH'}
-                    </Badge>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </Card>
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {stats.map((stat, idx) => {
+        const Icon = stat.icon;
+        return (
+          <div
+            key={idx}
+            className={`${stat.bgColor} p-4 rounded-xl min-h-[44px]`}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <Icon className={`h-4 w-4 ${stat.color}`} />
+              <span className="text-xs text-white/50 font-medium">
+                {stat.label}
+              </span>
+            </div>
+            <div className="text-2xl sm:text-3xl font-bold">{stat.value}</div>
+            {stat.badge && (
+              <Badge className={`${stat.badge} mt-2`}>
+                {stat.value <= 4 ? 'LOW' : stat.value <= 12 ? 'MED' : 'HIGH'}
+              </Badge>
+            )}
+          </div>
+        );
+      })}
+    </div>
   );
 };

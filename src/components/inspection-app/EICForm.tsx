@@ -307,38 +307,116 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       const scheduleData = designData.schedule_data;
 
       // Transform design circuits to test results format for EIC schedule
+      // FULL CONTEXT: Includes all calculation data, expected values, and compliance info
       const transformedCircuits = scheduleData.circuits?.map((circuit: any, idx: number) => ({
         id: `design-${Date.now()}-${idx}`,
         circuitNumber: circuit.circuitNumber || (idx + 1).toString(),
         circuitDesignation: `C${idx + 1}`,
         circuitDescription: circuit.circuitDescription || circuit.name || '',
+        loadType: circuit.loadType || '',
+
         // Phase type handling
         phaseType: circuit.phaseType === '3-phase' ? '3P' : '1P',
+
         // Installation details
         referenceMethod: circuit.referenceMethod || '',
         typeOfWiring: circuit.typeOfWiring || '',
         pointsServed: circuit.pointsServed || '',
+        cableType: circuit.cableType || '',
+        cableLength: circuit.cableLength || '',
+
         // Cable sizes
         liveSize: circuit.liveSize || '',
         cpcSize: circuit.cpcSize || '',
+
         // Protective device details
         bsStandard: circuit.bsStandard || 'BS EN 60898',
         protectiveDeviceType: circuit.protectiveDeviceType || 'MCB',
         protectiveDeviceCurve: circuit.protectiveDeviceCurve || 'B',
         protectiveDeviceRating: circuit.protectiveDeviceRating || '',
         protectiveDeviceKaRating: circuit.protectiveDeviceKaRating || '6',
-        maxZs: circuit.maxZs || '',
+        maxZs: circuit.maxZs || circuit.calculations?.maxZs?.toFixed?.(2) || '',
+
+        // ==== FULL CALCULATION DATA (from Circuit Designer) ====
+        calculations: circuit.calculations ? {
+          Ib: circuit.calculations.Ib,
+          In: circuit.calculations.In,
+          Iz: circuit.calculations.Iz,
+          deratedCapacity: circuit.calculations.deratedCapacity,
+          safetyMargin: circuit.calculations.safetyMargin,
+          voltageDrop: circuit.calculations.voltageDrop,
+          zs: circuit.calculations.zs,
+          maxZs: circuit.calculations.maxZs
+        } : null,
+
+        // ==== VOLTAGE DROP DATA ====
+        voltageDrop: circuit.calculations?.voltageDrop ? {
+          volts: circuit.calculations.voltageDrop.volts,
+          percent: circuit.calculations.voltageDrop.percent,
+          compliant: circuit.calculations.voltageDrop.compliant,
+          limit: circuit.calculations.voltageDrop.limit
+        } : null,
+
         // RCD details
+        rcdProtected: circuit.rcdProtected || false,
         rcdBsStandard: circuit.rcdBsStandard || '',
         rcdType: circuit.rcdType || '',
         rcdRating: circuit.rcdRating || '',
-        // Expected values from design (for reference)
-        expectedR1R2: circuit.r1r2 || '',
+        rcdTestSpecs: circuit.rcdTestSpecs || null,
+
+        // ==== EXPECTED TEST VALUES (for reference) ====
+        // R1+R2 at both temperatures
+        expectedR1R2: circuit.r1r2At20C || circuit.r1r2 || '',
+        expectedR1R2At20C: circuit.r1r2At20C || circuit.r1r2 || '',
+        expectedR1R2At70C: circuit.r1r2At70C || '',
+        r1r2Calculation: circuit.r1r2Calculation || '',
+        r1r2Regulation: circuit.r1r2Regulation || '',
+
+        // Zs values
         expectedZs: circuit.zs || '',
-        // Actual test values (blank - to be filled on-site)
+        zsMarginPercent: circuit.zsMarginPercent,
+        zsCompliant: circuit.zsCompliant,
+        zsRegulation: circuit.zsRegulation || '',
+
+        // Insulation test
+        insulationTestVoltage: circuit.insulationTestVoltage || '500V DC',
+        insulationResistanceExpected: circuit.insulationResistance || '≥1.0MΩ',
+        insulationRegulation: circuit.insulationRegulation || '',
+
+        // ==== FAULT CURRENT ANALYSIS ====
+        faultCurrentAnalysis: circuit.faultCurrentAnalysis || null,
+
+        // ==== DERATING FACTORS ====
+        deratingFactors: circuit.deratingFactors || null,
+
+        // ==== SPECIAL LOCATION COMPLIANCE ====
+        specialLocationCompliance: circuit.specialLocationCompliance || null,
+
+        // ==== EARTHING REQUIREMENTS ====
+        earthingRequirements: circuit.earthingRequirements || null,
+
+        // ==== INSTALLATION GUIDANCE ====
+        installationNotes: circuit.installationNotes || '',
+        installationGuidance: circuit.installationGuidance || null,
+
+        // ==== DESIGN JUSTIFICATIONS ====
+        justifications: circuit.justifications || null,
+
+        // ==== COMPLIANCE STATUS ====
+        complianceStatus: circuit.complianceStatus || 'pass',
+        warnings: circuit.warnings || [],
+        validationIssues: circuit.validationIssues || [],
+
+        // ==== DIVERSITY ====
+        diversityFactor: circuit.diversityFactor,
+        diversityJustification: circuit.diversityJustification || '',
+
+        // Circuit topology (ring vs radial)
+        circuitTopology: circuit.circuitTopology || 'radial',
+
+        // ==== ACTUAL TEST VALUES (blank - to be filled on-site) ====
         r1r2: '',
         zs: '',
-        insulationTestVoltage: circuit.insulationTestVoltage || '500V DC',
         insulationResistance: '',
         insulationLiveNeutral: '',
         insulationLiveEarth: '',
@@ -348,6 +426,14 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         rcdTestButton: '',
         pfc: '',
         functionalTesting: '',
+
+        // Ring circuit fields (for ring final circuits)
+        ringR1: '',
+        ringRn: '',
+        ringR2: '',
+        ringContinuityLive: '',
+        ringContinuityNeutral: '',
+
         // Metadata
         fromDesigner: true,
         notes: scheduleData.includesExpectedResults
@@ -355,7 +441,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
           : 'Pre-filled from Circuit Designer'
       })) || [];
 
-      // Pre-fill form with design data
+      // Pre-fill form with design data - FULL CONTEXT from Circuit Designer
       setFormData(prev => ({
         ...prev,
         // Client/Installation info
@@ -363,15 +449,53 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         installationAddress: prev.installationAddress || designData.installation_address || '',
         description: prev.description || scheduleData.projectInfo?.projectName || '',
         installationType: scheduleData.projectInfo?.installationType || prev.installationType || 'domestic',
-        // Supply info
+
+        // Supply info - FULL
         supplyVoltage: scheduleData.supply?.voltage?.toString() || prev.supplyVoltage || '230',
         phases: scheduleData.supply?.phases === 'three' ? '3' : '1',
         earthingArrangement: scheduleData.supply?.earthingSystem || prev.earthingArrangement || 'TN-C-S',
         mainSwitchRating: scheduleData.supply?.mainSwitchRating?.toString() || prev.mainSwitchRating || '',
+        consumerUnitType: scheduleData.consumerUnit?.type || scheduleData.supply?.consumerUnitType || '',
+
         // Supply test values (Ze and PSCC)
         earthElectrodeResistance: scheduleData.supply?.ze?.toString() || '',
-        // Schedule of tests
+        prospectiveFaultCurrent: scheduleData.supply?.pscc?.toString() || '',
+
+        // Schedule of tests with full circuit data
         scheduleOfTests: transformedCircuits,
+
+        // ==== DESIGN-LEVEL CONTEXT (for reference/display) ====
+        designContext: {
+          // Load summary
+          totalLoad: scheduleData.projectInfo?.totalLoad,
+          diversifiedLoad: scheduleData.projectInfo?.diversifiedLoad,
+          diversityFactor: scheduleData.projectInfo?.diversityFactor,
+
+          // Diversity breakdown
+          diversityBreakdown: scheduleData.diversityBreakdown || null,
+
+          // Design reasoning
+          reasoning: scheduleData.reasoning || null,
+
+          // Validation status
+          validationPassed: scheduleData.validationPassed,
+          validationIssues: scheduleData.validationIssues || [],
+
+          // Materials and cost estimate
+          materials: scheduleData.materials || [],
+          costEstimate: scheduleData.costEstimate || null,
+
+          // Installation guidance
+          installationGuidance: scheduleData.installationGuidance || null,
+          practicalGuidance: scheduleData.practicalGuidance || [],
+
+          // Metadata
+          source: scheduleData.source,
+          generatedAt: scheduleData.generatedAt,
+          circuitCount: scheduleData.circuitCount,
+          totalCircuitCompliant: scheduleData.totalCircuitCompliant
+        },
+
         // Designer info
         designerName: prev.designerName || scheduleData.projectInfo?.electricianName || '',
       }));

@@ -34,11 +34,11 @@ export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: Enhanc
       >
         <MobileAccordionItem value={`hazard-${index}`}>
           <MobileAccordionTrigger className="w-full bg-transparent hover:bg-elec-gray/30 border-0 rounded-lg p-4 cursor-pointer">
-            <div className="flex flex-col items-center gap-3 w-full sm:flex-row sm:items-start">
+            <div className="flex items-start gap-3 w-full">
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center font-bold text-sm">
                 {index + 1}
               </div>
-              <div className="flex-1 text-center sm:text-left w-full">
+              <div className="flex-1 text-left w-full">
                 {isEditing ? (
                   <Input
                     value={hazard.hazard}
@@ -49,11 +49,9 @@ export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: Enhanc
                 ) : (
                   <h4 className="font-semibold text-base mb-2">{hazard.hazard}</h4>
                 )}
-                <div className="flex justify-center sm:justify-start">
-                  <Badge className={riskColors.badge}>
-                    Risk Score: {riskScore}
-                   </Badge>
-                 </div>
+                <Badge className={riskColors.badge}>
+                  Risk Score: {riskScore}
+                </Badge>
                </div>
                <div className="absolute top-2 right-2 flex gap-1">
                  <Button

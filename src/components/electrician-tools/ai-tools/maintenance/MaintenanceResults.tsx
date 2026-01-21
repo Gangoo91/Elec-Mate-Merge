@@ -239,90 +239,66 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       </div>
 
       {/* Equipment Health Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Risk Score */}
-        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/80 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group">
-          <CardContent className="pt-5 pb-5">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm sm:text-base text-foreground mb-2">Risk Level</p>
-                <p className={`text-2xl sm:text-3xl font-bold ${getRiskColor(results.riskLevel).split(' ')[0]}`}>
-                  {results.riskScore || 0}
-                </p>
-                <Badge className={`mt-2 ${getRiskColor(results.riskLevel)} transition-colors`}>
-                  {results.riskLevel || 'unknown'}
-                </Badge>
-              </div>
-              <div className="bg-elec-yellow/10 p-2 rounded-lg group-hover:bg-elec-yellow/20 transition-colors">
-                <AlertTriangle className={`h-6 w-6 sm:h-8 sm:w-8 ${getRiskColor(results.riskLevel).split(' ')[0]}`} />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="bg-white/5 rounded-xl p-4 min-h-[44px]">
+          <div className="flex items-center gap-2 mb-2">
+            <AlertTriangle className={`h-4 w-4 ${getRiskColor(results.riskLevel).split(' ')[0]}`} />
+            <span className="text-xs text-white/50">Risk Level</span>
+          </div>
+          <p className={`text-2xl sm:text-3xl font-bold ${getRiskColor(results.riskLevel).split(' ')[0]}`}>
+            {results.riskScore || 0}
+          </p>
+          <Badge className={`mt-2 ${getRiskColor(results.riskLevel)}`}>
+            {results.riskLevel || 'unknown'}
+          </Badge>
+        </div>
 
         {/* Compliance Status */}
-        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/80 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group">
-          <CardContent className="pt-5 pb-5">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm sm:text-base text-foreground mb-2">Compliance</p>
-                <Badge className={`mt-2 ${getComplianceColor(results.complianceStatus)} transition-colors`}>
-                  {results.complianceStatus?.replace('-', ' ') || 'unknown'}
-                </Badge>
-                {results.nextEICRDue && (
-                  <p className="text-xs text-foreground mt-2">EICR: {results.nextEICRDue}</p>
-                )}
-              </div>
-              <div className="bg-elec-yellow/10 p-2 rounded-lg group-hover:bg-elec-yellow/20 transition-colors">
-                <CheckCircle2 className={`h-6 w-6 sm:h-8 sm:w-8 ${getComplianceColor(results.complianceStatus).split(' ')[0]}`} />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="bg-white/5 rounded-xl p-4 min-h-[44px]">
+          <div className="flex items-center gap-2 mb-2">
+            <CheckCircle2 className={`h-4 w-4 ${getComplianceColor(results.complianceStatus).split(' ')[0]}`} />
+            <span className="text-xs text-white/50">Compliance</span>
+          </div>
+          <Badge className={`${getComplianceColor(results.complianceStatus)}`}>
+            {results.complianceStatus?.replace('-', ' ') || 'unknown'}
+          </Badge>
+          {results.nextEICRDue && (
+            <p className="text-xs text-foreground mt-2">EICR: {results.nextEICRDue}</p>
+          )}
+        </div>
 
         {/* Annual Cost */}
-        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/80 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group">
-          <CardContent className="pt-5 pb-5">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm sm:text-base text-foreground mb-2">Annual Cost</p>
-                {results.annualCostEstimate ? (
-                  <>
-                    <p className="text-xl sm:text-2xl font-bold text-foreground">
-                      £{results.annualCostEstimate.min}
-                    </p>
-                    <p className="text-xs text-foreground mt-1">
-                      to £{results.annualCostEstimate.max}
-                    </p>
-                  </>
-                ) : (
-                  <p className="text-lg text-foreground">N/A</p>
-                )}
-              </div>
-              <div className="bg-elec-yellow/10 p-2 rounded-lg group-hover:bg-elec-yellow/20 transition-colors">
-                <PoundSterling className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="bg-white/5 rounded-xl p-4 min-h-[44px]">
+          <div className="flex items-center gap-2 mb-2">
+            <PoundSterling className="h-4 w-4 text-elec-yellow" />
+            <span className="text-xs text-white/50">Annual Cost</span>
+          </div>
+          {results.annualCostEstimate ? (
+            <>
+              <p className="text-xl sm:text-2xl font-bold text-foreground">
+                £{results.annualCostEstimate.min}
+              </p>
+              <p className="text-xs text-foreground mt-1">
+                to £{results.annualCostEstimate.max}
+              </p>
+            </>
+          ) : (
+            <p className="text-lg text-foreground">N/A</p>
+          )}
+        </div>
 
         {/* Total Hours */}
-        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/80 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group">
-          <CardContent className="pt-5 pb-5">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm sm:text-base text-foreground mb-2">Annual Hours</p>
-                <p className="text-xl sm:text-2xl font-bold text-foreground">
-                  {results.totalEstimatedHours || 0}h
-                </p>
-                <p className="text-xs text-foreground mt-1">per year</p>
-              </div>
-              <div className="bg-elec-yellow/10 p-2 rounded-lg group-hover:bg-elec-yellow/20 transition-colors">
-                <Clock className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="bg-white/5 rounded-xl p-4 min-h-[44px]">
+          <div className="flex items-center gap-2 mb-2">
+            <Clock className="h-4 w-4 text-elec-yellow" />
+            <span className="text-xs text-white/50">Annual Hours</span>
+          </div>
+          <p className="text-xl sm:text-2xl font-bold text-foreground">
+            {results.totalEstimatedHours || 0}h
+          </p>
+          <p className="text-xs text-foreground mt-1">per year</p>
+        </div>
       </div>
 
       {/* Age Warning */}

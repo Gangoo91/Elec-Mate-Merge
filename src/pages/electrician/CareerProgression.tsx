@@ -63,68 +63,47 @@ interface CareerCardProps {
   onClick: () => void;
 }
 
-function CareerCard({ title, description, icon: Icon, color, comingSoon, onClick }: CareerCardProps) {
+function CareerCard({ title, icon: Icon, color, comingSoon, onClick }: CareerCardProps) {
   return (
     <motion.div
       variants={itemVariants}
-      whileHover={!comingSoon ? { y: -2, scale: 1.01 } : {}}
-      whileTap={!comingSoon ? { scale: 0.98 } : {}}
+      whileTap={!comingSoon ? { scale: 0.97 } : {}}
       onClick={!comingSoon ? onClick : undefined}
       className={cn(
-        "relative glass-premium rounded-xl h-full cursor-pointer group overflow-hidden touch-manipulation",
-        comingSoon && "opacity-60 cursor-not-allowed"
+        "relative rounded-2xl h-full cursor-pointer group touch-manipulation active:bg-white/5 transition-colors",
+        "bg-white/[0.03] border border-white/10",
+        comingSoon && "opacity-50 cursor-not-allowed"
       )}
     >
-      {/* Card Content - Horizontal layout with icon and content side by side */}
-      <div className="p-4 sm:p-5 flex flex-col h-full">
-        {/* Icon + Title Row */}
-        <div className="flex items-start gap-3 mb-3">
-          <div className={cn(
-            "p-2.5 rounded-xl flex-shrink-0 transition-colors",
-            color === "purple" && "bg-purple-500/10 group-hover:bg-purple-500/20 group-active:bg-purple-500/25",
-            color === "blue" && "bg-blue-500/10 group-hover:bg-blue-500/20 group-active:bg-blue-500/25",
-            color === "green" && "bg-green-500/10 group-hover:bg-green-500/20 group-active:bg-green-500/25",
-            color === "yellow" && "bg-elec-yellow/10 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25",
-            color === "orange" && "bg-orange-500/10 group-hover:bg-orange-500/20 group-active:bg-orange-500/25",
-          )}>
-            <Icon className={cn(
-              "h-5 w-5 sm:h-6 sm:w-6",
-              color === "purple" && "text-purple-400",
-              color === "blue" && "text-blue-400",
-              color === "green" && "text-green-400",
-              color === "yellow" && "text-elec-yellow",
-              color === "orange" && "text-orange-400",
-            )} />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h3 className={cn(
-              "text-base sm:text-lg font-semibold text-white transition-colors leading-tight",
-              !comingSoon && color === "purple" && "group-hover:text-purple-400 group-active:text-purple-400",
-              !comingSoon && color === "blue" && "group-hover:text-blue-400 group-active:text-blue-400",
-              !comingSoon && color === "green" && "group-hover:text-green-400 group-active:text-green-400",
-              !comingSoon && color === "yellow" && "group-hover:text-elec-yellow group-active:text-elec-yellow",
-              !comingSoon && color === "orange" && "group-hover:text-orange-400 group-active:text-orange-400",
-            )}>
-              {title}
-            </h3>
-            {/* Subtle Coming Soon text below title */}
-            {comingSoon && (
-              <p className="text-xs text-amber-400/80 mt-1">Coming Soon</p>
-            )}
-          </div>
+      {/* Native app style - centered icon + title */}
+      <div className="p-4 flex flex-col items-center justify-center text-center min-h-[100px]">
+        {/* Icon container */}
+        <div className={cn(
+          "w-11 h-11 rounded-xl flex items-center justify-center mb-2.5",
+          color === "purple" && "bg-purple-500/15",
+          color === "blue" && "bg-blue-500/15",
+          color === "green" && "bg-green-500/15",
+          color === "yellow" && "bg-elec-yellow/15",
+          color === "orange" && "bg-orange-500/15",
+        )}>
+          <Icon className={cn(
+            "h-5 w-5",
+            color === "purple" && "text-purple-400",
+            color === "blue" && "text-blue-400",
+            color === "green" && "text-green-400",
+            color === "yellow" && "text-elec-yellow",
+            color === "orange" && "text-orange-400",
+          )} />
         </div>
 
-        {/* Description */}
-        <p className="text-sm text-white/60 leading-relaxed flex-1">
-          {description}
-        </p>
+        {/* Title - always visible, properly sized */}
+        <span className="text-[13px] font-medium text-white leading-tight">
+          {title}
+        </span>
 
-        {/* Explore CTA */}
-        {!comingSoon && (
-          <div className="flex items-center gap-1.5 mt-4 text-white/50 group-hover:text-white/80 group-active:text-white/80 transition-colors">
-            <span className="text-sm font-medium">Explore</span>
-            <ChevronRight className="h-4 w-4 group-hover:translate-x-1 group-active:translate-x-1 transition-transform" />
-          </div>
+        {/* Coming Soon indicator */}
+        {comingSoon && (
+          <span className="text-[10px] text-amber-400/90 mt-1">Coming Soon</span>
         )}
       </div>
     </motion.div>
@@ -500,16 +479,15 @@ const CareerProgression = () => {
 
             {/* Career Sections Grid */}
             <div>
-              <div className="flex items-center gap-2 px-1 mb-3 sm:mb-4">
-                <div className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                <h2 className="text-base sm:text-lg font-semibold text-white">Explore Career Options</h2>
-              </div>
+              <p className="text-xs font-medium text-white/50 uppercase tracking-wider px-1 mb-3">
+                Career Options
+              </p>
 
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
+                className="grid grid-cols-3 gap-2 sm:gap-3"
               >
                 {careerSections.map((section) => (
                   <CareerCard
@@ -523,10 +501,9 @@ const CareerProgression = () => {
 
             {/* High-Demand Opportunities */}
             <div>
-              <div className="flex items-center gap-2 px-1 mb-3 sm:mb-4">
-                <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                <h2 className="text-base sm:text-lg font-semibold text-white">High-Demand Opportunities</h2>
-              </div>
+              <p className="text-xs font-medium text-white/50 uppercase tracking-wider px-1 mb-3">
+                High-Demand Roles
+              </p>
 
               {/* Horizontal scroll on mobile, grid on desktop */}
               <motion.div
@@ -543,10 +520,9 @@ const CareerProgression = () => {
 
             {/* Development Roadmap */}
             <div>
-              <div className="flex items-center gap-2 px-1 mb-3 sm:mb-4">
-                <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-                <h2 className="text-base sm:text-lg font-semibold text-white">Development Roadmap</h2>
-              </div>
+              <p className="text-xs font-medium text-white/50 uppercase tracking-wider px-1 mb-3">
+                Development Roadmap
+              </p>
 
               {/* Horizontal scroll on mobile, grid on desktop */}
               <motion.div
@@ -631,10 +607,9 @@ const CareerProgression = () => {
 
             {/* Industry Insights */}
             <div>
-              <div className="flex items-center gap-2 px-1 mb-3 sm:mb-4">
-                <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-                <h2 className="text-base sm:text-lg font-semibold text-white">Industry Insights</h2>
-              </div>
+              <p className="text-xs font-medium text-white/50 uppercase tracking-wider px-1 mb-3">
+                Industry Insights
+              </p>
 
               {/* Horizontal scroll on mobile, grid on desktop */}
               <motion.div
