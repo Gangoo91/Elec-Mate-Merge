@@ -29,6 +29,14 @@ const EICRObservationsSection = React.forwardRef<HTMLDivElement, EICRObservation
     const criticalIssues = defectObservations.filter(obs => ['C1', 'C2'].includes(obs.defectCode)).length;
     const improvements = defectObservations.filter(obs => obs.defectCode === 'C3').length;
 
+    // Build certificate context from formData for photo documentation
+    const certificateContext = {
+      certificateNumber: formData?.certificateNumber || reportId,
+      certificateType: 'eicr' as const,
+      installationAddress: formData?.installationAddress || formData?.clientAddress,
+      clientName: formData?.clientName,
+    };
+
     return (
       <div ref={ref}>
         <Card>
@@ -51,6 +59,7 @@ const EICRObservationsSection = React.forwardRef<HTMLDivElement, EICRObservation
               onAddObservation={() => {}} // Not used in EICR mode
               onUpdateObservation={onUpdateObservation}
               onRemoveObservation={onRemoveObservation}
+              certificateContext={certificateContext}
             />
           </CardContent>
         </Card>

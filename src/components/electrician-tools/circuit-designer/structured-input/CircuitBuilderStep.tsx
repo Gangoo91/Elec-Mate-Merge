@@ -58,11 +58,11 @@ export const CircuitBuilderStep = ({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Section Header */}
+    <div className="space-y-5">
+      {/* Section Header - Native app style */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 border border-elec-yellow/30 shadow-[0_0_12px_rgba(255,204,0,0.1)]">
             <CircuitBoard className="h-5 w-5 text-elec-yellow" />
           </div>
           <div>
@@ -73,8 +73,10 @@ export const CircuitBuilderStep = ({
         <Badge
           variant="secondary"
           className={cn(
-            "bg-white/5 border-0 px-3 py-1",
-            circuits.length > 0 ? "text-elec-yellow" : "text-white/60"
+            "px-3 py-1.5 rounded-full font-semibold",
+            circuits.length > 0
+              ? "bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow"
+              : "bg-white/5 border border-white/10 text-white/50"
           )}
         >
           {circuits.length} Circuit{circuits.length !== 1 ? 's' : ''}
@@ -106,16 +108,21 @@ export const CircuitBuilderStep = ({
       {circuits.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-white/80">Your Circuits</h3>
+            <h3 className="text-sm font-semibold text-white/80 flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+              Your Circuits
+            </h3>
             <Button
               variant="ghost"
               size="sm"
               onClick={addBlankCircuit}
               className={cn(
-                "gap-2 h-10 px-4 rounded-xl",
-                "bg-white/5 border border-white/[0.08]",
-                "hover:bg-white/10 hover:border-white/15",
+                "gap-2 h-11 px-4 rounded-xl",
+                "bg-elec-yellow/10 border border-elec-yellow/25",
+                "hover:bg-elec-yellow/20 hover:border-elec-yellow/40",
+                "text-elec-yellow font-medium",
                 "transition-all duration-ios-fast",
+                "active:scale-[0.97]",
                 "touch-manipulation"
               )}
             >
@@ -150,18 +157,19 @@ export const CircuitBuilderStep = ({
         </div>
       )}
 
-      {/* Empty State */}
+      {/* Empty State - Native app feel */}
       {circuits.length === 0 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className={cn(
-            "p-8 sm:p-12 text-center rounded-xl",
-            "bg-white/[0.03] border-2 border-dashed border-white/[0.08]"
+            "p-8 sm:p-12 text-center rounded-2xl",
+            "bg-gradient-to-br from-elec-yellow/[0.04] to-transparent",
+            "border-2 border-dashed border-elec-yellow/20"
           )}
         >
-          <div className="inline-flex p-4 rounded-xl bg-white/5 mb-4">
-            <Zap className="h-10 w-10 sm:h-12 sm:w-12 text-white/40" />
+          <div className="inline-flex p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 mb-5">
+            <Zap className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow" />
           </div>
           <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
             No Circuits Added Yet
@@ -172,11 +180,11 @@ export const CircuitBuilderStep = ({
           <Button
             onClick={addBlankCircuit}
             className={cn(
-              "gap-2 h-12 px-6 rounded-xl",
-              "bg-elec-yellow text-black font-semibold",
+              "gap-2.5 h-13 px-8 rounded-xl",
+              "bg-elec-yellow text-black font-semibold text-base",
               "hover:bg-elec-yellow/90",
-              "shadow-[0_2px_8px_rgba(0,0,0,0.2)]",
-              "active:scale-[0.98]",
+              "shadow-[0_4px_16px_rgba(255,204,0,0.25)]",
+              "active:scale-[0.97]",
               "transition-all duration-ios-fast",
               "touch-manipulation"
             )}

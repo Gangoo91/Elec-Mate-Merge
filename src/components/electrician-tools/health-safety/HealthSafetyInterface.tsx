@@ -8,6 +8,9 @@ import { HealthSafetyProcessingView } from "./HealthSafetyProcessingView";
 import { HealthSafetySuccess } from "./HealthSafetySuccess";
 import { HealthSafetyResults } from "./HealthSafetyResults";
 import { triggerHaptic } from "@/utils/animation-helpers";
+import { getStoredCircuitContext, clearStoredCircuitContext, type StoredCircuitContext } from "@/utils/circuit-context-generator";
+import { ImportedContextBanner } from "@/components/electrician-tools/shared/ImportedContextBanner";
+import { AnimatePresence } from "framer-motion";
 
 const HealthSafetyInterface = () => {
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
@@ -15,11 +18,35 @@ const HealthSafetyInterface = () => {
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationShown, setCelebrationShown] = useState(false);
   const [generationStartTime, setGenerationStartTime] = useState<number>(0);
+  const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
+  const [initialPrompt, setInitialPrompt] = useState<string>("");
+  const [initialProjectName, setInitialProjectName] = useState<string>("");
 
-  const { job, startPolling, stopPolling, progress, status, currentStep, outputData, error } = 
+  const { job, startPolling, stopPolling, progress, status, currentStep, outputData, error } =
     useHealthSafetyGeneration(currentJobId);
-  
+
   const { requestPermission, showCompletionNotification, showErrorNotification } = useRAMSNotifications();
+
+  // Check for imported circuit context on mount
+  useEffect(() => {
+    const storedContext = getStoredCircuitContext();
+    if (storedContext && storedContext.agentType === 'rams') {
+      setImportedContext(storedContext);
+      clearStoredCircuitContext();
+    }
+  }, []);
+
+  const handleUseImportedContext = () => {
+    if (importedContext) {
+      setInitialPrompt(importedContext.formattedPrompt);
+      setInitialProjectName(importedContext.sourceDesign);
+      setImportedContext(null);
+    }
+  };
+
+  const handleDismissImportedContext = () => {
+    setImportedContext(null);
+  };
 
   // Request notification permission on mount
   useEffect(() => {
@@ -151,10 +178,24 @@ const HealthSafetyInterface = () => {
 
   return (
     <div className="space-y-4">
+      {/* Imported Circuit Context Banner */}
+      <AnimatePresence>
+        {importedContext && !showResults && (
+          <ImportedContextBanner
+            source={importedContext.sourceDesign}
+            circuitCount={importedContext.context.circuitSummaries.length}
+            onUseContext={handleUseImportedContext}
+            onDismiss={handleDismissImportedContext}
+          />
+        )}
+      </AnimatePresence>
+
       {!showResults && (
-        <HealthSafetyInput 
+        <HealthSafetyInput
           onGenerate={handleGenerate}
           isProcessing={status === 'processing' || status === 'pending'}
+          initialPrompt={initialPrompt}
+          initialProjectName={initialProjectName}
         />
       )}
       

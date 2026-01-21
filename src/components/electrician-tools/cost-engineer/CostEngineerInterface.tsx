@@ -9,6 +9,9 @@ import { parseCostAnalysis, ParsedCostAnalysis } from "@/utils/cost-analysis-par
 import { BusinessSettings, DEFAULT_BUSINESS_SETTINGS, BusinessSettingsDialog } from "./BusinessSettingsDialog";
 import { AgentSuccessDialog } from "@/components/agents/shared/AgentSuccessDialog";
 import { CostEngineerInput } from "./CostEngineerInput";
+import { getStoredCircuitContext, clearStoredCircuitContext, type StoredCircuitContext } from "@/utils/circuit-context-generator";
+import { ImportedContextBanner } from "@/components/electrician-tools/shared/ImportedContextBanner";
+import { AnimatePresence } from "framer-motion";
 
 const STORAGE_KEY = 'electrician_business_settings';
 
@@ -31,6 +34,29 @@ const CostEngineerInterface = () => {
   const [showSettingsDialog, setShowSettingsDialog] = useState(false);
   const [jobId, setJobId] = useState<string | null>(null);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
+
+  // Check for imported circuit context on mount
+  useEffect(() => {
+    const storedContext = getStoredCircuitContext();
+    if (storedContext && storedContext.agentType === 'cost-engineer') {
+      setImportedContext(storedContext);
+      // Clear after pickup (one-time use)
+      clearStoredCircuitContext();
+    }
+  }, []);
+
+  const handleUseImportedContext = () => {
+    if (importedContext) {
+      setPrompt(importedContext.formattedPrompt);
+      setProjectName(importedContext.sourceDesign);
+      setImportedContext(null);
+    }
+  };
+
+  const handleDismissImportedContext = () => {
+    setImportedContext(null);
+  };
 
   // Load business settings from localStorage on mount
   useEffect(() => {
@@ -229,6 +255,20 @@ const CostEngineerInterface = () => {
 
   return (
     <>
+      {/* Imported Circuit Context Banner */}
+      <AnimatePresence>
+        {importedContext && (
+          <div className="px-4 pt-4">
+            <ImportedContextBanner
+              source={importedContext.sourceDesign}
+              circuitCount={importedContext.context.circuitSummaries.length}
+              onUseContext={handleUseImportedContext}
+              onDismiss={handleDismissImportedContext}
+            />
+          </div>
+        )}
+      </AnimatePresence>
+
       <CostEngineerInput
         prompt={prompt}
         projectType={projectType}

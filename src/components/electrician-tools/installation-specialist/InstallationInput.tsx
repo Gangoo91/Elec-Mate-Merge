@@ -19,14 +19,16 @@ import {
 interface InstallationInputProps {
   onGenerate: (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean) => void;
   isProcessing: boolean;
+  initialPrompt?: string;
+  initialProjectName?: string;
 }
 
-export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInputProps) => {
-  const [description, setDescription] = useState("");
+export const InstallationInput = ({ onGenerate, isProcessing, initialPrompt, initialProjectName }: InstallationInputProps) => {
+  const [description, setDescription] = useState(initialPrompt || "");
   const [generateFullMethodStatement, setGenerateFullMethodStatement] = useState(true);
   const [installationType, setInstallationType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
   const [projectDetails, setProjectDetails] = useState<ProjectDetailsType>({
-    projectName: '',
+    projectName: initialProjectName || '',
     location: '',
     installationType: 'domestic'
   });
@@ -37,6 +39,17 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
   useEffect(() => {
     setProjectDetails(prev => ({ ...prev, installationType }));
   }, [installationType]);
+
+  // Update state when initial values change
+  useEffect(() => {
+    if (initialPrompt) setDescription(initialPrompt);
+  }, [initialPrompt]);
+
+  useEffect(() => {
+    if (initialProjectName) {
+      setProjectDetails(prev => ({ ...prev, projectName: initialProjectName }));
+    }
+  }, [initialProjectName]);
 
   const handleTemplateSelect = (template: InstallationTemplate) => {
     setDescription(template.prefilledPrompt);

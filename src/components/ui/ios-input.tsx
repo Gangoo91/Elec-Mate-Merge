@@ -96,24 +96,24 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
               isPasswordType && "pr-12",
               // Typography
               compact ? "text-sm" : "text-base",
-              "text-white placeholder:text-white/30",
-              // Clean dark background - NO red/amber tints
-              "bg-white/[0.06] border",
-              // Border states
+              "text-white placeholder:text-white/35",
+              // Clean dark background - subtle and professional
+              "bg-white/[0.04] border",
+              // Border states - subtle gold accents
               error
                 ? "border-elec-yellow/50 focus:border-elec-yellow"
                 : success
-                  ? "border-green-500/50"
+                  ? "border-green-500/40"
                   : isFocused
                     ? "border-elec-yellow/60"
-                    : "border-white/10 hover:border-white/20",
-              // Focus ring
-              isFocused && !error && "ring-2 ring-elec-yellow/20",
-              error && "ring-2 ring-elec-yellow/10",
-              success && "ring-2 ring-green-500/10",
+                    : "border-white/[0.12] hover:border-white/20",
+              // Focus ring - subtle
+              isFocused && !error && "ring-1 ring-elec-yellow/20",
+              error && "ring-1 ring-elec-yellow/15",
+              success && "ring-1 ring-green-500/15",
               // Focus state
-              "focus:outline-none focus:bg-white/[0.08]",
-              // Touch
+              "focus:outline-none focus:bg-white/[0.06]",
+              // Touch - native app feel
               "touch-manipulation",
               // Selection
               "selection:bg-elec-yellow/30",

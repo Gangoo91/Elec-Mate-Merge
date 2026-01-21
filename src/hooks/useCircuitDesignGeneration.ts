@@ -32,6 +32,7 @@ interface UseCircuitDesignGenerationReturn {
   estimatedTimeRemaining: string | null; // OPTIMIZATION: Show estimated completion time
   designData: any;
   installationGuidance: any;
+  installationAgentStatus: string | undefined; // Track installation agent status separately
   error: string | null;
 }
 
@@ -259,6 +260,7 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
     estimatedTimeRemaining: getEstimatedTimeRemaining(),
     designData: job?.design_data,
     installationGuidance: job?.installation_guidance,
+    installationAgentStatus: job?.installation_agent_status,
     error: job?.error_message
   };
 };

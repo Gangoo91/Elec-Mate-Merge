@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import {
@@ -62,16 +62,27 @@ const TYPE_CONFIG = {
 interface HealthSafetyInputProps {
   onGenerate: (query: string, projectInfo: any, workType: 'domestic' | 'commercial' | 'industrial') => void;
   isProcessing: boolean;
+  initialPrompt?: string;
+  initialProjectName?: string;
 }
 
-export const HealthSafetyInput = ({ onGenerate, isProcessing }: HealthSafetyInputProps) => {
-  const [prompt, setPrompt] = useState("");
+export const HealthSafetyInput = ({ onGenerate, isProcessing, initialPrompt, initialProjectName }: HealthSafetyInputProps) => {
+  const [prompt, setPrompt] = useState(initialPrompt || "");
   const [selectedType, setSelectedType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
-  const [projectName, setProjectName] = useState("");
+  const [projectName, setProjectName] = useState(initialProjectName || "");
   const [location, setLocation] = useState("");
   const [clientName, setClientName] = useState("");
   const [showExamples, setShowExamples] = useState(false);
   const [showProjectDetails, setShowProjectDetails] = useState(false);
+
+  // Update state when initial values change (e.g., from imported context)
+  useEffect(() => {
+    if (initialPrompt) setPrompt(initialPrompt);
+  }, [initialPrompt]);
+
+  useEffect(() => {
+    if (initialProjectName) setProjectName(initialProjectName);
+  }, [initialProjectName]);
 
   const config = AGENT_CONFIG['health-safety'];
 

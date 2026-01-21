@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -75,17 +75,28 @@ interface CommissioningInputProps {
     imageUrls?: string[];
   }) => void;
   isProcessing: boolean;
+  initialPrompt?: string;
+  initialProjectName?: string;
 }
 
-const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProps) => {
-  const [prompt, setPrompt] = useState("");
+const CommissioningInput = ({ onGenerate, isProcessing, initialPrompt, initialProjectName }: CommissioningInputProps) => {
+  const [prompt, setPrompt] = useState(initialPrompt || "");
   const [queryMode, setQueryMode] = useState<'testing' | 'fault'>('testing');
   const [selectedType, setSelectedType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
-  const [projectName, setProjectName] = useState("");
+  const [projectName, setProjectName] = useState(initialProjectName || "");
   const [location, setLocation] = useState("");
   const [clientName, setClientName] = useState("");
   const [installationDate, setInstallationDate] = useState("");
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+  // Update state when initial values change
+  useEffect(() => {
+    if (initialPrompt) setPrompt(initialPrompt);
+  }, [initialPrompt]);
+
+  useEffect(() => {
+    if (initialProjectName) setProjectName(initialProjectName);
+  }, [initialProjectName]);
 
   const handlePhotosUploaded = (urls: string[]) => {
     setImageUrls(urls);

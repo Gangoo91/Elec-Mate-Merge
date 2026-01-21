@@ -9,6 +9,9 @@ import FaultDiagnosisView from "./FaultDiagnosisView";
 import { Button } from "@/components/ui/button";
 import type { CommissioningResponse, FaultDiagnosis } from "@/types/commissioning-response";
 import { toast } from "sonner";
+import { getStoredCircuitContext, clearStoredCircuitContext, type StoredCircuitContext } from "@/utils/circuit-context-generator";
+import { ImportedContextBanner } from "@/components/electrician-tools/shared/ImportedContextBanner";
+import { AnimatePresence } from "framer-motion";
 
 const CommissioningChat = lazy(() => import("./CommissioningChat"));
 
@@ -19,6 +22,30 @@ const CommissioningInterface = () => {
   const [results, setResults] = useState<CommissioningResponse | null>(null);
   const [generationStartTime, setGenerationStartTime] = useState(0);
   const [responseMode, setResponseMode] = useState<'procedure' | 'conversational' | 'fault-diagnosis' | null>(null);
+  const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
+  const [initialPrompt, setInitialPrompt] = useState<string>("");
+  const [initialProjectName, setInitialProjectName] = useState<string>("");
+
+  // Check for imported circuit context on mount
+  useEffect(() => {
+    const storedContext = getStoredCircuitContext();
+    if (storedContext && storedContext.agentType === 'commissioning') {
+      setImportedContext(storedContext);
+      clearStoredCircuitContext();
+    }
+  }, []);
+
+  const handleUseImportedContext = () => {
+    if (importedContext) {
+      setInitialPrompt(importedContext.formattedPrompt);
+      setInitialProjectName(importedContext.sourceDesign);
+      setImportedContext(null);
+    }
+  };
+
+  const handleDismissImportedContext = () => {
+    setImportedContext(null);
+  };
   const [conversationalResponse, setConversationalResponse] = useState<{
     text: string;
     queryType: 'troubleshooting' | 'question' | 'photo-analysis';
@@ -231,7 +258,27 @@ const CommissioningInterface = () => {
 
   // Show input form
   if (!showResults) {
-    return <CommissioningInput onGenerate={handleGenerate} isProcessing={isLoading} />;
+    return (
+      <div className="space-y-4">
+        {/* Imported Circuit Context Banner */}
+        <AnimatePresence>
+          {importedContext && (
+            <ImportedContextBanner
+              source={importedContext.sourceDesign}
+              circuitCount={importedContext.context.circuitSummaries.length}
+              onUseContext={handleUseImportedContext}
+              onDismiss={handleDismissImportedContext}
+            />
+          )}
+        </AnimatePresence>
+        <CommissioningInput
+          onGenerate={handleGenerate}
+          isProcessing={isLoading}
+          initialPrompt={initialPrompt}
+          initialProjectName={initialProjectName}
+        />
+      </div>
+    );
   }
 
   // Show processing view while loading

@@ -26,6 +26,12 @@ interface DefectObservationCardProps {
   index: number;
   onUpdate: (id: string, field: keyof DefectObservation, value: any) => void;
   onRemove: (id: string) => void;
+  certificateContext?: {
+    certificateNumber?: string;
+    certificateType?: 'eicr' | 'eic';
+    installationAddress?: string;
+    clientName?: string;
+  };
 }
 
 const defectCodeConfig = {
@@ -79,7 +85,7 @@ const defectCodeConfig = {
   },
 };
 
-const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove }: DefectObservationCardProps) => {
+const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, certificateContext }: DefectObservationCardProps) => {
   const {
     photos,
     isUploading,
@@ -267,6 +273,7 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove }: 
                   description: defect.description || 'No description provided',
                   recommendation: defect.recommendation,
                 }}
+                certificateContext={certificateContext}
               />
             </div>
           )}

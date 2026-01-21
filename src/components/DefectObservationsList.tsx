@@ -20,6 +20,12 @@ interface DefectObservationsListProps {
   onAddObservation: () => void;
   onUpdateObservation: (id: string, field: keyof DefectObservation, value: any) => void;
   onRemoveObservation: (id: string) => void;
+  certificateContext?: {
+    certificateNumber?: string;
+    certificateType?: 'eicr' | 'eic';
+    installationAddress?: string;
+    clientName?: string;
+  };
 }
 
 const DefectObservationsList = ({
@@ -27,7 +33,8 @@ const DefectObservationsList = ({
   reportId,
   onAddObservation,
   onUpdateObservation,
-  onRemoveObservation
+  onRemoveObservation,
+  certificateContext
 }: DefectObservationsListProps) => {
   if (defectObservations.length === 0) {
     return (
@@ -52,6 +59,7 @@ const DefectObservationsList = ({
           index={index}
           onUpdate={onUpdateObservation}
           onRemove={onRemoveObservation}
+          certificateContext={certificateContext}
         />
       ))}
     </div>

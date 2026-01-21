@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { X, Sparkles, Loader2, ZoomIn, CheckCircle, AlertTriangle, AlertCircle, HelpCircle, ArrowRight } from 'lucide-react';
+import { X, Sparkles, Loader2, ZoomIn, CheckCircle, AlertTriangle, AlertCircle, HelpCircle, ArrowRight, FolderOutput } from 'lucide-react';
 import { InspectionPhoto } from '@/types/inspection';
 import {
   Dialog,
@@ -15,6 +15,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Progress } from '@/components/ui/progress';
 import AIAnalysisConfirmDialog from './AIAnalysisConfirmDialog';
 import AIAnalysisSummaryCard from './AIAnalysisSummaryCard';
+import { useSafetyPhotoUpload } from '@/hooks/useSafetyPhotoUpload';
+import { useToast } from '@/hooks/use-toast';
 
 interface InspectionPhotoGalleryProps {
   photos: InspectionPhoto[];
@@ -27,7 +29,23 @@ interface InspectionPhotoGalleryProps {
     description?: string;
     recommendation?: string;
   };
+  certificateContext?: {
+    certificateNumber?: string;
+    certificateType?: 'eicr' | 'eic';
+    installationAddress?: string;
+    clientName?: string;
+  };
 }
+
+// Map defect codes to photo documentation categories
+const defectCodeToCategoryMap: Record<string, string> = {
+  'C1': 'hazard_identification',
+  'C2': 'hazard_identification',
+  'C3': 'site_condition',
+  'FI': 'site_condition',
+  'LIM': 'site_condition',
+  'N/A': 'other',
+};
 
 const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
   photos,
@@ -35,10 +53,15 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
   onScanPhoto,
   isScanning,
   inspectorContext,
+  certificateContext,
 }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<InspectionPhoto | null>(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [photoToScan, setPhotoToScan] = useState<InspectionPhoto | null>(null);
+  const [sendingToDocsId, setSendingToDocsId] = useState<string | null>(null);
+
+  const { copyFromInspection, isUploading } = useSafetyPhotoUpload();
+  const { toast } = useToast();
 
   const handleScanClick = (photo: InspectionPhoto) => {
     setPhotoToScan(photo);
@@ -49,6 +72,53 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
     if (photoToScan) {
       onScanPhoto(photoToScan.id);
       setPhotoToScan(null);
+    }
+  };
+
+  const handleSendToPhotoDocs = async (photo: InspectionPhoto) => {
+    setSendingToDocsId(photo.id);
+    try {
+      const defectCode = photo.faultCode || inspectorContext?.classification || '';
+      const category = defectCodeToCategoryMap[defectCode] || 'other';
+
+      // Build description from context
+      const descriptionParts = [];
+      if (defectCode) descriptionParts.push(`[${defectCode}]`);
+      if (inspectorContext?.itemLocation) descriptionParts.push(inspectorContext.itemLocation);
+      if (inspectorContext?.description) descriptionParts.push(inspectorContext.description);
+      const description = descriptionParts.join(' - ') || 'Inspection photo';
+
+      // Build project reference from certificate
+      const projectReference = certificateContext?.certificateNumber
+        ? `${certificateContext.certificateType?.toUpperCase() || 'CERT'}-${certificateContext.certificateNumber}`
+        : certificateContext?.clientName || 'Inspection';
+
+      const result = await copyFromInspection({
+        sourceUrl: photo.url,
+        projectReference,
+        description,
+        category,
+        defectCode: defectCode || undefined,
+        location: certificateContext?.installationAddress,
+        certificateNumber: certificateContext?.certificateNumber,
+        certificateType: certificateContext?.certificateType?.toUpperCase(),
+      });
+
+      if (result) {
+        toast({
+          title: 'Photo saved to Photo Docs',
+          description: 'Photo has been copied to your Photo Documentation',
+        });
+      }
+    } catch (error) {
+      console.error('Error sending to photo docs:', error);
+      toast({
+        title: 'Failed to save',
+        description: 'Could not copy photo to Photo Documentation',
+        variant: 'destructive',
+      });
+    } finally {
+      setSendingToDocsId(null);
     }
   };
 
@@ -135,6 +205,23 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                     )}
                   </Button>
                 )}
+                <Button
+                  size="icon"
+                  variant="secondary"
+                  className="h-7 w-7 bg-elec-yellow/90 hover:bg-elec-yellow text-black"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSendToPhotoDocs(photo);
+                  }}
+                  disabled={sendingToDocsId === photo.id}
+                  title="Send to Photo Documentation"
+                >
+                  {sendingToDocsId === photo.id ? (
+                    <Loader2 className="h-3 w-3 animate-spin" />
+                  ) : (
+                    <FolderOutput className="h-3 w-3" />
+                  )}
+                </Button>
                 <Button
                   size="icon"
                   variant="destructive"

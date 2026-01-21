@@ -195,8 +195,8 @@ export const AIInstallationDesigner = () => {
   const [jobId, setJobId] = useState<string | null>(null);
   const successToastShown = useRef(false);
   
-  // Use job polling hook (now includes installationGuidance)
-  const { job, progress, status, currentStep, designData: jobDesignData, installationGuidance, error } = useCircuitDesignGeneration(jobId);
+  // Use job polling hook (now includes installationGuidance and installationAgentStatus)
+  const { job, progress, status, currentStep, designData: jobDesignData, installationGuidance, installationAgentStatus, error } = useCircuitDesignGeneration(jobId);
 
   const handleGenerate = async (inputs: DesignInputs) => {
     try {
@@ -282,8 +282,23 @@ export const AIInstallationDesigner = () => {
 
   // Monitor job completion
   useEffect(() => {
-    if (status === 'complete' && jobDesignData && !successToastShown.current) {
-      console.log('✅ Job complete, processing results...');
+    // Check if installation agent is ready (complete, failed, skipped, or timeout)
+    const guidanceReady = installationAgentStatus === 'complete' ||
+                          installationAgentStatus === 'failed' ||
+                          installationAgentStatus === 'skipped' ||
+                          installationAgentStatus === 'timeout';
+
+    // Debug logging for installation guidance
+    console.log('📦 Installation guidance status:', {
+      hasGuidance: !!installationGuidance,
+      agentStatus: installationAgentStatus,
+      guidanceReady,
+      keys: installationGuidance ? Object.keys(installationGuidance) : [],
+      sample: installationGuidance?.circuit_0 ? 'Has circuit_0' : 'No circuit_0'
+    });
+
+    if (status === 'complete' && jobDesignData && guidanceReady && !successToastShown.current) {
+      console.log('✅ Job complete with guidance ready, processing results...');
       
       // Extract project info from job inputs
       const jobInputs = (job as any)?.job_inputs;
@@ -438,7 +453,7 @@ export const AIInstallationDesigner = () => {
       setCurrentView('input');
       setJobId(null);
     }
-  }, [status, jobDesignData, error]);
+  }, [status, jobDesignData, installationGuidance, installationAgentStatus, error]);
 
   // Load design data from session on mount
   useEffect(() => {

@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { CircuitInput } from "@/types/installation-design";
 import { SMART_DEFAULTS, DEFAULT_CABLE_LENGTHS } from "@/lib/circuit-templates";
-import { Plus } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { Plus, Zap, Lightbulb, UtensilsCrossed, Droplets, Car } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface QuickAddButtonsProps {
   installationType: 'domestic' | 'commercial' | 'industrial';
@@ -53,26 +53,57 @@ export const QuickAddButtons = ({ installationType, onAddCircuit }: QuickAddButt
     });
   };
 
+  // Get icon for circuit type
+  const getIcon = (type: string) => {
+    if (type.includes('socket') || type.includes('ring')) return Zap;
+    if (type.includes('lighting')) return Lightbulb;
+    if (type.includes('cooker') || type.includes('kitchen')) return UtensilsCrossed;
+    if (type.includes('shower')) return Droplets;
+    if (type.includes('ev') || type.includes('charger')) return Car;
+    return Zap;
+  };
+
   return (
-    <Card className="p-3 sm:p-4 bg-accent/30 border-dashed">
-      <div className="flex items-center gap-2 mb-3">
-        <Plus className="h-4 w-4 text-primary" />
-        <h3 className="font-semibold text-sm">Quick Add Common Circuits</h3>
+    <div
+      className={cn(
+        "p-4 rounded-xl",
+        "bg-gradient-to-br from-elec-yellow/[0.06] to-transparent",
+        "border border-elec-yellow/20 border-dashed"
+      )}
+    >
+      <div className="flex items-center gap-2 mb-4">
+        <div className="p-1.5 rounded-lg bg-elec-yellow/15">
+          <Plus className="h-4 w-4 text-elec-yellow" />
+        </div>
+        <h3 className="font-semibold text-sm text-white">Quick Add Common Circuits</h3>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        {presets.map(preset => (
-          <Button
-            key={preset.type}
-            variant="outline"
-            size="default"
-            onClick={() => handleQuickAdd(preset)}
-            className="gap-1.5 w-full justify-start"
-          >
-            <Plus className="h-3.5 w-3.5" />
-            {preset.label}
-          </Button>
-        ))}
+      <div className="grid grid-cols-2 gap-2.5">
+        {presets.map(preset => {
+          const Icon = getIcon(preset.type);
+          return (
+            <Button
+              key={preset.type}
+              variant="ghost"
+              onClick={() => handleQuickAdd(preset)}
+              className={cn(
+                "h-12 px-3 gap-2.5 justify-start",
+                "bg-gradient-to-br from-white/[0.06] to-white/[0.02]",
+                "border border-elec-yellow/20",
+                "hover:bg-elec-yellow/10 hover:border-elec-yellow/40",
+                "active:scale-[0.98] active:bg-elec-yellow/15",
+                "transition-all duration-150",
+                "touch-manipulation",
+                "rounded-xl"
+              )}
+            >
+              <div className="p-1 rounded-md bg-elec-yellow/10">
+                <Icon className="h-3.5 w-3.5 text-elec-yellow" />
+              </div>
+              <span className="text-sm font-medium text-white/90 truncate">{preset.label}</span>
+            </Button>
+          );
+        })}
       </div>
-    </Card>
+    </div>
   );
 };

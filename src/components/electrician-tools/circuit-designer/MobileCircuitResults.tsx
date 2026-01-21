@@ -90,28 +90,46 @@ export const MobileCircuitResults = ({
 
   return (
     <div className="min-h-screen bg-elec-dark pb-20">
-      {/* Compact Page Header (scrolls away) */}
-      <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-2 sm:pb-3 border-b border-elec-yellow/20">
-        <div className="flex items-center justify-between">
-          <div className="flex-1 min-w-0">
-            <h1 className="text-sm sm:text-base font-bold text-elec-light truncate">
+      {/* Mobile Header - Native App Style */}
+      <div className="px-4 pt-safe pb-4 bg-gradient-to-b from-elec-dark to-transparent">
+        {/* Status Bar */}
+        <div className="flex items-center justify-between mb-4">
+          <Badge className="bg-white/10 text-white/80 border-0 text-xs">
+            BS 7671:2018+A3:2024
+          </Badge>
+          <Badge
+            className={cn(
+              "border-0 font-medium",
+              overallStatus === 'pass'
+                ? "bg-green-500/20 text-green-400"
+                : overallStatus === 'warning'
+                ? "bg-amber-500/20 text-amber-400"
+                : "bg-red-500/20 text-red-400"
+            )}
+          >
+            {overallStatus === 'pass' ? (
+              <><CheckCircle2 className="h-3 w-3 mr-1" /> Compliant</>
+            ) : overallStatus === 'warning' ? (
+              <><AlertTriangle className="h-3 w-3 mr-1" /> Review</>
+            ) : (
+              <><AlertCircle className="h-3 w-3 mr-1" /> Issues</>
+            )}
+          </Badge>
+        </div>
+
+        {/* Project Title - Large & Clear */}
+        <div className="flex items-start gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-elec-yellow to-amber-600 rounded-xl flex items-center justify-center flex-shrink-0">
+            <Zap className="h-6 w-6 text-black" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h1 className="text-xl font-bold text-white truncate">
               {design.projectName}
             </h1>
-            <p className="text-xs text-foreground/80 truncate">{design.location}</p>
+            <p className="text-sm text-white/50 flex items-center gap-1 mt-0.5">
+              <span className="truncate">{design.location}</span>
+            </p>
           </div>
-          <Badge 
-            variant={overallStatus === 'pass' ? 'default' : overallStatus === 'warning' ? 'outline' : 'destructive'}
-            className={`ml-3 flex-shrink-0 text-[10px] sm:text-xs ${
-              overallStatus === 'pass' ? 'bg-green-500/20 text-green-400 border-green-500/30' :
-              overallStatus === 'warning' ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' :
-              'bg-red-500/20 text-red-400 border-red-500/30'
-            }`}
-          >
-            {overallStatus === 'pass' && <CheckCircle2 className="h-3 w-3 mr-1" />}
-            {overallStatus === 'warning' && <AlertTriangle className="h-3 w-3 mr-1" />}
-            {overallStatus === 'fail' && <AlertCircle className="h-3 w-3 mr-1" />}
-            {overallStatus === 'pass' ? 'Pass' : overallStatus === 'warning' ? 'Warning' : 'Review'}
-          </Badge>
         </div>
       </div>
 

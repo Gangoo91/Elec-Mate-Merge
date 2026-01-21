@@ -81,56 +81,68 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
   return (
     <div
       className={cn(
-        "relative p-4 rounded-xl",
-        "bg-white/5 backdrop-blur border border-white/10",
+        "relative p-4 rounded-2xl",
+        "bg-gradient-to-br from-elec-yellow/[0.04] to-white/[0.02]",
+        "backdrop-blur border border-elec-yellow/20",
         "transition-all duration-ios-fast",
-        "hover:border-white/20"
+        "hover:border-elec-yellow/35",
+        "shadow-[0_2px_8px_rgba(0,0,0,0.15)]"
       )}
     >
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-elec-yellow/10">
+      {/* Header - Native app style with swipe hint */}
+      <div className="flex items-center justify-between mb-5">
+        <div className="flex items-center gap-2.5">
+          <div className="p-2 rounded-xl bg-elec-yellow/15 border border-elec-yellow/20">
             <Zap className="h-4 w-4 text-elec-yellow" />
           </div>
-          <Badge
-            variant="secondary"
-            className="bg-white/10 border-0 text-white/80 text-xs"
-          >
-            Circuit {index + 1}
-          </Badge>
-          {circuit.phases === 'three' && (
-            <Badge className="bg-purple-500/20 text-purple-300 border-0 text-xs">
-              3Φ
-            </Badge>
-          )}
+          <div className="flex flex-col">
+            <div className="flex items-center gap-2">
+              <Badge
+                variant="secondary"
+                className="bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-xs font-semibold px-2"
+              >
+                Circuit {index + 1}
+              </Badge>
+              {circuit.phases === 'three' && (
+                <Badge className="bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs px-1.5">
+                  3Φ
+                </Badge>
+              )}
+            </div>
+          </div>
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-1.5">
           <Button
             variant="ghost"
             size="sm"
             onClick={onDuplicate}
             className={cn(
-              "h-8 w-8 p-0 rounded-lg",
-              "bg-white/5 hover:bg-white/10",
-              "text-white/60 hover:text-white",
-              "transition-all duration-ios-fast"
+              "h-9 w-9 p-0 rounded-xl",
+              "bg-white/[0.06] hover:bg-elec-yellow/15",
+              "border border-white/10 hover:border-elec-yellow/30",
+              "text-white/60 hover:text-elec-yellow",
+              "transition-all duration-ios-fast",
+              "active:scale-95",
+              "touch-manipulation"
             )}
           >
-            <Copy className="h-3.5 w-3.5" />
+            <Copy className="h-4 w-4" />
           </Button>
           <Button
             variant="ghost"
             size="sm"
             onClick={onDelete}
             className={cn(
-              "h-8 w-8 p-0 rounded-lg",
+              "h-9 w-9 p-0 rounded-xl",
               "bg-red-500/10 hover:bg-red-500/20",
+              "border border-red-500/20 hover:border-red-500/40",
               "text-red-400 hover:text-red-300",
-              "transition-all duration-ios-fast"
+              "transition-all duration-ios-fast",
+              "active:scale-95",
+              "touch-manipulation"
             )}
           >
-            <Trash2 className="h-3.5 w-3.5" />
+            <Trash2 className="h-4 w-4" />
           </Button>
         </div>
       </div>
@@ -225,17 +237,19 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
             <Button
               variant="ghost"
               className={cn(
-                "w-full justify-between h-10 px-3 rounded-xl",
-                "bg-white/5 border border-white/10",
-                "hover:bg-white/10 hover:border-white/20",
-                "text-white/60 text-sm",
-                "transition-all duration-ios-fast"
+                "w-full justify-between h-11 px-4 rounded-xl",
+                "bg-white/[0.04] border border-elec-yellow/15",
+                "hover:bg-elec-yellow/10 hover:border-elec-yellow/30",
+                "text-white/70 text-sm font-medium",
+                "transition-all duration-ios-fast",
+                "active:scale-[0.99]",
+                "touch-manipulation"
               )}
             >
               <span>{showAdvanced ? 'Hide' : 'Show'} Advanced Options</span>
               <ChevronDown
                 className={cn(
-                  "h-4 w-4 transition-transform duration-ios-normal",
+                  "h-4 w-4 text-elec-yellow/60 transition-transform duration-ios-normal",
                   showAdvanced && "rotate-180"
                 )}
               />

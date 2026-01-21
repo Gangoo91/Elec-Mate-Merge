@@ -60,18 +60,18 @@ const IOSSelect = React.forwardRef<HTMLButtonElement, IOSSelectProps>(
               icon ? "pl-12 pr-4" : "px-4",
               // Typography - iOS body style
               "text-ios-body text-white",
-              // Background & border - Premium warm amber tint
-              "bg-gradient-to-br from-amber-950/30 to-black/20 rounded-xl border",
-              "border-amber-800/20",
+              // Background & border - Consistent elec-yellow/gold styling
+              "bg-gradient-to-br from-elec-yellow/[0.08] to-amber-950/20 rounded-xl border",
+              "border-elec-yellow/30",
               // Focus/Open state
               "focus:outline-none",
-              isOpen && "border-elec-yellow/60 bg-white/8 shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.1)]",
+              isOpen && "border-elec-yellow bg-elec-yellow/[0.12] shadow-[0_0_0_3px_hsl(var(--elec-yellow)/0.15)]",
               // Animation
               "transition-all duration-ios-normal ease-ios-ease",
               // Error state
               error && "border-red-400/60",
               // Touch optimization
-              "touch-manipulation",
+              "touch-manipulation active:scale-[0.99]",
               // Disabled state
               disabled && "opacity-50 cursor-not-allowed"
             )}
@@ -93,10 +93,10 @@ const IOSSelect = React.forwardRef<HTMLButtonElement, IOSSelectProps>(
 
           <SelectContent
             className={cn(
-              // Premium dropdown styling
-              "bg-elec-dark/95 backdrop-blur-xl",
-              "border border-white/10 rounded-xl",
-              "shadow-[0_8px_32px_rgba(0,0,0,0.4)]",
+              // Premium dropdown styling with gold accents
+              "bg-[#1a1a1a]/98 backdrop-blur-xl",
+              "border border-elec-yellow/20 rounded-xl",
+              "shadow-[0_8px_32px_rgba(0,0,0,0.5),0_0_0_1px_hsl(var(--elec-yellow)/0.1)]",
               "overflow-hidden"
             )}
           >
@@ -105,12 +105,12 @@ const IOSSelect = React.forwardRef<HTMLButtonElement, IOSSelectProps>(
                 key={option.value}
                 value={option.value}
                 className={cn(
-                  "px-4 py-3 cursor-pointer",
+                  "px-4 py-3.5 cursor-pointer",
                   "text-ios-body text-white",
-                  "focus:bg-elec-yellow/10 focus:text-white",
-                  "data-[state=checked]:bg-elec-yellow/20",
+                  "focus:bg-elec-yellow/15 focus:text-white",
+                  "data-[state=checked]:bg-elec-yellow/25 data-[state=checked]:text-elec-yellow",
                   "transition-colors duration-ios-fast",
-                  "touch-manipulation"
+                  "touch-manipulation active:bg-elec-yellow/20"
                 )}
               >
                 <div className="flex flex-col">

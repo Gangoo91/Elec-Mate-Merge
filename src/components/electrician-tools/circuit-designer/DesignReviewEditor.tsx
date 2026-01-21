@@ -8,6 +8,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import InstallationSpecialistInterface from '@/components/electrician-tools/installation-specialist/InstallationSpecialistInterface';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -16,7 +17,8 @@ import type { EnhancedInstallationGuidance } from '@/types/circuit-design';
 import {
   CheckCircle2, AlertTriangle, AlertCircle, Download, Zap, Cable, Shield,
   TrendingDown, Percent, Gauge, Wrench, MapPin, ClipboardCheck, FileText,
-  Upload, Loader2, Check, ChevronDown, Copy, TestTube, Anchor, Clock, FileCheck
+  Upload, Loader2, Check, ChevronDown, Copy, TestTube, Anchor, Clock, FileCheck,
+  Send, Calculator
 } from 'lucide-react';
 import { ResultsSuccessAnimation } from './ResultsSuccessAnimation';
 import { downloadEICPDF } from '@/lib/eic/pdfGenerator';
@@ -33,6 +35,7 @@ import { ExpectedTestsDisplay } from './ExpectedTestsDisplay';
 import { InstallationGuidanceDisplay } from './InstallationGuidanceDisplay';
 import { InstallationGuidancePanel } from './InstallationGuidancePanel';
 import { InstallationGuidancePerCircuitPanel } from './InstallationGuidancePerCircuitPanel';
+import { storeContextForAgent, type AgentType } from '@/utils/circuit-context-generator';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -201,6 +204,51 @@ const transformInstallationTestingToExpectedResults = (testingReqs: any): any =>
   return result;
 };
 
+// Helper component for metric cards in the header
+const MetricCard = ({ icon: Icon, label, value, subValue, color }: {
+  icon: any;
+  label: string;
+  value: string;
+  subValue?: string;
+  color: 'yellow' | 'green' | 'blue' | 'purple';
+}) => {
+  const colorClasses = {
+    yellow: 'border-elec-yellow/20 text-elec-yellow',
+    green: 'border-green-500/20 text-green-500',
+    blue: 'border-blue-500/20 text-blue-500',
+    purple: 'border-purple-500/20 text-purple-500'
+  };
+
+  const iconColorClasses = {
+    yellow: 'text-elec-yellow',
+    green: 'text-green-500',
+    blue: 'text-blue-500',
+    purple: 'text-purple-500'
+  };
+
+  return (
+    <div className={`p-4 rounded-xl border bg-white/[0.02] ${colorClasses[color].split(' ')[0]}`}>
+      <div className="flex items-center gap-2 mb-2">
+        <Icon className={`h-4 w-4 ${iconColorClasses[color]}`} />
+        <span className="text-xs text-white/50 uppercase tracking-wide">{label}</span>
+      </div>
+      <div className="flex items-baseline gap-2">
+        <span className="text-xl font-bold text-white">{value}</span>
+        {subValue && (
+          <span className="text-sm text-white/40">{subValue}</span>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Helper component for info pills
+const InfoPill = ({ label }: { label: string }) => (
+  <span className="px-3 py-1.5 text-xs font-medium bg-white/[0.05] border border-white/10 rounded-full text-white/70">
+    {label}
+  </span>
+);
+
 export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps) => {
   const navigate = useNavigate();
   const [selectedCircuit, setSelectedCircuit] = useState(0);
@@ -216,6 +264,38 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [isSendingToEIC, setIsSendingToEIC] = useState(false);
   const [showSendToEICDialog, setShowSendToEICDialog] = useState(false);
   const [includeExpectedResults, setIncludeExpectedResults] = useState(false);
+  const [selectedCircuitsForExport, setSelectedCircuitsForExport] = useState<number[]>([]);
+
+  // Send to agent function
+  const sendToAgent = (agentType: AgentType) => {
+    // If no circuits selected, use all circuits
+    const circuitIndices = selectedCircuitsForExport.length > 0
+      ? selectedCircuitsForExport
+      : design.circuits.map((_, i) => i);
+
+    // Store context in session storage for agent to pick up
+    storeContextForAgent(design, circuitIndices, agentType);
+
+    // Navigate to agent page
+    const agentRoutes: Record<AgentType, string> = {
+      installer: '/electrician-tools/installation-specialist',
+      rams: '/electrician-tools/health-safety',
+      'cost-engineer': '/electrician-tools/cost-engineer',
+      commissioning: '/electrician-tools/commissioning'
+    };
+
+    const agentNames: Record<AgentType, string> = {
+      installer: 'Installation Specialist',
+      rams: 'RAMS Generator',
+      'cost-engineer': 'Cost Engineer',
+      commissioning: 'Commissioning Specialist'
+    };
+
+    navigate(agentRoutes[agentType]);
+    toast.success(`Circuit context sent to ${agentNames[agentType]}`, {
+      description: `${circuitIndices.length} circuit${circuitIndices.length !== 1 ? 's' : ''} ready for processing`
+    });
+  };
 
   // Responsive breakpoint detection
   useEffect(() => {
@@ -1124,12 +1204,13 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         }
       };
 
-      // Transform design circuits to EIC schedule format
-      // Expected test results (r1r2, zs, maxZs) are conditional based on user choice
+      // Transform design circuits to EIC schedule format with FULL context
+      // Includes all calculation data, test values, and compliance information
       const scheduleCircuits = design.circuits.map((circuit, idx) => ({
         // Circuit identification
         circuitNumber: (circuit.circuitNumber || idx + 1).toString(),
         circuitDescription: circuit.name,
+        loadType: circuit.loadType,
 
         // Phase type - formatted for EIC table
         phaseType: circuit.phases === 'three' ? '3-phase' : 'single-phase',
@@ -1152,43 +1233,154 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         protectiveDeviceKaRating: circuit.protectionDevice?.kaRating?.toString() || '6',
         bsStandard: getBsStandard(circuit.protectionDevice?.type),
 
-        // RCD details (if applicable)
+        // RCD details (if applicable) - ENHANCED
         rcdProtected: circuit.rcdProtected || false,
         rcdRating: circuit.rcdProtected
           ? (circuit.protectionDevice?.rcdRating?.toString() || '30') + 'mA'
           : '',
         rcdType: circuit.rcdProtected ? 'Type A' : '',
         rcdBsStandard: circuit.rcdProtected ? 'BS EN 62423' : '',
+        rcdTestSpecs: circuit.expectedTests?.rcd ? {
+          ratingmA: circuit.expectedTests.rcd.ratingmA,
+          maxTripTimeMs: circuit.expectedTests.rcd.maxTripTimeMs,
+          testCurrentMultiple: circuit.expectedTests.rcd.testCurrentMultiple,
+          regulation: circuit.expectedTests.rcd.regulation
+        } : null,
 
-        // Expected test results (conditional based on user checkbox)
-        r1r2: includeExpectedResults
+        // ==== FULL CALCULATION DATA ====
+        calculations: {
+          // Current values
+          Ib: circuit.calculations?.Ib || circuit.designCurrent,
+          In: circuit.calculations?.In || circuit.protectionDevice?.rating,
+          Iz: circuit.calculations?.Iz,
+          deratedCapacity: circuit.calculations?.deratedCapacity,
+          safetyMargin: circuit.calculations?.safetyMargin,
+
+          // Voltage drop - FULL details
+          voltageDrop: circuit.calculations?.voltageDrop ? {
+            volts: circuit.calculations.voltageDrop.volts,
+            percent: circuit.calculations.voltageDrop.percent,
+            compliant: circuit.calculations.voltageDrop.compliant,
+            limit: circuit.calculations.voltageDrop.limit
+          } : null,
+
+          // Earth fault loop impedance
+          zs: circuit.calculations?.zs,
+          maxZs: circuit.calculations?.maxZs
+        },
+
+        // ==== EXPECTED TEST RESULTS - FULL ====
+        // R1+R2 values (both temperatures)
+        r1r2At20C: includeExpectedResults
           ? (circuit.expectedTestResults?.r1r2?.at20C ||
-             circuit.expectedTests?.r1r2?.at20C ||
+             circuit.expectedTests?.r1r2?.at20C?.toString() ||
              circuit.expectedTests?.r1r2?.value || '')
           : '',
+        r1r2At70C: includeExpectedResults
+          ? (circuit.expectedTestResults?.r1r2?.at70C ||
+             circuit.expectedTests?.r1r2?.at70C?.toString() || '')
+          : '',
+        r1r2Calculation: circuit.expectedTestResults?.r1r2?.calculation || '',
+        r1r2Regulation: circuit.expectedTests?.r1r2?.regulation || 'Appendix F Table F.1',
+
+        // Zs values - FULL
         zs: includeExpectedResults
           ? (circuit.calculations?.zs?.toFixed(2) || '')
           : '',
         maxZs: circuit.calculations?.maxZs?.toFixed(2) ||
                circuit.expectedTests?.zs?.maxPermitted?.toString() || '',
+        zsMarginPercent: circuit.expectedTests?.zs?.marginPercent,
+        zsCompliant: circuit.expectedTests?.zs?.compliant ??
+                     (circuit.calculations?.zs <= circuit.calculations?.maxZs),
+        zsRegulation: circuit.expectedTests?.zs?.regulation || 'BS 7671 Table 41.3',
 
-        // Insulation test defaults
-        insulationTestVoltage: '500V DC',
-        insulationResistance: '≥1.0MΩ',
+        // Insulation resistance - FULL
+        insulationTestVoltage: circuit.expectedTests?.insulationResistance?.testVoltage || '500V DC',
+        insulationResistance: circuit.expectedTests?.insulationResistance?.minResistance || '≥1.0MΩ',
+        insulationRegulation: circuit.expectedTests?.insulationResistance?.regulation || 'BS 7671 Table 6.1',
 
-        // On-site verification required
+        // On-site verification required (legacy fields)
+        r1r2: includeExpectedResults
+          ? (circuit.expectedTestResults?.r1r2?.at20C ||
+             circuit.expectedTests?.r1r2?.at20C?.toString() ||
+             circuit.expectedTests?.r1r2?.value || '')
+          : '',
         polarity: 'Verify on-site',
         pfc: 'Test on-site',
         functionalTesting: 'Test on-site',
 
         // Circuit topology for ring circuits
-        circuitTopology: circuit.circuitTopology || (circuit.loadType === 'ring' ? 'ring' : 'radial')
+        circuitTopology: circuit.circuitTopology || (circuit.loadType === 'ring' ? 'ring' : 'radial'),
+
+        // ==== FAULT CURRENT ANALYSIS ====
+        faultCurrentAnalysis: circuit.faultCurrentAnalysis ? {
+          psccAtCircuit: circuit.faultCurrentAnalysis.psccAtCircuit,
+          deviceBreakingCapacity: circuit.faultCurrentAnalysis.deviceBreakingCapacity,
+          compliant: circuit.faultCurrentAnalysis.compliant,
+          marginOfSafety: circuit.faultCurrentAnalysis.marginOfSafety,
+          regulation: circuit.faultCurrentAnalysis.regulation
+        } : null,
+
+        // ==== DERATING FACTORS ====
+        deratingFactors: circuit.deratingFactors ? {
+          Ca: circuit.deratingFactors.Ca,
+          Cg: circuit.deratingFactors.Cg,
+          Ci: circuit.deratingFactors.Ci,
+          overall: circuit.deratingFactors.overall,
+          explanation: circuit.deratingFactors.explanation,
+          tableReferences: circuit.deratingFactors.tableReferences
+        } : null,
+
+        // ==== SPECIAL LOCATION COMPLIANCE ====
+        specialLocationCompliance: circuit.specialLocationCompliance ? {
+          isSpecialLocation: circuit.specialLocationCompliance.isSpecialLocation,
+          locationType: circuit.specialLocationCompliance.locationType,
+          requirements: circuit.specialLocationCompliance.requirements,
+          zonesApplicable: circuit.specialLocationCompliance.zonesApplicable,
+          regulation: circuit.specialLocationCompliance.regulation
+        } : null,
+
+        // ==== EARTHING REQUIREMENTS ====
+        earthingRequirements: circuit.earthingRequirements ? {
+          cpcSize: circuit.earthingRequirements.cpcSize,
+          supplementaryBonding: circuit.earthingRequirements.supplementaryBonding,
+          bondingConductorSize: circuit.earthingRequirements.bondingConductorSize,
+          justification: circuit.earthingRequirements.justification,
+          regulation: circuit.earthingRequirements.regulation
+        } : null,
+
+        // ==== INSTALLATION GUIDANCE ====
+        installationNotes: circuit.installationNotes || '',
+        installationGuidance: circuit.installationGuidance ? {
+          overview: circuit.installationGuidance.overview,
+          steps: circuit.installationGuidance.steps,
+          safetyWarnings: circuit.installationGuidance.safetyWarnings,
+          testingRequirements: circuit.installationGuidance.testingRequirements
+        } : null,
+
+        // ==== DESIGN JUSTIFICATIONS ====
+        justifications: circuit.justifications ? {
+          cableSize: circuit.justifications.cableSize,
+          protection: circuit.justifications.protection,
+          rcd: circuit.justifications.rcd
+        } : null,
+
+        // ==== COMPLIANCE STATUS ====
+        complianceStatus: circuit.complianceStatus ||
+                          (circuit.calculations?.voltageDrop?.compliant &&
+                           (circuit.calculations?.zs <= circuit.calculations?.maxZs) ? 'pass' : 'warning'),
+        warnings: circuit.warnings || [],
+        validationIssues: circuit.validationIssues || [],
+
+        // ==== DIVERSITY ====
+        diversityFactor: circuit.diversityFactor,
+        diversityJustification: circuit.diversityJustification
       }));
 
       // Generate a unique installation ID
       const installationId = `INST-${Date.now()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
 
-      // Build schedule_data JSON matching EIC format with comprehensive data
+      // Build schedule_data JSON matching EIC format with FULL comprehensive data
       const scheduleData = {
         circuits: scheduleCircuits,
         supply: {
@@ -1207,12 +1399,66 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           location: design.location,
           electricianName: design.electricianName,
           totalLoad: design.totalLoad,
-          diversifiedLoad: (design as any).diversifiedLoad || design.totalLoad,
+          diversifiedLoad: design.diversifiedLoad || design.totalLoad,
           diversityFactor: design.diversityFactor
         },
+        // ==== DIVERSITY BREAKDOWN - FULL ====
+        diversityBreakdown: design.diversityBreakdown ? {
+          totalConnectedLoad: design.diversityBreakdown.totalConnectedLoad,
+          diversifiedLoad: design.diversityBreakdown.diversifiedLoad,
+          overallDiversityFactor: design.diversityBreakdown.overallDiversityFactor,
+          reasoning: design.diversityBreakdown.reasoning,
+          bs7671Reference: design.diversityBreakdown.bs7671Reference,
+          circuitDiversity: design.diversityBreakdown.circuitDiversity
+        } : null,
+        // ==== CONSUMER UNIT DETAILS ====
+        consumerUnit: {
+          type: design.consumerUnit?.type,
+          mainSwitchRating: design.consumerUnit?.mainSwitchRating,
+          incomingSupply: {
+            voltage: design.consumerUnit?.incomingSupply?.voltage,
+            phases: design.consumerUnit?.incomingSupply?.phases,
+            incomingPFC: design.consumerUnit?.incomingSupply?.incomingPFC,
+            Ze: design.consumerUnit?.incomingSupply?.Ze,
+            earthingSystem: design.consumerUnit?.incomingSupply?.earthingSystem
+          }
+        },
+        // ==== DESIGN REASONING ====
+        reasoning: design.reasoning ? {
+          voltageContext: design.reasoning.voltageContext,
+          cableSelectionLogic: design.reasoning.cableSelectionLogic,
+          protectionLogic: design.reasoning.protectionLogic,
+          complianceChecks: design.reasoning.complianceChecks,
+          correctionsApplied: design.reasoning.correctionsApplied
+        } : null,
+        // ==== INSTALLATION GUIDANCE (Design-level) ====
+        installationGuidance: design.installationGuidance || null,
+        practicalGuidance: design.practicalGuidance || [],
+        // ==== MATERIALS LIST ====
+        materials: design.materials?.map(m => ({
+          name: m.name,
+          specification: m.specification,
+          quantity: m.quantity,
+          unit: m.unit,
+          unitCost: m.unitCost,
+          totalCost: m.totalCost
+        })) || [],
+        // ==== COST ESTIMATE ====
+        costEstimate: design.costEstimate || null,
+        // ==== VALIDATION STATUS ====
+        validationPassed: design.validationPassed,
+        validationIssues: design.validationIssues || [],
+        autoFixSuggestions: design.autoFixSuggestions || [],
+        // ==== METADATA ====
         source: 'circuit-designer',
         includesExpectedResults: includeExpectedResults,
-        generatedAt: new Date().toISOString()
+        generatedAt: new Date().toISOString(),
+        circuitCount: design.circuits.length,
+        totalCircuitCompliant: design.circuits.filter(c => {
+          const zsOk = c.calculations?.zs <= c.calculations?.maxZs;
+          const vdOk = c.calculations?.voltageDrop?.compliant;
+          return zsOk && vdOk;
+        }).length
       };
 
       // Save to eic_schedules table with correct schema
@@ -1698,102 +1944,87 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         </Alert>
       )}
       
-      {/* Unified Header Card - combines RequestSummaryHeader and Project Summary */}
-      <Card className="p-4 sm:p-5 md:p-6 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
-        <div className="space-y-4">
-          {/* Top row: Title, location, and key metrics */}
-          <div className="flex items-start justify-between flex-wrap gap-4">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/20 rounded-xl flex items-center justify-center border border-elec-yellow/40 shrink-0">
-                  <Zap className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div className="min-w-0">
-                  <h2 className="text-xl md:text-2xl font-bold truncate">{design.projectName}</h2>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <MapPin className="h-3.5 w-3.5" />
-                    <p className="truncate">{design.location}</p>
-                  </div>
-                </div>
-              </div>
+      {/* Redesigned Header - Clean & Prominent */}
+      <div className="space-y-4">
+        {/* Title Row - Clean & Prominent */}
+        <div className="flex items-start justify-between gap-4 flex-wrap">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-gradient-to-br from-elec-yellow to-amber-600 rounded-2xl flex items-center justify-center shadow-lg shadow-elec-yellow/20">
+              <Zap className="h-7 w-7 text-black" />
             </div>
-            
-            {/* Key metrics on the right */}
-            <div className="flex items-center gap-4 sm:gap-6 text-sm flex-wrap">
-              <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-primary" />
-                <span className="font-semibold">
-                  {design.totalLoad ? `${fmt(design.totalLoad / 1000, 2)}kW` : 'Not specified'} Connected
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <TrendingDown className="h-4 w-4 text-green-500" />
-                <span className="font-semibold">
-                  {design.diversifiedLoad 
-                    ? `${fmt(design.diversifiedLoad / 1000, 2)}kW`
-                    : design.diversityBreakdown?.diversifiedLoad 
-                      ? `${fmt(design.diversityBreakdown.diversifiedLoad / 1000, 2)}kW`
-                      : 'Not specified'} Diversified
-                </span>
-                {design.installationType && design.diversityFactor && (
-                  <Badge variant="outline" className="ml-2 text-xs">
-                    {`${(design.diversityFactor * 100).toFixed(1)}%`}
-                  </Badge>
-                )}
-              </div>
-              <div className="flex items-center gap-2">
-                <Cable className="h-4 w-4 text-blue-400" />
-                <span className="font-semibold">{design.circuits.length} Circuits</span>
-              </div>
-              <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full ${allCompliant ? 'bg-green-500/10 text-green-600' : 'bg-orange-500/10 text-orange-600'}`}>
-                {allCompliant ? <CheckCircle2 className="h-4 w-4" /> : <AlertTriangle className="h-4 w-4" />}
-                <span className="font-medium text-xs">{allCompliant ? 'Compliant' : 'Issues'}</span>
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold text-white">
+                {design.projectName}
+              </h1>
+              <div className="flex items-center gap-2 text-white/60 mt-1">
+                <MapPin className="h-4 w-4" />
+                <span>{design.location}</span>
               </div>
             </div>
           </div>
-          
-          {/* Bottom row: Installation type and voltage badges */}
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="outline" className="border-primary/30">
-              {design.installationType || 'Standard Installation'}
-            </Badge>
-            <Badge variant="outline" className="border-blue-500/30 text-blue-400">
-              {design.consumerUnit?.incomingSupply?.voltage || 230}V
-            </Badge>
-            <Badge variant="outline" className="border-purple-500/30 text-purple-400">
-              {(typeof design.circuits[0]?.phases === 'number' && design.circuits[0]?.phases === 3) || design.circuits[0]?.phases === 'three' ? '3-Phase' : 'Single-Phase'}
-            </Badge>
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              {design.consumerUnit?.mainSwitchRating || 100}A Main Switch
-            </Badge>
-            {design.consumerUnit?.incomingSupply?.Ze && (
-              <Badge variant="outline" className="border-green-500/30 text-green-400">
-                Ze: {design.consumerUnit.incomingSupply.Ze.toFixed(2)}Ω
-              </Badge>
+
+          {/* Compliance Badge - Large & Clear */}
+          <div className={`flex items-center gap-2 px-4 py-2 rounded-xl ${
+            allCompliant
+              ? "bg-green-500/15 border border-green-500/30"
+              : "bg-amber-500/15 border border-amber-500/30"
+          }`}>
+            {allCompliant ? (
+              <CheckCircle2 className="h-5 w-5 text-green-500" />
+            ) : (
+              <AlertTriangle className="h-5 w-5 text-amber-500" />
             )}
-            {design.consumerUnit?.incomingSupply?.incomingPFC && (
-              <Badge variant="outline" className="border-red-500/30 text-red-400">
-                PSCC: {(design.consumerUnit.incomingSupply.incomingPFC / 1000).toFixed(1)}kA
-              </Badge>
-            )}
-            {design.consumerUnit?.incomingSupply?.earthingSystem && (
-              <Badge variant="outline" className="border-orange-500/30 text-orange-400">
-                {design.consumerUnit.incomingSupply.earthingSystem}
-              </Badge>
-            )}
-            {(design as any).totalDesignCurrent && (
-              <Badge variant="outline" className="border-cyan-500/30 text-cyan-400">
-                Total Design Ib: {fmt((design as any).totalDesignCurrent, 1)}A
-              </Badge>
-            )}
-            {(design.consumerUnit as any)?.ways && (
-              <Badge variant="outline" className="border-indigo-500/30 text-indigo-400">
-                {(design.consumerUnit as any).ways} Ways
-              </Badge>
-            )}
+            <span className={`font-semibold ${
+              allCompliant ? "text-green-500" : "text-amber-500"
+            }`}>
+              {allCompliant ? 'BS 7671 Compliant' : 'Review Required'}
+            </span>
           </div>
         </div>
-      </Card>
+
+        {/* Key Metrics Row - Clean Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <MetricCard
+            icon={Zap}
+            label="Connected Load"
+            value={`${fmt(design.totalLoad / 1000, 2)}kW`}
+            color="yellow"
+          />
+          <MetricCard
+            icon={TrendingDown}
+            label="After Diversity"
+            value={`${fmt((design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad) / 1000, 2)}kW`}
+            subValue={design.diversityFactor ? `${(design.diversityFactor * 100).toFixed(0)}%` : undefined}
+            color="green"
+          />
+          <MetricCard
+            icon={Cable}
+            label="Circuits"
+            value={design.circuits.length.toString()}
+            color="blue"
+          />
+          <MetricCard
+            icon={Shield}
+            label="Main Switch"
+            value={`${design.consumerUnit?.mainSwitchRating || 100}A`}
+            color="purple"
+          />
+        </div>
+
+        {/* System Info - Compact Pills */}
+        <div className="flex flex-wrap gap-2">
+          <InfoPill label={design.installationType || 'domestic'} />
+          <InfoPill label={`${design.consumerUnit?.incomingSupply?.voltage || 230}V`} />
+          <InfoPill label={design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-C-S'} />
+          <InfoPill label={`Ze: ${design.consumerUnit?.incomingSupply?.Ze?.toFixed(2) || '0.35'}Ω`} />
+          {design.consumerUnit?.incomingSupply?.incomingPFC && (
+            <InfoPill label={`PSCC: ${(design.consumerUnit.incomingSupply.incomingPFC / 1000).toFixed(1)}kA`} />
+          )}
+          {(design as any).totalDesignCurrent && (
+            <InfoPill label={`Total Ib: ${fmt((design as any).totalDesignCurrent, 1)}A`} />
+          )}
+        </div>
+      </div>
 
       {/* Diversity Breakdown Card */}
       {design.diversityBreakdown && (
@@ -1872,53 +2103,50 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         </Card>
       )}
 
-      {/* Enhanced Circuit Selector Pills */}
-      <Card className="p-3 sm:p-4 bg-card border-elec-yellow/20">
-        <div className="space-y-2.5 sm:space-y-3">
+      {/* Compact Circuit Selector Pills */}
+      <Card className="p-3 sm:p-4 bg-card/50 border-white/10">
+        <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-              <h3 className="text-sm sm:text-base font-semibold">Select Circuit to View</h3>
-              <Badge variant="default" className="ml-2">
-                {design.circuits.length} Circuit{design.circuits.length !== 1 ? 's' : ''}
-              </Badge>
+              <Zap className="h-4 w-4 text-elec-yellow" />
+              <h3 className="text-sm font-semibold text-white">Select Circuit</h3>
             </div>
+            <span className="text-xs text-white/50">
+              {selectedCircuit + 1} of {design.circuits.length}
+            </span>
           </div>
-          
-          <div className="flex gap-3 overflow-x-auto pb-2 hide-scrollbar">
+
+          <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar snap-x snap-mandatory">
             {design.circuits.map((circuit, idx) => {
               const isActive = idx === selectedCircuit;
               const hasWarnings = circuit.warnings?.length > 0;
               const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
               const zsCompliant = (circuit.calculations?.zs ?? 0) < (circuit.calculations?.maxZs ?? 999);
               const hasIssues = !vdCompliant || !zsCompliant;
-              
+
               return (
                 <button
                   key={idx}
                   onClick={() => setSelectedCircuit(idx)}
-                  className={`flex-shrink-0 px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 rounded-xl border-2 transition-all touch-manipulation min-h-[44px] ${
-                    isActive 
-                      ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow shadow-lg shadow-elec-yellow/20' 
-                      : 'bg-elec-dark/60 border-elec-yellow/20 text-elec-light/60 hover:border-elec-yellow/40'
+                  className={`flex-shrink-0 px-3 py-2 rounded-lg border transition-all touch-manipulation min-h-[44px] snap-center ${
+                    isActive
+                      ? 'bg-elec-yellow/15 border-elec-yellow text-white'
+                      : 'bg-white/[0.02] border-white/10 text-white/60 hover:border-white/20'
                   }`}
                 >
-                  <div className="flex flex-col items-center gap-2 min-w-[100px]">
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg font-bold">
-                        Way {idx + 1}
-                        {circuit.phases === 'three' && (
-                          <span className="text-xs ml-1 opacity-70">3Ø</span>
-                        )}
-                      </span>
-                      {(hasWarnings || hasIssues) && <AlertTriangle className="h-4 w-4 text-orange-400" />}
-                    </div>
-                    <div className="text-sm font-semibold">
-                      {circuit.protectionDevice?.rating}A {circuit.protectionDevice?.curve}
-                    </div>
-                    <div className="text-xs opacity-70 line-clamp-1 max-w-[120px]">
-                      {circuit.name}
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-sm">
+                      C{idx + 1}
+                      {circuit.phases === 'three' && (
+                        <span className="text-[10px] ml-0.5 opacity-60">3Ø</span>
+                      )}
+                    </span>
+                    {(hasWarnings || hasIssues) && (
+                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    )}
+                  </div>
+                  <div className="text-xs opacity-60 truncate max-w-[80px] text-left mt-0.5">
+                    {circuit.protectionDevice?.rating}A {circuit.protectionDevice?.curve}
                   </div>
                 </button>
               );
@@ -2640,7 +2868,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
 
       {/* NEW: Installation Guidance Section */}
-      {design.installationGuidance && (
+      {design.installationGuidance ? (
         <Card className="p-6">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
@@ -2651,7 +2879,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             <p className="text-sm text-muted-foreground">
               Comprehensive installation guidance generated in parallel with circuit design
             </p>
-            <InstallationGuidancePerCircuitPanel 
+            <InstallationGuidancePerCircuitPanel
               guidance={
                 // Unwrap nested .guidance field (circuit_0.guidance → circuit_0)
                 Object.entries(design.installationGuidance as any).reduce((acc, [key, value]) => {
@@ -2661,6 +2889,16 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               }
               circuits={design.circuits}
             />
+          </div>
+        </Card>
+      ) : (
+        <Card className="p-4 border-amber-500/30 bg-amber-500/5">
+          <div className="flex items-center gap-3">
+            <Loader2 className="h-5 w-5 animate-spin text-amber-500" />
+            <div>
+              <p className="font-medium text-foreground">Installation guidance is being generated...</p>
+              <p className="text-sm text-muted-foreground">This may take a moment. The guidance will appear when ready.</p>
+            </div>
           </div>
         </Card>
       )}
@@ -2708,7 +2946,36 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           <Wrench className="h-5 w-5 mr-2" />
           Create Installation Method
         </Button>
-        
+
+        {/* Send to Agent Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="lg" variant="outline" className="w-full sm:flex-1 min-h-[44px] touch-manipulation gap-2">
+              <Send className="h-5 w-5" />
+              Send to Agent
+              <ChevronDown className="h-4 w-4 ml-1" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuItem onClick={() => sendToAgent('installer')} className="cursor-pointer">
+              <Wrench className="h-4 w-4 mr-2" />
+              Installation Specialist
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => sendToAgent('rams')} className="cursor-pointer">
+              <FileText className="h-4 w-4 mr-2" />
+              RAMS Generator
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => sendToAgent('cost-engineer')} className="cursor-pointer">
+              <Calculator className="h-4 w-4 mr-2" />
+              Cost Engineer
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => sendToAgent('commissioning')} className="cursor-pointer">
+              <TestTube className="h-4 w-4 mr-2" />
+              Commissioning Specialist
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         {/* Phase 1: Circuit Selection Dialog */}
         <Dialog open={showCircuitSelector} onOpenChange={setShowCircuitSelector}>
           <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">

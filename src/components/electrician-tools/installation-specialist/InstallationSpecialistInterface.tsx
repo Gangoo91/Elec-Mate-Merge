@@ -9,6 +9,9 @@ import InstallationSuccess from "./InstallationSuccess";
 import { InstallationProjectDetails as ProjectDetailsType } from "@/types/installation-method";
 import { useInstallationMethodJobPolling } from "@/hooks/useInstallationMethodJobPolling";
 import { supabase } from "@/integrations/supabase/client";
+import { getStoredCircuitContext, clearStoredCircuitContext, type StoredCircuitContext } from "@/utils/circuit-context-generator";
+import { ImportedContextBanner } from "@/components/electrician-tools/shared/ImportedContextBanner";
+import { AnimatePresence } from "framer-motion";
 
 interface InstallationSpecialistInterfaceProps {
   designerContext?: any;
@@ -29,6 +32,30 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
   });
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [isCancelling, setIsCancelling] = useState(false);
+  const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
+  const [initialPrompt, setInitialPrompt] = useState<string>("");
+  const [initialProjectName, setInitialProjectName] = useState<string>("");
+
+  // Check for imported circuit context on mount
+  useEffect(() => {
+    const storedContext = getStoredCircuitContext();
+    if (storedContext && storedContext.agentType === 'installer') {
+      setImportedContext(storedContext);
+      clearStoredCircuitContext();
+    }
+  }, []);
+
+  const handleUseImportedContext = () => {
+    if (importedContext) {
+      setInitialPrompt(importedContext.formattedPrompt);
+      setInitialProjectName(importedContext.sourceDesign);
+      setImportedContext(null);
+    }
+  };
+
+  const handleDismissImportedContext = () => {
+    setImportedContext(null);
+  };
   
   const {
     job, 
@@ -207,10 +234,25 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
       />
 
       {!showResults ? (
-        <InstallationInput 
-          onGenerate={handleGenerate} 
-          isProcessing={isGenerating}
-        />
+        <>
+          {/* Imported Circuit Context Banner */}
+          <AnimatePresence>
+            {importedContext && (
+              <ImportedContextBanner
+                source={importedContext.sourceDesign}
+                circuitCount={importedContext.context.circuitSummaries.length}
+                onUseContext={handleUseImportedContext}
+                onDismiss={handleDismissImportedContext}
+              />
+            )}
+          </AnimatePresence>
+          <InstallationInput
+            onGenerate={handleGenerate}
+            isProcessing={isGenerating}
+            initialPrompt={initialPrompt}
+            initialProjectName={initialProjectName}
+          />
+        </>
       ) : isGenerating ? (
         <InstallationProcessingView 
           originalQuery={originalQuery}

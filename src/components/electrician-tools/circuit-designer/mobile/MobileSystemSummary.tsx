@@ -3,14 +3,16 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { 
-  TrendingDown, 
-  ChevronDown, 
-  Zap, 
-  CheckCircle2, 
-  AlertTriangle, 
+import {
+  TrendingDown,
+  ChevronDown,
+  Zap,
+  CheckCircle2,
+  AlertTriangle,
   XCircle,
-  Activity
+  Activity,
+  Cable,
+  Shield
 } from 'lucide-react';
 import { InstallationDesign } from '@/types/installation-design';
 import { triggerHaptic } from '@/utils/animation-helpers';
@@ -24,6 +26,31 @@ interface MobileSystemSummaryProps {
     fails: number;
   };
 }
+
+// Helper component for mobile metric cards
+const MobileMetricCard = ({ icon: Icon, label, value, accent }: {
+  icon: any;
+  label: string;
+  value: string;
+  accent?: 'yellow' | 'green' | 'blue' | 'purple';
+}) => {
+  const accentClasses = {
+    yellow: 'text-elec-yellow',
+    green: 'text-green-400',
+    blue: 'text-blue-400',
+    purple: 'text-purple-400'
+  };
+
+  return (
+    <div className="p-3 bg-white/[0.04] border border-white/10 rounded-xl">
+      <div className="flex items-center gap-2 text-white/50 text-xs mb-1">
+        <Icon className={`h-3.5 w-3.5 ${accent ? accentClasses[accent] : ''}`} />
+        {label}
+      </div>
+      <div className="text-lg font-bold text-white">{value}</div>
+    </div>
+  );
+};
 
 export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSummaryProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -57,33 +84,32 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
   return (
     <Card className="bg-gradient-to-br from-elec-card via-elec-card to-elec-card/80 border-elec-yellow/20 shadow-lg">
       <div className="p-3 sm:p-4">
-        {/* Always Visible - Load Comparison */}
-        <div className="grid grid-cols-2 gap-3 mb-3">
-          {/* Connected Load */}
-          <motion.div 
-            className="bg-elec-dark/50 rounded-lg p-3 border border-elec-yellow/10"
-            whileTap={{ scale: 0.98 }}
-          >
-            <div className="flex items-center gap-1 mb-1">
-              <Zap className="h-3 w-3 text-elec-yellow" />
-              <p className="text-[10px] text-foreground/60 font-medium uppercase tracking-wide">Connected</p>
-            </div>
-            <p className="text-xl sm:text-2xl font-bold text-elec-yellow">{connectedLoadKw}</p>
-            <p className="text-[10px] text-foreground/40">kW Total</p>
-          </motion.div>
-          
-          {/* Diversified Load */}
-          <motion.div 
-            className="bg-elec-dark/50 rounded-lg p-3 border border-green-500/20"
-            whileTap={{ scale: 0.98 }}
-          >
-            <div className="flex items-center gap-1 mb-1">
-              <TrendingDown className="h-3 w-3 text-green-400" />
-              <p className="text-[10px] text-foreground/60 font-medium uppercase tracking-wide">After Diversity</p>
-            </div>
-            <p className="text-xl sm:text-2xl font-bold text-green-400">{diversifiedLoadKw}</p>
-            <p className="text-[10px] text-green-400/60">{diversityPercent}% reduction</p>
-          </motion.div>
+        {/* Compact Metrics Grid - 2x2 */}
+        <div className="grid grid-cols-2 gap-2 mb-3">
+          <MobileMetricCard
+            icon={Zap}
+            label="Connected"
+            value={`${connectedLoadKw}kW`}
+            accent="yellow"
+          />
+          <MobileMetricCard
+            icon={TrendingDown}
+            label="Diversified"
+            value={`${diversifiedLoadKw}kW`}
+            accent="green"
+          />
+          <MobileMetricCard
+            icon={Cable}
+            label="Circuits"
+            value={design.circuits.length.toString()}
+            accent="blue"
+          />
+          <MobileMetricCard
+            icon={Shield}
+            label="Main Switch"
+            value={`${mainSwitchRating}A`}
+            accent="purple"
+          />
         </div>
 
         {/* Compliance Status Pills */}
