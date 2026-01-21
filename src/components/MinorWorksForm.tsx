@@ -677,25 +677,39 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
           <motion.div key="declaration" {...tabAnimation}>
             <MWDeclarationTab formData={formData} onUpdate={handleUpdate} />
 
-            {/* PDF Generation in Declaration tab */}
-            <div className="mt-6 space-y-4">
-              <div className="eicr-section-card p-4 sm:p-6">
-                <MinorWorksPdfGenerator
-                  formData={formData}
-                  isFormValid={canGenerateCertificate()}
-                  reportId={currentReportId || formData.certificateNumber}
-                  userId={userId || undefined}
-                  onSuccess={handlePdfSuccess}
-                />
+            {/* PDF Generation in Declaration tab - Edge-to-edge on mobile */}
+            <div className="-mx-4 sm:mx-0 mt-6">
+              <div className="bg-gradient-to-b from-green-500/10 to-green-500/5 border-t border-b sm:border sm:rounded-xl border-green-500/20 p-4 sm:p-6">
+                <div className="px-0 sm:px-0">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2.5 rounded-xl bg-green-500/20">
+                      <svg className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-base font-semibold text-white">Generate Certificate</h3>
+                      <p className="text-xs text-white/50">Create your official Minor Works PDF</p>
+                    </div>
+                  </div>
 
-                {!isFormValid() && (
-                  <Alert className="mt-4 border-orange-500/30 bg-orange-500/10">
-                    <AlertTriangle className="h-4 w-4 text-orange-400" />
-                    <AlertDescription className="text-orange-300">
-                      Please complete all required fields (*) before generating the certificate.
-                    </AlertDescription>
-                  </Alert>
-                )}
+                  <MinorWorksPdfGenerator
+                    formData={formData}
+                    isFormValid={canGenerateCertificate()}
+                    reportId={currentReportId || formData.certificateNumber}
+                    userId={userId || undefined}
+                    onSuccess={handlePdfSuccess}
+                  />
+
+                  {!isFormValid() && (
+                    <div className="mt-4 p-3 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-start gap-3">
+                      <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-orange-300">
+                        Complete all required fields (*) before generating the certificate.
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -731,10 +745,10 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         />
 
         {/* Main Content */}
-        <div className="lg:pt-0 pt-0">
-          <div className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-            {/* Step Indicator - Sticky on scroll */}
-            <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm -mx-4 px-4 py-3 border-b border-white/5 sm:border-0 sm:bg-transparent sm:backdrop-blur-none sm:relative sm:mx-0 sm:px-0 sm:py-0">
+        <div>
+          <div className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto minor-works-container">
+            {/* Step Indicator */}
+            <div className="-mx-4 px-4 py-3 border-b border-white/5 sm:border-0 sm:mx-0 sm:px-0 sm:py-0">
               <MWStepIndicator
                 currentTab={currentTab}
                 onTabChange={setTab}
@@ -743,32 +757,32 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
             </div>
 
             {/* Tab Content */}
-            <div className="mt-6 pb-40 sm:pb-32">
+            <div className="mt-6 pb-6">
               <AnimatePresence mode="wait">
                 {renderTabContent()}
               </AnimatePresence>
             </div>
-          </div>
-        </div>
 
-        {/* Bottom Navigation - Fixed on mobile */}
-        <div className="fixed bottom-0 left-0 right-0 sm:relative sm:bottom-auto z-40">
-          <MWTabNavigation
-          currentTab={currentTab}
-          currentTabIndex={currentTabIndex}
-          totalTabs={totalTabs}
-          canNavigateNext={canNavigateNext}
-          canNavigatePrevious={canNavigatePrevious}
-          navigateNext={navigateNext}
-          navigatePrevious={navigatePrevious}
-          getProgressPercentage={getProgressPercentage}
-          isCurrentTabComplete={isTabComplete(currentTab)}
-          currentTabHasRequiredFields={currentTabHasRequiredFields()}
-          onToggleComplete={() => {}}
-          onGenerateCertificate={() => {}}
-          canGenerateCertificate={canGenerateCertificate()}
-          showGenerate={currentTab === 'declaration'}
-        />
+            {/* Navigation - Flows with content */}
+            <div className="mt-6 pb-8">
+              <MWTabNavigation
+                currentTab={currentTab}
+                currentTabIndex={currentTabIndex}
+                totalTabs={totalTabs}
+                canNavigateNext={canNavigateNext}
+                canNavigatePrevious={canNavigatePrevious}
+                navigateNext={navigateNext}
+                navigatePrevious={navigatePrevious}
+                getProgressPercentage={getProgressPercentage}
+                isCurrentTabComplete={isTabComplete(currentTab)}
+                currentTabHasRequiredFields={currentTabHasRequiredFields()}
+                onToggleComplete={() => {}}
+                onGenerateCertificate={() => {}}
+                canGenerateCertificate={canGenerateCertificate()}
+                showGenerate={currentTab === 'declaration'}
+              />
+            </div>
+          </div>
         </div>
 
         <StartNewEICRDialog

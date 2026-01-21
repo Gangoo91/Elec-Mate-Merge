@@ -45,7 +45,7 @@ const EICStepIndicator: React.FC<EICStepIndicatorProps> = ({
       {/* Mobile: Horizontal scrollable pill buttons */}
       <div className={cn("lg:hidden", className)}>
         <div className="overflow-x-auto scrollbar-hide -mx-4 px-4">
-          <div className="flex items-center gap-2 py-2 min-w-max">
+          <div className="flex items-center justify-center gap-2 py-2 min-w-max">
             {steps.map((step, index) => {
               const isActive = step.id === currentTab;
               const isComplete = isTabComplete(step.id);

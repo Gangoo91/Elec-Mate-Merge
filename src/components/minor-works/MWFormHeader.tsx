@@ -59,9 +59,9 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
 
   return (
     <>
-      {/* Mobile: Compact sticky header */}
-      <header className="lg:hidden eicr-header-compact">
-        <div className="flex items-center justify-between h-[52px] px-4">
+      {/* Mobile: Compact header - scrolls with content */}
+      <header className="lg:hidden bg-background border-b border-white/10">
+        <div className="flex items-center justify-between h-[56px] px-4">
           {/* Left: Back + Context */}
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <button
@@ -71,26 +71,23 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
               <ArrowLeft className="h-5 w-5" />
             </button>
             <div className="flex flex-col min-w-0">
-              <span className="text-sm font-semibold text-white truncate max-w-[160px]">
+              <span className="text-sm font-semibold text-white truncate max-w-[180px]">
                 {displayName}
               </span>
-              <span className="text-xs text-white/50">
-                {currentTabLabel} {progressPercentage > 0 && `- ${progressPercentage}%`}
-              </span>
+              <div className="flex items-center gap-2 text-xs text-white/50">
+                <span>{currentTabLabel} {progressPercentage > 0 && `- ${progressPercentage}%`}</span>
+                {syncState && syncState.status === 'synced' && (
+                  <span className="text-green-400">• Synced</span>
+                )}
+                {syncState && syncState.status === 'syncing' && (
+                  <span className="text-blue-400">• Syncing</span>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* Right: Status + Actions */}
+          {/* Right: Actions + Status */}
           <div className="flex items-center gap-2">
-            {syncState && (
-              <SyncStatusIndicator
-                status={syncState.status}
-                lastSyncTime={syncState.lastSyncTime}
-                isOnline={isOnline}
-                isAuthenticated={isAuthenticated}
-                className="h-7 w-7"
-              />
-            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="h-9 w-9 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition-colors ios-pressable">

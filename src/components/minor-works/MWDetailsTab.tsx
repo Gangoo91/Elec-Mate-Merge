@@ -9,6 +9,7 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { FieldTooltip } from '@/components/ui/field-tooltip';
 import { Users, FileText, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   EARTHING_ARRANGEMENTS,
   EARTHING_CONDUCTOR_SIZES,
@@ -23,6 +24,7 @@ interface MWDetailsTabProps {
 }
 
 const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
+  const isMobile = useIsMobile();
   const [openSections, setOpenSections] = useState({
     client: true,
     work: true,
@@ -64,7 +66,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className={cn("space-y-4 sm:space-y-6", isMobile && "-mx-4")}>
       {/* Client & Installation */}
       <div className="eicr-section-card">
         <Collapsible open={openSections.client} onOpenChange={() => toggleSection('client')}>
@@ -240,7 +242,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                 />
               </div>
 
-              {/* Risk Assessment Attached - IET Required */}
+              {/* Risk Assessment Attached */}
               <div className="flex items-center gap-3 p-4 min-h-[48px] rounded-lg bg-amber-500/5 border border-amber-500/20">
                 <Checkbox
                   id="riskAssessmentAttached"
@@ -386,7 +388,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                   })}
                 </div>
 
-                {/* Other Bonding Specification - IET Required when Other is checked */}
+                {/* Other Bonding Specification - shown when Other is checked */}
                 {formData.bondingOther && (
                   <div className="space-y-2 mt-2">
                     <Label className="text-sm">Other Bonding - Specify</Label>

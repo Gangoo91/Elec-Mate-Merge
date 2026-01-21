@@ -83,9 +83,9 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
         "lg:hidden sticky top-0 z-50 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 border-b border-border/50",
         isMobile && "-mx-4 pt-[env(safe-area-inset-top)]"
       )}>
-        <div className="flex items-center justify-between h-14 px-1">
+        <div className="flex items-center justify-between h-14 px-3">
           {/* Left: Back + Title */}
-          <div className="flex items-center gap-1 flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-1 min-w-0">
             <button
               onClick={handleBack}
               className="h-14 w-14 shrink-0 flex items-center justify-center rounded-none touch-manipulation text-foreground/70 hover:text-foreground hover:bg-accent/50 active:bg-accent/70 transition-colors"
@@ -105,7 +105,7 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
           </div>
 
           {/* Right: Actions */}
-          <div className="flex items-center gap-1 pr-2">
+          <div className="flex items-center gap-2 pr-2">
             {/* Sync Status - compact icon only on mobile */}
             {syncState && (
               <div className="flex items-center justify-center h-11 w-11 shrink-0">

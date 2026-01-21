@@ -138,7 +138,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
   return (
     <div className={cn(
       "space-y-4",
-      isMobile ? "" : "p-4 bg-gradient-to-r from-elec-gray/10 to-elec-gray/5 rounded-xl border border-elec-yellow/30"
+      isMobile ? "px-4 py-4" : "p-4 bg-gradient-to-r from-elec-gray/10 to-elec-gray/5 rounded-xl border border-elec-yellow/30"
     )}>
       <div className={cn(
         "grid gap-4",

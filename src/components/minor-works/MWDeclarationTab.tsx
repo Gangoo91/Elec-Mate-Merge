@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { User, CheckSquare, PenTool, UserCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 import SignatureInput from '@/components/signature/SignatureInput';
 import {
   QUALIFICATION_LEVELS,
@@ -21,6 +22,7 @@ interface MWDeclarationTabProps {
 }
 
 const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate }) => {
+  const isMobile = useIsMobile();
   const [openSections, setOpenSections] = useState({
     electrician: true,
     compliance: true,
@@ -70,7 +72,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className={cn("space-y-4 sm:space-y-6", isMobile && "-mx-4")}>
       {/* Electrician Details */}
       <div className="eicr-section-card">
         <Collapsible open={openSections.electrician} onOpenChange={() => toggleSection('electrician')}>
@@ -84,116 +86,117 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
             />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              {/* Use My Profile Button */}
-              <Button
+            <div className="p-4 sm:p-5 md:p-6 space-y-5">
+              {/* Use My Profile Button - Premium Style */}
+              <button
                 type="button"
-                variant="outline"
                 onClick={handleUseMyProfile}
-                className="w-full h-12 border-dashed border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50 text-amber-400"
+                className="w-full h-14 rounded-xl border-2 border-dashed border-amber-500/30 bg-amber-500/5 hover:bg-amber-500/10 hover:border-amber-500/50 transition-all flex items-center justify-center gap-3 ios-pressable"
               >
-                <UserCircle className="h-5 w-5 mr-2" />
-                Use My Profile Details
-              </Button>
+                <div className="p-2 rounded-lg bg-amber-500/20">
+                  <UserCircle className="h-5 w-5 text-amber-400" />
+                </div>
+                <span className="text-amber-400 font-medium">Use My Profile Details</span>
+              </button>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm">Electrician Name *</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Electrician Name *</label>
                   <Input
                     value={formData.electricianName || ''}
                     onChange={(e) => onUpdate('electricianName', e.target.value)}
                     placeholder="Full name"
-                    className={cn("h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500", !formData.electricianName && "border-red-500/50")}
+                    className={cn("h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20", !formData.electricianName && "border-red-500/30")}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">For and on behalf of (Company)</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Company Name</label>
                   <Input
                     value={formData.forAndOnBehalfOf || ''}
                     onChange={(e) => onUpdate('forAndOnBehalfOf', e.target.value)}
                     placeholder="Company or trading name"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
+                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm">Position *</Label>
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Position *</label>
                 <Input
                   value={formData.position || ''}
                   onChange={(e) => onUpdate('position', e.target.value)}
                   placeholder="e.g., Qualified Electrician"
-                  className={cn("h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500", !formData.position && "border-red-500/50")}
+                  className={cn("h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20", !formData.position && "border-red-500/30")}
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm">Qualification Level</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Qualification Level</label>
                   <MobileSelectPicker
                     value={formData.qualificationLevel || ''}
                     onValueChange={(v) => onUpdate('qualificationLevel', v)}
                     options={QUALIFICATION_LEVELS}
                     placeholder="Select level"
                     title="Qualification Level"
-                    triggerClassName="bg-elec-gray border-white/30"
+                    triggerClassName="h-12 bg-white/5 border-white/10 rounded-xl text-base"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Scheme Provider</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Scheme Provider</label>
                   <MobileSelectPicker
                     value={formData.schemeProvider || ''}
                     onValueChange={(v) => onUpdate('schemeProvider', v)}
                     options={SCHEME_PROVIDERS}
                     placeholder="Select provider"
                     title="Scheme Provider"
-                    triggerClassName="bg-elec-gray border-white/30"
+                    triggerClassName="h-12 bg-white/5 border-white/10 rounded-xl text-base"
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm">Registration Number</Label>
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Registration Number</label>
                 <Input
                   value={formData.registrationNumber || ''}
                   onChange={(e) => onUpdate('registrationNumber', e.target.value)}
                   placeholder="Scheme registration number"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
+                  className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                 />
               </div>
 
-              {/* Contractor Address - IET Required */}
-              <div className="space-y-2">
-                <Label className="text-sm">Contractor Address</Label>
+              {/* Contractor Address */}
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Contractor Address</label>
                 <Textarea
                   value={formData.contractorAddress || ''}
                   onChange={(e) => onUpdate('contractorAddress', e.target.value)}
                   placeholder="Business address"
                   rows={2}
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-amber-500 focus:ring-amber-500"
+                  className="text-base bg-white/5 border-white/10 rounded-xl min-h-[80px] focus:border-amber-500/50 focus:ring-amber-500/20"
                 />
               </div>
 
               {/* Contact Details */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm">Contact Telephone</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Contact Telephone</label>
                   <Input
                     type="tel"
                     value={formData.electricianPhone || ''}
                     onChange={(e) => onUpdate('electricianPhone', e.target.value)}
                     placeholder="e.g., 07123 456789"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
+                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Email Address</Label>
+                <div className="space-y-1.5">
+                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Email Address</label>
                   <Input
                     type="email"
                     value={formData.electricianEmail || ''}
                     onChange={(e) => onUpdate('electricianEmail', e.target.value)}
                     placeholder="e.g., name@company.co.uk"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
+                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
                   />
                 </div>
               </div>
@@ -215,68 +218,68 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
             />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4">
+            <div className="p-4 sm:p-5 md:p-6 space-y-5">
               {/* IET Official Declaration - Consolidated */}
               <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20">
+                <div className="p-4 rounded-xl bg-green-500/5 border-l-2 border-l-green-500 border border-white/10">
                   <div className="flex items-start gap-3">
                     <Checkbox
                       id="ietDeclaration"
                       checked={formData.ietDeclaration || false}
                       onCheckedChange={(c) => onUpdate('ietDeclaration', c)}
-                      className="mt-0.5 h-6 w-6 border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 touch-manipulation"
+                      className="mt-0.5 h-6 w-6 rounded-lg border-white/30 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation flex-shrink-0"
                     />
-                    <Label htmlFor="ietDeclaration" className="text-sm cursor-pointer leading-relaxed">
-                      I/We CERTIFY that the work does not impair the safety of the existing installation
+                    <label htmlFor="ietDeclaration" className="text-sm cursor-pointer leading-relaxed text-white/80 text-left">
+                      I/We <span className="text-green-400 font-medium">CERTIFY</span> that the work does not impair the safety of the existing installation
                       and that the work has been designed, constructed, inspected and tested in accordance
-                      with BS 7671:2018+A2:2022 (IET Wiring Regulations), subject to the departures detailed
+                      with <span className="text-white font-medium">BS 7671:2018+A3:2024</span> (IET Wiring Regulations), subject to the departures detailed
                       above if any. The work is to the best of my/our knowledge and belief safe to be put
-                      into service. *
-                    </Label>
+                      into service. <span className="text-red-400">*</span>
+                    </label>
                   </div>
                 </div>
 
                 {/* Optional Additional Declarations */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20">
-                    <div className="flex items-start gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
+                    <div className="flex items-center gap-3">
                       <Checkbox
                         id="partPNotification"
                         checked={formData.partPNotification || false}
                         onCheckedChange={(c) => onUpdate('partPNotification', c)}
-                        className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500 touch-manipulation"
+                        className="h-5 w-5 rounded-md border-white/30 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500 touch-manipulation"
                       />
-                      <Label htmlFor="partPNotification" className="text-sm cursor-pointer leading-relaxed">
-                        Part P notification made (where applicable)
-                      </Label>
+                      <label htmlFor="partPNotification" className="text-sm cursor-pointer text-white/70">
+                        Part P notification made
+                      </label>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-cyan-500/5 border border-cyan-500/20">
-                    <div className="flex items-start gap-3">
+                  <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
+                    <div className="flex items-center gap-3">
                       <Checkbox
                         id="copyProvided"
                         checked={formData.copyProvided || false}
                         onCheckedChange={(c) => onUpdate('copyProvided', c)}
-                        className="mt-0.5 h-5 w-5 border-white/40 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500 touch-manipulation"
+                        className="h-5 w-5 rounded-md border-white/30 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500 touch-manipulation"
                       />
-                      <Label htmlFor="copyProvided" className="text-sm cursor-pointer leading-relaxed">
-                        Copy provided to person ordering work
-                      </Label>
+                      <label htmlFor="copyProvided" className="text-sm cursor-pointer text-white/70">
+                        Copy provided to client
+                      </label>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Additional Notes */}
-              <div className="space-y-2 pt-2">
-                <Label className="text-sm">Additional Notes / Comments</Label>
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Additional Notes</label>
                 <Textarea
                   value={formData.additionalNotes || ''}
                   onChange={(e) => onUpdate('additionalNotes', e.target.value)}
                   placeholder="Any additional notes, comments or recommendations..."
                   rows={3}
-                  className="text-base touch-manipulation min-h-[100px] border-white/30 focus:border-green-500 focus:ring-green-500"
+                  className="text-base bg-white/5 border-white/10 rounded-xl min-h-[100px] focus:border-green-500/50 focus:ring-green-500/20"
                 />
               </div>
             </div>
@@ -297,44 +300,44 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
             />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              <div className="space-y-2">
-                <Label className="text-sm">Signature Date *</Label>
+            <div className="p-4 sm:p-5 md:p-6 space-y-5">
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Signature Date *</label>
                 <Input
                   type="date"
                   value={formData.signatureDate || ''}
                   onChange={(e) => onUpdate('signatureDate', e.target.value)}
-                  className={cn("h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500", !formData.signatureDate && "border-red-500/50")}
+                  className={cn("h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-purple-500/50 focus:ring-purple-500/20", !formData.signatureDate && "border-red-500/30")}
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm">Signature *</Label>
+              <div className="space-y-1.5">
+                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Signature *</label>
                 <SignatureInput
                   value={formData.signature || ''}
                   onChange={(v) => onUpdate('signature', v)}
                   placeholder="Sign here"
-                  className={cn(!formData.signature && "border-red-500/50")}
+                  className={cn("rounded-xl", !formData.signature && "border-red-500/30")}
                 />
               </div>
 
-              {/* Summary info */}
+              {/* Summary info - Premium card */}
               {formData.electricianName && formData.signatureDate && (
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                  <div className="text-sm text-white/60">
-                    Certificate signed by <span className="text-white font-medium">{formData.electricianName}</span>
-                    {formData.position && <span> ({formData.position})</span>}
+                <div className="p-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-purple-500/5 border border-purple-500/20">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="p-1.5 rounded-lg bg-purple-500/20">
+                      <PenTool className="h-4 w-4 text-purple-400" />
+                    </div>
+                    <span className="text-xs uppercase tracking-wide text-purple-400 font-medium">Certificate Signed</span>
+                  </div>
+                  <div className="text-sm text-white/70">
+                    Signed by <span className="text-white font-medium">{formData.electricianName}</span>
+                    {formData.position && <span className="text-white/50"> ({formData.position})</span>}
                     {' '}on <span className="text-white font-medium">{new Date(formData.signatureDate).toLocaleDateString('en-GB')}</span>
                     {formData.schemeProvider && formData.schemeProvider !== 'none' && (
-                      <>
-                        {' '}
-                        <span className="text-white/60">
-                          registered with{' '}
-                          <span className="text-white font-medium">
-                            {SCHEME_PROVIDERS.find(s => s.value === formData.schemeProvider)?.label || formData.schemeProvider}
-                          </span>
-                        </span>
-                      </>
+                      <span className="text-white/50">
+                        {' '}• {SCHEME_PROVIDERS.find(s => s.value === formData.schemeProvider)?.label || formData.schemeProvider}
+                      </span>
                     )}
                   </div>
                 </div>

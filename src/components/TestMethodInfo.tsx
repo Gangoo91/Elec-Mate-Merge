@@ -17,7 +17,10 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="space-y-4">
+    <div className={cn(
+      "space-y-4",
+      isMobile ? "px-4 py-4" : ""
+    )}>
       <div className={cn(
         "grid gap-4",
         isMobile ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 p-4 bg-gradient-to-r from-elec-gray/10 to-elec-gray/5 rounded-xl border border-elec-yellow/30"

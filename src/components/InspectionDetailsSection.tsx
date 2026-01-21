@@ -207,7 +207,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
           </FormField>
 
           <FormField label="Inspection Interval" required>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {intervalOptions.map((option) => (
                 <button
                   key={option.value}

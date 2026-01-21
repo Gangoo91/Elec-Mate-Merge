@@ -84,7 +84,7 @@ const EICRTabNavigation = ({
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-between sm:items-center sm:gap-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center sm:gap-4">
         <Button
           variant="outline"
           onClick={handleNavigatePrevious}

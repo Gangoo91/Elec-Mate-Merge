@@ -180,8 +180,10 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
         onUpdate('inspectorSignature', inspectorProfile.signatureData);
         loadedItems.push('Signature');
       }
+      // Registration details
       if (inspectorProfile.registrationScheme) {
         onUpdate('registrationScheme', inspectorProfile.registrationScheme);
+        loadedItems.push('Registration');
       }
       if (inspectorProfile.registrationNumber) {
         onUpdate('registrationNumber', inspectorProfile.registrationNumber);
@@ -189,8 +191,10 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
       if (inspectorProfile.registrationExpiry) {
         onUpdate('registrationExpiry', inspectorProfile.registrationExpiry);
       }
+      // Insurance details
       if (inspectorProfile.insuranceProvider) {
         onUpdate('insuranceProvider', inspectorProfile.insuranceProvider);
+        loadedItems.push('Insurance');
       }
       if (inspectorProfile.insurancePolicyNumber) {
         onUpdate('insurancePolicyNumber', inspectorProfile.insurancePolicyNumber);
@@ -337,14 +341,12 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
           <Button
             onClick={handleLoadFromBusinessSettings}
             disabled={companyProfileLoading}
-            className="w-full h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation"
+            variant="outline"
+            className="w-full h-11 border-border/50 text-foreground hover:bg-card/50 font-medium touch-manipulation"
           >
-            <Settings className="h-5 w-5 mr-2" />
+            <Settings className="h-4 w-4 mr-2" />
             Load My Saved Details
           </Button>
-          <p className="text-xs text-muted-foreground text-center mt-2">
-            Loads from Business Settings + Inspector Profile
-          </p>
         </div>
       )}
 

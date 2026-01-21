@@ -8,6 +8,7 @@ import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Power, Zap, Shield, Wrench, AlertCircle, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 import {
   RCD_RATINGS,
   TEST_EQUIPMENT,
@@ -20,6 +21,7 @@ interface MWTestingTabProps {
 }
 
 const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
+  const isMobile = useIsMobile();
   const [openSections, setOpenSections] = useState({
     dead: true,
     live: true,
@@ -175,7 +177,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className={cn("space-y-4 sm:space-y-6", isMobile && "-mx-4")}>
       {/* Dead Tests */}
       <div className="eicr-section-card">
         <Collapsible open={openSections.dead} onOpenChange={() => toggleSection('dead')}>
@@ -259,51 +261,47 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
 
               {/* Ring Circuit Continuity - shown only for ring circuits */}
               {formData.circuitType === 'ring' && (
-                <div className="space-y-4">
-                  <h4 className="text-sm font-semibold text-orange-400 flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>
-                    Ring Circuit Continuity (IET Required)
-                  </h4>
-                  <div className="p-4 bg-orange-50/30 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg">
+                <div className="rounded-xl border border-white/10 bg-orange-500/5 border-l-2 border-l-orange-500 overflow-hidden">
+                  <div className="px-4 py-2.5 bg-orange-500/10 border-b border-white/5">
+                    <span className="text-sm font-medium text-orange-400">Ring Circuit Continuity</span>
+                  </div>
+                  <div className="p-4 space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      <div className="space-y-2">
-                        <Label className="text-sm">(r1) Line-Line (Ω)</Label>
+                      <div className="space-y-1.5">
+                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">(r1) Line-Line</label>
                         <div className="relative">
                           <Input
                             value={formData.ringR1 || ''}
                             onChange={(e) => onUpdate('ringR1', e.target.value)}
                             placeholder="e.g., 0.52"
-                            className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500 pr-10"
+                            className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-orange-500/50 focus:ring-orange-500/20 pr-10"
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">Ω</span>
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">Ω</span>
                         </div>
-                        <p className="text-xs text-muted-foreground">End-to-end line conductors</p>
                       </div>
-                      <div className="space-y-2">
-                        <Label className="text-sm">(rn) Neutral-Neutral (Ω)</Label>
+                      <div className="space-y-1.5">
+                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">(rn) Neutral-Neutral</label>
                         <div className="relative">
                           <Input
                             value={formData.ringRn || ''}
                             onChange={(e) => onUpdate('ringRn', e.target.value)}
                             placeholder="e.g., 0.52"
-                            className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500 pr-10"
+                            className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-orange-500/50 focus:ring-orange-500/20 pr-10"
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">Ω</span>
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">Ω</span>
                         </div>
-                        <p className="text-xs text-muted-foreground">End-to-end neutral conductors</p>
                       </div>
-                      <div className="space-y-2">
-                        <Label className="text-sm">(r2) CPC-CPC (Ω)</Label>
+                      <div className="space-y-1.5">
+                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">(r2) CPC-CPC</label>
                         <div className="relative">
                           <Input
                             value={formData.ringR2 || ''}
                             onChange={(e) => onUpdate('ringR2', e.target.value)}
                             placeholder="e.g., 0.87"
-                            className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500 pr-10"
+                            className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-orange-500/50 focus:ring-orange-500/20 pr-10"
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">Ω</span>
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">Ω</span>
                         </div>
-                        <p className="text-xs text-muted-foreground">End-to-end CPC conductors</p>
                       </div>
                     </div>
                   </div>
@@ -649,7 +647,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                         />
                       </div>
                     </div>
-                    {/* SPD Test Button - IET Required Checkbox */}
+                    {/* SPD Test Button Checkbox */}
                     <div className="flex items-center gap-3 p-4 min-h-[52px] rounded-lg bg-card/50">
                       <Checkbox
                         id="spdTestButton"

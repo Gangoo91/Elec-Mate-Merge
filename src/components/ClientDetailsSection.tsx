@@ -81,15 +81,17 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
 
   return (
     <div className={cn("space-y-6", isMobile && "-mx-4")}>
-      {/* Client Type Toggle */}
-      <div className={cn(isMobile ? "px-4" : "")}>
-        <Label className="text-sm text-foreground/60 mb-3 block text-center">Client Type</Label>
-        <div className="flex gap-2">
+      {/* Client Type Toggle - Edge-to-edge on mobile */}
+      <div>
+        <div className={cn(isMobile ? "px-4" : "")}>
+          <Label className="text-sm text-foreground/60 mb-3 block text-center">Client Type</Label>
+        </div>
+        <div className={cn("grid grid-cols-2 gap-2", isMobile ? "px-4" : "")}>
           <Button
             type="button"
             variant={clientType === 'new' ? 'default' : 'outline'}
             className={cn(
-              "flex-1 h-12 font-medium touch-manipulation",
+              "h-12 font-medium touch-manipulation",
               clientType === 'new'
                 ? "bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 : "border-border/50"
@@ -103,7 +105,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
             type="button"
             variant={clientType === 'existing' ? 'default' : 'outline'}
             className={cn(
-              "flex-1 h-12 font-medium touch-manipulation",
+              "h-12 font-medium touch-manipulation",
               clientType === 'existing'
                 ? "bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 : "border-border/50"

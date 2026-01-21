@@ -46,6 +46,67 @@ interface EICRScheduleOfTestsProps {
   onOpenBoardScan?: () => void;
 }
 
+/**
+ * DebouncedInput - Input with local state and debounced updates
+ * Prevents focus loss on mobile by not triggering parent re-renders on every keystroke
+ */
+const DebouncedInput = React.memo(({
+  value,
+  onChange,
+  className,
+  style,
+  ...props
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  className?: string;
+  style?: React.CSSProperties;
+  [key: string]: any;
+}) => {
+  const [localValue, setLocalValue] = React.useState(value || '');
+  const debounceTimerRef = React.useRef<NodeJS.Timeout>();
+
+  // Sync local value when prop changes
+  React.useEffect(() => {
+    setLocalValue(value || '');
+  }, [value]);
+
+  // Debounced onChange handler
+  const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setLocalValue(newValue);
+
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    debounceTimerRef.current = setTimeout(() => {
+      onChange(newValue);
+    }, 300);
+  }, [onChange]);
+
+  // Cleanup timer on unmount
+  React.useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <input
+      value={localValue}
+      onChange={handleChange}
+      className={className}
+      style={style}
+      {...props}
+    />
+  );
+});
+
+DebouncedInput.displayName = 'DebouncedInput';
+
 const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRScheduleOfTestsProps) => {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [distributionBoards, setDistributionBoards] = useState<DistributionBoard[]>([]);
@@ -1399,10 +1460,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                         <div className="grid grid-cols-2 gap-3">
                           <div>
                             <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">Reference</label>
-                            <input
+                            <DebouncedInput
                               type="text"
                               value={board.reference || ''}
-                              onChange={(e) => handleUpdateBoard(board.id, 'reference', e.target.value)}
+                              onChange={(value) => handleUpdateBoard(board.id, 'reference', value)}
                               placeholder={board.name}
                               className="w-full h-10 px-3 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
                               style={{ fontSize: '16px' }}
@@ -1410,10 +1471,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                           </div>
                           <div>
                             <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">Location</label>
-                            <input
+                            <DebouncedInput
                               type="text"
                               value={board.location || ''}
-                              onChange={(e) => handleUpdateBoard(board.id, 'location', e.target.value)}
+                              onChange={(value) => handleUpdateBoard(board.id, 'location', value)}
                               placeholder="e.g., Garage, Kitchen"
                               className="w-full h-10 px-3 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
                               style={{ fontSize: '16px' }}
@@ -1426,11 +1487,11 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                           <div>
                             <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">Z<sub>DB</sub> (Ω)</label>
                             <div className="relative">
-                              <input
+                              <DebouncedInput
                                 type="text"
                                 inputMode="decimal"
                                 value={board.zdb || ''}
-                                onChange={(e) => handleUpdateBoard(board.id, 'zdb', e.target.value)}
+                                onChange={(value) => handleUpdateBoard(board.id, 'zdb', value)}
                                 placeholder="0.00"
                                 className="w-full h-10 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
                                 style={{ fontSize: '16px' }}
@@ -1441,11 +1502,11 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                           <div>
                             <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">I<sub>PF</sub> (kA)</label>
                             <div className="relative">
-                              <input
+                              <DebouncedInput
                                 type="text"
                                 inputMode="decimal"
                                 value={board.ipf || ''}
-                                onChange={(e) => handleUpdateBoard(board.id, 'ipf', e.target.value)}
+                                onChange={(value) => handleUpdateBoard(board.id, 'ipf', value)}
                                 placeholder="0.0"
                                 className="w-full h-10 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
                                 style={{ fontSize: '16px' }}
@@ -1518,23 +1579,23 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                       </div>
 
                       {/* Tools Bar - Above Circuit Table */}
-                      <div className="flex items-center gap-2 p-4 bg-background border-y border-border/30">
+                      <div className="-mx-4 grid grid-cols-[1fr_1fr_48px] gap-2 p-4 bg-background border-y border-border/30">
                         <Button
-                          className="flex-1 h-12 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-95 flex items-center justify-center"
+                          className="h-12 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
                           onClick={() => { setActiveBoardId(board.id); onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true); }}
                         >
                           <Camera className="h-5 w-5 mr-2" />
                           AI Scan
                         </Button>
                         <Button
-                          className="flex-1 h-12 rounded-xl bg-card border border-border/50 text-foreground font-semibold hover:bg-card/80 touch-manipulation active:scale-95 flex items-center justify-center"
+                          className="h-12 rounded-xl bg-card border border-border/50 text-foreground font-semibold hover:bg-card/80 touch-manipulation active:scale-95"
                           onClick={() => addCircuitToBoard(board.id)}
                         >
                           <Plus className="h-5 w-5 mr-2" />
                           Add Circuit
                         </Button>
                         <Button
-                          className={`h-12 w-12 rounded-xl touch-manipulation active:scale-95 flex items-center justify-center flex-shrink-0 ${
+                          className={`h-12 w-12 rounded-xl touch-manipulation active:scale-95 ${
                             voiceActive
                               ? 'bg-green-500 text-white'
                               : voiceConnecting
@@ -1857,7 +1918,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               </button>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <div className="p-4 bg-card/30">
+              <div className="bg-card/30">
                 <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
               </div>
             </CollapsibleContent>
@@ -1878,7 +1939,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               </button>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <div className="p-4 bg-card/30">
+              <div className="bg-card/30">
                 <TestMethodInfo formData={formData} onUpdate={onUpdate} />
               </div>
             </CollapsibleContent>

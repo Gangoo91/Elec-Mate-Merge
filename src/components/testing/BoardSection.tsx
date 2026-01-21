@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useCallback, useEffect, useRef, memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -53,6 +53,64 @@ interface BoardSectionProps {
   tools?: BoardToolCallbacks;
   showTools?: boolean;
 }
+
+/**
+ * DebouncedInput - Input with local state and debounced updates
+ * Prevents focus loss on mobile by not triggering parent re-renders on every keystroke
+ */
+const DebouncedInput = memo(({
+  value,
+  onChange,
+  className,
+  ...props
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  className?: string;
+  [key: string]: any;
+}) => {
+  const [localValue, setLocalValue] = useState(value);
+  const debounceTimerRef = useRef<NodeJS.Timeout>();
+
+  // Sync local value when prop changes (e.g., from external updates)
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
+  // Debounced onChange handler
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setLocalValue(newValue);
+
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    debounceTimerRef.current = setTimeout(() => {
+      onChange(newValue);
+    }, 300);
+  }, [onChange]);
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <Input
+      value={localValue}
+      onChange={handleChange}
+      className={className}
+      {...props}
+    />
+  );
+});
+
+DebouncedInput.displayName = 'DebouncedInput';
 
 /**
  * BoardSection - Expandable section for a distribution board
@@ -152,9 +210,9 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <Label className="text-xs font-medium text-white/60 uppercase tracking-wide">
                   Reference
                 </Label>
-                <Input
+                <DebouncedInput
                   value={board.reference}
-                  onChange={(e) => onUpdateBoard(board.id, 'reference', e.target.value)}
+                  onChange={(value) => onUpdateBoard(board.id, 'reference', value)}
                   placeholder="e.g. Main CU, Sub-DB1"
                   className="h-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
                 />
@@ -165,9 +223,9 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <Label className="text-xs font-medium text-white/60 uppercase tracking-wide">
                   Location
                 </Label>
-                <Input
+                <DebouncedInput
                   value={board.location || ''}
-                  onChange={(e) => onUpdateBoard(board.id, 'location', e.target.value)}
+                  onChange={(value) => onUpdateBoard(board.id, 'location', value)}
                   placeholder="e.g. Garage, Kitchen"
                   className="h-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
                 />
@@ -179,11 +237,11 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   Z<sub className="text-[9px]">db</sub> (Ω)
                 </Label>
                 <div className="relative">
-                  <Input
+                  <DebouncedInput
                     type="number"
                     step="0.01"
                     value={board.zdb}
-                    onChange={(e) => onUpdateBoard(board.id, 'zdb', e.target.value)}
+                    onChange={(value) => onUpdateBoard(board.id, 'zdb', value)}
                     placeholder="0.00"
                     className="h-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50 pr-8"
                   />
@@ -197,11 +255,11 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   I<sub className="text-[9px]">pf</sub> (kA)
                 </Label>
                 <div className="relative">
-                  <Input
+                  <DebouncedInput
                     type="number"
                     step="0.1"
                     value={board.ipf}
-                    onChange={(e) => onUpdateBoard(board.id, 'ipf', e.target.value)}
+                    onChange={(value) => onUpdateBoard(board.id, 'ipf', value)}
                     placeholder="0.0"
                     className="h-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50 pr-10"
                   />

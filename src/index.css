@@ -1624,11 +1624,11 @@
   /* Compact sticky header for EICR forms */
   .eicr-header-compact {
     position: fixed;
-    top: 0;
+    top: env(safe-area-inset-top, 0px);
     left: 0;
     right: 0;
     z-index: 50;
-    background: rgba(0, 0, 0, 0.88);
+    background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid hsl(47 100% 50% / 0.1);
@@ -1636,7 +1636,13 @@
 
   /* Content offset for sticky header on mobile */
   .eicr-content-with-header {
-    @apply pt-[68px] lg:pt-0;
+    padding-top: calc(68px + env(safe-area-inset-top, 0px));
+  }
+
+  @screen lg {
+    .eicr-content-with-header {
+      padding-top: 0;
+    }
   }
 
   /* Premium section card */

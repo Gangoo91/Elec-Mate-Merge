@@ -7,6 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { CircuitBoard, Shield, Cable } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 import MWSmartDefaults from './MWSmartDefaults';
 import {
   PROTECTIVE_DEVICE_TYPES,
@@ -35,6 +36,7 @@ interface MWCircuitTabProps {
 }
 
 const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
+  const isMobile = useIsMobile();
   const [openSections, setOpenSections] = useState({
     circuit: true,
     protection: true,
@@ -190,9 +192,12 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className={cn("space-y-4 sm:space-y-6", isMobile && "-mx-4")}>
       {/* Smart Defaults Quick Fill */}
-      <div className="p-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20">
+      <div className={cn(
+        "p-4 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-y border-purple-500/20",
+        !isMobile && "rounded-xl border mx-0"
+      )}>
         <MWSmartDefaults onApply={handleSmartDefaultApply} />
       </div>
 
@@ -373,16 +378,15 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 </div>
               </div>
 
-              {/* RCD Details - IET Required */}
+              {/* RCD Details */}
               {(formData.protectionRcd || formData.protectionRcbo) && (
-                <div className="p-4 bg-blue-50/30 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg space-y-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <Label className="text-sm font-medium">RCD Details (IET Required)</Label>
+                <div className="rounded-xl border border-white/10 bg-blue-500/5 border-l-2 border-l-blue-500 overflow-hidden">
+                  <div className="px-4 py-2.5 bg-blue-500/10 border-b border-white/5">
+                    <span className="text-sm font-medium text-blue-400">RCD Details</span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-sm">BS (EN) Standard</Label>
+                  <div className="p-4 space-y-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">BS (EN) Standard</label>
                       <MobileSelectPicker
                         value={formData.rcdBsEn || ''}
                         onValueChange={(v) => onUpdate('rcdBsEn', v)}
@@ -391,105 +395,105 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                           { value: 'BS EN 61009', label: 'BS EN 61009', description: 'RCBOs' },
                           { value: 'BS EN 62423', label: 'BS EN 62423', description: 'Type F and Type B RCDs' },
                         ]}
-                        placeholder="Select"
+                        placeholder="Select standard"
                         title="RCD BS (EN) Standard"
-                        triggerClassName="bg-elec-gray border-white/30"
+                        triggerClassName="h-12 bg-white/5 border-white/10 rounded-xl text-base"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label className="text-sm">Type</Label>
-                      <MobileSelectPicker
-                        value={formData.rcdType || ''}
-                        onValueChange={(v) => onUpdate('rcdType', v)}
-                        options={RCD_TYPES}
-                        placeholder="Select"
-                        title="RCD Type"
-                        triggerClassName="bg-elec-gray border-white/30"
-                      />
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Type</label>
+                        <MobileSelectPicker
+                          value={formData.rcdType || ''}
+                          onValueChange={(v) => onUpdate('rcdType', v)}
+                          options={RCD_TYPES}
+                          placeholder="Select"
+                          title="RCD Type"
+                          triggerClassName="h-12 bg-white/5 border-white/10 rounded-xl text-base"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Rating (A)</label>
+                        <Input
+                          type="number"
+                          value={formData.rcdRatingAmps || ''}
+                          onChange={(e) => onUpdate('rcdRatingAmps', e.target.value)}
+                          placeholder="63"
+                          className="h-12 text-base touch-manipulation bg-white/5 border-white/10 rounded-xl focus:border-blue-500/50"
+                        />
+                      </div>
                     </div>
-                    <div className="space-y-2">
-                      <Label className="text-sm">Rating (A)</Label>
-                      <Input
-                        type="number"
-                        value={formData.rcdRatingAmps || ''}
-                        onChange={(e) => onUpdate('rcdRatingAmps', e.target.value)}
-                        placeholder="e.g., 63"
-                        className="h-11 text-base touch-manipulation border-white/30"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-sm">IΔn (mA)</Label>
+                    <div className="space-y-1.5">
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">IΔn (mA)</label>
                       <MobileSelectPicker
                         value={formData.rcdIdn || ''}
                         onValueChange={(v) => onUpdate('rcdIdn', v)}
                         options={RCD_RATINGS}
-                        placeholder="Select"
+                        placeholder="Select rating"
                         title="RCD Rating (IΔn)"
-                        triggerClassName="bg-elec-gray border-white/30"
+                        triggerClassName="h-12 bg-white/5 border-white/10 rounded-xl text-base"
                       />
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* AFDD Details - IET Required */}
+              {/* AFDD Details */}
               {formData.protectionAfdd && (
-                <div className="p-4 bg-purple-50/30 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800 rounded-lg space-y-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                    <Label className="text-sm font-medium">AFDD Details (IET Required)</Label>
+                <div className="rounded-xl border border-white/10 bg-purple-500/5 border-l-2 border-l-purple-500 overflow-hidden">
+                  <div className="px-4 py-2.5 bg-purple-500/10 border-b border-white/5">
+                    <span className="text-sm font-medium text-purple-400">AFDD Details</span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-sm">BS (EN) Standard</Label>
+                  <div className="p-4 space-y-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">BS (EN) Standard</label>
                       <MobileSelectPicker
                         value={formData.afddBsEn || ''}
                         onValueChange={(v) => onUpdate('afddBsEn', v)}
                         options={[
                           { value: 'BS EN 62606', label: 'BS EN 62606', description: 'Arc Fault Detection Devices' },
                         ]}
-                        placeholder="Select"
+                        placeholder="Select standard"
                         title="AFDD BS (EN) Standard"
-                        triggerClassName="bg-elec-gray border-white/30"
+                        triggerClassName="h-12 bg-white/5 border-white/10 rounded-xl text-base"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label className="text-sm">Rating (A)</Label>
+                    <div className="space-y-1.5">
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Rating (A)</label>
                       <Input
                         type="number"
                         value={formData.afddRating || ''}
                         onChange={(e) => onUpdate('afddRating', e.target.value)}
-                        placeholder="e.g., 16"
-                        className="h-11 text-base touch-manipulation border-white/30"
+                        placeholder="16"
+                        className="h-12 text-base touch-manipulation bg-white/5 border-white/10 rounded-xl focus:border-purple-500/50"
                       />
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* SPD Details - IET Required */}
+              {/* SPD Details */}
               {formData.protectionSpd && (
-                <div className="p-4 bg-green-50/30 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg space-y-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <Label className="text-sm font-medium">SPD Details (IET Required)</Label>
+                <div className="rounded-xl border border-white/10 bg-green-500/5 border-l-2 border-l-green-500 overflow-hidden">
+                  <div className="px-4 py-2.5 bg-green-500/10 border-b border-white/5">
+                    <span className="text-sm font-medium text-green-400">SPD Details</span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-sm">BS (EN) Standard</Label>
+                  <div className="p-4 space-y-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">BS (EN) Standard</label>
                       <MobileSelectPicker
                         value={formData.spdBsEn || ''}
                         onValueChange={(v) => onUpdate('spdBsEn', v)}
                         options={[
                           { value: 'BS EN 61643-11', label: 'BS EN 61643-11', description: 'Surge Protective Devices' },
                         ]}
-                        placeholder="Select"
+                        placeholder="Select standard"
                         title="SPD BS (EN) Standard"
-                        triggerClassName="bg-elec-gray border-white/30"
+                        triggerClassName="h-12 bg-white/5 border-white/10 rounded-xl text-base"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label className="text-sm">Type</Label>
+                    <div className="space-y-1.5">
+                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Type</label>
                       <MobileSelectPicker
                         value={formData.spdType || ''}
                         onValueChange={(v) => onUpdate('spdType', v)}
@@ -500,9 +504,9 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                           { value: '1+2', label: 'Type 1+2', description: 'Combined Type 1 and 2' },
                           { value: '2+3', label: 'Type 2+3', description: 'Combined Type 2 and 3' },
                         ]}
-                        placeholder="Select"
+                        placeholder="Select type"
                         title="SPD Type"
-                        triggerClassName="bg-elec-gray border-white/30"
+                        triggerClassName="h-12 bg-white/5 border-white/10 rounded-xl text-base"
                       />
                     </div>
                   </div>
