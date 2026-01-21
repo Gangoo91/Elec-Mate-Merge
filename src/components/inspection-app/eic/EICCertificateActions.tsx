@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 import PDFExportProgress from '@/components/PDFExportProgress';
 import { EmailCertificateDialog } from '@/components/certificate-completion';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
@@ -531,11 +532,51 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
       setExportProgress(80);
 
+      // Get user ID for storage path
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      // Generate professional filename
+      const { generatePdfFilename } = await import('@/utils/pdfFilenameGenerator');
+      const filename = generatePdfFilename(
+        'EIC',
+        formData.certificateNumber || 'EIC',
+        formData.clientName || 'Client',
+        formData.installationDate || new Date()
+      );
+
+      // Save PDF to permanent Supabase Storage (PDFMonkey URLs expire after 7 days)
+      let permanentUrl = functionData.pdfUrl; // Fallback to temp URL
+      let storagePath: string | null = null;
+
+      try {
+        const storageResult = await saveCertificatePdf(
+          functionData.pdfUrl,
+          user.id,
+          reportId,
+          formData.certificateNumber
+        );
+        permanentUrl = storageResult.permanentUrl;
+        storagePath = storageResult.storagePath;
+        console.log('[EIC PDF] PDF saved to permanent storage:', storagePath);
+      } catch (storageError) {
+        console.error('[EIC PDF] Failed to save PDF permanently, using temp URL:', storageError);
+        // Continue with temp URL - user can still download, just won't persist long-term
+      }
+
+      setExportProgress(85);
+
       // Save PDF URL to database for later preview/retrieval
       const updateData: Record<string, any> = {
-        pdf_url: functionData.pdfUrl,
+        pdf_url: permanentUrl, // Use permanent URL if available
         pdf_generated_at: new Date().toISOString(),
       };
+
+      if (storagePath) {
+        updateData.storage_path = storagePath;
+      }
 
       if (functionData.documentId) {
         updateData.pdf_document_id = functionData.documentId;
@@ -560,36 +601,30 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
       setExportProgress(90);
 
-      // Download the PDF with professional filename
-      const { generatePdfFilename } = await import('@/utils/pdfFilenameGenerator');
-      const filename = generatePdfFilename(
-        'EIC',
-        formData.certificateNumber || 'EIC',
-        formData.clientName || 'Client',
-        formData.installationDate || new Date()
-      );
-      
+      // Download the PDF for the user
       // Fetch PDF as blob to ensure correct filename
-      const response = await fetch(functionData.pdfUrl);
+      const response = await fetch(permanentUrl);
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
-      
+
       const link = document.createElement('a');
       link.href = blobUrl;
       link.download = filename;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      
+
       // Clean up blob URL
       setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
-      
+
       setExportProgress(100);
       setExportStatus('complete');
-      
+
       toast({
         title: "EIC Generated Successfully",
-        description: "Your Electrical Installation Certificate has been generated and downloaded.",
+        description: storagePath
+          ? "Your certificate has been generated and saved permanently."
+          : "Your certificate has been generated and downloaded.",
       });
       
       // Also call the original handler for any additional processing

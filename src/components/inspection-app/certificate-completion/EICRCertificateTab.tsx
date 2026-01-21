@@ -50,6 +50,7 @@ import { useEICRForm } from '../eicr/EICRFormProvider';
 import { exportCompleteEICRToPDF } from '@/utils/pdfExport';
 import { formatEICRJson } from '@/utils/eicrJsonFormatter';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
+import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 
 interface EICRCertificateTabProps {
   formData: any;
@@ -255,13 +256,38 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
 
       if (!pdfUrl) throw new Error('No PDF URL returned');
 
-      // Update report with PDF URL
+      // Save PDF to permanent Supabase Storage (PDFMonkey URLs expire after 7 days)
+      let permanentUrl = pdfUrl; // Fallback to temp URL
+      let storagePath: string | null = null;
+
+      try {
+        const storageResult = await saveCertificatePdf(
+          pdfUrl,
+          user.id,
+          savedReportId,
+          formData.reportReference || formData.certificateNumber
+        );
+        permanentUrl = storageResult.permanentUrl;
+        storagePath = storageResult.storagePath;
+        console.log('[EICR PDF] PDF saved to permanent storage:', storagePath);
+      } catch (storageError) {
+        console.error('[EICR PDF] Failed to save PDF permanently, using temp URL:', storageError);
+        // Continue with temp URL - user can still download, just won't persist long-term
+      }
+
+      // Update report with permanent PDF URL
+      const updateData: Record<string, any> = {
+        pdf_url: permanentUrl,
+        pdf_generated_at: new Date().toISOString(),
+      };
+
+      if (storagePath) {
+        updateData.storage_path = storagePath;
+      }
+
       await supabase
         .from('reports')
-        .update({
-          pdf_url: pdfUrl,
-          pdf_generated_at: new Date().toISOString()
-        })
+        .update(updateData)
         .eq('report_id', savedReportId);
 
       // Update form state
@@ -273,8 +299,8 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
       queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
       queryClient.invalidateQueries({ queryKey: ['my-reports'] });
 
-      // Download PDF
-      const response = await fetch(pdfUrl);
+      // Download PDF from permanent URL
+      const response = await fetch(permanentUrl);
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
 
@@ -292,7 +318,9 @@ export const EICRCertificateTab: React.FC<EICRCertificateTabProps> = ({
       setIsComplete(true);
       toast({
         title: 'Certificate generated',
-        description: 'Your EICR certificate is ready for download.',
+        description: storagePath
+          ? 'Your EICR certificate has been saved permanently.'
+          : 'Your EICR certificate is ready for download.',
       });
 
     } catch (error) {

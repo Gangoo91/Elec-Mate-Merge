@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useCloudSync } from '@/hooks/useCloudSync';
 import { formatEICRJson } from '@/utils/eicrJsonFormatter';
 import { supabase } from '@/integrations/supabase/client';
+import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useEICRForm } from './eicr/EICRFormProvider';
 import { useQueryClient } from '@tanstack/react-query';
@@ -246,24 +247,51 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       }
 
       console.log('[PDF Generation] Step 4: PDF generated successfully:', pdfUrlFromResponse);
-      setPdfUrl(pdfUrlFromResponse);
-      
-      // Step 5: Save PDF URL to database using the SAVED report_id
-      console.log('[PDF Generation] Step 5: Saving PDF URL to database for report_id:', savedReportId);
-      const { error: updateError, data: updateData } = await supabase
+
+      // Step 5: Save PDF to permanent Supabase Storage (PDFMonkey URLs expire after 7 days)
+      let permanentUrl = pdfUrlFromResponse; // Fallback to temp URL
+      let storagePath: string | null = null;
+
+      try {
+        const storageResult = await saveCertificatePdf(
+          pdfUrlFromResponse,
+          user.id,
+          savedReportId,
+          formData.reportReference || formData.certificateNumber
+        );
+        permanentUrl = storageResult.permanentUrl;
+        storagePath = storageResult.storagePath;
+        console.log('[PDF Generation] PDF saved to permanent storage:', storagePath);
+      } catch (storageError) {
+        console.error('[PDF Generation] Failed to save PDF permanently, using temp URL:', storageError);
+        // Continue with temp URL - user can still download, just won't persist long-term
+      }
+
+      setPdfUrl(permanentUrl);
+
+      // Step 6: Save PDF URL to database using the SAVED report_id
+      console.log('[PDF Generation] Step 6: Saving PDF URL to database for report_id:', savedReportId);
+
+      const updateData: Record<string, any> = {
+        pdf_url: permanentUrl,
+        pdf_generated_at: new Date().toISOString(),
+      };
+
+      if (storagePath) {
+        updateData.storage_path = storagePath;
+      }
+
+      const { error: updateError } = await supabase
         .from('reports')
-        .update({ 
-          pdf_url: pdfUrlFromResponse,
-          pdf_generated_at: new Date().toISOString()
-        })
+        .update(updateData)
         .eq('report_id', savedReportId)
         .select('id, report_id, pdf_url');
-        
+
       if (updateError) {
         console.error('[PDF Generation] CRITICAL: Failed to save PDF URL to database:', updateError);
         console.error('[PDF Generation] Update attempted for report_id:', savedReportId);
-        console.error('[PDF Generation] PDF URL that failed to save:', pdfUrlFromResponse);
-        
+        console.error('[PDF Generation] PDF URL that failed to save:', permanentUrl);
+
         // Still show the PDF to user, but warn them
         toast({
           title: "Warning",
@@ -271,20 +299,22 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           variant: "destructive"
         });
       }
-        
+
       // Mark certificate as completed
       onUpdate('certificateGenerated', true);
       onUpdate('certificateGeneratedAt', new Date().toISOString());
       onUpdate('status', 'completed');
-      
+
       // Invalidate dashboard queries to refresh
       queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
       queryClient.invalidateQueries({ queryKey: ['my-reports'] });
       queryClient.invalidateQueries({ queryKey: ['customer-reports'] });
-      
+
       toast({
         title: "Certificate generated",
-        description: "Your EICR certificate is ready for download.",
+        description: storagePath
+          ? "Your EICR certificate has been saved permanently."
+          : "Your EICR certificate is ready for download.",
       });
 
       // Check if customer already exists in pool

@@ -9,6 +9,7 @@ import { CheckCircle, Download, AlertTriangle, FileCheck, Bell, Mail, Loader2, S
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 import { validateMinorWorksFormData, formatFieldForPdf } from '@/utils/minorWorksValidation';
 import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 import { useNavigate } from 'react-router-dom';
@@ -284,43 +285,73 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       } else {
         // Try multiple response formats
         const pdfUrlFromResponse = functionData?.pdfUrl || functionData?.pdf_url || functionData?.url || functionData?.data?.pdfUrl;
-        
+
         if (pdfUrlFromResponse) {
           console.log('[MinorWorks PDF] Step 3: PDF URL extracted:', pdfUrlFromResponse);
+
+          // Save PDF to permanent Supabase Storage (PDFMonkey URLs expire after 7 days)
+          let permanentUrl = pdfUrlFromResponse; // Fallback to temp URL
+          let storagePath: string | null = null;
+
+          if (savedReportId) {
+            try {
+              const storageResult = await saveCertificatePdf(
+                pdfUrlFromResponse,
+                user.id,
+                savedReportId,
+                formData.certificateNumber
+              );
+              permanentUrl = storageResult.permanentUrl;
+              storagePath = storageResult.storagePath;
+              console.log('[MinorWorks PDF] PDF saved to permanent storage:', storagePath);
+            } catch (storageError) {
+              console.error('[MinorWorks PDF] Failed to save PDF permanently, using temp URL:', storageError);
+              // Continue with temp URL - user can still download, just won't persist long-term
+            }
+          }
+
           console.log('[MinorWorks PDF] Step 4: Saving PDF URL to database for report_id:', savedReportId);
-          
+
           // Save PDF URL to database
           if (savedReportId) {
-            const { error: updateError, data: updateData } = await supabase
+            const updateData: Record<string, any> = {
+              pdf_url: permanentUrl,
+              pdf_generated_at: new Date().toISOString(),
+            };
+
+            if (storagePath) {
+              updateData.storage_path = storagePath;
+            }
+
+            const { error: updateError, data: dbUpdateData } = await supabase
               .from('reports')
-              .update({ 
-                pdf_url: pdfUrlFromResponse,
-                pdf_generated_at: new Date().toISOString()
-              })
+              .update(updateData)
               .eq('report_id', savedReportId)
               .select('id, report_id, pdf_url');
-            
+
             if (updateError) {
               console.error('[MinorWorks PDF] CRITICAL: Failed to save PDF URL:', updateError);
               console.error('[MinorWorks PDF] Update attempted for report_id:', savedReportId);
-              console.error('[MinorWorks PDF] PDF URL that failed to save:', pdfUrlFromResponse);
-              
+              console.error('[MinorWorks PDF] PDF URL that failed to save:', permanentUrl);
+
               toast({
                 title: "Warning",
                 description: "PDF generated but not saved to your account.",
                 variant: "destructive"
               });
             } else {
-              console.log('[MinorWorks PDF] PDF URL saved successfully:', updateData);
+              console.log('[MinorWorks PDF] PDF URL saved successfully:', dbUpdateData);
             }
           }
-          
-          setPdfUrl(pdfUrlFromResponse);
+
+          setPdfUrl(permanentUrl);
           setProgress(100);
-        
+
           toast({
             title: "Certificate Generated",
-            description: "Certificate generated successfully using your custom template.",
+            description: storagePath
+              ? "Certificate generated and saved permanently."
+              : "Certificate generated successfully using your custom template.",
           });
           
           onSuccess?.();
