@@ -38,9 +38,9 @@ export const useSwipeable = ({ onSwipeLeft, onSwipeRight, threshold = 50 }: Swip
       touchEndX.current = 0;
     };
 
-    element.addEventListener('touchstart', handleTouchStart);
-    element.addEventListener('touchmove', handleTouchMove);
-    element.addEventListener('touchend', handleTouchEnd);
+    element.addEventListener('touchstart', handleTouchStart, { passive: true });
+    element.addEventListener('touchmove', handleTouchMove, { passive: true });
+    element.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {
       element.removeEventListener('touchstart', handleTouchStart);

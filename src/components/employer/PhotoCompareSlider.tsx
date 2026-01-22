@@ -82,7 +82,8 @@ export const PhotoCompareSlider = ({
     if (isDragging) {
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("mouseup", handleEnd);
-      window.addEventListener("touchmove", handleTouchMove);
+      // Use passive: true to avoid blocking scroll on Android
+      window.addEventListener("touchmove", handleTouchMove, { passive: true });
       window.addEventListener("touchend", handleEnd);
     }
 

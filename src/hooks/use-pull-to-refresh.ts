@@ -105,8 +105,7 @@ export const usePullToRefresh = ({
     if (!container) return;
 
     container.addEventListener('touchstart', handleTouchStart, { passive: true });
-    // CRITICAL: Must be passive: false to allow preventDefault() on Android
-    // Android Chrome 60+ silently ignores preventDefault() on passive listeners
+    // Use passive: false because handleTouchMove may call preventDefault() when pulling
     container.addEventListener('touchmove', handleTouchMove, { passive: false });
     container.addEventListener('touchend', handleTouchEnd, { passive: true });
 

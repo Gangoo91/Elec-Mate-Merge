@@ -115,7 +115,7 @@ const Index = () => {
   };
 
   return (
-    <div className="bg-black text-white overflow-hidden pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+    <div className="bg-black text-white overflow-x-hidden min-h-screen pb-[env(safe-area-inset-bottom)]">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         {/* Animated background */}
@@ -153,8 +153,8 @@ const Index = () => {
           animate="visible"
           className="relative max-w-lg mx-auto px-6 pt-8 pb-12"
         >
-          {/* Logo */}
-          <motion.div variants={itemVariants} className="flex justify-center mb-8">
+          {/* Logo - hidden on mobile to avoid status bar overlap */}
+          <motion.div variants={itemVariants} className="hidden sm:flex justify-center mb-8">
             <Link to="/" className="flex items-center gap-2.5 group">
               <motion.div
                 whileHover={{ scale: 1.05 }}

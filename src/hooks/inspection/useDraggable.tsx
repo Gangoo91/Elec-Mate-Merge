@@ -94,7 +94,8 @@ export function useDraggable(
   useEffect(() => {
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove as any);
-      window.addEventListener('touchmove', handleMouseMove as any);
+      // Use passive: true to avoid blocking scroll on Android
+      window.addEventListener('touchmove', handleMouseMove as any, { passive: true });
       window.addEventListener('mouseup', handleMouseUp);
       window.addEventListener('touchend', handleMouseUp);
 

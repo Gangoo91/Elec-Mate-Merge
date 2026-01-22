@@ -148,18 +148,24 @@
    ============================================ */
 
 .scroll-smooth {
-  -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 }
 
 .scroll-snap-x {
   scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
 }
 
 .scroll-snap-y {
   scroll-snap-type: y mandatory;
-  -webkit-overflow-scrolling: touch;
+}
+
+/* iOS-specific smooth scrolling */
+@supports (-webkit-touch-callout: none) {
+  .scroll-smooth,
+  .scroll-snap-x,
+  .scroll-snap-y {
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .scroll-snap-item {
@@ -660,11 +666,17 @@
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
   gap: 12px;
   padding: 4px;
+}
+
+/* iOS-specific for carousel */
+@supports (-webkit-touch-callout: none) {
+  .carousel-container {
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .carousel-container::-webkit-scrollbar {
@@ -719,16 +731,28 @@
    ============================================ */
 
 .momentum-scroll {
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
   scroll-behavior: smooth;
+}
+
+/* iOS-specific for .momentum-scroll */
+@supports (-webkit-touch-callout: none) {
+  .momentum-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
 }
 
 .momentum-scroll-x {
   overflow-x: auto;
   overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
+}
+
+/* iOS-specific for .momentum-scroll-x */
+@supports (-webkit-touch-callout: none) {
+  .momentum-scroll-x {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
 }
 
 .momentum-scroll-y {
@@ -749,13 +773,18 @@
    Prevents touchmove cancelable warnings
    ============================================ */
 
-/* Allow vertical scrolling through motion elements */
-[data-framer-component-type],
-[style*="transform"] {
-  touch-action: pan-y;
-}
+/*
+ * REMOVED: Global [data-framer-component-type], [style*="transform"] selector
+ * This was too broad and blocked scroll on Android devices.
+ * Instead, use specific classes on elements that need touch-action control.
+ */
 
 /* Motion elements that only need tap, not drag */
 .motion-tap-only {
   touch-action: manipulation;
+}
+
+/* Use this class on draggable elements during drag */
+.dragging-active {
+  touch-action: none;
 }

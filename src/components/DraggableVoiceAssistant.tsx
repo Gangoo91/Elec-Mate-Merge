@@ -787,8 +787,8 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
-      // Use passive: true to avoid blocking main thread; preventDefault is guarded by cancelable check
-      document.addEventListener('touchmove', handleDocTouchMove, { passive: true });
+      // Use passive: false because handleDocTouchMove calls preventDefault() when dragging
+      document.addEventListener('touchmove', handleDocTouchMove, { passive: false });
       document.addEventListener('touchend', handleDocTouchEnd);
     }
 
