@@ -145,32 +145,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     setGenerationError(null);
     
     try {
-      // Step 0: Validate required fields
-      console.log('[PDF Generation] Step 0: Validating required fields...');
-      
-      const missingFields = [];
-      if (!formData.clientName || formData.clientName.trim() === '') {
-        missingFields.push('Client Name');
-      }
-      if (!formData.installationAddress || formData.installationAddress.trim() === '') {
-        missingFields.push('Installation Address');
-      }
-      if (!formData.inspectorName || formData.inspectorName.trim() === '') {
-        missingFields.push('Inspector Name');
-      }
-      
-      if (missingFields.length > 0) {
-        setIsGenerating(false);
-        setShowDialog(false);
-        toast({
-          title: "Cannot generate PDF",
-          description: `Please complete the following required fields: ${missingFields.join(', ')}`,
-          variant: "destructive",
-          duration: 5000
-        });
-        return;
-      }
-      
       // Step 1: Ensure report is saved to database first
       console.log('[PDF Generation] Step 1: Ensuring report is saved to database...');
       
@@ -432,20 +406,9 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     queryClient.invalidateQueries({ queryKey: ['customers'] });
   };
 
+  // Allow PDF generation without strict field validation
   const isFormComplete = () => {
-    const requiredFields = [
-      'clientName',
-      'installationAddress',
-      'inspectionDate',
-      'inspectorName',
-      'inspectorQualifications',
-      'overallAssessment',
-      'satisfactoryForContinuedUse',
-      'inspectedBySignature',
-      'reportAuthorisedBySignature'
-    ];
-    
-    return requiredFields.every(field => formData[field] && formData[field].toString().trim() !== '');
+    return true;
   };
 
   // DEV ONLY: Fill all required fields for quick PDF testing
