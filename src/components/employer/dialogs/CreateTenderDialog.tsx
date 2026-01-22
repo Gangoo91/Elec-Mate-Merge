@@ -100,7 +100,7 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden">
+      <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl flex flex-col">
         <div className="flex flex-col h-full bg-background">
           {/* Drag indicator */}
           <div className="flex justify-center py-3">

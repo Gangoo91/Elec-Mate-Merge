@@ -96,10 +96,26 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
   }, []);
 
   useEffect(() => {
-    if (headerRef.current) {
-      const height = headerRef.current.offsetHeight;
-      document.documentElement.style.setProperty('--header-height', `${height}px`);
-    }
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        const height = headerRef.current.offsetHeight;
+        document.documentElement.style.setProperty('--header-height', `${height}px`);
+      }
+    };
+
+    // Initial measurement
+    updateHeaderHeight();
+
+    // Re-measure after a delay to catch safe area inset
+    const timer = setTimeout(updateHeaderHeight, 100);
+
+    // Re-measure on resize
+    window.addEventListener('resize', updateHeaderHeight);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateHeaderHeight);
+    };
   }, [isMobile]);
 
   return (
@@ -111,9 +127,12 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
         "border-b transition-all duration-300",
         isScrolled
           ? "border-white/10 shadow-lg shadow-black/20"
-          : "border-white/[0.06]",
-        "pt-safe"
+          : "border-white/[0.06]"
       )}
+      style={{
+        // Use CSS variable with fallback for safe area
+        paddingTop: 'var(--safe-area-top, env(safe-area-inset-top, 0px))',
+      }}
     >
       {/* Mobile: 48px | Desktop: 56px */}
       <div className="flex items-center justify-between h-12 sm:h-14 px-3 sm:px-4">

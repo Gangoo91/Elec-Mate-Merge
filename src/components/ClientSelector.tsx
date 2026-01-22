@@ -82,7 +82,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
 
       {/* Customer Search Sheet */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
           <div className="flex flex-col h-full bg-background">
             {/* Header */}
             <SheetHeader className="px-4 pt-4 pb-2 border-b border-border">
@@ -104,7 +104,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
             </div>
 
             {/* Customer List */}
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto overscroll-contain">
               {isLoading ? (
                 <div className="flex items-center justify-center py-12">
                   <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />

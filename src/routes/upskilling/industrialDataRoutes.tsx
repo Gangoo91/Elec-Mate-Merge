@@ -176,6 +176,8 @@ const FiberOpticsMockExam = React.lazy(() => import('@/pages/upskilling/FiberOpt
 
 const EmergencyLightingMockExam = React.lazy(() => import('@/pages/upskilling/EmergencyLightingMockExam'));
 
+const IndustrialElectricalMockExam = React.lazy(() => import('@/pages/upskilling/IndustrialElectricalMockExam'));
+
 export const industrialDataRoutes = (
   <>
   <Route path="industrial-electrical-course" element={<IndustrialElectricalCourse />} />,
@@ -221,6 +223,9 @@ export const industrialDataRoutes = (
   <Route path="industrial-electrical-module-5-section-3" element={<IndustrialElectricalModule5Section3 />} />,
   <Route path="industrial-electrical-module-5-section-4" element={<IndustrialElectricalModule5Section4 />} />,
   <Route path="industrial-electrical-module-5-section-5" element={<IndustrialElectricalModule5Section5 />} />,
+
+  {/* Industrial Electrical Mock Exam */}
+  <Route path="industrial-electrical-mock-exam" element={<IndustrialElectricalMockExam />} />,
 
   <Route path="data-cabling-course" element={<DataCablingCourse />} />,
   <Route path="data-cabling-module-1" element={<DataCablingModule1 />} />,

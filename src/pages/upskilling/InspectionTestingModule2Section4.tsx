@@ -196,7 +196,7 @@ const InspectionTestingModule2Section4 = () => {
             <h2 className="text-xl font-semibold">The Prove-Test-Prove Sequence</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               The <strong>prove-test-prove</strong> sequence is the fundamental method for safely confirming a circuit is dead. It ensures your voltage indicating device is working correctly throughout the testing process.
             </p>
@@ -266,7 +266,7 @@ const InspectionTestingModule2Section4 = () => {
             <h2 className="text-xl font-semibold">Single-Phase All-Pole Testing</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               For single-phase circuits (L, N, E), you must test between <strong>every combination</strong> of conductors. Testing only line-to-earth is insufficient and dangerous.
             </p>
@@ -344,7 +344,7 @@ const InspectionTestingModule2Section4 = () => {
             <h2 className="text-xl font-semibold">Three-Phase All-Pole Testing</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               Three-phase circuits (L1, L2, L3, N, E) require comprehensive testing between every possible conductor combination - a total of <strong>10 individual tests</strong>.
             </p>
@@ -432,7 +432,7 @@ const InspectionTestingModule2Section4 = () => {
             <h2 className="text-xl font-semibold">Test Point Selection</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               <strong>Where</strong> you test is as important as <strong>how</strong> you test. Testing at the wrong location could give false confidence about safety at your actual work point.
             </p>
@@ -508,7 +508,7 @@ const InspectionTestingModule2Section4 = () => {
             <h2 className="text-xl font-semibold">Interpreting Unexpected Results</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               Not all voltage readings are straightforward. Understanding what different readings mean helps you respond safely and avoid dangerous assumptions.
             </p>
@@ -570,7 +570,7 @@ const InspectionTestingModule2Section4 = () => {
             <h2 className="text-xl font-semibold">Documentation Requirements</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               Proper documentation of proving dead provides evidence of safe working practices and helps with any subsequent investigation or audit of procedures.
             </p>
@@ -638,7 +638,7 @@ const InspectionTestingModule2Section4 = () => {
             {defined_faqs.map((faq, index) => (
               <div key={index} className="border border-border rounded-lg p-4">
                 <h4 className="font-medium text-foreground mb-2">{faq.question}</h4>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                <p className="text-sm text-white/90">{faq.answer}</p>
               </div>
             ))}
           </div>

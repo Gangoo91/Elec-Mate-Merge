@@ -127,7 +127,7 @@ export default function UserActivitySheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="px-4 pt-4 pb-3 border-b border-border">

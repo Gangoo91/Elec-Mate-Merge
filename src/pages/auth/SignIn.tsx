@@ -193,6 +193,7 @@ const SignIn = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="space-y-5"
+            autoComplete="off"
           >
             {/* Email field */}
             <div className="space-y-2">
@@ -213,7 +214,9 @@ const SignIn = () => {
                   onFocus={() => setFocusedField('email')}
                   onBlur={() => setFocusedField(null)}
                   placeholder="you@example.com"
-                  autoComplete="email"
+                  autoComplete="off"
+                  name="login-email"
+                  data-form-type="other"
                   className={cn(
                     "w-full h-14 pl-12 pr-12 rounded-2xl",
                     "bg-white/[0.06] border-2 text-white placeholder:text-white/30",
@@ -260,7 +263,9 @@ const SignIn = () => {
                   onFocus={() => setFocusedField('password')}
                   onBlur={() => setFocusedField(null)}
                   placeholder="Enter your password"
-                  autoComplete="current-password"
+                  autoComplete="off"
+                  name="login-password"
+                  data-form-type="other"
                   className={cn(
                     "w-full h-14 pl-12 pr-12 rounded-2xl",
                     "bg-white/[0.06] border-2 text-white placeholder:text-white/30",

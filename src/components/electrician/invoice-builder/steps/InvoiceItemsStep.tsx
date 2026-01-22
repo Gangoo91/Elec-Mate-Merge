@@ -329,18 +329,24 @@ export const InvoiceItemsStep = ({
                       type="number"
                       value={item.quantity === 0 ? '' : item.quantity}
                       onChange={(e) => {
-                        const quantity = parseFloat(e.target.value) || 0;
-                        onUpdateItem(item.id, { quantity, totalPrice: quantity * item.unitPrice });
+                        const val = e.target.value;
+                        const quantity = val === '' ? 0 : parseFloat(val);
+                        if (!isNaN(quantity)) {
+                          onUpdateItem(item.id, { quantity, totalPrice: quantity * item.unitPrice });
+                        }
                       }}
                       className="h-8 w-16 text-[13px] bg-white/[0.05] border-white/[0.06]"
                     />
                     <span className="text-[12px] text-white/50">×</span>
                     <Input
                       type="number"
-                      value={item.unitPrice}
+                      value={item.unitPrice === 0 ? '' : item.unitPrice}
                       onChange={(e) => {
-                        const unitPrice = parseFloat(e.target.value) || 0;
-                        onUpdateItem(item.id, { unitPrice, totalPrice: item.quantity * unitPrice });
+                        const val = e.target.value;
+                        const unitPrice = val === '' ? 0 : parseFloat(val);
+                        if (!isNaN(unitPrice)) {
+                          onUpdateItem(item.id, { unitPrice, totalPrice: item.quantity * unitPrice });
+                        }
                       }}
                       className="h-8 w-20 text-[13px] bg-white/[0.05] border-white/[0.06]"
                     />
@@ -624,7 +630,13 @@ export const InvoiceItemsStep = ({
                 <input
                   type="number"
                   value={newItem.quantity === 0 ? '' : newItem.quantity}
-                  onChange={(e) => setNewItem(prev => ({ ...prev, quantity: parseFloat(e.target.value) || 0 }))}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const quantity = val === '' ? 0 : parseFloat(val);
+                    if (!isNaN(quantity)) {
+                      setNewItem(prev => ({ ...prev, quantity }));
+                    }
+                  }}
                   className="w-full h-11 px-3 rounded-lg bg-white/[0.05] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
                   placeholder="1"
                 />
@@ -634,7 +646,13 @@ export const InvoiceItemsStep = ({
                 <input
                   type="number"
                   value={newItem.unitPrice === 0 ? '' : newItem.unitPrice}
-                  onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(e.target.value) || 0 }))}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const unitPrice = val === '' ? 0 : parseFloat(val);
+                    if (!isNaN(unitPrice)) {
+                      setNewItem(prev => ({ ...prev, unitPrice }));
+                    }
+                  }}
                   className="w-full h-11 px-3 rounded-lg bg-white/[0.05] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
                   placeholder="0.00"
                 />
@@ -702,16 +720,25 @@ export const InvoiceItemsStep = ({
                     type="number"
                     value={item.quantity === 0 ? '' : item.quantity}
                     onChange={(e) => {
-                      const parsed = parseFloat(e.target.value) || 0;
-                      onUpdateItem(item.id, { quantity: parsed });
+                      const val = e.target.value;
+                      const quantity = val === '' ? 0 : parseFloat(val);
+                      if (!isNaN(quantity)) {
+                        onUpdateItem(item.id, { quantity });
+                      }
                     }}
                     className="h-8 w-16 text-[13px] bg-white/[0.05] border-white/[0.06]"
                   />
                   <span className="text-[12px] text-white/50">×</span>
                   <Input
                     type="number"
-                    value={item.unitPrice}
-                    onChange={(e) => onUpdateItem(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
+                    value={item.unitPrice === 0 ? '' : item.unitPrice}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const unitPrice = val === '' ? 0 : parseFloat(val);
+                      if (!isNaN(unitPrice)) {
+                        onUpdateItem(item.id, { unitPrice });
+                      }
+                    }}
                     className="h-8 w-20 text-[13px] bg-white/[0.05] border-white/[0.06]"
                   />
                   <span className="text-[12px] text-white/50 flex-1">{item.unit}</span>

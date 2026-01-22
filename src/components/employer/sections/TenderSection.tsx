@@ -696,7 +696,7 @@ export function TenderSection() {
 
       {/* Discover Tenders Sheet */}
       <Sheet open={showDiscoverSheet} onOpenChange={setShowDiscoverSheet}>
-        <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-2xl flex flex-col">
           <div className="flex flex-col h-full">
             <SheetHeader className="p-4 pb-0 flex-shrink-0">
               <SheetTitle className="flex items-center gap-2">
@@ -707,7 +707,7 @@ export function TenderSection() {
                 Find electrical contracts from 20+ UK sources
               </p>
             </SheetHeader>
-            <div className="flex-1 overflow-hidden">
+            <div className="flex-1 overflow-y-auto overscroll-contain">
               <TenderOpportunitiesSection onStartTender={handleStartTenderFromOpportunity} />
             </div>
           </div>

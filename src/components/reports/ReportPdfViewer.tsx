@@ -105,20 +105,34 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         body: JSON.stringify({ pdfUrl: url }),
       });
 
+      const contentType = response.headers.get('content-type');
+      console.log('[ReportPdfViewer] Response status:', response.status, 'content-type:', contentType);
+
+      // Check if response is JSON (error) instead of PDF
+      if (contentType?.includes('application/json')) {
+        const errorData = await response.json();
+        console.error('[ReportPdfViewer] Proxy returned error:', errorData);
+        throw new Error(errorData.error || 'Proxy returned error response');
+      }
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error('[ReportPdfViewer] Proxy error:', response.status, errorText);
         throw new Error(`Proxy failed: ${response.status}`);
       }
 
-      const contentType = response.headers.get('content-type');
-      console.log('[ReportPdfViewer] Response content-type:', contentType);
-
       const blob = await response.blob();
       console.log('[ReportPdfViewer] Blob size:', blob.size, 'type:', blob.type);
 
       if (blob.size === 0) {
         throw new Error('PDF file is empty');
+      }
+
+      // Verify it looks like a PDF (starts with %PDF)
+      const firstBytes = await blob.slice(0, 5).text();
+      if (!firstBytes.startsWith('%PDF')) {
+        console.error('[ReportPdfViewer] Response does not appear to be a PDF:', firstBytes);
+        throw new Error('Invalid PDF: Response is not a valid PDF file');
       }
 
       // Ensure correct MIME type for PDF
@@ -133,7 +147,13 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
     } catch (error) {
       const errorMsg = error instanceof Error ? error.message : 'Unknown error';
       console.error('[ReportPdfViewer] Failed to create blob URL:', errorMsg);
-      setPreviewError(errorMsg);
+
+      // Check if this is an expired URL error - if so, indicate we need to regenerate
+      if (errorMsg.includes('403') || errorMsg.includes('expired') || errorMsg.includes('Forbidden')) {
+        setPreviewError('PDF link has expired. Click "Regenerate PDF" to create a new one.');
+      } else {
+        setPreviewError(errorMsg);
+      }
       return null;
     } finally {
       setIsLoadingPreview(false);
@@ -141,26 +161,25 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
   };
 
   /**
-   * Check if a PDF URL is still valid (not expired and accessible)
+   * Check if a PDF URL is still valid based on expiry date
+   * Note: We don't make HEAD requests as they're blocked by CORS on PDF Monkey URLs
    */
   const isPdfUrlValid = async (url: string, expiresAt?: string): Promise<boolean> => {
-    // First check if expired based on stored expiry
+    // Check expiry date only - HEAD requests are blocked by CORS
     if (expiresAt) {
       const expiryDate = new Date(expiresAt);
       if (new Date() > expiryDate) {
         console.log('[ReportPdfViewer] PDF expired at:', expiresAt);
         return false;
       }
+      // Not expired yet, assume valid
+      console.log('[ReportPdfViewer] PDF valid until:', expiresAt);
+      return true;
     }
 
-    // Validate URL actually works with a HEAD request
-    try {
-      const response = await fetch(url, { method: 'HEAD' });
-      return response.ok;
-    } catch (error) {
-      console.log('[ReportPdfViewer] PDF URL validation failed:', error);
-      return false;
-    }
+    // No expiry date stored - assume valid, proxy will handle errors
+    console.log('[ReportPdfViewer] No expiry date, assuming valid');
+    return true;
   };
 
   /**
@@ -397,30 +416,37 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
   };
 
   const handleDownload = async () => {
-    if (!pdfUrl || !report) return;
+    if (!report) return;
 
-    try {
-      // First try to open the URL directly
-      const response = await fetch(pdfUrl, { method: 'HEAD' });
+    // Use blob URL if available (already fetched via CORS proxy)
+    if (blobUrl) {
+      try {
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = `${report.certificate_number || 'certificate'}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
 
-      if (response.ok) {
-        window.open(pdfUrl, '_blank');
-      } else {
-        // PDF URL has expired, regenerate
         toast({
-          title: "Regenerating PDF",
-          description: "The PDF link has expired, generating a fresh one...",
+          title: "Download Started",
+          description: "Your PDF is downloading...",
         });
-        await generatePdf(report);
-        // After regeneration, open the new URL
-        if (pdfUrl) {
-          window.open(pdfUrl, '_blank');
-        }
+        return;
+      } catch (error) {
+        console.error('Blob download error:', error);
       }
-    } catch (error) {
-      console.error('Download error:', error);
-      // If fetch fails (CORS, etc.), try opening directly as fallback
+    }
+
+    // Fallback: open PDF URL in new tab (browser handles CORS for navigation)
+    if (pdfUrl) {
       window.open(pdfUrl, '_blank');
+    } else {
+      toast({
+        title: "No PDF Available",
+        description: "Please generate the PDF first",
+        variant: "destructive",
+      });
     }
   };
 
@@ -586,9 +612,9 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         )}
 
         {/* PDF Content */}
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 relative">
           {isGenerating || isLoadingPreview ? (
-            <div className="flex flex-col items-center justify-center p-6">
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
               <Loader2 className="h-12 w-12 animate-spin text-primary mb-4" />
               <p className="text-muted-foreground">
                 {isGenerating ? 'Generating PDF...' : 'Loading preview...'}
@@ -597,7 +623,7 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
             </div>
           ) : blobUrl ? (
             isMobile ? (
-              <div className="flex flex-col items-center justify-center p-6">
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
                 <FileText className="h-16 w-16 text-primary mb-4" />
                 <p className="text-center mb-4 text-muted-foreground">PDF preview not available on mobile</p>
                 <Button onClick={handleDownload} className="h-12 px-6 touch-manipulation">
@@ -607,13 +633,14 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
               </div>
             ) : (
               <iframe
-                src={blobUrl}
-                className="w-full h-full border-0 absolute inset-0"
+                src={`${blobUrl}#toolbar=1&navpanes=1&scrollbar=1`}
+                className="absolute inset-0 w-full h-full border-0 bg-white"
                 title="PDF Preview"
+                style={{ minHeight: '400px' }}
               />
             )
           ) : pdfUrl && !blobUrl ? (
-            <div className="flex flex-col items-center justify-center p-6">
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
               <AlertCircle className="h-12 w-12 text-amber-500 mb-4" />
               <p className="text-muted-foreground mb-2">Preview unavailable</p>
               {previewError && (
@@ -625,9 +652,18 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
                 <Download className="h-4 w-4 mr-2" />
                 Download PDF Instead
               </Button>
+              <Button
+                variant="outline"
+                onClick={() => report && generatePdf(report)}
+                disabled={isGenerating}
+                className="h-11 touch-manipulation mt-2"
+              >
+                <Loader2 className={cn("h-4 w-4 mr-2", isGenerating && "animate-spin")} />
+                Regenerate PDF
+              </Button>
             </div>
           ) : !generationError && !pdfUrl ? (
-            <div className="flex flex-col items-center justify-center p-6">
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
               <AlertCircle className="h-12 w-12 text-muted-foreground mb-4" />
               <p className="text-muted-foreground mb-2">No PDF generated yet</p>
               <p className="text-xs text-muted-foreground mb-4">

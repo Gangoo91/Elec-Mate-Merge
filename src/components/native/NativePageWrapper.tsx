@@ -1,9 +1,12 @@
+/**
+ * NativePageWrapper
+ *
+ * Simple page wrapper with header. Keeps scrolling simple - no custom touch handling.
+ */
+
 import React, { ReactNode, useCallback } from 'react';
-import { motion, useTransform, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { usePullToRefresh } from '@/hooks/use-pull-to-refresh';
-import { useCollapsingHeader } from '@/hooks/use-collapsing-header';
 import { cn } from '@/lib/utils';
 
 interface NativePageWrapperProps {
@@ -55,14 +58,9 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
   headerColor = 'yellow',
   showBackButton = true,
   onBack,
-  onRefresh,
-  collapsingHeader = true,
   headerActions,
   className,
   contentClassName,
-  headerMaxHeight = 120,
-  headerMinHeight = 56,
-  compactTitle = false,
 }) => {
   const navigate = useNavigate();
   const colors = colorClasses[headerColor];
@@ -75,61 +73,11 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
     }
   }, [onBack, navigate]);
 
-  const handleRefresh = useCallback(async () => {
-    if (onRefresh) {
-      await onRefresh();
-    }
-  }, [onRefresh]);
-
-  const {
-    headerRef,
-    contentRef,
-    scrollProgress,
-    headerHeight,
-    titleScale,
-    subtitleOpacity,
-    isCollapsed,
-  } = useCollapsingHeader({
-    maxHeight: headerMaxHeight,
-    minHeight: headerMinHeight,
-    scrollThreshold: 80,
-  });
-
-  const {
-    containerRef,
-    pullDistance,
-    isRefreshing,
-    progress,
-  } = usePullToRefresh({
-    onRefresh: handleRefresh,
-    disabled: !onRefresh,
-  });
-
-  // Merge refs for pull-to-refresh container and scroll content
-  const setRefs = useCallback(
-    (el: HTMLDivElement | null) => {
-      (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
-      (contentRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
-    },
-    [containerRef, contentRef]
-  );
-
-  const iconOpacity = useTransform(scrollProgress, [0, 0.5], [1, 0]);
-  const inlineTitleOpacity = useTransform(scrollProgress, [0.5, 1], [0, 1]);
-
   return (
-    <div className={cn('min-h-screen bg-background flex flex-col', className)}>
-      {/* Collapsing Header */}
-      <motion.header
-        ref={headerRef}
-        style={collapsingHeader ? { height: headerHeight } : undefined}
-        className={cn(
-          'header-collapsible bg-background border-b border-white/[0.06]',
-          !collapsingHeader && 'py-4'
-        )}
-      >
-        <div className="h-full max-w-7xl mx-auto px-4 flex flex-col justify-end">
-          {/* Top row - back button and inline title (visible when collapsed) */}
+    <div className={cn('min-h-screen bg-background', className)}>
+      {/* Simple Header */}
+      <header className="sticky top-0 z-20 bg-background border-b border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-14">
             <div className="flex items-center gap-3">
               {showBackButton && (
@@ -141,128 +89,35 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
                 </button>
               )}
 
-              {/* Inline title (visible when collapsed) */}
-              {collapsingHeader && (
-                <motion.div
-                  style={{ opacity: inlineTitleOpacity }}
-                  className="flex items-center gap-2"
-                >
-                  {icon && (
-                    <div className={cn('p-1.5 rounded-lg', colors.icon)}>
-                      {React.cloneElement(icon as React.ReactElement, {
-                        className: 'h-4 w-4',
-                      })}
-                    </div>
-                  )}
-                  <span className="header-title-inline text-foreground">
+              <div className="flex items-center gap-2">
+                {icon && (
+                  <div className={cn('p-1.5 rounded-lg', colors.icon)}>
+                    {React.cloneElement(icon as React.ReactElement, {
+                      className: 'h-4 w-4',
+                    })}
+                  </div>
+                )}
+                <div>
+                  <span className="text-base font-semibold text-foreground">
                     {title}
                   </span>
-                </motion.div>
-              )}
+                  {subtitle && (
+                    <p className="text-xs text-muted-foreground">{subtitle}</p>
+                  )}
+                </div>
+              </div>
             </div>
 
             {headerActions && (
               <div className="flex items-center gap-2">{headerActions}</div>
             )}
           </div>
-
-          {/* Large title row (hidden when collapsed) */}
-          {collapsingHeader && (
-            <motion.div
-              style={{ opacity: subtitleOpacity, scale: titleScale }}
-              className={cn("pb-3", icon ? "origin-left" : "origin-center")}
-            >
-              <div className={cn(
-                "flex items-center gap-3",
-                !icon && "justify-center text-center"
-              )}>
-                {icon && (
-                  <motion.div
-                    style={{ opacity: iconOpacity }}
-                    className={cn('p-2.5 rounded-xl', colors.icon)}
-                  >
-                    {React.cloneElement(icon as React.ReactElement, {
-                      className: 'h-6 w-6',
-                    })}
-                  </motion.div>
-                )}
-                <div className={!icon ? "text-center" : undefined}>
-                  <h1 className={cn(
-                    compactTitle ? "text-2xl font-bold" : "header-title-large",
-                    "text-foreground"
-                  )}>{title}</h1>
-                  {subtitle && (
-                    <p className="text-sm text-muted-foreground mt-0.5">
-                      {subtitle}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Non-collapsing header content */}
-          {!collapsingHeader && (
-            <div className="flex items-center gap-3">
-              {icon && (
-                <div className={cn('p-2.5 rounded-xl', colors.icon)}>
-                  {React.cloneElement(icon as React.ReactElement, {
-                    className: 'h-6 w-6',
-                  })}
-                </div>
-              )}
-              <div>
-                <h1 className="text-xl font-bold text-foreground">{title}</h1>
-                {subtitle && (
-                  <p className="text-sm text-muted-foreground">{subtitle}</p>
-                )}
-              </div>
-            </div>
-          )}
         </div>
-      </motion.header>
+      </header>
 
-      {/* Pull-to-refresh indicator */}
-      <AnimatePresence>
-        {(pullDistance > 0 || isRefreshing) && onRefresh && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{
-              height: Math.min(pullDistance, 80),
-              opacity: Math.min(progress, 1),
-            }}
-            exit={{ height: 0, opacity: 0 }}
-            className="flex items-center justify-center overflow-hidden bg-background"
-          >
-            <div
-              className={cn(
-                'refresh-spinner',
-                isRefreshing ? 'refreshing' : 'pulling'
-              )}
-              style={
-                !isRefreshing
-                  ? ({ '--pull-progress': progress } as React.CSSProperties)
-                  : undefined
-              }
-            />
-            {isRefreshing && (
-              <Loader2 className="h-5 w-5 text-elec-yellow animate-spin ml-2" />
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Scrollable content */}
-      <div
-        ref={setRefs}
-        className={cn(
-          'flex-1 momentum-scroll-y',
-          contentClassName
-        )}
-      >
-        <div className="max-w-7xl mx-auto px-4 py-6 pb-safe space-y-6">
-          {children}
-        </div>
+      {/* Content */}
+      <div className={cn('max-w-7xl mx-auto px-4 py-6 space-y-6', contentClassName)}>
+        {children}
       </div>
     </div>
   );

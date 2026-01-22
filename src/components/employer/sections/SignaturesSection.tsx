@@ -198,12 +198,12 @@ export function SignaturesSection() {
               Request Signature
             </Button>
           </SheetTrigger>
-          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
             <div className="flex flex-col h-full bg-background">
               <SheetHeader className="p-4 border-b border-border">
                 <SheetTitle>Request Signature</SheetTitle>
               </SheetHeader>
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
                 <div className="space-y-2">
                   <Label>Document Title *</Label>
                   <Input

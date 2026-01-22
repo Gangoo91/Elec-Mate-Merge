@@ -73,7 +73,7 @@ export default function InspectionTestingModule6() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             RCD Testing
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white/80 text-sm sm:text-base">
             Master comprehensive RCD testing procedures including trip time verification, ramp testing, and understanding selective protection coordination
           </p>
         </div>

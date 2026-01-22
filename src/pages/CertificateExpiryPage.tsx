@@ -279,7 +279,7 @@ export default function CertificateExpiryPage() {
 
       {/* Reminder Detail Sheet */}
       <Sheet open={!!selectedReminder} onOpenChange={(open) => !open && setSelectedReminder(null)}>
-        <SheetContent side="bottom" className="h-[75vh] rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[75vh] rounded-t-2xl flex flex-col">
           {selectedReminder && (
             <div className="flex flex-col h-full">
               <SheetHeader className="border-b pb-4">
@@ -300,7 +300,7 @@ export default function CertificateExpiryPage() {
                 </div>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto py-4 space-y-6">
+              <div className="flex-1 overflow-y-auto overscroll-contain py-4 space-y-6">
                 {/* Details */}
                 <div className="space-y-3">
                   <div className="flex items-start gap-3 p-3 rounded-lg bg-card">

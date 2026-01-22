@@ -641,7 +641,7 @@ export function ProgressLogsSection() {
 
       {/* Create Log Sheet */}
       <Sheet open={showCreateSheet} onOpenChange={setShowCreateSheet}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
           <div className="flex flex-col h-full bg-background">
             <SheetHeader className="p-4 border-b border-border">
               <SheetTitle className="flex items-center gap-2">
@@ -650,7 +650,7 @@ export function ProgressLogsSection() {
               </SheetTitle>
             </SheetHeader>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
               {/* Job Selection */}
               <div className="space-y-2">
                 <Label>Job *</Label>
@@ -843,7 +843,7 @@ export function ProgressLogsSection() {
 
       {/* View Log Sheet */}
       <Sheet open={!!selectedLog} onOpenChange={() => setSelectedLog(null)}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
           {selectedLog && (
             <div className="flex flex-col h-full bg-background">
               <SheetHeader className="p-4 border-b border-border">
@@ -860,7 +860,7 @@ export function ProgressLogsSection() {
                 </div>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
                 {/* Job Info */}
                 <Card className="bg-elec-gray">
                   <CardContent className="p-4">

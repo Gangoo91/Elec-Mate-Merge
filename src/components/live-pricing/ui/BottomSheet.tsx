@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, ReactNode } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useScrollLock } from "@/hooks/use-scroll-lock";
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -22,16 +23,14 @@ const BottomSheet = ({
   const [currentY, setCurrentY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
+  // Lock body scroll when bottom sheet is open
+  useScrollLock(isOpen);
+
+  // Reset drag state when opening
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
       setCurrentY(0);
-    } else {
-      document.body.style.overflow = '';
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
   }, [isOpen]);
 
   const handleTouchStart = (e: React.TouchEvent) => {

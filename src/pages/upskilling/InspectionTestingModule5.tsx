@@ -79,7 +79,7 @@ export default function InspectionTestingModule5() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Earth Fault Loop Impedance
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white/80 text-sm sm:text-base">
             Master the measurement and verification of earth fault loop impedance to ensure automatic disconnection of supply operates within required times
           </p>
         </div>

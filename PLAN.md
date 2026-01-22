@@ -1,75 +1,82 @@
-# Client Selector Implementation Plan
+# Plan: Fix PDF Preview in Certificate Viewer
 
-## Problem Identified
+## Problem
 
-The original implementation modified the WRONG files:
-- Modified `src/components/inspection-app/eic/EICClientDetailsSection.tsx` but EIC uses `src/components/inspection/eic/EICClientDetailsSection.tsx`
-- Modified `src/components/inspection-app/minor-works/WorkDetailsSection.tsx` but Minor Works uses `src/components/minor-works/MWDetailsTab.tsx`
+The PDF preview in `ReportPdfViewer.tsx` shows an empty box because:
 
-## Correct Files to Modify
+1. **CORS Error**: Direct requests to PDF Monkey's S3 bucket (`pdfmonkey-store.s3.eu-west-3.amazonaws.com`) are blocked by CORS policy
+2. **`isPdfUrlValid()`** makes a direct HEAD request (line 158) that fails due to CORS
+3. **`handleDownload()`** makes a direct HEAD request (line 404) that also fails due to CORS
 
-| Form | Correct File Path |
-|------|------------------|
-| **EICR** | `src/components/inspection-app/ClientDetailsSection.tsx` |
-| **EIC** | `src/components/inspection/eic/EICClientDetailsSection.tsx` |
-| **Minor Works** | `src/components/minor-works/MWDetailsTab.tsx` |
+The `proxy-pdf` edge function already exists to bypass CORS, but it's not being used in all the right places.
 
----
+## Solution
 
-## Implementation Steps
+### Step 1: Fix `isPdfUrlValid()` function
 
-### Step 1: Create ClientSelector Component
-**File:** `src/components/inspection-app/ClientSelector.tsx`
+**Current behaviour**: Makes a direct HEAD request to the PDF URL → fails due to CORS
 
-A reusable component that:
-- Shows toggle: "New Client" | "Existing Client"
-- When "Existing Client" selected, opens mobile-first bottom sheet (85vh)
-- Fetches customers via `useCustomers()` hook with debounced search
-- Shows selected customer card with clear/change options
-- Emits selected customer to parent for pre-fill
+**Fix**: Use expiry date only for validation - don't make HEAD requests that will be blocked:
 
-### Step 2: Modify EICR Client Details Section
-**File:** `src/components/inspection-app/ClientDetailsSection.tsx`
+```typescript
+const isPdfUrlValid = async (url: string, expiresAt?: string): Promise<boolean> => {
+  // Check expiry date only - don't make HEAD request (CORS blocked)
+  if (expiresAt) {
+    const expiryDate = new Date(expiresAt);
+    if (new Date() > expiryDate) {
+      return false;
+    }
+    return true;
+  }
+  // No expiry date - assume valid, let proxy handle errors
+  return true;
+};
+```
 
-Changes:
-1. Import `ClientSelector` and `Customer` type
-2. Add `handleCustomerSelect` function after `handleAlterationsChange`
-3. Add `ClientSelector` component after "Client Information" header (line ~59)
-4. Pre-fill fields: clientName, clientEmail, clientPhone, clientAddress
+### Step 2: Fix `handleDownload()` function
 
-### Step 3: Modify EIC Client Details Section
-**File:** `src/components/inspection/eic/EICClientDetailsSection.tsx`
+**Current behaviour**: Makes a direct HEAD request, then opens URL → fails due to CORS
 
-Changes:
-1. Import `ClientSelector` and `Customer` type
-2. Add `handleCustomerSelect` function after `handleSameAddressToggle`
-3. Add `ClientSelector` component after "Client Information" header (line ~67)
-4. Pre-fill fields: clientName, clientEmail, clientPhone, clientAddress
+**Fix**: Use the existing blob URL for download:
 
-### Step 4: Modify Minor Works Details Tab
-**File:** `src/components/minor-works/MWDetailsTab.tsx`
+```typescript
+const handleDownload = async () => {
+  if (!report) return;
 
-Changes:
-1. Import `ClientSelector` and `Customer` type
-2. Add `handleCustomerSelect` function after `getCompletionPercentage`
-3. Add `ClientSelector` component after Certificate Number display (line ~80-81)
-4. Pre-fill fields: clientName, clientEmail, propertyAddress
+  // Use blob URL if available (already fetched via proxy)
+  if (blobUrl) {
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = `${report.certificate_number}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    return;
+  }
 
----
+  // Fallback: open PDF URL directly
+  if (pdfUrl) {
+    window.open(pdfUrl, '_blank');
+  }
+};
+```
 
-## Client Field Mappings
+### Step 3: Ensure proxy-pdf edge function is deployed
 
-| Customer Field | EICR | EIC | Minor Works |
-|---------------|------|-----|-------------|
-| `name` | clientName | clientName | clientName |
-| `email` | clientEmail | clientEmail | clientEmail |
-| `phone` | clientPhone | clientPhone | *(not used)* |
-| `address` | clientAddress | clientAddress | propertyAddress |
+```bash
+npx supabase functions deploy proxy-pdf --project-ref jtwygbeceundfgnkirof
+```
 
----
+## Files to Modify
 
-## Verification Steps
+1. `/src/components/reports/ReportPdfViewer.tsx`
+   - Fix `isPdfUrlValid()` (lines 146-164)
+   - Fix `handleDownload()` (lines 399-425)
 
-1. **EIC Form:** Navigate to Inspection > EIC, toggle "Existing Client", search and select a customer, verify fields pre-fill
-2. **EICR Form:** Navigate to Inspection > EICR, same test
-3. **Minor Works Form:** Navigate to Inspection > Minor Works, same test (note: uses propertyAddress not clientAddress)
+## Testing
+
+1. Navigate to Inspection & Testing → My Reports
+2. Click on a certificate to open the PDF viewer
+3. Verify PDF displays in the preview area
+4. Verify Download button works
+5. Verify Edit button works

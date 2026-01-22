@@ -152,7 +152,7 @@ export const PartialPaymentDialog = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 flex flex-col">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="px-6 pt-6 pb-4 border-b border-border/50">
@@ -163,7 +163,7 @@ export const PartialPaymentDialog = ({
           </SheetHeader>
 
           {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-6 py-4 space-y-6">
             {/* Progress Card */}
             <div className="rounded-xl bg-gradient-to-br from-emerald-500/15 to-emerald-500/5 border border-emerald-500/20 p-4 space-y-3">
               <div className="flex items-center justify-between">

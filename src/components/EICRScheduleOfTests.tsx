@@ -1520,57 +1520,57 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                         <div className="grid grid-cols-2 gap-2">
                           <button
                             type="button"
-                            onClick={() => handleUpdateBoard(board.id, 'polarityCorrect', !board.polarityCorrect)}
+                            onClick={() => handleUpdateBoard(board.id, 'confirmedCorrectPolarity', !board.confirmedCorrectPolarity)}
                             className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 ${
-                              board.polarityCorrect
+                              board.confirmedCorrectPolarity
                                 ? 'bg-green-500/20 border border-green-500/30 text-green-400'
                                 : 'bg-card border border-border/50 text-muted-foreground'
                             }`}
                           >
-                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.polarityCorrect ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
-                              {board.polarityCorrect && <Check className="h-3 w-3 text-white" />}
+                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.confirmedCorrectPolarity ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
+                              {board.confirmedCorrectPolarity && <Check className="h-3 w-3 text-white" />}
                             </div>
                             <span className="flex-1 text-left">Polarity</span>
                           </button>
                           <button
                             type="button"
-                            onClick={() => handleUpdateBoard(board.id, 'phaseSequenceCorrect', !board.phaseSequenceCorrect)}
+                            onClick={() => handleUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence)}
                             className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 ${
-                              board.phaseSequenceCorrect
+                              board.confirmedPhaseSequence
                                 ? 'bg-green-500/20 border border-green-500/30 text-green-400'
                                 : 'bg-card border border-border/50 text-muted-foreground'
                             }`}
                           >
-                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.phaseSequenceCorrect ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
-                              {board.phaseSequenceCorrect && <Check className="h-3 w-3 text-white" />}
+                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.confirmedPhaseSequence ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
+                              {board.confirmedPhaseSequence && <Check className="h-3 w-3 text-white" />}
                             </div>
                             <span className="flex-1 text-left">Phase Seq</span>
                           </button>
                           <button
                             type="button"
-                            onClick={() => handleUpdateBoard(board.id, 'spdOperational', !board.spdOperational)}
+                            onClick={() => handleUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus)}
                             className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 ${
-                              board.spdOperational
+                              board.spdOperationalStatus
                                 ? 'bg-green-500/20 border border-green-500/30 text-green-400'
                                 : 'bg-card border border-border/50 text-muted-foreground'
                             }`}
                           >
-                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.spdOperational ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
-                              {board.spdOperational && <Check className="h-3 w-3 text-white" />}
+                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.spdOperationalStatus ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
+                              {board.spdOperationalStatus && <Check className="h-3 w-3 text-white" />}
                             </div>
                             <span className="flex-1 text-left">SPD OK</span>
                           </button>
                           <button
                             type="button"
-                            onClick={() => handleUpdateBoard(board.id, 'spdNotApplicable', !board.spdNotApplicable)}
+                            onClick={() => handleUpdateBoard(board.id, 'spdNA', !board.spdNA)}
                             className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 ${
-                              board.spdNotApplicable
+                              board.spdNA
                                 ? 'bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow'
                                 : 'bg-card border border-border/50 text-muted-foreground'
                             }`}
                           >
-                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.spdNotApplicable ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground'}`}>
-                              {board.spdNotApplicable && <Check className="h-3 w-3 text-black" />}
+                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 ${board.spdNA ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground'}`}>
+                              {board.spdNA && <Check className="h-3 w-3 text-black" />}
                             </div>
                             <span className="flex-1 text-left">SPD N/A</span>
                           </button>
@@ -1750,82 +1750,69 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 </div>
               </div>
 
-              {/* Action Buttons Grid */}
-              <div className="grid grid-cols-6 gap-3">
+              {/* Action Buttons - Clean 4-button layout */}
+              <div className="flex items-center gap-3">
+                {/* AI Board Scan */}
                 <Button
-                  className="testing-action-primary col-span-2"
+                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 text-white transition-all"
                   onClick={() => onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true)}
                 >
-                  <Camera className="h-4 w-4 mr-2" />
+                  <Camera className="h-5 w-5 mr-2.5 text-elec-yellow" />
                   AI Board Scan
                 </Button>
+
+                {/* Voice Assistant */}
                 <Button
-                  className={`col-span-2 h-11 rounded-lg font-medium transition-all duration-200 text-white shadow-lg border ${
+                  className={`h-12 px-5 rounded-xl font-medium transition-all shadow-lg ${
                     voiceActive
-                      ? 'bg-gradient-to-r from-green-600 to-emerald-600 shadow-green-500/20 border-green-400/30'
+                      ? 'bg-gradient-to-r from-green-600 to-emerald-600 shadow-green-500/25 border border-green-400/30'
                       : voiceConnecting
-                      ? 'bg-gradient-to-r from-yellow-600 to-amber-600 animate-pulse shadow-yellow-500/20 border-yellow-400/30'
-                      : 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-purple-500/20 border-purple-400/30'
-                  }`}
+                      ? 'bg-gradient-to-r from-amber-600 to-yellow-600 animate-pulse shadow-amber-500/25 border border-amber-400/30'
+                      : 'bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 shadow-purple-500/25 border border-purple-400/30'
+                  } text-white`}
                   onClick={toggleVoice}
                   disabled={voiceConnecting}
                 >
-                  <Mic className={`h-4 w-4 mr-2 ${voiceActive ? 'animate-pulse' : ''}`} />
+                  <Mic className={`h-5 w-5 mr-2.5 ${voiceActive ? 'animate-pulse' : ''}`} />
                   {voiceActive ? 'Tap to Stop' : voiceConnecting ? 'Connecting...' : 'Voice Assistant'}
                 </Button>
-                <Button className="testing-action-secondary col-span-2" onClick={addTestResult}>
-                  <Plus className="h-4 w-4 mr-2" />
+
+                {/* Quick Add - Opens prompt with circuit type selection */}
+                <Button
+                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-amber-500/10 border border-white/20 hover:border-amber-500/30 text-white transition-all"
+                  onClick={addTestResult}
+                >
+                  <Zap className="h-5 w-5 mr-2.5 text-amber-400" />
+                  Quick Add
+                </Button>
+
+                {/* Add Circuit - Simple blank circuit */}
+                <Button
+                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 text-white transition-all"
+                  onClick={() => addCircuitToBoard(distributionBoards[0]?.id || 'main-cu')}
+                >
+                  <Plus className="h-5 w-5 mr-2.5" />
                   Add Circuit
                 </Button>
-              </div>
 
-              {/* Secondary Tools Row */}
-              <div className="grid grid-cols-4 gap-2 mt-3">
-                <Button className="testing-action-secondary" onClick={() => setShowTestResultsScan(true)}>
-                  <FileText className="h-4 w-4 mr-2" />
-                  Scan Results
-                </Button>
-                <Button className="testing-action-secondary" onClick={() => setShowScribbleDialog(true)}>
-                  <PenTool className="h-4 w-4 mr-2" />
-                  Text to Circuits
-                </Button>
-                <Button className="testing-action-secondary" onClick={() => setShowSmartAutoFillDialog(true)}>
-                  <Zap className="h-4 w-4 mr-2" />
-                  Smart Fill
-                </Button>
-                <Button className="testing-action-secondary" onClick={() => setShowBulkInfillDialog(true)}>
-                  <ClipboardCheck className="h-4 w-4 mr-2" />
-                  Bulk Infill
-                </Button>
-              </div>
+                {/* Spacer */}
+                <div className="flex-1" />
 
-              {/* Secondary Actions Row */}
-              <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
-                <div className="flex gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
-                    onClick={() => setShowRcdPresetsDialog(true)}
-                  >
-                    <Shield className="h-4 w-4 mr-2" />
-                    RCD Presets
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
-                    onClick={() => setShowAnalytics(!showAnalytics)}
-                  >
-                    <BarChart3 className="h-4 w-4 mr-2" />
-                    Analytics
-                  </Button>
-                </div>
+                {/* Analytics */}
+                <Button
+                  variant="ghost"
+                  className="h-10 px-4 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-all"
+                  onClick={() => setShowAnalytics(!showAnalytics)}
+                >
+                  <BarChart3 className="h-4 w-4 mr-2" />
+                  Analytics
+                </Button>
+
+                {/* Clear All */}
                 {testResults.length > 0 && (
                   <Button
                     variant="ghost"
-                    size="sm"
-                    className="h-9 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                    className="h-10 px-4 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all"
                     onClick={removeAllTestResults}
                   >
                     <Trash2 className="h-4 w-4 mr-2" />

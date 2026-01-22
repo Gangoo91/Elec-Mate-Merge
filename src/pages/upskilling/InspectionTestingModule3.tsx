@@ -79,7 +79,7 @@ export default function InspectionTestingModule3() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Continuity Testing
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white/80 text-sm sm:text-base">
             Master the essential techniques for verifying electrical continuity in protective conductors, ring circuits, and bonding connections
           </p>
         </div>

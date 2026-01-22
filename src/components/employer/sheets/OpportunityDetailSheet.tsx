@@ -84,7 +84,7 @@ export function OpportunityDetailSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden">
+      <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl flex flex-col">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="p-4 pb-0 flex-shrink-0">

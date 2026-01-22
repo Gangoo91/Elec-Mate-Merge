@@ -196,7 +196,7 @@ const InspectionTestingModule2Section3 = () => {
             <h2 className="text-xl font-semibold">LOTO Fundamentals</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               Lock-Out Tag-Out (LOTO) is a safety procedure that uses physical locks and warning tags to ensure hazardous energy sources cannot be released while work is being performed. It is the critical follow-up to electrical isolation, ensuring the isolation remains secure.
             </p>
@@ -276,7 +276,7 @@ const InspectionTestingModule2Section3 = () => {
             <h2 className="text-xl font-semibold">Personal Padlock Requirements</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               Your personal padlock is your primary protection against re-energisation. It must be under your exclusive control at all times and identifiable as yours.
             </p>
@@ -360,7 +360,7 @@ const InspectionTestingModule2Section3 = () => {
             <h2 className="text-xl font-semibold">Warning Tags</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               Warning tags (danger tags) provide essential information about who has isolated the equipment and why. They supplement locks but must <strong>never be used alone</strong> as they can be removed without tools.
             </p>
@@ -437,7 +437,7 @@ const InspectionTestingModule2Section3 = () => {
             <h2 className="text-xl font-semibold">Multi-Lock Hasps</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               When multiple workers need protection from the same isolation point, a <strong>multi-lock hasp</strong> (or scissor hasp) allows each person to apply their own padlock. The isolation cannot be removed until everyone has finished and removed their lock.
             </p>
@@ -529,7 +529,7 @@ const InspectionTestingModule2Section3 = () => {
             <h2 className="text-xl font-semibold">Permit-to-Work Systems</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               A permit-to-work (PTW) is a formal documented system providing additional management control for high-risk work. It specifies the work to be done, hazards involved, and precautions required including isolation requirements.
             </p>
@@ -613,7 +613,7 @@ const InspectionTestingModule2Section3 = () => {
             <h2 className="text-xl font-semibold">Lock Removal and Re-energisation</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               The safe removal of locks and re-energisation of equipment is just as important as the initial isolation. Rushing this process or not following correct procedures has caused many accidents.
             </p>
@@ -706,7 +706,7 @@ const InspectionTestingModule2Section3 = () => {
             {defined_faqs.map((faq, index) => (
               <div key={index} className="border border-border rounded-lg p-4">
                 <h4 className="font-medium text-foreground mb-2">{faq.question}</h4>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                <p className="text-sm text-white/90">{faq.answer}</p>
               </div>
             ))}
           </div>

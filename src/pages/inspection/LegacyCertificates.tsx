@@ -354,11 +354,11 @@ export default function LegacyCertificates() {
 
       {/* Edit Sheet */}
       <Sheet open={!!editingCertificate} onOpenChange={(open) => !open && setEditingCertificate(null)}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl flex flex-col">
           <SheetHeader className="px-4 py-4 border-b border-border">
             <SheetTitle>Edit Certificate Details</SheetTitle>
           </SheetHeader>
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Certificate Type</Label>

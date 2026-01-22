@@ -73,7 +73,7 @@ export default function InspectionTestingModule7() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Polarity & Functional Testing
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white/80 text-sm sm:text-base">
             Master polarity verification and functional testing techniques to ensure all electrical equipment operates safely and correctly
           </p>
         </div>

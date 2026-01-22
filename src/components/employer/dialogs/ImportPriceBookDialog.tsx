@@ -183,7 +183,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
       if (!isOpen) resetDialog();
       onOpenChange(isOpen);
     }}>
-      <SheetContent side="bottom" className="h-[70dvh] p-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[70dvh] p-0 flex flex-col">
         <div className="flex flex-col h-full">
           {/* Header */}
           <SheetHeader className="shrink-0 px-4 py-3 border-b border-border">
@@ -197,7 +197,7 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
           </SheetHeader>
 
           {/* Content */}
-          <div className="flex-1 overflow-auto p-4 space-y-4">
+          <div className="flex-1 overflow-auto overscroll-contain p-4 space-y-4">
             {/* Drop Zone */}
             <div
               onDrop={handleDrop}

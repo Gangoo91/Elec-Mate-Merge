@@ -122,12 +122,11 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
               <Input
                 type="number"
                 placeholder="Qty"
-                value={newItem.quantity}
+                value={newItem.quantity === 0 ? '' : newItem.quantity}
                 onChange={(e) => {
                   const value = e.target.value;
-                  // Allow empty string for deletion, otherwise parse the value
                   if (value === '') {
-                    setNewItem(prev => ({ ...prev, quantity: 0 })); // Temporarily set to 0 to allow clearing
+                    setNewItem(prev => ({ ...prev, quantity: 0 }));
                   } else {
                     const parsed = parseInt(value);
                     if (!isNaN(parsed) && parsed >= 0) {
@@ -136,7 +135,6 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
                   }
                 }}
                 onBlur={(e) => {
-                  // Ensure minimum value on blur
                   const value = parseInt(e.target.value);
                   if (isNaN(value) || value <= 0) {
                     setNewItem(prev => ({ ...prev, quantity: 1 }));
@@ -144,14 +142,20 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
                 }}
               />
             </div>
-            
+
             <div>
               <Input
                 placeholder="£ Price"
                 type="number"
                 step="0.01"
-                value={newItem.unitPrice}
-                onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(e.target.value) || 0 }))}
+                value={newItem.unitPrice === 0 ? '' : newItem.unitPrice}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  const unitPrice = val === '' ? 0 : parseFloat(val);
+                  if (!isNaN(unitPrice)) {
+                    setNewItem(prev => ({ ...prev, unitPrice }));
+                  }
+                }}
               />
             </div>
             
@@ -200,12 +204,11 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
                     <TableCell>
                       <Input
                         type="number"
-                        value={item.quantity}
+                        value={item.quantity === 0 ? '' : item.quantity}
                         onChange={(e) => {
                           const value = e.target.value;
-                          // Allow empty string for deletion, otherwise parse the value
                           if (value === '') {
-                            onUpdate(item.id, { quantity: 0 }); // Temporarily set to 0 to allow clearing
+                            onUpdate(item.id, { quantity: 0 });
                           } else {
                             const parsed = parseInt(value);
                             if (!isNaN(parsed) && parsed >= 0) {
@@ -214,7 +217,6 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
                           }
                         }}
                         onBlur={(e) => {
-                          // Ensure minimum value on blur
                           const value = parseInt(e.target.value);
                           if (isNaN(value) || value <= 0) {
                             onUpdate(item.id, { quantity: 1 });
@@ -227,8 +229,14 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
                       <Input
                         type="number"
                         step="0.01"
-                        value={item.unitPrice}
-                        onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
+                        value={item.unitPrice === 0 ? '' : item.unitPrice}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const unitPrice = val === '' ? 0 : parseFloat(val);
+                          if (!isNaN(unitPrice)) {
+                            onUpdate(item.id, { unitPrice });
+                          }
+                        }}
                         className="w-24"
                       />
                     </TableCell>

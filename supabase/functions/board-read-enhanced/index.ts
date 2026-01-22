@@ -3,8 +3,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-// Using hardcoded key for Gemini 3 Flash Preview testing - REGENERATE AFTER TESTING
-const geminiApiKey = 'AIzaSyB5M1dZAxJjyndEjCBy_C28gWMaK_gUQBU';
+// API keys from environment variables (set in Supabase Dashboard > Edge Functions > Secrets)
+const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
 
 // NOTE: Supabase client is created inside the request handler to ensure

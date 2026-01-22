@@ -81,7 +81,7 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
       {/* Mobile: Compact sticky header - edge-to-edge */}
       <header className={cn(
         "lg:hidden sticky top-0 z-50 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80 border-b border-border/50",
-        isMobile && "-mx-4 pt-[env(safe-area-inset-top)]"
+        isMobile && "-mx-4"
       )}>
         <div className="flex items-center justify-between h-14 px-3">
           {/* Left: Back + Title */}

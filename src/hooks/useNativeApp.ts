@@ -25,6 +25,10 @@ export function useNativeApp() {
         if (Capacitor.getPlatform() === 'android') {
           await StatusBar.setBackgroundColor({ color: '#0a0a0a' });
         }
+        // On iOS, ensure WebView doesn't overlap status bar
+        if (Capacitor.getPlatform() === 'ios') {
+          await StatusBar.setOverlaysWebView({ overlay: true });
+        }
 
         // Hide splash screen after app is ready
         await SplashScreen.hide();

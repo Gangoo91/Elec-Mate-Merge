@@ -196,7 +196,7 @@ const InspectionTestingModule2Section5 = () => {
             <h2 className="text-xl font-semibold">Maintaining Isolation Integrity</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               Once you've confirmed isolation, your focus shifts to <strong>maintaining</strong> that safe state throughout your work. The isolation is only as good as the ongoing vigilance applied to it.
             </p>
@@ -265,7 +265,7 @@ const InspectionTestingModule2Section5 = () => {
             <h2 className="text-xl font-semibold">Team Coordination</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               When multiple people work on the same isolated system, clear coordination prevents dangerous misunderstandings. Each person must understand their role and the status of the isolation.
             </p>
@@ -330,7 +330,7 @@ const InspectionTestingModule2Section5 = () => {
             <h2 className="text-xl font-semibold">Working Near Live Equipment</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               Often your isolated circuit will be located near equipment that remains energised. Managing the interface between your dead work area and adjacent live parts is critical for safety.
             </p>
@@ -378,7 +378,7 @@ const InspectionTestingModule2Section5 = () => {
             <h2 className="text-xl font-semibold">Extended Work and Shift Changes</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               Work that extends over shifts or multiple days requires careful planning to maintain continuous protection. The handover process is a critical safety point where errors can occur.
             </p>
@@ -446,7 +446,7 @@ const InspectionTestingModule2Section5 = () => {
             <h2 className="text-xl font-semibold">Stored Energy Hazards</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               Electrical isolation removes the ongoing supply, but <strong>stored energy</strong> can remain in equipment long after isolation. These hazards require separate assessment and control.
             </p>
@@ -506,7 +506,7 @@ const InspectionTestingModule2Section5 = () => {
             <h2 className="text-xl font-semibold">Emergency Procedures</h2>
           </div>
 
-          <div className="space-y-4 text-muted-foreground">
+          <div className="space-y-4 text-white">
             <p>
               Despite best precautions, emergencies can occur. Knowing how to respond protects you and your colleagues. Pre-planning emergency response is essential.
             </p>
@@ -579,7 +579,7 @@ const InspectionTestingModule2Section5 = () => {
             {defined_faqs.map((faq, index) => (
               <div key={index} className="border border-border rounded-lg p-4">
                 <h4 className="font-medium text-foreground mb-2">{faq.question}</h4>
-                <p className="text-sm text-muted-foreground">{faq.answer}</p>
+                <p className="text-sm text-white/90">{faq.answer}</p>
               </div>
             ))}
           </div>

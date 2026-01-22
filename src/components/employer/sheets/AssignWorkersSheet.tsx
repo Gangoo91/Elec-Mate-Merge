@@ -169,7 +169,7 @@ export function AssignWorkersSheet({ job, open, onOpenChange, existingAssignment
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent className="w-full sm:max-w-lg p-0 !h-full grid grid-rows-[auto_1fr_auto] overflow-hidden">
+        <SheetContent className="w-full sm:max-w-lg p-0 !h-full grid grid-rows-[auto_1fr_auto]">
           {/* Sticky Header - Compact Job Info */}
           <div className="bg-background border-b overflow-hidden">
             {/* Job Header */}

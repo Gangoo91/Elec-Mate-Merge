@@ -197,7 +197,7 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl overflow-hidden">
+      <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-2xl flex flex-col">
         <div className="flex flex-col h-full bg-background">
           <SheetHeader className="px-4 py-4 border-b border-border">
             <SheetTitle className="flex items-center gap-2">
@@ -209,7 +209,7 @@ export const LegacyCertificateUpload: React.FC<LegacyCertificateUploadProps> = (
             </SheetDescription>
           </SheetHeader>
 
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="flex-1 overflow-y-auto overscroll-contain p-4">
             {mode === 'select' && (
               <div className="space-y-4">
                 {/* Drop zone */}

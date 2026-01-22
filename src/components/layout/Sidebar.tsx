@@ -8,6 +8,7 @@ import SidebarNavSection from "./SidebarNavSection";
 import SidebarFooter from "./SidebarFooter";
 import { mainNavItems } from "./SidebarNavItems";
 import { useEffect } from "react";
+import { useScrollLock } from "@/hooks/use-scroll-lock";
 
 interface SidebarProps {
   open: boolean;
@@ -37,14 +38,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
   }, [open, setOpen]);
 
   // Prevent body scroll when mobile sidebar is open
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.body.style.overflow = 'unset';
-      };
-    }
-  }, [open]);
+  useScrollLock(open);
 
   return (
     <>
@@ -64,7 +58,9 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
           "shadow-2xl shadow-black/50",
           "transition-transform duration-300 ease-in-out",
           "md:relative md:translate-x-0 md:z-auto",
-          open ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+          open ? "translate-x-0" : "-translate-x-full",
+          // Hide completely on mobile when closed
+          !open && "max-md:invisible"
         )}
       >
         {/* Logo section with gradient styling */}

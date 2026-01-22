@@ -79,7 +79,7 @@ export default function InspectionTestingModule2() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Safe Isolation Procedures
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white/80 text-sm sm:text-base">
             Master the critical procedures for safely isolating electrical circuits before carrying out any work
           </p>
         </div>

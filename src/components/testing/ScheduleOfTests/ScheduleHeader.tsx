@@ -276,7 +276,8 @@ const MobileHeader: React.FC<Omit<ScheduleHeaderProps, 'isMobile' | 'onShowAnaly
 };
 
 /**
- * Desktop header with clean action bar
+ * Desktop header with clean, focused design
+ * Only 3 primary actions: Board Scanner, Voice Assistant, Add Circuit
  */
 const DesktopHeader: React.FC<{
   circuitCount: number;
@@ -293,110 +294,105 @@ const DesktopHeader: React.FC<{
   circuitCount,
   onAddCircuit,
   onScanBoard,
-  onScanTestResults,
-  onScribbleToTable,
   onSmartAutoFill,
-  onBulkInfill,
-  onRemoveAllCircuits,
-  onShowAnalytics,
   className = '',
 }) => {
+  // Calculate stats
+  const completedCircuits = 0; // Will be calculated from actual data
+  const pendingCircuits = circuitCount;
+  const progressPercent = circuitCount > 0 ? Math.round((completedCircuits / circuitCount) * 100) : 0;
+
   return (
-    <div className={cn('space-y-4 px-4 lg:px-6 py-4 mb-4', className)}>
-      {/* Title Row */}
-      <div className="flex items-center justify-between">
-        <div className="space-y-1">
-          <h2 className="text-xl font-bold text-foreground">Schedule of Tests</h2>
-          <p className="text-sm text-muted-foreground">
-            BS 7671 Electrical Installation Certificate
-          </p>
+    <div className={cn('px-4 lg:px-6 py-6 mb-4', className)}>
+      <div className="bg-gradient-to-br from-card via-card to-card/80 rounded-2xl border border-border/50 shadow-lg overflow-hidden">
+        {/* Header Content */}
+        <div className="p-6">
+          <div className="flex items-start justify-between gap-6">
+            {/* Left: Icon + Title */}
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center shrink-0">
+                <Zap className="h-7 w-7 text-primary" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-foreground tracking-tight">Schedule of Tests</h2>
+                <p className="text-sm text-muted-foreground mt-0.5">
+                  BS 7671 compliant circuit testing & verification
+                </p>
+              </div>
+            </div>
+
+            {/* Right: Stats Grid */}
+            <div className="flex items-center gap-1">
+              <StatCard value={circuitCount} label="Circuits" color="text-foreground" />
+              <StatCard value={completedCircuits} label="Complete" color="text-green-400" />
+              <StatCard value={pendingCircuits} label="Pending" color="text-amber-400" />
+              <StatCard value={`${progressPercent}%`} label="Progress" color="text-primary" />
+            </div>
+          </div>
+
+          {/* Action Buttons - Clean 4-button layout */}
+          <div className="mt-6 flex items-center gap-3">
+            {/* AI Board Scan - Primary Feature */}
+            <Button
+              onClick={onScanBoard}
+              size="lg"
+              className="h-12 px-6 gap-2.5 bg-primary/10 hover:bg-primary/20 text-foreground border border-primary/30 hover:border-primary/50 font-medium transition-all"
+              variant="outline"
+            >
+              <Camera className="h-5 w-5 text-primary" />
+              AI Board Scan
+            </Button>
+
+            {/* Voice Assistant - Premium Feature */}
+            <Button
+              size="lg"
+              className="h-12 px-6 gap-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-medium shadow-lg shadow-purple-500/25 transition-all"
+            >
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                <line x1="12" y1="19" x2="12" y2="23" />
+                <line x1="8" y1="23" x2="16" y2="23" />
+              </svg>
+              Voice Assistant
+            </Button>
+
+            {/* Smart Fill - Auto-populate Feature */}
+            <Button
+              onClick={onSmartAutoFill}
+              size="lg"
+              variant="outline"
+              className="h-12 px-6 gap-2.5 text-amber-400 border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50 font-medium transition-all"
+            >
+              <Sparkles className="h-5 w-5" />
+              Smart Fill
+            </Button>
+
+            {/* Add Circuit - Standard Action */}
+            <Button
+              onClick={onAddCircuit}
+              size="lg"
+              variant="outline"
+              className="h-12 px-6 gap-2.5 border-border/60 hover:bg-muted/50 font-medium transition-all"
+            >
+              <Plus className="h-5 w-5" />
+              Add Circuit
+            </Button>
+          </div>
         </div>
-        <Badge variant="secondary" className="px-3 py-1.5 text-sm font-medium">
-          {circuitCount} {circuitCount === 1 ? 'circuit' : 'circuits'}
-        </Badge>
-      </div>
-
-      {/* Action Bar - All visible on desktop */}
-      <div className="flex flex-wrap items-center gap-3 p-3 rounded-xl bg-card/50 border border-border">
-        {/* Primary Action */}
-        <Button onClick={onAddCircuit} className="h-10 px-4 gap-2">
-          <Plus className="h-4 w-4" />
-          Add Circuit
-        </Button>
-
-        <div className="w-px h-8 bg-border" />
-
-        {/* AI Tools */}
-        <Button
-          onClick={onScanBoard}
-          className="h-10 px-4 gap-2 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
-        >
-          <Camera className="h-4 w-4" />
-          Scan Board
-        </Button>
-        <Button
-          onClick={onScanTestResults}
-          variant="outline"
-          className="h-10 px-4 gap-2"
-        >
-          <FileText className="h-4 w-4" />
-          Scan Results
-        </Button>
-        <Button
-          onClick={onScribbleToTable}
-          variant="outline"
-          className="h-10 px-4 gap-2"
-        >
-          <Pen className="h-4 w-4" />
-          Text to Circuits
-        </Button>
-
-        <div className="w-px h-8 bg-border" />
-
-        {/* Smart Features */}
-        <Button
-          onClick={onSmartAutoFill}
-          variant="outline"
-          className="h-10 px-4 gap-2 text-amber-400 border-amber-500/30 hover:bg-amber-500/10"
-        >
-          <Zap className="h-4 w-4" />
-          Auto-Fill
-        </Button>
-        <Button
-          onClick={onBulkInfill}
-          variant="outline"
-          className="h-10 px-4 gap-2"
-        >
-          <Grid className="h-4 w-4" />
-          Bulk Infill
-        </Button>
-        <Button
-          onClick={onShowAnalytics}
-          variant="outline"
-          className="h-10 px-4 gap-2"
-          disabled={circuitCount === 0}
-        >
-          <BarChart3 className="h-4 w-4" />
-          Analytics
-        </Button>
-
-        {/* Spacer */}
-        <div className="flex-1" />
-
-        {/* Destructive Action */}
-        {circuitCount > 0 && (
-          <Button
-            onClick={onRemoveAllCircuits}
-            variant="ghost"
-            className="h-10 px-4 gap-2 text-destructive hover:bg-destructive/10 hover:text-destructive"
-          >
-            <Trash2 className="h-4 w-4" />
-            Clear All
-          </Button>
-        )}
       </div>
     </div>
   );
 };
+
+/**
+ * Stat card component for header
+ */
+const StatCard: React.FC<{ value: number | string; label: string; color: string }> = ({ value, label, color }) => (
+  <div className="px-5 py-3 text-center min-w-[90px] border-r border-border/30 last:border-r-0">
+    <div className={cn("text-2xl font-bold tabular-nums", color)}>{value}</div>
+    <div className="text-xs text-muted-foreground mt-0.5">{label}</div>
+  </div>
+);
 
 export default ScheduleHeader;

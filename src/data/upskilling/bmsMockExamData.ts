@@ -1,4 +1,28 @@
 import { QuizQuestion } from '@/types/quiz';
+import { StandardMockQuestion, DifficultyLevel } from '@/types/standardMockExam';
+import { getRandomQuestionsBalanced } from '@/utils/questionSelection';
+
+// Categories based on BMS course modules
+export const bmsCategories = [
+  'BMS Fundamentals',
+  'Hardware & Wiring',
+  'HVAC Integration',
+  'Lighting & Access Control',
+  'Communication Protocols',
+  'Advanced Features',
+  'Commissioning & Handover'
+];
+
+// Configuration for BMS mock exam
+export const bmsMockExamConfig = {
+  examId: 'bms',
+  examTitle: 'Building Management Systems Mock Examination',
+  totalQuestions: 30,
+  timeLimit: 2700, // 45 minutes
+  passThreshold: 60,
+  exitPath: '/electrician/upskilling/bms-course',
+  categories: bmsCategories
+};
 
 // Import BMS quiz data files that use the standard QuizQuestion interface
 import { bmsModule4Section5QuizData } from './bmsModule4Section5QuizData';
@@ -79,14 +103,57 @@ const bmsQuestionBank: QuizQuestion[] = allBMSQuestions.map((question, index) =>
   id: index + 1
 }));
 
+// Helper function to determine difficulty based on question characteristics
+const getBMSDifficulty = (question: QuizQuestion): DifficultyLevel => {
+  const q = question.question.toLowerCase();
+  // Basic: definitions, "what is", terminology, basic concepts
+  if (q.includes('what is') || q.includes('what does') || q.includes('stand for') ||
+      q.includes('purpose of') || q.includes('primary') || q.includes('main function') ||
+      q.includes('define') || q.includes('meaning of')) {
+    return 'basic';
+  }
+  // Advanced: troubleshooting, calculations, complex integration, advanced protocols
+  if (q.includes('calculat') || q.includes('formula') || q.includes('troubleshoot') ||
+      q.includes('fault find') || q.includes('pid') || q.includes('integration') ||
+      q.includes('protocol') || q.includes('bacnet') || q.includes('modbus')) {
+    return 'advanced';
+  }
+  // Intermediate: procedures, configuration, wiring, commissioning
+  return 'intermediate';
+};
+
+// Helper function to get category based on question source module
+const getBMSCategory = (index: number, total: number): string => {
+  // Distribute evenly across categories based on index
+  const categoryIndex = Math.min(Math.floor((index / total) * bmsCategories.length), bmsCategories.length - 1);
+  return bmsCategories[categoryIndex];
+};
+
+// Convert to StandardMockQuestion format
+export const bmsStandardQuestionBank: StandardMockQuestion[] = bmsQuestionBank.map((q, index) => ({
+  id: q.id,
+  question: q.question,
+  options: q.options,
+  correctAnswer: q.correctAnswer,
+  explanation: q.explanation,
+  section: getBMSCategory(index, bmsQuestionBank.length),
+  difficulty: getBMSDifficulty(q),
+  topic: getBMSCategory(index, bmsQuestionBank.length),
+  category: getBMSCategory(index, bmsQuestionBank.length)
+}));
+
 /**
- * Get a random selection of BMS mock exam questions
- * @param count Number of questions to return (default: 30)
- * @returns Array of randomly selected quiz questions
+ * Get a random selection of BMS mock exam questions (new format with difficulty distribution)
+ * @param numQuestions Number of questions to return (default: 30)
+ * @returns Array of randomly selected StandardMockQuestion
  */
-export const getRandomBMSMockExamQuestions = (count: number = 30): QuizQuestion[] => {
-  const shuffled = [...bmsQuestionBank].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
+export const getRandomBMSMockExamQuestions = (numQuestions: number = 30): StandardMockQuestion[] => {
+  return getRandomQuestionsBalanced(
+    bmsStandardQuestionBank,
+    numQuestions,
+    bmsCategories,
+    { basic: 0.35, intermediate: 0.45, advanced: 0.2 }
+  );
 };
 
 export { bmsQuestionBank };

@@ -79,7 +79,7 @@ export default function InspectionTestingModule4() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Insulation Resistance Testing
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white/80 text-sm sm:text-base">
             Learn to perform insulation resistance tests correctly, interpret results, and troubleshoot faults to BS 7671 standards
           </p>
         </div>

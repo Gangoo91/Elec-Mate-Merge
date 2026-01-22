@@ -460,11 +460,11 @@ export function ClientPortalSection() {
                                 Preview
                               </Button>
                             </SheetTrigger>
-                            <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+                            <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
                               <SheetHeader className="p-4 border-b border-border">
                                 <SheetTitle>Client View Preview</SheetTitle>
                               </SheetHeader>
-                              <ScrollArea className="h-[calc(85vh-60px)] p-4">
+                              <ScrollArea className="h-[calc(85vh-60px)] p-4 overscroll-contain">
                                 <PortalPreview />
                               </ScrollArea>
                             </SheetContent>

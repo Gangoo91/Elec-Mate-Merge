@@ -99,8 +99,8 @@ const LandingPage = () => {
         </script>
       </Helmet>
 
-      {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50">
+      {/* Nav - hidden on mobile to avoid iOS status bar overlap */}
+      <nav className="hidden sm:block fixed top-0 left-0 right-0 z-50">
         {/* Gradient background for depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black/80 backdrop-blur-xl" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent" />

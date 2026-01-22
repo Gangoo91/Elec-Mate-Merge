@@ -148,7 +148,7 @@ export const ExportToEICDialog: React.FC<ExportToEICDialogProps> = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
         <div className="flex flex-col h-full bg-background">
           <SheetHeader className="px-4 py-4 border-b border-border">
             <SheetTitle className="flex items-center gap-2">
@@ -160,7 +160,7 @@ export const ExportToEICDialog: React.FC<ExportToEICDialogProps> = ({
             </SheetDescription>
           </SheetHeader>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-12">
                 <Loader2 className="h-8 w-8 animate-spin text-elec-yellow mb-4" />

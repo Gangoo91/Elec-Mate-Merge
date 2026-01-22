@@ -279,7 +279,7 @@ export const CreateCustomerDialog: React.FC<CreateCustomerDialogProps> = ({
   if (isMobile) {
     return (
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 flex flex-col">
           <div className="flex flex-col h-full bg-background">
             {/* Header */}
             <SheetHeader className="px-5 pt-5 pb-4 border-b border-border/50 flex-shrink-0">
@@ -297,7 +297,7 @@ export const CreateCustomerDialog: React.FC<CreateCustomerDialogProps> = ({
             </SheetHeader>
 
             {/* Scrollable Form Content */}
-            <div className="flex-1 overflow-y-auto px-5 py-5">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5">
               <FormContent />
             </div>
 

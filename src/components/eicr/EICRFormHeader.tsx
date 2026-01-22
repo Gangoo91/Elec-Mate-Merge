@@ -56,7 +56,7 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
 
   if (isMobile) {
     return (
-      <div className="-mx-4 pt-[env(safe-area-inset-top)] bg-background/95 backdrop-blur-md sticky top-0 z-50 border-b border-border/30">
+      <div className="-mx-4 bg-background/95 backdrop-blur-md sticky top-0 z-40 border-b border-border/30">
         <div className="flex items-center h-14 px-4">
           <Button
             variant="ghost"

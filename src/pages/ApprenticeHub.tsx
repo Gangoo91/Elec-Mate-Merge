@@ -6,10 +6,9 @@
  * Yellow/gold theme throughout.
  */
 
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import useSEO, { SEOSchemas } from '@/hooks/useSEO';
 import {
   GraduationCap,
@@ -466,8 +465,6 @@ const additionalResources: ToolCardProps[] = [
 ];
 
 const ApprenticeHub = () => {
-  const { refetch, isRefetching } = useApprenticeData();
-
   // SEO for apprentice hub - high priority for Google ranking
   useSEO({
     title: 'Apprentice Hub | Level 2 & 3 Electrical Training',
@@ -483,15 +480,9 @@ const ApprenticeHub = () => {
     },
   });
 
-  const handleRefresh = useCallback(async () => {
-    await refetch?.();
-  }, [refetch]);
-
   return (
-    <div className="bg-[hsl(240,5.9%,10%)] flex flex-col">
-      <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefetching}>
-      <div className="flex-1 momentum-scroll-y">
-        <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8 ">
+    <div className="bg-[hsl(240,5.9%,10%)]">
+        <div className="mx-auto max-w-6xl py-4 md:py-6 lg:py-8">
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -556,8 +547,6 @@ const ApprenticeHub = () => {
             <div className="h-6 sm:h-8" />
           </motion.div>
         </div>
-      </div>
-      </PullToRefresh>
     </div>
   );
 };

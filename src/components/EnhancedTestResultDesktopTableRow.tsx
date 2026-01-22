@@ -74,9 +74,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
     if (overallCompliance === 'warning') {
       return 'bg-amber-500/10 hover:bg-amber-500/20';
     }
-    if (result.autoFilled) {
-      return 'bg-blue-500/10 hover:bg-blue-500/20';
-    }
+    // All rows use the same dark background - no special blue for auto-filled
     return 'bg-card hover:bg-muted/30';
   };
 

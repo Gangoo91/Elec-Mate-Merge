@@ -178,7 +178,7 @@ const SettingsPage = () => {
   // Mobile View
   if (isMobile) {
     return (
-      <div className="bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 momentum-scroll-y">
+      <div className="bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95">
         <AnimatePresence mode="wait" initial={false}>
           {selectedTab === null ? (
             // Mobile Grid View (List)

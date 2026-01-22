@@ -73,7 +73,7 @@ export default function InspectionTestingModule8() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Visual Inspection & Documentation
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white/80 text-sm sm:text-base">
             Learn systematic visual inspection techniques and master the documentation required for electrical installation certification
           </p>
         </div>

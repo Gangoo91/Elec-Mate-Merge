@@ -1,6 +1,8 @@
-import { QuizQuestion } from '@/types/quiz';
+import { StandardMockQuestion } from '@/types/standardMockExam';
+import { getRandomQuestionsBalanced } from '@/utils/questionSelection';
 
-export const smartHomeMockExamQuestions: QuizQuestion[] = [
+// Smart Home Mock Exam Question Bank - 200 Questions covering all modules
+export const smartHomeQuestionBank: StandardMockQuestion[] = [
   // Smart Home Fundamentals (25 questions)
   {
     id: 1,
@@ -12,7 +14,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Better energy efficiency only"
     ],
     correctAnswer: 1,
-    explanation: "Smart home systems excel at integration and intelligent automation, allowing different devices to work together seamlessly and respond to various conditions automatically."
+    explanation: "Smart home systems excel at integration and intelligent automation, allowing different devices to work together seamlessly and respond to various conditions automatically.",
+    section: "Smart Home Fundamentals",
+    difficulty: "basic",
+    topic: "Smart Home Benefits",
+    category: "Fundamentals"
   },
   {
     id: 2,
@@ -24,7 +30,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Traditional light switches"
     ],
     correctAnswer: 3,
-    explanation: "Traditional light switches are replaced by smart switches in a smart home system. Core components include smart devices, communication networks, and central hubs."
+    explanation: "Traditional light switches are replaced by smart switches in a smart home system. Core components include smart devices, communication networks, and central hubs.",
+    section: "Smart Home Fundamentals",
+    difficulty: "basic",
+    topic: "System Components",
+    category: "Fundamentals"
   },
   {
     id: 3,
@@ -36,7 +46,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Indoor Optimization Technology"
     ],
     correctAnswer: 0,
-    explanation: "IoT stands for Internet of Things, referring to the network of physical devices that connect and exchange data over the internet."
+    explanation: "IoT stands for Internet of Things, referring to the network of physical devices that connect and exchange data over the internet.",
+    section: "Smart Home Fundamentals",
+    difficulty: "basic",
+    topic: "Terminology",
+    category: "Fundamentals"
   },
   {
     id: 4,
@@ -48,7 +62,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Using only wireless devices"
     ],
     correctAnswer: 2,
-    explanation: "Understanding the customer's lifestyle and needs is crucial for designing a system that genuinely improves their daily life and provides value."
+    explanation: "Understanding the customer's lifestyle and needs is crucial for designing a system that genuinely improves their daily life and provides value.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "System Design",
+    category: "Fundamentals"
   },
   {
     id: 5,
@@ -60,7 +78,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "The security level of the system"
     ],
     correctAnswer: 1,
-    explanation: "Interoperability refers to the ability for devices from different manufacturers to communicate and work together seamlessly within the same system."
+    explanation: "Interoperability refers to the ability for devices from different manufacturers to communicate and work together seamlessly within the same system.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "Terminology",
+    category: "Fundamentals"
   },
   {
     id: 6,
@@ -72,7 +94,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Random automation patterns"
     ],
     correctAnswer: 1,
-    explanation: "Using presence detection and scheduling ensures devices operate only when needed, maximizing energy efficiency while maintaining comfort and convenience."
+    explanation: "Using presence detection and scheduling ensures devices operate only when needed, maximizing energy efficiency while maintaining comfort and convenience.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "Energy Management",
+    category: "Fundamentals"
   },
   {
     id: 7,
@@ -84,7 +110,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "To control lighting only"
     ],
     correctAnswer: 2,
-    explanation: "A smart home gateway acts as a translator between different protocols and provides internet connectivity, enabling different devices to communicate and be controlled remotely."
+    explanation: "A smart home gateway acts as a translator between different protocols and provides internet connectivity, enabling different devices to communicate and be controlled remotely.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "System Components",
+    category: "Fundamentals"
   },
   {
     id: 8,
@@ -96,7 +126,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Voice assistants"
     ],
     correctAnswer: 1,
-    explanation: "Automated door locks with monitoring provide direct security benefits by controlling access and providing logs of entry/exit activities."
+    explanation: "Automated door locks with monitoring provide direct security benefits by controlling access and providing logs of entry/exit activities.",
+    section: "Smart Home Fundamentals",
+    difficulty: "basic",
+    topic: "Security Features",
+    category: "Security"
   },
   {
     id: 9,
@@ -108,7 +142,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Network security protocols"
     ],
     correctAnswer: 2,
-    explanation: "Geofencing uses GPS or other location services to create virtual boundaries that trigger automated actions when residents enter or leave specified areas."
+    explanation: "Geofencing uses GPS or other location services to create virtual boundaries that trigger automated actions when residents enter or leave specified areas.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "Automation Features",
+    category: "Fundamentals"
   },
   {
     id: 10,
@@ -120,7 +158,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Avoiding user training"
     ],
     correctAnswer: 1,
-    explanation: "Starting with basic functionality and expanding gradually allows users to become comfortable with the system while ensuring each component works properly before adding complexity."
+    explanation: "Starting with basic functionality and expanding gradually allows users to become comfortable with the system while ensuring each component works properly before adding complexity.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "Installation Best Practices",
+    category: "Installation"
   },
   {
     id: 11,
@@ -132,7 +174,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Better wireless range"
     ],
     correctAnswer: 1,
-    explanation: "Edge computing processes data locally, reducing latency for faster responses and improving privacy by keeping sensitive data on local devices rather than in the cloud."
+    explanation: "Edge computing processes data locally, reducing latency for faster responses and improving privacy by keeping sensitive data on local devices rather than in the cloud.",
+    section: "Smart Home Fundamentals",
+    difficulty: "advanced",
+    topic: "Data Processing",
+    category: "Fundamentals"
   },
   {
     id: 12,
@@ -144,7 +190,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Bluetooth Classic"
     ],
     correctAnswer: 2,
-    explanation: "Zigbee and Z-Wave are designed for low-power operation, making them ideal for battery-powered devices that need to operate for months or years on a single battery."
+    explanation: "Zigbee and Z-Wave are designed for low-power operation, making them ideal for battery-powered devices that need to operate for months or years on a single battery.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "Protocols",
+    category: "Protocols"
   },
   {
     id: 13,
@@ -156,7 +206,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Simpler device pairing"
     ],
     correctAnswer: 1,
-    explanation: "Mesh networking allows devices to communicate through multiple paths, extending coverage and improving reliability by providing redundant communication routes."
+    explanation: "Mesh networking allows devices to communicate through multiple paths, extending coverage and improving reliability by providing redundant communication routes.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "Networking",
+    category: "Protocols"
   },
   {
     id: 14,
@@ -168,7 +222,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Using only wired connections"
     ],
     correctAnswer: 1,
-    explanation: "Regular firmware updates patch security vulnerabilities, while strong authentication prevents unauthorized access to smart home systems."
+    explanation: "Regular firmware updates patch security vulnerabilities, while strong authentication prevents unauthorized access to smart home systems.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "Cybersecurity",
+    category: "Security"
   },
   {
     id: 15,
@@ -180,7 +238,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Providing entertainment"
     ],
     correctAnswer: 1,
-    explanation: "AI learns from user behavior patterns and environmental conditions to automatically adjust settings and create personalized automation without manual programming."
+    explanation: "AI learns from user behavior patterns and environmental conditions to automatically adjust settings and create personalized automation without manual programming.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "AI Integration",
+    category: "Fundamentals"
   },
   {
     id: 16,
@@ -192,7 +254,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Smart speakers"
     ],
     correctAnswer: 0,
-    explanation: "Voice control systems enable people with mobility limitations to control their environment easily, significantly improving accessibility and independence."
+    explanation: "Voice control systems enable people with mobility limitations to control their environment easily, significantly improving accessibility and independence.",
+    section: "Smart Home Fundamentals",
+    difficulty: "basic",
+    topic: "Accessibility",
+    category: "Fundamentals"
   },
   {
     id: 17,
@@ -204,7 +270,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Both local and cloud backup strategies"
     ],
     correctAnswer: 3,
-    explanation: "A comprehensive backup strategy includes both local and cloud options to ensure system configurations and data can be restored in various failure scenarios."
+    explanation: "A comprehensive backup strategy includes both local and cloud options to ensure system configurations and data can be restored in various failure scenarios.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "Data Management",
+    category: "Fundamentals"
   },
   {
     id: 18,
@@ -216,7 +286,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Brand selection"
     ],
     correctAnswer: 1,
-    explanation: "Protocol choice determines how many devices can be supported and network capacity affects performance as the system grows."
+    explanation: "Protocol choice determines how many devices can be supported and network capacity affects performance as the system grows.",
+    section: "Smart Home Fundamentals",
+    difficulty: "advanced",
+    topic: "System Scalability",
+    category: "Fundamentals"
   },
   {
     id: 19,
@@ -228,7 +302,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Warranty registration"
     ],
     correctAnswer: 1,
-    explanation: "Commissioning involves systematically testing and configuring all components to ensure the system operates correctly and meets the design specifications."
+    explanation: "Commissioning involves systematically testing and configuring all components to ensure the system operates correctly and meets the design specifications.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "Installation Process",
+    category: "Installation"
   },
   {
     id: 20,
@@ -240,7 +318,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Installing maximum devices initially"
     ],
     correctAnswer: 2,
-    explanation: "Open standards ensure future compatibility and upgrade options, while quality components provide reliability and longevity, delivering better long-term value."
+    explanation: "Open standards ensure future compatibility and upgrade options, while quality components provide reliability and longevity, delivering better long-term value.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "System Planning",
+    category: "Fundamentals"
   },
   {
     id: 21,
@@ -252,7 +334,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Device counting"
     ],
     correctAnswer: 1,
-    explanation: "Smart home analytics analyze usage patterns to optimize system performance, energy efficiency, and user comfort through data-driven insights."
+    explanation: "Smart home analytics analyze usage patterns to optimize system performance, energy efficiency, and user comfort through data-driven insights.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "Analytics",
+    category: "Fundamentals"
   },
   {
     id: 22,
@@ -264,7 +350,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Multiple login requirements"
     ],
     correctAnswer: 1,
-    explanation: "Intuitive and consistent navigation ensures users can easily control their smart home system without confusion or extensive training."
+    explanation: "Intuitive and consistent navigation ensures users can easily control their smart home system without confusion or extensive training.",
+    section: "Smart Home Fundamentals",
+    difficulty: "basic",
+    topic: "User Interface",
+    category: "Fundamentals"
   },
   {
     id: 23,
@@ -276,7 +366,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Time-based scheduling only"
     ],
     correctAnswer: 1,
-    explanation: "Conditional automation uses multiple triggers and conditions (time, occupancy, weather, etc.) to create intelligent responses that adapt to various situations."
+    explanation: "Conditional automation uses multiple triggers and conditions (time, occupancy, weather, etc.) to create intelligent responses that adapt to various situations.",
+    section: "Smart Home Fundamentals",
+    difficulty: "intermediate",
+    topic: "Automation",
+    category: "Fundamentals"
   },
   {
     id: 24,
@@ -288,7 +382,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Ignoring network capacity"
     ],
     correctAnswer: 0,
-    explanation: "Regular maintenance and monitoring help identify issues early, ensure optimal performance, and extend system life through proactive care."
+    explanation: "Regular maintenance and monitoring help identify issues early, ensure optimal performance, and extend system life through proactive care.",
+    section: "Smart Home Fundamentals",
+    difficulty: "basic",
+    topic: "Maintenance",
+    category: "Maintenance"
   },
   {
     id: 25,
@@ -300,7 +398,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Avoiding wireless technologies"
     ],
     correctAnswer: 2,
-    explanation: "Flexible infrastructure with upgrade capabilities allows systems to evolve with new technologies while protecting the initial investment."
+    explanation: "Flexible infrastructure with upgrade capabilities allows systems to evolve with new technologies while protecting the initial investment.",
+    section: "Smart Home Fundamentals",
+    difficulty: "advanced",
+    topic: "Future-Proofing",
+    category: "Fundamentals"
   },
 
   // Communication Protocols (30 questions)
@@ -314,7 +416,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "60 GHz"
     ],
     correctAnswer: 1,
-    explanation: "Zigbee primarily operates on the 2.4 GHz ISM band globally, though regional variants exist for 868 MHz (Europe) and 915 MHz (North America)."
+    explanation: "Zigbee primarily operates on the 2.4 GHz ISM band globally, though regional variants exist for 868 MHz (Europe) and 915 MHz (North America).",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Zigbee",
+    category: "Protocols"
   },
   {
     id: 27,
@@ -326,7 +432,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "1000"
     ],
     correctAnswer: 1,
-    explanation: "Z-Wave networks support up to 232 devices (nodes) per network, with node IDs ranging from 1 to 232."
+    explanation: "Z-Wave networks support up to 232 devices (nodes) per network, with node IDs ranging from 1 to 232.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Z-Wave",
+    category: "Protocols"
   },
   {
     id: 28,
@@ -338,7 +448,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Zigbee"
     ],
     correctAnswer: 2,
-    explanation: "LoRaWAN provides the longest range, capable of covering several kilometers, making it suitable for wide-area IoT applications."
+    explanation: "LoRaWAN provides the longest range, capable of covering several kilometers, making it suitable for wide-area IoT applications.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "LoRaWAN",
+    category: "Protocols"
   },
   {
     id: 29,
@@ -350,7 +464,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Reduced cost"
     ],
     correctAnswer: 1,
-    explanation: "Wi-Fi 6 significantly increases device capacity through improved efficiency techniques like OFDMA and better handles dense device environments."
+    explanation: "Wi-Fi 6 significantly increases device capacity through improved efficiency techniques like OFDMA and better handles dense device environments.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Wi-Fi",
+    category: "Protocols"
   },
   {
     id: 30,
@@ -362,7 +480,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Thread"
     ],
     correctAnswer: 2,
-    explanation: "Wi-Fi provides the highest bandwidth among common smart home protocols, making it ideal for video streaming and other high-data applications."
+    explanation: "Wi-Fi provides the highest bandwidth among common smart home protocols, making it ideal for video streaming and other high-data applications.",
+    section: "Communication Protocols",
+    difficulty: "basic",
+    topic: "Wi-Fi",
+    category: "Protocols"
   },
   {
     id: 31,
@@ -374,7 +496,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Better security only"
     ],
     correctAnswer: 1,
-    explanation: "Matter is designed to provide universal interoperability, allowing devices from different manufacturers to work together seamlessly."
+    explanation: "Matter is designed to provide universal interoperability, allowing devices from different manufacturers to work together seamlessly.",
+    section: "Communication Protocols",
+    difficulty: "basic",
+    topic: "Matter",
+    category: "Protocols"
   },
   {
     id: 32,
@@ -386,7 +512,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "433 MHz"
     ],
     correctAnswer: 0,
-    explanation: "Z-Wave operates on 868 MHz in Europe, 915 MHz in North America, and various other frequencies in different regions to comply with local regulations."
+    explanation: "Z-Wave operates on 868 MHz in Europe, 915 MHz in North America, and various other frequencies in different regions to comply with local regulations.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Z-Wave",
+    category: "Protocols"
   },
   {
     id: 33,
@@ -398,7 +528,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "500 meters"
     ],
     correctAnswer: 1,
-    explanation: "BLE typically provides a range of 10-30 meters in indoor environments, though this can vary based on obstacles and device implementation."
+    explanation: "BLE typically provides a range of 10-30 meters in indoor environments, though this can vary based on obstacles and device implementation.",
+    section: "Communication Protocols",
+    difficulty: "basic",
+    topic: "Bluetooth",
+    category: "Protocols"
   },
   {
     id: 34,
@@ -410,7 +544,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Simple pairing process"
     ],
     correctAnswer: 1,
-    explanation: "Zigbee's self-healing mesh topology allows the network to automatically find alternative routes if a device fails, ensuring reliability in large networks."
+    explanation: "Zigbee's self-healing mesh topology allows the network to automatically find alternative routes if a device fails, ensuring reliability in large networks.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Zigbee",
+    category: "Protocols"
   },
   {
     id: 35,
@@ -422,7 +560,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Simpler passwords"
     ],
     correctAnswer: 1,
-    explanation: "Z-Wave's dedicated frequency band reduces interference and makes it harder for attackers to access compared to the crowded 2.4 GHz Wi-Fi band."
+    explanation: "Z-Wave's dedicated frequency band reduces interference and makes it harder for attackers to access compared to the crowded 2.4 GHz Wi-Fi band.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Z-Wave",
+    category: "Protocols"
   },
   {
     id: 36,
@@ -434,7 +576,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Ethernet"
     ],
     correctAnswer: 1,
-    explanation: "Zigbee 3.0 is designed for ultra-low power consumption, allowing battery-powered devices to operate for years on a single battery."
+    explanation: "Zigbee 3.0 is designed for ultra-low power consumption, allowing battery-powered devices to operate for years on a single battery.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Zigbee",
+    category: "Protocols"
   },
   {
     id: 37,
@@ -446,7 +592,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "A device pairing method"
     ],
     correctAnswer: 1,
-    explanation: "Thread is an IPv6-based mesh networking protocol designed specifically for IoT devices, providing secure and reliable communication."
+    explanation: "Thread is an IPv6-based mesh networking protocol designed specifically for IoT devices, providing secure and reliable communication.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Thread",
+    category: "Protocols"
   },
   {
     id: 38,
@@ -458,7 +608,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Room temperature"
     ],
     correctAnswer: 1,
-    explanation: "Network topology (how devices are arranged) and interference from other 2.4 GHz devices significantly impact Zigbee performance."
+    explanation: "Network topology (how devices are arranged) and interference from other 2.4 GHz devices significantly impact Zigbee performance.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Zigbee",
+    category: "Protocols"
   },
   {
     id: 39,
@@ -470,7 +624,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Unlimited"
     ],
     correctAnswer: 1,
-    explanation: "Z-Wave networks typically support up to 4 hops between the controller and end devices to maintain reliable communication and reasonable latency."
+    explanation: "Z-Wave networks typically support up to 4 hops between the controller and end devices to maintain reliable communication and reasonable latency.",
+    section: "Communication Protocols",
+    difficulty: "advanced",
+    topic: "Z-Wave",
+    category: "Protocols"
   },
   {
     id: 40,
@@ -482,7 +640,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Bluetooth pairing"
     ],
     correctAnswer: 1,
-    explanation: "Zigbee touchlink allows for rapid device pairing by bringing devices close together and pressing buttons, typically completing in seconds."
+    explanation: "Zigbee touchlink allows for rapid device pairing by bringing devices close together and pressing buttons, typically completing in seconds.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Zigbee",
+    category: "Protocols"
   },
   {
     id: 41,
@@ -494,7 +656,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Battery status updates"
     ],
     correctAnswer: 1,
-    explanation: "Beaconing involves coordinators sending periodic synchronization signals to maintain network timing and coordination among devices."
+    explanation: "Beaconing involves coordinators sending periodic synchronization signals to maintain network timing and coordination among devices.",
+    section: "Communication Protocols",
+    difficulty: "advanced",
+    topic: "Zigbee",
+    category: "Protocols"
   },
   {
     id: 42,
@@ -506,7 +672,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Infrared"
     ],
     correctAnswer: 1,
-    explanation: "Microwave ovens operate at 2.45 GHz, which can interfere with Wi-Fi and other 2.4 GHz protocols like Zigbee and Bluetooth."
+    explanation: "Microwave ovens operate at 2.45 GHz, which can interfere with Wi-Fi and other 2.4 GHz protocols like Zigbee and Bluetooth.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Interference",
+    category: "Protocols"
   },
   {
     id: 43,
@@ -518,7 +688,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Better aesthetics"
     ],
     correctAnswer: 1,
-    explanation: "Different protocols excel in different areas - using multiple protocols allows optimization for specific use cases (e.g., Wi-Fi for high bandwidth, Zigbee for sensors)."
+    explanation: "Different protocols excel in different areas - using multiple protocols allows optimization for specific use cases (e.g., Wi-Fi for high bandwidth, Zigbee for sensors).",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Multi-Protocol",
+    category: "Protocols"
   },
   {
     id: 44,
@@ -530,7 +704,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "DES"
     ],
     correctAnswer: 2,
-    explanation: "Z-Wave Plus uses AES-128 encryption for secure communication between devices, providing strong security for smart home networks."
+    explanation: "Z-Wave Plus uses AES-128 encryption for secure communication between devices, providing strong security for smart home networks.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Z-Wave",
+    category: "Protocols"
   },
   {
     id: 45,
@@ -542,7 +720,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Extending network range"
     ],
     correctAnswer: 1,
-    explanation: "Channel bonding combines multiple Wi-Fi channels to increase available bandwidth, improving performance for high-data applications."
+    explanation: "Channel bonding combines multiple Wi-Fi channels to increase available bandwidth, improving performance for high-data applications.",
+    section: "Communication Protocols",
+    difficulty: "advanced",
+    topic: "Wi-Fi",
+    category: "Protocols"
   },
   {
     id: 46,
@@ -554,7 +736,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "More access points"
     ],
     correctAnswer: 1,
-    explanation: "Adaptive frequency hopping allows devices to switch between different frequencies to avoid congested channels and maintain reliable communication."
+    explanation: "Adaptive frequency hopping allows devices to switch between different frequencies to avoid congested channels and maintain reliable communication.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Network Management",
+    category: "Protocols"
   },
   {
     id: 47,
@@ -566,7 +752,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "5-10 seconds"
     ],
     correctAnswer: 1,
-    explanation: "Z-Wave typically has latency of 10-100 milliseconds for local communication, which is acceptable for most smart home control applications."
+    explanation: "Z-Wave typically has latency of 10-100 milliseconds for local communication, which is acceptable for most smart home control applications.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Z-Wave",
+    category: "Protocols"
   },
   {
     id: 48,
@@ -578,7 +768,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Internet bandwidth"
     ],
     correctAnswer: 1,
-    explanation: "Router devices extend network coverage and capacity in Zigbee mesh networks, making them crucial for scalability in large installations."
+    explanation: "Router devices extend network coverage and capacity in Zigbee mesh networks, making them crucial for scalability in large installations.",
+    section: "Communication Protocols",
+    difficulty: "advanced",
+    topic: "Zigbee",
+    category: "Protocols"
   },
   {
     id: 49,
@@ -590,7 +784,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Faster pairing"
     ],
     correctAnswer: 1,
-    explanation: "Sub-GHz frequencies (like Z-Wave's 868/915 MHz) penetrate walls better and provide longer range compared to 2.4 GHz protocols."
+    explanation: "Sub-GHz frequencies (like Z-Wave's 868/915 MHz) penetrate walls better and provide longer range compared to 2.4 GHz protocols.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Frequency Bands",
+    category: "Protocols"
   },
   {
     id: 50,
@@ -602,7 +800,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Thread"
     ],
     correctAnswer: 2,
-    explanation: "Some Wi-Fi devices rely entirely on cloud services and require internet connectivity for basic control, unlike local mesh protocols like Zigbee and Z-Wave."
+    explanation: "Some Wi-Fi devices rely entirely on cloud services and require internet connectivity for basic control, unlike local mesh protocols like Zigbee and Z-Wave.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Wi-Fi",
+    category: "Protocols"
   },
   {
     id: 51,
@@ -614,7 +816,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "A network topology"
     ],
     correctAnswer: 1,
-    explanation: "MQTT is a lightweight messaging protocol designed for IoT devices, enabling efficient communication between smart home devices and controllers."
+    explanation: "MQTT is a lightweight messaging protocol designed for IoT devices, enabling efficient communication between smart home devices and controllers.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "MQTT",
+    category: "Protocols"
   },
   {
     id: 52,
@@ -626,7 +832,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Bluetooth"
     ],
     correctAnswer: 2,
-    explanation: "Wired protocols like KNX provide the most deterministic timing since they don't compete for wireless spectrum and have predictable communication patterns."
+    explanation: "Wired protocols like KNX provide the most deterministic timing since they don't compete for wireless spectrum and have predictable communication patterns.",
+    section: "Communication Protocols",
+    difficulty: "advanced",
+    topic: "Wired Protocols",
+    category: "Protocols"
   },
   {
     id: 53,
@@ -638,7 +848,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "User confusion"
     ],
     correctAnswer: 1,
-    explanation: "Different wireless protocols may interfere with each other, especially those sharing the 2.4 GHz band, requiring careful spectrum management."
+    explanation: "Different wireless protocols may interfere with each other, especially those sharing the 2.4 GHz band, requiring careful spectrum management.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Interference",
+    category: "Protocols"
   },
   {
     id: 54,
@@ -650,7 +864,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Cheapest implementation"
     ],
     correctAnswer: 1,
-    explanation: "Matter's ability to work across existing major ecosystems (Alexa, Google Assistant, Apple HomeKit) eliminates vendor lock-in concerns."
+    explanation: "Matter's ability to work across existing major ecosystems (Alexa, Google Assistant, Apple HomeKit) eliminates vendor lock-in concerns.",
+    section: "Communication Protocols",
+    difficulty: "basic",
+    topic: "Matter",
+    category: "Protocols"
   },
   {
     id: 55,
@@ -662,7 +880,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Diagnostic mode"
     ],
     correctAnswer: 1,
-    explanation: "Commissioning mode is a special state where the network controller accepts new devices, typically activated temporarily for security purposes."
+    explanation: "Commissioning mode is a special state where the network controller accepts new devices, typically activated temporarily for security purposes.",
+    section: "Communication Protocols",
+    difficulty: "intermediate",
+    topic: "Device Pairing",
+    category: "Protocols"
   },
 
   // Lighting Control and Scene Programming (25 questions)
@@ -676,7 +898,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "No electrical noise"
     ],
     correctAnswer: 1,
-    explanation: "LED dimming maintains high energy efficiency across the entire dimming range, unlike incandescent bulbs which waste energy as heat even when dimmed."
+    explanation: "LED dimming maintains high energy efficiency across the entire dimming range, unlike incandescent bulbs which waste energy as heat even when dimmed.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "LED Technology",
+    category: "Lighting"
   },
   {
     id: 57,
@@ -688,7 +914,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Fluorescent dimming"
     ],
     correctAnswer: 1,
-    explanation: "PWM dimming rapidly switches LEDs on and off to control brightness, providing smooth, flicker-free dimming ideal for LED strips."
+    explanation: "PWM dimming rapidly switches LEDs on and off to control brightness, providing smooth, flicker-free dimming ideal for LED strips.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Dimming Methods",
+    category: "Lighting"
   },
   {
     id: 58,
@@ -700,7 +930,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "A type of light switch"
     ],
     correctAnswer: 1,
-    explanation: "A scene is a pre-programmed combination of lighting settings (brightness, color, on/off states) that can be activated with a single command."
+    explanation: "A scene is a pre-programmed combination of lighting settings (brightness, color, on/off states) that can be activated with a single command.",
+    section: "Lighting Control",
+    difficulty: "basic",
+    topic: "Scene Programming",
+    category: "Lighting"
   },
   {
     id: 59,
@@ -712,7 +946,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "7000K+"
     ],
     correctAnswer: 0,
-    explanation: "Warm white lighting typically ranges from 2700K-3000K, providing a cozy, relaxing atmosphere similar to traditional incandescent bulbs."
+    explanation: "Warm white lighting typically ranges from 2700K-3000K, providing a cozy, relaxing atmosphere similar to traditional incandescent bulbs.",
+    section: "Lighting Control",
+    difficulty: "basic",
+    topic: "Color Temperature",
+    category: "Lighting"
   },
   {
     id: 60,
@@ -724,7 +962,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Increased brightness levels"
     ],
     correctAnswer: 2,
-    explanation: "Circadian lighting adjusts color temperature and brightness throughout the day to support natural human circadian rhythms and improve sleep quality."
+    explanation: "Circadian lighting adjusts color temperature and brightness throughout the day to support natural human circadian rhythms and improve sleep quality.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Circadian Lighting",
+    category: "Lighting"
   },
   {
     id: 61,
@@ -736,7 +978,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Cloud-based control"
     ],
     correctAnswer: 1,
-    explanation: "Hardwired or direct control provides the fastest response time as there's no wireless communication delay or network processing required."
+    explanation: "Hardwired or direct control provides the fastest response time as there's no wireless communication delay or network processing required.",
+    section: "Lighting Control",
+    difficulty: "basic",
+    topic: "Control Methods",
+    category: "Lighting"
   },
   {
     id: 62,
@@ -748,7 +994,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Switch to energy saving mode"
     ],
     correctAnswer: 0,
-    explanation: "A 'master off' scene provides a convenient way to turn off all lights in the system or designated areas with a single command."
+    explanation: "A 'master off' scene provides a convenient way to turn off all lights in the system or designated areas with a single command.",
+    section: "Lighting Control",
+    difficulty: "basic",
+    topic: "Scene Programming",
+    category: "Lighting"
   },
   {
     id: 63,
@@ -760,7 +1010,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Installation cost"
     ],
     correctAnswer: 1,
-    explanation: "Flicker performance and smooth dimming transitions significantly affect perceived quality - poor dimming can cause visible flicker and stepped dimming curves."
+    explanation: "Flicker performance and smooth dimming transitions significantly affect perceived quality - poor dimming can cause visible flicker and stepped dimming curves.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "LED Technology",
+    category: "Lighting"
   },
   {
     id: 64,
@@ -772,7 +1026,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Battery backup lighting"
     ],
     correctAnswer: 1,
-    explanation: "Adaptive lighting automatically adjusts based on factors like occupancy, time of day, ambient light levels, and user activities."
+    explanation: "Adaptive lighting automatically adjusts based on factors like occupancy, time of day, ambient light levels, and user activities.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Adaptive Lighting",
+    category: "Lighting"
   },
   {
     id: 65,
@@ -784,7 +1042,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Motion sensor controls only"
     ],
     correctAnswer: 2,
-    explanation: "Centralized lighting control systems provide maximum flexibility by allowing any combination of lights to be controlled together in scenes."
+    explanation: "Centralized lighting control systems provide maximum flexibility by allowing any combination of lights to be controlled together in scenes.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Control Systems",
+    category: "Lighting"
   },
   {
     id: 66,
@@ -796,7 +1058,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Keep lights dimmed always"
     ],
     correctAnswer: 1,
-    explanation: "Arrival scenes should gradually increase appropriate lighting levels based on time of day and ambient conditions for comfort and energy efficiency."
+    explanation: "Arrival scenes should gradually increase appropriate lighting levels based on time of day and ambient conditions for comfort and energy efficiency.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Scene Programming",
+    category: "Lighting"
   },
   {
     id: 67,
@@ -808,7 +1074,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Strobing effects"
     ],
     correctAnswer: 1,
-    explanation: "Motion-activated pathway lighting with auto-off timers provides safety while minimizing energy consumption by operating only when needed."
+    explanation: "Motion-activated pathway lighting with auto-off timers provides safety while minimizing energy consumption by operating only when needed.",
+    section: "Lighting Control",
+    difficulty: "basic",
+    topic: "Energy Efficiency",
+    category: "Lighting"
   },
   {
     id: 68,
@@ -820,7 +1090,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Managing lighting schedules"
     ],
     correctAnswer: 0,
-    explanation: "Load balancing distributes electrical load across multiple circuits to prevent overloading and ensure stable operation of the lighting system."
+    explanation: "Load balancing distributes electrical load across multiple circuits to prevent overloading and ensure stable operation of the lighting system.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Electrical Design",
+    category: "Installation"
   },
   {
     id: 69,
@@ -832,7 +1106,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Always dimmed lighting"
     ],
     correctAnswer: 1,
-    explanation: "Multiple bedroom scenes (bedtime, reading, morning, etc.) provide appropriate lighting for different activities and times of day."
+    explanation: "Multiple bedroom scenes (bedtime, reading, morning, etc.) provide appropriate lighting for different activities and times of day.",
+    section: "Lighting Control",
+    difficulty: "basic",
+    topic: "Scene Programming",
+    category: "Lighting"
   },
   {
     id: 70,
@@ -844,7 +1122,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Directing sunlight into buildings"
     ],
     correctAnswer: 1,
-    explanation: "Daylight harvesting uses sensors to measure natural light and automatically adjusts artificial lighting to maintain desired levels while saving energy."
+    explanation: "Daylight harvesting uses sensors to measure natural light and automatically adjusts artificial lighting to maintain desired levels while saving energy.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Energy Efficiency",
+    category: "Lighting"
   },
   {
     id: 71,
@@ -856,7 +1138,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Energy efficiency only"
     ],
     correctAnswer: 0,
-    explanation: "Task lighting requires appropriate color temperature (typically cooler, 4000K+) and adequate brightness levels to support visual tasks effectively."
+    explanation: "Task lighting requires appropriate color temperature (typically cooler, 4000K+) and adequate brightness levels to support visual tasks effectively.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Task Lighting",
+    category: "Lighting"
   },
   {
     id: 72,
@@ -868,7 +1154,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Change color temperature"
     ],
     correctAnswer: 1,
-    explanation: "Pre-heat warms fluorescent lamp filaments before ignition, extending lamp life and ensuring reliable starting, especially in dimming applications."
+    explanation: "Pre-heat warms fluorescent lamp filaments before ignition, extending lamp life and ensuring reliable starting, especially in dimming applications.",
+    section: "Lighting Control",
+    difficulty: "advanced",
+    topic: "Fluorescent Dimming",
+    category: "Lighting"
   },
   {
     id: 73,
@@ -880,7 +1170,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "No transitions"
     ],
     correctAnswer: 1,
-    explanation: "Gradual fade times create smooth, professional-looking scene transitions that are comfortable for occupants and enhance the user experience."
+    explanation: "Gradual fade times create smooth, professional-looking scene transitions that are comfortable for occupants and enhance the user experience.",
+    section: "Lighting Control",
+    difficulty: "basic",
+    topic: "Scene Programming",
+    category: "Lighting"
   },
   {
     id: 74,
@@ -892,7 +1186,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Outdoor lighting only"
     ],
     correctAnswer: 1,
-    explanation: "Zonal lighting control organizes lights into logical groups (zones) based on function or location, enabling coordinated control and scene programming."
+    explanation: "Zonal lighting control organizes lights into logical groups (zones) based on function or location, enabling coordinated control and scene programming.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Zone Control",
+    category: "Lighting"
   },
   {
     id: 75,
@@ -904,7 +1202,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Multiple switch locations"
     ],
     correctAnswer: 1,
-    explanation: "Occupancy sensing with automatic shutoff prevents lights from being left on in unoccupied spaces, providing significant energy savings."
+    explanation: "Occupancy sensing with automatic shutoff prevents lights from being left on in unoccupied spaces, providing significant energy savings.",
+    section: "Lighting Control",
+    difficulty: "basic",
+    topic: "Energy Efficiency",
+    category: "Lighting"
   },
   {
     id: 76,
@@ -916,7 +1218,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Lights with adjustable beam angles"
     ],
     correctAnswer: 0,
-    explanation: "Tunable white lighting can adjust color temperature from warm (2700K) to cool (6500K) whites, supporting circadian rhythms and different activities."
+    explanation: "Tunable white lighting can adjust color temperature from warm (2700K) to cool (6500K) whites, supporting circadian rhythms and different activities.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Tunable White",
+    category: "Lighting"
   },
   {
     id: 77,
@@ -928,7 +1234,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Maximum brightness always"
     ],
     correctAnswer: 1,
-    explanation: "Entertainment lighting scenes use dynamic effects synchronized with music, TV content, or other media to create immersive experiences."
+    explanation: "Entertainment lighting scenes use dynamic effects synchronized with music, TV content, or other media to create immersive experiences.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Entertainment Lighting",
+    category: "Lighting"
   },
   {
     id: 78,
@@ -940,7 +1250,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "No testing required"
     ],
     correctAnswer: 1,
-    explanation: "Testing scenes at different times of day and ambient conditions ensures they work correctly in all real-world situations the user will experience."
+    explanation: "Testing scenes at different times of day and ambient conditions ensures they work correctly in all real-world situations the user will experience.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Commissioning",
+    category: "Installation"
   },
   {
     id: 79,
@@ -952,7 +1266,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Installation speed"
     ],
     correctAnswer: 1,
-    explanation: "Understanding user habits and preferences is crucial for programming automated scenes that enhance rather than interfere with daily routines."
+    explanation: "Understanding user habits and preferences is crucial for programming automated scenes that enhance rather than interfere with daily routines.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "User Experience",
+    category: "Lighting"
   },
   {
     id: 80,
@@ -964,7 +1282,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Installing lights higher up"
     ],
     correctAnswer: 1,
-    explanation: "Light pollution reduction involves directing light where needed (typically downward), using appropriate timing, and minimizing unnecessary upward light spillage."
+    explanation: "Light pollution reduction involves directing light where needed (typically downward), using appropriate timing, and minimizing unnecessary upward light spillage.",
+    section: "Lighting Control",
+    difficulty: "intermediate",
+    topic: "Outdoor Lighting",
+    category: "Lighting"
   },
 
   // HVAC and Environmental Control (25 questions)
@@ -978,7 +1300,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Faster heating and cooling"
     ],
     correctAnswer: 1,
-    explanation: "Zoned HVAC control allows different areas of the home to be heated or cooled independently, improving comfort and energy efficiency."
+    explanation: "Zoned HVAC control allows different areas of the home to be heated or cooled independently, improving comfort and energy efficiency.",
+    section: "HVAC Control",
+    difficulty: "basic",
+    topic: "Zone Control",
+    category: "HVAC"
   },
   {
     id: 82,
@@ -990,7 +1316,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Sound sensor"
     ],
     correctAnswer: 1,
-    explanation: "Temperature and humidity sensors are essential for smart thermostats to accurately monitor conditions and make appropriate adjustments."
+    explanation: "Temperature and humidity sensors are essential for smart thermostats to accurately monitor conditions and make appropriate adjustments.",
+    section: "HVAC Control",
+    difficulty: "basic",
+    topic: "Sensors",
+    category: "HVAC"
   },
   {
     id: 83,
@@ -1002,7 +1332,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Air circulation rate"
     ],
     correctAnswer: 1,
-    explanation: "Thermal mass is the building's ability to store and release thermal energy, affecting how quickly temperatures change and influencing smart HVAC scheduling."
+    explanation: "Thermal mass is the building's ability to store and release thermal energy, affecting how quickly temperatures change and influencing smart HVAC scheduling.",
+    section: "HVAC Control",
+    difficulty: "advanced",
+    topic: "Building Science",
+    category: "HVAC"
   },
   {
     id: 84,
@@ -1014,7 +1348,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Manual control only"
     ],
     correctAnswer: 1,
-    explanation: "Adaptive scheduling that considers occupancy patterns, weather forecasts, and thermal mass provides optimal energy efficiency."
+    explanation: "Adaptive scheduling that considers occupancy patterns, weather forecasts, and thermal mass provides optimal energy efficiency.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Energy Efficiency",
+    category: "HVAC"
   },
   {
     id: 85,
@@ -1026,7 +1364,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Emergency heating modes"
     ],
     correctAnswer: 1,
-    explanation: "Demand response automatically reduces HVAC energy consumption during utility peak demand periods, often providing financial incentives to users."
+    explanation: "Demand response automatically reduces HVAC energy consumption during utility peak demand periods, often providing financial incentives to users.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Demand Response",
+    category: "HVAC"
   },
   {
     id: 86,
@@ -1038,7 +1380,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "App interface design"
     ],
     correctAnswer: 1,
-    explanation: "Sensor location away from heat sources and good air circulation around sensors are critical for accurate temperature measurement and control."
+    explanation: "Sensor location away from heat sources and good air circulation around sensors are critical for accurate temperature measurement and control.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Sensor Placement",
+    category: "HVAC"
   },
   {
     id: 87,
@@ -1050,7 +1396,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Seasonal maintenance"
     ],
     correctAnswer: 1,
-    explanation: "Pre-conditioning starts heating or cooling before scheduled occupancy times to ensure comfort when residents arrive while optimizing energy use."
+    explanation: "Pre-conditioning starts heating or cooling before scheduled occupancy times to ensure comfort when residents arrive while optimizing energy use.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Scheduling",
+    category: "HVAC"
   },
   {
     id: 88,
@@ -1062,7 +1412,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Random ventilation cycles"
     ],
     correctAnswer: 1,
-    explanation: "Demand-controlled ventilation uses occupancy and air quality sensors to provide fresh air when needed while minimizing energy consumption."
+    explanation: "Demand-controlled ventilation uses occupancy and air quality sensors to provide fresh air when needed while minimizing energy consumption.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Ventilation",
+    category: "HVAC"
   },
   {
     id: 89,
@@ -1074,7 +1428,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Enhancing lighting quality"
     ],
     correctAnswer: 0,
-    explanation: "Proper humidity control (typically 30-50% RH) ensures comfort and prevents mold/mildew growth, which can cause health issues and property damage."
+    explanation: "Proper humidity control (typically 30-50% RH) ensures comfort and prevents mold/mildew growth, which can cause health issues and property damage.",
+    section: "HVAC Control",
+    difficulty: "basic",
+    topic: "Humidity Control",
+    category: "HVAC"
   },
   {
     id: 90,
@@ -1086,7 +1444,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Outdoor temperature-based control"
     ],
     correctAnswer: 1,
-    explanation: "Distributed sensors throughout different zones provide faster, more accurate response to local temperature changes compared to single central sensors."
+    explanation: "Distributed sensors throughout different zones provide faster, more accurate response to local temperature changes compared to single central sensors.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Zone Control",
+    category: "HVAC"
   },
   {
     id: 91,
@@ -1098,7 +1460,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Emergency operation mode"
     ],
     correctAnswer: 0,
-    explanation: "Economizer mode uses outdoor air for cooling when outdoor temperatures and humidity are favorable, reducing mechanical cooling energy use."
+    explanation: "Economizer mode uses outdoor air for cooling when outdoor temperatures and humidity are favorable, reducing mechanical cooling energy use.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Energy Efficiency",
+    category: "HVAC"
   },
   {
     id: 92,
@@ -1110,7 +1476,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Random temperature adjustments"
     ],
     correctAnswer: 1,
-    explanation: "Learning algorithms analyze occupant behavior patterns and preferences to optimize both comfort and energy efficiency automatically."
+    explanation: "Learning algorithms analyze occupant behavior patterns and preferences to optimize both comfort and energy efficiency automatically.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "AI Learning",
+    category: "HVAC"
   },
   {
     id: 93,
@@ -1122,7 +1492,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Monitoring electrical consumption"
     ],
     correctAnswer: 0,
-    explanation: "Duct pressure monitoring helps detect leaks, blockages, and ensures proper airflow distribution throughout the HVAC system."
+    explanation: "Duct pressure monitoring helps detect leaks, blockages, and ensures proper airflow distribution throughout the HVAC system.",
+    section: "HVAC Control",
+    difficulty: "advanced",
+    topic: "System Monitoring",
+    category: "HVAC"
   },
   {
     id: 94,
@@ -1134,7 +1508,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Kitchen appliances only"
     ],
     correctAnswer: 0,
-    explanation: "Weather forecasting integration allows HVAC systems to prepare for weather changes, optimizing energy use and maintaining comfort proactively."
+    explanation: "Weather forecasting integration allows HVAC systems to prepare for weather changes, optimizing energy use and maintaining comfort proactively.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Integration",
+    category: "HVAC"
   },
   {
     id: 95,
@@ -1146,7 +1524,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Measuring air velocity"
     ],
     correctAnswer: 1,
-    explanation: "Thermal comfort modeling considers factors like temperature, humidity, air movement, and radiant heat to determine optimal conditions for human comfort."
+    explanation: "Thermal comfort modeling considers factors like temperature, humidity, air movement, and radiant heat to determine optimal conditions for human comfort.",
+    section: "HVAC Control",
+    difficulty: "advanced",
+    topic: "Comfort Modeling",
+    category: "HVAC"
   },
   {
     id: 96,
@@ -1158,7 +1540,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "User manual access"
     ],
     correctAnswer: 0,
-    explanation: "Predictive maintenance uses system data to identify potential issues before they cause failures, reducing downtime and repair costs."
+    explanation: "Predictive maintenance uses system data to identify potential issues before they cause failures, reducing downtime and repair costs.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Maintenance",
+    category: "Maintenance"
   },
   {
     id: 97,
@@ -1170,7 +1556,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Adjusting ductwork"
     ],
     correctAnswer: 1,
-    explanation: "Load shifting moves HVAC energy consumption to off-peak hours when electricity rates are lower, reducing operating costs."
+    explanation: "Load shifting moves HVAC energy consumption to off-peak hours when electricity rates are lower, reducing operating costs.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Energy Management",
+    category: "HVAC"
   },
   {
     id: 98,
@@ -1182,7 +1572,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Outdoor air quality data only"
     ],
     correctAnswer: 1,
-    explanation: "Multi-parameter sensors monitoring CO2, VOCs, particulates, and humidity provide comprehensive indoor air quality assessment."
+    explanation: "Multi-parameter sensors monitoring CO2, VOCs, particulates, and humidity provide comprehensive indoor air quality assessment.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Air Quality",
+    category: "HVAC"
   },
   {
     id: 99,
@@ -1194,7 +1588,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "System restart procedures"
     ],
     correctAnswer: 1,
-    explanation: "Smart recovery calculates when to start heating or cooling to reach target temperatures at scheduled times, considering building characteristics."
+    explanation: "Smart recovery calculates when to start heating or cooling to reach target temperatures at scheduled times, considering building characteristics.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Scheduling",
+    category: "HVAC"
   },
   {
     id: 100,
@@ -1206,7 +1604,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Identical zone sizes"
     ],
     correctAnswer: 0,
-    explanation: "Proper zone design considering building layout, solar exposure, and usage patterns is crucial for effective zoned HVAC control."
+    explanation: "Proper zone design considering building layout, solar exposure, and usage patterns is crucial for effective zoned HVAC control.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Zone Design",
+    category: "HVAC"
   },
   {
     id: 101,
@@ -1218,7 +1620,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Seasonal temperature changes only"
     ],
     correctAnswer: 0,
-    explanation: "Adaptive comfort automatically adjusts environmental settings based on occupant feedback, behavior patterns, and external conditions."
+    explanation: "Adaptive comfort automatically adjusts environmental settings based on occupant feedback, behavior patterns, and external conditions.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Adaptive Control",
+    category: "HVAC"
   },
   {
     id: 102,
@@ -1230,7 +1636,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Random temperature adjustments"
     ],
     correctAnswer: 1,
-    explanation: "Intelligent setback reduces heating/cooling during unoccupied periods while ensuring comfortable conditions when residents return."
+    explanation: "Intelligent setback reduces heating/cooling during unoccupied periods while ensuring comfortable conditions when residents return.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Energy Efficiency",
+    category: "HVAC"
   },
   {
     id: 103,
@@ -1242,7 +1652,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Ventilation pathways"
     ],
     correctAnswer: 1,
-    explanation: "Thermal bridging creates areas where heat bypasses insulation, affecting HVAC efficiency and requiring consideration in smart control strategies."
+    explanation: "Thermal bridging creates areas where heat bypasses insulation, affecting HVAC efficiency and requiring consideration in smart control strategies.",
+    section: "HVAC Control",
+    difficulty: "advanced",
+    topic: "Building Science",
+    category: "HVAC"
   },
   {
     id: 104,
@@ -1254,7 +1668,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Identical control interfaces"
     ],
     correctAnswer: 0,
-    explanation: "Coordinating HVAC with security systems allows energy-saving setbacks when the system is armed and normal operation when disarmed."
+    explanation: "Coordinating HVAC with security systems allows energy-saving setbacks when the system is armed and normal operation when disarmed.",
+    section: "HVAC Control",
+    difficulty: "intermediate",
+    topic: "Integration",
+    category: "HVAC"
   },
   {
     id: 105,
@@ -1266,7 +1684,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Equipment radiation shielding"
     ],
     correctAnswer: 1,
-    explanation: "Radiant comfort considers heat transfer to/from surfaces like radiant floors or ceiling panels, which significantly affects human thermal comfort."
+    explanation: "Radiant comfort considers heat transfer to/from surfaces like radiant floors or ceiling panels, which significantly affects human thermal comfort.",
+    section: "HVAC Control",
+    difficulty: "advanced",
+    topic: "Radiant Systems",
+    category: "HVAC"
   },
 
   // Security and Access Control (25 questions)
@@ -1280,7 +1702,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Simpler installation"
     ],
     correctAnswer: 1,
-    explanation: "Smart locks provide access logging, remote control, temporary access codes, and integration with other security systems, enhancing overall security."
+    explanation: "Smart locks provide access logging, remote control, temporary access codes, and integration with other security systems, enhancing overall security.",
+    section: "Security & Access Control",
+    difficulty: "basic",
+    topic: "Smart Locks",
+    category: "Security"
   },
   {
     id: 107,
@@ -1292,7 +1718,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Voice recognition only"
     ],
     correctAnswer: 1,
-    explanation: "Multi-factor authentication combining biometrics with PIN codes or cards provides the highest security by requiring multiple forms of verification."
+    explanation: "Multi-factor authentication combining biometrics with PIN codes or cards provides the highest security by requiring multiple forms of verification.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Authentication",
+    category: "Security"
   },
   {
     id: 108,
@@ -1304,7 +1734,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Camera motion detection"
     ],
     correctAnswer: 1,
-    explanation: "Geofencing automatically arms or disarms security systems based on residents' smartphone locations, providing convenience and security."
+    explanation: "Geofencing automatically arms or disarms security systems based on residents' smartphone locations, providing convenience and security.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Geofencing",
+    category: "Security"
   },
   {
     id: 109,
@@ -1316,7 +1750,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Motion detectors only"
     ],
     correctAnswer: 1,
-    explanation: "Layered security using multiple sensor types (door/window, motion, cameras, glass break, etc.) provides comprehensive coverage and reduces false alarms."
+    explanation: "Layered security using multiple sensor types (door/window, motion, cameras, glass break, etc.) provides comprehensive coverage and reduces false alarms.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Security Design",
+    category: "Security"
   },
   {
     id: 110,
@@ -1328,7 +1766,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Testing device functionality"
     ],
     correctAnswer: 0,
-    explanation: "Tamper detection alerts when someone attempts to disable, remove, or interfere with security devices, maintaining system integrity."
+    explanation: "Tamper detection alerts when someone attempts to disable, remove, or interfere with security devices, maintaining system integrity.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Tamper Protection",
+    category: "Security"
   },
   {
     id: 111,
@@ -1340,7 +1782,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "No encryption"
     ],
     correctAnswer: 1,
-    explanation: "Local storage with encrypted remote access keeps video data under user control while providing secure remote viewing capabilities."
+    explanation: "Local storage with encrypted remote access keeps video data under user control while providing secure remote viewing capabilities.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Video Surveillance",
+    category: "Security"
   },
   {
     id: 112,
@@ -1352,7 +1798,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Tracking energy consumption"
     ],
     correctAnswer: 1,
-    explanation: "Behavioral analytics learns normal household patterns and identifies unusual activities that may indicate security threats."
+    explanation: "Behavioral analytics learns normal household patterns and identifies unusual activities that may indicate security threats.",
+    section: "Security & Access Control",
+    difficulty: "advanced",
+    topic: "Analytics",
+    category: "Security"
   },
   {
     id: 113,
@@ -1364,7 +1814,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Thermostat coordination"
     ],
     correctAnswer: 0,
-    explanation: "Video doorbells and camera verification provide visual confirmation of who is requesting access, enhancing smart lock security."
+    explanation: "Video doorbells and camera verification provide visual confirmation of who is requesting access, enhancing smart lock security.",
+    section: "Security & Access Control",
+    difficulty: "basic",
+    topic: "Integration",
+    category: "Security"
   },
   {
     id: 114,
@@ -1376,7 +1830,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Maintenance mode"
     ],
     correctAnswer: 1,
-    explanation: "Panic mode provides instant emergency activation of all alarms, lighting, and notifications to deter intruders and alert authorities."
+    explanation: "Panic mode provides instant emergency activation of all alarms, lighting, and notifications to deter intruders and alert authorities.",
+    section: "Security & Access Control",
+    difficulty: "basic",
+    topic: "Emergency Features",
+    category: "Security"
   },
   {
     id: 115,
@@ -1388,7 +1846,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Infrared only"
     ],
     correctAnswer: 1,
-    explanation: "Multiple communication paths ensure security systems can still send alerts even if primary communication methods are compromised."
+    explanation: "Multiple communication paths ensure security systems can still send alerts even if primary communication methods are compromised.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Communication",
+    category: "Security"
   },
   {
     id: 116,
@@ -1400,7 +1862,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Administrator password"
     ],
     correctAnswer: 0,
-    explanation: "A duress code appears to disarm the system normally but silently alerts authorities, providing protection during forced entry situations."
+    explanation: "A duress code appears to disarm the system normally but silently alerts authorities, providing protection during forced entry situations.",
+    section: "Security & Access Control",
+    difficulty: "advanced",
+    topic: "Access Codes",
+    category: "Security"
   },
   {
     id: 117,
@@ -1412,7 +1878,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Outdoor areas only"
     ],
     correctAnswer: 1,
-    explanation: "Covering all entry points with strategic interior backup sensors provides comprehensive perimeter protection and early warning."
+    explanation: "Covering all entry points with strategic interior backup sensors provides comprehensive perimeter protection and early warning.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Sensor Placement",
+    category: "Security"
   },
   {
     id: 118,
@@ -1424,7 +1894,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Improving aesthetics"
     ],
     correctAnswer: 0,
-    explanation: "False alarm reduction prevents emergency response fatigue, maintains system credibility, and often avoids false alarm fines."
+    explanation: "False alarm reduction prevents emergency response fatigue, maintains system credibility, and often avoids false alarm fines.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "False Alarms",
+    category: "Security"
   },
   {
     id: 119,
@@ -1436,7 +1910,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Solar panels only"
     ],
     correctAnswer: 1,
-    explanation: "Battery backup systems with monitoring ensure security systems remain operational during power outages, with alerts when backup power is low."
+    explanation: "Battery backup systems with monitoring ensure security systems remain operational during power outages, with alerts when backup power is low.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Backup Power",
+    category: "Security"
   },
   {
     id: 120,
@@ -1448,7 +1926,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Device categorization only"
     ],
     correctAnswer: 1,
-    explanation: "Security system partitioning allows different areas of the home to be armed/disarmed independently, providing flexible security control."
+    explanation: "Security system partitioning allows different areas of the home to be armed/disarmed independently, providing flexible security control.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "System Design",
+    category: "Security"
   },
   {
     id: 121,
@@ -1460,7 +1942,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Installation simplification"
     ],
     correctAnswer: 0,
-    explanation: "Security-triggered lighting activation deters intruders, aids emergency response, and helps residents during security events."
+    explanation: "Security-triggered lighting activation deters intruders, aids emergency response, and helps residents during security events.",
+    section: "Security & Access Control",
+    difficulty: "basic",
+    topic: "Integration",
+    category: "Security"
   },
   {
     id: 122,
@@ -1472,7 +1958,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Battery replacement timing"
     ],
     correctAnswer: 1,
-    explanation: "Access scheduling allows smart locks to grant access only during specified times, useful for service personnel, cleaners, or temporary guests."
+    explanation: "Access scheduling allows smart locks to grant access only during specified times, useful for service personnel, cleaners, or temporary guests.",
+    section: "Security & Access Control",
+    difficulty: "basic",
+    topic: "Access Control",
+    category: "Security"
   },
   {
     id: 123,
@@ -1484,7 +1974,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "External storage only"
     ],
     correctAnswer: 1,
-    explanation: "Privacy modes allow users to disable recording when home while maintaining security when away, balancing security and privacy."
+    explanation: "Privacy modes allow users to disable recording when home while maintaining security when away, balancing security and privacy.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Privacy",
+    category: "Security"
   },
   {
     id: 124,
@@ -1496,7 +1990,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Energy consumption tracking"
     ],
     correctAnswer: 1,
-    explanation: "Security system health monitoring continuously checks all components, communication paths, and system integrity to ensure reliable operation."
+    explanation: "Security system health monitoring continuously checks all components, communication paths, and system integrity to ensure reliable operation.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "System Monitoring",
+    category: "Security"
   },
   {
     id: 125,
@@ -1508,7 +2006,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Number of devices"
     ],
     correctAnswer: 1,
-    explanation: "Proper installation, regular testing, and maintenance procedures are crucial for ensuring smart security systems operate reliably when needed."
+    explanation: "Proper installation, regular testing, and maintenance procedures are crucial for ensuring smart security systems operate reliably when needed.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Reliability",
+    category: "Security"
   },
   {
     id: 126,
@@ -1520,7 +2022,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Device authentication"
     ],
     correctAnswer: 1,
-    explanation: "Intrusion verification uses multiple sensors or confirmation methods to distinguish actual intrusions from false alarms before alerting authorities."
+    explanation: "Intrusion verification uses multiple sensors or confirmation methods to distinguish actual intrusions from false alarms before alerting authorities.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Verification",
+    category: "Security"
   },
   {
     id: 127,
@@ -1532,7 +2038,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Using maximum transmission power always"
     ],
     correctAnswer: 1,
-    explanation: "Intelligent power management allows devices to enter sleep modes when inactive while ensuring rapid response when security events occur."
+    explanation: "Intelligent power management allows devices to enter sleep modes when inactive while ensuring rapid response when security events occur.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Power Management",
+    category: "Security"
   },
   {
     id: 128,
@@ -1544,7 +2054,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Automatic device replacement"
     ],
     correctAnswer: 1,
-    explanation: "Security automation triggers coordinated responses to security events, such as activating lights, cameras, sirens, and sending notifications."
+    explanation: "Security automation triggers coordinated responses to security events, such as activating lights, cameras, sirens, and sending notifications.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Automation",
+    category: "Security"
   },
   {
     id: 129,
@@ -1556,7 +2070,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Music synchronization"
     ],
     correctAnswer: 1,
-    explanation: "HVAC and lighting integration can simulate occupancy when away, deterring intruders by making the home appear occupied."
+    explanation: "HVAC and lighting integration can simulate occupancy when away, deterring intruders by making the home appear occupied.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Integration",
+    category: "Security"
   },
   {
     id: 130,
@@ -1568,7 +2086,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Fastest processing speed"
     ],
     correctAnswer: 1,
-    explanation: "Strong encryption, regular firmware updates, and network segmentation protect smart security systems from cyber attacks and unauthorized access."
+    explanation: "Strong encryption, regular firmware updates, and network segmentation protect smart security systems from cyber attacks and unauthorized access.",
+    section: "Security & Access Control",
+    difficulty: "intermediate",
+    topic: "Cybersecurity",
+    category: "Security"
   },
 
   // Hubs and Voice Assistants (25 questions)
@@ -1582,7 +2104,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Playing music"
     ],
     correctAnswer: 1,
-    explanation: "A smart home hub acts as a central controller that can communicate with devices using different protocols and coordinate their operation."
+    explanation: "A smart home hub acts as a central controller that can communicate with devices using different protocols and coordinate their operation.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "basic",
+    topic: "Hub Functions",
+    category: "Hubs"
   },
   {
     id: 132,
@@ -1594,7 +2120,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Simpler setup"
     ],
     correctAnswer: 1,
-    explanation: "Local hubs can continue controlling devices and executing automations even when internet connectivity is lost, ensuring system reliability."
+    explanation: "Local hubs can continue controlling devices and executing automations even when internet connectivity is lost, ensuring system reliability.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Local Processing",
+    category: "Hubs"
   },
   {
     id: 133,
@@ -1606,7 +2136,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Power distribution"
     ],
     correctAnswer: 1,
-    explanation: "Protocol bridging allows hubs to translate communications between different protocols (Zigbee, Z-Wave, Wi-Fi, etc.) so diverse devices can work together."
+    explanation: "Protocol bridging allows hubs to translate communications between different protocols (Zigbee, Z-Wave, Wi-Fi, etc.) so diverse devices can work together.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Protocol Bridging",
+    category: "Hubs"
   },
   {
     id: 134,
@@ -1618,7 +2152,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Entertainment information"
     ],
     correctAnswer: 1,
-    explanation: "Hands-free voice control enables people with mobility limitations to control their environment easily, significantly improving accessibility."
+    explanation: "Hands-free voice control enables people with mobility limitations to control their environment easily, significantly improving accessibility.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "basic",
+    topic: "Accessibility",
+    category: "Voice Assistants"
   },
   {
     id: 135,
@@ -1630,7 +2168,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Error processing"
     ],
     correctAnswer: 0,
-    explanation: "Edge processing handles automation logic and device control locally on the hub, reducing latency and improving privacy and reliability."
+    explanation: "Edge processing handles automation logic and device control locally on the hub, reducing latency and improving privacy and reliability.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Edge Processing",
+    category: "Hubs"
   },
   {
     id: 136,
@@ -1642,7 +2184,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "No privacy controls"
     ],
     correctAnswer: 1,
-    explanation: "Local processing for basic commands with optional cloud features provides privacy control while maintaining functionality."
+    explanation: "Local processing for basic commands with optional cloud features provides privacy control while maintaining functionality.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Privacy",
+    category: "Voice Assistants"
   },
   {
     id: 137,
@@ -1654,7 +2200,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Audio quality enhancement"
     ],
     correctAnswer: 1,
-    explanation: "Wake words are specific phrases (like 'Alexa' or 'Hey Google') that activate voice assistants to start processing subsequent commands."
+    explanation: "Wake words are specific phrases (like 'Alexa' or 'Hey Google') that activate voice assistants to start processing subsequent commands.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "basic",
+    topic: "Wake Words",
+    category: "Voice Assistants"
   },
   {
     id: 138,
@@ -1666,7 +2216,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Brand recognition"
     ],
     correctAnswer: 1,
-    explanation: "Device capacity and processing power determine how many devices the hub can manage and how complex automations it can execute effectively."
+    explanation: "Device capacity and processing power determine how many devices the hub can manage and how complex automations it can execute effectively.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Scalability",
+    category: "Hubs"
   },
   {
     id: 139,
@@ -1678,7 +2232,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Voice volume control"
     ],
     correctAnswer: 1,
-    explanation: "Natural language processing enables voice assistants to understand conversational speech, context, and intent rather than requiring rigid command phrases."
+    explanation: "Natural language processing enables voice assistants to understand conversational speech, context, and intent rather than requiring rigid command phrases.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "NLP",
+    category: "Voice Assistants"
   },
   {
     id: 140,
@@ -1690,7 +2248,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Identical functionality duplication"
     ],
     correctAnswer: 1,
-    explanation: "Unified control allows voice commands to trigger complex hub automations, providing natural language control of sophisticated smart home scenarios."
+    explanation: "Unified control allows voice commands to trigger complex hub automations, providing natural language control of sophisticated smart home scenarios.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Integration",
+    category: "Hubs"
   },
   {
     id: 141,
@@ -1702,7 +2264,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Device status awareness only"
     ],
     correctAnswer: 1,
-    explanation: "Contextual awareness allows voice assistants to provide more relevant responses by understanding current conditions, time, location, and user patterns."
+    explanation: "Contextual awareness allows voice assistants to provide more relevant responses by understanding current conditions, time, location, and user patterns.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Contextual Awareness",
+    category: "Voice Assistants"
   },
   {
     id: 142,
@@ -1714,7 +2280,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Cloud-only control"
     ],
     correctAnswer: 1,
-    explanation: "Redundant hub deployment with backup capabilities ensures system continues operating if the primary hub fails."
+    explanation: "Redundant hub deployment with backup capabilities ensures system continues operating if the primary hub fails.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "advanced",
+    topic: "Redundancy",
+    category: "Hubs"
   },
   {
     id: 143,
@@ -1726,7 +2296,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Network configuration"
     ],
     correctAnswer: 1,
-    explanation: "Skill development creates custom voice commands and integrations that extend voice assistant capabilities for specific smart home functions."
+    explanation: "Skill development creates custom voice commands and integrations that extend voice assistant capabilities for specific smart home functions.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Skills",
+    category: "Voice Assistants"
   },
   {
     id: 144,
@@ -1738,7 +2312,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "No user interface"
     ],
     correctAnswer: 1,
-    explanation: "Intuitive mobile apps with logical organization make it easy for users to monitor, control, and configure their smart home systems."
+    explanation: "Intuitive mobile apps with logical organization make it easy for users to monitor, control, and configure their smart home systems.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "basic",
+    topic: "User Interface",
+    category: "Hubs"
   },
   {
     id: 145,
@@ -1750,7 +2328,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Individual room isolation"
     ],
     correctAnswer: 1,
-    explanation: "Multi-room audio coordination allows synchronized music playback across multiple rooms and independent control of each zone."
+    explanation: "Multi-room audio coordination allows synchronized music playback across multiple rooms and independent control of each zone.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "basic",
+    topic: "Multi-Room Audio",
+    category: "Hubs"
   },
   {
     id: 146,
@@ -1762,7 +2344,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "User age only"
     ],
     correctAnswer: 1,
-    explanation: "Background noise and microphone placement significantly impact voice recognition accuracy - quiet environments with well-positioned microphones work best."
+    explanation: "Background noise and microphone placement significantly impact voice recognition accuracy - quiet environments with well-positioned microphones work best.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Voice Recognition",
+    category: "Voice Assistants"
   },
   {
     id: 147,
@@ -1774,7 +2360,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Update procedures"
     ],
     correctAnswer: 1,
-    explanation: "Routine automation allows single voice commands to trigger complex sequences of actions across multiple smart home devices."
+    explanation: "Routine automation allows single voice commands to trigger complex sequences of actions across multiple smart home devices.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Routines",
+    category: "Voice Assistants"
   },
   {
     id: 148,
@@ -1786,7 +2376,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Multiple color options"
     ],
     correctAnswer: 1,
-    explanation: "Comprehensive logging and diagnostics help identify issues quickly, reducing troubleshooting time and improving system reliability."
+    explanation: "Comprehensive logging and diagnostics help identify issues quickly, reducing troubleshooting time and improving system reliability.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Diagnostics",
+    category: "Hubs"
   },
   {
     id: 149,
@@ -1798,7 +2392,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Language selection"
     ],
     correctAnswer: 1,
-    explanation: "Voice profile recognition identifies different household members and provides personalized responses, calendars, preferences, and access controls."
+    explanation: "Voice profile recognition identifies different household members and provides personalized responses, calendars, preferences, and access controls.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Voice Profiles",
+    category: "Voice Assistants"
   },
   {
     id: 150,
@@ -1810,7 +2408,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Ignoring performance metrics"
     ],
     correctAnswer: 1,
-    explanation: "Regular updates, performance monitoring, and periodic restarts maintain optimal hub operation and incorporate security patches and new features."
+    explanation: "Regular updates, performance monitoring, and periodic restarts maintain optimal hub operation and incorporate security patches and new features.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "basic",
+    topic: "Maintenance",
+    category: "Maintenance"
   },
   {
     id: 151,
@@ -1822,7 +2424,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Radio broadcasting"
     ],
     correctAnswer: 1,
-    explanation: "Intercom functionality allows household members to communicate between rooms using smart speakers, useful for large homes or calling family to meals."
+    explanation: "Intercom functionality allows household members to communicate between rooms using smart speakers, useful for large homes or calling family to meals.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "basic",
+    topic: "Intercom",
+    category: "Voice Assistants"
   },
   {
     id: 152,
@@ -1834,7 +2440,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Size restrictions"
     ],
     correctAnswer: 1,
-    explanation: "Network security, encryption, and access controls protect the hub and connected devices from cyber threats and unauthorized access."
+    explanation: "Network security, encryption, and access controls protect the hub and connected devices from cyber threats and unauthorized access.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Security",
+    category: "Security"
   },
   {
     id: 153,
@@ -1846,7 +2456,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Installation certification"
     ],
     correctAnswer: 1,
-    explanation: "Hub federation allows multiple hubs to work together, extending system capacity and enabling complex multi-hub automations."
+    explanation: "Hub federation allows multiple hubs to work together, extending system capacity and enabling complex multi-hub automations.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "advanced",
+    topic: "Federation",
+    category: "Hubs"
   },
   {
     id: 154,
@@ -1858,7 +2472,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Bathroom installation only"
     ],
     correctAnswer: 1,
-    explanation: "Distributed voice assistants throughout the home provide better coverage and natural interaction from any room while coordinating responses."
+    explanation: "Distributed voice assistants throughout the home provide better coverage and natural interaction from any room while coordinating responses.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Deployment",
+    category: "Voice Assistants"
   },
   {
     id: 155,
@@ -1870,7 +2488,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Color coordination"
     ],
     correctAnswer: 1,
-    explanation: "Acoustic environment (minimal echo, background noise) and central location ensure optimal voice pickup and response from throughout the room."
+    explanation: "Acoustic environment (minimal echo, background noise) and central location ensure optimal voice pickup and response from throughout the room.",
+    section: "Hubs & Voice Assistants",
+    difficulty: "intermediate",
+    topic: "Placement",
+    category: "Voice Assistants"
   },
 
   // Installation and Safety (25 questions)
@@ -1884,7 +2506,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Marketing materials review"
     ],
     correctAnswer: 1,
-    explanation: "BS 7671 requires complete initial verification including visual inspection and electrical testing before any new installation can be energized."
+    explanation: "BS 7671 requires complete initial verification including visual inspection and electrical testing before any new installation can be energized.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "BS 7671 Requirements",
+    category: "Installation"
   },
   {
     id: 157,
@@ -1896,7 +2522,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Cost minimization"
     ],
     correctAnswer: 1,
-    explanation: "Electrical isolation and safe working practices are critical to prevent electrocution, fire hazards, and ensure safe installation of smart home devices."
+    explanation: "Electrical isolation and safe working practices are critical to prevent electrocution, fire hazards, and ensure safe installation of smart home devices.",
+    section: "Installation & Safety",
+    difficulty: "basic",
+    topic: "Electrical Safety",
+    category: "Installation"
   },
   {
     id: 158,
@@ -1908,7 +2538,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "No specific requirement"
     ],
     correctAnswer: 1,
-    explanation: "Bathroom installations require IP44 or higher depending on the specific zone, with higher ratings required closer to water sources."
+    explanation: "Bathroom installations require IP44 or higher depending on the specific zone, with higher ratings required closer to water sources.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "IP Ratings",
+    category: "Installation"
   },
   {
     id: 159,
@@ -1920,7 +2554,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Business card"
     ],
     correctAnswer: 1,
-    explanation: "Customers must receive appropriate electrical certificates and comprehensive user documentation explaining system operation and safety information."
+    explanation: "Customers must receive appropriate electrical certificates and comprehensive user documentation explaining system operation and safety information.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Documentation",
+    category: "Installation"
   },
   {
     id: 160,
@@ -1932,7 +2570,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Power factor correction"
     ],
     correctAnswer: 1,
-    explanation: "RCD (Residual Current Device) protection provides personal protection against electric shock by detecting earth leakage currents."
+    explanation: "RCD (Residual Current Device) protection provides personal protection against electric shock by detecting earth leakage currents.",
+    section: "Installation & Safety",
+    difficulty: "basic",
+    topic: "RCD Protection",
+    category: "Installation"
   },
   {
     id: 161,
@@ -1944,19 +2586,27 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Manufacturer's preference"
     ],
     correctAnswer: 1,
-    explanation: "BS 7671 specifies the testing sequence to ensure accurate results: continuity, insulation resistance, polarity, earth fault loop impedance."
+    explanation: "BS 7671 specifies the testing sequence to ensure accurate results: continuity, insulation resistance, polarity, earth fault loop impedance.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Testing Sequence",
+    category: "Installation"
   },
   {
     id: 162,
     question: "What is the maximum earth fault loop impedance for a 6A Type B MCB?",
     options: [
-      "1.15Ω",
-      "7.27Ω",
-      "2.3Ω",
-      "4.8Ω"
+      "1.15\u03a9",
+      "7.27\u03a9",
+      "2.3\u03a9",
+      "4.8\u03a9"
     ],
     correctAnswer: 1,
-    explanation: "For a 6A Type B MCB, the maximum earth fault loop impedance (Zs) is 7.27Ω to ensure proper disconnection within required time limits."
+    explanation: "For a 6A Type B MCB, the maximum earth fault loop impedance (Zs) is 7.27\u03a9 to ensure proper disconnection within required time limits.",
+    section: "Installation & Safety",
+    difficulty: "advanced",
+    topic: "Earth Fault Loop",
+    category: "Installation"
   },
   {
     id: 163,
@@ -1968,7 +2618,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Highest possible routing"
     ],
     correctAnswer: 1,
-    explanation: "Cable routing must protect against mechanical damage while using appropriate cable types for the installation environment and load requirements."
+    explanation: "Cable routing must protect against mechanical damage while using appropriate cable types for the installation environment and load requirements.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Cable Installation",
+    category: "Installation"
   },
   {
     id: 164,
@@ -1980,7 +2634,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Cost reduction"
     ],
     correctAnswer: 1,
-    explanation: "Safe isolation ensures electrical supply is properly disconnected, locked off, and cannot be accidentally re-energized while work is being performed."
+    explanation: "Safe isolation ensures electrical supply is properly disconnected, locked off, and cannot be accidentally re-energized while work is being performed.",
+    section: "Installation & Safety",
+    difficulty: "basic",
+    topic: "Safe Isolation",
+    category: "Installation"
   },
   {
     id: 165,
@@ -1992,19 +2650,27 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "IT system"
     ],
     correctAnswer: 1,
-    explanation: "TN-S earthing systems are most common in UK domestic installations, providing a separate neutral and earth conductor from the supply transformer."
+    explanation: "TN-S earthing systems are most common in UK domestic installations, providing a separate neutral and earth conductor from the supply transformer.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Earthing Systems",
+    category: "Installation"
   },
   {
     id: 166,
     question: "What is the minimum insulation resistance required for circuits up to 500V AC?",
     options: [
-      "0.5 MΩ",
-      "1 MΩ",
-      "2 MΩ",
-      "5 MΩ"
+      "0.5 M\u03a9",
+      "1 M\u03a9",
+      "2 M\u03a9",
+      "5 M\u03a9"
     ],
     correctAnswer: 1,
-    explanation: "BS 7671 requires a minimum insulation resistance of 1 MΩ for circuits rated up to 500V AC to ensure adequate insulation integrity."
+    explanation: "BS 7671 requires a minimum insulation resistance of 1 M\u03a9 for circuits rated up to 500V AC to ensure adequate insulation integrity.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Insulation Resistance",
+    category: "Installation"
   },
   {
     id: 167,
@@ -2016,7 +2682,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Power factor correction"
     ],
     correctAnswer: 1,
-    explanation: "Socket outlet circuits require 30mA RCD protection for additional safety against electric shock in accordance with BS 7671."
+    explanation: "Socket outlet circuits require 30mA RCD protection for additional safety against electric shock in accordance with BS 7671.",
+    section: "Installation & Safety",
+    difficulty: "basic",
+    topic: "RCD Requirements",
+    category: "Installation"
   },
   {
     id: 168,
@@ -2028,7 +2698,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "No specific requirement"
     ],
     correctAnswer: 1,
-    explanation: "Socket outlet circuits must disconnect within 0.4 seconds under earth fault conditions to provide adequate personal protection."
+    explanation: "Socket outlet circuits must disconnect within 0.4 seconds under earth fault conditions to provide adequate personal protection.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Disconnection Times",
+    category: "Installation"
   },
   {
     id: 169,
@@ -2040,7 +2714,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Manufacturer preference"
     ],
     correctAnswer: 1,
-    explanation: "Current-carrying capacity depends on installation method, ambient temperature, grouping with other cables, and thermal insulation effects."
+    explanation: "Current-carrying capacity depends on installation method, ambient temperature, grouping with other cables, and thermal insulation effects.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Cable Selection",
+    category: "Installation"
   },
   {
     id: 170,
@@ -2052,7 +2730,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Simplifying installation"
     ],
     correctAnswer: 1,
-    explanation: "Equipotential bonding ensures all metallic parts are at the same electrical potential, preventing dangerous voltage differences during fault conditions."
+    explanation: "Equipotential bonding ensures all metallic parts are at the same electrical potential, preventing dangerous voltage differences during fault conditions.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Bonding",
+    category: "Installation"
   },
   {
     id: 171,
@@ -2064,7 +2746,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Warranty information only"
     ],
     correctAnswer: 1,
-    explanation: "Comprehensive documentation including certificates, test results, maintenance records, and as-built drawings must be maintained for safety and compliance."
+    explanation: "Comprehensive documentation including certificates, test results, maintenance records, and as-built drawings must be maintained for safety and compliance.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Documentation",
+    category: "Installation"
   },
   {
     id: 172,
@@ -2076,7 +2762,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Disable all security features"
     ],
     correctAnswer: 1,
-    explanation: "Proper security configuration including changing default passwords, enabling encryption, and updating firmware is essential during installation."
+    explanation: "Proper security configuration including changing default passwords, enabling encryption, and updating firmware is essential during installation.",
+    section: "Installation & Safety",
+    difficulty: "basic",
+    topic: "Network Security",
+    category: "Security"
   },
   {
     id: 173,
@@ -2088,7 +2778,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Power analyzer"
     ],
     correctAnswer: 1,
-    explanation: "Insulation resistance testing requires a dedicated tester applying 500V DC for circuits up to 500V AC to properly assess insulation integrity."
+    explanation: "Insulation resistance testing requires a dedicated tester applying 500V DC for circuits up to 500V AC to properly assess insulation integrity.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Testing Equipment",
+    category: "Installation"
   },
   {
     id: 174,
@@ -2100,7 +2794,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Power factor improvement"
     ],
     correctAnswer: 1,
-    explanation: "Circuit protective conductors provide a low-impedance path for fault currents, enabling protective devices to operate quickly during earth faults."
+    explanation: "Circuit protective conductors provide a low-impedance path for fault currents, enabling protective devices to operate quickly during earth faults.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "CPCs",
+    category: "Installation"
   },
   {
     id: 175,
@@ -2112,7 +2810,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Single circuit for all devices"
     ],
     correctAnswer: 1,
-    explanation: "Power supply design must consider adequate capacity, apply diversity factors appropriately, and allow for future system expansion."
+    explanation: "Power supply design must consider adequate capacity, apply diversity factors appropriately, and allow for future system expansion.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Power Supply Design",
+    category: "Installation"
   },
   {
     id: 176,
@@ -2124,7 +2826,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "No periodic inspection required"
     ],
     correctAnswer: 1,
-    explanation: "BS 7671 recommends 10-year intervals for periodic inspection of domestic electrical installations to ensure continued safety and compliance."
+    explanation: "BS 7671 recommends 10-year intervals for periodic inspection of domestic electrical installations to ensure continued safety and compliance.",
+    section: "Installation & Safety",
+    difficulty: "basic",
+    topic: "Periodic Inspection",
+    category: "Installation"
   },
   {
     id: 177,
@@ -2136,7 +2842,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Use standard equipment"
     ],
     correctAnswer: 1,
-    explanation: "Working near water requires power isolation and use of appropriate IP-rated equipment to prevent electric shock and equipment damage."
+    explanation: "Working near water requires power isolation and use of appropriate IP-rated equipment to prevent electric shock and equipment damage.",
+    section: "Installation & Safety",
+    difficulty: "basic",
+    topic: "Water Safety",
+    category: "Installation"
   },
   {
     id: 178,
@@ -2148,7 +2858,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Power factor correction"
     ],
     correctAnswer: 1,
-    explanation: "SPDs protect sensitive smart home electronic equipment from damaging voltage surges caused by lightning or switching operations."
+    explanation: "SPDs protect sensitive smart home electronic equipment from damaging voltage surges caused by lightning or switching operations.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Surge Protection",
+    category: "Installation"
   },
   {
     id: 179,
@@ -2160,7 +2874,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Basic connectivity testing only"
     ],
     correctAnswer: 1,
-    explanation: "Proper commissioning requires systematic testing of all functions, complete documentation, and comprehensive user training for safe operation."
+    explanation: "Proper commissioning requires systematic testing of all functions, complete documentation, and comprehensive user training for safe operation.",
+    section: "Installation & Safety",
+    difficulty: "intermediate",
+    topic: "Commissioning",
+    category: "Installation"
   },
   {
     id: 180,
@@ -2172,7 +2890,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Equipment selection"
     ],
     correctAnswer: 1,
-    explanation: "DIY installers must understand electrical safety requirements and recognize when qualified electricians are required for safe, compliant installations."
+    explanation: "DIY installers must understand electrical safety requirements and recognize when qualified electricians are required for safe, compliant installations.",
+    section: "Installation & Safety",
+    difficulty: "basic",
+    topic: "DIY Safety",
+    category: "Installation"
   },
 
   // Troubleshooting and Maintenance (20 questions)
@@ -2186,7 +2908,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Reset all devices"
     ],
     correctAnswer: 1,
-    explanation: "Network connectivity and signal strength issues are the most common cause of smart home problems and should be checked first."
+    explanation: "Network connectivity and signal strength issues are the most common cause of smart home problems and should be checked first.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "basic",
+    topic: "Connectivity Issues",
+    category: "Maintenance"
   },
   {
     id: 182,
@@ -2198,7 +2924,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Standard Wi-Fi analyzer"
     ],
     correctAnswer: 1,
-    explanation: "Network analyzers with Zigbee capabilities can identify interference, mesh topology issues, and communication problems specific to Zigbee networks."
+    explanation: "Network analyzers with Zigbee capabilities can identify interference, mesh topology issues, and communication problems specific to Zigbee networks.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Diagnostic Tools",
+    category: "Maintenance"
   },
   {
     id: 183,
@@ -2210,7 +2940,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Software bugs"
     ],
     correctAnswer: 1,
-    explanation: "Weak wireless signals or interference from other devices commonly cause intermittent operation of smart home devices."
+    explanation: "Weak wireless signals or interference from other devices commonly cause intermittent operation of smart home devices.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "basic",
+    topic: "Common Issues",
+    category: "Maintenance"
   },
   {
     id: 184,
@@ -2222,7 +2956,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Avoiding system use"
     ],
     correctAnswer: 1,
-    explanation: "Regular software updates provide security patches and bug fixes, while physical cleaning prevents overheating and component degradation."
+    explanation: "Regular software updates provide security patches and bug fixes, while physical cleaning prevents overheating and component degradation.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "basic",
+    topic: "Preventive Maintenance",
+    category: "Maintenance"
   },
   {
     id: 185,
@@ -2234,7 +2972,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Disable all automations"
     ],
     correctAnswer: 1,
-    explanation: "Systematic checking involves verifying triggers fire correctly, conditions are met, and actions execute as programmed to isolate failure points."
+    explanation: "Systematic checking involves verifying triggers fire correctly, conditions are met, and actions execute as programmed to isolate failure points.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Automation Issues",
+    category: "Maintenance"
   },
   {
     id: 186,
@@ -2246,7 +2988,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Air pressure changes"
     ],
     correctAnswer: 1,
-    explanation: "Temperature and humidity extremes can affect electronic components, battery performance, and wireless signal propagation."
+    explanation: "Temperature and humidity extremes can affect electronic components, battery performance, and wireless signal propagation.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Environmental Factors",
+    category: "Maintenance"
   },
   {
     id: 187,
@@ -2258,7 +3004,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Manual documentation only"
     ],
     correctAnswer: 1,
-    explanation: "Regular automated configuration backups combined with tested restore procedures ensure quick recovery from system failures."
+    explanation: "Regular automated configuration backups combined with tested restore procedures ensure quick recovery from system failures.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Backup & Recovery",
+    category: "Maintenance"
   },
   {
     id: 188,
@@ -2270,7 +3020,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Brand preference only"
     ],
     correctAnswer: 1,
-    explanation: "Verifying protocol specifications, certification levels, and manufacturer compatibility lists prevents most device compatibility issues."
+    explanation: "Verifying protocol specifications, certification levels, and manufacturer compatibility lists prevents most device compatibility issues.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Compatibility",
+    category: "Maintenance"
   },
   {
     id: 189,
@@ -2282,7 +3036,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Wireless interference"
     ],
     correctAnswer: 1,
-    explanation: "Improper sensor placement (near heat sources, air vents) or incorrect sensitivity settings cause most false alarm issues."
+    explanation: "Improper sensor placement (near heat sources, air vents) or incorrect sensitivity settings cause most false alarm issues.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "False Alarms",
+    category: "Maintenance"
   },
   {
     id: 190,
@@ -2294,7 +3052,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Physical device relocation"
     ],
     correctAnswer: 1,
-    explanation: "Monthly battery level checks and system health monitoring help identify issues before they cause system failures."
+    explanation: "Monthly battery level checks and system health monitoring help identify issues before they cause system failures.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "basic",
+    topic: "Monthly Maintenance",
+    category: "Maintenance"
   },
   {
     id: 191,
@@ -2306,7 +3068,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Switching to different protocols"
     ],
     correctAnswer: 1,
-    explanation: "Analyzing mesh topology and optimizing device placement ensures proper signal paths and eliminates coverage gaps."
+    explanation: "Analyzing mesh topology and optimizing device placement ensures proper signal paths and eliminates coverage gaps.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Mesh Networks",
+    category: "Maintenance"
   },
   {
     id: 192,
@@ -2318,7 +3084,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Continuous device replacement"
     ],
     correctAnswer: 1,
-    explanation: "Proactive monitoring identifies potential issues early, while preventive maintenance prevents many common failures."
+    explanation: "Proactive monitoring identifies potential issues early, while preventive maintenance prevents many common failures.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Reliability",
+    category: "Maintenance"
   },
   {
     id: 193,
@@ -2330,7 +3100,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Wait for automatic resolution"
     ],
     correctAnswer: 1,
-    explanation: "Cybersecurity alerts require immediate investigation to determine if actual threats exist and implement appropriate response measures."
+    explanation: "Cybersecurity alerts require immediate investigation to determine if actual threats exist and implement appropriate response measures.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Security Alerts",
+    category: "Security"
   },
   {
     id: 194,
@@ -2342,7 +3116,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Warranty information only"
     ],
     correctAnswer: 1,
-    explanation: "Detailed configuration records and change logs help quickly identify what changed before problems occurred, accelerating troubleshooting."
+    explanation: "Detailed configuration records and change logs help quickly identify what changed before problems occurred, accelerating troubleshooting.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Documentation",
+    category: "Maintenance"
   },
   {
     id: 195,
@@ -2354,7 +3132,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Marketing information"
     ],
     correctAnswer: 1,
-    explanation: "Users need to understand how the system normally operates and basic troubleshooting steps to resolve simple issues independently."
+    explanation: "Users need to understand how the system normally operates and basic troubleshooting steps to resolve simple issues independently.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "basic",
+    topic: "User Training",
+    category: "Maintenance"
   },
   {
     id: 196,
@@ -2366,7 +3148,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Random update timing"
     ],
     correctAnswer: 1,
-    explanation: "Scheduled updates with testing procedures and rollback capability ensure updates improve rather than disrupt system operation."
+    explanation: "Scheduled updates with testing procedures and rollback capability ensure updates improve rather than disrupt system operation.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "System Updates",
+    category: "Maintenance"
   },
   {
     id: 197,
@@ -2378,7 +3164,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Higher costs"
     ],
     correctAnswer: 1,
-    explanation: "Remote monitoring enables early detection of issues and proactive maintenance, reducing emergency service calls and system downtime."
+    explanation: "Remote monitoring enables early detection of issues and proactive maintenance, reducing emergency service calls and system downtime.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Remote Monitoring",
+    category: "Maintenance"
   },
   {
     id: 198,
@@ -2390,7 +3180,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Cost considerations"
     ],
     correctAnswer: 1,
-    explanation: "Systematic troubleshooting approaches combined with proper diagnostic tools efficiently identify and resolve issues."
+    explanation: "Systematic troubleshooting approaches combined with proper diagnostic tools efficiently identify and resolve issues.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Troubleshooting Methods",
+    category: "Maintenance"
   },
   {
     id: 199,
@@ -2402,7 +3196,11 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Only when problems occur"
     ],
     correctAnswer: 1,
-    explanation: "Quarterly performance reviews identify trends and issues early, while annual comprehensive assessments ensure optimal long-term operation."
+    explanation: "Quarterly performance reviews identify trends and issues early, while annual comprehensive assessments ensure optimal long-term operation.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Performance Reviews",
+    category: "Maintenance"
   },
   {
     id: 200,
@@ -2414,12 +3212,44 @@ export const smartHomeMockExamQuestions: QuizQuestion[] = [
       "Random maintenance schedules"
     ],
     correctAnswer: 1,
-    explanation: "Preventive maintenance based on actual usage and manufacturer recommendations optimizes system reliability while controlling costs."
+    explanation: "Preventive maintenance based on actual usage and manufacturer recommendations optimizes system reliability while controlling costs.",
+    section: "Troubleshooting & Maintenance",
+    difficulty: "intermediate",
+    topic: "Maintenance Strategy",
+    category: "Maintenance"
   }
 ];
 
-// Utility function to get random questions for the mock exam
-export const getRandomSmartHomeMockExamQuestions = (count: number): QuizQuestion[] => {
-  const shuffled = [...smartHomeMockExamQuestions].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
+// Categories for balanced question selection
+export const smartHomeCategories = [
+  'Fundamentals',
+  'Protocols',
+  'Lighting',
+  'HVAC',
+  'Security',
+  'Hubs',
+  'Voice Assistants',
+  'Installation',
+  'Maintenance'
+];
+
+// Configuration for Smart Home mock exam
+export const smartHomeMockExamConfig = {
+  examId: 'smart-home',
+  examTitle: 'Smart Home Technology Mock Examination',
+  totalQuestions: 30,
+  timeLimit: 2700, // 45 minutes in seconds
+  passThreshold: 60,
+  exitPath: '/electrician/upskilling/smart-home-course',
+  categories: smartHomeCategories
+};
+
+// Function to get random questions for mock exam (30 questions with difficulty distribution)
+export const getRandomSmartHomeMockExamQuestions = (numQuestions: number = 30): StandardMockQuestion[] => {
+  return getRandomQuestionsBalanced(
+    smartHomeQuestionBank,
+    numQuestions,
+    smartHomeCategories,
+    { basic: 0.35, intermediate: 0.45, advanced: 0.2 }
+  );
 };
