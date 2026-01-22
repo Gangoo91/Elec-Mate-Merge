@@ -1094,9 +1094,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       {/* Mobile Bottom Action Bar */}
       {isMobile && (
         <MobileBottomActionBar
-          onSave={() => onSave && onSave()}
+          onSave={handleSaveToLibrary}
           onDownload={handleGenerateCombinedRAMS}
-          isSaving={isSaving}
+          isSaving={localIsSaving}
         />
       )}
     </div>

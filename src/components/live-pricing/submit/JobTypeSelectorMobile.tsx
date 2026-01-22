@@ -71,7 +71,9 @@ const JobTypeSelectorMobile: React.FC<JobTypeSelectorMobileProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const { byCategory, configs } = useJobTypes();
+  const { data } = useJobTypes();
+  const byCategory = data?.byCategory ?? {};
+  const configs = data?.configs ?? [];
 
   // Find selected config
   const selectedConfig = useMemo(() => {
