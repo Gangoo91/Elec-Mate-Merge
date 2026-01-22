@@ -16,13 +16,15 @@ import {
 import {
   ArrowLeft, ArrowRight, Zap, Cable, Shield, TrendingDown,
   CheckCircle2, AlertTriangle, AlertCircle, Download, RotateCcw,
-  FileCheck, Loader2, Send, Wrench, FileText, Calculator, TestTube
+  FileCheck, Loader2, Send, Wrench, FileText, Calculator, TestTube,
+  Settings, Clipboard
 } from 'lucide-react';
 import { CircuitWorkingsSheet } from './CircuitWorkingsSheet';
 import { CircuitCard } from './CircuitCard';
 import { MobileSystemSummary } from './mobile/MobileSystemSummary';
 import { cn } from '@/lib/utils';
-import { generateCircuitContext } from '@/utils/circuit-context-generator';
+import { storeContextForAgent, type AgentType } from '@/utils/circuit-context-generator';
+import { toast } from 'sonner';
 
 interface MobileCircuitResultsProps {
   design: InstallationDesign;
@@ -44,15 +46,40 @@ export const MobileCircuitResults = ({
   const [showWorkingsSheet, setShowWorkingsSheet] = useState(false);
 
   // Send to Agent handler
-  const sendToAgent = (agentType: 'installer' | 'rams' | 'cost-engineer' | 'commissioning') => {
-    const context = generateCircuitContext(design);
-    const routes: Record<string, string> = {
-      'installer': '/electrician-tools/installation-advisor',
-      'rams': '/electrician-tools/site-safety',
-      'cost-engineer': '/electrician-tools/cost-engineer',
-      'commissioning': '/electrician-tools/commissioning'
-    };
-    navigate(routes[agentType], { state: { circuitContext: context } });
+  const sendToAgent = (agentType: AgentType) => {
+    try {
+      // Use all circuits for mobile view
+      const circuitIndices = design.circuits.map((_, i) => i);
+
+      // Store context in session storage for agent to pick up
+      storeContextForAgent(design, circuitIndices, agentType);
+
+      const agentRoutes: Record<AgentType, string> = {
+        installer: '/electrician/installation-specialist',
+        rams: '/electrician/health-safety',
+        'cost-engineer': '/electrician/cost-engineer',
+        'method-statement': '/electrician/method-statement',
+        maintenance: '/electrician/maintenance'
+      };
+
+      const agentNames: Record<AgentType, string> = {
+        installer: 'Installation Specialist',
+        rams: 'Risk Assessment',
+        'cost-engineer': 'Cost Engineer',
+        'method-statement': 'Method Statement',
+        maintenance: 'Maintenance Instructions'
+      };
+
+      navigate(agentRoutes[agentType]);
+      toast.success(`Circuit context sent to ${agentNames[agentType]}`, {
+        description: `${circuitIndices.length} circuit${circuitIndices.length !== 1 ? 's' : ''} ready for processing`
+      });
+    } catch (error) {
+      console.error('Failed to send to agent:', error);
+      toast.error('Failed to send circuit context', {
+        description: 'Please try again'
+      });
+    }
   };
 
   const selectedCircuit = design.circuits[selectedCircuitIndex];
@@ -263,20 +290,6 @@ export const MobileCircuitResults = ({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" side="top" className="w-56 mb-2 bg-elec-dark border-elec-yellow/30">
                 <DropdownMenuItem
-                  onClick={() => sendToAgent('installer')}
-                  className="text-white hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 cursor-pointer"
-                >
-                  <Wrench className="h-4 w-4 mr-2 text-elec-yellow" />
-                  Installation Specialist
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => sendToAgent('rams')}
-                  className="text-white hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 cursor-pointer"
-                >
-                  <FileText className="h-4 w-4 mr-2 text-elec-yellow" />
-                  RAMS Generator
-                </DropdownMenuItem>
-                <DropdownMenuItem
                   onClick={() => sendToAgent('cost-engineer')}
                   className="text-white hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 cursor-pointer"
                 >
@@ -284,11 +297,25 @@ export const MobileCircuitResults = ({
                   Cost Engineer
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => sendToAgent('commissioning')}
+                  onClick={() => sendToAgent('rams')}
                   className="text-white hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 cursor-pointer"
                 >
-                  <TestTube className="h-4 w-4 mr-2 text-elec-yellow" />
-                  Commissioning
+                  <Shield className="h-4 w-4 mr-2 text-elec-yellow" />
+                  Risk Assessment
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => sendToAgent('method-statement')}
+                  className="text-white hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 cursor-pointer"
+                >
+                  <Clipboard className="h-4 w-4 mr-2 text-elec-yellow" />
+                  Method Statement
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => sendToAgent('maintenance')}
+                  className="text-white hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 cursor-pointer"
+                >
+                  <Settings className="h-4 w-4 mr-2 text-elec-yellow" />
+                  Maintenance Instructions
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

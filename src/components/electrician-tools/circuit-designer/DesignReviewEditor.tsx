@@ -18,7 +18,7 @@ import {
   CheckCircle2, AlertTriangle, AlertCircle, Download, Zap, Cable, Shield,
   TrendingDown, Percent, Gauge, Wrench, MapPin, ClipboardCheck, FileText,
   Upload, Loader2, Check, ChevronDown, Copy, TestTube, Anchor, Clock, FileCheck,
-  Send, Calculator
+  Send, Calculator, Settings, Clipboard
 } from 'lucide-react';
 import { ResultsSuccessAnimation } from './ResultsSuccessAnimation';
 import { downloadEICPDF } from '@/lib/eic/pdfGenerator';
@@ -268,33 +268,42 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
   // Send to agent function
   const sendToAgent = (agentType: AgentType) => {
-    // If no circuits selected, use all circuits
-    const circuitIndices = selectedCircuitsForExport.length > 0
-      ? selectedCircuitsForExport
-      : design.circuits.map((_, i) => i);
+    try {
+      // If no circuits selected, use all circuits
+      const circuitIndices = selectedCircuitsForExport.length > 0
+        ? selectedCircuitsForExport
+        : design.circuits.map((_, i) => i);
 
-    // Store context in session storage for agent to pick up
-    storeContextForAgent(design, circuitIndices, agentType);
+      // Store context in session storage for agent to pick up
+      storeContextForAgent(design, circuitIndices, agentType);
 
-    // Navigate to agent page
-    const agentRoutes: Record<AgentType, string> = {
-      installer: '/electrician-tools/installation-specialist',
-      rams: '/electrician-tools/health-safety',
-      'cost-engineer': '/electrician-tools/cost-engineer',
-      commissioning: '/electrician-tools/commissioning'
-    };
+      // Navigate to agent page
+      const agentRoutes: Record<AgentType, string> = {
+        installer: '/electrician/installation-specialist',
+        rams: '/electrician/health-safety',
+        'cost-engineer': '/electrician/cost-engineer',
+        'method-statement': '/electrician/method-statement',
+        maintenance: '/electrician/maintenance'
+      };
 
-    const agentNames: Record<AgentType, string> = {
-      installer: 'Installation Specialist',
-      rams: 'RAMS Generator',
-      'cost-engineer': 'Cost Engineer',
-      commissioning: 'Commissioning Specialist'
-    };
+      const agentNames: Record<AgentType, string> = {
+        installer: 'Installation Specialist',
+        rams: 'Risk Assessment',
+        'cost-engineer': 'Cost Engineer',
+        'method-statement': 'Method Statement',
+        maintenance: 'Maintenance Instructions'
+      };
 
-    navigate(agentRoutes[agentType]);
-    toast.success(`Circuit context sent to ${agentNames[agentType]}`, {
-      description: `${circuitIndices.length} circuit${circuitIndices.length !== 1 ? 's' : ''} ready for processing`
-    });
+      navigate(agentRoutes[agentType]);
+      toast.success(`Circuit context sent to ${agentNames[agentType]}`, {
+        description: `${circuitIndices.length} circuit${circuitIndices.length !== 1 ? 's' : ''} ready for processing`
+      });
+    } catch (error) {
+      console.error('Failed to send to agent:', error);
+      toast.error('Failed to send circuit context', {
+        description: 'Please try again'
+      });
+    }
   };
 
   // Responsive breakpoint detection
@@ -2957,21 +2966,21 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuItem onClick={() => sendToAgent('installer')} className="cursor-pointer">
-              <Wrench className="h-4 w-4 mr-2" />
-              Installation Specialist
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => sendToAgent('rams')} className="cursor-pointer">
-              <FileText className="h-4 w-4 mr-2" />
-              RAMS Generator
-            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => sendToAgent('cost-engineer')} className="cursor-pointer">
               <Calculator className="h-4 w-4 mr-2" />
               Cost Engineer
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => sendToAgent('commissioning')} className="cursor-pointer">
-              <TestTube className="h-4 w-4 mr-2" />
-              Commissioning Specialist
+            <DropdownMenuItem onClick={() => sendToAgent('rams')} className="cursor-pointer">
+              <Shield className="h-4 w-4 mr-2" />
+              Risk Assessment
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => sendToAgent('method-statement')} className="cursor-pointer">
+              <Clipboard className="h-4 w-4 mr-2" />
+              Method Statement
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => sendToAgent('maintenance')} className="cursor-pointer">
+              <Settings className="h-4 w-4 mr-2" />
+              Maintenance Instructions
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

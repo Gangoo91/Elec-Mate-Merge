@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { MaintenanceEquipmentDetails } from '@/types/maintenance-method';
@@ -8,6 +9,8 @@ import { MaintenanceMethodResults } from './MaintenanceMethodResults';
 import { MaintenanceSuccess } from './MaintenanceSuccess';
 import { useMaintenanceMethodJobPolling } from '@/hooks/useMaintenanceMethodJobPolling';
 import { buildMaintenancePdfPayload } from '@/utils/maintenance-pdf-payload-builder';
+import { getStoredCircuitContext, clearStoredCircuitContext, type StoredCircuitContext } from '@/utils/circuit-context-generator';
+import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
 
 type ViewState = 'input' | 'processing' | 'success' | 'results';
 
@@ -24,8 +27,30 @@ export const MaintenanceMethodInterface = () => {
   const [isCancelling, setIsCancelling] = useState(false);
   const [viewState, setViewState] = useState<ViewState>('input');
   const [startTime, setStartTime] = useState<number>(0);
+  const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
 
   const { job, isPolling, cancelJob } = useMaintenanceMethodJobPolling(currentJobId);
+
+  // Check for imported circuit context on mount
+  useEffect(() => {
+    const storedContext = getStoredCircuitContext();
+    if (storedContext && storedContext.agentType === 'maintenance') {
+      setImportedContext(storedContext);
+      // Clear after pickup (one-time use)
+      clearStoredCircuitContext();
+    }
+  }, []);
+
+  const handleUseImportedContext = () => {
+    if (importedContext) {
+      setQuery(importedContext.formattedPrompt);
+      setImportedContext(null);
+    }
+  };
+
+  const handleDismissImportedContext = () => {
+    setImportedContext(null);
+  };
 
   // Auto-transition to success when job completes
   // Use boolean for method_data dependency to avoid object reference issues
@@ -262,13 +287,28 @@ export const MaintenanceMethodInterface = () => {
 
   // Show input form
   return (
-    <MaintenanceInput
-      query={query}
-      equipmentDetails={equipmentDetails}
-      onQueryChange={setQuery}
-      onEquipmentDetailsChange={setEquipmentDetails}
-      onGenerate={handleGenerate}
-      isProcessing={isSubmitting}
-    />
+    <>
+      {/* Imported Circuit Context Banner */}
+      <AnimatePresence>
+        {importedContext && (
+          <div className="px-4 pt-4">
+            <ImportedContextBanner
+              source={importedContext.sourceDesign}
+              circuitCount={importedContext.context.circuitSummaries.length}
+              onUseContext={handleUseImportedContext}
+              onDismiss={handleDismissImportedContext}
+            />
+          </div>
+        )}
+      </AnimatePresence>
+      <MaintenanceInput
+        query={query}
+        equipmentDetails={equipmentDetails}
+        onQueryChange={setQuery}
+        onEquipmentDetailsChange={setEquipmentDetails}
+        onGenerate={handleGenerate}
+        isProcessing={isSubmitting}
+      />
+    </>
   );
 };

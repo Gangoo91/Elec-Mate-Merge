@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
@@ -20,15 +20,28 @@ interface MethodStatementInputProps {
     jobScale: 'domestic' | 'commercial' | 'industrial'
   ) => void;
   isProcessing: boolean;
+  initialJobDescription?: string;
+  initialProjectName?: string;
 }
 
 export const MethodStatementInput: React.FC<MethodStatementInputProps> = ({
   onGenerate,
-  isProcessing
+  isProcessing,
+  initialJobDescription = '',
+  initialProjectName = ''
 }) => {
-  const [jobDescription, setJobDescription] = useState('');
-  const [projectName, setProjectName] = useState('');
+  const [jobDescription, setJobDescription] = useState(initialJobDescription);
+  const [projectName, setProjectName] = useState(initialProjectName);
   const [location, setLocation] = useState('');
+
+  // Update state when initial values change (from imported context)
+  useEffect(() => {
+    if (initialJobDescription) setJobDescription(initialJobDescription);
+  }, [initialJobDescription]);
+
+  useEffect(() => {
+    if (initialProjectName) setProjectName(initialProjectName);
+  }, [initialProjectName]);
   const [assessor, setAssessor] = useState('');
   const [contractor, setContractor] = useState('');
   const [supervisor, setSupervisor] = useState('');

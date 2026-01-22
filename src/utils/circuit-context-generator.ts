@@ -33,7 +33,7 @@ export const generateCircuitContext = (
   };
 };
 
-export type AgentType = 'installer' | 'rams' | 'cost-engineer' | 'commissioning';
+export type AgentType = 'installer' | 'rams' | 'cost-engineer' | 'method-statement' | 'maintenance';
 
 export const formatContextForAgent = (
   context: CircuitContextSummary,
@@ -58,7 +58,8 @@ ${context.circuitSummaries.map((c, i) => `
     installer: 'Please provide detailed installation guidance for these circuits.',
     rams: 'Please generate a RAMS document covering installation of these circuits.',
     'cost-engineer': 'Please estimate materials and labour costs for these circuits.',
-    commissioning: 'Please provide commissioning and testing procedures for these circuits.'
+    'method-statement': 'Please generate a method statement for installing these circuits.',
+    maintenance: 'Please provide maintenance instructions and schedules for these circuits.'
   };
 
   return `${baseContext}\n\n${agentInstructions[agentType]}`;

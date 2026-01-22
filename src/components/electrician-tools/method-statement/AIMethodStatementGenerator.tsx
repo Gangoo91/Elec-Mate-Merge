@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Clock } from 'lucide-react';
+import { AnimatePresence } from 'framer-motion';
 import { MethodStatementInput } from './MethodStatementInput';
 import { MethodStatementProcessingView } from './MethodStatementProcessingView';
 import { MethodStatementReviewEditor } from './MethodStatementReviewEditor';
@@ -9,6 +10,8 @@ import { triggerHaptic } from '@/utils/animation-helpers';
 import { supabase } from '@/integrations/supabase/client';
 import { useRAMSJobPolling } from '@/hooks/useRAMSJobPolling';
 import { toast } from '@/hooks/use-toast';
+import { getStoredCircuitContext, clearStoredCircuitContext, type StoredCircuitContext } from '@/utils/circuit-context-generator';
+import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
 
 export const AIMethodStatementGenerator: React.FC = () => {
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
@@ -23,8 +26,29 @@ export const AIMethodStatementGenerator: React.FC = () => {
   const [isCancelling, setIsCancelling] = useState(false);
   const [currentJobDescription, setCurrentJobDescription] = useState<string>('');
   const lastErrorNotifiedJobRef = React.useRef<string | null>(null);
-  
+  const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
+
   const { job, startPolling, stopPolling, progress, status, currentStep, methodData, error } = useRAMSJobPolling(currentJobId);
+
+  // Check for imported circuit context on mount
+  useEffect(() => {
+    const storedContext = getStoredCircuitContext();
+    if (storedContext && storedContext.agentType === 'method-statement') {
+      setImportedContext(storedContext);
+      // Clear after pickup (one-time use)
+      clearStoredCircuitContext();
+    }
+  }, []);
+
+  const handleUseImportedContext = () => {
+    if (importedContext) {
+      setImportedContext(null);
+    }
+  };
+
+  const handleDismissImportedContext = () => {
+    setImportedContext(null);
+  };
 
   // Check for in-progress jobs on mount
   useEffect(() => {
@@ -257,10 +281,27 @@ export const AIMethodStatementGenerator: React.FC = () => {
 
         <div className="space-y-6 md:space-y-8">
           {!showResults ? (
-            <MethodStatementInput
-              onGenerate={handleGenerate}
-              isProcessing={!!currentJobId && (status === 'pending' || status === 'processing')}
-            />
+            <>
+              {/* Imported Circuit Context Banner */}
+              <AnimatePresence>
+                {importedContext && (
+                  <div className="px-2 sm:px-0">
+                    <ImportedContextBanner
+                      source={importedContext.sourceDesign}
+                      circuitCount={importedContext.context.circuitSummaries.length}
+                      onUseContext={handleUseImportedContext}
+                      onDismiss={handleDismissImportedContext}
+                    />
+                  </div>
+                )}
+              </AnimatePresence>
+              <MethodStatementInput
+                onGenerate={handleGenerate}
+                isProcessing={!!currentJobId && (status === 'pending' || status === 'processing')}
+                initialJobDescription={importedContext?.formattedPrompt || ''}
+                initialProjectName={importedContext?.sourceDesign || ''}
+              />
+            </>
           ) : (
             <>
               {resumedJob && status !== 'complete' && (
