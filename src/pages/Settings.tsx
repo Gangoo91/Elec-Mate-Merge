@@ -190,8 +190,8 @@ const SettingsPage = () => {
               transition={{ type: "spring", stiffness: 400, damping: 35 }}
               className="min-h-screen"
             >
-              {/* Mobile Header */}
-              <div className="sticky top-0 z-20 bg-elec-dark/80 backdrop-blur-xl border-b border-white/[0.06]">
+              {/* Mobile Header - solid bg for Android compatibility */}
+              <div className="sticky top-0 z-20 bg-elec-dark border-b border-white/[0.06]">
                 <div className="px-4 py-4">
                   <div className="flex items-center justify-between">
                     {/* User Info */}
@@ -280,8 +280,8 @@ const SettingsPage = () => {
               transition={{ type: "spring", stiffness: 400, damping: 35 }}
               className="min-h-screen"
             >
-              {/* Detail Header */}
-              <div className="sticky top-0 z-20 bg-elec-dark/80 backdrop-blur-xl border-b border-white/[0.06]">
+              {/* Detail Header - solid bg for Android compatibility */}
+              <div className="sticky top-0 z-20 bg-elec-dark border-b border-white/[0.06]">
                 <div className="px-4 py-4">
                   <div className="flex items-center gap-3">
                     <Button
@@ -316,8 +316,8 @@ const SettingsPage = () => {
   // Desktop View
   return (
     <div className="bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 animate-fade-in">
-      {/* Desktop Header */}
-      <div className="border-b border-white/[0.06] bg-elec-dark/50 backdrop-blur-sm sticky top-0 z-20">
+      {/* Desktop Header - solid bg for Android compatibility */}
+      <div className="border-b border-white/[0.06] bg-elec-dark sticky top-0 z-20">
         <div className="px-4 md:px-6 lg:px-8 py-4 max-w-[1600px] mx-auto">
           <div className="flex items-center justify-between gap-4">
             {/* Left: User Info */}

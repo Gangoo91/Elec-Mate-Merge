@@ -105,8 +105,9 @@ export const usePullToRefresh = ({
     if (!container) return;
 
     container.addEventListener('touchstart', handleTouchStart, { passive: true });
-    // Use passive: true to avoid blocking native scroll - preventDefault is guarded by cancelable check
-    container.addEventListener('touchmove', handleTouchMove, { passive: true });
+    // CRITICAL: Must be passive: false to allow preventDefault() on Android
+    // Android Chrome 60+ silently ignores preventDefault() on passive listeners
+    container.addEventListener('touchmove', handleTouchMove, { passive: false });
     container.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {

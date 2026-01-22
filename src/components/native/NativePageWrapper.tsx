@@ -21,6 +21,7 @@ interface NativePageWrapperProps {
   contentClassName?: string;
   headerMaxHeight?: number;
   headerMinHeight?: number;
+  compactTitle?: boolean;
 }
 
 const colorClasses = {
@@ -61,6 +62,7 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
   contentClassName,
   headerMaxHeight = 120,
   headerMinHeight = 56,
+  compactTitle = false,
 }) => {
   const navigate = useNavigate();
   const colors = colorClasses[headerColor];
@@ -122,7 +124,7 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
         ref={headerRef}
         style={collapsingHeader ? { height: headerHeight } : undefined}
         className={cn(
-          'header-collapsible bg-background/80 backdrop-blur-xl border-b border-white/[0.06]',
+          'header-collapsible bg-background border-b border-white/[0.06]',
           !collapsingHeader && 'py-4'
         )}
       >
@@ -168,9 +170,12 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
           {collapsingHeader && (
             <motion.div
               style={{ opacity: subtitleOpacity, scale: titleScale }}
-              className="pb-3 origin-left"
+              className={cn("pb-3", icon ? "origin-left" : "origin-center")}
             >
-              <div className="flex items-center gap-3">
+              <div className={cn(
+                "flex items-center gap-3",
+                !icon && "justify-center text-center"
+              )}>
                 {icon && (
                   <motion.div
                     style={{ opacity: iconOpacity }}
@@ -181,8 +186,11 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
                     })}
                   </motion.div>
                 )}
-                <div>
-                  <h1 className="header-title-large text-foreground">{title}</h1>
+                <div className={!icon ? "text-center" : undefined}>
+                  <h1 className={cn(
+                    compactTitle ? "text-2xl font-bold" : "header-title-large",
+                    "text-foreground"
+                  )}>{title}</h1>
                   {subtitle && (
                     <p className="text-sm text-muted-foreground mt-0.5">
                       {subtitle}

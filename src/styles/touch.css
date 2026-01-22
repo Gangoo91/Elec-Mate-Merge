@@ -212,7 +212,13 @@
 
 /* Padding-bottom with safe area for fixed footers */
 .pb-safe {
-  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  padding-bottom: 1rem; /* Fallback for older Android */
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
 }
 
 /* Safe area inset classes for Capacitor/native apps */
@@ -486,9 +492,15 @@
 
 .pull-to-refresh-container {
   overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
   position: relative;
+}
+
+/* iOS-specific momentum scrolling for pull-to-refresh */
+@supports (-webkit-touch-callout: none) {
+  .pull-to-refresh-container {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
 }
 
 .pull-to-refresh-indicator {
@@ -722,6 +734,28 @@
 .momentum-scroll-y {
   overflow-y: auto;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
+}
+
+/* iOS-specific momentum scrolling - only apply on iOS devices */
+@supports (-webkit-touch-callout: none) {
+  .momentum-scroll-y {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+}
+
+/* ============================================
+   FRAMER MOTION TOUCH FIX
+   Prevents touchmove cancelable warnings
+   ============================================ */
+
+/* Allow vertical scrolling through motion elements */
+[data-framer-component-type],
+[style*="transform"] {
+  touch-action: pan-y;
+}
+
+/* Motion elements that only need tap, not drag */
+.motion-tap-only {
+  touch-action: manipulation;
 }
