@@ -5,7 +5,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { FieldTooltip } from '@/components/ui/field-tooltip';
 import { Users, FileText, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -189,14 +195,18 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Type of Work *</Label>
-                  <MobileSelectPicker
-                    value={formData.workType || ''}
-                    onValueChange={(v) => onUpdate('workType', v)}
-                    options={WORK_TYPES}
-                    placeholder="Select type"
-                    title="Type of Work"
-                    triggerClassName="bg-elec-gray border-white/30"
-                  />
+                  <Select value={formData.workType || ''} onValueChange={(v) => onUpdate('workType', v)}>
+                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {WORK_TYPES.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Location of Work</Label>
@@ -294,17 +304,26 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                       example="Most UK domestic supplies are TN-C-S (PME). TT systems require an earth electrode."
                     />
                   </div>
-                  <MobileSelectPicker
-                    value={formData.earthingArrangement || ''}
-                    onValueChange={(v) => onUpdate('earthingArrangement', v)}
-                    options={EARTHING_ARRANGEMENTS}
-                    placeholder="Select earthing type"
-                    title="Earthing Arrangement"
-                    triggerClassName={cn(
-                      "bg-elec-gray border-white/30",
+                  <Select value={formData.earthingArrangement || ''} onValueChange={(v) => onUpdate('earthingArrangement', v)}>
+                    <SelectTrigger className={cn(
+                      "h-12 bg-white/5 border-white/10 rounded-xl text-base",
                       !formData.earthingArrangement && "border-red-500/50"
-                    )}
-                  />
+                    )}>
+                      <SelectValue placeholder="Select earthing type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {EARTHING_ARRANGEMENTS.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          <div className="flex flex-col">
+                            <span>{opt.label}</span>
+                            {opt.description && (
+                              <span className="text-xs text-white/50">{opt.description}</span>
+                            )}
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   {formData.earthingArrangement && (
                     <p className="text-xs text-muted-foreground mt-1">
                       {EARTHING_ARRANGEMENTS.find(e => e.value === formData.earthingArrangement)?.description}
@@ -346,25 +365,33 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Main Earthing Conductor Size</Label>
-                  <MobileSelectPicker
-                    value={formData.mainEarthingConductorSize || ''}
-                    onValueChange={(v) => onUpdate('mainEarthingConductorSize', v)}
-                    options={EARTHING_CONDUCTOR_SIZES}
-                    placeholder="Select size"
-                    title="Main Earthing Conductor Size"
-                    triggerClassName="bg-elec-gray border-white/30"
-                  />
+                  <Select value={formData.mainEarthingConductorSize || ''} onValueChange={(v) => onUpdate('mainEarthingConductorSize', v)}>
+                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                      <SelectValue placeholder="Select size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {EARTHING_CONDUCTOR_SIZES.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Main Bonding Conductor Size</Label>
-                  <MobileSelectPicker
-                    value={formData.mainBondingConductorSize || ''}
-                    onValueChange={(v) => onUpdate('mainBondingConductorSize', v)}
-                    options={EARTHING_CONDUCTOR_SIZES}
-                    placeholder="Select size"
-                    title="Main Bonding Conductor Size"
-                    triggerClassName="bg-elec-gray border-white/30"
-                  />
+                  <Select value={formData.mainBondingConductorSize || ''} onValueChange={(v) => onUpdate('mainBondingConductorSize', v)}>
+                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                      <SelectValue placeholder="Select size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {EARTHING_CONDUCTOR_SIZES.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 

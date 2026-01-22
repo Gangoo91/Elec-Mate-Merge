@@ -6,7 +6,13 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
-import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { User, CheckSquare, PenTool, UserCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -133,25 +139,33 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({ formData, onUpdate 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Qualification Level</label>
-                  <MobileSelectPicker
-                    value={formData.qualificationLevel || ''}
-                    onValueChange={(v) => onUpdate('qualificationLevel', v)}
-                    options={QUALIFICATION_LEVELS}
-                    placeholder="Select level"
-                    title="Qualification Level"
-                    triggerClassName="h-12 bg-white/5 border-white/10 rounded-xl text-base"
-                  />
+                  <Select value={formData.qualificationLevel || ''} onValueChange={(v) => onUpdate('qualificationLevel', v)}>
+                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                      <SelectValue placeholder="Select level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {QUALIFICATION_LEVELS.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">Scheme Provider</label>
-                  <MobileSelectPicker
-                    value={formData.schemeProvider || ''}
-                    onValueChange={(v) => onUpdate('schemeProvider', v)}
-                    options={SCHEME_PROVIDERS}
-                    placeholder="Select provider"
-                    title="Scheme Provider"
-                    triggerClassName="h-12 bg-white/5 border-white/10 rounded-xl text-base"
-                  />
+                  <Select value={formData.schemeProvider || ''} onValueChange={(v) => onUpdate('schemeProvider', v)}>
+                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                      <SelectValue placeholder="Select provider" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SCHEME_PROVIDERS.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 

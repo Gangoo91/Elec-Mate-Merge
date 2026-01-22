@@ -4,7 +4,13 @@ import SectionHeader from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Power, Zap, Shield, Wrench, AlertCircle, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -227,22 +233,30 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                   </div>
                   <div className="space-y-2">
                     <Label className="text-sm">Polarity *</Label>
-                    <MobileSelectPicker
-                      value={formData.polarity || ''}
-                      onValueChange={(v) => onUpdate('polarity', v)}
-                      options={[
-                        { value: 'correct', label: 'Correct', description: 'All conductors correctly identified' },
-                        { value: 'incorrect', label: 'Incorrect', description: 'Polarity fault detected' },
-                      ]}
-                      placeholder="Select"
-                      title="Polarity Test Result"
-                      triggerClassName={cn(
-                        "bg-elec-gray border-white/30",
+                    <Select value={formData.polarity || ''} onValueChange={(v) => onUpdate('polarity', v)}>
+                      <SelectTrigger className={cn(
+                        "h-12 bg-white/5 border-white/10 rounded-xl text-base",
                         !formData.polarity && "border-red-500/50",
                         formData.polarity === 'correct' && "border-green-500/50",
                         formData.polarity === 'incorrect' && "border-red-500"
-                      )}
-                    />
+                      )}>
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="correct">
+                          <div className="flex flex-col">
+                            <span>Correct</span>
+                            <span className="text-xs text-white/50">All conductors correctly identified</span>
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="incorrect">
+                          <div className="flex flex-col">
+                            <span>Incorrect</span>
+                            <span className="text-xs text-white/50">Polarity fault detected</span>
+                          </div>
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                     {formData.polarity === 'correct' && (
                       <div className="flex items-center gap-1 text-xs text-green-400">
                         <CheckCircle className="h-3 w-3" />
@@ -317,14 +331,18 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label className="text-sm">Test Voltage</Label>
-                    <MobileSelectPicker
-                      value={formData.insulationTestVoltage || '500V'}
-                      onValueChange={(v) => onUpdate('insulationTestVoltage', v)}
-                      options={INSULATION_TEST_VOLTAGES}
-                      placeholder="Select"
-                      title="Insulation Test Voltage"
-                      triggerClassName="bg-elec-gray border-white/30"
-                    />
+                    <Select value={formData.insulationTestVoltage || '500V'} onValueChange={(v) => onUpdate('insulationTestVoltage', v)}>
+                      <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {INSULATION_TEST_VOLTAGES.map((opt) => (
+                          <SelectItem key={opt.value} value={opt.value}>
+                            {opt.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -445,18 +463,31 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Functional Testing</Label>
-                  <MobileSelectPicker
-                    value={formData.functionalTesting || ''}
-                    onValueChange={(v) => onUpdate('functionalTesting', v)}
-                    options={[
-                      { value: 'pass', label: 'Pass', description: 'All functions working correctly' },
-                      { value: 'fail', label: 'Fail', description: 'Functional issues found' },
-                      { value: 'na', label: 'N/A', description: 'Not applicable' },
-                    ]}
-                    placeholder="Select result"
-                    title="Functional Testing Result"
-                    triggerClassName="bg-elec-gray border-white/30"
-                  />
+                  <Select value={formData.functionalTesting || ''} onValueChange={(v) => onUpdate('functionalTesting', v)}>
+                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                      <SelectValue placeholder="Select result" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pass">
+                        <div className="flex flex-col">
+                          <span>Pass</span>
+                          <span className="text-xs text-white/50">All functions working correctly</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="fail">
+                        <div className="flex flex-col">
+                          <span>Fail</span>
+                          <span className="text-xs text-white/50">Functional issues found</span>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="na">
+                        <div className="flex flex-col">
+                          <span>N/A</span>
+                          <span className="text-xs text-white/50">Not applicable</span>
+                        </div>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>
@@ -489,14 +520,18 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="space-y-2">
                         <Label className="text-sm">RCD Rating (mA)</Label>
-                        <MobileSelectPicker
-                          value={formData.rcdRating || ''}
-                          onValueChange={(v) => onUpdate('rcdRating', v)}
-                          options={RCD_RATINGS}
-                          placeholder="Select"
-                          title="RCD Rating (IΔn)"
-                          triggerClassName="bg-elec-gray border-white/30"
-                        />
+                        <Select value={formData.rcdRating || ''} onValueChange={(v) => onUpdate('rcdRating', v)}>
+                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                            <SelectValue placeholder="Select" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {RCD_RATINGS.map((opt) => (
+                              <SelectItem key={opt.value} value={opt.value}>
+                                {opt.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                       <div className="space-y-2">
                         <Label className="text-sm">1× IΔn Trip Time (ms)</Label>
@@ -528,17 +563,25 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                       </div>
                       <div className="space-y-2">
                         <Label className="text-sm">Test Button</Label>
-                        <MobileSelectPicker
-                          value={formData.rcdTestButton || ''}
-                          onValueChange={(v) => onUpdate('rcdTestButton', v)}
-                          options={[
-                            { value: 'pass', label: 'Pass', description: 'RCD trips when test button pressed' },
-                            { value: 'fail', label: 'Fail', description: 'RCD did not trip' },
-                          ]}
-                          placeholder="Result"
-                          title="RCD Test Button Result"
-                          triggerClassName="bg-elec-gray border-white/30"
-                        />
+                        <Select value={formData.rcdTestButton || ''} onValueChange={(v) => onUpdate('rcdTestButton', v)}>
+                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                            <SelectValue placeholder="Result" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pass">
+                              <div className="flex flex-col">
+                                <span>Pass</span>
+                                <span className="text-xs text-white/50">RCD trips when test button pressed</span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="fail">
+                              <div className="flex flex-col">
+                                <span>Fail</span>
+                                <span className="text-xs text-white/50">RCD did not trip</span>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
                     {/* Additional RCD test fields */}
@@ -567,17 +610,25 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                       </div>
                       <div className="space-y-2">
                         <Label className="text-sm">½× IΔn (No Trip)</Label>
-                        <MobileSelectPicker
-                          value={formData.rcdHalfX || ''}
-                          onValueChange={(v) => onUpdate('rcdHalfX', v)}
-                          options={[
-                            { value: 'pass', label: 'Pass', description: 'RCD did not trip at ½× IΔn' },
-                            { value: 'fail', label: 'Fail', description: 'RCD tripped (too sensitive)' },
-                          ]}
-                          placeholder="Result"
-                          title="½× IΔn Test Result"
-                          triggerClassName="bg-elec-gray border-white/30"
-                        />
+                        <Select value={formData.rcdHalfX || ''} onValueChange={(v) => onUpdate('rcdHalfX', v)}>
+                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                            <SelectValue placeholder="Result" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pass">
+                              <div className="flex flex-col">
+                                <span>Pass</span>
+                                <span className="text-xs text-white/50">RCD did not trip at ½× IΔn</span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="fail">
+                              <div className="flex flex-col">
+                                <span>Fail</span>
+                                <span className="text-xs text-white/50">RCD tripped (too sensitive)</span>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
                   </div>
@@ -593,17 +644,25 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label className="text-sm">Test Button</Label>
-                        <MobileSelectPicker
-                          value={formData.afddTestButton || ''}
-                          onValueChange={(v) => onUpdate('afddTestButton', v)}
-                          options={[
-                            { value: 'pass', label: 'Pass', description: 'AFDD trips when test button pressed' },
-                            { value: 'fail', label: 'Fail', description: 'AFDD did not trip' },
-                          ]}
-                          placeholder="Result"
-                          title="AFDD Test Button Result"
-                          triggerClassName="bg-elec-gray border-white/30"
-                        />
+                        <Select value={formData.afddTestButton || ''} onValueChange={(v) => onUpdate('afddTestButton', v)}>
+                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                            <SelectValue placeholder="Result" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pass">
+                              <div className="flex flex-col">
+                                <span>Pass</span>
+                                <span className="text-xs text-white/50">AFDD trips when test button pressed</span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="fail">
+                              <div className="flex flex-col">
+                                <span>Fail</span>
+                                <span className="text-xs text-white/50">AFDD did not trip</span>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
                   </div>
@@ -619,32 +678,53 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label className="text-sm">Indicator Status</Label>
-                        <MobileSelectPicker
-                          value={formData.spdIndicatorStatus || ''}
-                          onValueChange={(v) => onUpdate('spdIndicatorStatus', v)}
-                          options={[
-                            { value: 'green', label: 'Green (OK)', description: 'SPD is functional' },
-                            { value: 'red', label: 'Red (Replace)', description: 'SPD needs replacement' },
-                            { value: 'na', label: 'N/A', description: 'No indicator present' },
-                          ]}
-                          placeholder="Status"
-                          title="SPD Indicator Status"
-                          triggerClassName="bg-elec-gray border-white/30"
-                        />
+                        <Select value={formData.spdIndicatorStatus || ''} onValueChange={(v) => onUpdate('spdIndicatorStatus', v)}>
+                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                            <SelectValue placeholder="Status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="green">
+                              <div className="flex flex-col">
+                                <span>Green (OK)</span>
+                                <span className="text-xs text-white/50">SPD is functional</span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="red">
+                              <div className="flex flex-col">
+                                <span>Red (Replace)</span>
+                                <span className="text-xs text-white/50">SPD needs replacement</span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="na">
+                              <div className="flex flex-col">
+                                <span>N/A</span>
+                                <span className="text-xs text-white/50">No indicator present</span>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                       <div className="space-y-2">
                         <Label className="text-sm">Visual Inspection</Label>
-                        <MobileSelectPicker
-                          value={formData.spdVisualInspection || ''}
-                          onValueChange={(v) => onUpdate('spdVisualInspection', v)}
-                          options={[
-                            { value: 'satisfactory', label: 'Satisfactory', description: 'No visible damage or issues' },
-                            { value: 'unsatisfactory', label: 'Unsatisfactory', description: 'Damage or issues found' },
-                          ]}
-                          placeholder="Result"
-                          title="SPD Visual Inspection"
-                          triggerClassName="bg-elec-gray border-white/30"
-                        />
+                        <Select value={formData.spdVisualInspection || ''} onValueChange={(v) => onUpdate('spdVisualInspection', v)}>
+                          <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                            <SelectValue placeholder="Result" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="satisfactory">
+                              <div className="flex flex-col">
+                                <span>Satisfactory</span>
+                                <span className="text-xs text-white/50">No visible damage or issues</span>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="unsatisfactory">
+                              <div className="flex flex-col">
+                                <span>Unsatisfactory</span>
+                                <span className="text-xs text-white/50">Damage or issues found</span>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
                     {/* SPD Test Button Checkbox */}
@@ -684,14 +764,23 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Test Instrument</Label>
-                  <MobileSelectPicker
-                    value={formData.testEquipmentModel || ''}
-                    onValueChange={handleInstrumentSelect}
-                    options={instrumentOptions}
-                    placeholder="Select instrument"
-                    title="Test Instrument"
-                    triggerClassName="bg-elec-gray border-white/30"
-                  />
+                  <Select value={formData.testEquipmentModel || ''} onValueChange={handleInstrumentSelect}>
+                    <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
+                      <SelectValue placeholder="Select instrument" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {instrumentOptions.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          <div className="flex flex-col">
+                            <span>{opt.label}</span>
+                            {opt.description && (
+                              <span className="text-xs text-white/50">{opt.description}</span>
+                            )}
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   {formData.testEquipmentModel && formData.testEquipmentSerial && (
                     <p className="text-xs text-green-400 flex items-center gap-1">
                       <CheckCircle className="h-3 w-3" />
