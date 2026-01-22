@@ -6,6 +6,7 @@ import { useDevelopmentMode } from '@/hooks/auth/useDevelopmentMode';
 import { useAuthentication } from '@/hooks/auth/useAuthentication';
 import { AuthContextType } from '@/hooks/auth/types';
 import { PresenceManager } from '@/services/presenceService';
+import { identifySentryUser, clearSentryUser } from '@/lib/sentry';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -21,6 +22,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Start presence tracking when user logs in
       presenceManagerRef.current = new PresenceManager(user.id);
       presenceManagerRef.current.start();
+
+      // Identify user in Sentry for error tracking
+      identifySentryUser({
+        id: user.id,
+        email: user.email,
+        role: profile?.role,
+      });
+    } else {
+      // Clear Sentry user on logout
+      clearSentryUser();
     }
 
     return () => {
@@ -30,7 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         presenceManagerRef.current = null;
       }
     };
-  }, [user?.id]);
+  }, [user?.id, user?.email, profile?.role]);
   const {
     isTrialActive,
     trialEndsAt,

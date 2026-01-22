@@ -6,8 +6,12 @@ import App from "./App.tsx";
 import "./index.css";
 import ErrorBoundary from "./components/common/ErrorBoundary.tsx";
 import { initPostHog } from "./components/analytics/PostHogProvider.tsx";
+import { initSentry } from "./lib/sentry.ts";
 
 console.log("[Elec-Mate] All imports loaded");
+
+// Initialize error tracking first (catches errors during init)
+initSentry();
 
 // Initialize PostHog analytics early
 initPostHog();
