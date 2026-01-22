@@ -12,35 +12,9 @@ export interface ValidationResult {
 }
 
 // Required fields for a complete Minor Works Certificate
-const REQUIRED_FIELDS = [
-  'certificateNumber',
-  'propertyAddress',
-  'postcode',
-  'clientName',
-  'workDate',
-  'dateOfCompletion',
-  'contractorName',
-  'workDescription',
-  'workType',
-  'workLocation',
-  'supplyVoltage',
-  'frequency',
-  'supplyPhases',
-  'earthingArrangement',
-  'circuitDesignation',
-  'circuitDescription',
-  'protectiveDeviceType',
-  'protectiveDeviceRating',
-  'continuityR1R2',
-  'polarity',
-  'earthFaultLoopImpedance',
-  'electricianName',
-  'position',
-  'qualificationLevel',
-  'signatureDate',
-  'bs7671Compliance',
-  'testResultsAccurate',
-  'workSafety'
+// Note: Declaration checkboxes removed as blockers - user may generate PDF without all ticked
+const REQUIRED_FIELDS: string[] = [
+  // Minimal required fields - allow PDF generation with partial data
 ];
 
 // Fields that should be numeric
