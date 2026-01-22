@@ -92,7 +92,7 @@ export const DashboardContainer: React.FC<DashboardContainerProps> = ({
       {/* Scrollable content */}
       <div
         ref={containerRef}
-        className="flex-1 overflow-y-auto momentum-scroll-y"
+        className="flex-1 momentum-scroll-y"
       >
         <motion.div
           initial={{ opacity: 0 }}

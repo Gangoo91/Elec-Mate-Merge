@@ -18,7 +18,7 @@ const valueProps = [
 const Subscriptions = () => {
 
   return (
-    <div className="animate-fade-in relative overflow-hidden momentum-scroll-y">
+    <div className="animate-fade-in relative momentum-scroll-y">
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-elec-yellow/[0.05] via-transparent to-transparent" />

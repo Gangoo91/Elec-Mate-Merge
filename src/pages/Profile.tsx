@@ -225,7 +225,7 @@ const ProfilePage = () => {
       {/* Main Content */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto momentum-scroll-y"
+        className="flex-1 momentum-scroll-y"
         onTouchStart={isMobile ? handleTouchStart : undefined}
         onTouchMove={isMobile ? handleTouchMove : undefined}
         onTouchEnd={isMobile ? handleTouchEnd : undefined}

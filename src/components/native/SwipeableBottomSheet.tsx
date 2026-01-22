@@ -93,7 +93,7 @@ export const SwipeableBottomSheet: React.FC<SwipeableBottomSheetProps> = ({
           {/* Content */}
           <div
             className={cn(
-              'overflow-y-auto momentum-scroll-y',
+              'momentum-scroll-y',
               'px-6 py-4 pb-safe',
               contentClassName
             )}

@@ -302,8 +302,8 @@ const SettingsPage = () => {
                 </div>
               </div>
 
-              {/* Detail Content */}
-              <div className="px-4 py-6 momentum-scroll-y">
+              {/* Detail Content - no momentum-scroll-y here, parent handles scroll */}
+              <div className="px-4 py-6">
                 <TabComponent />
               </div>
             </motion.div>

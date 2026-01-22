@@ -36,7 +36,7 @@ export default function StudyCentreIndex() {
     : 0;
 
   return (
-    <div className="pb-24 overflow-y-auto momentum-scroll-y">
+    <div className="pb-24 momentum-scroll-y">
       {/* Premium Hero Section */}
       <div className="relative overflow-hidden">
         {/* Animated background gradient */}

@@ -40,7 +40,10 @@ export function useDraggable(
   }, [bounds, elementRef]);
 
   const handleMouseDown = useCallback((e: MouseEvent | TouchEvent) => {
-    e.preventDefault();
+    // Guard preventDefault with cancelable check to avoid Android intervention warnings
+    if (e.cancelable) {
+      e.preventDefault();
+    }
     setIsDragging(true);
     
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
@@ -79,7 +82,8 @@ export function useDraggable(
     if (!element) return;
 
     element.addEventListener('mousedown', handleMouseDown as any);
-    element.addEventListener('touchstart', handleMouseDown as any, { passive: false });
+    // Use passive: true to avoid blocking main thread; preventDefault is guarded by cancelable check
+    element.addEventListener('touchstart', handleMouseDown as any, { passive: true });
 
     return () => {
       element.removeEventListener('mousedown', handleMouseDown as any);

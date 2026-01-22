@@ -166,7 +166,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
 
         {/* Photo grid */}
         <PullToRefresh onRefresh={handleRefresh} isRefreshing={isLoading}>
-          <div className="flex-1 overflow-y-auto momentum-scroll-y scrollbar-hide p-3">
+          <div className="flex-1 momentum-scroll-y scrollbar-hide p-3">
             <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
               {displayPhotos.map((photo, index) => (
                 <motion.div
@@ -283,7 +283,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
 
       {/* Content */}
       <PullToRefresh onRefresh={handleRefresh} isRefreshing={isLoading}>
-        <div className="flex-1 overflow-y-auto momentum-scroll-y scrollbar-hide">
+        <div className="flex-1 momentum-scroll-y scrollbar-hide">
 
           {/* Projects View - Cards grouped by project */}
           {viewMode === "projects" && (

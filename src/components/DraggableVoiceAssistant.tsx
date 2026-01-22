@@ -772,7 +772,10 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
     // Touch events - added to document for reliable dragging across entire screen
     const handleDocTouchMove = (e: TouchEvent) => {
       if (e.touches.length === 1) {
-        e.preventDefault(); // Prevent scroll while dragging
+        // Guard preventDefault with cancelable check to avoid Android intervention warnings
+        if (e.cancelable) {
+          e.preventDefault(); // Prevent scroll while dragging
+        }
         handleDragMove(e.touches[0].clientX, e.touches[0].clientY);
       }
     };
@@ -784,7 +787,8 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
-      document.addEventListener('touchmove', handleDocTouchMove, { passive: false });
+      // Use passive: true to avoid blocking main thread; preventDefault is guarded by cancelable check
+      document.addEventListener('touchmove', handleDocTouchMove, { passive: true });
       document.addEventListener('touchend', handleDocTouchEnd);
     }
 
@@ -1310,7 +1314,7 @@ export const DraggableVoiceAssistant: React.FC<DraggableVoiceAssistantProps> = (
           }}
           className={cn(
             "relative h-14 w-14 rounded-full transition-all duration-300 select-none",
-            "flex items-center justify-center",
+            "flex items-center justify-center touch-none",
             "shadow-xl",
             isConnected
               ? "bg-gradient-to-br from-green-500 to-emerald-600 shadow-green-500/30"

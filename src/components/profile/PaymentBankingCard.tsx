@@ -280,7 +280,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
             </button>
           </div>
 
-          <div className="px-4 py-6 space-y-6 overflow-y-auto momentum-scroll-y pb-32">
+          <div className="px-4 py-6 space-y-6 momentum-scroll-y pb-32">
             {/* Stripe Connect CTA */}
             {stripeStatus?.status !== 'active' && (
               <motion.button

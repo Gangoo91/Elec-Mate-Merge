@@ -225,7 +225,7 @@ export default function CameraTab({ onPhotoUploaded, projectReference: initialPr
   return (
     <div className="flex flex-col h-full bg-elec-dark">
       {/* Compact form with desktop max-width */}
-      <div className="flex-1 overflow-y-auto momentum-scroll-y scrollbar-hide">
+      <div className="flex-1 momentum-scroll-y scrollbar-hide">
         <div className="p-3 md:p-6 space-y-4 max-w-2xl mx-auto">
           {/* Photo thumbnail - smaller on desktop */}
           <div className="relative w-full md:w-48 md:mx-auto h-24 md:h-32 rounded-xl overflow-hidden bg-[#1e1e1e] border border-white/10">

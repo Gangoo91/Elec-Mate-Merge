@@ -233,7 +233,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
             </button>
           </div>
 
-          <div className="px-4 py-6 space-y-6 overflow-y-auto momentum-scroll-y pb-32">
+          <div className="px-4 py-6 space-y-6 momentum-scroll-y pb-32">
             {hasElecId && (
               <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                 <div className="flex items-center gap-2 mb-2">

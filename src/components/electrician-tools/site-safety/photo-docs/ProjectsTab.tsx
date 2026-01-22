@@ -108,7 +108,7 @@ export default function ProjectsTab() {
 
         {/* Camera Sheet */}
         <Sheet open={cameraOpen} onOpenChange={setCameraOpen}>
-          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
             <CameraTab
               onPhotoUploaded={handlePhotoUploaded}
               projectReference={captureForProject || undefined}
@@ -148,7 +148,7 @@ export default function ProjectsTab() {
 
           {/* Projects list */}
           <PullToRefresh onRefresh={handleRefresh} isRefreshing={isLoading}>
-            <div className="flex-1 overflow-y-auto momentum-scroll-y scrollbar-hide p-3 space-y-2">
+            <div className="flex-1 momentum-scroll-y scrollbar-hide p-3 space-y-2">
               {filteredProjects.length === 0 ? (
                 <div className="text-center py-12">
                   <p className="text-sm text-white/50">No projects found</p>
@@ -223,7 +223,7 @@ export default function ProjectsTab() {
 
         {/* Camera Sheet */}
         <Sheet open={cameraOpen} onOpenChange={setCameraOpen}>
-          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
             <CameraTab
               onPhotoUploaded={handlePhotoUploaded}
               projectReference={captureForProject || undefined}
@@ -270,7 +270,7 @@ export default function ProjectsTab() {
 
         {/* Photo grid */}
         <PullToRefresh onRefresh={handleRefresh} isRefreshing={isLoading}>
-          <div className="flex-1 overflow-y-auto momentum-scroll-y scrollbar-hide p-3 pb-20">
+          <div className="flex-1 momentum-scroll-y scrollbar-hide p-3 pb-20">
             {displayPhotos.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-sm text-white/50">No photos in this project</p>
@@ -337,7 +337,7 @@ export default function ProjectsTab() {
 
       {/* Camera Sheet */}
       <Sheet open={cameraOpen} onOpenChange={setCameraOpen}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
           <CameraTab
             onPhotoUploaded={handlePhotoUploaded}
             projectReference={captureForProject || undefined}

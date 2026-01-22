@@ -248,7 +248,7 @@ export const NativePageWrapper: React.FC<NativePageWrapperProps> = ({
       <div
         ref={setRefs}
         className={cn(
-          'flex-1 overflow-y-auto momentum-scroll-y',
+          'flex-1 momentum-scroll-y',
           contentClassName
         )}
       >

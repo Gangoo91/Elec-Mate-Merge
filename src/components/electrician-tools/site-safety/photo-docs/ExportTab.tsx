@@ -332,7 +332,7 @@ export default function ExportTab() {
   }
 
   return (
-    <div className="flex flex-col h-full bg-black overflow-y-auto momentum-scroll-y scrollbar-hide">
+    <div className="flex flex-col h-full bg-black momentum-scroll-y scrollbar-hide">
       {/* Stats summary - compact */}
       <div className="grid grid-cols-3 gap-[1px] bg-white/5">
         <div className="bg-black p-3 text-center">

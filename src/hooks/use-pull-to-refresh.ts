@@ -105,7 +105,8 @@ export const usePullToRefresh = ({
     if (!container) return;
 
     container.addEventListener('touchstart', handleTouchStart, { passive: true });
-    container.addEventListener('touchmove', handleTouchMove, { passive: false });
+    // Use passive: true to avoid blocking native scroll - preventDefault is guarded by cancelable check
+    container.addEventListener('touchmove', handleTouchMove, { passive: true });
     container.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {

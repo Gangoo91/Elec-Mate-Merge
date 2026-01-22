@@ -172,7 +172,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
             </button>
           </div>
 
-          <div className="px-4 py-6 space-y-6 overflow-y-auto momentum-scroll-y pb-32">
+          <div className="px-4 py-6 space-y-6 momentum-scroll-y pb-32">
             <div className="space-y-2">
               <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
                 Company Name *

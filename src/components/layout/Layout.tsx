@@ -25,11 +25,11 @@ const Layout = () => {
   }, [isMobile, sidebarOpen]);
 
   return (
-    <div className="flex min-h-screen min-h-[100dvh] bg-elec-dark text-slate-50 overflow-x-hidden">
+    <div className="flex min-h-screen bg-elec-dark text-slate-50 overflow-x-hidden">
       {/* Sidebar navigation - mobile-ready with glass morphism */}
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
-      <div className="flex flex-col flex-1 relative min-w-0 min-h-screen min-h-[100dvh]">
+      <div className="flex flex-col flex-1 relative min-w-0">
         {/* Header with glass morphism */}
         <Header toggleSidebar={toggleSidebar} />
 

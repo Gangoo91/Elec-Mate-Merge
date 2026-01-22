@@ -97,8 +97,11 @@ export const useSwipeable = ({
     const direction = getDirection(diffX, diffY);
 
     // Prevent scroll when swiping horizontally (useful for carousels)
+    // Guard with cancelable check to avoid Android intervention warnings
     if (preventScrollOnHorizontal && Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
-      e?.preventDefault();
+      if (e && 'cancelable' in e && e.cancelable) {
+        e.preventDefault();
+      }
     }
 
     setSwipeState({
