@@ -32,7 +32,7 @@ const outcomeOptions = [
   { value: 'C2' as const, label: 'C2', icon: AlertCircle, color: 'orange' },
   { value: 'C3' as const, label: 'C3', icon: AlertTriangle, color: 'yellow' },
   { value: 'not-applicable' as const, label: 'N/A', icon: null, color: 'gray' },
-  { value: 'limitation' as const, label: 'LIM', icon: null, color: 'purple' },
+  { value: 'not-verified' as const, label: 'N/V', icon: Eye, color: 'blue' },
 ];
 
 const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
@@ -129,6 +129,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
       case 'C3': return { border: 'border-l-yellow-500', bg: 'bg-yellow-500/5' };
       case 'limitation': return { border: 'border-l-purple-500', bg: 'bg-purple-500/5' };
       case 'not-applicable': return { border: 'border-l-gray-500', bg: 'bg-gray-500/5' };
+      case 'not-verified': return { border: 'border-l-blue-500', bg: 'bg-blue-500/5' };
       default: return { border: 'border-l-border/50', bg: '' };
     }
   };
@@ -184,22 +185,26 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
             currentOutcome === 'C2' ? "bg-orange-500/20 text-orange-400" :
             currentOutcome === 'C3' ? "bg-yellow-500/20 text-yellow-400" :
             currentOutcome === 'not-applicable' ? "bg-gray-500/20 text-gray-400" :
+            currentOutcome === 'not-verified' ? "bg-blue-500/20 text-blue-400" :
+            currentOutcome === 'limitation' ? "bg-purple-500/20 text-purple-400" :
             "bg-elec-yellow/20 text-elec-yellow"
           )}>
             {currentOutcome === 'satisfactory' ? <Check className="h-4 w-4" /> :
              currentOutcome === 'C1' ? 'C1' :
              currentOutcome === 'C2' ? 'C2' :
              currentOutcome === 'C3' ? 'C3' :
+             currentOutcome === 'not-verified' ? 'N/V' :
+             currentOutcome === 'limitation' ? 'LIM' :
              sectionItem.number}
           </span>
 
           {/* Item Title */}
-          <div className="flex-1 min-w-0">
-            <p className="text-sm text-foreground font-medium leading-tight line-clamp-2">
+          <div className="flex-1 min-w-0 text-left">
+            <p className="text-sm text-foreground font-medium leading-tight line-clamp-2 text-left">
               {sectionItem.item}
             </p>
             {sectionItem.clause && (
-              <span className="text-xs text-muted-foreground font-mono">
+              <span className="text-xs text-muted-foreground font-mono block text-left">
                 {sectionItem.clause}
               </span>
             )}
@@ -214,7 +219,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
 
         {/* Inline outcome buttons - always visible */}
         <div className="px-3 pb-3 flex gap-1.5">
-          {outcomeOptions.slice(0, 5).map((option) => {
+          {outcomeOptions.map((option) => {
             const isActive = currentOutcome === option.value;
             const Icon = option.icon;
             return (
@@ -224,7 +229,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
                 onClick={() => handleOutcomeClick(option.value)}
                 className={cn(
                   "flex-1 h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation",
-                  "flex items-center justify-center gap-1",
+                  "flex items-center justify-center gap-0.5",
                   "active:scale-95",
                   isActive ? (
                     option.color === 'green' ? "bg-green-500 text-white" :
@@ -232,6 +237,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
                     option.color === 'orange' ? "bg-orange-500 text-white" :
                     option.color === 'yellow' ? "bg-yellow-500 text-black" :
                     option.color === 'gray' ? "bg-gray-500 text-white" :
+                    option.color === 'blue' ? "bg-blue-500 text-white" :
                     "bg-purple-500 text-white"
                   ) : (
                     option.color === 'green' ? "bg-green-500/10 text-green-400 border border-green-500/30" :
@@ -239,6 +245,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
                     option.color === 'orange' ? "bg-orange-500/10 text-orange-400 border border-orange-500/30" :
                     option.color === 'yellow' ? "bg-yellow-500/10 text-yellow-400 border border-yellow-500/30" :
                     option.color === 'gray' ? "bg-white/5 text-white/50 border border-white/10" :
+                    option.color === 'blue' ? "bg-blue-500/10 text-blue-400 border border-blue-500/30" :
                     "bg-purple-500/10 text-purple-400 border border-purple-500/30"
                   )
                 )}

@@ -30,7 +30,6 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
 
   // Board scan state
   const [showBoardScan, setShowBoardScan] = useState(false);
-  const [returnToTestingTab, setReturnToTestingTab] = useState(false);
 
   // Lifted tab state - controlled from header
   const [currentTab, setCurrentTab] = useState<TabValue>('details');
@@ -128,7 +127,8 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     }
 
     setShowBoardScan(false);
-    setReturnToTestingTab(true);
+    // Stay on testing tab after scan completes
+    setCurrentTab('testing');
   }, [formData.scheduleOfTests, updateFormData]);
 
   // Warn before closing tab if there are unsynchronised changes

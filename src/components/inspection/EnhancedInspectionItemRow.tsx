@@ -101,19 +101,19 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
       </TableCell>
 
       {/* Item Number + Title + Clause */}
-      <TableCell className="py-4">
+      <TableCell className="py-4 text-left">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="space-y-1">
-                <p className="text-sm text-white leading-relaxed">
+              <div className="space-y-1 text-left">
+                <p className="text-sm text-white leading-relaxed text-left">
                   <span className="text-elec-yellow font-mono font-semibold mr-2">
                     {sectionItem.number}
                   </span>
                   {sectionItem.item}
                 </p>
                 {sectionItem.clause && (
-                  <p className="text-xs text-white/40 font-mono">
+                  <p className="text-xs text-white/40 font-mono text-left">
                     {sectionItem.clause}
                   </p>
                 )}

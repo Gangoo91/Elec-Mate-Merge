@@ -2,26 +2,15 @@ import React, { useMemo, useState, useCallback, useEffect, useRef, memo } from '
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import {
   ChevronDown,
   Plus,
   Trash2,
-  Zap,
   MapPin,
   CircuitBoard,
   CheckCircle,
-  AlertCircle,
-  Camera,
-  Mic,
-  Wand2,
-  Sparkles,
-  FileText,
-  Pen,
-  Shield,
-  Grid
+  AlertCircle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DistributionBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
@@ -202,39 +191,39 @@ const BoardSection: React.FC<BoardSectionProps> = ({
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <div className="p-4 space-y-4 border-t border-white/10">
-            {/* Board Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="p-5 space-y-5 border-t border-white/10">
+            {/* Board Details - Clean Grid Layout */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Reference */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+              <div className="space-y-2">
+                <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
                   Reference
                 </Label>
                 <DebouncedInput
                   value={board.reference}
                   onChange={(value) => onUpdateBoard(board.id, 'reference', value)}
-                  placeholder="e.g. Main CU, Sub-DB1"
-                  className="h-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+                  placeholder="e.g. Main CU"
+                  className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white/25 focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg"
                 />
               </div>
 
               {/* Location */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+              <div className="space-y-2">
+                <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
                   Location
                 </Label>
                 <DebouncedInput
                   value={board.location || ''}
                   onChange={(value) => onUpdateBoard(board.id, 'location', value)}
                   placeholder="e.g. Garage, Kitchen"
-                  className="h-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+                  className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white/25 focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg"
                 />
               </div>
 
               {/* Zdb */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-white/60 uppercase tracking-wide">
-                  Z<sub className="text-[9px]">db</sub> (Ω)
+              <div className="space-y-2">
+                <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                  Z<sub className="text-[9px]">DB</sub> (Ω)
                 </Label>
                 <div className="relative">
                   <DebouncedInput
@@ -243,16 +232,16 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     value={board.zdb}
                     onChange={(value) => onUpdateBoard(board.id, 'zdb', value)}
                     placeholder="0.00"
-                    className="h-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50 pr-8"
+                    className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white/25 focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg pr-10"
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-xs">Ω</span>
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm font-medium">Ω</span>
                 </div>
               </div>
 
               {/* Ipf */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-white/60 uppercase tracking-wide">
-                  I<sub className="text-[9px]">pf</sub> (kA)
+              <div className="space-y-2">
+                <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                  I<sub className="text-[9px]">PF</sub> (kA)
                 </Label>
                 <div className="relative">
                   <DebouncedInput
@@ -261,94 +250,122 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     value={board.ipf}
                     onChange={(value) => onUpdateBoard(board.id, 'ipf', value)}
                     placeholder="0.0"
-                    className="h-10 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50 pr-10"
+                    className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white/25 focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg pr-10"
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-xs">kA</span>
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm font-medium">kA</span>
                 </div>
               </div>
             </div>
 
-            {/* Verification Checkboxes */}
-            <div className={cn("flex flex-wrap gap-4", isMobile && "gap-2")}>
-              <label className={cn(
-                "flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all",
-                "hover:bg-white/5",
-                board.confirmedCorrectPolarity && "bg-green-500/10 border border-green-500/20",
-                isMobile && "px-2 py-1.5 text-xs"
-              )}>
-                <Checkbox
-                  checked={board.confirmedCorrectPolarity}
-                  onCheckedChange={(checked) => onUpdateBoard(board.id, 'confirmedCorrectPolarity', checked === true)}
-                  className="data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                />
-                <span className={cn("text-sm text-white/80", isMobile && "text-xs")}>Correct Polarity</span>
-              </label>
+            {/* Verification Checkboxes - Button Style */}
+            <div className={cn("flex items-center flex-wrap gap-2", isMobile && "gap-1.5")}>
+              <button
+                type="button"
+                onClick={() => onUpdateBoard(board.id, 'confirmedCorrectPolarity', !board.confirmedCorrectPolarity)}
+                className={cn(
+                  "h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3",
+                  board.confirmedCorrectPolarity
+                    ? "bg-green-500/20 border border-green-500/30 text-green-400"
+                    : "bg-card border border-border/50 text-muted-foreground hover:bg-card/80",
+                  isMobile && "h-9 px-2.5"
+                )}
+              >
+                <div className={cn(
+                  "w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0",
+                  board.confirmedCorrectPolarity ? "bg-green-500 border-green-500" : "border-muted-foreground"
+                )}>
+                  {board.confirmedCorrectPolarity && (
+                    <svg className="h-3 w-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  )}
+                </div>
+                <span>Correct Polarity</span>
+              </button>
 
-              <label className={cn(
-                "flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all",
-                "hover:bg-white/5",
-                board.confirmedPhaseSequence && "bg-green-500/10 border border-green-500/20",
-                isMobile && "px-2 py-1.5 text-xs"
-              )}>
-                <Checkbox
-                  checked={board.confirmedPhaseSequence}
-                  onCheckedChange={(checked) => onUpdateBoard(board.id, 'confirmedPhaseSequence', checked === true)}
-                  className="data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                />
-                <span className={cn("text-sm text-white/80", isMobile && "text-xs")}>Phase Sequence</span>
-              </label>
+              <button
+                type="button"
+                onClick={() => onUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence)}
+                className={cn(
+                  "h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3",
+                  board.confirmedPhaseSequence
+                    ? "bg-green-500/20 border border-green-500/30 text-green-400"
+                    : "bg-card border border-border/50 text-muted-foreground hover:bg-card/80",
+                  isMobile && "h-9 px-2.5"
+                )}
+              >
+                <div className={cn(
+                  "w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0",
+                  board.confirmedPhaseSequence ? "bg-green-500 border-green-500" : "border-muted-foreground"
+                )}>
+                  {board.confirmedPhaseSequence && (
+                    <svg className="h-3 w-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  )}
+                </div>
+                <span>Phase Sequence</span>
+              </button>
 
-              <label className={cn(
-                "flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all",
-                "hover:bg-white/5",
-                board.spdOperationalStatus && "bg-green-500/10 border border-green-500/20",
-                isMobile && "px-2 py-1.5 text-xs"
-              )}>
-                <Checkbox
-                  checked={board.spdOperationalStatus}
-                  onCheckedChange={(checked) => onUpdateBoard(board.id, 'spdOperationalStatus', checked === true)}
-                  className="data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  disabled={board.spdNA}
-                />
-                <span className={cn("text-sm text-white/80", isMobile && "text-xs")}>SPD Operational</span>
-              </label>
+              <button
+                type="button"
+                onClick={() => !board.spdNA && onUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus)}
+                className={cn(
+                  "h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3",
+                  board.spdOperationalStatus
+                    ? "bg-green-500/20 border border-green-500/30 text-green-400"
+                    : "bg-card border border-border/50 text-muted-foreground hover:bg-card/80",
+                  board.spdNA && "opacity-40 cursor-not-allowed",
+                  isMobile && "h-9 px-2.5"
+                )}
+                disabled={board.spdNA}
+              >
+                <div className={cn(
+                  "w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0",
+                  board.spdOperationalStatus ? "bg-green-500 border-green-500" : "border-muted-foreground"
+                )}>
+                  {board.spdOperationalStatus && (
+                    <svg className="h-3 w-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  )}
+                </div>
+                <span>SPD Operational</span>
+              </button>
 
-              <label className={cn(
-                "flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all touch-manipulation",
-                "hover:bg-white/5 active:scale-[0.98]",
-                board.spdNA && "bg-amber-500/10 border border-amber-500/30",
-                !board.spdNA && "border border-transparent",
-                isMobile && "px-2 py-1.5 text-xs"
-              )}>
-                <Checkbox
-                  checked={board.spdNA}
-                  onCheckedChange={(checked) => {
-                    onUpdateBoard(board.id, 'spdNA', checked === true);
-                    if (checked) onUpdateBoard(board.id, 'spdOperationalStatus', false);
-                  }}
-                  className="h-5 w-5 border-elec-yellow/50 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                />
-                <span className={cn("text-sm text-white", isMobile && "text-xs")}>SPD N/A</span>
-              </label>
+              <button
+                type="button"
+                onClick={() => {
+                  const newValue = !board.spdNA;
+                  onUpdateBoard(board.id, 'spdNA', newValue);
+                  if (newValue) onUpdateBoard(board.id, 'spdOperationalStatus', false);
+                }}
+                className={cn(
+                  "h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3",
+                  board.spdNA
+                    ? "bg-amber-500/20 border border-amber-500/30 text-amber-400"
+                    : "bg-card border border-border/50 text-muted-foreground hover:bg-card/80",
+                  isMobile && "h-9 px-2.5"
+                )}
+              >
+                <div className={cn(
+                  "w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0",
+                  board.spdNA ? "bg-amber-500 border-amber-500" : "border-muted-foreground"
+                )}>
+                  {board.spdNA && (
+                    <svg className="h-3 w-3 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  )}
+                </div>
+                <span>SPD N/A</span>
+              </button>
             </div>
 
             {/* Mobile Action Bar - Above table */}
-            {isMobile && showTools && tools && (
+            {isMobile && (
               <div className="py-3 border-t border-white/10">
                 <div className="flex items-center gap-2">
-                  {/* AI Scan Button - Primary action */}
-                  {tools.onScanBoard && (
-                    <Button
-                      variant="default"
-                      size="sm"
-                      className="flex-1 h-11 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
-                      onClick={tools.onScanBoard}
-                    >
-                      <Camera className="h-4 w-4 mr-2" />
-                      AI Scan
-                    </Button>
-                  )}
-
                   {/* Add Circuit Button */}
                   <Button
                     variant="outline"
@@ -359,137 +376,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     <Plus className="h-4 w-4 mr-2" />
                     Add Circuit
                   </Button>
-
-                  {/* Voice Button */}
-                  {tools.onVoiceToggle && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className={cn(
-                        "h-11 w-11 p-0 flex-shrink-0 touch-manipulation active:scale-[0.98] transition-all duration-200",
-                        tools.voiceActive
-                          ? "bg-green-500/20 border-green-500 ring-2 ring-green-500/30"
-                          : tools.voiceConnecting
-                          ? "bg-yellow-500/20 border-yellow-500 animate-pulse"
-                          : "bg-purple-500/20 border-purple-500/50 hover:bg-purple-500/30"
-                      )}
-                      onClick={tools.onVoiceToggle}
-                      disabled={tools.voiceConnecting}
-                    >
-                      <Mic className={cn(
-                        "h-5 w-5",
-                        tools.voiceActive ? "text-green-500 animate-pulse" :
-                        tools.voiceConnecting ? "text-yellow-500" : "text-purple-400"
-                      )} />
-                    </Button>
-                  )}
                 </div>
-              </div>
-            )}
-
-            {/* AI Tools Toolbar - Desktop only */}
-            {showTools && tools && !isMobile && (
-              <div className="flex items-center gap-2 py-3 border-t border-white/10">
-                {/* Primary: AI Board Scanner */}
-                {tools.onScanBoard && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-9 px-3 hover:bg-primary/10 hover:border-primary/30"
-                    title="AI Scan Board"
-                    onClick={tools.onScanBoard}
-                  >
-                    <Camera className="h-4 w-4 mr-1.5 text-primary" />
-                    <span className="text-xs">Scan Board</span>
-                  </Button>
-                )}
-
-                {/* AI Tools Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-9 w-9 p-0 hover:bg-primary/10 hover:border-primary/30"
-                      title="AI Tools"
-                    >
-                      <Wand2 className="h-4 w-4 text-primary" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-56 bg-background z-50">
-                    {tools.onScanTestResults && (
-                      <DropdownMenuItem onClick={tools.onScanTestResults}>
-                        <FileText className="mr-2 h-4 w-4" />
-                        AI Scan Test Results
-                      </DropdownMenuItem>
-                    )}
-                    {tools.onScribbleToTable && (
-                      <DropdownMenuItem onClick={tools.onScribbleToTable}>
-                        <Pen className="mr-2 h-4 w-4" />
-                        Scribble to Table
-                      </DropdownMenuItem>
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-                {/* Smart Tools Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-9 w-9 p-0 hover:bg-primary/10 hover:border-primary/30"
-                      title="Smart Tools"
-                    >
-                      <Sparkles className="h-4 w-4 text-primary" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-56 bg-background z-50">
-                    {tools.onSmartAutoFill && (
-                      <DropdownMenuItem onClick={tools.onSmartAutoFill}>
-                        <Zap className="mr-2 h-4 w-4" />
-                        Smart Auto-Fill
-                      </DropdownMenuItem>
-                    )}
-                    {tools.onQuickRcdPresets && (
-                      <DropdownMenuItem onClick={tools.onQuickRcdPresets}>
-                        <Shield className="mr-2 h-4 w-4" />
-                        Quick RCD Presets
-                      </DropdownMenuItem>
-                    )}
-                    {tools.onBulkInfill && (
-                      <DropdownMenuItem onClick={tools.onBulkInfill}>
-                        <Grid className="mr-2 h-4 w-4" />
-                        Bulk Infill
-                      </DropdownMenuItem>
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
-                {/* Voice Button */}
-                {tools.onVoiceToggle && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className={cn(
-                      "h-9 w-9 p-0 transition-all duration-200",
-                      tools.voiceActive
-                        ? "bg-green-500/20 border-green-500 ring-2 ring-green-500/30"
-                        : tools.voiceConnecting
-                        ? "bg-yellow-500/20 border-yellow-500 animate-pulse"
-                        : "hover:bg-primary/10 hover:border-primary/30"
-                    )}
-                    title={tools.voiceActive ? "Voice active - click to stop" : "Start voice input"}
-                    onClick={tools.onVoiceToggle}
-                    disabled={tools.voiceConnecting}
-                  >
-                    <Mic className={cn(
-                      "h-4 w-4",
-                      tools.voiceActive ? "text-green-500 animate-pulse" :
-                      tools.voiceConnecting ? "text-yellow-500" : "text-primary"
-                    )} />
-                  </Button>
-                )}
               </div>
             )}
 
@@ -500,42 +387,23 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               </div>
             )}
 
-            {/* Actions */}
-            <div className={cn(
-              "flex items-center justify-between pt-2 border-t border-white/10",
-              isMobile && "pt-3"
-            )}>
-              {/* Add Circuit - only show on desktop (mobile has it above table) */}
-              {!isMobile && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-9 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10"
-                  onClick={onAddCircuit}
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Circuit
-                </Button>
-              )}
-
-              {/* Spacer on mobile */}
-              {isMobile && <div />}
-
-              {!isMainBoard && (
+            {/* Actions - Clean footer */}
+            {!isMainBoard && (
+              <div className="flex items-center justify-end pt-3 border-t border-white/5">
                 <Button
                   variant="ghost"
                   size="sm"
                   className={cn(
-                    "h-9 text-red-400 hover:text-red-300 hover:bg-red-500/10",
-                    isMobile && "h-10 text-sm"
+                    "h-9 text-red-400/70 hover:text-red-400 hover:bg-red-500/10 text-xs",
+                    isMobile && "h-10"
                   )}
                   onClick={() => onRemoveBoard(board.id)}
                 >
-                  <Trash2 className="h-4 w-4 mr-2" />
+                  <Trash2 className="h-3.5 w-3.5 mr-1.5" />
                   Remove Board
                 </Button>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </CollapsibleContent>
       </Collapsible>

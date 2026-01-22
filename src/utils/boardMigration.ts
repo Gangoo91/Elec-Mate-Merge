@@ -24,10 +24,33 @@ export interface MultiboardFormData {
  * Preserves all existing data while adding board support
  */
 export const migrateToMultiBoard = (formData: any): MultiboardFormData => {
-  // If already migrated (has distributionBoards array), return as-is
+  // If already migrated (has distributionBoards array), ensure all fields exist
   if (formData.distributionBoards?.length > 0) {
+    // Ensure all boards have required fields (handles boards saved before new fields were added)
+    const boardsWithDefaults = formData.distributionBoards.map((board: Partial<DistributionBoard>) => ({
+      // Start with defaults from createDefaultBoard pattern
+      id: board.id || MAIN_BOARD_ID,
+      name: board.name || 'Board',
+      reference: board.reference || board.name || 'Board',
+      order: board.order ?? 0,
+      zdb: board.zdb || '',
+      ipf: board.ipf || '',
+      confirmedCorrectPolarity: board.confirmedCorrectPolarity ?? false,
+      confirmedPhaseSequence: board.confirmedPhaseSequence ?? false,
+      spdOperationalStatus: board.spdOperationalStatus ?? false,
+      spdNA: board.spdNA ?? false,
+      // Optional fields
+      location: board.location,
+      make: board.make,
+      model: board.model,
+      type: board.type,
+      totalWays: board.totalWays,
+      createdAt: board.createdAt,
+      updatedAt: board.updatedAt,
+    }));
+
     return {
-      distributionBoards: formData.distributionBoards,
+      distributionBoards: boardsWithDefaults,
       scheduleOfTests: (formData.scheduleOfTests || []).map((circuit: TestResult) => ({
         ...circuit,
         boardId: circuit.boardId || MAIN_BOARD_ID,

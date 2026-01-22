@@ -2,7 +2,6 @@ import React from 'react';
 import EICRFormTabs from '../EICRFormTabs';
 import DraftHeaderActions from '../DraftHeaderActions';
 import StartNewEICRDialog from '../StartNewEICRDialog';
-import QuickRcdPresets from '../QuickRcdPresets';
 
 interface EICRFormContentProps {
   formData: any;
@@ -36,23 +35,6 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
   onOpenBoardScan,
   initialTab
 }) => {
-  const handleApplyRcdPreset = (circuitIds: string[], preset: any) => {
-    const currentResults = formData.testResults || [];
-    const updatedResults = currentResults.map((result: any) => {
-      if (circuitIds.includes(result.id)) {
-        return {
-          ...result,
-          rcdBsStandard: preset.bsStandard,
-          rcdType: preset.type,
-          rcdRating: preset.rating,
-          rcdRatingA: preset.ratingA,
-        };
-      }
-      return result;
-    });
-    onUpdate('testResults', updatedResults);
-  };
-
   return (
     <div>
       <DraftHeaderActions
@@ -62,15 +44,6 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
         onStartNew={onStartNewFromDraft}
         hasUnsavedChanges={hasUnsavedChanges}
       />
-
-      {formData.testResults && formData.testResults.length > 0 && (
-        <div className="mb-4">
-          <QuickRcdPresets
-            testResults={formData.testResults}
-            onApplyToCircuits={handleApplyRcdPreset}
-          />
-        </div>
-      )}
 
       <EICRFormTabs
         formData={formData}

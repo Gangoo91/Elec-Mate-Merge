@@ -287,12 +287,17 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
   // Format defect observations with photo evidence from database
   const formatDefects = async () => {
     const defects = formData['defectObservations'] || [];
+    console.log('[formatDefects] Number of defects:', defects.length);
+    console.log('[formatDefects] Defect IDs:', defects.map((d: any) => d.id));
+
     if (!Array.isArray(defects)) return [];
-    
+
     // Resolve the UUID - reportId might be either reports.id (UUID) or reports.report_id (text)
     let reportUuid = reportId;
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    
+
+    console.log('[formatDefects] Input reportId:', reportId);
+
     if (!uuidRegex.test(reportId)) {
       // reportId is the text report_id field, need to fetch the UUID
       const { data: report } = await supabase
@@ -304,6 +309,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
 
       if (report?.id) {
         reportUuid = report.id;
+        console.log('[formatDefects] Resolved reportUuid:', reportUuid);
       } else {
         console.warn('[formatDefects] Could not resolve report UUID for:', reportId, '- photos will not be loaded');
       }
@@ -312,6 +318,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     // Fetch all photos for this report using the UUID (only if we have a valid UUID)
     let photos: any[] = [];
     if (uuidRegex.test(reportUuid)) {
+      console.log('[formatDefects] Fetching photos for report UUID:', reportUuid);
       const { data, error } = await supabase
         .from('inspection_photos')
         .select('*')
@@ -321,16 +328,21 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         console.error('[formatDefects] Error fetching photos:', error);
       } else {
         photos = data || [];
+        console.log('[formatDefects] Found photos:', photos.length);
+        console.log('[formatDefects] Photo observation_ids:', photos.map(p => p.observation_id));
+        console.log('[formatDefects] Photo item_ids:', photos.map(p => p.item_id));
       }
     }
-    
+
     return defects.map((defect: any) => {
       // Find photos linked to this observation by observation_id OR item_id (fallback)
-      const observationPhotos = photos?.filter(p => 
-        p.observation_id === defect.id || 
+      const observationPhotos = photos?.filter(p =>
+        p.observation_id === defect.id ||
         (defect.inspectionItemId && p.item_id === defect.inspectionItemId)
       ) || [];
-      
+
+      console.log(`[formatDefects] Defect ${defect.id}: found ${observationPhotos.length} matching photos`);
+
       // Get public URLs for the photos
       const photoUrls = observationPhotos.map(photo => {
         const { data: { publicUrl } } = supabase.storage
@@ -338,7 +350,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
           .getPublicUrl(photo.file_path);
         return publicUrl;
       });
-      
+
       return {
         id: defect.id || "",
         item: defect.item || "",

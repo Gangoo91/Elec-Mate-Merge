@@ -246,9 +246,9 @@ const EnhancedInspectionSectionCard = ({
                 <TableHeader>
                   <TableRow className="hover:bg-white/5 border-white/10 bg-white/[0.02]">
                     <TableHead className="w-14 text-center text-white/50 text-xs uppercase tracking-wider">Status</TableHead>
-                    <TableHead className="text-white/50 text-xs uppercase tracking-wider">Item & Regulation</TableHead>
-                    <TableHead className="w-72 text-white/50 text-xs uppercase tracking-wider">Outcome</TableHead>
-                    <TableHead className="text-white/50 text-xs uppercase tracking-wider">Notes</TableHead>
+                    <TableHead className="text-left text-white/50 text-xs uppercase tracking-wider">Item & Regulation</TableHead>
+                    <TableHead className="w-72 text-left text-white/50 text-xs uppercase tracking-wider">Outcome</TableHead>
+                    <TableHead className="text-left text-white/50 text-xs uppercase tracking-wider">Notes</TableHead>
                     <TableHead className="w-24 text-center text-white/50 text-xs uppercase tracking-wider">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
