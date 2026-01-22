@@ -68,8 +68,8 @@ export const usePullToRefresh = ({
         const distance = diff / resistance;
         setPullDistance(distance);
 
-        // Prevent scroll when pulling
-        if (distance > 10) {
+        // Prevent scroll when pulling (only if event is cancelable)
+        if (distance > 10 && e.cancelable) {
           e.preventDefault();
         }
       }
