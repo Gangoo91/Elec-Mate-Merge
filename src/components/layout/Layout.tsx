@@ -25,30 +25,32 @@ const Layout = () => {
   }, [isMobile, sidebarOpen]);
 
   return (
-    <div className="bg-elec-dark text-slate-50">
+    <div className="flex min-h-screen min-h-[100dvh] bg-elec-dark text-slate-50 overflow-x-hidden">
       {/* Sidebar navigation - mobile-ready with glass morphism */}
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
-      {/* Header with glass morphism */}
-      <Header toggleSidebar={toggleSidebar} />
+      <div className="flex flex-col flex-1 relative min-w-0 min-h-screen min-h-[100dvh]">
+        {/* Header with glass morphism */}
+        <Header toggleSidebar={toggleSidebar} />
 
-      {/* Main content area - no flex constraints, natural document flow for mobile scroll */}
-      <main
-        className="min-h-screen pb-6"
-        style={{ paddingTop: 'var(--header-height, 56px)' }}
-      >
-        {/* Reduced padding for more native feel - minimal on mobile, moderate on desktop */}
-        <div className="px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6">
-          {/* Announcements Banner */}
-          <AnnouncementBanner />
+        {/* Main content area with proper spacing for fixed header */}
+        <main
+          className="flex-1 overflow-x-hidden"
+          style={{ paddingTop: 'var(--header-height, 56px)' }}
+        >
+          {/* Reduced padding for more native feel - minimal on mobile, moderate on desktop */}
+          <div className="px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6">
+            {/* Announcements Banner */}
+            <AnnouncementBanner />
 
-          <div className={cn("min-w-0")}>
-            <PageTransition key={location.pathname}>
-              <Outlet />
-            </PageTransition>
+            <div className={cn("min-w-0")}>
+              <PageTransition key={location.pathname}>
+                <Outlet />
+              </PageTransition>
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 };
