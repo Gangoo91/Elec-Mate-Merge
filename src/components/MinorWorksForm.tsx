@@ -551,24 +551,9 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     });
   };
 
-  const isFormValid = () => {
-    const required = [
-      'propertyAddress', 'clientName', 'workDate', 'workDescription',
-      'earthingArrangement', 'circuitDesignation', 'protectiveDeviceType',
-      'protectiveDeviceRating', 'polarity', 'electricianName', 'position',
-      'signatureDate', 'ietDeclaration'
-    ];
-
-    return required.every(field => {
-      if (typeof formData[field] === 'boolean') {
-        return formData[field] === true;
-      }
-      return formData[field]?.toString().trim();
-    });
-  };
-
+  // Allow PDF generation without strict field validation
   const canGenerateCertificate = () => {
-    return isFormValid();
+    return true;
   };
 
   // Determine if current tab has required fields for "Mark as Complete" functionality
@@ -695,20 +680,11 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
 
                   <MinorWorksPdfGenerator
                     formData={formData}
-                    isFormValid={canGenerateCertificate()}
+                    isFormValid={true}
                     reportId={currentReportId || formData.certificateNumber}
                     userId={userId || undefined}
                     onSuccess={handlePdfSuccess}
                   />
-
-                  {!isFormValid() && (
-                    <div className="mt-4 p-3 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-start gap-3">
-                      <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-sm text-orange-300">
-                        Complete all required fields (*) before generating the certificate.
-                      </p>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>

@@ -605,50 +605,9 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     });
   };
 
-  // Determine if certificate can be generated with BS7671 compliance validation
+  // Allow PDF generation without strict field validation
   const canGenerateCertificate = () => {
-    const requiredInstallationFields = [
-      'clientName', 'installationAddress', 'installationDate',
-      'installationType', 'supplyVoltage', 'supplyFrequency',
-      'earthingArrangement', 'mainProtectiveDevice'
-    ];
-    
-    const requiredDeclarationFields = [
-      'designerName', 'constructorName', 'inspectorName'
-    ];
-    
-    const hasInstallation = requiredInstallationFields.every(
-      field => formData[field] && formData[field].toString().trim() !== ''
-    );
-    
-    const hasDeclarations = requiredDeclarationFields.every(
-      field => formData[field] && formData[field].toString().trim() !== ''
-    );
-    
-    // Check BS7671 compliance for test results
-    if (formData.scheduleOfTests && Array.isArray(formData.scheduleOfTests) && formData.scheduleOfTests.length > 0) {
-      const complianceResult = checkAllResultsCompliance(formData.scheduleOfTests);
-      
-      // Block if critical failures exist
-      const hasCriticalFailures = Array.from(complianceResult.values()).some(
-        (result) => result.warnings.some((w) => 
-          w.severity === 'critical' && (
-            w.title.includes('Zs') || 
-            w.title.includes('Insulation') ||
-            w.title.includes('polarity') ||
-            w.description.includes('Zs exceeds') ||
-            w.description.includes('Insulation resistance') ||
-            w.description.includes('polarity')
-          )
-        )
-      );
-      
-      if (hasCriticalFailures) {
-        return false;
-      }
-    }
-    
-    return hasInstallation && hasDeclarations;
+    return true;
   };
 
   const handleGenerateCertificate = async () => {
