@@ -25,17 +25,17 @@ const Layout = () => {
   }, [isMobile, sidebarOpen]);
 
   return (
-    <div className="flex h-screen bg-elec-dark text-slate-50 overflow-hidden">
+    <div className="flex min-h-screen min-h-[100dvh] bg-elec-dark text-slate-50 overflow-x-hidden">
       {/* Sidebar navigation - mobile-ready with glass morphism */}
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
-      <div className="flex flex-col flex-1 relative min-w-0">
+      <div className="flex flex-col flex-1 relative min-w-0 min-h-screen min-h-[100dvh]">
         {/* Header with glass morphism */}
         <Header toggleSidebar={toggleSidebar} />
 
         {/* Main content area with proper spacing for fixed header */}
         <main
-          className="flex-1 overflow-y-auto overflow-x-hidden"
+          className="flex-1 overflow-x-hidden"
           style={{ paddingTop: 'var(--header-height, 56px)' }}
         >
           {/* Reduced padding for more native feel - minimal on mobile, moderate on desktop */}
