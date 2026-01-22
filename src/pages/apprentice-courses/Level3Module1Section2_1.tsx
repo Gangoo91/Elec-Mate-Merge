@@ -284,18 +284,7 @@ const Level3Module1Section2_1 = () => {
         {/* ----------------------------------------
             HEADER - Centered title with badge
             ---------------------------------------- */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.2.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Five Steps to Risk Assessment
-          </h1>
-          <p className="text-white/80">
-            The systematic process for identifying hazards and controlling risks on every job
-          </p>
-        </header>
+        
 
         {/* ----------------------------------------
             QUICK SUMMARY BOXES
@@ -324,26 +313,9 @@ const Level3Module1Section2_1 = () => {
         {/* ----------------------------------------
             LEARNING OUTCOMES
             ---------------------------------------- */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Apply the HSE's 5-step risk assessment process to electrical work",
-              "Identify electrical hazards and who might be harmed",
-              "Calculate risk levels using likelihood and severity",
-              "Record significant findings correctly and legally",
-              "Know when and why to review risk assessments",
-              "Understand employer and employee legal duties"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* ----------------------------------------
             CONTENT SECTION 01 - Identify Hazards

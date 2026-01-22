@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Wrench, CheckCircle2, Calendar, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Wrench } from 'lucide-react';
 
 // Import all components
 import FaultFindingOverview, { ViewMode } from './FaultFindingOverview';
@@ -29,38 +28,6 @@ interface ViewState {
 
 const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
   const [viewState, setViewState] = useState<ViewState>({ view: 'overview' });
-
-  // Get page title based on current view
-  const getPageTitle = (): string => {
-    switch (viewState.view) {
-      case 'overview':
-        return 'Fault Finding';
-      case 'common-faults':
-        return 'Common Faults';
-      case 'common-fault-detail':
-        return 'Fault Details';
-      case 'real-world':
-        return 'Real-World Cases';
-      case 'case-detail':
-        return 'Case Study';
-      case 'diagnostics':
-        return 'Diagnostics';
-      case 'diagnostic-detail':
-        return 'Diagnostic Details';
-      case 'methodology':
-        return 'Methodology';
-      case 'safety':
-        return 'Safety Protocols';
-      case 'safety-detail':
-        return 'Safety Details';
-      case 'equipment':
-        return 'Equipment Guides';
-      case 'equipment-detail':
-        return 'Equipment Details';
-      default:
-        return 'Fault Finding';
-    }
-  };
 
   // Handle back navigation
   const handleBack = () => {
@@ -188,75 +155,34 @@ const FaultFindingSection = ({ onBack }: FaultFindingSectionProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-3 sm:p-4 md:p-6">
-      <div className="max-w-6xl mx-auto space-y-4 sm:space-y-6">
-        {/* Header */}
-        <div className="flex items-center gap-2 sm:gap-4">
+    <div className="space-y-4">
+      {/* iOS-style header */}
+      <header className="sticky top-0 z-50 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06] -mx-4 px-4 mb-4">
+        <div className="flex items-center gap-3 h-14">
           <Button
-            variant="outline"
+            variant="ghost"
+            size="icon"
             onClick={handleBack}
-            className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black min-h-[44px] touch-manipulation"
+            className="h-10 w-10 -ml-2 touch-manipulation active:scale-95 hover:bg-white/5"
           >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            <span className="hidden sm:inline">
-              {viewState.view === 'overview' ? 'Back to Learning Hub' : 'Back'}
-            </span>
-            <span className="sm:hidden">Back</span>
+            <ArrowLeft className="h-5 w-5" />
           </Button>
-        </div>
-
-        {/* Page Header - Only show on overview */}
-        {viewState.view === 'overview' && (
-          <div className="text-center space-y-3 sm:space-y-4 px-2 sm:px-4">
-            {/* Amendment Badges */}
-            <div className="flex justify-center gap-2 flex-wrap">
-              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
-                <CheckCircle2 className="h-3 w-3 mr-1" />
-                BS 7671:2018+A3:2024
-              </Badge>
-              <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                <Calendar className="h-3 w-3 mr-1" />
-                Updated January 2026
-              </Badge>
-              <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-xs">
-                <AlertTriangle className="h-3 w-3 mr-1" />
-                Diagnostic Techniques
-              </Badge>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-              <div className="p-3 sm:p-4 bg-red-500/10 rounded-2xl border border-red-500/20">
-                <Wrench className="h-8 w-8 sm:h-10 sm:w-10 text-red-400" />
-              </div>
-              <div>
-                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">
-                  Fault Finding
-                </h1>
-                <p className="text-sm sm:text-base text-white/80 mt-1">
-                  Systematic Diagnostic Procedures
-                </p>
-              </div>
-            </div>
-            <p className="text-sm sm:text-base text-white max-w-3xl mx-auto">
-              Learn systematic approaches to electrical fault diagnosis and resolution aligned with
-              BS 7671:2018 Amendment 3:2024. Master the methodical process from initial symptoms to successful repair.
+          <div className="w-9 h-9 rounded-xl bg-red-500 flex items-center justify-center">
+            <Wrench className="h-5 w-5 text-white" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-base font-semibold text-white truncate">
+              Fault Finding
+            </h1>
+            <p className="text-[11px] text-white/50">
+              Diagnostic Procedures
             </p>
           </div>
-        )}
+        </div>
+      </header>
 
-        {/* Section Title - Show on non-overview pages */}
-        {viewState.view !== 'overview' && (
-          <div className="flex items-center gap-3">
-            <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              {getPageTitle()}
-            </h2>
-          </div>
-        )}
-
-        {/* Main Content */}
-        {renderContent()}
-      </div>
+      {/* Main Content */}
+      {renderContent()}
     </div>
   );
 };

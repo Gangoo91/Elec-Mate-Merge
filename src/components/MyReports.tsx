@@ -8,13 +8,14 @@ import {
   FileText,
   Plus,
   X,
-  ChevronDown,
   Upload,
   CheckSquare,
   Loader2,
   Users,
   Archive,
   ArrowLeft,
+  MoreVertical,
+  ChevronRight,
 } from 'lucide-react';
 import { SortDropdown, SortOption } from './reports/SortDropdown';
 import { BulkActionsBar } from './reports/BulkActionsBar';
@@ -32,7 +33,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useCustomers } from '@/hooks/useCustomers';
 import { linkCustomerToReport } from '@/utils/customerHelper';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
-import { SegmentedControl, SegmentOption } from './certificates/SegmentedControl';
+// SegmentedControl removed - replaced with scrollable filter chips
 import { CertificateCard, CertificateData } from './certificates/CertificateCard';
 import { CertificateActionSheet } from './certificates/CertificateActionSheet';
 import {
@@ -55,7 +56,15 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -98,6 +107,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   const [showPdfViewer, setShowPdfViewer] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [showNewCertSheet, setShowNewCertSheet] = useState(false);
 
   // Action sheet state
   const [actionSheetOpen, setActionSheetOpen] = useState(false);
@@ -177,21 +188,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     };
   }, [reports]);
 
-  // Status filter options
-  const statusOptions: SegmentOption<StatusFilter>[] = [
-    { value: 'all', label: 'All', count: statusCounts.all },
-    { value: 'draft', label: 'Drafts', count: statusCounts.draft },
-    { value: 'in-progress', label: 'Progress', count: statusCounts['in-progress'] },
-    { value: 'completed', label: 'Done', count: statusCounts.completed },
-  ];
-
-  // Type filter options
-  const typeOptions: SegmentOption<TypeFilter>[] = [
-    { value: 'all', label: 'All Types' },
-    { value: 'eicr', label: 'EICR' },
-    { value: 'eic', label: 'EIC' },
-    { value: 'minor-works', label: 'Minor Works' },
-  ];
+  // Filter chip options defined inline in the JSX
 
   const filteredReports = useMemo(() => {
     let filtered = reports;
@@ -628,164 +625,193 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   return (
     <>
       <div className="min-h-screen bg-background text-foreground pb-24 prevent-shortcuts">
-        {/* Header */}
-        <div className="bg-background border-b border-border">
-          <div className="max-w-7xl mx-auto px-4">
-            {/* Title Row */}
-            <div className="flex items-center justify-between py-3 gap-3">
-              <div className="flex items-center gap-3 min-w-0">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={onBack}
-                  className="h-10 w-10 touch-manipulation flex-shrink-0"
-                >
-                  <ArrowLeft className="h-5 w-5" />
+        {/* Header - Simplified Native App Style */}
+        <header className="sticky top-0 z-50 bg-sidebar/95 backdrop-blur supports-[backdrop-filter]:bg-sidebar/80 border-b border-elec-yellow/20">
+          <div className="flex items-center h-14 px-3">
+            {/* Back */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onBack}
+              className="-ml-2 text-white/60 touch-manipulation"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+
+            {/* Title */}
+            <div className="flex-1 ml-2">
+              <h1 className="text-base font-semibold text-white">My Certificates</h1>
+              <p className="text-xs text-white/50">
+                {reports.length} certificate{reports.length !== 1 ? 's' : ''}
+              </p>
+            </div>
+
+            {/* Search Toggle */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => {
+                navigator.vibrate?.(10);
+                setShowSearch(!showSearch);
+              }}
+              className={cn(
+                "touch-manipulation",
+                showSearch ? "text-elec-yellow" : "text-white/60"
+              )}
+            >
+              <Search className="h-5 w-5" />
+            </Button>
+
+            {/* Overflow Menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-white/60 touch-manipulation">
+                  <MoreVertical className="h-5 w-5" />
                 </Button>
-                <div className="min-w-0">
-                  <h1 className="text-lg font-semibold truncate">My Certificates</h1>
-                  <p className="text-xs text-muted-foreground">
-                    {reports.length} certificate{reports.length !== 1 ? 's' : ''}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <Button
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem
                   onClick={() => {
                     navigator.vibrate?.(10);
                     toggleBulkMode();
                   }}
-                  variant={isBulkMode ? 'default' : 'outline'}
-                  size="sm"
-                  className="h-10 touch-manipulation"
                 >
-                  {isBulkMode ? (
-                    <X className="h-4 w-4" />
-                  ) : (
-                    <CheckSquare className="h-4 w-4" />
-                  )}
-                  <span className="hidden sm:inline ml-2">
-                    {isBulkMode ? 'Cancel' : 'Select'}
-                  </span>
-                </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button className="bg-elec-yellow hover:bg-elec-yellow/90 text-neutral-900 font-semibold h-10 touch-manipulation">
-                      <Plus className="h-4 w-4" />
-                      <span className="hidden sm:inline ml-2">New</span>
-                      <ChevronDown className="h-4 w-4 ml-1" />
+                  <CheckSquare className="h-4 w-4 mr-2" />
+                  {isBulkMode ? 'Cancel Selection' : 'Select Multiple'}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    navigator.vibrate?.(10);
+                    setShowImportDialog(true);
+                  }}
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  Import CSV
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    navigator.vibrate?.(10);
+                    navigate('/electrician/inspection-testing/legacy-certificates');
+                  }}
+                >
+                  <Archive className="h-4 w-4 mr-2" />
+                  Legacy PDFs
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <div className="px-2 py-1.5">
+                  <SortDropdown sortBy={sortBy} onSortChange={setSortBy} />
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* New Certificate */}
+            <Button
+              size="icon"
+              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black h-9 w-9 rounded-full ml-1 touch-manipulation"
+              onClick={() => {
+                navigator.vibrate?.(10);
+                setShowNewCertSheet(true);
+              }}
+            >
+              <Plus className="h-5 w-5" />
+            </Button>
+          </div>
+
+          {/* Collapsible Search */}
+          <AnimatePresence>
+            {showSearch && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="px-3 pb-3 overflow-hidden"
+              >
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                  <Input
+                    placeholder="Search by name, address, or certificate..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 h-11 bg-white/5 border-elec-yellow/20 text-base touch-manipulation"
+                    autoFocus
+                  />
+                  {searchQuery && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 touch-manipulation"
+                      onClick={() => {
+                        navigator.vibrate?.(10);
+                        setSearchQuery('');
+                      }}
+                    >
+                      <X className="h-4 w-4" />
                     </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem
-                      onClick={() => {
-                        onNavigate('eicr');
-                        navigator.vibrate?.(10);
-                      }}
-                    >
-                      <FileText className="h-4 w-4 mr-2" />
-                      EICR
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => {
-                        onNavigate('eic');
-                        navigator.vibrate?.(10);
-                      }}
-                    >
-                      <FileText className="h-4 w-4 mr-2" />
-                      EIC
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => {
-                        onNavigate('minor-works');
-                        navigator.vibrate?.(10);
-                      }}
-                    >
-                      <FileText className="h-4 w-4 mr-2" />
-                      Minor Works
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-            {/* Search Row */}
-            <div className="flex items-center gap-3 pb-3">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="Search certificates..."
-                  inputMode="search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 pr-10 h-11 bg-card/50 border-border text-foreground placeholder:text-muted-foreground text-base"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => {
-                      setSearchQuery('');
-                      navigator.vibrate?.(10);
-                    }}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
+          {/* Filter Chips - Single Scrollable Row */}
+          <div className="flex gap-2 px-3 py-2 overflow-x-auto scrollbar-hide border-t border-elec-yellow/10">
+            {/* Status chips */}
+            {[
+              { value: 'all' as StatusFilter, label: 'All', count: statusCounts.all },
+              { value: 'draft' as StatusFilter, label: 'Drafts', count: statusCounts.draft },
+              { value: 'in-progress' as StatusFilter, label: 'Progress', count: statusCounts['in-progress'] },
+              { value: 'completed' as StatusFilter, label: 'Done', count: statusCounts.completed },
+            ].map(({ value, label, count }) => (
+              <button
+                key={value}
+                onClick={() => {
+                  navigator.vibrate?.(10);
+                  setStatusFilter(value);
+                }}
+                className={cn(
+                  "flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-all touch-manipulation",
+                  statusFilter === value
+                    ? "bg-elec-yellow text-black border-elec-yellow"
+                    : "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 active:bg-elec-yellow/20"
                 )}
-              </div>
-              <SortDropdown sortBy={sortBy} onSortChange={setSortBy} />
-            </div>
+              >
+                {label} {count > 0 && <span className="ml-1 opacity-70">{count}</span>}
+              </button>
+            ))}
 
-            {/* iOS-Style Segmented Controls */}
-            <div className="space-y-2 pb-3">
-              {/* Status Segment */}
-              <SegmentedControl
-                options={statusOptions}
-                value={statusFilter}
-                onChange={setStatusFilter}
-                showCounts
-              />
+            {/* Divider */}
+            <div className="w-px bg-elec-yellow/20 mx-1 self-stretch flex-shrink-0" />
 
-              {/* Type Segment */}
-              <SegmentedControl
-                options={typeOptions}
-                value={typeFilter}
-                onChange={setTypeFilter}
-              />
-            </div>
-
-            {/* Quick Actions - Compact */}
-            <div className="flex gap-2 pb-3 overflow-x-auto scrollbar-hide">
-              <Button
-                variant="outline"
-                size="sm"
+            {/* Type chips */}
+            {[
+              { value: 'all' as TypeFilter, label: 'All Types' },
+              { value: 'eicr' as TypeFilter, label: 'EICR' },
+              { value: 'eic' as TypeFilter, label: 'EIC' },
+              { value: 'minor-works' as TypeFilter, label: 'MW' },
+            ].map(({ value, label }) => (
+              <button
+                key={value}
                 onClick={() => {
                   navigator.vibrate?.(10);
-                  setShowImportDialog(true);
+                  setTypeFilter(value);
                 }}
-                className="h-9 touch-manipulation flex-shrink-0 text-xs"
+                className={cn(
+                  "flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-all touch-manipulation",
+                  typeFilter === value
+                    ? "bg-elec-yellow text-black border-elec-yellow"
+                    : "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 active:bg-elec-yellow/20"
+                )}
               >
-                <Upload className="h-3.5 w-3.5 mr-1.5" />
-                Import CSV
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  navigator.vibrate?.(10);
-                  navigate('/electrician/inspection-testing/legacy-certificates');
-                }}
-                className="h-9 touch-manipulation flex-shrink-0 text-xs"
-              >
-                <Archive className="h-3.5 w-3.5 mr-1.5" />
-                Legacy PDFs
-              </Button>
-            </div>
+                {label}
+              </button>
+            ))}
           </div>
 
           {/* Bulk Actions Bar */}
           {isBulkMode && selectedReports.size > 0 && (
-            <div className="max-w-7xl mx-auto px-4 pb-3">
+            <div className="px-3 pb-3">
               <BulkActionsBar
                 selectedCount={selectedReports.size}
                 onBulkDelete={() => setShowBulkDeleteDialog(true)}
@@ -796,7 +822,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               />
             </div>
           )}
-        </div>
+        </header>
 
         {/* Content */}
         <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefreshing}>
@@ -867,51 +893,43 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
           </div>
         </PullToRefresh>
 
-        {/* Mobile FAB */}
-        {filteredReports.length > 0 && !isBulkMode && (
-          <div className="fixed bottom-20 right-4 lg:hidden z-40">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  size="icon"
-                  className="h-14 w-14 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-neutral-900 shadow-lg shadow-elec-yellow/30"
-                >
-                  <Plus className="h-6 w-6" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" side="top" className="mb-2">
-                <DropdownMenuItem
-                  onClick={() => {
-                    onNavigate('eicr');
-                    navigator.vibrate?.(10);
-                  }}
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  EICR
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => {
-                    onNavigate('eic');
-                    navigator.vibrate?.(10);
-                  }}
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  EIC
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => {
-                    onNavigate('minor-works');
-                    navigator.vibrate?.(10);
-                  }}
-                >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Minor Works
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        )}
+        {/* FAB removed - using header + button instead */}
       </div>
+
+      {/* New Certificate Bottom Sheet */}
+      <Sheet open={showNewCertSheet} onOpenChange={setShowNewCertSheet}>
+        <SheetContent side="bottom" className="h-auto rounded-t-2xl">
+          <SheetHeader className="pb-4">
+            <SheetTitle>New Certificate</SheetTitle>
+          </SheetHeader>
+          <div className="space-y-2 pb-6">
+            {[
+              { type: 'eicr', label: 'EICR', desc: 'Electrical Installation Condition Report' },
+              { type: 'eic', label: 'EIC', desc: 'Electrical Installation Certificate' },
+              { type: 'minor-works', label: 'Minor Works', desc: 'Minor Electrical Installation Works' },
+            ].map(({ type, label, desc }) => (
+              <button
+                key={type}
+                onClick={() => {
+                  navigator.vibrate?.(10);
+                  setShowNewCertSheet(false);
+                  onNavigate(type);
+                }}
+                className="w-full flex items-center gap-4 p-4 rounded-xl bg-elec-yellow/5 border border-elec-yellow/20 hover:bg-elec-yellow/10 active:scale-[0.98] transition-all touch-manipulation"
+              >
+                <div className="w-12 h-12 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
+                  <FileText className="h-6 w-6 text-elec-yellow" />
+                </div>
+                <div className="flex-1 text-left">
+                  <p className="font-semibold text-white">{label}</p>
+                  <p className="text-xs text-white/50">{desc}</p>
+                </div>
+                <ChevronRight className="h-5 w-5 text-elec-yellow/40" />
+              </button>
+            ))}
+          </div>
+        </SheetContent>
+      </Sheet>
 
       {/* Certificate Action Sheet */}
       <CertificateActionSheet

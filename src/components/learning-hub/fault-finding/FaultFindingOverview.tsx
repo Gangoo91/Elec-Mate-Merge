@@ -1,6 +1,5 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
 import {
   AlertTriangle,
   Target,
@@ -9,6 +8,7 @@ import {
   Wrench,
   ChevronRight
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export type ViewMode =
   | 'overview'
@@ -28,174 +28,155 @@ interface FaultFindingOverviewProps {
   onNavigate: (view: ViewMode) => void;
 }
 
-interface HubCard {
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -10 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { type: 'spring', stiffness: 500, damping: 30 }
+  }
+};
+
+interface HubItem {
   id: ViewMode;
   title: string;
   subtitle: string;
   count: string;
-  icon: React.ReactNode;
-  color: string;
-  borderColor: string;
-  bgColor: string;
+  icon: React.ElementType;
+  iconBg: string;
 }
 
 const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
-  const hubCards: HubCard[] = [
+  const diagnosticItems: HubItem[] = [
     {
       id: 'common-faults',
       title: 'Common Faults',
       subtitle: 'Fault types & theory',
       count: '6 types',
-      icon: <AlertTriangle className="h-8 w-8" />,
-      color: 'text-red-400',
-      borderColor: 'border-red-500/30',
-      bgColor: 'bg-red-500/10'
-    },
-    {
-      id: 'real-world',
-      title: 'Real-World Cases',
-      subtitle: 'Practical case studies',
-      count: '35+ cases',
-      icon: <Target className="h-8 w-8" />,
-      color: 'text-blue-400',
-      borderColor: 'border-blue-500/30',
-      bgColor: 'bg-blue-500/10'
+      icon: AlertTriangle,
+      iconBg: 'bg-red-500'
     },
     {
       id: 'diagnostics',
       title: 'Diagnostics',
       subtitle: 'Search symptoms & causes',
       count: '25+ guides',
-      icon: <Search className="h-8 w-8" />,
-      color: 'text-green-400',
-      borderColor: 'border-green-500/30',
-      bgColor: 'bg-green-500/10'
+      icon: Search,
+      iconBg: 'bg-green-500'
     },
     {
       id: 'methodology',
       title: 'Methodology',
       subtitle: 'Step-by-step process',
       count: '8 steps',
-      icon: <Target className="h-8 w-8" />,
-      color: 'text-purple-400',
-      borderColor: 'border-purple-500/30',
-      bgColor: 'bg-purple-500/10'
+      icon: Target,
+      iconBg: 'bg-purple-500'
+    }
+  ];
+
+  const practicalItems: HubItem[] = [
+    {
+      id: 'real-world',
+      title: 'Real-World Cases',
+      subtitle: 'Practical case studies',
+      count: '35+ cases',
+      icon: Target,
+      iconBg: 'bg-blue-500'
     },
     {
       id: 'safety',
       title: 'Safety Protocols',
       subtitle: 'Critical safety info',
       count: '6 topics',
-      icon: <Shield className="h-8 w-8" />,
-      color: 'text-orange-400',
-      borderColor: 'border-orange-500/30',
-      bgColor: 'bg-orange-500/10'
+      icon: Shield,
+      iconBg: 'bg-orange-500'
     },
     {
       id: 'equipment',
       title: 'Equipment Guides',
       subtitle: 'Test instruments',
       count: '6 tools',
-      icon: <Wrench className="h-8 w-8" />,
-      color: 'text-cyan-400',
-      borderColor: 'border-cyan-500/30',
-      bgColor: 'bg-cyan-500/10'
+      icon: Wrench,
+      iconBg: 'bg-cyan-500'
     }
   ];
 
-  return (
-    <div className="space-y-4">
-      {/* Quick Stats */}
-      <div className="grid grid-cols-3 gap-2 sm:gap-3">
-        <div className="bg-card/50 rounded-lg p-3 text-center border border-muted/20">
-          <div className="text-lg sm:text-xl font-bold text-red-400">6</div>
-          <div className="text-xs text-muted-foreground">Fault Types</div>
+  const renderItem = (item: HubItem) => {
+    const Icon = item.icon;
+    return (
+      <motion.div
+        key={item.id}
+        variants={itemVariants}
+        onClick={() => onNavigate(item.id)}
+        className="flex items-center gap-3 p-3.5 cursor-pointer touch-manipulation active:bg-white/[0.04] transition-colors"
+      >
+        <div className={cn(
+          "w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0",
+          item.iconBg
+        )}>
+          <Icon className="h-5 w-5 text-white" />
         </div>
-        <div className="bg-card/50 rounded-lg p-3 text-center border border-muted/20">
-          <div className="text-lg sm:text-xl font-bold text-blue-400">35+</div>
-          <div className="text-xs text-muted-foreground">Case Studies</div>
-        </div>
-        <div className="bg-card/50 rounded-lg p-3 text-center border border-muted/20">
-          <div className="text-lg sm:text-xl font-bold text-green-400">25+</div>
-          <div className="text-xs text-muted-foreground">Diagnostics</div>
-        </div>
-      </div>
-
-      {/* Hub Cards Grid */}
-      <div className="grid grid-cols-2 gap-3 sm:gap-4">
-        {hubCards.map((card) => (
-          <Card
-            key={card.id}
-            className={`${card.borderColor} border-2 ${card.bgColor} cursor-pointer
-              transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]
-              touch-manipulation`}
-            onClick={() => onNavigate(card.id)}
-          >
-            <CardContent className="p-4 sm:p-5">
-              <div className="flex flex-col h-full">
-                {/* Icon */}
-                <div className={`${card.color} mb-3`}>
-                  {card.icon}
-                </div>
-
-                {/* Title */}
-                <h3 className={`font-semibold text-sm sm:text-base ${card.color} mb-1`}>
-                  {card.title}
-                </h3>
-
-                {/* Subtitle */}
-                <p className="text-xs text-muted-foreground mb-3 flex-1">
-                  {card.subtitle}
-                </p>
-
-                {/* Footer */}
-                <div className="flex items-center justify-between">
-                  <Badge
-                    variant="outline"
-                    className={`text-xs ${card.borderColor} ${card.color}`}
-                  >
-                    {card.count}
-                  </Badge>
-                  <ChevronRight className={`h-4 w-4 ${card.color}`} />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* Quick Reference Card */}
-      <Card className="border-l-4 border-l-elec-yellow bg-card/50">
-        <CardContent className="p-4">
-          <h3 className="font-semibold text-elec-yellow mb-3 text-sm sm:text-base">
-            Fault Finding Principles
+        <div className="flex-1 min-w-0">
+          <h3 className="text-[15px] font-medium text-white leading-tight">
+            {item.title}
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 shrink-0" />
-              <div>
-                <p className="text-xs font-medium text-foreground">Systematic</p>
-                <p className="text-xs text-muted-foreground">Follow logical sequence</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 shrink-0" />
-              <div>
-                <p className="text-xs font-medium text-foreground">Safety First</p>
-                <p className="text-xs text-muted-foreground">Always isolate safely</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 shrink-0" />
-              <div>
-                <p className="text-xs font-medium text-foreground">Verify Repair</p>
-                <p className="text-xs text-muted-foreground">Test after fixing</p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          <p className="text-[13px] text-white/50 leading-tight mt-0.5">
+            {item.subtitle}
+          </p>
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <span className="text-[13px] text-white/30">{item.count}</span>
+          <ChevronRight className="h-4 w-4 text-white/20" />
+        </div>
+      </motion.div>
+    );
+  };
+
+  return (
+    <motion.div
+      className="space-y-6"
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+    >
+      {/* Diagnostic Tools */}
+      <div>
+        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          Diagnostic Tools
+        </p>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+          {diagnosticItems.map(renderItem)}
+        </div>
+      </div>
+
+      {/* Practical Resources */}
+      <div>
+        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          Practical Resources
+        </p>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+          {practicalItems.map(renderItem)}
+        </div>
+      </div>
+
+      {/* Safety reminder */}
+      <motion.div variants={itemVariants}>
+        <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.02]">
+          <Shield className="h-4 w-4 text-white/30 flex-shrink-0" />
+          <p className="text-[12px] text-white/40">
+            Always isolate safely before fault diagnosis
+          </p>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

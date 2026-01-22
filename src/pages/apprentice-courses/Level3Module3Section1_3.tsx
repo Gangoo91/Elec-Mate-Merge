@@ -212,18 +212,7 @@ const Level3Module3Section1_3 = () => {
       </div>
 
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Measurement Instruments
-          </h1>
-          <p className="text-white/80">
-            Essential tools for testing, commissioning and fault finding
-          </p>
-        </header>
+        
 
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -245,26 +234,9 @@ const Level3Module3Section1_3 = () => {
           </div>
         </div>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Select the appropriate instrument for each measurement type",
-              "Connect meters correctly for voltage and current measurement",
-              "Perform insulation resistance testing safely",
-              "Understand CAT ratings and their importance",
-              "Use the prove-test-prove sequence correctly",
-              "Interpret readings and identify anomalies"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">

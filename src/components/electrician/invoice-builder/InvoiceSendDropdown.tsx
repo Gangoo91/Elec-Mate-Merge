@@ -21,6 +21,7 @@ interface InvoiceSendDropdownProps {
   disabled?: boolean;
   className?: string;
   refreshKey?: number;
+  compact?: boolean;
 }
 
 export const InvoiceSendDropdown = ({
@@ -29,6 +30,7 @@ export const InvoiceSendDropdown = ({
   disabled = false,
   className = '',
   refreshKey = 0,
+  compact = false,
 }: InvoiceSendDropdownProps) => {
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
@@ -474,18 +476,32 @@ ${companyName}`;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="default"
-          disabled={disabled || isLoading}
-          className={`h-11 touch-manipulation rounded-xl bg-blue-600 hover:bg-blue-700 text-white ${className}`}
-        >
-          {isLoading ? (
-            <Loader2 className="h-4 w-4 animate-spin sm:mr-2" />
-          ) : (
-            <Mail className="h-4 w-4 sm:mr-2" />
-          )}
-          <span className="hidden sm:inline">{isLoading ? (isSendingEmail ? 'Sending...' : 'Loading...') : 'Send'}</span>
-        </Button>
+        {compact ? (
+          <button
+            disabled={disabled || isLoading}
+            className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-blue-500 hover:bg-blue-600 text-[13px] font-semibold text-white touch-manipulation transition-all active:scale-[0.96] disabled:opacity-50"
+          >
+            {isLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Mail className="h-4 w-4" />
+            )}
+            <span>Send</span>
+          </button>
+        ) : (
+          <Button
+            variant="default"
+            disabled={disabled || isLoading}
+            className={`h-11 touch-manipulation rounded-xl bg-blue-600 hover:bg-blue-700 text-white ${className}`}
+          >
+            {isLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin sm:mr-2" />
+            ) : (
+              <Mail className="h-4 w-4 sm:mr-2" />
+            )}
+            <span className="hidden sm:inline">{isLoading ? (isSendingEmail ? 'Sending...' : 'Loading...') : 'Send'}</span>
+          </Button>
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="center"

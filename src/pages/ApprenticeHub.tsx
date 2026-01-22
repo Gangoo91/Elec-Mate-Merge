@@ -59,13 +59,6 @@ const itemVariants = {
 function ApprenticeHero() {
   const { user, stats, isLoading } = useApprenticeData();
 
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
-  };
-
   return (
     <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
       {/* Gradient accent line */}
@@ -74,52 +67,52 @@ function ApprenticeHero() {
       {/* Decorative blob */}
       <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
-      <div className="relative z-10 p-5 sm:p-6">
-        <div className="flex items-start gap-4">
+      <div className="relative z-10 p-4 sm:p-5">
+        {/* Header label */}
+        <div className="flex items-center gap-1.5 text-elec-yellow mb-3">
+          <Sparkles className="h-3 w-3" />
+          <span className="text-[10px] sm:text-xs font-medium tracking-wide uppercase">
+            Apprentice Hub
+          </span>
+        </div>
+
+        {/* Main content row - icon and text aligned */}
+        <div className="flex items-center gap-4">
           {/* Icon */}
-          <div className="flex-shrink-0 p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+          <div className="flex-shrink-0 w-16 h-16 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
             <GraduationCap className="h-8 w-8 text-elec-yellow" />
           </div>
 
-          {/* Content */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-1.5 text-elec-yellow mb-1">
-              <Sparkles className="h-3 w-3" />
-              <span className="text-[10px] sm:text-xs font-medium tracking-wide uppercase">
-                Apprentice Hub
-              </span>
-            </div>
-
-            <h1 className="text-xl sm:text-2xl font-semibold text-white leading-tight">
-              <span className="hidden sm:inline">{getGreeting()}, </span>
-              <span className="text-elec-yellow">{user.firstName}</span>
+          {/* Text - vertically centered with icon */}
+          <div className="flex-1 min-w-0 flex flex-col justify-center">
+            <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow leading-tight">
+              {user.firstName.toUpperCase()}
             </h1>
-
-            <p className="text-sm text-white/70 mt-1">
+            <p className="text-xs sm:text-sm text-white/70 mt-0.5">
               Your command center for apprenticeship success
             </p>
-
-            {/* Status badges */}
-            <div className="flex items-center gap-2 mt-3 flex-wrap">
-              {user.apprenticeYear && (
-                <Badge
-                  variant="outline"
-                  className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[10px] sm:text-xs"
-                >
-                  Year {user.apprenticeYear}
-                </Badge>
-              )}
-              {stats.learning.currentStreak > 0 && (
-                <Badge
-                  variant="outline"
-                  className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-[10px] sm:text-xs"
-                >
-                  <Flame className="w-3 h-3 mr-1" />
-                  {stats.learning.currentStreak} day streak
-                </Badge>
-              )}
-            </div>
           </div>
+        </div>
+
+        {/* Status badges - aligned below */}
+        <div className="flex items-center gap-2 mt-4 pl-20">
+          {user.apprenticeYear && (
+            <Badge
+              variant="outline"
+              className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[10px] sm:text-xs"
+            >
+              Year {user.apprenticeYear}
+            </Badge>
+          )}
+          {stats.learning.currentStreak > 0 && (
+            <Badge
+              variant="outline"
+              className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-[10px] sm:text-xs"
+            >
+              <Flame className="w-3 h-3 mr-1" />
+              {stats.learning.currentStreak} day streak
+            </Badge>
+          )}
         </div>
       </div>
     </div>

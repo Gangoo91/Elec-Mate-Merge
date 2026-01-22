@@ -136,7 +136,7 @@ export default function CustomersPage() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/electrician/inspection-testing')}
             className="h-11 w-11 touch-manipulation active:scale-[0.98] -ml-2"
           >
             <ArrowLeft className="h-5 w-5" />

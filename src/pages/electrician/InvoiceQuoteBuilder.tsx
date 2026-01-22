@@ -4,9 +4,10 @@ import { Helmet } from 'react-helmet';
 import { supabase } from '@/integrations/supabase/client';
 import { Quote, QuoteClient, QuoteItem, QuoteSettings, QuoteTag } from '@/types/quote';
 import { Invoice, InvoiceItem, InvoiceSettings } from '@/types/invoice';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ArrowLeft } from 'lucide-react';
 import { InvoiceWizard } from '@/components/electrician/invoice-builder/InvoiceWizard';
 import { toast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
 
 export default function InvoiceQuoteBuilder() {
   const { quoteId } = useParams<{ quoteId: string }>();
@@ -114,12 +115,21 @@ export default function InvoiceQuoteBuilder() {
   }, [quoteId, navigate]);
 
   const handleQuoteGenerated = () => {
-    toast({
-      title: 'Invoice created',
-      description: 'Your invoice has been generated successfully',
-      variant: 'success',
-    });
-    navigate('/electrician/invoices');
+    if (quote?.invoice_raised && quoteId) {
+      toast({
+        title: 'Invoice updated',
+        description: 'Your invoice has been updated successfully',
+        variant: 'success',
+      });
+      navigate(`/electrician/invoices/${quoteId}/view`);
+    } else {
+      toast({
+        title: 'Invoice created',
+        description: 'Your invoice has been generated successfully',
+        variant: 'success',
+      });
+      navigate('/electrician/invoices');
+    }
   };
 
   if (isLoading) {
@@ -139,16 +149,31 @@ export default function InvoiceQuoteBuilder() {
 
       <div className="px-4 py-4 sm:py-6 animate-fade-in">
         <div className="mb-6">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-            <span>Business Hub</span>
-            <span>›</span>
-            <span>Quotes</span>
-            <span>›</span>
-            <span className="text-foreground">Create Invoice</span>
-          </div>
-          <h1 className="text-2xl md:text-3xl font-bold mb-2">Adjust Invoice Costs</h1>
+          {/* Back Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              if (quote?.invoice_raised && quoteId) {
+                navigate(`/electrician/invoices/${quoteId}/view`);
+              } else {
+                navigate('/electrician/quotes');
+              }
+            }}
+            className="h-10 mb-3 -ml-2 touch-manipulation"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            {quote?.invoice_raised ? 'Back to Invoice' : 'Back to Quotes'}
+          </Button>
+
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">
+            {quote?.invoice_raised ? 'Edit Invoice' : 'Create Invoice'}
+          </h1>
           <p className="text-muted-foreground">
-            Review and modify the quote items before generating the final invoice
+            {quote?.invoice_raised
+              ? `Editing ${quote.invoice_number}`
+              : 'Review and modify the quote items before generating the final invoice'
+            }
           </p>
         </div>
         

@@ -288,18 +288,7 @@ const Level3Module1Section6_2 = () => {
         {/* ----------------------------------------
             HEADER
             ---------------------------------------- */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.6.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Accountability for Safe Working Practices
-          </h1>
-          <p className="text-white/80">
-            Understanding personal and professional accountability in workplace health and safety
-          </p>
-        </header>
+        
 
         {/* ----------------------------------------
             QUICK SUMMARY BOXES
@@ -327,27 +316,9 @@ const Level3Module1Section6_2 = () => {
         {/* ----------------------------------------
             LEARNING OUTCOMES
             ---------------------------------------- */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Define accountability versus responsibility in safety contexts",
-              "Understand personal liability under HSWA",
-              "Recognise the importance of documentation",
-              "Apply competence requirements to accountability",
-              "Identify proactive accountability behaviours",
-              "Understand consequences of accountability failures"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* ----------------------------------------
             CONTENT SECTION 01

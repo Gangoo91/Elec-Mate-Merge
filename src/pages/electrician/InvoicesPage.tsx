@@ -394,34 +394,36 @@ const InvoicesPage = () => {
             </div>
           ) : (
             <>
-              {/* Row 1: Back + Title + Primary Action */}
-              <div className="flex items-center h-14 px-4 gap-3">
+              {/* Row 1: Navigation bar */}
+              <div className="flex items-center h-14 px-4 gap-2">
                 <button
                   onClick={() => navigate('/electrician')}
-                  className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation -ml-2"
+                  className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
                 >
                   <ArrowLeft className="h-5 w-5" />
                 </button>
                 <h1 className="flex-1 text-xl font-bold">Invoices</h1>
-
-                {/* New Invoice - Primary Action, always visible */}
-                <Button
-                  onClick={() => navigate('/electrician/invoice-builder/create')}
-                  className="shrink-0 bg-emerald-500 text-white hover:bg-emerald-600 gap-2 h-11 px-4 touch-manipulation active:scale-[0.98] font-semibold"
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
                 >
-                  <Plus className="h-4 w-4" />
-                  <span className="hidden xs:inline">New</span>
-                  <span className="hidden sm:inline"> Invoice</span>
-                </Button>
+                  <Search className="h-5 w-5 text-white/80" />
+                </button>
+                <button
+                  onClick={() => navigate('/electrician/invoice-builder/create')}
+                  className="h-10 w-10 flex items-center justify-center rounded-xl bg-elec-yellow active:scale-[0.98] transition-all touch-manipulation"
+                >
+                  <Plus className="h-5 w-5 text-black" />
+                </button>
 
                 {/* Desktop View Toggle */}
-                <div className="hidden lg:flex items-center gap-1 bg-elec-gray/30 rounded-lg p-1">
+                <div className="hidden lg:flex items-center gap-1 bg-white/[0.06] rounded-lg p-1 ml-2">
                   <button
                     onClick={() => setViewMode('card')}
                     className={cn(
                       "h-9 w-9 flex items-center justify-center rounded-md transition-all",
                       viewMode === 'card'
-                        ? "bg-emerald-500/20 text-emerald-400"
+                        ? "bg-elec-yellow/20 text-elec-yellow"
                         : "text-muted-foreground hover:text-foreground"
                     )}
                   >
@@ -432,7 +434,7 @@ const InvoicesPage = () => {
                     className={cn(
                       "h-9 w-9 flex items-center justify-center rounded-md transition-all",
                       viewMode === 'table'
-                        ? "bg-emerald-500/20 text-emerald-400"
+                        ? "bg-elec-yellow/20 text-elec-yellow"
                         : "text-muted-foreground hover:text-foreground"
                     )}
                   >
@@ -441,36 +443,23 @@ const InvoicesPage = () => {
                 </div>
               </div>
 
-              {/* Row 2: Secondary Tools - Horizontally scrollable on mobile */}
-              <div className="flex items-center gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-                {/* Quick Link to Quotes */}
-                <Button
-                  variant="outline"
+              {/* Row 2: Quick actions */}
+              <div className="flex items-center gap-3 px-4 pb-3">
+                <button
                   onClick={() => navigate('/electrician/quotes')}
-                  className="shrink-0 h-11 w-11 sm:w-auto sm:px-4 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 touch-manipulation gap-2"
+                  className="flex items-center gap-2 text-elec-yellow active:opacity-70 transition-opacity touch-manipulation"
                 >
                   <FileText className="h-4 w-4" />
-                  <span className="hidden sm:inline">Quotes</span>
-                </Button>
-
-                {/* Search */}
-                <button
-                  onClick={() => setIsSearchOpen(true)}
-                  className="shrink-0 h-11 w-11 flex items-center justify-center rounded-full bg-elec-gray/50 hover:bg-elec-gray active:scale-[0.98] transition-all touch-manipulation"
-                >
-                  <Search className="h-5 w-5" />
+                  <span className="text-[14px] font-medium">Quotes</span>
                 </button>
-
-                {/* Refresh */}
+                <div className="flex-1" />
                 <button
                   onClick={handleRefresh}
                   disabled={isRefreshing}
-                  className="shrink-0 h-11 w-11 flex items-center justify-center rounded-full bg-elec-gray/50 hover:bg-elec-gray active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
+                  className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
                 >
-                  <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
+                  <RefreshCw className={cn("h-4 w-4 text-white/60", isRefreshing && "animate-spin")} />
                 </button>
-
-                {/* Voice */}
                 <VoiceHeaderButton
                   hint="Send invoice"
                   currentSection="invoices"
@@ -480,33 +469,29 @@ const InvoicesPage = () => {
             </>
           )}
 
-          {/* Row 3: Filter Pills - Horizontal Scroll */}
+          {/* Row 3: Filter pills - compact, no icons */}
           {!isSearchOpen && (
             <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-              {filters.map((filter) => {
-                const Icon = filter.icon;
-                return (
-                  <button
-                    key={filter.id}
-                    onClick={() => handleFilterChange(filter.id)}
-                    className={cn(
-                      "shrink-0 h-11 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation flex items-center gap-2",
-                      activeFilter === filter.id
-                        ? "bg-emerald-500 text-white"
-                        : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"
-                    )}
-                  >
-                    <Icon className="h-4 w-4" />
-                    {filter.label}
-                    <span className={cn(
-                      "text-xs px-1.5 py-0.5 rounded-full min-w-[20px] text-center",
-                      activeFilter === filter.id ? "bg-black/20" : "bg-muted"
-                    )}>
-                      {filter.count}
-                    </span>
-                  </button>
-                );
-              })}
+              {filters.map((filter) => (
+                <button
+                  key={filter.id}
+                  onClick={() => handleFilterChange(filter.id)}
+                  className={cn(
+                    "shrink-0 flex items-center gap-1.5 h-9 px-3.5 rounded-full text-[13px] font-medium transition-all active:scale-[0.98] touch-manipulation",
+                    activeFilter === filter.id
+                      ? "bg-elec-yellow text-black"
+                      : "bg-white/[0.08] text-white"
+                  )}
+                >
+                  {filter.label}
+                  <span className={cn(
+                    "text-[11px] px-1.5 py-0.5 rounded-full min-w-[18px] text-center font-semibold",
+                    activeFilter === filter.id ? "bg-black/20 text-black" : "bg-white/[0.12] text-white"
+                  )}>
+                    {filter.count}
+                  </span>
+                </button>
+              ))}
             </div>
           )}
         </header>
@@ -516,101 +501,71 @@ const InvoicesPage = () => {
           {/* Stripe Connect Banner - Prompt to enable card payments */}
           <StripeConnectBanner refreshKey={stripeRefreshKey} />
 
-          {/* Premium Financial Snapshot - Matches QuotesPage Design */}
-          <section className="relative overflow-hidden rounded-3xl glass-premium p-6 border border-white/[0.08]">
-            {/* Gradient accent line at top */}
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-400 via-green-400 to-emerald-400" />
-
-            {/* Decorative blur elements */}
-            <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-400/[0.08] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-green-400/[0.06] rounded-full blur-2xl translate-y-1/2 -translate-x-1/4" />
-
-            <div className="relative space-y-5">
-              {/* Header */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-xl bg-emerald-400/10">
-                    <PoundSterling className="h-4 w-4 text-emerald-400" />
-                  </div>
-                  <span className="text-sm font-medium text-white/70">Total Paid Revenue</span>
+          {/* Financial Snapshot Card - Clean iOS Design */}
+          <section className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+            {/* Main Value Section */}
+            <div className="p-5">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center">
+                  <PoundSterling className="h-5 w-5 text-black" />
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.08]">
-                  <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-xs font-medium text-white/70">Live</span>
-                </div>
-              </div>
-
-              {/* Main Value */}
-              <div>
-                <div className="text-5xl font-bold text-white tracking-tight mb-2">
-                  £{stats.monthlyTotal.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="flex items-center gap-1.5 text-white/50">
-                    <FileText className="h-3.5 w-3.5" />
-                    <span>{stats.total} invoices</span>
-                  </div>
-                  <div className="w-1 h-1 rounded-full bg-white/20" />
-                  <div className="flex items-center gap-1.5 text-emerald-400">
-                    <CheckCircle className="h-3.5 w-3.5" />
-                    <span className="font-medium">{stats.paid} paid</span>
+                <div>
+                  <p className="text-[12px] text-white">Total Paid Revenue</p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                    <span className="text-[11px] text-white">Live</span>
                   </div>
                 </div>
               </div>
+              <p className="text-4xl font-bold text-elec-yellow mt-4">
+                £{stats.monthlyTotal.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+              </p>
+              <p className="text-[13px] text-white mt-1">{stats.total} invoices • {stats.paid} paid</p>
+            </div>
 
-              {/* Quick Stats Grid */}
-              <div className="grid grid-cols-3 gap-2 pt-3 border-t border-white/[0.08]">
-                <button
-                  onClick={() => handleFilterChange('overdue')}
-                  className={cn(
-                    "group relative p-3 rounded-xl bg-gradient-to-br from-red-500/10 to-red-600/5 border border-red-500/20 hover:border-red-500/40 active:scale-[0.97] transition-all touch-manipulation",
-                    activeFilter === 'overdue' && "ring-2 ring-red-400"
-                  )}
-                >
-                  <div className="flex flex-col items-start gap-1">
-                    <AlertCircle className="h-4 w-4 text-red-400 mb-1" />
-                    <div className="text-xs text-red-400/70 font-medium">Overdue</div>
-                    <div className="text-lg font-bold text-red-400">
-                      {stats.overdue}
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 bg-red-400/5 rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
-                </button>
+            {/* Status Grid - Unified elec-yellow */}
+            <div className="grid grid-cols-3 divide-x divide-white/[0.06] border-t border-white/[0.06]">
+              <button
+                onClick={() => handleFilterChange('overdue')}
+                className={cn(
+                  "p-4 flex flex-col items-center gap-2 active:bg-white/[0.04] transition-all touch-manipulation",
+                  activeFilter === 'overdue' && "bg-white/[0.04]"
+                )}
+              >
+                <div className="w-9 h-9 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
+                  <AlertCircle className="h-4 w-4 text-elec-yellow" />
+                </div>
+                <span className="text-[11px] text-white font-medium">Overdue</span>
+                <span className="text-lg font-bold text-elec-yellow">{stats.overdue}</span>
+              </button>
 
-                <button
-                  onClick={() => handleFilterChange('sent')}
-                  className={cn(
-                    "group relative p-3 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 hover:border-blue-500/40 active:scale-[0.97] transition-all touch-manipulation",
-                    activeFilter === 'sent' && "ring-2 ring-blue-400"
-                  )}
-                >
-                  <div className="flex flex-col items-start gap-1">
-                    <Send className="h-4 w-4 text-blue-400 mb-1" />
-                    <div className="text-xs text-blue-400/70 font-medium">Sent</div>
-                    <div className="text-lg font-bold text-blue-400">
-                      {stats.sent}
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 bg-blue-400/5 rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
-                </button>
+              <button
+                onClick={() => handleFilterChange('sent')}
+                className={cn(
+                  "p-4 flex flex-col items-center gap-2 active:bg-white/[0.04] transition-all touch-manipulation",
+                  activeFilter === 'sent' && "bg-white/[0.04]"
+                )}
+              >
+                <div className="w-9 h-9 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
+                  <Send className="h-4 w-4 text-elec-yellow" />
+                </div>
+                <span className="text-[11px] text-white font-medium">Sent</span>
+                <span className="text-lg font-bold text-elec-yellow">{stats.sent}</span>
+              </button>
 
-                <button
-                  onClick={() => handleFilterChange('paid')}
-                  className={cn(
-                    "group relative p-3 rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20 hover:border-emerald-500/40 active:scale-[0.97] transition-all touch-manipulation",
-                    activeFilter === 'paid' && "ring-2 ring-emerald-400"
-                  )}
-                >
-                  <div className="flex flex-col items-start gap-1">
-                    <CheckCircle className="h-4 w-4 text-emerald-400 mb-1" />
-                    <div className="text-xs text-emerald-400/70 font-medium">Paid</div>
-                    <div className="text-lg font-bold text-emerald-400">
-                      {stats.paid}
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 bg-emerald-400/5 rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
-                </button>
-              </div>
+              <button
+                onClick={() => handleFilterChange('paid')}
+                className={cn(
+                  "p-4 flex flex-col items-center gap-2 active:bg-white/[0.04] transition-all touch-manipulation",
+                  activeFilter === 'paid' && "bg-white/[0.04]"
+                )}
+              >
+                <div className="w-9 h-9 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
+                  <CheckCircle className="h-4 w-4 text-elec-yellow" />
+                </div>
+                <span className="text-[11px] text-white font-medium">Paid</span>
+                <span className="text-lg font-bold text-elec-yellow">{stats.paid}</span>
+              </button>
             </div>
           </section>
 

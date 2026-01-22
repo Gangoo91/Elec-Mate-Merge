@@ -267,18 +267,7 @@ const Level3Module1Section4_3 = () => {
       <article className="px-4 sm:px-6 py-8 sm:py-12">
 
         {/* Header */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Confined Space Hazards and Permits
-          </h1>
-          <p className="text-white/80">
-            Understanding the invisible dangers - atmospheric hazards, permit systems, and rescue procedures
-          </p>
-        </header>
+        
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
@@ -301,27 +290,9 @@ const Level3Module1Section4_3 = () => {
           </div>
         </div>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Define what constitutes a confined space",
-              "Identify the main hazards in confined spaces",
-              "Understand permit to work requirements",
-              "Know atmospheric testing requirements",
-              "Recognise the importance of rescue planning",
-              "Apply safe entry procedures for electrical work"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* Section 01 - What is a Confined Space */}
         <section className="mb-10">

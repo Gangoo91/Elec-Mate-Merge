@@ -77,31 +77,9 @@ const Level3Module1Section3 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        {/* Hero Section */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Section 3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Electrical Safety in the Workplace
-          </h1>
-          <p className="text-white/80 max-w-3xl mx-auto">
-            Workplace electrical safety protocols, procedures and emergency response
-          </p>
-        </header>
+        
 
-        {/* Section Overview */}
-        <section className="mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">Section Overview</p>
-            <p className="text-sm text-white">
-              This section covers essential electrical safety procedures including safe isolation techniques,
-              lock-off and tagging methods, restrictions on live working, temporary earthing and bonding,
-              GS38 test equipment standards, and the practical application of RCD protection systems.
-            </p>
-          </div>
-        </section>
+        
 
         {/* Subsections Grid */}
         <section>

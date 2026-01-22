@@ -288,18 +288,7 @@ const Level3Module1Section3_1 = () => {
         {/* ----------------------------------------
             HEADER
             ---------------------------------------- */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1 Section 3.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Safe Isolation Procedures
-          </h1>
-          <p className="text-white/80">
-            The sequence that keeps you alive when working on electrical systems
-          </p>
-        </header>
+        
 
         {/* ----------------------------------------
             QUICK SUMMARY BOXES
@@ -327,26 +316,9 @@ const Level3Module1Section3_1 = () => {
         {/* ----------------------------------------
             LEARNING OUTCOMES
             ---------------------------------------- */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Execute the safe isolation sequence correctly every time",
-              "Select and use GS38-compliant test equipment",
-              "Understand WHY each step exists and what happens if you skip it",
-              "Identify all conductors requiring testing",
-              "Recognise multiple supply scenarios (PV, UPS, generators)",
-              "Apply proving procedures using voltage indicators and proving units"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* ----------------------------------------
             CONTENT SECTION 01

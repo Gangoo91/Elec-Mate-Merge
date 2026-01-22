@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard';
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ArrowLeft, FileText } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { SmartBackButton } from '@/components/ui/smart-back-button';
 
 const QuoteBuilderEdit = () => {
   const { id } = useParams<{ id: string }>();
@@ -95,40 +95,84 @@ const QuoteBuilderEdit = () => {
 
   if (error || !quote) {
     return (
-      <div className="space-y-6">
-        <SmartBackButton />
-        <div className="text-center py-12 space-y-4">
-          <h2 className="text-2xl font-bold">Quote Not Found</h2>
-          <p className="text-muted-foreground">
+      <motion.div
+        className="min-h-screen bg-background"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
+        {/* iOS-style Header */}
+        <header className="sticky top-0 z-50 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06]">
+          <div className="flex items-center gap-3 px-4 h-14">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => navigate('/electrician/quote-builder')}
+              className="h-10 w-10 -ml-2 touch-manipulation active:scale-95 hover:bg-white/5"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center">
+              <FileText className="h-5 w-5 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h1 className="text-base font-semibold text-white truncate">Quote Not Found</h1>
+            </div>
+          </div>
+        </header>
+
+        <div className="px-4 py-12 text-center space-y-4">
+          <div className="w-16 h-16 mx-auto rounded-2xl bg-white/[0.03] flex items-center justify-center">
+            <FileText className="h-8 w-8 text-white/30" />
+          </div>
+          <h2 className="text-xl font-semibold text-white">Quote Not Found</h2>
+          <p className="text-[14px] text-white/50">
             The quote you're looking for doesn't exist or may have been deleted.
           </p>
-          <Button onClick={() => navigate('/electrician/quote-builder')}>
+          <Button
+            onClick={() => navigate('/electrician/quote-builder')}
+            className="mt-4 h-12 px-6 rounded-xl bg-elec-yellow text-black font-semibold touch-manipulation active:scale-95"
+          >
             View All Quotes
           </Button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="bg-background  ">
-      <div className="space-y-6 px-4 py-6 animate-fade-in">
-        <div className="flex items-center gap-4">
-          <SmartBackButton />
-          <div>
-            <h1 className="text-2xl font-bold">Edit Quote {quote.quoteNumber}</h1>
-            <p className="text-sm text-muted-foreground">
-              Make changes to your existing quote
-            </p>
+    <motion.div
+      className="min-h-screen bg-background pb-24"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
+      {/* iOS-style Header */}
+      <header className="sticky top-0 z-50 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="flex items-center gap-3 px-4 h-14">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate('/electrician/quotes')}
+            className="h-10 w-10 -ml-2 touch-manipulation active:scale-95 hover:bg-white/5"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <div className="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center">
+            <FileText className="h-5 w-5 text-white" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-base font-semibold text-white truncate">Edit {quote.quoteNumber}</h1>
+            <p className="text-[11px] text-white/50">Make changes to your quote</p>
           </div>
         </div>
+      </header>
 
+      <div className="px-4 py-4">
         <QuoteWizard
           initialQuote={quote}
           onQuoteGenerated={() => navigate('/electrician/quote-builder')}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

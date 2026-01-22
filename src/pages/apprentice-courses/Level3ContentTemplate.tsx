@@ -140,18 +140,7 @@ const Level3ContentTemplate = () => {
         {/* ----------------------------------------
             HEADER - Centered title with badge
             ---------------------------------------- */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module X.Y.Z</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            [Page Title]
-          </h1>
-          <p className="text-white/80">
-            [Subtitle - one line describing the content]
-          </p>
-        </header>
+        
 
         {/* ----------------------------------------
             QUICK SUMMARY BOXES
@@ -181,27 +170,9 @@ const Level3ContentTemplate = () => {
             LEARNING OUTCOMES
             What You'll Learn section
             ---------------------------------------- */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Learning outcome 1",
-              "Learning outcome 2",
-              "Learning outcome 3",
-              "Learning outcome 4",
-              "Learning outcome 5",
-              "Learning outcome 6"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* ----------------------------------------
             CONTENT SECTION 01

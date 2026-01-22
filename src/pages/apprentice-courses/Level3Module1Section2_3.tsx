@@ -284,18 +284,7 @@ const Level3Module1Section2_3 = () => {
         {/* ----------------------------------------
             HEADER
             ---------------------------------------- */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.2.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Hierarchy of Controls
-          </h1>
-          <p className="text-white/80">
-            Understanding why elimination comes first and PPE comes last
-          </p>
-        </header>
+        
 
         {/* ----------------------------------------
             QUICK SUMMARY BOXES
@@ -324,26 +313,9 @@ const Level3Module1Section2_3 = () => {
         {/* ----------------------------------------
             LEARNING OUTCOMES
             ---------------------------------------- */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Understand each level of the hierarchy and its effectiveness",
-              "Apply elimination (safe isolation) as the primary control for electrical work",
-              "Identify substitution opportunities in everyday electrical tasks",
-              "Recognise engineering controls vs administrative controls",
-              "Know when and why PPE should be used",
-              "Combine multiple control levels for adequate protection"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* ----------------------------------------
             CONTENT SECTION 01 - Elimination

@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Camera, Grid3X3, Folder, Download } from "lucide-react";
+import { Camera, Grid3X3, Folder, Download, ArrowLeft } from "lucide-react";
 import { useSafetyPhotos } from "@/hooks/useSafetyPhotos";
 
 // Tab components
@@ -18,7 +19,12 @@ interface Tab {
   badge?: number;
 }
 
-export default function PhotoDocumentation() {
+interface PhotoDocumentationProps {
+  onBack?: () => void;
+}
+
+export default function PhotoDocumentation({ onBack }: PhotoDocumentationProps) {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabId>("gallery");
   const { stats } = useSafetyPhotos();
 
@@ -66,8 +72,29 @@ export default function PhotoDocumentation() {
     }
   };
 
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      navigate('/electrician/site-safety');
+    }
+  };
+
   return (
     <div className="flex flex-col h-[calc(100vh-80px)] bg-black">
+      {/* Header with back button */}
+      <div className="flex-shrink-0 bg-black/95 backdrop-blur-sm border-b border-white/[0.08]">
+        <div className="px-4 py-2">
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
+          >
+            <ArrowLeft className="h-5 w-5" />
+            <span className="text-sm font-medium">Site Safety</span>
+          </button>
+        </div>
+      </div>
+
       {/* Tab content area - full height */}
       <div className="flex-1 overflow-hidden">
         <AnimatePresence mode="wait">

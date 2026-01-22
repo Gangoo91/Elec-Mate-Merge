@@ -1,10 +1,12 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { CheckCircle, ArrowLeft, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { CheckCircle, ArrowLeft, FileText } from "lucide-react";
 import { QuoteWizard } from "@/components/electrician/quote-builder/QuoteWizard";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import { useState, useEffect } from "react";
 import { VoiceFormProvider } from "@/contexts/VoiceFormContext";
+import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -72,7 +74,11 @@ const QuoteBuilderCreate = () => {
 
   return (
     <VoiceFormProvider>
-      <div className="bg-background   animate-fade-in">
+      <motion.div
+        className="min-h-screen bg-background pb-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
         <Helmet>
           <title>Create Quote | Elec-Mate</title>
           <meta
@@ -82,42 +88,48 @@ const QuoteBuilderCreate = () => {
           <link rel="canonical" href={canonical} />
         </Helmet>
 
-        {/* Minimal Header */}
-        <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border/50">
-          <div className="flex items-center justify-between h-14 px-4">
-            {/* Close Button */}
-            <button
+        {/* iOS-style Header */}
+        <header className="sticky top-0 z-50 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06]">
+          <div className="flex items-center gap-3 px-4 h-14">
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={handleBack}
-              className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all -ml-1"
+              className="h-10 w-10 -ml-2 touch-manipulation active:scale-95 hover:bg-white/5"
             >
-              <X className="h-5 w-5" />
-            </button>
-
-            {/* Title */}
-            <h1 className="text-base font-semibold">New Quote</h1>
-
-            {/* Spacer */}
-            <div className="w-10" />
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="w-9 h-9 rounded-xl bg-elec-yellow flex items-center justify-center">
+              <FileText className="h-5 w-5 text-black" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h1 className="text-base font-semibold text-white truncate">New Quote</h1>
+              <p className="text-[11px] text-white/50">Create a professional quote</p>
+            </div>
           </div>
         </header>
 
         {/* Cost Engineer Banner */}
         {costContext && (
-          <div className="mx-4 mt-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <CheckCircle className="h-5 w-5 text-emerald-400" />
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20"
+          >
+            <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
+              <CheckCircle className="h-5 w-5 text-white" />
             </div>
-            <div>
-              <p className="text-sm font-medium">Cost Data Imported</p>
-              <p className="text-xs text-muted-foreground">
+            <div className="flex-1 min-w-0">
+              <p className="text-[15px] font-medium text-emerald-400">Cost Data Imported</p>
+              <p className="text-[13px] text-white/50">
                 {costContext.materials?.length || 0} materials pre-filled
               </p>
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Main Content */}
-        <main className="px-4 py-6 pb-32">
+        <main className="px-4 py-4">
           <QuoteWizard
             onQuoteGenerated={handleQuoteGenerated}
             initialCostData={costContext}
@@ -126,7 +138,7 @@ const QuoteBuilderCreate = () => {
 
         {/* Exit Confirmation Dialog */}
         <AlertDialog open={showExitDialog} onOpenChange={setShowExitDialog}>
-          <AlertDialogContent>
+          <AlertDialogContent className="rounded-2xl">
             <AlertDialogHeader>
               <AlertDialogTitle>Discard quote?</AlertDialogTitle>
               <AlertDialogDescription>
@@ -134,14 +146,14 @@ const QuoteBuilderCreate = () => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Keep Editing</AlertDialogCancel>
-              <AlertDialogAction onClick={confirmExit} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              <AlertDialogCancel className="rounded-xl">Keep Editing</AlertDialogCancel>
+              <AlertDialogAction onClick={confirmExit} className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl">
                 Discard
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
+      </motion.div>
     </VoiceFormProvider>
   );
 };

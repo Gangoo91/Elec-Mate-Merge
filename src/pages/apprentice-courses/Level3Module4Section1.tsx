@@ -70,31 +70,9 @@ const Level3Module4Section1 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        {/* Hero Section */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Section 1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Principles of Fault Diagnosis
-          </h1>
-          <p className="text-white/80 max-w-3xl mx-auto">
-            Learn the fundamental principles of electrical fault diagnosis, including fault types, symptoms, systematic approaches and safety considerations
-          </p>
-        </header>
+        
 
-        {/* Section Overview */}
-        <section className="mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">Section Overview</p>
-            <p className="text-sm text-white">
-              This section covers the fundamental principles of fault diagnosis including types of faults,
-              symptoms and indicators, diagnostic sequences, safety considerations,
-              and proper documentation of findings.
-            </p>
-          </div>
-        </section>
+        
 
         {/* Subsections Grid */}
         <section>

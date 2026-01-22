@@ -1,31 +1,21 @@
 import { useState, useMemo } from 'react';
 import { InvoiceItem } from '@/types/invoice';
-import { MobileButton } from '@/components/ui/mobile-button';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { DropdownTabs } from '@/components/ui/dropdown-tabs';
-import { Plus, Trash2, Calculator, AlertCircle, Wrench, Package, Zap, Clock, FileText, Copy, TrendingUp, Search } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Plus, Trash2, Calculator, Wrench, Package, Zap, Clock, FileText, Copy, Search, ChevronDown, ChevronUp, Check, User, HardHat, Hammer, Lightbulb } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { JobTemplates } from '@/components/electrician/quote-builder/JobTemplates';
+import { cn } from '@/lib/utils';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
 import { JobTemplate } from '@/types/quote';
 
-import { 
-  workerTypes, 
-  materialCategories, 
-  commonMaterials, 
-  equipmentCategories, 
+import {
+  workerTypes as defaultWorkerTypes,
+  materialCategories,
+  commonMaterials,
+  equipmentCategories,
   commonEquipment
 } from '@/data/electrician/presetData';
 
@@ -37,6 +27,20 @@ interface InvoiceItemsStepProps {
   onRemoveItem: (itemId: string) => void;
 }
 
+type AddMethod = 'quick' | 'manual' | 'templates';
+type Category = 'labour' | 'materials' | 'equipment';
+
+// Worker type icons
+const getWorkerIcon = (id: string) => {
+  switch (id) {
+    case 'electrician': return Lightbulb;
+    case 'apprentice': return HardHat;
+    case 'labourer': return Hammer;
+    case 'designer': return User;
+    default: return Wrench;
+  }
+};
+
 export const InvoiceItemsStep = ({
   originalItems,
   additionalItems,
@@ -44,13 +48,54 @@ export const InvoiceItemsStep = ({
   onUpdateItem,
   onRemoveItem,
 }: InvoiceItemsStepProps) => {
-  const [editingItemId, setEditingItemId] = useState<string | null>(null);
+  const [activeAddMethod, setActiveAddMethod] = useState<AddMethod>('quick');
+  const [showOriginalItems, setShowOriginalItems] = useState(true);
+  const [workerSheetOpen, setWorkerSheetOpen] = useState(false);
+  const [hoursSheetOpen, setHoursSheetOpen] = useState(false);
+  const [materialSheetOpen, setMaterialSheetOpen] = useState(false);
+  const [categorySheetOpen, setCategorySheetOpen] = useState(false);
+  const [equipmentSheetOpen, setEquipmentSheetOpen] = useState(false);
+  const [equipmentCategorySheetOpen, setEquipmentCategorySheetOpen] = useState(false);
+
+  // Get user's hourly rate from their company profile (Business Settings)
+  const { companyProfile } = useCompanyProfile();
+
+  // Calculate personalised worker rates based on user's business hourly rate
+  const workerTypes = useMemo(() => {
+    // Get user's rate from company profile (default to £45/hr if not set)
+    const userRate = companyProfile?.hourly_rate || 45;
+
+    // Scale other worker types relative to the qualified electrician rate
+    // Original ratios: Apprentice ~55%, Labourer ~44%, Designer ~144%
+    return defaultWorkerTypes.map(worker => {
+      let rate = worker.defaultHourlyRate;
+      switch (worker.id) {
+        case 'electrician':
+          rate = userRate;
+          break;
+        case 'apprentice':
+          rate = Math.round(userRate * 0.55); // ~55% of qualified rate
+          break;
+        case 'labourer':
+          rate = Math.round(userRate * 0.44); // ~44% of qualified rate
+          break;
+        case 'designer':
+          rate = Math.round(userRate * 1.44); // ~144% of qualified rate
+          break;
+        case 'owner':
+          rate = Math.round(userRate * 1.11); // ~111% of qualified rate
+          break;
+      }
+      return { ...worker, defaultHourlyRate: rate };
+    });
+  }, [companyProfile?.hourly_rate]);
+
   const [newItem, setNewItem] = useState({
     description: '',
     quantity: 1,
     unit: 'each',
     unitPrice: 0,
-    category: 'labour' as 'labour' | 'materials' | 'equipment',
+    category: 'labour' as Category,
     subcategory: '',
     workerType: '',
     hours: 0,
@@ -67,7 +112,6 @@ export const InvoiceItemsStep = ({
     return basePrice * (1 + priceAdjustment / 100);
   };
 
-
   const handleTemplateSelect = (template: JobTemplate) => {
     template.items.forEach(item => {
       onAddItem(item);
@@ -78,10 +122,10 @@ export const InvoiceItemsStep = ({
     });
   };
 
-  const handleCategoryChange = (category: string) => {
+  const handleCategoryChange = (category: Category) => {
     setNewItem(prev => ({
       ...prev,
-      category: category as 'labour' | 'materials' | 'equipment',
+      category,
       subcategory: '',
       workerType: '',
       hours: 0,
@@ -104,6 +148,7 @@ export const InvoiceItemsStep = ({
         description: prev.description || `${worker.name} - ${worker.description}`
       }));
     }
+    setWorkerSheetOpen(false);
   };
 
   const handleMaterialSelect = (materialId: string) => {
@@ -117,6 +162,7 @@ export const InvoiceItemsStep = ({
         unit: material.unit
       }));
     }
+    setMaterialSheetOpen(false);
   };
 
   const handleEquipmentSelect = (equipmentId: string) => {
@@ -130,6 +176,7 @@ export const InvoiceItemsStep = ({
         unit: equipment.unit
       }));
     }
+    setEquipmentSheetOpen(false);
   };
 
   const handleHoursChange = (hours: number) => {
@@ -139,6 +186,7 @@ export const InvoiceItemsStep = ({
       quantity: hours,
       unitPrice: prev.hourlyRate
     }));
+    setHoursSheetOpen(false);
   };
 
   const handleAddItem = () => {
@@ -150,7 +198,7 @@ export const InvoiceItemsStep = ({
       });
       return;
     }
-    
+
     if (newItem.unitPrice <= 0) {
       toast({
         title: 'Invalid price',
@@ -165,8 +213,7 @@ export const InvoiceItemsStep = ({
       quantity: newItem.category === 'labour' && newItem.hours > 0 ? newItem.hours : newItem.quantity
     };
     onAddItem(itemToAdd);
-    
-    // Reset form while preserving category
+
     setNewItem(prev => ({
       description: '',
       quantity: 1,
@@ -212,21 +259,16 @@ export const InvoiceItemsStep = ({
 
   const filteredMaterials = useMemo(() => {
     let filtered = commonMaterials;
-
-    if (newItem.subcategory) {
+    if (newItem.subcategory && newItem.subcategory !== 'all-categories') {
       filtered = filtered.filter(m => m.category === newItem.subcategory);
     }
-
     if (materialSearch.trim().length >= 2) {
       const searchTerm = materialSearch.toLowerCase();
-      filtered = filtered.filter(material => 
+      filtered = filtered.filter(material =>
         material.name.toLowerCase().includes(searchTerm) ||
-        material.category.toLowerCase().includes(searchTerm) ||
-        material.subcategory.toLowerCase().includes(searchTerm) ||
-        (material.code && material.code.toLowerCase().includes(searchTerm))
+        material.category.toLowerCase().includes(searchTerm)
       );
     }
-
     return filtered;
   }, [materialSearch, newItem.subcategory]);
 
@@ -243,829 +285,645 @@ export const InvoiceItemsStep = ({
   }, 0);
   const grandTotal = originalTotal + additionalTotal;
 
+  const selectedWorker = workerTypes.find(w => w.id === newItem.workerType);
+  const selectedMaterial = commonMaterials.find(m => m.id === newItem.materialCode);
+  const selectedEquipment = commonEquipment.find(e => e.id === newItem.equipmentCode);
+  const selectedCategory = materialCategories.find(c => c.id === newItem.subcategory);
+  const selectedEquipmentCategory = equipmentCategories.find(c => c.id === newItem.subcategory);
+
+  const hourOptions = [0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 24, 40];
+
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-bold mb-2">Review & Edit Items</h2>
-        <p className="text-sm text-muted-foreground">
-          Edit quantities and prices of original quote items, or add additional items.
-        </p>
+    <div className="space-y-4 text-left pb-24">
+      {/* Compact Running Total */}
+      <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30">
+        <div className="flex items-center gap-2">
+          <Calculator className="h-5 w-5 text-elec-yellow" />
+          <span className="text-[13px] text-white">Total</span>
+        </div>
+        <span className="text-lg font-bold text-elec-yellow">{formatCurrency(grandTotal)}</span>
       </div>
 
       {/* Original Quote Items */}
       {originalItems.length > 0 && (
-        <Card className="bg-card border-primary/20">
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Original Quote Items ({originalItems.length})
-              </span>
-              <span className="text-xl font-bold text-primary">
-                Total: {formatCurrency(originalTotal)}
-              </span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {/* Mobile Card View */}
-            <div className="md:hidden space-y-3">
-              {originalItems.map((item) => (
-                <Card key={item.id} className="border-muted">
-                  <CardContent className="p-4 space-y-3">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-start gap-2 flex-1 min-w-0">
-                        <div className="flex-shrink-0 mt-1">
-                          {getCategoryIcon(item.category)}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm break-words">{item.description}</p>
-                          {item.notes && (
-                            <p className="text-xs text-muted-foreground mt-1 break-words">{item.notes}</p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 pt-2 border-t">
-                      <div>
-                        <label className="text-xs text-muted-foreground">Quantity</label>
-                        <Input
-                          type="number"
-                          value={item.quantity === 0 ? "" : item.quantity}
-                          onChange={(e) => {
-                            const quantity = parseFloat(e.target.value) || 0;
-                            onUpdateItem(item.id, { 
-                              quantity,
-                              totalPrice: quantity * item.unitPrice 
-                            });
-                          }}
-                          className="h-8 mt-1"
-                          min="0.1"
-                          step="0.1"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-xs text-muted-foreground">Unit</label>
-                        <div className="h-8 flex items-center mt-1 px-3 bg-muted rounded-md text-sm">
-                          {item.unit}
-                        </div>
-                      </div>
-                      <div>
-                        <label className="text-xs text-muted-foreground">Unit Price</label>
-                        <Input
-                          type="number"
-                          value={item.unitPrice}
-                          onChange={(e) => {
-                            const unitPrice = parseFloat(e.target.value) || 0;
-                            onUpdateItem(item.id, { 
-                              unitPrice,
-                              totalPrice: item.quantity * unitPrice 
-                            });
-                          }}
-                          className="h-8 mt-1"
-                          min="0"
-                          step="0.01"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-xs text-muted-foreground">Total</label>
-                        <div className="h-8 flex items-center justify-end mt-1 px-3 bg-primary/10 rounded-md font-semibold text-sm">
-                          {formatCurrency(item.totalPrice)}
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            {/* Desktop Table View */}
-            <div className="hidden md:block overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-muted">
-                    <TableHead className="w-[40px]">Type</TableHead>
-                    <TableHead className="min-w-[300px]">Description</TableHead>
-                    <TableHead className="text-center w-[120px]">Qty</TableHead>
-                    <TableHead className="text-center w-[100px]">Unit</TableHead>
-                    <TableHead className="text-right w-[150px]">Unit Price</TableHead>
-                    <TableHead className="text-right w-[120px]">Total</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {originalItems.map((item) => (
-                    <TableRow key={item.id} className="border-muted">
-                      <TableCell className="py-3">
-                        <div className="flex items-center justify-center">
-                          {getCategoryIcon(item.category)}
-                        </div>
-                      </TableCell>
-                      <TableCell className="py-3">
-                        <div>
-                          <p className="font-medium">{item.description}</p>
-                          {item.notes && (
-                            <p className="text-xs text-muted-foreground mt-1">{item.notes}</p>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell className="py-3">
-                        <div className="flex justify-center">
-                          <Input
-                            type="number"
-                            value={item.quantity === 0 ? "" : item.quantity}
-                            onChange={(e) => {
-                              const quantity = parseFloat(e.target.value) || 0;
-                              onUpdateItem(item.id, { 
-                                quantity,
-                                totalPrice: quantity * item.unitPrice 
-                              });
-                            }}
-                            className="w-24 text-center h-10 text-base"
-                            min="0.1"
-                            step="0.1"
-                            aria-label={`Quantity for ${item.description}`}
-                          />
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center py-3">
-                        <span className="text-sm text-muted-foreground">{item.unit}</span>
-                      </TableCell>
-                      <TableCell className="py-3">
-                        <div className="flex justify-end">
-                          <Input
-                            type="number"
-                            value={item.unitPrice}
-                            onChange={(e) => {
-                              const unitPrice = parseFloat(e.target.value) || 0;
-                              onUpdateItem(item.id, {
-                                unitPrice,
-                                totalPrice: item.quantity * unitPrice 
-                              });
-                            }}
-                            className="w-32 text-right h-10 text-base"
-                            min="0"
-                            step="0.01"
-                            aria-label={`Unit price for ${item.description}`}
-                          />
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right py-3">
-                        <span className="font-semibold text-primary">
-                          {formatCurrency(item.totalPrice)}
-                        </span>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Running Total Card */}
-      {(originalItems.length > 0 || additionalItems.length > 0) && (
-        <Card className="bg-primary/5 border-primary/20">
-          <CardContent className="pt-6">
+        <div>
+          <button
+            onClick={() => setShowOriginalItems(!showOriginalItems)}
+            className="w-full flex items-center justify-between py-2"
+          >
+            <span className="text-[12px] font-semibold text-white/60 uppercase tracking-wider">
+              Quote Items ({originalItems.length})
+            </span>
+            {showOriginalItems ? <ChevronUp className="h-4 w-4 text-white/40" /> : <ChevronDown className="h-4 w-4 text-white/40" />}
+          </button>
+          {showOriginalItems && (
             <div className="space-y-2">
-              {originalItems.length > 0 && (
-                <div className="flex items-center justify-between text-sm">
-                  <span>Original Quote Total</span>
-                  <span className="font-semibold">{formatCurrency(originalTotal)}</span>
-                </div>
-              )}
-              {additionalItems.length > 0 && (
-                <div className="flex items-center justify-between text-sm">
-                  <span>Additional Items Total</span>
-                  <span className="font-semibold">{formatCurrency(additionalTotal)}</span>
-                </div>
-              )}
-              <div className="pt-2 border-t flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Calculator className="h-5 w-5 text-primary" />
-                  <span className="font-medium">Grand Total</span>
-                </div>
-                <span className="text-xl font-bold text-primary">
-                  {formatCurrency(grandTotal)}
-                </span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      <DropdownTabs
-        tabs={[
-          {
-            value: "quick",
-            label: "Quick Add",
-            icon: Clock,
-            content: (
-              <div className="w-full bg-card/50 border border-primary/20 rounded-lg p-4">
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
-                    <Clock className="h-5 w-5" />
-                    Quick Add Items
-                  </h3>
-                </div>
-                
-                <div className="space-y-4">
-                  {/* Category Selection */}
-                  <div className="space-y-2">
-                    <Label htmlFor="category" className="text-sm font-medium">Category</Label>
-                    <Select value={newItem.category} onValueChange={handleCategoryChange}>
-                      <SelectTrigger className="h-12 w-full">
-                        <SelectValue placeholder="Select category" />
-                      </SelectTrigger>
-                      <SelectContent className="z-50 bg-background border shadow-lg">
-                        <SelectItem value="labour">
-                          <div className="flex items-center gap-2">
-                            <Wrench className="h-4 w-4" />
-                            Labour
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="materials">
-                          <div className="flex items-center gap-2">
-                            <Package className="h-4 w-4" />
-                            Materials
-                          </div>
-                        </SelectItem>
-                        <SelectItem value="equipment">
-                          <div className="flex items-center gap-2">
-                            <Zap className="h-4 w-4" />
-                            Equipment
-                          </div>
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+              {originalItems.map((item) => (
+                <div key={item.id} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-[13px] font-medium text-white truncate flex-1 mr-2">{item.description}</p>
+                    <p className="text-[13px] font-bold text-elec-yellow">{formatCurrency(item.totalPrice)}</p>
                   </div>
-
-                  {/* Labour specific fields */}
-                  {newItem.category === "labour" && (
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="workerType" className="text-sm font-medium">Worker Type</Label>
-                        <Select value={newItem.workerType} onValueChange={handleWorkerTypeChange}>
-                          <SelectTrigger className="h-12 w-full">
-                            <SelectValue placeholder="Select worker type" />
-                          </SelectTrigger>
-                          <SelectContent className="z-50 bg-background border shadow-lg">
-                            {workerTypes.map(worker => (
-                              <SelectItem key={worker.id} value={worker.id}>
-                                <div className="flex flex-col">
-                                  <span>{worker.name}</span>
-                                  <span className="text-xs text-muted-foreground">£{worker.defaultHourlyRate}/hour</span>
-                                </div>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="hours" className="text-sm font-medium">Hours</Label>
-                         <Select value={newItem.hours > 0 ? newItem.hours.toString() : ""} onValueChange={(value) => handleHoursChange(parseFloat(value))}>
-                           <SelectTrigger className="h-12 w-full">
-                             <SelectValue placeholder="Select hours" />
-                          </SelectTrigger>
-                          <SelectContent className="z-50 bg-background border shadow-lg">
-                            <SelectItem value="0.5">0.5 hours</SelectItem>
-                            <SelectItem value="1">1 hour</SelectItem>
-                            <SelectItem value="1.5">1.5 hours</SelectItem>
-                            <SelectItem value="2">2 hours</SelectItem>
-                            <SelectItem value="2.5">2.5 hours</SelectItem>
-                            <SelectItem value="3">3 hours</SelectItem>
-                            <SelectItem value="4">4 hours</SelectItem>
-                            <SelectItem value="5">5 hours</SelectItem>
-                            <SelectItem value="6">6 hours</SelectItem>
-                            <SelectItem value="7">7 hours</SelectItem>
-                            <SelectItem value="8">8 hours (1 day)</SelectItem>
-                            <SelectItem value="10">10 hours</SelectItem>
-                            <SelectItem value="12">12 hours</SelectItem>
-                            <SelectItem value="16">16 hours (2 days)</SelectItem>
-                            <SelectItem value="24">24 hours (3 days)</SelectItem>
-                            <SelectItem value="32">32 hours (4 days)</SelectItem>
-                            <SelectItem value="40">40 hours (5 days)</SelectItem>
-                            <SelectItem value="48">48 hours (6 days)</SelectItem>
-                            <SelectItem value="56">56 hours (7 days)</SelectItem>
-                            <SelectItem value="80">80 hours (10 days)</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Materials specific fields */}
-                  {newItem.category === "materials" && (
-                    <div className="space-y-4">
-                      {/* Material Markup Selection */}
-                      <div className="space-y-2">
-                        <Label className="text-sm font-medium flex items-center gap-2">
-                          <TrendingUp className="h-4 w-4 text-primary" />
-                          Material Markup
-                        </Label>
-                        <Select value={priceAdjustment.toString()} onValueChange={(value) => setPriceAdjustment(Number(value))}>
-                          <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Select markup" />
-                          </SelectTrigger>
-                          <SelectContent className="z-50 bg-background border shadow-lg">
-                            <SelectItem value="0">No markup (0%)</SelectItem>
-                            <SelectItem value="5">5% markup</SelectItem>
-                            <SelectItem value="10">10% markup</SelectItem>
-                            <SelectItem value="15">15% markup</SelectItem>
-                            <SelectItem value="20">20% markup</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        {priceAdjustment > 0 && (
-                          <p className="text-xs text-muted-foreground">
-                            Applied to all material prices below
-                          </p>
-                        )}
-                      </div>
-                      
-                      {/* Search Materials */}
-                      <div className="space-y-2">
-                        <Label htmlFor="materialSearch" className="text-sm font-medium flex items-center gap-2">
-                          <Search className="h-4 w-4" />
-                          Search Materials
-                        </Label>
-                        <Input
-                          id="materialSearch"
-                          placeholder="Search by name, category, or code..."
-                          value={materialSearch}
-                          onChange={(e) => setMaterialSearch(e.target.value)}
-                          className="h-12"
-                        />
-                        {materialSearch.length >= 2 && (
-                          <p className="text-xs text-muted-foreground">
-                            Found {filteredMaterials.length} material{filteredMaterials.length !== 1 ? 's' : ''}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="materialCategory" className="text-sm font-medium">Material Category</Label>
-                          <Select value={newItem.subcategory} onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value, materialCode: "" }))}>
-                            <SelectTrigger className="h-12">
-                              <SelectValue placeholder="Select category" />
-                            </SelectTrigger>
-                            <SelectContent className="z-50 bg-background border shadow-lg">
-                              <SelectItem value="all-categories">All Categories</SelectItem>
-                              {materialCategories.map(cat => (
-                                <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="material" className="text-sm font-medium">Material</Label>
-                        <Select value={newItem.materialCode} onValueChange={handleMaterialSelect}>
-                          <SelectTrigger className="h-12">
-                            <SelectValue placeholder={filteredMaterials.length > 0 ? "Select material" : "No materials found"} />
-                          </SelectTrigger>
-                           <SelectContent className="z-50 bg-background border shadow-lg max-h-[300px]">
-                             {filteredMaterials.length > 0 ? (
-                               filteredMaterials.map(material => {
-                                 const adjustedPrice = calculateAdjustedPrice(material.defaultPrice);
-                                 return (
-                                   <SelectItem key={material.id} value={material.id}>
-                                     <div className="flex flex-col">
-                                       <span>{material.name}</span>
-                                       <span className="text-xs text-muted-foreground">
-                                         {material.code && `${material.code} | `}
-                                         {priceAdjustment > 0 ? (
-                                           <>Base: £{material.defaultPrice.toFixed(2)} | Adjusted: £{adjustedPrice.toFixed(2)} (+{priceAdjustment}%)</>
-                                         ) : (
-                                           <>£{material.defaultPrice.toFixed(2)}/{material.unit}</>
-                                         )}
-                                       </span>
-                                     </div>
-                                   </SelectItem>
-                                 );
-                               })
-                              ) : (
-                                <SelectItem value="no-materials" disabled>
-                                  No materials found
-                                </SelectItem>
-                              )}
-                           </SelectContent>
-                        </Select>
-                      </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Equipment specific fields */}
-                  {newItem.category === "equipment" && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="equipmentCategory" className="text-sm font-medium">Equipment Category</Label>
-                        <Select value={newItem.subcategory} onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value }))}>
-                          <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Select category" />
-                          </SelectTrigger>
-                          <SelectContent className="z-50 bg-background border shadow-lg">
-                            {equipmentCategories.map(cat => (
-                              <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="equipment" className="text-sm font-medium">Equipment</Label>
-                        <Select value={newItem.equipmentCode} onValueChange={handleEquipmentSelect}>
-                          <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Select equipment" />
-                          </SelectTrigger>
-                          <SelectContent className="z-50 bg-background border shadow-lg">
-                            {commonEquipment
-                              .filter(e => !newItem.subcategory || e.category === newItem.subcategory)
-                              .map(equipment => (
-                              <SelectItem key={equipment.id} value={equipment.id}>
-                                <div className="flex flex-col">
-                                  <span>{equipment.name}</span>
-                                  <span className="text-xs text-muted-foreground">£{equipment.dailyRate}/{equipment.unit}</span>
-                                </div>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  )}
-
-                  <Button onClick={handleAddItem} className="w-full">
-                    Add Item
-                  </Button>
-                </div>
-              </div>
-            )
-          },
-          {
-            value: "manual",
-            label: "Manual Entry",
-            icon: Plus,
-            content: (
-              <Card className="bg-card border-primary/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Plus className="h-5 w-5" />
-                    Manual Item Entry
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="description" className="text-sm font-medium">Description</Label>
-                      <Input
-                        value={newItem.description}
-                        onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
-                        placeholder="Item description"
-                        className="h-12"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="category-manual" className="text-sm font-medium">Category</Label>
-                      <Select value={newItem.category} onValueChange={handleCategoryChange}>
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select category" />
-                        </SelectTrigger>
-                        <SelectContent className="z-50 bg-background border shadow-lg">
-                          <SelectItem value="labour">
-                            <div className="flex items-center gap-2">
-                              <Wrench className="h-4 w-4" />
-                              Labour
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="materials">
-                            <div className="flex items-center gap-2">
-                              <Package className="h-4 w-4" />
-                              Materials
-                            </div>
-                          </SelectItem>
-                          <SelectItem value="equipment">
-                            <div className="flex items-center gap-2">
-                              <Zap className="h-4 w-4" />
-                              Equipment
-                            </div>
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="quantity" className="text-sm font-medium">Quantity</Label>
-                      <Input
-                        type="number"
-                        value={newItem.quantity === 0 ? "" : newItem.quantity}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          if (value === '') {
-                            setNewItem(prev => ({ ...prev, quantity: 0 }));
-                          } else {
-                            const parsed = parseFloat(value);
-                            if (!isNaN(parsed) && parsed >= 0) {
-                              setNewItem(prev => ({ ...prev, quantity: parsed }));
-                            }
-                          }
-                        }}
-                        onBlur={(e) => {
-                          const value = parseFloat(e.target.value);
-                          if (isNaN(value) || value <= 0) {
-                            setNewItem(prev => ({ ...prev, quantity: 1 }));
-                          }
-                        }}
-                        min="0.1"
-                        step="0.1"
-                        className="h-12"
-                        placeholder="Enter quantity"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="unit-price" className="text-sm font-medium">Unit Price (£)</Label>
-                      <Input
-                        type="number"
-                        value={newItem.unitPrice === 0 ? "" : newItem.unitPrice}
-                        onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(e.target.value) || 0 }))}
-                        min="0"
-                        step="0.01"
-                        className="h-12"
-                        placeholder="Enter price"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="unit" className="text-sm font-medium">Unit</Label>
-                      <Select value={newItem.unit} onValueChange={(value) => setNewItem(prev => ({ ...prev, unit: value }))}>
-                        <SelectTrigger className="h-12">
-                          <SelectValue placeholder="Select unit" />
-                        </SelectTrigger>
-                        <SelectContent className="z-50 bg-background border shadow-lg">
-                          <SelectItem value="each">Each</SelectItem>
-                          <SelectItem value="hour">Hour</SelectItem>
-                          <SelectItem value="day">Day</SelectItem>
-                          <SelectItem value="metre">Metre</SelectItem>
-                          <SelectItem value="linear metre">Linear Metre</SelectItem>
-                          <SelectItem value="m²">Square Metre</SelectItem>
-                          <SelectItem value="point">Point</SelectItem>
-                          <SelectItem value="circuit">Circuit</SelectItem>
-                          <SelectItem value="way">Way</SelectItem>
-                          <SelectItem value="core">Core</SelectItem>
-                          <SelectItem value="pack">Pack</SelectItem>
-                          <SelectItem value="roll">Roll</SelectItem>
-                          <SelectItem value="box">Box</SelectItem>
-                          <SelectItem value="installation">Installation</SelectItem>
-                          <SelectItem value="system">System</SelectItem>
-                          <SelectItem value="panel">Panel</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="notes" className="text-sm font-medium">Notes (Optional)</Label>
-                      <Textarea
-                        value={newItem.notes}
-                        onChange={(e) => setNewItem(prev => ({ ...prev, notes: e.target.value }))}
-                        placeholder="Additional notes"
-                        rows={2}
-                      />
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="number"
+                      value={item.quantity === 0 ? '' : item.quantity}
+                      onChange={(e) => {
+                        const quantity = parseFloat(e.target.value) || 0;
+                        onUpdateItem(item.id, { quantity, totalPrice: quantity * item.unitPrice });
+                      }}
+                      className="h-8 w-16 text-[13px] bg-white/[0.05] border-white/[0.06]"
+                    />
+                    <span className="text-[12px] text-white/50">×</span>
+                    <Input
+                      type="number"
+                      value={item.unitPrice}
+                      onChange={(e) => {
+                        const unitPrice = parseFloat(e.target.value) || 0;
+                        onUpdateItem(item.id, { unitPrice, totalPrice: item.quantity * unitPrice });
+                      }}
+                      className="h-8 w-20 text-[13px] bg-white/[0.05] border-white/[0.06]"
+                    />
+                    <span className="text-[12px] text-white/50 flex-1">{item.unit}</span>
                   </div>
-
-                  <Button onClick={handleAddItem} className="w-full">
-                    Add Item to Invoice
-                  </Button>
                 </div>
-                </CardContent>
-              </Card>
-            )
-          },
-          {
-            value: "templates",
-            label: "Job Templates",
-            icon: FileText,
-            content: <JobTemplates onSelectTemplate={handleTemplateSelect} />
-          }
-        ]}
-        defaultValue="quick"
-        placeholder="Select option"
-        className="mb-6"
-      />
-
-      {/* Items List */}
-      {additionalItems.length > 0 && (
-        <Card className="bg-card border-primary/20">
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              <span>Additional Items ({additionalItems.length})</span>
-              <span className="text-xl font-bold text-primary">
-                Total: £{additionalTotal.toFixed(2)}
-              </span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {/* Mobile Card View */}
-            <div className="md:hidden space-y-3">
-              {additionalItems.map((item) => (
-                <Card key={item.id} className="border-muted">
-                  <CardContent className="p-4 space-y-3">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-start gap-2 flex-1 min-w-0">
-                        <div className="flex-shrink-0 mt-1">
-                          {getCategoryIcon(item.category)}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm break-words">{item.description}</p>
-                          {item.notes && (
-                            <p className="text-xs text-muted-foreground mt-1 break-words">{item.notes}</p>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-1 flex-shrink-0">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => duplicateItem(item)}
-                          className="h-7 w-7 p-0"
-                        >
-                          <Copy className="h-3 w-3" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => onRemoveItem(item.id)}
-                          className="h-7 w-7 p-0 text-destructive hover:text-destructive"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 pt-2 border-t">
-                      <div>
-                        <label className="text-xs text-muted-foreground">Quantity</label>
-                        <Input
-                          type="number"
-                          value={item.quantity === 0 ? "" : item.quantity}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            if (value === '') {
-                              onUpdateItem(item.id, { quantity: 0 });
-                            } else {
-                              const parsed = parseFloat(value);
-                              if (!isNaN(parsed) && parsed >= 0) {
-                                onUpdateItem(item.id, { quantity: parsed });
-                              }
-                            }
-                          }}
-                          onBlur={(e) => {
-                            const value = parseFloat(e.target.value);
-                            if (isNaN(value) || value <= 0) {
-                              onUpdateItem(item.id, { quantity: 1 });
-                            }
-                          }}
-                          className="h-8 mt-1"
-                          min="0.1"
-                          step="0.1"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-xs text-muted-foreground">Unit</label>
-                        <div className="h-8 flex items-center mt-1 px-3 bg-muted rounded-md text-sm">
-                          {item.unit}
-                        </div>
-                      </div>
-                      <div>
-                        <label className="text-xs text-muted-foreground">Unit Price</label>
-                        <Input
-                          type="number"
-                          value={item.unitPrice}
-                          onChange={(e) => onUpdateItem(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
-                          className="h-8 mt-1"
-                          min="0"
-                          step="0.01"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-xs text-muted-foreground">Total</label>
-                        <div className="h-8 flex items-center justify-end mt-1 px-3 bg-primary/10 rounded-md font-semibold text-sm">
-                          £{item.totalPrice.toFixed(2)}
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
               ))}
             </div>
-
-            {/* Desktop Table View */}
-            <div className="hidden md:block overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-muted">
-                    <TableHead className="w-[40px]">Type</TableHead>
-                    <TableHead className="min-w-[300px]">Description</TableHead>
-                    <TableHead className="text-center w-[80px]">Qty</TableHead>
-                    <TableHead className="text-center w-[80px]">Unit</TableHead>
-                    <TableHead className="text-right w-[100px]">Unit Price</TableHead>
-                    <TableHead className="text-right w-[100px]">Total</TableHead>
-                    <TableHead className="text-center w-[100px]">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {additionalItems.map((item) => (
-                    <TableRow key={item.id} className="border-muted">
-                      <TableCell className="py-3">
-                        <div className="flex items-center justify-center">
-                          {getCategoryIcon(item.category)}
-                        </div>
-                      </TableCell>
-                      <TableCell className="py-3">
-                        <div>
-                          <p className="font-medium">{item.description}</p>
-                          {item.notes && (
-                            <p className="text-xs text-muted-foreground mt-1">{item.notes}</p>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center py-3">
-                        <Input
-                          type="number"
-                          value={item.quantity === 0 ? "" : item.quantity}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            if (value === '') {
-                              onUpdateItem(item.id, { quantity: 0 });
-                            } else {
-                              const parsed = parseFloat(value);
-                              if (!isNaN(parsed) && parsed >= 0) {
-                                onUpdateItem(item.id, { quantity: parsed });
-                              }
-                            }
-                          }}
-                          onBlur={(e) => {
-                            const value = parseFloat(e.target.value);
-                            if (isNaN(value) || value <= 0) {
-                              onUpdateItem(item.id, { quantity: 1 });
-                            }
-                          }}
-                          className="w-20 text-center h-8"
-                          min="0.1"
-                          step="0.1"
-                        />
-                      </TableCell>
-                      <TableCell className="text-center py-3">
-                        <span className="text-sm text-muted-foreground">{item.unit}</span>
-                      </TableCell>
-                      <TableCell className="text-right py-3">
-                        <Input
-                          type="number"
-                          value={item.unitPrice}
-                          onChange={(e) => onUpdateItem(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
-                          className="w-24 text-right ml-auto h-8"
-                          min="0"
-                          step="0.01"
-                        />
-                      </TableCell>
-                      <TableCell className="text-right py-3">
-                        <span className="font-semibold text-primary">
-                          £{item.totalPrice.toFixed(2)}
-                        </span>
-                      </TableCell>
-                      <TableCell className="py-3">
-                        <div className="flex items-center justify-center gap-1">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => duplicateItem(item)}
-                            className="h-8 w-8 p-0"
-                          >
-                            <Copy className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => onRemoveItem(item.id)}
-                            className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
+          )}
+        </div>
       )}
+
+      {/* Add Method Tabs */}
+      <div className="flex rounded-xl bg-white/[0.03] border border-white/[0.06] p-1">
+        {[
+          { id: 'quick' as AddMethod, label: 'Quick', icon: Clock },
+          { id: 'manual' as AddMethod, label: 'Manual', icon: Plus },
+          { id: 'templates' as AddMethod, label: 'Templates', icon: FileText },
+        ].map((method) => {
+          const Icon = method.icon;
+          const isActive = activeAddMethod === method.id;
+          return (
+            <button
+              key={method.id}
+              onClick={() => setActiveAddMethod(method.id)}
+              className={cn(
+                'flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[13px] font-medium transition-all touch-manipulation',
+                isActive ? 'bg-elec-yellow text-black' : 'text-white/70'
+              )}
+            >
+              <Icon className="h-4 w-4" />
+              {method.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Quick Add */}
+      {activeAddMethod === 'quick' && (
+        <div className="space-y-3">
+          {/* Category Tabs */}
+          <div className="flex rounded-xl bg-white/[0.03] border border-white/[0.06] p-1">
+            {[
+              { id: 'labour' as Category, label: 'Labour', icon: Wrench },
+              { id: 'materials' as Category, label: 'Materials', icon: Package },
+              { id: 'equipment' as Category, label: 'Equipment', icon: Zap },
+            ].map((cat) => {
+              const Icon = cat.icon;
+              const isActive = newItem.category === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => handleCategoryChange(cat.id)}
+                  className={cn(
+                    'flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[13px] font-medium transition-all touch-manipulation',
+                    isActive ? 'bg-elec-yellow text-black' : 'text-white/70'
+                  )}
+                >
+                  <Icon className="h-4 w-4" />
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Labour */}
+          {newItem.category === 'labour' && (
+            <div className="space-y-2">
+              {/* Worker Type Selector */}
+              <button
+                onClick={() => setWorkerSheetOpen(true)}
+                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
+                    <Wrench className="h-5 w-5 text-black" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[11px] text-white/60 uppercase tracking-wide">Worker Type</p>
+                    <p className="text-[15px] font-medium text-white">
+                      {selectedWorker ? selectedWorker.name : 'Select worker type'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  {selectedWorker && (
+                    <span className="text-[14px] font-semibold text-elec-yellow">£{selectedWorker.defaultHourlyRate}/hr</span>
+                  )}
+                  <ChevronDown className="h-5 w-5 text-white/40" />
+                </div>
+              </button>
+
+              {/* Hours Selector */}
+              <button
+                onClick={() => setHoursSheetOpen(true)}
+                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+                    <Clock className="h-5 w-5 text-white/70" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[11px] text-white/60 uppercase tracking-wide">Hours</p>
+                    <p className="text-[15px] font-medium text-white">
+                      {newItem.hours > 0 ? `${newItem.hours} ${newItem.hours === 1 ? 'hour' : 'hours'}` : 'Select hours'}
+                    </p>
+                  </div>
+                </div>
+                <ChevronDown className="h-5 w-5 text-white/40" />
+              </button>
+
+              {/* Subtotal */}
+              {selectedWorker && newItem.hours > 0 && (
+                <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[14px] text-white">Subtotal</span>
+                    <span className="text-[18px] font-bold text-elec-yellow">
+                      {formatCurrency(newItem.hours * newItem.hourlyRate)}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Materials */}
+          {newItem.category === 'materials' && (
+            <div className="space-y-2">
+              {/* Search */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                <input
+                  placeholder="Search materials..."
+                  value={materialSearch}
+                  onChange={(e) => setMaterialSearch(e.target.value)}
+                  className="w-full h-11 pl-10 pr-4 rounded-xl bg-white/[0.05] border border-white/[0.06] text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow"
+                />
+              </div>
+
+              {/* Category Selector */}
+              <button
+                onClick={() => setCategorySheetOpen(true)}
+                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
+                    <Package className="h-5 w-5 text-black" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[11px] text-white/60 uppercase tracking-wide">Category</p>
+                    <p className="text-[15px] font-medium text-white">
+                      {selectedCategory ? selectedCategory.name : 'All categories'}
+                    </p>
+                  </div>
+                </div>
+                <ChevronDown className="h-5 w-5 text-white/40" />
+              </button>
+
+              {/* Material Selector */}
+              <button
+                onClick={() => setMaterialSheetOpen(true)}
+                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+                    <Package className="h-5 w-5 text-white/70" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[11px] text-white/60 uppercase tracking-wide">Material</p>
+                    <p className="text-[15px] font-medium text-white truncate max-w-[180px]">
+                      {selectedMaterial ? selectedMaterial.name : 'Select material'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  {selectedMaterial && (
+                    <span className="text-[14px] font-semibold text-elec-yellow">
+                      £{calculateAdjustedPrice(selectedMaterial.defaultPrice).toFixed(2)}
+                    </span>
+                  )}
+                  <ChevronDown className="h-5 w-5 text-white/40" />
+                </div>
+              </button>
+
+              {/* Markup Quick Select */}
+              <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <span className="text-[12px] text-white/60 uppercase tracking-wide">Markup</span>
+                <div className="flex gap-1">
+                  {[0, 10, 15, 20].map(markup => (
+                    <button
+                      key={markup}
+                      onClick={() => setPriceAdjustment(markup)}
+                      className={cn(
+                        'px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all touch-manipulation',
+                        priceAdjustment === markup
+                          ? 'bg-elec-yellow text-black'
+                          : 'bg-white/[0.05] text-white/70'
+                      )}
+                    >
+                      {markup}%
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Equipment */}
+          {newItem.category === 'equipment' && (
+            <div className="space-y-2">
+              <button
+                onClick={() => setEquipmentCategorySheetOpen(true)}
+                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
+                    <Zap className="h-5 w-5 text-black" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[11px] text-white/60 uppercase tracking-wide">Category</p>
+                    <p className="text-[15px] font-medium text-white">
+                      {selectedEquipmentCategory ? selectedEquipmentCategory.name : 'Select category'}
+                    </p>
+                  </div>
+                </div>
+                <ChevronDown className="h-5 w-5 text-white/40" />
+              </button>
+
+              <button
+                onClick={() => setEquipmentSheetOpen(true)}
+                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+                    <Zap className="h-5 w-5 text-white/70" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-[11px] text-white/60 uppercase tracking-wide">Equipment</p>
+                    <p className="text-[15px] font-medium text-white">
+                      {selectedEquipment ? selectedEquipment.name : 'Select equipment'}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  {selectedEquipment && (
+                    <span className="text-[14px] font-semibold text-elec-yellow">£{selectedEquipment.dailyRate}/day</span>
+                  )}
+                  <ChevronDown className="h-5 w-5 text-white/40" />
+                </div>
+              </button>
+            </div>
+          )}
+
+          {/* Add Button */}
+          <Button
+            onClick={handleAddItem}
+            className="w-full h-12 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            Add to Invoice
+          </Button>
+        </div>
+      )}
+
+      {/* Manual Entry */}
+      {activeAddMethod === 'manual' && (
+        <div className="space-y-3">
+          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+            <div className="p-4 border-b border-white/[0.06]">
+              <label className="text-[11px] text-white/60 uppercase tracking-wide block mb-2">Description *</label>
+              <input
+                value={newItem.description}
+                onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
+                placeholder="Enter item description"
+                className="w-full h-11 px-3 rounded-lg bg-white/[0.05] border-0 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-elec-yellow"
+              />
+            </div>
+            <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
+              <div className="p-4">
+                <label className="text-[11px] text-white/60 uppercase tracking-wide block mb-2">Quantity</label>
+                <input
+                  type="number"
+                  value={newItem.quantity === 0 ? '' : newItem.quantity}
+                  onChange={(e) => setNewItem(prev => ({ ...prev, quantity: parseFloat(e.target.value) || 0 }))}
+                  className="w-full h-11 px-3 rounded-lg bg-white/[0.05] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
+                  placeholder="1"
+                />
+              </div>
+              <div className="p-4">
+                <label className="text-[11px] text-white/60 uppercase tracking-wide block mb-2">Unit Price (£)</label>
+                <input
+                  type="number"
+                  value={newItem.unitPrice === 0 ? '' : newItem.unitPrice}
+                  onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(e.target.value) || 0 }))}
+                  className="w-full h-11 px-3 rounded-lg bg-white/[0.05] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
+                  placeholder="0.00"
+                />
+              </div>
+            </div>
+            {newItem.quantity > 0 && newItem.unitPrice > 0 && (
+              <div className="p-4 bg-elec-yellow/10 border-t border-elec-yellow/20">
+                <div className="flex justify-between items-center">
+                  <span className="text-[14px] text-white">Line Total</span>
+                  <span className="text-[18px] font-bold text-elec-yellow">
+                    {formatCurrency(newItem.quantity * newItem.unitPrice)}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+          <Button
+            onClick={handleAddItem}
+            className="w-full h-12 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            Add to Invoice
+          </Button>
+        </div>
+      )}
+
+      {/* Templates */}
+      {activeAddMethod === 'templates' && (
+        <JobTemplates onSelectTemplate={handleTemplateSelect} />
+      )}
+
+      {/* Additional Items */}
+      {additionalItems.length > 0 && (
+        <div>
+          <p className="text-[12px] font-semibold text-white/60 uppercase tracking-wider py-2">
+            Added Items ({additionalItems.length})
+          </p>
+          <div className="space-y-2">
+            {additionalItems.map((item) => (
+              <div key={item.id} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <div className="w-7 h-7 rounded-lg bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                      {getCategoryIcon(item.category)}
+                    </div>
+                    <p className="text-[13px] font-medium text-white truncate">{item.description}</p>
+                  </div>
+                  <div className="flex items-center gap-1 ml-2">
+                    <button
+                      onClick={() => duplicateItem(item)}
+                      className="w-7 h-7 rounded-lg bg-white/[0.05] flex items-center justify-center touch-manipulation active:scale-95"
+                    >
+                      <Copy className="h-3.5 w-3.5 text-white/70" />
+                    </button>
+                    <button
+                      onClick={() => onRemoveItem(item.id)}
+                      className="w-7 h-7 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
+                    >
+                      <Trash2 className="h-3.5 w-3.5 text-red-400" />
+                    </button>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="number"
+                    value={item.quantity === 0 ? '' : item.quantity}
+                    onChange={(e) => {
+                      const parsed = parseFloat(e.target.value) || 0;
+                      onUpdateItem(item.id, { quantity: parsed });
+                    }}
+                    className="h-8 w-16 text-[13px] bg-white/[0.05] border-white/[0.06]"
+                  />
+                  <span className="text-[12px] text-white/50">×</span>
+                  <Input
+                    type="number"
+                    value={item.unitPrice}
+                    onChange={(e) => onUpdateItem(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
+                    className="h-8 w-20 text-[13px] bg-white/[0.05] border-white/[0.06]"
+                  />
+                  <span className="text-[12px] text-white/50 flex-1">{item.unit}</span>
+                  <span className="text-[13px] font-bold text-elec-yellow">{formatCurrency(item.totalPrice)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Worker Type Sheet */}
+      <Sheet open={workerSheetOpen} onOpenChange={setWorkerSheetOpen}>
+        <SheetContent side="bottom" className="h-[70vh] rounded-t-3xl p-0">
+          <SheetHeader className="p-4 border-b border-white/[0.06]">
+            <SheetTitle className="text-white text-left">Select Worker Type</SheetTitle>
+          </SheetHeader>
+          <div className="overflow-y-auto h-[calc(70vh-60px)]">
+            {workerTypes.map(worker => {
+              const WorkerIcon = getWorkerIcon(worker.id);
+              const isSelected = newItem.workerType === worker.id;
+              return (
+                <button
+                  key={worker.id}
+                  onClick={() => handleWorkerTypeChange(worker.id)}
+                  className={cn(
+                    'w-full flex items-center gap-4 p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.05]',
+                    isSelected && 'bg-elec-yellow/10'
+                  )}
+                >
+                  <div className={cn(
+                    'w-12 h-12 rounded-xl flex items-center justify-center',
+                    isSelected ? 'bg-elec-yellow' : 'bg-white/[0.05]'
+                  )}>
+                    <WorkerIcon className={cn('h-6 w-6', isSelected ? 'text-black' : 'text-white/70')} />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <p className="text-[16px] font-medium text-white">{worker.name}</p>
+                    <p className="text-[13px] text-white/50">{worker.description}</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[16px] font-bold text-elec-yellow">£{worker.defaultHourlyRate}/hr</span>
+                    {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Hours Sheet */}
+      <Sheet open={hoursSheetOpen} onOpenChange={setHoursSheetOpen}>
+        <SheetContent side="bottom" className="h-[60vh] rounded-t-3xl p-0">
+          <SheetHeader className="p-4 border-b border-white/[0.06]">
+            <SheetTitle className="text-white text-left">Select Hours</SheetTitle>
+          </SheetHeader>
+          <div className="grid grid-cols-3 gap-2 p-4">
+            {hourOptions.map(h => {
+              const isSelected = newItem.hours === h;
+              return (
+                <button
+                  key={h}
+                  onClick={() => handleHoursChange(h)}
+                  className={cn(
+                    'p-4 rounded-xl border transition-all touch-manipulation active:scale-[0.98]',
+                    isSelected
+                      ? 'bg-elec-yellow text-black border-elec-yellow font-bold'
+                      : 'bg-white/[0.03] border-white/[0.06] text-white'
+                  )}
+                >
+                  <p className="text-[18px] font-semibold">{h}</p>
+                  <p className="text-[11px] opacity-70">{h === 1 ? 'hour' : 'hours'}</p>
+                </button>
+              );
+            })}
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Material Category Sheet */}
+      <Sheet open={categorySheetOpen} onOpenChange={setCategorySheetOpen}>
+        <SheetContent side="bottom" className="h-[60vh] rounded-t-3xl p-0">
+          <SheetHeader className="p-4 border-b border-white/[0.06]">
+            <SheetTitle className="text-white text-left">Select Category</SheetTitle>
+          </SheetHeader>
+          <div className="overflow-y-auto h-[calc(60vh-60px)]">
+            <button
+              onClick={() => { setNewItem(prev => ({ ...prev, subcategory: '', materialCode: '' })); setCategorySheetOpen(false); }}
+              className={cn(
+                'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation',
+                !newItem.subcategory && 'bg-elec-yellow/10'
+              )}
+            >
+              <span className="text-[16px] font-medium text-white">All Categories</span>
+              {!newItem.subcategory && <Check className="h-5 w-5 text-elec-yellow" />}
+            </button>
+            {materialCategories.map(cat => {
+              const isSelected = newItem.subcategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => { setNewItem(prev => ({ ...prev, subcategory: cat.id, materialCode: '' })); setCategorySheetOpen(false); }}
+                  className={cn(
+                    'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation',
+                    isSelected && 'bg-elec-yellow/10'
+                  )}
+                >
+                  <span className="text-[16px] font-medium text-white">{cat.name}</span>
+                  {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
+                </button>
+              );
+            })}
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Material Sheet */}
+      <Sheet open={materialSheetOpen} onOpenChange={setMaterialSheetOpen}>
+        <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl p-0">
+          <SheetHeader className="p-4 border-b border-white/[0.06]">
+            <SheetTitle className="text-white text-left">Select Material</SheetTitle>
+          </SheetHeader>
+          <div className="overflow-y-auto h-[calc(80vh-60px)]">
+            {filteredMaterials.map(material => {
+              const isSelected = newItem.materialCode === material.id;
+              const price = calculateAdjustedPrice(material.defaultPrice);
+              return (
+                <button
+                  key={material.id}
+                  onClick={() => handleMaterialSelect(material.id)}
+                  className={cn(
+                    'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.05]',
+                    isSelected && 'bg-elec-yellow/10'
+                  )}
+                >
+                  <div className="flex-1 text-left">
+                    <p className="text-[15px] font-medium text-white">{material.name}</p>
+                    <p className="text-[12px] text-white/50">{material.category}</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[15px] font-bold text-elec-yellow">£{price.toFixed(2)}</span>
+                    {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Equipment Category Sheet */}
+      <Sheet open={equipmentCategorySheetOpen} onOpenChange={setEquipmentCategorySheetOpen}>
+        <SheetContent side="bottom" className="h-[50vh] rounded-t-3xl p-0">
+          <SheetHeader className="p-4 border-b border-white/[0.06]">
+            <SheetTitle className="text-white text-left">Select Category</SheetTitle>
+          </SheetHeader>
+          <div className="overflow-y-auto h-[calc(50vh-60px)]">
+            {equipmentCategories.map(cat => {
+              const isSelected = newItem.subcategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => { setNewItem(prev => ({ ...prev, subcategory: cat.id })); setEquipmentCategorySheetOpen(false); }}
+                  className={cn(
+                    'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation',
+                    isSelected && 'bg-elec-yellow/10'
+                  )}
+                >
+                  <span className="text-[16px] font-medium text-white">{cat.name}</span>
+                  {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
+                </button>
+              );
+            })}
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Equipment Sheet */}
+      <Sheet open={equipmentSheetOpen} onOpenChange={setEquipmentSheetOpen}>
+        <SheetContent side="bottom" className="h-[70vh] rounded-t-3xl p-0">
+          <SheetHeader className="p-4 border-b border-white/[0.06]">
+            <SheetTitle className="text-white text-left">Select Equipment</SheetTitle>
+          </SheetHeader>
+          <div className="overflow-y-auto h-[calc(70vh-60px)]">
+            {commonEquipment
+              .filter(e => !newItem.subcategory || e.category === newItem.subcategory)
+              .map(equipment => {
+                const isSelected = newItem.equipmentCode === equipment.id;
+                return (
+                  <button
+                    key={equipment.id}
+                    onClick={() => handleEquipmentSelect(equipment.id)}
+                    className={cn(
+                      'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.05]',
+                      isSelected && 'bg-elec-yellow/10'
+                    )}
+                  >
+                    <div className="flex-1 text-left">
+                      <p className="text-[15px] font-medium text-white">{equipment.name}</p>
+                      <p className="text-[12px] text-white/50">{equipment.category}</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[15px] font-bold text-elec-yellow">£{equipment.dailyRate}/{equipment.unit}</span>
+                      {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
+                    </div>
+                  </button>
+                );
+              })}
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

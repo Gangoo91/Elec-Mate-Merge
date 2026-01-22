@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MessageSquare, ArrowLeft, Building2, Briefcase, Heart, Hash, GraduationCap, Send, Loader2 } from "lucide-react";
+import { MessageSquare, ArrowLeft, Building2, Briefcase, Heart, Hash, GraduationCap, Send, Loader2, CheckCheck, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -35,8 +35,11 @@ import { TeamChatList, TeamChatView } from "@/components/employer/team-chat";
 import { CollegeChatList, CollegeChatView } from "@/components/college/chat";
 
 // Peer support
-import { peerConversationService, PeerConversation, PeerMessage } from "@/services/peerSupportService";
+import { peerConversationService, peerMessageService, PeerConversation, PeerMessage } from "@/services/peerSupportService";
 import { usePeerMessages, useSendPeerMessage, useMarkPeerMessagesAsRead } from "@/hooks/usePeerChat";
+
+// Notifications
+import { useNotifications } from "@/components/notifications/NotificationProvider";
 import { PeerChatActions } from "@/components/mental-health/peer-support/PeerChatActions";
 
 // Types
@@ -312,6 +315,15 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const isMobile = useIsMobile();
   const { user } = useAuth();
 
+  // Get notifications context for clearing localStorage notifications
+  let clearAllNotifications: (() => void) | null = null;
+  try {
+    const notificationsContext = useNotifications();
+    clearAllNotifications = notificationsContext.clearAllNotifications;
+  } catch {
+    // NotificationProvider not available
+  }
+
   // Determine context based on path
   const isEmployerContext = location.pathname.startsWith('/employer');
   const isCollegeContext = location.pathname.startsWith('/college');
@@ -345,6 +357,17 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   // Messages for selected job conversation
   const { data: messages = [], isLoading: messagesLoading } = useMessages(selectedConversation?.id || '');
   const sendMessage = useSendMessage();
+  const markAllAsRead = useMarkAllAsRead();
+
+  // Mark messages as read when conversation is selected
+  useEffect(() => {
+    if (selectedConversation && user) {
+      markAllAsRead.mutate({
+        conversationId: selectedConversation.id,
+        userType: userType as 'employer' | 'electrician',
+      });
+    }
+  }, [selectedConversation?.id, user?.id]);
 
   // Reset state when sheet closes
   const handleClose = (isOpen: boolean) => {
@@ -424,9 +447,53 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                 <MessageSquare className="h-5 w-5 text-elec-yellow" />
                 Messages
                 {totalUnread > 0 && (
-                  <Badge className="bg-elec-yellow text-black ml-auto">
+                  <Badge className="bg-elec-yellow text-black">
                     {totalUnread}
                   </Badge>
+                )}
+                {totalUnread > 0 && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={async () => {
+                      // Mark all job conversations as read
+                      jobConversations.forEach((conv) => {
+                        const unreadCount = 'unread_employer' in conv
+                          ? (isEmployerContext ? conv.unread_employer : conv.unread_electrician)
+                          : 0;
+                        if (unreadCount > 0) {
+                          markAllAsRead.mutate({
+                            conversationId: conv.id,
+                            userType: userType as 'employer' | 'electrician',
+                          });
+                        }
+                      });
+
+                      // Mark all peer messages as read
+                      if (peerUnread > 0) {
+                        try {
+                          await peerMessageService.markAllAsRead();
+                          queryClient.invalidateQueries({ queryKey: ['peer-conversations'] });
+                        } catch (e) {
+                          console.error('Failed to clear peer messages:', e);
+                        }
+                      }
+
+                      // Clear localStorage notifications
+                      if (clearAllNotifications) {
+                        clearAllNotifications();
+                      }
+
+                      toast({
+                        title: "All cleared",
+                        description: "All messages marked as read",
+                      });
+                    }}
+                    className="ml-auto h-8 text-xs text-white/70 hover:text-white"
+                  >
+                    <CheckCheck className="h-4 w-4 mr-1" />
+                    Clear all
+                  </Button>
                 )}
               </SheetTitle>
             </SheetHeader>

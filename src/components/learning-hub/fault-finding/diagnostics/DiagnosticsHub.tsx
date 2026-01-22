@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,82 +12,58 @@ import {
   Eye,
   Target,
   Clock,
-  ThermometerSun
+  ThermometerSun,
+  AlertTriangle
 } from 'lucide-react';
 import {
   diagnosticScenarios,
-  DiagnosticScenario,
-  Diagnostic,
   searchDiagnostics,
   getDiagnosticCategories
 } from '../data/faultFindingData';
+import { cn } from '@/lib/utils';
 
 interface DiagnosticsHubProps {
   onSelectDiagnostic: (categoryId: string, diagnosticIndex: number) => void;
 }
 
-const getCategoryIcon = (category: string) => {
-  switch (category) {
-    case 'continuity':
-      return <Activity className="h-5 w-5" />;
-    case 'voltage':
-      return <Zap className="h-5 w-5" />;
-    case 'rcd':
-    case 'protection':
-      return <Shield className="h-5 w-5" />;
-    case 'insulation':
-      return <Shield className="h-5 w-5" />;
-    case 'earthing':
-      return <Activity className="h-5 w-5" />;
-    case 'power-quality':
-      return <Eye className="h-5 w-5" />;
-    case 'load':
-      return <Target className="h-5 w-5" />;
-    case 'thermal':
-      return <ThermometerSun className="h-5 w-5" />;
-    case 'transient':
-      return <Clock className="h-5 w-5" />;
-    default:
-      return <Search className="h-5 w-5" />;
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04 }
   }
 };
 
-const getCategoryColor = (category: string) => {
-  switch (category) {
-    case 'continuity':
-      return { text: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/30' };
-    case 'voltage':
-      return { text: 'text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/30' };
-    case 'rcd':
-    case 'protection':
-      return { text: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/30' };
-    case 'insulation':
-      return { text: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' };
-    case 'earthing':
-      return { text: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/30' };
-    case 'power-quality':
-      return { text: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/30' };
-    case 'load':
-      return { text: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/30' };
-    case 'thermal':
-      return { text: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/30' };
-    case 'transient':
-      return { text: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/30' };
-    default:
-      return { text: 'text-slate-400', bg: 'bg-slate-500/10', border: 'border-slate-500/30' };
+const itemVariants = {
+  hidden: { opacity: 0, x: -10 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { type: 'spring', stiffness: 500, damping: 30 }
   }
 };
 
-const getSeverityColor = (severity: string) => {
+const getCategoryConfig = (category: string) => {
+  const configs: Record<string, { icon: React.ElementType; iconBg: string }> = {
+    'continuity': { icon: Activity, iconBg: 'bg-green-500' },
+    'voltage': { icon: Zap, iconBg: 'bg-amber-500' },
+    'rcd': { icon: Shield, iconBg: 'bg-purple-500' },
+    'protection': { icon: Shield, iconBg: 'bg-purple-500' },
+    'insulation': { icon: Shield, iconBg: 'bg-blue-500' },
+    'earthing': { icon: Activity, iconBg: 'bg-green-500' },
+    'power-quality': { icon: Eye, iconBg: 'bg-cyan-500' },
+    'load': { icon: Target, iconBg: 'bg-orange-500' },
+    'thermal': { icon: ThermometerSun, iconBg: 'bg-red-500' },
+    'transient': { icon: Clock, iconBg: 'bg-purple-500' }
+  };
+  return configs[category] || { icon: Search, iconBg: 'bg-slate-500' };
+};
+
+const getSeverityBg = (severity: string) => {
   switch (severity) {
-    case 'critical':
-      return 'bg-red-500/20 text-red-400 border-red-500/30';
-    case 'high':
-      return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-    case 'medium':
-      return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-    default:
-      return 'bg-slate-500/20 text-slate-400 border-slate-500/30';
+    case 'critical': return 'bg-red-500';
+    case 'high': return 'bg-orange-500';
+    default: return 'bg-amber-500';
   }
 };
 
@@ -116,8 +91,7 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
       }
     }
 
-    // Show all diagnostics flattened
-    return diagnosticScenarios.flatMap((scenario, scenarioIndex) =>
+    return diagnosticScenarios.flatMap((scenario) =>
       scenario.diagnostics.map((d, diagIndex) => ({
         ...d,
         categoryId: scenario.id,
@@ -136,131 +110,123 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
   };
 
   return (
-    <div className="space-y-4">
-      {/* Search Bar */}
-      <Card>
-        <CardContent className="p-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search symptoms, readings, causes..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 pr-9 h-11 text-base touch-manipulation"
-            />
-            {searchQuery && (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8"
-                onClick={() => setSearchQuery('')}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Category Filter Pills */}
-      <div className="flex flex-wrap gap-2">
-        <Button
-          variant={selectedCategory === null ? 'default' : 'outline'}
-          size="sm"
-          className="h-8 text-xs"
-          onClick={() => setSelectedCategory(null)}
-        >
-          All
-        </Button>
-        {categories.map((cat) => {
-          const colors = getCategoryColor(cat.id.replace('-analysis', '').replace('-diagnostics', ''));
-          return (
-            <Button
-              key={cat.id}
-              variant={selectedCategory === cat.id ? 'default' : 'outline'}
-              size="sm"
-              className={`h-8 text-xs ${selectedCategory === cat.id ? '' : colors.border + ' ' + colors.text}`}
-              onClick={() => setSelectedCategory(selectedCategory === cat.id ? null : cat.id)}
-            >
-              {cat.title.replace(' Analysis', '').replace(' & Current Measurement', '')}
-            </Button>
-          );
-        })}
-      </div>
-
-      {/* Results Count */}
-      <p className="text-xs text-muted-foreground">
-        {filteredDiagnostics.length} diagnostic{filteredDiagnostics.length !== 1 ? 's' : ''} found
-      </p>
-
-      {/* Diagnostic Results */}
-      <div className="space-y-3">
-        {filteredDiagnostics.map((diagnostic, index) => {
-          const colors = getCategoryColor(diagnostic.categoryId.replace('-analysis', '').replace('-diagnostics', ''));
-
-          return (
-            <Card
-              key={`${diagnostic.categoryId}-${index}`}
-              className={`${colors.border} border cursor-pointer hover:scale-[1.01] active:scale-[0.99] transition-all touch-manipulation`}
-              onClick={() => handleDiagnosticClick(diagnostic)}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  {/* Severity Indicator */}
-                  <div className={`w-2 h-2 rounded-full mt-2 shrink-0 ${
-                    diagnostic.severity === 'critical' ? 'bg-red-500' :
-                    diagnostic.severity === 'high' ? 'bg-orange-500' : 'bg-yellow-500'
-                  }`} />
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-sm text-foreground mb-1">
-                      {diagnostic.symptom}
-                    </h4>
-                    <p className="text-xs text-muted-foreground mb-2 line-clamp-1">
-                      {diagnostic.measurement}
-                    </p>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <Badge
-                        variant="outline"
-                        className={`text-xs ${colors.border} ${colors.text}`}
-                      >
-                        {diagnostic.categoryTitle.replace(' Analysis', '')}
-                      </Badge>
-                      <Badge
-                        variant="outline"
-                        className={`text-xs uppercase ${getSeverityColor(diagnostic.severity)}`}
-                      >
-                        {diagnostic.severity}
-                      </Badge>
-                      <span className="text-xs text-muted-foreground">
-                        {diagnostic.possibleCauses.length} causes
-                      </span>
-                    </div>
-                  </div>
-
-                  <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0" />
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-
-        {filteredDiagnostics.length === 0 && (
-          <Card className="border-dashed">
-            <CardContent className="p-8 text-center">
-              <Search className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground">
-                No diagnostics found matching your search
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Try different keywords or clear filters
-              </p>
-            </CardContent>
-          </Card>
+    <motion.div
+      className="space-y-4"
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+    >
+      {/* Search */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+        <Input
+          placeholder="Search symptoms, readings..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10 pr-10 h-12 text-base touch-manipulation bg-white/[0.03] border-white/[0.06] rounded-xl"
+        />
+        {searchQuery && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute right-1 top-1/2 -translate-y-1/2 h-10 w-10"
+            onClick={() => setSearchQuery('')}
+          >
+            <X className="h-4 w-4" />
+          </Button>
         )}
       </div>
-    </div>
+
+      {/* Category Pills */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setSelectedCategory(null)}
+          className={cn(
+            "px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-colors",
+            selectedCategory === null
+              ? "bg-white/10 text-white"
+              : "bg-white/[0.03] text-white/50"
+          )}
+        >
+          All
+        </button>
+        {categories.slice(0, 4).map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => setSelectedCategory(selectedCategory === cat.id ? null : cat.id)}
+            className={cn(
+              "px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-colors",
+              selectedCategory === cat.id
+                ? "bg-white/10 text-white"
+                : "bg-white/[0.03] text-white/50"
+            )}
+          >
+            {cat.title.replace(' Analysis', '').replace(' & Current Measurement', '')}
+          </button>
+        ))}
+      </div>
+
+      {/* Results */}
+      <div>
+        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          {filteredDiagnostics.length} Diagnostics
+        </p>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+          {filteredDiagnostics.slice(0, 15).map((diagnostic, index) => {
+            const catId = diagnostic.categoryId.replace('-analysis', '').replace('-diagnostics', '');
+            const config = getCategoryConfig(catId);
+            const Icon = config.icon;
+
+            return (
+              <motion.div
+                key={`${diagnostic.categoryId}-${index}`}
+                variants={itemVariants}
+                onClick={() => handleDiagnosticClick(diagnostic)}
+                className="flex items-center gap-3 p-3.5 cursor-pointer touch-manipulation active:bg-white/[0.04] transition-colors"
+              >
+                <div className={cn(
+                  "w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0",
+                  config.iconBg
+                )}>
+                  <Icon className="h-5 w-5 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-[15px] font-medium text-white leading-tight">
+                    {diagnostic.symptom}
+                  </h3>
+                  <p className="text-[13px] text-white/50 leading-tight mt-0.5 line-clamp-1">
+                    {diagnostic.measurement}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <div className={cn("w-2 h-2 rounded-full", getSeverityBg(diagnostic.severity))} />
+                  <ChevronRight className="h-4 w-4 text-white/20" />
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+
+      {filteredDiagnostics.length === 0 && (
+        <motion.div variants={itemVariants}>
+          <div className="flex flex-col items-center gap-2 py-8 text-center">
+            <Search className="h-8 w-8 text-white/20" />
+            <p className="text-[13px] text-white/40">No diagnostics found</p>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Info notice */}
+      <motion.div variants={itemVariants}>
+        <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.02]">
+          <AlertTriangle className="h-4 w-4 text-white/30 flex-shrink-0" />
+          <p className="text-[12px] text-white/40">
+            Severity indicated by dot colour (red = critical)
+          </p>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

@@ -108,6 +108,7 @@ export const ExportToEICDialog: React.FC<ExportToEICDialogProps> = ({
       const eicDataWithMeta = {
         ...eicData,
         sourceEICRReportId: reportId,
+        sourceCertificateNumber: eicrData.certificateNumber,
         exportedFromEICR: true,
         exportedAt: new Date().toISOString(),
       };

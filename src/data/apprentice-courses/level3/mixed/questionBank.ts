@@ -139,4 +139,43 @@ export const getQuestionBankStats = () => {
   return stats;
 };
 
+// Category labels for results display (shorter names for UI)
+export const CATEGORY_LABELS: Record<string, string> = {
+  'Module 1: Health & Safety': 'Health & Safety',
+  'Module 2: Environmental Technologies': 'Environmental Tech',
+  'Module 3: Electrical Science': 'Electrical Science',
+  'Module 4: Fault Diagnosis': 'Fault Diagnosis',
+  'Module 5: Inspection & Testing': 'Inspection & Testing',
+  'Module 6: Systems Design': 'Systems Design',
+  'Module 7: Career Development': 'Career Development'
+};
+
+// Get category breakdown from exam results
+export const getCategoryBreakdown = (
+  examQuestions: Question[],
+  selectedAnswers: number[]
+): { category: string; label: string; total: number; correct: number; percent: number }[] => {
+  const breakdown: Record<string, { total: number; correct: number }> = {};
+
+  examQuestions.forEach((q, index) => {
+    const category = q.module || 'General';
+    if (!breakdown[category]) {
+      breakdown[category] = { total: 0, correct: 0 };
+    }
+    breakdown[category].total++;
+    if (selectedAnswers[index] === q.correctAnswer) {
+      breakdown[category].correct++;
+    }
+  });
+
+  return Object.entries(breakdown)
+    .sort((a, b) => b[1].total - a[1].total)
+    .map(([category, stats]) => ({
+      category,
+      label: CATEGORY_LABELS[category] || category,
+      ...stats,
+      percent: Math.round((stats.correct / stats.total) * 100)
+    }));
+};
+
 export default mixedQuestions;

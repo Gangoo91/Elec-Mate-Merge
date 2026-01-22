@@ -1,6 +1,5 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
 import {
   ChevronRight,
   Shield,
@@ -11,122 +10,142 @@ import {
   ClipboardCheck
 } from 'lucide-react';
 import { safetyTopics, SafetyTopic } from '../data/faultFindingData';
+import { cn } from '@/lib/utils';
 
 interface SafetyGridProps {
   onSelectTopic: (topicId: string) => void;
 }
 
-const getCategoryIcon = (category: string) => {
-  switch (category) {
-    case 'safety':
-      return <Shield className="h-6 w-6" />;
-    case 'equipment':
-      return <HardHat className="h-6 w-6" />;
-    case 'procedures':
-      return <Lock className="h-6 w-6" />;
-    case 'emergency':
-      return <AlertTriangle className="h-6 w-6" />;
-    case 'legal':
-      return <BookOpen className="h-6 w-6" />;
-    case 'assessment':
-      return <ClipboardCheck className="h-6 w-6" />;
-    default:
-      return <Shield className="h-6 w-6" />;
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04 }
   }
 };
 
-const getPriorityColor = (priority: string) => {
-  switch (priority) {
-    case 'critical':
-      return {
-        text: 'text-red-400',
-        bg: 'bg-red-500/10',
-        border: 'border-red-500/30',
-        badge: 'bg-red-500/20 text-red-400 border-red-500/30'
-      };
-    case 'high':
-      return {
-        text: 'text-orange-400',
-        bg: 'bg-orange-500/10',
-        border: 'border-orange-500/30',
-        badge: 'bg-orange-500/20 text-orange-400 border-orange-500/30'
-      };
-    default:
-      return {
-        text: 'text-yellow-400',
-        bg: 'bg-yellow-500/10',
-        border: 'border-yellow-500/30',
-        badge: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
-      };
+const itemVariants = {
+  hidden: { opacity: 0, x: -10 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { type: 'spring', stiffness: 500, damping: 30 }
   }
+};
+
+const getCategoryConfig = (category: string, priority: string) => {
+  const iconMap: Record<string, React.ElementType> = {
+    'safety': Shield,
+    'equipment': HardHat,
+    'procedures': Lock,
+    'emergency': AlertTriangle,
+    'legal': BookOpen,
+    'assessment': ClipboardCheck
+  };
+
+  const colorMap: Record<string, string> = {
+    'critical': 'bg-red-500',
+    'high': 'bg-orange-500',
+    'essential': 'bg-amber-500'
+  };
+
+  return {
+    icon: iconMap[category] || Shield,
+    iconBg: colorMap[priority] || 'bg-amber-500'
+  };
 };
 
 const SafetyGrid = ({ onSelectTopic }: SafetyGridProps) => {
+  // Group by priority
+  const criticalTopics = safetyTopics.filter(t => t.priority === 'critical');
+  const highTopics = safetyTopics.filter(t => t.priority === 'high');
+  const essentialTopics = safetyTopics.filter(t => t.priority === 'essential');
+
+  const renderTopic = (topic: SafetyTopic) => {
+    const config = getCategoryConfig(topic.category, topic.priority);
+    const Icon = config.icon;
+
+    return (
+      <motion.div
+        key={topic.id}
+        variants={itemVariants}
+        onClick={() => onSelectTopic(topic.id)}
+        className="flex items-center gap-3 p-3.5 cursor-pointer touch-manipulation active:bg-white/[0.04] transition-colors"
+      >
+        <div className={cn(
+          "w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0",
+          config.iconBg
+        )}>
+          <Icon className="h-5 w-5 text-white" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-[15px] font-medium text-white leading-tight">
+            {topic.title}
+          </h3>
+          <p className="text-[13px] text-white/50 leading-tight mt-0.5 line-clamp-1">
+            {topic.description}
+          </p>
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <ChevronRight className="h-4 w-4 text-white/20" />
+        </div>
+      </motion.div>
+    );
+  };
+
   return (
-    <div className="space-y-4">
-      {/* Critical Safety Warning */}
-      <Card className="border-l-4 border-l-red-500 bg-red-500/10">
-        <CardContent className="p-4">
-          <div className="flex items-start gap-3">
-            <Shield className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
-            <div>
-              <h3 className="font-semibold text-red-400 text-sm mb-1">
-                Critical Safety Requirements
-              </h3>
-              <p className="text-sm text-red-300">
-                Electrical fault finding involves working with potentially live systems.
-                Always prioritise safety over speed of diagnosis.
-              </p>
-            </div>
+    <motion.div
+      className="space-y-6"
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+    >
+      {/* Critical */}
+      {criticalTopics.length > 0 && (
+        <div>
+          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            Critical
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-red-500/20 overflow-hidden divide-y divide-white/[0.06]">
+            {criticalTopics.map(renderTopic)}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      )}
 
-      {/* Safety Topic Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {safetyTopics.map((topic: SafetyTopic) => {
-          const colors = getPriorityColor(topic.priority);
+      {/* High Priority */}
+      {highTopics.length > 0 && (
+        <div>
+          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            High Priority
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+            {highTopics.map(renderTopic)}
+          </div>
+        </div>
+      )}
 
-          return (
-            <Card
-              key={topic.id}
-              className={`${colors.border} border ${colors.bg} cursor-pointer
-                transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]
-                touch-manipulation`}
-              onClick={() => onSelectTopic(topic.id)}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  {/* Icon */}
-                  <div className={`${colors.text} shrink-0`}>
-                    {getCategoryIcon(topic.category)}
-                  </div>
+      {/* Essential */}
+      {essentialTopics.length > 0 && (
+        <div>
+          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            Essential
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+            {essentialTopics.map(renderTopic)}
+          </div>
+        </div>
+      )}
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className={`font-semibold text-sm sm:text-base ${colors.text} mb-1`}>
-                      {topic.title}
-                    </h3>
-                    <p className="text-xs text-muted-foreground line-clamp-2 mb-2">
-                      {topic.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <Badge
-                        variant="outline"
-                        className={`text-xs uppercase ${colors.badge}`}
-                      >
-                        {topic.priority}
-                      </Badge>
-                      <ChevronRight className={`h-4 w-4 ${colors.text}`} />
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
-    </div>
+      {/* Safety reminder */}
+      <motion.div variants={itemVariants}>
+        <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.02]">
+          <AlertTriangle className="h-4 w-4 text-white/30 flex-shrink-0" />
+          <p className="text-[12px] text-white/40">
+            Always prioritise safety over speed of diagnosis
+          </p>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

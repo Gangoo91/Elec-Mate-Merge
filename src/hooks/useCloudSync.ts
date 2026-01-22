@@ -36,6 +36,7 @@ export const useCloudSync = ({
     status,
     isOnline,
     isAuthenticated,
+    authCheckComplete,
     saveNow,
     loadReport,
     hasRecoverableDraft,
@@ -87,6 +88,7 @@ export const useCloudSync = ({
     loadFromCloud,
     isOnline,
     isAuthenticated,
+    authCheckComplete,
     processOfflineQueue,
     // New features exposed for gradual adoption
     hasRecoverableDraft,

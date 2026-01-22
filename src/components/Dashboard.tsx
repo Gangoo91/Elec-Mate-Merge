@@ -12,11 +12,14 @@ import { useCustomers } from '@/hooks/useCustomers';
 import HelpPanel from './HelpPanel';
 import { Card, CardHeader } from '@/components/ui/card';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 const Dashboard = ({ onNavigate }: { onNavigate: (section: string, reportId?: string, reportType?: string) => void }) => {
   const navigate = useNavigate();
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const { customers, isLoading } = useCustomers();
+  const isMobile = useIsMobile();
 
   const handleNavigate = (section: string, reportId?: string, reportType?: string) => {
     onNavigate(section, reportId, reportType);
@@ -31,28 +34,27 @@ const Dashboard = ({ onNavigate }: { onNavigate: (section: string, reportId?: st
       <div className="min-h-screen bg-sidebar text-foreground">
         {/* Header */}
         <header className="sticky top-0 z-50 w-full border-b border-elec-yellow/20 bg-sidebar/95 backdrop-blur supports-[backdrop-filter]:bg-sidebar/80">
-          <div className="px-3 sm:px-4">
-            <div className="flex h-14 items-center justify-between">
-              {/* Left - Back */}
+          <div className="px-3">
+            <div className="flex h-14 items-center">
+              {/* Back */}
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleBack}
-                className="gap-1.5 text-muted-foreground hover:text-foreground -ml-2"
+                className="gap-1.5 text-muted-foreground hover:text-foreground -ml-2 mr-2"
               >
                 <ArrowLeft className="h-4 w-4" />
-                <span className="hidden sm:inline">Back</span>
               </Button>
 
-              {/* Center - Title with yellow icon */}
-              <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-xl bg-elec-yellow/15">
-                  <Zap className="h-5 w-5 text-elec-yellow" />
+              {/* Title - Left aligned */}
+              <div className="flex items-center gap-2 flex-1">
+                <div className="p-1.5 rounded-lg bg-elec-yellow/15">
+                  <Zap className="h-4 w-4 text-elec-yellow" />
                 </div>
-                <span className="font-semibold text-foreground">Inspection & Testing</span>
+                <span className="font-semibold text-foreground text-sm">Inspection & Testing</span>
               </div>
 
-              {/* Right - Help */}
+              {/* Help */}
               <Button
                 variant="ghost"
                 size="icon"
@@ -65,18 +67,21 @@ const Dashboard = ({ onNavigate }: { onNavigate: (section: string, reportId?: st
           </div>
         </header>
 
-        {/* Main Content - Minimal padding */}
-        <main className="px-3 sm:px-4 py-4 space-y-4 pb-20 sm:pb-6">
-          {/* Certificate Type Grid with AI Scanner */}
+        {/* Main Content */}
+        <main className={cn(
+          "px-3 py-3 space-y-3 pb-20",
+          !isMobile && "sm:px-4 sm:py-4 sm:space-y-4 sm:pb-6"
+        )}>
+          {/* Certificate Type Grid */}
           <CertificateTypeGrid onNavigate={handleNavigate} />
 
-          {/* Designed Circuits from Circuit Designer */}
+          {/* Designed Circuits */}
           <DesignedCircuitsCard onNavigate={handleNavigate} />
 
-          {/* Customer Stats - always show so users can add customers */}
+          {/* Customer Stats */}
           {isLoading ? (
-            <Card className="bg-card border-border">
-              <CardHeader className="p-4">
+            <Card className="bg-card border-elec-yellow/20">
+              <CardHeader className="p-3">
                 <LoadingSkeleton type="card" count={1} />
               </CardHeader>
             </Card>

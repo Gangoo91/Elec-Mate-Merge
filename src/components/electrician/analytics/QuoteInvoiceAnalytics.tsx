@@ -193,38 +193,38 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="mb-6">
       <CollapsibleTrigger asChild>
-        <button className="w-full flex items-center justify-between p-4 bg-card/50 border border-border/50 rounded-xl hover:bg-card/70 transition-colors touch-manipulation">
+        <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.05] active:scale-[0.98] transition-all">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-              <BarChart3 className="h-5 w-5 text-elec-yellow" />
+            <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
+              <BarChart3 className="h-5 w-5 text-black" />
             </div>
             <div className="text-left">
-              <p className="font-semibold">Analytics Dashboard</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-[15px] font-medium text-white">Analytics Dashboard</p>
+              <p className="text-[13px] text-white">
                 {metrics.winRate}% win rate • {formatCurrency(metrics.totalRevenue)} revenue
               </p>
             </div>
           </div>
           {isOpen ? (
-            <ChevronUp className="h-5 w-5 text-muted-foreground" />
+            <ChevronUp className="h-5 w-5 text-white" />
           ) : (
-            <ChevronDown className="h-5 w-5 text-muted-foreground" />
+            <ChevronDown className="h-5 w-5 text-white" />
           )}
         </button>
       </CollapsibleTrigger>
 
       <CollapsibleContent className="mt-4 space-y-4">
-        {/* Date Range Selector */}
-        <div className="flex gap-2 overflow-x-auto pb-2">
+        {/* Date Range Selector - iOS Segmented Style */}
+        <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-hide">
           {dateRangeOptions.map(option => (
             <button
               key={option.value}
               onClick={() => setDateRange(option.value)}
               className={cn(
-                "px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors touch-manipulation",
+                "px-4 py-2.5 rounded-xl text-[13px] font-medium whitespace-nowrap transition-all touch-manipulation active:scale-[0.98]",
                 dateRange === option.value
-                  ? "bg-elec-yellow text-elec-dark"
-                  : "bg-card/50 text-muted-foreground hover:bg-card"
+                  ? "bg-elec-yellow text-black font-semibold"
+                  : "bg-white/[0.05] text-white border border-white/[0.06]"
               )}
             >
               {option.label}

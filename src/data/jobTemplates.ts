@@ -1018,12 +1018,12 @@ export const jobTemplates: JobTemplate[] = [
       }
     ]
   },
-  // Solar/Renewable Templates
+  // Renewable Energy Templates
   {
     id: 'solar-panel-basic',
     name: 'Solar Panel Installation (Basic)',
     description: '4kW domestic solar panel system with inverter',
-    category: 'Solar/Renewable',
+    category: 'Renewable',
     estimatedHours: 8,
     items: [
       {
@@ -1067,7 +1067,7 @@ export const jobTemplates: JobTemplate[] = [
     id: 'battery-storage-system',
     name: 'Battery Storage System',
     description: '10kWh home battery storage with hybrid inverter',
-    category: 'Solar/Renewable',
+    category: 'Renewable',
     estimatedHours: 6,
     items: [
       {
@@ -1104,7 +1104,7 @@ export const jobTemplates: JobTemplate[] = [
     id: 'heat-pump-electrical',
     name: 'Heat Pump Electrical Connection',
     description: 'Electrical supply for air source heat pump installation',
-    category: 'Solar/Renewable',
+    category: 'Renewable',
     estimatedHours: 4,
     items: [
       {
@@ -1141,7 +1141,7 @@ export const jobTemplates: JobTemplate[] = [
     id: 'car-lift-power-supply',
     name: 'Car Lift Power Supply',
     description: '3-phase power supply for hydraulic car lift',
-    category: 'Specialist',
+    category: 'Commercial',
     estimatedHours: 5,
     items: [
       {
@@ -1178,7 +1178,7 @@ export const jobTemplates: JobTemplate[] = [
     id: 'pool-spa-electrical',
     name: 'Pool/Spa Electrical Installation',
     description: 'Complete electrical installation for swimming pool equipment',
-    category: 'Specialist',
+    category: 'Commercial',
     estimatedHours: 6,
     items: [
       {
@@ -1218,12 +1218,12 @@ export const jobTemplates: JobTemplate[] = [
       }
     ]
   },
-  // Testing & Certification Templates
+  // Testing Templates
   {
     id: 'pat-testing-per-item',
     name: 'PAT Testing (Per Item)',
     description: 'Portable appliance testing certification',
-    category: 'Testing/Certification',
+    category: 'Testing',
     estimatedHours: 0.1,
     items: [
       {
@@ -1253,7 +1253,7 @@ export const jobTemplates: JobTemplate[] = [
     id: 'new-installation-certificate',
     name: 'New Installation Certificate',
     description: 'Electrical Installation Certificate for new work',
-    category: 'Testing/Certification',
+    category: 'Testing',
     estimatedHours: 2,
     items: [
       {
@@ -1283,7 +1283,7 @@ export const jobTemplates: JobTemplate[] = [
     id: 'periodic-inspection-testing',
     name: 'Periodic Inspection & Testing',
     description: 'Comprehensive electrical installation inspection',
-    category: 'Testing/Certification',
+    category: 'Testing',
     estimatedHours: 4,
     items: [
       {
@@ -1313,7 +1313,7 @@ export const jobTemplates: JobTemplate[] = [
     id: 'fault-finding-diagnostics',
     name: 'Fault Finding & Diagnostics',
     description: 'Electrical fault investigation and repair diagnosis',
-    category: 'Testing/Certification',
+    category: 'Testing',
     estimatedHours: 2,
     items: [
       {

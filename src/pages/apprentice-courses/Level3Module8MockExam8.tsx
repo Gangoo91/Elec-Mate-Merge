@@ -1,45 +1,77 @@
-import React, { useState, useEffect } from 'react';
+/**
+ * Level 3 Full Practice Exam (AM2-Style)
+ *
+ * Comprehensive mock exam covering all 7 Level 3 modules
+ * - 40 questions balanced across modules
+ * - 90 minute time limit
+ * - 60% pass mark (24/40)
+ * - ExamMobileLayout for mobile-first experience
+ * - Category breakdown in results
+ */
+
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ArrowRight, Flag, CheckCircle, Clock, BookOpen, Target, FileText, X, Eye, RotateCcw, Shuffle } from "lucide-react";
+import { ArrowLeft, ArrowRight, Flag, CheckCircle, XCircle, Clock, BookOpen, Target, FileText, X, Eye, RotateCcw, Shuffle, Trophy, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import useSEO from "@/hooks/useSEO";
-import { getBalancedRandomQuestions } from "@/data/apprentice-courses/level3/mixed/questionBank";
+import { ExamMobileLayout } from "@/components/apprentice-courses/ExamMobileLayout";
+import { ExamDesktopSidebar } from "@/components/apprentice-courses/ExamDesktopSidebar";
+import { getBalancedRandomQuestions, getCategoryBreakdown, Question } from "@/data/apprentice-courses/level3/mixed/questionBank";
+
+const EXAM_CONFIG = {
+  totalQuestions: 40,
+  timeInSeconds: 90 * 60, // 90 minutes
+  passPercentage: 60,
+  exitPath: "/study-centre/apprentice/level3-module8"
+};
 
 const Level3Module8MockExam8 = () => {
-  useSEO("Mock Exam 8: Full Practice Exam | Level 3 Electrical Course", "Complete practice exam with questions from all 7 modules - the ultimate Level 3 preparation test.");
+  useSEO(
+    "Level 3 Full Practice Exam | Comprehensive Mock Assessment",
+    "Complete 40-question practice exam covering all Level 3 modules. Balanced difficulty, 90-minute timed conditions, category breakdown."
+  );
 
-  const [examQuestions, setExamQuestions] = useState<any[]>([]);
+  const [examQuestions, setExamQuestions] = useState<Question[]>([]);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(60 * 45);
-  const [flaggedQuestions, setFlaggedQuestions] = useState(new Set<number>());
-  const [reviewMode, setReviewMode] = useState(false);
-  const [reviewFilter, setReviewFilter] = useState("all");
+  const [showReview, setShowReview] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(EXAM_CONFIG.timeInSeconds);
+  const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
+  const [reviewFilter, setReviewFilter] = useState<'all' | 'correct' | 'incorrect' | 'unanswered' | 'flagged'>('all');
 
+  // Start exam
   const startExam = () => {
-    const selectedQuestions = getBalancedRandomQuestions(30);
-    setExamQuestions(selectedQuestions);
-    setSelectedAnswers(new Array(30).fill(-1));
+    const questions = getBalancedRandomQuestions(EXAM_CONFIG.totalQuestions);
+    setExamQuestions(questions);
+    setSelectedAnswers(new Array(EXAM_CONFIG.totalQuestions).fill(-1));
     setCurrentQuestion(0);
     setExamStarted(true);
     setShowResults(false);
-    setTimeRemaining(60 * 45);
+    setShowReview(false);
+    setTimeRemaining(EXAM_CONFIG.timeInSeconds);
     setFlaggedQuestions(new Set());
   };
 
+  // Timer
   useEffect(() => {
     if (examStarted && !showResults && timeRemaining > 0) {
-      const timer = setTimeout(() => setTimeRemaining(timeRemaining - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (timeRemaining === 0 && examStarted && !showResults) {
-      handleSubmit();
+      const timer = setInterval(() => {
+        setTimeRemaining(prev => {
+          if (prev <= 1) {
+            handleSubmit();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
     }
-  }, [timeRemaining, examStarted, showResults]);
+  }, [examStarted, showResults, timeRemaining]);
 
   const handleAnswerSelect = (answerIndex: number) => {
     const newAnswers = [...selectedAnswers];
@@ -79,40 +111,6 @@ const Level3Module8MockExam8 = () => {
     }, 0);
   };
 
-  const getQuestionStatus = (index: number) => {
-    const answer = selectedAnswers[index];
-    const isCorrect = answer === examQuestions[index]?.correctAnswer;
-    const isAnswered = answer !== -1;
-
-    if (!isAnswered) return { type: "unanswered", color: "text-white/70" };
-    if (isCorrect) return { type: "correct", color: "text-green-500" };
-    return { type: "incorrect", color: "text-elec-yellow" };
-  };
-
-  const getFilteredQuestions = () => {
-    return examQuestions.map((_, index) => index).filter(index => {
-      const status = getQuestionStatus(index);
-      const isFlagged = flaggedQuestions.has(index);
-
-      switch (reviewFilter) {
-        case "correct": return status.type === "correct";
-        case "incorrect": return status.type === "incorrect";
-        case "unanswered": return status.type === "unanswered";
-        case "flagged": return isFlagged;
-        default: return true;
-      }
-    });
-  };
-
-  const getSummaryStats = () => {
-    const correct = examQuestions.filter((_, index) => selectedAnswers[index] === examQuestions[index]?.correctAnswer).length;
-    const incorrect = examQuestions.filter((_, index) => selectedAnswers[index] !== -1 && selectedAnswers[index] !== examQuestions[index]?.correctAnswer).length;
-    const unanswered = examQuestions.filter((_, index) => selectedAnswers[index] === -1).length;
-    const flagged = flaggedQuestions.size;
-
-    return { correct, incorrect, unanswered, flagged };
-  };
-
   const goToNextFlagged = () => {
     const flaggedArray = Array.from(flaggedQuestions).sort((a, b) => a - b);
     if (flaggedArray.length > 0) {
@@ -122,467 +120,531 @@ const Level3Module8MockExam8 = () => {
     }
   };
 
-  const answeredQuestions = selectedAnswers.filter(answer => answer !== -1).length;
-  const progressPercentage = examQuestions.length > 0 ? (answeredQuestions / examQuestions.length) * 100 : 0;
+  const getQuestionStatus = (index: number) => {
+    const answer = selectedAnswers[index];
+    const isCorrect = answer === examQuestions[index]?.correctAnswer;
+    const isAnswered = answer !== -1;
 
-  const formatTime = (seconds: number) => {
+    if (!isAnswered) return 'unanswered';
+    if (isCorrect) return 'correct';
+    return 'incorrect';
+  };
+
+  const getFilteredQuestions = () => {
+    return examQuestions.map((_, index) => index).filter(index => {
+      const status = getQuestionStatus(index);
+      const isFlagged = flaggedQuestions.has(index);
+
+      switch (reviewFilter) {
+        case 'correct': return status === 'correct';
+        case 'incorrect': return status === 'incorrect';
+        case 'unanswered': return status === 'unanswered';
+        case 'flagged': return isFlagged;
+        default: return true;
+      }
+    });
+  };
+
+  const answeredQuestions = selectedAnswers.filter(answer => answer !== -1).length;
+
+  const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // ========== START SCREEN ==========
   if (!examStarted) {
     return (
-      <div className="overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
-        <div>
-          <Card className="border-elec-yellow/30 bg-transparent">
-            <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
-              <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10">
-                <Shuffle className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-              </div>
-              <CardTitle className="text-lg sm:text-xl md:text-2xl text-white mb-1">Level 3 Full Practice Exam</CardTitle>
-              <h2 className="text-xs sm:text-sm md:text-lg text-elec-yellow">Mixed Questions - All 7 Modules</h2>
-            </CardHeader>
+      <div className="min-h-screen bg-[#0d0d0d] p-4 flex items-center justify-center">
+        <Card className="max-w-md w-full border-elec-yellow/30 bg-transparent">
+          <CardHeader className="text-center pb-4">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-600/10">
+              <Shuffle className="h-7 w-7 text-elec-yellow" />
+            </div>
+            <CardTitle className="text-xl text-white mb-2">Level 3 Full Practice Exam</CardTitle>
+            <p className="text-elec-yellow text-sm">All 7 Modules Combined</p>
+          </CardHeader>
 
-            <CardContent className="space-y-4 sm:space-y-6 px-3 sm:px-6">
-              <div className="bg-[#1a1a1a] p-3 sm:p-4 rounded-lg sm:rounded-xl border border-muted/40">
-                <div className="flex items-center gap-2 mb-3 sm:mb-3">
-                  <div className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md sm:rounded-lg bg-elec-yellow/20">
-                    <CheckCircle className="h-3 w-3 sm:h-3 sm:w-3 text-elec-yellow" />
-                  </div>
-                  <h3 className="font-semibold text-white text-sm sm:text-base">Instructions</h3>
-                </div>
-                <div className="grid gap-2 sm:gap-2">
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-white/70 leading-relaxed">30 questions balanced across all 7 modules (1,400+ question bank)</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-white/70 leading-relaxed">45 minutes time limit</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-white/70 leading-relaxed">Covers: H&S, Environmental, Science, Fault Diagnosis, I&T, Design, Career</p>
-                  </div>
-                </div>
+          <CardContent className="space-y-5">
+            <div className="bg-white/[0.02] p-4 rounded-xl border border-white/10">
+              <div className="flex items-center gap-2 mb-3">
+                <CheckCircle className="h-4 w-4 text-elec-yellow" />
+                <span className="font-semibold text-white text-sm">Instructions</span>
               </div>
+              <ul className="space-y-2 text-sm text-white/70">
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>40 questions from 1,400+ question bank</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>90 minutes time limit</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>60% pass mark (24/40 correct)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+                  <span>Balanced across all Level 3 modules</span>
+                </li>
+              </ul>
+            </div>
 
-              <div className="bg-gradient-to-br from-elec-yellow/10 to-transparent p-3 rounded-lg border border-elec-yellow/20">
-                <p className="text-xs text-center text-white/70">
-                  <span className="text-elec-yellow font-semibold">Pro Tip:</span> This exam simulates the real Level 3 assessment format with questions from all modules for comprehensive preparation.
-                </p>
+            <div className="grid grid-cols-2 gap-3 text-center">
+              <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10">
+                <div className="text-lg font-bold text-elec-yellow">40</div>
+                <div className="text-xs text-white/50">Questions</div>
               </div>
+              <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10">
+                <div className="text-lg font-bold text-elec-yellow">90</div>
+                <div className="text-xs text-white/50">Minutes</div>
+              </div>
+            </div>
 
-              <Button
-                onClick={startExam}
-                className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold py-3 sm:py-3 text-base sm:text-base touch-manipulation min-h-[48px] rounded-lg"
-                size="lg"
-              >
-                <div className="flex items-center justify-center gap-3">
-                  <FileText className="h-4 w-4 sm:h-4 sm:w-4" />
-                  Start Full Practice Exam
-                  <ArrowRight className="h-4 w-4 sm:h-4 sm:w-4" />
-                </div>
+            <Button
+              onClick={startExam}
+              className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold touch-manipulation active:scale-[0.98]"
+            >
+              <FileText className="h-5 w-5 mr-2" />
+              Start Exam
+            </Button>
+
+            <Link to={EXAM_CONFIG.exitPath}>
+              <Button variant="ghost" className="w-full text-white/50 hover:text-white">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Module 8
               </Button>
-            </CardContent>
-          </Card>
-        </div>
+            </Link>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
-  if (showResults) {
+  // ========== RESULTS SCREEN ==========
+  if (showResults && !showReview) {
     const score = calculateScore();
     const percentage = Math.round((score / examQuestions.length) * 100);
-    const stats = getSummaryStats();
-
-    if (reviewMode) {
-      const filteredQuestions = getFilteredQuestions();
-
-      return (
-        <div className="overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-4">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h1 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">Review Answers</h1>
-                  <p className="text-sm text-white/70">Score: {percentage}% ({score}/{examQuestions.length})</p>
-                </div>
-                <Button
-                  onClick={() => setReviewMode(false)}
-                  variant="ghost"
-                  size="sm"
-                  className="text-white/70 hover:text-elec-yellow"
-                >
-                  <X className="h-4 w-4 mr-2" />
-                  Exit Review
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-4">
-                <Card
-                  className={`bg-transparent border-green-500/20 cursor-pointer hover:bg-transparent active:scale-[0.98] transition-all touch-manipulation ${reviewFilter === "correct" ? "ring-2 ring-green-500/50" : ""}`}
-                  onClick={() => setReviewFilter(reviewFilter === "correct" ? "all" : "correct")}
-                >
-                  <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-green-500">{stats.correct}</div>
-                    <div className="text-xs text-white/70">Correct</div>
-                  </CardContent>
-                </Card>
-                <Card
-                  className={`bg-transparent border-red-500/20 cursor-pointer hover:bg-transparent active:scale-[0.98] transition-all touch-manipulation ${reviewFilter === "incorrect" ? "ring-2 ring-red-500/50" : ""}`}
-                  onClick={() => setReviewFilter(reviewFilter === "incorrect" ? "all" : "incorrect")}
-                >
-                  <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-elec-yellow">{stats.incorrect}</div>
-                    <div className="text-xs text-white/70">Incorrect</div>
-                  </CardContent>
-                </Card>
-                <Card
-                  className={`bg-transparent border-muted/20 cursor-pointer hover:bg-muted/10 active:scale-[0.98] transition-all touch-manipulation ${reviewFilter === "unanswered" ? "ring-2 ring-muted/50" : ""}`}
-                  onClick={() => setReviewFilter(reviewFilter === "unanswered" ? "all" : "unanswered")}
-                >
-                  <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-white/70">{stats.unanswered}</div>
-                    <div className="text-xs text-white/70">Unanswered</div>
-                  </CardContent>
-                </Card>
-                <Card
-                  className={`bg-transparent border-elec-yellow/30 cursor-pointer hover:bg-elec-yellow/5 active:scale-[0.98] transition-all touch-manipulation ${reviewFilter === "flagged" ? "ring-2 ring-elec-yellow/50" : ""}`}
-                  onClick={() => setReviewFilter(reviewFilter === "flagged" ? "all" : "flagged")}
-                >
-                  <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
-                    <div className="text-xs text-white/70">Flagged</div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              {filteredQuestions.map(questionIndex => {
-                const question = examQuestions[questionIndex];
-                const userAnswer = selectedAnswers[questionIndex];
-                const correctAnswer = question.correctAnswer;
-                const status = getQuestionStatus(questionIndex);
-                const isFlagged = flaggedQuestions.has(questionIndex);
-
-                return (
-                  <Card key={questionIndex} className="bg-transparent border-elec-yellow/30">
-                    <CardHeader className="pb-3">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <CardTitle className="text-base text-white">Question {questionIndex + 1}</CardTitle>
-                          {question.module && (
-                            <p className="text-xs text-white/70 mt-1">{question.module}</p>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {isFlagged && (
-                            <Badge variant="outline" className="text-elec-yellow border-elec-yellow/40">
-                              <Flag className="h-3 w-3 mr-1 fill-current" />Flagged
-                            </Badge>
-                          )}
-                          <Badge
-                            variant={status.type === "correct" ? "default" : "destructive"}
-                            className={status.type === "correct" ? "bg-green-500/20 text-green-500 border-green-500/40" : status.type === "incorrect" ? "bg-red-500/20 text-elec-yellow border-red-500/40" : "bg-muted/20 text-white/70 border-muted/40"}
-                          >
-                            {status.type === "correct" ? "Correct" : status.type === "incorrect" ? "Incorrect" : "Unanswered"}
-                          </Badge>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm leading-relaxed mb-4 font-medium">{question.question}</p>
-                      <div className="space-y-2">
-                        {question.options.map((option: string, optionIndex: number) => {
-                          const isUserAnswer = userAnswer === optionIndex;
-                          const isCorrectAnswer = correctAnswer === optionIndex;
-
-                          return (
-                            <div
-                              key={optionIndex}
-                              className={`p-3 rounded-lg border-2 text-sm ${isCorrectAnswer ? "border-green-500 bg-transparent text-green-500" : isUserAnswer && !isCorrectAnswer ? "border-red-500 bg-transparent text-elec-yellow" : "border-muted/40 bg-muted/5"}`}
-                            >
-                              <div className="flex items-start gap-3">
-                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${isCorrectAnswer ? "border-green-500 bg-green-500" : isUserAnswer && !isCorrectAnswer ? "border-red-500 bg-red-500" : "border-muted-foreground"}`}>
-                                  {(isUserAnswer || isCorrectAnswer) && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
-                                </div>
-                                <span className="flex-1 leading-relaxed">{option}</span>
-                                {isCorrectAnswer && <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />}
-                                {isUserAnswer && !isCorrectAnswer && <X className="h-4 w-4 text-elec-yellow flex-shrink-0" />}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      {question.explanation && (
-                        <div className="mt-4 p-3 bg-transparent rounded-lg border border-elec-yellow/30">
-                          <div className="flex items-start gap-2">
-                            <div className="flex h-5 w-5 items-center justify-center rounded-md bg-elec-yellow/20 flex-shrink-0 mt-0.5">
-                              <Eye className="h-3 w-3 text-elec-yellow" />
-                            </div>
-                            <div>
-                              <h4 className="text-sm font-semibold text-white mb-1">Explanation</h4>
-                              <p className="text-sm text-white/70 leading-relaxed">{question.explanation}</p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      );
-    }
+    const passed = percentage >= EXAM_CONFIG.passPercentage;
+    const categoryBreakdown = getCategoryBreakdown(examQuestions, selectedAnswers);
+    const correct = score;
+    const incorrect = selectedAnswers.filter((a, i) => a !== -1 && a !== examQuestions[i]?.correctAnswer).length;
+    const unanswered = selectedAnswers.filter(a => a === -1).length;
 
     return (
-      <div className="overflow-x-hidden bg-[#1a1a1a] p-2 sm:p-4">
-        <div>
-          <Card className="border-elec-yellow/30 bg-transparent">
-            <CardHeader className="text-center pb-3 sm:pb-4 px-3 sm:px-6">
-              <div className="mx-auto mb-3 sm:mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-elec-yellow/10">
-                <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-              </div>
-              <CardTitle className="text-lg sm:text-xl md:text-2xl text-white mb-1">Full Practice Exam Complete!</CardTitle>
-              <h2 className="text-xs sm:text-sm md:text-lg text-elec-yellow">Mixed Questions - All 7 Modules</h2>
-            </CardHeader>
-
-            <CardContent className="space-y-4 sm:space-y-6 px-3 sm:px-6">
-              <div className="text-center bg-[#1a1a1a] p-4 sm:p-6 rounded-xl">
-                <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-elec-yellow mb-2">{percentage}%</div>
-                <p className="text-xs sm:text-sm text-white/70">You scored {score} out of {examQuestions.length} questions correctly</p>
-                {percentage >= 70 && (
-                  <p className="text-xs text-green-500 mt-2">Great job! You're on track for Level 3!</p>
-                )}
-                {percentage < 70 && percentage >= 50 && (
-                  <p className="text-xs text-elec-yellow mt-2">Good effort! Review the explanations to improve.</p>
-                )}
-                {percentage < 50 && (
-                  <p className="text-xs text-white/70 mt-2">Keep studying! Focus on your weak areas.</p>
+      <div className="min-h-screen bg-[#0d0d0d] p-4">
+        <div className="max-w-2xl mx-auto space-y-6">
+          {/* Pass/Fail Header */}
+          <Card className={`border-2 ${passed ? 'border-green-500/40 bg-green-500/5' : 'border-red-500/40 bg-red-500/5'}`}>
+            <CardContent className="p-6 text-center">
+              <div className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full ${passed ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                {passed ? (
+                  <Trophy className="h-8 w-8 text-green-400" />
+                ) : (
+                  <AlertTriangle className="h-8 w-8 text-red-400" />
                 )}
               </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
-                <div className="text-center p-3 bg-transparent rounded-lg border border-green-500/20">
-                  <div className="text-lg font-bold text-green-500">{stats.correct}</div>
-                  <div className="text-xs text-white/70">Correct</div>
-                </div>
-                <div className="text-center p-3 bg-transparent rounded-lg border border-red-500/20">
-                  <div className="text-lg font-bold text-elec-yellow">{stats.incorrect}</div>
-                  <div className="text-xs text-white/70">Incorrect</div>
-                </div>
-                <div className="text-center p-3 bg-muted/10 rounded-lg border border-muted/20">
-                  <div className="text-lg font-bold text-white/70">{stats.unanswered}</div>
-                  <div className="text-xs text-white/70">Unanswered</div>
-                </div>
-                <div className="text-center p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
-                  <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
-                  <div className="text-xs text-white/70">Flagged</div>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-3 pt-2">
-                <Button
-                  onClick={() => { setReviewFilter("all"); setReviewMode(true); }}
-                  className="w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation min-h-[44px]"
-                >
-                  <Eye className="h-4 w-4 mr-2" />Review Answers
-                </Button>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button
-                    onClick={() => {
-                      setCurrentQuestion(0);
-                      setSelectedAnswers([]);
-                      setShowResults(false);
-                      setExamStarted(false);
-                      setTimeRemaining(60 * 45);
-                      setReviewMode(false);
-                      setReviewFilter("all");
-                    }}
-                    variant="outline"
-                    className="flex-1 border-elec-yellow/40 text-elec-yellow hover:bg-[#1a1a1a] bg-[#1a1a1a] touch-manipulation min-h-[44px]"
-                  >
-                    <RotateCcw className="h-4 w-4 mr-2" />Retake Exam
-                  </Button>
-                  <Link to="/study-centre/apprentice/level3-course/module8-section8" className="flex-1">
-                    <Button variant="outline" className="w-full border-elec-yellow/40 text-elec-yellow hover:bg-[#1a1a1a] bg-[#1a1a1a] touch-manipulation min-h-[44px]">
-                      Back to Mock Exams
-                    </Button>
-                  </Link>
-                </div>
-              </div>
+              <Badge className={`mb-3 ${passed ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+                {passed ? 'PASSED' : 'NOT PASSED'}
+              </Badge>
+              <div className="text-4xl font-bold text-white mb-2">{percentage}%</div>
+              <p className="text-white/70">
+                {score} out of {examQuestions.length} questions correct
+              </p>
+              <p className="text-xs text-white/50 mt-2">
+                Pass mark: {EXAM_CONFIG.passPercentage}%
+              </p>
             </CardContent>
           </Card>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-4 gap-2">
+            <div className="text-center p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+              <div className="text-xl font-bold text-green-400">{correct}</div>
+              <div className="text-xs text-white/50">Correct</div>
+            </div>
+            <div className="text-center p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+              <div className="text-xl font-bold text-red-400">{incorrect}</div>
+              <div className="text-xs text-white/50">Incorrect</div>
+            </div>
+            <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+              <div className="text-xl font-bold text-white/70">{unanswered}</div>
+              <div className="text-xs text-white/50">Skipped</div>
+            </div>
+            <div className="text-center p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
+              <div className="text-xl font-bold text-elec-yellow">{flaggedQuestions.size}</div>
+              <div className="text-xs text-white/50">Flagged</div>
+            </div>
+          </div>
+
+          {/* Category Breakdown */}
+          <Card className="border-white/10 bg-transparent">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base text-white flex items-center gap-2">
+                <BookOpen className="h-4 w-4 text-elec-yellow" />
+                Module Breakdown
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {categoryBreakdown.map((cat, index) => (
+                <div key={index}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm text-white/80">{cat.label}</span>
+                    <span className={`text-sm font-semibold ${cat.percent >= 60 ? 'text-green-400' : 'text-red-400'}`}>
+                      {cat.correct}/{cat.total} ({cat.percent}%)
+                    </span>
+                  </div>
+                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all ${cat.percent >= 60 ? 'bg-green-500' : 'bg-red-500'}`}
+                      style={{ width: `${cat.percent}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Action Buttons */}
+          <div className="space-y-3">
+            <Button
+              onClick={() => setShowReview(true)}
+              className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+            >
+              <Eye className="h-5 w-5 mr-2" />
+              Review Answers
+            </Button>
+            <div className="grid grid-cols-2 gap-3">
+              <Button
+                onClick={() => {
+                  setExamStarted(false);
+                  setShowResults(false);
+                }}
+                variant="outline"
+                className="h-11 border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Retake
+              </Button>
+              <Link to={EXAM_CONFIG.exitPath} className="h-11">
+                <Button variant="outline" className="w-full h-full border-white/20 text-white/70 hover:text-white">
+                  Back to Course
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
-  return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-muted/20 bg-transparent/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <Link to="/study-centre/apprentice/level3-course/module8-section8" className="text-sm text-white/70 hover:text-elec-yellow transition-colors flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />Exit Exam
-            </Link>
-            <div className="text-2xl font-bold font-mono text-elec-yellow">{formatTime(timeRemaining)}</div>
+  // ========== REVIEW SCREEN ==========
+  if (showReview) {
+    const filteredQuestions = getFilteredQuestions();
+    const score = calculateScore();
+    const percentage = Math.round((score / examQuestions.length) * 100);
+    const stats = {
+      correct: score,
+      incorrect: selectedAnswers.filter((a, i) => a !== -1 && a !== examQuestions[i]?.correctAnswer).length,
+      unanswered: selectedAnswers.filter(a => a === -1).length,
+      flagged: flaggedQuestions.size
+    };
+
+    return (
+      <div className="min-h-screen bg-[#0d0d0d]">
+        {/* Header */}
+        <div className="sticky top-0 z-50 bg-[#0d0d0d] border-b border-white/10 p-4">
+          <div className="max-w-4xl mx-auto flex items-center justify-between">
+            <div>
+              <h1 className="text-lg font-semibold text-white">Review Answers</h1>
+              <p className="text-sm text-white/60">Score: {percentage}% ({score}/{examQuestions.length})</p>
+            </div>
+            <Button
+              onClick={() => setShowReview(false)}
+              variant="ghost"
+              size="sm"
+              className="text-white/60 hover:text-white"
+            >
+              <X className="h-4 w-4 mr-2" />
+              Exit
+            </Button>
+          </div>
+        </div>
+
+        <div className="max-w-4xl mx-auto p-4 space-y-4">
+          {/* Filter Buttons */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {[
+              { key: 'correct' as const, label: 'Correct', count: stats.correct, color: 'green' },
+              { key: 'incorrect' as const, label: 'Incorrect', count: stats.incorrect, color: 'red' },
+              { key: 'unanswered' as const, label: 'Skipped', count: stats.unanswered, color: 'gray' },
+              { key: 'flagged' as const, label: 'Flagged', count: stats.flagged, color: 'yellow' }
+            ].map(({ key, label, count, color }) => (
+              <button
+                key={key}
+                onClick={() => setReviewFilter(reviewFilter === key ? 'all' : key)}
+                className={`p-3 rounded-xl border-2 text-center transition-all touch-manipulation ${
+                  reviewFilter === key
+                    ? color === 'green' ? 'border-green-500 bg-green-500/10' :
+                      color === 'red' ? 'border-red-500 bg-red-500/10' :
+                      color === 'yellow' ? 'border-elec-yellow bg-elec-yellow/10' :
+                      'border-white/40 bg-white/5'
+                    : 'border-white/10 bg-transparent'
+                }`}
+              >
+                <div className={`text-lg font-bold ${
+                  color === 'green' ? 'text-green-400' :
+                  color === 'red' ? 'text-red-400' :
+                  color === 'yellow' ? 'text-elec-yellow' :
+                  'text-white/60'
+                }`}>{count}</div>
+                <div className="text-xs text-white/50">{label}</div>
+              </button>
+            ))}
+          </div>
+
+          {/* Questions */}
+          <div className="space-y-4">
+            {filteredQuestions.map(qIndex => {
+              const question = examQuestions[qIndex];
+              const userAnswer = selectedAnswers[qIndex];
+              const correctAnswer = question.correctAnswer;
+              const status = getQuestionStatus(qIndex);
+              const isFlagged = flaggedQuestions.has(qIndex);
+
+              return (
+                <Card key={qIndex} className="border-white/10 bg-transparent">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="text-base text-white">Question {qIndex + 1}</CardTitle>
+                        <p className="text-xs text-white/50 mt-1">{question.module}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {isFlagged && (
+                          <Badge variant="outline" className="text-elec-yellow border-elec-yellow/40">
+                            <Flag className="h-3 w-3 mr-1 fill-current" />Flagged
+                          </Badge>
+                        )}
+                        <Badge className={
+                          status === 'correct' ? 'bg-green-500/20 text-green-400 border-green-500/40' :
+                          status === 'incorrect' ? 'bg-red-500/20 text-red-400 border-red-500/40' :
+                          'bg-white/10 text-white/60 border-white/20'
+                        }>
+                          {status === 'correct' ? 'Correct' : status === 'incorrect' ? 'Incorrect' : 'Skipped'}
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-white mb-4 leading-relaxed">{question.question}</p>
+                    <div className="space-y-2">
+                      {question.options.map((option, optIndex) => {
+                        const isUserAnswer = userAnswer === optIndex;
+                        const isCorrectAnswer = correctAnswer === optIndex;
+
+                        return (
+                          <div
+                            key={optIndex}
+                            className={`p-3 rounded-xl border-2 text-sm ${
+                              isCorrectAnswer
+                                ? 'border-green-500 bg-green-500/10 text-green-400'
+                                : isUserAnswer && !isCorrectAnswer
+                                ? 'border-red-500 bg-red-500/10 text-red-400'
+                                : 'border-white/10 text-white/70'
+                            }`}
+                          >
+                            <div className="flex items-start gap-3">
+                              <span className="font-semibold text-xs mt-0.5">{String.fromCharCode(65 + optIndex)}.</span>
+                              <span className="flex-1">{option}</span>
+                              {isCorrectAnswer && <CheckCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />}
+                              {isUserAnswer && !isCorrectAnswer && <XCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    {question.explanation && (
+                      <div className="mt-4 p-3 rounded-xl bg-elec-yellow/5 border border-elec-yellow/20">
+                        <div className="flex items-start gap-2">
+                          <Eye className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="text-xs font-semibold text-elec-yellow mb-1">Explanation</p>
+                            <p className="text-sm text-white/80 leading-relaxed">{question.explanation}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </div>
+    );
+  }
 
-      <div className="max-w-7xl mx-auto p-4">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <Card className="lg:col-span-3 bg-transparent border border-elec-yellow/30">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-lg font-semibold text-white">Question {currentQuestion + 1} of {examQuestions.length}</h2>
-                  <div className="text-sm text-white/70 mt-1">
-                    Full Practice • {examQuestions[currentQuestion]?.module || 'Mixed Topics'}
-                  </div>
-                </div>
-                <Button
-                  onClick={toggleFlag}
-                  variant="outline"
-                  size="sm"
-                  className={`border-elec-yellow/30 ${flaggedQuestions.has(currentQuestion) ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white hover:bg-elec-yellow/10'}`}
-                >
-                  <Flag className="h-4 w-4 mr-2" />{flaggedQuestions.has(currentQuestion) ? 'Flagged' : 'Flag'}
-                </Button>
-              </div>
+  // ========== ACTIVE EXAM SCREEN ==========
+  const questionContent = (
+    <div className="space-y-4">
+      {/* Module badge */}
+      <div className="flex items-center gap-2">
+        <Badge variant="outline" className="text-xs text-white/60 border-white/20">
+          {examQuestions[currentQuestion]?.module || 'Level 3'}
+        </Badge>
+      </div>
 
-              <div className="mb-8">
-                <p className="text-white text-lg leading-relaxed mb-6">{examQuestions[currentQuestion]?.question}</p>
-                <div className="space-y-3">
-                  {examQuestions[currentQuestion]?.options.map((option: string, index: number) => (
-                    <button
-                      key={index}
-                      onClick={() => handleAnswerSelect(index)}
-                      className={`w-full p-4 text-left rounded-lg border transition-colors ${selectedAnswers[currentQuestion] === index ? 'bg-elec-yellow/20 border-elec-yellow text-white' : 'bg-[#1a1a1a]/30 border-elec-yellow/30 text-white/70 hover:bg-elec-yellow/10 hover:border-elec-yellow/40'}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm font-semibold min-w-[20px]">{String.fromCharCode(65 + index)}.</span>
-                        <span>{option}</span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
+      {/* Question */}
+      <p className="text-white text-base leading-relaxed">
+        {examQuestions[currentQuestion]?.question}
+      </p>
 
-              <div className="flex justify-between items-center pt-6 border-t border-elec-yellow/30">
-                <Button onClick={handlePrevious} disabled={currentQuestion === 0} variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 disabled:opacity-50">
-                  <ArrowLeft className="h-4 w-4 mr-2" />Previous
-                </Button>
-                <div className="flex gap-2">
-                  {currentQuestion === examQuestions.length - 1 ? (
-                    <Button onClick={handleSubmit} disabled={answeredQuestions === 0} className="bg-elec-yellow hover:bg-elec-yellow/90 text-black disabled:opacity-50 text-sm sm:text-sm px-6 py-3 sm:py-3 min-h-[52px] touch-manipulation font-semibold rounded-xl flex-shrink-0" size="sm">
-                      <span className="hidden xs:inline">Submit Exam</span><span className="xs:hidden">Submit</span>
-                      <CheckCircle className="h-4 w-4 ml-2" />
-                    </Button>
-                  ) : (
-                    <Button onClick={handleNext} className="flex-1 sm:flex-initial sm:px-8 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold py-3 sm:py-3 text-base sm:text-base touch-manipulation min-h-[48px] rounded-lg" size="lg">
-                      Next<ArrowRight className="h-4 w-4 ml-2" />
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-transparent border border-elec-yellow/30 shadow-lg hidden lg:block">
-            <CardContent className="p-4">
-              <div className="space-y-6">
-                <div className="text-center">
-                  <div className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/10 p-4 rounded-xl border border-elec-yellow/30">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <Clock className="h-5 w-5 text-elec-yellow" />
-                      <span className="text-sm font-medium text-white">Time Remaining</span>
-                    </div>
-                    <div className="font-mono text-2xl font-bold text-elec-yellow">{formatTime(timeRemaining)}</div>
-                    <div className="text-xs text-white/70 mt-1">{timeRemaining < 300 ? 'Final 5 minutes!' : 'Stay focused'}</div>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="bg-[#1a1a1a]/50 p-4 rounded-lg border border-elec-yellow/30">
-                    <div className="flex justify-between items-center mb-3">
-                      <span className="text-sm font-medium text-white">Progress</span>
-                      <span className="text-lg font-bold text-elec-yellow">{answeredQuestions}/{examQuestions.length}</span>
-                    </div>
-                    <Progress value={progressPercentage} className="h-3 mb-3" />
-                    <div className="text-xs text-center text-white/70">{Math.round(progressPercentage)}% Complete</div>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                    <Target className="h-4 w-4 text-elec-yellow" />Statistics
-                  </h3>
-                  <div className="grid grid-cols-1 gap-2">
-                    <div className="flex items-center justify-between p-3 bg-transparent rounded-lg border border-green-500/20">
-                      <div className="flex items-center gap-2"><div className="w-3 h-3 bg-green-500 rounded-full"></div><span className="text-sm text-green-400">Answered</span></div>
-                      <span className="font-bold text-green-400">{answeredQuestions}</span>
-                    </div>
-                    <div className="flex items-center justify-between p-3 bg-transparent rounded-lg border border-red-500/20">
-                      <div className="flex items-center gap-2"><div className="w-3 h-3 bg-red-500 rounded-full"></div><span className="text-sm text-elec-yellow">Remaining</span></div>
-                      <span className="font-bold text-elec-yellow">{examQuestions.length - answeredQuestions}</span>
-                    </div>
-                    <div className="flex items-center justify-between p-3 bg-transparent rounded-lg border border-elec-yellow/20">
-                      <div className="flex items-center gap-2"><Flag className="w-3 h-3 text-elec-yellow" /><span className="text-sm text-elec-yellow">Flagged</span></div>
-                      <span className="font-bold text-elec-yellow">{flaggedQuestions.size}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 text-elec-yellow" />Questions
-                  </h3>
-                  <div className="grid grid-cols-5 gap-2">
-                    {examQuestions.map((_, index) => {
-                      const isAnswered = selectedAnswers[index] !== -1;
-                      const isCurrent = index === currentQuestion;
-                      const isFlagged = flaggedQuestions.has(index);
-
-                      return (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentQuestion(index)}
-                          className={`relative w-10 h-10 text-xs font-bold rounded-lg transition-all duration-200 border-2 ${isCurrent ? 'bg-elec-yellow text-black border-elec-yellow shadow-lg scale-110' : isAnswered ? 'bg-green-500/30 text-green-400 border-green-500/50 hover:bg-green-500/40' : 'bg-[#1a1a1a]/30 text-white/70 border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'}`}
-                        >
-                          {index + 1}
-                          {isFlagged && (
-                            <div className="absolute -top-1 -right-1 w-3 h-3 bg-elec-yellow rounded-full flex items-center justify-center">
-                              <Flag className="w-2 h-2 text-white fill-current" />
-                            </div>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Button onClick={goToNextFlagged} disabled={flaggedQuestions.size === 0} variant="outline" size="sm" className="w-full text-xs border-white/10/30 text-elec-yellow hover:bg-transparent disabled:opacity-50">
-                    <Flag className="h-3 w-3 mr-2" />Next Flagged ({flaggedQuestions.size})
-                  </Button>
-                  <div className="text-xs text-center text-white/70 pt-2 border-t border-elec-yellow/30">
-                    <div>Level 3 Full Practice</div>
-                    <div>All 7 Modules Combined</div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+      {/* Options */}
+      <div className="space-y-2">
+        {examQuestions[currentQuestion]?.options.map((option, index) => (
+          <button
+            key={index}
+            onClick={() => handleAnswerSelect(index)}
+            className={`w-full min-h-[48px] p-3 flex items-center gap-3 rounded-xl border-2 transition-all touch-manipulation active:scale-[0.98] ${
+              selectedAnswers[currentQuestion] === index
+                ? 'bg-elec-yellow/20 border-elec-yellow'
+                : 'bg-white/[0.02] border-white/15 active:border-white/25'
+            }`}
+          >
+            <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
+              selectedAnswers[currentQuestion] === index
+                ? 'bg-elec-yellow text-black'
+                : 'bg-white/10 text-white/60'
+            }`}>
+              <span className="text-xs font-bold">{String.fromCharCode(65 + index)}</span>
+            </div>
+            <span className="text-sm text-white leading-snug text-left">{option}</span>
+          </button>
+        ))}
       </div>
     </div>
+  );
+
+  return (
+    <>
+      {/* Mobile Layout */}
+      <ExamMobileLayout
+        examTitle="Level 3 Full Practice"
+        currentQuestion={currentQuestion}
+        totalQuestions={examQuestions.length}
+        timeRemaining={timeRemaining}
+        answeredQuestions={answeredQuestions}
+        flaggedQuestions={flaggedQuestions}
+        selectedAnswers={selectedAnswers}
+        onQuestionSelect={setCurrentQuestion}
+        onToggleFlag={toggleFlag}
+        onPrevious={handlePrevious}
+        onNext={handleNext}
+        onSubmit={handleSubmit}
+        exitPath={EXAM_CONFIG.exitPath}
+        formatTime={formatTime}
+      >
+        {questionContent}
+      </ExamMobileLayout>
+
+      {/* Desktop Layout */}
+      <div className="hidden lg:block min-h-screen bg-[#0d0d0d]">
+        <div className="max-w-7xl mx-auto p-6">
+          <div className="grid grid-cols-4 gap-6">
+            {/* Main Question Area */}
+            <div className="col-span-3">
+              <Card className="border-white/10 bg-transparent">
+                <CardHeader className="pb-4 border-b border-white/10">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-lg text-white">Question {currentQuestion + 1} of {examQuestions.length}</CardTitle>
+                      <p className="text-sm text-white/50 mt-1">{examQuestions[currentQuestion]?.module}</p>
+                    </div>
+                    <Button
+                      onClick={toggleFlag}
+                      variant="outline"
+                      size="sm"
+                      className={`border-elec-yellow/30 ${flaggedQuestions.has(currentQuestion) ? 'bg-elec-yellow/20 text-elec-yellow' : 'text-white/60 hover:text-white'}`}
+                    >
+                      <Flag className={`h-4 w-4 mr-2 ${flaggedQuestions.has(currentQuestion) ? 'fill-current' : ''}`} />
+                      {flaggedQuestions.has(currentQuestion) ? 'Flagged' : 'Flag'}
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <p className="text-white text-lg leading-relaxed mb-6">{examQuestions[currentQuestion]?.question}</p>
+                  <div className="space-y-3">
+                    {examQuestions[currentQuestion]?.options.map((option, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleAnswerSelect(index)}
+                        className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
+                          selectedAnswers[currentQuestion] === index
+                            ? 'bg-elec-yellow/20 border-elec-yellow text-white'
+                            : 'bg-white/[0.02] border-white/10 text-white/70 hover:border-white/20'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="font-semibold">{String.fromCharCode(65 + index)}.</span>
+                          <span>{option}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Navigation */}
+                  <div className="flex justify-between items-center pt-6 mt-6 border-t border-white/10">
+                    <Button
+                      onClick={handlePrevious}
+                      disabled={currentQuestion === 0}
+                      variant="outline"
+                      className="border-white/20 text-white/70 hover:text-white disabled:opacity-30"
+                    >
+                      <ArrowLeft className="h-4 w-4 mr-2" />
+                      Previous
+                    </Button>
+                    {currentQuestion === examQuestions.length - 1 ? (
+                      <Button
+                        onClick={handleSubmit}
+                        className="bg-green-500 hover:bg-green-600 text-white font-semibold px-6"
+                      >
+                        Submit Exam
+                        <CheckCircle className="h-4 w-4 ml-2" />
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={handleNext}
+                        className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold px-6"
+                      >
+                        Next
+                        <ArrowRight className="h-4 w-4 ml-2" />
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Desktop Sidebar */}
+            <ExamDesktopSidebar
+              timeRemaining={timeRemaining}
+              answeredQuestions={answeredQuestions}
+              totalQuestions={examQuestions.length}
+              flaggedQuestions={flaggedQuestions}
+              selectedAnswers={selectedAnswers}
+              currentQuestion={currentQuestion}
+              onQuestionSelect={setCurrentQuestion}
+              onSubmit={handleSubmit}
+              exitPath={EXAM_CONFIG.exitPath}
+              formatTime={formatTime}
+            />
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

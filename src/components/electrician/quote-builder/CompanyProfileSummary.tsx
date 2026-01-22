@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Building, ChevronDown, ChevronUp, Edit2, Check, AlertCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Building, ChevronRight, Check, AlertCircle, Phone, Mail, MapPin, FileText } from "lucide-react";
 import { useCompanyProfile } from "@/hooks/useCompanyProfile";
 import { cn } from "@/lib/utils";
 
@@ -12,12 +11,12 @@ export const CompanyProfileSummary = () => {
 
   if (loading) {
     return (
-      <div className="p-4 bg-elec-gray/30 rounded-xl animate-pulse">
+      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 animate-pulse">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-elec-gray rounded-lg" />
+          <div className="w-11 h-11 bg-white/[0.06] rounded-xl" />
           <div className="space-y-2 flex-1">
-            <div className="h-4 w-32 bg-elec-gray rounded" />
-            <div className="h-3 w-24 bg-elec-gray rounded" />
+            <div className="h-4 w-32 bg-white/[0.06] rounded" />
+            <div className="h-3 w-24 bg-white/[0.06] rounded" />
           </div>
         </div>
       </div>
@@ -32,105 +31,122 @@ export const CompanyProfileSummary = () => {
       <button
         type="button"
         onClick={() => navigate("/settings?tab=company")}
-        className="w-full p-4 border-2 border-dashed border-amber-500/50 rounded-xl bg-amber-500/5 hover:bg-amber-500/10 transition-colors"
+        className="w-full rounded-2xl bg-amber-500/10 border border-amber-500/20 overflow-hidden touch-manipulation active:bg-amber-500/15 transition-colors"
       >
-        <div className="flex items-center gap-3">
-          <div className="p-3 bg-amber-500/20 rounded-lg">
-            <AlertCircle className="h-5 w-5 text-amber-500" />
+        <div className="flex items-center gap-3 p-3.5">
+          <div className="w-11 h-11 rounded-xl bg-amber-500 flex items-center justify-center flex-shrink-0">
+            <AlertCircle className="h-5 w-5 text-white" />
           </div>
-          <div className="text-left flex-1">
-            <p className="font-medium text-amber-500">Set Up Company Profile</p>
-            <p className="text-sm text-muted-foreground">
-              Add your company details for professional quotes
-            </p>
+          <div className="flex-1 min-w-0 text-left">
+            <p className="text-[15px] font-medium text-amber-400">Set Up Company Profile</p>
+            <p className="text-[13px] text-white/50">Add your details for professional quotes</p>
           </div>
-          <Edit2 className="h-4 w-4 text-muted-foreground" />
+          <ChevronRight className="h-4 w-4 text-amber-400/50" />
         </div>
       </button>
     );
   }
 
   return (
-    <div className="rounded-xl border border-border/50 bg-elec-gray/20 overflow-hidden">
-      {/* Collapsed View */}
+    <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+      {/* Main Summary Row */}
       <button
         type="button"
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full p-4 flex items-center gap-3 hover:bg-elec-gray/30 transition-colors"
+        className="w-full flex items-center gap-3 p-3.5 touch-manipulation active:bg-white/[0.04] transition-colors"
       >
         {/* Logo or Placeholder */}
         {companyProfile.logo_data_url ? (
           <img
             src={companyProfile.logo_data_url}
             alt={companyProfile.company_name}
-            className="w-12 h-12 rounded-lg object-contain bg-background border border-border"
+            className="w-11 h-11 rounded-xl object-contain bg-white border border-white/10"
           />
         ) : (
-          <div className="w-12 h-12 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-            <Building className="h-6 w-6 text-elec-yellow" />
+          <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+            <Building className="h-5 w-5 text-black" />
           </div>
         )}
 
         {/* Company Info */}
-        <div className="text-left flex-1 min-w-0">
+        <div className="flex-1 min-w-0 text-left">
           <div className="flex items-center gap-2">
-            <p className="font-semibold truncate">{companyProfile.company_name}</p>
+            <p className="text-[15px] font-medium text-white truncate">{companyProfile.company_name}</p>
             {isComplete && (
-              <Check className="h-4 w-4 text-emerald-500 shrink-0" />
+              <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                <Check className="h-3 w-3 text-white" />
+              </div>
             )}
           </div>
-          <p className="text-sm text-muted-foreground truncate">
-            {companyProfile.company_email || "No email set"}
+          <p className="text-[13px] text-white/50 truncate">
+            {companyProfile.company_email || "Tap to expand"}
           </p>
         </div>
 
-        {/* Expand Icon */}
-        {isExpanded ? (
-          <ChevronUp className="h-5 w-5 text-muted-foreground shrink-0" />
-        ) : (
-          <ChevronDown className="h-5 w-5 text-muted-foreground shrink-0" />
-        )}
+        {/* Chevron */}
+        <ChevronRight className={cn(
+          "h-4 w-4 text-white/20 transition-transform",
+          isExpanded && "rotate-90"
+        )} />
       </button>
 
       {/* Expanded Details */}
       {isExpanded && (
-        <div className="px-4 pb-4 pt-2 border-t border-border/50 space-y-3">
-          <div className="grid grid-cols-2 gap-3 text-sm">
-            {companyProfile.company_phone && (
-              <div>
-                <p className="text-xs text-muted-foreground">Phone</p>
-                <p className="font-medium">{companyProfile.company_phone}</p>
+        <div className="border-t border-white/[0.06] divide-y divide-white/[0.06]">
+          {companyProfile.company_email && (
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-9 h-9 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                <Mail className="h-4 w-4 text-blue-400" />
               </div>
-            )}
-            {companyProfile.company_address && (
-              <div>
-                <p className="text-xs text-muted-foreground">Address</p>
-                <p className="font-medium truncate">{companyProfile.company_address}</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-[14px] text-white truncate">{companyProfile.company_email}</p>
+                <p className="text-[12px] text-white/40">Email</p>
               </div>
-            )}
-            {companyProfile.vat_number && (
-              <div>
-                <p className="text-xs text-muted-foreground">VAT Number</p>
-                <p className="font-medium">{companyProfile.vat_number}</p>
+            </div>
+          )}
+          {companyProfile.company_phone && (
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-9 h-9 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                <Phone className="h-4 w-4 text-emerald-400" />
               </div>
-            )}
-            {companyProfile.company_registration && (
-              <div>
-                <p className="text-xs text-muted-foreground">Company Reg</p>
-                <p className="font-medium">{companyProfile.company_registration}</p>
+              <div className="flex-1 min-w-0">
+                <p className="text-[14px] text-white">{companyProfile.company_phone}</p>
+                <p className="text-[12px] text-white/40">Phone</p>
               </div>
-            )}
-          </div>
+            </div>
+          )}
+          {companyProfile.company_address && (
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-9 h-9 rounded-lg bg-orange-500/20 flex items-center justify-center flex-shrink-0">
+                <MapPin className="h-4 w-4 text-orange-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[14px] text-white truncate">{companyProfile.company_address}</p>
+                <p className="text-[12px] text-white/40">Address</p>
+              </div>
+            </div>
+          )}
+          {companyProfile.vat_number && (
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-9 h-9 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                <FileText className="h-4 w-4 text-purple-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[14px] text-white">{companyProfile.vat_number}</p>
+                <p className="text-[12px] text-white/40">VAT Number</p>
+              </div>
+            </div>
+          )}
 
-          <Button
-            variant="outline"
-            size="sm"
+          {/* Edit Button */}
+          <button
+            type="button"
             onClick={() => navigate("/settings?tab=company")}
-            className="w-full"
+            className="w-full flex items-center justify-center gap-2 p-3.5 touch-manipulation active:bg-white/[0.04] transition-colors"
           >
-            <Edit2 className="h-4 w-4 mr-2" />
-            Edit Company Profile
-          </Button>
+            <span className="text-[15px] font-medium text-elec-yellow">Edit Company Profile</span>
+            <ChevronRight className="h-4 w-4 text-elec-yellow/50" />
+          </button>
         </div>
       )}
     </div>

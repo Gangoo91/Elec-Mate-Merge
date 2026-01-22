@@ -21,6 +21,7 @@ import {
   MapPin,
   Loader2,
   CheckCircle,
+  PoundSterling,
 } from 'lucide-react';
 
 interface CompanyProfileFormData {
@@ -37,6 +38,7 @@ interface CompanyProfileFormData {
   currency: string;
   locale: string;
   payment_terms: string;
+  hourly_rate: number;
 }
 
 export const CompanyProfileSettings = () => {
@@ -61,6 +63,7 @@ export const CompanyProfileSettings = () => {
       currency: companyProfile?.currency || 'GBP',
       locale: companyProfile?.locale || 'en-GB',
       payment_terms: companyProfile?.payment_terms || '30 days',
+      hourly_rate: companyProfile?.hourly_rate || 45,
     }
   });
 
@@ -79,6 +82,7 @@ export const CompanyProfileSettings = () => {
       setValue('currency', companyProfile.currency);
       setValue('locale', companyProfile.locale);
       setValue('payment_terms', companyProfile.payment_terms);
+      setValue('hourly_rate', companyProfile.hourly_rate || 45);
       setLogoPreview(companyProfile.logo_url || null);
     }
   }, [companyProfile, setValue]);
@@ -351,6 +355,45 @@ export const CompanyProfileSettings = () => {
           </div>
         </div>
 
+        {/* Pricing Settings */}
+        <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+          <div className="px-4 md:px-6 py-4 border-b border-white/10">
+            <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+              <PoundSterling className="h-4 w-4 text-elec-yellow" />
+              Pricing Settings
+            </h3>
+          </div>
+          <div className="p-4 md:p-6 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-foreground">Hourly Rate (£)</Label>
+                <div className="relative">
+                  <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                  <Input
+                    type="number"
+                    step="0.50"
+                    min="0"
+                    {...register('hourly_rate', { valueAsNumber: true })}
+                    placeholder="45.00"
+                    className="bg-white/5 border-white/10 pl-10"
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Your default hourly rate for quotes and invoices
+                </p>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-foreground">Payment Terms</Label>
+                <Input
+                  {...register('payment_terms')}
+                  placeholder="30 days"
+                  className="bg-white/5 border-white/10"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Currency & Settings */}
         <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
           <div className="px-4 md:px-6 py-4 border-b border-white/10">
@@ -360,7 +403,7 @@ export const CompanyProfileSettings = () => {
             </h3>
           </div>
           <div className="p-4 md:p-6 space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="text-foreground">Currency</Label>
                 <Select value={watch('currency')} onValueChange={(value) => setValue('currency', value)}>
@@ -387,14 +430,6 @@ export const CompanyProfileSettings = () => {
                     <SelectItem value="fr-FR">French</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-              <div className="space-y-2">
-                <Label className="text-foreground">Payment Terms</Label>
-                <Input
-                  {...register('payment_terms')}
-                  placeholder="30 days"
-                  className="bg-white/5 border-white/10"
-                />
               </div>
             </div>
           </div>

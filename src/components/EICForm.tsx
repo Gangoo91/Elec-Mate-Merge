@@ -125,7 +125,6 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
 
   // State for cloud sync
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
-  const [authChecked, setAuthChecked] = useState(false);
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
   const [showBoardScan, setShowBoardScan] = useState(false);
   const [hasLoadedDesign, setHasLoadedDesign] = useState(false);
@@ -182,7 +181,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
   }, []);
 
   // Cloud sync integration
-  const { syncState, syncToCloud, loadFromCloud, isOnline, isAuthenticated } = useCloudSync({
+  const { syncState, syncToCloud, loadFromCloud, isOnline, isAuthenticated, authCheckComplete } = useCloudSync({
     reportId: currentReportId,
     reportType: 'eic',
     data: formData,
@@ -289,16 +288,9 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     }
   }, [designData, hasLoadedDesign, designId, initialReportId, toast, updateDesignStatus]);
 
-  // Track when authentication has been checked
-  useEffect(() => {
-    if (isAuthenticated !== undefined) {
-      setAuthChecked(true);
-    }
-  }, [isAuthenticated]);
-
   // Load from cloud if initialReportId is provided
   useEffect(() => {
-    if (initialReportId && authChecked) {
+    if (initialReportId && authCheckComplete) {
       if (!isAuthenticated) {
         toast({
           title: 'Cannot load report',
@@ -307,7 +299,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         });
         return;
       }
-      
+
       if (!isOnline) {
         toast({
           title: 'Cannot load report',
@@ -333,7 +325,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         }
       });
     }
-  }, [initialReportId, authChecked, isAuthenticated, isOnline, loadFromCloud]);
+  }, [initialReportId, authCheckComplete, isAuthenticated, isOnline, loadFromCloud]);
 
   // Observations hook
   const {

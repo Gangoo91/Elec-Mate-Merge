@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
@@ -39,9 +39,19 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const invoiceBuilder = useInvoiceBuilder(sourceQuote, existingInvoice);
   const { saveInvoice } = useInvoiceStorage();
+
+  // Smooth scroll to top on step change
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [currentStep]);
 
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
@@ -151,7 +161,7 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
   };
 
   return (
-    <div className="space-y-6">
+    <div ref={contentRef} className="space-y-6 pb-32">
       {/* Step Progress - Clean pills (matching quote wizard) */}
       <div className="flex items-center justify-center gap-2">
         {steps.map((step, index) => {
@@ -196,7 +206,7 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
       </div>
 
       {/* Step Content */}
-      <div className="min-h-[50vh]">
+      <div>
         {renderStep()}
       </div>
 

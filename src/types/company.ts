@@ -17,6 +17,7 @@ export interface CompanyProfile {
   locale: string;
   payment_terms: string;
   bank_details?: any;
+  hourly_rate?: number;
   created_at: Date;
   updated_at: Date;
 }

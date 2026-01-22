@@ -1,28 +1,47 @@
-import { Brain, ArrowLeft, ArrowRight, Cpu } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Brain, ArrowLeft, ArrowRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { toolOptions } from "@/components/electrician-tools/ai-tools/constants";
 
-// Color assignments for each tool to add visual variety
-const toolColors: Record<string, { gradient: string; bgGradient: string }> = {
-  'component-identify': { gradient: 'from-blue-400 to-blue-500', bgGradient: 'from-blue-500/20 to-blue-500/10' },
-  'wiring-instruction': { gradient: 'from-emerald-400 to-green-500', bgGradient: 'from-emerald-500/20 to-green-500/10' },
-  'fault-diagnosis': { gradient: 'from-orange-400 to-red-500', bgGradient: 'from-orange-500/20 to-red-500/10' },
-  'installation-verify': { gradient: 'from-cyan-400 to-teal-500', bgGradient: 'from-cyan-500/20 to-teal-500/10' },
-  'explainer': { gradient: 'from-pink-400 to-rose-500', bgGradient: 'from-pink-500/20 to-rose-500/10' },
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.03, delayChildren: 0 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.2, ease: 'easeOut' },
+  },
+};
+
+// Color assignments for each tool
+const toolColors: Record<string, string> = {
+  'component-identify': 'from-blue-400 to-blue-500',
+  'wiring-instruction': 'from-emerald-400 to-green-500',
+  'fault-diagnosis': 'from-orange-400 to-red-500',
+  'installation-verify': 'from-cyan-400 to-teal-500',
+  'explainer': 'from-pink-400 to-rose-500',
 };
 
 const AITooling = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-background pb-24">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* Sticky Header */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-3">
+        <div className="px-4 py-2">
           <button
             onClick={() => navigate('/electrician')}
-            className="flex items-center gap-2 text-white active:opacity-70 transition-opacity touch-manipulation"
+            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="text-sm font-medium">Electrician Hub</span>
@@ -30,86 +49,77 @@ const AITooling = () => {
         </div>
       </div>
 
-      <main className="px-4 py-4 space-y-6">
+      <motion.main
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="px-4 py-4 space-y-6"
+      >
         {/* Hero Header */}
-        <div className="flex items-center gap-3">
+        <motion.div variants={itemVariants} className="flex items-center gap-3">
           <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
             <Brain className="h-6 w-6 text-purple-400" />
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">AI Tooling Suite</h1>
-            <p className="text-sm text-white/50">Smart analysis tools for UK electricians</p>
+            <p className="text-sm text-white/70">Smart analysis tools for UK electricians</p>
           </div>
-        </div>
-
-        {/* Feature Banner */}
-        <Card className="relative overflow-hidden bg-[#1e1e1e] border border-purple-500/20 rounded-2xl">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-4">
-              <div className="flex-shrink-0 p-3 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/20">
-                <Cpu className="h-8 w-8 text-purple-400" />
-              </div>
-              <div>
-                <h2 className="text-base font-bold text-white mb-1">AI Analysis Suite</h2>
-                <p className="text-sm text-white/60 leading-relaxed">
-                  Component identification, wiring guidance, fault diagnosis & BS 7671 compliance
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        </motion.div>
 
         {/* Tools List */}
-        <section className="space-y-4">
+        <motion.section variants={itemVariants} className="space-y-3">
           <div className="flex items-center gap-2.5">
             <div className="h-1.5 w-1.5 rounded-full bg-purple-400" />
             <h2 className="text-base font-bold text-white">Available Tools</h2>
+            <Badge variant="secondary" className="bg-purple-500/20 text-purple-400 border-purple-500/30 text-xs">
+              {toolOptions.length} Active
+            </Badge>
           </div>
 
-          <div className="space-y-3">
+          <motion.div variants={containerVariants} className="space-y-2">
             {toolOptions.map((tool) => {
               const IconComponent = tool.icon;
-              const colors = toolColors[tool.value] || { gradient: 'from-gray-400 to-gray-500', bgGradient: 'from-gray-500/20 to-gray-500/10' };
+              const gradient = toolColors[tool.value] || 'from-gray-400 to-gray-500';
 
               return (
-                <Link
-                  key={tool.value}
-                  to={`/electrician-tools/ai-tooling/${tool.value}`}
-                  className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 rounded-2xl touch-manipulation active:scale-[0.98] transition-transform"
-                >
-                  <Card className="relative overflow-hidden bg-[#1e1e1e] border border-white/10 rounded-2xl group">
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-4">
-                        {/* Icon with gradient background */}
-                        <div className={`flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center bg-gradient-to-br ${colors.gradient} shadow-lg`}>
-                          <IconComponent className="h-7 w-7 text-white" />
-                        </div>
+                <motion.div key={tool.value} variants={itemVariants}>
+                  <Link
+                    to={`/electrician-tools/ai-tooling/${tool.value}`}
+                    className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 rounded-2xl touch-manipulation"
+                  >
+                    <div className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-2xl group active:bg-white/[0.06] active:scale-[0.98] transition-all">
+                      <div className="p-4">
+                        <div className="flex items-center gap-3">
+                          {/* Icon with gradient background */}
+                          <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${gradient}`}>
+                            <IconComponent className="h-6 w-6 text-white" />
+                          </div>
 
-                        <div className="flex-1 min-w-0">
-                          {/* Title */}
-                          <h3 className="text-base font-bold text-white mb-1">
-                            {tool.label}
-                          </h3>
+                          <div className="flex-1 min-w-0">
+                            {/* Title */}
+                            <h3 className="text-[15px] font-bold text-white">
+                              {tool.label}
+                            </h3>
+                            {/* Description */}
+                            <p className="text-[13px] text-white/70 line-clamp-1">
+                              {tool.description}
+                            </p>
+                          </div>
 
-                          {/* Description */}
-                          <p className="text-sm text-white/60 leading-relaxed line-clamp-2">
-                            {tool.description}
-                          </p>
-                        </div>
-
-                        {/* Arrow indicator */}
-                        <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/20 group-active:bg-purple-500/20 transition-colors self-center">
-                          <ArrowRight className="h-5 w-5 text-purple-400" />
+                          {/* Arrow indicator */}
+                          <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
+                            <ArrowRight className="h-4 w-4 text-white/70" />
+                          </div>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                </Link>
+                    </div>
+                  </Link>
+                </motion.div>
               );
             })}
-          </div>
-        </section>
-      </main>
+          </motion.div>
+        </motion.section>
+      </motion.main>
     </div>
   );
 };

@@ -177,18 +177,7 @@ const Level3Module3Section1_1 = () => {
       </div>
 
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 3.1.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Ohm's Law and Power Equations
-          </h1>
-          <p className="text-white/80">
-            The mathematical foundation of all electrical circuit analysis
-          </p>
-        </header>
+        
 
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -210,26 +199,9 @@ const Level3Module3Section1_1 = () => {
           </div>
         </div>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Apply Ohm's Law in all its transposed forms",
-              "Calculate power using the appropriate formula for available data",
-              "Understand why power loss is proportional to current squared",
-              "Use these equations for practical cable and circuit calculations",
-              "Recognise when Ohm's Law applies and when it doesn't",
-              "Link these equations to real-world installation scenarios"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">

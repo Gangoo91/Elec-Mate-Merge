@@ -1,16 +1,11 @@
 import { InvoiceSettings } from '@/types/invoice';
-import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Calendar as CalendarIcon, CreditCard, FileText, Info, Receipt } from 'lucide-react';
+import { Calendar as CalendarIcon, CreditCard, FileText, Receipt, Building, Hash, SortAsc } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Switch } from '@/components/ui/switch';
-import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -32,32 +27,25 @@ export const InvoiceSettingsStep = ({
   onUpdateSettings,
   onUpdateNotes,
 }: InvoiceSettingsStepProps) => {
-  return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-bold mb-2">Invoice Settings</h2>
-        <p className="text-sm text-muted-foreground">
-          Configure VAT, payment terms and bank details for this invoice.
-        </p>
-      </div>
+  // Clean inline input style for seamless look
+  const inputClassName = 'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
 
+  return (
+    <div className="space-y-5 text-left">
       {/* VAT Settings Section */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Receipt className="h-5 w-5 text-primary" />
-            <CardTitle className="text-lg">VAT Settings</CardTitle>
-          </div>
-          <CardDescription>
-            Configure VAT for this invoice (leave off if not VAT registered)
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* VAT Registered Toggle */}
-          <div className="flex items-center justify-between p-4 bg-elec-gray/30 rounded-lg">
-            <div>
-              <p className="font-medium">VAT Registered</p>
-              <p className="text-sm text-muted-foreground">Add VAT to this invoice?</p>
+      <div>
+        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+          VAT Settings
+        </p>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+          {/* VAT Toggle Row */}
+          <div className="flex items-center gap-3 p-4">
+            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+              <Receipt className="h-5 w-5 text-black" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[14px] font-medium text-white">VAT Registered</p>
+              <p className="text-[12px] text-white/50">Add VAT to this invoice</p>
             </div>
             <Switch
               checked={settings?.vatRegistered || false}
@@ -68,52 +56,53 @@ export const InvoiceSettingsStep = ({
 
           {/* VAT Rate - Only shown if VAT registered */}
           {settings?.vatRegistered && (
-            <div className="pl-4">
-              <Label htmlFor="vatRate" className="text-sm">VAT Rate (%)</Label>
-              <Input
-                id="vatRate"
-                type="number"
-                inputMode="decimal"
-                step="0.1"
-                min="0"
-                max="100"
-                value={settings?.vatRate ?? 20}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  onUpdateSettings({ vatRate: value === '' ? 20 : parseFloat(value) || 20 });
-                }}
-                className="mt-1 h-14 max-w-[150px]"
-                placeholder="20"
-              />
-              <p className="text-xs text-muted-foreground mt-1">Standard UK VAT rate is 20%</p>
+            <div className="flex items-center gap-3 p-4">
+              <div className="w-11 h-11 rounded-xl bg-white/[0.05] flex items-center justify-center flex-shrink-0">
+                <Hash className="h-5 w-5 text-white/70" />
+              </div>
+              <div className="flex-1 min-w-0 text-left">
+                <label className="text-[12px] text-white block mb-0.5">VAT Rate (%)</label>
+                <input
+                  type="number"
+                  inputMode="decimal"
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  value={settings?.vatRate ?? 20}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    onUpdateSettings({ vatRate: value === '' ? 20 : parseFloat(value) || 20 });
+                  }}
+                  className={inputClassName}
+                  placeholder="20"
+                />
+              </div>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Payment Terms Section */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <CalendarIcon className="h-5 w-5 text-primary" />
-            <CardTitle className="text-lg">Payment Terms</CardTitle>
-          </div>
-          <CardDescription>
-            Set when payment is due for this invoice
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="paymentTerms" className="text-sm">Payment Terms</Label>
+      <div>
+        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+          Payment Terms
+        </p>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+          {/* Payment Terms Select */}
+          <div className="flex items-center gap-3 p-4">
+            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+              <CalendarIcon className="h-5 w-5 text-black" />
+            </div>
+            <div className="flex-1 min-w-0 text-left">
+              <label className="text-[12px] text-white block mb-0.5">Payment Terms</label>
               <Select
                 value={settings?.paymentTerms || '30 days'}
                 onValueChange={(value) => onUpdateSettings({ paymentTerms: value })}
               >
-                <SelectTrigger className="mt-1">
+                <SelectTrigger className="h-8 border-0 bg-transparent p-0 text-[16px] font-medium text-white focus:ring-0 [&>svg]:text-white/50">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-elec-gray border-white/[0.1]">
                   <SelectItem value="Due on receipt">Due on receipt</SelectItem>
                   <SelectItem value="7 days">7 days</SelectItem>
                   <SelectItem value="14 days">14 days</SelectItem>
@@ -123,24 +112,28 @@ export const InvoiceSettingsStep = ({
                 </SelectContent>
               </Select>
             </div>
-            <div>
-              <Label htmlFor="dueDate" className="text-sm">Due Date</Label>
+          </div>
+
+          {/* Due Date Picker */}
+          <div className="flex items-center gap-3 p-4">
+            <div className="w-11 h-11 rounded-xl bg-white/[0.05] flex items-center justify-center flex-shrink-0">
+              <CalendarIcon className="h-5 w-5 text-white/70" />
+            </div>
+            <div className="flex-1 min-w-0 text-left">
+              <label className="text-[12px] text-white block mb-0.5">Due Date</label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     className={cn(
-                      "w-full h-14 rounded-xl border border-primary/30 bg-card px-4 text-base font-medium text-elec-light",
-                      "hover:border-elec-yellow/40 focus:border-elec-yellow focus-visible:border-elec-yellow transition-all duration-200",
-                      "justify-start text-left mt-1",
-                      !settings?.dueDate && "text-muted-foreground"
+                      'h-8 p-0 justify-start text-[16px] font-medium hover:bg-transparent',
+                      settings?.dueDate ? 'text-white' : 'text-white/50'
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {settings?.dueDate ? format(new Date(settings.dueDate), "PPP") : <span>Pick a date</span>}
+                    {settings?.dueDate ? format(new Date(settings.dueDate), 'PPP') : 'Select due date'}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent className="w-auto p-0 bg-elec-gray border-white/[0.1]" align="start">
                   <Calendar
                     mode="single"
                     selected={settings?.dueDate ? new Date(settings.dueDate) : undefined}
@@ -152,132 +145,151 @@ export const InvoiceSettingsStep = ({
               </Popover>
             </div>
           </div>
-          
-          <div className="flex items-start gap-2 p-3 bg-primary/5 rounded-lg border border-primary/20">
-            <Info className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-            <p className="text-xs text-muted-foreground">
-              The due date will be calculated automatically based on the payment terms you select. You can override it manually if needed.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Bank Details Section */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <CreditCard className="h-5 w-5 text-primary" />
-            <CardTitle className="text-lg">Bank Details</CardTitle>
+      <div>
+        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+          Bank Details
+        </p>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+          {/* Bank Name */}
+          <div className="flex items-center gap-3 p-4">
+            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+              <Building className="h-5 w-5 text-black" />
+            </div>
+            <div className="flex-1 min-w-0 text-left">
+              <label className="text-[12px] text-white block mb-0.5">Bank Name</label>
+              <input
+                value={settings?.bankDetails?.bankName || ''}
+                onChange={(e) =>
+                  onUpdateSettings({
+                    bankDetails: {
+                      bankName: e.target.value,
+                      accountName: settings?.bankDetails?.accountName || '',
+                      accountNumber: settings?.bankDetails?.accountNumber || '',
+                      sortCode: settings?.bankDetails?.sortCode || '',
+                    },
+                  })
+                }
+                placeholder="e.g., Barclays, HSBC, Lloyds"
+                className={inputClassName}
+              />
+            </div>
           </div>
-          <CardDescription>
-            These details will appear on the invoice for payment
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <MobileInputWrapper
-            label="Bank Name"
-            placeholder="e.g., Barclays, HSBC, Lloyds"
-            value={settings?.bankDetails?.bankName || ''}
-            onChange={(value) =>
-              onUpdateSettings({
-                bankDetails: {
-                  bankName: value,
-                  accountName: settings?.bankDetails?.accountName || '',
-                  accountNumber: settings?.bankDetails?.accountNumber || '',
-                  sortCode: settings?.bankDetails?.sortCode || '',
-                },
-              })
-            }
-            hint="The name of your bank"
-          />
-          
-          <MobileInputWrapper
-            label="Account Name"
-            placeholder="e.g., Smith Electrical Ltd"
-            value={settings?.bankDetails?.accountName || ''}
-            onChange={(value) =>
-              onUpdateSettings({
-                bankDetails: {
-                  bankName: settings?.bankDetails?.bankName || '',
-                  accountName: value,
-                  accountNumber: settings?.bankDetails?.accountNumber || '',
-                  sortCode: settings?.bankDetails?.sortCode || '',
-                },
-              })
-            }
-            hint="The name on your bank account"
-          />
-          
-          <div className="grid md:grid-cols-2 gap-4">
-            <MobileInputWrapper
-              label="Account Number"
-              placeholder="12345678"
-              value={settings?.bankDetails?.accountNumber || ''}
-              onChange={(value) => {
-                const numericValue = value.replace(/\D/g, '').slice(0, 8);
-                onUpdateSettings({
-                  bankDetails: {
-                    bankName: settings?.bankDetails?.bankName || '',
-                    accountName: settings?.bankDetails?.accountName || '',
-                    accountNumber: numericValue,
-                    sortCode: settings?.bankDetails?.sortCode || '',
-                  },
-                });
-              }}
-              inputMode="numeric"
-              hint="8 digits"
-            />
-            <MobileInputWrapper
-              label="Sort Code"
-              placeholder="12-34-56"
-              value={settings?.bankDetails?.sortCode || ''}
-              onChange={(value) => {
-                let formattedValue = value.replace(/\D/g, '');
-                if (formattedValue.length > 6) formattedValue = formattedValue.slice(0, 6);
-                if (formattedValue.length > 4) formattedValue = `${formattedValue.slice(0, 2)}-${formattedValue.slice(2, 4)}-${formattedValue.slice(4)}`;
-                else if (formattedValue.length > 2) formattedValue = `${formattedValue.slice(0, 2)}-${formattedValue.slice(2)}`;
-                
-                onUpdateSettings({
-                  bankDetails: {
-                    bankName: settings?.bankDetails?.bankName || '',
-                    accountName: settings?.bankDetails?.accountName || '',
-                    accountNumber: settings?.bankDetails?.accountNumber || '',
-                    sortCode: formattedValue,
-                  },
-                });
-              }}
-              inputMode="numeric"
-              hint="Format: XX-XX-XX"
-            />
+
+          {/* Account Name */}
+          <div className="flex items-center gap-3 p-4">
+            <div className="w-11 h-11 rounded-xl bg-white/[0.05] flex items-center justify-center flex-shrink-0">
+              <CreditCard className="h-5 w-5 text-white/70" />
+            </div>
+            <div className="flex-1 min-w-0 text-left">
+              <label className="text-[12px] text-white block mb-0.5">Account Name</label>
+              <input
+                value={settings?.bankDetails?.accountName || ''}
+                onChange={(e) =>
+                  onUpdateSettings({
+                    bankDetails: {
+                      bankName: settings?.bankDetails?.bankName || '',
+                      accountName: e.target.value,
+                      accountNumber: settings?.bankDetails?.accountNumber || '',
+                      sortCode: settings?.bankDetails?.sortCode || '',
+                    },
+                  })
+                }
+                placeholder="e.g., Smith Electrical Ltd"
+                className={inputClassName}
+              />
+            </div>
           </div>
-        </CardContent>
-      </Card>
+
+          {/* Account Number */}
+          <div className="flex items-center gap-3 p-4">
+            <div className="w-11 h-11 rounded-xl bg-white/[0.05] flex items-center justify-center flex-shrink-0">
+              <Hash className="h-5 w-5 text-white/70" />
+            </div>
+            <div className="flex-1 min-w-0 text-left">
+              <label className="text-[12px] text-white block mb-0.5">Account Number</label>
+              <input
+                value={settings?.bankDetails?.accountNumber || ''}
+                onChange={(e) => {
+                  const numericValue = e.target.value.replace(/\D/g, '').slice(0, 8);
+                  onUpdateSettings({
+                    bankDetails: {
+                      bankName: settings?.bankDetails?.bankName || '',
+                      accountName: settings?.bankDetails?.accountName || '',
+                      accountNumber: numericValue,
+                      sortCode: settings?.bankDetails?.sortCode || '',
+                    },
+                  });
+                }}
+                inputMode="numeric"
+                placeholder="12345678"
+                className={inputClassName}
+              />
+            </div>
+          </div>
+
+          {/* Sort Code */}
+          <div className="flex items-center gap-3 p-4">
+            <div className="w-11 h-11 rounded-xl bg-white/[0.05] flex items-center justify-center flex-shrink-0">
+              <SortAsc className="h-5 w-5 text-white/70" />
+            </div>
+            <div className="flex-1 min-w-0 text-left">
+              <label className="text-[12px] text-white block mb-0.5">Sort Code</label>
+              <input
+                value={settings?.bankDetails?.sortCode || ''}
+                onChange={(e) => {
+                  let formattedValue = e.target.value.replace(/\D/g, '');
+                  if (formattedValue.length > 6) formattedValue = formattedValue.slice(0, 6);
+                  if (formattedValue.length > 4) formattedValue = `${formattedValue.slice(0, 2)}-${formattedValue.slice(2, 4)}-${formattedValue.slice(4)}`;
+                  else if (formattedValue.length > 2) formattedValue = `${formattedValue.slice(0, 2)}-${formattedValue.slice(2)}`;
+
+                  onUpdateSettings({
+                    bankDetails: {
+                      bankName: settings?.bankDetails?.bankName || '',
+                      accountName: settings?.bankDetails?.accountName || '',
+                      accountNumber: settings?.bankDetails?.accountNumber || '',
+                      sortCode: formattedValue,
+                    },
+                  });
+                }}
+                inputMode="numeric"
+                placeholder="12-34-56"
+                className={inputClassName}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Invoice Notes Section */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-primary" />
-            <CardTitle className="text-lg">Invoice Notes</CardTitle>
+      <div>
+        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+          Invoice Notes
+        </p>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+          <div className="flex items-start gap-3 p-4">
+            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+              <FileText className="h-5 w-5 text-black" />
+            </div>
+            <div className="flex-1 min-w-0 text-left">
+              <label className="text-[12px] text-white block mb-0.5">Notes (Optional)</label>
+              <textarea
+                value={notes || ''}
+                onChange={(e) => onUpdateNotes(e.target.value)}
+                placeholder="e.g., Thank you for your business. Please ensure payment is made within the agreed terms."
+                className={cn(inputClassName, 'min-h-[100px] resize-none')}
+                rows={4}
+              />
+            </div>
           </div>
-          <CardDescription>
-            Add any additional information or terms
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Textarea
-            id="invoiceNotes"
-            value={notes || ''}
-            onChange={(e) => onUpdateNotes(e.target.value)}
-            placeholder="e.g., Thank you for your business. Please ensure payment is made within the agreed terms."
-            rows={5}
-            className="resize-none"
-          />
-          <p className="text-xs text-muted-foreground mt-2">
-            These notes will appear at the bottom of your invoice
-          </p>
-        </CardContent>
-      </Card>
+        </div>
+        <p className="text-[11px] text-white/40 mt-2 px-1">
+          These notes will appear at the bottom of your invoice
+        </p>
+      </div>
     </div>
   );
 };

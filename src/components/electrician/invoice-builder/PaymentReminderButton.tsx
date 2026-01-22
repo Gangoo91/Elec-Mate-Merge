@@ -77,41 +77,57 @@ export const PaymentReminderButton = ({
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('User not authenticated');
 
-      const reminderMessage = getReminderMessage(type);
       const clientEmail = invoice.client?.email;
 
       if (!clientEmail) {
         toast({ title: 'No email address', description: 'Client email address is required to send reminders', variant: 'destructive' });
+        setSending(false);
+        setSelectedType(null);
         return;
       }
 
-      // Open email client with pre-filled reminder
-      const mailtoLink = `mailto:${clientEmail}?subject=${encodeURIComponent(reminderMessage.subject)}&body=${encodeURIComponent(reminderMessage.body)}`;
-      window.location.href = mailtoLink;
+      // Call edge function to send reminder email
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co'}/functions/v1/send-payment-reminder`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            invoiceId: invoice.id,
+            reminderType: type,
+          }),
+        }
+      );
 
-      // Update reminder tracking in database
-      const { error: updateError } = await supabase
-        .from('quotes')
-        .update({
-          last_reminder_sent_at: new Date().toISOString(),
-          reminder_count: reminderCount + 1,
-        })
-        .eq('id', invoice.id);
+      const data = await response.json();
 
-      if (updateError) {
-        console.error('Error updating reminder count:', updateError);
+      if (!response.ok || data.error) {
+        throw new Error(data.error || 'Failed to send reminder');
       }
 
+      const typeLabels = {
+        gentle: 'Friendly',
+        firm: 'Firm',
+        final: 'Final notice'
+      };
+
       toast({
-        title: 'Reminder ready',
-        description: `${reminderMessage.tone} reminder opened in your email app`,
+        title: 'Reminder sent',
+        description: `${typeLabels[type]} reminder sent to ${clientEmail}`,
         variant: 'success',
       });
 
       onReminderSent?.();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error sending reminder:', error);
-      toast({ title: 'Error', description: 'Failed to prepare reminder. Please try again.', variant: 'destructive' });
+      toast({
+        title: 'Error sending reminder',
+        description: error.message || 'Failed to send reminder. Please try again.',
+        variant: 'destructive'
+      });
     } finally {
       setSending(false);
       setSelectedType(null);

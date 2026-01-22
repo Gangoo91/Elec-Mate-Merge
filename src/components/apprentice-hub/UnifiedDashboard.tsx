@@ -162,7 +162,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       <div className="grid grid-cols-2 gap-3">
         <Button
           onClick={onCapture}
-          className="h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium touch-manipulation active:scale-95"
+          className="h-14 rounded-2xl bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base touch-manipulation active:scale-[0.97] transition-transform shadow-lg shadow-elec-yellow/20"
         >
           <Plus className="h-5 w-5 mr-2" />
           Add Evidence
@@ -170,7 +170,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         <Button
           variant="outline"
           onClick={() => onNavigate('hours')}
-          className="h-12 font-medium touch-manipulation active:scale-95"
+          className="h-14 rounded-2xl font-semibold text-base touch-manipulation active:scale-[0.97] transition-transform border-white/20 bg-white/5"
         >
           <Timer className="h-5 w-5 mr-2" />
           Log Time
@@ -249,10 +249,10 @@ function ProgressCard({
   onClick: () => void;
 }) {
   const colorClasses = {
-    yellow: 'text-elec-yellow bg-elec-yellow/10',
-    green: 'text-green-500 bg-green-500/10',
-    blue: 'text-blue-500 bg-blue-500/10',
-    red: 'text-red-500 bg-red-500/10',
+    yellow: 'text-elec-yellow bg-elec-yellow/15',
+    green: 'text-green-400 bg-green-500/15',
+    blue: 'text-blue-400 bg-blue-500/15',
+    red: 'text-red-400 bg-red-500/15',
   };
 
   const progressColors = {
@@ -262,27 +262,36 @@ function ProgressCard({
     red: 'bg-red-500',
   };
 
+  const textColors = {
+    yellow: 'text-elec-yellow',
+    green: 'text-green-400',
+    blue: 'text-blue-400',
+    red: 'text-red-400',
+  };
+
   return (
     <button
       onClick={onClick}
-      className="p-4 rounded-xl bg-card border border-border text-left active:scale-[0.98] transition-transform touch-manipulation"
+      className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-left active:scale-[0.97] transition-all touch-manipulation hover:bg-white/[0.05]"
     >
-      <div className="flex items-start justify-between mb-3">
-        <div className={cn('p-2 rounded-lg', colorClasses[color])}>
+      <div className="flex items-center gap-3 mb-3">
+        <div className={cn('p-2.5 rounded-xl', colorClasses[color])}>
           <Icon className="h-4 w-4" />
         </div>
-        <span className="text-2xl font-bold text-foreground">{Math.min(value, 100)}%</span>
+        <div className="flex-1">
+          <span className="text-sm font-semibold text-foreground block">{title}</span>
+          <span className="text-xs text-muted-foreground">{subtitle}</span>
+        </div>
       </div>
       <div className="space-y-2">
-        <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+        <div className="h-2 bg-white/10 rounded-full overflow-hidden">
           <div
-            className={cn('h-full rounded-full transition-all', progressColors[color])}
+            className={cn('h-full rounded-full transition-all duration-500', progressColors[color])}
             style={{ width: `${Math.min(value, 100)}%` }}
           />
         </div>
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-foreground">{title}</span>
-          <span className="text-xs text-muted-foreground">{subtitle}</span>
+        <div className="flex items-center justify-end">
+          <span className={cn('text-xl font-bold', textColors[color])}>{Math.min(value, 100)}%</span>
         </div>
       </div>
     </button>
@@ -306,24 +315,26 @@ function ActionCard({
   return (
     <button
       onClick={onClick}
-      className="p-4 rounded-xl bg-card border border-border text-left active:scale-[0.98] transition-transform touch-manipulation"
+      className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-left active:scale-[0.97] transition-all touch-manipulation hover:bg-white/[0.05]"
     >
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex items-center gap-3 mb-3">
         <div className={cn(
-          'p-2 rounded-lg',
-          count > 0 ? 'text-orange-500 bg-orange-500/10' : 'text-green-500 bg-green-500/10'
+          'p-2.5 rounded-xl',
+          count > 0 ? 'text-orange-400 bg-orange-500/15' : 'text-green-400 bg-green-500/15'
         )}>
           <Icon className="h-4 w-4" />
         </div>
-        {count > 0 && (
-          <Badge variant="destructive" className="text-xs">
-            {count}
-          </Badge>
-        )}
+        <div className="flex-1">
+          <span className="text-sm font-semibold text-foreground block">{title}</span>
+          <span className="text-xs text-muted-foreground">{subtitle}</span>
+        </div>
       </div>
-      <div className="space-y-1">
-        <span className="text-sm font-medium text-foreground">{title}</span>
-        <p className="text-xs text-muted-foreground">{subtitle}</p>
+      <div className="flex items-center justify-end">
+        {count > 0 ? (
+          <span className="text-xl font-bold text-orange-400">{count}</span>
+        ) : (
+          <span className="text-xl font-bold text-green-400">✓</span>
+        )}
       </div>
     </button>
   );

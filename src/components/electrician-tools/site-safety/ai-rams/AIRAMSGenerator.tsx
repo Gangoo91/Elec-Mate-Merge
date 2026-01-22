@@ -14,7 +14,11 @@ import { toast } from '@/hooks/use-toast';
 
 const EXPECTED_TOTAL_SECONDS = 180; // 3 minutes visual countdown
 
-export const AIRAMSGenerator: React.FC = () => {
+interface AIRAMSGeneratorProps {
+  onBack?: () => void;
+}
+
+export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
   const navigate = useNavigate();
   
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
@@ -396,7 +400,7 @@ export const AIRAMSGenerator: React.FC = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate('/electrician/site-safety')}
+            onClick={() => onBack ? onBack() : navigate('/electrician/site-safety')}
             className="h-9 w-9 rounded-lg hover:bg-white/10"
           >
             <ArrowLeft className="h-4 w-4" />

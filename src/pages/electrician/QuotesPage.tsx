@@ -127,29 +127,32 @@ const QuotesPage = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Mobile-Optimized Header - Matches InvoicesPage Layout */}
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border/50">
+      {/* iOS-Style Native Header */}
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md">
         {showSearch ? (
           /* Search Mode - Full width search input */
           <div className="flex items-center h-14 px-4 gap-2">
             <div className="relative flex-1">
               {!searchQuery && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none" />
               )}
               <Input
                 type="text"
                 placeholder="Search by name, quote #..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={cn("h-11 pr-9 text-base touch-manipulation bg-elec-gray/50 border-elec-gray focus:border-elec-yellow", !searchQuery && "pl-9")}
+                className={cn(
+                  "h-11 pr-9 text-base touch-manipulation rounded-xl bg-white/[0.05] border-white/[0.06] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20",
+                  !searchQuery && "pl-9"
+                )}
                 autoFocus
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 flex items-center justify-center rounded-full bg-muted hover:bg-muted/80 touch-manipulation"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 flex items-center justify-center rounded-full bg-white/[0.1] hover:bg-white/[0.15] touch-manipulation"
                 >
-                  <X className="h-3 w-3" />
+                  <X className="h-3 w-3 text-white" />
                 </button>
               )}
             </div>
@@ -158,66 +161,60 @@ const QuotesPage = () => {
                 setShowSearch(false);
                 setSearchQuery('');
               }}
-              className="text-sm text-muted-foreground font-medium px-2"
+              className="text-sm text-elec-yellow font-medium px-2 touch-manipulation"
             >
               Cancel
             </button>
           </div>
         ) : (
           <>
-            {/* Row 1: Back + Title + Primary Action */}
-            <div className="flex items-center h-14 px-4 gap-3">
+            {/* Row 1: Navigation bar */}
+            <div className="flex items-center h-14 px-4 gap-2">
               <button
                 onClick={() => navigate('/electrician')}
-                className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-[0.98] transition-all touch-manipulation -ml-2"
+                className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
+
               <h1 className="flex-1 text-xl font-bold">Quotes</h1>
 
-              {/* New Quote - Primary Action, always visible */}
-              <Button
-                onClick={() => navigate('/electrician/quote-builder/create')}
-                className="shrink-0 bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-2 h-11 px-4 touch-manipulation active:scale-[0.98] font-semibold"
-              >
-                <Plus className="h-4 w-4" />
-                <span className="hidden xs:inline">New</span>
-                <span className="hidden sm:inline"> Quote</span>
-              </Button>
-            </div>
-
-            {/* Row 2: Secondary Tools - Horizontally scrollable on mobile */}
-            <div className="flex items-center gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-              {/* Quick Link to Invoices - Icon only on mobile */}
-              <Button
-                variant="outline"
-                onClick={() => navigate('/electrician/invoices')}
-                className="shrink-0 h-11 w-11 sm:w-auto sm:px-4 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50 touch-manipulation gap-2"
-                title="View Invoices"
-              >
-                <Receipt className="h-4 w-4" />
-                <span className="hidden sm:inline">Invoices</span>
-              </Button>
-
-              {/* Search */}
+              {/* Right side actions */}
               <button
                 onClick={() => setShowSearch(true)}
-                className="shrink-0 h-11 w-11 flex items-center justify-center rounded-full bg-elec-gray/50 hover:bg-elec-gray active:scale-[0.98] transition-all touch-manipulation"
-                title="Search quotes"
+                className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
-                <Search className="h-5 w-5" />
+                <Search className="h-5 w-5 text-white/80" />
               </button>
 
-              {/* Refresh */}
+              <button
+                onClick={() => navigate('/electrician/quote-builder/create')}
+                className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation"
+              >
+                <Plus className="h-5 w-5 text-black" />
+              </button>
+            </div>
+
+            {/* Row 2: Quick actions */}
+            <div className="flex items-center gap-3 px-4 pb-3">
+              <button
+                onClick={() => navigate('/electrician/invoices')}
+                className="flex items-center gap-2 text-elec-yellow active:opacity-70 touch-manipulation"
+              >
+                <Receipt className="h-4 w-4" />
+                <span className="text-[14px] font-medium">Invoices</span>
+              </button>
+
+              <div className="flex-1" />
+
               <button
                 onClick={handleRefresh}
                 disabled={isRefreshing}
-                className="shrink-0 h-11 w-11 flex items-center justify-center rounded-full bg-elec-gray/50 hover:bg-elec-gray active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
+                className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
               >
-                <RefreshCw className={cn("h-5 w-5", isRefreshing && "animate-spin")} />
+                <RefreshCw className={cn("h-4 w-4 text-white/60", isRefreshing && "animate-spin")} />
               </button>
 
-              {/* Voice */}
               <VoiceHeaderButton
                 hint="Send quote"
                 currentSection="quotes"
@@ -227,124 +224,100 @@ const QuotesPage = () => {
           </>
         )}
 
-        {/* Row 3: Filter Pills - Horizontal Scroll */}
+        {/* Filter Pills - Compact iOS style */}
         {!showSearch && (
           <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-            {filterOptions.map((option) => {
-            const Icon = option.icon;
-            return (
+            {filterOptions.map((option) => (
               <button
                 key={option.id}
                 onClick={() => setFilter(option.id)}
                 className={cn(
-                  "shrink-0 h-11 px-4 rounded-full text-sm font-medium transition-all active:scale-[0.98] touch-manipulation flex items-center gap-2",
+                  "shrink-0 flex items-center gap-1.5 h-9 px-3.5 rounded-full text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]",
                   filter === option.id
                     ? "bg-elec-yellow text-black"
-                    : "bg-elec-gray/50 text-foreground hover:bg-elec-gray"
+                    : "bg-white/[0.08] text-white"
                 )}
               >
-                <Icon className="h-4 w-4" />
                 {option.label}
                 <span className={cn(
-                  "text-xs px-1.5 py-0.5 rounded-full min-w-[20px] text-center",
-                  filter === option.id ? "bg-black/20" : "bg-muted"
+                  "text-[11px] px-1.5 py-0.5 rounded-full min-w-[18px] text-center font-semibold",
+                  filter === option.id ? "bg-black/20" : "bg-white/[0.15]"
                 )}>
                   {option.count}
                 </span>
               </button>
-            );
-          })}
+            ))}
           </div>
         )}
       </header>
 
       <div className="px-4 py-4 space-y-4 pb-6">
-        {/* Premium Financial Snapshot - Best in Class Mobile */}
-        <section className="relative overflow-hidden rounded-3xl glass-premium p-6 border border-white/[0.08]">
-          {/* Gradient accent line at top */}
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-
-          {/* Decorative blur elements */}
-          <div className="absolute top-0 right-0 w-40 h-40 bg-elec-yellow/[0.08] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-amber-400/[0.06] rounded-full blur-2xl translate-y-1/2 -translate-x-1/4" />
-
-          <div className="relative space-y-5">
-            {/* Header */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-elec-yellow/10">
-                  <PoundSterling className="h-4 w-4 text-elec-yellow" />
+        {/* iOS-Style Pipeline Card - Clean Grouped List */}
+        <section className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+          {/* Main Value Section */}
+          <div className="p-5">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center">
+                  <PoundSterling className="h-5 w-5 text-black" />
                 </div>
-                <span className="text-sm font-medium text-white/70">Total Pipeline Value</span>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.08]">
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-xs font-medium text-white/70">Live</span>
-              </div>
-            </div>
-
-            {/* Main Value */}
-            <div>
-              <div className="text-5xl font-bold text-white tracking-tight mb-2">
-                £{stats.totalValue.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-              </div>
-              <div className="flex items-center gap-3 text-sm">
-                <div className="flex items-center gap-1.5 text-white/50">
-                  <FileText className="h-3.5 w-3.5" />
-                  <span>{stats.counts.all} active</span>
-                </div>
-                <div className="w-1 h-1 rounded-full bg-white/20" />
-                <div className="flex items-center gap-1.5 text-green-400">
-                  <TrendingUp className="h-3.5 w-3.5" />
-                  <span className="font-medium">{stats.conversionRate}% win rate</span>
+                <div>
+                  <p className="text-[12px] text-white">Pipeline Value</p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                    <span className="text-[11px] text-white">Live</span>
+                  </div>
                 </div>
               </div>
             </div>
+            <p className="text-4xl font-bold text-elec-yellow">
+              £{stats.totalValue.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+            </p>
+            <p className="text-[13px] text-white mt-1">
+              {stats.counts.all} active • {stats.conversionRate}% win rate
+            </p>
+          </div>
 
-            {/* Quick Stats Grid */}
-            <div className="grid grid-cols-3 gap-2 pt-3 border-t border-white/[0.08]">
-              <button
-                onClick={() => setFilter('approved')}
-                className="group relative p-3 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-600/5 border border-green-500/20 hover:border-green-500/40 active:scale-[0.97] transition-all touch-manipulation"
-              >
-                <div className="flex flex-col items-start gap-1">
-                  <CheckCircle className="h-4 w-4 text-green-400 mb-1" />
-                  <div className="text-xs text-green-400/70 font-medium">Approved</div>
-                  <div className="text-lg font-bold text-green-400">
-                    £{(stats.approvedValue / 1000).toFixed(0)}k
-                  </div>
-                </div>
-                <div className="absolute inset-0 bg-green-400/5 rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
-              </button>
+          {/* Status Grid - All elec-yellow themed */}
+          <div className="grid grid-cols-3 divide-x divide-white/[0.06] border-t border-white/[0.06]">
+            <button
+              onClick={() => setFilter('approved')}
+              className="p-4 text-center hover:bg-white/[0.02] active:scale-[0.98] touch-manipulation transition-colors"
+            >
+              <div className="w-9 h-9 mx-auto rounded-xl bg-elec-yellow/20 flex items-center justify-center mb-2">
+                <CheckCircle className="h-4 w-4 text-elec-yellow" />
+              </div>
+              <p className="text-[11px] text-white mb-0.5">Approved</p>
+              <p className="text-lg font-bold text-white">
+                £{(stats.approvedValue / 1000).toFixed(0)}k
+              </p>
+            </button>
 
-              <button
-                onClick={() => setFilter('sent')}
-                className="group relative p-3 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 hover:border-blue-500/40 active:scale-[0.97] transition-all touch-manipulation"
-              >
-                <div className="flex flex-col items-start gap-1">
-                  <Send className="h-4 w-4 text-blue-400 mb-1" />
-                  <div className="text-xs text-blue-400/70 font-medium">Pending</div>
-                  <div className="text-lg font-bold text-blue-400">
-                    {stats.counts.sent}
-                  </div>
-                </div>
-                <div className="absolute inset-0 bg-blue-400/5 rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
-              </button>
+            <button
+              onClick={() => setFilter('sent')}
+              className="p-4 text-center hover:bg-white/[0.02] active:scale-[0.98] touch-manipulation transition-colors"
+            >
+              <div className="w-9 h-9 mx-auto rounded-xl bg-elec-yellow/20 flex items-center justify-center mb-2">
+                <Send className="h-4 w-4 text-elec-yellow" />
+              </div>
+              <p className="text-[11px] text-white mb-0.5">Pending</p>
+              <p className="text-lg font-bold text-white">
+                {stats.counts.sent}
+              </p>
+            </button>
 
-              <button
-                onClick={() => setFilter('draft')}
-                className="group relative p-3 rounded-xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/[0.08] hover:border-white/20 active:scale-[0.97] transition-all touch-manipulation"
-              >
-                <div className="flex flex-col items-start gap-1">
-                  <Clock className="h-4 w-4 text-white/50 mb-1" />
-                  <div className="text-xs text-white/40 font-medium">Draft</div>
-                  <div className="text-lg font-bold text-white/70">
-                    {stats.counts.draft}
-                  </div>
-                </div>
-                <div className="absolute inset-0 bg-white/[0.02] rounded-xl opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
-              </button>
-            </div>
+            <button
+              onClick={() => setFilter('draft')}
+              className="p-4 text-center hover:bg-white/[0.02] active:scale-[0.98] touch-manipulation transition-colors"
+            >
+              <div className="w-9 h-9 mx-auto rounded-xl bg-elec-yellow/20 flex items-center justify-center mb-2">
+                <Clock className="h-4 w-4 text-elec-yellow" />
+              </div>
+              <p className="text-[11px] text-white mb-0.5">Draft</p>
+              <p className="text-lg font-bold text-white">
+                {stats.counts.draft}
+              </p>
+            </button>
           </div>
         </section>
 

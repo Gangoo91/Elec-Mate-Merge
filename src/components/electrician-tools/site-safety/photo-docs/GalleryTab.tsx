@@ -130,7 +130,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
           <Grid3X3 className="h-8 w-8 text-white/30" />
         </div>
         <h3 className="text-base font-semibold text-white mb-1">No photos yet</h3>
-        <p className="text-xs text-white/50 text-center max-w-[200px]">
+        <p className="text-xs text-white/70 text-center max-w-[200px]">
           Take photos in the Camera tab to get started
         </p>
       </div>
@@ -159,7 +159,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
               <h2 className="text-sm font-semibold text-white truncate">
                 {expandedProject === "__unorganised__" ? "Unorganised Photos" : expandedProject}
               </h2>
-              <p className="text-xs text-white/50">{displayPhotos.length} photos</p>
+              <p className="text-xs text-white/70">{displayPhotos.length} photos</p>
             </div>
           </div>
         </div>
@@ -294,28 +294,28 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: groupIndex * 0.05 }}
-                  className="bg-[#1e1e1e] rounded-xl border border-white/10 overflow-hidden"
+                  className="bg-white/[0.03] rounded-2xl border border-white/[0.08] overflow-hidden"
                 >
                   {/* Project header */}
                   <button
                     onClick={() => setExpandedProject(project.name)}
-                    className="w-full flex items-center gap-3 p-3 hover:bg-white/5 transition-colors touch-manipulation"
+                    className="w-full flex items-center gap-3 p-3 hover:bg-white/5 active:bg-white/[0.08] transition-colors touch-manipulation"
                   >
-                    <div className={`p-2.5 rounded-lg ${project.name === "__unorganised__" ? "bg-white/5 border border-dashed border-white/20" : "bg-elec-yellow/10 border border-elec-yellow/20"}`}>
+                    <div className={`p-2.5 rounded-xl ${project.name === "__unorganised__" ? "bg-white/[0.05] border border-dashed border-white/20" : "bg-elec-yellow flex items-center justify-center"}`}>
                       {project.name === "__unorganised__" ? (
-                        <ImageIcon className="h-5 w-5 text-white/40" />
+                        <ImageIcon className="h-5 w-5 text-white/60" />
                       ) : (
-                        <Folder className="h-5 w-5 text-elec-yellow" />
+                        <Folder className="h-5 w-5 text-black" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0 text-left">
-                      <h3 className="text-sm font-semibold text-white truncate">
+                      <h3 className="text-[14px] font-semibold text-white truncate">
                         {project.name === "__unorganised__" ? "Unorganised Photos" : project.name}
                       </h3>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-xs text-white/50">{project.photos.length} photos</span>
-                        <span className="text-xs text-white/30">•</span>
-                        <span className="text-xs text-white/40 flex items-center gap-1">
+                        <span className="text-[12px] text-white/80">{project.photos.length} photos</span>
+                        <span className="text-[12px] text-white/40">•</span>
+                        <span className="text-[12px] text-white/70 flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
                           {formatDistanceToNow(project.lastUpdated, { addSuffix: true })}
                         </span>
@@ -327,10 +327,10 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                         <span key={cat} className={`w-2 h-2 rounded-full ${getCategoryColor(cat)}`} />
                       ))}
                       {project.categories.length > 4 && (
-                        <span className="text-[10px] text-white/40">+{project.categories.length - 4}</span>
+                        <span className="text-[10px] text-white/70">+{project.categories.length - 4}</span>
                       )}
                     </div>
-                    <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0" />
+                    <ChevronRight className="h-5 w-5 text-white/50 flex-shrink-0" />
                   </button>
 
                   {/* Photo preview grid */}
@@ -392,7 +392,7 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                     <div className={`absolute top-1.5 left-1.5 w-2.5 h-2.5 rounded-full ${getCategoryColor(photo.category)} ring-2 ring-black/50`} />
                     {photo.project_reference && (
                       <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-1.5">
-                        <span className="text-[9px] text-white/70 flex items-center gap-1">
+                        <span className="text-[9px] text-white/90 flex items-center gap-1">
                           <Folder className="h-2.5 w-2.5" />
                           {photo.project_reference}
                         </span>
@@ -427,18 +427,18 @@ export default function GalleryTab({ onPhotoSelect }: GalleryTabProps) {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className={`w-2 h-2 rounded-full flex-shrink-0 ${getCategoryColor(photo.category)}`} />
-                      <span className="text-[10px] text-white/50 uppercase font-medium">{getCategoryLabel(photo.category)}</span>
+                      <span className="text-[10px] text-white/70 uppercase font-medium">{getCategoryLabel(photo.category)}</span>
                     </div>
                     <p className="text-sm text-white line-clamp-1 font-medium">{photo.description}</p>
                     <div className="flex items-center gap-3 mt-1">
                       {photo.project_reference && (
-                        <span className="flex items-center gap-1 text-xs text-white/40">
+                        <span className="flex items-center gap-1 text-xs text-white/70">
                           <Folder className="h-3 w-3" />
                           {photo.project_reference}
                         </span>
                       )}
                       {photo.location && (
-                        <span className="flex items-center gap-1 text-xs text-white/40">
+                        <span className="flex items-center gap-1 text-xs text-white/70">
                           <MapPin className="h-3 w-3" />
                           {photo.location}
                         </span>

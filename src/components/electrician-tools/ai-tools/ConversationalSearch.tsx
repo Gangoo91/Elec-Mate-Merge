@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, Camera, ImageIcon, X } from 'lucide-react';
+import { Brain, Camera, ImageIcon, X, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
 import { InspectorMessage } from './InspectorMessage';
 import { useSmoothedStreaming } from '@/hooks/useSmoothedStreaming';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -27,6 +29,7 @@ const SUPABASE_URL = 'https://jtwygbeceundfgnkirof.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8';
 
 export default function ConversationalSearch() {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
@@ -310,18 +313,26 @@ export default function ConversationalSearch() {
 
   return (
     <ChatContainer>
-      {/* Header - Always visible */}
-      <div className="shrink-0 px-4 py-3 border-b border-border/30">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
+      {/* Header - iOS style with back button */}
+      <header className="shrink-0 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="flex items-center gap-3 px-4 h-14">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate('/electrician')}
+            className="h-10 w-10 -ml-2 touch-manipulation active:scale-95 hover:bg-white/5"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
             <Brain className="w-5 h-5 text-white" />
           </div>
-          <div>
-            <h1 className="text-lg font-bold text-foreground">Elec-AI</h1>
-            <p className="text-xs text-muted-foreground">Your electrical advisor</p>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-base font-semibold text-white truncate">Elec-AI</h1>
+            <p className="text-[11px] text-white/50">Your electrical advisor</p>
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Empty State - Clean spacer */}
       {messages.length === 0 && (

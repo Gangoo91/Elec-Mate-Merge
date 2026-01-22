@@ -63,7 +63,6 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
   const [isLoadingReport, setIsLoadingReport] = useState(!!initialReportId);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const [authChecked, setAuthChecked] = useState(false);
   const [showCustomerDialog, setShowCustomerDialog] = useState(false);
   const [pendingReportId, setPendingReportId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
@@ -215,6 +214,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     loadFromCloud,
     isOnline,
     isAuthenticated,
+    authCheckComplete,
     processOfflineQueue,
   } = useCloudSync({
     reportId: currentReportId,
@@ -257,14 +257,11 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     }
   };
 
-  // Track when authentication has been checked
+  // Track user ID for customer linking
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setUserId(session?.user?.id || null);
-      if (isAuthenticated !== undefined) {
-        setAuthChecked(true);
-      }
     };
     checkAuth();
 
@@ -273,7 +270,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     });
 
     return () => subscription.unsubscribe();
-  }, [isAuthenticated]);
+  }, []);
 
   // Load report from cloud on initial mount
   useEffect(() => {
@@ -284,13 +281,13 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       }
 
       // Don't attempt to load until auth state has been checked
-      if (!authChecked) {
+      if (!authCheckComplete) {
         return;
       }
 
       console.log('[EICR] Loading report from cloud:', initialReportId);
       setIsLoadingReport(true);
-      
+
       if (!isAuthenticated) {
         toast({
           title: 'Cannot load report',
@@ -300,7 +297,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         setIsLoadingReport(false);
         return;
       }
-      
+
       if (!isOnline) {
         toast({
           title: 'Cannot load report',
@@ -314,7 +311,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       const cloudData = await loadFromCloud(initialReportId);
       if (cloudData && typeof cloudData === 'object') {
         console.log('[EICR] Successfully loaded from cloud');
-        
+
         const loadedData = cloudData as any;
         setFormData(prev => ({
           ...prev,
@@ -335,12 +332,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
           variant: 'destructive',
         });
       }
-      
+
       setIsLoadingReport(false);
     };
 
     loadInitialData();
-  }, [initialReportId, authChecked, isAuthenticated, isOnline]);
+  }, [initialReportId, authCheckComplete, isAuthenticated, isOnline]);
 
   // Auto-fill inspector details from default profile when starting new report
   useEffect(() => {

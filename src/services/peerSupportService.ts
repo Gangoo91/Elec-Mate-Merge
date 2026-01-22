@@ -508,6 +508,23 @@ export const peerMessageService = {
   },
 
   /**
+   * Mark ALL peer messages as read across all conversations
+   */
+  async markAllAsRead(): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    // Mark all messages not sent by me as read
+    const { error } = await supabase
+      .from('mental_health_peer_messages')
+      .update({ is_read: true })
+      .neq('sender_id', user.id)
+      .eq('is_read', false);
+
+    if (error) throw error;
+  },
+
+  /**
    * Get unread count for a conversation
    */
   async getUnreadCount(conversationId: string): Promise<number> {

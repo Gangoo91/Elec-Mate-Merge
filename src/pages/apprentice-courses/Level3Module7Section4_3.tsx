@@ -258,18 +258,7 @@ const Level3Module7Section4_3 = () => {
       <article className="px-4 sm:px-6 py-8 sm:py-12">
 
         {/* HEADER */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Career Pathways
-          </h1>
-          <p className="text-white/80">
-            Understanding your options for growth and progression in the electrical industry
-          </p>
-        </header>
+        
 
         {/* QUICK SUMMARY BOXES */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
@@ -293,26 +282,9 @@ const Level3Module7Section4_3 = () => {
         </div>
 
         {/* LEARNING OUTCOMES */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Understand the JIB grading structure and progression routes",
-              "Identify specialisation areas within the electrical industry",
-              "Recognise management and supervisory career paths",
-              "Explore routes into electrical engineering and design",
-              "Understand the role of professional registration",
-              "Plan your own career development effectively"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* CONTENT SECTION 01 */}
         <section className="mb-10">

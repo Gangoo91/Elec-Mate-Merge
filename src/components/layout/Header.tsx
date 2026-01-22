@@ -107,18 +107,18 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
       ref={headerRef}
       className={cn(
         "fixed top-0 left-0 right-0 z-50",
-        "backdrop-blur-xl bg-elec-dark/90",
+        "backdrop-blur-xl bg-background/95",
         "border-b transition-all duration-300",
         isScrolled
-          ? "border-white/15 shadow-xl shadow-black/40"
-          : "border-white/5",
+          ? "border-white/10 shadow-lg shadow-black/20"
+          : "border-white/[0.06]",
         "pt-safe"
       )}
     >
-      {/* Mobile: Compact 52px | Desktop: 64px */}
-      <div className="flex items-center justify-between h-[52px] sm:h-16 px-2 sm:px-4">
+      {/* Mobile: 48px | Desktop: 56px */}
+      <div className="flex items-center justify-between h-12 sm:h-14 px-3 sm:px-4">
         {/* Left side - Menu toggle and branding */}
-        <div className="flex items-center gap-1.5 sm:gap-3">
+        <div className="flex items-center gap-3">
           {isMobile && (
             <motion.div whileTap={{ scale: 0.92 }}>
               <Button
@@ -126,48 +126,36 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
                 size="icon"
                 onClick={toggleSidebar}
                 className={cn(
-                  "h-11 w-11 min-w-[44px] min-h-[44px]",
-                  "hover:bg-white/10 active:bg-white/20",
+                  "h-10 w-10 min-w-[40px] min-h-[40px]",
+                  "hover:bg-white/10 active:bg-white/15",
                   "touch-manipulation rounded-xl",
                   "transition-all duration-150"
                 )}
                 aria-label="Toggle navigation menu"
               >
-                <Menu className="h-[18px] w-[18px]" />
+                <Menu className="h-5 w-5 text-white/80" />
               </Button>
             </motion.div>
           )}
 
-          {/* Branding - compact on mobile */}
-          <div className="flex items-center gap-1.5 sm:gap-3">
-            <motion.div
-              className={cn(
-                "rounded-lg sm:rounded-xl overflow-hidden",
-                "border border-elec-yellow/30"
-              )}
-              whileTap={{ scale: 0.95 }}
-            >
-              <img
-                src="/logo.jpg"
-                alt="Elec-Mate"
-                className="h-8 w-8 sm:h-10 sm:w-10 object-cover"
-              />
-            </motion.div>
-            <div className="flex items-center">
-              <h1 className="text-base sm:text-xl md:text-2xl font-bold tracking-tight">
-                <span className="bg-gradient-to-r from-elec-yellow to-amber-400 bg-clip-text text-transparent">Elec</span>
-                <span className="text-white/90">-</span>
-                <span className="text-white">Mate</span>
-              </h1>
-              <RecordingIndicator className="ml-1" />
-            </div>
-          </div>
+          {/* Branding - Clean single wordmark */}
+          <motion.div
+            className="flex items-center"
+            whileTap={{ scale: 0.97 }}
+          >
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center">
+              <span className="text-elec-yellow">Elec</span>
+              <span className="text-white/40">-</span>
+              <span className="text-white">Mate</span>
+            </h1>
+            <RecordingIndicator className="ml-1.5" />
+          </motion.div>
         </div>
 
         {/* Center - Live Clock (desktop only) */}
         <LiveClock className="hidden md:flex" />
 
-        {/* Right side - Profile with combined notifications/messages */}
+        {/* Right side - Profile */}
         <div className="flex items-center">
           <UserProfileDropdown />
         </div>

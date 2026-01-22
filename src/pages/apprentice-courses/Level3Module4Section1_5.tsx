@@ -265,18 +265,7 @@ const Level3Module4Section1_5 = () => {
       <article className="px-4 sm:px-6 py-8 sm:py-12">
 
         {/* Header */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <FileText className="h-4 w-4" />
-            <span>Module 4.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Documentation of Findings
-          </h1>
-          <p className="text-white/80">
-            Recording fault diagnosis results and maintaining accurate documentation
-          </p>
-        </header>
+        
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
@@ -300,27 +289,9 @@ const Level3Module4Section1_5 = () => {
           </div>
         </div>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Select the correct certificate type for different fault rectification scenarios",
-              "Complete electrical certificates accurately with all required information",
-              "Document fault diagnosis findings in a professional, comprehensive manner",
-              "Understand BS 7671 documentation requirements including Reg 132.13 and Part 6",
-              "Record departures and non-compliances correctly",
-              "Maintain records that protect you professionally and demonstrate competence"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* Section 01: Why Documentation Matters */}
         <section className="mb-10">

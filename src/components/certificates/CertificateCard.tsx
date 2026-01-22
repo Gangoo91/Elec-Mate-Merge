@@ -11,6 +11,7 @@ import {
   Trash2,
   Edit,
   ArrowRight,
+  ChevronRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -52,15 +53,16 @@ const getTypeLabel = (type: string) => {
 };
 
 const getTypeColor = (type: string) => {
+  // Unified elec-yellow theme with subtle differentiation
   switch (type) {
     case 'eicr':
-      return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40';
     case 'eic':
-      return 'bg-green-500/20 text-green-400 border-green-500/30';
+      return 'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/30';
     case 'minor-works':
-      return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+      return 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20';
     default:
-      return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      return 'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/30';
   }
 };
 
@@ -202,14 +204,14 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           </div>
         )}
 
-        {/* Footer: Date */}
+        {/* Footer: Date + Chevron */}
         <div className="flex items-center justify-between pt-2 border-t border-border/50">
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <Calendar className="h-3.5 w-3.5" />
             <span>{formatDate(certificate.lastModified)}</span>
           </div>
           {!isBulkMode && (
-            <span className="text-xs text-muted-foreground">Tap for options</span>
+            <ChevronRight className="h-4 w-4 text-elec-yellow/30 flex-shrink-0" />
           )}
         </div>
       </CardContent>

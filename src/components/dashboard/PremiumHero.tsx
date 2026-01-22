@@ -148,9 +148,23 @@ export function PremiumHero() {
         <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
         {/* Content */}
-        <div className="relative z-10 p-4 sm:p-5 md:p-6">
-          <div className="flex items-start gap-4 sm:gap-5">
-            {/* Profile Photo with Streak Ring - Mobile optimized */}
+        <div className="relative z-10 p-4 sm:p-5">
+          {/* Header label */}
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="flex items-center gap-1.5 text-elec-yellow mb-3"
+          >
+            <Sparkles className="h-3 w-3 flex-shrink-0" />
+            <span className="text-[10px] sm:text-xs font-medium tracking-wide uppercase">
+              Dashboard
+            </span>
+          </motion.div>
+
+          {/* Main content row - icon and text aligned */}
+          <div className="flex items-center gap-4">
+            {/* Profile Photo with Streak Ring */}
             <div className="relative flex-shrink-0">
               <input
                 ref={fileInputRef}
@@ -165,14 +179,13 @@ export function PremiumHero() {
                 whileTap={{ scale: 0.95 }}
                 className="group relative touch-manipulation"
               >
-                {/* Container with responsive size: 56px mobile, 72px tablet, 80px desktop */}
-                <div className="relative w-14 h-14 sm:w-[72px] sm:h-[72px] md:w-20 md:h-20">
-                  {/* Streak ring - now scales with container */}
+                <div className="relative w-16 h-16">
+                  {/* Streak ring */}
                   <StreakRing progress={streakProgress} strokeWidth={3} />
 
-                  {/* Avatar - inset from ring */}
+                  {/* Avatar */}
                   <div className={cn(
-                    'absolute inset-[5px] sm:inset-[6px] rounded-lg sm:rounded-xl overflow-hidden',
+                    'absolute inset-[5px] rounded-xl overflow-hidden',
                     'bg-white/[0.05] border border-white/10',
                     'flex items-center justify-center',
                     'transition-all duration-200',
@@ -186,13 +199,13 @@ export function PremiumHero() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <User className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white/40" />
+                      <User className="w-7 h-7 text-white/40" />
                     )}
                   </div>
 
-                  {/* Camera overlay - hidden on mobile, visible on hover for desktop */}
+                  {/* Camera overlay on hover */}
                   <div className="
-                    absolute inset-[5px] sm:inset-[6px] rounded-lg sm:rounded-xl
+                    absolute inset-[5px] rounded-xl
                     bg-black/60 opacity-0 group-hover:opacity-100
                     hidden sm:flex items-center justify-center
                     transition-opacity duration-200
@@ -203,88 +216,73 @@ export function PremiumHero() {
               </motion.button>
             </div>
 
-            {/* Text content */}
-            <div className="flex-1 min-w-0 pt-0.5">
-              {/* Dashboard badge */}
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="flex items-center gap-1.5 text-elec-yellow mb-1"
-              >
-                <Sparkles className="h-3 w-3 flex-shrink-0" />
-                <span className="text-[10px] sm:text-xs font-medium tracking-wide uppercase">
-                  Dashboard
-                </span>
-              </motion.div>
-
-              {/* Greeting - hidden on mobile for native app feel */}
+            {/* Text - vertically centered with icon */}
+            <div className="flex-1 min-w-0 flex flex-col justify-center">
               <motion.h1
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-lg sm:text-xl md:text-2xl font-semibold text-white leading-tight"
+                className="text-xl sm:text-2xl font-bold text-elec-yellow leading-tight"
               >
-                <span className="hidden sm:inline">{greeting}, </span>
-                <span className="text-elec-yellow">{userData.firstName}</span>
+                {userData.firstName.toUpperCase()}
               </motion.h1>
 
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="text-xs sm:text-sm text-white/70 mt-0.5 line-clamp-1"
+                className="text-xs sm:text-sm text-white/70 mt-0.5"
               >
                 Your command center for electrical excellence
               </motion.p>
-
-              {/* Status badges */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="flex items-center gap-2 mt-3 flex-wrap"
-              >
-                {/* Online status */}
-                <Badge
-                  variant="outline"
-                  className="bg-green-500/10 border-green-500/30 text-green-400 text-[10px] sm:text-xs px-2 py-0.5"
-                >
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 animate-pulse" />
-                  Online
-                </Badge>
-
-                {/* Streak badge */}
-                {learning.currentStreak > 0 && (
-                  <Badge
-                    variant="outline"
-                    className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-[10px] sm:text-xs px-2 py-0.5"
-                  >
-                    <Flame className="w-3 h-3 mr-1" />
-                    <span className="streak-glow">{learning.currentStreak} day streak</span>
-                  </Badge>
-                )}
-
-                {/* Subscription status */}
-                {userData.isSubscribed ? (
-                  <Badge
-                    variant="outline"
-                    className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[10px] sm:text-xs px-2 py-0.5 hidden sm:flex"
-                  >
-                    <Crown className="w-3 h-3 mr-1" />
-                    Pro
-                  </Badge>
-                ) : userData.trialDaysLeft !== null && userData.trialDaysLeft > 0 ? (
-                  <Badge
-                    variant="outline"
-                    className="bg-blue-500/10 border-blue-500/30 text-blue-400 text-[10px] sm:text-xs px-2 py-0.5 hidden sm:flex"
-                  >
-                    Trial: {userData.trialDaysLeft}d left
-                  </Badge>
-                ) : null}
-              </motion.div>
             </div>
           </div>
+
+          {/* Status badges - aligned below */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="flex items-center gap-2 mt-4 pl-20"
+          >
+            {/* Online status */}
+            <Badge
+              variant="outline"
+              className="bg-green-500/10 border-green-500/30 text-green-400 text-[10px] sm:text-xs"
+            >
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500 mr-1.5 animate-pulse" />
+              Online
+            </Badge>
+
+            {/* Streak badge */}
+            {learning.currentStreak > 0 && (
+              <Badge
+                variant="outline"
+                className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-[10px] sm:text-xs"
+              >
+                <Flame className="w-3 h-3 mr-1" />
+                {learning.currentStreak} day streak
+              </Badge>
+            )}
+
+            {/* Subscription status */}
+            {userData.isSubscribed ? (
+              <Badge
+                variant="outline"
+                className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[10px] sm:text-xs hidden sm:flex"
+              >
+                <Crown className="w-3 h-3 mr-1" />
+                Pro
+              </Badge>
+            ) : userData.trialDaysLeft !== null && userData.trialDaysLeft > 0 ? (
+              <Badge
+                variant="outline"
+                className="bg-blue-500/10 border-blue-500/30 text-blue-400 text-[10px] sm:text-xs hidden sm:flex"
+              >
+                Trial: {userData.trialDaysLeft}d left
+              </Badge>
+            ) : null}
+          </motion.div>
         </div>
       </Card>
     </motion.div>

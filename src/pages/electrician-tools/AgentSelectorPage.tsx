@@ -173,17 +173,17 @@ const AgentSelectorPage = () => {
             <p className="text-sm text-white/50">Choose your specialist agent</p>
           </div>
         </motion.div>
-        {/* Available Agents Section */}
-        <motion.section variants={itemVariants} className="space-y-4">
+        {/* Build Partners Section */}
+        <motion.section variants={itemVariants} className="space-y-3">
           <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            <h2 className="text-base font-bold text-white">Available Agents</h2>
-            <Badge variant="secondary" className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">
+            <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+            <h2 className="text-base font-bold text-white">Build Partners</h2>
+            <Badge variant="secondary" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
               {availableAgents.length} Active
             </Badge>
           </div>
 
-          <motion.div variants={containerVariants} className="space-y-3">
+          <motion.div variants={containerVariants} className="space-y-2">
             {availableAgents.map((agent) => {
               const IconComponent = agent.icon;
               return (
@@ -194,107 +194,93 @@ const AgentSelectorPage = () => {
                   onClick={() => handleAgentSelect(agent.id, agent.comingSoon)}
                   className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
                 >
-                  <Card className="relative overflow-hidden bg-[#1e1e1e] border border-white/10 rounded-2xl group">
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-4">
+                  <div className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-2xl group active:bg-white/[0.06] transition-colors">
+                    <div className="p-4">
+                      <div className="flex items-center gap-3">
                         {/* Icon with gradient background */}
-                        <div className={`flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} shadow-lg`}>
-                          <IconComponent className="h-7 w-7 text-white" />
+                        <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${agent.gradient}`}>
+                          <IconComponent className="h-6 w-6 text-white" />
                         </div>
 
                         <div className="flex-1 min-w-0">
                           {/* Agent Name */}
-                          <h3 className="text-base font-bold text-white mb-1">
+                          <h3 className="text-[15px] font-bold text-white">
                             {agent.name}
                           </h3>
-
                           {/* Description */}
-                          <p className="text-sm text-white/60 leading-relaxed mb-3">
+                          <p className="text-[13px] text-white/70 line-clamp-1">
                             {agent.description}
                           </p>
-
-                          {/* Expertise Tags */}
-                          <div className="flex flex-wrap gap-1.5">
-                            {agent.expertise.slice(0, 3).map((item, idx) => (
-                              <span
-                                key={idx}
-                                className="px-2 py-1 text-[10px] bg-[#1a1a1a] text-white/70 rounded-md border border-white/10"
-                              >
-                                {item}
-                              </span>
-                            ))}
-                          </div>
                         </div>
 
                         {/* Arrow indicator */}
-                        <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 group-active:bg-elec-yellow/20 transition-colors self-center">
-                          <ArrowRight className="h-5 w-5 text-elec-yellow" />
+                        <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
+                          <ArrowRight className="h-4 w-4 text-white/70" />
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
+
+                      {/* Expertise Tags - horizontal scroll */}
+                      <div className="flex gap-1.5 mt-3 overflow-x-auto scrollbar-hide -mx-1 px-1">
+                        {agent.expertise.map((item, idx) => (
+                          <span
+                            key={idx}
+                            className="flex-shrink-0 px-2.5 py-1 text-[11px] bg-white/[0.05] text-white/80 rounded-lg border border-white/[0.08]"
+                          >
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </motion.button>
               );
             })}
           </motion.div>
         </motion.section>
 
-        {/* Coming Soon Agents Section */}
-        <motion.section variants={itemVariants} className="space-y-4">
+        {/* Coming Soon Section */}
+        <motion.section variants={itemVariants} className="space-y-3">
           <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-white/40" />
-            <h2 className="text-base font-bold text-white/60">Coming Soon</h2>
-            <Badge variant="secondary" className="bg-white/10 text-white/50 border-white/20 text-xs">
+            <div className="h-1.5 w-1.5 rounded-full bg-white/30" />
+            <h2 className="text-base font-bold text-white/50">Coming Soon</h2>
+            <Badge variant="secondary" className="bg-white/10 text-white/40 border-white/10 text-xs">
               {comingSoonAgents.length} Planned
             </Badge>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
             {comingSoonAgents.map((agent) => {
               const IconComponent = agent.icon;
               return (
-                <Card
+                <div
                   key={agent.id}
-                  className="relative overflow-hidden bg-[#1e1e1e]/50 border border-white/5 rounded-2xl"
+                  className="relative overflow-hidden bg-white/[0.02] border border-white/[0.05] rounded-2xl opacity-60"
                 >
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-4">
+                  <div className="p-4">
+                    <div className="flex items-center gap-3">
                       {/* Icon with muted gradient */}
-                      <div className={`flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} opacity-40`}>
-                        <IconComponent className="h-7 w-7 text-white" />
+                      <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} opacity-50`}>
+                        <IconComponent className="h-6 w-6 text-white" />
                       </div>
 
                       <div className="flex-1 min-w-0">
                         {/* Agent Name with Badge */}
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-base font-bold text-white/50">
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-[15px] font-bold text-white/60">
                             {agent.name}
                           </h3>
                           <Badge variant="secondary" className="bg-white/10 text-white/40 border-white/10 text-[10px]">
                             Soon
                           </Badge>
                         </div>
-
                         {/* Description */}
-                        <p className="text-sm text-white/40 leading-relaxed mb-3">
+                        <p className="text-[13px] text-white/40 line-clamp-1">
                           {agent.description}
                         </p>
-
-                        {/* Expertise Tags - Muted */}
-                        <div className="flex flex-wrap gap-1.5">
-                          {agent.expertise.slice(0, 3).map((item, idx) => (
-                            <span
-                              key={idx}
-                              className="px-2 py-1 text-[10px] bg-[#1a1a1a]/50 text-white/30 rounded-md border border-white/5"
-                            >
-                              {item}
-                            </span>
-                          ))}
-                        </div>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               );
             })}
           </div>

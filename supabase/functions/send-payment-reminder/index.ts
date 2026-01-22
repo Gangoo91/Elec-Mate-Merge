@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+import { Resend } from "https://esm.sh/resend@2.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -7,12 +8,11 @@ const corsHeaders = {
 };
 
 interface PaymentReminderRequest {
-  quoteId: string;
+  invoiceId: string;
   reminderType: 'gentle' | 'firm' | 'final';
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -25,85 +25,135 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const { quoteId, reminderType }: PaymentReminderRequest = await req.json();
+    const { invoiceId, reminderType }: PaymentReminderRequest = await req.json();
 
-    if (!quoteId || !reminderType) {
-      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+    if (!invoiceId || !reminderType) {
+      return new Response(JSON.stringify({ error: 'Missing required fields: invoiceId and reminderType' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
     }
 
-    // Get the quote details
-    const { data: quote, error: fetchError } = await supabase
+    // Get the invoice/quote details
+    const { data: invoice, error: fetchError } = await supabase
       .from('quotes')
       .select('*')
-      .eq('id', quoteId)
+      .eq('id', invoiceId)
       .single();
 
-    if (fetchError || !quote) {
-      console.error('Error fetching quote:', fetchError);
-      return new Response(JSON.stringify({ error: 'Quote not found' }), {
+    if (fetchError || !invoice) {
+      console.error('Error fetching invoice:', fetchError);
+      return new Response(JSON.stringify({ error: 'Invoice not found' }), {
         status: 404,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
     }
 
-    // Parse client and settings data
-    const clientData = typeof quote.client_data === 'string' 
-      ? JSON.parse(quote.client_data) 
-      : quote.client_data;
-    
-    const settingsData = typeof quote.settings === 'string'
-      ? JSON.parse(quote.settings)
-      : quote.settings;
+    // Parse client data
+    const clientData = typeof invoice.client_data === 'string'
+      ? JSON.parse(invoice.client_data)
+      : invoice.client_data;
 
-    // Calculate days overdue
-    const dueDate = new Date(quote.invoice_due_date);
-    const today = new Date();
-    const daysOverdue = Math.floor((today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24));
+    const settingsData = typeof invoice.settings === 'string'
+      ? JSON.parse(invoice.settings)
+      : invoice.settings;
 
-    // Generate reminder email content based on type
-    const reminderContent = generateReminderContent(reminderType, quote, clientData, settingsData, daysOverdue);
-
-    console.log(`Sending ${reminderType} payment reminder for invoice ${quote.invoice_number} to ${clientData.email}`);
-    console.log('Reminder content:', reminderContent);
-
-    // Update the quote with last reminder sent timestamp and increment counter
-    const { error: updateError } = await supabase
-      .from('quotes')
-      .update({ 
-        last_reminder_sent_at: new Date().toISOString(),
-        reminder_count: (quote.reminder_count || 0) + 1
-      })
-      .eq('id', quoteId);
-
-    if (updateError) {
-      console.error('Error updating quote:', updateError);
+    const clientEmail = clientData?.email;
+    if (!clientEmail) {
+      return new Response(JSON.stringify({ error: 'No client email address' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
 
-    // In a real implementation, you would integrate with an email service here
-    // For now, we'll just log the action and return success
-    
-    return new Response(JSON.stringify({ 
-      success: true, 
-      message: `${reminderType} payment reminder sent successfully`,
-      sentTo: clientData.email,
-      invoiceNumber: quote.invoice_number,
+    // Get company profile for sender info
+    const { data: companyProfile } = await supabase
+      .from('company_profiles')
+      .select('*')
+      .eq('user_id', invoice.user_id)
+      .single();
+
+    // Calculate days overdue
+    const dueDate = invoice.invoice_due_date ? new Date(invoice.invoice_due_date) : new Date();
+    const today = new Date();
+    const daysOverdue = Math.max(0, Math.floor((today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24)));
+
+    // Generate reminder email content
+    const emailContent = generateReminderEmail(
+      reminderType,
+      invoice,
+      clientData,
+      companyProfile,
+      daysOverdue
+    );
+
+    console.log(`📧 Sending ${reminderType} payment reminder for ${invoice.invoice_number} to ${clientEmail}`);
+
+    // Send via Resend
+    if (!resendApiKey) {
+      return new Response(JSON.stringify({ error: 'Email service not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    const resend = new Resend(resendApiKey);
+
+    const fromEmail = companyProfile?.company_email || 'invoices@elec-mate.com';
+    const fromName = companyProfile?.company_name || 'ElecMate';
+
+    const { data: emailResult, error: emailError } = await resend.emails.send({
+      from: `${fromName} <${fromEmail}>`,
+      to: [clientEmail],
+      subject: emailContent.subject,
+      html: emailContent.html,
+    });
+
+    if (emailError) {
+      console.error('Resend error:', emailError);
+      return new Response(JSON.stringify({ error: 'Failed to send email', details: emailError }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    // Update the invoice with reminder tracking
+    const { error: updateError } = await supabase
+      .from('quotes')
+      .update({
+        last_reminder_sent_at: new Date().toISOString(),
+        last_reminder_type: reminderType,
+        reminder_count: (invoice.reminder_count || 0) + 1
+      })
+      .eq('id', invoiceId);
+
+    if (updateError) {
+      console.error('Error updating invoice:', updateError);
+    }
+
+    console.log(`✅ ${reminderType} reminder sent successfully to ${clientEmail}`);
+
+    return new Response(JSON.stringify({
+      success: true,
+      message: `${reminderType.charAt(0).toUpperCase() + reminderType.slice(1)} reminder sent successfully`,
+      sentTo: clientEmail,
+      invoiceNumber: invoice.invoice_number,
       daysOverdue,
-      reminderCount: (quote.reminder_count || 0) + 1
+      reminderCount: (invoice.reminder_count || 0) + 1,
+      emailId: emailResult?.id
     }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });
 
   } catch (error: any) {
-    console.error('Error in send-payment-reminder function:', error);
+    console.error('Error in send-payment-reminder:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -111,217 +161,154 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-function generateReminderContent(type: string, quote: any, client: any, settings: any, daysOverdue: number) {
-  const baseEmail = {
-    to: client.email,
-    from: settings.contactEmail || 'noreply@elecmate.com',
-    subject: '',
-    html: ''
-  };
+function generateReminderEmail(
+  type: 'gentle' | 'firm' | 'final',
+  invoice: any,
+  client: any,
+  company: any,
+  daysOverdue: number
+) {
+  const companyName = company?.company_name || 'Your Electrician';
+  const companyPhone = company?.company_phone || '';
+  const companyEmail = company?.company_email || '';
+  const bankDetails = company?.bank_details || invoice.settings?.bankDetails;
 
-  const dueDate = new Date(quote.invoice_due_date).toLocaleDateString('en-GB');
-  const amount = `£${quote.total.toFixed(2)}`;
+  const dueDate = invoice.invoice_due_date
+    ? new Date(invoice.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    : 'as agreed';
+  const amount = `£${(invoice.total || 0).toFixed(2)}`;
+  const clientName = client?.name || 'Valued Customer';
+
+  const baseStyles = `
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+      .container { max-width: 600px; margin: 0 auto; background: white; }
+      .header { padding: 30px; text-align: center; }
+      .content { padding: 30px; }
+      .invoice-box { background: #f8f9fa; padding: 24px; border-radius: 12px; margin: 24px 0; }
+      .amount { font-size: 32px; font-weight: bold; margin: 12px 0; }
+      .footer { background: #1a1a1a; color: #999; padding: 24px; text-align: center; font-size: 14px; }
+      .bank-details { background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6; }
+      .cta-button { display: inline-block; background: #FFD700; color: #1a1a1a; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; margin: 20px 0; }
+    </style>
+  `;
+
+  let subject = '';
+  let headerBg = '';
+  let headerColor = '';
+  let amountColor = '';
+  let urgencyBanner = '';
 
   switch (type) {
     case 'gentle':
-      baseEmail.subject = `Friendly Reminder - Invoice ${quote.invoice_number}`;
-      baseEmail.html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; background: white; }
-    .header { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 30px; text-align: center; color: #FFD700; }
-    .content { padding: 30px; }
-    .invoice-box { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
-    .amount { font-size: 28px; font-weight: bold; color: #FFD700; }
-    .footer { background: #1a1a1a; color: #999; padding: 20px; text-align: center; font-size: 14px; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>${settings.companyName}</h1>
-    </div>
-    <div class="content">
-      <p>Dear ${client.name},</p>
-      
-      <p>I hope this message finds you well. This is a friendly reminder regarding the outstanding payment for Invoice ${quote.invoice_number}.</p>
-      
-      <div class="invoice-box">
-        <p><strong>Invoice Number:</strong> ${quote.invoice_number}</p>
-        <p><strong>Due Date:</strong> ${dueDate}</p>
-        <p><strong>Days Overdue:</strong> ${daysOverdue}</p>
-        <p class="amount">${amount}</p>
-      </div>
-      
-      <p>If you've already sent payment, please disregard this message. If not, I'd appreciate payment at your earliest convenience.</p>
-      
-      ${settings.bankDetails ? `
-      <p><strong>Bank Transfer Details:</strong><br>
-      Bank: ${settings.bankDetails.bankName}<br>
-      Account: ${settings.bankDetails.accountName}<br>
-      Number: ${settings.bankDetails.accountNumber}<br>
-      Sort Code: ${settings.bankDetails.sortCode}</p>
-      ` : ''}
-      
-      <p>Thank you for your business!</p>
-      <p><strong>${settings.companyName}</strong><br>
-      ${settings.contactPhone ? `${settings.contactPhone}<br>` : ''}
-      ${settings.contactEmail || ''}</p>
-    </div>
-    <div class="footer">
-      <p>⚡ Powered by ElecMate Professional Suite</p>
-    </div>
-  </div>
-</body>
-</html>
-      `;
+      subject = `Friendly Reminder: Invoice ${invoice.invoice_number}`;
+      headerBg = 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)';
+      headerColor = '#FFD700';
+      amountColor = '#FFD700';
       break;
-      
     case 'firm':
-      baseEmail.subject = `Payment Reminder - Invoice ${quote.invoice_number} - Action Required`;
-      baseEmail.html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; background: white; }
-    .header { background: linear-gradient(135deg, #c82333 0%, #e04b5a 100%); padding: 30px; text-align: center; color: white; }
-    .content { padding: 30px; }
-    .invoice-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; margin: 20px 0; }
-    .amount { font-size: 28px; font-weight: bold; color: #c82333; }
-    .warning { background: #f8d7da; border-left: 4px solid #c82333; padding: 15px; margin: 20px 0; }
-    .footer { background: #1a1a1a; color: #999; padding: 20px; text-align: center; font-size: 14px; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>Payment Reminder</h1>
-    </div>
-    <div class="content">
-      <p>Dear ${client.name},</p>
-      
-      <p>This is a follow-up regarding the outstanding payment for Invoice ${quote.invoice_number}.</p>
-      
-      <div class="invoice-box">
-        <p><strong>Invoice Number:</strong> ${quote.invoice_number}</p>
-        <p><strong>Original Due Date:</strong> ${dueDate}</p>
-        <p><strong>Days Overdue:</strong> ${daysOverdue}</p>
-        <p class="amount">${amount}</p>
-      </div>
-      
-      <div class="warning">
-        <strong>⚠️ Action Required:</strong> Please arrange payment as soon as possible.
-      </div>
-      
-      <p>If there are any issues preventing payment, please contact me immediately so we can discuss a solution.</p>
-      
-      ${settings.bankDetails ? `
-      <p><strong>Bank Transfer Details:</strong><br>
-      Bank: ${settings.bankDetails.bankName}<br>
-      Account: ${settings.bankDetails.accountName}<br>
-      Number: ${settings.bankDetails.accountNumber}<br>
-      Sort Code: ${settings.bankDetails.sortCode}</p>
-      ` : ''}
-      
-      <p>Best regards,<br>
-      <strong>${settings.companyName}</strong><br>
-      ${settings.contactPhone ? `${settings.contactPhone}<br>` : ''}
-      ${settings.contactEmail || ''}</p>
-    </div>
-    <div class="footer">
-      <p>⚡ Powered by ElecMate Professional Suite</p>
-    </div>
-  </div>
-</body>
-</html>
+      subject = `Payment Required: Invoice ${invoice.invoice_number} - ${daysOverdue} Days Overdue`;
+      headerBg = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+      headerColor = '#ffffff';
+      amountColor = '#d97706';
+      urgencyBanner = `
+        <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; margin: 20px 0;">
+          <strong>⚠️ Second Notice:</strong> This invoice is now ${daysOverdue} days overdue. Please arrange payment within 7 days.
+        </div>
       `;
       break;
-      
     case 'final':
-      baseEmail.subject = `FINAL NOTICE - Payment Required for Invoice ${quote.invoice_number}`;
-      baseEmail.html = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; background: white; }
-    .header { background: linear-gradient(135deg, #8b0000 0%, #b22222 100%); padding: 30px; text-align: center; color: white; }
-    .urgent { background: #8b0000; color: white; padding: 5px 15px; border-radius: 4px; display: inline-block; }
-    .content { padding: 30px; }
-    .invoice-box { background: #ffebee; border: 2px solid #c82333; padding: 20px; margin: 20px 0; }
-    .amount { font-size: 32px; font-weight: bold; color: #8b0000; }
-    .final-warning { background: #f8d7da; border-left: 4px solid #8b0000; padding: 20px; margin: 20px 0; }
-    .consequences { background: #fff3cd; padding: 15px; margin: 15px 0; border-left: 4px solid #ffc107; }
-    .footer { background: #1a1a1a; color: #999; padding: 20px; text-align: center; font-size: 14px; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1><span class="urgent">FINAL NOTICE</span></h1>
-      <p style="margin: 10px 0 0 0;">Payment Required</p>
-    </div>
-    <div class="content">
-      <p>Dear ${client.name},</p>
-      
-      <p><strong>This is a FINAL NOTICE</strong> regarding the outstanding payment for Invoice ${quote.invoice_number}, which is now significantly overdue.</p>
-      
-      <div class="invoice-box">
-        <p><strong>Invoice Number:</strong> ${quote.invoice_number}</p>
-        <p><strong>Original Due Date:</strong> ${dueDate}</p>
-        <p><strong>Days Overdue:</strong> ${daysOverdue}</p>
-        <p class="amount">${amount}</p>
-      </div>
-      
-      <div class="final-warning">
-        <h3 style="margin-top: 0; color: #8b0000;">⚠️ Immediate Action Required</h3>
-        <p><strong>Payment must be received within 7 days</strong> to avoid the following consequences:</p>
-      </div>
-      
-      <div class="consequences">
-        <ul style="margin: 10px 0; padding-left: 20px;">
-          <li>Late payment fees (8% statutory interest per UK law)</li>
-          <li>Suspension of all services</li>
-          <li>Referral to debt collection agency</li>
-          <li>Potential legal proceedings</li>
-        </ul>
-      </div>
-      
-      <p><strong>If payment has already been made, please send confirmation immediately.</strong></p>
-      
-      ${settings.bankDetails ? `
-      <p style="background: #f8f9fa; padding: 15px; border-radius: 4px;"><strong>Bank Transfer Details:</strong><br>
-      Bank: ${settings.bankDetails.bankName}<br>
-      Account: ${settings.bankDetails.accountName}<br>
-      Number: ${settings.bankDetails.accountNumber}<br>
-      Sort Code: ${settings.bankDetails.sortCode}</p>
-      ` : ''}
-      
-      <p style="margin-top: 30px;"><strong>Contact immediately:</strong><br>
-      ${settings.companyName}<br>
-      ${settings.contactPhone ? `📞 ${settings.contactPhone}<br>` : ''}
-      ${settings.contactEmail ? `✉️ ${settings.contactEmail}` : ''}</p>
-    </div>
-    <div class="footer">
-      <p>⚡ Powered by ElecMate Professional Suite</p>
-    </div>
-  </div>
-</body>
-</html>
+      subject = `URGENT FINAL NOTICE: Invoice ${invoice.invoice_number}`;
+      headerBg = 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)';
+      headerColor = '#ffffff';
+      amountColor = '#dc2626';
+      urgencyBanner = `
+        <div style="background: #fef2f2; border: 2px solid #dc2626; padding: 20px; margin: 20px 0; border-radius: 8px;">
+          <h3 style="margin: 0 0 10px 0; color: #dc2626;">🚨 FINAL NOTICE - Immediate Action Required</h3>
+          <p style="margin: 0;">This invoice is ${daysOverdue} days overdue. Payment must be received within <strong>48 hours</strong> to avoid:</p>
+          <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+            <li>Late payment interest charges</li>
+            <li>Referral to debt collection</li>
+            <li>Legal proceedings</li>
+          </ul>
+        </div>
       `;
       break;
   }
-  
-  return baseEmail;
+
+  const bankDetailsHtml = bankDetails ? `
+    <div class="bank-details">
+      <h4 style="margin: 0 0 12px 0;">Bank Transfer Details</h4>
+      ${bankDetails.bankName ? `<p style="margin: 4px 0;"><strong>Bank:</strong> ${bankDetails.bankName}</p>` : ''}
+      ${bankDetails.accountName ? `<p style="margin: 4px 0;"><strong>Account Name:</strong> ${bankDetails.accountName}</p>` : ''}
+      ${bankDetails.accountNumber ? `<p style="margin: 4px 0;"><strong>Account Number:</strong> ${bankDetails.accountNumber}</p>` : ''}
+      ${bankDetails.sortCode ? `<p style="margin: 4px 0;"><strong>Sort Code:</strong> ${bankDetails.sortCode}</p>` : ''}
+      <p style="margin: 12px 0 0 0; font-size: 13px; color: #666;">Reference: ${invoice.invoice_number}</p>
+    </div>
+  ` : '';
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  ${baseStyles}
+</head>
+<body>
+  <div class="container">
+    <div class="header" style="background: ${headerBg}; color: ${headerColor};">
+      <h1 style="margin: 0; font-size: 24px;">${companyName}</h1>
+      <p style="margin: 8px 0 0 0; opacity: 0.9;">Payment Reminder</p>
+    </div>
+
+    <div class="content">
+      <p>Dear ${clientName},</p>
+
+      ${type === 'gentle' ? `
+        <p>I hope this message finds you well. This is a friendly reminder regarding the outstanding payment for the following invoice:</p>
+      ` : type === 'firm' ? `
+        <p>I'm following up regarding the outstanding payment that is now overdue:</p>
+      ` : `
+        <p>Despite previous reminders, the following invoice remains unpaid:</p>
+      `}
+
+      ${urgencyBanner}
+
+      <div class="invoice-box" style="text-align: center;">
+        <p style="margin: 0; color: #666;">Invoice ${invoice.invoice_number}</p>
+        <p class="amount" style="color: ${amountColor};">${amount}</p>
+        <p style="margin: 0; color: #666;">Due: ${dueDate}</p>
+        ${daysOverdue > 0 ? `<p style="margin: 8px 0 0 0; color: ${type === 'gentle' ? '#f59e0b' : '#dc2626'}; font-weight: 600;">${daysOverdue} days overdue</p>` : ''}
+      </div>
+
+      ${bankDetailsHtml}
+
+      ${type === 'gentle' ? `
+        <p>If you've already arranged payment, please disregard this message. Otherwise, I'd appreciate it if you could arrange payment at your earliest convenience.</p>
+      ` : type === 'firm' ? `
+        <p>If there are any issues preventing payment, please contact me immediately so we can discuss a solution.</p>
+      ` : `
+        <p><strong>Please contact me immediately</strong> if you have already made payment or need to discuss payment arrangements.</p>
+      `}
+
+      <p style="margin-top: 30px;">
+        Best regards,<br>
+        <strong>${companyName}</strong><br>
+        ${companyPhone ? `📞 ${companyPhone}<br>` : ''}
+        ${companyEmail ? `✉️ ${companyEmail}` : ''}
+      </p>
+    </div>
+
+    <div class="footer">
+      <p style="margin: 0;">⚡ Sent via ElecMate</p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
+
+  return { subject, html };
 }
 
 serve(handler);

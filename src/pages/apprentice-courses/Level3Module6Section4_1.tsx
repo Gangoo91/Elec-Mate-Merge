@@ -255,18 +255,7 @@ const Level3Module6Section4_1 = () => {
       </div>
 
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6.4.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Bathrooms and Locations Containing a Bath/Shower
-          </h1>
-          <p className="text-white/80">
-            Designing safe electrical installations for wet locations under BS 7671 Section 701
-          </p>
-        </header>
+        
 
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -288,26 +277,9 @@ const Level3Module6Section4_1 = () => {
           </div>
         </div>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "The bathroom zone system and boundary dimensions",
-              "IP rating requirements for each zone",
-              "When supplementary bonding can be omitted",
-              "Equipment selection for wet locations",
-              "Electric shower circuit design requirements",
-              "Special considerations for commercial bathrooms"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">

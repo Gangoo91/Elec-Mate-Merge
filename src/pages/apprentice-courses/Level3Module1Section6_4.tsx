@@ -288,18 +288,7 @@ const Level3Module1Section6_4 = () => {
         {/* ----------------------------------------
             HEADER
             ---------------------------------------- */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.6.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Ethical Responsibilities in Protecting Others
-          </h1>
-          <p className="text-white/80">
-            Going beyond legal requirements to do what's right for people's safety
-          </p>
-        </header>
+        
 
         {/* ----------------------------------------
             QUICK SUMMARY BOXES
@@ -327,27 +316,9 @@ const Level3Module1Section6_4 = () => {
         {/* ----------------------------------------
             LEARNING OUTCOMES
             ---------------------------------------- */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Distinguish legal from ethical responsibilities",
-              "Apply the 'do no harm' principle to electrical work",
-              "Understand obligations to future occupants",
-              "Handle ethical dilemmas in practice",
-              "Recognise when ethics require refusing work",
-              "Build professional reputation through ethical practice"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* ----------------------------------------
             CONTENT SECTION 01

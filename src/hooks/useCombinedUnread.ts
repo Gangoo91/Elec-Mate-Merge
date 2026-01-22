@@ -45,7 +45,10 @@ export const useCombinedUnread = (): CombinedUnreadResult => {
     enabled: !!user,
   });
 
-  const peerUnread = peerConversations?.filter(c => c.status === 'active').length || 0;
+  // Sum up actual unread counts from peer conversations
+  const peerUnread = peerConversations?.reduce((total, conv) => {
+    return total + (conv.unread_count || 0);
+  }, 0) || 0;
 
   // Calculate message total
   const messageUnread = useMemo(() => {

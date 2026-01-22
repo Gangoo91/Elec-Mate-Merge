@@ -1,11 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Wrench, Package, Zap, FileText, Copy, TrendingUp, Search } from "lucide-react";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { Plus, Trash2, Wrench, Package, Zap, FileText, Copy, TrendingUp, Search, ChevronDown, ChevronRight, Clock, PoundSterling, Hash } from "lucide-react";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
 import { cn } from "@/lib/utils";
@@ -224,170 +221,227 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
   const total = items.reduce((sum, item) => sum + item.totalPrice, 0);
 
   const categories = [
-    { id: 'labour', label: 'Labour', icon: Wrench },
-    { id: 'materials', label: 'Materials', icon: Package },
-    { id: 'equipment', label: 'Equipment', icon: Zap },
-    { id: 'manual', label: 'Custom', icon: FileText },
+    { id: 'labour', label: 'Labour', icon: Wrench, color: 'bg-elec-yellow' },
+    { id: 'materials', label: 'Materials', icon: Package, color: 'bg-elec-yellow' },
+    { id: 'equipment', label: 'Equipment', icon: Zap, color: 'bg-elec-yellow' },
+    { id: 'manual', label: 'Custom', icon: FileText, color: 'bg-elec-yellow' },
+  ];
+
+  const hourOptions = [
+    { value: "1", label: "1 hour" },
+    { value: "2", label: "2 hours" },
+    { value: "4", label: "4 hours" },
+    { value: "8", label: "8 hours (1 day)" },
+    { value: "16", label: "16 hours (2 days)" },
+    { value: "24", label: "24 hours (3 days)" },
+    { value: "40", label: "40 hours (5 days)" },
+  ];
+
+  const markupOptions = [
+    { value: "0", label: "No markup (0%)" },
+    { value: "10", label: "10% markup" },
+    { value: "15", label: "15% markup" },
+    { value: "20", label: "20% markup" },
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Section Header with Total */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Package className="h-5 w-5 text-elec-yellow" />
-          <h2 className="text-lg font-semibold">Quote Items</h2>
-        </div>
-        {items.length > 0 && (
-          <div className="text-right">
-            <p className="text-xs text-muted-foreground">Total</p>
-            <p className="text-xl font-bold text-elec-yellow">£{total.toFixed(2)}</p>
+    <div className="space-y-4">
+      {/* Running Total Banner */}
+      {items.length > 0 && (
+        <div className="flex items-center justify-between p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
+              <PoundSterling className="h-5 w-5 text-black" />
+            </div>
+            <div>
+              <p className="text-[12px] text-white/70">Quote Total</p>
+              <p className="text-[13px] text-white/70">{items.length} item{items.length !== 1 && 's'}</p>
+            </div>
           </div>
-        )}
+          <p className="text-2xl font-bold text-elec-yellow">£{total.toFixed(2)}</p>
+        </div>
+      )}
+
+      {/* Category Pills - iOS-style segmented control */}
+      <div className="flex gap-1.5 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
+        {categories.map((cat) => {
+          const Icon = cat.icon;
+          return (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => handleCategoryChange(cat.id)}
+              className={cn(
+                "shrink-0 flex items-center gap-2 px-4 py-3 rounded-xl transition-all touch-manipulation active:scale-[0.98]",
+                newItem.category === cat.id
+                  ? "bg-elec-yellow text-black font-semibold shadow-lg shadow-elec-yellow/20"
+                  : "bg-white/[0.05] text-white/70 border border-white/[0.06]"
+              )}
+            >
+              <Icon className="h-4 w-4" />
+              <span className="text-[14px] font-medium">{cat.label}</span>
+            </button>
+          );
+        })}
       </div>
 
-      {/* Category Pills - Horizontal scroll */}
-      <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-        {categories.map((cat) => (
-          <button
-            key={cat.id}
-            type="button"
-            onClick={() => handleCategoryChange(cat.id)}
-            className={cn(
-              "shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full border-2 transition-all active:scale-[0.98]",
-              newItem.category === cat.id
-                ? "bg-elec-yellow text-elec-dark border-elec-yellow font-semibold"
-                : "bg-transparent border-border hover:border-elec-yellow/50"
-            )}
-          >
-            <cat.icon className="h-4 w-4" />
-            <span className="text-sm font-medium">{cat.label}</span>
-          </button>
-        ))}
-      </div>
-
-      {/* Add Item Form - Dashed border container */}
-      <div className="space-y-4 p-4 bg-elec-gray/30 rounded-lg border-2 border-dashed border-border">
+      {/* Add Item Form - iOS grouped style */}
+      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
         {/* Labour Fields */}
         {newItem.category === "labour" && (
-          <div className="space-y-4">
-            <MobileSelectWrapper
-              label="Worker Type"
-              value={newItem.workerType}
-              onValueChange={handleWorkerTypeChange}
-              options={workerTypes.map(w => ({
-                value: w.id,
-                label: `${w.name} - £${w.defaultHourlyRate}/hr`
-              }))}
-              placeholder="Select worker type"
-            />
-            <MobileSelectWrapper
-              label="Hours"
-              value={newItem.hours > 0 ? newItem.hours.toString() : ""}
-              onValueChange={(v) => handleHoursChange(parseFloat(v))}
-              options={[
-                { value: "1", label: "1 hour" },
-                { value: "2", label: "2 hours" },
-                { value: "4", label: "4 hours" },
-                { value: "8", label: "8 hours (1 day)" },
-                { value: "16", label: "16 hours (2 days)" },
-                { value: "24", label: "24 hours (3 days)" },
-                { value: "40", label: "40 hours (5 days)" },
-              ]}
-              placeholder="Select hours"
-            />
+          <div className="divide-y divide-white/[0.06]">
+            {/* Worker Type */}
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                <Wrench className="h-5 w-5 text-black" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <label className="text-[12px] text-white/40 block">Worker Type</label>
+                <div className="relative">
+                  <select
+                    value={newItem.workerType}
+                    onChange={(e) => handleWorkerTypeChange(e.target.value)}
+                    className="w-full h-9 bg-transparent text-[15px] font-medium text-white appearance-none cursor-pointer focus:outline-none"
+                  >
+                    <option value="" disabled className="bg-zinc-900">Select worker type</option>
+                    {workerTypes.map(w => (
+                      <option key={w.id} value={w.id} className="bg-zinc-900">
+                        {w.name} - £{w.defaultHourlyRate}/hr
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
+                </div>
+              </div>
+            </div>
+            {/* Hours */}
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                <Clock className="h-5 w-5 text-black" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <label className="text-[12px] text-white/40 block">Hours</label>
+                <div className="relative">
+                  <select
+                    value={newItem.hours > 0 ? newItem.hours.toString() : ""}
+                    onChange={(e) => handleHoursChange(parseFloat(e.target.value))}
+                    className="w-full h-9 bg-transparent text-[15px] font-medium text-white appearance-none cursor-pointer focus:outline-none"
+                  >
+                    <option value="" disabled className="bg-zinc-900">Select hours</option>
+                    {hourOptions.map(opt => (
+                      <option key={opt.value} value={opt.value} className="bg-zinc-900">{opt.label}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
         {/* Materials Fields */}
         {newItem.category === "materials" && (
-          <div className="space-y-4">
+          <div className="divide-y divide-white/[0.06]">
+            {/* Markup Selector */}
             {setPriceAdjustment && (
-              <MobileSelectWrapper
-                label="Material Markup"
-                value={priceAdjustment.toString()}
-                onValueChange={(v) => setPriceAdjustment(Number(v))}
-                options={[
-                  { value: "0", label: "No markup (0%)" },
-                  { value: "10", label: "10% markup" },
-                  { value: "15", label: "15% markup" },
-                  { value: "20", label: "20% markup" },
-                ]}
-                placeholder="Select markup"
-                icon={<TrendingUp className="h-4 w-4" />}
-              />
+              <div className="flex items-center gap-3 p-3.5">
+                <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                  <TrendingUp className="h-5 w-5 text-black" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <label className="text-[12px] text-white/40 block">Material Markup</label>
+                  <div className="relative">
+                    <select
+                      value={priceAdjustment.toString()}
+                      onChange={(e) => setPriceAdjustment(Number(e.target.value))}
+                      className="w-full h-9 bg-transparent text-[15px] font-medium text-white appearance-none cursor-pointer focus:outline-none"
+                    >
+                      {markupOptions.map(opt => (
+                        <option key={opt.value} value={opt.value} className="bg-zinc-900">{opt.label}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
+                  </div>
+                </div>
+              </div>
             )}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium flex items-center gap-2">
-                <Search className="h-4 w-4" />
-                Search Materials
-              </Label>
-              <Input
-                placeholder="Search by name or code..."
-                value={materialSearch}
-                onChange={(e) => setMaterialSearch(e.target.value)}
-                className="h-14"
-              />
-              {materialSearch.length >= 2 && (
-                <p className="text-xs text-muted-foreground">
-                  {filteredMaterials.length} found {isSearchingRAG && "• Searching..."}
-                </p>
-              )}
+            {/* Search */}
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                <Search className="h-5 w-5 text-black" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <label className="text-[12px] text-white/40 block">Search Materials</label>
+                <Input
+                  placeholder="Search by name or code..."
+                  value={materialSearch}
+                  onChange={(e) => setMaterialSearch(e.target.value)}
+                  className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
+                />
+              </div>
             </div>
 
             {/* Material Results */}
             {materialSearch.length >= 2 && (filteredMaterials.length > 0 || ragResults.length > 0) && (
-              <div className="max-h-[300px] overflow-y-auto space-y-2 rounded-lg border border-border p-2 bg-background">
-                {filteredMaterials.slice(0, 5).map(material => {
-                  const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice;
-                  return (
-                    <button
-                      key={material.id}
-                      type="button"
-                      onClick={() => handleMaterialSelect(material.id)}
-                      className={cn(
-                        "w-full p-3 rounded-lg border-l-4 text-left transition-all",
-                        newItem.materialCode === material.id
-                          ? "bg-elec-yellow/20 border-l-elec-yellow"
-                          : "bg-elec-gray/30 border-l-green-500 hover:bg-elec-gray/50"
-                      )}
-                    >
-                      <div className="flex justify-between items-start">
-                        <p className="font-medium text-sm">{material.name}</p>
-                        <p className="font-bold text-elec-yellow">£{adjustedPrice.toFixed(2)}</p>
-                      </div>
-                      <p className="text-xs text-muted-foreground">{material.category}</p>
-                    </button>
-                  );
-                })}
-                {ragResults.slice(0, 10).map((material, idx) => {
-                  const priceMatch = material.price?.match(/£?(\d+\.?\d*)/);
-                  const basePrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
-                  const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(basePrice) : basePrice;
-                  return (
-                    <button
-                      key={`rag-${idx}`}
-                      type="button"
-                      onClick={() => {
-                        setNewItem(prev => ({
-                          ...prev,
-                          description: material.name,
-                          unitPrice: adjustedPrice,
-                          unit: "each",
-                          materialCode: `rag-${material.id}`,
-                        }));
-                        toast({ title: "Material Selected", description: material.name });
-                      }}
-                      className="w-full p-3 rounded-lg border-l-4 border-l-green-500/50 bg-elec-gray/20 text-left hover:bg-elec-gray/40"
-                    >
-                      <div className="flex justify-between items-start">
-                        <p className="font-medium text-sm">{material.name}</p>
-                        <p className="font-bold">£{adjustedPrice.toFixed(2)}</p>
-                      </div>
-                      <p className="text-xs text-muted-foreground">{material.supplier}</p>
-                    </button>
-                  );
-                })}
+              <div className="p-3.5">
+                <p className="text-[12px] text-white/40 mb-2">
+                  {filteredMaterials.length} found {isSearchingRAG && "• Searching..."}
+                </p>
+                <div className="max-h-[250px] overflow-y-auto space-y-2 rounded-xl bg-white/[0.02] p-2">
+                  {filteredMaterials.slice(0, 5).map(material => {
+                    const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice;
+                    const isSelected = newItem.materialCode === material.id;
+                    return (
+                      <button
+                        key={material.id}
+                        type="button"
+                        onClick={() => handleMaterialSelect(material.id)}
+                        className={cn(
+                          "w-full p-3 rounded-xl text-left transition-all touch-manipulation active:scale-[0.99]",
+                          isSelected
+                            ? "bg-elec-yellow/20 border border-elec-yellow/40"
+                            : "bg-white/[0.03] border border-white/[0.06] active:bg-white/[0.06]"
+                        )}
+                      >
+                        <div className="flex justify-between items-start">
+                          <p className="font-medium text-[14px] text-white">{material.name}</p>
+                          <p className={cn("font-bold text-[15px]", isSelected ? "text-elec-yellow" : "text-white")}>
+                            £{adjustedPrice.toFixed(2)}
+                          </p>
+                        </div>
+                        <p className="text-[12px] text-white/70 mt-0.5">{material.category}</p>
+                      </button>
+                    );
+                  })}
+                  {ragResults.slice(0, 10).map((material, idx) => {
+                    const priceMatch = material.price?.match(/£?(\d+\.?\d*)/);
+                    const basePrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
+                    const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(basePrice) : basePrice;
+                    return (
+                      <button
+                        key={`rag-${idx}`}
+                        type="button"
+                        onClick={() => {
+                          setNewItem(prev => ({
+                            ...prev,
+                            description: material.name,
+                            unitPrice: adjustedPrice,
+                            unit: "each",
+                            materialCode: `rag-${material.id}`,
+                          }));
+                          toast({ title: "Material Selected", description: material.name });
+                        }}
+                        className="w-full p-3 rounded-xl text-left bg-white/[0.02] border border-white/[0.04] active:bg-white/[0.05] transition-all touch-manipulation"
+                      >
+                        <div className="flex justify-between items-start">
+                          <p className="font-medium text-[14px] text-white">{material.name}</p>
+                          <p className="font-bold text-[15px] text-white">£{adjustedPrice.toFixed(2)}</p>
+                        </div>
+                        <p className="text-[12px] text-white/70 mt-0.5">{material.supplier}</p>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
@@ -395,63 +449,116 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
         {/* Equipment Fields */}
         {newItem.category === "equipment" && (
-          <div className="space-y-4">
-            <MobileSelectWrapper
-              label="Equipment Category"
-              value={newItem.subcategory}
-              onValueChange={(v) => setNewItem(prev => ({ ...prev, subcategory: v }))}
-              options={equipmentCategories.map(c => ({ value: c.id, label: c.name }))}
-              placeholder="Select category"
-            />
-            <MobileSelectWrapper
-              label="Equipment"
-              value={newItem.equipmentCode}
-              onValueChange={handleEquipmentSelect}
-              options={commonEquipment
-                .filter(e => !newItem.subcategory || e.category === newItem.subcategory)
-                .map(e => ({ value: e.id, label: `${e.name} - £${e.dailyRate}/${e.unit}` }))}
-              placeholder="Select equipment"
-            />
+          <div className="divide-y divide-white/[0.06]">
+            {/* Category */}
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                <Zap className="h-5 w-5 text-black" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <label className="text-[12px] text-white/40 block">Equipment Category</label>
+                <div className="relative">
+                  <select
+                    value={newItem.subcategory}
+                    onChange={(e) => setNewItem(prev => ({ ...prev, subcategory: e.target.value }))}
+                    className="w-full h-9 bg-transparent text-[15px] font-medium text-white appearance-none cursor-pointer focus:outline-none"
+                  >
+                    <option value="" disabled className="bg-zinc-900">Select category</option>
+                    {equipmentCategories.map(c => (
+                      <option key={c.id} value={c.id} className="bg-zinc-900">{c.name}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
+                </div>
+              </div>
+            </div>
+            {/* Equipment */}
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                <Package className="h-5 w-5 text-black" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <label className="text-[12px] text-white/40 block">Equipment</label>
+                <div className="relative">
+                  <select
+                    value={newItem.equipmentCode}
+                    onChange={(e) => handleEquipmentSelect(e.target.value)}
+                    className="w-full h-9 bg-transparent text-[15px] font-medium text-white appearance-none cursor-pointer focus:outline-none"
+                  >
+                    <option value="" disabled className="bg-zinc-900">Select equipment</option>
+                    {commonEquipment
+                      .filter(e => !newItem.subcategory || e.category === newItem.subcategory)
+                      .map(e => (
+                        <option key={e.id} value={e.id} className="bg-zinc-900">
+                          {e.name} - £{e.dailyRate}/{e.unit}
+                        </option>
+                      ))}
+                  </select>
+                  <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
         {/* Manual Entry Fields */}
         {newItem.category === "manual" && (
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Description *</Label>
-              <Textarea
-                placeholder="e.g., Site visit fee, Call-out charge"
-                value={newItem.description}
-                onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
-                className="min-h-[80px] text-base border-2 border-primary/20"
-              />
+          <div className="divide-y divide-white/[0.06]">
+            {/* Description */}
+            <div className="p-3.5">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                  <FileText className="h-5 w-5 text-black" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <label className="text-[12px] text-white/40 block mb-1">Description *</label>
+                  <Textarea
+                    placeholder="e.g., Site visit fee, Call-out charge"
+                    value={newItem.description}
+                    onChange={(e) => setNewItem(prev => ({ ...prev, description: e.target.value }))}
+                    className="min-h-[80px] px-0 border-0 bg-transparent text-[15px] text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0 resize-none"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Quantity</Label>
+            {/* Quantity */}
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                <Hash className="h-5 w-5 text-black" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <label className="text-[12px] text-white/40 block">Quantity</label>
                 <Input
                   type="number"
                   inputMode="decimal"
                   value={newItem.quantity || ""}
                   onChange={(e) => setNewItem(prev => ({ ...prev, quantity: parseFloat(e.target.value) || 1 }))}
-                  className="h-14"
+                  placeholder="1"
+                  className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
               </div>
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Unit Price (£)</Label>
+            </div>
+            {/* Unit Price */}
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                <PoundSterling className="h-5 w-5 text-black" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <label className="text-[12px] text-white/40 block">Unit Price (£)</label>
                 <Input
                   type="number"
                   inputMode="decimal"
                   value={newItem.unitPrice || ""}
                   onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(e.target.value) || 0 }))}
-                  className="h-14"
+                  placeholder="0.00"
+                  className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
               </div>
             </div>
+            {/* Total Preview */}
             {newItem.quantity > 0 && newItem.unitPrice > 0 && (
-              <div className="p-3 bg-elec-yellow/10 rounded-lg text-right">
-                <span className="text-sm text-muted-foreground">Total: </span>
+              <div className="flex items-center justify-between p-3.5 bg-elec-yellow/5">
+                <span className="text-[14px] text-white/60">Item Total</span>
                 <span className="text-lg font-bold text-elec-yellow">
                   £{(newItem.quantity * newItem.unitPrice).toFixed(2)}
                 </span>
@@ -460,93 +567,121 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
           </div>
         )}
 
-        <Button
-          onClick={handleAddItem}
-          disabled={!newItem.description || newItem.unitPrice <= 0}
-          className="w-full h-14 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
-        >
-          <Plus className="h-5 w-5 mr-2" />
-          Add to Quote
-        </Button>
+        {/* Add Button */}
+        <div className="p-3.5 bg-white/[0.02]">
+          <Button
+            onClick={handleAddItem}
+            disabled={!newItem.description || newItem.unitPrice <= 0}
+            className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-40"
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            Add to Quote
+          </Button>
+        </div>
       </div>
 
       {/* Items List */}
       {items.length > 0 && (
-        <>
-          <div className="border-t border-border/50" />
-          <div className="space-y-3">
-            <p className="text-sm font-medium text-muted-foreground">
-              {items.length} item{items.length !== 1 && 's'} added
-            </p>
-            {items.map((item) => (
-              <div
-                key={item.id}
-                className={cn(
-                  "p-4 bg-elec-gray/50 rounded-lg border-l-4",
-                  getCategoryColor(item.category)
-                )}
-              >
-                <div className="flex justify-between items-start gap-3 mb-3">
-                  <p className="font-medium text-sm flex-1">{item.description}</p>
-                  <p className="text-lg font-bold text-elec-yellow shrink-0">
-                    £{item.totalPrice.toFixed(2)}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      onChange={(e) => onUpdate(item.id, { quantity: parseFloat(e.target.value) || 1 })}
-                      className="w-16 h-10 text-center text-sm bg-background border rounded"
-                    />
-                    <span className="text-xs text-muted-foreground">{item.unit}</span>
+        <div>
+          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider px-1 mb-2">
+            Added Items
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+            {items.map((item) => {
+              const cat = categories.find(c => c.id === item.category);
+              const Icon = cat?.icon || FileText;
+              const color = cat?.color || 'bg-gray-500';
+              return (
+                <div key={item.id} className="p-3.5">
+                  <div className="flex items-start gap-3">
+                    <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0", color)}>
+                      <Icon className="h-5 w-5 text-black" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-start gap-2">
+                        <p className="font-medium text-[14px] text-white leading-tight">{item.description}</p>
+                        <p className="text-[15px] font-bold text-elec-yellow shrink-0">
+                          £{item.totalPrice.toFixed(2)}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-3 mt-2">
+                        <div className="flex items-center gap-1.5">
+                          <input
+                            type="number"
+                            value={item.quantity}
+                            onChange={(e) => onUpdate(item.id, { quantity: parseFloat(e.target.value) || 1 })}
+                            className="w-14 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white"
+                          />
+                          <span className="text-[12px] text-white/70">{item.unit}</span>
+                        </div>
+                        <span className="text-[12px] text-white/30">×</span>
+                        <div className="flex items-center gap-1">
+                          <span className="text-[12px] text-white/70">£</span>
+                          <input
+                            type="number"
+                            value={item.unitPrice}
+                            onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
+                            className="w-16 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white"
+                          />
+                        </div>
+                        <div className="flex-1" />
+                        <button
+                          type="button"
+                          onClick={() => duplicateItem(item)}
+                          className="w-8 h-8 rounded-lg bg-white/[0.05] flex items-center justify-center touch-manipulation active:bg-white/[0.1]"
+                        >
+                          <Copy className="h-4 w-4 text-white/70" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => onRemove(item.id)}
+                          className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:bg-red-500/20"
+                        >
+                          <Trash2 className="h-4 w-4 text-red-400" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <span className="text-xs text-muted-foreground">x</span>
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs text-muted-foreground">£</span>
-                    <input
-                      type="number"
-                      value={item.unitPrice}
-                      onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
-                      className="w-20 h-10 text-center text-sm bg-background border rounded"
-                    />
-                  </div>
                 </div>
-                <div className="flex justify-end gap-2">
-                  <Button variant="ghost" size="sm" onClick={() => duplicateItem(item)}>
-                    <Copy className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="sm" onClick={() => onRemove(item.id)} className="text-destructive">
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
-        </>
+        </div>
       )}
 
-      {/* Job Templates Link */}
+      {/* Job Templates Button */}
       {!showTemplates ? (
         <button
           type="button"
           onClick={() => setShowTemplates(true)}
-          className="w-full p-4 border-2 border-dashed border-border rounded-lg text-center hover:border-elec-yellow/50 transition-colors"
+          className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-dashed border-white/[0.1] touch-manipulation active:bg-white/[0.05] transition-colors"
         >
-          <FileText className="h-5 w-5 mx-auto mb-2 text-muted-foreground" />
-          <p className="text-sm font-medium">Use Job Template</p>
-          <p className="text-xs text-muted-foreground">Pre-built item sets for common jobs</p>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
+              <FileText className="h-5 w-5 text-white/40" />
+            </div>
+            <div className="text-left">
+              <p className="text-[14px] font-medium text-white">Use Job Template</p>
+              <p className="text-[12px] text-white/70">Pre-built item sets for common jobs</p>
+            </div>
+          </div>
+          <ChevronRight className="h-5 w-5 text-white/30" />
         </button>
       ) : (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-semibold">Job Templates</h3>
-            <Button variant="ghost" size="sm" onClick={() => setShowTemplates(false)}>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+          <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
+            <h3 className="font-semibold text-white">Job Templates</h3>
+            <button
+              type="button"
+              onClick={() => setShowTemplates(false)}
+              className="text-[14px] text-elec-yellow font-medium touch-manipulation"
+            >
               Close
-            </Button>
+            </button>
           </div>
-          <JobTemplates onSelectTemplate={handleTemplateSelect} />
+          <div className="p-4">
+            <JobTemplates onSelectTemplate={handleTemplateSelect} />
+          </div>
         </div>
       )}
     </div>

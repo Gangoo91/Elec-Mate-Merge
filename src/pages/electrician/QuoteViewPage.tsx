@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
+import { Loader2, Edit, Trash2, Download, ArrowLeft, CheckCircle, Clock, FileText, Send, Receipt, User, MapPin, Calendar, Phone, Mail, AlertTriangle, XCircle, Bell, MailOpen, Eye, ChevronRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Edit, Trash2, Download, ArrowLeft, CheckCircle, Clock, FileText, Send, Receipt, User, MapPin, Calendar, Phone, Mail, AlertTriangle, XCircle, Bell, MailOpen, Eye } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { Helmet } from 'react-helmet';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
@@ -20,6 +21,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { format, differenceInDays, isPast } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 const QuoteViewPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -389,8 +391,23 @@ const QuoteViewPage = () => {
   const isExpired = quote.expiryDate && isPast(new Date(quote.expiryDate));
   const daysUntilExpiry = quote.expiryDate ? differenceInDays(new Date(quote.expiryDate), new Date()) : null;
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { staggerChildren: 0.04 } }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 500, damping: 30 } }
+  };
+
   return (
-    <div className="bg-background pb-24">
+    <motion.div
+      className="min-h-screen bg-background pb-8"
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+    >
       <Helmet>
         <title>View Quote {quote.quoteNumber} | Professional Electrical Quote</title>
         <meta
@@ -400,387 +417,392 @@ const QuoteViewPage = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b">
-        <div className="px-4 py-3 flex items-center justify-between">
+      {/* iOS-style Header */}
+      <header className="sticky top-0 z-50 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="flex items-center gap-3 px-4 h-14">
           <Button
             variant="ghost"
-            size="sm"
+            size="icon"
             onClick={() => navigate('/electrician/quotes')}
-            className="h-10 touch-manipulation"
+            className="h-10 w-10 -ml-2 touch-manipulation active:scale-95 hover:bg-white/5"
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Quotes
+            <ArrowLeft className="h-5 w-5" />
           </Button>
-          <Badge variant="outline" className={statusInfo?.badge}>
-            <StatusIcon className="mr-1 h-3 w-3" />
-            {statusInfo?.label}
-          </Badge>
-        </div>
-      </div>
-
-      {/* Hero Card - Compact on mobile */}
-      <div className={`mx-4 mt-4 rounded-2xl bg-gradient-to-br ${statusInfo?.gradient} border p-5 sm:p-6`}>
-        <div className="text-center space-y-1">
-          <p className="text-xs sm:text-sm text-muted-foreground font-medium uppercase tracking-wider">Quote Total</p>
-          <p className="text-3xl sm:text-4xl font-bold text-foreground">{formatCurrency(quote.total)}</p>
-          <p className="text-sm sm:text-base text-muted-foreground font-mono">{quote.quoteNumber}</p>
-          <div className="pt-2 flex flex-wrap justify-center gap-2">
-            {quote.acceptance_status === 'accepted' && (
-              <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
-                <CheckCircle className="mr-1 h-3 w-3" />
-                Accepted {quote.accepted_at && format(new Date(quote.accepted_at), 'dd MMM')}
-              </Badge>
-            )}
-            {isExpired && quote.acceptance_status !== 'accepted' && (
-              <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
-                <AlertTriangle className="mr-1 h-3 w-3" />
-                Expired {Math.abs(daysUntilExpiry || 0)}d ago
-              </Badge>
-            )}
-            {!isExpired && daysUntilExpiry !== null && daysUntilExpiry <= 7 && quote.acceptance_status !== 'accepted' && (
-              <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
-                <Clock className="mr-1 h-3 w-3" />
-                {daysUntilExpiry}d left
-              </Badge>
-            )}
+          <div className={cn(
+            "w-9 h-9 rounded-xl flex items-center justify-center",
+            quote.acceptance_status === 'accepted' ? 'bg-emerald-500' :
+            quote.acceptance_status === 'declined' ? 'bg-red-500' :
+            isExpired ? 'bg-amber-500' :
+            quote.status === 'sent' ? 'bg-blue-500' : 'bg-zinc-500'
+          )}>
+            <StatusIcon className="h-5 w-5 text-white" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-base font-semibold text-white truncate">{quote.quoteNumber}</h1>
+            <p className="text-[11px] text-white/50">{statusInfo?.label}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-lg font-bold text-elec-yellow">{formatCurrency(quote.total)}</p>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Action Buttons - Stack on mobile, 2x2 on larger screens */}
-      <div className="mx-4 mt-4 space-y-2 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-3">
-        {/* Primary action - always full width on mobile */}
-        <Button
-          onClick={handleDownloadPDF}
-          disabled={isDownloading}
-          className="w-full h-12 sm:h-11 bg-primary hover:bg-primary/90 rounded-xl touch-manipulation active:scale-[0.98] font-semibold"
-        >
-          {isDownloading ? (
-            <Loader2 className="h-5 w-5 animate-spin" />
-          ) : (
-            <>
-              <Download className="h-5 w-5 mr-2" />
-              Download PDF
-            </>
-          )}
-        </Button>
-        <QuoteSendDropdown
-          quote={quote}
-          onSuccess={() => toast({ title: "Quote sent", variant: "success" })}
-          disabled={!quote.client?.email || !quote.id}
-          className="w-full h-12 sm:h-11 rounded-xl"
-        />
-        <Button
-          variant="outline"
-          onClick={() => navigate(`/electrician/quote-builder/${quote.id}`)}
-          className="w-full h-12 sm:h-11 rounded-xl touch-manipulation active:scale-[0.98]"
-        >
-          <Edit className="h-5 w-5 mr-2" />
-          Edit Quote
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => setShowDeleteDialog(true)}
-          className="w-full h-12 sm:h-11 rounded-xl text-destructive hover:text-destructive hover:bg-destructive/10 touch-manipulation active:scale-[0.98]"
-        >
-          <Trash2 className="h-5 w-5 mr-2" />
-          Delete
-        </Button>
-      </div>
-
-      {/* Convert to Invoice - Show for accepted quotes not yet invoiced */}
-      {quote.acceptance_status === 'accepted' && !quote.invoice_raised && (
-        <div className="mx-4 mt-4">
-          <Button
-            onClick={handleConvertToInvoice}
-            disabled={isConverting}
-            className="w-full h-14 bg-emerald-600 hover:bg-emerald-700 rounded-xl touch-manipulation"
-          >
-            {isConverting ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
-            ) : (
-              <>
-                <Receipt className="h-5 w-5 mr-2" />
-                Convert to Invoice
-              </>
-            )}
-          </Button>
-        </div>
-      )}
-
-      {/* Invoice Already Raised Badge */}
-      {quote.invoice_raised && (
-        <div className="mx-4 mt-4 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-          <div className="flex items-center gap-3">
-            <Receipt className="h-5 w-5 text-emerald-400" />
-            <div>
-              <p className="font-medium text-emerald-400">Invoice Raised</p>
-              {quote.invoice_number && (
-                <p className="text-sm text-muted-foreground">Invoice #{quote.invoice_number}</p>
-              )}
+      <div className="px-4 py-4 space-y-4">
+        {/* Status Banner */}
+        {quote.acceptance_status === 'accepted' && (
+          <motion.div variants={itemVariants} className="flex items-center gap-3 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
+              <CheckCircle className="h-5 w-5 text-white" />
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* Email Tracking - Show for sent quotes awaiting response */}
-      {quote.status === 'sent' && quote.acceptance_status === 'pending' && emailTracking?.first_sent_at && (
-        <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-              <Mail className="h-4 w-4 text-muted-foreground" />
-              Email Tracking
-            </h3>
-            {emailTracking.email_opened_at && (
-              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
-                <MailOpen className="h-3 w-3 mr-1" />
-                Viewed
-              </Badge>
-            )}
-          </div>
-
-          {/* Compact stats row */}
-          <div className="grid grid-cols-4 gap-2 text-center mb-4">
-            <div className="p-2 rounded-lg bg-muted/30">
-              <Send className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
-              <p className="text-xs text-muted-foreground">Sent</p>
-              <p className="text-sm font-semibold">
-                {format(new Date(emailTracking.first_sent_at), 'dd MMM')}
+            <div className="flex-1 min-w-0">
+              <p className="text-[15px] font-medium text-emerald-400">Quote Accepted</p>
+              <p className="text-[13px] text-white/50">
+                {quote.accepted_at && format(new Date(quote.accepted_at), 'dd MMM yyyy')}
+                {quote.accepted_by_name && ` by ${quote.accepted_by_name}`}
               </p>
             </div>
+          </motion.div>
+        )}
 
-            <div className="p-2 rounded-lg bg-muted/30">
-              <Eye className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
-              <p className="text-xs text-muted-foreground">Opens</p>
-              <p className={`text-sm font-semibold ${emailTracking.email_opened_at ? 'text-blue-400' : 'text-muted-foreground'}`}>
-                {emailTracking.email_opened_at ? (emailTracking.email_open_count || 1) : '—'}
-              </p>
+        {quote.invoice_raised && (
+          <motion.div variants={itemVariants} className="flex items-center gap-3 p-3.5 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
+            <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+              <Receipt className="h-5 w-5 text-black" />
             </div>
-
-            <div className="p-2 rounded-lg bg-muted/30">
-              <Bell className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
-              <p className="text-xs text-muted-foreground">Reminders</p>
-              <p className={`text-sm font-semibold ${(emailTracking.reminder_count || 0) > 0 ? 'text-purple-400' : ''}`}>
-                {emailTracking.reminder_count || 0}/2
-              </p>
+            <div className="flex-1 min-w-0">
+              <p className="text-[15px] font-medium text-elec-yellow">Invoice Raised</p>
+              <p className="text-[13px] text-white/50">Invoice #{quote.invoice_number}</p>
             </div>
+          </motion.div>
+        )}
 
-            <div className="p-2 rounded-lg bg-muted/30">
-              <Clock className="h-4 w-4 mx-auto mb-1 text-muted-foreground" />
-              <p className="text-xs text-muted-foreground">Expires</p>
-              <p className={`text-sm font-semibold ${isExpired ? 'text-destructive' : daysUntilExpiry !== null && daysUntilExpiry <= 3 ? 'text-amber-400' : ''}`}>
-                {isExpired ? 'Expired' : daysUntilExpiry === 0 ? 'Today' : `${daysUntilExpiry}d`}
-              </p>
-            </div>
-          </div>
-
-          {/* Status message */}
-          <p className="text-xs text-center mb-3 px-2">
-            {emailTracking.email_opened_at ? (
-              <span className="text-blue-400">Client viewed your quote — awaiting decision</span>
-            ) : (
-              <span className="text-muted-foreground">Auto-reminders at 3 & 7 days if no response</span>
-            )}
+        {/* Quick Actions - iOS grouped list style */}
+        <motion.div variants={itemVariants}>
+          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            Actions
           </p>
-
-          {/* Send Reminder Button */}
-          {!isExpired && (emailTracking.reminder_count || 0) < 2 && (
-            <Button
-              onClick={handleSendReminder}
-              disabled={isSendingReminder}
-              variant="outline"
-              className="w-full h-11 rounded-xl touch-manipulation active:scale-[0.98]"
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+            <button
+              onClick={handleDownloadPDF}
+              disabled={isDownloading}
+              className="flex items-center gap-3 p-3.5 w-full touch-manipulation active:bg-white/[0.04] transition-colors"
             >
-              {isSendingReminder ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              ) : (
-                <Bell className="h-4 w-4 mr-2" />
-              )}
-              Send Reminder
-            </Button>
-          )}
-        </div>
-      )}
+              <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center flex-shrink-0">
+                {isDownloading ? <Loader2 className="h-5 w-5 text-white animate-spin" /> : <Download className="h-5 w-5 text-white" />}
+              </div>
+              <div className="flex-1 min-w-0 text-left">
+                <p className="text-[15px] font-medium text-white">Download PDF</p>
+                <p className="text-[13px] text-white/50">Get a copy of this quote</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-white/20" />
+            </button>
 
-      {/* Acceptance Details - Show if accepted */}
-      {quote.acceptance_status === 'accepted' && (quote.accepted_by_name || quote.accepted_by_email) && (
-        <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-          <h3 className="text-sm font-semibold text-muted-foreground mb-3 flex items-center gap-2">
-            <CheckCircle className="h-4 w-4" />
-            Acceptance Details
-          </h3>
-          <div className="space-y-2 text-sm">
-            {quote.accepted_by_name && (
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Accepted By</span>
-                <span className="font-medium">{quote.accepted_by_name}</span>
+            <div className="flex items-center gap-3 p-3.5 touch-manipulation">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                <Send className="h-5 w-5 text-white" />
               </div>
-            )}
-            {quote.accepted_by_email && (
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Email</span>
-                <span className="font-medium">{quote.accepted_by_email}</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-medium text-white text-left">Send Quote</p>
+                <p className="text-[13px] text-white/50 text-left">Email or WhatsApp</p>
               </div>
-            )}
-            {quote.acceptance_method && (
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Method</span>
-                <span className="font-medium capitalize">{quote.acceptance_method.replace(/_/g, ' ')}</span>
-              </div>
-            )}
-            {quote.accepted_at && (
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Date</span>
-                <span className="font-medium">{format(new Date(quote.accepted_at), 'dd MMM yyyy, HH:mm')}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Client Details */}
-      <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-        <h3 className="text-sm font-semibold text-muted-foreground mb-3 flex items-center gap-2">
-          <User className="h-4 w-4" />
-          Client Details
-        </h3>
-        <div className="space-y-3">
-          <p className="font-semibold text-lg">{quote.client?.name || 'No client name'}</p>
-          {quote.client?.email && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Mail className="h-4 w-4" />
-              <a href={`mailto:${quote.client.email}`} className="hover:text-primary">
-                {quote.client.email}
-              </a>
+              <QuoteSendDropdown
+                quote={quote}
+                onSuccess={() => toast({ title: "Quote sent", variant: "success" })}
+                disabled={!quote.client?.email || !quote.id}
+                className="h-9 px-4"
+              />
             </div>
-          )}
-          {quote.client?.phone && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Phone className="h-4 w-4" />
-              <a href={`tel:${quote.client.phone}`} className="hover:text-primary">
-                {quote.client.phone}
-              </a>
-            </div>
-          )}
-          {quote.client?.address && (
-            <div className="flex items-start gap-2 text-sm text-muted-foreground">
-              <MapPin className="h-4 w-4 mt-0.5" />
-              <span>{quote.client.address}</span>
-            </div>
-          )}
-        </div>
-      </div>
 
-      {/* Job Details */}
-      {quote.jobDetails && (
-        <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-          <h3 className="text-sm font-semibold text-muted-foreground mb-3 flex items-center gap-2">
-            <FileText className="h-4 w-4" />
-            Job Details
-          </h3>
-          <div className="space-y-2 text-sm">
-            {quote.jobDetails.description && (
-              <div>
-                <span className="text-muted-foreground">Description</span>
-                <p className="font-medium mt-1">{quote.jobDetails.description}</p>
+            <button
+              onClick={() => navigate(`/electrician/quote-builder/${quote.id}`)}
+              className="flex items-center gap-3 p-3.5 w-full touch-manipulation active:bg-white/[0.04] transition-colors"
+            >
+              <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center flex-shrink-0">
+                <Edit className="h-5 w-5 text-white" />
               </div>
-            )}
-            {quote.jobDetails.location && (
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Location</span>
-                <span className="font-medium">{quote.jobDetails.location}</span>
+              <div className="flex-1 min-w-0 text-left">
+                <p className="text-[15px] font-medium text-white">Edit Quote</p>
+                <p className="text-[13px] text-white/50">Make changes</p>
               </div>
-            )}
-          </div>
-        </div>
-      )}
+              <ChevronRight className="h-4 w-4 text-white/20" />
+            </button>
 
-      {/* Quote Dates */}
-      <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-        <h3 className="text-sm font-semibold text-muted-foreground mb-3 flex items-center gap-2">
-          <Calendar className="h-4 w-4" />
-          Quote Dates
-        </h3>
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <span className="text-muted-foreground">Created</span>
-            <p className="font-medium">{format(new Date(quote.createdAt), 'dd MMM yyyy')}</p>
+            <button
+              onClick={() => setShowDeleteDialog(true)}
+              className="flex items-center gap-3 p-3.5 w-full touch-manipulation active:bg-white/[0.04] transition-colors"
+            >
+              <div className="w-10 h-10 rounded-xl bg-red-500 flex items-center justify-center flex-shrink-0">
+                <Trash2 className="h-5 w-5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0 text-left">
+                <p className="text-[15px] font-medium text-red-400">Delete Quote</p>
+                <p className="text-[13px] text-white/50">Remove permanently</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-white/20" />
+            </button>
           </div>
-          <div>
-            <span className="text-muted-foreground">Valid Until</span>
-            <p className={`font-medium ${isExpired ? 'text-destructive' : ''}`}>
-              {format(new Date(quote.expiryDate), 'dd MMM yyyy')}
+        </motion.div>
+
+        {/* Convert to Invoice - Show for accepted quotes not yet invoiced */}
+        {quote.acceptance_status === 'accepted' && !quote.invoice_raised && (
+          <motion.div variants={itemVariants}>
+            <button
+              onClick={handleConvertToInvoice}
+              disabled={isConverting}
+              className="flex items-center gap-3 p-3.5 w-full rounded-2xl bg-emerald-500/10 border border-emerald-500/20 touch-manipulation active:bg-emerald-500/20 transition-colors"
+            >
+              <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                {isConverting ? <Loader2 className="h-5 w-5 text-white animate-spin" /> : <Receipt className="h-5 w-5 text-white" />}
+              </div>
+              <div className="flex-1 min-w-0 text-left">
+                <p className="text-[15px] font-medium text-emerald-400">Convert to Invoice</p>
+                <p className="text-[13px] text-white/50">Create invoice from this quote</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-emerald-400/50" />
+            </button>
+          </motion.div>
+        )}
+
+        {/* Email Tracking - Show for sent quotes awaiting response */}
+        {quote.status === 'sent' && quote.acceptance_status === 'pending' && emailTracking?.first_sent_at && (
+          <motion.div variants={itemVariants}>
+            <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+              Email Tracking
             </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Line Items */}
-      <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-        <h3 className="text-sm font-semibold text-muted-foreground mb-3">Line Items</h3>
-        <div className="space-y-3">
-          {quote.items?.map((item, index) => (
-            <div key={index} className="flex justify-between items-start py-2 border-b border-border/50 last:border-0">
-              <div className="flex-1 min-w-0 pr-4">
-                <p className="font-medium truncate">{item.name || item.description}</p>
-                {item.description && item.name && (
-                  <p className="text-sm text-muted-foreground truncate">{item.description}</p>
-                )}
-                <p className="text-xs text-muted-foreground mt-1">
-                  {item.quantity} × {formatCurrency(item.unitPrice || item.price)}
+            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+              <div className="grid grid-cols-4 divide-x divide-white/[0.06]">
+                <div className="p-3 text-center">
+                  <Send className="h-4 w-4 mx-auto mb-1 text-blue-400" />
+                  <p className="text-[11px] text-white/40">Sent</p>
+                  <p className="text-[13px] font-semibold text-white">
+                    {format(new Date(emailTracking.first_sent_at), 'd MMM')}
+                  </p>
+                </div>
+                <div className="p-3 text-center">
+                  <Eye className="h-4 w-4 mx-auto mb-1 text-white/40" />
+                  <p className="text-[11px] text-white/40">Opens</p>
+                  <p className={cn("text-[13px] font-semibold", emailTracking.email_opened_at ? 'text-blue-400' : 'text-white/30')}>
+                    {emailTracking.email_opened_at ? (emailTracking.email_open_count || 1) : '—'}
+                  </p>
+                </div>
+                <div className="p-3 text-center">
+                  <Bell className="h-4 w-4 mx-auto mb-1 text-white/40" />
+                  <p className="text-[11px] text-white/40">Reminders</p>
+                  <p className={cn("text-[13px] font-semibold", (emailTracking.reminder_count || 0) > 0 ? 'text-purple-400' : 'text-white')}>
+                    {emailTracking.reminder_count || 0}/2
+                  </p>
+                </div>
+                <div className="p-3 text-center">
+                  <Clock className="h-4 w-4 mx-auto mb-1 text-white/40" />
+                  <p className="text-[11px] text-white/40">Expires</p>
+                  <p className={cn("text-[13px] font-semibold", isExpired ? 'text-red-400' : daysUntilExpiry !== null && daysUntilExpiry <= 3 ? 'text-amber-400' : 'text-white')}>
+                    {isExpired ? 'Expired' : daysUntilExpiry === 0 ? 'Today' : `${daysUntilExpiry}d`}
+                  </p>
+                </div>
+              </div>
+              <div className="px-4 py-3 border-t border-white/[0.06] bg-white/[0.02]">
+                <p className="text-[12px] text-center text-white/40">
+                  {emailTracking.email_opened_at ? (
+                    <span className="text-blue-400">Client viewed your quote — awaiting decision</span>
+                  ) : (
+                    'Auto-reminders at 3 & 7 days if no response'
+                  )}
                 </p>
               </div>
-              <p className="font-semibold whitespace-nowrap">{formatCurrency(item.total || (item.quantity * (item.unitPrice || item.price || 0)))}</p>
+              {!isExpired && (emailTracking.reminder_count || 0) < 2 && (
+                <button
+                  onClick={handleSendReminder}
+                  disabled={isSendingReminder}
+                  className="flex items-center justify-center gap-2 w-full p-3.5 border-t border-white/[0.06] touch-manipulation active:bg-white/[0.04] transition-colors"
+                >
+                  {isSendingReminder ? <Loader2 className="h-4 w-4 animate-spin text-white/50" /> : <Bell className="h-4 w-4 text-white/50" />}
+                  <span className="text-[15px] font-medium text-white">Send Reminder</span>
+                </button>
+              )}
             </div>
-          ))}
-        </div>
-      </div>
+          </motion.div>
+        )}
 
-      {/* Quote Summary */}
-      <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-        <h3 className="text-sm font-semibold text-muted-foreground mb-3">Summary</h3>
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Subtotal</span>
-            <span>{formatCurrency(quote.subtotal)}</span>
+        {/* Client Details */}
+        <motion.div variants={itemVariants}>
+          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            Client Details
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-10 h-10 rounded-xl bg-purple-500 flex items-center justify-center flex-shrink-0">
+                <User className="h-5 w-5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-medium text-white">{quote.client?.name || 'No client name'}</p>
+                <p className="text-[13px] text-white/50">Client Name</p>
+              </div>
+            </div>
+            {quote.client?.email && (
+              <a href={`mailto:${quote.client.email}`} className="flex items-center gap-3 p-3.5 touch-manipulation active:bg-white/[0.04] transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center flex-shrink-0">
+                  <Mail className="h-5 w-5 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[15px] font-medium text-white">{quote.client.email}</p>
+                  <p className="text-[13px] text-white/50">Email</p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-white/20" />
+              </a>
+            )}
+            {quote.client?.phone && (
+              <a href={`tel:${quote.client.phone}`} className="flex items-center gap-3 p-3.5 touch-manipulation active:bg-white/[0.04] transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                  <Phone className="h-5 w-5 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[15px] font-medium text-white">{quote.client.phone}</p>
+                  <p className="text-[13px] text-white/50">Phone</p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-white/20" />
+              </a>
+            )}
+            {quote.client?.address && (
+              <div className="flex items-center gap-3 p-3.5">
+                <div className="w-10 h-10 rounded-xl bg-orange-500 flex items-center justify-center flex-shrink-0">
+                  <MapPin className="h-5 w-5 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[15px] font-medium text-white">{quote.client.address}</p>
+                  <p className="text-[13px] text-white/50">Address</p>
+                </div>
+              </div>
+            )}
           </div>
-          {(quote.overhead ?? 0) > 0 && (
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Overhead</span>
-              <span>{formatCurrency(quote.overhead)}</span>
-            </div>
-          )}
-          {(quote.profit ?? 0) > 0 && (
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Profit</span>
-              <span>{formatCurrency(quote.profit)}</span>
-            </div>
-          )}
-          {(quote.vatAmount ?? 0) > 0 && (
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">VAT</span>
-              <span>{formatCurrency(quote.vatAmount)}</span>
-            </div>
-          )}
-          <div className="flex justify-between pt-2 border-t font-semibold text-base">
-            <span>Total</span>
-            <span className="text-primary">{formatCurrency(quote.total)}</span>
-          </div>
-        </div>
-      </div>
+        </motion.div>
 
-      {/* Notes */}
-      {quote.notes && (
-        <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-          <h3 className="text-sm font-semibold text-muted-foreground mb-2">Notes</h3>
-          <p className="text-sm whitespace-pre-wrap">{quote.notes}</p>
-        </div>
-      )}
+        {/* Job Details */}
+        {quote.jobDetails?.description && (
+          <motion.div variants={itemVariants}>
+            <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+              Job Details
+            </p>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
+              {quote.jobDetails.title && (
+                <h3 className="text-[15px] font-semibold text-white mb-2">{quote.jobDetails.title}</h3>
+              )}
+              <p className="text-[14px] text-white/70 whitespace-pre-wrap">{quote.jobDetails.description}</p>
+              {quote.jobDetails.location && (
+                <div className="flex items-center gap-2 mt-3 pt-3 border-t border-white/[0.06]">
+                  <MapPin className="h-4 w-4 text-white/40" />
+                  <span className="text-[13px] text-white/50">{quote.jobDetails.location}</span>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Quote Dates */}
+        <motion.div variants={itemVariants}>
+          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            Quote Dates
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500 flex items-center justify-center flex-shrink-0">
+                <Calendar className="h-5 w-5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-medium text-white">{format(new Date(quote.createdAt), 'dd MMM yyyy')}</p>
+                <p className="text-[13px] text-white/50">Created</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 p-3.5">
+              <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0", isExpired ? 'bg-red-500' : 'bg-amber-500')}>
+                <Clock className="h-5 w-5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className={cn("text-[15px] font-medium", isExpired ? 'text-red-400' : 'text-white')}>
+                  {format(new Date(quote.expiryDate), 'dd MMM yyyy')}
+                </p>
+                <p className="text-[13px] text-white/50">
+                  {isExpired ? 'Expired' : daysUntilExpiry !== null && daysUntilExpiry <= 7 ? `${daysUntilExpiry} days left` : 'Valid Until'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Line Items */}
+        <motion.div variants={itemVariants}>
+          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            Line Items ({quote.items?.length || 0})
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+            {quote.items?.map((item, index) => (
+              <div key={index} className="p-3.5">
+                <div className="flex justify-between items-start gap-3">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[15px] font-medium text-white leading-tight">{item.name || item.description}</p>
+                    <p className="text-[13px] text-white/50 mt-0.5">
+                      {item.quantity} × {formatCurrency(item.unitPrice || item.price)}
+                    </p>
+                  </div>
+                  <p className="text-[15px] font-semibold text-elec-yellow whitespace-nowrap">
+                    {formatCurrency(item.total || (item.quantity * (item.unitPrice || item.price || 0)))}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Quote Summary */}
+        <motion.div variants={itemVariants}>
+          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            Summary
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+            <div className="flex justify-between text-[14px]">
+              <span className="text-white/50">Subtotal</span>
+              <span className="text-white">{formatCurrency(quote.subtotal)}</span>
+            </div>
+            {(quote.overhead ?? 0) > 0 && (
+              <div className="flex justify-between text-[14px]">
+                <span className="text-white/50">Overhead</span>
+                <span className="text-white">{formatCurrency(quote.overhead)}</span>
+              </div>
+            )}
+            {(quote.profit ?? 0) > 0 && (
+              <div className="flex justify-between text-[14px]">
+                <span className="text-white/50">Profit</span>
+                <span className="text-white">{formatCurrency(quote.profit)}</span>
+              </div>
+            )}
+            {(quote.vatAmount ?? 0) > 0 && (
+              <div className="flex justify-between text-[14px]">
+                <span className="text-white/50">VAT</span>
+                <span className="text-white">{formatCurrency(quote.vatAmount)}</span>
+              </div>
+            )}
+            <div className="flex justify-between pt-3 border-t border-white/[0.06]">
+              <span className="text-[16px] font-semibold text-white">Total</span>
+              <span className="text-[18px] font-bold text-elec-yellow">{formatCurrency(quote.total)}</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Notes */}
+        {quote.notes && (
+          <motion.div variants={itemVariants}>
+            <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+              Notes
+            </p>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
+              <p className="text-[14px] text-white/70 whitespace-pre-wrap">{quote.notes}</p>
+            </div>
+          </motion.div>
+        )}
+      </div>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Quote {quote.quoteNumber}?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -789,11 +811,11 @@ const QuoteViewPage = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isDeleting} className="rounded-xl">Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
-              className="bg-destructive hover:bg-destructive/90"
+              className="bg-destructive hover:bg-destructive/90 rounded-xl"
             >
               {isDeleting ? (
                 <>
@@ -807,7 +829,7 @@ const QuoteViewPage = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,6 +1,5 @@
 import { ArrowLeft, Zap, CheckCircle, Shield, Award, GraduationCap, BookOpen } from "lucide-react";
 import { CourseCard } from "@/components/apprentice-courses/CourseCard";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const courses = [
@@ -47,29 +46,22 @@ const courses = [
 
 const Index = () => {
   return (
-    <div className="bg-background">
-      {/* Header - full width */}
-      <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8 pt-3 sm:pt-4 md:pt-6 pb-4 sm:pb-6">
-        <Link to="/study-centre">
-          <Button variant="ghost" className="text-muted-foreground hover:text-foreground transition-colors p-0 mb-3 sm:mb-4">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            <span className="text-sm">Back to Study Centre</span>
-          </Button>
-        </Link>
-
-        <div className="space-y-1 sm:space-y-2">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-            Apprentice Courses
-          </h1>
-          <p className="text-sm sm:text-base text-muted-foreground">
-            Electrical training for apprentices
-          </p>
+    <div className="bg-[#0d0d0d] min-h-screen">
+      {/* Compact Header */}
+      <div className="sticky top-0 z-10 bg-[#0d0d0d]/95 backdrop-blur-sm border-b border-white/5">
+        <div className="px-4 py-3 flex items-center gap-3">
+          <Link to="/study-centre" className="p-2 -ml-2 touch-manipulation">
+            <ArrowLeft className="w-5 h-5 text-white/60" />
+          </Link>
+          <div>
+            <h1 className="text-lg font-bold text-white">Apprentice Courses</h1>
+          </div>
         </div>
       </div>
 
-      {/* Course Grid - full width, edge to edge on mobile */}
-      <div className="w-full px-2 sm:px-4 md:px-6 lg:px-8 pb-6 sm:pb-8">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+      {/* Course Grid - single column on mobile */}
+      <div className="px-4 py-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {courses.map((course, index) => (
             <CourseCard
               key={index}

@@ -254,18 +254,7 @@ const Level3Module7Section3_4 = () => {
       <article className="px-4 sm:px-6 py-8 sm:py-12">
 
         {/* HEADER */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 7.3.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Client Communication
-          </h1>
-          <p className="text-white/80">
-            Professional communication skills for building trust and successful working relationships
-          </p>
-        </header>
+        
 
         {/* QUICK SUMMARY BOXES */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
@@ -289,26 +278,9 @@ const Level3Module7Section3_4 = () => {
         </div>
 
         {/* LEARNING OUTCOMES */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Write professional quotations with clear terms and exclusions",
-              "Manage client expectations through the project lifecycle",
-              "Handle variations and additional work requests professionally",
-              "Deliver appropriate documentation upon completion",
-              "Respond to complaints constructively and fairly",
-              "Build long-term relationships that generate repeat business"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* CONTENT SECTION 01 */}
         <section className="mb-10">

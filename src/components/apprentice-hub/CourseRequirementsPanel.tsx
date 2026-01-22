@@ -75,65 +75,69 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
   ).length || 0;
 
   return (
-    <Card className="bg-card border-border">
-      <CardHeader className="pb-3">
+    <Card className="bg-card/50 border-white/10 overflow-hidden">
+      <CardHeader className="pb-0">
         <button
           onClick={() => setExpanded(!expanded)}
-          className="flex items-center justify-between w-full text-left min-h-[44px] touch-manipulation"
+          className="flex items-center justify-between w-full text-left min-h-[56px] touch-manipulation active:opacity-80 transition-opacity -mx-1 px-1"
         >
-          <div className="space-y-1">
+          <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <CardTitle className="text-base font-semibold">Course Requirements</CardTitle>
+              <CardTitle className="text-base font-bold">Course Requirements</CardTitle>
               {onChangeCourse && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onChangeCourse();
                   }}
-                  className="p-2 rounded hover:bg-muted transition-colors touch-manipulation"
+                  className="p-2 -m-2 rounded-full hover:bg-white/10 transition-colors touch-manipulation active:scale-95"
                   title="Change qualification"
                 >
-                  <Pencil className="h-3.5 w-3.5 text-muted-foreground hover:text-foreground" />
+                  <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
                 </button>
               )}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground mt-0.5 truncate pr-4">
               {userSelection.qualification?.title || 'Your qualification'}
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-shrink-0">
             <div className="text-right">
-              <p className="text-lg font-bold text-elec-yellow">{overallPercent}%</p>
-              <p className="text-[10px] text-muted-foreground">
+              <p className="text-2xl font-bold text-elec-yellow leading-none">{overallPercent}%</p>
+              <p className="text-[11px] text-muted-foreground mt-1">
                 {completedCategories}/{categories?.length || 0} categories
               </p>
             </div>
-            {expanded ? (
-              <ChevronUp className="h-5 w-5 text-muted-foreground" />
-            ) : (
+            <div className={cn(
+              'w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform',
+              expanded && 'rotate-180'
+            )}>
               <ChevronDown className="h-5 w-5 text-muted-foreground" />
-            )}
+            </div>
           </div>
         </button>
       </CardHeader>
 
       {expanded && (
-        <CardContent className="pt-0 space-y-4">
+        <CardContent className="pt-4 space-y-4">
           {/* Overall Progress Bar */}
-          <div className="space-y-2">
-            <div className="h-2 bg-muted rounded-full overflow-hidden">
+          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-medium text-foreground">Overall Progress</span>
+              <span className="text-xs text-muted-foreground">
+                {totalCompleted}/{totalRequired} items
+              </span>
+            </div>
+            <div className="h-2 bg-white/10 rounded-full overflow-hidden">
               <div
-                className="h-full rounded-full bg-elec-yellow transition-all"
+                className="h-full rounded-full bg-elec-yellow transition-all duration-500"
                 style={{ width: `${Math.min(overallPercent, 100)}%` }}
               />
             </div>
-            <p className="text-xs text-muted-foreground text-center">
-              {totalCompleted} of {totalRequired} evidence items completed
-            </p>
           </div>
 
-          {/* Category List */}
-          <div className="space-y-3">
+          {/* Category List - Mobile Optimised */}
+          <div className="space-y-2">
             {categories?.map((category) => {
               const categoryCompliance = compliance?.find(c => c.category_id === category.id);
               const completed = categoryCompliance?.completed_entries || 0;
@@ -142,45 +146,61 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
               const percent = required > 0 ? Math.round((completed / required) * 100) : 0;
 
               return (
-                <div key={category.id} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
+                <div
+                  key={category.id}
+                  className={cn(
+                    'p-3 rounded-xl border transition-colors',
+                    isComplete
+                      ? 'bg-green-500/5 border-green-500/20'
+                      : 'bg-white/[0.02] border-white/10'
+                  )}
+                >
+                  {/* Header Row */}
+                  <div className="flex items-start gap-3">
+                    <div className={cn(
+                      'w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5',
+                      isComplete
+                        ? 'bg-green-500 text-white'
+                        : 'bg-white/10'
+                    )}>
                       {isComplete ? (
-                        <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0" />
+                        <CheckCircle2 className="h-4 w-4" />
                       ) : (
-                        <Circle className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                      )}
-                      <div className="min-w-0">
-                        <span className="text-sm font-medium text-foreground block truncate">
-                          {category.name}
+                        <span className="text-xs font-medium text-muted-foreground">
+                          {completed}
                         </span>
-                        {category.description && (
-                          <span className="text-xs text-muted-foreground block truncate">
-                            {category.description}
-                          </span>
-                        )}
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <h4 className="text-sm font-semibold text-foreground leading-tight">
+                          {category.name}
+                        </h4>
+                        <span className={cn(
+                          'text-xs font-medium flex-shrink-0 px-2 py-0.5 rounded-full',
+                          isComplete
+                            ? 'bg-green-500/20 text-green-400'
+                            : 'bg-white/10 text-muted-foreground'
+                        )}>
+                          {completed}/{required}
+                        </span>
+                      </div>
+                      {category.description && (
+                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                          {category.description}
+                        </p>
+                      )}
+                      {/* Progress Bar */}
+                      <div className="mt-2 h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div
+                          className={cn(
+                            'h-full rounded-full transition-all duration-500',
+                            isComplete ? 'bg-green-500' : 'bg-elec-yellow'
+                          )}
+                          style={{ width: `${Math.min(percent, 100)}%` }}
+                        />
                       </div>
                     </div>
-                    <Badge
-                      variant="outline"
-                      className={cn(
-                        'text-xs ml-2 flex-shrink-0',
-                        isComplete
-                          ? 'border-green-500/30 text-green-500 bg-green-500/10'
-                          : 'border-muted-foreground/30 text-muted-foreground'
-                      )}
-                    >
-                      {completed}/{required}
-                    </Badge>
-                  </div>
-                  <div className="h-1.5 bg-muted rounded-full overflow-hidden ml-6">
-                    <div
-                      className={cn(
-                        'h-full rounded-full transition-all',
-                        isComplete ? 'bg-green-500' : 'bg-elec-yellow'
-                      )}
-                      style={{ width: `${Math.min(percent, 100)}%` }}
-                    />
                   </div>
                 </div>
               );

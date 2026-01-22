@@ -15,7 +15,7 @@ const AM2Module8 = () => {
   const navigate = useNavigate();
   useSEO(
     "Module 8: AM2 Mock Examination - AM2 Preparation Course",
-    "Practice AM2 knowledge test with 40 questions, 60-minute timer from 500+ question bank covering safe isolation, BS7671, testing and fault finding"
+    "Practice AM2 knowledge test with 30 questions, 60-minute timer from 400 question bank covering safe isolation, BS7671, testing and fault finding"
   );
 
   // Exam state
@@ -29,11 +29,11 @@ const AM2Module8 = () => {
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
   const [reviewFilter, setReviewFilter] = useState<'all' | 'correct' | 'incorrect' | 'unanswered' | 'flagged'>('all');
 
-  // Start exam
+  // Start exam - 30 questions matching real AM2 theory exam
   const startExam = () => {
-    const questions = getRandomQuestions(40, { basic: 0.4, intermediate: 0.4, advanced: 0.2 });
+    const questions = getRandomQuestions(30, { basic: 0.35, intermediate: 0.45, advanced: 0.2 });
     setExamQuestions(questions);
-    setSelectedAnswers(new Array(40).fill(-1));
+    setSelectedAnswers(new Array(30).fill(-1));
     setCurrentQuestion(0);
     setTimeRemaining(3600);
     setFlaggedQuestions(new Set());
@@ -112,6 +112,30 @@ const AM2Module8 = () => {
     }, 0);
   };
 
+  // Calculate category breakdown
+  const getCategoryBreakdown = () => {
+    const breakdown: Record<string, { total: number; correct: number }> = {};
+
+    examQuestions.forEach((q, index) => {
+      const category = q.category || 'General';
+      if (!breakdown[category]) {
+        breakdown[category] = { total: 0, correct: 0 };
+      }
+      breakdown[category].total++;
+      if (selectedAnswers[index] === q.correctAnswer) {
+        breakdown[category].correct++;
+      }
+    });
+
+    return Object.entries(breakdown)
+      .sort((a, b) => b[1].total - a[1].total)
+      .map(([category, stats]) => ({
+        category,
+        ...stats,
+        percent: Math.round((stats.correct / stats.total) * 100)
+      }));
+  };
+
   // Get question status for review
   const getQuestionStatus = (index: number): 'correct' | 'incorrect' | 'unanswered' => {
     if (selectedAnswers[index] === -1) return 'unanswered';
@@ -178,29 +202,33 @@ const AM2Module8 = () => {
             </CardHeader>
             
             <CardContent className="space-y-4 sm:space-y-6 px-3 sm:px-6">
-              <div className="bg-[#1a1a1a] p-3 sm:p-4 rounded-lg sm:rounded-xl border border-muted/40">
-                <div className="flex items-center gap-2 mb-3 sm:mb-3">
-                  <div className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md sm:rounded-lg bg-elec-yellow/20">
-                    <CheckCircle className="h-3 w-3 sm:h-3 sm:w-3 text-elec-yellow" />
+              <div className="bg-[#1a1a1a] p-4 rounded-xl border border-white/10 text-left">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-elec-yellow/20">
+                    <CheckCircle className="h-3.5 w-3.5 text-elec-yellow" />
                   </div>
-                  <h3 className="font-semibold text-white text-sm sm:text-base">Instructions</h3>
+                  <h3 className="font-semibold text-white text-sm">Instructions</h3>
                 </div>
-                <div className="grid gap-2 sm:gap-2">
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-white leading-relaxed">40 questions randomly selected from 500+ question bank</p>
+                <div className="space-y-2.5 pl-1">
+                  <div className="flex items-start gap-3">
+                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
+                    <p className="text-sm text-white/90">30 questions from 400 question bank</p>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-white leading-relaxed">60 minutes time limit</p>
+                  <div className="flex items-start gap-3">
+                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
+                    <p className="text-sm text-white/90">60 minutes (matches real AM2)</p>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-white leading-relaxed">Pass mark: 60% (24/40 questions)</p>
+                  <div className="flex items-start gap-3">
+                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
+                    <p className="text-sm text-white/90">Pass mark: 60% (18/30)</p>
                   </div>
-                  <div className="flex items-start gap-2">
-                    <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-white leading-relaxed">Covers all AM2 assessment areas</p>
+                  <div className="flex items-start gap-3">
+                    <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
+                    <p className="text-sm text-white/90">H&S, BS7671, Building Regs, Safe Isolation</p>
+                  </div>
+                  <div className="flex items-start gap-3 pt-1 mt-1 border-t border-white/10">
+                    <div className="h-1.5 w-1.5 rounded-full bg-blue-400 mt-[7px] flex-shrink-0" />
+                    <p className="text-sm text-blue-300">Reference materials allowed in exam</p>
                   </div>
                 </div>
               </div>
@@ -243,28 +271,63 @@ const AM2Module8 = () => {
             </CardHeader>
             
             <CardContent className="px-4 sm:px-6">
-              <div className="grid grid-cols-1 gap-4 mb-6">
+              {/* Summary Stats */}
+              <div className="grid grid-cols-3 gap-3 mb-6">
                 <Card className="bg-transparent border-green-500/20">
-                  <CardContent className="p-4 text-center">
-                    <div className="text-2xl font-bold text-green-500">{stats.correct}</div>
-                    <div className="text-sm text-white">Correct</div>
+                  <CardContent className="p-3 text-center">
+                    <div className="text-xl font-bold text-green-500">{stats.correct}</div>
+                    <div className="text-xs text-white">Correct</div>
                   </CardContent>
                 </Card>
                 <Card className="bg-transparent border-red-500/20">
-                  <CardContent className="p-4 text-center">
-                    <div className="text-2xl font-bold text-elec-yellow">{stats.incorrect}</div>
-                    <div className="text-sm text-white">Incorrect</div>
+                  <CardContent className="p-3 text-center">
+                    <div className="text-xl font-bold text-red-400">{stats.incorrect}</div>
+                    <div className="text-xs text-white">Incorrect</div>
                   </CardContent>
                 </Card>
                 <Card className="bg-transparent border-muted/20">
-                  <CardContent className="p-4 text-center">
-                    <div className="text-2xl font-bold text-white">{stats.unanswered}</div>
-                    <div className="text-sm text-white">Unanswered</div>
+                  <CardContent className="p-3 text-center">
+                    <div className="text-xl font-bold text-white">{stats.unanswered}</div>
+                    <div className="text-xs text-white">Skipped</div>
                   </CardContent>
                 </Card>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {/* Category Breakdown */}
+              <div className="mb-6">
+                <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                  <Target className="h-4 w-4 text-elec-yellow" />
+                  Performance by Category
+                </h3>
+                <div className="space-y-2">
+                  {getCategoryBreakdown().map(({ category, total, correct, percent }) => (
+                    <div key={category} className="bg-white/[0.03] rounded-lg p-3 border border-white/10">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-white truncate pr-2">{category}</span>
+                        <span className={`text-sm font-bold ${percent >= 60 ? 'text-green-400' : 'text-red-400'}`}>
+                          {correct}/{total} ({percent}%)
+                        </span>
+                      </div>
+                      <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all duration-500 ${percent >= 60 ? 'bg-green-500' : 'bg-red-500'}`}
+                          style={{ width: `${percent}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {getCategoryBreakdown().filter(c => c.percent < 60).length > 0 && (
+                  <div className="mt-3 p-3 rounded-lg border border-orange-500/30 bg-orange-500/10">
+                    <p className="text-xs text-orange-300">
+                      <AlertTriangle className="h-3 w-3 inline mr-1" />
+                      Focus on: {getCategoryBreakdown().filter(c => c.percent < 60).map(c => c.category).join(', ')}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button 
                   onClick={() => setShowReview(true)}
                   variant="outline"
@@ -502,9 +565,9 @@ const AM2Module8 = () => {
   };
   
   return (
-    <div className="bg-[#1a1a1a] overflow-x-hidden">
-      {/* Header */}
-      <div className="sticky top-0 z-50 backdrop-blur-sm bg-[#1a1a1a]/80 border-b border-elec-yellow/30">
+    <div className="bg-[#0d0d0d] overflow-x-hidden">
+      {/* Desktop Header - hidden on mobile */}
+      <div className="hidden lg:block sticky top-0 z-50 backdrop-blur-sm bg-[#1a1a1a]/80 border-b border-elec-yellow/30">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div>
             <Link to=".." className="text-white hover:text-elec-yellow">
@@ -521,7 +584,7 @@ const AM2Module8 = () => {
         </div>
       </div>
 
-      {/* Mobile Layout */}
+      {/* Mobile Layout - single viewport optimised */}
       <div className="lg:hidden">
         <ExamMobileLayout
           examTitle="AM2 Mock Exam"
@@ -536,52 +599,53 @@ const AM2Module8 = () => {
           onNext={handleNext}
           onSubmit={handleSubmit}
           onToggleFlag={toggleFlag}
-          exitPath="am2"
+          exitPath="/study-centre/apprentice/am2"
           formatTime={formatTime}
         >
-          {/* Question content for mobile */}
+          {/* Compact question content for mobile */}
           {examQuestions[currentQuestion] && (
-            <div className="p-6">
-              <div className="mb-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-white">
-                    Question {currentQuestion + 1} of {examQuestions.length}
-                  </h2>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={toggleFlag}
-                    className={flaggedQuestions.has(currentQuestion) ? "text-elec-yellow" : "text-white"}
-                  >
-                    <Flag className="w-4 h-4" />
-                  </Button>
-                </div>
-                <p className="text-white leading-relaxed">
-                  {examQuestions[currentQuestion].question}
-                </p>
+            <>
+              {/* Category Badge - centered */}
+              <div className="text-center mb-3">
+                <Badge
+                  variant="outline"
+                  className="text-[11px] border-elec-yellow/50 text-elec-yellow bg-elec-yellow/10 px-3"
+                >
+                  {examQuestions[currentQuestion].category || 'General'}
+                </Badge>
               </div>
 
-              <div className="space-y-3">
+              {/* Question Text - centered */}
+              <p className="text-white text-center text-[15px] leading-snug mb-4 px-2">
+                {examQuestions[currentQuestion].question}
+              </p>
+
+              {/* Compact Options - 48px each */}
+              <div className="space-y-2">
                 {examQuestions[currentQuestion].options.map((option, index) => (
                   <button
                     key={index}
                     onClick={() => handleAnswerSelect(index)}
-                    className={`w-full p-4 text-left rounded-lg border transition-colors ${
+                    className={`w-full min-h-[48px] p-3 flex items-center gap-3 rounded-xl border-2 transition-all touch-manipulation active:scale-[0.98] ${
                       selectedAnswers[currentQuestion] === index
-                        ? 'bg-elec-yellow/20 border-elec-yellow text-white'
-                        : 'bg-transparent border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
+                        ? 'bg-elec-yellow/20 border-elec-yellow'
+                        : 'bg-white/[0.02] border-white/15 hover:border-white/25'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm font-semibold min-w-[20px]">
-                        {String.fromCharCode(65 + index)}.
+                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                      selectedAnswers[currentQuestion] === index
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-white/10 text-white/60'
+                    }`}>
+                      <span className="text-xs font-bold">
+                        {String.fromCharCode(65 + index)}
                       </span>
-                      <span>{option}</span>
                     </div>
+                    <span className="text-sm text-white leading-snug text-left">{option}</span>
                   </button>
                 ))}
               </div>
-            </div>
+            </>
           )}
         </ExamMobileLayout>
       </div>
@@ -618,6 +682,13 @@ const AM2Module8 = () => {
                 </div>
 
                 <div className="mb-8">
+                  {/* Category Badge - Desktop */}
+                  <Badge
+                    variant="outline"
+                    className="text-xs border-elec-yellow/40 text-elec-yellow mb-4"
+                  >
+                    {examQuestions[currentQuestion]?.category || 'General'}
+                  </Badge>
                   <p className="text-white text-lg leading-relaxed mb-6">
                     {examQuestions[currentQuestion]?.question}
                   </p>
@@ -627,17 +698,23 @@ const AM2Module8 = () => {
                       <button
                         key={index}
                         onClick={() => handleAnswerSelect(index)}
-                        className={`w-full p-4 text-left rounded-lg border transition-colors ${
+                        className={`w-full min-h-[56px] p-4 text-left rounded-xl border-2 transition-all touch-manipulation active:scale-[0.98] ${
                           selectedAnswers[currentQuestion] === index
                             ? 'bg-elec-yellow/20 border-elec-yellow text-white'
-                            : 'bg-[#1a1a1a]/30 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
+                            : 'bg-white/[0.02] border-white/20 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
                         }`}
                       >
-                        <div className="flex items-center gap-3">
-                          <span className="text-sm font-semibold min-w-[20px]">
-                            {String.fromCharCode(65 + index)}.
-                          </span>
-                          <span>{option}</span>
+                        <div className="flex items-start gap-3">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                            selectedAnswers[currentQuestion] === index
+                              ? 'bg-elec-yellow text-black font-bold'
+                              : 'bg-white/10 text-white/70'
+                          }`}>
+                            <span className="text-sm font-bold">
+                              {String.fromCharCode(65 + index)}
+                            </span>
+                          </div>
+                          <span className="leading-relaxed pt-1">{option}</span>
                         </div>
                       </button>
                     ))}

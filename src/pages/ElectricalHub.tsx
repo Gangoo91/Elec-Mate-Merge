@@ -69,13 +69,6 @@ function ElectricalHero() {
   const { profile } = useAuth();
   const { business } = useDashboardData();
 
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
-  };
-
   const firstName = profile?.full_name?.split(' ')[0] || 'Electrician';
 
   return (
@@ -87,59 +80,60 @@ function ElectricalHero() {
       <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
       <div className="relative z-10 p-4 sm:p-5">
-        <div className="flex items-start gap-3">
+        {/* Header label */}
+        <div className="flex items-center gap-1.5 text-elec-yellow mb-3">
+          <Sparkles className="h-3 w-3" />
+          <span className="text-[10px] sm:text-xs font-medium tracking-wide uppercase">
+            Electrical Hub
+          </span>
+        </div>
+
+        {/* Main content row - icon and text aligned */}
+        <div className="flex items-center gap-4">
           {/* Icon */}
-          <div className="flex-shrink-0 p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-            <Zap className="h-6 w-6 text-elec-yellow" />
+          <div className="flex-shrink-0 w-16 h-16 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
+            <Zap className="h-8 w-8 text-elec-yellow" />
           </div>
 
-          {/* Content */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-1.5 text-elec-yellow mb-1">
-              <Sparkles className="h-3 w-3" />
-              <span className="text-[10px] sm:text-xs font-medium tracking-wide uppercase">
-                Electrical Hub
-              </span>
-            </div>
-
-            <h1 className="text-lg sm:text-xl font-semibold text-white leading-tight">
-              <span className="text-elec-yellow">{firstName}</span>
+          {/* Text - vertically centered with icon */}
+          <div className="flex-1 min-w-0 flex flex-col justify-center">
+            <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow leading-tight">
+              {firstName.toUpperCase()}
             </h1>
-
-            <p className="text-xs text-white/70 mt-0.5">
+            <p className="text-xs sm:text-sm text-white/70 mt-0.5">
               Professional tools for qualified electricians
             </p>
-
-            {/* Status badges */}
-            <div className="flex items-center gap-2 mt-2 flex-wrap">
-              {business.activeQuotes > 0 && (
-                <Badge
-                  variant="outline"
-                  className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[10px] sm:text-xs"
-                >
-                  <FileText className="w-3 h-3 mr-1" />
-                  {business.activeQuotes} active quotes
-                </Badge>
-              )}
-              {business.overdueInvoices > 0 ? (
-                <Badge
-                  variant="outline"
-                  className="bg-red-500/10 border-red-500/30 text-red-400 text-[10px] sm:text-xs"
-                >
-                  <AlertCircle className="w-3 h-3 mr-1" />
-                  {business.overdueInvoices} overdue
-                </Badge>
-              ) : (
-                <Badge
-                  variant="outline"
-                  className="bg-green-500/10 border-green-500/30 text-green-400 text-[10px] sm:text-xs"
-                >
-                  <CheckCircle className="w-3 h-3 mr-1" />
-                  All paid
-                </Badge>
-              )}
-            </div>
           </div>
+        </div>
+
+        {/* Status badges - aligned below */}
+        <div className="flex items-center gap-2 mt-4 pl-20">
+          {business.activeQuotes > 0 && (
+            <Badge
+              variant="outline"
+              className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[10px] sm:text-xs"
+            >
+              <FileText className="w-3 h-3 mr-1" />
+              {business.activeQuotes} active quotes
+            </Badge>
+          )}
+          {business.overdueInvoices > 0 ? (
+            <Badge
+              variant="outline"
+              className="bg-red-500/10 border-red-500/30 text-red-400 text-[10px] sm:text-xs"
+            >
+              <AlertCircle className="w-3 h-3 mr-1" />
+              {business.overdueInvoices} overdue
+            </Badge>
+          ) : (
+            <Badge
+              variant="outline"
+              className="bg-green-500/10 border-green-500/30 text-green-400 text-[10px] sm:text-xs"
+            >
+              <CheckCircle className="w-3 h-3 mr-1" />
+              All paid
+            </Badge>
+          )}
         </div>
       </div>
     </div>
@@ -150,8 +144,6 @@ function ElectricalHero() {
 function ElectricalStatsBar() {
   const { business, certificates, isLoading } = useDashboardData();
   const navigate = useNavigate();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
 
   const statItems = [
     {
@@ -185,134 +177,84 @@ function ElectricalStatsBar() {
     },
   ];
 
-  // Track scroll position for pagination dots
-  const handleScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const cardWidth = 130 + 12;
-    const newIndex = Math.round(el.scrollLeft / cardWidth);
-    setActiveIndex(Math.max(0, Math.min(newIndex, statItems.length - 1)));
-  };
-
   if (isLoading) {
     return (
-      <div className="px-4 sm:px-0">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-[85px] rounded-xl glass-premium animate-pulse" />
-          ))}
-        </div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="h-[85px] rounded-xl glass-premium animate-pulse" />
+        ))}
       </div>
     );
   }
 
   return (
-    <div className="relative">
-      <motion.div
-        ref={scrollRef}
-        onScroll={handleScroll}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className={cn(
-          'flex gap-3 overflow-x-auto pb-2 -mx-4 px-4',
-          'snap-x snap-mandatory scrollbar-hide momentum-scroll-x',
-          'sm:grid sm:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0'
-        )}
-      >
-        {statItems.map((stat, index) => {
-          const Icon = stat.icon;
-          const isSuccess = stat.variant === 'success';
-          const isDanger = stat.variant === 'danger';
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="grid grid-cols-2 sm:grid-cols-4 gap-3"
+    >
+      {statItems.map((stat) => {
+        const Icon = stat.icon;
+        const isSuccess = stat.variant === 'success';
+        const isDanger = stat.variant === 'danger';
 
-          return (
-            <motion.button
-              key={stat.label}
-              onClick={() => navigate(stat.navigateTo)}
-              variants={itemVariants}
-              whileTap={{ scale: 0.96 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-              className={cn(
-                'flex-shrink-0 w-[130px] snap-start touch-manipulation cursor-pointer group',
-                index === statItems.length - 1 && 'mr-4 sm:mr-0',
-                'sm:w-full'
-              )}
-              aria-label={`View ${stat.label}`}
-            >
-              <div className={cn(
-                'glass-premium rounded-xl p-3 h-[85px]',
-                'group-hover:bg-white/[0.04] group-active:bg-white/[0.02]',
-                'transition-all duration-200',
-                'group-hover:shadow-lg group-hover:shadow-elec-yellow/5'
-              )}>
-                <div className="flex flex-col h-full">
-                  {/* Icon row */}
-                  <div className="flex items-center justify-between">
-                    <div className={cn(
-                      'p-1.5 rounded-lg transition-colors',
-                      isSuccess ? 'bg-green-500/10 group-hover:bg-green-500/20' : isDanger ? 'bg-red-500/10 group-hover:bg-red-500/20' : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
-                    )}>
-                      <Icon className={cn(
-                        'h-3.5 w-3.5',
+        return (
+          <motion.button
+            key={stat.label}
+            onClick={() => navigate(stat.navigateTo)}
+            variants={itemVariants}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+            className="touch-manipulation cursor-pointer group w-full"
+            aria-label={`View ${stat.label}`}
+          >
+            <div className={cn(
+              'glass-premium rounded-xl p-3 h-[85px]',
+              'group-hover:bg-white/[0.04] group-active:bg-white/[0.02]',
+              'transition-all duration-200',
+              'group-hover:shadow-lg group-hover:shadow-elec-yellow/5'
+            )}>
+              <div className="flex flex-col h-full">
+                {/* Icon row */}
+                <div className="flex items-center justify-between">
+                  <div className={cn(
+                    'p-1.5 rounded-lg transition-colors',
+                    isSuccess ? 'bg-green-500/10 group-hover:bg-green-500/20' : isDanger ? 'bg-red-500/10 group-hover:bg-red-500/20' : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
+                  )}>
+                    <Icon className={cn(
+                      'h-3.5 w-3.5',
+                      isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
+                    )} />
+                  </div>
+                  <ChevronRight className="h-3 w-3 text-white/20 opacity-50 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
+                </div>
+                {/* Value and label - left aligned */}
+                <div className="flex-1 flex flex-col justify-end">
+                  {stat.formatAsCurrency ? (
+                    <span className="text-lg sm:text-xl font-bold text-elec-yellow truncate">
+                      {business.formattedQuoteValue}
+                    </span>
+                  ) : (
+                    <AnimatedCounter
+                      value={stat.value}
+                      prefix={stat.prefix}
+                      className={cn(
+                        'text-lg sm:text-xl font-bold',
                         isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                      )} />
-                    </div>
-                    <ChevronRight className="h-3 w-3 text-white/20 opacity-50 group-hover:opacity-100 group-active:opacity-100 transition-opacity" />
-                  </div>
-                  {/* Value and label - left aligned */}
-                  <div className="flex-1 flex flex-col justify-end">
-                    {stat.formatAsCurrency ? (
-                      <span className="text-lg sm:text-xl font-bold text-elec-yellow">
-                        {business.formattedQuoteValue}
-                      </span>
-                    ) : (
-                      <AnimatedCounter
-                        value={stat.value}
-                        prefix={stat.prefix}
-                        className={cn(
-                          'text-lg sm:text-xl font-bold',
-                          isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                        )}
-                      />
-                    )}
-                    <p className="text-[11px] text-white/70">
-                      {stat.label}
-                    </p>
-                  </div>
+                      )}
+                    />
+                  )}
+                  <p className="text-[11px] text-white/70 truncate">
+                    {stat.label}
+                  </p>
                 </div>
               </div>
-            </motion.button>
-          );
-        })}
-      </motion.div>
-
-      {/* Pagination dots - mobile only */}
-      <div className="flex justify-center gap-0.5 mt-2 sm:hidden">
-        {statItems.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => {
-              const el = scrollRef.current;
-              if (el) {
-                const cardWidth = 130 + 12;
-                el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
-              }
-            }}
-            className="min-h-11 min-w-8 flex items-center justify-center touch-manipulation active:scale-95"
-            aria-label={`View ${statItems[i].label}`}
-          >
-            <span
-              className={cn(
-                'transition-all duration-200',
-                i === activeIndex
-                  ? 'w-5 h-2 rounded-full bg-elec-yellow'
-                  : 'w-2 h-2 rounded-full bg-white/20'
-              )}
-            />
-          </button>
-        ))}
-      </div>
-    </div>
+            </div>
+          </motion.button>
+        );
+      })}
+    </motion.div>
   );
 }
 

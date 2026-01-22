@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Briefcase, ChevronRight, MapPin, Building2, PoundSterling, Loader2 } from "lucide-react";
+import { ChevronRight, MapPin, Building2, Loader2, Zap } from "lucide-react";
 import { useLatestJobs, LatestJob } from "@/hooks/job-vacancies/useLatestJobs";
+import { motion } from "framer-motion";
 
 // Format salary for display - convert "45059.00 GBP Annual" to "£45k"
 const formatSalary = (salary: string | undefined): string | null => {
@@ -40,55 +39,62 @@ const formatLocation = (location: string | undefined): string => {
   return parts[0].trim();
 };
 
-const JobRow = ({ job, isLast }: { job: LatestJob; isLast: boolean }) => {
+const JobRow = ({ job, index }: { job: LatestJob; index: number }) => {
   const salary = formatSalary(job.salary);
   const company = formatCompany(job.company);
   const location = formatLocation(job.location);
 
   return (
-    <Link
-      to={job.external_url || "/electrician/job-vacancies"}
-      target={job.external_url ? "_blank" : undefined}
-      rel={job.external_url ? "noopener noreferrer" : undefined}
-      className="block"
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05, duration: 0.2 }}
     >
-      <div
-        className={`flex items-center gap-3 py-3 px-1 -mx-1 rounded-lg touch-manipulation active:bg-white/5 transition-colors ${
-          !isLast ? 'border-b border-white/10' : ''
-        }`}
+      <Link
+        to={job.external_url || "/electrician/job-vacancies"}
+        target={job.external_url ? "_blank" : undefined}
+        rel={job.external_url ? "noopener noreferrer" : undefined}
+        className="block"
       >
-        {/* Job icon */}
-        <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-          <Briefcase className="h-5 w-5 text-elec-yellow" />
-        </div>
-
-        {/* Job details - left aligned */}
-        <div className="flex-1 min-w-0">
-          <p className="font-medium text-sm text-white truncate leading-tight">
-            {job.title}
-          </p>
-          <div className="flex items-center gap-3 mt-1">
-            <span className="flex items-center gap-1 text-xs text-white/60 truncate">
-              <Building2 className="h-3 w-3 flex-shrink-0" />
-              {company}
-            </span>
-            <span className="flex items-center gap-1 text-xs text-white/60 flex-shrink-0">
-              <MapPin className="h-3 w-3" />
-              {location}
-            </span>
+        <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.06] active:scale-[0.98] transition-all">
+          {/* Job icon */}
+          <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0 mt-0.5">
+            <Zap className="h-5 w-5 text-black" />
           </div>
-        </div>
 
-        {/* Salary badge - right aligned */}
-        {salary && (
-          <div className="flex-shrink-0 bg-green-500/15 text-green-400 text-xs font-semibold px-2.5 py-1 rounded-full">
-            {salary}
+          {/* Job details - stacked layout */}
+          <div className="flex-1 min-w-0">
+            {/* Title */}
+            <p className="font-semibold text-[14px] text-white leading-tight">
+              {job.title}
+            </p>
+
+            {/* Company & Location */}
+            <div className="flex items-center gap-2 mt-1.5">
+              <span className="flex items-center gap-1 text-[12px] text-white/80">
+                <Building2 className="h-3 w-3 flex-shrink-0 text-white/60" />
+                <span className="truncate max-w-[120px]">{company}</span>
+              </span>
+              <span className="w-1 h-1 rounded-full bg-white/30" />
+              <span className="flex items-center gap-1 text-[12px] text-white/80">
+                <MapPin className="h-3 w-3 flex-shrink-0 text-white/60" />
+                {location}
+              </span>
+            </div>
+
+            {/* Salary badge - stacked below */}
+            {salary && (
+              <div className="inline-flex mt-2 bg-green-500/20 text-green-400 text-[12px] font-bold px-2.5 py-1 rounded-lg">
+                {salary}
+              </div>
+            )}
           </div>
-        )}
 
-        <ChevronRight className="h-4 w-4 text-white/30 flex-shrink-0" />
-      </div>
-    </Link>
+          {/* Arrow */}
+          <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0 mt-2" />
+        </div>
+      </Link>
+    </motion.div>
   );
 };
 
@@ -100,65 +106,58 @@ export const LatestJobsWidget = () => {
   }
 
   return (
-    <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 via-card/80 to-card/60 overflow-hidden">
-      {/* Header */}
-      <CardHeader className="pb-2 pt-4">
-        <CardTitle className="flex items-center gap-2 text-base">
-          <div className="w-8 h-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-            <Briefcase className="h-4 w-4 text-elec-yellow" />
-          </div>
-          <span className="text-white font-semibold">Latest Jobs</span>
-          {jobs && jobs.length > 0 && (
-            <span className="ml-auto text-xs text-white/50 font-normal">
-              {jobs.length} new
-            </span>
-          )}
-        </CardTitle>
-      </CardHeader>
-
-      <CardContent className="pt-1 pb-3">
-        {isLoading ? (
-          <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
-          </div>
-        ) : jobs && jobs.length > 0 ? (
-          <div>
-            {jobs.map((job, index) => (
-              <JobRow
-                key={job.id}
-                job={job}
-                isLast={index === jobs.length - 1}
-              />
-            ))}
-
-            <Link to="/electrician/job-vacancies" className="block mt-3">
-              <Button
-                variant="ghost"
-                className="w-full h-12 touch-manipulation active:scale-[0.98] transition-all bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow hover:text-elec-yellow rounded-xl font-medium"
-              >
-                View All Jobs
-                <ChevronRight className="h-4 w-4 ml-1" />
-              </Button>
-            </Link>
-          </div>
-        ) : (
-          <div className="text-center py-6">
-            <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-3">
-              <Briefcase className="h-6 w-6 text-white/40" />
-            </div>
-            <p className="text-white/60 text-sm mb-4">No jobs available right now</p>
-            <Link to="/electrician/job-vacancies">
-              <Button
-                variant="outline"
-                className="h-12 px-6 touch-manipulation active:scale-[0.98] transition-all border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10 rounded-xl"
-              >
-                Browse Job Board
-                <ChevronRight className="h-4 w-4 ml-1" />
-              </Button>
-            </Link>
-          </div>
+    <div className="space-y-3">
+      {/* Section Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+          <h2 className="text-base font-bold text-white">Latest Electrical Jobs</h2>
+        </div>
+        {jobs && jobs.length > 0 && (
+          <span className="text-xs text-white/60 bg-white/[0.05] px-2.5 py-1 rounded-full">
+            {jobs.length} new
+          </span>
         )}
-      </CardContent>
-    </Card>
+      </div>
+
+      {/* Jobs List */}
+      {isLoading ? (
+        <div className="flex items-center justify-center py-12 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+          <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
+        </div>
+      ) : jobs && jobs.length > 0 ? (
+        <div className="space-y-2">
+          {jobs.map((job, index) => (
+            <JobRow key={job.id} job={job} index={index} />
+          ))}
+
+          <Link to="/electrician/job-vacancies" className="block mt-3">
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              className="w-full h-12 touch-manipulation flex items-center justify-center gap-2 bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow rounded-xl font-medium text-[14px] border border-elec-yellow/20 transition-colors"
+            >
+              View All Electrical Jobs
+              <ChevronRight className="h-4 w-4" />
+            </motion.button>
+          </Link>
+        </div>
+      ) : (
+        <div className="text-center py-10 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+          <div className="w-14 h-14 rounded-2xl bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
+            <Zap className="h-7 w-7 text-white/40" />
+          </div>
+          <p className="text-white/70 text-sm mb-4">No electrical jobs found</p>
+          <Link to="/electrician/job-vacancies">
+            <motion.button
+              whileTap={{ scale: 0.98 }}
+              className="h-11 px-6 touch-manipulation inline-flex items-center justify-center gap-2 bg-elec-yellow text-black rounded-xl font-semibold text-[14px] transition-colors"
+            >
+              Browse Job Board
+              <ChevronRight className="h-4 w-4" />
+            </motion.button>
+          </Link>
+        </div>
+      )}
+    </div>
   );
 };

@@ -1,32 +1,24 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
-  FileWarning,
   ArrowRight,
   AlertTriangle,
   CheckCircle2,
-  Clock,
   MapPin,
   User,
-  FileText,
-  Zap,
   CalendarClock,
-  Bell
+  Bell,
+  ChevronRight
 } from 'lucide-react';
 import { useNotifications } from '@/hooks/useNotifications';
-import { formatDeadlineStatus, getDaysUntilDeadline, getDeadlineUrgency } from '@/utils/notificationHelper';
+import { getDaysUntilDeadline, getDeadlineUrgency } from '@/utils/notificationHelper';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface PendingNotificationsCardProps {
   onNavigate?: (section: string) => void;
 }
 
-// Format work type to be more readable
 const formatWorkType = (workType: string): string => {
   if (!workType) return 'Electrical Work';
-
   return workType
     .replace(/-/g, ' ')
     .replace(/_/g, ' ')
@@ -35,28 +27,17 @@ const formatWorkType = (workType: string): string => {
     .join(' ');
 };
 
-// Get report type badge info - handles various formats
 const getReportTypeBadge = (reportType?: string, certNumber?: string) => {
   const type = reportType?.toLowerCase().replace(/[\s_]/g, '-') || '';
-
-  // Check report type first, then certificate number prefix as fallback
-  if (type.includes('minor') || certNumber?.startsWith('MW-')) {
-    return { label: 'MW', color: 'bg-purple-500/20 text-purple-400 border-purple-500/30', fullLabel: 'Minor Works' };
-  }
-  if (type === 'eic' || type.includes('eic') && !type.includes('eicr') || certNumber?.startsWith('EIC-')) {
-    return { label: 'EIC', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30', fullLabel: 'EIC' };
-  }
-  if (type === 'eicr' || type.includes('eicr') || certNumber?.startsWith('EICR-')) {
-    return { label: 'EICR', color: 'bg-green-500/20 text-green-400 border-green-500/30', fullLabel: 'EICR' };
-  }
-  return { label: 'CERT', color: 'bg-gray-500/20 text-gray-400 border-gray-500/30', fullLabel: 'Certificate' };
+  if (type.includes('minor') || certNumber?.startsWith('MW-')) return 'MW';
+  if (type === 'eic' || (type.includes('eic') && !type.includes('eicr')) || certNumber?.startsWith('EIC-')) return 'EIC';
+  if (type === 'eicr' || type.includes('eicr') || certNumber?.startsWith('EICR-')) return 'EICR';
+  return 'CERT';
 };
 
 export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCardProps) => {
   const { notifications = [], isLoading } = useNotifications();
-  const isMobile = useIsMobile();
 
-  // Get pending/overdue notifications sorted by urgency
   const urgentNotifications = notifications
     .filter(n => n.notification_status !== 'submitted' && n.notification_status !== 'cancelled')
     .sort((a, b) => {
@@ -64,7 +45,7 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
       if (!b.submission_deadline) return -1;
       return getDaysUntilDeadline(a.submission_deadline) - getDaysUntilDeadline(b.submission_deadline);
     })
-    .slice(0, 3); // Show top 3 for cleaner mobile view
+    .slice(0, 3);
 
   const overdueCount = notifications.filter(
     n => n.submission_deadline && getDaysUntilDeadline(n.submission_deadline) < 0 && n.notification_status !== 'submitted'
@@ -76,100 +57,78 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
 
   if (isLoading) {
     return (
-      <Card className="bg-gradient-to-br from-card via-card to-amber-500/5 border-amber-500/30 shadow-lg shadow-amber-500/5">
-        <CardHeader className={cn("pb-3", isMobile && "px-3 pt-3")}>
-          <CardTitle className={cn("flex items-center text-base", isMobile ? "gap-2" : "gap-2.5")}>
-            <div className={cn("bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl shadow-lg shadow-amber-500/20", isMobile ? "p-1.5" : "p-2")}>
-              <Bell className={cn("text-black", isMobile ? "w-3.5 h-3.5" : "w-4 h-4")} />
-            </div>
-            <span className={isMobile ? "text-sm" : "text-base"}>Part P Notifications</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className={isMobile ? "px-3 pb-3" : ""}>
-          <div className={cn("flex items-center justify-center", isMobile ? "py-6" : "py-8")}>
-            <div className={cn("border-3 border-amber-500 border-t-transparent rounded-full animate-spin", isMobile ? "w-6 h-6" : "w-8 h-8")} />
+      <div className="bg-card border border-elec-yellow/20 rounded-xl overflow-hidden">
+        <div className="p-3 border-b border-elec-yellow/10">
+          <div className="flex items-center gap-2">
+            <Bell className="h-4 w-4 text-elec-yellow" />
+            <span className="text-sm font-semibold text-white">Part P Notifications</span>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+        <div className="p-3 flex items-center justify-center py-10">
+          <div className="w-5 h-5 border-2 border-elec-yellow border-t-transparent rounded-full animate-spin" />
+        </div>
+      </div>
     );
   }
 
   if (urgentNotifications.length === 0) {
     return (
-      <Card className="bg-gradient-to-br from-card via-card to-green-500/5 border-green-500/30 shadow-lg shadow-green-500/5">
-        <CardHeader className={cn("pb-3", isMobile && "px-3 pt-3")}>
-          <CardTitle className={cn("flex items-center", isMobile ? "gap-2 text-sm" : "gap-2.5 text-base")}>
-            <div className={cn("bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg shadow-green-500/20", isMobile ? "p-1.5" : "p-2")}>
-              <CheckCircle2 className={cn("text-white", isMobile ? "w-3.5 h-3.5" : "w-4 h-4")} />
+      <div className="bg-card border border-elec-yellow/20 rounded-xl overflow-hidden">
+        <div className="p-3 border-b border-elec-yellow/10">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="h-4 w-4 text-green-400" />
+            <span className="text-sm font-semibold text-white">Part P Notifications</span>
+          </div>
+        </div>
+        <div className="p-3">
+          <div className="py-6 text-center">
+            <div className="w-11 h-11 mx-auto mb-3 rounded-xl bg-green-500/15 flex items-center justify-center">
+              <CheckCircle2 className="h-5 w-5 text-green-400" />
             </div>
-            Part P Notifications
-          </CardTitle>
-        </CardHeader>
-        <CardContent className={isMobile ? "px-3 pb-3" : ""}>
-          <div className={cn("flex flex-col items-center justify-center text-center", isMobile ? "py-4" : "py-6")}>
-            <div className={cn("rounded-full bg-green-500/10 flex items-center justify-center mb-3", isMobile ? "w-12 h-12" : "w-16 h-16 mb-4")}>
-              <CheckCircle2 className={cn("text-green-500", isMobile ? "w-6 h-6" : "w-8 h-8")} />
-            </div>
-            <p className={cn("font-semibold text-green-400 mb-1", isMobile && "text-sm")}>All Clear!</p>
-            <p className={cn("text-muted-foreground", isMobile ? "text-xs" : "text-sm")}>No pending Part P notifications</p>
+            <p className="text-sm font-medium text-green-400 mb-1">All Clear</p>
+            <p className="text-xs text-white/40 mb-3">No pending Part P notifications</p>
             <Button
-              variant="outline"
+              variant="ghost"
               size="sm"
               onClick={() => onNavigate?.('notifications')}
-              className={cn("mt-4 border-green-500/30 hover:bg-green-500/10 hover:border-green-500/50 touch-manipulation", isMobile && "h-10 w-full")}
+              className="text-elec-yellow/60 hover:text-elec-yellow hover:bg-elec-yellow/10 h-8 px-3 text-xs font-medium touch-manipulation"
             >
-              View History
-              <ArrowRight className={cn(isMobile ? "w-3.5 h-3.5 ml-1" : "w-4 h-4 ml-1.5")} />
+              View History <ArrowRight className="w-3 h-3 ml-1" />
             </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className={cn(
-      "shadow-lg transition-all",
-      overdueCount > 0
-        ? "bg-gradient-to-br from-card via-card to-red-500/10 border-red-500/40 shadow-red-500/10"
-        : "bg-gradient-to-br from-card via-card to-amber-500/5 border-amber-500/30 shadow-amber-500/5"
+    <div className={cn(
+      "bg-card border rounded-xl overflow-hidden",
+      overdueCount > 0 ? "border-red-500/40" : "border-elec-yellow/20"
     )}>
-      <CardHeader className={cn("pb-2", isMobile ? "px-3 pt-3" : "px-4")}>
+      {/* Header */}
+      <div className="p-3 border-b border-elec-yellow/10">
         <div className="flex items-center justify-between">
-          <CardTitle className={cn("flex items-center", isMobile ? "gap-2 text-sm" : "gap-2.5 text-base")}>
-            <div className={cn(
-              "rounded-xl shadow-lg",
-              overdueCount > 0
-                ? "bg-gradient-to-br from-red-500 to-red-600 shadow-red-500/30"
-                : "bg-gradient-to-br from-amber-500 to-orange-500 shadow-amber-500/20",
-              isMobile ? "p-1.5" : "p-2"
-            )}>
-              {overdueCount > 0 ? (
-                <AlertTriangle className={cn("text-white", isMobile ? "w-3.5 h-3.5" : "w-4 h-4")} />
-              ) : (
-                <Bell className={cn("text-black", isMobile ? "w-3.5 h-3.5" : "w-4 h-4")} />
-              )}
-            </div>
-            Part P Notifications
-          </CardTitle>
-
-          {/* Stats Pills */}
-          <div className={cn("flex items-center", isMobile ? "gap-1.5" : "gap-2")}>
-            {overdueCount > 0 && (
-              <Badge className={cn("bg-red-500/20 text-red-400 border-red-500/30 animate-pulse font-bold", isMobile ? "px-1.5 py-0.5 text-[10px]" : "px-2 py-0.5 text-xs")}>
-                {overdueCount} Overdue
-              </Badge>
+          <div className="flex items-center gap-2">
+            {overdueCount > 0 ? (
+              <AlertTriangle className="h-4 w-4 text-red-400" />
+            ) : (
+              <Bell className="h-4 w-4 text-elec-yellow" />
             )}
-            {totalPending > urgentNotifications.length && (
-              <Badge variant="outline" className={cn("border-muted-foreground/30 text-muted-foreground", isMobile ? "px-1.5 py-0.5 text-[10px]" : "px-2 py-0.5 text-xs")}>
-                +{totalPending - urgentNotifications.length} more
-              </Badge>
+            <span className="text-sm font-semibold text-white">Part P Notifications</span>
+          </div>
+          <div className="flex items-center gap-2">
+            {overdueCount > 0 && (
+              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-400">
+                {overdueCount} overdue
+              </span>
             )}
           </div>
         </div>
-      </CardHeader>
+      </div>
 
-      <CardContent className={cn(isMobile ? "space-y-2 px-3 pb-3" : "space-y-3 px-4 pb-4")}>
+      {/* Notifications List */}
+      <div className="p-2 space-y-1.5">
         {urgentNotifications.map(notification => {
           const daysRemaining = notification.submission_deadline
             ? getDaysUntilDeadline(notification.submission_deadline)
@@ -181,147 +140,67 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
           const clientName = notification.reports?.client_name;
           const address = notification.reports?.installation_address;
           const certNumber = notification.reports?.certificate_number;
-          const reportBadge = getReportTypeBadge(notification.reports?.report_type, certNumber);
+          const reportLabel = getReportTypeBadge(notification.reports?.report_type, certNumber);
 
-          // Urgency styling
-          const urgencyStyles = {
-            overdue: {
-              border: 'border-red-500/40',
-              bg: 'bg-gradient-to-r from-red-500/10 to-red-500/5',
-              deadline: 'text-red-400',
-              icon: 'text-red-500',
-              glow: 'shadow-red-500/10'
-            },
-            urgent: {
-              border: 'border-orange-500/40',
-              bg: 'bg-gradient-to-r from-orange-500/10 to-orange-500/5',
-              deadline: 'text-orange-400',
-              icon: 'text-orange-500',
-              glow: 'shadow-orange-500/10'
-            },
-            warning: {
-              border: 'border-amber-500/30',
-              bg: 'bg-gradient-to-r from-amber-500/5 to-transparent',
-              deadline: 'text-amber-400',
-              icon: 'text-amber-500',
-              glow: 'shadow-amber-500/5'
-            },
-            safe: {
-              border: 'border-border/50',
-              bg: 'bg-card/50',
-              deadline: 'text-green-400',
-              icon: 'text-green-500',
-              glow: ''
-            }
-          };
-
-          const styles = urgencyStyles[urgency];
+          const isOverdue = urgency === 'overdue';
+          const isUrgent = urgency === 'urgent';
 
           return (
-            <div
+            <button
               key={notification.id}
               className={cn(
-                'rounded-2xl border transition-all cursor-pointer touch-manipulation',
-                'hover:scale-[1.01] active:scale-[0.99]',
-                styles.border,
-                styles.bg,
-                styles.glow && `shadow-lg ${styles.glow}`,
-                isMobile ? 'p-3' : 'p-4'
+                'w-full rounded-lg border p-2.5 text-left touch-manipulation transition-all',
+                'active:scale-[0.98]',
+                isOverdue ? 'border-red-500/30 bg-red-500/5' :
+                isUrgent ? 'border-orange-500/30 bg-orange-500/5' :
+                'border-elec-yellow/10 bg-elec-yellow/5'
               )}
               onClick={() => onNavigate?.('notifications')}
             >
-              {/* Header: Type Badge + Work Type */}
-              <div className={cn("flex items-center", isMobile ? "gap-2.5 mb-2" : "gap-3 mb-3")}>
-                {/* Type Icon Badge */}
-                <div className={cn(
-                  'rounded-xl flex items-center justify-center flex-shrink-0',
-                  reportBadge.label === 'MW' && 'bg-purple-500',
-                  reportBadge.label === 'EIC' && 'bg-blue-500',
-                  reportBadge.label === 'EICR' && 'bg-green-500',
-                  reportBadge.label === 'CERT' && 'bg-gray-500',
-                  isMobile ? 'w-8 h-8' : 'w-10 h-10'
-                )}>
-                  <span className={cn("font-bold text-white", isMobile ? "text-[10px]" : "text-xs")}>{reportBadge.label}</span>
+              <div className="flex items-center gap-2.5">
+                {/* Type Badge */}
+                <div className="w-8 h-8 rounded-lg bg-elec-yellow/15 flex items-center justify-center flex-shrink-0">
+                  <span className="text-[9px] font-bold text-elec-yellow">{reportLabel}</span>
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <p className={cn("font-semibold text-foreground truncate", isMobile ? "text-xs" : "text-sm")}>
+                  <p className="text-xs font-medium text-white truncate">
                     {formatWorkType(notification.work_type)}
                   </p>
-                  <p className={cn("text-muted-foreground font-mono", isMobile ? "text-[10px]" : "text-xs")}>
-                    {certNumber || notification.report_id?.substring(0, 16)}
-                  </p>
-                </div>
-
-                <ArrowRight className={cn("text-muted-foreground flex-shrink-0", isMobile ? "w-3.5 h-3.5" : "w-4 h-4")} />
-              </div>
-
-              {/* Client & Address (if available) */}
-              {(clientName || address) && (
-                <div className={cn("space-y-1", isMobile ? "mb-2 pl-[42px]" : "space-y-1.5 mb-3 pl-[52px]")}>
                   {clientName && (
-                    <div className={cn("flex items-center", isMobile ? "gap-1.5" : "gap-2")}>
-                      <User className={cn("text-primary flex-shrink-0", isMobile ? "w-3 h-3" : "w-3.5 h-3.5")} />
-                      <span className={cn("text-foreground truncate", isMobile ? "text-xs" : "text-sm")}>{clientName}</span>
-                    </div>
+                    <p className="text-[10px] text-white/50 truncate">{clientName}</p>
                   )}
-                  {address && (
-                    <div className={cn("flex items-start", isMobile ? "gap-1.5" : "gap-2")}>
-                      <MapPin className={cn("text-muted-foreground flex-shrink-0 mt-0.5", isMobile ? "w-3 h-3" : "w-3.5 h-3.5")} />
-                      <span className={cn("text-muted-foreground line-clamp-1", isMobile ? "text-[10px]" : "text-xs")}>{address}</span>
-                    </div>
+                  {notification.submission_deadline && (
+                    <p className={cn(
+                      "text-[10px] font-medium mt-0.5",
+                      isOverdue ? "text-red-400" : isUrgent ? "text-orange-400" : "text-elec-yellow"
+                    )}>
+                      {daysRemaining !== null && daysRemaining < 0
+                        ? `${Math.abs(daysRemaining)}d overdue`
+                        : daysRemaining === 0
+                          ? 'Due today'
+                          : `${daysRemaining}d left`
+                      }
+                    </p>
                   )}
                 </div>
-              )}
 
-              {/* Deadline Badge - Prominent */}
-              {notification.submission_deadline && (
-                <div className={cn(
-                  "flex items-center justify-between rounded-xl mt-2",
-                  urgency === 'overdue' && "bg-red-500/20",
-                  urgency === 'urgent' && "bg-orange-500/20",
-                  urgency === 'warning' && "bg-amber-500/10",
-                  urgency === 'safe' && "bg-green-500/10",
-                  isMobile ? "p-2" : "p-2.5"
-                )}>
-                  <div className={cn("flex items-center", isMobile ? "gap-1.5" : "gap-2")}>
-                    {urgency === 'overdue' || urgency === 'urgent' ? (
-                      <AlertTriangle className={cn(styles.icon, urgency === 'overdue' && 'animate-pulse', isMobile ? "w-3.5 h-3.5" : "w-4 h-4")} />
-                    ) : (
-                      <CalendarClock className={cn(styles.icon, isMobile ? "w-3.5 h-3.5" : "w-4 h-4")} />
-                    )}
-                    <span className={cn("text-muted-foreground", isMobile ? "text-[10px]" : "text-xs")}>Deadline</span>
-                  </div>
-                  <span className={cn("font-bold", styles.deadline, isMobile ? "text-xs" : "text-sm")}>
-                    {daysRemaining !== null && daysRemaining < 0
-                      ? `${Math.abs(daysRemaining)} days overdue`
-                      : daysRemaining === 0
-                        ? 'Due today!'
-                        : `${daysRemaining} days left`
-                    }
-                  </span>
-                </div>
-              )}
-            </div>
+                <ChevronRight className="w-4 h-4 text-elec-yellow/30 flex-shrink-0" />
+              </div>
+            </button>
           );
         })}
 
         {/* View All Button */}
         <Button
-          variant="outline"
-          className={cn(
-            "w-full font-semibold transition-all touch-manipulation",
-            overdueCount > 0
-              ? "border-red-500/30 hover:bg-red-500/10 hover:border-red-500/50 text-red-400"
-              : "border-amber-500/30 hover:bg-amber-500/10 hover:border-amber-500/50",
-            isMobile ? "h-10 text-sm" : "h-12"
-          )}
+          variant="ghost"
+          className="w-full h-8 text-xs font-medium text-elec-yellow/60 hover:text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
           onClick={() => onNavigate?.('notifications')}
         >
           View All Notifications
-          <ArrowRight className={cn(isMobile ? "w-3.5 h-3.5 ml-1.5" : "w-4 h-4 ml-2")} />
+          <ArrowRight className="w-3 h-3 ml-1" />
         </Button>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

@@ -1,16 +1,16 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { UnifiedAddressFinder } from '@/components/ui/unified-address-finder';
 import { QuoteClient, JobDetails } from '@/types/quote';
-import { Building2, MapPin, User } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Clock, User, Mail, Phone, MapPin, Briefcase, FileText, Calendar } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const clientSchema = z.object({
   name: z.string().min(1, 'Client name is required'),
-  email: z.string().email('Invalid email address'),
+  email: z.string().email('Please enter a valid email address'),
   phone: z.string().min(1, 'Phone number is required'),
   address: z.string().min(1, 'Address is required'),
   postcode: z.string().min(1, 'Postcode is required'),
@@ -31,11 +31,9 @@ interface InvoiceClientDetailsStepProps {
 }
 
 export const InvoiceClientDetailsStep = ({ initialData, onUpdate }: InvoiceClientDetailsStepProps) => {
-  const {
-    register,
-    formState: { errors },
-    watch,
-  } = useForm<ClientFormData>({
+  const [recentClients, setRecentClients] = useState<QuoteClient[]>([]);
+
+  const form = useForm<ClientFormData>({
     resolver: zodResolver(clientSchema),
     defaultValues: {
       name: initialData?.client?.name || '',
@@ -50,187 +48,284 @@ export const InvoiceClientDetailsStep = ({ initialData, onUpdate }: InvoiceClien
     },
   });
 
-  // Watch all fields and update parent on changes
-  const formValues = watch();
-  
-  // Update parent whenever form values change
-  const handleFormChange = () => {
-    const client: QuoteClient = {
-      name: formValues.name,
-      email: formValues.email,
-      phone: formValues.phone,
-      address: formValues.address,
-      postcode: formValues.postcode,
-    };
+  // Load recent clients from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('recentClients');
+    if (saved) {
+      setRecentClients(JSON.parse(saved).slice(0, 5));
+    }
+  }, []);
 
-    const jobDetails: JobDetails = {
-      title: formValues.jobTitle,
-      description: formValues.jobDescription,
-      location: formValues.jobLocation,
-      workStartDate: formValues.workStartDate,
-    };
-
-    onUpdate(client, jobDetails);
+  const handleAddressSelect = (address: string, postcode: string) => {
+    form.setValue('address', address);
+    form.setValue('postcode', postcode);
   };
 
+  const handleUseRecentClient = (recentClient: QuoteClient) => {
+    form.setValue('name', recentClient.name);
+    form.setValue('email', recentClient.email);
+    form.setValue('phone', recentClient.phone);
+    form.setValue('address', recentClient.address);
+    form.setValue('postcode', recentClient.postcode);
+  };
+
+  // Watch form changes and update parent
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      const client: QuoteClient = {
+        name: value.name || '',
+        email: value.email || '',
+        phone: value.phone || '',
+        address: value.address || '',
+        postcode: value.postcode || '',
+      };
+
+      const jobDetails: JobDetails = {
+        title: value.jobTitle || '',
+        description: value.jobDescription,
+        location: value.jobLocation,
+        workStartDate: value.workStartDate,
+      };
+
+      onUpdate(client, jobDetails);
+
+      // Save to recent clients when complete
+      if (value.name && value.email && value.phone && value.address && value.postcode) {
+        const saved = localStorage.getItem('recentClients');
+        const recent: QuoteClient[] = saved ? JSON.parse(saved) : [];
+        const updated = [client, ...recent.filter((c) => c.email !== value.email)].slice(0, 5);
+        localStorage.setItem('recentClients', JSON.stringify(updated));
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [form, onUpdate]);
+
+  // Clean inline input style for seamless look
+  const inputClassName = 'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
+
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold">Client & Job Details</h2>
-        <p className="text-muted-foreground">
-          Enter the client information and job details for this invoice
-        </p>
-      </div>
+    <Form {...form}>
+      <div className="space-y-5 text-left pb-24">
+        {/* Recent Clients - Horizontal scroll chips */}
+        {recentClients.length > 0 && (
+          <div className="space-y-2">
+            <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider flex items-center gap-2">
+              <Clock className="h-3.5 w-3.5" />
+              Recent Clients
+            </p>
+            <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+              {recentClients.map((recentClient, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleUseRecentClient(recentClient)}
+                  className={cn(
+                    'shrink-0 px-4 py-2.5 rounded-xl transition-all touch-manipulation active:scale-[0.98]',
+                    'bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06]',
+                    'text-[14px] font-medium text-white whitespace-nowrap'
+                  )}
+                >
+                  {recentClient.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
-      {/* Client Information */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <User className="h-5 w-5" />
+        {/* Client Information Section */}
+        <div>
+          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
             Client Information
-          </CardTitle>
-          <CardDescription>
-            Details of the client receiving the invoice
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Client Name *</Label>
-              <Input
-                id="name"
-                {...register('name')}
-                onBlur={handleFormChange}
-                placeholder="John Smith"
-              />
-              {errors.name && (
-                <p className="text-sm text-destructive">{errors.name.message}</p>
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+            {/* Client Name */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="m-0 p-0 space-y-0">
+                  <div className="flex items-center gap-3 p-4">
+                    <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                      <User className="h-5 w-5 text-black" />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <label className="text-[12px] text-white block mb-0.5">Client Name *</label>
+                      <FormControl>
+                        <input
+                          {...field}
+                          placeholder="Enter client name"
+                          className={inputClassName}
+                          autoComplete="name"
+                        />
+                      </FormControl>
+                    </div>
+                  </div>
+                  <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
+                </FormItem>
               )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email">Email *</Label>
-              <Input
-                id="email"
-                type="email"
-                {...register('email')}
-                onBlur={handleFormChange}
-                placeholder="john@example.com"
-              />
-              {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
-              )}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone *</Label>
-              <Input
-                id="phone"
-                {...register('phone')}
-                onBlur={handleFormChange}
-                placeholder="07123 456789"
-              />
-              {errors.phone && (
-                <p className="text-sm text-destructive">{errors.phone.message}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="postcode">Postcode *</Label>
-              <Input
-                id="postcode"
-                {...register('postcode')}
-                onBlur={handleFormChange}
-                placeholder="SW1A 1AA"
-              />
-              {errors.postcode && (
-                <p className="text-sm text-destructive">{errors.postcode.message}</p>
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="address">Address *</Label>
-            <Input
-              id="address"
-              {...register('address')}
-              onBlur={handleFormChange}
-              placeholder="123 Main Street, London"
             />
-            {errors.address && (
-              <p className="text-sm text-destructive">{errors.address.message}</p>
-            )}
-          </div>
-        </CardContent>
-      </Card>
 
-      {/* Job Details */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Building2 className="h-5 w-5" />
+            {/* Email */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="m-0 p-0 space-y-0">
+                  <div className="flex items-center gap-3 p-4">
+                    <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                      <Mail className="h-5 w-5 text-black" />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <label className="text-[12px] text-white block mb-0.5">Email Address *</label>
+                      <FormControl>
+                        <input
+                          {...field}
+                          type="email"
+                          inputMode="email"
+                          placeholder="client@example.com"
+                          className={inputClassName}
+                          autoComplete="email"
+                        />
+                      </FormControl>
+                    </div>
+                  </div>
+                  <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
+                </FormItem>
+              )}
+            />
+
+            {/* Phone */}
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem className="m-0 p-0 space-y-0">
+                  <div className="flex items-center gap-3 p-4">
+                    <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                      <Phone className="h-5 w-5 text-black" />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <label className="text-[12px] text-white block mb-0.5">Phone Number *</label>
+                      <FormControl>
+                        <input
+                          {...field}
+                          type="tel"
+                          inputMode="tel"
+                          placeholder="07xxx xxxxxx"
+                          className={inputClassName}
+                          autoComplete="tel"
+                        />
+                      </FormControl>
+                    </div>
+                  </div>
+                  <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
+
+        {/* Address Section */}
+        <div>
+          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3 flex items-center gap-2">
+            <MapPin className="h-3.5 w-3.5" />
+            Job Site Address
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
+            <UnifiedAddressFinder
+              onAddressSelect={handleAddressSelect}
+              defaultValue={form.watch('address') ? `${form.watch('address')}, ${form.watch('postcode')}` : ''}
+            />
+          </div>
+        </div>
+
+        {/* Job Details Section */}
+        <div>
+          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
             Job Details
-          </CardTitle>
-          <CardDescription>
-            Information about the work being invoiced
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="jobTitle">Job Title *</Label>
-            <Input
-              id="jobTitle"
-              {...register('jobTitle')}
-              onBlur={handleFormChange}
-              placeholder="e.g., Consumer Unit Replacement"
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+            {/* Job Title */}
+            <FormField
+              control={form.control}
+              name="jobTitle"
+              render={({ field }) => (
+                <FormItem className="m-0 p-0 space-y-0">
+                  <div className="flex items-center gap-3 p-4">
+                    <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                      <Briefcase className="h-5 w-5 text-black" />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <label className="text-[12px] text-white block mb-0.5">Job Title *</label>
+                      <FormControl>
+                        <input
+                          {...field}
+                          placeholder="e.g., Consumer Unit Replacement"
+                          className={inputClassName}
+                        />
+                      </FormControl>
+                    </div>
+                  </div>
+                  <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
+                </FormItem>
+              )}
             />
-            {errors.jobTitle && (
-              <p className="text-sm text-destructive">{errors.jobTitle.message}</p>
-            )}
-          </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="jobDescription">Job Description</Label>
-            <Textarea
-              id="jobDescription"
-              {...register('jobDescription')}
-              onBlur={handleFormChange}
-              placeholder="Describe the work completed..."
-              rows={4}
+            {/* Job Description */}
+            <FormField
+              control={form.control}
+              name="jobDescription"
+              render={({ field }) => (
+                <FormItem className="m-0 p-0 space-y-0">
+                  <div className="flex items-start gap-3 p-4">
+                    <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                      <FileText className="h-5 w-5 text-black" />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <label className="text-[12px] text-white block mb-0.5">Description</label>
+                      <FormControl>
+                        <textarea
+                          {...field}
+                          placeholder="Describe the work completed..."
+                          className={cn(inputClassName, 'min-h-[80px] resize-none')}
+                          rows={3}
+                        />
+                      </FormControl>
+                    </div>
+                  </div>
+                  <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
+                </FormItem>
+              )}
             />
-            {errors.jobDescription && (
-              <p className="text-sm text-destructive">{errors.jobDescription.message}</p>
-            )}
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="jobLocation" className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                Job Location
-              </Label>
-              <Input
-                id="jobLocation"
-                {...register('jobLocation')}
-                onBlur={handleFormChange}
-                placeholder="e.g., London"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="workStartDate">Work Completion Date</Label>
-              <Input
-                id="workStartDate"
-                type="date"
-                {...register('workStartDate')}
-                onBlur={handleFormChange}
-              />
-            </div>
+            {/* Work Completion Date */}
+            <FormField
+              control={form.control}
+              name="workStartDate"
+              render={({ field }) => (
+                <FormItem className="m-0 p-0 space-y-0">
+                  <div className="flex items-center gap-3 p-4">
+                    <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                      <Calendar className="h-5 w-5 text-black" />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <label className="text-[12px] text-white block mb-0.5">Work Completion Date</label>
+                      <FormControl>
+                        <input
+                          {...field}
+                          type="date"
+                          className={cn(inputClassName, 'appearance-none')}
+                        />
+                      </FormControl>
+                    </div>
+                  </div>
+                  <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
+                </FormItem>
+              )}
+            />
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </div>
+    </Form>
   );
 };

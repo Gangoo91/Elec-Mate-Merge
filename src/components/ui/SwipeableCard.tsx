@@ -20,6 +20,8 @@ interface SwipeableCardProps {
   rightAction?: SwipeAction;
   /** Swipe threshold in pixels to trigger action */
   threshold?: number;
+  /** Minimum drag distance before swipe starts (prevents accidental swipes) */
+  dragStartThreshold?: number;
   /** Additional class names */
   className?: string;
   /** Disable swipe interactions */
@@ -35,22 +37,29 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   children,
   leftAction,
   rightAction,
-  threshold = 80,
+  threshold = 100,
+  dragStartThreshold = 20,
   className = '',
   disabled = false,
 }) => {
   const [translateX, setTranslateX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [hasStartedDrag, setHasStartedDrag] = useState(false);
   const startXRef = useRef(0);
+  const startYRef = useRef(0);
   const currentXRef = useRef(0);
   const cardRef = useRef<HTMLDivElement>(null);
+  const isScrollingRef = useRef(false);
 
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
       if (disabled) return;
       startXRef.current = e.touches[0].clientX;
+      startYRef.current = e.touches[0].clientY;
       currentXRef.current = e.touches[0].clientX;
       setIsDragging(true);
+      setHasStartedDrag(false);
+      isScrollingRef.current = false;
     },
     [disabled]
   );
@@ -59,17 +68,35 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
     (e: React.TouchEvent) => {
       if (!isDragging || disabled) return;
       currentXRef.current = e.touches[0].clientX;
-      const diff = currentXRef.current - startXRef.current;
+      const diffX = currentXRef.current - startXRef.current;
+      const diffY = e.touches[0].clientY - startYRef.current;
+
+      // If we haven't determined scroll direction yet, check it
+      if (!hasStartedDrag && !isScrollingRef.current) {
+        // If vertical movement is greater, this is a scroll - ignore horizontal
+        if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
+          isScrollingRef.current = true;
+          return;
+        }
+        // Only start horizontal drag after crossing threshold
+        if (Math.abs(diffX) < dragStartThreshold) {
+          return;
+        }
+        setHasStartedDrag(true);
+      }
+
+      // If scrolling vertically, don't handle swipe
+      if (isScrollingRef.current) return;
 
       // Limit swipe distance with resistance
       const maxSwipe = 120;
-      let newTranslateX = diff;
+      let newTranslateX = diffX;
 
       // Apply resistance at edges
-      if (Math.abs(diff) > maxSwipe) {
-        const overflow = Math.abs(diff) - maxSwipe;
+      if (Math.abs(diffX) > maxSwipe) {
+        const overflow = Math.abs(diffX) - maxSwipe;
         const resistance = 0.3;
-        newTranslateX = diff > 0
+        newTranslateX = diffX > 0
           ? maxSwipe + overflow * resistance
           : -(maxSwipe + overflow * resistance);
       }
@@ -80,12 +107,14 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
 
       setTranslateX(newTranslateX);
     },
-    [isDragging, disabled, leftAction, rightAction]
+    [isDragging, disabled, leftAction, rightAction, hasStartedDrag, dragStartThreshold]
   );
 
   const handleTouchEnd = useCallback(() => {
     if (!isDragging) return;
     setIsDragging(false);
+    setHasStartedDrag(false);
+    isScrollingRef.current = false;
 
     const swipeDistance = Math.abs(translateX);
 

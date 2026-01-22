@@ -288,18 +288,7 @@ const Level3Module1Section2_5 = () => {
         {/* ----------------------------------------
             HEADER
             ---------------------------------------- */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 1.2.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Safe Systems of Work
-          </h1>
-          <p className="text-white/80">
-            PTWs, LOTO procedures, and the formal controls that keep you alive
-          </p>
-        </header>
+        
 
         {/* ----------------------------------------
             QUICK SUMMARY BOXES
@@ -327,26 +316,9 @@ const Level3Module1Section2_5 = () => {
         {/* ----------------------------------------
             LEARNING OUTCOMES
             ---------------------------------------- */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Understand what constitutes a safe system of work",
-              "Know when and how permit to work systems are used",
-              "Apply Lock-Off/Tag-Out (LOTO) procedures correctly",
-              "Execute the safe isolation procedure to GS38 standard",
-              "Understand roles: Authorised Person, Competent Person",
-              "Know the legal basis for these procedures"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* ----------------------------------------
             CONTENT SECTION 01 - Safe Systems of Work

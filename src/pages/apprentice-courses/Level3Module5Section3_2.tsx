@@ -265,18 +265,7 @@ const Level3Module5Section3_2 = () => {
       <article className="px-4 sm:px-6 py-8 sm:py-12">
 
         {/* Header */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 5.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Insulation Resistance Testing
-          </h1>
-          <p className="text-white/80">
-            Test voltages, procedures, and acceptance criteria for insulation integrity
-          </p>
-        </header>
+        
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
@@ -300,27 +289,9 @@ const Level3Module5Section3_2 = () => {
           </div>
         </div>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Select correct test voltage for different circuit types",
-              "Perform insulation resistance tests safely",
-              "Interpret IR readings and identify problems",
-              "Prepare circuits for testing without damage",
-              "Understand factors affecting IR measurements",
-              "Record and report IR test results correctly"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* Section 01: Principles of Insulation Resistance Testing */}
         <section className="mb-10">

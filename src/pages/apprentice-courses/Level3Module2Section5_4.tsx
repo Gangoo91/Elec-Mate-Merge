@@ -263,18 +263,7 @@ const Level3Module2Section5_4 = () => {
       <article className="px-4 sm:px-6 py-8 sm:py-12">
 
         {/* Header */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 2.5.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Load Balancing and Harmonics Considerations
-          </h1>
-          <p className="text-white/80">
-            Managing electrical loads and power quality in integrated systems
-          </p>
-        </header>
+        
 
         {/* Quick Summary Boxes */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
@@ -297,27 +286,9 @@ const Level3Module2Section5_4 = () => {
           </div>
         </div>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Principles of three-phase load balancing",
-              "What harmonics are and where they come from",
-              "Effects of harmonics on installations",
-              "Triplen harmonics and neutral current",
-              "Measuring and managing harmonic content",
-              "Inverter selection for power quality"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* Section 01 */}
         <section className="mb-10">

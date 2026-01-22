@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Download, Eye, Calendar, User, Trash2, CheckCircle, AlertCircle, Receipt, Send, Edit, FileText, CreditCard, PoundSterling } from 'lucide-react';
+import { Download, Eye, Calendar, Trash2, CheckCircle, AlertCircle, Send, Edit, CreditCard, PoundSterling, Clock, MoreHorizontal, FileText, User, Loader2 } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format, isPast, differenceInDays } from 'date-fns';
 import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
@@ -9,6 +8,7 @@ import { PaymentReminderButton } from '@/components/electrician/invoice-builder/
 import { PartialPaymentDialog } from '@/components/electrician/invoice-builder/PartialPaymentDialog';
 import { SwipeableCard } from '@/components/ui/SwipeableCard';
 import { cn } from '@/lib/utils';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 
 interface InvoiceCardViewProps {
   invoices: Quote[];
@@ -40,95 +40,76 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
   stripeRefreshKey = 0,
 }) => {
   const [partialPaymentInvoice, setPartialPaymentInvoice] = useState<Quote | null>(null);
+  const [actionsSheetInvoice, setActionsSheetInvoice] = useState<Quote | null>(null);
 
-  // Get days overdue info with severity escalation
   const getOverdueInfo = (invoice: Quote) => {
     if (!invoice.invoice_due_date) return null;
     const dueDate = new Date(invoice.invoice_due_date);
     const daysOverdue = differenceInDays(new Date(), dueDate);
-
     if (daysOverdue <= 0) return null;
-
-    // Severity escalation: amber (1-7), orange (8-14), red (15+)
-    let severity: 'warning' | 'danger' | 'critical' = 'warning';
-    let color = 'text-amber-500 bg-amber-500/10 border-amber-500/20';
-
-    if (daysOverdue > 14) {
-      severity = 'critical';
-      color = 'text-red-600 bg-red-500/20 border-red-500/30';
-    } else if (daysOverdue > 7) {
-      severity = 'danger';
-      color = 'text-orange-500 bg-orange-500/15 border-orange-500/20';
-    }
-
-    return { daysOverdue, severity, color };
+    return { daysOverdue };
   };
 
-  const getStatusInfo = (invoice: Quote) => {
-    const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
+  const getStatusConfig = (invoice: Quote) => {
+    const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date)) && invoice.invoice_status !== 'paid';
     const status = invoice.invoice_status;
 
     if (isOverdue || status === 'overdue') {
       return {
-        color: 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 border-red-200 dark:border-red-800',
-        label: '⚠️ Overdue',
+        bg: 'bg-red-500/15',
+        border: 'border-red-500/30',
+        text: 'text-red-400',
+        label: 'Overdue',
         icon: AlertCircle,
-        borderColor: 'border-red-500/30 border-l-4 border-l-red-500/60'
+        dot: 'bg-red-500'
       };
     }
-
     if (status === 'paid') {
       return {
-        color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
-        label: '✅ Paid',
+        bg: 'bg-emerald-500/15',
+        border: 'border-emerald-500/30',
+        text: 'text-emerald-400',
+        label: 'Paid',
         icon: CheckCircle,
-        borderColor: 'border-green-500/30 border-l-4 border-l-green-500/60'
+        dot: 'bg-emerald-500'
       };
     }
-
     if (status === 'sent') {
       return {
-        color: 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 border-blue-200 dark:border-blue-800',
-        label: '📤 Sent',
+        bg: 'bg-blue-500/15',
+        border: 'border-blue-500/30',
+        text: 'text-blue-400',
+        label: 'Sent',
         icon: Send,
-        borderColor: 'border-blue-500/30 border-l-4 border-l-blue-500/60'
+        dot: 'bg-blue-500'
       };
     }
-
-    if (status === 'draft') {
-      return {
-        color: 'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300 border-slate-200 dark:border-slate-800',
-        label: '📝 Draft',
-        icon: Edit,
-        borderColor: 'border-slate-500/30 border-l-4 border-l-slate-500/60'
-      };
-    }
-
     return {
-      color: 'bg-slate-100 text-slate-700 dark:bg-slate-950 dark:text-slate-300 border-slate-200 dark:border-slate-800',
-      label: status,
-      icon: Receipt,
-      borderColor: 'border-primary/20 border-l-4 border-l-primary/60'
+      bg: 'bg-white/10',
+      border: 'border-white/20',
+      text: 'text-white/90',
+      label: 'Draft',
+      icon: Edit,
+      dot: 'bg-white/50'
     };
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="space-y-3">
       {invoices.map((invoice, index) => {
-        const statusInfo = getStatusInfo(invoice);
-        const StatusIcon = statusInfo.icon;
-        const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date));
+        const statusConfig = getStatusConfig(invoice);
+        const StatusIcon = statusConfig.icon;
+        const isOverdue = invoice.invoice_due_date && isPast(new Date(invoice.invoice_due_date)) && invoice.invoice_status !== 'paid';
         const overdueInfo = getOverdueInfo(invoice);
         const isPaid = invoice.invoice_status === 'paid';
         const canMarkPaid = invoice.invoice_status === 'sent' || invoice.invoice_status === 'overdue' || isOverdue;
-
         const clientData = invoice.client;
 
         return (
           <div
             key={invoice.id}
             className="animate-fade-in"
-            style={{ animationDelay: `${index * 50}ms` }}
+            style={{ animationDelay: `${index * 30}ms` }}
           >
             <SwipeableCard
               leftAction={{
@@ -145,194 +126,261 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
               } : undefined}
               disabled={isPaid}
             >
-          <div
-            id={`invoice-${invoice.id}`}
-            className={`relative bg-elec-card rounded-2xl overflow-hidden hover:shadow-2xl transition-all border ${statusInfo.borderColor}`}
-          >
-            {/* Content Container */}
-            <div className="relative p-6">
-              {/* Header with invoice number and status */}
-              <div className="flex items-start justify-between mb-4 pb-3 border-b border-primary/20">
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="text-lg sm:text-xl font-bold">
-                      {invoice.invoice_number}
-                    </h3>
-                    <Badge className={`text-xs ${statusInfo.color}`}>
-                      <StatusIcon className="h-3 w-3 mr-1" />
-                      {statusInfo.label}
-                    </Badge>
-                  </div>
-                  {invoice.quoteNumber && (
-                    <div className="text-xs text-muted-foreground flex items-center gap-1">
-                      <Receipt className="h-3 w-3" />
-                      From Quote #{invoice.quoteNumber}
+              <button
+                onClick={() => onInvoiceAction(invoice)}
+                className={cn(
+                  "w-full text-left rounded-2xl overflow-hidden touch-manipulation active:scale-[0.99] transition-all",
+                  "bg-gradient-to-br from-[#1e1e1e] to-[#161616]",
+                  "border",
+                  isPaid ? "border-emerald-500/20" : isOverdue ? "border-red-500/20" : "border-white/[0.08]"
+                )}
+              >
+                {/* Main Content */}
+                <div className="p-4">
+                  {/* Amount - Hero element */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      {/* Status Badge */}
+                      <div className={cn(
+                        "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold mb-2",
+                        statusConfig.bg, statusConfig.border, statusConfig.text, "border"
+                      )}>
+                        <div className={cn("w-1.5 h-1.5 rounded-full", statusConfig.dot)} />
+                        {statusConfig.label}
+                      </div>
+                      {/* Invoice Number */}
+                      <p className="text-[13px] text-white/80 font-medium">{invoice.invoice_number}</p>
                     </div>
-                  )}
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onInvoiceAction(invoice)}
-                  className="h-8 w-8 flex-shrink-0"
-                >
-                  <Eye className="h-4 w-4" />
-                </Button>
-              </div>
-
-              {/* Client Information */}
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-12 h-12 flex items-center justify-center flex-shrink-0">
-                  <User className="h-12 w-12 text-muted-foreground/40" strokeWidth={1.5} />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="text-xs text-muted-foreground mb-0.5">Client</div>
-                  <div className="text-base font-medium truncate">
-                    {clientData?.name || 'Unknown Client'}
-                  </div>
-                  {clientData?.email && (
-                    <div className="text-xs text-muted-foreground truncate">
-                      {clientData.email}
+                    {/* Amount */}
+                    <div className="text-right">
+                      <p className={cn(
+                        "text-[26px] font-bold tracking-tight",
+                        isPaid ? "text-emerald-400" : isOverdue ? "text-red-400" : "text-white"
+                      )}>
+                        {formatCurrency(invoice.total)}
+                      </p>
                     </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Amount Display */}
-              <div className="text-center mb-4 py-4 bg-background/40 rounded-lg border border-primary/10">
-                <div className="text-sm text-muted-foreground mb-1">Total Amount</div>
-                <div className="text-3xl sm:text-4xl font-bold text-elec-yellow">
-                  {formatCurrency(invoice.total)}
-                </div>
-              </div>
-
-              {/* Invoice Details - 2 Column Layout */}
-              <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
-                <div>
-                  <div className="text-xs text-muted-foreground mb-1">Invoice Date</div>
-                  <div className="text-foreground font-medium flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
-                    {invoice.invoice_date ? format(new Date(invoice.invoice_date), 'dd MMM yyyy') : 'N/A'}
                   </div>
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground mb-1">Due Date</div>
-                  <div className={`font-medium flex items-center gap-1 ${
-                    isOverdue ? 'text-red-600 font-semibold' : 'text-foreground'
-                  }`}>
-                    <Calendar className="h-3 w-3" />
-                    {invoice.invoice_due_date ? format(new Date(invoice.invoice_due_date), 'dd MMM yyyy') : 'N/A'}
-                    {isOverdue && <AlertCircle className="h-3 w-3 ml-1" />}
-                  </div>
-                  {/* Days overdue badge */}
-                  {overdueInfo && (
-                    <div className={cn(
-                      "flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium mt-2 border w-fit",
-                      overdueInfo.color
-                    )}>
-                      <AlertCircle className="h-3 w-3" />
-                      <span>{overdueInfo.daysOverdue} days overdue</span>
+
+                  {/* Client Info */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                      <User className="h-5 w-5 text-elec-yellow" />
                     </div>
-                  )}
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground mb-1">Items</div>
-                  <div className="text-foreground font-medium flex items-center gap-1">
-                    <FileText className="h-3 w-3" />
-                    {invoice.items.length}
-                  </div>
-                </div>
-              </div>
-
-              {/* Quick Actions Bar - Mobile Native */}
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <div className="flex items-center gap-1.5">
-                  {/* PDF Download */}
-                  <Button
-                    onClick={() => onDownloadPDF(invoice)}
-                    disabled={downloadingPdfId === invoice.id}
-                    variant="ghost"
-                    size="icon"
-                    className="h-11 w-11 touch-manipulation rounded-xl bg-background/60 hover:bg-background"
-                  >
-                    <Download className="h-5 w-5" />
-                  </Button>
-
-                  {/* View/Edit */}
-                  <Button
-                    onClick={() => onInvoiceAction(invoice)}
-                    variant="ghost"
-                    size="icon"
-                    className="h-11 w-11 touch-manipulation rounded-xl bg-background/60 hover:bg-background"
-                  >
-                    {invoice.invoice_status === 'draft' ? <Edit className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                  </Button>
-
-                  {/* Delete */}
-                  <Button
-                    onClick={() => onDeleteInvoice(invoice.id)}
-                    disabled={deletingInvoiceId === invoice.id}
-                    variant="ghost"
-                    size="icon"
-                    className="h-11 w-11 touch-manipulation rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500"
-                  >
-                    <Trash2 className="h-5 w-5" />
-                  </Button>
-                </div>
-
-                {/* Send Dropdown */}
-                <InvoiceSendDropdown
-                  invoice={invoice}
-                  onSuccess={onSendSuccess}
-                  disabled={!clientData?.email || invoice.invoice_status === 'paid'}
-                  refreshKey={stripeRefreshKey}
-                />
-              </div>
-
-              {/* Payment Actions - Native Card Style */}
-              {(invoice.invoice_status === 'sent' || invoice.invoice_status === 'overdue' || isOverdue) && (
-                <div className="bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/20 rounded-xl p-3 space-y-2">
-                  <div className="flex items-center gap-2 text-xs text-emerald-400 font-medium mb-2">
-                    <PoundSterling className="h-3.5 w-3.5" />
-                    Payment Actions
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[15px] font-semibold text-white truncate">
+                        {clientData?.name || 'Unknown Client'}
+                      </p>
+                      {clientData?.email && (
+                        <p className="text-[13px] text-white/80 truncate">{clientData.email}</p>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2">
-                    {/* Record Partial Payment */}
-                    <Button
-                      onClick={() => setPartialPaymentInvoice(invoice)}
-                      variant="outline"
-                      className="h-11 touch-manipulation border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 rounded-xl"
+                  {/* Meta Row */}
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <div className="flex items-center gap-1.5 text-[12px] text-white/90 bg-white/[0.05] px-2.5 py-1.5 rounded-lg">
+                      <Calendar className="h-3.5 w-3.5" />
+                      <span>{invoice.invoice_date ? format(new Date(invoice.invoice_date), 'dd MMM yy') : 'N/A'}</span>
+                    </div>
+
+                    {invoice.invoice_due_date && (
+                      <div className={cn(
+                        "flex items-center gap-1.5 text-[12px] px-2.5 py-1.5 rounded-lg",
+                        isOverdue
+                          ? "bg-red-500/10 text-red-400 font-medium"
+                          : "bg-white/[0.05] text-white/90"
+                      )}>
+                        <Clock className="h-3.5 w-3.5" />
+                        <span>
+                          {isOverdue && overdueInfo
+                            ? `${overdueInfo.daysOverdue}d overdue`
+                            : `Due ${format(new Date(invoice.invoice_due_date), 'dd MMM')}`
+                          }
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="flex items-center gap-1.5 text-[12px] text-white/90 bg-white/[0.05] px-2.5 py-1.5 rounded-lg">
+                      <FileText className="h-3.5 w-3.5" />
+                      <span>{invoice.items.length} items</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Bar - Only show for non-paid invoices */}
+                {!isPaid && (
+                  <div
+                    className="flex items-center gap-2 p-3 border-t border-white/[0.06]"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* Download PDF */}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onDownloadPDF(invoice); }}
+                      disabled={downloadingPdfId === invoice.id}
+                      className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-white/[0.08] hover:bg-white/[0.12] text-[13px] font-medium text-white touch-manipulation transition-all active:scale-[0.96]"
                     >
-                      <PoundSterling className="h-4 w-4 sm:mr-2" />
-                      <span className="hidden sm:inline">Record</span>
-                    </Button>
+                      {downloadingPdfId === invoice.id ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Download className="h-4 w-4" />
+                      )}
+                      <span>PDF</span>
+                    </button>
 
-                    {/* Send Reminder */}
-                    <PaymentReminderButton
-                      invoice={invoice}
-                      onReminderSent={onSendSuccess}
-                      className="h-11 touch-manipulation rounded-xl"
-                    />
+                    {/* Send */}
+                    <div className="flex-1">
+                      <InvoiceSendDropdown
+                        invoice={invoice}
+                        onSuccess={onSendSuccess}
+                        disabled={!clientData?.email}
+                        refreshKey={stripeRefreshKey}
+                        compact
+                      />
+                    </div>
+
+                    {canMarkPaid && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onMarkAsPaid(invoice); }}
+                        disabled={markingPaidId === invoice.id}
+                        className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-[13px] font-semibold text-emerald-400 touch-manipulation transition-all active:scale-[0.96]"
+                      >
+                        {markingPaidId === invoice.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <CheckCircle className="h-4 w-4" />
+                        )}
+                        <span>Paid</span>
+                      </button>
+                    )}
+
+                    {/* More Actions */}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setActionsSheetInvoice(invoice); }}
+                      className="flex items-center justify-center h-10 w-10 rounded-xl bg-white/[0.08] hover:bg-white/[0.12] text-white touch-manipulation transition-all active:scale-[0.96]"
+                    >
+                      <MoreHorizontal className="h-5 w-5" />
+                    </button>
                   </div>
+                )}
 
-                  {/* Mark as Fully Paid - Primary Action */}
-                  <Button
-                    onClick={() => onMarkAsPaid(invoice)}
-                    disabled={markingPaidId === invoice.id}
-                    className="w-full h-12 touch-manipulation bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold"
-                  >
-                    <CheckCircle className="h-5 w-5 mr-2" />
-                    {markingPaidId === invoice.id ? 'Updating...' : 'Mark Fully Paid'}
-                  </Button>
-                </div>
-              )}
-            </div>
-          </div>
+                {/* Paid Badge Footer */}
+                {isPaid && (
+                  <div className="flex items-center justify-center gap-2 py-3 bg-emerald-500/10 border-t border-emerald-500/20">
+                    <CheckCircle className="h-4 w-4 text-emerald-400" />
+                    <span className="text-[13px] font-semibold text-emerald-400">Paid</span>
+                  </div>
+                )}
+              </button>
             </SwipeableCard>
           </div>
         );
       })}
+
+      {/* Actions Sheet */}
+      <Sheet open={!!actionsSheetInvoice} onOpenChange={(open) => !open && setActionsSheetInvoice(null)}>
+        <SheetContent side="bottom" className="h-auto max-h-[80vh] rounded-t-[28px] p-0 bg-[#0f0f0f] border-t border-white/10">
+          {/* Handle bar */}
+          <div className="flex justify-center pt-3 pb-2">
+            <div className="w-10 h-1 rounded-full bg-white/20" />
+          </div>
+
+          {actionsSheetInvoice && (
+            <>
+              {/* Invoice Summary Header */}
+              <div className="px-5 pb-4 border-b border-white/[0.06]">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[13px] text-white/80 font-medium">{actionsSheetInvoice.invoice_number}</p>
+                    <p className="text-[15px] font-semibold text-white mt-0.5">
+                      {actionsSheetInvoice.client?.name || 'Unknown Client'}
+                    </p>
+                  </div>
+                  <p className="text-[22px] font-bold text-elec-yellow">
+                    {formatCurrency(actionsSheetInvoice.total)}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 pb-10 space-y-2">
+                {/* View/Edit */}
+                <button
+                  onClick={() => { onInvoiceAction(actionsSheetInvoice); setActionsSheetInvoice(null); }}
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center">
+                    <Eye className="h-5 w-5 text-blue-400" />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <p className="text-[15px] font-semibold text-white">View Invoice</p>
+                    <p className="text-[12px] text-white/80">View or edit details</p>
+                  </div>
+                </button>
+
+                {/* Download PDF */}
+                <button
+                  onClick={() => { onDownloadPDF(actionsSheetInvoice); setActionsSheetInvoice(null); }}
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
+                    <Download className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <p className="text-[15px] font-semibold text-white">Download PDF</p>
+                    <p className="text-[12px] text-white/80">Save to device</p>
+                  </div>
+                </button>
+
+                {/* Record Partial Payment */}
+                {(actionsSheetInvoice.invoice_status === 'sent' || actionsSheetInvoice.invoice_status === 'overdue') && (
+                  <button
+                    onClick={() => { setPartialPaymentInvoice(actionsSheetInvoice); setActionsSheetInvoice(null); }}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
+                  >
+                    <div className="w-11 h-11 rounded-xl bg-emerald-500/15 flex items-center justify-center">
+                      <PoundSterling className="h-5 w-5 text-emerald-400" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="text-[15px] font-semibold text-white">Record Payment</p>
+                      <p className="text-[12px] text-white/80">Log partial or full payment</p>
+                    </div>
+                  </button>
+                )}
+
+                {/* Send Reminder */}
+                {(actionsSheetInvoice.invoice_status === 'sent' || actionsSheetInvoice.invoice_status === 'overdue') && (
+                  <div className="pt-1">
+                    <PaymentReminderButton
+                      invoice={actionsSheetInvoice}
+                      onReminderSent={() => { onSendSuccess(); setActionsSheetInvoice(null); }}
+                      className="w-full h-14 rounded-2xl text-[15px] font-semibold bg-amber-500/10 border-amber-500/20 hover:bg-amber-500/15"
+                    />
+                  </div>
+                )}
+
+                {/* Divider */}
+                <div className="py-2">
+                  <div className="h-px bg-white/[0.06]" />
+                </div>
+
+                {/* Delete */}
+                <button
+                  onClick={() => { onDeleteInvoice(actionsSheetInvoice.id); setActionsSheetInvoice(null); }}
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl hover:bg-red-500/10 touch-manipulation active:scale-[0.98] transition-all"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-red-500/15 flex items-center justify-center">
+                    <Trash2 className="h-5 w-5 text-red-400" />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <p className="text-[15px] font-semibold text-red-400">Delete Invoice</p>
+                    <p className="text-[12px] text-white/90">This cannot be undone</p>
+                  </div>
+                </button>
+              </div>
+            </>
+          )}
+        </SheetContent>
+      </Sheet>
 
       {/* Partial Payment Dialog */}
       {partialPaymentInvoice && (

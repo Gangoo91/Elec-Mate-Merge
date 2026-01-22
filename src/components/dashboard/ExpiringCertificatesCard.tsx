@@ -1,162 +1,161 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, Calendar, ChevronRight, User } from 'lucide-react';
 import { useExpiryReminders } from '@/hooks/useExpiryReminders';
-import { formatExpiryStatus, getExpiryUrgency, getExpiryColorClasses, filterByTimeRange } from '@/utils/expiryHelper';
+import { formatExpiryStatus, getExpiryUrgency, filterByTimeRange } from '@/utils/expiryHelper';
 import { useNavigate, Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 export const ExpiringCertificatesCard = () => {
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
   const { reminders, isLoading } = useExpiryReminders();
 
-  // Filter to show only expiring in next 90 days or overdue
   const upcomingReminders = filterByTimeRange(reminders, '90');
-  
-  // Sort by urgency (expired first, then by days remaining)
   const sortedReminders = [...upcomingReminders]
     .sort((a, b) => new Date(a.expiry_date).getTime() - new Date(b.expiry_date).getTime())
     .slice(0, 5);
 
-  const handleViewAll = () => {
-    navigate('/certificate-expiry');
-  };
-
-  const handleReminderClick = (reportId: string) => {
-    navigate(`/certificate-expiry?highlight=${reportId}`);
-  };
+  const handleViewAll = () => navigate('/certificate-expiry');
+  const handleReminderClick = (reportId: string) => navigate(`/certificate-expiry?highlight=${reportId}`);
 
   if (isLoading) {
     return (
-      <Card className="bg-gradient-to-br from-neutral-900 to-neutral-800 border-elec-yellow/30">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
-            <Calendar className="h-5 w-5" />
-            Expiring Certificates
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-center h-32">
-            <div className="animate-pulse text-neutral-400">Loading...</div>
+      <div className="bg-card border border-elec-yellow/20 rounded-xl overflow-hidden">
+        <div className="p-3 border-b border-elec-yellow/10">
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4 text-elec-yellow" />
+            <span className="text-sm font-semibold text-white">Expiring Certificates</span>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+        <div className="p-3 flex items-center justify-center py-10">
+          <div className="w-5 h-5 border-2 border-elec-yellow border-t-transparent rounded-full animate-spin" />
+        </div>
+      </div>
     );
   }
 
   if (sortedReminders.length === 0) {
     return (
-      <Card className="bg-gradient-to-br from-neutral-900 to-neutral-800 border-elec-yellow/30">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
-            <Calendar className="h-5 w-5" />
-            Expiring Certificates
-          </CardTitle>
-          <CardDescription className="text-neutral-400">
-            No certificates expiring in the next 90 days
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col items-center justify-center py-8 text-center">
-            <div className="rounded-full bg-green-500/10 p-3 mb-3">
-              <Calendar className="h-6 w-6 text-green-500" />
-            </div>
-            <p className="text-neutral-400 text-sm">All certificates are up to date</p>
+      <div className="bg-card border border-elec-yellow/20 rounded-xl overflow-hidden">
+        <div className="p-3 border-b border-elec-yellow/10">
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4 text-green-400" />
+            <span className="text-sm font-semibold text-white">Expiring Certificates</span>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+        <div className="p-3">
+          <div className="py-6 text-center">
+            <div className="w-11 h-11 mx-auto mb-3 rounded-xl bg-green-500/15 flex items-center justify-center">
+              <Calendar className="h-5 w-5 text-green-400" />
+            </div>
+            <p className="text-sm font-medium text-green-400 mb-1">All Up to Date</p>
+            <p className="text-xs text-white/40">No certificates expiring in 90 days</p>
+          </div>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="bg-gradient-to-br from-neutral-900 to-neutral-800 border-elec-yellow/30">
-      <CardHeader>
+    <div className="bg-card border border-elec-yellow/20 rounded-xl overflow-hidden">
+      {/* Header */}
+      <div className="p-3 border-b border-elec-yellow/10">
         <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className={cn("flex items-center gap-2 text-foreground", isMobile && "text-sm")}>
-              <Calendar className={cn(isMobile ? "h-4 w-4" : "h-5 w-5")} />
-              Expiring Certificates
-            </CardTitle>
-            <CardDescription className={cn("text-neutral-400", isMobile && "text-xs")}>
-              {sortedReminders.length} certificate{sortedReminders.length === 1 ? '' : 's'} expiring soon
-            </CardDescription>
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4 text-elec-yellow" />
+            <span className="text-sm font-semibold text-white">Expiring Certificates</span>
+            <span className="text-xs text-white/40">({sortedReminders.length})</span>
           </div>
           <Button
             variant="ghost"
             size="sm"
             onClick={handleViewAll}
-            className="text-elec-yellow hover:text-elec-yellow/90 hover:bg-elec-yellow/10"
+            className="text-elec-yellow/60 hover:text-elec-yellow hover:bg-elec-yellow/10 h-7 px-2 text-xs font-medium touch-manipulation"
           >
-            {isMobile ? 'All' : 'View All'}
-            <ChevronRight className="h-4 w-4 ml-1" />
+            View All <ChevronRight className="h-3 w-3 ml-1" />
           </Button>
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className={cn(isMobile ? "space-y-2" : "space-y-3")}>
-          {sortedReminders.map((reminder) => {
-            const urgency = getExpiryUrgency(reminder.expiry_date);
-            const colors = getExpiryColorClasses(urgency);
-            const statusText = formatExpiryStatus(reminder.expiry_date);
+      </div>
 
-            return (
-              <button
-                key={reminder.id}
-                onClick={() => handleReminderClick(reminder.report_id)}
-                className={cn(
-                  `w-full rounded-lg border ${colors.border} ${colors.bg} hover:opacity-80 transition-all text-left active:scale-[0.98] touch-manipulation`,
-                  isMobile ? "p-2.5" : "p-3"
-                )}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      {reminder.customer ? (
-                        <Link
-                          to={`/customers/${reminder.customer.id}`}
-                          onClick={(e) => e.stopPropagation()}
-                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-medium hover:bg-elec-yellow/30 transition-colors shrink-0"
-                        >
-                          <User className="h-3 w-3" />
-                          {reminder.customer.name}
-                        </Link>
-                      ) : (
-                        <span className="font-medium text-foreground text-sm truncate">
-                          {reminder.client_name || 'Unknown Client'}
-                        </span>
-                      )}
-                      <Badge className={`${colors.badge} text-xs shrink-0`}>
-                        {urgency === 'expired' ? 'Expired' : statusText}
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-neutral-400 truncate mb-1">
-                      {reminder.installation_address || 'No address'}
-                    </p>
-                    <div className="flex items-center gap-4 text-xs text-neutral-500">
-                      <span>Cert: {reminder.certificate_number}</span>
-                      <span>Expires: {format(new Date(reminder.expiry_date), 'dd MMM yyyy')}</span>
-                    </div>
+      {/* Reminders List */}
+      <div className="p-2 space-y-1.5">
+        {sortedReminders.map((reminder) => {
+          const urgency = getExpiryUrgency(reminder.expiry_date);
+          const statusText = formatExpiryStatus(reminder.expiry_date);
+          const isExpired = urgency === 'expired';
+          const isCritical = urgency === 'critical';
+
+          return (
+            <button
+              key={reminder.id}
+              onClick={() => handleReminderClick(reminder.report_id)}
+              className={cn(
+                'w-full rounded-lg border p-2.5 text-left touch-manipulation transition-all',
+                'active:scale-[0.98]',
+                isExpired ? 'border-red-500/30 bg-red-500/5' :
+                isCritical ? 'border-orange-500/30 bg-orange-500/5' :
+                'border-elec-yellow/10 bg-elec-yellow/5'
+              )}
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex-1 min-w-0">
+                  {/* Customer/Client */}
+                  <div className="flex items-center gap-2 mb-1">
+                    {reminder.customer ? (
+                      <Link
+                        to={`/customers/${reminder.customer.id}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-elec-yellow/15 text-elec-yellow text-[10px] font-medium hover:bg-elec-yellow/25 transition-colors"
+                      >
+                        <User className="h-2.5 w-2.5" />
+                        {reminder.customer.name}
+                      </Link>
+                    ) : (
+                      <span className="text-xs font-medium text-white truncate">
+                        {reminder.client_name || 'Unknown Client'}
+                      </span>
+                    )}
+                    <span className={cn(
+                      'text-[9px] font-medium px-1.5 py-0.5 rounded-full',
+                      isExpired ? 'bg-red-500/20 text-red-400' :
+                      isCritical ? 'bg-orange-500/20 text-orange-400' :
+                      'bg-elec-yellow/20 text-elec-yellow'
+                    )}>
+                      {isExpired ? 'Expired' : statusText}
+                    </span>
                   </div>
-                  {urgency === 'expired' && (
-                    <AlertCircle className={cn(isMobile ? "h-4 w-4" : "h-5 w-5", "text-red-500 shrink-0 mt-1")} />
-                  )}
-                </div>
-              </button>
-            );
-          })}
-        </div>
 
+                  {/* Address */}
+                  <p className="text-[10px] text-white/40 truncate mb-0.5">
+                    {reminder.installation_address || 'No address'}
+                  </p>
+
+                  {/* Cert & Expiry */}
+                  <div className="flex items-center gap-2 text-[10px] text-white/40">
+                    <span className="font-mono">{reminder.certificate_number}</span>
+                    <span>·</span>
+                    <span>Expires {format(new Date(reminder.expiry_date), 'dd MMM yyyy')}</span>
+                  </div>
+                </div>
+
+                {isExpired && (
+                  <AlertCircle className="h-4 w-4 text-red-400 flex-shrink-0" />
+                )}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Manage All Button */}
+      <div className="p-2 pt-0">
         <Button
           onClick={handleViewAll}
-          className={cn("w-full bg-elec-yellow hover:bg-elec-yellow/90 text-neutral-900 font-semibold", isMobile ? "mt-3" : "mt-4")}
+          className="w-full bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/25 font-medium h-9 text-sm touch-manipulation"
         >
-          Manage All Expiring Certificates
+          Manage Expiring Certificates
         </Button>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

@@ -70,31 +70,9 @@ const Level3Module4Section5 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        {/* Hero Section */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Section 5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Rectification and Verification
-          </h1>
-          <p className="text-white/80 max-w-3xl mx-auto">
-            Learn proper rectification methods, compliance verification and documentation for electrical fault repairs
-          </p>
-        </header>
+        
 
-        {/* Section Overview */}
-        <section className="mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">Section Overview</p>
-            <p className="text-sm text-white">
-              This section covers rectification and verification including repair methods,
-              BS7671 compliance, recording remedial works, re-testing and certification,
-              and preventative maintenance strategies.
-            </p>
-          </div>
-        </section>
+        
 
         {/* Subsections Grid */}
         <section>

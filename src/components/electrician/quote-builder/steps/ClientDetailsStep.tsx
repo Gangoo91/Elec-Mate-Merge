@@ -2,11 +2,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { MobileInput } from "@/components/ui/mobile-input";
 import { UnifiedAddressFinder } from "@/components/ui/unified-address-finder";
 import { QuoteClient } from "@/types/quote";
 import { useEffect, useState } from "react";
-import { Clock, User, MapPin } from "lucide-react";
+import { Clock, User, MapPin, Mail, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const clientSchema = z.object({
@@ -73,20 +72,17 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
     return () => subscription.unsubscribe();
   }, [form, onUpdate]);
 
+  // Clean inline input style for seamless look
+  const inputClassName = "w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow";
+
   return (
     <Form {...form}>
-      <div className="space-y-6">
-        {/* Section Header */}
-        <div className="flex items-center gap-2">
-          <User className="h-5 w-5 text-elec-yellow" />
-          <h2 className="text-lg font-semibold">Client Information</h2>
-        </div>
-
+      <div className="space-y-4 text-left">
         {/* Recent Clients - Horizontal scroll chips */}
         {recentClients.length > 0 && (
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground flex items-center gap-2">
-              <Clock className="h-4 w-4" />
+            <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider flex items-center gap-2">
+              <Clock className="h-3.5 w-3.5" />
               Recent Clients
             </p>
             <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
@@ -96,9 +92,9 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
                   type="button"
                   onClick={() => handleUseRecentClient(recentClient)}
                   className={cn(
-                    "shrink-0 px-4 py-2.5 rounded-full border-2 transition-all",
-                    "bg-elec-gray/50 border-border hover:border-elec-yellow/50 hover:bg-elec-gray",
-                    "text-sm font-medium whitespace-nowrap active:scale-[0.98]"
+                    "shrink-0 px-4 py-2.5 rounded-xl transition-all touch-manipulation active:scale-[0.98]",
+                    "bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06]",
+                    "text-[14px] font-medium text-white whitespace-nowrap"
                   )}
                 >
                   {recentClient.name}
@@ -108,83 +104,111 @@ export const ClientDetailsStep = ({ client, onUpdate }: ClientDetailsStepProps) 
           </div>
         )}
 
-        {/* Divider */}
-        <div className="border-t border-border/50" />
+        {/* Client Information Section */}
+        <div>
+          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+            Client Information
+          </p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+            {/* Client Name */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="m-0 p-0 space-y-0">
+                  <div className="flex items-center gap-3 p-4">
+                    <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                      <User className="h-5 w-5 text-black" />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <label className="text-[12px] text-white/70 block mb-0.5">Client Name *</label>
+                      <FormControl>
+                        <input
+                          {...field}
+                          placeholder="Enter client name"
+                          className={inputClassName}
+                          autoComplete="name"
+                        />
+                      </FormControl>
+                    </div>
+                  </div>
+                  <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
+                </FormItem>
+              )}
+            />
 
-        {/* Client Name - Full width */}
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <MobileInput
-                  label="Client Name *"
-                  placeholder="Enter client name"
-                  className="h-14"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+            {/* Email */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="m-0 p-0 space-y-0">
+                  <div className="flex items-center gap-3 p-4">
+                    <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                      <Mail className="h-5 w-5 text-black" />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <label className="text-[12px] text-white/70 block mb-0.5">Email Address *</label>
+                      <FormControl>
+                        <input
+                          {...field}
+                          type="email"
+                          inputMode="email"
+                          placeholder="client@example.com"
+                          className={inputClassName}
+                          autoComplete="email"
+                        />
+                      </FormControl>
+                    </div>
+                  </div>
+                  <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
+                </FormItem>
+              )}
+            />
 
-        {/* Email and Phone - Grid on tablet+ */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <MobileInput
-                    label="Email Address *"
-                    type="email"
-                    placeholder="client@example.com"
-                    className="h-14"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <MobileInput
-                    label="Phone Number *"
-                    type="tel"
-                    inputMode="tel"
-                    placeholder="07xxx xxxxxx"
-                    className="h-14"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            {/* Phone */}
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem className="m-0 p-0 space-y-0">
+                  <div className="flex items-center gap-3 p-4">
+                    <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                      <Phone className="h-5 w-5 text-black" />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <label className="text-[12px] text-white/70 block mb-0.5">Phone Number *</label>
+                      <FormControl>
+                        <input
+                          {...field}
+                          type="tel"
+                          inputMode="tel"
+                          placeholder="07xxx xxxxxx"
+                          className={inputClassName}
+                          autoComplete="tel"
+                        />
+                      </FormControl>
+                    </div>
+                  </div>
+                  <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-border/50" />
-
         {/* Address Section */}
-        <div className="space-y-3">
-          <p className="text-sm font-medium flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-elec-yellow" />
+        <div>
+          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3 flex items-center gap-2">
+            <MapPin className="h-3.5 w-3.5" />
             Job Site Address
           </p>
-          <UnifiedAddressFinder
-            onAddressSelect={handleAddressSelect}
-            defaultValue={form.watch("address") ? `${form.watch("address")}, ${form.watch("postcode")}` : ""}
-          />
+          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
+            <UnifiedAddressFinder
+              onAddressSelect={handleAddressSelect}
+              defaultValue={form.watch("address") ? `${form.watch("address")}, ${form.watch("postcode")}` : ""}
+            />
+          </div>
         </div>
       </div>
     </Form>

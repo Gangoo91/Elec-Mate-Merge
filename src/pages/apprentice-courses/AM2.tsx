@@ -104,34 +104,8 @@ const AM2 = () => {
       </header>
 
       {/* Main Content */}
-      <main className="px-4 sm:px-6 py-6 safe-bottom">
+      <main className="px-4 sm:px-6 py-4 safe-bottom">
         <div className="max-w-7xl mx-auto">
-          {/* Hero Section */}
-          <div className="pb-6 sm:pb-8">
-            {/* Icon with Glow Effect */}
-            <div className="relative inline-block mb-4">
-              <div className="absolute inset-0 bg-elec-yellow/20 rounded-2xl blur-xl scale-150" />
-              <div className={cn(
-                'relative p-3 sm:p-4 rounded-2xl',
-                'bg-gradient-to-br from-elec-yellow/20 to-amber-500/10',
-                'border border-elec-yellow/30',
-                'shadow-[0_0_30px_-5px_hsl(47_100%_50%/0.3)]'
-              )}>
-                <Award className="w-7 h-7 sm:w-8 sm:h-8 text-elec-yellow" />
-              </div>
-            </div>
-
-            {/* Title */}
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
-              AM2 Preparation & Guidance
-            </h1>
-
-            {/* Description */}
-            <p className="text-base text-white/70 leading-relaxed max-w-2xl">
-              Comprehensive preparation for the AM2 assessment covering installation tasks, inspection & testing, fault diagnosis, and exam strategy.
-            </p>
-          </div>
-
           {/* Modules Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {modules.map((module) => (

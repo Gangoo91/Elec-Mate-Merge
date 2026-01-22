@@ -1,4 +1,4 @@
-import { ArrowLeft, ClipboardCheck, Timer, Zap, FileSearch } from "lucide-react";
+import { ArrowLeft, ClipboardCheck, Timer, Zap, FileSearch, Shuffle, Clock, Trophy } from "lucide-react";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -7,8 +7,8 @@ import useSEO from "@/hooks/useSEO";
 const subsections = [
   {
     number: "1.1",
-    title: "Full Practice Exam",
-    description: "Complete mock exams simulating real Level 3 exam conditions and format",
+    title: "Topic-Based Mock Exams",
+    description: "Individual exams for each module - H&S, Science, Testing, Design & more",
     icon: ClipboardCheck,
     href: "../level3-module8-section1-1",
   },
@@ -63,35 +63,40 @@ const Level3Module8Section1 = () => {
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-        {/* Hero Section */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Section 1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Mock Exams
-          </h1>
-          <p className="text-white/80 max-w-3xl mx-auto">
-            Practice exams and tests to prepare you for the real Level 3 assessments
-          </p>
-        </header>
 
-        {/* Section Overview */}
-        <section className="mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">Section Overview</p>
-            <p className="text-sm text-white">
-              This section provides comprehensive exam preparation including full practice exams,
-              timed module tests, quick fire questions for instant recall,
-              and past paper analysis to understand exam patterns.
-            </p>
-          </div>
+        {/* Featured: Comprehensive Mock Exam */}
+        <section className="mb-8">
+          <Link to="../level3-module8-mock-exam8">
+            <div className="relative p-5 rounded-2xl bg-gradient-to-br from-elec-yellow/10 to-amber-600/5 border-2 border-elec-yellow/30 hover:border-elec-yellow/50 transition-all touch-manipulation active:scale-[0.98]">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
+                  <Shuffle className="h-7 w-7 text-elec-yellow" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs font-bold text-elec-yellow bg-elec-yellow/20 px-2 py-0.5 rounded">COMPREHENSIVE</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-1">Full Practice Exam</h3>
+                  <p className="text-sm text-white/60 mb-3">40 questions from all 7 modules • 90 minutes • 60% pass mark</p>
+                  <div className="flex items-center gap-4 text-xs text-white/50">
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3.5 w-3.5" />
+                      90 mins
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Trophy className="h-3.5 w-3.5" />
+                      60% to pass
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
         </section>
 
         {/* Subsections Grid */}
         <section>
-          <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
+          <h2 className="text-lg font-semibold text-white mb-6">Exam Resources</h2>
           <div className="grid grid-cols-1 gap-4">
             {subsections.map((subsection, index) => (
               <ModuleCard

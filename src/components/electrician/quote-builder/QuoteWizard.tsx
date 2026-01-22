@@ -273,16 +273,17 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }:
       {/* Email Banner */}
       {FEATURES.EMAIL_INTEGRATION_ENABLED && <EmailStatusBanner />}
 
-      {/* Step Progress - Clean pills */}
-      <div className="flex items-center justify-center gap-2">
-        {steps.map((step, index) => {
-          const isComplete = currentStep > index;
-          const isActive = currentStep === index;
-          const Icon = step.icon;
+      {/* Step Progress - iOS-style segmented control */}
+      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-1.5">
+        <div className="flex items-center gap-1">
+          {steps.map((step, index) => {
+            const isComplete = currentStep > index;
+            const isActive = currentStep === index;
+            const Icon = step.icon;
 
-          return (
-            <React.Fragment key={step.id}>
+            return (
               <button
+                key={step.id}
                 onClick={() => {
                   if (isComplete) {
                     // Allow going back to completed steps
@@ -291,10 +292,10 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }:
                 }}
                 disabled={!isComplete && !isActive}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-2.5 rounded-full transition-all active:scale-95",
-                  isComplete && "bg-emerald-500/20 text-emerald-400 cursor-pointer",
-                  isActive && "bg-elec-yellow text-elec-dark font-semibold",
-                  !isComplete && !isActive && "bg-elec-gray/30 text-muted-foreground"
+                  "flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-xl transition-all touch-manipulation active:scale-[0.98]",
+                  isComplete && "bg-emerald-500/15 text-emerald-400 cursor-pointer",
+                  isActive && "bg-elec-yellow text-black font-semibold shadow-lg shadow-elec-yellow/20",
+                  !isComplete && !isActive && "text-white/30"
                 )}
               >
                 {isComplete ? (
@@ -302,34 +303,28 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }:
                 ) : (
                   <Icon className="h-4 w-4" />
                 )}
-                <span className="text-sm hidden sm:inline">{step.title}</span>
-                <span className="text-sm sm:hidden">{step.shortTitle}</span>
+                <span className="text-[13px] font-medium hidden sm:inline">{step.title}</span>
+                <span className="text-[13px] font-medium sm:hidden">{step.shortTitle}</span>
               </button>
-              {index < steps.length - 1 && (
-                <div className={cn(
-                  "w-6 h-0.5 rounded-full",
-                  currentStep > index ? "bg-emerald-500" : "bg-elec-gray/50"
-                )} />
-              )}
-            </React.Fragment>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {/* Step Content */}
-      <div className="min-h-[50vh]" key={`step-${currentStep}`}>
+      <div key={`step-${currentStep}`}>
         {renderStep()}
       </div>
 
-      {/* Bottom Navigation - Fixed */}
-      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border/50 px-4 py-4 z-30">
-        <div className="flex gap-3 max-w-lg mx-auto">
+      {/* Bottom Navigation */}
+      <div className="mt-6 pt-4 border-t border-white/[0.06]">
+        <div className="flex gap-3">
           {/* Back Button */}
           <Button
-            variant="outline"
+            variant="ghost"
             onClick={prevStep}
             disabled={currentStep === 0}
-            className="h-14 px-6 flex-shrink-0"
+            className="h-14 w-14 flex-shrink-0 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.06] touch-manipulation active:scale-95"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
@@ -339,7 +334,7 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }:
             <Button
               onClick={generateQuote}
               disabled={isGenerating || !canProceed()}
-              className="flex-1 h-14 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold text-base"
+              className="flex-1 h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base rounded-xl touch-manipulation active:scale-[0.98] shadow-lg shadow-elec-yellow/20"
             >
               {isGenerating ? (
                 <>
@@ -357,7 +352,7 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }:
             <Button
               onClick={nextStep}
               disabled={!canProceed()}
-              className="flex-1 h-14 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold text-base"
+              className="flex-1 h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base rounded-xl touch-manipulation active:scale-[0.98] shadow-lg shadow-elec-yellow/20"
             >
               Continue
               <ArrowRight className="h-5 w-5 ml-2" />

@@ -319,18 +319,7 @@ const Level3Module8Section1_3 = () => {
       <article className="px-4 sm:px-6 py-8 sm:py-12">
 
         {/* HEADER */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 8.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Quick Fire Questions
-          </h1>
-          <p className="text-white/80">
-            Rapid-response testing to build instant recall and automatic knowledge retrieval
-          </p>
-        </header>
+        
 
         {/* QUICK SUMMARY BOXES */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
@@ -354,26 +343,9 @@ const Level3Module8Section1_3 = () => {
         </div>
 
         {/* LEARNING OUTCOMES */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              "Understand the science behind effective rapid recall practice",
-              "Develop techniques for building automatic knowledge retrieval",
-              "Identify which topics are most suitable for quick fire practice",
-              "Apply spaced repetition principles to maximise retention",
-              "Use quick fire sessions to identify revision priorities",
-              "Balance quick fire practice with deeper understanding study"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        
 
-        <hr className="border-white/5 mb-12" />
+        
 
         {/* CONTENT SECTION 01 */}
         <section className="mb-10">

@@ -10,9 +10,6 @@ interface Report {
   inspection_date: string | null;
   client_name: string | null;
   installation_address: string | null;
-  version?: number;
-  is_latest_version?: boolean;
-  parent_report_id?: string | null;
 }
 
 export const useCustomerReports = (customerId: string) => {
@@ -31,7 +28,7 @@ export const useCustomerReports = (customerId: string) => {
         setIsLoading(true);
         const { data, error } = await supabase
           .from('reports')
-          .select('id, certificate_number, report_type, status, created_at, inspection_date, client_name, installation_address, version, is_latest_version, parent_report_id')
+          .select('id, certificate_number, report_type, status, created_at, inspection_date, client_name, installation_address')
           .eq('customer_id', customerId)
           .order('created_at', { ascending: false });
 

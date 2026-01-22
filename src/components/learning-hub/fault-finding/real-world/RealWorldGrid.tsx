@@ -1,129 +1,104 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
 import { ChevronRight, Zap, Activity, Shield, Eye, Target } from 'lucide-react';
 import { realWorldFaultCategories, RealWorldFaultCategory } from '../data/faultFindingData';
+import { cn } from '@/lib/utils';
 
 interface RealWorldGridProps {
   onSelectCategory: (categoryId: string) => void;
 }
 
-const getCategoryIcon = (category: string) => {
-  switch (category) {
-    case 'overcurrent':
-      return <Zap className="h-6 w-6" />;
-    case 'earthing':
-      return <Activity className="h-6 w-6" />;
-    case 'insulation':
-      return <Shield className="h-6 w-6" />;
-    case 'supply_issues':
-      return <Eye className="h-6 w-6" />;
-    default:
-      return <Target className="h-6 w-6" />;
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04 }
   }
 };
 
-const getCategoryColor = (category: string) => {
+const itemVariants = {
+  hidden: { opacity: 0, x: -10 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { type: 'spring', stiffness: 500, damping: 30 }
+  }
+};
+
+const getCategoryConfig = (category: string) => {
   switch (category) {
     case 'overcurrent':
-      return {
-        text: 'text-red-400',
-        bg: 'bg-red-500/10',
-        border: 'border-red-500/30'
-      };
+      return { icon: Zap, iconBg: 'bg-red-500' };
     case 'earthing':
-      return {
-        text: 'text-green-400',
-        bg: 'bg-green-500/10',
-        border: 'border-green-500/30'
-      };
+      return { icon: Activity, iconBg: 'bg-green-500' };
     case 'insulation':
-      return {
-        text: 'text-purple-400',
-        bg: 'bg-purple-500/10',
-        border: 'border-purple-500/30'
-      };
+      return { icon: Shield, iconBg: 'bg-purple-500' };
     case 'supply_issues':
-      return {
-        text: 'text-cyan-400',
-        bg: 'bg-cyan-500/10',
-        border: 'border-cyan-500/30'
-      };
+      return { icon: Eye, iconBg: 'bg-cyan-500' };
     default:
-      return {
-        text: 'text-blue-400',
-        bg: 'bg-blue-500/10',
-        border: 'border-blue-500/30'
-      };
+      return { icon: Target, iconBg: 'bg-blue-500' };
   }
 };
 
 const RealWorldGrid = ({ onSelectCategory }: RealWorldGridProps) => {
   return (
-    <div className="space-y-4">
-      {/* Intro Card */}
-      <Card className="border-l-4 border-l-blue-500 bg-blue-500/5">
-        <CardContent className="p-4">
-          <div className="flex items-start gap-3">
-            <Target className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
-            <div>
-              <h3 className="font-semibold text-blue-400 text-sm mb-1">
-                Real-World Fault Cases
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Detailed case studies from actual fault-finding scenarios, including
-                symptoms, diagnosis methods, solutions, and prevention strategies.
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+    <motion.div
+      className="space-y-6"
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+    >
+      {/* Case Categories */}
+      <div>
+        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          Case Study Categories
+        </p>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+          {realWorldFaultCategories.map((category: RealWorldFaultCategory) => {
+            const config = getCategoryConfig(category.category);
+            const Icon = config.icon;
 
-      {/* Category Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {realWorldFaultCategories.map((category: RealWorldFaultCategory) => {
-          const colors = getCategoryColor(category.category);
-
-          return (
-            <Card
-              key={category.id}
-              className={`${colors.border} border ${colors.bg} cursor-pointer
-                transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]
-                touch-manipulation`}
-              onClick={() => onSelectCategory(category.id)}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  {/* Icon */}
-                  <div className={`${colors.text} shrink-0`}>
-                    {getCategoryIcon(category.category)}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className={`font-semibold text-sm sm:text-base ${colors.text} mb-1`}>
-                      {category.title}
-                    </h3>
-                    <p className="text-xs text-muted-foreground line-clamp-2 mb-2">
-                      {category.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <Badge
-                        variant="outline"
-                        className={`text-xs ${colors.border} ${colors.text}`}
-                      >
-                        {category.examples.length} cases
-                      </Badge>
-                      <ChevronRight className={`h-4 w-4 ${colors.text}`} />
-                    </div>
-                  </div>
+            return (
+              <motion.div
+                key={category.id}
+                variants={itemVariants}
+                onClick={() => onSelectCategory(category.id)}
+                className="flex items-center gap-3 p-3.5 cursor-pointer touch-manipulation active:bg-white/[0.04] transition-colors"
+              >
+                <div className={cn(
+                  "w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0",
+                  config.iconBg
+                )}>
+                  <Icon className="h-5 w-5 text-white" />
                 </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-[15px] font-medium text-white leading-tight">
+                    {category.title}
+                  </h3>
+                  <p className="text-[13px] text-white/50 leading-tight mt-0.5 line-clamp-1">
+                    {category.description}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <span className="text-[13px] text-white/30">{category.examples.length} cases</span>
+                  <ChevronRight className="h-4 w-4 text-white/20" />
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+
+      {/* Info notice */}
+      <motion.div variants={itemVariants}>
+        <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.02]">
+          <Target className="h-4 w-4 text-white/30 flex-shrink-0" />
+          <p className="text-[12px] text-white/40">
+            Based on real fault-finding scenarios with detailed solutions
+          </p>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

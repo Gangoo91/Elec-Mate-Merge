@@ -34,6 +34,7 @@ interface UseReportSyncReturn {
   status: SyncStatus;
   isOnline: boolean;
   isAuthenticated: boolean;
+  authCheckComplete: boolean;
 
   // Actions
   saveNow: () => Promise<{ success: boolean; reportId: string | null }>;
@@ -76,6 +77,7 @@ export const useReportSync = ({
 
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authCheckComplete, setAuthCheckComplete] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [hasRecoverableDraft, setHasRecoverableDraft] = useState(false);
   const [draftPreview, setDraftPreview] = useState<{ clientName?: string; installationAddress?: string; lastModified: Date } | null>(null);
@@ -99,6 +101,7 @@ export const useReportSync = ({
       const { data: { session } } = await supabase.auth.getSession();
       setIsAuthenticated(!!session);
       setUserId(session?.user?.id || null);
+      setAuthCheckComplete(true);  // Set AFTER auth check completes
     };
     checkAuth();
 
@@ -558,6 +561,7 @@ export const useReportSync = ({
     status,
     isOnline,
     isAuthenticated,
+    authCheckComplete,
     saveNow,
     loadReport,
     recoverDraft,
