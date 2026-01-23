@@ -22,11 +22,15 @@ export function useNativeApp() {
       try {
         // Configure status bar (dark theme)
         await StatusBar.setStyle({ style: Style.Dark });
+
         if (Capacitor.getPlatform() === 'android') {
+          // Solid dark status bar that doesn't overlap content
+          await StatusBar.setOverlaysWebView({ overlay: false });
           await StatusBar.setBackgroundColor({ color: '#0a0a0a' });
         }
-        // On iOS, ensure WebView doesn't overlap status bar
+
         if (Capacitor.getPlatform() === 'ios') {
+          // iOS can use overlay with safe-area insets
           await StatusBar.setOverlaysWebView({ overlay: true });
         }
 

@@ -2,6 +2,7 @@
 console.log("[Elec-Mate] main.tsx loading...");
 
 import { createRoot } from "react-dom/client";
+import { Capacitor } from "@capacitor/core";
 import App from "./App.tsx";
 import "./index.css";
 import ErrorBoundary from "./components/common/ErrorBoundary.tsx";
@@ -15,6 +16,16 @@ initSentry();
 
 // Initialize PostHog analytics early
 initPostHog();
+
+// Add Android status bar spacer
+if (Capacitor.isNativePlatform() && Capacitor.getPlatform() === "android") {
+  const spacer = document.createElement("div");
+  spacer.id = "android-status-bar-spacer";
+  spacer.style.cssText = "height: 68px; width: 100%; background-color: #0a0a0a; position: fixed; top: 0; left: 0; z-index: 99999;";
+  document.body.insertBefore(spacer, document.body.firstChild);
+  document.body.style.paddingTop = "68px";
+  console.log("[Elec-Mate] Android status bar spacer added (68px)");
+}
 
 const rootElement = document.getElementById("root");
 

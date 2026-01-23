@@ -1,6 +1,5 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -10,7 +9,6 @@ import {
   Award,
   ClipboardCheck,
   Briefcase,
-  ChevronRight,
   TrendingUp,
   MapPin,
   Zap,
@@ -19,333 +17,144 @@ import {
   Building2,
   Cpu,
   Users,
-  Target,
-  Calendar,
-  Rocket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import CareerPathways from "@/components/electrician/career/CareerPathways";
 import CareerCourses from "@/components/electrician/career/CareerCourses";
 import EnhancedFurtherEducation from "@/components/electrician/career/EnhancedFurtherEducation";
 import ProfessionalAccreditation from "@/components/electrician/career/ProfessionalAccreditation";
 import CPDTracker from "@/components/electrician/career/CPDTracker";
 import JobVacancies from "@/pages/electrician/JobVacancies";
-import { useLiveMarketData } from "@/hooks/useLiveMarketData";
-import { AnimatedCounter } from "@/components/dashboard/AnimatedCounter";
-
-// Animation variants - Smooth, fast entrance
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.02, delayChildren: 0 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' },
-  },
-};
-
-// Career Section Card Component
-interface CareerCardProps {
-  id: string;
-  title: string;
-  description: string;
-  icon: typeof GraduationCap;
-  color: string;
-  comingSoon?: boolean;
-  onClick: () => void;
-}
-
-function CareerCard({ title, icon: Icon, color, comingSoon, onClick }: CareerCardProps) {
-  return (
-    <motion.div
-      variants={itemVariants}
-      whileTap={!comingSoon ? { scale: 0.97 } : {}}
-      onClick={!comingSoon ? onClick : undefined}
-      className={cn(
-        "relative rounded-2xl h-full cursor-pointer group touch-manipulation active:bg-white/5 transition-colors",
-        "bg-white/[0.03] border border-white/10",
-        comingSoon && "opacity-50 cursor-not-allowed"
-      )}
-    >
-      {/* Native app style - centered icon + title */}
-      <div className="p-4 flex flex-col items-center justify-center text-center min-h-[100px]">
-        {/* Icon container */}
-        <div className={cn(
-          "w-11 h-11 rounded-xl flex items-center justify-center mb-2.5",
-          color === "purple" && "bg-purple-500/15",
-          color === "blue" && "bg-blue-500/15",
-          color === "green" && "bg-green-500/15",
-          color === "yellow" && "bg-elec-yellow/15",
-          color === "orange" && "bg-orange-500/15",
-        )}>
-          <Icon className={cn(
-            "h-5 w-5",
-            color === "purple" && "text-purple-400",
-            color === "blue" && "text-blue-400",
-            color === "green" && "text-green-400",
-            color === "yellow" && "text-elec-yellow",
-            color === "orange" && "text-orange-400",
-          )} />
-        </div>
-
-        {/* Title - always visible, properly sized */}
-        <span className="text-[13px] font-medium text-white leading-tight">
-          {title}
-        </span>
-
-        {/* Coming Soon indicator */}
-        {comingSoon && (
-          <span className="text-[10px] text-amber-400/90 mt-1">Coming Soon</span>
-        )}
-      </div>
-    </motion.div>
-  );
-}
-
-// Opportunity Card Component
-interface OpportunityCardProps {
-  title: string;
-  description: string;
-  icon: typeof Zap;
-  color: string;
-  rate: string;
-  requirement: string;
-  growth: string;
-}
-
-function OpportunityCard({ title, description, icon: Icon, color, rate, requirement, growth }: OpportunityCardProps) {
-  return (
-    <motion.div
-      variants={itemVariants}
-      whileHover={{ y: -2 }}
-      className="glass-premium rounded-xl p-3 sm:p-5 h-full flex-shrink-0 w-[280px] sm:w-auto"
-    >
-      <div className="flex items-start gap-2 sm:gap-3 mb-2 sm:mb-3">
-        <div className={cn(
-          "p-1.5 sm:p-2 rounded-lg flex-shrink-0",
-          color === "green" && "bg-green-500/10",
-          color === "blue" && "bg-blue-500/10",
-          color === "purple" && "bg-purple-500/10",
-          color === "orange" && "bg-orange-500/10",
-          color === "red" && "bg-red-500/10",
-          color === "cyan" && "bg-cyan-500/10",
-        )}>
-          <Icon className={cn(
-            "h-4 w-4 sm:h-5 sm:w-5",
-            color === "green" && "text-green-400",
-            color === "blue" && "text-blue-400",
-            color === "purple" && "text-purple-400",
-            color === "orange" && "text-orange-400",
-            color === "red" && "text-red-400",
-            color === "cyan" && "text-cyan-400",
-          )} />
-        </div>
-        <div className="flex-1 min-w-0">
-          <h4 className={cn(
-            "font-semibold text-sm sm:text-base leading-tight",
-            color === "green" && "text-green-400",
-            color === "blue" && "text-blue-400",
-            color === "purple" && "text-purple-400",
-            color === "orange" && "text-orange-400",
-            color === "red" && "text-red-400",
-            color === "cyan" && "text-cyan-400",
-          )}>
-            {title}
-          </h4>
-          {/* Rate shown inline on mobile */}
-          <div className={cn(
-            "sm:hidden font-medium text-xs mt-0.5",
-            color === "green" && "text-green-300",
-            color === "blue" && "text-blue-300",
-            color === "purple" && "text-purple-300",
-            color === "orange" && "text-orange-300",
-            color === "red" && "text-red-300",
-            color === "cyan" && "text-cyan-300",
-          )}>
-            {rate}
-          </div>
-        </div>
-      </div>
-
-      <p className="text-xs sm:text-sm text-white/70 mb-2 sm:mb-4 leading-snug sm:leading-relaxed line-clamp-2 sm:line-clamp-none">
-        {description}
-      </p>
-
-      <div className="space-y-1 sm:space-y-2 text-sm">
-        {/* Rate hidden on mobile (shown above) */}
-        <div className={cn(
-          "hidden sm:block font-medium",
-          color === "green" && "text-green-300",
-          color === "blue" && "text-blue-300",
-          color === "purple" && "text-purple-300",
-          color === "orange" && "text-orange-300",
-          color === "red" && "text-red-300",
-          color === "cyan" && "text-cyan-300",
-        )}>
-          {rate}
-        </div>
-        <div className="text-white/60 text-[11px] sm:text-xs line-clamp-1">{requirement}</div>
-        <div className="text-white/40 text-[10px] sm:text-[11px] line-clamp-1">{growth}</div>
-      </div>
-    </motion.div>
-  );
-}
-
-// Stats Card Component - Mobile optimized
-function StatsCard({ label, value, icon: Icon, color }: { label: string; value: string | number; icon: typeof Zap; color: string }) {
-  return (
-    <motion.div
-      variants={itemVariants}
-      className="glass-premium rounded-xl p-3 sm:p-4 flex-shrink-0 min-w-[140px] sm:min-w-0"
-    >
-      <div className="flex items-center gap-2 sm:gap-3">
-        <div className={cn(
-          "p-1.5 sm:p-2 rounded-lg",
-          color === "yellow" && "bg-elec-yellow/10",
-          color === "blue" && "bg-blue-500/10",
-          color === "green" && "bg-green-500/10",
-          color === "purple" && "bg-purple-500/10",
-        )}>
-          <Icon className={cn(
-            "h-4 w-4",
-            color === "yellow" && "text-elec-yellow",
-            color === "blue" && "text-blue-400",
-            color === "green" && "text-green-400",
-            color === "purple" && "text-purple-400",
-          )} />
-        </div>
-        <div>
-          <div className={cn(
-            "text-base sm:text-xl font-bold leading-tight",
-            color === "yellow" && "text-elec-yellow",
-            color === "blue" && "text-blue-400",
-            color === "green" && "text-green-400",
-            color === "purple" && "text-purple-400",
-          )}>
-            {value}
-          </div>
-          <p className="text-[10px] sm:text-xs text-white/60">{label}</p>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+import { CareerSectionList } from "@/components/electrician/career/CareerSectionList";
+import { CareerListItem } from "@/components/electrician/career/CareerListItem";
+import { OpportunityStack } from "@/components/electrician/career/OpportunityStack";
+import { RoadmapTimeline } from "@/components/electrician/career/RoadmapTimeline";
+import { cn } from "@/lib/utils";
 
 // Section data
 const careerSections = [
   {
     id: "pathways",
     title: "Career Pathways",
-    description: "Explore specialisations from EV charging to data centres",
+    subtitle: "Explore 6 specialist career routes",
     icon: Compass,
-    color: "yellow",
+    color: "yellow" as const,
   },
   {
     id: "courses",
     title: "Training Courses",
-    description: "Professional qualifications and certifications",
+    subtitle: "Professional qualifications & certifications",
     icon: BookOpen,
-    color: "blue",
+    color: "blue" as const,
   },
   {
     id: "accreditation",
     title: "Professional Bodies",
-    description: "IET, ECA, NAPIT membership and accreditation",
+    subtitle: "IET, ECA, NAPIT membership",
     icon: Award,
-    color: "green",
+    color: "green" as const,
   },
   {
     id: "education",
     title: "Further Education",
-    description: "HNC, HND, degree pathways and apprenticeships",
+    subtitle: "HNC, HND & degree pathways",
     icon: GraduationCap,
-    color: "purple",
+    color: "purple" as const,
   },
   {
     id: "cpd",
     title: "CPD Tracker",
-    description: "Track continuing professional development hours",
+    subtitle: "Track your development hours",
     icon: ClipboardCheck,
-    color: "orange",
+    color: "orange" as const,
     comingSoon: true,
   },
   {
     id: "job-vacancies",
     title: "Job Vacancies",
-    description: "Browse current electrical opportunities",
+    subtitle: "Browse live opportunities",
     icon: Briefcase,
-    color: "green",
+    color: "green" as const,
+    badge: "247",
   },
 ];
 
 const opportunities = [
   {
     title: "EV Charging Specialist",
-    description: "Design, install and maintain electric vehicle charging infrastructure",
+    description: "Install and maintain EV charging infrastructure",
     icon: Battery,
     color: "green",
     rate: "£280-420/day",
-    requirement: "Required: 2919 + 3 years experience",
-    growth: "Growth: 300% increase over 3 years",
+    requirement: "2919 + 3 years experience",
+    growth: "+300% demand",
   },
   {
     title: "Data Centre Technician",
-    description: "Support critical AI infrastructure with advanced electrical systems",
+    description: "Support critical AI infrastructure systems",
     icon: Cpu,
     color: "blue",
     rate: "£320-480/day",
-    requirement: "Required: HV competence + cooling knowledge",
-    growth: "Growth: AI boom driving expansion",
+    requirement: "HV competence + cooling knowledge",
+    growth: "AI boom driving expansion",
   },
   {
     title: "Heat Pump Engineer",
-    description: "Install renewable heating systems and heat pump technology",
+    description: "Install renewable heating systems",
     icon: Zap,
     color: "purple",
     rate: "£250-380/day",
-    requirement: "Required: MCS certification",
-    growth: "Growth: Net Zero targets driving demand",
+    requirement: "MCS certification",
+    growth: "Net Zero targets",
   },
   {
     title: "Solar PV Installer",
-    description: "Design and install solar systems with battery storage",
+    description: "Design solar systems with battery storage",
     icon: Sun,
     color: "orange",
     rate: "£240-350/day",
-    requirement: "Required: 2399 + MCS accreditation",
-    growth: "Growth: Record installations year on year",
+    requirement: "2399 + MCS accreditation",
+    growth: "Record installations",
   },
   {
     title: "Smart Building Engineer",
-    description: "Integrate IoT systems and intelligent building automation",
+    description: "Integrate IoT and building automation",
     icon: Building2,
     color: "red",
     rate: "£300-450/day",
-    requirement: "Required: BMS knowledge",
-    growth: "Growth: Smart city initiatives accelerating",
+    requirement: "BMS knowledge",
+    growth: "Smart city initiatives",
   },
   {
     title: "Project Manager",
-    description: "Lead complex electrical projects from design to commissioning",
+    description: "Lead complex electrical projects",
     icon: Users,
     color: "cyan",
     rate: "£400-600/day",
-    requirement: "Required: Degree/HNC + 5+ years",
-    growth: "Growth: Infrastructure investment boom",
+    requirement: "Degree/HNC + 5+ years",
+    growth: "Infrastructure investment",
   },
 ];
 
+const marketTrends = [
+  { label: "Net Zero Premium", value: "+25%", color: "green" },
+  { label: "EV Infrastructure", value: "+300%", color: "green" },
+  { label: "Smart Home", value: "+180%", color: "blue" },
+  { label: "Data Centres", value: "+220%", color: "purple" },
+];
+
+const regionalRates = [
+  { region: "London & SE", rate: "£350-500/day" },
+  { region: "Manchester & NW", rate: "£280-400/day" },
+  { region: "Scotland", rate: "£300-420/day" },
+  { region: "Wales & SW", rate: "£260-380/day" },
+];
+
 const CareerProgression = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const activeSection = searchParams.get("section") || null;
+
   const setActiveSection = (section: string | null) => {
     if (section) {
       setSearchParams({ section }, { replace: false });
@@ -354,7 +163,6 @@ const CareerProgression = () => {
       setSearchParams(searchParams, { replace: false });
     }
   };
-  const { marketData } = useLiveMarketData();
 
   const handleBackToSections = () => {
     setActiveSection(null);
@@ -380,305 +188,214 @@ const CareerProgression = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95  ">
+    <div className="bg-[#1a1a1a] min-h-screen animate-fade-in">
       <Helmet>
         <title>Electrician Career Progression UK | JIB Timeline & CPD</title>
-        <meta name="description" content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant." />
+        <meta
+          name="description"
+          content="Explore UK electrician career progression: JIB grades, timelines, prerequisites, day rates, CPD, and pathways. BS 7671 18th Edition compliant."
+        />
         <link rel="canonical" href="/electrician/career-progression" />
       </Helmet>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-5 sm:space-y-8">
-        {/* Back Button Header */}
-        <div className="flex items-center justify-between">
-          {!activeSection ? (
-            <Link to="/electrician">
-              <Button variant="ghost" className="gap-2 text-white/60 hover:text-white hover:bg-white/10 h-11 touch-manipulation active:scale-[0.98] -ml-2 px-3">
-                <ArrowLeft className="h-5 w-5" />
-                Back
-              </Button>
-            </Link>
-          ) : (
+      {/* Sticky Header */}
+      <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center h-14 sm:h-16">
             <Button
               variant="ghost"
-              onClick={handleBackToSections}
-              className="gap-2 text-white/60 hover:text-white hover:bg-white/10 h-11 touch-manipulation active:scale-[0.98] -ml-2 px-3"
+              size="icon"
+              onClick={() => activeSection ? handleBackToSections() : navigate("/electrician")}
+              className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl mr-3 h-11 w-11 touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
-              Back to Sections
             </Button>
-          )}
+            <div className="flex-1">
+              <h1 className="text-lg sm:text-xl font-bold text-white">
+                {activeSection ? "Career Progression" : "Career Progression"}
+              </h1>
+              {activeSection && (
+                <p className="text-xs text-white/50 hidden sm:block">
+                  {careerSections.find(s => s.id === activeSection)?.title}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
+      </header>
 
-        {activeSection === null ? (
-          <>
-            {/* Hero Section - Compact on mobile */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="relative overflow-hidden bg-elec-gray/50 border border-purple-500/20 rounded-xl sm:rounded-2xl"
-            >
-              {/* Gradient accent line */}
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-purple-400 to-purple-500" />
-
-              <div className="relative z-10 p-4 sm:p-6">
-                <div className="flex items-center gap-3 sm:gap-4">
-                  {/* Hide icon on mobile, show on sm+ */}
-                  <div className="hidden sm:flex flex-shrink-0 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                    <GraduationCap className="h-8 w-8 text-purple-400" />
-                  </div>
-                  {/* Small icon on mobile only */}
-                  <div className="sm:hidden flex-shrink-0 p-2 rounded-lg bg-purple-500/10">
-                    <GraduationCap className="h-5 w-5 text-purple-400" />
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <h1 className="text-lg sm:text-2xl font-semibold text-white leading-tight">
-                      Career <span className="text-purple-400">Progression</span>
-                    </h1>
-                    <p className="text-xs sm:text-sm text-white/60 mt-0.5 sm:mt-1 line-clamp-1 sm:line-clamp-none">
-                      JIB grades & specialist pathways
-                    </p>
-                  </div>
+      {activeSection === null ? (
+        <>
+          {/* Hero Section */}
+          <section className="border-b border-white/10 bg-gradient-to-b from-purple-500/10 to-[#1a1a1a]">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+              <div className="flex flex-col sm:flex-row items-center gap-6">
+                <div className="p-4 bg-purple-500/20 rounded-2xl border border-purple-500/20">
+                  <GraduationCap className="h-10 w-10 sm:h-12 sm:w-12 text-purple-400" />
+                </div>
+                <div className="text-center sm:text-left">
+                  <p className="text-base sm:text-lg text-white/70 max-w-2xl">
+                    Plan your electrical career journey from apprentice to specialist. Explore JIB grades, qualifications, and high-demand roles.
+                  </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
+          </section>
 
-            {/* Stats Bar - Horizontal scroll on mobile */}
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="flex sm:grid sm:grid-cols-4 gap-2 sm:gap-3 overflow-x-auto pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide"
-            >
-              <StatsCard
-                label="Pathways"
-                value={marketData?.careerpathways || "15+"}
-                icon={Compass}
-                color="yellow"
-              />
-              <StatsCard
-                label="Courses"
-                value={marketData?.totalCourses || "350+"}
-                icon={BookOpen}
-                color="blue"
-              />
-              <StatsCard
-                label="Salary"
-                value={marketData?.professionalRange || "£30-85k"}
-                icon={TrendingUp}
-                color="green"
-              />
-              <StatsCard
-                label="Growth"
-                value="18%"
-                icon={Rocket}
-                color="purple"
-              />
-            </motion.div>
-
-            {/* Career Sections Grid */}
+          {/* Main Content */}
+          <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8">
+            {/* Career Sections - 2 columns on desktop */}
             <div>
-              <p className="text-xs font-medium text-white/50 uppercase tracking-wider px-1 mb-3">
-                Career Options
+              <p className="text-xs font-medium text-white/40 uppercase tracking-wider mb-3 px-1">
+                Explore
               </p>
-
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="grid grid-cols-3 gap-2 sm:gap-3"
-              >
-                {careerSections.map((section) => (
-                  <CareerCard
-                    key={section.id}
-                    {...section}
-                    onClick={() => setActiveSection(section.id)}
-                  />
-                ))}
-              </motion.div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <CareerSectionList>
+                  {careerSections.slice(0, 3).map((section) => (
+                    <CareerListItem
+                      key={section.id}
+                      title={section.title}
+                      subtitle={section.subtitle}
+                      icon={section.icon}
+                      color={section.color}
+                      badge={section.badge}
+                      comingSoon={section.comingSoon}
+                      onClick={() => setActiveSection(section.id)}
+                    />
+                  ))}
+                </CareerSectionList>
+                <CareerSectionList>
+                  {careerSections.slice(3).map((section) => (
+                    <CareerListItem
+                      key={section.id}
+                      title={section.title}
+                      subtitle={section.subtitle}
+                      icon={section.icon}
+                      color={section.color}
+                      badge={section.badge}
+                      comingSoon={section.comingSoon}
+                      onClick={() => setActiveSection(section.id)}
+                    />
+                  ))}
+                </CareerSectionList>
+              </div>
             </div>
 
-            {/* High-Demand Opportunities */}
+            {/* High-Demand Roles - 2 columns on desktop */}
             <div>
-              <p className="text-xs font-medium text-white/50 uppercase tracking-wider px-1 mb-3">
+              <p className="text-xs font-medium text-white/40 uppercase tracking-wider mb-3 px-1">
                 High-Demand Roles
               </p>
-
-              {/* Horizontal scroll on mobile, grid on desktop */}
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide"
-              >
-                {opportunities.map((opp, index) => (
-                  <OpportunityCard key={index} {...opp} />
-                ))}
-              </motion.div>
+              <div className="hidden lg:grid lg:grid-cols-2 gap-4">
+                <OpportunityStack opportunities={opportunities.slice(0, 3)} initialCount={3} />
+                <OpportunityStack opportunities={opportunities.slice(3)} initialCount={3} />
+              </div>
+              <div className="lg:hidden">
+                <OpportunityStack opportunities={opportunities} initialCount={3} />
+              </div>
             </div>
 
-            {/* Development Roadmap */}
-            <div>
-              <p className="text-xs font-medium text-white/50 uppercase tracking-wider px-1 mb-3">
-                Development Roadmap
-              </p>
+            {/* Roadmap + Market Insights - Side by side on desktop */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Development Roadmap */}
+              <div>
+                <p className="text-xs font-medium text-white/40 uppercase tracking-wider mb-3 px-1">
+                  Your Roadmap
+                </p>
+                <RoadmapTimeline />
+              </div>
 
-              {/* Horizontal scroll on mobile, grid on desktop */}
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="flex md:grid md:grid-cols-3 gap-3 sm:gap-4 overflow-x-auto pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide"
-              >
-                {/* Immediate Actions */}
-                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-3 sm:p-5 flex-shrink-0 w-[260px] sm:w-[280px] md:w-auto">
-                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                      <Target className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-elec-yellow" />
+              {/* Market Insights */}
+              <div>
+                <p className="text-xs font-medium text-white/40 uppercase tracking-wider mb-3 px-1">
+                  Market Insights
+                </p>
+                <div className="space-y-3">
+                  {/* Trends */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden"
+                  >
+                    <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
+                      <TrendingUp className="h-4 w-4 text-green-400" />
+                      <span className="text-sm font-medium text-white">
+                        Growth Sectors
+                      </span>
                     </div>
-                    <h3 className="font-semibold text-white text-sm sm:text-base">Immediate</h3>
-                  </div>
-                  <ul className="space-y-2 sm:space-y-2.5">
-                    {[
-                      "Update CV with certifications",
-                      "Research tech training",
-                      "Join networking groups",
-                      "Review JIB requirements",
-                      "Set up job alerts",
-                    ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-white/70">
-                        <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
+                    <div className="divide-y divide-white/[0.06]">
+                      {marketTrends.map((trend, i) => (
+                        <div
+                          key={i}
+                          className="flex justify-between items-center px-4 py-3"
+                        >
+                          <span className="text-sm text-white/70">
+                            {trend.label}
+                          </span>
+                          <span
+                            className={cn(
+                              "font-semibold text-sm",
+                              trend.color === "green" && "text-green-400",
+                              trend.color === "blue" && "text-blue-400",
+                              trend.color === "purple" && "text-purple-400"
+                            )}
+                          >
+                            {trend.value}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
 
-                {/* 3-Month Goals */}
-                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-3 sm:p-5 flex-shrink-0 w-[260px] sm:w-[280px] md:w-auto">
-                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                      <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-400" />
+                  {/* Regional Rates */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25, delay: 0.05 }}
+                    className="bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden"
+                  >
+                    <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
+                      <MapPin className="h-4 w-4 text-elec-yellow" />
+                      <span className="text-sm font-medium text-white">
+                        Regional Day Rates
+                      </span>
                     </div>
-                    <h3 className="font-semibold text-white text-sm sm:text-base">3-Month</h3>
-                  </div>
-                  <ul className="space-y-2 sm:space-y-2.5">
-                    {[
-                      "Book specialist courses",
-                      "Attend trade shows",
-                      "Research rates vs salary",
-                      "Apply for membership",
-                      "Build specialist portfolio",
-                    ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-white/70">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 flex-shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-
-                {/* Long-term Strategy */}
-                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-3 sm:p-5 flex-shrink-0 w-[260px] sm:w-[280px] md:w-auto">
-                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                      <Rocket className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-400" />
+                    <div className="divide-y divide-white/[0.06]">
+                      {regionalRates.map((item, i) => (
+                        <div
+                          key={i}
+                          className="flex justify-between items-center px-4 py-3"
+                        >
+                          <span className="text-sm text-white/70">
+                            {item.region}
+                          </span>
+                          <span className="font-semibold text-sm text-elec-yellow">
+                            {item.rate}
+                          </span>
+                        </div>
+                      ))}
                     </div>
-                    <h3 className="font-semibold text-white text-sm sm:text-base">Long-term</h3>
-                  </div>
-                  <ul className="space-y-2 sm:space-y-2.5">
-                    {[
-                      "Complete qualifications",
-                      "Build expertise",
-                      "HNC/HND/Degree pathway",
-                      "Contracting vs employment",
-                      "Explore business ownership",
-                    ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-white/70">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 flex-shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              </motion.div>
+                  </motion.div>
+                </div>
+              </div>
             </div>
 
-            {/* Industry Insights */}
-            <div>
-              <p className="text-xs font-medium text-white/50 uppercase tracking-wider px-1 mb-3">
-                Industry Insights
-              </p>
-
-              {/* Horizontal scroll on mobile, grid on desktop */}
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="flex md:grid md:grid-cols-2 gap-3 sm:gap-4 overflow-x-auto pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide"
-              >
-                {/* Market Trends */}
-                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-3 sm:p-5 flex-shrink-0 w-[280px] sm:w-[320px] md:w-auto">
-                  <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                    <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
-                    <h3 className="font-semibold text-white text-sm sm:text-base">Market Trends</h3>
-                  </div>
-                  <div className="space-y-2 sm:space-y-3">
-                    {[
-                      { label: "Net Zero Premium", value: "+25%", color: "green" },
-                      { label: "EV Infrastructure", value: "+300%", color: "green" },
-                      { label: "Smart Home", value: "+180%", color: "blue" },
-                      { label: "Data Centres", value: "+220%", color: "purple" },
-                    ].map((item, i) => (
-                      <div key={i} className="flex justify-between items-center p-2 sm:p-3 bg-white/5 rounded-lg">
-                        <span className="text-xs sm:text-sm text-white/80">{item.label}</span>
-                        <span className={cn(
-                          "font-semibold text-xs sm:text-sm",
-                          item.color === "green" && "text-green-400",
-                          item.color === "blue" && "text-blue-400",
-                          item.color === "purple" && "text-purple-400",
-                        )}>
-                          {item.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-
-                {/* Regional Rates */}
-                <motion.div variants={itemVariants} className="glass-premium rounded-xl p-3 sm:p-5 flex-shrink-0 w-[280px] sm:w-[320px] md:w-auto">
-                  <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                    <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
-                    <h3 className="font-semibold text-white text-sm sm:text-base">Regional Rates</h3>
-                  </div>
-                  <div className="space-y-2 sm:space-y-3">
-                    {[
-                      { region: "London & SE", rate: "£350-500/day" },
-                      { region: "Manchester & NW", rate: "£280-400/day" },
-                      { region: "Scotland", rate: "£300-420/day" },
-                      { region: "Wales & SW", rate: "£260-380/day" },
-                    ].map((item, i) => (
-                      <div key={i} className="flex justify-between items-center p-2 sm:p-3 bg-white/5 rounded-lg">
-                        <span className="text-xs sm:text-sm text-white/80">{item.region}</span>
-                        <span className="font-semibold text-xs sm:text-sm text-elec-yellow">{item.rate}</span>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              </motion.div>
-            </div>
-          </>
-        ) : (
+            {/* Bottom Spacing */}
+            <div className="h-4" />
+          </main>
+        </>
+      ) : (
+        <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
           >
             {renderSectionContent()}
           </motion.div>
-        )}
-      </main>
+        </main>
+      )}
     </div>
   );
 };

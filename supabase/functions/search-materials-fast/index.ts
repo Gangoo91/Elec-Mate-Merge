@@ -11,7 +11,7 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'search-materials-fast' });
 
   try {
-    const { query, categoryFilter, supplierFilter, limit = 30 } = await req.json();
+    const { query, categoryFilter, supplierFilter, limit = 50, similarityThreshold = 0.2 } = await req.json();
 
     // Input validation
     if (!query || query.trim().length === 0) {
@@ -21,52 +21,27 @@ serve(async (req) => {
       throw new ValidationError('Limit must be between 1 and 100');
     }
 
-    logger.info('Fast search initiated', { query, categoryFilter, supplierFilter, limit });
+    logger.info('Fuzzy search initiated', { query, categoryFilter, supplierFilter, limit, similarityThreshold });
 
     // Connect to Supabase
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Parse query into terms for multi-term matching
-    const searchTerms = query.toLowerCase().trim().split(/\s+/).filter(t => t.length > 1);
-    
-    logger.debug('Search terms extracted', { searchTerms });
-
-    // Build search query using PostgreSQL ILIKE for fuzzy matching
-    let searchQuery = supabase
-      .from('pricing_embeddings')
-      .select('id, item_name, category, wholesaler, base_cost, in_stock, product_url, metadata');
-
-    // Multi-term search: each term must appear somewhere in the item name
-    if (searchTerms.length > 0) {
-      // Build OR condition for each term appearing in item_name
-      const orConditions = searchTerms.map(term => `item_name.ilike.%${term}%`).join(',');
-      searchQuery = searchQuery.or(orConditions);
-    }
-
-    // Apply category filter if provided
-    if (categoryFilter && categoryFilter !== 'all') {
-      searchQuery = searchQuery.eq('category', categoryFilter);
-    }
-
-    // Apply supplier filter if provided
-    if (supplierFilter && supplierFilter !== 'all') {
-      searchQuery = searchQuery.eq('wholesaler', supplierFilter);
-    }
-
-    // Sort by item name and limit results
-    searchQuery = searchQuery
-      .order('item_name', { ascending: true })
-      .limit(limit);
-
+    // Call the fuzzy search RPC function
     const { data: results, error: searchError } = await logger.time(
-      'PostgreSQL keyword search',
-      async () => await searchQuery
+      'PostgreSQL fuzzy search',
+      async () => await supabase.rpc('search_materials_fuzzy', {
+        search_query: query.trim(),
+        category_filter: categoryFilter && categoryFilter !== 'all' ? categoryFilter : null,
+        supplier_filter: supplierFilter && supplierFilter !== 'all' ? supplierFilter : null,
+        similarity_threshold: similarityThreshold,
+        result_limit: limit
+      })
     );
 
     if (searchError) {
-      logger.error('Search failed', { error: searchError });
+      logger.error('Fuzzy search failed', { error: searchError });
       throw new Error(`Database search failed: ${searchError.message}`);
     }
 
@@ -75,24 +50,39 @@ serve(async (req) => {
       id: item.id,
       name: item.item_name,
       category: item.category || 'Materials',
-      price: typeof item.base_cost === 'number' 
-        ? `£${item.base_cost.toFixed(2)}` 
+      price: typeof item.base_cost === 'number'
+        ? `£${item.base_cost.toFixed(2)}`
         : '£0.00',
       supplier: item.wholesaler || 'Unknown',
-      image: item.metadata?.image || '/placeholder.svg',
+      image: '/placeholder.svg',
       stockStatus: item.in_stock ? 'In Stock' : 'Out of Stock',
       productUrl: item.product_url,
-      highlights: item.metadata?.highlights || [],
-      similarity: 0.8, // Fixed score for keyword matches
-      // Include additional metadata
-      brand: item.metadata?.brand,
-      description: item.metadata?.description,
-      specifications: item.metadata?.specifications,
+      highlights: [],
+      similarity: item.similarity_score,
+      isFuzzyMatch: item.similarity_score < 0.8,
     }));
 
-    logger.info('Fast search completed successfully', { 
+    // Get suggestions if no results found
+    let suggestions: string[] = [];
+    if (materials.length === 0) {
+      // Try a more relaxed search to get suggestions
+      const { data: suggestionResults } = await supabase.rpc('search_materials_fuzzy', {
+        search_query: query.trim(),
+        category_filter: null,
+        supplier_filter: null,
+        similarity_threshold: 0.1,
+        result_limit: 5
+      });
+
+      if (suggestionResults && suggestionResults.length > 0) {
+        suggestions = suggestionResults.map((item: any) => item.item_name);
+      }
+    }
+
+    logger.info('Fuzzy search completed successfully', {
       materialsCount: materials.length,
-      requestId 
+      hasSuggestions: suggestions.length > 0,
+      requestId
     });
 
     return new Response(
@@ -101,21 +91,22 @@ serve(async (req) => {
         materials,
         query,
         resultsCount: materials.length,
-        searchMethod: 'fast_keyword',
+        searchMethod: 'fuzzy_trigram',
+        suggestions,
         filters: {
           category: categoryFilter,
           supplier: supplierFilter
         },
         requestId
       }),
-      { 
+      {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
+        status: 200
       }
     );
 
   } catch (error) {
-    logger.error('Fast search failed', { error });
+    logger.error('Fuzzy search failed', { error });
     return handleError(error);
   }
 });

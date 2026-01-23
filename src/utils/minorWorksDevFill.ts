@@ -104,7 +104,6 @@ export interface MinorWorksDevFillData {
   electricianName: string;
   forAndOnBehalfOf: string;
   position: string;
-  contractorAddress: string;
   electricianPhone: string;
   electricianEmail: string;
   qualificationLevel: string;
@@ -239,7 +238,6 @@ export const MINOR_WORKS_DEV_FILL: MinorWorksDevFillData = {
   electricianName: 'John Smith',
   forAndOnBehalfOf: 'Sparks Electrical Ltd',
   position: 'Qualified Supervisor',
-  contractorAddress: 'Unit 5, Industrial Estate, Birmingham, B12 9QR',
   electricianPhone: '0121 456 7890',
   electricianEmail: 'john@sparkselectrical.co.uk',
   qualificationLevel: 'level3',
@@ -413,7 +411,6 @@ export function clearMinorWorksForm(
     electricianName: '',
     forAndOnBehalfOf: '',
     position: '',
-    contractorAddress: '',
     electricianPhone: '',
     electricianEmail: '',
     qualificationLevel: '',

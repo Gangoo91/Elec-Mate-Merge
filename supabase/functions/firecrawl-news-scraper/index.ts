@@ -64,28 +64,33 @@ serve(async (req) => {
           formats: [
             {
               type: "json",
-              prompt: `You are extracting UK electrical and construction industry news articles.
+              prompt: `You are extracting ONLY UK electrical and construction industry news articles. Be VERY strict.
 
-STRICT REQUIREMENTS:
-1. ONLY include articles about the UK electrical industry, UK construction projects, or UK building services
-2. MUST be from UK publications or specifically about UK topics
-3. Extract: full article title, complete description/summary (2-3 sentences), publication date, article URL, and any image URL
+=== CRITICAL: REJECT THESE IMMEDIATELY - DO NOT EXTRACT ===
+- ANY mention of India, Indian cities (Mumbai, Delhi, Bangalore, Chennai, Hyderabad, Kolkata, Pune, etc.)
+- ANY mention of Indian companies (Tata, Reliance, Adani, Infosys, Wipro, L&T, Mahindra)
+- ANY mention of Indian currency (crore, lakh, rupee, INR, ₹)
+- ANY articles from Indian news sources (Times of India, Hindustan Times, Economic Times, NDTV, etc.)
+- ANY mention of USA, Australia, China, Middle East, Asia Pacific, Singapore, Dubai
+- Stock market, share prices, quarterly earnings, IPO, investor news
+- Product advertisements, sponsored content, press releases
 
-REJECT IMMEDIATELY:
-- Any articles about USA, India, Australia, Asia, Middle East, Europe (non-UK)
-- Stock market news, financial reports, quarterly earnings, IPO announcements
-- Product advertisements, sponsored content, press release distributions
-- Generic international news not specifically about UK
+=== ONLY EXTRACT ARTICLES THAT ===
+1. Are SPECIFICALLY about the UK electrical industry or UK construction
+2. Mention UK locations (London, Manchester, Birmingham, Scotland, Wales, etc.)
+3. Reference UK regulations (BS7671, 18th Edition, Part P, Building Regulations)
+4. Mention UK bodies (NICEIC, NAPIT, IET, HSE, JIB, ECS)
+5. Discuss UK projects, UK tenders, UK contracts
+6. Use British spelling and £ GBP currency
 
-ACCEPT:
-- UK electrical regulations (BS7671, 18th Edition, Part P, Building Regulations)
-- UK electrician news, training, apprenticeships (NICEIC, NAPIT, ECS, JIB)
-- UK construction projects, infrastructure, building contracts
-- UK electrical safety, HSE guidance, fire safety
-- UK renewable energy, EV charging, solar, heat pumps
-- UK building services, M&E, HVAC
+=== EXTRACT THESE FIELDS ===
+- title: Full article title exactly as written
+- description: 2-3 sentence summary of the key points
+- date: Publication date in ISO format (YYYY-MM-DD)
+- visit_link: Direct URL to the article
+- imageUrl: Article image URL if available
 
-For each article, extract the complete title as written, a detailed summary capturing the key points, the exact publication date in ISO format, and the direct URL to the article.`,
+If in doubt about whether an article is UK-specific, DO NOT include it. We only want confirmed UK content.`,
               schema: {
                 type: "array",
                 items: {
@@ -216,20 +221,64 @@ For each article, extract the complete title as written, a detailed summary capt
 
           // Words that indicate non-UK or non-electrical content
           const EXCLUSION_KEYWORDS = [
-            // Non-UK geographic
-            'nec code', 'nfpa', 'ul listed', 'american', 'usa', 'us market',
-            'canadian', 'australian', 'india', 'asia pacific',
-            'indian', 'asian', 'china', 'chinese', 'japan', 'japanese',
-            'middle east', 'africa', 'south america', 'mexico', 'brazil',
-            'european union', 'germany', 'france', 'united states',
-            'mumbai', 'delhi', 'bangalore', 'singapore', 'dubai',
-            // Financial spam
+            // === INDIA - Comprehensive blocking ===
+            // Countries & Regions
+            'india', 'indian', 'bharat', 'hindustan',
+            // Major Cities (Top 50+)
+            'mumbai', 'delhi', 'bangalore', 'bengaluru', 'hyderabad', 'chennai', 'kolkata',
+            'pune', 'ahmedabad', 'jaipur', 'lucknow', 'kanpur', 'nagpur', 'indore',
+            'thane', 'bhopal', 'visakhapatnam', 'vadodara', 'ghaziabad', 'ludhiana',
+            'agra', 'nashik', 'faridabad', 'meerut', 'rajkot', 'varanasi', 'srinagar',
+            'aurangabad', 'dhanbad', 'amritsar', 'allahabad', 'ranchi', 'howrah',
+            'coimbatore', 'jabalpur', 'gwalior', 'vijayawada', 'jodhpur', 'madurai',
+            'raipur', 'kota', 'guwahati', 'chandigarh', 'solapur', 'hubli', 'tiruchirappalli',
+            'bareilly', 'moradabad', 'mysore', 'tiruppur', 'gurgaon', 'noida', 'greater noida',
+            // States
+            'maharashtra', 'uttar pradesh', 'karnataka', 'tamil nadu', 'telangana',
+            'gujarat', 'rajasthan', 'west bengal', 'madhya pradesh', 'kerala',
+            'andhra pradesh', 'punjab', 'haryana', 'bihar', 'odisha', 'jharkhand',
+            // Indian Companies & Terms
+            'tata', 'reliance', 'adani', 'infosys', 'wipro', 'hcl tech', 'bharti',
+            'larsen & toubro', 'l&t', 'mahindra', 'bajaj', 'hdfc', 'icici',
+            'nse india', 'bse india', 'sensex', 'nifty',
+            'crore', 'lakh', 'rupee', 'inr', '₹',
+            // Indian Regulatory/Industry
+            'bureau of indian standards', 'bis certification', 'cpwd', 'pwd india',
+            'indian electrical', 'cei india', 'central electricity',
+            // Indian News Sources (block even if on UK sites)
+            'times of india', 'hindustan times', 'economic times india', 'ndtv',
+            'zee news', 'india today', 'the hindu', 'indian express', 'deccan',
+            'livemint', 'moneycontrol', 'business standard india', 'firstpost',
+
+            // === OTHER NON-UK REGIONS ===
+            // USA
+            'nec code', 'nfpa', 'ul listed', 'american', 'usa', 'us market', 'united states',
+            'california', 'texas', 'florida', 'new york city', 'los angeles', 'chicago',
+            // Other Countries
+            'canadian', 'australian', 'australia', 'new zealand',
+            'china', 'chinese', 'beijing', 'shanghai', 'shenzhen',
+            'japan', 'japanese', 'tokyo',
+            'asia pacific', 'apac', 'asian',
+            'middle east', 'uae', 'saudi', 'qatar', 'dubai', 'abu dhabi',
+            'africa', 'south africa', 'nigeria', 'kenya',
+            'south america', 'mexico', 'brazil', 'argentina',
+            'european union', 'eu market', 'eurozone',
+            'germany', 'german', 'france', 'french', 'spain', 'italy', 'poland',
+            'singapore', 'malaysia', 'indonesia', 'thailand', 'vietnam', 'philippines',
+
+            // === FINANCIAL SPAM ===
             'stock market', 'share price', 'quarterly earnings', 'ipo', 'nasdaq', 'nyse',
-            'cryptocurrency', 'bitcoin', 'blockchain',
-            'advertisement', 'sponsored', 'press release distribution',
-            'free shipping', 'buy now', 'discount code', 'promo',
-            // Non-UK regulatory
-            'ieee', 'ansi', 'csa', 'saa',
+            'stock exchange', 'market cap', 'trading volume', 'investor relations',
+            'cryptocurrency', 'bitcoin', 'blockchain', 'crypto',
+            'forex', 'currency trading',
+
+            // === SPAM/ADS ===
+            'advertisement', 'sponsored', 'press release distribution', 'paid content',
+            'free shipping', 'buy now', 'discount code', 'promo', 'limited offer',
+            'click here', 'subscribe now', 'sign up free',
+
+            // === NON-UK REGULATORY ===
+            'ieee', 'ansi', 'csa', 'saa', 'ul certification', 'etl listed',
           ];
 
           const isRelevantArticle = (article: any): boolean => {
@@ -244,21 +293,54 @@ For each article, extract the complete title as written, a detailed summary capt
 
           const validateUKRelevance = (article: any): boolean => {
             const text = `${article.title || ''} ${article.description || ''}`.toLowerCase();
-
-            // Strong UK indicators
-            const ukIndicators = [
-              'bs 7671', 'bs7671', '18th edition', 'iet', 'niceic', 'napit', 'elecsa',
-              'part p', 'building regulations', 'hse',
-              'uk', 'united kingdom', 'british', 'england', 'scotland', 'wales',
-              'northern ireland', 'london', 'manchester', 'birmingham', 'leeds',
-              'liverpool', 'glasgow', 'edinburgh', 'cardiff', 'belfast'
-            ];
-
-            // Check URL for UK domain
             const url = (article.visit_link || article.url || '').toLowerCase();
+
+            // FIRST: Hard reject if contains Indian/non-UK indicators in text
+            const hardRejectTerms = [
+              'india', 'indian', 'mumbai', 'delhi', 'bangalore', 'hyderabad', 'chennai',
+              'kolkata', 'pune', 'crore', 'lakh', 'rupee', '₹', 'sensex', 'nifty',
+              'tata', 'reliance', 'adani', 'infosys', 'wipro',
+              'times of india', 'hindustan times', 'economic times',
+            ];
+            if (hardRejectTerms.some(term => text.includes(term))) {
+              return false;
+            }
+
+            // Check URL for UK domain - this is a strong positive signal
             const isUKDomain = url.includes('.co.uk') || url.includes('.gov.uk') || url.includes('.org.uk');
 
-            return ukIndicators.some(ind => text.includes(ind)) || isUKDomain;
+            // Strong UK indicators - REQUIRE at least one for non-.co.uk sources
+            const ukIndicators = [
+              // UK Regulations & Standards
+              'bs 7671', 'bs7671', '18th edition', 'wiring regulations', 'part p',
+              'building regulations', 'approved document',
+              // UK Bodies
+              'iet', 'niceic', 'napit', 'elecsa', 'stroma', 'hse', 'ofgem',
+              'ecs card', 'jib', 'competent person scheme',
+              // UK Geographic (specific)
+              'united kingdom', 'british', 'england', 'scotland', 'wales', 'northern ireland',
+              // UK Cities (major)
+              'london', 'manchester', 'birmingham', 'leeds', 'liverpool',
+              'glasgow', 'edinburgh', 'cardiff', 'belfast', 'bristol',
+              'sheffield', 'newcastle', 'nottingham', 'leicester', 'coventry',
+              'bradford', 'southampton', 'portsmouth', 'reading', 'milton keynes',
+              // UK-specific terms
+              'uk electrician', 'uk electrical', 'uk construction', 'uk project',
+              'british standard', 'uk government', 'uk tender', 'uk contract',
+              'nhs', 'network rail', 'hs2', 'crossrail', 'thames', 'heathrow',
+              // UK currency (positive indicator)
+              '£', 'gbp', 'pound sterling',
+            ];
+
+            const hasUKIndicator = ukIndicators.some(ind => text.includes(ind));
+
+            // For UK domains, we're more lenient
+            if (isUKDomain) {
+              return true; // Trust UK domains unless hard-rejected above
+            }
+
+            // For non-UK domains (like .com), REQUIRE a UK indicator
+            return hasUKIndicator;
           };
 
             // Helper to detect source from URL
@@ -279,9 +361,30 @@ For each article, extract the complete title as written, a detailed summary capt
               if (urlLower.includes('napit.org')) return { category: "Industry", source: "NAPIT" };
               if (urlLower.includes('hse.gov.uk')) return { category: "Safety", source: "HSE" };
 
-              // REJECT non-UK domains
-              const nonUkDomains = ['.in', '.com.au', '.us', '.ca', '.de', '.fr', '.jp', '.cn', 'thehindu', 'shiksha', 'jagranjosh', 'india'];
+              // REJECT non-UK domains - comprehensive list
+              const nonUkDomains = [
+                // Indian domains & news
+                '.in/', '.in?', '.co.in', '.org.in', '.net.in', '.gov.in',
+                'thehindu', 'hindustantimes', 'indiatimes', 'timesofindia',
+                'economictimes.com', 'livemint.com', 'moneycontrol.com',
+                'ndtv.com', 'zeenews', 'indiatoday', 'indianexpress',
+                'deccanherald', 'deccanchronicle', 'firstpost.com',
+                'shiksha', 'jagranjosh', 'naukri.com', 'shine.com',
+                'business-standard.com/india', 'financialexpress.com/india',
+                // Other non-UK
+                '.com.au', '.au/', '.us/', '.ca/', '.de/', '.fr/', '.jp/', '.cn/',
+                '.com.sg', '.com.my', '.co.za', '.com.br', '.com.mx',
+                '.ae/', '.sa/', '.qa/',
+                // US news
+                'reuters.com/world/us', 'apnews.com/hub/united-states',
+              ];
               if (nonUkDomains.some(d => urlLower.includes(d))) {
+                return { category: "REJECT", source: "REJECT" };
+              }
+
+              // Also reject if URL contains india-related paths
+              const indianPaths = ['/india/', '/indian/', '/mumbai/', '/delhi/', '/bangalore/', '/asia/', '/apac/'];
+              if (indianPaths.some(p => urlLower.includes(p))) {
                 return { category: "REJECT", source: "REJECT" };
               }
 

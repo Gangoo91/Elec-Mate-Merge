@@ -2,12 +2,12 @@ import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Wrench, Package, Zap, FileText, Copy, TrendingUp, Search, ChevronDown, ChevronRight, Clock, PoundSterling, Hash } from "lucide-react";
+import { Plus, Trash2, Wrench, Package, Zap, FileText, Copy, TrendingUp, Search, ChevronRight, ChevronDown, Clock, PoundSterling, Hash } from "lucide-react";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
 import { cn } from "@/lib/utils";
 import {
-  workerTypes,
+  workerTypes as defaultWorkerTypes,
   materialCategories,
   commonMaterials,
   equipmentCategories,
@@ -16,6 +16,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useDebounce } from "@/hooks/useDebounce";
 import { toast } from "@/hooks/use-toast";
+import { useCompanyProfile } from "@/hooks/useCompanyProfile";
 
 interface EnhancedQuoteItemsStepProps {
   items: QuoteItem[];
@@ -28,6 +29,49 @@ interface EnhancedQuoteItemsStepProps {
 }
 
 export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, priceAdjustment = 0, setPriceAdjustment, calculateAdjustedPrice }: EnhancedQuoteItemsStepProps) => {
+  // Get user's company profile for custom worker rates
+  const { companyProfile } = useCompanyProfile();
+
+  // Calculate personalised worker rates based on user's saved worker_rates or fallback to hourly_rate
+  const workerTypes = useMemo(() => {
+    const savedRates = companyProfile?.worker_rates;
+
+    // If user has saved custom worker rates, use them
+    if (savedRates) {
+      return defaultWorkerTypes.map(worker => {
+        const savedRate = savedRates[worker.id as keyof typeof savedRates];
+        return {
+          ...worker,
+          defaultHourlyRate: savedRate ?? worker.defaultHourlyRate
+        };
+      });
+    }
+
+    // Fall back to percentage calculation if no saved rates
+    const userRate = companyProfile?.hourly_rate || 45;
+    return defaultWorkerTypes.map(worker => {
+      let rate = worker.defaultHourlyRate;
+      switch (worker.id) {
+        case 'electrician':
+          rate = userRate;
+          break;
+        case 'apprentice':
+          rate = Math.round(userRate * 0.55);
+          break;
+        case 'labourer':
+          rate = Math.round(userRate * 0.44);
+          break;
+        case 'designer':
+          rate = Math.round(userRate * 1.44);
+          break;
+        case 'owner':
+          rate = Math.round(userRate * 1.11);
+          break;
+      }
+      return { ...worker, defaultHourlyRate: rate };
+    });
+  }, [companyProfile?.worker_rates, companyProfile?.hourly_rate]);
+
   const [newItem, setNewItem] = useState({
     description: "",
     quantity: 1,
@@ -342,26 +386,30 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
         {/* Materials Fields */}
         {newItem.category === "materials" && (
           <div className="divide-y divide-white/[0.06]">
-            {/* Markup Selector */}
+            {/* Markup Quick Select - matching invoice flow style */}
             {setPriceAdjustment && (
-              <div className="flex items-center gap-3 p-3.5">
-                <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="h-5 w-5 text-black" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <label className="text-[12px] text-white/40 block">Material Markup</label>
-                  <div className="relative">
-                    <select
-                      value={priceAdjustment.toString()}
-                      onChange={(e) => setPriceAdjustment(Number(e.target.value))}
-                      className="w-full h-9 bg-transparent text-[15px] font-medium text-white appearance-none cursor-pointer focus:outline-none"
-                    >
-                      {markupOptions.map(opt => (
-                        <option key={opt.value} value={opt.value} className="bg-zinc-900">{opt.label}</option>
-                      ))}
-                    </select>
-                    <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
+              <div className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="h-5 w-5 text-black" />
                   </div>
+                  <span className="text-[12px] text-white/60 uppercase tracking-wide">Markup</span>
+                </div>
+                <div className="flex gap-1">
+                  {[0, 10, 15, 20].map(markup => (
+                    <button
+                      key={markup}
+                      onClick={() => setPriceAdjustment(markup)}
+                      className={cn(
+                        'px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all touch-manipulation',
+                        priceAdjustment === markup
+                          ? 'bg-elec-yellow text-black'
+                          : 'bg-white/[0.05] text-white/70'
+                      )}
+                    >
+                      {markup}%
+                    </button>
+                  ))}
                 </div>
               </div>
             )}

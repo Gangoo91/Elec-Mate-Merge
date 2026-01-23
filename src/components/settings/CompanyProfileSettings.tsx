@@ -22,7 +22,55 @@ import {
   Loader2,
   CheckCircle,
   PoundSterling,
+  Users,
+  Shield,
+  Award,
+  Calendar,
+  Pen,
+  Check,
 } from 'lucide-react';
+import { WorkerRates } from '@/types/company';
+import SignatureInput from '@/components/signature/SignatureInput';
+
+// Default worker rates matching preset data
+const defaultWorkerRates: WorkerRates = {
+  electrician: 45,
+  apprentice: 25,
+  labourer: 20,
+  designer: 65,
+  owner: 75,
+};
+
+// Worker type labels for display
+const workerTypeLabels: Record<keyof WorkerRates, { name: string; description: string }> = {
+  electrician: { name: 'Qualified Electrician', description: 'Fully qualified electrician' },
+  apprentice: { name: 'Apprentice', description: 'Apprentice electrician under supervision' },
+  labourer: { name: 'General Labourer', description: 'General building labourer' },
+  designer: { name: 'Electrical Designer', description: 'Design and planning specialist' },
+  owner: { name: 'Business Owner', description: 'Business owner / senior electrician' },
+};
+
+// Available qualifications for inspector
+const availableQualifications = [
+  '18th Edition BS7671',
+  'City & Guilds 2391-52',
+  'City & Guilds 2391-51',
+  'NICEIC Approved',
+  'NAPIT Registered',
+  'ECA Member',
+  'JIB Approved',
+  'CompEx Certified',
+];
+
+// Registration schemes
+const registrationSchemes = [
+  { value: 'NICEIC', label: 'NICEIC' },
+  { value: 'NAPIT', label: 'NAPIT' },
+  { value: 'ELECSA', label: 'ELECSA' },
+  { value: 'STROMA', label: 'STROMA' },
+  { value: 'BRE', label: 'BRE' },
+  { value: 'other', label: 'Other' },
+];
 
 interface CompanyProfileFormData {
   company_name: string;
@@ -39,6 +87,19 @@ interface CompanyProfileFormData {
   locale: string;
   payment_terms: string;
   hourly_rate: number;
+  // Worker rates
+  worker_rates: WorkerRates;
+  // Inspector details
+  inspector_name: string;
+  inspector_qualifications: string[];
+  registration_scheme: string;
+  registration_number: string;
+  registration_expiry: string;
+  insurance_provider: string;
+  insurance_policy_number: string;
+  insurance_coverage: string;
+  insurance_expiry: string;
+  signature_data: string;
 }
 
 export const CompanyProfileSettings = () => {
@@ -64,6 +125,17 @@ export const CompanyProfileSettings = () => {
       locale: companyProfile?.locale || 'en-GB',
       payment_terms: companyProfile?.payment_terms || '30 days',
       hourly_rate: companyProfile?.hourly_rate || 45,
+      worker_rates: companyProfile?.worker_rates || defaultWorkerRates,
+      inspector_name: companyProfile?.inspector_name || '',
+      inspector_qualifications: companyProfile?.inspector_qualifications || [],
+      registration_scheme: companyProfile?.registration_scheme || '',
+      registration_number: companyProfile?.registration_number || '',
+      registration_expiry: companyProfile?.registration_expiry || '',
+      insurance_provider: companyProfile?.insurance_provider || '',
+      insurance_policy_number: companyProfile?.insurance_policy_number || '',
+      insurance_coverage: companyProfile?.insurance_coverage || '',
+      insurance_expiry: companyProfile?.insurance_expiry || '',
+      signature_data: companyProfile?.signature_data || '',
     }
   });
 
@@ -83,6 +155,17 @@ export const CompanyProfileSettings = () => {
       setValue('locale', companyProfile.locale);
       setValue('payment_terms', companyProfile.payment_terms);
       setValue('hourly_rate', companyProfile.hourly_rate || 45);
+      setValue('worker_rates', companyProfile.worker_rates || defaultWorkerRates);
+      setValue('inspector_name', companyProfile.inspector_name || '');
+      setValue('inspector_qualifications', companyProfile.inspector_qualifications || []);
+      setValue('registration_scheme', companyProfile.registration_scheme || '');
+      setValue('registration_number', companyProfile.registration_number || '');
+      setValue('registration_expiry', companyProfile.registration_expiry || '');
+      setValue('insurance_provider', companyProfile.insurance_provider || '');
+      setValue('insurance_policy_number', companyProfile.insurance_policy_number || '');
+      setValue('insurance_coverage', companyProfile.insurance_coverage || '');
+      setValue('insurance_expiry', companyProfile.insurance_expiry || '');
+      setValue('signature_data', companyProfile.signature_data || '');
       setLogoPreview(companyProfile.logo_url || null);
     }
   }, [companyProfile, setValue]);
@@ -116,6 +199,19 @@ export const CompanyProfileSettings = () => {
     await saveCompanyProfile({
       ...data,
       ...logoData,
+      // Ensure worker_rates is saved
+      worker_rates: data.worker_rates || defaultWorkerRates,
+      // Ensure inspector details are saved
+      inspector_name: data.inspector_name || undefined,
+      inspector_qualifications: data.inspector_qualifications?.length > 0 ? data.inspector_qualifications : undefined,
+      registration_scheme: data.registration_scheme || undefined,
+      registration_number: data.registration_number || undefined,
+      registration_expiry: data.registration_expiry || undefined,
+      insurance_provider: data.insurance_provider || undefined,
+      insurance_policy_number: data.insurance_policy_number || undefined,
+      insurance_coverage: data.insurance_coverage || undefined,
+      insurance_expiry: data.insurance_expiry || undefined,
+      signature_data: data.signature_data || undefined,
     });
 
     addNotification({
@@ -390,6 +486,215 @@ export const CompanyProfileSettings = () => {
                   className="bg-white/5 border-white/10"
                 />
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Worker Hourly Rates */}
+        <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+          <div className="px-4 md:px-6 py-4 border-b border-white/10">
+            <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+              <Users className="h-4 w-4 text-elec-yellow" />
+              Worker Hourly Rates
+            </h3>
+            <p className="text-xs text-muted-foreground mt-1">
+              These rates are used as defaults in quotes and invoices
+            </p>
+          </div>
+          <div className="p-4 md:p-6 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {(Object.keys(workerTypeLabels) as Array<keyof WorkerRates>).map((workerKey) => {
+                const worker = workerTypeLabels[workerKey];
+                const rates = watch('worker_rates') || defaultWorkerRates;
+                return (
+                  <div key={workerKey} className="space-y-2">
+                    <Label className="text-foreground">{worker.name}</Label>
+                    <div className="relative">
+                      <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                      <Input
+                        type="number"
+                        step="0.50"
+                        min="0"
+                        value={rates[workerKey] || defaultWorkerRates[workerKey]}
+                        onChange={(e) => {
+                          const newRates = { ...rates, [workerKey]: parseFloat(e.target.value) || 0 };
+                          setValue('worker_rates', newRates);
+                        }}
+                        className="bg-white/5 border-white/10 pl-10"
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground">{worker.description}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Inspector Details for Certificates */}
+        <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+          <div className="px-4 md:px-6 py-4 border-b border-white/10">
+            <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+              <Shield className="h-4 w-4 text-elec-yellow" />
+              Inspector Details for Certificates
+            </h3>
+            <p className="text-xs text-muted-foreground mt-1">
+              Auto-fills EICR, EIC, and Minor Works forms
+            </p>
+          </div>
+          <div className="p-4 md:p-6 space-y-6">
+            {/* Inspector Name */}
+            <div className="space-y-2">
+              <Label className="text-foreground">Inspector Name</Label>
+              <Input
+                {...register('inspector_name')}
+                placeholder="Full name of the inspector"
+                className="bg-white/5 border-white/10"
+              />
+            </div>
+
+            {/* Qualifications */}
+            <div className="space-y-3">
+              <Label className="text-foreground flex items-center gap-2">
+                <Award className="h-4 w-4 text-elec-yellow" />
+                Qualifications
+              </Label>
+              <p className="text-xs text-muted-foreground">Tap to select your qualifications</p>
+              <div className="flex flex-wrap gap-2">
+                {availableQualifications.map((qualification) => {
+                  const currentQuals = watch('inspector_qualifications') || [];
+                  const isSelected = currentQuals.includes(qualification);
+                  return (
+                    <button
+                      key={qualification}
+                      type="button"
+                      onClick={() => {
+                        const updated = isSelected
+                          ? currentQuals.filter((q: string) => q !== qualification)
+                          : [...currentQuals, qualification];
+                        setValue('inspector_qualifications', updated);
+                      }}
+                      className={cn(
+                        "px-3 py-2 rounded-lg text-sm font-medium transition-all touch-manipulation",
+                        "flex items-center gap-2 active:scale-95",
+                        isSelected
+                          ? "bg-elec-yellow text-black"
+                          : "bg-white/5 text-foreground border border-white/10 hover:bg-white/10"
+                      )}
+                    >
+                      {isSelected && <Check className="h-4 w-4" />}
+                      {qualification}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Registration Details */}
+            <div className="space-y-4">
+              <Label className="text-foreground flex items-center gap-2">
+                <Shield className="h-4 w-4 text-elec-yellow" />
+                Professional Registration
+              </Label>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm text-muted-foreground">Registration Scheme</Label>
+                  <Select
+                    value={watch('registration_scheme') || ''}
+                    onValueChange={(value) => setValue('registration_scheme', value)}
+                  >
+                    <SelectTrigger className="bg-white/5 border-white/10">
+                      <SelectValue placeholder="Select scheme" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-gray border-white/10">
+                      {registrationSchemes.map((scheme) => (
+                        <SelectItem key={scheme.value} value={scheme.value}>
+                          {scheme.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm text-muted-foreground">Registration Number</Label>
+                  <Input
+                    {...register('registration_number')}
+                    placeholder="e.g., NICEIC/12345"
+                    className="bg-white/5 border-white/10"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm text-muted-foreground">Registration Expiry</Label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                    <Input
+                      type="date"
+                      {...register('registration_expiry')}
+                      className="bg-white/5 border-white/10 pl-10"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Insurance Details */}
+            <div className="space-y-4">
+              <Label className="text-foreground flex items-center gap-2">
+                <FileText className="h-4 w-4 text-elec-yellow" />
+                Insurance Details
+              </Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm text-muted-foreground">Insurance Provider</Label>
+                  <Input
+                    {...register('insurance_provider')}
+                    placeholder="e.g., Zurich, Aviva"
+                    className="bg-white/5 border-white/10"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm text-muted-foreground">Policy Number</Label>
+                  <Input
+                    {...register('insurance_policy_number')}
+                    placeholder="Policy number"
+                    className="bg-white/5 border-white/10"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm text-muted-foreground">Coverage Amount</Label>
+                  <Input
+                    {...register('insurance_coverage')}
+                    placeholder="e.g., £2,000,000"
+                    className="bg-white/5 border-white/10"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm text-muted-foreground">Insurance Expiry</Label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                    <Input
+                      type="date"
+                      {...register('insurance_expiry')}
+                      className="bg-white/5 border-white/10 pl-10"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Signature */}
+            <div className="space-y-3">
+              <Label className="text-foreground flex items-center gap-2">
+                <Pen className="h-4 w-4 text-elec-yellow" />
+                Signature
+              </Label>
+              <p className="text-xs text-muted-foreground">
+                Draw or type your signature. This will auto-fill on EICR, EIC, and Minor Works certificates.
+              </p>
+              <SignatureInput
+                value={watch('signature_data') || ''}
+                onChange={(signature) => setValue('signature_data', signature || '')}
+              />
             </div>
           </div>
         </div>

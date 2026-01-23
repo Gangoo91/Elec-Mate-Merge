@@ -60,13 +60,23 @@ export const InvoiceItemsStep = ({
   // Get user's hourly rate from their company profile (Business Settings)
   const { companyProfile } = useCompanyProfile();
 
-  // Calculate personalised worker rates based on user's business hourly rate
+  // Calculate personalised worker rates based on user's saved worker_rates or fallback to hourly_rate
   const workerTypes = useMemo(() => {
-    // Get user's rate from company profile (default to £45/hr if not set)
-    const userRate = companyProfile?.hourly_rate || 45;
+    const savedRates = companyProfile?.worker_rates;
 
-    // Scale other worker types relative to the qualified electrician rate
-    // Original ratios: Apprentice ~55%, Labourer ~44%, Designer ~144%
+    // If user has saved custom worker rates, use them
+    if (savedRates) {
+      return defaultWorkerTypes.map(worker => {
+        const savedRate = savedRates[worker.id as keyof typeof savedRates];
+        return {
+          ...worker,
+          defaultHourlyRate: savedRate ?? worker.defaultHourlyRate
+        };
+      });
+    }
+
+    // Fall back to percentage calculation if no saved rates
+    const userRate = companyProfile?.hourly_rate || 45;
     return defaultWorkerTypes.map(worker => {
       let rate = worker.defaultHourlyRate;
       switch (worker.id) {
@@ -74,21 +84,21 @@ export const InvoiceItemsStep = ({
           rate = userRate;
           break;
         case 'apprentice':
-          rate = Math.round(userRate * 0.55); // ~55% of qualified rate
+          rate = Math.round(userRate * 0.55);
           break;
         case 'labourer':
-          rate = Math.round(userRate * 0.44); // ~44% of qualified rate
+          rate = Math.round(userRate * 0.44);
           break;
         case 'designer':
-          rate = Math.round(userRate * 1.44); // ~144% of qualified rate
+          rate = Math.round(userRate * 1.44);
           break;
         case 'owner':
-          rate = Math.round(userRate * 1.11); // ~111% of qualified rate
+          rate = Math.round(userRate * 1.11);
           break;
       }
       return { ...worker, defaultHourlyRate: rate };
     });
-  }, [companyProfile?.hourly_rate]);
+  }, [companyProfile?.worker_rates, companyProfile?.hourly_rate]);
 
   const [newItem, setNewItem] = useState({
     description: '',

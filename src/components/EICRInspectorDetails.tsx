@@ -149,6 +149,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
   };
 
   // Load ALL details from both Business Settings AND saved Inspector Profile
+  // Priority: Company Profile inspector details > Inspector Profile > fallback
   const handleLoadFromBusinessSettings = () => {
     const inspectorProfile = getAvailableProfile();
 
@@ -165,49 +166,65 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     haptics.success();
     let loadedItems: string[] = [];
 
-    // Load personal details from Inspector Profile (name, qualifications, signature)
-    if (inspectorProfile) {
-      if (inspectorProfile.name) {
-        onUpdate('inspectorName', inspectorProfile.name);
-        loadedItems.push('Name');
-      }
-      if (inspectorProfile.qualifications?.length > 0) {
-        onUpdate('inspectorQualifications', inspectorProfile.qualifications.join(', '));
-        setSelectedQualifications(inspectorProfile.qualifications);
-        loadedItems.push('Qualifications');
-      }
-      if (inspectorProfile.signatureData) {
-        onUpdate('inspectorSignature', inspectorProfile.signatureData);
-        loadedItems.push('Signature');
-      }
-      // Registration details
-      if (inspectorProfile.registrationScheme) {
-        onUpdate('registrationScheme', inspectorProfile.registrationScheme);
-        loadedItems.push('Registration');
-      }
-      if (inspectorProfile.registrationNumber) {
-        onUpdate('registrationNumber', inspectorProfile.registrationNumber);
-      }
-      if (inspectorProfile.registrationExpiry) {
-        onUpdate('registrationExpiry', inspectorProfile.registrationExpiry);
-      }
-      // Insurance details
-      if (inspectorProfile.insuranceProvider) {
-        onUpdate('insuranceProvider', inspectorProfile.insuranceProvider);
-        loadedItems.push('Insurance');
-      }
-      if (inspectorProfile.insurancePolicyNumber) {
-        onUpdate('insurancePolicyNumber', inspectorProfile.insurancePolicyNumber);
-      }
-      if (inspectorProfile.insuranceCoverage) {
-        onUpdate('insuranceCoverage', inspectorProfile.insuranceCoverage);
-      }
-      if (inspectorProfile.insuranceExpiry) {
-        onUpdate('insuranceExpiry', inspectorProfile.insuranceExpiry);
-      }
+    // Load inspector personal details - Company Profile takes priority
+    const inspectorName = companyProfile?.inspector_name || inspectorProfile?.name;
+    if (inspectorName) {
+      onUpdate('inspectorName', inspectorName);
+      loadedItems.push('Name');
     }
 
-    // Load company details from Business Settings (CompanyProfile) - takes priority
+    // Load qualifications - Company Profile takes priority
+    const qualifications = companyProfile?.inspector_qualifications?.length
+      ? companyProfile.inspector_qualifications
+      : inspectorProfile?.qualifications;
+    if (qualifications?.length) {
+      onUpdate('inspectorQualifications', qualifications.join(', '));
+      setSelectedQualifications(qualifications);
+      loadedItems.push('Qualifications');
+    }
+
+    // Load signature - Company Profile takes priority
+    const signature = companyProfile?.signature_data || inspectorProfile?.signatureData;
+    if (signature) {
+      onUpdate('inspectorSignature', signature);
+      loadedItems.push('Signature');
+    }
+
+    // Load registration details - Company Profile takes priority
+    const registrationScheme = companyProfile?.registration_scheme || inspectorProfile?.registrationScheme;
+    if (registrationScheme) {
+      onUpdate('registrationScheme', registrationScheme);
+      loadedItems.push('Registration');
+    }
+    const registrationNumber = companyProfile?.registration_number || inspectorProfile?.registrationNumber;
+    if (registrationNumber) {
+      onUpdate('registrationNumber', registrationNumber);
+    }
+    const registrationExpiry = companyProfile?.registration_expiry || inspectorProfile?.registrationExpiry;
+    if (registrationExpiry) {
+      onUpdate('registrationExpiry', registrationExpiry);
+    }
+
+    // Load insurance details - Company Profile takes priority
+    const insuranceProvider = companyProfile?.insurance_provider || inspectorProfile?.insuranceProvider;
+    if (insuranceProvider) {
+      onUpdate('insuranceProvider', insuranceProvider);
+      loadedItems.push('Insurance');
+    }
+    const insurancePolicyNumber = companyProfile?.insurance_policy_number || inspectorProfile?.insurancePolicyNumber;
+    if (insurancePolicyNumber) {
+      onUpdate('insurancePolicyNumber', insurancePolicyNumber);
+    }
+    const insuranceCoverage = companyProfile?.insurance_coverage || inspectorProfile?.insuranceCoverage;
+    if (insuranceCoverage) {
+      onUpdate('insuranceCoverage', insuranceCoverage);
+    }
+    const insuranceExpiry = companyProfile?.insurance_expiry || inspectorProfile?.insuranceExpiry;
+    if (insuranceExpiry) {
+      onUpdate('insuranceExpiry', insuranceExpiry);
+    }
+
+    // Load company details from Business Settings (CompanyProfile) - always takes priority
     if (companyProfile) {
       if (companyProfile.company_name) {
         onUpdate('companyName', companyProfile.company_name);
