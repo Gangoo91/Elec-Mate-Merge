@@ -179,6 +179,18 @@ const SettingsPage = () => {
   if (isMobile) {
     return (
       <div className="bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95">
+        {/* Back Button */}
+        <div className="px-4 pt-4">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+            onClick={() => navigate("/dashboard")}
+          >
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            Back to Dashboard
+          </Button>
+        </div>
+
         <AnimatePresence mode="wait" initial={false}>
           {selectedTab === null ? (
             // Mobile Grid View (List)
@@ -316,6 +328,18 @@ const SettingsPage = () => {
   // Desktop View
   return (
     <div className="bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 animate-fade-in">
+      {/* Back Button */}
+      <div className="px-4 md:px-6 lg:px-8 pt-4 max-w-[1600px] mx-auto">
+        <Button
+          variant="ghost"
+          className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+          onClick={() => navigate("/dashboard")}
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to Dashboard
+        </Button>
+      </div>
+
       {/* Desktop Header - solid bg for Android compatibility */}
       <div className="border-b border-white/[0.06] bg-elec-dark sticky top-0 z-20">
         <div className="px-4 md:px-6 lg:px-8 py-4 max-w-[1600px] mx-auto">

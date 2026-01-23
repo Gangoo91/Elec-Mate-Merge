@@ -1,4 +1,6 @@
-import { Zap, Shield, Clock, Sparkles, CheckCircle2 } from "lucide-react";
+import { Zap, Shield, Clock, Sparkles, CheckCircle2, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import SubscriptionStatus from "@/components/subscriptions/SubscriptionStatus";
 import PlanSelection from "@/components/subscriptions/PlanSelection";
 import SubscriptionFAQ from "@/components/subscriptions/SubscriptionFAQ";
@@ -19,6 +21,19 @@ const Subscriptions = () => {
 
   return (
     <div className="animate-fade-in relative">
+      {/* Back Button */}
+      <div className="relative z-20 px-4 pt-4">
+        <Link to="/dashboard">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            Back to Dashboard
+          </Button>
+        </Link>
+      </div>
+
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-elec-yellow/[0.05] via-transparent to-transparent" />

@@ -31,6 +31,7 @@ import {
   Crown,
   FileCheck,
   Camera,
+  ArrowLeft,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -145,6 +146,18 @@ export default function AdminPanel() {
 
   return (
     <div className="bg-background">
+      {/* Back Button */}
+      <div className="px-4 pt-4">
+        <Button
+          variant="ghost"
+          className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+          onClick={() => navigate("/dashboard")}
+        >
+          <ArrowLeft className="mr-2 h-5 w-5" />
+          Back to Dashboard
+        </Button>
+      </div>
+
       {/* Admin Header */}
       <div className="border-b border-border bg-card/50 backdrop-blur-xl sticky top-0 z-40">
         <div className="px-4 py-3">

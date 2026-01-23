@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { GraduationCap, Zap, BookOpen, Award, Clock, Target, TrendingUp, Play, ChevronRight, Flame, Star, Sparkles } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import { GraduationCap, Zap, BookOpen, Award, Clock, Target, TrendingUp, Play, ChevronRight, Flame, Star, Sparkles, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useStudyStreak } from "@/hooks/useStudyStreak";
@@ -37,6 +38,19 @@ export default function StudyCentreIndex() {
 
   return (
     <div className="pb-24 momentum-scroll-y">
+      {/* Back Button */}
+      <div className="px-4 pt-4">
+        <Link to="/dashboard">
+          <Button
+            variant="ghost"
+            className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+          >
+            <ArrowLeft className="mr-2 h-5 w-5" />
+            Back to Dashboard
+          </Button>
+        </Link>
+      </div>
+
       {/* Premium Hero Section */}
       <div className="relative overflow-hidden">
         {/* Animated background gradient */}
