@@ -17,7 +17,8 @@ import {
   Copy,
   Code,
   Loader2,
-  Bell
+  Bell,
+  Receipt
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -28,6 +29,7 @@ import { Input } from '@/components/ui/input';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { createNotificationFromCertificate } from '@/utils/notificationHelper';
+import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 
 interface EICCertificateActionsProps {
   formData: any;
@@ -361,6 +363,38 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
     } finally {
       setIsSendingEmail(false);
     }
+  };
+
+  // Navigate to quote builder with client data pre-filled
+  const handleCreateQuote = () => {
+    const url = createQuoteFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientPhone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.installationAddress || '',
+      certificateType: 'EIC',
+      certificateReference: formData.certificateNumber || '',
+      reportId: reportId || undefined,
+      pdfUrl: formData.pdfUrl || undefined,
+    });
+    navigate(url);
+  };
+
+  // Navigate to invoice builder with client data pre-filled
+  const handleCreateInvoice = () => {
+    const url = createInvoiceFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientPhone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.installationAddress || '',
+      certificateType: 'EIC',
+      certificateReference: formData.certificateNumber || '',
+      reportId: reportId || undefined,
+      pdfUrl: formData.pdfUrl || undefined,
+    });
+    navigate(url);
   };
 
   const generateTestJSON = async (reportId: string) => {
@@ -736,7 +770,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
               <Mail className="h-4 w-4 mr-2" />
               Email Certificate
             </Button>
-            
+
             <Button
               onClick={() => window.print()}
               variant="outline"
@@ -745,6 +779,27 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
             >
               <Printer className="h-4 w-4 mr-2" />
               Print Preview
+            </Button>
+          </div>
+
+          {/* Quote & Invoice Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button
+              onClick={handleCreateQuote}
+              variant="outline"
+              className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400"
+            >
+              <FileText className="h-4 w-4 mr-2" />
+              Quote
+            </Button>
+
+            <Button
+              onClick={handleCreateInvoice}
+              variant="outline"
+              className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20 text-blue-400"
+            >
+              <Receipt className="h-4 w-4 mr-2" />
+              Invoice
             </Button>
           </div>
 

@@ -72,10 +72,15 @@ Deno.serve(async (req) => {
           break;
         }
 
+        // Check if user already has an account
+        const { data: existingUserData } = await supabaseAdmin.auth.admin.getUserByEmail(invite.email);
+        const hasExistingAccount = !!existingUserData?.user;
+
         result = {
           valid: true,
           email: invite.email,
           price: "£3.99/month",
+          hasExistingAccount,
         };
         break;
       }

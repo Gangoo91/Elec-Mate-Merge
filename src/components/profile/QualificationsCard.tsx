@@ -202,12 +202,12 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
       </motion.div>
 
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e]">
-          <div className="flex justify-center pt-3 pb-2">
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+          <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
 
-          <div className="flex items-center justify-between px-4 pb-4 border-b border-white/[0.08]">
+          <div className="flex items-center justify-between px-4 pb-4 border-b border-white/[0.08] flex-shrink-0">
             <button
               onClick={() => setIsEditing(false)}
               className="text-[17px] text-blue-400 font-normal active:opacity-50 touch-manipulation"
@@ -232,7 +232,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
             </button>
           </div>
 
-          <div className="px-4 py-6 space-y-6 momentum-scroll-y pb-32">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
             {hasElecId && (
               <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                 <div className="flex items-center gap-2 mb-2">

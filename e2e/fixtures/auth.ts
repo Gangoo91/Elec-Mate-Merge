@@ -12,7 +12,7 @@ export const test = base.extend<{ authenticatedPage: Page }>({
 
     // Wait for the form to load
     await page.waitForSelector('input[type="email"], input[name="email"]', {
-      timeout: 10000,
+      timeout: 15000,
     });
 
     // Fill in credentials
@@ -25,9 +25,10 @@ export const test = base.extend<{ authenticatedPage: Page }>({
     // Submit the form
     await page.click('button[type="submit"]');
 
-    // Wait for navigation to dashboard or check for successful login
-    await page.waitForURL(/dashboard|electrician|apprentice/, {
-      timeout: 15000,
+    // Wait for navigation - include all possible post-login routes
+    // Increased timeout to 30s for slower browsers (Firefox, WebKit, mobile)
+    await page.waitForURL(/dashboard|electrician|apprentice|admin|employer|college/, {
+      timeout: 30000,
     });
 
     // Use the authenticated page
@@ -35,19 +36,56 @@ export const test = base.extend<{ authenticatedPage: Page }>({
   },
 });
 
-// Helper function to login via UI
-export async function loginViaUI(page: Page) {
-  await page.goto("/auth/signin");
-  await page.waitForSelector('input[type="email"], input[name="email"]', {
-    timeout: 10000,
-  });
-  await page.fill('input[type="email"], input[name="email"]', TEST_EMAIL);
-  await page.fill(
-    'input[type="password"], input[name="password"]',
-    TEST_PASSWORD
-  );
-  await page.click('button[type="submit"]');
-  await page.waitForURL(/dashboard|electrician|apprentice/, { timeout: 15000 });
+// Helper function to login via UI with retry logic for rate limiting
+export async function loginViaUI(page: Page, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      await page.goto("/auth/signin");
+      await page.waitForSelector('input[type="email"], input[name="email"]', {
+        timeout: 15000,
+      });
+
+      // Check for rate limit message before filling
+      const rateLimitVisible = await page
+        .getByText(/rate limit|too many requests/i)
+        .isVisible()
+        .catch(() => false);
+
+      if (rateLimitVisible && attempt < retries) {
+        // Wait and retry if rate limited
+        await page.waitForTimeout(2000 * attempt);
+        continue;
+      }
+
+      await page.fill('input[type="email"], input[name="email"]', TEST_EMAIL);
+      await page.fill(
+        'input[type="password"], input[name="password"]',
+        TEST_PASSWORD
+      );
+      await page.click('button[type="submit"]');
+
+      // Check for rate limit after submit
+      await page.waitForTimeout(500);
+      const postSubmitRateLimit = await page
+        .getByText(/rate limit|too many requests/i)
+        .isVisible()
+        .catch(() => false);
+
+      if (postSubmitRateLimit && attempt < retries) {
+        await page.waitForTimeout(3000 * attempt);
+        continue;
+      }
+
+      // Include admin in URL pattern since test user may be redirected there
+      // Increased timeout to 30s for slower browsers (Firefox, WebKit, mobile)
+      await page.waitForURL(/dashboard|electrician|apprentice|admin|employer|college/, { timeout: 30000 });
+      return; // Success
+    } catch (error) {
+      if (attempt === retries) throw error;
+      // Wait before retry
+      await page.waitForTimeout(2000 * attempt);
+    }
+  }
 }
 
 // Helper to check if page loaded without critical errors

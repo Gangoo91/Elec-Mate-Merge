@@ -57,7 +57,11 @@ export const DEFAULT_BUSINESS_SETTINGS: BusinessSettings = {
   }
 };
 
-const STORAGE_KEY = 'electrician_business_settings';
+// Generate user-scoped storage key for business settings
+const getStorageKey = (userId?: string) =>
+  userId
+    ? `electrician_business_settings_${userId}`
+    : 'electrician_business_settings_guest';
 
 interface BusinessSettingsDialogProps {
   onSettingsChange?: (settings: BusinessSettings) => void;
@@ -65,6 +69,7 @@ interface BusinessSettingsDialogProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   hideButton?: boolean;
+  userId?: string;
 }
 
 export function BusinessSettingsDialog({
@@ -72,7 +77,8 @@ export function BusinessSettingsDialog({
   currentSettings,
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
-  hideButton = false
+  hideButton = false,
+  userId
 }: BusinessSettingsDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
 
@@ -82,8 +88,10 @@ export function BusinessSettingsDialog({
   const [settings, setSettings] = useState<BusinessSettings>(currentSettings || DEFAULT_BUSINESS_SETTINGS);
   const [hasConfigured, setHasConfigured] = useState(false);
 
+  const storageKey = getStorageKey(userId);
+
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = localStorage.getItem(storageKey);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -93,11 +101,15 @@ export function BusinessSettingsDialog({
       } catch (e) {
         console.error('Failed to parse business settings:', e);
       }
+    } else {
+      // Reset to defaults when no saved settings for this user
+      setSettings(DEFAULT_BUSINESS_SETTINGS);
+      setHasConfigured(false);
     }
-  }, []);
+  }, [storageKey]);
 
   const handleSave = () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    localStorage.setItem(storageKey, JSON.stringify(settings));
     setHasConfigured(true);
     onSettingsChange?.(settings);
     setOpen(false);

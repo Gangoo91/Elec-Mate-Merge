@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
-import { useSEO } from '@/hooks/useSEO';
+import useSEO from '@/hooks/useSEO';
 import {
   ArrowLeft,
   ArrowRight,

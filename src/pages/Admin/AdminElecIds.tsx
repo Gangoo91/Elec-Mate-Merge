@@ -1,16 +1,30 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetFooter,
 } from "@/components/ui/sheet";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import {
   Select,
   SelectContent,
@@ -21,6 +35,7 @@ import {
 import {
   IdCard,
   ShieldCheck,
+  ShieldX,
   Eye,
   Award,
   CheckCircle,
@@ -29,6 +44,10 @@ import {
   ChevronRight,
   Briefcase,
   GraduationCap,
+  Loader2,
+  RefreshCw,
+  CheckSquare,
+  Square,
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import AdminSearchInput from "@/components/admin/AdminSearchInput";
@@ -59,12 +78,19 @@ interface ElecIdProfile {
 }
 
 export default function AdminElecIds() {
+  const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [selectedProfile, setSelectedProfile] = useState<ElecIdProfile | null>(null);
+  const [rejectReason, setRejectReason] = useState("");
+  const [showRejectDialog, setShowRejectDialog] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [showBulkApproveDialog, setShowBulkApproveDialog] = useState(false);
+  const [showBulkRejectDialog, setShowBulkRejectDialog] = useState(false);
+  const [bulkRejectReason, setBulkRejectReason] = useState("");
 
   // Fetch Elec-ID profiles
-  const { data: elecIds, isLoading } = useQuery({
+  const { data: elecIds, isLoading, refetch } = useQuery({
     queryKey: ["admin-elec-ids", search, statusFilter],
     queryFn: async () => {
       let query = supabase
@@ -127,6 +153,123 @@ export default function AdminElecIds() {
     },
     staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
+
+  // Approve mutation via edge function
+  const approveMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { data, error } = await supabase.functions.invoke("admin-verify-elecid", {
+        body: { action: "approve", profileId: id },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-elec-ids"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-elec-id-stats"] });
+      setSelectedProfile(null);
+      toast({ title: "Profile approved", description: "Elec-ID has been verified." });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
+  // Reject mutation via edge function
+  const rejectMutation = useMutation({
+    mutationFn: async ({ id, reason }: { id: string; reason: string }) => {
+      const { data, error } = await supabase.functions.invoke("admin-verify-elecid", {
+        body: { action: "reject", profileId: id, reason },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-elec-ids"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-elec-id-stats"] });
+      setSelectedProfile(null);
+      setShowRejectDialog(false);
+      setRejectReason("");
+      toast({ title: "Profile rejected" });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
+  // Bulk approve mutation
+  const bulkApproveMutation = useMutation({
+    mutationFn: async (ids: string[]) => {
+      const results = await Promise.allSettled(
+        ids.map((id) =>
+          supabase.functions.invoke("admin-verify-elecid", {
+            body: { action: "approve", profileId: id },
+          })
+        )
+      );
+      const failures = results.filter((r) => r.status === "rejected");
+      if (failures.length > 0) {
+        throw new Error(`${failures.length} of ${ids.length} approvals failed`);
+      }
+      return { approved: ids.length };
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["admin-elec-ids"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-elec-id-stats"] });
+      setSelectedIds(new Set());
+      setShowBulkApproveDialog(false);
+      toast({ title: "Bulk approval complete", description: `${data.approved} profiles verified.` });
+    },
+    onError: (error: any) => {
+      toast({ title: "Bulk approval failed", description: error.message, variant: "destructive" });
+    },
+  });
+
+  // Bulk reject mutation
+  const bulkRejectMutation = useMutation({
+    mutationFn: async ({ ids, reason }: { ids: string[]; reason: string }) => {
+      const results = await Promise.allSettled(
+        ids.map((id) =>
+          supabase.functions.invoke("admin-verify-elecid", {
+            body: { action: "reject", profileId: id, reason },
+          })
+        )
+      );
+      const failures = results.filter((r) => r.status === "rejected");
+      if (failures.length > 0) {
+        throw new Error(`${failures.length} of ${ids.length} rejections failed`);
+      }
+      return { rejected: ids.length };
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["admin-elec-ids"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-elec-id-stats"] });
+      setSelectedIds(new Set());
+      setShowBulkRejectDialog(false);
+      setBulkRejectReason("");
+      toast({ title: "Bulk rejection complete", description: `${data.rejected} profiles rejected.` });
+    },
+    onError: (error: any) => {
+      toast({ title: "Bulk rejection failed", description: error.message, variant: "destructive" });
+    },
+  });
+
+  // Selection helpers
+  const pendingProfiles = elecIds?.filter((p) => !p.is_verified) || [];
+  const toggleSelect = (id: string) => {
+    const newSet = new Set(selectedIds);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      newSet.add(id);
+    }
+    setSelectedIds(newSet);
+  };
+  const selectAllPending = () => {
+    setSelectedIds(new Set(pendingProfiles.map((p) => p.id)));
+  };
+  const clearSelection = () => {
+    setSelectedIds(new Set());
+  };
 
   const getVerificationBadge = (profile: ElecIdProfile) => {
     if (profile.is_verified) {
@@ -232,9 +375,70 @@ export default function AdminElecIds() {
                 <SelectItem value="activated">Activated</SelectItem>
               </SelectContent>
             </Select>
+            <Button variant="outline" size="icon" className="h-11 w-11 touch-manipulation shrink-0" onClick={() => refetch()}>
+              <RefreshCw className="h-4 w-4" />
+            </Button>
           </div>
         </CardContent>
       </Card>
+
+      {/* Bulk Actions Bar */}
+      {pendingProfiles.length > 0 && (
+        <Card className={selectedIds.size > 0 ? "border-cyan-500/30 bg-cyan-500/5" : ""}>
+          <CardContent className="pt-3 pb-3">
+            <div className="flex items-center justify-between gap-3 flex-wrap">
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-9 touch-manipulation gap-2"
+                  onClick={selectedIds.size === pendingProfiles.length ? clearSelection : selectAllPending}
+                >
+                  {selectedIds.size === pendingProfiles.length ? (
+                    <>
+                      <CheckSquare className="h-4 w-4" />
+                      Deselect All
+                    </>
+                  ) : (
+                    <>
+                      <Square className="h-4 w-4" />
+                      Select All Pending ({pendingProfiles.length})
+                    </>
+                  )}
+                </Button>
+                {selectedIds.size > 0 && (
+                  <span className="text-sm text-muted-foreground">
+                    {selectedIds.size} selected
+                  </span>
+                )}
+              </div>
+              {selectedIds.size > 0 && (
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 touch-manipulation gap-2 border-red-500/30 text-red-400 hover:bg-red-500/10"
+                    onClick={() => setShowBulkRejectDialog(true)}
+                    disabled={bulkRejectMutation.isPending}
+                  >
+                    <ShieldX className="h-4 w-4" />
+                    Reject ({selectedIds.size})
+                  </Button>
+                  <Button
+                    size="sm"
+                    className="h-9 touch-manipulation gap-2 bg-green-500 hover:bg-green-600"
+                    onClick={() => setShowBulkApproveDialog(true)}
+                    disabled={bulkApproveMutation.isPending}
+                  >
+                    <ShieldCheck className="h-4 w-4" />
+                    Approve ({selectedIds.size})
+                  </Button>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Elec-ID List */}
       {isLoading ? (
@@ -262,12 +466,23 @@ export default function AdminElecIds() {
           {elecIds?.map((profile) => (
             <Card
               key={profile.id}
-              className="touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
+              className={`touch-manipulation active:scale-[0.99] transition-transform cursor-pointer ${
+                selectedIds.has(profile.id) ? "border-cyan-500/50 bg-cyan-500/5" : ""
+              }`}
               onClick={() => setSelectedProfile(profile)}
             >
               <CardContent className="pt-4 pb-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 min-w-0 flex-1">
+                    {/* Checkbox for pending profiles */}
+                    {!profile.is_verified && (
+                      <Checkbox
+                        checked={selectedIds.has(profile.id)}
+                        onCheckedChange={() => toggleSelect(profile.id)}
+                        onClick={(e) => e.stopPropagation()}
+                        className="shrink-0 border-cyan-500/50 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500"
+                      />
+                    )}
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center shrink-0">
                       <IdCard className="h-5 w-5 text-cyan-400" />
                     </div>
@@ -467,9 +682,149 @@ export default function AdminElecIds() {
                 </Card>
               )}
             </div>
+
+            {/* Action Buttons for pending profiles */}
+            {selectedProfile && !selectedProfile.is_verified && (
+              <SheetFooter className="p-4 border-t border-border">
+                <div className="flex gap-3 w-full">
+                  <Button
+                    variant="outline"
+                    className="flex-1 h-12 touch-manipulation gap-2 border-red-500/30 text-red-400 hover:bg-red-500/10"
+                    onClick={() => setShowRejectDialog(true)}
+                    disabled={approveMutation.isPending}
+                  >
+                    <ShieldX className="h-4 w-4" />
+                    Reject
+                  </Button>
+                  <Button
+                    className="flex-1 h-12 touch-manipulation gap-2 bg-green-500 hover:bg-green-600"
+                    onClick={() => selectedProfile && approveMutation.mutate(selectedProfile.id)}
+                    disabled={approveMutation.isPending}
+                  >
+                    {approveMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <ShieldCheck className="h-4 w-4" />
+                    )}
+                    {approveMutation.isPending ? "Approving..." : "Verify"}
+                  </Button>
+                </div>
+              </SheetFooter>
+            )}
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* Reject Dialog */}
+      <AlertDialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Reject Verification?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Please provide a reason for rejection. This will be sent to the user.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <Textarea
+            value={rejectReason}
+            onChange={(e) => setRejectReason(e.target.value)}
+            placeholder="Enter rejection reason..."
+            className="min-h-[100px]"
+          />
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={rejectMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
+              onClick={() => selectedProfile && rejectMutation.mutate({ id: selectedProfile.id, reason: rejectReason })}
+              disabled={!rejectReason.trim() || rejectMutation.isPending}
+            >
+              {rejectMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Rejecting...
+                </>
+              ) : (
+                "Reject"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Bulk Approve Dialog */}
+      <AlertDialog open={showBulkApproveDialog} onOpenChange={setShowBulkApproveDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Bulk Approve {selectedIds.size} Profiles?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will verify {selectedIds.size} Elec-ID profiles. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={bulkApproveMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-green-500 hover:bg-green-600"
+              onClick={() => bulkApproveMutation.mutate(Array.from(selectedIds))}
+              disabled={bulkApproveMutation.isPending}
+            >
+              {bulkApproveMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Approving...
+                </>
+              ) : (
+                <>
+                  <ShieldCheck className="h-4 w-4 mr-2" />
+                  Approve All
+                </>
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Bulk Reject Dialog */}
+      <AlertDialog open={showBulkRejectDialog} onOpenChange={setShowBulkRejectDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Bulk Reject {selectedIds.size} Profiles?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Please provide a reason for rejection. This will be sent to all {selectedIds.size} users.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <Textarea
+            value={bulkRejectReason}
+            onChange={(e) => setBulkRejectReason(e.target.value)}
+            placeholder="Enter rejection reason..."
+            className="min-h-[100px]"
+          />
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={bulkRejectMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
+              onClick={() => bulkRejectMutation.mutate({ ids: Array.from(selectedIds), reason: bulkRejectReason })}
+              disabled={!bulkRejectReason.trim() || bulkRejectMutation.isPending}
+            >
+              {bulkRejectMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Rejecting...
+                </>
+              ) : (
+                <>
+                  <ShieldX className="h-4 w-4 mr-2" />
+                  Reject All
+                </>
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

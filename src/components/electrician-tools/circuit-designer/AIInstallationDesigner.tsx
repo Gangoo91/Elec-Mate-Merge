@@ -2,11 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { StructuredDesignWizard } from "./structured-input/StructuredDesignWizard";
 import { DesignReviewEditor } from "./DesignReviewEditor";
 import { DesignProcessingView } from "./DesignProcessingView";
-import { DesignInputs } from "@/types/installation-design";
+import { DesignInputs, CircuitInput } from "@/types/installation-design";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useCircuitDesignGeneration } from "@/hooks/useCircuitDesignGeneration";
+import { ImportedContextBanner } from "@/components/electrician-tools/shared/ImportedContextBanner";
+import { AnimatePresence } from "framer-motion";
 
 // User-friendly error message mapper
 const getFriendlyErrorMessage = (error: string): string => {
@@ -187,6 +189,37 @@ const transformExpectedTests = (expectedTests: any): any => {
   };
 };
 
+// Map context data from another agent to wizard initial data format
+const mapContextToWizardData = (contextData: any): Partial<DesignInputs> => {
+  return {
+    projectName: contextData.projectName || '',
+    location: contextData.location || '',
+    clientName: contextData.clientName || '',
+    propertyType: contextData.installationType || contextData.propertyType || 'domestic',
+    voltage: contextData.voltage || 230,
+    phases: contextData.phases || 'single',
+    ze: contextData.ze || 0.35,
+    earthingSystem: contextData.earthingSystem || 'TN-C-S',
+    circuits: contextData.circuits?.map((c: any) => ({
+      id: crypto.randomUUID(),
+      name: c.name || 'Imported Circuit',
+      loadType: c.loadType || 'general',
+      loadPower: c.loadPower || c.power,
+      cableLength: c.cableLength || c.length,
+      phases: c.phases || 'single',
+      specialLocation: c.specialLocation || 'none',
+      notes: c.notes || ''
+    })) || []
+  };
+};
+
+// Interface for imported context from other agents
+interface ImportedAgentContext {
+  contextData: any;
+  instruction: string | null;
+  source: string;
+}
+
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>('input');
   const [userRequest, setUserRequest] = useState<string>('');
@@ -194,6 +227,9 @@ export const AIInstallationDesigner = () => {
   const [designData, setDesignData] = useState<any>(null);
   const [jobId, setJobId] = useState<string | null>(null);
   const successToastShown = useRef(false);
+  // State for context imported from other agents via AgentInbox
+  const [importedContext, setImportedContext] = useState<ImportedAgentContext | null>(null);
+  const [wizardInitialData, setWizardInitialData] = useState<Partial<DesignInputs> | undefined>(undefined);
   
   // Use job polling hook (now includes installationGuidance and installationAgentStatus)
   const { job, progress, status, currentStep, designData: jobDesignData, installationGuidance, installationAgentStatus, error } = useCircuitDesignGeneration(jobId);
@@ -488,21 +524,68 @@ export const AIInstallationDesigner = () => {
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     console.log('Task accepted from agent:', contextData, instruction);
-    // TODO: Pre-fill form with data from other agents
+
+    if (contextData) {
+      try {
+        // Store context for wizard to use
+        setImportedContext({
+          contextData,
+          instruction,
+          source: contextData.sourceAgent || contextData.projectName || 'another agent'
+        });
+
+        toast.success('Context loaded', {
+          description: 'Work forwarded from another agent. Click "Use Context" to populate form.'
+        });
+      } catch (error) {
+        console.error('Failed to parse agent context:', error);
+        toast.error('Failed to load context from agent');
+      }
+    }
+  };
+
+  const handleUseImportedContext = () => {
+    if (importedContext) {
+      // Map context to wizard data format and set as initial data
+      const mappedData = mapContextToWizardData(importedContext.contextData);
+      setWizardInitialData(mappedData);
+      setImportedContext(null);
+
+      toast.success('Form populated', {
+        description: `Imported ${mappedData.circuits?.length || 0} circuit(s) from ${importedContext.source}`
+      });
+    }
+  };
+
+  const handleDismissImportedContext = () => {
+    setImportedContext(null);
   };
 
   return (
     <div className="space-y-4">
       {/* Agent Inbox */}
-      <AgentInbox 
+      <AgentInbox
         currentAgent="designer"
         onTaskAccept={handleTaskAccept}
       />
 
+      {/* Imported Context Banner - show when context is available and in input view */}
+      <AnimatePresence>
+        {importedContext && currentView === 'input' && (
+          <ImportedContextBanner
+            source={importedContext.source}
+            circuitCount={importedContext.contextData?.circuits?.length || 0}
+            onUseContext={handleUseImportedContext}
+            onDismiss={handleDismissImportedContext}
+          />
+        )}
+      </AnimatePresence>
+
       {currentView === 'input' && (
-        <StructuredDesignWizard 
+        <StructuredDesignWizard
           onGenerate={handleGenerate}
           isProcessing={status === 'processing'}
+          initialData={wizardInitialData}
         />
       )}
 

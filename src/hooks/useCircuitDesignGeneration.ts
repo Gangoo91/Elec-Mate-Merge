@@ -36,9 +36,14 @@ interface UseCircuitDesignGenerationReturn {
   error: string | null;
 }
 
+// Installation agent timeout - 5 minutes
+const INSTALLATION_TIMEOUT_MS = 5 * 60 * 1000;
+
 export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesignGenerationReturn => {
   const [job, setJob] = useState<CircuitDesignJob | null>(null);
   const [stuckCheckTimeout, setStuckCheckTimeout] = useState<number | null>(null);
+  // Track when installation agent started processing for timeout detection
+  const [installationStartTime, setInstallationStartTime] = useState<number | null>(null);
 
   useEffect(() => {
     // CRITICAL: Reset state when jobId is null to ensure fresh start
@@ -95,6 +100,16 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
           }
           return data as any as CircuitDesignJob;
         });
+
+        // Installation agent stuck detection
+        const installAgentStatus = (data as any).installation_agent_status;
+        if (jobStatus === 'complete' && installAgentStatus === 'processing') {
+          // Installation agent is still processing after main design is complete
+          setInstallationStartTime(prev => prev ?? Date.now());
+        } else if (installAgentStatus === 'complete' || installAgentStatus === 'failed' || installAgentStatus === 'skipped') {
+          // Clear timeout tracking when installation agent finishes
+          setInstallationStartTime(null);
+        }
         
         // Stop polling when job reaches terminal state
         if (jobStatus === 'complete' || jobStatus === 'failed' || jobStatus === 'cancelled') {
@@ -169,6 +184,33 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
       }
     };
   }, [jobId]);
+
+  // Check for installation agent timeout
+  useEffect(() => {
+    if (!installationStartTime || !job) return;
+
+    const checkTimeout = () => {
+      if (Date.now() - installationStartTime > INSTALLATION_TIMEOUT_MS) {
+        console.warn('⏱️ Installation agent timed out after 5 minutes');
+        // Mark installation agent as timed out locally
+        setJob(prev => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            installation_agent_status: 'timeout',
+            current_step: 'Installation guidance timed out'
+          };
+        });
+        setInstallationStartTime(null);
+      }
+    };
+
+    // Check immediately and then every 10 seconds
+    checkTimeout();
+    const interval = setInterval(checkTimeout, 10000);
+
+    return () => clearInterval(interval);
+  }, [installationStartTime, job?.status]);
 
   // Calculate estimated time remaining based on progress and elapsed time
   const getEstimatedTimeRemaining = (): string | null => {

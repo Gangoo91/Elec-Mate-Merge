@@ -214,11 +214,40 @@ const EVChargingModule2Section4 = React.lazy(() => import('@/pages/upskilling/EV
 const EVChargingModule2Section5 = React.lazy(() => import('@/pages/upskilling/EVChargingModule2Section5'));
 const EnergyEfficiencyCourse = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyCourse'));
 const EnergyEfficiencyModule1 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule1'));
+const EnergyEfficiencyModule1Section1 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule1Section1'));
+const EnergyEfficiencyModule1Section2 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule1Section2'));
+const EnergyEfficiencyModule1Section3 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule1Section3'));
+const EnergyEfficiencyModule1Section4 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule1Section4'));
 const EnergyEfficiencyModule2 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule2'));
+const EnergyEfficiencyModule2Section1 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule2Section1'));
+const EnergyEfficiencyModule2Section2 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule2Section2'));
+const EnergyEfficiencyModule2Section3 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule2Section3'));
+const EnergyEfficiencyModule2Section4 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule2Section4'));
+const EnergyEfficiencyModule2Section5 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule2Section5'));
 const EnergyEfficiencyModule3 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule3'));
+const EnergyEfficiencyModule3Section1 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule3Section1'));
+const EnergyEfficiencyModule3Section2 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule3Section2'));
+const EnergyEfficiencyModule3Section3 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule3Section3'));
+const EnergyEfficiencyModule3Section4 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule3Section4'));
+const EnergyEfficiencyModule3Section5 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule3Section5'));
 const EnergyEfficiencyModule4 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule4'));
+const EnergyEfficiencyModule4Section1 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule4Section1'));
+const EnergyEfficiencyModule4Section2 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule4Section2'));
+const EnergyEfficiencyModule4Section3 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule4Section3'));
+const EnergyEfficiencyModule4Section4 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule4Section4'));
+const EnergyEfficiencyModule4Section5 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule4Section5'));
 const EnergyEfficiencyModule5 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule5'));
+const EnergyEfficiencyModule5Section1 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule5Section1'));
+const EnergyEfficiencyModule5Section2 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule5Section2'));
+const EnergyEfficiencyModule5Section3 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule5Section3'));
+const EnergyEfficiencyModule5Section4 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule5Section4'));
+const EnergyEfficiencyModule5Section5 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule5Section5'));
 const EnergyEfficiencyModule6 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule6'));
+const EnergyEfficiencyModule6Section1 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule6Section1'));
+const EnergyEfficiencyModule6Section2 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule6Section2'));
+const EnergyEfficiencyModule6Section3 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule6Section3'));
+const EnergyEfficiencyModule6Section4 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule6Section4'));
+const EnergyEfficiencyModule6Section5 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule6Section5'));
 
 export const specializedCoursesRoutes = (
   <>
@@ -432,11 +461,40 @@ export const specializedCoursesRoutes = (
   <Route path="ev-charging-mock-exam" element={<EVChargingMockExam />} />,
   <Route path="energy-efficiency-course" element={<EnergyEfficiencyCourse />} />,
   <Route path="energy-efficiency-module-1" element={<EnergyEfficiencyModule1 />} />,
+  <Route path="energy-efficiency-module-1-section-1" element={<EnergyEfficiencyModule1Section1 />} />,
+  <Route path="energy-efficiency-module-1-section-2" element={<EnergyEfficiencyModule1Section2 />} />,
+  <Route path="energy-efficiency-module-1-section-3" element={<EnergyEfficiencyModule1Section3 />} />,
+  <Route path="energy-efficiency-module-1-section-4" element={<EnergyEfficiencyModule1Section4 />} />,
   <Route path="energy-efficiency-module-2" element={<EnergyEfficiencyModule2 />} />,
+  <Route path="energy-efficiency-module-2-section-1" element={<EnergyEfficiencyModule2Section1 />} />,
+  <Route path="energy-efficiency-module-2-section-2" element={<EnergyEfficiencyModule2Section2 />} />,
+  <Route path="energy-efficiency-module-2-section-3" element={<EnergyEfficiencyModule2Section3 />} />,
+  <Route path="energy-efficiency-module-2-section-4" element={<EnergyEfficiencyModule2Section4 />} />,
+  <Route path="energy-efficiency-module-2-section-5" element={<EnergyEfficiencyModule2Section5 />} />,
   <Route path="energy-efficiency-module-3" element={<EnergyEfficiencyModule3 />} />,
+  <Route path="energy-efficiency-module-3-section-1" element={<EnergyEfficiencyModule3Section1 />} />,
+  <Route path="energy-efficiency-module-3-section-2" element={<EnergyEfficiencyModule3Section2 />} />,
+  <Route path="energy-efficiency-module-3-section-3" element={<EnergyEfficiencyModule3Section3 />} />,
+  <Route path="energy-efficiency-module-3-section-4" element={<EnergyEfficiencyModule3Section4 />} />,
+  <Route path="energy-efficiency-module-3-section-5" element={<EnergyEfficiencyModule3Section5 />} />,
   <Route path="energy-efficiency-module-4" element={<EnergyEfficiencyModule4 />} />,
+  <Route path="energy-efficiency-module-4-section-1" element={<EnergyEfficiencyModule4Section1 />} />,
+  <Route path="energy-efficiency-module-4-section-2" element={<EnergyEfficiencyModule4Section2 />} />,
+  <Route path="energy-efficiency-module-4-section-3" element={<EnergyEfficiencyModule4Section3 />} />,
+  <Route path="energy-efficiency-module-4-section-4" element={<EnergyEfficiencyModule4Section4 />} />,
+  <Route path="energy-efficiency-module-4-section-5" element={<EnergyEfficiencyModule4Section5 />} />,
   <Route path="energy-efficiency-module-5" element={<EnergyEfficiencyModule5 />} />,
+  <Route path="energy-efficiency-module-5-section-1" element={<EnergyEfficiencyModule5Section1 />} />,
+  <Route path="energy-efficiency-module-5-section-2" element={<EnergyEfficiencyModule5Section2 />} />,
+  <Route path="energy-efficiency-module-5-section-3" element={<EnergyEfficiencyModule5Section3 />} />,
+  <Route path="energy-efficiency-module-5-section-4" element={<EnergyEfficiencyModule5Section4 />} />,
+  <Route path="energy-efficiency-module-5-section-5" element={<EnergyEfficiencyModule5Section5 />} />,
   <Route path="energy-efficiency-module-6" element={<EnergyEfficiencyModule6 />} />,
+  <Route path="energy-efficiency-module-6-section-1" element={<EnergyEfficiencyModule6Section1 />} />,
+  <Route path="energy-efficiency-module-6-section-2" element={<EnergyEfficiencyModule6Section2 />} />,
+  <Route path="energy-efficiency-module-6-section-3" element={<EnergyEfficiencyModule6Section3 />} />,
+  <Route path="energy-efficiency-module-6-section-4" element={<EnergyEfficiencyModule6Section4 />} />,
+  <Route path="energy-efficiency-module-6-section-5" element={<EnergyEfficiencyModule6Section5 />} />,
   <Route path="smart-home-mock-exam" element={<SmartHomeMockExam />} />
   </>
 );

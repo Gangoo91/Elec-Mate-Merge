@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, XCircle, Loader2 } from 'lucide-react';
+import { Clock, XCircle, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import { ProcessingRing } from './premium/ProcessingRing';
 import { StageCards } from './premium/StageCards';
+import { Button } from '@/components/ui/button';
 
 interface CostAnalysisProcessingViewProps {
   progress: {
@@ -11,6 +12,9 @@ interface CostAnalysisProcessingViewProps {
   } | null;
   onCancel: () => void;
   isCancelling?: boolean;
+  status?: 'processing' | 'failed';
+  error?: string | null;
+  onRetry?: () => void;
 }
 
 const ESTIMATED_TIME = 180; // 3 minutes
@@ -18,7 +22,10 @@ const ESTIMATED_TIME = 180; // 3 minutes
 const CostAnalysisProcessingView = ({
   progress: agentProgress,
   onCancel,
-  isCancelling = false
+  isCancelling = false,
+  status = 'processing',
+  error,
+  onRetry
 }: CostAnalysisProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [startTime] = useState(Date.now());
@@ -82,6 +89,46 @@ const CostAnalysisProcessingView = ({
 
       <div className="relative z-10 flex-1 flex flex-col justify-evenly px-4 py-6 max-w-md mx-auto w-full">
 
+        {/* Error State */}
+        {status === 'failed' && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex-1 flex flex-col items-center justify-center text-center space-y-6"
+          >
+            <div className="p-4 rounded-full bg-red-500/10 border border-red-500/20">
+              <AlertCircle className="h-12 w-12 text-red-500" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-xl font-bold text-white">Generation Failed</h3>
+              <p className="text-sm text-white/60 max-w-xs">
+                {error || 'An unexpected error occurred. Please try again.'}
+              </p>
+            </div>
+            <div className="flex gap-3">
+              {onRetry && (
+                <Button
+                  onClick={onRetry}
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12 px-6 rounded-xl font-semibold"
+                >
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Try Again
+                </Button>
+              )}
+              <Button
+                onClick={onCancel}
+                variant="ghost"
+                className="h-12 px-6 rounded-xl text-white/60 hover:text-white hover:bg-white/10"
+              >
+                Cancel
+              </Button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Processing State */}
+        {status !== 'failed' && (
+          <>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -160,6 +207,8 @@ const CostAnalysisProcessingView = ({
             <><XCircle className="w-3 h-3" /> Cancel</>
           )}
         </motion.button>
+          </>
+        )}
       </div>
     </div>
   );

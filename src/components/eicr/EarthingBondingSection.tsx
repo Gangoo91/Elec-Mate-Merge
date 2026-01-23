@@ -15,6 +15,41 @@ interface EarthingBondingSectionProps {
   onToggle?: () => void;
 }
 
+// Section header - MUST be outside main component to prevent focus loss
+const SectionTitle = ({ icon: Icon, title, color = "green", isMobile }: { icon: React.ElementType; title: string; color?: string; isMobile: boolean }) => (
+  <div className={cn(
+    "flex items-center gap-3 py-3",
+    isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
+  )}>
+    <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center", `bg-${color}-500/20`)}>
+      <Icon className={cn("h-4 w-4", `text-${color}-400`)} />
+    </div>
+    <h3 className="font-semibold text-foreground">{title}</h3>
+  </div>
+);
+
+// Input field wrapper - MUST be outside main component to prevent focus loss
+const FormField = ({
+  label,
+  required,
+  hint,
+  children
+}: {
+  label: string;
+  required?: boolean;
+  hint?: string;
+  children: React.ReactNode;
+}) => (
+  <div className="space-y-2">
+    <Label className="text-sm text-foreground/80">
+      {label}
+      {required && <span className="text-elec-yellow ml-1">*</span>}
+    </Label>
+    {children}
+    {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+  </div>
+);
+
 /**
  * EarthingBondingSection - Best-in-class mobile form for earthing & bonding details
  * Edge-to-edge design with large touch targets and native app feel
@@ -98,41 +133,6 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
     onUpdate('mainBondingLocations', parts.join(', '));
   };
 
-  // Section header component
-  const SectionTitle = ({ icon: Icon, title, color = "green" }: { icon: React.ElementType; title: string; color?: string }) => (
-    <div className={cn(
-      "flex items-center gap-3 py-3",
-      isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
-    )}>
-      <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center", `bg-${color}-500/20`)}>
-        <Icon className={cn("h-4 w-4", `text-${color}-400`)} />
-      </div>
-      <h3 className="font-semibold text-foreground">{title}</h3>
-    </div>
-  );
-
-  // Input field wrapper with proper mobile styling
-  const FormField = ({
-    label,
-    required,
-    hint,
-    children
-  }: {
-    label: string;
-    required?: boolean;
-    hint?: string;
-    children: React.ReactNode;
-  }) => (
-    <div className="space-y-2">
-      <Label className="text-sm text-foreground/80">
-        {label}
-        {required && <span className="text-elec-yellow ml-1">*</span>}
-      </Label>
-      {children}
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
-    </div>
-  );
-
   // Conductor size options
   const conductorSizes = ['6', '10', '16', '25', '35', 'custom'];
   const supplementarySizes = ['2.5', '4', '6', '10', 'not-required', 'custom'];
@@ -151,7 +151,7 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
       {/* Earth Electrode Section */}
       {showEarthElectrodeResistance && (
         <div>
-          <SectionTitle icon={Zap} title="Earth Electrode" color="yellow" />
+          <SectionTitle icon={Zap} title="Earth Electrode" color="yellow" isMobile={isMobile} />
           <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
             <FormField
               label="Earth Electrode Resistance (Ω)"
@@ -174,7 +174,7 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
 
       {/* Main Earthing Conductor Section */}
       <div>
-        <SectionTitle icon={Cable} title="Main Earthing Conductor" color="green" />
+        <SectionTitle icon={Cable} title="Main Earthing Conductor" color="green" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <FormField label="Conductor Material" required>
@@ -233,7 +233,7 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
 
       {/* Main Protective Bonding Section */}
       <div>
-        <SectionTitle icon={Link2} title="Main Protective Bonding" color="blue" />
+        <SectionTitle icon={Link2} title="Main Protective Bonding" color="blue" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <FormField label="Conductor Material" required>
@@ -348,7 +348,7 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
 
       {/* Supplementary Bonding Section */}
       <div>
-        <SectionTitle icon={CircuitBoard} title="Supplementary Bonding" color="purple" />
+        <SectionTitle icon={CircuitBoard} title="Supplementary Bonding" color="purple" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="Supplementary Bonding Conductor Size" hint="Required in locations with increased risk (e.g., bathrooms)">
             <Select

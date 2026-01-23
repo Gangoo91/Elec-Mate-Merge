@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import Quiz from '@/components/apprentice-courses/Quiz';
-import InlineCheck from '@/components/apprentice-courses/InlineCheck';
-import { useSEO } from '@/hooks/useSEO';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import useSEO from '@/hooks/useSEO';
 import {
   Shield,
   AlertTriangle,

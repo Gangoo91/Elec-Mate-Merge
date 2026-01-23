@@ -125,6 +125,11 @@ export interface Quote {
   pdf_url?: string;
   pdf_generated_at?: Date;
   pdf_version?: number;
+  // Linked certificate fields (when created from EICR/EIC/Minor Works)
+  linked_certificate_id?: string;
+  linked_certificate_type?: 'EICR' | 'EIC' | 'Minor Works';
+  linked_certificate_reference?: string;
+  linked_certificate_pdf_url?: string;
 }
 
 export type QuoteTag = 'awaiting_payment' | 'job_not_complete' | 'on_hold' | 'disputed' | 'work_done';

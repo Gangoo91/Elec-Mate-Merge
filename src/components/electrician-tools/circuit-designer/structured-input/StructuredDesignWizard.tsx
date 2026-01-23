@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 interface StructuredDesignWizardProps {
   onGenerate: (inputs: DesignInputs) => Promise<void>;
   isProcessing: boolean;
+  initialData?: Partial<DesignInputs>;
 }
 
 const STEPS = [
@@ -53,7 +54,7 @@ const stepVariants = {
   })
 };
 
-export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredDesignWizardProps) => {
+export const StructuredDesignWizard = ({ onGenerate, isProcessing, initialData }: StructuredDesignWizardProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [direction, setDirection] = useState(0);
   const [showClearCacheDialog, setShowClearCacheDialog] = useState(false);
@@ -80,6 +81,30 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
 
   // Circuits
   const [circuits, setCircuits] = useState<CircuitInput[]>([]);
+
+  // Apply initial data when it changes (e.g., from imported context)
+  useEffect(() => {
+    if (initialData) {
+      if (initialData.projectName) setProjectName(initialData.projectName);
+      if (initialData.location) setLocation(initialData.location);
+      if (initialData.clientName) setClientName(initialData.clientName);
+      if (initialData.electricianName) setElectricianName(initialData.electricianName);
+      if (initialData.propertyType) setInstallationType(initialData.propertyType);
+      if (initialData.voltage) setVoltage(initialData.voltage);
+      if (initialData.phases) setPhases(initialData.phases);
+      if (initialData.ze) setZe(initialData.ze);
+      if (initialData.earthingSystem) setEarthingSystem(initialData.earthingSystem);
+      if (initialData.pscc) setPscc(initialData.pscc);
+      if (initialData.ambientTemp) setAmbientTemp(initialData.ambientTemp);
+      if (initialData.installationMethod) setInstallationMethod(initialData.installationMethod);
+      if (initialData.groupingFactor) setGroupingFactor(initialData.groupingFactor);
+      if (initialData.mainSwitchRating) setMainSwitchRating(initialData.mainSwitchRating);
+      if (initialData.propertyAge) setPropertyAge(initialData.propertyAge);
+      if (initialData.circuits && initialData.circuits.length > 0) {
+        setCircuits(initialData.circuits);
+      }
+    }
+  }, [initialData]);
 
   // Update defaults when installation type or phases change
   useEffect(() => {

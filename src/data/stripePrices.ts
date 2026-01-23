@@ -31,6 +31,7 @@ export const stripePrices = {
 };
 
 // Subscription plans data for UI
+// NOTE: Employer plan is hidden for launch - only Apprentice and Electrician available
 export const stripePriceData = {
   monthly: [
     {
@@ -52,7 +53,6 @@ export const stripePriceData = {
       notIncluded: [
         "8 AI Specialist Agents",
         "Inspection & Testing suite",
-        "Employer features",
       ],
       popular: false,
       color: "bg-gradient-to-br from-elec-gray to-elec-dark",
@@ -74,10 +74,7 @@ export const stripePriceData = {
         "RAMS generator",
         "Customer management",
       ],
-      notIncluded: [
-        "Team GPS & job tracking",
-        "Team management",
-      ],
+      notIncluded: [],
       popular: true,
       color: "bg-gradient-to-br from-elec-gray to-elec-dark",
       priceId: stripePrices.monthly.electrician,
@@ -102,6 +99,7 @@ export const stripePriceData = {
       popular: false,
       color: "bg-gradient-to-br from-elec-gray to-elec-dark",
       priceId: stripePrices.monthly.employer,
+      coming: true,
     },
   ],
   yearly: [
@@ -124,7 +122,6 @@ export const stripePriceData = {
       notIncluded: [
         "8 AI Specialist Agents",
         "Inspection & Testing suite",
-        "Employer features",
       ],
       popular: false,
       color: "bg-gradient-to-br from-elec-gray to-elec-dark",
@@ -147,10 +144,7 @@ export const stripePriceData = {
         "RAMS generator",
         "Customer management",
       ],
-      notIncluded: [
-        "Team GPS & job tracking",
-        "Team management",
-      ],
+      notIncluded: [],
       popular: true,
       color: "bg-gradient-to-br from-elec-gray to-elec-dark",
       savings: "Save £19.89 vs monthly",
@@ -177,6 +171,7 @@ export const stripePriceData = {
       color: "bg-gradient-to-br from-elec-gray to-elec-dark",
       savings: "Save £59.89 vs monthly",
       priceId: stripePrices.yearly.employer,
+      coming: true,
     },
   ],
 };

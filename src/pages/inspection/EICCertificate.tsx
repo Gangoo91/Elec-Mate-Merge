@@ -21,12 +21,14 @@ import {
   CheckCircle2,
   AlertCircle,
   Loader2,
-  CircuitBoard
+  CircuitBoard,
+  Receipt
 } from 'lucide-react';
 import { useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
+import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 import { supabase } from '@/integrations/supabase/client';
 
 // Import EIC form components
@@ -312,6 +314,34 @@ export default function EICCertificate() {
     }
   };
 
+  // Navigate to quote builder with client data pre-filled
+  const handleCreateQuote = () => {
+    const url = createQuoteFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientTelephone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.installationAddress || '',
+      certificateType: 'EIC',
+      certificateReference: formData.certificateNumber || '',
+    });
+    navigate(url);
+  };
+
+  // Navigate to invoice builder with client data pre-filled
+  const handleCreateInvoice = () => {
+    const url = createInvoiceFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientTelephone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.installationAddress || '',
+      certificateType: 'EIC',
+      certificateReference: formData.certificateNumber || '',
+    });
+    navigate(url);
+  };
+
   // Loading state for design
   if (designId && isLoadingDesign) {
     return (
@@ -431,6 +461,26 @@ export default function EICCertificate() {
                   <Download className="h-4 w-4 mr-2" />
                 )}
                 Generate PDF
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleCreateQuote}
+                className="bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20"
+              >
+                <FileText className="h-4 w-4 mr-2" />
+                Quote
+              </Button>
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleCreateInvoice}
+                className="bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20"
+              >
+                <Receipt className="h-4 w-4 mr-2" />
+                Invoice
               </Button>
             </div>
           </div>

@@ -24,9 +24,46 @@ interface QuoteWizardProps {
   onQuoteGenerated?: () => void;
   initialQuote?: any;
   initialCostData?: any;
+  initialCertificateData?: {
+    client: {
+      name: string;
+      email: string;
+      phone: string;
+      address: string;
+      postcode: string;
+    };
+    jobDetails: {
+      title: string;
+      description: string;
+      location: string;
+    };
+    linkedCertificate?: {
+      reportId: string;
+      certificateType: string;
+      certificateReference: string;
+      pdfUrl?: string;
+      pdfStoragePath?: string;
+    };
+  };
 }
 
-export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }: QuoteWizardProps) => {
+export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData, initialCertificateData }: QuoteWizardProps) => {
+  // Merge certificate data into initial quote for proper initialization
+  const mergedInitialQuote = initialCertificateData
+    ? {
+        ...initialQuote,
+        client: initialCertificateData.client,
+        jobDetails: initialCertificateData.jobDetails,
+        // Include linked certificate data for attachment support
+        ...(initialCertificateData.linkedCertificate && {
+          linked_certificate_id: initialCertificateData.linkedCertificate.reportId,
+          linked_certificate_type: initialCertificateData.linkedCertificate.certificateType as 'EICR' | 'EIC' | 'Minor Works',
+          linked_certificate_reference: initialCertificateData.linkedCertificate.certificateReference,
+          linked_certificate_pdf_url: initialCertificateData.linkedCertificate.pdfUrl,
+        }),
+      }
+    : initialQuote;
+
   const {
     quote,
     currentStep,
@@ -44,7 +81,7 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }:
     generateQuote,
     resetQuote,
     isGenerating,
-  } = useQuoteBuilder(onQuoteGenerated, initialQuote);
+  } = useQuoteBuilder(onQuoteGenerated, mergedInitialQuote);
 
   const voiceForm = useOptionalVoiceFormContext();
 
@@ -196,6 +233,9 @@ export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }:
       items.forEach(item => addItem(item));
     }
   }, [initialCostData]);
+
+  // Certificate data is now merged into initialQuote at the top of the component
+  // This ensures proper initialization timing
 
   const canProceed = () => {
     switch (currentStep) {

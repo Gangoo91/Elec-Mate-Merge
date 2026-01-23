@@ -54,6 +54,11 @@ export const useInvoiceStorage = () => {
     pdf_document_id: row.pdf_document_id,
     pdf_generated_at: row.pdf_generated_at ? new Date(row.pdf_generated_at) : undefined,
     pdf_version: row.pdf_version,
+    // Linked certificate fields
+    linked_certificate_id: row.linked_certificate_id,
+    linked_certificate_type: row.linked_certificate_type,
+    linked_certificate_reference: row.linked_certificate_reference,
+    linked_certificate_pdf_url: row.linked_certificate_pdf_url,
   }), []);
 
 
@@ -185,6 +190,11 @@ export const useInvoiceStorage = () => {
             acceptance_status: 'accepted',
             accepted_at: new Date().toISOString(),
             pdf_version: 1,
+            // Linked certificate fields (when created from EICR/EIC/Minor Works)
+            linked_certificate_id: invoice.linked_certificate_id || null,
+            linked_certificate_type: invoice.linked_certificate_type || null,
+            linked_certificate_reference: invoice.linked_certificate_reference || null,
+            linked_certificate_pdf_url: invoice.linked_certificate_pdf_url || null,
           }])
           .select()
           .single();

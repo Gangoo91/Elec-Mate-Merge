@@ -5,7 +5,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CheckCircle, Download, AlertTriangle, FileCheck, Bell, Mail, Loader2, Send } from 'lucide-react';
+import { CheckCircle, Download, AlertTriangle, FileCheck, Bell, Mail, Loader2, Send, FileText, Receipt } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -13,6 +13,7 @@ import { saveCertificatePdf } from '@/utils/certificate-pdf-storage';
 import { validateMinorWorksFormData, formatFieldForPdf } from '@/utils/minorWorksValidation';
 import { createNotificationFromCertificate } from '@/utils/notificationHelper';
 import { useNavigate } from 'react-router-dom';
+import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 
 interface MinorWorksPdfGeneratorProps {
   formData: any;
@@ -529,6 +530,38 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
     }
   };
 
+  // Navigate to quote builder with client data pre-filled
+  const handleCreateQuote = () => {
+    const url = createQuoteFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.electricianPhone || '',
+      clientAddress: formData.propertyAddress || '',
+      installationAddress: formData.propertyAddress || '',
+      certificateType: 'Minor Works',
+      certificateReference: formData.certificateNumber || '',
+      reportId: reportId || undefined,
+      pdfUrl: pdfUrl || formData.pdfUrl || undefined,
+    });
+    navigate(url);
+  };
+
+  // Navigate to invoice builder with client data pre-filled
+  const handleCreateInvoice = () => {
+    const url = createInvoiceFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.electricianPhone || '',
+      clientAddress: formData.propertyAddress || '',
+      installationAddress: formData.propertyAddress || '',
+      certificateType: 'Minor Works',
+      certificateReference: formData.certificateNumber || '',
+      reportId: reportId || undefined,
+      pdfUrl: pdfUrl || formData.pdfUrl || undefined,
+    });
+    navigate(url);
+  };
+
 
   return (
     <>
@@ -551,6 +584,27 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           >
             <Mail className="h-4 w-4 mr-2" />
             Email Certificate
+          </Button>
+        </div>
+
+        {/* Quote & Invoice Buttons */}
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button
+            onClick={handleCreateQuote}
+            variant="outline"
+            className="w-full h-12 touch-manipulation bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400"
+          >
+            <FileText className="h-4 w-4 mr-2" />
+            Quote
+          </Button>
+
+          <Button
+            onClick={handleCreateInvoice}
+            variant="outline"
+            className="w-full h-12 touch-manipulation bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20 text-blue-400"
+          >
+            <Receipt className="h-4 w-4 mr-2" />
+            Invoice
           </Button>
         </div>
 

@@ -585,7 +585,47 @@ const handler = async (req: Request): Promise<Response> => {
         filename: `Invoice_${invoiceNumber}.pdf`,
         content: pdfBase64,
       }];
-      console.log('📎 PDF attached');
+      console.log('📎 Invoice PDF attached');
+    }
+
+    // Check for linked certificate PDF (when invoice was created from EICR/EIC/Minor Works)
+    if (invoice.linked_certificate_pdf_url) {
+      console.log('🔗 Linked certificate found, downloading certificate PDF...');
+      try {
+        const certPdfResponse = await fetch(invoice.linked_certificate_pdf_url);
+        if (certPdfResponse.ok) {
+          const certPdfArrayBuffer = await certPdfResponse.arrayBuffer();
+          // Safer base64 encoding for large files
+          const certUint8Array = new Uint8Array(certPdfArrayBuffer);
+          let certBinary = '';
+          const certChunkSize = 0x8000; // 32KB chunks
+          for (let i = 0; i < certUint8Array.length; i += certChunkSize) {
+            const chunk = certUint8Array.subarray(i, i + certChunkSize);
+            certBinary += String.fromCharCode.apply(null, Array.from(chunk));
+          }
+          const certPdfBase64 = btoa(certBinary);
+
+          // Generate certificate filename
+          const certType = invoice.linked_certificate_type || 'Certificate';
+          const certRef = invoice.linked_certificate_reference || 'CERT';
+          const certFilename = `${certType.replace(/\s+/g, '_')}_${certRef}.pdf`;
+
+          // Add certificate as additional attachment
+          if (!emailOptions.attachments) {
+            emailOptions.attachments = [];
+          }
+          emailOptions.attachments.push({
+            filename: certFilename,
+            content: certPdfBase64,
+          });
+
+          console.log(`📎 Certificate PDF attached: ${certFilename} (${certPdfArrayBuffer.byteLength} bytes)`);
+        } else {
+          console.warn('⚠️ Failed to download certificate PDF, continuing without it');
+        }
+      } catch (certError) {
+        console.warn('⚠️ Error downloading certificate PDF (non-fatal):', certError);
+      }
     }
 
     const { data: emailData, error: emailError } = await resend.emails.send(emailOptions);

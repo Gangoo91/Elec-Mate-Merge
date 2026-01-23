@@ -197,6 +197,33 @@ const handler = async (req: Request): Promise<Response> => {
       const pdfBase64Wrapped = pdfBase64.replace(/.{1,76}/g, '$&\r\n');
       console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
 
+    // Check for linked certificate PDF (when quote was created from EICR/EIC/Minor Works)
+    let certPdfBase64Wrapped: string | null = null;
+    let certFilename: string | null = null;
+
+    if (quote.linked_certificate_pdf_url) {
+      console.log('Linked certificate found, downloading certificate PDF...');
+      try {
+        const certPdfResponse = await fetch(quote.linked_certificate_pdf_url);
+        if (certPdfResponse.ok) {
+          const certPdfArrayBuffer = await certPdfResponse.arrayBuffer();
+          const certPdfBase64 = base64Encode(new Uint8Array(certPdfArrayBuffer));
+          certPdfBase64Wrapped = certPdfBase64.replace(/.{1,76}/g, '$&\r\n');
+
+          // Generate certificate filename
+          const certType = quote.linked_certificate_type || 'Certificate';
+          const certRef = quote.linked_certificate_reference || 'CERT';
+          certFilename = `${certType.replace(/\s+/g, '_')}_${certRef}.pdf`;
+
+          console.log(`Certificate PDF downloaded: ${certPdfArrayBuffer.byteLength} bytes`);
+        } else {
+          console.warn('Failed to download certificate PDF, continuing without it');
+        }
+      } catch (certError) {
+        console.warn('Error downloading certificate PDF (non-fatal):', certError);
+      }
+    }
+
     // Get Gmail credentials from Supabase secrets
     const rawClientId = Deno.env.get('GMAIL_CLIENT_ID') ?? '';
     const rawClientSecret = Deno.env.get('GMAIL_CLIENT_SECRET') ?? '';
@@ -260,11 +287,12 @@ const handler = async (req: Request): Promise<Response> => {
     const emailSubject = `Quote ${quoteNumber} from ${companyName}`;
     const emailBody = generateEmailHTML(quote, clientName, companyName, companyProfile, acceptUrl, rejectUrl);
 
-    // Create multipart email with PDF attachment
+    // Create multipart email with PDF attachment(s)
     const boundary = '----=_Part_' + Date.now();
     const pdfFilename = `Quote_${quoteNumber}.pdf`;
-    
-    const emailMessage = [
+
+    // Build email parts array
+    const emailParts = [
       `From: ${companyName} <${senderEmail}>`,
       `To: ${clientEmail}`,
       `Subject: ${emailSubject}`,
@@ -283,8 +311,26 @@ const handler = async (req: Request): Promise<Response> => {
       '',
       pdfBase64Wrapped,
       '',
-      `--${boundary}--`
-    ].join('\r\n');
+    ];
+
+    // Add certificate PDF attachment if available
+    if (certPdfBase64Wrapped && certFilename) {
+      emailParts.push(
+        `--${boundary}`,
+        'Content-Type: application/pdf',
+        'Content-Transfer-Encoding: base64',
+        `Content-Disposition: attachment; filename="${certFilename}"`,
+        '',
+        certPdfBase64Wrapped,
+        ''
+      );
+      console.log(`Certificate PDF attached: ${certFilename}`);
+    }
+
+    // Close the multipart message
+    emailParts.push(`--${boundary}--`);
+
+    const emailMessage = emailParts.join('\r\n');
 
     // Encode email message in base64url (using TextEncoder for large messages)
     const encoder = new TextEncoder();

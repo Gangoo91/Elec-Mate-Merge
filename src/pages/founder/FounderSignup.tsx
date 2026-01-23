@@ -143,6 +143,7 @@ export default function FounderSignup() {
   const [valid, setValid] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState<string>("");
+  const [hasExistingAccount, setHasExistingAccount] = useState(false);
 
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
@@ -181,6 +182,7 @@ export default function FounderSignup() {
       if (data?.valid) {
         setValid(true);
         setEmail(data.email);
+        setHasExistingAccount(data.hasExistingAccount || false);
       } else {
         setError(data?.reason || "Invalid invite");
       }
@@ -188,6 +190,36 @@ export default function FounderSignup() {
       setError(err.message || "Failed to validate invite");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Handle existing user checkout (just redirect to Stripe)
+  const handleExistingUserCheckout = async () => {
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      const { data, error } = await supabase.functions.invoke(
+        "founder-checkout",
+        {
+          body: {
+            action: "create_checkout",
+            token,
+          },
+        }
+      );
+
+      if (error) throw error;
+
+      if (data?.url) {
+        // Redirect to Stripe checkout
+        window.location.href = data.url;
+      } else {
+        throw new Error("No checkout URL returned");
+      }
+    } catch (err: any) {
+      setError(err.message || "Failed to start checkout");
+      setSubmitting(false);
     }
   };
 
@@ -421,152 +453,235 @@ export default function FounderSignup() {
             )}
           </AnimatePresence>
 
-          {/* Signup Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Email - Read Only */}
-            <div className="space-y-2">
-              <label className="block text-[13px] font-medium text-white/70 ml-1">
-                Email address
-              </label>
-              <div className="relative">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
-                  <CheckCircle2 className="h-5 w-5 text-green-400" />
+          {/* Existing Account - Simplified checkout flow */}
+          {hasExistingAccount ? (
+            <div className="space-y-6">
+              {/* Email - Read Only */}
+              <div className="space-y-2">
+                <label className="block text-[13px] font-medium text-white/70 ml-1">
+                  Email address
+                </label>
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                    <CheckCircle2 className="h-5 w-5 text-green-400" />
+                  </div>
+                  <input
+                    type="email"
+                    value={email}
+                    readOnly
+                    className="w-full h-14 pl-14 pr-4 rounded-2xl bg-white/[0.03] border-2 border-green-500/30 text-white/70 text-[16px] outline-none cursor-not-allowed"
+                  />
                 </div>
-                <input
-                  type="email"
-                  value={email}
-                  readOnly
-                  className="w-full h-14 pl-14 pr-4 rounded-2xl bg-white/[0.03] border-2 border-green-500/30 text-white/70 text-[16px] outline-none cursor-not-allowed"
-                />
+                <p className="text-[11px] text-green-400 ml-1">
+                  Account found - ready to claim your offer
+                </p>
               </div>
-              <p className="text-[11px] text-green-400 ml-1">
-                Email verified from your invite
-              </p>
-            </div>
 
-            <InputField
-              label="Full Name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="John Smith"
-              icon={User}
-              field="name"
-              focusedField={focusedField}
-              setFocusedField={setFocusedField}
-              disabled={submitting}
-            />
-
-            <div>
-              <InputField
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Create password"
-                icon={Lock}
-                field="password"
-                focusedField={focusedField}
-                setFocusedField={setFocusedField}
-                showToggle
-                isVisible={showPassword}
-                onToggle={() => setShowPassword(!showPassword)}
-                disabled={submitting}
-              />
-              {password && (
-                <div className="flex gap-1.5 mt-2">
-                  {PASSWORD_REQUIREMENTS.map((req) => (
-                    <div
-                      key={req.id}
-                      className={cn(
-                        "flex-1 py-1.5 rounded-lg text-center text-[11px] font-medium transition-all",
-                        req.test(password)
-                          ? "bg-green-500/20 text-green-400"
-                          : "bg-white/5 text-white/40"
-                      )}
-                    >
-                      {req.label}
-                    </div>
-                  ))}
+              {/* Existing Account Notice */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20"
+              >
+                <div className="flex gap-3 items-start">
+                  <CheckCircle2 className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-[14px] text-blue-400 font-medium">
+                      You already have an account!
+                    </p>
+                    <p className="text-[13px] text-white/50 mt-1">
+                      Click below to proceed directly to checkout and activate your founder pricing.
+                    </p>
+                  </div>
                 </div>
-              )}
+              </motion.div>
+
+              <div className="pt-2">
+                <Button
+                  type="button"
+                  onClick={handleExistingUserCheckout}
+                  disabled={submitting}
+                  className={cn(
+                    "w-full h-14 rounded-2xl text-[16px] font-bold",
+                    "bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black",
+                    "shadow-lg shadow-yellow-500/25 transition-all duration-200",
+                    "disabled:opacity-50 disabled:cursor-not-allowed"
+                  )}
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Preparing Checkout...
+                    </>
+                  ) : (
+                    <>
+                      Proceed to Checkout
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </>
+                  )}
+                </Button>
+              </div>
+
+              <div className="flex items-center justify-center gap-4 mt-4 text-xs text-muted-foreground">
+                <span className="flex items-center gap-1">
+                  <Shield className="h-3 w-3" /> Secure
+                </span>
+                <span className="flex items-center gap-1">
+                  <CreditCard className="h-3 w-3" /> Via Stripe
+                </span>
+                <span>Cancel anytime</span>
+              </div>
             </div>
+          ) : (
+            <>
+              {/* Signup Form - For new accounts */}
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Email - Read Only */}
+                <div className="space-y-2">
+                  <label className="block text-[13px] font-medium text-white/70 ml-1">
+                    Email address
+                  </label>
+                  <div className="relative">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                      <CheckCircle2 className="h-5 w-5 text-green-400" />
+                    </div>
+                    <input
+                      type="email"
+                      value={email}
+                      readOnly
+                      className="w-full h-14 pl-14 pr-4 rounded-2xl bg-white/[0.03] border-2 border-green-500/30 text-white/70 text-[16px] outline-none cursor-not-allowed"
+                    />
+                  </div>
+                  <p className="text-[11px] text-green-400 ml-1">
+                    Email verified from your invite
+                  </p>
+                </div>
 
-            <InputField
-              label="Confirm Password"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm password"
-              icon={Lock}
-              field="confirmPassword"
-              focusedField={focusedField}
-              setFocusedField={setFocusedField}
-              showToggle
-              isVisible={showConfirmPassword}
-              onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
-              showSuccess={passwordsMatch}
-              disabled={submitting}
-            />
+                <InputField
+                  label="Full Name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="John Smith"
+                  icon={User}
+                  field="name"
+                  focusedField={focusedField}
+                  setFocusedField={setFocusedField}
+                  disabled={submitting}
+                />
 
-            <div className="pt-2">
-              <Button
-                type="submit"
-                disabled={submitting || !fullName || !allPasswordRequirementsMet || !passwordsMatch}
-                className={cn(
-                  "w-full h-14 rounded-2xl text-[16px] font-bold",
-                  "bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black",
-                  "shadow-lg shadow-yellow-500/25 transition-all duration-200",
-                  "disabled:opacity-50 disabled:cursor-not-allowed"
-                )}
-              >
-                {submitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Creating Account...
-                  </>
-                ) : (
-                  <>
-                    Create Account & Subscribe
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </>
-                )}
-              </Button>
-            </div>
+                <div>
+                  <InputField
+                    label="Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Create password"
+                    icon={Lock}
+                    field="password"
+                    focusedField={focusedField}
+                    setFocusedField={setFocusedField}
+                    showToggle
+                    isVisible={showPassword}
+                    onToggle={() => setShowPassword(!showPassword)}
+                    disabled={submitting}
+                  />
+                  {password && (
+                    <div className="flex gap-1.5 mt-2">
+                      {PASSWORD_REQUIREMENTS.map((req) => (
+                        <div
+                          key={req.id}
+                          className={cn(
+                            "flex-1 py-1.5 rounded-lg text-center text-[11px] font-medium transition-all",
+                            req.test(password)
+                              ? "bg-green-500/20 text-green-400"
+                              : "bg-white/5 text-white/40"
+                          )}
+                        >
+                          {req.label}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
-            <div className="flex items-center justify-center gap-4 mt-4 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <Shield className="h-3 w-3" /> Secure
-              </span>
-              <span className="flex items-center gap-1">
-                <CreditCard className="h-3 w-3" /> Via Stripe
-              </span>
-              <span>Cancel anytime</span>
-            </div>
-          </form>
+                <InputField
+                  label="Confirm Password"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm password"
+                  icon={Lock}
+                  field="confirmPassword"
+                  focusedField={focusedField}
+                  setFocusedField={setFocusedField}
+                  showToggle
+                  isVisible={showConfirmPassword}
+                  onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
+                  showSuccess={passwordsMatch}
+                  disabled={submitting}
+                />
 
-          {/* Divider */}
-          <div className="flex items-center gap-4 my-6">
-            <div className="flex-1 h-px bg-white/10" />
-            <span className="text-[12px] text-white/30 uppercase tracking-wider">
-              or
-            </span>
-            <div className="flex-1 h-px bg-white/10" />
-          </div>
+                <div className="pt-2">
+                  <Button
+                    type="submit"
+                    disabled={submitting || !fullName || !allPasswordRequirementsMet || !passwordsMatch}
+                    className={cn(
+                      "w-full h-14 rounded-2xl text-[16px] font-bold",
+                      "bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black",
+                      "shadow-lg shadow-yellow-500/25 transition-all duration-200",
+                      "disabled:opacity-50 disabled:cursor-not-allowed"
+                    )}
+                  >
+                    {submitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Creating Account...
+                      </>
+                    ) : (
+                      <>
+                        Create Account & Subscribe
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </>
+                    )}
+                  </Button>
+                </div>
 
-          {/* Sign in link */}
-          <div className="text-center pb-8">
-            <p className="text-[14px] text-white/40 mb-3">
-              Already have an account?
-            </p>
-            <Link to="/auth/signin">
-              <Button
-                variant="outline"
-                className="w-full h-13 rounded-2xl text-[15px] font-semibold bg-transparent border-2 border-white/10 text-white hover:bg-white/5"
-              >
-                Sign In
-              </Button>
-            </Link>
-          </div>
+                <div className="flex items-center justify-center gap-4 mt-4 text-xs text-muted-foreground">
+                  <span className="flex items-center gap-1">
+                    <Shield className="h-3 w-3" /> Secure
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <CreditCard className="h-3 w-3" /> Via Stripe
+                  </span>
+                  <span>Cancel anytime</span>
+                </div>
+              </form>
+
+              {/* Divider */}
+              <div className="flex items-center gap-4 my-6">
+                <div className="flex-1 h-px bg-white/10" />
+                <span className="text-[12px] text-white/30 uppercase tracking-wider">
+                  or
+                </span>
+                <div className="flex-1 h-px bg-white/10" />
+              </div>
+
+              {/* Sign in link */}
+              <div className="text-center pb-8">
+                <p className="text-[14px] text-white/40 mb-3">
+                  Already have an account?
+                </p>
+                <Link to="/auth/signin">
+                  <Button
+                    variant="outline"
+                    className="w-full h-13 rounded-2xl text-[15px] font-semibold bg-transparent border-2 border-white/10 text-white hover:bg-white/5"
+                  >
+                    Sign In
+                  </Button>
+                </Link>
+              </div>
+            </>
+          )}
         </motion.div>
       </main>
 

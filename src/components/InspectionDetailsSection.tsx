@@ -16,6 +16,41 @@ interface InspectionDetailsSectionProps {
   onUpdate: (field: string, value: string) => void;
 }
 
+// Section header component - MUST be outside main component to prevent re-renders
+const SectionTitle = ({ icon: Icon, title, isMobile }: { icon: React.ElementType; title: string; isMobile: boolean }) => (
+  <div className={cn(
+    "flex items-center gap-3 py-3",
+    isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
+  )}>
+    <div className="h-8 w-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+      <Icon className="h-4 w-4 text-blue-400" />
+    </div>
+    <h3 className="font-semibold text-foreground">{title}</h3>
+  </div>
+);
+
+// Input field wrapper - MUST be outside main component to prevent focus loss
+const FormField = ({
+  label,
+  required,
+  hint,
+  children
+}: {
+  label: string;
+  required?: boolean;
+  hint?: string;
+  children: React.ReactNode;
+}) => (
+  <div className="space-y-2">
+    <Label className="text-sm text-foreground/80">
+      {label}
+      {required && <span className="text-elec-yellow ml-1">*</span>}
+    </Label>
+    {children}
+    {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+  </div>
+);
+
 /**
  * InspectionDetailsSection - Best-in-class mobile form for inspection purpose and dates
  * Edge-to-edge design with large touch targets and native app feel
@@ -88,41 +123,6 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
 
   const isOtherPurposeRequired = formData.purposeOfInspection === 'other';
 
-  // Section header component
-  const SectionTitle = ({ icon: Icon, title }: { icon: React.ElementType; title: string }) => (
-    <div className={cn(
-      "flex items-center gap-3 py-3",
-      isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
-    )}>
-      <div className="h-8 w-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
-        <Icon className="h-4 w-4 text-blue-400" />
-      </div>
-      <h3 className="font-semibold text-foreground">{title}</h3>
-    </div>
-  );
-
-  // Input field wrapper with proper mobile styling
-  const FormField = ({
-    label,
-    required,
-    hint,
-    children
-  }: {
-    label: string;
-    required?: boolean;
-    hint?: string;
-    children: React.ReactNode;
-  }) => (
-    <div className="space-y-2">
-      <Label className="text-sm text-foreground/80">
-        {label}
-        {required && <span className="text-elec-yellow ml-1">*</span>}
-      </Label>
-      {children}
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
-    </div>
-  );
-
   // Purpose option buttons
   const purposeOptions = [
     { value: 'periodic', label: 'Periodic', shortLabel: 'Periodic' },
@@ -144,7 +144,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
     <div className={cn("space-y-6", isMobile && "-mx-4")}>
       {/* Purpose of Inspection Section */}
       <div>
-        <SectionTitle icon={ClipboardList} title="Purpose of Inspection" />
+        <SectionTitle icon={ClipboardList} title="Purpose of Inspection" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="Purpose" required>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -184,7 +184,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
 
       {/* Inspection Dates Section */}
       <div>
-        <SectionTitle icon={Calendar} title="Inspection Dates" />
+        <SectionTitle icon={Calendar} title="Inspection Dates" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="Date of Inspection" required>
             <div className="flex gap-2">
@@ -260,7 +260,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
 
       {/* Inspection Scope Section */}
       <div>
-        <SectionTitle icon={Telescope} title="Inspection Scope" />
+        <SectionTitle icon={Telescope} title="Inspection Scope" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField
             label="Extent of Inspection"

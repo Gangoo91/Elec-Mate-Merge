@@ -13,6 +13,41 @@ interface SupplyCharacteristicsSectionProps {
   onUpdate: (field: string, value: string) => void;
 }
 
+// Section header - MUST be outside main component to prevent focus loss
+const SectionTitle = ({ icon: Icon, title, color = "purple", isMobile }: { icon: React.ElementType; title: string; color?: string; isMobile: boolean }) => (
+  <div className={cn(
+    "flex items-center gap-3 py-3",
+    isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
+  )}>
+    <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center", `bg-${color}-500/20`)}>
+      <Icon className={cn("h-4 w-4", `text-${color}-400`)} />
+    </div>
+    <h3 className="font-semibold text-foreground">{title}</h3>
+  </div>
+);
+
+// Input field wrapper - MUST be outside main component to prevent focus loss
+const FormField = ({
+  label,
+  required,
+  hint,
+  children
+}: {
+  label: string;
+  required?: boolean;
+  hint?: string;
+  children: React.ReactNode;
+}) => (
+  <div className="space-y-2">
+    <Label className="text-sm text-foreground/80">
+      {label}
+      {required && <span className="text-elec-yellow ml-1">*</span>}
+    </Label>
+    {children}
+    {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+  </div>
+);
+
 /**
  * SupplyCharacteristicsSection - Best-in-class mobile form for supply & earthing details
  * Edge-to-edge design with large touch targets and native app feel
@@ -88,41 +123,6 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
     return info[arrangement] || '';
   };
 
-  // Section header component
-  const SectionTitle = ({ icon: Icon, title, color = "purple" }: { icon: React.ElementType; title: string; color?: string }) => (
-    <div className={cn(
-      "flex items-center gap-3 py-3",
-      isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
-    )}>
-      <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center", `bg-${color}-500/20`)}>
-        <Icon className={cn("h-4 w-4", `text-${color}-400`)} />
-      </div>
-      <h3 className="font-semibold text-foreground">{title}</h3>
-    </div>
-  );
-
-  // Input field wrapper with proper mobile styling
-  const FormField = ({
-    label,
-    required,
-    hint,
-    children
-  }: {
-    label: string;
-    required?: boolean;
-    hint?: string;
-    children: React.ReactNode;
-  }) => (
-    <div className="space-y-2">
-      <Label className="text-sm text-foreground/80">
-        {label}
-        {required && <span className="text-elec-yellow ml-1">*</span>}
-      </Label>
-      {children}
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
-    </div>
-  );
-
   // Common DNO options
   const dnoOptions = [
     'UK Power Networks',
@@ -146,7 +146,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
     <div className={cn("space-y-6", isMobile && "-mx-4")}>
       {/* Supply Authority Section */}
       <div>
-        <SectionTitle icon={Building2} title="Supply Authority" color="blue" />
+        <SectionTitle icon={Building2} title="Supply Authority" color="blue" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="DNO (Distribution Network Operator)">
             <Select value={formData.dnoName || ''} onValueChange={(value) => { haptics.tap(); onUpdate('dnoName', value); }}>
@@ -185,7 +185,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
 
       {/* Supply Details Section */}
       <div>
-        <SectionTitle icon={Plug} title="Supply Details" color="yellow" />
+        <SectionTitle icon={Plug} title="Supply Details" color="yellow" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="Number of Phases" required>
             <div className="grid grid-cols-2 gap-2">
@@ -286,7 +286,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
 
       {/* Main Protective Device Section */}
       <div>
-        <SectionTitle icon={Shield} title="Main Protective Device" color="orange" />
+        <SectionTitle icon={Shield} title="Main Protective Device" color="orange" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="Main Protective Device" required hint="Common protective devices per BS 7671">
             <Select
@@ -330,7 +330,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
 
       {/* Earthing System Section */}
       <div>
-        <SectionTitle icon={Globe} title="Earthing System" color="green" />
+        <SectionTitle icon={Globe} title="Earthing System" color="green" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="Earthing Arrangement" required>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -378,7 +378,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
 
       {/* RCD Protection Section */}
       <div>
-        <SectionTitle icon={Shield} title="RCD Protection" color="purple" />
+        <SectionTitle icon={Shield} title="RCD Protection" color="purple" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="RCD Main Switch">
             <div className="grid grid-cols-2 gap-2">

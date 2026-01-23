@@ -1,13 +1,52 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Wrench, Construction, Save, Download } from "lucide-react";
+import { ArrowLeft, Wrench, Construction, Save, Download, FileText, Receipt } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 
 export default function MinorWorksCertificate() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const isNew = id === "new";
+
+  // Placeholder form data - will be replaced when form is implemented
+  const formData = {
+    clientName: '',
+    clientEmail: '',
+    clientPhone: '',
+    clientAddress: '',
+    installationAddress: '',
+    certificateNumber: '',
+  };
+
+  // Navigate to quote builder with client data pre-filled
+  const handleCreateQuote = () => {
+    const url = createQuoteFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientPhone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.installationAddress || '',
+      certificateType: 'Minor Works',
+      certificateReference: formData.certificateNumber || '',
+    });
+    navigate(url);
+  };
+
+  // Navigate to invoice builder with client data pre-filled
+  const handleCreateInvoice = () => {
+    const url = createInvoiceFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientPhone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.installationAddress || '',
+      certificateType: 'Minor Works',
+      certificateReference: formData.certificateNumber || '',
+    });
+    navigate(url);
+  };
 
   return (
     <div className="bg-background">
@@ -48,6 +87,24 @@ export default function MinorWorksCertificate() {
               <Button size="sm" disabled>
                 <Download className="h-4 w-4 mr-2" />
                 Generate PDF
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleCreateQuote}
+                className="bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20"
+              >
+                <FileText className="h-4 w-4 mr-2" />
+                Quote
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleCreateInvoice}
+                className="bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20"
+              >
+                <Receipt className="h-4 w-4 mr-2" />
+                Invoice
               </Button>
             </div>
           </div>

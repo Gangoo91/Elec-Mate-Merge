@@ -21,6 +21,12 @@ const HealthSafetyInterface = () => {
   const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
   const [initialPrompt, setInitialPrompt] = useState<string>("");
   const [initialProjectName, setInitialProjectName] = useState<string>("");
+  // Track last inputs for retry functionality
+  const [lastJobInputs, setLastJobInputs] = useState<{
+    query: string;
+    workType: 'domestic' | 'commercial' | 'industrial';
+    projectInfo: any;
+  } | null>(null);
 
   const { job, startPolling, stopPolling, progress, status, currentStep, outputData, error } =
     useHealthSafetyGeneration(currentJobId);
@@ -112,6 +118,9 @@ const HealthSafetyInterface = () => {
       setCelebrationShown(false);
       setGenerationStartTime(Date.now());
 
+      // Store inputs for potential retry
+      setLastJobInputs({ query, workType, projectInfo });
+
       triggerHaptic(50);
 
       const { data, error } = await supabase.functions.invoke('create-health-safety-job', {
@@ -176,6 +185,40 @@ const HealthSafetyInterface = () => {
     triggerHaptic(50);
   };
 
+  const handleRetry = async () => {
+    if (!lastJobInputs) {
+      // No inputs to retry with, go back to input view
+      setShowResults(false);
+      return;
+    }
+
+    try {
+      setGenerationStartTime(Date.now());
+      setCelebrationShown(false);
+
+      triggerHaptic(50);
+
+      const { data, error } = await supabase.functions.invoke('create-health-safety-job', {
+        body: lastJobInputs
+      });
+
+      if (error) throw error;
+
+      setCurrentJobId(data.jobId);
+      sessionStorage.setItem('health-safety-job-id', data.jobId);
+      startPolling();
+
+      toast.success('Retrying generation', {
+        description: 'Your safety documentation is being created'
+      });
+    } catch (error) {
+      console.error('Failed to retry generation:', error);
+      toast.error('Retry failed', {
+        description: error instanceof Error ? error.message : 'Please try again'
+      });
+    }
+  };
+
   return (
     <div className="space-y-4">
       {/* Imported Circuit Context Banner */}
@@ -199,11 +242,14 @@ const HealthSafetyInterface = () => {
         />
       )}
       
-      {showResults && status !== 'complete' && status !== 'cancelled' && status !== 'failed' && (
-        <HealthSafetyProcessingView 
+      {showResults && status !== 'complete' && status !== 'cancelled' && (
+        <HealthSafetyProcessingView
           progress={progress}
           currentStep={currentStep}
           onCancel={handleCancel}
+          status={status === 'failed' ? 'failed' : 'processing'}
+          error={error}
+          onRetry={handleRetry}
         />
       )}
       

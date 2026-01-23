@@ -22,6 +22,53 @@ interface EICRInspectorDetailsProps {
   onToggle?: () => void;
 }
 
+// Section header - MUST be outside main component to prevent focus loss
+const SectionTitle = ({ icon: Icon, title, color = "blue", isOpen, badge, isMobile }: {
+  icon: React.ElementType;
+  title: string;
+  color?: string;
+  isOpen: boolean;
+  badge?: string;
+  isMobile: boolean;
+}) => (
+  <div
+    className={cn(
+      "w-full flex items-center gap-3 py-4 text-left touch-manipulation transition-colors cursor-pointer",
+      isMobile ? "px-4 bg-card/30 border-y border-border/20" : "pb-3 border-b border-border/30",
+      "active:bg-card/50"
+    )}
+  >
+    <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center", `bg-${color}-500/20`)}>
+      <Icon className={cn("h-5 w-5", `text-${color}-400`)} />
+    </div>
+    <div className="flex-1 min-w-0">
+      <h3 className="font-semibold text-foreground">{title}</h3>
+      {badge && <span className="text-xs text-muted-foreground">{badge}</span>}
+    </div>
+    <ChevronDown className={cn(
+      "h-5 w-5 text-muted-foreground transition-transform",
+      isOpen && "rotate-180"
+    )} />
+  </div>
+);
+
+// Form field wrapper - MUST be outside main component to prevent focus loss
+const FormField = ({ label, required, hint, children }: {
+  label: string;
+  required?: boolean;
+  hint?: string;
+  children: React.ReactNode;
+}) => (
+  <div className="space-y-2">
+    <Label className="text-sm text-foreground/80">
+      {label}
+      {required && <span className="text-elec-yellow ml-1">*</span>}
+    </Label>
+    {children}
+    {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+  </div>
+);
+
 const availableQualifications = [
   '18th Edition BS7671',
   'City & Guilds 2391-52',
@@ -292,52 +339,6 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
 
   const validation = getValidationStatus();
 
-  // Section header component - now a div since CollapsibleTrigger handles click
-  const SectionTitle = ({ icon: Icon, title, color = "blue", isOpen, badge }: {
-    icon: React.ElementType;
-    title: string;
-    color?: string;
-    isOpen: boolean;
-    badge?: string;
-  }) => (
-    <div
-      className={cn(
-        "w-full flex items-center gap-3 py-4 text-left touch-manipulation transition-colors cursor-pointer",
-        isMobile ? "px-4 bg-card/30 border-y border-border/20" : "pb-3 border-b border-border/30",
-        "active:bg-card/50"
-      )}
-    >
-      <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center", `bg-${color}-500/20`)}>
-        <Icon className={cn("h-5 w-5", `text-${color}-400`)} />
-      </div>
-      <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-foreground">{title}</h3>
-        {badge && <span className="text-xs text-muted-foreground">{badge}</span>}
-      </div>
-      <ChevronDown className={cn(
-        "h-5 w-5 text-muted-foreground transition-transform",
-        isOpen && "rotate-180"
-      )} />
-    </div>
-  );
-
-  // Form field wrapper
-  const FormField = ({ label, required, hint, children }: {
-    label: string;
-    required?: boolean;
-    hint?: string;
-    children: React.ReactNode;
-  }) => (
-    <div className="space-y-2">
-      <Label className="text-sm text-foreground/80">
-        {label}
-        {required && <span className="text-elec-yellow ml-1">*</span>}
-      </Label>
-      {children}
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
-    </div>
-  );
-
   return (
     <div className={cn("space-y-2", isMobile && "-mx-4")}>
       {/* Validation Alert */}
@@ -376,6 +377,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
               title="Personal Details"
               color="blue"
               isOpen={openSections.personal}
+              isMobile={isMobile}
             />
           </div>
         </CollapsibleTrigger>
@@ -410,6 +412,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
               color="yellow"
               isOpen={openSections.qualifications}
               badge={`${selectedQualifications.length} selected`}
+              isMobile={isMobile}
             />
           </div>
         </CollapsibleTrigger>
@@ -452,6 +455,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
               title="Professional Registration"
               color="green"
               isOpen={openSections.registration}
+              isMobile={isMobile}
             />
           </div>
         </CollapsibleTrigger>
@@ -503,6 +507,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
               title="Company Details"
               color="purple"
               isOpen={openSections.company}
+              isMobile={isMobile}
             />
           </div>
         </CollapsibleTrigger>
@@ -561,6 +566,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
               title="Company Branding"
               color="orange"
               isOpen={openSections.branding}
+              isMobile={isMobile}
             />
           </div>
         </CollapsibleTrigger>

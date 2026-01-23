@@ -17,6 +17,38 @@ interface ClientDetailsSectionProps {
   onUpdate: (field: string, value: string) => void;
 }
 
+// Section header component - MUST be outside main component to prevent re-renders
+const SectionTitle = ({ icon: Icon, title, isMobile }: { icon: React.ElementType; title: string; isMobile: boolean }) => (
+  <div className={cn(
+    "flex items-center gap-3 py-3",
+    isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
+  )}>
+    <div className="h-8 w-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
+      <Icon className="h-4 w-4 text-elec-yellow" />
+    </div>
+    <h3 className="font-semibold text-foreground">{title}</h3>
+  </div>
+);
+
+// Input field wrapper - MUST be outside main component to prevent focus loss on re-renders
+const FormField = ({
+  label,
+  required,
+  children
+}: {
+  label: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) => (
+  <div className="space-y-2">
+    <Label className="text-sm text-foreground/80">
+      {label}
+      {required && <span className="text-elec-yellow ml-1">*</span>}
+    </Label>
+    {children}
+  </div>
+);
+
 /**
  * ClientDetailsSection - Best-in-class mobile form for client & installation details
  * Edge-to-edge design with large touch targets and native app feel
@@ -46,38 +78,6 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
       }
     }
   };
-
-  // Section header component
-  const SectionTitle = ({ icon: Icon, title }: { icon: React.ElementType; title: string }) => (
-    <div className={cn(
-      "flex items-center gap-3 py-3",
-      isMobile ? "-mx-4 px-4 bg-card/30 border-y border-border/20" : "pb-2 border-b border-border/30"
-    )}>
-      <div className="h-8 w-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-        <Icon className="h-4 w-4 text-elec-yellow" />
-      </div>
-      <h3 className="font-semibold text-foreground">{title}</h3>
-    </div>
-  );
-
-  // Input field wrapper with proper mobile styling
-  const FormField = ({
-    label,
-    required,
-    children
-  }: {
-    label: string;
-    required?: boolean;
-    children: React.ReactNode;
-  }) => (
-    <div className="space-y-2">
-      <Label className="text-sm text-foreground/80">
-        {label}
-        {required && <span className="text-elec-yellow ml-1">*</span>}
-      </Label>
-      {children}
-    </div>
-  );
 
   return (
     <div className={cn("space-y-6", isMobile && "-mx-4")}>
@@ -127,7 +127,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
 
       {/* Client Information Section */}
       <div>
-        <SectionTitle icon={Users} title="Client Information" />
+        <SectionTitle icon={Users} title="Client Information" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="Client Name" required>
             <Input
@@ -172,7 +172,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
 
       {/* Installation Details Section */}
       <div>
-        <SectionTitle icon={Building2} title="Installation Details" />
+        <SectionTitle icon={Building2} title="Installation Details" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           {/* Same Address Toggle */}
           <button
@@ -249,7 +249,7 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
 
       {/* Installation History Section */}
       <div>
-        <SectionTitle icon={History} title="Installation History" />
+        <SectionTitle icon={History} title="Installation History" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="Estimated Age">
             <div className="flex gap-2">

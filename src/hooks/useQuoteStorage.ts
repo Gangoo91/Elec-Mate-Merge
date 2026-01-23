@@ -44,6 +44,11 @@ export const useQuoteStorage = () => {
     // Email view tracking (from join with quote_views if available)
     email_opened_at: row.email_opened_at ? new Date(row.email_opened_at) : undefined,
     email_open_count: row.email_open_count || 0,
+    // Linked certificate fields
+    linked_certificate_id: row.linked_certificate_id,
+    linked_certificate_type: row.linked_certificate_type,
+    linked_certificate_reference: row.linked_certificate_reference,
+    linked_certificate_pdf_url: row.linked_certificate_pdf_url,
   }), []);
 
   // Load quotes from Supabase on mount
@@ -220,7 +225,12 @@ export const useQuoteStorage = () => {
         expiry_date: quote.expiryDate.toISOString(),
         acceptance_status: quote.acceptance_status || 'pending',
         accepted_at: quote.accepted_at?.toISOString(),
-        public_token: quote.public_token
+        public_token: quote.public_token,
+        // Linked certificate fields (when created from EICR/EIC/Minor Works)
+        linked_certificate_id: quote.linked_certificate_id || null,
+        linked_certificate_type: quote.linked_certificate_type || null,
+        linked_certificate_reference: quote.linked_certificate_reference || null,
+        linked_certificate_pdf_url: quote.linked_certificate_pdf_url || null
       };
 
       console.log('Quote Storage - Prepared data for database', {

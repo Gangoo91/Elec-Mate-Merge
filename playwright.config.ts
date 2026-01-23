@@ -4,8 +4,9 @@ export default defineConfig({
   testDir: "./e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI ? 2 : 1, // Add 1 retry locally to handle flaky auth
+  // Limit workers to avoid Supabase auth rate limiting
+  workers: process.env.CI ? 1 : 3,
   reporter: [
     ["html", { open: "never" }],
     ["list"],

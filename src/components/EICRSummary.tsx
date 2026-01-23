@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -8,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { AlertTriangle, CheckCircle, XCircle, FileText, FileDown, Save, Beaker, Copy, ChevronDown, ChevronUp, Loader2, User, Mail, PenTool, Code } from 'lucide-react';
+import { AlertTriangle, CheckCircle, XCircle, FileText, FileDown, Save, Beaker, Copy, ChevronDown, ChevronUp, Loader2, User, Mail, PenTool, Code, Receipt } from 'lucide-react';
 import { exportCompleteEICRToPDF } from '@/utils/pdfExport';
 import { cn } from '@/lib/utils';
 
@@ -26,6 +27,7 @@ import { EmailCertificateDialog } from '@/components/certificate-completion/Emai
 import { useCustomers } from '@/hooks/useCustomers';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
+import { createQuoteFromCertificate, createInvoiceFromCertificate } from '@/utils/certificateToQuote';
 
 interface EICRSummaryProps {
   formData: any;
@@ -40,6 +42,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const onUpdate = updateFormData; // Use context updateFormData for all operations
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const haptics = useHaptics();
   const [isJsonOpen, setIsJsonOpen] = useState(false);
@@ -404,6 +407,40 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
     // Invalidate customer queries to refresh list
     queryClient.invalidateQueries({ queryKey: ['customers'] });
+  };
+
+  // Navigate to quote builder with client data pre-filled
+  const handleCreateQuote = () => {
+    haptics.tap();
+    const url = createQuoteFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientPhone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.installationAddress || '',
+      certificateType: 'EICR',
+      certificateReference: formData.reportReference || '',
+      reportId: effectiveReportId || undefined,
+      pdfUrl: formData.pdfUrl || undefined,
+    });
+    navigate(url);
+  };
+
+  // Navigate to invoice builder with client data pre-filled
+  const handleCreateInvoice = () => {
+    haptics.tap();
+    const url = createInvoiceFromCertificate({
+      clientName: formData.clientName || '',
+      clientEmail: formData.clientEmail || '',
+      clientPhone: formData.clientPhone || '',
+      clientAddress: formData.clientAddress || '',
+      installationAddress: formData.installationAddress || '',
+      certificateType: 'EICR',
+      certificateReference: formData.reportReference || '',
+      reportId: effectiveReportId || undefined,
+      pdfUrl: formData.pdfUrl || undefined,
+    });
+    navigate(url);
   };
 
   // Allow PDF generation without strict field validation
@@ -1417,6 +1454,26 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
             >
               <Save className="h-4 w-4" />
               Save Draft
+            </Button>
+          </div>
+
+          {/* Quote & Invoice Buttons */}
+          <div className="grid grid-cols-2 gap-3">
+            <Button
+              variant="outline"
+              className="h-12 gap-2 bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 transition-all duration-200 active:scale-95 touch-manipulation"
+              onClick={handleCreateQuote}
+            >
+              <FileText className="h-4 w-4" />
+              Quote
+            </Button>
+            <Button
+              variant="outline"
+              className="h-12 gap-2 bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20 text-blue-400 transition-all duration-200 active:scale-95 touch-manipulation"
+              onClick={handleCreateInvoice}
+            >
+              <Receipt className="h-4 w-4" />
+              Invoice
             </Button>
           </div>
 

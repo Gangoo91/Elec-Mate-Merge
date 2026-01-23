@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { CheckCircle, X } from "lucide-react";
+import { CheckCircle, X, ClipboardCheck } from "lucide-react";
 import { InvoiceWizard } from "@/components/electrician/invoice-builder/InvoiceWizard";
 import { useInvoiceStorage } from "@/hooks/useInvoiceStorage";
 import { useState, useEffect } from "react";
@@ -21,12 +21,15 @@ const InvoiceBuilderCreate = () => {
   const location = useLocation();
   const { fetchInvoices } = useInvoiceStorage();
   const [quoteContext, setQuoteContext] = useState<any>(null);
+  const [certificateContext, setCertificateContext] = useState<any>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
+  const [isLoadingContext, setIsLoadingContext] = useState(true);
 
-  // Load quote data from sessionStorage if creating from quote
+  // Load quote data or certificate data from sessionStorage
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const quoteSessionId = params.get('quoteSessionId');
+    const certificateSessionId = params.get('certificateSessionId');
 
     if (quoteSessionId) {
       const storedContext = sessionStorage.getItem(quoteSessionId);
@@ -36,6 +39,18 @@ const InvoiceBuilderCreate = () => {
         sessionStorage.removeItem(quoteSessionId);
       }
     }
+
+    if (certificateSessionId) {
+      const storedContext = sessionStorage.getItem(certificateSessionId);
+      if (storedContext) {
+        const parsed = JSON.parse(storedContext);
+        setCertificateContext(parsed.certificateData);
+        sessionStorage.removeItem(certificateSessionId);
+      }
+    }
+
+    // Mark context loading as complete
+    setIsLoadingContext(false);
   }, [location]);
 
   const handleInvoiceGenerated = () => {
@@ -116,12 +131,34 @@ const InvoiceBuilderCreate = () => {
           </div>
         )}
 
+        {/* Certificate Import Banner */}
+        {certificateContext && (
+          <div className="mx-4 mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-xl flex items-center gap-3">
+            <div className="h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <ClipboardCheck className="h-5 w-5 text-blue-400" />
+            </div>
+            <div>
+              <p className="text-sm font-medium">Certificate Data Imported</p>
+              <p className="text-xs text-muted-foreground">
+                Client details pre-filled from certificate
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Main Content */}
         <main className="px-4 py-6 pb-32">
-          <InvoiceWizard
-            onInvoiceGenerated={handleInvoiceGenerated}
-            sourceQuote={quoteContext}
-          />
+          {isLoadingContext ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow"></div>
+            </div>
+          ) : (
+            <InvoiceWizard
+              onInvoiceGenerated={handleInvoiceGenerated}
+              sourceQuote={quoteContext}
+              initialCertificateData={certificateContext}
+            />
+          )}
         </main>
 
         {/* Exit Confirmation Dialog */}

@@ -1,8 +1,8 @@
 import { ArrowLeft, Zap, CheckCircle, Bell, Target, Layers, FileText, TrendingUp, BellOff, Brain, Wrench, Clock, Activity, Settings, Shield, AlertTriangle, Info, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import Quiz from "@/components/apprentice-courses/Quiz";
-import InlineCheck from "@/components/apprentice-courses/InlineCheck";
+import { Quiz } from "@/components/apprentice-courses/Quiz";
+import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
 import useSEO from "@/hooks/useSEO";
 
 const TITLE = "Fault Alerts and Event Logging - Energy Efficiency Module 5 Section 3";

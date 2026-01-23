@@ -33,15 +33,63 @@ interface InvoiceWizardProps {
   sourceQuote?: Quote;
   existingInvoice?: Partial<Invoice>;
   onInvoiceGenerated?: () => void;
+  initialCertificateData?: {
+    client: {
+      name: string;
+      email: string;
+      phone: string;
+      address: string;
+      postcode: string;
+    };
+    jobDetails: {
+      title: string;
+      description: string;
+      location: string;
+    };
+    linkedCertificate?: {
+      reportId: string;
+      certificateType: string;
+      certificateReference: string;
+      pdfUrl?: string;
+      pdfStoragePath?: string;
+    };
+  };
 }
 
-export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated }: InvoiceWizardProps) => {
+export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated, initialCertificateData }: InvoiceWizardProps) => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const invoiceBuilder = useInvoiceBuilder(sourceQuote, existingInvoice);
+  // Merge certificate data into existing invoice for proper initialization
+  const mergedExistingInvoice = initialCertificateData && !existingInvoice && !sourceQuote
+    ? {
+        client: initialCertificateData.client,
+        jobDetails: initialCertificateData.jobDetails,
+        // Include default settings so useInvoiceBuilder can calculate totals
+        items: [],
+        additional_invoice_items: [],
+        settings: {
+          labourRate: 50,
+          overheadPercentage: 0,
+          profitMargin: 0,
+          vatRate: 20,
+          vatRegistered: true,
+          paymentTerms: '30 days',
+          dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        },
+        // Include linked certificate data for attachment support
+        ...(initialCertificateData.linkedCertificate && {
+          linked_certificate_id: initialCertificateData.linkedCertificate.reportId,
+          linked_certificate_type: initialCertificateData.linkedCertificate.certificateType as 'EICR' | 'EIC' | 'Minor Works',
+          linked_certificate_reference: initialCertificateData.linkedCertificate.certificateReference,
+          linked_certificate_pdf_url: initialCertificateData.linkedCertificate.pdfUrl,
+        }),
+      }
+    : existingInvoice;
+
+  const invoiceBuilder = useInvoiceBuilder(sourceQuote, mergedExistingInvoice);
   const { saveInvoice } = useInvoiceStorage();
 
   // Smooth scroll to top on step change
@@ -52,6 +100,9 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [currentStep]);
+
+  // Certificate data is now merged into existingInvoice at the top of the component
+  // This ensures proper initialization timing
 
   const nextStep = () => {
     if (currentStep < steps.length - 1) {

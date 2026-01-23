@@ -1,6 +1,6 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, X, ChevronRight, Loader2, Zap, Building2, GraduationCap, Star, Sparkles } from "lucide-react";
+import { Check, X, ChevronRight, Loader2, Zap, Building2, GraduationCap, Star, Sparkles, Clock } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
@@ -138,6 +138,11 @@ const PlansList = ({ billing }: PlansListProps) => {
                   "ring-2 ring-green-500/60 shadow-lg shadow-green-500/15",
                   "border-green-500/40",
                 ],
+                // Coming soon styling
+                plan.coming && [
+                  "border-purple-500/30",
+                  "ring-1 ring-purple-500/30",
+                ],
               )}
             >
               {/* Current Plan Banner */}
@@ -149,7 +154,7 @@ const PlansList = ({ billing }: PlansListProps) => {
               )}
 
               {/* Popular Badge */}
-              {plan.popular && !isCurrentPlan && (
+              {plan.popular && !isCurrentPlan && !plan.coming && (
                 <div className="absolute -top-px left-1/2 -translate-x-1/2 z-10">
                   <div className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-b-xl bg-gradient-to-r from-elec-yellow to-yellow-500 text-elec-dark text-[10px] sm:text-xs font-bold tracking-wide flex items-center gap-1 sm:gap-1.5 shadow-lg shadow-elec-yellow/30">
                     <Star className="h-3 w-3 fill-current" />
@@ -158,10 +163,20 @@ const PlansList = ({ billing }: PlansListProps) => {
                 </div>
               )}
 
+              {/* Coming Soon Badge */}
+              {plan.coming && (
+                <div className="absolute -top-px left-1/2 -translate-x-1/2 z-10">
+                  <div className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-b-xl bg-gradient-to-r from-purple-500 to-purple-600 text-white text-[10px] sm:text-xs font-bold tracking-wide flex items-center gap-1 sm:gap-1.5 shadow-lg shadow-purple-500/30">
+                    <Clock className="h-3 w-3" />
+                    COMING SOON
+                  </div>
+                </div>
+              )}
+
               <CardHeader className={cn(
                 "pb-4 sm:pb-5",
                 isCurrentPlan && "pt-4",
-                plan.popular && !isCurrentPlan && "pt-8 sm:pt-10"
+                (plan.popular || plan.coming) && !isCurrentPlan && "pt-8 sm:pt-10"
               )}>
                 {/* Plan Icon & Name Row */}
                 <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
@@ -227,14 +242,15 @@ const PlansList = ({ billing }: PlansListProps) => {
                   className={cn(
                     "w-full h-12 sm:h-14 text-sm sm:text-base font-semibold rounded-xl transition-all duration-300 relative overflow-hidden",
                     "active:scale-[0.98] touch-manipulation",
-                    plan.popular && !isCurrentPlan
+                    plan.popular && !isCurrentPlan && !plan.coming
                       ? "bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark shadow-lg shadow-elec-yellow/20 hover:shadow-xl hover:shadow-elec-yellow/30"
                       : "bg-white/10 hover:bg-white/15 text-foreground border border-white/20",
                     isCurrentPlan && "bg-green-500/20 text-green-400 border-green-500/30 cursor-default shadow-none hover:bg-green-500/20",
+                    plan.coming && "bg-purple-500/20 text-purple-300 border-purple-500/30 cursor-default shadow-none hover:bg-purple-500/20",
                     // Shimmer effect for popular button
-                    plan.popular && !isCurrentPlan && "before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700"
+                    plan.popular && !isCurrentPlan && !plan.coming && "before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-200%] hover:before:translate-x-[200%] before:transition-transform before:duration-700"
                   )}
-                  disabled={isCurrentPlan || isLoading[plan.id]}
+                  disabled={isCurrentPlan || isLoading[plan.id] || plan.coming}
                   onClick={() => handleSubscribe(plan.id, plan.priceId)}
                 >
                   {isLoading[plan.id] ? (
@@ -246,6 +262,11 @@ const PlansList = ({ billing }: PlansListProps) => {
                     <>
                       <Check className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                       Current Plan
+                    </>
+                  ) : plan.coming ? (
+                    <>
+                      <Clock className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                      Coming Soon
                     </>
                   ) : (
                     <>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,13 +12,21 @@ import { CostEngineerInput } from "./CostEngineerInput";
 import { getStoredCircuitContext, clearStoredCircuitContext, type StoredCircuitContext } from "@/utils/circuit-context-generator";
 import { ImportedContextBanner } from "@/components/electrician-tools/shared/ImportedContextBanner";
 import { AnimatePresence } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
-const STORAGE_KEY = 'electrician_business_settings';
+// Generate user-scoped storage key for business settings
+const getStorageKey = (userId?: string) =>
+  userId
+    ? `electrician_business_settings_${userId}`
+    : 'electrician_business_settings_guest';
 
 type ViewState = 'input' | 'processing' | 'results';
 type ProjectType = 'domestic' | 'commercial' | 'industrial';
 
 const CostEngineerInterface = () => {
+  const { user } = useAuth();
+  const storageKey = useMemo(() => getStorageKey(user?.id), [user?.id]);
+
   const [viewState, setViewState] = useState<ViewState>('input');
   const [projectType, setProjectType] = useState<ProjectType>('domestic');
   const [prompt, setPrompt] = useState("");
@@ -35,6 +43,14 @@ const CostEngineerInterface = () => {
   const [jobId, setJobId] = useState<string | null>(null);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
+  // Track last inputs for retry functionality
+  const [lastJobInputs, setLastJobInputs] = useState<{
+    query: string;
+    region: string;
+    projectContext: any;
+    businessSettings: BusinessSettings;
+  } | null>(null);
+  const [jobError, setJobError] = useState<string | null>(null);
 
   // Check for imported circuit context on mount
   useEffect(() => {
@@ -58,9 +74,9 @@ const CostEngineerInterface = () => {
     setImportedContext(null);
   };
 
-  // Load business settings from localStorage on mount
+  // Load business settings from localStorage on mount or when user changes
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = localStorage.getItem(storageKey);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -69,8 +85,12 @@ const CostEngineerInterface = () => {
       } catch (e) {
         console.error('Failed to parse business settings:', e);
       }
+    } else {
+      // Reset to defaults when switching to a user without saved settings
+      setBusinessSettings(DEFAULT_BUSINESS_SETTINGS);
+      setHasConfiguredSettings(false);
     }
-  }, []);
+  }, [storageKey]);
 
   const handleSettingsChange = (newSettings: BusinessSettings) => {
     setBusinessSettings(newSettings);
@@ -81,10 +101,12 @@ const CostEngineerInterface = () => {
   const { job, isPolling, cancelJob } = useCostEngineerGeneration({
     jobId,
     onComplete: (data) => {
+      setJobError(null);
       handleJobComplete(data);
     },
     onError: (error) => {
-      setViewState('input');
+      // Keep in processing view to show error state with retry option
+      setJobError(error);
       toast({
         title: "Generation failed",
         description: error,
@@ -156,21 +178,26 @@ const CostEngineerInterface = () => {
     }
 
     setViewState('processing');
+    setJobError(null);
+
+    // Store inputs for potential retry
+    const inputs = {
+      query: prompt,
+      region: location || 'UK',
+      projectContext: {
+        projectType: projectType,
+        projectName: projectName,
+        clientInfo: clientInfo,
+        additionalInfo: additionalInfo
+      },
+      businessSettings: businessSettings
+    };
+    setLastJobInputs(inputs);
 
     try {
       // Create job using new job queue pattern
       const { data, error } = await supabase.functions.invoke('create-cost-engineer-job', {
-        body: {
-          query: prompt,
-          region: location || 'UK',
-          projectContext: {
-            projectType: projectType,
-            projectName: projectName,
-            clientInfo: clientInfo,
-            additionalInfo: additionalInfo
-          },
-          businessSettings: businessSettings
-        }
+        body: inputs
       });
 
       if (error) throw error;
@@ -199,6 +226,43 @@ const CostEngineerInterface = () => {
     }
     setViewState('input');
     setJobId(null);
+    setJobError(null);
+  };
+
+  const handleRetry = async () => {
+    if (!lastJobInputs) {
+      // No inputs to retry with, go back to input view
+      setViewState('input');
+      setJobError(null);
+      return;
+    }
+
+    setJobError(null);
+    setJobId(null);
+
+    try {
+      // Create job using stored inputs
+      const { data, error } = await supabase.functions.invoke('create-cost-engineer-job', {
+        body: lastJobInputs
+      });
+
+      if (error) throw error;
+
+      setJobId(data.jobId);
+
+      toast({
+        title: "Retrying analysis",
+        description: "Generating cost estimate...",
+      });
+    } catch (error: any) {
+      console.error('Error retrying job:', error);
+      setJobError(error.message);
+      toast({
+        title: "Retry failed",
+        description: error.message,
+        variant: "destructive"
+      });
+    }
   };
 
   const handleNewAnalysis = () => {
@@ -213,7 +277,7 @@ const CostEngineerInterface = () => {
     setShowSuccessDialog(false);
   };
 
-  if (viewState === 'processing' && isPolling) {
+  if (viewState === 'processing' && (isPolling || jobError)) {
     // Map job status to stage
     let stage: 'initializing' | 'rag' | 'ai' | 'validation' | 'complete' = 'initializing';
     if (job) {
@@ -230,6 +294,9 @@ const CostEngineerInterface = () => {
           message: job?.current_step || 'Initializing...'
         }}
         onCancel={handleCancel}
+        status={jobError ? 'failed' : 'processing'}
+        error={jobError}
+        onRetry={handleRetry}
       />
     );
   }
@@ -296,6 +363,7 @@ const CostEngineerInterface = () => {
         open={showSettingsDialog}
         onOpenChange={setShowSettingsDialog}
         hideButton={true}
+        userId={user?.id}
       />
 
       {/* Success Dialog */}
