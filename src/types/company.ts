@@ -1,3 +1,13 @@
+import { AccountingIntegration } from './accounting';
+
+export interface WorkerRates {
+  electrician: number;
+  apprentice: number;
+  labourer: number;
+  designer: number;
+  owner: number;
+}
+
 export interface CompanyProfile {
   id: string;
   user_id: string;
@@ -20,6 +30,28 @@ export interface CompanyProfile {
   hourly_rate?: number;
   created_at: Date;
   updated_at: Date;
+
+  // Worker rates for different worker types
+  worker_rates?: WorkerRates;
+
+  // Inspector details for certificates (EICR/EIC/Minor Works)
+  inspector_name?: string;
+  inspector_qualifications?: string[];
+  registration_scheme?: string;
+  registration_number?: string;
+  registration_expiry?: string;
+  insurance_provider?: string;
+  insurance_policy_number?: string;
+  insurance_coverage?: string;
+  insurance_expiry?: string;
+  signature_data?: string;
+
+  // Stripe integration fields (auto-managed by edge functions)
+  stripe_account_id?: string;
+  stripe_account_status?: 'not_connected' | 'pending' | 'active' | 'restricted';
+
+  // Accounting software integrations
+  accounting_integrations?: AccountingIntegration[];
 }
 
 export interface CompanyBranding {

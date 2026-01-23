@@ -25,6 +25,7 @@ import { CalendarIcon, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 
 interface MarkAsPaidDialogProps {
   invoice: Quote;
@@ -44,6 +45,9 @@ export const MarkAsPaidDialog = ({
   const [paymentReference, setPaymentReference] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Accounting integrations for auto-sync
+  const { hasConnectedProvider, syncInvoice, integrations } = useAccountingIntegrations();
 
   const handleMarkAsPaid = async () => {
     try {
@@ -87,6 +91,31 @@ export const MarkAsPaidDialog = ({
         description: `Invoice ${invoice.invoice_number} has been marked as paid`,
         variant: 'success',
       });
+
+      // Auto-sync to connected accounting software (e.g., Xero)
+      if (hasConnectedProvider) {
+        const connectedProvider = integrations.find(i => i.status === 'connected');
+        if (connectedProvider) {
+          toast({
+            title: 'Syncing to accounting...',
+            description: `Sending invoice to ${connectedProvider.tenantName || connectedProvider.provider}`,
+          });
+
+          // Sync in background - don't block the UI
+          syncInvoice(invoice.id).then((success) => {
+            if (success) {
+              toast({
+                title: 'Synced to accounting',
+                description: `Invoice synced to ${connectedProvider.tenantName || connectedProvider.provider}`,
+                variant: 'success',
+              });
+            }
+          }).catch((error) => {
+            console.error('Auto-sync failed:', error);
+            // Don't show error toast here - syncInvoice already handles it
+          });
+        }
+      }
 
       onSuccess();
       onOpenChange(false);

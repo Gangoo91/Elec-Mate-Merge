@@ -9,11 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { Mail, MessageCircle, Loader2, CreditCard, Zap, CheckCircle } from 'lucide-react';
+import { Mail, MessageCircle, Loader2, CreditCard, Zap, CheckCircle, Calculator, ExternalLink } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { toast as sonnerToast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
+import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
+import { ACCOUNTING_PROVIDERS } from '@/types/accounting';
 
 interface InvoiceSendDropdownProps {
   invoice: Quote;
@@ -36,6 +38,16 @@ export const InvoiceSendDropdown = ({
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
   const [isConnectingStripe, setIsConnectingStripe] = useState(false);
   const [stripeStatus, setStripeStatus] = useState<'loading' | 'not_connected' | 'pending' | 'active'>('loading');
+  const [isSyncingAccounting, setIsSyncingAccounting] = useState(false);
+
+  // Accounting integrations hook
+  const {
+    integrations: accountingIntegrations,
+    loading: accountingLoading,
+    hasConnectedProvider: hasAccountingConnected,
+    syncInvoice,
+    connectProvider,
+  } = useAccountingIntegrations();
 
   // Check if user has Stripe connected - refreshes on mount, focus, or refreshKey change
   // Calls edge function to sync with Stripe API and update database
@@ -471,7 +483,22 @@ ${companyName}`;
     }
   };
 
-  const isLoading = isSendingEmail || isSharingWhatsApp || isConnectingStripe;
+  // Sync invoice to connected accounting software
+  const handleSyncToAccounting = async () => {
+    try {
+      setIsSyncingAccounting(true);
+      await syncInvoice(invoice.id);
+    } finally {
+      setIsSyncingAccounting(false);
+    }
+  };
+
+  // Connect accounting (redirect to profile page)
+  const handleConnectAccounting = () => {
+    window.location.href = '/electrician/profile?openAccounting=true';
+  };
+
+  const isLoading = isSendingEmail || isSharingWhatsApp || isConnectingStripe || isSyncingAccounting;
 
   return (
     <DropdownMenu>
@@ -545,6 +572,60 @@ ${companyName}`;
             <span className="text-xs text-muted-foreground">Send with PDF link</span>
           </div>
         </DropdownMenuItem>
+
+        {/* Accounting Sync Section */}
+        {!accountingLoading && (
+          <>
+            <DropdownMenuSeparator className="my-2 bg-border/30" />
+            <DropdownMenuLabel className="text-[10px] font-semibold text-muted-foreground px-3 py-1 uppercase tracking-wider">
+              Accounting Software
+            </DropdownMenuLabel>
+            {hasAccountingConnected ? (
+              <>
+                {accountingIntegrations
+                  .filter(i => i.status === 'connected')
+                  .map(integration => (
+                    <DropdownMenuItem
+                      key={integration.provider}
+                      onClick={handleSyncToAccounting}
+                      disabled={isSyncingAccounting}
+                      className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-purple-500/10 touch-manipulation"
+                    >
+                      <div className={`h-10 w-10 rounded-xl ${ACCOUNTING_PROVIDERS[integration.provider].bgColor} flex items-center justify-center mr-3 flex-shrink-0`}>
+                        {isSyncingAccounting ? (
+                          <Loader2 className="h-5 w-5 text-purple-400 animate-spin" />
+                        ) : (
+                          <Calculator className={`h-5 w-5 ${ACCOUNTING_PROVIDERS[integration.provider].logoColor}`} />
+                        )}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-sm">
+                          Sync to {ACCOUNTING_PROVIDERS[integration.provider].name}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {integration.tenantName || 'Send invoice to accounting'}
+                        </span>
+                      </div>
+                    </DropdownMenuItem>
+                  ))}
+              </>
+            ) : (
+              <DropdownMenuItem
+                onClick={handleConnectAccounting}
+                className="cursor-pointer rounded-xl h-16 px-3 my-1 focus:bg-purple-500/10 touch-manipulation"
+              >
+                <div className="h-10 w-10 rounded-xl bg-purple-500/15 flex items-center justify-center mr-3 flex-shrink-0">
+                  <Calculator className="h-5 w-5 text-purple-400" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-semibold text-sm">Connect Accounting</span>
+                  <span className="text-xs text-muted-foreground">Xero, QuickBooks, Sage & more</span>
+                </div>
+                <ExternalLink className="h-4 w-4 text-muted-foreground ml-auto" />
+              </DropdownMenuItem>
+            )}
+          </>
+        )}
 
         {/* Stripe Connect - show connect options, pending status, or connected status */}
         {stripeStatus === 'not_connected' && (

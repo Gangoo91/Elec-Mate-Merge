@@ -268,6 +268,35 @@ serve(async (req) => {
           }
         }
 
+        // Auto-sync to accounting software (Xero, etc.)
+        if (electricianUserId) {
+          try {
+            // Check if user has connected accounting
+            const { data: tokens } = await supabase
+              .from('accounting_oauth_tokens')
+              .select('provider')
+              .eq('user_id', electricianUserId)
+              .limit(1);
+
+            if (tokens && tokens.length > 0) {
+              console.log(`📊 Syncing invoice ${invoiceNumber} to ${tokens[0].provider}...`);
+
+              // Call accounting sync function with internal userId
+              await supabase.functions.invoke('accounting-sync-invoice', {
+                body: {
+                  invoiceId,
+                  provider: tokens[0].provider,
+                  userId: electricianUserId,
+                },
+              });
+              console.log(`✅ Invoice ${invoiceNumber} synced to ${tokens[0].provider}`);
+            }
+          } catch (syncError) {
+            // Don't fail the webhook if sync fails - it's not critical
+            console.error('Accounting sync error (non-critical):', syncError);
+          }
+        }
+
         // Send thank-you email to client
         try {
           // Fetch invoice details for client info
