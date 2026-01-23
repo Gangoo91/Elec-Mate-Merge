@@ -12,7 +12,7 @@ const ElecIdPage = () => {
     <div className="bg-background min-h-screen">
       {/* Header - Not sticky on mobile for native app feel */}
       <header className={`${isMobile ? '' : 'sticky top-0 z-50'} w-full border-b border-border/50 bg-background`}>
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-6xl mx-auto px-4 lg:px-8">
           <div className="flex h-14 items-center gap-3">
             <Button
               variant="ghost"
@@ -27,8 +27,8 @@ const ElecIdPage = () => {
         </div>
       </header>
 
-      {/* Content - Edge to edge on mobile */}
-      <main className="max-w-4xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
+      {/* Content - Edge to edge on mobile, wider on desktop */}
+      <main className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-8 py-3 sm:py-4">
         <ElecIdTab />
       </main>
     </div>

@@ -387,9 +387,9 @@ const ElecIdTab = () => {
             </div>
           </div>
 
-          {/* Desktop: Full tabs */}
+          {/* Desktop: Full tabs - wider with better spacing */}
           <div className="hidden sm:block">
-            <div className="flex items-center gap-1 p-1 rounded-xl bg-white/5 border border-white/10">
+            <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-white/5 border border-white/10">
               {ELEC_ID_TABS.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeSubTab === tab.id;
@@ -398,15 +398,14 @@ const ElecIdTab = () => {
                     key={tab.id}
                     onClick={() => setActiveSubTab(tab.id)}
                     className={cn(
-                      "flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                      "flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-medium transition-all whitespace-nowrap",
                       isActive
                         ? "bg-elec-yellow text-elec-dark shadow-lg shadow-elec-yellow/20"
                         : "text-foreground/70 hover:text-foreground hover:bg-white/10"
                     )}
                   >
-                    <Icon className="h-4 w-4" />
-                    <span className="hidden lg:inline">{tab.label}</span>
-                    <span className="lg:hidden">{tab.shortLabel}</span>
+                    <Icon className="h-4 w-4 flex-shrink-0" />
+                    <span>{tab.label}</span>
                   </button>
                 );
               })}
