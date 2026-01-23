@@ -92,11 +92,12 @@ export default function AdminDashboard() {
       // Exclude free_access_granted users from paid counts (they pay £0)
       const paidSubscribers = subscribedData.filter(u => !u.free_access_granted);
       const freeSubscribers = subscribedData.filter(u => u.free_access_granted);
+      // Handle both capitalized and lowercase tier names for backwards compatibility
       const tierCounts = {
-        apprentice: paidSubscribers.filter(u => u.subscription_tier === "Apprentice").length,
-        electrician: paidSubscribers.filter(u => u.subscription_tier === "Electrician").length,
-        employer: paidSubscribers.filter(u => u.subscription_tier === "Employer").length,
-        founder: paidSubscribers.filter(u => u.subscription_tier === "Founder").length,
+        apprentice: paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "apprentice").length,
+        electrician: paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "electrician").length,
+        employer: paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "employer").length,
+        founder: paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "founder").length,
         free: freeSubscribers.length,
       };
 

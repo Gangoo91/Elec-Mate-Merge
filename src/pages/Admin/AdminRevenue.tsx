@@ -109,18 +109,15 @@ export default function AdminRevenue() {
         ? (((thisMonthSubsRes.count || 0) - lastMonthSubsRes.count) / lastMonthSubsRes.count) * 100
         : 0;
 
-      // Subscription by tier
-      const tierBreakdown: Record<string, number> = { Apprentice: 0, Electrician: 0, Employer: 0 };
+      // Subscription by tier - handle case-insensitive tier names
+      const tierBreakdown: Record<string, number> = { Apprentice: 0, Electrician: 0, Employer: 0, Founder: 0 };
       subscribedProfiles.forEach(p => {
-        const tier = p.subscription_tier || "Electrician";
-        if (tierBreakdown[tier] !== undefined) {
-          tierBreakdown[tier]++;
-        } else {
-          // Handle legacy tier names
-          if (tier === "basic" || tier === "apprentice") tierBreakdown["Apprentice"]++;
-          else if (tier === "pro" || tier === "electrician") tierBreakdown["Electrician"]++;
-          else if (tier === "enterprise" || tier === "employer") tierBreakdown["Employer"]++;
-        }
+        const tier = p.subscription_tier?.toLowerCase() || "electrician";
+        // Map all variants to canonical names
+        if (tier === "basic" || tier === "apprentice") tierBreakdown["Apprentice"]++;
+        else if (tier === "pro" || tier === "electrician") tierBreakdown["Electrician"]++;
+        else if (tier === "enterprise" || tier === "employer") tierBreakdown["Employer"]++;
+        else if (tier === "founder") tierBreakdown["Founder"]++;
       });
 
       // Role breakdown of subscribers
@@ -327,11 +324,13 @@ export default function AdminRevenue() {
                 Apprentice: "bg-purple-500",
                 Electrician: "bg-yellow-500",
                 Employer: "bg-blue-500",
+                Founder: "bg-amber-500",
               };
               const prices: Record<string, string> = {
                 Apprentice: "£4.99",
                 Electrician: "£9.99",
                 Employer: "£29.99",
+                Founder: "£3.99",
               };
               return (
                 <div key={tier} className="space-y-1">
