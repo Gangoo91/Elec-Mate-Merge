@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { GraduationCap, IdCard, Shield, Award, ChevronRight, Loader2, Check, ChevronDown, ChevronUp } from 'lucide-react';
+import { GraduationCap, IdCard, Shield, Award, ChevronRight, Loader2, Check, ChevronDown, ChevronUp, CheckCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { InspectorProfile } from '@/hooks/useInspectorProfiles';
 import { ElecIdProfile } from '@/hooks/useElecIdProfile';
@@ -250,21 +249,27 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
               <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
                 Registration Scheme
               </Label>
-              <Select
-                value={formData.registrationScheme}
-                onValueChange={(value) => setFormData({ ...formData, registrationScheme: value })}
-              >
-                <SelectTrigger className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 text-white">
-                  <SelectValue placeholder="Select scheme" />
-                </SelectTrigger>
-                <SelectContent className="bg-[#2c2c2e] border-white/10">
-                  {SCHEME_OPTIONS.map((scheme) => (
-                    <SelectItem key={scheme.value} value={scheme.value} className="text-white">
-                      {scheme.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="grid grid-cols-2 gap-2">
+                {SCHEME_OPTIONS.map((scheme) => {
+                  const isSelected = formData.registrationScheme === scheme.value;
+                  return (
+                    <motion.button
+                      key={scheme.value}
+                      type="button"
+                      whileTap={{ scale: 0.97 }}
+                      className={`flex items-center justify-between p-3.5 rounded-xl border touch-manipulation text-left transition-all ${
+                        isSelected
+                          ? 'bg-purple-500/20 border-purple-500/50 text-white'
+                          : 'bg-white/[0.04] border-white/[0.06] text-white/70 active:bg-white/[0.08]'
+                      }`}
+                      onClick={() => setFormData({ ...formData, registrationScheme: scheme.value })}
+                    >
+                      <span className="text-[15px] font-medium">{scheme.label}</span>
+                      {isSelected && <CheckCircle className="h-5 w-5 text-purple-400" />}
+                    </motion.button>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="space-y-2">
