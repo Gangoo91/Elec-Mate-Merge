@@ -102,8 +102,9 @@ const AccountingConnectorsCard: React.FC = () => {
   // Get first connected integration for preview
   const connectedIntegration = integrations.find(i => i.status === 'connected');
 
-  // Available providers to show
-  const providers: AccountingProvider[] = ['xero', 'quickbooks', 'sage', 'freshbooks'];
+  // Available providers to show - only Xero is implemented for now
+  const implementedProviders: AccountingProvider[] = ['xero'];
+  const comingSoonProviders: AccountingProvider[] = ['quickbooks', 'sage', 'freshbooks'];
 
   const handleConnect = async (provider: AccountingProvider) => {
     await connectProvider(provider);
@@ -207,12 +208,12 @@ const AccountingConnectorsCard: React.FC = () => {
 
       {/* Edit Sheet */}
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e]">
-          <div className="flex justify-center pt-3 pb-2">
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+          <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
 
-          <div className="flex items-center justify-between px-4 pb-4 border-b border-white/[0.08]">
+          <div className="flex items-center justify-between px-4 pb-4 border-b border-white/[0.08] flex-shrink-0">
             <button
               onClick={() => setIsEditing(false)}
               className="text-[17px] text-blue-400 font-normal active:opacity-50 touch-manipulation"
@@ -233,13 +234,13 @@ const AccountingConnectorsCard: React.FC = () => {
             </button>
           </div>
 
-          <div className="px-4 py-6 space-y-4 momentum-scroll-y pb-32">
-            <p className="text-[13px] text-white/50 mb-6">
-              Connect your accounting software to automatically sync invoices. Your data stays secure with encrypted OAuth connections.
+          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-4">
+            <p className="text-[13px] text-white/50 mb-2">
+              Connect your accounting software to automatically sync invoices.
             </p>
 
-            {/* Provider List */}
-            {providers.map((providerId) => {
+            {/* Implemented Providers - Xero */}
+            {implementedProviders.map((providerId) => {
               const provider = ACCOUNTING_PROVIDERS[providerId];
               const integration = getIntegration(providerId);
               const isConnected = isProviderConnected(providerId);
@@ -313,8 +314,45 @@ const AccountingConnectorsCard: React.FC = () => {
               );
             })}
 
+            {/* Coming Soon Providers */}
+            {comingSoonProviders.length > 0 && (
+              <>
+                <p className="text-[11px] font-medium text-white/40 uppercase tracking-wide mt-6 mb-2 px-1">
+                  Coming Soon
+                </p>
+                {comingSoonProviders.map((providerId) => {
+                  const provider = ACCOUNTING_PROVIDERS[providerId];
+
+                  return (
+                    <div
+                      key={providerId}
+                      className="flex items-center gap-4 p-4 rounded-xl border bg-white/[0.01] border-white/[0.04] opacity-60"
+                    >
+                      {/* Provider Logo */}
+                      <div className={`w-12 h-12 rounded-xl ${provider.bgColor} flex items-center justify-center flex-shrink-0 opacity-50`}>
+                        <span className={provider.logoColor}>
+                          <ProviderIcon provider={providerId} />
+                        </span>
+                      </div>
+
+                      {/* Provider Info */}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[15px] font-semibold text-white/70">{provider.name}</p>
+                        <p className="text-[13px] text-white/40">{provider.description}</p>
+                      </div>
+
+                      {/* Coming Soon Badge */}
+                      <span className="px-2.5 py-1 rounded-full bg-white/[0.05] text-[11px] font-medium text-white/40">
+                        Soon
+                      </span>
+                    </div>
+                  );
+                })}
+              </>
+            )}
+
             {/* Help Section */}
-            <div className="mt-8 p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+            <div className="mt-6 p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
               <h3 className="text-[13px] font-semibold text-white/70 mb-2">How it works</h3>
               <ul className="text-[12px] text-white/50 space-y-2">
                 <li className="flex items-start gap-2">
@@ -333,7 +371,7 @@ const AccountingConnectorsCard: React.FC = () => {
             </div>
 
             {/* Security Note */}
-            <p className="text-[11px] text-white/40 text-center mt-4">
+            <p className="text-[11px] text-white/40 text-center mt-4 pb-8">
               Elec-Mate uses encrypted OAuth tokens. We never see your accounting login details.
             </p>
           </div>
