@@ -40,18 +40,20 @@ export const mainNavItems: NavItem[] = [
     icon: <Zap className="h-5 w-5" />,
     roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
   },
-  {
-    name: "Employer Hub",
-    path: "/employer",
-    icon: <Briefcase className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
-  },
-  {
-    name: "College Hub",
-    path: "/college",
-    icon: <School className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "college", "tutor", "admin"],
-  },
+  // Employer Hub - Hidden until ready for launch
+  // {
+  //   name: "Employer Hub",
+  //   path: "/employer",
+  //   icon: <Briefcase className="h-5 w-5" />,
+  //   roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
+  // },
+  // College Hub - Hidden until ready for launch
+  // {
+  //   name: "College Hub",
+  //   path: "/college",
+  //   icon: <School className="h-5 w-5" />,
+  //   roles: ["visitor", "apprentice", "electrician", "employer", "college", "tutor", "admin"],
+  // },
   {
     name: "Study Centre",
     path: "/study-centre",

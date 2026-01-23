@@ -311,60 +311,89 @@ interface ToolCardProps {
   link: string;
   featured?: boolean;
   badges?: string[];
+  comingSoon?: boolean;
 }
 
-function ToolCard({ title, description, icon: Icon, link, featured, badges }: ToolCardProps) {
-  return (
-    <Link to={link} className="block group touch-manipulation">
-      <motion.div
-        whileHover={{ y: -2, scale: 1.01 }}
-        whileTap={{ scale: 0.98 }}
-        className={cn(
-          'relative overflow-hidden glass-premium rounded-xl h-full min-h-[140px]',
-          featured && 'bg-gradient-to-br from-elec-yellow/[0.08] to-transparent'
-        )}
-      >
-        {featured && (
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-        )}
+function ToolCard({ title, description, icon: Icon, link, featured, badges, comingSoon }: ToolCardProps) {
+  const cardContent = (
+    <motion.div
+      whileHover={comingSoon ? {} : { y: -2, scale: 1.01 }}
+      whileTap={comingSoon ? {} : { scale: 0.98 }}
+      className={cn(
+        'relative overflow-hidden glass-premium rounded-xl h-full min-h-[140px]',
+        featured && !comingSoon && 'bg-gradient-to-br from-elec-yellow/[0.08] to-transparent',
+        comingSoon && 'opacity-60 cursor-not-allowed'
+      )}
+    >
+      {featured && !comingSoon && (
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
+      )}
 
-        <div className="p-4 sm:p-5 flex items-start gap-4">
-          <div
-            className={cn(
-              'flex-shrink-0 p-2.5 rounded-lg transition-colors',
-              featured
+      {/* Coming Soon banner */}
+      {comingSoon && (
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500" />
+      )}
+
+      <div className="p-4 sm:p-5 flex items-start gap-4">
+        <div
+          className={cn(
+            'flex-shrink-0 p-2.5 rounded-lg transition-colors',
+            comingSoon
+              ? 'bg-white/10'
+              : featured
                 ? 'bg-elec-yellow/20 group-hover:bg-elec-yellow/30 group-active:bg-elec-yellow/35 ring-1 ring-elec-yellow/30'
                 : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25'
-            )}
-          >
-            <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
-          </div>
+          )}
+        >
+          <Icon className={cn('h-6 w-6 sm:h-7 sm:w-7', comingSoon ? 'text-white/50' : 'text-elec-yellow')} />
+        </div>
 
-          <div className="flex-1 min-w-0">
-            <h3 className="text-base sm:text-lg font-semibold text-white mb-1 group-hover:text-elec-yellow group-active:text-elec-yellow transition-colors">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1">
+            <h3 className={cn(
+              'text-base sm:text-lg font-semibold transition-colors',
+              comingSoon ? 'text-white/70' : 'text-white group-hover:text-elec-yellow group-active:text-elec-yellow'
+            )}>
               {title}
             </h3>
-            <p className="text-sm text-white/70 leading-relaxed line-clamp-2">
-              {description}
-            </p>
-            {badges && (
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                {badges.map((badge, i) => (
-                  <Badge
-                    key={i}
-                    variant="outline"
-                    className="text-[10px] bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
-                  >
-                    {badge}
-                  </Badge>
-                ))}
-              </div>
+            {comingSoon && (
+              <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 text-[10px]">
+                Coming Soon
+              </Badge>
             )}
           </div>
-
-          <ChevronRight className="h-5 w-5 text-white/40 group-hover:text-elec-yellow group-hover:translate-x-1 group-active:text-elec-yellow group-active:translate-x-1 transition-all flex-shrink-0" />
+          <p className={cn('text-sm leading-relaxed line-clamp-2', comingSoon ? 'text-white/50' : 'text-white/70')}>
+            {description}
+          </p>
+          {badges && !comingSoon && (
+            <div className="flex flex-wrap gap-1.5 mt-2">
+              {badges.map((badge, i) => (
+                <Badge
+                  key={i}
+                  variant="outline"
+                  className="text-[10px] bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
+                >
+                  {badge}
+                </Badge>
+              ))}
+            </div>
+          )}
         </div>
-      </motion.div>
+
+        {!comingSoon && (
+          <ChevronRight className="h-5 w-5 text-white/40 group-hover:text-elec-yellow group-hover:translate-x-1 group-active:text-elec-yellow group-active:translate-x-1 transition-all flex-shrink-0" />
+        )}
+      </div>
+    </motion.div>
+  );
+
+  if (comingSoon) {
+    return <div className="block touch-manipulation">{cardContent}</div>;
+  }
+
+  return (
+    <Link to={link} className="block group touch-manipulation">
+      {cardContent}
     </Link>
   );
 }
@@ -419,6 +448,7 @@ const mainResources: ToolCardProps[] = [
     link: '/apprentice/hub',
     featured: true,
     badges: ['Portfolio', 'OJT Hours', 'Goals'],
+    comingSoon: true,
   },
   {
     title: 'Mental Health Hub',

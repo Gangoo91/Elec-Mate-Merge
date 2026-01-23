@@ -84,23 +84,24 @@ const hubsConfig: HubConfig[] = [
           }
         : null,
   },
-  {
-    id: 'employer',
-    title: 'Employer Hub',
-    subtitle: 'Manage',
-    description: 'Employees, jobs, timesheets, and business management.',
-    icon: Briefcase,
-    path: '/employer',
-    accentGradient: 'from-purple-500 via-purple-400 to-pink-400',
-    iconColor: 'text-purple-400',
-    iconBg: 'bg-purple-500/10 border border-purple-500/20',
-    roles: ['electrician', 'employer', 'admin'],
-    getStat: (data) => ({
-      label: 'Active jobs',
-      value: String(data.business.activeJobs),
-      icon: Briefcase,
-    })
-  },
+  // Employer Hub - Hidden until ready for launch
+  // {
+  //   id: 'employer',
+  //   title: 'Employer Hub',
+  //   subtitle: 'Manage',
+  //   description: 'Employees, jobs, timesheets, and business management.',
+  //   icon: Briefcase,
+  //   path: '/employer',
+  //   accentGradient: 'from-purple-500 via-purple-400 to-pink-400',
+  //   iconColor: 'text-purple-400',
+  //   iconBg: 'bg-purple-500/10 border border-purple-500/20',
+  //   roles: ['electrician', 'employer', 'admin'],
+  //   getStat: (data) => ({
+  //     label: 'Active jobs',
+  //     value: String(data.business.activeJobs),
+  //     icon: Briefcase,
+  //   })
+  // },
 ];
 
 const containerVariants = {
