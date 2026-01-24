@@ -89,9 +89,12 @@ export default function AdminElecIds() {
   const [showBulkRejectDialog, setShowBulkRejectDialog] = useState(false);
   const [bulkRejectReason, setBulkRejectReason] = useState("");
 
-  // Fetch Elec-ID profiles
+  // Fetch Elec-ID profiles - live updates every 30 seconds
   const { data: elecIds, isLoading, refetch } = useQuery({
     queryKey: ["admin-elec-ids", search, statusFilter],
+    refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
     queryFn: async () => {
       let query = supabase
         .from("employer_elec_id_profiles")
@@ -130,12 +133,14 @@ export default function AdminElecIds() {
 
       return filtered;
     },
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
-  // Fetch stats
+  // Fetch stats - live updates every 30 seconds
   const { data: stats } = useQuery({
     queryKey: ["admin-elec-id-stats"],
+    refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
     queryFn: async () => {
       const [totalRes, verifiedRes, activatedRes, hireableRes] = await Promise.all([
         supabase.from("employer_elec_id_profiles").select("*", { count: "exact", head: true }),
@@ -151,7 +156,6 @@ export default function AdminElecIds() {
         hireable: hireableRes.count || 0,
       };
     },
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   // Approve mutation via edge function
@@ -472,30 +476,32 @@ export default function AdminElecIds() {
               onClick={() => setSelectedProfile(profile)}
             >
               <CardContent className="pt-4 pb-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3 min-w-0 flex-1">
-                    {/* Checkbox for pending profiles */}
+                <div className="flex items-start sm:items-center justify-between gap-2">
+                  <div className="flex items-start sm:items-center gap-3 min-w-0 flex-1">
+                    {/* Checkbox for pending profiles - larger touch target */}
                     {!profile.is_verified && (
-                      <Checkbox
-                        checked={selectedIds.has(profile.id)}
-                        onCheckedChange={() => toggleSelect(profile.id)}
-                        onClick={(e) => e.stopPropagation()}
-                        className="shrink-0 border-cyan-500/50 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500"
-                      />
+                      <div className="pt-1 sm:pt-0">
+                        <Checkbox
+                          checked={selectedIds.has(profile.id)}
+                          onCheckedChange={() => toggleSelect(profile.id)}
+                          onClick={(e) => e.stopPropagation()}
+                          className="h-5 w-5 shrink-0 border-cyan-500/50 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500"
+                        />
+                      </div>
                     )}
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center shrink-0">
                       <IdCard className="h-5 w-5 text-cyan-400" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="font-medium truncate">
+                      <p className="font-medium text-sm sm:text-base line-clamp-2 sm:truncate">
                         {profile.profiles?.full_name || "Unknown"}
                       </p>
-                      <div className="flex items-center gap-2 mt-0.5">
+                      <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-0.5">
                         <span className="text-xs text-muted-foreground font-mono">
                           {profile.elec_id_number || "No ID"}
                         </span>
                         {profile.ecs_card_type && (
-                          <Badge variant="outline" className="text-[10px] py-0">
+                          <Badge variant="outline" className="text-[10px] sm:text-xs py-0">
                             {profile.ecs_card_type}
                           </Badge>
                         )}
@@ -507,7 +513,7 @@ export default function AdminElecIds() {
                       {getVerificationBadge(profile)}
                       {profile.verification_tier && getTierBadge(profile.verification_tier)}
                     </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                    <ChevronRight className="h-5 w-5 text-muted-foreground hidden sm:block" />
                   </div>
                 </div>
               </CardContent>

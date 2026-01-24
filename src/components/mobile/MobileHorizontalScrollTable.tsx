@@ -126,6 +126,51 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
     });
   };
 
+  // Insulation Resistance fill handlers
+  const handleFillAllInsulationVoltage = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('insulationTestVoltage', value);
+    } else {
+      testResults.forEach(result => {
+        onUpdate(result.id, 'insulationTestVoltage', value);
+      });
+    }
+    toast.success(`All Test Voltage fields filled with ${value}`);
+  };
+
+  const handleFillAllInsulationLiveNeutral = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('insulationLiveNeutral', value);
+    } else {
+      testResults.forEach(result => {
+        onUpdate(result.id, 'insulationLiveNeutral', value);
+      });
+    }
+    toast.success(`All Live-Neutral fields filled with ${value} MΩ`);
+  };
+
+  const handleFillAllInsulationLiveEarth = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('insulationLiveEarth', value);
+    } else {
+      testResults.forEach(result => {
+        onUpdate(result.id, 'insulationLiveEarth', value);
+      });
+    }
+    toast.success(`All Live-Earth fields filled with ${value} MΩ`);
+  };
+
+  const handleFillAllPolarity = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('polarity', value);
+    } else {
+      testResults.forEach(result => {
+        onUpdate(result.id, 'polarity', value);
+      });
+    }
+    toast.success(`All Polarity fields filled with ${value}`);
+  };
+
   return (
     <div className="w-screen relative left-[calc(-50vw+50%)] px-2">
       {/* Table Container - Full bleed with slight padding */}
@@ -137,16 +182,23 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
           scrollBehavior: 'smooth',
           overscrollBehaviorX: 'contain',
           touchAction: 'pan-x',
+          willChange: 'transform',
+          contain: 'layout',
+          transform: 'translateZ(0)',
         }}
       >
         <Table className="relative border-collapse w-full">
-          <MobileHorizontalScrollTableHeader 
+          <MobileHorizontalScrollTableHeader
             onFillAllRcdTestButton={handleFillAllRcdTestButton}
             onFillAllAfdd={handleFillAllAfdd}
             onFillAllRcdBsStandard={handleFillAllRcdBsStandard}
             onFillAllRcdType={handleFillAllRcdType}
             onFillAllRcdRating={handleFillAllRcdRating}
             onFillAllRcdRatingA={handleFillAllRcdRatingA}
+            onFillAllInsulationVoltage={handleFillAllInsulationVoltage}
+            onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}
+            onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
+            onFillAllPolarity={handleFillAllPolarity}
           />
           <TableBody>
             {/* Spacer row to create gap for sticky header */}

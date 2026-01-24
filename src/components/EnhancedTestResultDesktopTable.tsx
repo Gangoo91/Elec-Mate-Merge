@@ -175,6 +175,51 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     }
   };
 
+  // Insulation Resistance fill handlers
+  const handleFillAllInsulationVoltage = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('insulationTestVoltage', value);
+    } else {
+      testResults.forEach(result => {
+        onUpdate(result.id, 'insulationTestVoltage', value);
+      });
+    }
+    toast.success(`All Test Voltage fields filled with ${value}`);
+  };
+
+  const handleFillAllInsulationLiveNeutral = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('insulationLiveNeutral', value);
+    } else {
+      testResults.forEach(result => {
+        onUpdate(result.id, 'insulationLiveNeutral', value);
+      });
+    }
+    toast.success(`All Live-Neutral fields filled with ${value} MΩ`);
+  };
+
+  const handleFillAllInsulationLiveEarth = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('insulationLiveEarth', value);
+    } else {
+      testResults.forEach(result => {
+        onUpdate(result.id, 'insulationLiveEarth', value);
+      });
+    }
+    toast.success(`All Live-Earth fields filled with ${value} MΩ`);
+  };
+
+  const handleFillAllPolarity = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('polarity', value);
+    } else {
+      testResults.forEach(result => {
+        onUpdate(result.id, 'polarity', value);
+      });
+    }
+    toast.success(`All Polarity fields filled with ${value}`);
+  };
+
   const isEmpty = testResults.length === 0;
 
   return (
@@ -211,7 +256,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
           <ScrollArea className="w-full h-[calc(100vh-140px)] enhanced-table-scroll" style={{ overscrollBehaviorX: 'contain' }}>
             <div className="min-w-max enhanced-table-scroll">
               <Table useWrapper={false} className="text-sm border-separate border-spacing-0 w-full">
-                  <EnhancedTestResultDesktopTableHeader 
+                  <EnhancedTestResultDesktopTableHeader
                     showRegulationStatus={showRegulationStatus}
                     collapsedGroups={collapsedGroups}
                     onToggleGroup={toggleGroupCollapse}
@@ -222,6 +267,10 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                     onFillAllRcdRating={handleFillAllRcdRating}
                     onFillAllRcdRatingA={handleFillAllRcdRatingA}
                     onFillAllMaxZs={handleFillAllMaxZs}
+                    onFillAllInsulationVoltage={handleFillAllInsulationVoltage}
+                    onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}
+                    onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
+                    onFillAllPolarity={handleFillAllPolarity}
                   />
                   <TableBody>
                      {testResults.map((result, index) => (

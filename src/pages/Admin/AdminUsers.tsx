@@ -79,6 +79,14 @@ interface UserProfile {
   email?: string | null;
   email_confirmed?: boolean;
   last_sign_in?: string | null;
+  // Elec-ID profile data
+  elec_id_profile?: {
+    id: string;
+    elec_id_number: string | null;
+    is_verified: boolean;
+    activated: boolean;
+    ecs_card_type: string | null;
+  } | null;
 }
 
 // Use ROLE_COLORS from adminUtils but map to the local format with border
@@ -97,6 +105,14 @@ const roleFilters = [
   { value: "college", label: "College" },
 ];
 
+const elecIdFilters = [
+  { value: "all", label: "All IDs" },
+  { value: "has_id", label: "Has Elec-ID" },
+  { value: "verified", label: "Verified" },
+  { value: "pending", label: "Pending" },
+  { value: "no_id", label: "No Elec-ID" },
+];
+
 const timeFilters = [
   { value: "all", label: "All Time" },
   { value: "active", label: "Active Today" },
@@ -111,6 +127,7 @@ export default function AdminUsers() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
+  const [elecIdFilter, setElecIdFilter] = useState("all");
   const [timeFilter, setTimeFilter] = useState(() => searchParams.get("filter") || "all");
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -133,9 +150,12 @@ export default function AdminUsers() {
 
   const isSuperAdmin = profile?.admin_role === "super_admin";
 
-  // Fetch users with emails via edge function
+  // Fetch users with emails via edge function - live updates every 30 seconds
   const { data: users, isLoading, refetch, isFetching } = useQuery({
-    queryKey: ["admin-users", search, roleFilter, timeFilter],
+    queryKey: ["admin-users", search, roleFilter, elecIdFilter, timeFilter],
+    refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
     queryFn: async () => {
       // Use edge function to get users with emails
       const { data: edgeData, error: edgeError } = await supabase.functions.invoke("admin-get-users");
@@ -157,13 +177,30 @@ export default function AdminUsers() {
         presenceData?.map((p) => [p.user_id, p.last_seen]) || []
       );
 
-      // Enrich users with presence data
+      // Get Elec-ID profile data for all users
+      const { data: elecIdData } = await supabase
+        .from("employer_elec_id_profiles")
+        .select("id, employee_id, elec_id_number, is_verified, activated, ecs_card_type")
+        .in("employee_id", allUsers?.map((u: UserProfile) => u.id) || []);
+
+      const elecIdMap = new Map(
+        elecIdData?.map((p) => [p.employee_id, {
+          id: p.id,
+          elec_id_number: p.elec_id_number,
+          is_verified: p.is_verified,
+          activated: p.activated,
+          ecs_card_type: p.ecs_card_type,
+        }]) || []
+      );
+
+      // Enrich users with presence and Elec-ID data
       allUsers = allUsers.map((user: UserProfile) => ({
         ...user,
         last_seen: presenceMap.get(user.id) || user.last_seen,
         isOnline:
           presenceMap.get(user.id) &&
           new Date(presenceMap.get(user.id)!).getTime() > Date.now() - 5 * 60 * 1000,
+        elec_id_profile: elecIdMap.get(user.id) || null,
       }));
 
       // Apply search filter
@@ -179,6 +216,24 @@ export default function AdminUsers() {
       // Apply role filter
       if (roleFilter !== "all") {
         allUsers = allUsers.filter((u: UserProfile) => u.role === roleFilter);
+      }
+
+      // Apply Elec-ID filter
+      if (elecIdFilter !== "all") {
+        switch (elecIdFilter) {
+          case "has_id":
+            allUsers = allUsers.filter((u: UserProfile) => u.elec_id_profile);
+            break;
+          case "verified":
+            allUsers = allUsers.filter((u: UserProfile) => u.elec_id_profile?.is_verified);
+            break;
+          case "pending":
+            allUsers = allUsers.filter((u: UserProfile) => u.elec_id_profile && !u.elec_id_profile.is_verified);
+            break;
+          case "no_id":
+            allUsers = allUsers.filter((u: UserProfile) => !u.elec_id_profile);
+            break;
+        }
       }
 
       // Apply time filter
@@ -215,7 +270,6 @@ export default function AdminUsers() {
 
       return allUsers as UserProfile[];
     },
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
   });
 
   // Get stats
@@ -224,6 +278,9 @@ export default function AdminUsers() {
     online: users?.filter((u) => u.isOnline).length || 0,
     subscribed: users?.filter((u) => u.subscribed).length || 0,
     admins: users?.filter((u) => u.admin_role).length || 0,
+    elecIds: users?.filter((u) => u.elec_id_profile).length || 0,
+    verifiedIds: users?.filter((u) => u.elec_id_profile?.is_verified).length || 0,
+    pendingIds: users?.filter((u) => u.elec_id_profile && !u.elec_id_profile.is_verified).length || 0,
   };
 
   // Pagination logic
@@ -238,7 +295,7 @@ export default function AdminUsers() {
   useEffect(() => {
     setCurrentPage(1);
     setSelectedIds(new Set()); // Clear selection on filter change
-  }, [search, roleFilter, timeFilter]);
+  }, [search, roleFilter, elecIdFilter, timeFilter]);
 
   // Bulk selection functions - memoized for child component stability
   const toggleSelection = useCallback((id: string) => {
@@ -378,11 +435,11 @@ export default function AdminUsers() {
       await queryClient.cancelQueries({ queryKey: ["admin-users"] });
 
       // Snapshot current value
-      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, timeFilter]);
+      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, elecIdFilter, timeFilter]);
 
       // Optimistically update the user
       queryClient.setQueryData(
-        ["admin-users", search, roleFilter, timeFilter],
+        ["admin-users", search, roleFilter, elecIdFilter, timeFilter],
         (old: UserProfile[] | undefined) =>
           old?.map((u) =>
             u.id === userId ? { ...u, subscribed: true, free_access_granted: true } : u
@@ -403,7 +460,7 @@ export default function AdminUsers() {
     onError: (error, _variables, context) => {
       // Rollback on error
       if (context?.previousUsers) {
-        queryClient.setQueryData(["admin-users", search, roleFilter, timeFilter], context.previousUsers);
+        queryClient.setQueryData(["admin-users", search, roleFilter, elecIdFilter, timeFilter], context.previousUsers);
       }
       toast({ title: "Error", description: error.message, variant: "destructive" });
     },
@@ -443,11 +500,11 @@ export default function AdminUsers() {
       await queryClient.cancelQueries({ queryKey: ["admin-users"] });
 
       // Snapshot current value
-      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, timeFilter]);
+      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, elecIdFilter, timeFilter]);
 
       // Optimistically update the user
       queryClient.setQueryData(
-        ["admin-users", search, roleFilter, timeFilter],
+        ["admin-users", search, roleFilter, elecIdFilter, timeFilter],
         (old: UserProfile[] | undefined) =>
           old?.map((u) =>
             u.id === userId ? { ...u, subscribed: false, free_access_granted: false } : u
@@ -468,7 +525,7 @@ export default function AdminUsers() {
     onError: (error, _variables, context) => {
       // Rollback on error
       if (context?.previousUsers) {
-        queryClient.setQueryData(["admin-users", search, roleFilter, timeFilter], context.previousUsers);
+        queryClient.setQueryData(["admin-users", search, roleFilter, elecIdFilter, timeFilter], context.previousUsers);
       }
       toast({ title: "Error", description: error.message, variant: "destructive" });
     },
@@ -526,7 +583,7 @@ export default function AdminUsers() {
   return (
     <div className="space-y-4">
       {/* Stats Row */}
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
           <CardContent className="pt-3 pb-3">
             <div className="flex items-center gap-2">
@@ -560,18 +617,56 @@ export default function AdminUsers() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20">
+        <Card className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 border-cyan-500/20">
           <CardContent className="pt-3 pb-3">
             <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-red-400" />
+              <IdCard className="h-4 w-4 text-cyan-400" />
               <div>
-                <p className="text-lg font-bold">{stats.admins}</p>
-                <p className="text-[10px] text-muted-foreground">Admins</p>
+                <p className="text-lg font-bold">{stats.elecIds}</p>
+                <p className="text-[10px] text-muted-foreground">Elec-IDs</p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Elec-ID Summary Bar */}
+      {stats.elecIds > 0 && (
+        <Card className="border-cyan-500/30 bg-cyan-500/5">
+          <CardContent className="py-3 px-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <IdCard className="h-5 w-5 text-cyan-400" />
+                  <span className="text-sm font-medium">Elec-ID Status</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <span className="flex items-center gap-1.5">
+                    <ShieldCheck className="h-4 w-4 text-green-400" />
+                    <span className="text-green-400 font-medium">{stats.verifiedIds}</span>
+                    <span className="text-muted-foreground">verified</span>
+                  </span>
+                  <span className="text-muted-foreground">•</span>
+                  <span className="flex items-center gap-1.5">
+                    <Clock className="h-4 w-4 text-amber-400" />
+                    <span className="text-amber-400 font-medium">{stats.pendingIds}</span>
+                    <span className="text-muted-foreground">pending</span>
+                  </span>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10"
+                onClick={() => window.location.href = "/admin/elec-ids"}
+              >
+                View All
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Search Bar */}
       <div className="flex gap-2">
@@ -635,6 +730,32 @@ export default function AdminUsers() {
                 : "bg-muted/50"
             }`}
           >
+            {filter.label}
+          </Button>
+        ))}
+      </div>
+
+      {/* Elec-ID Filter Pills */}
+      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+        <IdCard className="h-4 w-4 text-cyan-400 shrink-0 self-center mr-1" />
+        {elecIdFilters.map((filter) => (
+          <Button
+            key={filter.value}
+            variant={elecIdFilter === filter.value ? "default" : "outline"}
+            size="sm"
+            onClick={() => setElecIdFilter(filter.value)}
+            className={`shrink-0 h-8 px-3 rounded-full touch-manipulation text-xs ${
+              elecIdFilter === filter.value
+                ? filter.value === "verified"
+                  ? "bg-green-500 text-white hover:bg-green-600"
+                  : filter.value === "pending"
+                  ? "bg-amber-500 text-white hover:bg-amber-600"
+                  : "bg-cyan-500 text-white hover:bg-cyan-600"
+                : "bg-muted/50"
+            }`}
+          >
+            {filter.value === "verified" && <ShieldCheck className="h-3 w-3 mr-1" />}
+            {filter.value === "pending" && <Clock className="h-3 w-3 mr-1" />}
             {filter.label}
           </Button>
         ))}
@@ -878,6 +999,58 @@ export default function AdminUsers() {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Elec-ID Profile Card */}
+              {selectedUser?.elec_id_profile && (
+                <Card className={selectedUser.elec_id_profile.is_verified ? "border-green-500/30 bg-green-500/5" : "border-amber-500/30 bg-amber-500/5"}>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm flex items-center gap-2">
+                      <IdCard className={`h-4 w-4 ${selectedUser.elec_id_profile.is_verified ? "text-green-400" : "text-amber-400"}`} />
+                      Elec-ID Profile
+                      {selectedUser.elec_id_profile.is_verified ? (
+                        <Badge className="text-[10px] px-1.5 py-0 h-4 bg-green-500/20 text-green-400">
+                          <ShieldCheck className="h-2.5 w-2.5 mr-1" />
+                          Verified
+                        </Badge>
+                      ) : (
+                        <Badge className="text-[10px] px-1.5 py-0 h-4 bg-amber-500/20 text-amber-400">
+                          <Clock className="h-2.5 w-2.5 mr-1" />
+                          Pending
+                        </Badge>
+                      )}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    {selectedUser.elec_id_profile.elec_id_number && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">Elec-ID Number</span>
+                        <span className="text-sm font-mono">{selectedUser.elec_id_profile.elec_id_number}</span>
+                      </div>
+                    )}
+                    {selectedUser.elec_id_profile.ecs_card_type && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground">ECS Card</span>
+                        <Badge variant="outline" className="text-xs">{selectedUser.elec_id_profile.ecs_card_type}</Badge>
+                      </div>
+                    )}
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Activated</span>
+                      <Badge variant="outline" className={selectedUser.elec_id_profile.activated ? "bg-green-500/10 text-green-400" : ""}>
+                        {selectedUser.elec_id_profile.activated ? "Yes" : "No"}
+                      </Badge>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full mt-2 h-9 touch-manipulation text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10"
+                      onClick={() => window.location.href = `/admin/elec-ids`}
+                    >
+                      <IdCard className="h-4 w-4 mr-2" />
+                      View Full Elec-ID Profile
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
 
               {/* Admin Status Card */}
               <Card className={selectedUser?.admin_role ? "border-red-500/30 bg-red-500/5" : ""}>

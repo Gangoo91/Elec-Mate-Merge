@@ -1,6 +1,7 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
+import { logger, generateRequestId } from '@/utils/logger';
 
 export function useAuthentication() {
   const { toast } = useToast();
@@ -27,6 +28,10 @@ export function useAuthentication() {
   };
 
   const signIn = async (email: string, password: string) => {
+    const requestId = generateRequestId();
+    logger.api('auth/signIn', requestId).start({ email });
+    logger.action('Sign in attempt', 'auth', { email });
+
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -34,6 +39,7 @@ export function useAuthentication() {
       });
 
       if (error) {
+        logger.api('auth/signIn', requestId).error(error, { email });
         toast({
           title: 'Login Failed',
           description: getFriendlyErrorMessage(error.message),
@@ -42,7 +48,7 @@ export function useAuthentication() {
         return { error };
       }
 
-      console.log('Sign in successful:', data?.user?.email);
+      logger.api('auth/signIn', requestId).success({ email: data?.user?.email });
 
       // Check for pending onboarding data and apply ONLY if onboarding not completed
       // This prevents race conditions with ConfirmEmail which is authoritative for initial setup
@@ -104,6 +110,10 @@ export function useAuthentication() {
   };
 
   const signUp = async (email: string, password: string, fullName: string) => {
+    const requestId = generateRequestId();
+    logger.api('auth/signUp', requestId).start({ email, fullName });
+    logger.action('Sign up attempt', 'auth', { email });
+
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -116,6 +126,7 @@ export function useAuthentication() {
       });
 
       if (error) {
+        logger.api('auth/signUp', requestId).error(error, { email });
         toast({
           title: 'Signup Failed',
           description: getFriendlyErrorMessage(error.message),
@@ -123,6 +134,8 @@ export function useAuthentication() {
         });
         return { error };
       }
+
+      logger.api('auth/signUp', requestId).success({ email, userId: data?.user?.id });
 
       // Note: Welcome email is now sent after email confirmation
       // The confirmation email is sent from SignUp.tsx via send-confirmation-email edge function
@@ -135,6 +148,7 @@ export function useAuthentication() {
 
       return { error: null, user: data?.user };
     } catch (error: any) {
+      logger.api('auth/signUp', requestId).error(error, { email });
       toast({
         title: 'Signup Error',
         description: getFriendlyErrorMessage(error.message || 'An unexpected error occurred'),
@@ -145,6 +159,8 @@ export function useAuthentication() {
   };
 
   const signOut = async () => {
+    logger.action('Sign out', 'auth');
+    logger.info('User signing out');
     await supabase.auth.signOut();
     toast({
       title: 'Logged Out',
@@ -153,6 +169,10 @@ export function useAuthentication() {
   };
 
   const resetPassword = async (email: string) => {
+    const requestId = generateRequestId();
+    logger.api('auth/resetPassword', requestId).start({ email });
+    logger.action('Password reset request', 'auth', { email });
+
     try {
       // Call our custom edge function that sends branded emails via Resend
       const { error } = await supabase.functions.invoke('send-password-reset', {
@@ -161,7 +181,9 @@ export function useAuthentication() {
 
       if (error) {
         // Don't reveal if email exists or not - always show success message
-        console.error('Password reset error:', error);
+        logger.warn('Password reset error (non-fatal)', { error: error.message });
+      } else {
+        logger.api('auth/resetPassword', requestId).success({ email });
       }
 
       // Always show success to prevent user enumeration
@@ -173,7 +195,7 @@ export function useAuthentication() {
       return { error: null };
     } catch (error: any) {
       // Even on error, show success message to prevent enumeration
-      console.error('Password reset exception:', error);
+      logger.warn('Password reset exception (non-fatal)', { error: error.message });
       toast({
         title: 'Check Your Email',
         description: 'If an account exists, we\'ve sent you a password reset link.',
@@ -183,12 +205,17 @@ export function useAuthentication() {
   };
 
   const updatePassword = async (newPassword: string) => {
+    const requestId = generateRequestId();
+    logger.api('auth/updatePassword', requestId).start();
+    logger.action('Password update', 'auth');
+
     try {
       const { error } = await supabase.auth.updateUser({
         password: newPassword,
       });
 
       if (error) {
+        logger.api('auth/updatePassword', requestId).error(error);
         toast({
           title: 'Update Failed',
           description: error.message,
@@ -197,6 +224,7 @@ export function useAuthentication() {
         return { error };
       }
 
+      logger.api('auth/updatePassword', requestId).success();
       toast({
         title: 'Password Updated',
         description: 'Your password has been successfully changed.',
@@ -204,6 +232,7 @@ export function useAuthentication() {
 
       return { error: null };
     } catch (error: any) {
+      logger.api('auth/updatePassword', requestId).error(error);
       toast({
         title: 'Update Error',
         description: error.message || 'An unexpected error occurred',
@@ -262,6 +291,9 @@ export function useAuthentication() {
     elec_id_enabled?: boolean;
     onboarding_completed?: boolean;
   }) => {
+    const requestId = generateRequestId();
+    logger.api('profiles/update', requestId).start({ userId, fields: Object.keys(profileData) });
+
     try {
       const { error } = await supabase
         .from('profiles')
@@ -272,13 +304,14 @@ export function useAuthentication() {
         .eq('id', userId);
 
       if (error) {
-        console.error('Error updating profile:', error.message);
+        logger.api('profiles/update', requestId).error(error, { userId });
         return { error };
       }
 
+      logger.api('profiles/update', requestId).success({ userId });
       return { error: null };
     } catch (error: any) {
-      console.error('Error in updateProfile:', error);
+      logger.api('profiles/update', requestId).error(error, { userId });
       return { error };
     }
   };

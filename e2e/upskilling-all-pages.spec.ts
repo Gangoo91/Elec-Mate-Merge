@@ -261,12 +261,12 @@ const COURSES = {
     modulePattern: '/electrician/upskilling/energy-efficiency-module-{m}',
     sectionPattern: '/electrician/upskilling/energy-efficiency-module-{m}-section-{s}',
     modules: {
-      1: { sections: 0 },
-      2: { sections: 0 },
-      3: { sections: 0 },
-      4: { sections: 0 },
-      5: { sections: 0 },
-      6: { sections: 0 },
+      1: { sections: 4 },
+      2: { sections: 5 },
+      3: { sections: 5 },
+      4: { sections: 5 },
+      5: { sections: 5 },
+      6: { sections: 5 },
     }
   },
 };
@@ -975,7 +975,7 @@ test.describe('Instrumentation - All Pages', () => {
 });
 
 // ============================================
-// Energy Efficiency - 6 Modules (no sections defined yet)
+// Energy Efficiency - 6 Modules, 29 Sections
 // ============================================
 test.describe('Energy Efficiency - All Pages', () => {
   const course = COURSES.energyEfficiency;
@@ -999,9 +999,10 @@ test.describe('Energy Efficiency - All Pages', () => {
     await expect(startBtn).toBeVisible({ timeout: 10000 });
   });
 
-  // Module pages only (no sections defined yet)
+  // All modules and sections
   for (const moduleNum of Object.keys(course.modules)) {
     const m = parseInt(moduleNum);
+    const moduleConfig = course.modules[m];
 
     test(`Module ${m} page loads with content`, async ({ page }) => {
       page.setDefaultTimeout(TIMEOUT);
@@ -1012,6 +1013,19 @@ test.describe('Energy Efficiency - All Pages', () => {
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `Energy Efficiency Module ${m}`);
     });
+
+    // Section pages
+    for (let s = 1; s <= moduleConfig.sections; s++) {
+      test(`Module ${m} Section ${s} loads with content`, async ({ page }) => {
+        page.setDefaultTimeout(TIMEOUT);
+        const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
+        await page.goto(url);
+        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        await loginIfRequired(page);
+        await waitForContentLoad(page);
+        await verifyPageHasContent(page, `Module ${m}`);
+      });
+    }
   }
 });
 
@@ -1024,6 +1038,7 @@ test.describe('Navigation - Section to Module to Course', () => {
     { course: COURSES.fireAlarm, module: 2, section: 1 },
     { course: COURSES.evCharging, module: 3, section: 2 },
     { course: COURSES.smartHome, module: 4, section: 1 },
+    { course: COURSES.energyEfficiency, module: 1, section: 1 },
   ];
 
   for (const tc of testCases) {

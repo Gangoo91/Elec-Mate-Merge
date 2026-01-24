@@ -69,9 +69,12 @@ export default function AdminFounders() {
   const [confirmSendAll, setConfirmSendAll] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  // Fetch stats
+  // Fetch stats - live updates every 30 seconds
   const { data: stats } = useQuery<Stats>({
     queryKey: ["admin-founder-stats"],
+    refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke("send-founder-invite", {
         body: { action: "stats" },
@@ -82,9 +85,12 @@ export default function AdminFounders() {
     },
   });
 
-  // Fetch invites
+  // Fetch invites - live updates every 30 seconds
   const { data: invites, isLoading, refetch } = useQuery<FounderInvite[]>({
     queryKey: ["admin-founder-invites"],
+    refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke("send-founder-invite", {
         body: { action: "list" },
@@ -346,10 +352,10 @@ export default function AdminFounders() {
               className="touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
               onClick={() => setSelectedInvite(invite)}
             >
-              <CardContent className="pt-3 pb-3">
-                <div className="flex items-center justify-between gap-3">
+              <CardContent className="pt-3 pb-3 px-3 sm:px-6">
+                <div className="flex items-start sm:items-center justify-between gap-2 sm:gap-3">
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium truncate">{invite.email}</p>
+                    <p className="text-sm font-medium line-clamp-1 sm:truncate break-all">{invite.email}</p>
                     <p className="text-xs text-muted-foreground">
                       {invite.sent_at
                         ? `Sent ${formatDistanceToNow(new Date(invite.sent_at), { addSuffix: true })}`
@@ -358,7 +364,7 @@ export default function AdminFounders() {
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     {getStatusBadge(invite.status)}
-                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                    <ChevronRight className="h-4 w-4 text-muted-foreground hidden sm:block" />
                   </div>
                 </div>
               </CardContent>

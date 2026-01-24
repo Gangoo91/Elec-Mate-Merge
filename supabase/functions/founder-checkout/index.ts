@@ -1,16 +1,21 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { createLogger, generateRequestId } from "../_shared/logger.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
 };
 
 // Founder price ID - £3.99/month
 const FOUNDER_PRICE_ID = "price_1SPK8c2RKw5t5RAmRGJxXfjc";
 
 Deno.serve(async (req) => {
-  console.log(`[v22] Method: ${req.method}`);
+  // Extract or generate request ID for correlation
+  const requestId = req.headers.get('x-request-id') || generateRequestId();
+  const logger = createLogger(requestId, { function: 'founder-checkout' });
+
+  logger.info('Request received', { method: req.method });
 
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -19,12 +24,12 @@ Deno.serve(async (req) => {
   try {
     // Read and log body
     const rawBody = await req.text();
-    console.log(`[v22] Body length: ${rawBody.length}`);
-    console.log(`[v22] Body: ${rawBody.substring(0, 200)}`);
+    logger.debug('Request body received', { bodyLength: rawBody.length });
 
     if (!rawBody || rawBody.length === 0) {
+      logger.warn('Empty request body');
       return new Response(JSON.stringify({ error: "Empty request body" }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json", "x-request-id": requestId },
         status: 400,
       });
     }
@@ -32,11 +37,11 @@ Deno.serve(async (req) => {
     let body;
     try {
       body = JSON.parse(rawBody);
-      console.log(`[v22] Parsed OK, action: ${body.action}`);
+      logger.info('Request parsed', { action: body.action });
     } catch (e: any) {
-      console.log(`[v22] JSON parse failed: ${e.message}`);
+      logger.error('JSON parse failed', { error: e.message });
       return new Response(JSON.stringify({ error: "Invalid JSON", details: e.message }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json", "x-request-id": requestId },
         status: 400,
       });
     }
@@ -44,8 +49,9 @@ Deno.serve(async (req) => {
     const { action, token, password, fullName, role } = body;
 
     if (!action) {
+      logger.warn('Missing action in request');
       return new Response(JSON.stringify({ error: "Missing action" }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json", "x-request-id": requestId },
         status: 400,
       });
     }
@@ -54,12 +60,13 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
-    console.log(`[v22] Supabase URL exists: ${!!supabaseUrl}`);
-    console.log(`[v22] Service key exists: ${!!supabaseKey}`);
-
     if (!supabaseUrl || !supabaseKey) {
+      logger.error('Missing Supabase environment variables', {
+        hasUrl: !!supabaseUrl,
+        hasKey: !!supabaseKey
+      });
       return new Response(JSON.stringify({ error: "Missing Supabase env vars" }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json", "x-request-id": requestId },
         status: 500,
       });
     }
@@ -82,35 +89,36 @@ Deno.serve(async (req) => {
 
     switch (action) {
       case "validate": {
-        console.log(`[v22] Validate action, token: ${token ? token.substring(0, 10) + '...' : 'MISSING'}`);
+        logger.info('Validating founder invite token', { tokenPrefix: token?.substring(0, 10) });
 
         if (!token) {
+          logger.warn('Token required but not provided');
           return new Response(JSON.stringify({ error: "Token is required" }), {
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
+            headers: { ...corsHeaders, "Content-Type": "application/json", "x-request-id": requestId },
             status: 400,
           });
         }
 
-        console.log(`[v22] Querying founder_invites...`);
         const { data: invite, error: inviteError } = await supabaseAdmin
           .from("founder_invites")
           .select("*")
           .eq("invite_token", token)
           .single();
 
-        console.log(`[v22] Query done. Error: ${inviteError?.message || 'none'}, Found: ${!!invite}`);
-
         if (inviteError || !invite) {
+          logger.info('Invalid or not found invite token', { error: inviteError?.message });
           result = { valid: false, reason: "Invalid or expired invite link" };
           break;
         }
 
         if (invite.status === "claimed") {
+          logger.info('Invite already claimed', { inviteId: invite.id });
           result = { valid: false, reason: "This invite has already been used" };
           break;
         }
 
         if (invite.expires_at && new Date(invite.expires_at) < new Date()) {
+          logger.info('Invite expired', { inviteId: invite.id, expiresAt: invite.expires_at });
           await supabaseAdmin
             .from("founder_invites")
             .update({ status: "expired" })
@@ -130,11 +138,13 @@ Deno.serve(async (req) => {
           price: "£3.99/month",
           hasExistingAccount,
         };
-        console.log(`[v22] Validate success for ${invite.email}`);
+        logger.info('Invite validated successfully', { email: invite.email, hasExistingAccount });
         break;
       }
 
       case "create_checkout": {
+        logger.info('Creating checkout session');
+
         if (!token) throw new Error("Token is required");
 
         const { data: invite, error: inviteError } = await supabaseAdmin
@@ -147,18 +157,22 @@ Deno.serve(async (req) => {
         if (invite.status === "claimed") throw new Error("This invite has already been used");
         if (invite.expires_at && new Date(invite.expires_at) < new Date()) throw new Error("This invite has expired");
 
+        logger.info('Invite verified, creating Stripe checkout', { email: invite.email });
+
         const stripe = await getStripe();
         const customers = await stripe.customers.list({ email: invite.email, limit: 1 });
 
         let customerId: string;
         if (customers.data.length > 0) {
           customerId = customers.data[0].id;
+          logger.info('Using existing Stripe customer', { customerId });
         } else {
           const newCustomer = await stripe.customers.create({
             email: invite.email,
             metadata: { founder: "true", invite_token: token },
           });
           customerId = newCustomer.id;
+          logger.info('Created new Stripe customer', { customerId });
         }
 
         const origin = req.headers.get("origin") || "https://elec-mate.com";
@@ -174,11 +188,14 @@ Deno.serve(async (req) => {
           allow_promotion_codes: false,
         });
 
+        logger.info('Checkout session created', { sessionId: session.id });
         result = { url: session.url };
         break;
       }
 
       case "create_account": {
+        logger.info('Creating founder account');
+
         if (!token) throw new Error("Token is required");
         if (!password || password.length < 8) throw new Error("Password must be at least 8 characters");
         if (!fullName || fullName.trim().length === 0) throw new Error("Full name is required");
@@ -196,6 +213,8 @@ Deno.serve(async (req) => {
           throw new Error("This invite has expired");
         }
 
+        logger.info('Invite verified for account creation', { email: invite.email });
+
         const { data: usersListData } = await supabaseAdmin.auth.admin.listUsers();
         const existingUser = usersListData?.users?.find((u: any) => u.email === invite.email);
 
@@ -203,8 +222,10 @@ Deno.serve(async (req) => {
 
         if (existingUser) {
           userId = existingUser.id;
+          logger.info('Using existing user account', { userId });
           await supabaseAdmin.from("founder_invites").update({ status: "in_progress", user_id: userId }).eq("id", invite.id);
         } else {
+          logger.info('Creating new user account', { email: invite.email });
           const { data: createData, error: createError } = await supabaseAdmin.auth.admin.createUser({
             email: invite.email,
             password: password,
@@ -216,6 +237,7 @@ Deno.serve(async (req) => {
           if (!createData.user) throw new Error("Failed to create user account");
 
           userId = createData.user.id;
+          logger.info('User account created', { userId });
 
           await supabaseAdmin.from("profiles").insert({
             id: userId,
@@ -236,6 +258,7 @@ Deno.serve(async (req) => {
         let customerId: string;
         if (customers.data.length > 0) {
           customerId = customers.data[0].id;
+          logger.info('Using existing Stripe customer', { customerId });
           await stripe.customers.update(customerId, {
             metadata: { founder: "true", invite_token: token, user_id: userId },
           });
@@ -246,6 +269,7 @@ Deno.serve(async (req) => {
             metadata: { founder: "true", invite_token: token, user_id: userId },
           });
           customerId = newCustomer.id;
+          logger.info('Created new Stripe customer', { customerId });
         }
 
         const origin = req.headers.get("origin") || Deno.env.get("SITE_URL") || "https://elec-mate.com";
@@ -261,11 +285,14 @@ Deno.serve(async (req) => {
           allow_promotion_codes: false,
         });
 
+        logger.info('Checkout session created for new account', { sessionId: session.id, userId });
         result = { checkoutUrl: session.url, userId };
         break;
       }
 
       case "complete": {
+        logger.info('Completing founder checkout');
+
         if (!token) throw new Error("Token is required");
 
         const { data: invite, error: inviteError } = await supabaseAdmin
@@ -296,6 +323,7 @@ Deno.serve(async (req) => {
             subscription_start: new Date().toISOString(),
             updated_at: new Date().toISOString(),
           }).eq("id", userId);
+          logger.info('Founder subscription activated', { userId, email: invite.email });
         }
 
         result = { success: true, email: invite.email };
@@ -303,22 +331,23 @@ Deno.serve(async (req) => {
       }
 
       default:
+        logger.warn('Unknown action requested', { action });
         return new Response(JSON.stringify({ error: `Unknown action: ${action}` }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          headers: { ...corsHeaders, "Content-Type": "application/json", "x-request-id": requestId },
           status: 400,
         });
     }
 
-    console.log(`[v22] Success, returning result`);
+    logger.info('Request completed successfully', { action });
     return new Response(JSON.stringify(result), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json", "x-request-id": requestId },
       status: 200,
     });
 
   } catch (error: any) {
-    console.error(`[v22] ERROR: ${error.message}`);
+    logger.error('Request failed', { error: error.message });
     return new Response(JSON.stringify({ error: error.message }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json", "x-request-id": requestId },
       status: 400,
     });
   }

@@ -3,7 +3,7 @@ import FirecrawlApp from 'https://esm.sh/@mendable/firecrawl-js@1.29.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // Test URLs for debugging

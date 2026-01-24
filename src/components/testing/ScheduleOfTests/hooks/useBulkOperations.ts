@@ -186,6 +186,46 @@ export function useBulkOperations({
     [testResults, setTestResults, onSave]
   );
 
+  // Quick Fill IR handlers
+  const handleFillAllInsulationVoltage = useCallback(
+    (value: string) => {
+      const updatedResults = testResults.map((result) => ({
+        ...result,
+        insulationTestVoltage: value,
+      }));
+      setTestResults(updatedResults);
+      onSave(updatedResults);
+      toast.success(`Applied Test Voltage "${value}" to all circuits`);
+    },
+    [testResults, setTestResults, onSave]
+  );
+
+  const handleFillAllInsulationLiveNeutral = useCallback(
+    (value: string) => {
+      const updatedResults = testResults.map((result) => ({
+        ...result,
+        insulationLiveNeutral: value,
+      }));
+      setTestResults(updatedResults);
+      onSave(updatedResults);
+      toast.success(`Applied Live-Neutral "${value}" MΩ to all circuits`);
+    },
+    [testResults, setTestResults, onSave]
+  );
+
+  const handleFillAllInsulationLiveEarth = useCallback(
+    (value: string) => {
+      const updatedResults = testResults.map((result) => ({
+        ...result,
+        insulationLiveEarth: value,
+      }));
+      setTestResults(updatedResults);
+      onSave(updatedResults);
+      toast.success(`Applied Live-Earth "${value}" MΩ to all circuits`);
+    },
+    [testResults, setTestResults, onSave]
+  );
+
   // Apply RCD preset to selected circuits
   const handleApplyRcdPreset = useCallback(
     (
@@ -242,6 +282,10 @@ export function useBulkOperations({
     handleFillAllRcdRating,
     handleFillAllRcdRatingA,
     handleApplyRcdPreset,
+    // IR handlers
+    handleFillAllInsulationVoltage,
+    handleFillAllInsulationLiveNeutral,
+    handleFillAllInsulationLiveEarth,
   };
 }
 

@@ -10,7 +10,7 @@ import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.t
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // Query Classification for Smart RAG Routing

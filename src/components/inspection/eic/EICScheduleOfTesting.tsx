@@ -11,6 +11,7 @@ import { MobileHorizontalScrollTable } from '../mobile/MobileHorizontalScrollTab
 import MobileSmartAutoFill from '../mobile/MobileSmartAutoFill';
 import QuickRcdPresets from '../QuickRcdPresets';
 import QuickFillRcdPanel from '../QuickFillRcdPanel';
+import QuickFillIrPanel from '../QuickFillIrPanel';
 import TestInstrumentInfo from '../TestInstrumentInfo';
 import TestMethodInfo from '../TestMethodInfo';
 import TestAnalytics from '../TestAnalytics';
@@ -1018,6 +1019,19 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     handleBulkFieldUpdate('rcdRatingA', value);
   };
 
+  // Quick Fill IR handlers
+  const handleFillAllInsulationVoltage = (value: string) => {
+    handleBulkFieldUpdate('insulationTestVoltage', value);
+  };
+
+  const handleFillAllInsulationLiveNeutral = (value: string) => {
+    handleBulkFieldUpdate('insulationLiveNeutral', value);
+  };
+
+  const handleFillAllInsulationLiveEarth = (value: string) => {
+    handleBulkFieldUpdate('insulationLiveEarth', value);
+  };
+
   return (
     <div className="pb-20 lg:pb-4">
       {/* MOBILE FULL-WIDTH LAYOUT - Native iOS Feel */}
@@ -1490,19 +1504,24 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               <X className="h-5 w-5" />
             </Button>
           </div>
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
             <QuickFillRcdPanel
               onFillAllRcdBsStandard={handleFillAllRcdBsStandard}
               onFillAllRcdType={handleFillAllRcdType}
               onFillAllRcdRating={handleFillAllRcdRating}
               onFillAllRcdRatingA={handleFillAllRcdRatingA}
             />
+            <QuickFillIrPanel
+              onFillAllInsulationVoltage={handleFillAllInsulationVoltage}
+              onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}
+              onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
+            />
           </div>
         </div>
       )}
 
       {/* Dialogs - Render outside conditional blocks */}
-      
+
       {/* AI Board Photo Capture - Tool Sheet Pattern */}
       {showPhotoCapture && (
         <>

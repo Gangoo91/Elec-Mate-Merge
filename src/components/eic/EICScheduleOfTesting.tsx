@@ -16,13 +16,13 @@ import { CircuitList } from '../testing/ScheduleOfTests/CircuitList';
 import MobileSmartAutoFill from '../mobile/MobileSmartAutoFill';
 import QuickRcdPresets from '../QuickRcdPresets';
 import QuickFillRcdPanel from '../QuickFillRcdPanel';
+import QuickFillIrPanel from '../QuickFillIrPanel';
 import TestInstrumentInfo from '../TestInstrumentInfo';
 import TestMethodInfo from '../TestMethodInfo';
 import TestAnalytics from '../TestAnalytics';
 import SmartAutoFillPromptDialog from '../SmartAutoFillPromptDialog';
 
-import { BoardPhotoCapture } from '@/components/testing/BoardPhotoCapture';
-import { SimpleCircuitTable } from '../testing/SimpleCircuitTable';
+import { BoardScannerOverlay } from '@/components/testing/BoardScannerOverlay';
 import TestResultsPhotoCapture from '../testing/TestResultsPhotoCapture';
 import TestResultsReviewDialog from '../testing/TestResultsReviewDialog';
 import ScribbleToTableDialog from '../mobile/ScribbleToTableDialog';
@@ -114,8 +114,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const [newCircuitNumber, setNewCircuitNumber] = useState('');
 
   const [showPhotoCapture, setShowPhotoCapture] = useState(false);
-  const [detectedCircuits, setDetectedCircuits] = useState<any>(null);
-  const [showCircuitReview, setShowCircuitReview] = useState(false);
   const [showTestResultsScan, setShowTestResultsScan] = useState(false);
   const [extractedTestResults, setExtractedTestResults] = useState<any>(null);
   const [showTestResultsReview, setShowTestResultsReview] = useState(false);
@@ -693,7 +691,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   // Add a circuit directly to a specific board
   const addCircuitToBoard = (boardId: string) => {
     const boardCircuits = getCircuitsForBoard(testResults, boardId);
-    const nextCircuitNum = testResults.length + 1;
+    // Use board-specific circuit count, not global count
+    const nextCircuitNum = boardCircuits.length + 1;
     const newResult: TestResult = {
       id: Date.now().toString(),
       circuitDesignation: `C${nextCircuitNum}`,
@@ -830,9 +829,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   };
 
   const handleAIAnalysisComplete = (data: any) => {
-    setDetectedCircuits(data);
-    setShowPhotoCapture(false);
-    setShowCircuitReview(true);
+    // BoardScannerOverlay handles the review internally, so we receive confirmed circuits
+    if (data.circuits && data.circuits.length > 0) {
+      handleApplyAICircuitsFromTable(data.circuits);
+      toast.success(`Added ${data.circuits.length} circuit(s) from AI scan`);
+    }
+    setActiveBoardId(null);
   };
 
   // Test Results Scanner Handlers
@@ -1036,44 +1038,51 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   };
 
   const handleApplyAICircuits = (circuits: Partial<TestResult>[]) => {
-    // Find blank rows to fill first
+    // Determine target board - use activeBoardId or default to main board
+    const targetBoardId = activeBoardId || distributionBoards[0]?.id || MAIN_BOARD_ID;
+
+    // Get existing circuits for the target board to calculate proper numbering
+    const existingBoardCircuits = getCircuitsForBoard(testResults, targetBoardId);
+
+    // Find blank rows for this specific board to fill first
     const blankIndices: number[] = [];
     testResults.forEach((result, idx) => {
-      if (isBlankRow(result)) {
+      if (result.boardId === targetBoardId && isBlankRow(result)) {
         blankIndices.push(idx);
       }
     });
 
     const updatedResults = [...testResults];
     const remainingCircuits: any[] = [];
+    let addedCount = 0; // Track how many circuits we've added for numbering
 
     circuits.forEach((circuit, circuitIdx) => {
       const normalisedCircuit = normaliseAICircuit(circuit);
-      
-      // If we have a blank slot, fill it
+
+      // If we have a blank slot for this board, fill it
       if (blankIndices.length > 0) {
         const blankIdx = blankIndices.shift()!;
         const existingResult = updatedResults[blankIdx];
         const circuitNumber = existingResult.circuitNumber;
-        
+
         const liveSize = normalisedCircuit.liveSize;
         const circuitType = normalisedCircuit.circuitType || '';
         const circuitDesc = normalisedCircuit.circuitDescription || '';
-        
+
         // Circuit type detection
         const isRingCircuit = circuitType.toLowerCase().includes('ring');
         const isSocketCircuit = circuitType.toLowerCase().includes('socket');
         const isBathroomCircuit = circuitDesc.toLowerCase().includes('bathroom');
-        const isOutdoorCircuit = circuitDesc.toLowerCase().includes('outdoor') || 
+        const isOutdoorCircuit = circuitDesc.toLowerCase().includes('outdoor') ||
                                   circuitDesc.toLowerCase().includes('garden');
-        
-        const isRCBOOrRCD = normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCD') || 
+
+        const isRCBOOrRCD = normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
                             normalisedCircuit.protectiveDeviceType.toUpperCase().includes('RCBO');
         const requiresRCD = isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
-        
+
         // Determine phase type (default to 1P if not specified)
         const phaseType = normalisedCircuit.phaseType || '1P';
-        
+
         updatedResults[blankIdx] = {
           ...existingResult,
           circuitDescription: circuitDesc,
@@ -1116,24 +1125,27 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
     // Append remaining circuits that didn't fit in blank slots
     remainingCircuits.forEach((circuit, index) => {
-      const circuitNumber = (updatedResults.length + 1).toString();
+      // Use board-specific circuit count + circuits already added in this loop
+      const circuitNumber = (existingBoardCircuits.length + addedCount + 1).toString();
+      addedCount++;
+
       const liveSize = circuit.liveSize;
       const circuitType = circuit.circuitType || '';
       const circuitDesc = circuit.circuitDescription || '';
-      
+
       const isRingCircuit = circuitType.toLowerCase().includes('ring');
       const isSocketCircuit = circuitType.toLowerCase().includes('socket');
       const isBathroomCircuit = circuitDesc.toLowerCase().includes('bathroom');
-      const isOutdoorCircuit = circuitDesc.toLowerCase().includes('outdoor') || 
+      const isOutdoorCircuit = circuitDesc.toLowerCase().includes('outdoor') ||
                                 circuitDesc.toLowerCase().includes('garden');
-      
-      const isRCBOOrRCD = circuit.protectiveDeviceType.toUpperCase().includes('RCD') || 
+
+      const isRCBOOrRCD = circuit.protectiveDeviceType.toUpperCase().includes('RCD') ||
                           circuit.protectiveDeviceType.toUpperCase().includes('RCBO');
       const requiresRCD = isSocketCircuit || isBathroomCircuit || isOutdoorCircuit || isRCBOOrRCD;
-      
+
       // Determine phase type (default to 1P if not specified)
       const phaseType = circuit.phaseType || '1P';
-      
+
       const newResult: TestResult = {
         id: `test-${Date.now()}-${Math.random()}`,
         circuitNumber: circuitNumber,
@@ -1185,6 +1197,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         rcdBsStandard: '',
         rcdType: '',
         rcdRatingA: '',
+        // Board assignment
+        boardId: targetBoardId,
         // Three-phase fields
         phaseType: phaseType,
         phaseRotation: phaseType === '3P' ? '' : undefined,
@@ -1195,8 +1209,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
     setTestResults(updatedResults);
     onUpdate('scheduleOfTests', updatedResults);
-    setShowCircuitReview(false);
-    setDetectedCircuits([]);
   };
 
   const handleCreateCircuit = (
@@ -1473,6 +1485,19 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
   const handleFillAllRcdRatingA = (value: string) => {
     handleBulkFieldUpdate('rcdRatingA', value);
+  };
+
+  // Quick Fill IR handlers
+  const handleFillAllInsulationVoltage = (value: string) => {
+    handleBulkFieldUpdate('insulationTestVoltage', value);
+  };
+
+  const handleFillAllInsulationLiveNeutral = (value: string) => {
+    handleBulkFieldUpdate('insulationLiveNeutral', value);
+  };
+
+  const handleFillAllInsulationLiveEarth = (value: string) => {
+    handleBulkFieldUpdate('insulationLiveEarth', value);
   };
 
   return (
@@ -1858,83 +1883,61 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 </div>
               </div>
 
-              {/* Action Buttons Grid */}
-              <div className="grid grid-cols-6 gap-3">
+              {/* Single row of tools */}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                {/* Primary tools - left */}
                 <Button
-                  className="testing-action-primary col-span-2"
                   onClick={() => setShowPhotoCapture(true)}
+                  variant="outline"
+                  className="h-10 sm:h-11 bg-white/5 border-white/20 hover:bg-white/10 text-white"
                 >
                   <Camera className="h-4 w-4 mr-2" />
                   AI Board Scan
                 </Button>
+
                 <Button
-                  className={`col-span-2 h-11 rounded-lg font-medium transition-all duration-200 text-white shadow-lg border ${
-                    voiceActive
-                      ? 'bg-gradient-to-r from-green-600 to-emerald-600 shadow-green-500/20 border-green-400/30'
-                      : voiceConnecting
-                      ? 'bg-gradient-to-r from-yellow-600 to-amber-600 animate-pulse shadow-yellow-500/20 border-yellow-400/30'
-                      : 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-purple-500/20 border-purple-400/30'
-                  }`}
                   onClick={toggleVoice}
                   disabled={voiceConnecting}
+                  variant="outline"
+                  className={`h-10 sm:h-11 ${
+                    voiceActive
+                      ? 'bg-green-600 hover:bg-green-700 border-green-400/30 text-white'
+                      : voiceConnecting
+                      ? 'bg-yellow-600 animate-pulse border-yellow-400/30 text-white'
+                      : 'bg-white/5 border-white/20 hover:bg-white/10 text-white'
+                  }`}
                 >
                   <Mic className={`h-4 w-4 mr-2 ${voiceActive ? 'animate-pulse' : ''}`} />
                   {voiceActive ? 'Tap to Stop' : voiceConnecting ? 'Connecting...' : 'Voice Assistant'}
                 </Button>
-                <Button className="testing-action-secondary col-span-2" onClick={addTestResult}>
+
+                <Button
+                  onClick={addTestResult}
+                  variant="outline"
+                  className="h-10 sm:h-11 bg-white/5 border-white/20 hover:bg-white/10 text-white"
+                >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Circuit
                 </Button>
-              </div>
 
-              {/* Secondary Tools Row */}
-              <div className="grid grid-cols-4 gap-2 mt-3">
-                <Button className="testing-action-secondary" onClick={() => setShowTestResultsScan(true)}>
-                  <FileText className="h-4 w-4 mr-2" />
-                  Scan Results
-                </Button>
-                <Button className="testing-action-secondary" onClick={() => setShowScribbleDialog(true)}>
-                  <PenTool className="h-4 w-4 mr-2" />
-                  Text to Circuits
-                </Button>
-                <Button className="testing-action-secondary" onClick={() => setShowSmartAutoFillDialog(true)}>
-                  <Zap className="h-4 w-4 mr-2" />
-                  Smart Fill
-                </Button>
-                <Button className="testing-action-secondary" onClick={() => setShowBulkInfillDialog(true)}>
-                  <ClipboardCheck className="h-4 w-4 mr-2" />
-                  Bulk Infill
-                </Button>
-              </div>
+                {/* Spacer */}
+                <div className="flex-1 min-w-0" />
 
-              {/* Secondary Actions Row */}
-              <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
-                <div className="flex gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
-                    onClick={() => setShowRcdPresetsDialog(true)}
-                  >
-                    <Shield className="h-4 w-4 mr-2" />
-                    RCD Presets
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
-                    onClick={() => setShowAnalytics(!showAnalytics)}
-                  >
-                    <BarChart3 className="h-4 w-4 mr-2" />
-                    Analytics
-                  </Button>
-                </div>
+                {/* Secondary tools - right */}
+                <Button
+                  onClick={() => setShowAnalytics(!showAnalytics)}
+                  variant="ghost"
+                  className="h-10 sm:h-11 text-white/60 hover:text-white hover:bg-white/10"
+                >
+                  <BarChart3 className="h-4 w-4 mr-2" />
+                  Analytics
+                </Button>
+
                 {testResults.length > 0 && (
                   <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                     onClick={removeAllTestResults}
+                    variant="ghost"
+                    className="h-10 sm:h-11 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
                     Clear All
@@ -2071,12 +2074,17 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               <X className="h-5 w-5" />
             </Button>
           </div>
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
             <QuickFillRcdPanel
               onFillAllRcdBsStandard={handleFillAllRcdBsStandard}
               onFillAllRcdType={handleFillAllRcdType}
               onFillAllRcdRating={handleFillAllRcdRating}
               onFillAllRcdRatingA={handleFillAllRcdRatingA}
+            />
+            <QuickFillIrPanel
+              onFillAllInsulationVoltage={handleFillAllInsulationVoltage}
+              onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}
+              onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
             />
           </div>
         </div>
@@ -2084,30 +2092,19 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
       {/* Dialogs - Render outside conditional blocks */}
       
-      {/* AI Board Photo Capture - Tool Sheet Pattern */}
+      {/* AI Board Scanner - Unified Overlay */}
       {showPhotoCapture && (
-        <>
-          <div className="tool-sheet-overlay" onClick={() => setShowPhotoCapture(false)} />
-          <div className="tool-sheet-container">
-            <div className="tool-sheet-handle md:hidden" />
-            <div className="tool-sheet-header">
-              <div className="tool-sheet-title">
-                <Camera className="h-5 w-5 text-elec-yellow" />
-                AI Board Scanner
-              </div>
-              <Button variant="ghost" size="icon" onClick={() => setShowPhotoCapture(false)}>
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="tool-sheet-content">
-              <BoardPhotoCapture
-                onAnalysisComplete={handleAIAnalysisComplete}
-                onClose={() => setShowPhotoCapture(false)}
-                renderContentOnly={true}
-              />
-            </div>
-          </div>
-        </>
+        <BoardScannerOverlay
+          onClose={() => {
+            setShowPhotoCapture(false);
+            setActiveBoardId(null);
+          }}
+          onAnalysisComplete={(data) => {
+            handleAIAnalysisComplete(data);
+            setShowPhotoCapture(false);
+          }}
+          title="Scan Distribution Board"
+        />
       )}
 
       {/* Test Results Photo Capture - Tool Sheet Pattern */}
@@ -2136,35 +2133,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         </>
       )}
 
-      {/* AI Circuit Review - Tool Sheet Pattern */}
-      {showCircuitReview && detectedCircuits && (
-        <>
-          <div className="tool-sheet-overlay" onClick={() => { setShowCircuitReview(false); setDetectedCircuits(null); }} />
-          <div className="tool-sheet-container">
-            <div className="tool-sheet-handle md:hidden" />
-            <div className="tool-sheet-header">
-              <div className="tool-sheet-title">
-                <Zap className="h-5 w-5 text-elec-yellow" />
-                Review Detected Circuits
-              </div>
-              <Button variant="ghost" size="icon" onClick={() => { setShowCircuitReview(false); setDetectedCircuits(null); }}>
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="tool-sheet-content">
-              <SimpleCircuitTable
-                circuits={detectedCircuits.circuits || []}
-                board={detectedCircuits.board || { make: 'Unknown', model: 'Unknown', mainSwitch: 'Unknown', spd: 'Unknown', totalWays: 0 }}
-                onApply={handleApplyAICircuitsFromTable}
-                onClose={() => {
-                  setShowCircuitReview(false);
-                  setDetectedCircuits(null);
-                }}
-              />
-            </div>
-          </div>
-        </>
-      )}
+      {/* AI Circuit Review now handled by BoardScannerOverlay's CircuitReviewSheet */}
 
       {/* Test Results Review Dialog */}
       {showTestResultsReview && extractedTestResults && (

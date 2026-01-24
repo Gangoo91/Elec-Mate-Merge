@@ -22,7 +22,7 @@ interface MobileHorizontalScrollTableRowProps {
   onRemove: (id: string) => void;
 }
 
-export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTableRowProps> = ({
+const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTableRowProps> = ({
   result,
   onUpdate,
   onRemove,
@@ -421,24 +421,36 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
         </Select>
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
-        <Input
+        <Select
           value={result.insulationLiveNeutral || ''}
-          onChange={(e) => onUpdate(result.id, 'insulationLiveNeutral', e.target.value)}
-          className={inputClassName}
-          placeholder="MΩ"
-          type="number"
-          step="0.1"
-        />
+          onValueChange={(value) => onUpdate(result.id, 'insulationLiveNeutral', value)}
+        >
+          <SelectTrigger className={selectTriggerClassName}>
+            <SelectValue placeholder="MΩ" />
+          </SelectTrigger>
+          <SelectContent className="z-[100] min-w-[140px]">
+            <SelectItem value=">200" className="py-3 text-base touch-manipulation">&gt;200 MΩ</SelectItem>
+            <SelectItem value=">999" className="py-3 text-base touch-manipulation">&gt;999 MΩ</SelectItem>
+            <SelectItem value="N/A" className="py-3 text-base touch-manipulation">N/A</SelectItem>
+            <SelectItem value="LIM" className="py-3 text-base touch-manipulation">LIM</SelectItem>
+          </SelectContent>
+        </Select>
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
-        <Input
+        <Select
           value={result.insulationLiveEarth || ''}
-          onChange={(e) => onUpdate(result.id, 'insulationLiveEarth', e.target.value)}
-          className={inputClassName}
-          placeholder="MΩ"
-          type="number"
-          step="0.1"
-        />
+          onValueChange={(value) => onUpdate(result.id, 'insulationLiveEarth', value)}
+        >
+          <SelectTrigger className={selectTriggerClassName}>
+            <SelectValue placeholder="MΩ" />
+          </SelectTrigger>
+          <SelectContent className="z-[100] min-w-[140px]">
+            <SelectItem value=">200" className="py-3 text-base touch-manipulation">&gt;200 MΩ</SelectItem>
+            <SelectItem value=">999" className="py-3 text-base touch-manipulation">&gt;999 MΩ</SelectItem>
+            <SelectItem value="N/A" className="py-3 text-base touch-manipulation">N/A</SelectItem>
+            <SelectItem value="LIM" className="py-3 text-base touch-manipulation">LIM</SelectItem>
+          </SelectContent>
+        </Select>
       </TableCell>
 
       {/* Earth Fault Tests Group */}
@@ -553,3 +565,6 @@ export const MobileHorizontalScrollTableRow: React.FC<MobileHorizontalScrollTabl
     </TableRow>
   );
 };
+
+// Memoize the row component to prevent unnecessary re-renders when other rows change
+export const MobileHorizontalScrollTableRow = React.memo(MobileHorizontalScrollTableRowComponent);

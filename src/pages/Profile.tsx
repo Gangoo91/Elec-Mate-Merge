@@ -19,6 +19,7 @@ import BrandingCard from '@/components/profile/BrandingCard';
 import ProfileFooter from '@/components/profile/ProfileFooter';
 import WorkerRatesCard from '@/components/profile/WorkerRatesCard';
 import InspectorDetailsCard from '@/components/profile/InspectorDetailsCard';
+import TestingInstrumentsCard from '@/components/profile/TestingInstrumentsCard';
 
 // Skeleton loading component
 const CardSkeleton = () => (
@@ -301,6 +302,14 @@ const ProfilePage = () => {
                   </motion.div>
 
                   <motion.div custom={5} variants={cardVariants} initial="hidden" animate="visible">
+                    <TestingInstrumentsCard
+                      companyProfile={companyProfile}
+                      onSave={saveCompanyProfile}
+                      isLoading={companyLoading}
+                    />
+                  </motion.div>
+
+                  <motion.div custom={6} variants={cardVariants} initial="hidden" animate="visible">
                     <QualificationsCard
                       inspectorProfile={defaultInspectorProfile}
                       elecIdProfile={elecIdProfile}
@@ -313,7 +322,7 @@ const ProfilePage = () => {
 
                 {/* Right Column */}
                 <div className="space-y-4">
-                  <motion.div custom={6} variants={cardVariants} initial="hidden" animate="visible">
+                  <motion.div custom={7} variants={cardVariants} initial="hidden" animate="visible">
                     <PaymentBankingCard
                       companyProfile={companyProfile}
                       onSave={saveCompanyProfile}
@@ -321,11 +330,11 @@ const ProfilePage = () => {
                     />
                   </motion.div>
 
-                  <motion.div custom={7} variants={cardVariants} initial="hidden" animate="visible">
+                  <motion.div custom={8} variants={cardVariants} initial="hidden" animate="visible">
                     <AccountingConnectorsCard />
                   </motion.div>
 
-                  <motion.div custom={8} variants={cardVariants} initial="hidden" animate="visible">
+                  <motion.div custom={9} variants={cardVariants} initial="hidden" animate="visible">
                     <BrandingCard
                       companyProfile={companyProfile}
                       inspectorProfile={defaultInspectorProfile}
@@ -339,7 +348,7 @@ const ProfilePage = () => {
               </div>
 
               {/* Footer - Full Width */}
-              <motion.div custom={9} variants={cardVariants} initial="hidden" animate="visible" className="mt-4">
+              <motion.div custom={10} variants={cardVariants} initial="hidden" animate="visible" className="mt-4">
                 <ProfileFooter
                   hasCompanyProfile={!!(companyProfile?.company_name)}
                   hasInspectorProfile={!!(defaultInspectorProfile?.name)}

@@ -2,7 +2,7 @@ import { serve } from '../_shared/deps.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const SYSTEM_PROMPT = `You are an expert BS 7671:2018 qualified electrical installation designer. Your role is to have a natural conversation with electricians to design safe, compliant installations.

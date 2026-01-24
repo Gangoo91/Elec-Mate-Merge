@@ -11,7 +11,6 @@ import {
   CheckCircle2,
   GraduationCap,
   Zap,
-  Briefcase,
   BadgeCheck,
   Gift,
   User,
@@ -146,8 +145,10 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [offerCode, setOfferCode] = useState<string | null>(null);
+  const [earlyAccessToken, setEarlyAccessToken] = useState<string | null>(null);
+  const [isEarlyAccess, setIsEarlyAccess] = useState(false);
 
-  // Capture offer code from URL and store for checkout
+  // Capture offer code and early access params from URL
   useEffect(() => {
     const code = searchParams.get('offer');
     if (code) {
@@ -155,12 +156,23 @@ const SignUp = () => {
       setOfferCode(code);
       console.log('Offer code captured:', code);
     }
+
+    // Check for early access invite
+    const ref = searchParams.get('ref');
+    const token = searchParams.get('token');
+    if (ref === 'early-access' && token) {
+      setEarlyAccessToken(token);
+      setIsEarlyAccess(true);
+      localStorage.setItem('elec-mate-early-access-token', token);
+      console.log('Early access token captured:', token);
+    }
   }, [searchParams]);
 
+  // Note: 'employer' role requires a paid subscription and is not available at free signup
+  // Employers must subscribe through the employer pricing page to get access
   const roleOptions = [
     { value: 'apprentice', label: 'Apprentice', icon: GraduationCap },
     { value: 'electrician', label: 'Electrician', icon: Zap },
-    { value: 'employer', label: 'Employer', icon: Briefcase }
   ];
 
   const allPasswordRequirementsMet = PASSWORD_REQUIREMENTS.every(req => req.test(password));
@@ -250,6 +262,20 @@ const SignUp = () => {
           ecsCardType: profile.ecsCardType,
           userId: data.user.id
         }));
+      }
+
+      // Handle early access invite claim (non-blocking)
+      if (earlyAccessToken) {
+        try {
+          await supabase.functions.invoke('send-early-access-invite', {
+            body: { action: 'claim', token: earlyAccessToken },
+          });
+          console.log('Early access invite claimed');
+          // Store that this is an early access signup for trial activation
+          localStorage.setItem('elec-mate-early-access-claimed', 'true');
+        } catch (claimErr) {
+          console.warn('Early access claim failed (non-critical):', claimErr);
+        }
       }
 
       // Send branded confirmation email via Resend
@@ -399,8 +425,27 @@ const SignUp = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
               >
+                {/* Early Access Banner */}
+                {isEarlyAccess && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-4 p-3 rounded-2xl bg-gradient-to-r from-blue-500/20 to-sky-500/20 border border-blue-500/30"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                        <Sparkles className="h-5 w-5 text-blue-400" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-blue-400">Early Access Invite</p>
+                        <p className="text-xs text-white/60">Your 7-day free trial will start automatically</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
                 {/* Offer Banner */}
-                {offerCode && (
+                {offerCode && !isEarlyAccess && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}

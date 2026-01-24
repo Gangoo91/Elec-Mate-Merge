@@ -5,7 +5,7 @@ import { autoRecoverStuckBatches } from './watchdog.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // Helper: Fetch all regulation_number with pagination (avoids 1000-row truncation)

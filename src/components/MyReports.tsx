@@ -26,7 +26,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { EmptyState } from '@/components/ui/empty-state';
 import { cn } from '@/lib/utils';
 import { CertificateImportDialog } from '@/components/certificates/CertificateImportDialog';
-import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import { ExportToEICDialog } from '@/components/ExportToEICDialog';
 import { ExportToEICRDialog } from '@/components/ExportToEICRDialog';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -104,7 +103,6 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [allReports, setAllReports] = useState<CloudReport[]>([]);
-  const [showPdfViewer, setShowPdfViewer] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
@@ -421,11 +419,36 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     navigate(`/electrician/inspection-testing?section=eicr&reportId=${eicrReportId}`);
   };
 
-  // Preview handler
-  const handlePreviewReport = (reportId: string) => {
-    setSelectedReportId(reportId);
-    setShowPdfViewer(true);
+  // Download PDF handler (replaces preview - viewer was unreliable)
+  const handleDownloadPdf = async (reportId: string) => {
     setActionSheetOpen(false);
+
+    toast({
+      title: 'Preparing PDF',
+      description: 'Generating certificate PDF for download...',
+    });
+
+    try {
+      const { generateBulkPDFs } = await import('@/utils/bulkPdfExport');
+      const result = await generateBulkPDFs([reportId], user?.id || '', {
+        onProgress: () => {},
+      });
+
+      if (result.successful > 0) {
+        toast({
+          title: 'Download Complete',
+          description: 'Your PDF has been downloaded.',
+        });
+      } else {
+        throw new Error('PDF generation failed');
+      }
+    } catch (error: any) {
+      toast({
+        title: 'Download Failed',
+        description: error?.message || 'Failed to generate PDF. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   // Bulk mode handlers
@@ -642,7 +665,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             <div className="flex-1 ml-2">
               <h1 className="text-base font-semibold text-white">My Certificates</h1>
               <p className="text-xs text-white/50">
-                {reports.length} certificate{reports.length !== 1 ? 's' : ''}
+                {totalCount} certificate{totalCount !== 1 ? 's' : ''}
               </p>
             </div>
 
@@ -962,7 +985,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
         }}
         onPreview={() => {
           if (selectedCertificate) {
-            handlePreviewReport(selectedCertificate.report_id);
+            handleDownloadPdf(selectedCertificate.report_id);
           }
         }}
         onConvertToEICR={() => {
@@ -1121,15 +1144,6 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
           )}
         </DialogContent>
       </Dialog>
-
-      {/* PDF Viewer */}
-      {selectedReportId && (
-        <ReportPdfViewer
-          reportId={selectedReportId}
-          open={showPdfViewer}
-          onOpenChange={setShowPdfViewer}
-        />
-      )}
 
       {/* Export EICR to EIC Dialog */}
       {exportToEICReportId && (

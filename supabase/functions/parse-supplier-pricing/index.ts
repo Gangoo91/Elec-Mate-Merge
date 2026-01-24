@@ -5,7 +5,7 @@ import * as XLSX from 'https://deno.land/x/sheetjs@v0.18.3/xlsx.mjs';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {

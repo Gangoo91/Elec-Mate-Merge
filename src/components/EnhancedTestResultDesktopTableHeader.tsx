@@ -15,6 +15,10 @@ interface EnhancedTestResultDesktopTableHeaderProps {
   onFillAllRcdRating?: (value: string) => void;
   onFillAllRcdRatingA?: (value: string) => void;
   onFillAllMaxZs?: () => void;
+  onFillAllInsulationVoltage?: (value: string) => void;
+  onFillAllInsulationLiveNeutral?: (value: string) => void;
+  onFillAllInsulationLiveEarth?: (value: string) => void;
+  onFillAllPolarity?: (value: string) => void;
 }
 
 const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTableHeaderProps> = ({
@@ -27,12 +31,20 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
   onFillAllRcdType,
   onFillAllRcdRating,
   onFillAllRcdRatingA,
-  onFillAllMaxZs
+  onFillAllMaxZs,
+  onFillAllInsulationVoltage,
+  onFillAllInsulationLiveNeutral,
+  onFillAllInsulationLiveEarth,
+  onFillAllPolarity
 }) => {
   const [rcdBsPopoverOpen, setRcdBsPopoverOpen] = useState(false);
   const [rcdTypePopoverOpen, setRcdTypePopoverOpen] = useState(false);
   const [rcdRatingPopoverOpen, setRcdRatingPopoverOpen] = useState(false);
   const [rcdRatingAPopoverOpen, setRcdRatingAPopoverOpen] = useState(false);
+  const [irVoltagePopoverOpen, setIrVoltagePopoverOpen] = useState(false);
+  const [irLiveNeutralPopoverOpen, setIrLiveNeutralPopoverOpen] = useState(false);
+  const [irLiveEarthPopoverOpen, setIrLiveEarthPopoverOpen] = useState(false);
+  const [polarityPopoverOpen, setPolarityPopoverOpen] = useState(false);
   
   const isGroupCollapsed = (groupName: string) => collapsedGroups.has(groupName);
 
@@ -561,16 +573,210 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {/* Insulation Tests */}
         {!isGroupCollapsed('insulation') && (
           <>
-            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="insulation">V</TableHead>
-            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="insulation">L-L</TableHead>
-            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="insulation">L-E</TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="insulation">
+              <div className="flex items-center justify-center gap-1">
+                <span>V</span>
+                {onFillAllInsulationVoltage && (
+                  <Popover open={irVoltagePopoverOpen} onOpenChange={setIrVoltagePopoverOpen}>
+                    <PopoverTrigger asChild>
+                      <button className="sot-fill-all-btn" title="Quick fill all Test Voltages">
+                        <CheckCircle className="h-3.5 w-3.5" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                      <div className="space-y-1">
+                        <button
+                          onClick={() => {
+                            onFillAllInsulationVoltage('250V');
+                            setIrVoltagePopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          250V
+                        </button>
+                        <button
+                          onClick={() => {
+                            onFillAllInsulationVoltage('500V');
+                            setIrVoltagePopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          500V
+                        </button>
+                        <button
+                          onClick={() => {
+                            onFillAllInsulationVoltage('1000V');
+                            setIrVoltagePopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          1000V
+                        </button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
+            </TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="insulation">
+              <div className="flex items-center justify-center gap-1">
+                <span>L-N</span>
+                {onFillAllInsulationLiveNeutral && (
+                  <Popover open={irLiveNeutralPopoverOpen} onOpenChange={setIrLiveNeutralPopoverOpen}>
+                    <PopoverTrigger asChild>
+                      <button className="sot-fill-all-btn" title="Quick fill all Live-Neutral readings">
+                        <CheckCircle className="h-3.5 w-3.5" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                      <div className="space-y-1">
+                        <button
+                          onClick={() => {
+                            onFillAllInsulationLiveNeutral('>200');
+                            setIrLiveNeutralPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          &gt;200 MΩ
+                        </button>
+                        <button
+                          onClick={() => {
+                            onFillAllInsulationLiveNeutral('>999');
+                            setIrLiveNeutralPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          &gt;999 MΩ
+                        </button>
+                        <button
+                          onClick={() => {
+                            onFillAllInsulationLiveNeutral('N/A');
+                            setIrLiveNeutralPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          N/A
+                        </button>
+                        <button
+                          onClick={() => {
+                            onFillAllInsulationLiveNeutral('LIM');
+                            setIrLiveNeutralPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          LIM
+                        </button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
+            </TableHead>
+            <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="insulation">
+              <div className="flex items-center justify-center gap-1">
+                <span>L-E</span>
+                {onFillAllInsulationLiveEarth && (
+                  <Popover open={irLiveEarthPopoverOpen} onOpenChange={setIrLiveEarthPopoverOpen}>
+                    <PopoverTrigger asChild>
+                      <button className="sot-fill-all-btn" title="Quick fill all Live-Earth readings">
+                        <CheckCircle className="h-3.5 w-3.5" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                      <div className="space-y-1">
+                        <button
+                          onClick={() => {
+                            onFillAllInsulationLiveEarth('>200');
+                            setIrLiveEarthPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          &gt;200 MΩ
+                        </button>
+                        <button
+                          onClick={() => {
+                            onFillAllInsulationLiveEarth('>999');
+                            setIrLiveEarthPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          &gt;999 MΩ
+                        </button>
+                        <button
+                          onClick={() => {
+                            onFillAllInsulationLiveEarth('N/A');
+                            setIrLiveEarthPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          N/A
+                        </button>
+                        <button
+                          onClick={() => {
+                            onFillAllInsulationLiveEarth('LIM');
+                            setIrLiveEarthPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          LIM
+                        </button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
+            </TableHead>
           </>
         )}
 
         {/* Zs (Ω) Tests */}
         {!isGroupCollapsed('zs') && (
           <>
-            <TableHead className="sot-header-cell w-20 min-w-[70px] max-w-[70px]" data-group="zs">Polarity</TableHead>
+            <TableHead className="sot-header-cell w-20 min-w-[70px] max-w-[70px]" data-group="zs">
+              <div className="flex items-center justify-center gap-1">
+                <span>Pol</span>
+                {onFillAllPolarity && (
+                  <Popover open={polarityPopoverOpen} onOpenChange={setPolarityPopoverOpen}>
+                    <PopoverTrigger asChild>
+                      <button className="sot-fill-all-btn" title="Quick fill all Polarity">
+                        <CheckCircle className="h-3.5 w-3.5" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                      <div className="space-y-1">
+                        <button
+                          onClick={() => {
+                            onFillAllPolarity('Correct');
+                            setPolarityPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          Correct
+                        </button>
+                        <button
+                          onClick={() => {
+                            onFillAllPolarity('Incorrect');
+                            setPolarityPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          Incorrect
+                        </button>
+                        <button
+                          onClick={() => {
+                            onFillAllPolarity('N/A');
+                            setPolarityPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          N/A
+                        </button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
+            </TableHead>
             <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="zs">Zs</TableHead>
           </>
         )}

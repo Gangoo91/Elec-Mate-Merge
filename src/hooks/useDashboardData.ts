@@ -10,8 +10,9 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
-import { useCertificates } from '@/hooks/certificates/useCertificates';
 import { useActiveJobs } from '@/hooks/useJobs';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { differenceInDays, isPast } from 'date-fns';
 
 export interface DashboardUserData {
@@ -74,11 +75,44 @@ export function useDashboardData(): DashboardData {
   const { streak, loading: streakLoading, getStreakDisplay } = useStudyStreak();
   const { savedQuotes, loading: quotesLoading } = useQuoteStorage();
   const { invoices, isLoading: invoicesLoading } = useInvoiceStorage();
-  const { certificates, loading: certificatesLoading } = useCertificates();
   const { data: activeJobsData, isLoading: jobsLoading } = useActiveJobs();
 
+  // Fetch electrical certificates (EIC/EICR/Minor Works from reports table)
+  const { data: reportsData, isLoading: reportsLoading } = useQuery({
+    queryKey: ['dashboard-reports', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return { total: 0, completed: 0 };
+
+      const { count, error } = await supabase
+        .from('reports')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+        .is('deleted_at', null);
+
+      if (error) {
+        console.error('Error fetching reports count:', error);
+        return { total: 0, completed: 0 };
+      }
+
+      // Also get completed count
+      const { count: completedCount } = await supabase
+        .from('reports')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+        .eq('status', 'completed')
+        .is('deleted_at', null);
+
+      return {
+        total: count || 0,
+        completed: completedCount || 0
+      };
+    },
+    enabled: !!user?.id,
+    staleTime: 30000, // Cache for 30 seconds
+  });
+
   // Aggregate loading state
-  const isLoading = authLoading || streakLoading || quotesLoading || invoicesLoading || certificatesLoading || jobsLoading;
+  const isLoading = authLoading || streakLoading || quotesLoading || invoicesLoading || reportsLoading || jobsLoading;
 
   // User data
   const userData = useMemo((): DashboardUserData => {
@@ -157,31 +191,20 @@ export function useDashboardData(): DashboardData {
     };
   }, [savedQuotes, invoices, activeJobsData]);
 
-  // Certificate data
+  // Certificate data - now uses reports (EIC/EICR/Minor Works) instead of training certificates
   const certificateData = useMemo((): DashboardCertificateData => {
-    const now = new Date();
-    const thirtyDaysFromNow = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
-
-    let expiringSoon = 0;
-    let expired = 0;
-
-    certificates?.forEach(cert => {
-      if (cert.expiryDate) {
-        const expiryDate = new Date(cert.expiryDate);
-        if (isPast(expiryDate)) {
-          expired++;
-        } else if (expiryDate <= thirtyDaysFromNow) {
-          expiringSoon++;
-        }
-      }
-    });
+    // Reports don't have expiry dates, so we show total and completed counts
+    // "expiringSoon" repurposed to show drafts/in-progress (certs needing attention)
+    const total = reportsData?.total || 0;
+    const completed = reportsData?.completed || 0;
+    const inProgress = total - completed;
 
     return {
-      total: certificates?.length || 0,
-      expiringSoon,
-      expired,
+      total,
+      expiringSoon: inProgress, // Repurposed: certs needing completion
+      expired: 0, // Not applicable for reports
     };
-  }, [certificates]);
+  }, [reportsData]);
 
   // Generate action items (prioritized)
   const actions = useMemo((): DashboardActionItem[] => {
@@ -223,29 +246,22 @@ export function useDashboardData(): DashboardData {
       });
     });
 
-    // Info: Expiring certificates
-    const expiringCerts = certificates?.filter(cert => {
-      if (!cert.expiryDate) return false;
-      const expiryDate = new Date(cert.expiryDate);
-      const thirtyDaysFromNow = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-      return !isPast(expiryDate) && expiryDate <= thirtyDaysFromNow;
-    }) || [];
-
-    expiringCerts.slice(0, 2).forEach(cert => {
-      const daysUntilExpiry = differenceInDays(new Date(cert.expiryDate!), new Date());
+    // Info: Incomplete certificates (drafts/in-progress)
+    const inProgressCount = (reportsData?.total || 0) - (reportsData?.completed || 0);
+    if (inProgressCount > 0) {
       items.push({
-        id: `cert-${cert.id}`,
+        id: 'incomplete-certs',
         type: 'info',
-        title: cert.name || 'Certificate',
-        description: `Expires in ${daysUntilExpiry} days`,
+        title: `${inProgressCount} Incomplete Certificate${inProgressCount > 1 ? 's' : ''}`,
+        description: 'Drafts or in-progress reports',
         action: 'View',
-        path: '/profile?tab=certificates',
-        metadata: { daysUntilExpiry },
+        path: '/electrician/inspection-testing?section=reports',
+        metadata: { count: inProgressCount },
       });
-    });
+    }
 
     return items;
-  }, [invoices, savedQuotes, certificates]);
+  }, [invoices, savedQuotes, reportsData]);
 
   // Collect any errors
   const errors: string[] = [];

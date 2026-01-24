@@ -32,6 +32,7 @@ import {
   FileCheck,
   Camera,
   ArrowLeft,
+  Rocket,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -52,6 +53,7 @@ const secondaryNavItems = [
   { name: "Pricing", path: "/admin/pricing", icon: PoundSterling },
   { name: "Subscriptions", path: "/admin/subscriptions", icon: CreditCard },
   { name: "Founders", path: "/admin/founders", icon: Crown },
+  { name: "Early Access", path: "/admin/early-access", icon: Rocket },
   { name: "Offers", path: "/admin/offers", icon: Gift },
   { name: "Chats", path: "/admin/conversations", icon: MessageSquare },
 ];
@@ -132,7 +134,7 @@ export default function AdminPanel() {
         onMouseEnter={() => onPrefetch(item.path)}
         onTouchStart={() => onPrefetch(item.path)}
         className={cn(
-          "shrink-0 gap-2 touch-manipulation h-9",
+          "shrink-0 gap-1.5 sm:gap-2 touch-manipulation h-10 sm:h-9 px-2.5 sm:px-4 text-xs sm:text-sm",
           isActive
             ? "bg-red-500/20 text-red-400 hover:bg-red-500/30"
             : "text-muted-foreground hover:text-foreground"
@@ -193,7 +195,7 @@ export default function AdminPanel() {
               variant={showMore ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setShowMore(!showMore)}
-              className="shrink-0 gap-1 touch-manipulation h-9 text-muted-foreground"
+              className="shrink-0 gap-1 touch-manipulation h-10 sm:h-9 px-3 text-xs sm:text-sm text-muted-foreground"
             >
               More
               {showMore ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
@@ -204,7 +206,7 @@ export default function AdminPanel() {
               variant={showTools ? "secondary" : "ghost"}
               size="sm"
               onClick={() => setShowTools(!showTools)}
-              className="shrink-0 gap-1 touch-manipulation h-9 text-muted-foreground"
+              className="shrink-0 gap-1 touch-manipulation h-10 sm:h-9 px-3 text-xs sm:text-sm text-muted-foreground"
             >
               Tools
               {showTools ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}

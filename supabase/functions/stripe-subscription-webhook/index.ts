@@ -9,10 +9,11 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from "https://esm.sh/stripe@14.21.0?target=deno";
 import { Resend } from "npm:resend@2.0.0";
+import { createLogger, generateRequestId } from "../_shared/logger.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, stripe-signature',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, stripe-signature, x-request-id',
 };
 
 // Tier display names
@@ -189,6 +190,10 @@ const PRICE_TO_TIER: Record<string, string> = {
 };
 
 serve(async (req) => {
+  // Generate request ID for tracing
+  const requestId = req.headers.get('x-request-id') || generateRequestId();
+  const logger = createLogger(requestId, { function: 'stripe-subscription-webhook' });
+
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -198,6 +203,7 @@ serve(async (req) => {
     const webhookSecret = Deno.env.get('STRIPE_SUBSCRIPTION_WEBHOOK_SECRET');
 
     if (!stripeKey) {
+      logger.error('STRIPE_SECRET_KEY not configured');
       throw new Error('STRIPE_SECRET_KEY not configured');
     }
 
@@ -213,18 +219,17 @@ serve(async (req) => {
     if (webhookSecret && signature) {
       try {
         event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
-        console.log('✅ Webhook signature verified');
+        logger.info('Webhook signature verified');
       } catch (err: any) {
-        console.error('⚠️ Webhook signature verification failed:', err.message);
-        console.log('⚠️ Processing webhook anyway (check STRIPE_SUBSCRIPTION_WEBHOOK_SECRET)');
+        logger.warn('Webhook signature verification failed, processing anyway', { error: err.message });
         event = JSON.parse(body);
       }
     } else {
       event = JSON.parse(body);
-      console.log('⚠️ Processing webhook without signature verification');
+      logger.warn('Processing webhook without signature verification');
     }
 
-    console.log(`📥 Subscription webhook event: ${event.type}`);
+    logger.info('Webhook event received', { eventType: event.type, eventId: event.id });
 
     // Initialize Supabase with service role key for admin access
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -252,8 +257,10 @@ serve(async (req) => {
           return null;
         }
 
-        const { data: authUser } = await supabase.auth.admin.getUserByEmail(customer.email);
-        return authUser?.user?.id || null;
+        // Use listUsers and filter - getUserByEmail doesn't exist in Supabase JS v2
+        const { data: usersData } = await supabase.auth.admin.listUsers();
+        const authUser = usersData?.users?.find((u: any) => u.email === customer.email);
+        return authUser?.id || null;
       } catch (err) {
         console.error('Error finding user by customer:', err);
         return null;
@@ -291,11 +298,11 @@ serve(async (req) => {
         .eq('id', userId);
 
       if (error) {
-        console.error('Error updating subscription status:', error);
+        logger.error('Error updating subscription status', { userId, error: error.message });
         throw error;
       }
 
-      console.log(`✅ Updated user ${userId}: subscribed=${subscribed}, tier=${tier}`);
+      logger.info('Subscription status updated', { userId, subscribed, tier });
     }
 
     // Handle different event types
@@ -305,11 +312,16 @@ serve(async (req) => {
         const subscription = event.data.object as Stripe.Subscription;
         const customerId = subscription.customer as string;
 
-        console.log(`📋 Subscription ${event.type}: ${subscription.id}, status: ${subscription.status}`);
+        logger.info('Processing subscription event', {
+          eventType: event.type,
+          subscriptionId: subscription.id,
+          status: subscription.status,
+          customerId
+        });
 
         const userId = await findUserByCustomer(customerId);
         if (!userId) {
-          console.log(`⚠️ No user found for customer ${customerId}`);
+          logger.warn('No user found for customer', { customerId });
           break;
         }
 
@@ -352,13 +364,13 @@ serve(async (req) => {
                 .eq('id', inviteId);
 
               if (inviteError) {
-                console.error('⚠️ Failed to mark founder invite as claimed:', inviteError);
+                logger.error('Failed to mark founder invite as claimed', { inviteId, error: inviteError.message });
               } else {
-                console.log(`✅ Founder invite ${inviteId} marked as claimed`);
+                logger.info('Founder invite claimed', { inviteId });
               }
             }
-          } catch (inviteErr) {
-            console.error('⚠️ Error processing founder invite (non-fatal):', inviteErr);
+          } catch (inviteErr: any) {
+            logger.warn('Error processing founder invite (non-fatal)', { error: inviteErr?.message });
           }
         }
 
@@ -384,8 +396,8 @@ serve(async (req) => {
                 read: false,
               });
             }
-          } catch (emailError) {
-            console.error('⚠️ Failed to send welcome email (non-fatal):', emailError);
+          } catch (emailError: any) {
+            logger.warn('Failed to send welcome email (non-fatal)', { error: emailError?.message });
           }
         }
 
@@ -411,11 +423,11 @@ serve(async (req) => {
         const subscription = event.data.object as Stripe.Subscription;
         const customerId = subscription.customer as string;
 
-        console.log(`❌ Subscription cancelled: ${subscription.id}`);
+        logger.info('Subscription cancelled', { subscriptionId: subscription.id, customerId });
 
         const userId = await findUserByCustomer(customerId);
         if (!userId) {
-          console.log(`⚠️ No user found for customer ${customerId}`);
+          logger.warn('No user found for customer', { customerId });
           break;
         }
 
@@ -439,16 +451,16 @@ serve(async (req) => {
 
         // Only handle subscription invoices
         if (!invoice.subscription) {
-          console.log('Not a subscription invoice, skipping');
+          logger.debug('Not a subscription invoice, skipping', { invoiceId: invoice.id });
           break;
         }
 
         const customerId = invoice.customer as string;
-        console.log(`💰 Subscription invoice paid: ${invoice.id}`);
+        logger.info('Subscription invoice paid', { invoiceId: invoice.id, customerId });
 
         const userId = await findUserByCustomer(customerId);
         if (!userId) {
-          console.log(`⚠️ No user found for customer ${customerId}`);
+          logger.warn('No user found for customer', { customerId });
           break;
         }
 
@@ -470,16 +482,16 @@ serve(async (req) => {
 
         // Only handle subscription invoices
         if (!invoice.subscription) {
-          console.log('Not a subscription invoice, skipping');
+          logger.debug('Not a subscription invoice, skipping', { invoiceId: invoice.id });
           break;
         }
 
         const customerId = invoice.customer as string;
-        console.log(`❌ Subscription payment failed: ${invoice.id}`);
+        logger.warn('Subscription payment failed', { invoiceId: invoice.id, customerId });
 
         const userId = await findUserByCustomer(customerId);
         if (!userId) {
-          console.log(`⚠️ No user found for customer ${customerId}`);
+          logger.warn('No user found for customer', { customerId });
           break;
         }
 
@@ -501,19 +513,20 @@ serve(async (req) => {
       }
 
       default:
-        console.log(`ℹ️ Unhandled event type: ${event.type}`);
+        logger.debug('Unhandled event type', { eventType: event.type });
     }
 
+    logger.info('Webhook processed successfully', { eventType: event.type });
     return new Response(
       JSON.stringify({ received: true, type: event.type }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json', 'x-request-id': requestId } }
     );
 
   } catch (error: any) {
-    console.error('❌ Webhook error:', error);
+    logger.error('Webhook error', { error: error.message });
     return new Response(
       JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json', 'x-request-id': requestId } }
     );
   }
 });

@@ -17,6 +17,7 @@ import { CircuitList } from './testing/ScheduleOfTests/CircuitList';
 import MobileSmartAutoFill from './mobile/MobileSmartAutoFill';
 import QuickRcdPresets from './QuickRcdPresets';
 import QuickFillRcdPanel from './QuickFillRcdPanel';
+import QuickFillIrPanel from './QuickFillIrPanel';
 import TestInstrumentInfo from './TestInstrumentInfo';
 import TestMethodInfo from './TestMethodInfo';
 import TestAnalytics from './TestAnalytics';
@@ -521,7 +522,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   // Add a circuit directly to a specific board
   const addCircuitToBoard = (boardId: string) => {
     const boardCircuits = getCircuitsForBoard(testResults, boardId);
-    const nextCircuitNum = testResults.length + 1;
+    const nextCircuitNum = boardCircuits.length + 1;
     const newResult: TestResult = {
       id: Date.now().toString(),
       circuitDesignation: `C${nextCircuitNum}`,
@@ -573,7 +574,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     const updatedResults = [...testResults, newResult];
     setTestResults(updatedResults);
     onUpdate('scheduleOfTests', updatedResults);
-    toast.success(`Circuit C${nextCircuitNum} added`);
+    toast.success(`Circuit C${nextCircuitNum} added to ${boardId === 'main' || boardId === 'main-cu' ? 'Main CU' : boardId}`);
   };
 
   // Board management functions
@@ -657,69 +658,107 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     });
   };
 
+  // Helper to check if a row is blank (used by handleCreateCircuit and AI scanner)
+  const isBlankRow = (result: TestResult): boolean => {
+    return !result.circuitDescription &&
+           !result.protectiveDeviceType &&
+           !result.protectiveDeviceRating &&
+           !result.liveSize;
+  };
+
   const handleCreateCircuit = (useAutoFill: boolean = false, circuitType?: string, suggestions?: Partial<TestResult>) => {
-    const baseResult: TestResult = {
-      id: crypto.randomUUID(),
-      circuitDesignation: `C${newCircuitNumber}`,
-      circuitNumber: newCircuitNumber,
-      circuitDescription: circuitType || '',
-      circuitType: circuitType || '',
-      type: circuitType || '',
-      referenceMethod: '',
-      liveSize: '',
-      cpcSize: '',
-      protectiveDeviceType: '',
-      protectiveDeviceRating: '',
-      protectiveDeviceKaRating: '',
-      protectiveDeviceLocation: '',
-      bsStandard: '',
-      cableSize: '',
-      protectiveDevice: '',
-      r1r2: '',
-      r2: '',
-      ringContinuityLive: '',
-      ringContinuityNeutral: '',
-      ringR1: '',
-      ringRn: '',
-      ringR2: '',
-      insulationTestVoltage: '',
-      insulationResistance: '',
-      insulationLiveNeutral: '',
-      insulationLiveEarth: '',
-      insulationNeutralEarth: '',
-      polarity: '',
-      zs: '',
-      maxZs: '',
-      pointsServed: '',
-      rcdRating: '',
-      rcdOneX: '',
-      rcdTestButton: '',
-      afddTest: '',
-      pfc: '',
-      pfcLiveNeutral: '',
-      pfcLiveEarth: '',
-      functionalTesting: '',
-      notes: '',
-      typeOfWiring: '',
-      rcdBsStandard: '',
-      rcdType: '',
-      rcdRatingA: ''
-    };
+    // Determine target board - use activeBoardId if viewing a subboard, otherwise main board
+    const targetBoardId = activeBoardId || distributionBoards[0]?.id || MAIN_BOARD_ID;
 
-    // Apply auto-fill suggestions if provided
-    const newResult = suggestions ? {
-      ...baseResult,
-      ...suggestions,
-      circuitDescription: circuitType || '',
-      type: circuitType || '',
-      autoFilled: true
-    } : baseResult;
+    // Find first blank row in the target board to replace (same logic as AI scanner uses)
+    const blankIndex = testResults.findIndex(result => isBlankRow(result) && (result.boardId === targetBoardId || (!result.boardId && targetBoardId === MAIN_BOARD_ID)));
 
-    const updatedResults = [...testResults, newResult];
-    setTestResults(updatedResults);
-    onUpdate('scheduleOfTests', updatedResults);
-    setShowAutoFillPrompt(false);
-    
+    if (blankIndex !== -1) {
+      // Replace existing blank row instead of appending
+      const existingResult = testResults[blankIndex];
+      const updatedResult: TestResult = {
+        ...existingResult,  // Keep existing id, circuitDesignation, circuitNumber, boardId
+        circuitDescription: circuitType || '',
+        circuitType: circuitType || '',
+        type: circuitType || '',
+        ...(suggestions || {}),
+        autoFilled: useAutoFill
+      };
+
+      const updatedResults = [...testResults];
+      updatedResults[blankIndex] = updatedResult;
+      setTestResults(updatedResults);
+      onUpdate('scheduleOfTests', updatedResults);
+      setShowAutoFillPrompt(false);
+      toast.success(`Circuit ${existingResult.circuitDesignation} updated`);
+    } else {
+      // No blank rows - create and append new circuit (existing logic)
+      const baseResult: TestResult = {
+        id: crypto.randomUUID(),
+        circuitDesignation: `C${newCircuitNumber}`,
+        circuitNumber: newCircuitNumber,
+        circuitDescription: circuitType || '',
+        circuitType: circuitType || '',
+        type: circuitType || '',
+        referenceMethod: '',
+        liveSize: '',
+        cpcSize: '',
+        protectiveDeviceType: '',
+        protectiveDeviceRating: '',
+        protectiveDeviceKaRating: '',
+        protectiveDeviceLocation: '',
+        bsStandard: '',
+        cableSize: '',
+        protectiveDevice: '',
+        r1r2: '',
+        r2: '',
+        ringContinuityLive: '',
+        ringContinuityNeutral: '',
+        ringR1: '',
+        ringRn: '',
+        ringR2: '',
+        insulationTestVoltage: '',
+        insulationResistance: '',
+        insulationLiveNeutral: '',
+        insulationLiveEarth: '',
+        insulationNeutralEarth: '',
+        polarity: '',
+        zs: '',
+        maxZs: '',
+        pointsServed: '',
+        rcdRating: '',
+        rcdOneX: '',
+        rcdTestButton: '',
+        afddTest: '',
+        pfc: '',
+        pfcLiveNeutral: '',
+        pfcLiveEarth: '',
+        functionalTesting: '',
+        notes: '',
+        typeOfWiring: '',
+        rcdBsStandard: '',
+        rcdType: '',
+        rcdRatingA: '',
+        boardId: targetBoardId
+      };
+
+      // Apply auto-fill suggestions if provided
+      const newResult = suggestions ? {
+        ...baseResult,
+        ...suggestions,
+        circuitDescription: circuitType || '',
+        type: circuitType || '',
+        autoFilled: true
+      } : baseResult;
+
+      const updatedResults = [...testResults, newResult];
+      setTestResults(updatedResults);
+      onUpdate('scheduleOfTests', updatedResults);
+      setShowAutoFillPrompt(false);
+      const boardName = targetBoardId === MAIN_BOARD_ID ? 'Main CU' : targetBoardId;
+      toast.success(`Circuit C${newCircuitNumber} added to ${boardName}`);
+    }
+
     // If user chose to use auto-fill, we'll scroll to the auto-fill section
     if (useAutoFill) {
       setTimeout(() => {
@@ -996,6 +1035,43 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     toast.success(`Applied RCD Rating "${value}A" to all circuits`);
   };
 
+  // Quick Fill IR handlers
+  const handleFillAllInsulationVoltage = (value: string) => {
+    setIsBulkUpdating(true);
+    const updatedResults = testResults.map(result => ({
+      ...result,
+      insulationTestVoltage: value
+    }));
+    setTestResults(updatedResults);
+    onUpdate('scheduleOfTests', updatedResults);
+    setTimeout(() => setIsBulkUpdating(false), 100);
+    toast.success(`Applied Test Voltage "${value}" to all circuits`);
+  };
+
+  const handleFillAllInsulationLiveNeutral = (value: string) => {
+    setIsBulkUpdating(true);
+    const updatedResults = testResults.map(result => ({
+      ...result,
+      insulationLiveNeutral: value
+    }));
+    setTestResults(updatedResults);
+    onUpdate('scheduleOfTests', updatedResults);
+    setTimeout(() => setIsBulkUpdating(false), 100);
+    toast.success(`Applied Live-Neutral "${value}" MΩ to all circuits`);
+  };
+
+  const handleFillAllInsulationLiveEarth = (value: string) => {
+    setIsBulkUpdating(true);
+    const updatedResults = testResults.map(result => ({
+      ...result,
+      insulationLiveEarth: value
+    }));
+    setTestResults(updatedResults);
+    onUpdate('scheduleOfTests', updatedResults);
+    setTimeout(() => setIsBulkUpdating(false), 100);
+    toast.success(`Applied Live-Earth "${value}" MΩ to all circuits`);
+  };
+
   // Utility function to fix protective device terminology
   const fixProtectiveDeviceType = (type: string): string => {
     if (!type) return type;
@@ -1098,15 +1174,6 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     onUpdate('scheduleOfTests', updatedResults);
     setShowTestResultsReview(false);
     setExtractedTestResults(null);
-  };
-
-
-  // Helper to check if a row is blank
-  const isBlankRow = (result: TestResult): boolean => {
-    return !result.circuitDescription && 
-           !result.protectiveDeviceType && 
-           !result.protectiveDeviceRating &&
-           !result.liveSize;
   };
 
   // Normalise AI circuit values to match UI Select options
@@ -1212,10 +1279,14 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   };
 
   const handleApplyAICircuits = (selectedCircuits: any[]) => {
-    // Find blank rows to fill first
+    // Determine target board - use activeBoardId if viewing a subboard, otherwise main board
+    const targetBoardId = activeBoardId || distributionBoards[0]?.id || MAIN_BOARD_ID;
+
+    // Find blank rows in the target board to fill first
     const blankIndices: number[] = [];
     testResults.forEach((result, idx) => {
-      if (isBlankRow(result)) {
+      const resultBoardId = result.boardId || MAIN_BOARD_ID;
+      if (isBlankRow(result) && resultBoardId === targetBoardId) {
         blankIndices.push(idx);
       }
     });
@@ -1278,7 +1349,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           rcdRating: requiresRCD ? '30mA' : '',
           functionalTesting: 'Satisfactory',
           notes: `AI detected (${circuit.confidence || 'unknown'} confidence) - Please verify all values`,
-          autoFilled: true
+          autoFilled: true,
+          boardId: targetBoardId
         };
       } else {
         // No blank slots, add to remaining
@@ -1356,7 +1428,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         typeOfWiring: '',
         rcdBsStandard: '',
         rcdType: '',
-        rcdRatingA: ''
+        rcdRatingA: '',
+        boardId: targetBoardId
       };
       updatedResults.push(newResult);
     });
@@ -1365,6 +1438,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     onUpdate('scheduleOfTests', updatedResults);
     setShowAIReview(false);
     setDetectedCircuits([]);
+
+    // Show toast with board info
+    const boardName = targetBoardId === MAIN_BOARD_ID ? 'Main CU' : targetBoardId;
+    toast.success(`${selectedCircuits.length} circuit(s) added to ${boardName}`);
   };
 
   return (
@@ -1967,12 +2044,17 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               <X className="h-5 w-5" />
             </Button>
           </div>
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
             <QuickFillRcdPanel
               onFillAllRcdBsStandard={handleFillAllRcdBsStandard}
               onFillAllRcdType={handleFillAllRcdType}
               onFillAllRcdRating={handleFillAllRcdRating}
               onFillAllRcdRatingA={handleFillAllRcdRatingA}
+            />
+            <QuickFillIrPanel
+              onFillAllInsulationVoltage={handleFillAllInsulationVoltage}
+              onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}
+              onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
             />
           </div>
         </div>

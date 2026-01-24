@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SectionHeader from '@/components/ui/section-header';
 import { Input } from '@/components/ui/input';
@@ -19,7 +19,8 @@ import {
   BadgeCheck,
   ClipboardCheck,
   FileWarning,
-  ChevronDown
+  ChevronDown,
+  Sparkles
 } from 'lucide-react';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useToast } from '@/hooks/use-toast';
@@ -27,6 +28,8 @@ import { cn } from '@/lib/utils';
 import EICCertificateActions from './EICCertificateActions';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
 
 interface EICCertificateTabProps {
   formData: any;
@@ -78,6 +81,8 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   const isMobile = useIsMobile();
   const haptics = useHaptics();
   const { toast } = useToast();
+  const { companyProfile } = useCompanyProfile();
+  const { getDefaultProfile } = useInspectorProfiles();
   const [openSections, setOpenSections] = useState({
     reportAuthorised: true,
     compliance: true
@@ -87,6 +92,63 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
     haptics.tap();
     setOpenSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
+
+  // Auto-fill from inspector profile or company settings on mount if fields are empty
+  useEffect(() => {
+    if (!formData.reportAuthorisedByName) {
+      const inspectorProfile = getDefaultProfile();
+
+      // Try inspector profile first (more specific), then fall back to company profile
+      if (inspectorProfile) {
+        onUpdate('reportAuthorisedByName', inspectorProfile.name?.toUpperCase() || '');
+        onUpdate('reportAuthorisedByForOnBehalfOf', inspectorProfile.companyName || '');
+        onUpdate('reportAuthorisedByAddress', inspectorProfile.companyAddress || '');
+        // Try to extract postcode from address
+        const postcodeMatch = inspectorProfile.companyAddress?.match(/[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}/i);
+        if (postcodeMatch) {
+          onUpdate('reportAuthorisedByPostcode', postcodeMatch[0]);
+        }
+        onUpdate('reportAuthorisedByPhone', inspectorProfile.companyPhone || '');
+        if (inspectorProfile.registrationNumber) {
+          const membershipNo = inspectorProfile.registrationScheme
+            ? `${inspectorProfile.registrationScheme} - ${inspectorProfile.registrationNumber}`
+            : inspectorProfile.registrationNumber;
+          onUpdate('reportAuthorisedByMembershipNo', membershipNo);
+        }
+        if (inspectorProfile.signatureData) {
+          onUpdate('reportAuthorisedBySignature', inspectorProfile.signatureData);
+        }
+        onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
+      } else if (companyProfile) {
+        // Fall back to company profile if no inspector profile
+        if (companyProfile.inspector_name) {
+          onUpdate('reportAuthorisedByName', companyProfile.inspector_name.toUpperCase());
+        }
+        if (companyProfile.company_name) {
+          onUpdate('reportAuthorisedByForOnBehalfOf', companyProfile.company_name);
+        }
+        if (companyProfile.company_address) {
+          onUpdate('reportAuthorisedByAddress', companyProfile.company_address);
+        }
+        if (companyProfile.company_postcode) {
+          onUpdate('reportAuthorisedByPostcode', companyProfile.company_postcode);
+        }
+        if (companyProfile.company_phone) {
+          onUpdate('reportAuthorisedByPhone', companyProfile.company_phone);
+        }
+        if (companyProfile.registration_number) {
+          const membershipNo = companyProfile.registration_scheme
+            ? `${companyProfile.registration_scheme} - ${companyProfile.registration_number}`
+            : companyProfile.registration_number;
+          onUpdate('reportAuthorisedByMembershipNo', membershipNo);
+        }
+        if (companyProfile.signature_data) {
+          onUpdate('reportAuthorisedBySignature', companyProfile.signature_data);
+        }
+        onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
+      }
+    }
+  }, [companyProfile, getDefaultProfile]);
 
   // Completion checks
   const isReportAuthorisedComplete = formData.reportAuthorisedByName && formData.reportAuthorisedBySignature && formData.reportAuthorisedByDate;
@@ -104,6 +166,83 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
         return formData.bs7671Compliance ? 100 : 0;
       default:
         return 0;
+    }
+  };
+
+  // Fill from inspector profile or business settings
+  const fillFromBusinessSettings = () => {
+    const inspectorProfile = getDefaultProfile();
+
+    if (!inspectorProfile && !companyProfile) {
+      toast({
+        title: "No Profile Found",
+        description: "Please set up your inspector profile or business settings first.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    haptics.tap();
+
+    // Prefer inspector profile, fall back to company profile
+    if (inspectorProfile) {
+      onUpdate('reportAuthorisedByName', inspectorProfile.name?.toUpperCase() || '');
+      onUpdate('reportAuthorisedByForOnBehalfOf', inspectorProfile.companyName || '');
+      onUpdate('reportAuthorisedByPosition', 'Inspector & Tester');
+      onUpdate('reportAuthorisedByAddress', inspectorProfile.companyAddress || '');
+      // Try to extract postcode from address
+      const postcodeMatch = inspectorProfile.companyAddress?.match(/[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}/i);
+      if (postcodeMatch) {
+        onUpdate('reportAuthorisedByPostcode', postcodeMatch[0]);
+      }
+      onUpdate('reportAuthorisedByPhone', inspectorProfile.companyPhone || '');
+      if (inspectorProfile.registrationNumber) {
+        const membershipNo = inspectorProfile.registrationScheme
+          ? `${inspectorProfile.registrationScheme} - ${inspectorProfile.registrationNumber}`
+          : inspectorProfile.registrationNumber;
+        onUpdate('reportAuthorisedByMembershipNo', membershipNo);
+      }
+      if (inspectorProfile.signatureData) {
+        onUpdate('reportAuthorisedBySignature', inspectorProfile.signatureData);
+      }
+      onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
+
+      toast({
+        title: "Details Filled",
+        description: "Your inspector profile details have been applied"
+      });
+    } else if (companyProfile) {
+      if (companyProfile.inspector_name) {
+        onUpdate('reportAuthorisedByName', companyProfile.inspector_name.toUpperCase());
+      }
+      if (companyProfile.company_name) {
+        onUpdate('reportAuthorisedByForOnBehalfOf', companyProfile.company_name);
+      }
+      onUpdate('reportAuthorisedByPosition', 'Inspector & Tester');
+      if (companyProfile.company_address) {
+        onUpdate('reportAuthorisedByAddress', companyProfile.company_address);
+      }
+      if (companyProfile.company_postcode) {
+        onUpdate('reportAuthorisedByPostcode', companyProfile.company_postcode);
+      }
+      if (companyProfile.company_phone) {
+        onUpdate('reportAuthorisedByPhone', companyProfile.company_phone);
+      }
+      if (companyProfile.registration_number) {
+        const membershipNo = companyProfile.registration_scheme
+          ? `${companyProfile.registration_scheme} - ${companyProfile.registration_number}`
+          : companyProfile.registration_number;
+        onUpdate('reportAuthorisedByMembershipNo', membershipNo);
+      }
+      if (companyProfile.signature_data) {
+        onUpdate('reportAuthorisedBySignature', companyProfile.signature_data);
+      }
+      onUpdate('reportAuthorisedByDate', new Date().toISOString().split('T')[0]);
+
+      toast({
+        title: "Details Filled",
+        description: "Your business details have been applied"
+      });
     }
   };
 
@@ -138,18 +277,43 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
             />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className="p-4 sm:p-5 space-y-5">
-              {/* Quick Copy Button */}
-              {formData.inspectorName && (
+            <div className={cn(
+              "p-4 sm:p-5 space-y-5",
+              isMobile && "px-3" // Slightly tighter padding on mobile for wider content
+            )}>
+              {/* Quick Fill Buttons */}
+              <div className={cn(
+                "flex gap-3",
+                isMobile ? "flex-col" : "flex-row"
+              )}>
+                {/* Fill from Business Settings - Primary action */}
                 <Button
-                  onClick={copyFromInspector}
-                  className="w-full h-12 touch-manipulation bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-200 font-medium rounded-xl active:scale-[0.98] transition-transform"
+                  onClick={fillFromBusinessSettings}
+                  className={cn(
+                    "h-12 touch-manipulation bg-elec-yellow/20 hover:bg-elec-yellow/30 border border-elec-yellow/40 text-elec-yellow font-medium rounded-xl active:scale-[0.98] transition-transform",
+                    isMobile ? "w-full" : "flex-1"
+                  )}
                   variant="outline"
                 >
-                  <User className="h-5 w-5 mr-2" />
-                  Copy from Inspector Declaration
+                  <Sparkles className="h-5 w-5 mr-2" />
+                  Fill from Business Settings
                 </Button>
-              )}
+
+                {/* Copy from Inspector - Secondary action */}
+                {formData.inspectorName && (
+                  <Button
+                    onClick={copyFromInspector}
+                    className={cn(
+                      "h-12 touch-manipulation bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-200 font-medium rounded-xl active:scale-[0.98] transition-transform",
+                      isMobile ? "w-full" : "flex-1"
+                    )}
+                    variant="outline"
+                  >
+                    <User className="h-5 w-5 mr-2" />
+                    Copy from Inspector
+                  </Button>
+                )}
+              </div>
 
               {/* Signatory Details Card */}
               <GlassCard color="amber">
@@ -207,8 +371,11 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                     />
                   </div>
 
-                  {/* Postcode, Tel, Date Row */}
-                  <div className="grid grid-cols-3 gap-4">
+                  {/* Postcode, Tel, Date Row - Stack on mobile */}
+                  <div className={cn(
+                    "grid gap-4",
+                    isMobile ? "grid-cols-1" : "grid-cols-3"
+                  )}>
                     <div className="space-y-2.5">
                       <Label className="text-sm text-white">Postcode</Label>
                       <Input
@@ -226,7 +393,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                         type="tel"
                         value={formData.reportAuthorisedByPhone || ''}
                         onChange={(e) => onUpdate('reportAuthorisedByPhone', e.target.value)}
-                        placeholder="Phone"
+                        placeholder="Phone number"
                         className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
                       />
                     </div>

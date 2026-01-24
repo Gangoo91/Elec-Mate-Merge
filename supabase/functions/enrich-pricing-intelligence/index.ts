@@ -14,7 +14,7 @@ import { callOpenAIWithRetry, hashContent, getCheckpoint, saveCheckpoint } from 
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const ENRICHMENT_VERSION = 'v1';

@@ -20,9 +20,12 @@ import {
 import { format, subDays, startOfDay, startOfMonth, endOfMonth, subMonths } from "date-fns";
 
 export default function AdminRevenue() {
-  // Fetch revenue data
+  // Fetch revenue data - live updates every 30 seconds
   const { data: revenue, isLoading, refetch, isFetching } = useQuery({
     queryKey: ["admin-revenue"],
+    refetchInterval: 30000, // Refresh every 30 seconds
+    refetchOnWindowFocus: true, // Refresh when tab becomes active
+    staleTime: 0, // Always consider data stale for admin dashboard
     queryFn: async () => {
       const now = new Date();
       const today = startOfDay(now);
@@ -175,8 +178,6 @@ export default function AdminRevenue() {
         avgRevenuePerUser: subscribedProfiles.length > 0 ? mrr / subscribedProfiles.length : 0,
       };
     },
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-    refetchInterval: 120000, // Refresh every 2 minutes
   });
 
   const getTrendIcon = (value: number) => {
@@ -292,16 +293,16 @@ export default function AdminRevenue() {
             Daily New Revenue (14 Days)
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="flex items-end justify-between gap-1 h-32 overflow-x-auto">
+        <CardContent className="px-2 sm:px-6">
+          <div className="flex items-end justify-between gap-0.5 sm:gap-1 h-28 sm:h-32 overflow-x-auto scrollbar-hide">
             {revenue?.dailyRevenue?.map((day, i) => (
-              <div key={i} className="flex-1 min-w-[30px] flex flex-col items-center gap-1">
+              <div key={i} className="flex-1 min-w-[20px] sm:min-w-[30px] flex flex-col items-center gap-0.5 sm:gap-1">
                 <div
                   className="w-full bg-gradient-to-t from-green-500/40 to-green-500/10 rounded-t-lg transition-all"
                   style={{ height: `${Math.max((day.amount / maxDailyRevenue) * 100, 5)}%` }}
                 />
-                <span className="text-[8px] text-muted-foreground whitespace-nowrap">{day.date.split(" ")[0]}</span>
-                <span className="text-[10px] font-medium">£{day.amount.toFixed(0)}</span>
+                <span className="text-[7px] sm:text-[8px] text-muted-foreground whitespace-nowrap">{day.date.split(" ")[0]}</span>
+                <span className="text-[9px] sm:text-[10px] font-medium">£{day.amount.toFixed(0)}</span>
               </div>
             ))}
           </div>

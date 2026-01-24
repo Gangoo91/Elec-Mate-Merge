@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertTriangle, Shield, FileCheck, User, PenTool, Hammer, Search, Calendar, MapPin, Phone, Building2, FileWarning, ClipboardCheck, ChevronDown, Wrench, UserCheck } from 'lucide-react';
+import { AlertTriangle, Shield, FileCheck, User, PenTool, Hammer, Search, Calendar, MapPin, Phone, Building2, FileWarning, ClipboardCheck, ChevronDown, Wrench, UserCheck, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
@@ -125,10 +125,32 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
     onUpdate(`${section}Name`, selectedProfile.name);
     onUpdate(`${section}Qualifications`, qualifications);
     onUpdate(`${section}Company`, selectedProfile.companyName);
+    onUpdate(`${section}Address`, selectedProfile.companyAddress || '');
+    onUpdate(`${section}Postcode`, selectedProfile.companyAddress?.match(/[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}/i)?.[0] || '');
+    onUpdate(`${section}Phone`, selectedProfile.companyPhone || '');
     onUpdate(`${section}Date`, today);
     if (selectedProfile.signatureData) {
       onUpdate(`${section}Signature`, selectedProfile.signatureData);
     }
+  };
+
+  // Manual fill button handler with haptic feedback
+  const handleFillFromProfile = (section: 'designer' | 'constructor' | 'inspector') => {
+    const defaultProfile = getDefaultProfile();
+    if (!defaultProfile) {
+      toast({
+        title: 'No Profile Found',
+        description: 'Please create an inspector profile in Settings first.',
+        variant: 'destructive'
+      });
+      return;
+    }
+    haptics.tap();
+    loadProfileToSection(section, defaultProfile);
+    toast({
+      title: 'Profile Applied',
+      description: 'Your inspector profile details have been filled in.'
+    });
   };
 
   return (
@@ -271,7 +293,18 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
 
               {/* Signatory Details */}
               <GlassCard color="blue">
-                <SubSectionHeader icon={User} title="Signatory Details" color="blue-400" />
+                <div className="flex items-center justify-between mb-4">
+                  <SubSectionHeader icon={User} title="Signatory Details" color="blue-400" />
+                  <Button
+                    onClick={() => handleFillFromProfile('designer')}
+                    variant="outline"
+                    size="sm"
+                    className="h-9 bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/30 text-blue-300 text-xs font-medium rounded-lg touch-manipulation"
+                  >
+                    <Sparkles className="h-3.5 w-3.5 mr-1.5" />
+                    Fill from Profile
+                  </Button>
+                </div>
                 <div className="space-y-5">
                   {/* Name & Company Row */}
                   <div className="grid grid-cols-1 gap-4">
@@ -313,8 +346,11 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     />
                   </div>
 
-                  {/* Postcode, Tel, Date Row */}
-                  <div className="grid grid-cols-3 gap-4">
+                  {/* Postcode, Tel, Date Row - Stack on mobile */}
+                  <div className={cn(
+                    "grid gap-4",
+                    isMobile ? "grid-cols-1" : "grid-cols-3"
+                  )}>
                     <div className="space-y-2.5">
                       <Label className="text-sm text-white">Postcode</Label>
                       <Input
@@ -332,7 +368,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         type="tel"
                         value={formData.designerPhone || ''}
                         onChange={(e) => onUpdate('designerPhone', e.target.value)}
-                        placeholder="Phone"
+                        placeholder="Phone number"
                         className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
                       />
                     </div>
@@ -462,7 +498,19 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
 
               {/* Signatory Details */}
               <GlassCard color="green" className={cn(formData.sameAsDesigner && 'opacity-50 pointer-events-none')}>
-                <SubSectionHeader icon={User} title="Signatory Details" color="green-400" />
+                <div className="flex items-center justify-between mb-4">
+                  <SubSectionHeader icon={User} title="Signatory Details" color="green-400" />
+                  <Button
+                    onClick={() => handleFillFromProfile('constructor')}
+                    variant="outline"
+                    size="sm"
+                    disabled={formData.sameAsDesigner}
+                    className="h-9 bg-green-500/10 hover:bg-green-500/20 border-green-500/30 text-green-300 text-xs font-medium rounded-lg touch-manipulation"
+                  >
+                    <Sparkles className="h-3.5 w-3.5 mr-1.5" />
+                    Fill from Profile
+                  </Button>
+                </div>
                 <div className="space-y-5">
                   {/* Name & Company Row */}
                   <div className="grid grid-cols-1 gap-4">
@@ -507,8 +555,11 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     />
                   </div>
 
-                  {/* Postcode, Tel, Date Row */}
-                  <div className="grid grid-cols-3 gap-4">
+                  {/* Postcode, Tel, Date Row - Stack on mobile */}
+                  <div className={cn(
+                    "grid gap-4",
+                    isMobile ? "grid-cols-1" : "grid-cols-3"
+                  )}>
                     <div className="space-y-2.5">
                       <Label className="text-sm text-white">Postcode</Label>
                       <Input
@@ -527,7 +578,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         type="tel"
                         value={formData.constructorPhone || ''}
                         onChange={(e) => onUpdate('constructorPhone', e.target.value)}
-                        placeholder="Phone"
+                        placeholder="Phone number"
                         disabled={formData.sameAsDesigner}
                         className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-green-500 focus:ring-green-500/20 rounded-xl"
                       />
@@ -659,7 +710,19 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
 
               {/* Signatory Details */}
               <GlassCard color="amber" className={cn(formData.sameAsConstructor && 'opacity-50 pointer-events-none')}>
-                <SubSectionHeader icon={User} title="Signatory Details" color="amber-400" />
+                <div className="flex items-center justify-between mb-4">
+                  <SubSectionHeader icon={User} title="Signatory Details" color="amber-400" />
+                  <Button
+                    onClick={() => handleFillFromProfile('inspector')}
+                    variant="outline"
+                    size="sm"
+                    disabled={formData.sameAsConstructor}
+                    className="h-9 bg-amber-500/10 hover:bg-amber-500/20 border-amber-500/30 text-amber-300 text-xs font-medium rounded-lg touch-manipulation"
+                  >
+                    <Sparkles className="h-3.5 w-3.5 mr-1.5" />
+                    Fill from Profile
+                  </Button>
+                </div>
                 <div className="space-y-5">
                   {/* Name & Company Row */}
                   <div className="grid grid-cols-1 gap-4">
@@ -704,8 +767,11 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     />
                   </div>
 
-                  {/* Postcode, Tel, Date Row */}
-                  <div className="grid grid-cols-3 gap-4">
+                  {/* Postcode, Tel, Date Row - Stack on mobile */}
+                  <div className={cn(
+                    "grid gap-4",
+                    isMobile ? "grid-cols-1" : "grid-cols-3"
+                  )}>
                     <div className="space-y-2.5">
                       <Label className="text-sm text-white">Postcode</Label>
                       <Input
@@ -724,7 +790,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         type="tel"
                         value={formData.inspectorPhone || ''}
                         onChange={(e) => onUpdate('inspectorPhone', e.target.value)}
-                        placeholder="Phone"
+                        placeholder="Phone number"
                         disabled={formData.sameAsConstructor}
                         className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
                       />

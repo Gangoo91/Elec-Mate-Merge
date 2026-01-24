@@ -7,6 +7,7 @@ import { useAuthentication } from '@/hooks/auth/useAuthentication';
 import { AuthContextType } from '@/hooks/auth/types';
 import { PresenceManager } from '@/services/presenceService';
 import { identifySentryUser, clearSentryUser } from '@/lib/sentry';
+import { logger } from '@/utils/logger';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -19,6 +20,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (user?.id) {
+      logger.info('User authenticated', { userId: user.id, email: user.email, role: profile?.role });
+      logger.action('User session started', 'auth', { userId: user.id });
+
       // Start presence tracking when user logs in
       presenceManagerRef.current = new PresenceManager(user.id);
       presenceManagerRef.current.start();
@@ -30,6 +34,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         role: profile?.role,
       });
     } else {
+      logger.info('User session ended');
+      logger.action('User session ended', 'auth');
       // Clear Sentry user on logout
       clearSentryUser();
     }

@@ -5,7 +5,7 @@ const TEMPLATE_ID = '178C3DA6-99D0-490C-A031-23AD55A1134C';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 

@@ -83,9 +83,9 @@ const statsConfig: StatConfig[] = [
     variant: 'purple',
     getSubtitle: (data) =>
       data.certificates.expiringSoon > 0
-        ? `${data.certificates.expiringSoon} expiring soon`
-        : undefined,
-    path: '/profile?tab=certificates',
+        ? `${data.certificates.expiringSoon} in progress`
+        : data.certificates.total > 0 ? 'All complete' : undefined,
+    path: '/electrician/inspection-testing?section=reports',
     roles: ['electrician', 'apprentice', 'admin'],
   },
   {

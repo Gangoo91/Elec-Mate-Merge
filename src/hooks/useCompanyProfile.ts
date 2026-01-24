@@ -2,24 +2,31 @@ import { useState, useCallback, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { CompanyProfile } from '@/types/company';
 import { toast } from '@/hooks/use-toast';
+import { logger, generateRequestId } from '@/utils/logger';
 
 export const useCompanyProfile = () => {
   const [companyProfile, setCompanyProfile] = useState<CompanyProfile | null>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchCompanyProfile = useCallback(async () => {
+    const requestId = generateRequestId();
+    logger.api('company_profiles/fetch', requestId).start();
+
     try {
       setLoading(true);
       const { data: { user } } = await supabase.auth.getUser();
 
-      if (!user) return;
+      if (!user) {
+        logger.info('No user found, skipping company profile fetch');
+        return;
+      }
 
       // Use RPC function to bypass 406 error from direct table query
       const { data, error } = await supabase
         .rpc('get_my_company_profile');
 
       if (error) {
-        console.error('Error fetching company profile:', error);
+        logger.api('company_profiles/fetch', requestId).error(error);
         return;
       }
 
@@ -27,26 +34,37 @@ export const useCompanyProfile = () => {
       const profile = Array.isArray(data) ? data[0] : data;
 
       if (profile) {
+        logger.api('company_profiles/fetch', requestId).success({ companyName: profile.company_name });
         setCompanyProfile({
           ...profile,
           bank_details: profile.bank_details || {},
           created_at: new Date(profile.created_at),
           updated_at: new Date(profile.updated_at),
         } as CompanyProfile);
+      } else {
+        logger.info('No company profile found for user');
       }
     } catch (error) {
-      console.error('Error fetching company profile:', error);
+      logger.api('company_profiles/fetch', requestId).error(error);
     } finally {
       setLoading(false);
     }
   }, []);
 
   const saveCompanyProfile = useCallback(async (profile: Partial<CompanyProfile>) => {
+    const requestId = generateRequestId();
+    const isUpdate = !!companyProfile?.id;
+    logger.api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId).start({
+      companyName: profile.company_name
+    });
+    logger.action('Save company profile', 'company', { isUpdate });
+
     try {
       setLoading(true);
       const { data: { user } } = await supabase.auth.getUser();
-      
+
       if (!user) {
+        logger.warn('Attempted to save company profile without authentication');
         toast({
           title: "Authentication Required",
           description: "Please log in to save company profile.",
@@ -81,7 +99,7 @@ export const useCompanyProfile = () => {
       }
 
       if (result.error) {
-        console.error('Error saving company profile:', result.error);
+        logger.api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId).error(result.error);
         toast({
           title: "Save Failed",
           description: "Failed to save company profile. Please try again.",
@@ -89,6 +107,10 @@ export const useCompanyProfile = () => {
         });
         return false;
       }
+
+      logger.api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId).success({
+        profileId: result.data.id
+      });
 
       setCompanyProfile({
         ...result.data,
@@ -105,7 +127,7 @@ export const useCompanyProfile = () => {
 
       return true;
     } catch (error) {
-      console.error('Error saving company profile:', error);
+      logger.api(`company_profiles/${isUpdate ? 'update' : 'create'}`, requestId).error(error);
       toast({
         title: "Save Failed",
         description: "An unexpected error occurred. Please try again.",

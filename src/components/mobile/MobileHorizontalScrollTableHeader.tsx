@@ -12,6 +12,10 @@ interface MobileHorizontalScrollTableHeaderProps {
   onFillAllRcdType?: (value: string) => void;
   onFillAllRcdRating?: (value: string) => void;
   onFillAllRcdRatingA?: (value: string) => void;
+  onFillAllInsulationVoltage?: (value: string) => void;
+  onFillAllInsulationLiveNeutral?: (value: string) => void;
+  onFillAllInsulationLiveEarth?: (value: string) => void;
+  onFillAllPolarity?: (value: string) => void;
 }
 
 export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollTableHeaderProps> = ({
@@ -20,7 +24,11 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
   onFillAllRcdBsStandard,
   onFillAllRcdType,
   onFillAllRcdRating,
-  onFillAllRcdRatingA
+  onFillAllRcdRatingA,
+  onFillAllInsulationVoltage,
+  onFillAllInsulationLiveNeutral,
+  onFillAllInsulationLiveEarth,
+  onFillAllPolarity
 }) => {
   const headerCell = "font-semibold text-xs p-0.5 text-center whitespace-nowrap border-r border-border bg-elec-gray text-foreground";
 
@@ -139,12 +147,78 @@ export const MobileHorizontalScrollTableHeader: React.FC<MobileHorizontalScrollT
         <TableHead className={`${headerCell} w-[80px] min-w-[80px] max-w-[80px]`}>R₂</TableHead>
 
         {/* Insulation Tests Group */}
-        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>V</TableHead>
-        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>L-L</TableHead>
-        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>L-E</TableHead>
+        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>
+          <div className="flex items-center justify-center gap-0">
+            <span>V</span>
+            {onFillAllInsulationVoltage && (
+              <Select onValueChange={onFillAllInsulationVoltage}>
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                </SelectTrigger>
+                <SelectContent className="min-w-[140px]">
+                  <SelectItem value="250V" className="py-3 text-base touch-manipulation">250V</SelectItem>
+                  <SelectItem value="500V" className="py-3 text-base touch-manipulation">500V</SelectItem>
+                  <SelectItem value="1000V" className="py-3 text-base touch-manipulation">1000V</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          </div>
+        </TableHead>
+        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>
+          <div className="flex items-center justify-center gap-0">
+            <span>L-N</span>
+            {onFillAllInsulationLiveNeutral && (
+              <Select onValueChange={onFillAllInsulationLiveNeutral}>
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                </SelectTrigger>
+                <SelectContent className="min-w-[140px]">
+                  <SelectItem value=">200" className="py-3 text-base touch-manipulation">&gt;200 MΩ</SelectItem>
+                  <SelectItem value=">999" className="py-3 text-base touch-manipulation">&gt;999 MΩ</SelectItem>
+                  <SelectItem value="N/A" className="py-3 text-base touch-manipulation">N/A</SelectItem>
+                  <SelectItem value="LIM" className="py-3 text-base touch-manipulation">LIM</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          </div>
+        </TableHead>
+        <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>
+          <div className="flex items-center justify-center gap-0">
+            <span>L-E</span>
+            {onFillAllInsulationLiveEarth && (
+              <Select onValueChange={onFillAllInsulationLiveEarth}>
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                </SelectTrigger>
+                <SelectContent className="min-w-[140px]">
+                  <SelectItem value=">200" className="py-3 text-base touch-manipulation">&gt;200 MΩ</SelectItem>
+                  <SelectItem value=">999" className="py-3 text-base touch-manipulation">&gt;999 MΩ</SelectItem>
+                  <SelectItem value="N/A" className="py-3 text-base touch-manipulation">N/A</SelectItem>
+                  <SelectItem value="LIM" className="py-3 text-base touch-manipulation">LIM</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          </div>
+        </TableHead>
 
         {/* Earth Fault Tests Group */}
-        <TableHead className={`${headerCell} w-[66px] min-w-[66px] max-w-[66px]`}>Pol</TableHead>
+        <TableHead className={`${headerCell} w-[66px] min-w-[66px] max-w-[66px]`}>
+          <div className="flex items-center justify-center gap-0">
+            <span>Pol</span>
+            {onFillAllPolarity && (
+              <Select onValueChange={onFillAllPolarity}>
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                </SelectTrigger>
+                <SelectContent className="min-w-[160px]">
+                  <SelectItem value="Correct" className="py-3 text-base touch-manipulation">Correct</SelectItem>
+                  <SelectItem value="Incorrect" className="py-3 text-base touch-manipulation">Incorrect</SelectItem>
+                  <SelectItem value="N/A" className="py-3 text-base touch-manipulation">N/A</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          </div>
+        </TableHead>
         <TableHead className={`${headerCell} w-[96px] min-w-[96px] max-w-[96px]`}>Zs</TableHead>
 
         {/* RCD Tests Group */}

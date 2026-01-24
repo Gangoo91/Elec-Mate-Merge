@@ -6,6 +6,7 @@ import { useQuoteStorage } from './useQuoteStorage';
 import { useCompanyProfile } from './useCompanyProfile';
 import { generateSequentialQuoteNumber } from '@/utils/quote-number-generator';
 import { supabase } from '@/integrations/supabase/client';
+import { logger, generateRequestId } from '@/utils/logger';
 
 export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Quote) => {
   const { saveQuote } = useQuoteStorage();
@@ -174,14 +175,18 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
   const generateQuote = useCallback(async () => {
     if (isGenerating) return; // Prevent multiple clicks
-    
+
+    const requestId = generateRequestId();
+    logger.api('quotes/generate', requestId).start({ quoteId: quote.id, quoteNumber: quote.quoteNumber });
+    logger.action('Generate quote', 'quotes', { quoteId: quote.id });
+
     setIsGenerating(true);
     try {
       const finalQuote = calculateTotals();
-      
+
       // Validate quote before generation
       if (!finalQuote.client || !finalQuote.items || finalQuote.items.length === 0 || !finalQuote.settings) {
-        console.log('Quote Generation - Validation failed', {
+        logger.warn('Quote validation failed', {
           hasClient: !!finalQuote.client,
           hasJobDetails: !!finalQuote.jobDetails,
           itemCount: finalQuote.items?.length || 0,
@@ -197,7 +202,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
       // Validate job details
       if (!finalQuote.jobDetails || !finalQuote.jobDetails.title || !finalQuote.jobDetails.description) {
-        console.log('Quote Generation - Job details validation failed', {
+        logger.warn('Quote job details validation failed', {
           hasJobDetails: !!finalQuote.jobDetails,
           hasTitle: !!finalQuote.jobDetails?.title,
           hasDescription: !!finalQuote.jobDetails?.description
@@ -210,14 +215,13 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         return;
       }
 
-      console.log('Quote Generation - Starting quote generation', {
+      logger.info('Quote generation started', {
+        requestId,
         quoteId: finalQuote.id,
         quoteNumber: finalQuote.quoteNumber,
         clientName: finalQuote.client?.name,
-        jobDetails: finalQuote.jobDetails,
         itemCount: finalQuote.items?.length,
-        total: finalQuote.total,
-        status: finalQuote.status
+        total: finalQuote.total
       });
 
       // Update quote status and expiry
@@ -248,24 +252,24 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
       // Generate PDF using PDF Monkey
       try {
-        console.log('PDF Generation - Calling PDF Monkey edge function');
+        logger.api('generate-pdf-monkey', requestId).start({ quoteId: updatedQuote.id });
         const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
-          body: { 
+          body: {
             quote: updatedQuote,
-            companyProfile 
+            companyProfile
           }
         });
 
         if (error) {
-          console.error('PDF Generation - Error:', error);
+          logger.api('generate-pdf-monkey', requestId).error(error, { quoteId: updatedQuote.id });
           throw error;
         }
 
         if (data?.downloadUrl) {
-          console.log('PDF Generation - Success, opening PDF');
+          logger.api('generate-pdf-monkey', requestId).success({ documentId: data.documentId });
           window.open(data.downloadUrl, '_blank');
         } else if (data?.documentId) {
-          console.log('PDF Generation - Document created but still processing:', data.documentId);
+          logger.info('PDF still processing', { documentId: data.documentId });
           toast({
             title: "PDF Processing",
             description: "Your PDF is being generated. It will open shortly.",
@@ -273,7 +277,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
           });
         }
       } catch (pdfError) {
-        console.error('PDF Generation - Failed:', pdfError);
+        logger.error('PDF generation failed', pdfError, { quoteId: updatedQuote.id, requestId });
         toast({
           title: "PDF Generation Failed",
           description: "Could not generate PDF. The quote has been saved.",
@@ -282,20 +286,19 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
       }
 
       // Save quote to Supabase
-      console.log('Quote Storage - Attempting to save quote to database');
+      logger.api('quotes/save', requestId).start({ quoteId: updatedQuote.id });
       const saved = await saveQuote(updatedQuote as Quote);
-      
+
       if (saved) {
-        console.log('Quote Storage - Quote saved successfully, notifying user');
+        logger.api('quotes/save', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
         toast({
           title: "Quote Generated Successfully",
           description: `Quote ${updatedQuote.quoteNumber} has been generated, downloaded, and saved to recent quotes.`,
           variant: "success"
         });
-        console.log('Quote Storage - Calling onQuoteGenerated callback');
         onQuoteGenerated?.(); // Trigger refresh of quotes list
       } else {
-        console.log('Quote Storage - Quote generation completed but save failed');
+        logger.warn('Quote save failed', { quoteId: updatedQuote.id, quoteNumber: updatedQuote.quoteNumber });
         toast({
           title: "Quote Generated",
           description: `Quote ${updatedQuote.quoteNumber} has been generated and downloaded, but could not be saved to recent quotes.`,
@@ -305,10 +308,9 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
       // Move to review step if not already there
       if (currentStep < 2) {
-        console.log('Quote Generation - Moving to review step');
         setCurrentStep(2);
       }
-      
+
       // Scroll to the Card content
       const cardElement = document.querySelector('[data-quote-step="content"]');
       if (cardElement) {
@@ -317,9 +319,9 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      console.log('Quote Generation - Process completed');
+      logger.api('quotes/generate', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
     } catch (error) {
-      console.error('Error generating quote:', error);
+      logger.api('quotes/generate', requestId).error(error, { quoteId: quote.id });
       toast({
         title: "Generation Failed",
         description: "There was an error generating the quote. Please try again.",

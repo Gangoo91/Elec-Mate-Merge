@@ -3,7 +3,7 @@ import { generateCommissioningProcedures } from '../_agents/commissioning-core.t
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // Graceful shutdown logging

@@ -58,14 +58,35 @@ export class DatabaseClient {
       return { inserted: 0, updated: 0, errors: products.length };
     }
 
+    // Deduplicate products by SKU before processing
+    // This prevents "ON CONFLICT DO UPDATE cannot affect row a second time" errors
+    const uniqueProducts = new Map<string, ScrapedProduct>();
+    for (const product of products) {
+      const key = product.sku;
+      if (!uniqueProducts.has(key)) {
+        uniqueProducts.set(key, product);
+      } else {
+        // Keep the one with lower price (better deal)
+        const existing = uniqueProducts.get(key)!;
+        if (product.currentPrice && existing.currentPrice && product.currentPrice < existing.currentPrice) {
+          uniqueProducts.set(key, product);
+        }
+      }
+    }
+    const deduplicatedProducts = Array.from(uniqueProducts.values());
+
+    if (deduplicatedProducts.length < products.length) {
+      console.log(`Deduplicated: ${products.length} -> ${deduplicatedProducts.length} products (removed ${products.length - deduplicatedProducts.length} duplicates)`);
+    }
+
     let inserted = 0;
     let updated = 0;
     let errors = 0;
 
     // Process in batches of 50
     const batchSize = 50;
-    for (let i = 0; i < products.length; i += batchSize) {
-      const batch = products.slice(i, i + batchSize);
+    for (let i = 0; i < deduplicatedProducts.length; i += batchSize) {
+      const batch = deduplicatedProducts.slice(i, i + batchSize);
 
       const records = batch.map((p) => ({
         supplier_id: supplierId,

@@ -56,9 +56,12 @@ export default function AdminDashboard() {
     setTimeout(() => setIsRefreshing(false), 500);
   }, [queryClient]);
 
-  // Fetch dashboard stats - batch queries for performance
+  // Fetch dashboard stats - batch queries for performance, live updates every 30 seconds
   const { data: stats, isLoading, isFetching } = useQuery({
     queryKey: ["admin-dashboard-stats"],
+    refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
     queryFn: async () => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -76,6 +79,8 @@ export default function AdminDashboard() {
         elecIdCompleteRes,
         subscribedDataRes,
         edgeDataRes,
+        trialDataRes,
+        betaDataRes,
       ] = await Promise.all([
         supabase.from("profiles").select("*", { count: "exact", head: true }),
         supabase.from("profiles").select("*", { count: "exact", head: true }).gte("created_at", today.toISOString()),
@@ -85,26 +90,37 @@ export default function AdminDashboard() {
         supabase.from("employer_elec_id_profiles").select("*", { count: "exact", head: true }),
         supabase.from("profiles").select("subscription_tier, free_access_granted").eq("subscribed", true),
         supabase.functions.invoke("admin-get-users"),
+        // Trial users (not subscribed, on trial tier)
+        supabase.from("profiles").select("subscription_tier, role").eq("subscription_tier", "trial"),
+        // Beta testers (free access granted)
+        supabase.from("profiles").select("subscription_tier, role, free_access_granted").eq("free_access_granted", true),
       ]);
 
       const subscribedData = subscribedDataRes.data || [];
+      const trialData = trialDataRes.data || [];
+      const betaData = betaDataRes.data || [];
       const subscribedUsers = subscribedData.length;
       // Exclude free_access_granted users from paid counts (they pay £0)
       const paidSubscribers = subscribedData.filter(u => !u.free_access_granted);
       const freeSubscribers = subscribedData.filter(u => u.free_access_granted);
+
       // Handle both capitalized and lowercase tier names for backwards compatibility
+      // Count ALL subscribers by tier (including free_access_granted for display)
       const tierCounts = {
-        apprentice: paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "apprentice").length,
-        electrician: paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "electrician").length,
-        employer: paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "employer").length,
-        founder: paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "founder").length,
-        free: freeSubscribers.length,
+        apprentice: subscribedData.filter(u => u.subscription_tier?.toLowerCase() === "apprentice").length,
+        electrician: subscribedData.filter(u => u.subscription_tier?.toLowerCase() === "electrician").length,
+        employer: subscribedData.filter(u => u.subscription_tier?.toLowerCase() === "employer").length,
+        founder: subscribedData.filter(u => u.subscription_tier?.toLowerCase() === "founder").length,
+        free: betaData.length, // Beta testers with free access
+        trial: trialData.length, // Trial users
       };
 
-      const mrr = (tierCounts.apprentice * 4.99) +
-                  (tierCounts.electrician * 9.99) +
-                  (tierCounts.employer * 29.99) +
-                  (tierCounts.founder * 3.99);
+      // MRR only counts PAYING subscribers (exclude free_access_granted)
+      const payingFounders = paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "founder").length;
+      const mrr = (paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "apprentice").length * 4.99) +
+                  (paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "electrician").length * 9.99) +
+                  (paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "employer").length * 29.99) +
+                  (payingFounders * 3.99);
 
       const usersWithEmails = edgeDataRes.data?.users || [];
 
@@ -121,8 +137,6 @@ export default function AdminDashboard() {
         recentSignups: usersWithEmails.slice(0, 8),
       };
     },
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
-    refetchInterval: 60000, // Refresh every 60 seconds
   });
 
   // Separate query for online users - refreshes more frequently for real-time feel
@@ -194,52 +208,66 @@ export default function AdminDashboard() {
               {stats?.subscribedUsers || 0} paying
             </Badge>
           </div>
-          {/* Tier Breakdown */}
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-4">
+          {/* Tier Breakdown - Paid tiers */}
+          <div className="grid grid-cols-4 gap-2 mt-4">
             <div
-              className="bg-purple-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-purple-500/20 transition-all active:scale-[0.98] touch-manipulation"
-              onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=apprentice"); }}
-            >
-              <GraduationCap className="h-4 w-4 text-purple-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-purple-400">{stats?.tierCounts?.apprentice || 0}</p>
-              <p className="text-[10px] text-muted-foreground">Apprentice</p>
-              <p className="text-[10px] text-purple-400/70">{pricingTiers.apprentice.monthly}/mo</p>
-            </div>
-            <div
-              className="bg-yellow-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-yellow-500/20 transition-all active:scale-[0.98] touch-manipulation"
-              onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=electrician"); }}
-            >
-              <Zap className="h-4 w-4 text-yellow-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-yellow-400">{stats?.tierCounts?.electrician || 0}</p>
-              <p className="text-[10px] text-muted-foreground">Electrician</p>
-              <p className="text-[10px] text-yellow-400/70">{pricingTiers.electrician.monthly}/mo</p>
-            </div>
-            <div
-              className="bg-blue-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-blue-500/20 transition-all active:scale-[0.98] touch-manipulation"
-              onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=employer"); }}
-            >
-              <Building2 className="h-4 w-4 text-blue-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-blue-400">{stats?.tierCounts?.employer || 0}</p>
-              <p className="text-[10px] text-muted-foreground">Employer</p>
-              <p className="text-[10px] text-blue-400/70">{pricingTiers.employer.monthly}/mo</p>
-            </div>
-            <div
-              className="bg-amber-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-amber-500/20 transition-all active:scale-[0.98] touch-manipulation"
+              className="bg-gradient-to-br from-yellow-500/20 to-amber-600/15 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-yellow-500/30 hover:to-amber-600/25 transition-all active:scale-[0.98] touch-manipulation border border-yellow-500/40"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/founders"); }}
             >
-              <Crown className="h-4 w-4 text-amber-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-amber-400">{stats?.tierCounts?.founder || 0}</p>
+              <Crown className="h-4 w-4 text-yellow-400 mx-auto mb-1" />
+              <p className="text-lg font-bold text-yellow-400">{stats?.tierCounts?.founder || 0}</p>
               <p className="text-[10px] text-muted-foreground">Founder</p>
-              <p className="text-[10px] text-amber-400/70">{pricingTiers.founder.monthly}/mo</p>
+              <p className="text-[10px] text-yellow-400/70">{pricingTiers.founder.monthly}/mo</p>
             </div>
             <div
-              className="bg-emerald-500/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:bg-emerald-500/20 transition-all active:scale-[0.98] touch-manipulation"
+              className="bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-cyan-500/30 hover:to-cyan-600/20 transition-all active:scale-[0.98] touch-manipulation border border-cyan-500/40"
+              onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=apprentice"); }}
+            >
+              <GraduationCap className="h-4 w-4 text-cyan-400 mx-auto mb-1" />
+              <p className="text-lg font-bold text-cyan-400">{stats?.tierCounts?.apprentice || 0}</p>
+              <p className="text-[10px] text-muted-foreground">Apprentice</p>
+              <p className="text-[10px] text-cyan-400/70">{pricingTiers.apprentice.monthly}/mo</p>
+            </div>
+            <div
+              className="bg-gradient-to-br from-blue-500/20 to-blue-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-blue-500/30 hover:to-blue-600/20 transition-all active:scale-[0.98] touch-manipulation border border-blue-500/40"
+              onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=electrician"); }}
+            >
+              <Zap className="h-4 w-4 text-blue-400 mx-auto mb-1" />
+              <p className="text-lg font-bold text-blue-400">{stats?.tierCounts?.electrician || 0}</p>
+              <p className="text-[10px] text-muted-foreground">Electrician</p>
+              <p className="text-[10px] text-blue-400/70">{pricingTiers.electrician.monthly}/mo</p>
+            </div>
+            <div
+              className="bg-gradient-to-br from-purple-500/20 to-purple-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-purple-500/30 hover:to-purple-600/20 transition-all active:scale-[0.98] touch-manipulation border border-purple-500/40"
+              onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=employer"); }}
+            >
+              <Building2 className="h-4 w-4 text-purple-400 mx-auto mb-1" />
+              <p className="text-lg font-bold text-purple-400">{stats?.tierCounts?.employer || 0}</p>
+              <p className="text-[10px] text-muted-foreground">Employer</p>
+              <p className="text-[10px] text-purple-400/70">{pricingTiers.employer.monthly}/mo</p>
+            </div>
+          </div>
+          {/* Non-paying users */}
+          <div className="grid grid-cols-2 gap-2 mt-2">
+            <div
+              className="bg-gradient-to-br from-teal-500/15 to-teal-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-teal-500/25 hover:to-teal-600/15 transition-all active:scale-[0.98] touch-manipulation border border-teal-500/30"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/users"); }}
             >
-              <Gift className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-emerald-400">{stats?.tierCounts?.free || 0}</p>
-              <p className="text-[10px] text-muted-foreground">Free Beta</p>
-              <p className="text-[10px] text-emerald-400/70">£0/mo</p>
+              <div className="flex items-center justify-center gap-2">
+                <Gift className="h-4 w-4 text-teal-400" />
+                <p className="text-lg font-bold text-teal-400">{stats?.tierCounts?.free || 0}</p>
+              </div>
+              <p className="text-[10px] text-muted-foreground">Beta Testers</p>
+            </div>
+            <div
+              className="bg-gradient-to-br from-orange-500/15 to-orange-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-orange-500/25 hover:to-orange-600/15 transition-all active:scale-[0.98] touch-manipulation border border-orange-500/30"
+              onClick={(e) => { e.stopPropagation(); navigate("/admin/users"); }}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <Clock className="h-4 w-4 text-orange-400" />
+                <p className="text-lg font-bold text-orange-400">{stats?.tierCounts?.trial || 0}</p>
+              </div>
+              <p className="text-[10px] text-muted-foreground">On Trial</p>
             </div>
           </div>
         </CardContent>

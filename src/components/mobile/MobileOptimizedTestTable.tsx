@@ -249,10 +249,11 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
   return (
     <div className="space-y-4">
       {testResults.map((result) => (
-        <Card 
-          key={result.id} 
+        <Card
+          key={result.id}
           className={`border-l-4 ${getBorderColor(result)} overflow-hidden bg-card shadow-sm`}
           data-circuit-id={result.id}
+          style={{ contain: 'layout' }}
         >
           {/* Circuit Header - Always Visible */}
           <CardHeader className="p-0 bg-gradient-to-r from-accent/5 to-transparent">

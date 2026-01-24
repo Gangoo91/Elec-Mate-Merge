@@ -7,7 +7,7 @@ import { createClient as createSupabaseClient } from 'https://esm.sh/@supabase/s
 // Lightweight inline utilities (no v3-core dependency)
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const generateRequestId = () => `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;

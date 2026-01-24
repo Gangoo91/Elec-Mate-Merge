@@ -10,7 +10,9 @@ import {
   MapPin,
   CircuitBoard,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Camera,
+  Mic
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DistributionBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
@@ -362,21 +364,84 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               </button>
             </div>
 
-            {/* Mobile Action Bar - Above table */}
-            {isMobile && (
-              <div className="py-3 border-t border-white/10">
-                <div className="flex items-center gap-2">
-                  {/* Add Circuit Button */}
+            {/* Tools Bar - Above Circuit Table (Desktop & Mobile) */}
+            {showTools && tools && (
+              <div className={cn(
+                "py-3 border-t border-white/10",
+                isMobile ? "-mx-5 px-5 bg-background border-y border-border/30" : ""
+              )}>
+                <div className={cn(
+                  "flex items-center gap-2",
+                  isMobile ? "grid grid-cols-[1fr_1fr_48px]" : "flex flex-wrap"
+                )}>
+                  {/* AI Board Scan */}
                   <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1 h-11 border-white/20 hover:bg-white/5 font-medium touch-manipulation active:scale-[0.98]"
+                    onClick={tools.onScanBoard}
+                    className={cn(
+                      "font-semibold touch-manipulation active:scale-95",
+                      isMobile
+                        ? "h-12 rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                        : "h-10 bg-white/5 border border-white/20 hover:bg-white/10 text-white"
+                    )}
+                  >
+                    <Camera className="h-4 w-4 mr-2" />
+                    {isMobile ? "AI Scan" : "AI Board Scan"}
+                  </Button>
+
+                  {/* Add Circuit */}
+                  <Button
                     onClick={onAddCircuit}
+                    className={cn(
+                      "font-semibold touch-manipulation active:scale-95",
+                      isMobile
+                        ? "h-12 rounded-xl bg-card border border-border/50 text-foreground hover:bg-card/80"
+                        : "h-10 bg-white/5 border border-white/20 hover:bg-white/10 text-white"
+                    )}
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add Circuit
                   </Button>
+
+                  {/* Voice Assistant */}
+                  <Button
+                    onClick={tools.onVoiceToggle}
+                    disabled={tools.voiceConnecting}
+                    className={cn(
+                      "touch-manipulation active:scale-95",
+                      isMobile ? "h-12 w-12 rounded-xl" : "h-10",
+                      tools.voiceActive
+                        ? "bg-green-500 text-white"
+                        : tools.voiceConnecting
+                        ? "bg-yellow-500 text-black animate-pulse"
+                        : isMobile
+                          ? "bg-purple-600 text-white"
+                          : "bg-white/5 border border-white/20 hover:bg-white/10 text-white"
+                    )}
+                  >
+                    <Mic className={cn("h-4 w-4", tools.voiceActive && "animate-pulse", !isMobile && "mr-2")} />
+                    {!isMobile && (tools.voiceActive ? "Tap to Stop" : tools.voiceConnecting ? "Connecting..." : "Voice")}
+                  </Button>
+
+                  {/* Desktop-only: Spacer */}
+                  {!isMobile && (
+                    <div className="flex-1 min-w-0" />
+                  )}
                 </div>
+              </div>
+            )}
+
+            {/* Fallback: Simple Add Circuit for mobile without tools */}
+            {isMobile && !showTools && (
+              <div className="py-3 border-t border-white/10">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full h-11 border-white/20 hover:bg-white/5"
+                  onClick={onAddCircuit}
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Circuit
+                </Button>
               </div>
             )}
 

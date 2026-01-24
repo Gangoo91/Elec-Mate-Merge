@@ -8,6 +8,16 @@ export interface WorkerRates {
   owner: number;
 }
 
+export interface TestingInstrument {
+  id: string;
+  instrument_type: 'multifunction' | 'insulation' | 'loop_impedance' | 'rcd' | 'pat' | 'clamp_meter' | 'other';
+  make: string;
+  model: string;
+  serial_number: string;
+  calibration_date: string;
+  calibration_due?: string;
+}
+
 export interface CompanyProfile {
   id: string;
   user_id: string;
@@ -52,6 +62,9 @@ export interface CompanyProfile {
 
   // Accounting software integrations
   accounting_integrations?: AccountingIntegration[];
+
+  // Testing instruments for certificates
+  testing_instruments?: TestingInstrument[];
 }
 
 export interface CompanyBranding {

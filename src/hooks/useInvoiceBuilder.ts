@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 import { supabase } from '@/integrations/supabase/client';
 import type { CompanyProfile } from '@/types/company';
+import { logger, generateRequestId } from '@/utils/logger';
 
 // Helper to safely get item price with NaN protection
 const safeItemPrice = (item: InvoiceItem): number => {
@@ -28,8 +29,14 @@ export function useCompanyProfileForInvoice() {
   return useQuery({
     queryKey: ['company-profile-invoice'],
     queryFn: async (): Promise<CompanyProfile | null> => {
+      const requestId = generateRequestId();
+      logger.api('company_profiles/fetch-for-invoice', requestId).start();
+
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return null;
+      if (!user) {
+        logger.info('No user found, skipping company profile fetch for invoice');
+        return null;
+      }
 
       const { data, error } = await supabase
         .from('company_profiles')
@@ -37,7 +44,12 @@ export function useCompanyProfileForInvoice() {
         .eq('user_id', user.id)
         .single();
 
-      if (error) return null;
+      if (error) {
+        logger.api('company_profiles/fetch-for-invoice', requestId).error(error);
+        return null;
+      }
+
+      logger.api('company_profiles/fetch-for-invoice', requestId).success({ companyName: data?.company_name });
       return data as CompanyProfile;
     },
   });

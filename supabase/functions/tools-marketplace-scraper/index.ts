@@ -3,7 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 }
 
 // Supplier IDs from marketplace_suppliers table
@@ -487,11 +487,27 @@ async function upsertProducts(products: any[]) {
 
   for (let i = 0; i < products.length; i += batchSize) {
     const batch = products.slice(i, i + batchSize);
-    console.log(`📦 Upserting batch ${i / batchSize + 1}: ${batch.length} products`);
+
+    // Final safety deduplication within batch to prevent "ON CONFLICT DO UPDATE cannot affect row a second time"
+    const batchUnique = new Map<string, any>();
+    for (const product of batch) {
+      const key = `${product.supplier_id}:${product.sku}`;
+      if (!batchUnique.has(key) ||
+          (product.current_price && batchUnique.get(key).current_price && product.current_price < batchUnique.get(key).current_price)) {
+        batchUnique.set(key, product);
+      }
+    }
+    const dedupedBatch = Array.from(batchUnique.values());
+
+    if (dedupedBatch.length < batch.length) {
+      console.log(`⚠️ Batch ${i / batchSize + 1}: Removed ${batch.length - dedupedBatch.length} in-batch duplicates`);
+    }
+
+    console.log(`📦 Upserting batch ${i / batchSize + 1}: ${dedupedBatch.length} products`);
 
     const { data, error } = await supabase
       .from('marketplace_products')
-      .upsert(batch, {
+      .upsert(dedupedBatch, {
         onConflict: 'supplier_id,sku',
         ignoreDuplicates: false
       })

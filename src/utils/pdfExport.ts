@@ -984,15 +984,34 @@ export const exportCompleteEICRToPDF = async (
     });
 
     // Render each board's schedule
+    let isFirstBoard = true;
     boardGroups.forEach((circuits, boardId) => {
-      // Board header
-      if (boardGroups.size > 1) {
-        pdf.setFontSize(9);
+      // Add new page for each board (except first)
+      if (!isFirstBoard) {
+        pdf.addPage('a4', 'landscape');
+        yPos = 12;
+
+        // Add header for new page
+        pdf.setFillColor(74, 85, 104);
+        pdf.rect(10, yPos, landscapeWidth - 20, 8, 'F');
+        pdf.setFontSize(10);
         pdf.setFont(getFont(), 'bold');
-        const safeBoardId = String(boardId || 'main');
-        pdf.text(`Distribution Board: ${safeBoardId === 'main' ? 'Main Consumer Unit' : safeBoardId}`, 12, yPos);
-        yPos += 6;
+        pdf.setTextColor(255, 255, 255);
+        pdf.text('CIRCUIT DETAILS - SCHEDULE OF TEST RESULTS', 15, yPos + 5.5);
+        pdf.setTextColor(0, 0, 0);
+        yPos += 12;
       }
+      isFirstBoard = false;
+
+      // Board subheader (always show board name now)
+      pdf.setFontSize(9);
+      pdf.setFont(getFont(), 'bold');
+      const safeBoardId = String(boardId || 'main');
+      const boardName = safeBoardId === 'main' || safeBoardId === 'main-cu'
+        ? 'Main Consumer Unit'
+        : safeBoardId;
+      pdf.text(`Distribution Board: ${boardName}`, 12, yPos);
+      yPos += 6;
 
       // Table headers (BS 7671 format) - use proper symbols if Unicode font available
       const sq = getSymbol('squared');

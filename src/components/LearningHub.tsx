@@ -50,7 +50,7 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
       {/* Native-style sticky header */}
       {currentSection === 'overview' && (
         <header className="sticky top-0 z-50 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06]">
-          <div className="flex items-center gap-3 px-4 h-14">
+          <div className="flex items-center gap-3 px-4 h-14 max-w-5xl mx-auto lg:h-16 lg:px-6">
             <Button
               variant="ghost"
               size="icon"
@@ -59,14 +59,14 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-elec-yellow to-amber-600 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
-              <Zap className="h-5 w-5 text-black" />
+            <div className="w-9 h-9 lg:w-11 lg:h-11 rounded-xl bg-gradient-to-br from-elec-yellow to-amber-600 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
+              <Zap className="h-5 w-5 lg:h-6 lg:w-6 text-black" />
             </div>
             <div className="flex-1 min-w-0">
-              <h1 className="text-base font-semibold text-white truncate">
+              <h1 className="text-base lg:text-xl font-semibold text-white truncate">
                 I&T Hub
               </h1>
-              <p className="text-[11px] text-white/50">
+              <p className="text-[11px] lg:text-sm text-white/50">
                 BS 7671:2018+A3:2024
               </p>
             </div>
@@ -75,7 +75,7 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
       )}
 
       {/* Content */}
-      <div className="p-4 max-w-2xl mx-auto">
+      <div className="p-4 max-w-2xl mx-auto lg:max-w-5xl">
         {renderCurrentSection()}
       </div>
     </div>

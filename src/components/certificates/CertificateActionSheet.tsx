@@ -2,7 +2,7 @@ import React from 'react';
 import { ActionSheet } from '@/components/native/SwipeableBottomSheet';
 import {
   Edit,
-  Eye,
+  Download,
   ArrowRight,
   Users,
   Trash2,
@@ -73,8 +73,8 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
       onClick: onEdit,
     },
     {
-      label: 'Preview PDF',
-      icon: <Eye className="h-5 w-5" />,
+      label: 'Download PDF',
+      icon: <Download className="h-5 w-5" />,
       onClick: onPreview,
     },
   ];
