@@ -207,9 +207,10 @@ export const InvoiceItemsStep = ({
     setHoursSheetOpen(false);
   };
 
-  // Scanner handlers
+  // Scanner handlers - close sheet and switch to quick tab while processing
   const handleScanCapture = async (imageData: string, file: File) => {
     setScannerSheetOpen(false);
+    setActiveAddMethod('quick'); // Switch away from scan tab
     const result = await scanner.handleCapture(imageData, file);
     if (result.success && result.items.length > 0) {
       setScanResultsOpen(true);
@@ -218,6 +219,7 @@ export const InvoiceItemsStep = ({
 
   const handleScanUpload = async (file: File) => {
     setScannerSheetOpen(false);
+    setActiveAddMethod('quick'); // Switch away from scan tab
     const result = await scanner.handleUpload(file);
     if (result.success && result.items.length > 0) {
       setScanResultsOpen(true);
