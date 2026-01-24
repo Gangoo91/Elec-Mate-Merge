@@ -17,6 +17,31 @@ initSentry();
 // Initialize PostHog analytics early
 initPostHog();
 
+// Global handler for chunk loading failures (stale deployment cache)
+// This catches errors before they reach React's ErrorBoundary
+const handleChunkError = (event: ErrorEvent | PromiseRejectionEvent) => {
+  const error = 'reason' in event ? event.reason : event.error;
+  const errorString = `${error?.message || ''} ${error?.toString() || ''}`.toLowerCase();
+
+  if (errorString.includes('dynamically imported module') ||
+      errorString.includes('failed to fetch') ||
+      errorString.includes('loading chunk') ||
+      errorString.includes('loading css chunk')) {
+    console.log('[Elec-Mate] Chunk load failure detected, refreshing...');
+    event.preventDefault();
+    // Clear caches and reload
+    if ('caches' in window) {
+      caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))))
+        .finally(() => window.location.reload());
+    } else {
+      window.location.reload();
+    }
+  }
+};
+
+window.addEventListener('error', handleChunkError);
+window.addEventListener('unhandledrejection', handleChunkError);
+
 // Add Android status bar spacer
 if (Capacitor.isNativePlatform() && Capacitor.getPlatform() === "android") {
   const spacer = document.createElement("div");
