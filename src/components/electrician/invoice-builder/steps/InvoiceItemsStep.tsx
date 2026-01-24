@@ -328,12 +328,13 @@ export const InvoiceItemsStep = ({
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
+  // Always calculate from quantity * unitPrice to ensure consistency with PDF generation
   const originalTotal = originalItems.reduce((sum, item) => {
-    const price = item.totalPrice ?? ((item.quantity || 0) * (item.unitPrice || 0));
+    const price = (item.quantity || 0) * (item.unitPrice || 0);
     return sum + (isNaN(price) ? 0 : price);
   }, 0);
   const additionalTotal = additionalItems.reduce((sum, item) => {
-    const price = item.totalPrice ?? ((item.quantity || 0) * (item.unitPrice || 0));
+    const price = (item.quantity || 0) * (item.unitPrice || 0);
     return sum + (isNaN(price) ? 0 : price);
   }, 0);
   const grandTotal = originalTotal + additionalTotal;
@@ -375,7 +376,7 @@ export const InvoiceItemsStep = ({
                 <div key={item.id} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
                   <div className="flex items-center justify-between mb-2">
                     <p className="text-[13px] font-medium text-white truncate flex-1 mr-2">{item.description}</p>
-                    <p className="text-[13px] font-bold text-elec-yellow">{formatCurrency(item.totalPrice)}</p>
+                    <p className="text-[13px] font-bold text-elec-yellow">{formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Input
@@ -838,7 +839,7 @@ export const InvoiceItemsStep = ({
                     className="h-8 w-20 text-[13px] bg-white/[0.05] border-white/[0.06]"
                   />
                   <span className="text-[12px] text-white/50 flex-1">{item.unit}</span>
-                  <span className="text-[13px] font-bold text-elec-yellow">{formatCurrency(item.totalPrice)}</span>
+                  <span className="text-[13px] font-bold text-elec-yellow">{formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}</span>
                 </div>
               </div>
             ))}

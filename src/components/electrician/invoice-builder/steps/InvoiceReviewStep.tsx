@@ -112,7 +112,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                     <p className="text-[14px] font-medium text-white truncate">{item.description}</p>
                     <p className="text-[12px] text-white/50">{item.quantity} × {formatCurrency(item.unitPrice)}</p>
                   </div>
-                  <p className="text-[14px] font-semibold text-elec-yellow ml-4">{formatCurrency(item.totalPrice)}</p>
+                  <p className="text-[14px] font-semibold text-elec-yellow ml-4">{formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}</p>
                 </div>
               ))}
               {allItems.length > 5 && (
@@ -289,7 +289,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                         )}
                       </div>
                       <p className="text-[14px] font-bold text-elec-yellow shrink-0">
-                        {formatCurrency(item.totalPrice)}
+                        {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
                       </p>
                     </div>
                     <div className="flex items-center gap-4 text-[12px] text-white/50">

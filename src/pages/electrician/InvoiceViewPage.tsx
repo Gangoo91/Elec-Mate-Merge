@@ -493,7 +493,8 @@ const InvoiceViewPage = () => {
         <h3 className="text-sm font-semibold text-muted-foreground mb-3">Line Items</h3>
         <div className="space-y-3">
           {invoice.items?.map((item: any, index: number) => {
-            const lineTotal = item.total ?? item.totalPrice ?? ((item.quantity || 0) * (item.unitPrice || 0));
+            // Always calculate from quantity * unitPrice to ensure consistency with PDF
+            const lineTotal = (item.quantity || 0) * (item.unitPrice || 0);
             return (
               <div key={index} className="flex justify-between items-start py-2 border-b border-border/50 last:border-0">
                 <div className="flex-1 min-w-0 pr-4">
