@@ -120,8 +120,8 @@ const createEmptyInvoice = (): Partial<Invoice> => {
     },
     settings: {
       labourRate: 50,
-      overheadPercentage: 15,
-      profitMargin: 20,
+      overheadPercentage: 0,  // User enters final prices - no automatic overhead
+      profitMargin: 0,        // User enters final prices - no automatic profit
       vatRate: 20,
       vatRegistered: true,
       paymentTerms: '30 days',

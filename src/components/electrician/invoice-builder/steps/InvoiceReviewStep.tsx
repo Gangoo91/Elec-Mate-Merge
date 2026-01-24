@@ -121,8 +121,23 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                 </div>
               )}
             </div>
-            <div className="p-4 bg-elec-yellow/10 border-t border-elec-yellow/20">
+            <div className="p-4 bg-elec-yellow/10 border-t border-elec-yellow/20 space-y-2">
+              {/* Subtotal */}
               <div className="flex items-center justify-between">
+                <span className="text-[12px] text-white/70">Subtotal</span>
+                <span className="text-[13px] font-medium text-white">{formatCurrency(invoice.subtotal || 0)}</span>
+              </div>
+
+              {/* VAT - only show if VAT registered */}
+              {invoice.settings?.vatRegistered && (
+                <div className="flex items-center justify-between">
+                  <span className="text-[12px] text-white/70">VAT ({invoice.settings?.vatRate || 20}%)</span>
+                  <span className="text-[13px] font-medium text-white">{formatCurrency(invoice.vatAmount || 0)}</span>
+                </div>
+              )}
+
+              {/* Total */}
+              <div className="flex items-center justify-between pt-1 border-t border-elec-yellow/30">
                 <span className="text-[14px] font-medium text-white">Total</span>
                 <span className="text-lg font-bold text-elec-yellow">{formatCurrency(totalAmount)}</span>
               </div>
@@ -301,10 +316,25 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                 ))}
               </div>
 
-              {/* Total */}
-              <div className="p-4 bg-elec-yellow/10 border-t border-elec-yellow/20">
+              {/* Totals Breakdown */}
+              <div className="p-4 bg-elec-yellow/10 border-t border-elec-yellow/20 space-y-2">
+                {/* Subtotal */}
                 <div className="flex items-center justify-between">
-                  <span className="text-[15px] font-semibold text-white">Invoice Total</span>
+                  <span className="text-[13px] text-white/70">Subtotal</span>
+                  <span className="text-[14px] font-medium text-white">{formatCurrency(invoice.subtotal || 0)}</span>
+                </div>
+
+                {/* VAT - only show if VAT registered */}
+                {invoice.settings?.vatRegistered && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-[13px] text-white/70">VAT ({invoice.settings?.vatRate || 20}%)</span>
+                    <span className="text-[14px] font-medium text-white">{formatCurrency(invoice.vatAmount || 0)}</span>
+                  </div>
+                )}
+
+                {/* Total */}
+                <div className="flex items-center justify-between pt-2 border-t border-elec-yellow/30">
+                  <span className="text-[15px] font-semibold text-white">Total</span>
                   <span className="text-xl font-bold text-elec-yellow">{formatCurrency(totalAmount)}</span>
                 </div>
               </div>

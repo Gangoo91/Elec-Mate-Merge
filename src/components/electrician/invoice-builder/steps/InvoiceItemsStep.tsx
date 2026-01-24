@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { InvoiceItem } from '@/types/invoice';
+import { InvoiceItem, InvoiceSettings } from '@/types/invoice';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Plus, Trash2, Calculator, Wrench, Package, Zap, Clock, FileText, Copy, Search, ChevronDown, ChevronUp, Check, User, HardHat, Hammer, Lightbulb, Camera, Scan } from 'lucide-react';
@@ -28,6 +28,10 @@ interface InvoiceItemsStepProps {
   onAddItem: (item: Omit<InvoiceItem, 'id' | 'totalPrice'>) => void;
   onUpdateItem: (itemId: string, updates: Partial<InvoiceItem>) => void;
   onRemoveItem: (itemId: string) => void;
+  settings?: InvoiceSettings;
+  subtotal?: number;
+  vatAmount?: number;
+  total?: number;
 }
 
 type AddMethod = 'quick' | 'manual' | 'templates' | 'scan';
@@ -50,6 +54,10 @@ export const InvoiceItemsStep = ({
   onAddItem,
   onUpdateItem,
   onRemoveItem,
+  settings,
+  subtotal = 0,
+  vatAmount = 0,
+  total = 0,
 }: InvoiceItemsStepProps) => {
   const [activeAddMethod, setActiveAddMethod] = useState<AddMethod>('quick');
   const [showOriginalItems, setShowOriginalItems] = useState(true);
@@ -328,16 +336,6 @@ export const InvoiceItemsStep = ({
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
-  // Always calculate from quantity * unitPrice to ensure consistency with PDF generation
-  const originalTotal = originalItems.reduce((sum, item) => {
-    const price = (item.quantity || 0) * (item.unitPrice || 0);
-    return sum + (isNaN(price) ? 0 : price);
-  }, 0);
-  const additionalTotal = additionalItems.reduce((sum, item) => {
-    const price = (item.quantity || 0) * (item.unitPrice || 0);
-    return sum + (isNaN(price) ? 0 : price);
-  }, 0);
-  const grandTotal = originalTotal + additionalTotal;
 
   const selectedWorker = workerTypes.find(w => w.id === newItem.workerType);
   const selectedMaterial = commonMaterials.find(m => m.id === newItem.materialCode);
@@ -349,13 +347,27 @@ export const InvoiceItemsStep = ({
 
   return (
     <div className="space-y-4 text-left pb-24">
-      {/* Compact Running Total */}
-      <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30">
-        <div className="flex items-center gap-2">
-          <Calculator className="h-5 w-5 text-elec-yellow" />
-          <span className="text-[13px] text-white">Total</span>
+      {/* Running Total with VAT breakdown */}
+      <div className="p-3 rounded-xl bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Calculator className="h-5 w-5 text-elec-yellow" />
+            <span className="text-[13px] text-white">Subtotal</span>
+          </div>
+          <span className="text-[14px] font-medium text-white">{formatCurrency(subtotal)}</span>
         </div>
-        <span className="text-lg font-bold text-elec-yellow">{formatCurrency(grandTotal)}</span>
+
+        {settings?.vatRegistered && (
+          <div className="flex items-center justify-between mt-1.5">
+            <span className="text-[12px] text-white/60 ml-7">VAT ({settings?.vatRate || 20}%)</span>
+            <span className="text-[13px] text-white/80">{formatCurrency(vatAmount)}</span>
+          </div>
+        )}
+
+        <div className="flex items-center justify-between mt-2 pt-2 border-t border-elec-yellow/30">
+          <span className="text-[13px] font-medium text-white ml-7">Total</span>
+          <span className="text-lg font-bold text-elec-yellow">{formatCurrency(total)}</span>
+        </div>
       </div>
 
       {/* Original Quote Items */}

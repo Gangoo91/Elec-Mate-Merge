@@ -174,6 +174,10 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
             onAddItem={invoiceBuilder.addInvoiceItem}
             onUpdateItem={invoiceBuilder.updateInvoiceItem}
             onRemoveItem={invoiceBuilder.removeInvoiceItem}
+            settings={invoiceBuilder.invoice.settings}
+            subtotal={invoiceBuilder.invoice.subtotal || 0}
+            vatAmount={invoiceBuilder.invoice.vatAmount || 0}
+            total={invoiceBuilder.invoice.total || 0}
           />
         );
 

@@ -363,8 +363,8 @@ serve(async (req) => {
           total: total
         },
         terms: freshQuote?.settings?.terms || "",
-        useVat: (freshQuote?.settings?.vatRate || 0) > 0,
-        vatRate: freshQuote?.settings?.vatRate || 20,
+        useVat: settings.vatRegistered === true,
+        vatRate: settings.vatRate || 20,
         // STEP 5: Cache busting timestamp
         _cache_bust: Date.now(),
         _generated_at: new Date().toISOString()
