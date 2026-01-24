@@ -66,6 +66,89 @@ serve(async (req) => {
       throw new Error('GEMINI_API_KEY environment variable not configured');
     }
 
+    // Build the system prompt for invoice extraction - generic for any supplier
+    const systemPrompt = `You are a specialist OCR system for reading invoices and receipts. Extract EVERY line item with maximum accuracy.
+
+## YOUR TASK
+Read the invoice/receipt image and extract all purchasable line items into structured JSON.
+
+## COMMON INVOICE FORMATS
+
+### Screwfix
+- Format: "CODE x QTY    DESCRIPTION    £PRICE"
+- Example: "7936D x 2    Erbauer Hex Shank Impact Nut Driver    £10.78"
+- The "x 2" is QUANTITY, the £10.78 is LINE TOTAL
+
+### Toolstation
+- Format: CODE, DESCRIPTION, QTY, PRICE columns
+- May have multi-line descriptions
+
+### Trade Suppliers (CEF, Edmundson, Rexel)
+- Tabular format with columns
+- Product codes and detailed descriptions
+
+### General Receipts
+- Simple list: ITEM - PRICE or ITEM x QTY - PRICE
+
+## EXTRACTION RULES
+
+### 1. QUANTITIES
+- Look for "x 2", "x 3", "Qty: 2", or numbers in QTY column
+- Default to 1 if no quantity shown
+
+### 2. PRICES (CRITICAL)
+- The price on the RIGHT is usually the LINE TOTAL
+- UNIT PRICE = LINE TOTAL ÷ QUANTITY
+- Example: "Item x 3 ... £9.00" → unit_price = 9.00 ÷ 3 = 3.00
+- DO NOT modify prices - extract exactly as shown, then calculate unit price
+
+### 3. DESCRIPTIONS
+- Extract the FULL product name/description
+- Include sizes, quantities, colors, specifications
+- Don't truncate or abbreviate
+
+### 4. PRODUCT CODES
+- Often alphanumeric (e.g., "7936D", "ABC123")
+- May be near barcode or at start of line
+- null if not visible
+
+## OUTPUT FORMAT
+
+Return ONLY valid JSON:
+{
+  "supplier_name": "Supplier name or null",
+  "invoice_number": "Invoice/receipt number or null",
+  "invoice_date": "YYYY-MM-DD or null",
+  "items": [
+    {
+      "description": "Full product description",
+      "quantity": 2,
+      "unit_price": 5.39,
+      "total_price": 10.78,
+      "product_code": "ABC123" or null,
+      "category": "other"
+    }
+  ]
+}
+
+## WORKED EXAMPLES
+
+Line: "7936D x 2    Erbauer Hex Shank Impact Nut Driver 10mmx65mm    £10.78"
+→ quantity: 2, unit_price: 5.39, total_price: 10.78
+
+Line: "398PR x 3    Titan Wood Drill Bit 4mm    £5.67"
+→ quantity: 3, unit_price: 1.89, total_price: 5.67
+
+Line: "Milk 2L    £1.50"
+→ quantity: 1, unit_price: 1.50, total_price: 1.50
+
+## CRITICAL
+- Extract EVERY line item visible
+- Never skip items
+- Calculate unit_price = total_price ÷ quantity
+- Use "other" for category
+- Ignore VAT lines, subtotals, delivery, payment info`;
+
     // Call Gemini 3 Flash Preview for vision extraction
     const geminiResponse = await logger.time('Gemini Vision API call', async () => {
       const response = await fetch(
@@ -77,7 +160,7 @@ serve(async (req) => {
             contents: [{
               parts: [
                 {
-                  text: 'Extract all line items from this UK electrical supplier invoice or receipt. Return valid JSON only, no markdown.'
+                  text: `Extract all line items from this invoice/receipt. Be thorough - scan the entire image. Return JSON only.`
                 },
                 {
                   inline_data: {
@@ -89,40 +172,13 @@ serve(async (req) => {
             }],
             systemInstruction: {
               parts: [{
-                text: `You are an expert at reading UK electrical supplier invoices and receipts from suppliers like Screwfix, Toolstation, CEF, Edmundson, Rexel, and independent electrical wholesalers.
-
-Extract ALL line items from the invoice image and return JSON with this exact structure:
-{
-  "supplier_name": "string or null - the supplier/shop name if visible",
-  "invoice_number": "string or null - invoice/receipt number if visible",
-  "invoice_date": "string or null - date in YYYY-MM-DD format if visible",
-  "items": [
-    {
-      "description": "exact product name/description from the invoice",
-      "quantity": number (default to 1 if unclear),
-      "unit_price": number or null (price per unit excluding VAT, in GBP),
-      "total_price": number or null (line total if shown),
-      "product_code": "SKU/product code if visible, otherwise null",
-      "category": "one of: cables|accessories|distribution|lighting|containment|heating|fire-safety|security|ev-charging|renewable-energy|industrial|data-comms|specialist|other"
-    }
-  ]
-}
-
-Important guidelines:
-- Extract EVERY line item, even if quality is poor
-- For prices, extract the ex-VAT price if both are shown
-- If only total with VAT shown, divide by 1.2 for ex-VAT price
-- Guess the category based on electrical product knowledge
-- Common patterns: T&E = cables, MCB/RCD = distribution, socket/switch = accessories
-- If description is partially visible, include what you can read
-- Return empty items array if no line items found
-- Always return valid JSON, never markdown code blocks`
+                text: systemPrompt
               }]
             },
             generationConfig: {
               responseMimeType: 'application/json',
-              maxOutputTokens: 6000,
-              temperature: 0.1 // Low temperature for accurate extraction
+              maxOutputTokens: 8000,
+              temperature: 0.05 // Very low temperature for maximum accuracy
             }
           })
         }

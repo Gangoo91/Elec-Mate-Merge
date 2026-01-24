@@ -242,67 +242,29 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
       }
 
       // Now match extracted items to materials
-      setState('matching');
-      setProgress(`Matching ${data.items.length} items...`);
+      setProgress(`Processing ${data.items.length} items...`);
 
-      const scannedItems: ScannedInvoiceItem[] = await Promise.all(
-        data.items.map(async (extracted, index) => {
-          setProgress(`Matching item ${index + 1} of ${data.items.length}...`);
+      // Create scanned items - auto-select all items with valid data
+      const scannedItems: ScannedInvoiceItem[] = data.items.map((extracted) => {
+        // Determine unit price (prefer extracted unit_price, calculate from total if needed)
+        const unitPrice = extracted.unit_price ??
+          (extracted.total_price && extracted.quantity > 0
+            ? Math.round((extracted.total_price / extracted.quantity) * 100) / 100
+            : 0);
 
-          // Get local matches first
-          const localMatches = findLocalMatches(
-            extracted.description,
-            extracted.product_code,
-            extracted.category,
-            opts.minMatchScore,
-            opts.maxAlternatives + 1
-          );
+        // Auto-select items that have valid prices
+        const autoSelect = unitPrice > 0;
 
-          // Get server matches if we don't have a high-confidence local match
-          let serverMatches: MaterialMatch[] = [];
-          if (localMatches.length === 0 || localMatches[0].score < 0.8) {
-            serverMatches = await findServerMatches(
-              extracted.description,
-              opts.maxAlternatives
-            );
-          }
-
-          // Combine and dedupe matches
-          const allMatches = [...localMatches];
-          serverMatches.forEach(sm => {
-            if (!allMatches.some(m => m.name.toLowerCase() === sm.name.toLowerCase())) {
-              allMatches.push(sm);
-            }
-          });
-
-          // Sort by score
-          allMatches.sort((a, b) => b.score - a.score);
-
-          const bestMatch = allMatches[0] || null;
-          const alternatives = allMatches.slice(1, opts.maxAlternatives + 1);
-
-          // Determine unit price (prefer extracted, fall back to match)
-          const unitPrice = extracted.unit_price ??
-            (extracted.total_price && extracted.quantity > 0
-              ? extracted.total_price / extracted.quantity
-              : null) ??
-            bestMatch?.defaultPrice ??
-            0;
-
-          // Auto-select if high confidence
-          const autoSelect = bestMatch !== null && bestMatch.score >= opts.autoSelectThreshold;
-
-          return {
-            id: generateId(),
-            extracted,
-            match: bestMatch,
-            alternativeMatches: alternatives,
-            selected: autoSelect,
-            quantity: extracted.quantity,
-            unitPrice
-          };
-        })
-      );
+        return {
+          id: generateId(),
+          extracted,
+          match: null, // Skip material matching - user can edit description
+          alternativeMatches: [],
+          selected: autoSelect,
+          quantity: extracted.quantity,
+          unitPrice
+        };
+      });
 
       const scanResult: ScanResult = {
         success: true,
