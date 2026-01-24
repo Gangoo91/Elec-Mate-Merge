@@ -235,7 +235,10 @@ export const InvoiceItemsStep = ({
       description: `${items.length} item${items.length === 1 ? '' : 's'} added from scanned invoice`,
     });
 
+    // Close sheets and switch to Quick tab to show the added items
     setScanResultsOpen(false);
+    setScannerSheetOpen(false);
+    setActiveAddMethod('quick');
     scanner.reset();
   };
 
