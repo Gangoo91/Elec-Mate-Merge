@@ -59,6 +59,11 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
   // Auto-set common voltage based on phases
   const handlePhasesChange = (value: string) => {
     haptics.tap();
+    // Toggle off if already selected
+    if (formData.phases === value) {
+      onUpdate('phases', '');
+      return;
+    }
     onUpdate('phases', value);
 
     // Auto-suggest common voltages
@@ -87,6 +92,11 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
   // Auto-set earthing arrangement when PME is set to Yes
   const handleSupplyPMEChange = (value: string) => {
     haptics.tap();
+    // Toggle off if already selected
+    if (formData.supplyPME === value) {
+      onUpdate('supplyPME', '');
+      return;
+    }
     onUpdate('supplyPME', value);
     if (value === 'yes' && formData.earthingArrangement !== 'TN-C-S') {
       onUpdate('earthingArrangement', 'TN-C-S');
@@ -99,7 +109,10 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
   // Handle main protective device selection
   const handleMainProtectiveDeviceChange = (value: string) => {
     haptics.tap();
-    if (value === 'other') {
+    if (value === '__clear__') {
+      onUpdate('mainProtectiveDevice', '');
+      onUpdate('mainProtectiveDeviceCustom', 'false');
+    } else if (value === 'other') {
       onUpdate('mainProtectiveDevice', '');
       onUpdate('mainProtectiveDeviceCustom', 'true');
     } else {
@@ -123,7 +136,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
     return info[arrangement] || '';
   };
 
-  // Common DNO options
+  // Common DNO options (including Northern Ireland)
   const dnoOptions = [
     'UK Power Networks',
     'Western Power Distribution',
@@ -132,6 +145,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
     'Electricity North West',
     'SSE Networks (SSEN)',
     'National Grid Electricity Distribution',
+    'NIE Networks (Northern Ireland)',
   ];
 
   // Earthing arrangement options
@@ -149,11 +163,12 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
         <SectionTitle icon={Building2} title="Supply Authority" color="blue" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="DNO (Distribution Network Operator)">
-            <Select value={formData.dnoName || ''} onValueChange={(value) => { haptics.tap(); onUpdate('dnoName', value); }}>
+            <Select value={formData.dnoName || ''} onValueChange={(value) => { haptics.tap(); onUpdate('dnoName', value === '__clear__' ? '' : value); }}>
               <SelectTrigger className="h-11 touch-manipulation">
                 <SelectValue placeholder="Select DNO" />
               </SelectTrigger>
               <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
+                <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                 {dnoOptions.map((dno) => (
                   <SelectItem key={dno} value={dno}>{dno}</SelectItem>
                 ))}
@@ -220,7 +235,11 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
                 <button
                   key={option.value}
                   type="button"
-                  onClick={() => { haptics.tap(); onUpdate('supplyVoltage', option.value); }}
+                  onClick={() => {
+                    haptics.tap();
+                    // Toggle off if already selected
+                    onUpdate('supplyVoltage', formData.supplyVoltage === option.value ? '' : option.value);
+                  }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation",
                     formData.supplyVoltage === option.value
@@ -232,12 +251,14 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
                 </button>
               ))}
             </div>
-            <p className="text-xs text-elec-yellow/70 flex items-center gap-1 mt-2">
-              <span className="w-1 h-1 rounded-full bg-elec-yellow"></span>
-              {formData.phases === '1' ? 'Typically 230V for single phase' :
-                formData.phases === '3' ? 'Typically 400V for three phase' :
-                  'Select nominal voltage'}
-            </p>
+            {formData.phases && (
+              <p className="text-xs text-elec-yellow/70 flex items-center gap-1 mt-2">
+                <span className="w-1 h-1 rounded-full bg-elec-yellow"></span>
+                {formData.phases === '1' ? 'Typically 230V for single phase' :
+                  formData.phases === '3' ? 'Typically 400V for three phase' :
+                    'Select nominal voltage'}
+              </p>
+            )}
           </FormField>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -297,6 +318,7 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
                 <SelectValue placeholder="Select protective device" />
               </SelectTrigger>
               <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
+                <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                 <SelectItem value="100A BS 88 Fuse">100A BS 88 Fuse</SelectItem>
                 <SelectItem value="80A BS 88 Fuse">80A BS 88 Fuse</SelectItem>
                 <SelectItem value="63A BS 88 Fuse">63A BS 88 Fuse</SelectItem>
@@ -338,7 +360,11 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
                 <button
                   key={option.value}
                   type="button"
-                  onClick={() => { haptics.tap(); onUpdate('earthingArrangement', option.value); }}
+                  onClick={() => {
+                    haptics.tap();
+                    // Toggle off if already selected
+                    onUpdate('earthingArrangement', formData.earthingArrangement === option.value ? '' : option.value);
+                  }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
                     formData.earthingArrangement === option.value
@@ -358,11 +384,12 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
           </FormField>
 
           <FormField label="Earth Electrode Type">
-            <Select value={formData.earthElectrodeType || ''} onValueChange={(value) => { haptics.tap(); onUpdate('earthElectrodeType', value); }}>
+            <Select value={formData.earthElectrodeType || ''} onValueChange={(value) => { haptics.tap(); onUpdate('earthElectrodeType', value === '__clear__' ? '' : value); }}>
               <SelectTrigger className="h-11 touch-manipulation">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                 <SelectItem value="rod">Rod</SelectItem>
                 <SelectItem value="tape">Tape</SelectItem>
                 <SelectItem value="plate">Plate</SelectItem>
@@ -389,7 +416,14 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
                 <button
                   key={option.value}
                   type="button"
-                  onClick={() => { haptics.tap(); onUpdate('rcdMainSwitch', option.value); }}
+                  onClick={() => {
+                    haptics.tap();
+                    // Toggle off if already selected
+                    const newValue = formData.rcdMainSwitch === option.value ? '' : option.value;
+                    onUpdate('rcdMainSwitch', newValue);
+                    // Clear RCD rating if turning off
+                    if (newValue !== 'yes') onUpdate('rcdRating', '');
+                  }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation",
                     formData.rcdMainSwitch === option.value
@@ -410,7 +444,11 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
                   <button
                     key={rating}
                     type="button"
-                    onClick={() => { haptics.tap(); onUpdate('rcdRating', rating); }}
+                    onClick={() => {
+                      haptics.tap();
+                      // Toggle off if already selected
+                      onUpdate('rcdRating', formData.rcdRating === rating ? '' : rating);
+                    }}
                     className={cn(
                       "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
                       formData.rcdRating === rating

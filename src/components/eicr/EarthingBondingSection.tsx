@@ -186,7 +186,7 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
                   <button
                     key={option.value}
                     type="button"
-                    onClick={() => { haptics.tap(); onUpdate('mainEarthingConductorType', option.value); }}
+                    onClick={() => { haptics.tap(); onUpdate('mainEarthingConductorType', formData.mainEarthingConductorType === option.value ? '' : option.value); }}
                     className={cn(
                       "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
                       formData.mainEarthingConductorType === option.value
@@ -202,12 +202,13 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
             <FormField label="Conductor Size" required>
               <Select
                 value={formData.mainEarthingConductorSize || ''}
-                onValueChange={(value) => { haptics.tap(); onUpdate('mainEarthingConductorSize', value); }}
+                onValueChange={(value) => { haptics.tap(); onUpdate('mainEarthingConductorSize', value === '__clear__' ? '' : value); }}
               >
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select size" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   {conductorSizes.map((size) => (
                     <SelectItem key={size} value={size}>
                       {size === 'custom' ? 'Other/Custom' : `${size}mm²`}
@@ -245,7 +246,7 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
                   <button
                     key={option.value}
                     type="button"
-                    onClick={() => { haptics.tap(); onUpdate('mainBondingConductorType', option.value); }}
+                    onClick={() => { haptics.tap(); onUpdate('mainBondingConductorType', formData.mainBondingConductorType === option.value ? '' : option.value); }}
                     className={cn(
                       "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
                       formData.mainBondingConductorType === option.value
@@ -261,12 +262,13 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
             <FormField label="Conductor Size" required hint="Typical: 10mm² copper for domestic">
               <Select
                 value={formData.mainBondingSize || ''}
-                onValueChange={(value) => { haptics.tap(); onUpdate('mainBondingSize', value); }}
+                onValueChange={(value) => { haptics.tap(); onUpdate('mainBondingSize', value === '__clear__' ? '' : value); }}
               >
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select size" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   {conductorSizes.map((size) => (
                     <SelectItem key={size} value={size}>
                       {size === 'custom' ? 'Other/Custom' : `${size}mm²`}
@@ -298,7 +300,7 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
                 <button
                   key={option.value}
                   type="button"
-                  onClick={() => { haptics.tap(); onUpdate('bondingCompliance', option.value); }}
+                  onClick={() => { haptics.tap(); onUpdate('bondingCompliance', formData.bondingCompliance === option.value ? '' : option.value); }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
                     formData.bondingCompliance === option.value
@@ -353,12 +355,13 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
           <FormField label="Supplementary Bonding Conductor Size" hint="Required in locations with increased risk (e.g., bathrooms)">
             <Select
               value={formData.supplementaryBondingSize || ''}
-              onValueChange={(value) => { haptics.tap(); onUpdate('supplementaryBondingSize', value); }}
+              onValueChange={(value) => { haptics.tap(); onUpdate('supplementaryBondingSize', value === '__clear__' ? '' : value); }}
             >
               <SelectTrigger className="h-11 touch-manipulation">
                 <SelectValue placeholder="Select size" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                 {supplementarySizes.map((size) => (
                   <SelectItem key={size} value={size}>
                     {size === 'custom' ? 'Other/Custom' :
@@ -391,7 +394,7 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
                 <button
                   key={option.value}
                   type="button"
-                  onClick={() => { haptics.tap(); onUpdate('equipotentialBonding', option.value); }}
+                  onClick={() => { haptics.tap(); onUpdate('equipotentialBonding', formData.equipotentialBonding === option.value ? '' : option.value); }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
                     formData.equipotentialBonding === option.value

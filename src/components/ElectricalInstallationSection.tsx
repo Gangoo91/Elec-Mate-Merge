@@ -127,7 +127,7 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
                 <button
                   key={size}
                   type="button"
-                  onClick={() => { haptics.tap(); onUpdate('intakeCableSize', size); }}
+                  onClick={() => { haptics.tap(); onUpdate('intakeCableSize', formData.intakeCableSize === size ? '' : size); }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
                     formData.intakeCableSize === size
@@ -166,7 +166,7 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
                 <button
                   key={size}
                   type="button"
-                  onClick={() => { haptics.tap(); onUpdate('tailsSize', size); }}
+                  onClick={() => { haptics.tap(); onUpdate('tailsSize', formData.tailsSize === size ? '' : size); }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
                     formData.tailsSize === size

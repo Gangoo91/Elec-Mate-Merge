@@ -38,6 +38,20 @@ export const useEICAutoSave = ({
     }
   }, [formData]);
 
+  // Save initial draft on mount (so cert appears in recent certs immediately)
+  useEffect(() => {
+    if (!enabled) return;
+    // Save immediately with a draft created timestamp
+    draftStorage.saveDraft(reportType, null, {
+      ...formData,
+      _draftCreatedAt: new Date().toISOString(),
+    });
+    lastDataRef.current = JSON.stringify(formData);
+    setLastSaveTime(new Date());
+    console.log('[useEICAutoSave] Initial draft saved for', reportType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount
+
   // Auto-save to local draft storage
   useEffect(() => {
     if (!enabled) return;

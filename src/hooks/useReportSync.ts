@@ -38,6 +38,7 @@ interface UseReportSyncReturn {
 
   // Actions
   saveNow: () => Promise<{ success: boolean; reportId: string | null }>;
+  saveInitialDraft: () => void;
   loadReport: (id: string) => Promise<any | null>;
   recoverDraft: () => any | null;
   discardDraft: () => void;
@@ -458,6 +459,22 @@ export const useReportSync = ({
     return await syncToCloud(true);
   }, [formData, reportType, syncToCloud]);
 
+  // === SAVE INITIAL DRAFT (immediately when form opens, even without meaningful data) ===
+  const saveInitialDraft = useCallback(() => {
+    // Save draft immediately to local storage (appears in recent certs/drafts)
+    draftStorage.saveDraft(reportType, currentReportIdRef.current, {
+      ...formData,
+      _draftCreatedAt: new Date().toISOString(),
+    });
+    lastFormDataRef.current = JSON.stringify(formData);
+    setStatus(prev => ({
+      ...prev,
+      local: 'saved',
+      lastLocalSave: new Date(),
+    }));
+    console.log('[ReportSync] Initial draft saved for', reportType);
+  }, [reportType, formData]);
+
   // === LOAD REPORT ===
   const loadReport = useCallback(async (loadReportId: string): Promise<any | null> => {
     if (!userId) return null;
@@ -563,6 +580,7 @@ export const useReportSync = ({
     isAuthenticated,
     authCheckComplete,
     saveNow,
+    saveInitialDraft,
     loadReport,
     recoverDraft,
     discardDraft,

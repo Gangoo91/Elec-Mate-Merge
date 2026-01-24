@@ -195,11 +195,12 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Type of Work *</Label>
-                  <Select value={formData.workType || ''} onValueChange={(v) => onUpdate('workType', v)}>
+                  <Select value={formData.workType || ''} onValueChange={(v) => onUpdate('workType', v === '__clear__' ? '' : v)}>
                     <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                       {WORK_TYPES.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
@@ -304,7 +305,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                       example="Most UK domestic supplies are TN-C-S (PME). TT systems require an earth electrode."
                     />
                   </div>
-                  <Select value={formData.earthingArrangement || ''} onValueChange={(v) => onUpdate('earthingArrangement', v)}>
+                  <Select value={formData.earthingArrangement || ''} onValueChange={(v) => onUpdate('earthingArrangement', v === '__clear__' ? '' : v)}>
                     <SelectTrigger className={cn(
                       "h-12 bg-white/5 border-white/10 rounded-xl text-base",
                       !formData.earthingArrangement && "border-red-500/50"
@@ -312,6 +313,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                       <SelectValue placeholder="Select earthing type" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                       {EARTHING_ARRANGEMENTS.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           <div className="flex flex-col">
@@ -365,11 +367,12 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-sm">Main Earthing Conductor Size</Label>
-                  <Select value={formData.mainEarthingConductorSize || ''} onValueChange={(v) => onUpdate('mainEarthingConductorSize', v)}>
+                  <Select value={formData.mainEarthingConductorSize || ''} onValueChange={(v) => onUpdate('mainEarthingConductorSize', v === '__clear__' ? '' : v)}>
                     <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
                       <SelectValue placeholder="Select size" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                       {EARTHING_CONDUCTOR_SIZES.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}
@@ -380,11 +383,12 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                 </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Main Bonding Conductor Size</Label>
-                  <Select value={formData.mainBondingConductorSize || ''} onValueChange={(v) => onUpdate('mainBondingConductorSize', v)}>
+                  <Select value={formData.mainBondingConductorSize || ''} onValueChange={(v) => onUpdate('mainBondingConductorSize', v === '__clear__' ? '' : v)}>
                     <SelectTrigger className="h-12 bg-white/5 border-white/10 rounded-xl text-base">
                       <SelectValue placeholder="Select size" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                       {EARTHING_CONDUCTOR_SIZES.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                           {opt.label}

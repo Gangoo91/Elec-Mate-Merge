@@ -289,8 +289,14 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                   type="button"
                   onClick={() => {
                     haptics.tap();
-                    onUpdate('lastInspectionType', option.value);
-                    if (option.value !== 'known') onUpdate('dateOfLastInspection', '');
+                    // Toggle off if already selected
+                    if (formData.lastInspectionType === option.value) {
+                      onUpdate('lastInspectionType', '');
+                      onUpdate('dateOfLastInspection', '');
+                    } else {
+                      onUpdate('lastInspectionType', option.value);
+                      if (option.value !== 'known') onUpdate('dateOfLastInspection', '');
+                    }
                   }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
@@ -324,8 +330,14 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                   type="button"
                   onClick={() => {
                     haptics.tap();
-                    onUpdate('evidenceOfAlterations', option.value);
-                    if (option.value === 'no') onUpdate('alterationsDetails', '');
+                    // Toggle off if already selected
+                    if (formData.evidenceOfAlterations === option.value) {
+                      onUpdate('evidenceOfAlterations', '');
+                      onUpdate('alterationsDetails', '');
+                    } else {
+                      onUpdate('evidenceOfAlterations', option.value);
+                      if (option.value === 'no') onUpdate('alterationsDetails', '');
+                    }
                   }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation",

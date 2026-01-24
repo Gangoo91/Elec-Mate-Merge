@@ -28,7 +28,13 @@ import {
   Calendar,
   Pen,
   Check,
+  Plus,
+  X,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WorkerRates } from '@/types/company';
 import SignatureInput from '@/components/signature/SignatureInput';
 
@@ -72,6 +78,58 @@ const registrationSchemes = [
   { value: 'other', label: 'Other' },
 ];
 
+// Default T&Cs grouped by category - must match edge function DEFAULT_TERMS_MAP
+const DEFAULT_TERMS_GROUPED = {
+  payment: {
+    label: 'Payment Terms',
+    terms: [
+      { id: 'payment_30', label: 'Payment due within 30 days of invoice date' },
+      { id: 'deposit_required', label: 'A deposit of the specified percentage is required before work commences' },
+      { id: 'additional_charges', label: 'Additional work not included in this quote will be charged at our standard hourly rate' },
+    ],
+  },
+  warranty: {
+    label: 'Warranty & Guarantee',
+    terms: [
+      { id: 'warranty_workmanship', label: 'All workmanship is guaranteed for the warranty period specified' },
+      { id: 'warranty_materials', label: 'Materials are covered by manufacturer warranties where applicable' },
+    ],
+  },
+  compliance: {
+    label: 'Compliance & Certification',
+    terms: [
+      { id: 'bs7671_compliance', label: 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations' },
+      { id: 'part_p_notification', label: 'Building control notification (Part P) included where required' },
+      { id: 'testing_cert', label: 'Electrical installation certificate or minor works certificate provided on completion' },
+    ],
+  },
+  site: {
+    label: 'Site Access & Safety',
+    terms: [
+      { id: 'access_required', label: 'Clear access to work areas must be provided' },
+      { id: 'power_isolation', label: 'Power may need to be isolated during installation - advance notice will be given' },
+      { id: 'site_safety', label: 'Work area will be left safe and clean at the end of each working day' },
+      { id: 'asbestos_disclaimer', label: 'This quote excludes work involving asbestos - if discovered, work will stop pending survey' },
+    ],
+  },
+  general: {
+    label: 'General Conditions',
+    terms: [
+      { id: 'price_validity', label: 'This quotation is valid for the number of days specified from the date of issue' },
+      { id: 'cancellation', label: 'Cancellation within 48 hours of scheduled work may incur charges' },
+      { id: 'unforeseen_works', label: 'Unforeseen works discovered during installation will be quoted separately' },
+    ],
+  },
+};
+
+// Get all default term IDs
+const ALL_DEFAULT_TERM_IDS = Object.values(DEFAULT_TERMS_GROUPED).flatMap(group => group.terms.map(t => t.id));
+
+interface CustomTerm {
+  id: string;
+  label: string;
+}
+
 interface CompanyProfileFormData {
   company_name: string;
   company_address: string;
@@ -83,12 +141,17 @@ interface CompanyProfileFormData {
   vat_number: string;
   primary_color: string;
   secondary_color: string;
+  accent_color: string;
   currency: string;
   locale: string;
   payment_terms: string;
   hourly_rate: number;
   // Worker rates
   worker_rates: WorkerRates;
+  // Quote settings (quote_terms managed via state, not form)
+  quote_validity_days: number;
+  warranty_period: string;
+  deposit_percentage: number;
   // Inspector details
   inspector_name: string;
   inspector_qualifications: string[];
@@ -102,12 +165,48 @@ interface CompanyProfileFormData {
   signature_data: string;
 }
 
+// Helper to parse quote_terms from database
+function parseQuoteTerms(quoteTermsJson: string | undefined | null): { selected: string[]; custom: CustomTerm[] } {
+  if (!quoteTermsJson) {
+    // Default selections
+    return {
+      selected: ['payment_30', 'deposit_required', 'warranty_workmanship', 'bs7671_compliance', 'testing_cert', 'price_validity'],
+      custom: [],
+    };
+  }
+  try {
+    const parsed = JSON.parse(quoteTermsJson);
+    if (parsed.selected && Array.isArray(parsed.selected)) {
+      return {
+        selected: parsed.selected,
+        custom: parsed.custom || [],
+      };
+    }
+    // Legacy plain text - migrate to new format
+    return {
+      selected: ['payment_30', 'warranty_workmanship', 'bs7671_compliance'],
+      custom: [],
+    };
+  } catch {
+    return {
+      selected: ['payment_30', 'warranty_workmanship', 'bs7671_compliance'],
+      custom: [],
+    };
+  }
+}
+
 export const CompanyProfileSettings = () => {
   const { companyProfile, loading, saveCompanyProfile, uploadLogo } = useCompanyProfile();
   const { addNotification } = useNotifications();
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(companyProfile?.logo_url || null);
   const [uploading, setUploading] = useState(false);
+
+  // T&Cs state
+  const [selectedTerms, setSelectedTerms] = useState<string[]>([]);
+  const [customTerms, setCustomTerms] = useState<CustomTerm[]>([]);
+  const [newCustomTerm, setNewCustomTerm] = useState('');
+  const [expandedGroups, setExpandedGroups] = useState<string[]>(['payment', 'compliance']);
 
   const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<CompanyProfileFormData>({
     defaultValues: {
@@ -121,11 +220,16 @@ export const CompanyProfileSettings = () => {
       vat_number: companyProfile?.vat_number || '',
       primary_color: companyProfile?.primary_color || '#1e40af',
       secondary_color: companyProfile?.secondary_color || '#3b82f6',
+      accent_color: companyProfile?.accent_color || '#F59E0B',
       currency: companyProfile?.currency || 'GBP',
       locale: companyProfile?.locale || 'en-GB',
       payment_terms: companyProfile?.payment_terms || '30 days',
       hourly_rate: companyProfile?.hourly_rate || 45,
       worker_rates: companyProfile?.worker_rates || defaultWorkerRates,
+      quote_terms: companyProfile?.quote_terms || '',
+      quote_validity_days: companyProfile?.quote_validity_days || 30,
+      warranty_period: companyProfile?.warranty_period || '12 months',
+      deposit_percentage: companyProfile?.deposit_percentage || 30,
       inspector_name: companyProfile?.inspector_name || '',
       inspector_qualifications: companyProfile?.inspector_qualifications || [],
       registration_scheme: companyProfile?.registration_scheme || '',
@@ -151,11 +255,15 @@ export const CompanyProfileSettings = () => {
       setValue('vat_number', companyProfile.vat_number || '');
       setValue('primary_color', companyProfile.primary_color);
       setValue('secondary_color', companyProfile.secondary_color);
+      setValue('accent_color', companyProfile.accent_color || '#F59E0B');
       setValue('currency', companyProfile.currency);
       setValue('locale', companyProfile.locale);
       setValue('payment_terms', companyProfile.payment_terms);
       setValue('hourly_rate', companyProfile.hourly_rate || 45);
       setValue('worker_rates', companyProfile.worker_rates || defaultWorkerRates);
+      setValue('quote_validity_days', companyProfile.quote_validity_days || 30);
+      setValue('warranty_period', companyProfile.warranty_period || '12 months');
+      setValue('deposit_percentage', companyProfile.deposit_percentage || 30);
       setValue('inspector_name', companyProfile.inspector_name || '');
       setValue('inspector_qualifications', companyProfile.inspector_qualifications || []);
       setValue('registration_scheme', companyProfile.registration_scheme || '');
@@ -167,6 +275,11 @@ export const CompanyProfileSettings = () => {
       setValue('insurance_expiry', companyProfile.insurance_expiry || '');
       setValue('signature_data', companyProfile.signature_data || '');
       setLogoPreview(companyProfile.logo_url || null);
+
+      // Parse and set T&Cs
+      const parsedTerms = parseQuoteTerms(companyProfile.quote_terms);
+      setSelectedTerms(parsedTerms.selected);
+      setCustomTerms(parsedTerms.custom);
     }
   }, [companyProfile, setValue]);
 
@@ -196,11 +309,23 @@ export const CompanyProfileSettings = () => {
       }
     }
 
+    // Build quote_terms JSON from selected terms and custom terms
+    const quoteTermsJson = JSON.stringify({
+      selected: selectedTerms,
+      custom: customTerms,
+    });
+
     await saveCompanyProfile({
       ...data,
       ...logoData,
       // Ensure worker_rates is saved
       worker_rates: data.worker_rates || defaultWorkerRates,
+      // Quote settings - T&Cs as JSON
+      quote_terms: quoteTermsJson,
+      quote_validity_days: data.quote_validity_days || 30,
+      warranty_period: data.warranty_period || '12 months',
+      deposit_percentage: data.deposit_percentage || 30,
+      accent_color: data.accent_color || '#F59E0B',
       // Ensure inspector details are saved
       inspector_name: data.inspector_name || undefined,
       inspector_qualifications: data.inspector_qualifications?.length > 0 ? data.inspector_qualifications : undefined,
@@ -237,6 +362,9 @@ export const CompanyProfileSettings = () => {
               </p>
             </div>
           </div>
+          <p className="text-xs text-amber-400/80 mt-3 pl-15">
+            💡 After saving changes, regenerate existing quote/invoice PDFs to update them with new details
+          </p>
         </div>
       </div>
 
@@ -527,6 +655,273 @@ export const CompanyProfileSettings = () => {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        </div>
+
+        {/* Quote Settings */}
+        <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+          <div className="px-4 md:px-6 py-4 border-b border-white/10">
+            <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+              <FileText className="h-4 w-4 text-elec-yellow" />
+              Quote Settings
+            </h3>
+            <p className="text-xs text-muted-foreground mt-1">
+              Customise your quotes with your own terms and branding
+            </p>
+          </div>
+          <div className="p-4 md:p-6 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label className="text-foreground">Quote Validity (Days)</Label>
+                <Input
+                  type="number"
+                  min="1"
+                  max="365"
+                  {...register('quote_validity_days', { valueAsNumber: true })}
+                  placeholder="30"
+                  className="bg-white/5 border-white/10"
+                />
+                <p className="text-xs text-muted-foreground">How long quotes remain valid</p>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-foreground">Deposit Percentage (%)</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  max="100"
+                  {...register('deposit_percentage', { valueAsNumber: true })}
+                  placeholder="30"
+                  className="bg-white/5 border-white/10"
+                />
+                <p className="text-xs text-muted-foreground">Required to secure booking</p>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-foreground">Warranty Period</Label>
+                <Input
+                  {...register('warranty_period')}
+                  placeholder="12 months"
+                  className="bg-white/5 border-white/10"
+                />
+                <p className="text-xs text-muted-foreground">Workmanship guarantee</p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-foreground">Accent Color</Label>
+              <div className="flex gap-2">
+                <Input
+                  type="color"
+                  {...register('accent_color')}
+                  className="w-14 h-10 p-1 cursor-pointer bg-transparent border-white/10 rounded-lg"
+                />
+                <Input
+                  {...register('accent_color')}
+                  placeholder="#F59E0B"
+                  className="flex-1 bg-white/5 border-white/10 font-mono"
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">Used for highlights on quotes</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Terms & Conditions Checklist */}
+        <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+          <div className="px-4 md:px-6 py-4 border-b border-white/10">
+            <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+              <FileText className="h-4 w-4 text-elec-yellow" />
+              Terms & Conditions
+            </h3>
+            <p className="text-xs text-muted-foreground mt-1">
+              Select which terms appear on your quotes ({selectedTerms.length} selected)
+            </p>
+          </div>
+          <div className="p-4 md:p-6 space-y-3">
+            {/* Grouped T&Cs */}
+            {Object.entries(DEFAULT_TERMS_GROUPED).map(([groupKey, group]) => {
+              const groupTermIds = group.terms.map(t => t.id);
+              const selectedInGroup = groupTermIds.filter(id => selectedTerms.includes(id)).length;
+              const isExpanded = expandedGroups.includes(groupKey);
+
+              return (
+                <Collapsible
+                  key={groupKey}
+                  open={isExpanded}
+                  onOpenChange={(open) => {
+                    setExpandedGroups(prev =>
+                      open ? [...prev, groupKey] : prev.filter(g => g !== groupKey)
+                    );
+                  }}
+                >
+                  <CollapsibleTrigger className="w-full">
+                    <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors touch-manipulation">
+                      <div className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
+                        <span className="font-medium text-foreground text-sm">{group.label}</span>
+                        <span className="text-xs text-muted-foreground">
+                          ({selectedInGroup}/{groupTermIds.length})
+                        </span>
+                      </div>
+                      {isExpanded ? (
+                        <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                      )}
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="pl-4 pt-2 space-y-2">
+                      {group.terms.map((term) => {
+                        const isSelected = selectedTerms.includes(term.id);
+                        return (
+                          <label
+                            key={term.id}
+                            className="flex items-start gap-3 p-2 rounded-lg hover:bg-white/5 cursor-pointer touch-manipulation"
+                          >
+                            <Checkbox
+                              checked={isSelected}
+                              onCheckedChange={(checked) => {
+                                setSelectedTerms(prev =>
+                                  checked
+                                    ? [...prev, term.id]
+                                    : prev.filter(id => id !== term.id)
+                                );
+                              }}
+                              className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                            />
+                            <span className="text-sm text-foreground/90 leading-relaxed">
+                              {term.label}
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              );
+            })}
+
+            {/* Custom Terms */}
+            <div className="pt-4 border-t border-white/10">
+              <div className="flex items-center justify-between mb-3">
+                <Label className="text-foreground font-medium">Custom Terms</Label>
+                <span className="text-xs text-muted-foreground">
+                  {customTerms.length} custom term{customTerms.length !== 1 ? 's' : ''}
+                </span>
+              </div>
+
+              {/* Existing custom terms */}
+              {customTerms.length > 0 && (
+                <div className="space-y-2 mb-3">
+                  {customTerms.map((term) => {
+                    const isSelected = selectedTerms.includes(term.id);
+                    return (
+                      <div
+                        key={term.id}
+                        className="flex items-start gap-3 p-2 rounded-lg bg-white/5"
+                      >
+                        <Checkbox
+                          checked={isSelected}
+                          onCheckedChange={(checked) => {
+                            setSelectedTerms(prev =>
+                              checked
+                                ? [...prev, term.id]
+                                : prev.filter(id => id !== term.id)
+                            );
+                          }}
+                          className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                        />
+                        <span className="flex-1 text-sm text-foreground/90 leading-relaxed">
+                          {term.label}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCustomTerms(prev => prev.filter(t => t.id !== term.id));
+                            setSelectedTerms(prev => prev.filter(id => id !== term.id));
+                          }}
+                          className="p-1 rounded hover:bg-red-500/20 text-muted-foreground hover:text-red-400 transition-colors touch-manipulation"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Add new custom term */}
+              <div className="flex gap-2">
+                <Input
+                  value={newCustomTerm}
+                  onChange={(e) => setNewCustomTerm(e.target.value)}
+                  placeholder="Add your own custom term..."
+                  className="flex-1 bg-white/5 border-white/10 text-sm"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && newCustomTerm.trim()) {
+                      e.preventDefault();
+                      const newId = `custom_${Date.now()}`;
+                      const newTerm = { id: newId, label: newCustomTerm.trim() };
+                      setCustomTerms(prev => [...prev, newTerm]);
+                      setSelectedTerms(prev => [...prev, newId]);
+                      setNewCustomTerm('');
+                    }
+                  }}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  disabled={!newCustomTerm.trim()}
+                  onClick={() => {
+                    if (newCustomTerm.trim()) {
+                      const newId = `custom_${Date.now()}`;
+                      const newTerm = { id: newId, label: newCustomTerm.trim() };
+                      setCustomTerms(prev => [...prev, newTerm]);
+                      setSelectedTerms(prev => [...prev, newId]);
+                      setNewCustomTerm('');
+                    }
+                  }}
+                  className="bg-elec-yellow/10 border-elec-yellow/30 hover:bg-elec-yellow/20 text-elec-yellow touch-manipulation"
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                Press Enter or click + to add a custom term
+              </p>
+            </div>
+
+            {/* Quick actions */}
+            <div className="pt-4 border-t border-white/10 flex flex-wrap gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedTerms(ALL_DEFAULT_TERM_IDS)}
+                className="text-xs border-white/10 hover:bg-white/10"
+              >
+                Select All
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedTerms([])}
+                className="text-xs border-white/10 hover:bg-white/10"
+              >
+                Deselect All
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedTerms(['payment_30', 'deposit_required', 'warranty_workmanship', 'bs7671_compliance', 'testing_cert', 'price_validity'])}
+                className="text-xs border-white/10 hover:bg-white/10"
+              >
+                Reset to Defaults
+              </Button>
             </div>
           </div>
         </div>

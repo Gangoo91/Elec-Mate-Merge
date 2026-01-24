@@ -154,7 +154,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
                   type="button"
                   onClick={() => {
                     haptics.tap();
-                    onUpdate('purposeOfInspection', option.value);
+                    onUpdate('purposeOfInspection', formData.purposeOfInspection === option.value ? '' : option.value);
                   }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm px-2",
@@ -214,7 +214,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
                   type="button"
                   onClick={() => {
                     haptics.tap();
-                    onUpdate('inspectionInterval', option.value);
+                    onUpdate('inspectionInterval', formData.inspectionInterval === option.value ? '' : option.value);
                   }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",

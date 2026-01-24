@@ -26,10 +26,11 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
   const showRCDFields = formData.rcdMainSwitch && formData.rcdMainSwitch !== 'no';
 
   const handleRCDMainSwitchChange = (value: string) => {
-    onUpdate('rcdMainSwitch', value);
+    const actualValue = value === '__clear__' ? '' : value;
+    onUpdate('rcdMainSwitch', actualValue);
 
-    // Clear RCD fields when "No" is selected
-    if (value === 'no') {
+    // Clear RCD fields when "No" or cleared
+    if (actualValue === 'no' || actualValue === '') {
       onUpdate('rcdRating', '');
       onUpdate('rcdType', '');
     }
@@ -116,11 +117,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <Label htmlFor="mainProtectiveDevice" className="font-medium text-sm">Device Type *</Label>
-              <Select value={formData.mainProtectiveDevice || ''} onValueChange={(value) => onUpdate('mainProtectiveDevice', value)}>
+              <Select value={formData.mainProtectiveDevice || ''} onValueChange={(value) => onUpdate('mainProtectiveDevice', value === '__clear__' ? '' : value)}>
                 <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                   <SelectValue placeholder="Select device type" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   <SelectItem value="main-switch">Main Switch</SelectItem>
                   <SelectItem value="switch-fuse">Switch Fuse</SelectItem>
                   <SelectItem value="circuit-breaker">Circuit-breaker</SelectItem>
@@ -144,11 +146,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             </div>
             <div>
               <Label htmlFor="mainSwitchPoles" className="font-medium text-sm">No. of Poles</Label>
-              <Select value={formData.mainSwitchPoles || ''} onValueChange={(value) => onUpdate('mainSwitchPoles', value)}>
+              <Select value={formData.mainSwitchPoles || ''} onValueChange={(value) => onUpdate('mainSwitchPoles', value === '__clear__' ? '' : value)}>
                 <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                   <SelectValue placeholder="Select poles" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   <SelectItem value="1">1 Pole</SelectItem>
                   <SelectItem value="2">2 Pole</SelectItem>
                   <SelectItem value="3">3 Pole</SelectItem>
@@ -161,11 +164,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
               <Label htmlFor="mainSwitchRating" className="font-medium text-sm">Current Rating (A) *</Label>
-              <Select value={formData.mainSwitchRating || ''} onValueChange={(value) => onUpdate('mainSwitchRating', value)}>
+              <Select value={formData.mainSwitchRating || ''} onValueChange={(value) => onUpdate('mainSwitchRating', value === '__clear__' ? '' : value)}>
                 <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                   <SelectValue placeholder="Select rating" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   <SelectItem value="16">16A</SelectItem>
                   <SelectItem value="20">20A</SelectItem>
                   <SelectItem value="25">25A</SelectItem>
@@ -194,11 +198,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             </div>
             <div>
               <Label htmlFor="mainSwitchVoltageRating" className="font-medium text-sm">Voltage Rating (V)</Label>
-              <Select value={formData.mainSwitchVoltageRating || ''} onValueChange={(value) => onUpdate('mainSwitchVoltageRating', value)}>
+              <Select value={formData.mainSwitchVoltageRating || ''} onValueChange={(value) => onUpdate('mainSwitchVoltageRating', value === '__clear__' ? '' : value)}>
                 <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                   <SelectValue placeholder="Select voltage" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   <SelectItem value="230">230V</SelectItem>
                   <SelectItem value="400">400V</SelectItem>
                   <SelectItem value="other">Other</SelectItem>
@@ -207,11 +212,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             </div>
             <div>
               <Label htmlFor="breakingCapacity" className="font-medium text-sm">Breaking Capacity (kA)</Label>
-              <Select value={formData.breakingCapacity || ''} onValueChange={(value) => onUpdate('breakingCapacity', value)}>
+              <Select value={formData.breakingCapacity || ''} onValueChange={(value) => onUpdate('breakingCapacity', value === '__clear__' ? '' : value)}>
                 <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                   <SelectValue placeholder="Select capacity" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   <SelectItem value="3">3kA</SelectItem>
                   <SelectItem value="6">6kA</SelectItem>
                   <SelectItem value="10">10kA</SelectItem>
@@ -239,6 +245,7 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
                   <SelectValue placeholder="Select RCD type" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   <SelectItem value="yes">Yes</SelectItem>
                   <SelectItem value="no">No</SelectItem>
                   <SelectItem value="rcbo">RCBO</SelectItem>
@@ -250,11 +257,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
               <>
                 <div>
                   <Label htmlFor="rcdRating" className="font-medium text-sm">I<sub>Δn</sub> Rating (mA)</Label>
-                  <Select value={formData.rcdRating || ''} onValueChange={(value) => onUpdate('rcdRating', value)}>
+                  <Select value={formData.rcdRating || ''} onValueChange={(value) => onUpdate('rcdRating', value === '__clear__' ? '' : value)}>
                     <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                       <SelectValue placeholder="Select rating" />
                     </SelectTrigger>
                     <SelectContent className="bg-background border-border text-foreground z-50">
+                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                       <SelectItem value="30">30mA</SelectItem>
                       <SelectItem value="100">100mA</SelectItem>
                       <SelectItem value="300">300mA</SelectItem>
@@ -263,11 +271,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
                 </div>
                 <div>
                   <Label htmlFor="rcdType" className="font-medium text-sm">RCD Type</Label>
-                  <Select value={formData.rcdType || ''} onValueChange={(value) => onUpdate('rcdType', value)}>
+                  <Select value={formData.rcdType || ''} onValueChange={(value) => onUpdate('rcdType', value === '__clear__' ? '' : value)}>
                     <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent className="bg-background border-border text-foreground z-50">
+                      <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                       <SelectItem value="ac">AC Type</SelectItem>
                       <SelectItem value="a">A Type</SelectItem>
                       <SelectItem value="b">B Type</SelectItem>
@@ -292,11 +301,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-3 rounded-lg bg-blue-500/5 border border-blue-500/20">
               <div>
                 <Label htmlFor="rcdTimeDelay" className="font-medium text-sm">Rated Time Delay (ms)</Label>
-                <Select value={formData.rcdTimeDelay || ''} onValueChange={(value) => onUpdate('rcdTimeDelay', value)}>
+                <Select value={formData.rcdTimeDelay || ''} onValueChange={(value) => onUpdate('rcdTimeDelay', value === '__clear__' ? '' : value)}>
                   <SelectTrigger className="bg-background border-border focus:border-blue-500 focus:ring-blue-500 h-11">
                     <SelectValue placeholder="Select delay" />
                   </SelectTrigger>
                   <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                     <SelectItem value="0">0ms (No delay)</SelectItem>
                     <SelectItem value="40">40ms</SelectItem>
                     <SelectItem value="150">150ms</SelectItem>
@@ -342,11 +352,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="intakeCableSize" className="font-medium text-sm">Intake Cable Size</Label>
-              <Select value={formData.intakeCableSize || ''} onValueChange={(value) => onUpdate('intakeCableSize', value)}>
+              <Select value={formData.intakeCableSize || ''} onValueChange={(value) => onUpdate('intakeCableSize', value === '__clear__' ? '' : value)}>
                 <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select cable size" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   {cableSizeOptions.map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
@@ -358,11 +369,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             </div>
             <div>
               <Label htmlFor="intakeCableType" className="font-medium text-sm">Intake Cable Type</Label>
-              <Select value={formData.intakeCableType || ''} onValueChange={(value) => onUpdate('intakeCableType', value)}>
+              <Select value={formData.intakeCableType || ''} onValueChange={(value) => onUpdate('intakeCableType', value === '__clear__' ? '' : value)}>
                 <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select cable type" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   <SelectItem value="pvc">PVC</SelectItem>
                   <SelectItem value="xlpe">XLPE</SelectItem>
                   <SelectItem value="paper">Paper Insulated</SelectItem>
@@ -374,11 +386,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="tailsSize" className="font-medium text-sm">Meter Tails Size</Label>
-              <Select value={formData.tailsSize || ''} onValueChange={(value) => onUpdate('tailsSize', value)}>
+              <Select value={formData.tailsSize || ''} onValueChange={(value) => onUpdate('tailsSize', value === '__clear__' ? '' : value)}>
                 <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select tails size" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   <SelectItem value="16mm">16mm²</SelectItem>
                   <SelectItem value="25mm">25mm²</SelectItem>
                   <SelectItem value="35mm">35mm²</SelectItem>
@@ -389,11 +402,12 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             </div>
             <div>
               <Label htmlFor="tailsLength" className="font-medium text-sm">Meter Tails Length</Label>
-              <Select value={formData.tailsLength || ''} onValueChange={(value) => onUpdate('tailsLength', value)}>
+              <Select value={formData.tailsLength || ''} onValueChange={(value) => onUpdate('tailsLength', value === '__clear__' ? '' : value)}>
                 <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select length" />
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   <SelectItem value="1m">1m</SelectItem>
                   <SelectItem value="1.5m">1.5m</SelectItem>
                   <SelectItem value="2m">2m</SelectItem>

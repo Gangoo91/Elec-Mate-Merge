@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Camera, Eye, Check, X, AlertTriangle, AlertCircle, ChevronRight } from 'lucide-react';
+import { Eye, Check, X, AlertTriangle, AlertCircle, ChevronRight } from 'lucide-react';
 import { InspectionItem as BaseInspectionItem } from '@/data/bs7671ChecklistData';
 import { cn } from '@/lib/utils';
 import { useHaptics } from '@/hooks/useHaptics';
@@ -200,7 +200,10 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
 
           {/* Item Title */}
           <div className="flex-1 min-w-0 text-left">
-            <p className="text-sm text-foreground font-medium leading-tight line-clamp-2 text-left">
+            <p className={cn(
+              "text-sm text-foreground font-medium leading-tight text-left",
+              !isExpanded && "line-clamp-2"
+            )}>
               {sectionItem.item}
             </p>
             {sectionItem.clause && (
@@ -272,32 +275,22 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
               />
             </div>
 
-            {/* Action buttons */}
-            <div className="flex gap-2">
+            {/* Action button for critical outcomes */}
+            {isCriticalOutcome && onNavigateToObservations && (
               <Button
                 variant="outline"
-                className="flex-1 h-11 text-sm bg-white/5 border-white/10 text-white/70 hover:bg-white/10 active:scale-95 touch-manipulation"
+                onClick={onNavigateToObservations}
+                className={cn(
+                  "w-full h-11 text-sm active:scale-95 touch-manipulation",
+                  currentOutcome === 'C1' && "bg-red-500/10 border-red-500/30 text-red-400",
+                  currentOutcome === 'C2' && "bg-orange-500/10 border-orange-500/30 text-orange-400",
+                  currentOutcome === 'C3' && "bg-yellow-500/10 border-yellow-500/30 text-yellow-400"
+                )}
               >
-                <Camera className="h-4 w-4 mr-2" />
-                Photo
+                <Eye className="h-4 w-4 mr-2" />
+                View
               </Button>
-
-              {isCriticalOutcome && onNavigateToObservations && (
-                <Button
-                  variant="outline"
-                  onClick={onNavigateToObservations}
-                  className={cn(
-                    "flex-1 h-11 text-sm active:scale-95 touch-manipulation",
-                    currentOutcome === 'C1' && "bg-red-500/10 border-red-500/30 text-red-400",
-                    currentOutcome === 'C2' && "bg-orange-500/10 border-orange-500/30 text-orange-400",
-                    currentOutcome === 'C3' && "bg-yellow-500/10 border-yellow-500/30 text-yellow-400"
-                  )}
-                >
-                  <Eye className="h-4 w-4 mr-2" />
-                  View
-                </Button>
-              )}
-            </div>
+            )}
 
             {/* LIM option if not in main row */}
             <button

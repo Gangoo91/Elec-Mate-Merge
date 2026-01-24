@@ -21,6 +21,82 @@ const BRIEFING_TEMPLATES = {
   'general': 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D' // For now, use same template
 };
 
+// Default T&Cs options for electrical contractors - must match frontend SettingsDialog.tsx
+const DEFAULT_TERMS_MAP: Record<string, string> = {
+  'payment_30': 'Payment due within 30 days of invoice date',
+  'deposit_required': 'A deposit of the specified percentage is required before work commences',
+  'additional_charges': 'Additional work not included in this quote will be charged at our standard hourly rate',
+  'warranty_workmanship': 'All workmanship is guaranteed for the warranty period specified',
+  'warranty_materials': 'Materials are covered by manufacturer warranties where applicable',
+  'bs7671_compliance': 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations',
+  'part_p_notification': 'Building control notification (Part P) included where required',
+  'testing_cert': 'Electrical installation certificate or minor works certificate provided on completion',
+  'access_required': 'Clear access to work areas must be provided',
+  'power_isolation': 'Power may need to be isolated during installation - advance notice will be given',
+  'site_safety': 'Work area will be left safe and clean at the end of each working day',
+  'asbestos_disclaimer': 'This quote excludes work involving asbestos - if discovered, work will stop pending survey',
+  'price_validity': 'This quotation is valid for the number of days specified from the date of issue',
+  'cancellation': 'Cancellation within 48 hours of scheduled work may incur charges',
+  'unforeseen_works': 'Unforeseen works discovered during installation will be quoted separately',
+};
+
+// Build terms list from stored JSON format
+function buildTermsList(quoteTermsJson: string | null): string[] {
+  if (!quoteTermsJson) {
+    // Return sensible defaults if no terms configured
+    return [
+      DEFAULT_TERMS_MAP['payment_30'],
+      DEFAULT_TERMS_MAP['deposit_required'],
+      DEFAULT_TERMS_MAP['warranty_workmanship'],
+      DEFAULT_TERMS_MAP['bs7671_compliance'],
+      DEFAULT_TERMS_MAP['testing_cert'],
+      DEFAULT_TERMS_MAP['price_validity'],
+    ];
+  }
+
+  try {
+    const parsed = JSON.parse(quoteTermsJson);
+    const terms: string[] = [];
+
+    // Handle new JSON format: { selected: string[], custom: {id: string, label: string}[] }
+    if (parsed.selected && Array.isArray(parsed.selected)) {
+      for (const termId of parsed.selected) {
+        // Check if it's a default term
+        if (DEFAULT_TERMS_MAP[termId]) {
+          terms.push(DEFAULT_TERMS_MAP[termId]);
+        }
+        // Check if it's a custom term
+        else if (termId.startsWith('custom_') && parsed.custom) {
+          const customTerm = parsed.custom.find((t: { id: string; label: string }) => t.id === termId);
+          if (customTerm?.label) {
+            terms.push(customTerm.label);
+          }
+        }
+      }
+      return terms.length > 0 ? terms : [
+        DEFAULT_TERMS_MAP['payment_30'],
+        DEFAULT_TERMS_MAP['warranty_workmanship'],
+        DEFAULT_TERMS_MAP['bs7671_compliance'],
+      ];
+    }
+
+    // Legacy format: plain text (split by newlines)
+    if (typeof quoteTermsJson === 'string' && !quoteTermsJson.startsWith('{')) {
+      return quoteTermsJson.split('\n').filter(line => line.trim());
+    }
+
+    // Fallback
+    return [
+      DEFAULT_TERMS_MAP['payment_30'],
+      DEFAULT_TERMS_MAP['warranty_workmanship'],
+      DEFAULT_TERMS_MAP['bs7671_compliance'],
+    ];
+  } catch {
+    // If parsing fails, treat as legacy plain text
+    return quoteTermsJson.split('\n').filter(line => line.trim());
+  }
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -389,10 +465,64 @@ serve(async (req) => {
         }
       };
       
+      // Calculate valid until date
+      const validUntilDate = freshQuote?.expiryDate || freshQuote?.expiry_date
+        ? new Date(freshQuote.expiryDate || freshQuote.expiry_date)
+        : new Date(Date.now() + (freshCompanyProfile?.quote_validity_days || 30) * 24 * 60 * 60 * 1000);
+
       payload = {
-        quote: transformedQuote,
-        companyProfile: freshCompanyProfile,
-        // STEP 5: Cache busting timestamp
+        quote: {
+          ...transformedQuote,
+          // Formatted dates for template
+          validUntil: validUntilDate.toISOString().split('T')[0],
+          // Signature/acceptance data for PDF
+          signature_url: freshQuote?.signature_url || null,
+          acceptance_status: freshQuote?.acceptance_status || null,
+          acceptance_method: freshQuote?.acceptance_method || null,
+          accepted_at: freshQuote?.accepted_at ? new Date(freshQuote.accepted_at).toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+          }) : null,
+          accepted_by_name: freshQuote?.accepted_by_name || null,
+          accepted_by_email: freshQuote?.accepted_by_email || null,
+        },
+        companyProfile: {
+          ...freshCompanyProfile,
+          // Ensure colors have defaults
+          primary_color: freshCompanyProfile?.primary_color || '#1e40af',
+          secondary_color: freshCompanyProfile?.secondary_color || '#1F2937',
+          accent_color: freshCompanyProfile?.accent_color || '#F59E0B',
+        },
+        // Branding settings for dynamic styling
+        branding: {
+          primaryColor: freshCompanyProfile?.primary_color || '#1e40af',
+          secondaryColor: freshCompanyProfile?.secondary_color || '#1F2937',
+          accentColor: freshCompanyProfile?.accent_color || '#F59E0B',
+        },
+        // Business settings
+        settings: {
+          quoteValidityDays: freshCompanyProfile?.quote_validity_days || 30,
+          warrantyPeriod: freshCompanyProfile?.warranty_period || '12 months',
+          depositPercentage: freshCompanyProfile?.deposit_percentage || 30,
+          paymentTerms: freshCompanyProfile?.payment_terms || '7 days',
+        },
+        // Build terms list from stored settings (handles JSON format with selected + custom terms)
+        terms: buildTermsList(freshCompanyProfile?.quote_terms || null),
+        // Also pass raw for backwards compatibility
+        customTerms: freshCompanyProfile?.quote_terms || null,
+        // Professional credentials
+        credentials: {
+          registrationScheme: freshCompanyProfile?.registration_scheme || null,
+          registrationNumber: freshCompanyProfile?.registration_number || null,
+          insuranceProvider: freshCompanyProfile?.insurance_provider || null,
+          insuranceCoverage: freshCompanyProfile?.insurance_coverage || null,
+          qualifications: freshCompanyProfile?.inspector_qualifications || [],
+        },
+        // VAT settings
+        useVat: freshQuote?.settings?.vatRegistered === true,
+        vatRate: freshQuote?.settings?.vatRate || 20,
+        // Cache busting timestamp
         _cache_bust: Date.now(),
         _generated_at: new Date().toISOString()
       };

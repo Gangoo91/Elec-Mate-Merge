@@ -872,7 +872,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   description="Get started by creating your first certificate."
                   action={{
                     label: 'Create Certificate',
-                    onClick: () => onNavigate('eicr'),
+                    onClick: () => setShowNewCertSheet(true),
                   }}
                 />
               )

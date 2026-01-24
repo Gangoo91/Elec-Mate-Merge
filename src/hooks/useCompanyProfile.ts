@@ -177,6 +177,27 @@ export const useCompanyProfile = () => {
     fetchCompanyProfile();
   }, [fetchCompanyProfile]);
 
+  // Refetch when window regains focus (e.g., after editing in settings)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchCompanyProfile();
+      }
+    };
+
+    const handleFocus = () => {
+      fetchCompanyProfile();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [fetchCompanyProfile]);
+
   return {
     companyProfile,
     loading,

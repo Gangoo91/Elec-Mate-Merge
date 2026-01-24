@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Trash2, Wrench, Package, Zap, FileText, Copy, TrendingUp, Search, ChevronRight, ChevronDown, Clock, PoundSterling, Hash } from "lucide-react";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
@@ -341,21 +342,21 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
               </div>
               <div className="flex-1 min-w-0">
                 <label className="text-[12px] text-white/40 block">Worker Type</label>
-                <div className="relative">
-                  <select
-                    value={newItem.workerType}
-                    onChange={(e) => handleWorkerTypeChange(e.target.value)}
-                    className="w-full h-9 bg-transparent text-[15px] font-medium text-white appearance-none cursor-pointer focus:outline-none"
-                  >
-                    <option value="" disabled className="bg-zinc-900">Select worker type</option>
+                <Select
+                  value={newItem.workerType || ""}
+                  onValueChange={handleWorkerTypeChange}
+                >
+                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white/30">
+                    <SelectValue placeholder="Select worker type" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
                     {workerTypes.map(w => (
-                      <option key={w.id} value={w.id} className="bg-zinc-900">
+                      <SelectItem key={w.id} value={w.id} className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer">
                         {w.name} - £{w.defaultHourlyRate}/hr
-                      </option>
+                      </SelectItem>
                     ))}
-                  </select>
-                  <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
-                </div>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             {/* Hours */}
@@ -365,19 +366,21 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
               </div>
               <div className="flex-1 min-w-0">
                 <label className="text-[12px] text-white/40 block">Hours</label>
-                <div className="relative">
-                  <select
-                    value={newItem.hours > 0 ? newItem.hours.toString() : ""}
-                    onChange={(e) => handleHoursChange(parseFloat(e.target.value))}
-                    className="w-full h-9 bg-transparent text-[15px] font-medium text-white appearance-none cursor-pointer focus:outline-none"
-                  >
-                    <option value="" disabled className="bg-zinc-900">Select hours</option>
+                <Select
+                  value={newItem.hours > 0 ? newItem.hours.toString() : ""}
+                  onValueChange={(value) => handleHoursChange(parseFloat(value))}
+                >
+                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white/30">
+                    <SelectValue placeholder="Select hours" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
                     {hourOptions.map(opt => (
-                      <option key={opt.value} value={opt.value} className="bg-zinc-900">{opt.label}</option>
+                      <SelectItem key={opt.value} value={opt.value.toString()} className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer">
+                        {opt.label}
+                      </SelectItem>
                     ))}
-                  </select>
-                  <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
-                </div>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
@@ -505,19 +508,21 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
               </div>
               <div className="flex-1 min-w-0">
                 <label className="text-[12px] text-white/40 block">Equipment Category</label>
-                <div className="relative">
-                  <select
-                    value={newItem.subcategory}
-                    onChange={(e) => setNewItem(prev => ({ ...prev, subcategory: e.target.value }))}
-                    className="w-full h-9 bg-transparent text-[15px] font-medium text-white appearance-none cursor-pointer focus:outline-none"
-                  >
-                    <option value="" disabled className="bg-zinc-900">Select category</option>
+                <Select
+                  value={newItem.subcategory || ""}
+                  onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value }))}
+                >
+                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white/30">
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
                     {equipmentCategories.map(c => (
-                      <option key={c.id} value={c.id} className="bg-zinc-900">{c.name}</option>
+                      <SelectItem key={c.id} value={c.id} className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer">
+                        {c.name}
+                      </SelectItem>
                     ))}
-                  </select>
-                  <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
-                </div>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             {/* Equipment */}
@@ -527,23 +532,23 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
               </div>
               <div className="flex-1 min-w-0">
                 <label className="text-[12px] text-white/40 block">Equipment</label>
-                <div className="relative">
-                  <select
-                    value={newItem.equipmentCode}
-                    onChange={(e) => handleEquipmentSelect(e.target.value)}
-                    className="w-full h-9 bg-transparent text-[15px] font-medium text-white appearance-none cursor-pointer focus:outline-none"
-                  >
-                    <option value="" disabled className="bg-zinc-900">Select equipment</option>
+                <Select
+                  value={newItem.equipmentCode || ""}
+                  onValueChange={(value) => handleEquipmentSelect(value)}
+                >
+                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white/30">
+                    <SelectValue placeholder="Select equipment" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
                     {commonEquipment
                       .filter(e => !newItem.subcategory || e.category === newItem.subcategory)
                       .map(e => (
-                        <option key={e.id} value={e.id} className="bg-zinc-900">
+                        <SelectItem key={e.id} value={e.id} className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer">
                           {e.name} - £{e.dailyRate}/{e.unit}
-                        </option>
+                        </SelectItem>
                       ))}
-                  </select>
-                  <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
-                </div>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
@@ -579,8 +584,8 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                 <Input
                   type="number"
                   inputMode="decimal"
-                  value={newItem.quantity || ""}
-                  onChange={(e) => setNewItem(prev => ({ ...prev, quantity: parseFloat(e.target.value) || 1 }))}
+                  value={newItem.quantity === 0 ? "" : newItem.quantity}
+                  onChange={(e) => setNewItem(prev => ({ ...prev, quantity: e.target.value === "" ? 0 : parseFloat(e.target.value) }))}
                   placeholder="1"
                   className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
@@ -596,8 +601,8 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                 <Input
                   type="number"
                   inputMode="decimal"
-                  value={newItem.unitPrice || ""}
-                  onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: parseFloat(e.target.value) || 0 }))}
+                  value={newItem.unitPrice === 0 ? "" : newItem.unitPrice}
+                  onChange={(e) => setNewItem(prev => ({ ...prev, unitPrice: e.target.value === "" ? 0 : parseFloat(e.target.value) }))}
                   placeholder="0.00"
                   className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
@@ -656,8 +661,8 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                         <div className="flex items-center gap-1.5">
                           <input
                             type="number"
-                            value={item.quantity}
-                            onChange={(e) => onUpdate(item.id, { quantity: parseFloat(e.target.value) || 1 })}
+                            value={item.quantity === 0 ? "" : item.quantity}
+                            onChange={(e) => onUpdate(item.id, { quantity: e.target.value === "" ? 0 : parseFloat(e.target.value) })}
                             className="w-14 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white"
                           />
                           <span className="text-[12px] text-white/70">{item.unit}</span>
@@ -667,8 +672,8 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                           <span className="text-[12px] text-white/70">£</span>
                           <input
                             type="number"
-                            value={item.unitPrice}
-                            onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
+                            value={item.unitPrice === 0 ? "" : item.unitPrice}
+                            onChange={(e) => onUpdate(item.id, { unitPrice: e.target.value === "" ? 0 : parseFloat(e.target.value) })}
                             className="w-16 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white"
                           />
                         </div>
