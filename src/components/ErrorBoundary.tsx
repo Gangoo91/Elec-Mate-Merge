@@ -32,10 +32,14 @@ class ErrorBoundary extends Component<Props, State> {
     });
 
     // Auto-refresh on chunk loading failures (stale deployment cache)
-    const isChunkError = error.message?.includes('dynamically imported module') ||
-                         error.message?.includes('Failed to fetch') ||
-                         error.message?.includes('Loading chunk') ||
-                         error.message?.includes('text/html');
+    const errorString = `${error?.message || ''} ${error?.toString() || ''} ${error?.name || ''}`.toLowerCase();
+    const stackString = (errorInfo?.componentStack || '').toLowerCase();
+    const isChunkError = errorString.includes('dynamically imported module') ||
+                         errorString.includes('failed to fetch') ||
+                         errorString.includes('loading chunk') ||
+                         errorString.includes('text/html') ||
+                         errorString.includes('loading css chunk') ||
+                         (errorString.includes('typeerror') && stackString.includes('lazy'));
     if (isChunkError) {
       console.log('[ErrorBoundary] Chunk load failure detected, auto-refreshing...');
       this.hardReload();
