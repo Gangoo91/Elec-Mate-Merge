@@ -701,7 +701,7 @@ const AM2Module5Section1 = () => {
       <AM2NavigationFooter
         previousHref="/study-centre/apprentice/am2/module4/section6"
         previousLabel="Time Management"
-        nextHref="../section2"
+        nextHref="/study-centre/apprentice/am2/module5/section2"
         nextLabel="Fault-Finding Techniques"
         currentSection={1}
         totalSections={6}
