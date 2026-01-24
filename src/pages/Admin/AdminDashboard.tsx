@@ -79,7 +79,11 @@ export default function AdminDashboard() {
         elecIdCompleteRes,
         subscribedDataRes,
         edgeDataRes,
+        // Trial users: signed up in last 7 days, not subscribed, not free access
         trialDataRes,
+        // Churned: signed up more than 7 days ago, never subscribed, not free access
+        churnedDataRes,
+        // Beta testers (free access granted)
         betaDataRes,
       ] = await Promise.all([
         supabase.from("profiles").select("*", { count: "exact", head: true }),
@@ -90,19 +94,34 @@ export default function AdminDashboard() {
         supabase.from("employer_elec_id_profiles").select("*", { count: "exact", head: true }),
         supabase.from("profiles").select("subscription_tier, free_access_granted").eq("subscribed", true),
         supabase.functions.invoke("admin-get-users"),
-        // Trial users (not subscribed, on trial tier)
-        supabase.from("profiles").select("subscription_tier, role").eq("subscription_tier", "trial"),
+        // Trial users: signed up in last 7 days, not subscribed, not free access
+        supabase.from("profiles").select("role, full_name, created_at")
+          .gte("created_at", weekAgo.toISOString())
+          .or("subscribed.is.null,subscribed.eq.false")
+          .or("free_access_granted.is.null,free_access_granted.eq.false"),
+        // Churned: signed up more than 7 days ago, never subscribed, not free access
+        supabase.from("profiles").select("role, full_name, created_at")
+          .lt("created_at", weekAgo.toISOString())
+          .or("subscribed.is.null,subscribed.eq.false")
+          .or("free_access_granted.is.null,free_access_granted.eq.false"),
         // Beta testers (free access granted)
         supabase.from("profiles").select("subscription_tier, role, free_access_granted").eq("free_access_granted", true),
       ]);
 
       const subscribedData = subscribedDataRes.data || [];
       const trialData = trialDataRes.data || [];
+      const churnedData = churnedDataRes.data || [];
       const betaData = betaDataRes.data || [];
       const subscribedUsers = subscribedData.length;
       // Exclude free_access_granted users from paid counts (they pay £0)
       const paidSubscribers = subscribedData.filter(u => !u.free_access_granted);
-      const freeSubscribers = subscribedData.filter(u => u.free_access_granted);
+
+      // Calculate trial breakdown by role
+      const trialByRole = {
+        electrician: trialData.filter(u => u.role === 'electrician').length,
+        apprentice: trialData.filter(u => u.role === 'apprentice').length,
+        other: trialData.filter(u => !u.role || (u.role !== 'electrician' && u.role !== 'apprentice')).length,
+      };
 
       // Handle both capitalized and lowercase tier names for backwards compatibility
       // Count ALL subscribers by tier (including free_access_granted for display)
@@ -112,7 +131,8 @@ export default function AdminDashboard() {
         employer: subscribedData.filter(u => u.subscription_tier?.toLowerCase() === "employer").length,
         founder: subscribedData.filter(u => u.subscription_tier?.toLowerCase() === "founder").length,
         free: betaData.length, // Beta testers with free access
-        trial: trialData.length, // Trial users
+        trial: trialData.length, // Users in 7-day trial
+        churned: churnedData.length, // Trial expired, didn't convert
       };
 
       // MRR only counts PAYING subscribers (exclude free_access_granted)
@@ -133,6 +153,7 @@ export default function AdminDashboard() {
         elecIdComplete: elecIdCompleteRes.count || 0,
         subscribedUsers,
         tierCounts,
+        trialByRole,
         mrr,
         recentSignups: usersWithEmails.slice(0, 8),
       };
@@ -248,7 +269,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           {/* Non-paying users */}
-          <div className="grid grid-cols-2 gap-2 mt-2">
+          <div className="grid grid-cols-3 gap-2 mt-2">
             <div
               className="bg-gradient-to-br from-teal-500/15 to-teal-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-teal-500/25 hover:to-teal-600/15 transition-all active:scale-[0.98] touch-manipulation border border-teal-500/30"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/users"); }}
@@ -267,7 +288,23 @@ export default function AdminDashboard() {
                 <Clock className="h-4 w-4 text-orange-400" />
                 <p className="text-lg font-bold text-orange-400">{stats?.tierCounts?.trial || 0}</p>
               </div>
-              <p className="text-[10px] text-muted-foreground">On Trial</p>
+              <p className="text-[10px] text-muted-foreground">In 7-Day Trial</p>
+              {/* Trial breakdown by role */}
+              <div className="flex items-center justify-center gap-1 mt-1">
+                <span className="text-[9px] text-blue-400">{stats?.trialByRole?.electrician || 0} elec</span>
+                <span className="text-[9px] text-muted-foreground">•</span>
+                <span className="text-[9px] text-cyan-400">{stats?.trialByRole?.apprentice || 0} appr</span>
+              </div>
+            </div>
+            <div
+              className="bg-gradient-to-br from-red-500/15 to-red-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-red-500/25 hover:to-red-600/15 transition-all active:scale-[0.98] touch-manipulation border border-red-500/30"
+              onClick={(e) => { e.stopPropagation(); navigate("/admin/users"); }}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <UserCheck className="h-4 w-4 text-red-400" />
+                <p className="text-lg font-bold text-red-400">{stats?.tierCounts?.churned || 0}</p>
+              </div>
+              <p className="text-[10px] text-muted-foreground">Churned</p>
             </div>
           </div>
         </CardContent>
