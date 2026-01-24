@@ -89,7 +89,7 @@ export const prefetchAdminElecIds = (qc: QueryClient) => {
   qc.prefetchQuery({
     queryKey: ["admin-elec-ids", "", "all"],
     queryFn: async () => {
-      const { data } = await supabase.functions.invoke("admin-list-elec-ids", {
+      const { data } = await supabase.functions.invoke("admin-verify-elecid", {
         body: { action: "list" },
       });
       return data?.profiles || [];

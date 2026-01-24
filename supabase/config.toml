@@ -1,5 +1,9 @@
 project_id = "cjjlpiyfzvhffkfyszgh"
 
+[auth.email]
+# Disable email confirmation - users go straight to dashboard after signup
+enable_confirmations = false
+
 # MINIMAL DEPLOY: Only 2 functions to fix bundle timeout
 [functions.health-safety-v3]
 verify_jwt = false
