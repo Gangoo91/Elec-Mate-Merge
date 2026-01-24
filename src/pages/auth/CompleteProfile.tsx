@@ -23,7 +23,7 @@ import {
 import { cn } from '@/lib/utils';
 
 const CompleteProfile = () => {
-  const { user, refreshProfile } = useAuth();
+  const { user, fetchProfile } = useAuth();
   const navigate = useNavigate();
 
   const [selectedRole, setSelectedRole] = useState<string>('');
@@ -67,8 +67,8 @@ const CompleteProfile = () => {
       }
 
       // Refresh the profile in AuthContext
-      if (refreshProfile) {
-        await refreshProfile();
+      if (fetchProfile) {
+        await fetchProfile();
       }
 
       // Navigate to dashboard
