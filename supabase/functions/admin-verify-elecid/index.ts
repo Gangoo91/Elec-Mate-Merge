@@ -57,18 +57,61 @@ Deno.serve(async (req) => {
     switch (action) {
       case "list": {
         const status = reason; // Reuse reason field for status filter
+
+        // Step 1: Fetch Elec-ID profiles
         let query = supabaseAdmin
           .from("employer_elec_id_profiles")
-          .select(`*, profiles:employee_id (full_name, username, role)`)
+          .select("*")
           .order("created_at", { ascending: true });
 
         if (status && status !== "all") {
           query = query.eq("verification_status", status);
         }
 
-        const { data, error } = await query;
-        if (error) throw error;
-        result = { profiles: data };
+        const { data: elecIdData, error: elecIdError } = await query;
+        if (elecIdError) throw elecIdError;
+
+        if (!elecIdData || elecIdData.length === 0) {
+          result = { profiles: [] };
+          break;
+        }
+
+        // Step 2: Fetch employee records to get user_ids
+        // employee_id in employer_elec_id_profiles references employer_employees.id
+        const employeeIds = elecIdData.map((p: any) => p.employee_id).filter(Boolean);
+        const { data: employeesData } = await supabaseAdmin
+          .from("employer_employees")
+          .select("id, user_id")
+          .in("id", employeeIds);
+
+        // Create a map of employee_id -> user_id
+        const employeeToUserMap = new Map(
+          employeesData?.map((e: any) => [e.id, e.user_id]) || []
+        );
+
+        // Step 3: Fetch profile data for all user_ids
+        const userIds = employeesData?.map((e: any) => e.user_id).filter(Boolean) || [];
+        const { data: profilesData } = await supabaseAdmin
+          .from("profiles")
+          .select("id, full_name, username, role")
+          .in("id", userIds);
+
+        // Create a map of user_id -> profile data
+        const profilesMap = new Map(
+          profilesData?.map((p: any) => [p.id, { full_name: p.full_name, username: p.username, role: p.role }]) || []
+        );
+
+        // Step 4: Merge the data
+        const mergedProfiles = elecIdData.map((elecId: any) => {
+          const userId = employeeToUserMap.get(elecId.employee_id);
+          const profile = userId ? profilesMap.get(userId) : null;
+          return {
+            ...elecId,
+            profiles: profile || null,
+          };
+        });
+
+        result = { profiles: mergedProfiles };
         break;
       }
 

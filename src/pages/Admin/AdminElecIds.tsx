@@ -96,16 +96,10 @@ export default function AdminElecIds() {
     refetchOnWindowFocus: true,
     staleTime: 0,
     queryFn: async () => {
+      // Step 1: Fetch Elec-ID profiles
       let query = supabase
         .from("employer_elec_id_profiles")
-        .select(`
-          *,
-          profiles:employee_id (
-            full_name,
-            username,
-            role
-          )
-        `)
+        .select("*")
         .order("created_at", { ascending: false });
 
       if (statusFilter === "verified") {
@@ -116,14 +110,60 @@ export default function AdminElecIds() {
         query = query.eq("activated", true);
       }
 
-      const { data, error } = await query;
-      if (error) throw error;
+      const { data: elecIdData, error: elecIdError } = await query;
+      if (elecIdError) throw elecIdError;
+
+      if (!elecIdData || elecIdData.length === 0) {
+        return [];
+      }
+
+      // Step 2: Fetch employee records to get user_ids
+      // employee_id in employer_elec_id_profiles references employer_employees.id
+      const employeeIds = elecIdData.map((p) => p.employee_id).filter(Boolean);
+      const { data: employeesData, error: employeesError } = await supabase
+        .from("employer_employees")
+        .select("id, user_id")
+        .in("id", employeeIds);
+
+      if (employeesError) {
+        console.error("Error fetching employees:", employeesError);
+      }
+
+      // Create a map of employee_id -> user_id
+      const employeeToUserMap = new Map(
+        employeesData?.map((e) => [e.id, e.user_id]) || []
+      );
+
+      // Step 3: Fetch profile data for all user_ids
+      const userIds = employeesData?.map((e) => e.user_id).filter(Boolean) || [];
+      const { data: profilesData, error: profilesError } = await supabase
+        .from("profiles")
+        .select("id, full_name, username, role")
+        .in("id", userIds);
+
+      if (profilesError) {
+        console.error("Error fetching profiles:", profilesError);
+      }
+
+      // Create a map of user_id -> profile data
+      const profilesMap = new Map(
+        profilesData?.map((p) => [p.id, { full_name: p.full_name, username: p.username, role: p.role }]) || []
+      );
+
+      // Step 4: Merge the data
+      let merged = elecIdData.map((elecId) => {
+        const userId = employeeToUserMap.get(elecId.employee_id);
+        const profile = userId ? profilesMap.get(userId) : null;
+        return {
+          ...elecId,
+          profiles: profile || null,
+        };
+      }) as ElecIdProfile[];
 
       // Filter by search
-      let filtered = data as ElecIdProfile[];
       if (search) {
         const searchLower = search.toLowerCase();
-        filtered = filtered.filter(
+        merged = merged.filter(
           (p) =>
             p.profiles?.full_name?.toLowerCase().includes(searchLower) ||
             p.elec_id_number?.toLowerCase().includes(searchLower) ||
@@ -131,7 +171,7 @@ export default function AdminElecIds() {
         );
       }
 
-      return filtered;
+      return merged;
     },
   });
 
