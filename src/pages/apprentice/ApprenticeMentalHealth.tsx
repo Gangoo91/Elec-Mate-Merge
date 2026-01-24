@@ -74,7 +74,7 @@ const MentalHealthContent = () => {
     }
   }, [activeSection]);
   const [selectedQuickMood, setSelectedQuickMood] = useState<number | null>(null);
-  const { moodHistory } = useMentalHealth();
+  const { moodHistory, addMoodEntry } = useMentalHealth();
   const { user } = useAuth();
 
   // Get user's first name

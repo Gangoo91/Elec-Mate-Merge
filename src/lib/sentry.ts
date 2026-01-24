@@ -45,6 +45,17 @@ export function initSentry() {
         "Load failed",
         // User cancelled
         "AbortError",
+        // Expected auth errors - user-facing, not bugs
+        "User already registered",
+        "Invalid login credentials",
+        "New password should be different from the old password",
+        "Email not confirmed",
+        "Invalid email or password",
+        /AuthApiError/,
+        // CDN/deployment transient errors
+        /is not a valid JavaScript MIME type/,
+        "ChunkLoadError",
+        /Loading chunk .* failed/,
       ],
 
       // Don't send PII
