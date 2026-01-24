@@ -25,11 +25,21 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    console.error('[ERROR] ErrorBoundary caught an error:', error, errorInfo);
     this.setState({
       error,
       errorInfo
     });
+
+    // Auto-refresh on chunk loading failures (stale deployment cache)
+    const isChunkError = error.message?.includes('dynamically imported module') ||
+                         error.message?.includes('Failed to fetch') ||
+                         error.message?.includes('Loading chunk') ||
+                         error.message?.includes('text/html');
+    if (isChunkError) {
+      console.log('[ErrorBoundary] Chunk load failure detected, auto-refreshing...');
+      this.hardReload();
+    }
   }
 
   private hardReload = async () => {

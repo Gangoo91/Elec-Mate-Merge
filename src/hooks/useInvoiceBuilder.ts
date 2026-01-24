@@ -10,8 +10,9 @@ import type { CompanyProfile } from '@/types/company';
 import { logger, generateRequestId } from '@/utils/logger';
 
 // Helper to safely get item price with NaN protection
+// Always calculate from quantity * unitPrice to ensure consistency with PDF generation
 const safeItemPrice = (item: InvoiceItem): number => {
-  const price = item.totalPrice ?? ((item.quantity || 0) * (item.unitPrice || 0));
+  const price = (item.quantity || 0) * (item.unitPrice || 0);
   return isNaN(price) ? 0 : price;
 };
 
@@ -42,7 +43,7 @@ export function useCompanyProfileForInvoice() {
         .from('company_profiles')
         .select('*')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
 
       if (error) {
         logger.api('company_profiles/fetch-for-invoice', requestId).error(error);
