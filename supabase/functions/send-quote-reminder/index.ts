@@ -299,7 +299,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Build URLs
-    const acceptUrl = `https://www.elec-mate.com/quote/${publicToken}#accept`;
+    const acceptUrl = `https://www.elec-mate.com/public-quote/${publicToken}#accept`;
     const trackingUrl = `${supabaseUrl}/functions/v1/quote-email-tracking?t=${publicToken}&q=${quoteId}`;
 
     // Build and send email

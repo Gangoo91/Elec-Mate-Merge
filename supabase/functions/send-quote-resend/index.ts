@@ -253,8 +253,8 @@ const handler = async (req: Request): Promise<Response> => {
     // instead of direct edge function (one-click without signature)
     // IMPORTANT: Always use www.elec-mate.com (non-www has no SSL certificate)
     const appUrl = 'https://www.elec-mate.com';
-    const acceptUrl = `${appUrl}/quote/${publicToken}#accept`;
-    const rejectUrl = `${appUrl}/quote/${publicToken}#reject`;
+    const acceptUrl = `${appUrl}/public-quote/${publicToken}#accept`;
+    const rejectUrl = `${appUrl}/public-quote/${publicToken}#reject`;
     console.log(`🔗 Accept URL: ${acceptUrl}`);
 
     // ========================================================================

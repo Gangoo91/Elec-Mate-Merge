@@ -227,7 +227,7 @@ Deno.serve(async (req) => {
       throw new Error("Unauthorized: Admin access required");
     }
 
-    const { action, emails, inviteId } = await req.json();
+    const { action, emails, inviteId, cohort, token } = await req.json();
 
     // Create admin client for operations
     const supabaseAdmin = createClient(
@@ -409,7 +409,6 @@ Deno.serve(async (req) => {
       }
 
       case "validate_token": {
-        const { token } = await req.json();
         if (!token) {
           throw new Error("Token is required");
         }
@@ -496,6 +495,210 @@ Deno.serve(async (req) => {
 
         if (error) throw error;
         result = { success: true };
+        break;
+      }
+
+      case "send_to_cohort": {
+        if (!cohort || !["trial", "churned"].includes(cohort)) {
+          throw new Error("Invalid cohort. Must be 'trial' or 'churned'");
+        }
+
+        const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
+        // Get all users with their auth emails via admin API
+        const { data: { users: authUsers }, error: authError } = await supabaseAdmin.auth.admin.listUsers();
+        if (authError) throw authError;
+
+        // Create email lookup map
+        const emailMap = new Map(authUsers.map(u => [u.id, u.email]));
+
+        // Get profiles based on cohort (trial vs churned)
+        // Trial users: signed up within last 7 days, not subscribed, no free access
+        // Churned users: signed up more than 7 days ago, not subscribed, no free access
+        let query = supabaseAdmin
+          .from("profiles")
+          .select("id, created_at")
+          .or("subscribed.is.null,subscribed.eq.false")
+          .or("free_access_granted.is.null,free_access_granted.eq.false");
+
+        if (cohort === "trial") {
+          query = query.gte("created_at", weekAgo.toISOString());
+        } else if (cohort === "churned") {
+          query = query.lt("created_at", weekAgo.toISOString());
+        }
+
+        const { data: profiles, error: profilesError } = await query;
+        if (profilesError) throw profilesError;
+
+        // Map profile IDs to emails
+        const userEmails = (profiles || [])
+          .map(p => emailMap.get(p.id))
+          .filter((email): email is string => !!email);
+
+        // Get existing invites to skip duplicates
+        const { data: existingInvites } = await supabaseAdmin
+          .from("founder_invites")
+          .select("email");
+        const existingEmails = new Set((existingInvites || []).map(i => i.email.toLowerCase()));
+
+        // Filter to users without existing invites
+        const newEmails = userEmails.filter(email =>
+          !existingEmails.has(email.toLowerCase())
+        );
+
+        if (newEmails.length === 0) {
+          result = { sent: 0, skipped: userEmails.length, total: userEmails.length, message: "All users already have invites" };
+          break;
+        }
+
+        // Create invites for new emails
+        const invites = newEmails.map(email => ({
+          email: email.toLowerCase(),
+          invite_token: generateToken(),
+          status: "pending",
+        }));
+
+        const { error: insertError } = await supabaseAdmin.from("founder_invites").insert(invites);
+        if (insertError) throw insertError;
+
+        // Send emails to all new invites
+        let sentCount = 0;
+        const errors: string[] = [];
+
+        // Choose subject line based on cohort
+        const subjectLine = cohort === "trial"
+          ? "🎁 Special Founder Offer - Lock in £3.99/month for Life!"
+          : "We miss you! Exclusive Founder Rate - £3.99/month Forever";
+
+        for (const email of newEmails) {
+          try {
+            const { data: invite, error: inviteError } = await supabaseAdmin
+              .from("founder_invites")
+              .select("*")
+              .eq("email", email.toLowerCase())
+              .single();
+
+            if (inviteError || !invite) {
+              errors.push(`${email}: Could not find invite`);
+              continue;
+            }
+
+            const emailHtml = generateInviteEmailHTML(email, invite.invite_token);
+
+            const { error: emailError } = await resend.emails.send({
+              from: "Elec-Mate <founder@elec-mate.com>",
+              to: [email],
+              subject: subjectLine,
+              html: emailHtml,
+            });
+
+            if (emailError) {
+              errors.push(`${email}: ${emailError.message}`);
+              continue;
+            }
+
+            await supabaseAdmin
+              .from("founder_invites")
+              .update({ status: "sent", sent_at: new Date().toISOString() })
+              .eq("id", invite.id);
+
+            sentCount++;
+          } catch (err: any) {
+            errors.push(`${email}: ${err.message}`);
+          }
+        }
+
+        console.log(`Sent ${sentCount} founder invites to ${cohort} cohort by admin ${user.id}`);
+        result = {
+          sent: sentCount,
+          skipped: userEmails.length - newEmails.length,
+          total: userEmails.length,
+          errors: errors.length > 0 ? errors : undefined,
+        };
+        break;
+      }
+
+      case "resend_all_unclaimed": {
+        // Get all sent invites that haven't been claimed
+        const { data: unclaimedInvites, error: unclaimedError } = await supabaseAdmin
+          .from("founder_invites")
+          .select("*")
+          .eq("status", "sent");
+
+        if (unclaimedError) throw unclaimedError;
+
+        if (!unclaimedInvites || unclaimedInvites.length === 0) {
+          result = { sent: 0, message: "No unclaimed invites to resend" };
+          break;
+        }
+
+        let sentCount = 0;
+        const errors: string[] = [];
+
+        for (const invite of unclaimedInvites) {
+          try {
+            const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
+
+            const { error: emailError } = await resend.emails.send({
+              from: "Elec-Mate <founder@elec-mate.com>",
+              to: [invite.email],
+              subject: "⏰ Reminder: Your £3.99/month Founder Rate is Still Waiting!",
+              html: emailHtml,
+            });
+
+            if (emailError) {
+              errors.push(`${invite.email}: ${emailError.message}`);
+              continue;
+            }
+
+            // Update sent_at timestamp
+            await supabaseAdmin
+              .from("founder_invites")
+              .update({ sent_at: new Date().toISOString() })
+              .eq("id", invite.id);
+
+            sentCount++;
+          } catch (err: any) {
+            errors.push(`${invite.email}: ${err.message}`);
+          }
+        }
+
+        console.log(`Resent ${sentCount} founder invites to unclaimed users by admin ${user.id}`);
+        result = {
+          sent: sentCount,
+          total: unclaimedInvites.length,
+          errors: errors.length > 0 ? errors : undefined,
+        };
+        break;
+      }
+
+      case "get_cohort_stats": {
+        const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
+        // Get trial count (within 7 days, not subscribed, no free access)
+        const { count: trialCount, error: trialError } = await supabaseAdmin
+          .from("profiles")
+          .select("id", { count: "exact", head: true })
+          .gte("created_at", weekAgo.toISOString())
+          .or("subscribed.is.null,subscribed.eq.false")
+          .or("free_access_granted.is.null,free_access_granted.eq.false");
+
+        if (trialError) throw trialError;
+
+        // Get churned count (more than 7 days, not subscribed, no free access)
+        const { count: churnedCount, error: churnedError } = await supabaseAdmin
+          .from("profiles")
+          .select("id", { count: "exact", head: true })
+          .lt("created_at", weekAgo.toISOString())
+          .or("subscribed.is.null,subscribed.eq.false")
+          .or("free_access_granted.is.null,free_access_granted.eq.false");
+
+        if (churnedError) throw churnedError;
+
+        result = {
+          trial: trialCount || 0,
+          churned: churnedCount || 0,
+        };
         break;
       }
 

@@ -51,15 +51,20 @@ const PublicQuoteView = () => {
     try {
       setLoading(true);
 
-      // Query quotes table directly by public_token (more reliable than quote_views)
-      const { data: quoteData, error: quoteError } = await supabase
-        .from("quotes")
-        .select("*")
-        .eq("public_token", token)
-        .single();
+      // Use secure RPC function to fetch quote by token (prevents viewing other quotes)
+      const { data: quoteResults, error: quoteError } = await supabase
+        .rpc("get_quote_by_public_token", { token_param: token });
 
-      if (quoteError || !quoteData) {
+      if (quoteError) {
         console.error("Quote fetch error:", quoteError);
+        throw new Error("Quote not found or expired");
+      }
+
+      // RPC returns an array, get the first (and only) result
+      const quoteData = Array.isArray(quoteResults) ? quoteResults[0] : quoteResults;
+
+      if (!quoteData) {
+        console.error("Quote not found for token:", token);
         throw new Error("Quote not found or expired");
       }
 
@@ -136,76 +141,41 @@ const PublicQuoteView = () => {
 
     setAccepting(true);
     try {
-      // Store signature as base64 data URL directly (no storage upload needed for anon users)
-      const { error: updateError } = await supabase
-        .from("quotes")
-        .update({
-          acceptance_status: "accepted",
-          acceptance_method: "in_app_signature",
-          accepted_at: new Date().toISOString(),
-          accepted_by_name: clientName,
-          accepted_by_email: clientEmail,
-          accepted_ip: await getUserIP(),
-          accepted_user_agent: navigator.userAgent,
-          signature_url: signatureData, // Store base64 directly
-          status: "approved"
-        })
-        .eq("id", quote.id)
-        .eq("public_token", quote.public_token); // Ensure we match by token too
+      // Use secure RPC function to accept quote (prevents unauthorized updates)
+      const clientIP = await getUserIP();
+      const { data: success, error: updateError } = await supabase
+        .rpc("accept_quote_by_token", {
+          token_param: quote.public_token,
+          accepted_name: clientName,
+          accepted_email: clientEmail,
+          signature_data: signatureData,
+          client_ip: clientIP,
+          client_user_agent: navigator.userAgent
+        });
 
       if (updateError) {
         console.error("Update error:", updateError);
         throw updateError;
       }
 
-      // Try to notify electrician (non-blocking)
-      const { data: quoteData } = await supabase
-        .from("quotes")
-        .select("user_id")
-        .eq("id", quote.id)
-        .single();
-
-      if (quoteData?.user_id) {
-        try {
-          const { data: userData } = await supabase
-            .from("profiles")
-            .select("email, full_name")
-            .eq("id", quoteData.user_id)
-            .single();
-
-          if (userData?.email) {
-            await supabase.functions.invoke("send-invoice-smart", {
-              body: {
-                documentType: "quote-acceptance-notification",
-                quoteId: quote.id,
-                electricianEmail: userData.email,
-                electricianName: userData.full_name || "Electrician",
-                clientName: clientName,
-                quoteNumber: quote.quoteNumber,
-                total: quote.total
-              }
-            });
-          }
-        } catch (notifyError) {
-          console.warn("Could not send acceptance notification:", notifyError);
-        }
+      if (!success) {
+        throw new Error("Quote could not be accepted. It may have expired.");
       }
 
-      // Send confirmation email to client (non-blocking)
-      if (clientEmail) {
-        try {
-          await supabase.functions.invoke("quote-acceptance-confirmation", {
-            body: {
-              quoteId: quote.id,
-              quoteNumber: quote.quoteNumber,
-              clientEmail: clientEmail,
-              clientName: clientName,
-              total: quote.total
-            }
-          });
-        } catch (clientEmailError) {
-          console.warn("Could not send client confirmation email:", clientEmailError);
-        }
+      // Send notifications via edge function (handles electrician + client emails)
+      try {
+        await supabase.functions.invoke("quote-acceptance-notification", {
+          body: {
+            quoteId: quote.id,
+            publicToken: quote.public_token,
+            clientName: clientName,
+            clientEmail: clientEmail,
+            quoteNumber: quote.quoteNumber,
+            total: quote.total
+          }
+        });
+      } catch (notifyError) {
+        console.warn("Could not send notifications:", notifyError);
       }
 
       toast({
@@ -233,20 +203,22 @@ const PublicQuoteView = () => {
 
     setRejecting(true);
     try {
-      const { error } = await supabase
-        .from("quotes")
-        .update({
-          acceptance_status: "rejected",
-          accepted_at: new Date().toISOString(),
-          accepted_by_name: clientName || "Client",
-          accepted_by_email: clientEmail,
-          accepted_ip: await getUserIP(),
-          accepted_user_agent: navigator.userAgent,
-          status: "rejected"
-        })
-        .eq("id", quote.id);
+      // Use secure RPC function to reject quote (prevents unauthorized updates)
+      const clientIP = await getUserIP();
+      const { data: success, error } = await supabase
+        .rpc("reject_quote_by_token", {
+          token_param: quote.public_token,
+          rejected_name: clientName || "Client",
+          rejected_email: clientEmail || null,
+          client_ip: clientIP,
+          client_user_agent: navigator.userAgent
+        });
 
       if (error) throw error;
+
+      if (!success) {
+        throw new Error("Quote could not be declined. It may have expired.");
+      }
 
       toast({
         title: "Quote Declined",

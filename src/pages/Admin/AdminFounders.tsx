@@ -37,6 +37,7 @@ import {
   Trash2,
   RotateCw,
   Loader2,
+  Users,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
@@ -68,6 +69,9 @@ export default function AdminFounders() {
   const [selectedInvite, setSelectedInvite] = useState<FounderInvite | null>(null);
   const [confirmSendAll, setConfirmSendAll] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [confirmSendTrial, setConfirmSendTrial] = useState(false);
+  const [confirmSendChurned, setConfirmSendChurned] = useState(false);
+  const [confirmResendUnclaimed, setConfirmResendUnclaimed] = useState(false);
 
   // Fetch stats - live updates every 30 seconds
   const { data: stats } = useQuery<Stats>({
@@ -98,6 +102,22 @@ export default function AdminFounders() {
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
       return data?.invites || [];
+    },
+  });
+
+  // Fetch cohort stats (trial and churned counts)
+  const { data: cohortStats } = useQuery<{ trial: number; churned: number }>({
+    queryKey: ["admin-cohort-stats"],
+    refetchInterval: 30000,
+    refetchOnWindowFocus: true,
+    staleTime: 0,
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke("send-founder-invite", {
+        body: { action: "get_cohort_stats" },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return { trial: data?.trial || 0, churned: data?.churned || 0 };
     },
   });
 
@@ -220,6 +240,80 @@ export default function AdminFounders() {
     },
   });
 
+  // Send to trial users mutation
+  const sendTrialMutation = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.functions.invoke("send-founder-invite", {
+        body: { action: "send_to_cohort", cohort: "trial" },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["admin-founder-invites"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-founder-stats"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-cohort-stats"] });
+      setConfirmSendTrial(false);
+      toast({
+        title: "Founder offers sent!",
+        description: `Sent to ${data.sent} trial users${data.skipped > 0 ? ` (${data.skipped} already had invites)` : ""}`,
+      });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
+  // Send to churned users mutation
+  const sendChurnedMutation = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.functions.invoke("send-founder-invite", {
+        body: { action: "send_to_cohort", cohort: "churned" },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["admin-founder-invites"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-founder-stats"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-cohort-stats"] });
+      setConfirmSendChurned(false);
+      toast({
+        title: "Founder offers sent!",
+        description: `Sent to ${data.sent} churned users${data.skipped > 0 ? ` (${data.skipped} already had invites)` : ""}`,
+      });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
+  // Resend to all unclaimed invites mutation
+  const resendUnclaimedMutation = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.functions.invoke("send-founder-invite", {
+        body: { action: "resend_all_unclaimed" },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["admin-founder-invites"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-founder-stats"] });
+      setConfirmResendUnclaimed(false);
+      toast({
+        title: "Reminder emails sent!",
+        description: `Resent to ${data.sent} users who haven't claimed their invite yet`,
+      });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
   const handleBulkUpload = () => {
     const emails = emailInput
       .split(/[\n,;]+/)
@@ -300,6 +394,84 @@ export default function AdminFounders() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Resend to Unclaimed Section */}
+      {(stats?.sent || 0) > 0 && (
+        <Card className="border-yellow-500/30 bg-gradient-to-br from-yellow-500/10 to-transparent">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm flex items-center gap-2">
+              <RotateCw className="h-4 w-4 text-yellow-400" />
+              Resend to Non-Responders
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-center">
+              <p className="text-3xl font-bold text-yellow-400">{stats?.sent || 0}</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Sent but not yet claimed
+              </p>
+              <Button
+                className="w-full mt-3 h-11 gap-2 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black touch-manipulation"
+                onClick={() => setConfirmResendUnclaimed(true)}
+                disabled={resendUnclaimedMutation.isPending || (stats?.sent || 0) === 0}
+              >
+                <Mail className="h-4 w-4" />
+                Resend Founder Offer to All
+              </Button>
+            </div>
+            <p className="text-[10px] text-muted-foreground text-center">
+              Sends a reminder email with subject "Your £3.99/month Founder Rate is Still Waiting!"
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Convert Trials Section */}
+      <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-transparent">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Users className="h-4 w-4 text-orange-400" />
+            Convert Trial Users to Founders
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            {/* In Trial */}
+            <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20 text-center">
+              <p className="text-2xl font-bold text-orange-400">{cohortStats?.trial || 0}</p>
+              <p className="text-[11px] text-muted-foreground">In 7-Day Trial</p>
+              <Button
+                size="sm"
+                className="w-full mt-2 h-9 text-xs gap-1 bg-orange-500 hover:bg-orange-600 touch-manipulation"
+                onClick={() => setConfirmSendTrial(true)}
+                disabled={sendTrialMutation.isPending || (cohortStats?.trial || 0) === 0}
+              >
+                <Mail className="h-3 w-3" />
+                Send Founder Offer
+              </Button>
+            </div>
+
+            {/* Churned */}
+            <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
+              <p className="text-2xl font-bold text-red-400">{cohortStats?.churned || 0}</p>
+              <p className="text-[11px] text-muted-foreground">Churned</p>
+              <Button
+                size="sm"
+                variant="outline"
+                className="w-full mt-2 h-9 text-xs gap-1 border-red-500/30 text-red-400 hover:bg-red-500/10 touch-manipulation"
+                onClick={() => setConfirmSendChurned(true)}
+                disabled={sendChurnedMutation.isPending || (cohortStats?.churned || 0) === 0}
+              >
+                <Mail className="h-3 w-3" />
+                Send Founder Offer
+              </Button>
+            </div>
+          </div>
+          <p className="text-[10px] text-muted-foreground text-center">
+            Users who already received a founder invite won't get duplicates
+          </p>
+        </CardContent>
+      </Card>
 
       {/* Actions */}
       <div className="flex gap-2">
@@ -580,6 +752,102 @@ export default function AdminFounders() {
                 </>
               ) : (
                 "Delete"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Send to Trial Users Confirmation */}
+      <AlertDialog open={confirmSendTrial} onOpenChange={setConfirmSendTrial}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Send Founder Offer to Trial Users?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will send the £3.99/month founder offer to {cohortStats?.trial || 0} users currently in their 7-day trial.
+              Users who already have a founder invite will be skipped.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={sendTrialMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-orange-500 hover:bg-orange-600"
+              onClick={() => sendTrialMutation.mutate()}
+              disabled={sendTrialMutation.isPending}
+            >
+              {sendTrialMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                "Send Founder Offers"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Send to Churned Users Confirmation */}
+      <AlertDialog open={confirmSendChurned} onOpenChange={setConfirmSendChurned}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Send Founder Offer to Churned Users?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will send a win-back £3.99/month founder offer to {cohortStats?.churned || 0} users whose trial has expired.
+              Users who already have a founder invite will be skipped.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={sendChurnedMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
+              onClick={() => sendChurnedMutation.mutate()}
+              disabled={sendChurnedMutation.isPending}
+            >
+              {sendChurnedMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                "Send Founder Offers"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Resend to Unclaimed Confirmation */}
+      <AlertDialog open={confirmResendUnclaimed} onOpenChange={setConfirmResendUnclaimed}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Resend to {stats?.sent || 0} Non-Responders?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will send a reminder email to everyone who received a founder invite but hasn't claimed it yet.
+              They'll get an email with subject "Your £3.99/month Founder Rate is Still Waiting!"
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="h-11 touch-manipulation" disabled={resendUnclaimedMutation.isPending}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black"
+              onClick={() => resendUnclaimedMutation.mutate()}
+              disabled={resendUnclaimedMutation.isPending}
+            >
+              {resendUnclaimedMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                "Resend to All"
               )}
             </AlertDialogAction>
           </AlertDialogFooter>

@@ -1,0 +1,264 @@
+<!--
+PDF MONKEY TEMPLATE UPDATE
+===========================
+Copy the sections below and paste into your PDF Monkey quote template.
+Replace the existing Terms & Conditions and Customer Acceptance sections.
+-->
+
+<!-- ============================================== -->
+<!-- TERMS & CONDITIONS SECTION - IMPROVED STYLING -->
+<!-- ============================================== -->
+
+<!-- Add page-break-inside: avoid to prevent cutting -->
+<div style="page-break-inside: avoid; margin-top: 30px;">
+  <h3 style="color: #1e40af; font-size: 16px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #1e40af;">
+    Terms &amp; Conditions
+  </h3>
+
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px;">
+    <ul style="margin: 0; padding: 0; list-style: none; columns: 2; column-gap: 24px;">
+      {% for term in terms %}
+      <li style="break-inside: avoid; margin-bottom: 10px; padding-left: 20px; position: relative; font-size: 11px; color: #374151; line-height: 1.5;">
+        <span style="position: absolute; left: 0; top: 2px; color: #1e40af; font-weight: bold;">✓</span>
+        {{ term }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+
+<!-- ============================================== -->
+<!-- CUSTOMER ACCEPTANCE SECTION - PREVENT PAGE CUT -->
+<!-- ============================================== -->
+
+<!-- Force page break BEFORE this section so it never gets cut -->
+<div style="page-break-before: always; padding-top: 20px;">
+  <div style="page-break-inside: avoid; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; background: #ffffff;">
+    <h3 style="color: #1e40af; font-size: 16px; font-weight: 600; margin: 0 0 20px 0;">
+      Customer Acceptance
+    </h3>
+
+    <p style="font-size: 12px; color: #6b7280; margin-bottom: 20px; line-height: 1.6;">
+      By signing below, I confirm that I have read and understood the scope of work, pricing, and terms &amp; conditions outlined in this quotation. I authorise the work to proceed as described.
+    </p>
+
+    <div style="display: flex; gap: 40px; margin-bottom: 24px;">
+      <!-- Signature Box -->
+      <div style="flex: 1;">
+        <p style="font-size: 10px; color: #6b7280; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Customer Signature</p>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; height: 80px; background: #fafafa; display: flex; align-items: center; justify-content: center;">
+          {% if quote.signature_url %}
+            <img src="{{ quote.signature_url }}" alt="Customer Signature" style="max-height: 70px; max-width: 100%;" />
+          {% else %}
+            <span style="color: #9ca3af; font-size: 11px;">Sign here</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Date Box -->
+      <div style="width: 180px;">
+        <p style="font-size: 10px; color: #6b7280; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Date</p>
+        <div style="border: 1px solid #d1d5db; border-radius: 8px; height: 80px; background: #fafafa; display: flex; align-items: center; justify-content: center;">
+          {% if quote.accepted_at %}
+            <span style="font-size: 14px; color: #374151; font-weight: 500;">{{ quote.accepted_at }}</span>
+          {% else %}
+            <span style="color: #9ca3af; font-size: 11px;">DD/MM/YYYY</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 40px;">
+      <!-- Print Name Box -->
+      <div style="flex: 1;">
+        <p style="font-size: 10px; color: #6b7280; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Print Name</p>
+        <div style="border-bottom: 1px solid #d1d5db; padding: 8px 0; min-height: 28px;">
+          {% if quote.accepted_by_name %}
+            <span style="font-size: 13px; color: #374151;">{{ quote.accepted_by_name }}</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Email/Contact Box -->
+      <div style="flex: 1;">
+        <p style="font-size: 10px; color: #6b7280; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Email / Contact</p>
+        <div style="border-bottom: 1px solid #d1d5db; padding: 8px 0; min-height: 28px;">
+          {% if quote.accepted_by_email %}
+            <span style="font-size: 13px; color: #374151;">{{ quote.accepted_by_email }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {% if quote.acceptance_status == 'accepted' %}
+    <div style="margin-top: 20px; padding: 12px 16px; background: #dcfce7; border: 1px solid #22c55e; border-radius: 8px; text-align: center;">
+      <span style="color: #166534; font-weight: 600; font-size: 12px;">
+        ✓ QUOTE ACCEPTED - {{ quote.accepted_at }}
+      </span>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+
+<!-- ============================================== -->
+<!-- FOOTER - POWERED BY ELEC-MATE                 -->
+<!-- ============================================== -->
+
+<footer style="position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 40px; background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); border-top: 3px solid #f59e0b;">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <p style="margin: 0; font-size: 10px; color: #94a3b8;">
+        Quote Reference: <strong style="color: #f59e0b;">{{ quote.quoteNumber }}</strong>
+      </p>
+    </div>
+    <div style="text-align: center;">
+      <p style="margin: 0; font-size: 9px; color: #64748b;">
+        Powered by <strong style="color: #f59e0b;">Elec-Mate Professional Suite</strong>
+      </p>
+    </div>
+    <div style="text-align: right;">
+      <p style="margin: 0; font-size: 10px; color: #94a3b8;">
+        Valid until: <strong style="color: #ffffff;">{{ quote.validUntil }}</strong>
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================== -->
+<!-- ALTERNATIVE: SIMPLER INLINE FOOTER            -->
+<!-- (Use if fixed footer causes issues)           -->
+<!-- ============================================== -->
+
+<!--
+<div style="margin-top: 40px; padding-top: 16px; border-top: 1px solid #e2e8f0; text-align: center;">
+  <p style="margin: 0; font-size: 9px; color: #9ca3af;">
+    Powered by <span style="color: #1e40af; font-weight: 500;">Elec-Mate Professional Suite</span>
+  </p>
+</div>
+-->
+
+
+<!-- ============================================== -->
+<!-- COMPLETE T&Cs + ACCEPTANCE + FOOTER SECTION   -->
+<!-- Copy everything below for a complete replacement -->
+<!-- ============================================== -->
+
+<!-- Quote Settings Summary Bar (existing, keep this) -->
+<div style="background: linear-gradient(135deg, #fef9c3 0%, #fef3c7 100%); border: 1px solid #fcd34d; border-radius: 12px; padding: 20px 24px; margin-top: 30px; page-break-inside: avoid;">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+    <div style="text-align: center;">
+      <p style="margin: 0; font-size: 10px; color: #92400e; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Quote Valid For</p>
+      <p style="margin: 4px 0 0 0; font-size: 20px; color: #78350f; font-weight: 700;">{{ settings.quoteValidityDays }} Days</p>
+    </div>
+    <div style="text-align: center;">
+      <p style="margin: 0; font-size: 10px; color: #92400e; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Warranty Period</p>
+      <p style="margin: 4px 0 0 0; font-size: 20px; color: #78350f; font-weight: 700;">{{ settings.warrantyPeriod }}</p>
+    </div>
+    <div style="text-align: center;">
+      <p style="margin: 0; font-size: 10px; color: #92400e; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Payment Terms</p>
+      <p style="margin: 4px 0 0 0; font-size: 20px; color: #78350f; font-weight: 700;">{{ settings.paymentTerms }}</p>
+    </div>
+    <div style="background: #7c2d12; color: white; padding: 16px 24px; border-radius: 8px; text-align: center;">
+      <p style="margin: 0; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.9;">Deposit Required</p>
+      <p style="margin: 4px 0 0 0; font-size: 24px; font-weight: 700;">{{ settings.depositPercentage }}%</p>
+    </div>
+  </div>
+</div>
+
+<!-- Terms & Conditions - Professional Layout -->
+<div style="margin-top: 24px; page-break-inside: avoid;">
+  <h3 style="color: #1e40af; font-size: 14px; font-weight: 600; margin: 0 0 12px 0; padding-bottom: 8px; border-bottom: 2px solid #1e40af;">
+    Terms &amp; Conditions
+  </h3>
+
+  <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px 20px;">
+    <div style="column-count: 2; column-gap: 32px;">
+      {% for term in terms %}
+      <div style="break-inside: avoid; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px;">
+        <span style="color: #1e40af; font-size: 12px; line-height: 1.4; flex-shrink: 0;">✓</span>
+        <span style="font-size: 10px; color: #374151; line-height: 1.5;">{{ term }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Customer Acceptance - On New Page to Prevent Cutting -->
+<div style="page-break-before: always; padding-top: 30px;">
+  <div style="border: 2px solid #e2e8f0; border-radius: 12px; padding: 28px; background: #ffffff; page-break-inside: avoid;">
+    <h3 style="color: #1e40af; font-size: 16px; font-weight: 600; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+      <span style="display: inline-block; width: 24px; height: 24px; background: #1e40af; border-radius: 50%; color: white; font-size: 12px; line-height: 24px; text-align: center;">✎</span>
+      Customer Acceptance
+    </h3>
+
+    <p style="font-size: 11px; color: #6b7280; margin: 0 0 24px 0; line-height: 1.6; padding: 12px; background: #f1f5f9; border-radius: 6px;">
+      By signing below, I confirm that I have read and understood the scope of work, pricing, and terms &amp; conditions outlined in this quotation. I authorise the contractor to proceed with the work as described above.
+    </p>
+
+    <div style="display: flex; gap: 32px; margin-bottom: 24px;">
+      <!-- Signature Box -->
+      <div style="flex: 2;">
+        <p style="font-size: 9px; color: #6b7280; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Customer Signature</p>
+        <div style="border: 2px dashed #cbd5e1; border-radius: 8px; height: 100px; background: #fafafa; display: flex; align-items: center; justify-content: center;">
+          {% if quote.signature_url %}
+            <img src="{{ quote.signature_url }}" alt="Customer Signature" style="max-height: 90px; max-width: 95%;" />
+          {% else %}
+            <span style="color: #94a3b8; font-size: 12px; font-style: italic;">Sign here</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Date Box -->
+      <div style="flex: 1;">
+        <p style="font-size: 9px; color: #6b7280; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Date</p>
+        <div style="border: 2px dashed #cbd5e1; border-radius: 8px; height: 100px; background: #fafafa; display: flex; align-items: center; justify-content: center;">
+          {% if quote.accepted_at %}
+            <span style="font-size: 16px; color: #374151; font-weight: 600;">{{ quote.accepted_at }}</span>
+          {% else %}
+            <span style="color: #94a3b8; font-size: 12px;">DD / MM / YYYY</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 32px;">
+      <!-- Print Name -->
+      <div style="flex: 1;">
+        <p style="font-size: 9px; color: #6b7280; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Print Name</p>
+        <div style="border-bottom: 2px solid #cbd5e1; padding: 12px 4px; min-height: 32px;">
+          {% if quote.accepted_by_name %}
+            <span style="font-size: 14px; color: #1f2937; font-weight: 500;">{{ quote.accepted_by_name }}</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div style="flex: 1;">
+        <p style="font-size: 9px; color: #6b7280; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">Email Address</p>
+        <div style="border-bottom: 2px solid #cbd5e1; padding: 12px 4px; min-height: 32px;">
+          {% if quote.accepted_by_email %}
+            <span style="font-size: 14px; color: #1f2937;">{{ quote.accepted_by_email }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {% if quote.acceptance_status == 'accepted' %}
+    <div style="margin-top: 24px; padding: 14px 20px; background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border: 2px solid #22c55e; border-radius: 8px; text-align: center;">
+      <span style="color: #166534; font-weight: 700; font-size: 13px; letter-spacing: 0.5px;">
+        ✓ QUOTE ACCEPTED ON {{ quote.accepted_at }}
+      </span>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Footer with Elec-Mate branding -->
+  <div style="margin-top: 40px; padding-top: 16px; border-top: 1px solid #e2e8f0; text-align: center;">
+    <p style="margin: 0; font-size: 9px; color: #9ca3af;">
+      Powered by <span style="color: #1e40af; font-weight: 600;">Elec-Mate Professional Suite</span> · elec-mate.com
+    </p>
+  </div>
+</div>
