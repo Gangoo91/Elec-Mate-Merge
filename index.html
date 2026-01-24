@@ -26,6 +26,32 @@
     <!-- Privacy-friendly analytics by Plausible -->
     <script defer data-domain="elec-mate.com" src="https://plausible.io/js/script.js"></script>
 
+    <!-- Handle chunk loading failures from stale cache (runs before React) -->
+    <script>
+      window.__chunkLoadRetried = false;
+      window.addEventListener('error', function(e) {
+        if (window.__chunkLoadRetried) return;
+        var msg = (e.message || '') + ' ' + ((e.filename || '').toLowerCase());
+        if (msg.includes('.js') && (msg.includes('loading') || msg.includes('fetch') || msg.includes('module') || msg.includes('chunk') || msg.includes('syntaxerror'))) {
+          window.__chunkLoadRetried = true;
+          e.preventDefault();
+          e.stopPropagation();
+          if ('caches' in window) { caches.keys().then(function(k) { return Promise.all(k.map(function(n) { return caches.delete(n); })); }).finally(function() { location.reload(); }); }
+          else { location.reload(); }
+        }
+      }, true);
+      window.addEventListener('unhandledrejection', function(e) {
+        if (window.__chunkLoadRetried) return;
+        var msg = String(e.reason || '').toLowerCase();
+        if (msg.includes('dynamically imported module') || msg.includes('failed to fetch') || msg.includes('loading chunk')) {
+          window.__chunkLoadRetried = true;
+          e.preventDefault();
+          if ('caches' in window) { caches.keys().then(function(k) { return Promise.all(k.map(function(n) { return caches.delete(n); })); }).finally(function() { location.reload(); }); }
+          else { location.reload(); }
+        }
+      }, true);
+    </script>
+
     <!-- Geo Tags for UK -->
     <meta name="geo.region" content="GB" />
     <meta name="geo.placename" content="United Kingdom" />
