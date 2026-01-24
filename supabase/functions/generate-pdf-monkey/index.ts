@@ -21,23 +21,41 @@ const BRIEFING_TEMPLATES = {
   'general': 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D' // For now, use same template
 };
 
-// Default T&Cs options for electrical contractors - must match frontend SettingsDialog.tsx
+// Default T&Cs options for electrical contractors - must match frontend QuoteSettingsCard.tsx
 const DEFAULT_TERMS_MAP: Record<string, string> = {
+  // Payment Terms
   'payment_30': 'Payment due within 30 days of invoice date',
+  'payment_14': 'Payment due within 14 days of invoice date',
+  'payment_on_completion': 'Payment due upon completion of works',
   'deposit_required': 'A deposit of the specified percentage is required before work commences',
   'additional_charges': 'Additional work not included in this quote will be charged at our standard hourly rate',
+  'late_payment': 'Late payments may incur interest charges as per the Late Payment of Commercial Debts Act',
+  'payment_methods': 'We accept bank transfer, card payments, and cash',
+  // Warranty & Guarantee
   'warranty_workmanship': 'All workmanship is guaranteed for the warranty period specified',
   'warranty_materials': 'Materials are covered by manufacturer warranties where applicable',
+  'warranty_callback': 'Free callback within warranty period for any defects in our workmanship',
+  'warranty_exclusions': 'Warranty excludes damage caused by misuse, third-party interference, or acts of nature',
+  // Compliance & Certification
   'bs7671_compliance': 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations',
   'part_p_notification': 'Building control notification (Part P) included where required',
   'testing_cert': 'Electrical installation certificate or minor works certificate provided on completion',
+  'competent_person': 'All work carried out by qualified electricians registered with a competent person scheme',
+  'insurance': 'Fully insured for public liability and professional indemnity',
+  // Site Access & Safety
   'access_required': 'Clear access to work areas must be provided',
   'power_isolation': 'Power may need to be isolated during installation - advance notice will be given',
   'site_safety': 'Work area will be left safe and clean at the end of each working day',
   'asbestos_disclaimer': 'This quote excludes work involving asbestos - if discovered, work will stop pending survey',
+  'parking': 'Suitable parking should be available close to the property',
+  'working_hours': 'Standard working hours are 8am-5pm Monday to Friday unless otherwise agreed',
+  // General Conditions
   'price_validity': 'This quotation is valid for the number of days specified from the date of issue',
   'cancellation': 'Cancellation within 48 hours of scheduled work may incur charges',
   'unforeseen_works': 'Unforeseen works discovered during installation will be quoted separately',
+  'price_subject': 'Prices are subject to change if scope of work differs from description',
+  'materials_ownership': 'All materials remain our property until paid for in full',
+  'variations': 'Any variations to the agreed scope must be confirmed in writing',
 };
 
 // Build terms list from stored JSON format
@@ -448,52 +466,158 @@ serve(async (req) => {
 
       console.log('[PDF-MONKEY] Transformed invoice payload for template');
     } else {
-      // Transform quote format to ensure jobDetails is properly structured with all fields - USE FRESH DATA
-      const transformedQuote = {
-        ...freshQuote,
-        jobDetails: {
-          title: freshQuote?.jobDetails?.title || "",
-          description: freshQuote?.jobDetails?.description || "",
-          location: freshQuote?.jobDetails?.location || "",
-          estimatedDuration: freshQuote?.jobDetails?.estimatedDuration || "",
-          customDuration: freshQuote?.jobDetails?.customDuration || "",
-          workStartDate: freshQuote?.jobDetails?.workStartDate || "",
-          specialRequirements: freshQuote?.jobDetails?.specialRequirements || "",
-          completionDate: freshQuote?.work_completion_date ? 
-            new Date(freshQuote.work_completion_date).toISOString().split('T')[0] : "",
-          reference: freshQuote?.jobDetails?.reference || freshQuote?.quoteNumber || ""
-        }
-      };
-      
+      // DEBUG: Log raw input data to diagnose missing fields
+      console.log('[PDF-MONKEY] RAW freshQuote:', JSON.stringify(freshQuote, null, 2));
+      console.log('[PDF-MONKEY] RAW freshCompanyProfile:', JSON.stringify(freshCompanyProfile, null, 2));
+      console.log('[PDF-MONKEY] freshQuote.items type:', typeof freshQuote?.items, 'isArray:', Array.isArray(freshQuote?.items));
+      console.log('[PDF-MONKEY] freshQuote.items length:', freshQuote?.items?.length || 0);
+      console.log('[PDF-MONKEY] freshCompanyProfile.logo_url:', freshCompanyProfile?.logo_url);
+
+      // Get items from quote - handle both camelCase and snake_case
+      const quoteItems = freshQuote?.items || [];
+      const jobDetails = freshQuote?.jobDetails || freshQuote?.job_details || {};
+      const clientData = freshQuote?.client || freshQuote?.client_data || {};
+      const quoteSettings = freshQuote?.settings || {};
+
+      console.log('[PDF-MONKEY] Extracted quoteItems:', quoteItems.length, 'items');
+      console.log('[PDF-MONKEY] First item (if any):', quoteItems[0] ? JSON.stringify(quoteItems[0]) : 'NONE');
+
+      // Transform items to ensure consistent format for PDF template
+      const transformedItems = quoteItems.map((item: any) => ({
+        id: item.id || '',
+        description: item.description || item.name || '',
+        quantity: parseFloat(item.quantity) || 1,
+        unit: item.unit || 'each',
+        unitPrice: parseFloat(item.unitPrice) || parseFloat(item.unit_price) || 0,
+        totalPrice: parseFloat(item.totalPrice) || parseFloat(item.total_price) || (parseFloat(item.quantity || 1) * parseFloat(item.unitPrice || item.unit_price || 0)),
+        category: item.category || 'manual',
+        subcategory: item.subcategory || '',
+        workerType: item.workerType || item.worker_type || '',
+        hours: parseFloat(item.hours) || 0,
+        hourlyRate: parseFloat(item.hourlyRate) || parseFloat(item.hourly_rate) || 0,
+        notes: item.notes || '',
+      }));
+
+      // Group items by category for template
+      const labourItems = transformedItems.filter((item: any) => item.category === 'labour');
+      const materialItems = transformedItems.filter((item: any) => item.category === 'materials');
+      const equipmentItems = transformedItems.filter((item: any) => item.category === 'equipment');
+      const manualItems = transformedItems.filter((item: any) => item.category === 'manual');
+
+      // Calculate totals from items
+      const itemsSubtotal = transformedItems.reduce((sum: number, item: any) => sum + (item.totalPrice || 0), 0);
+      const overhead = parseFloat(freshQuote?.overhead) || (itemsSubtotal * ((quoteSettings.overheadPercentage || 0) / 100));
+      const profit = parseFloat(freshQuote?.profit) || ((itemsSubtotal + overhead) * ((quoteSettings.profitMargin || 0) / 100));
+      const subtotalWithMarkups = itemsSubtotal + overhead + profit;
+      const vatAmount = quoteSettings.vatRegistered
+        ? (parseFloat(freshQuote?.vat_amount) || parseFloat(freshQuote?.vatAmount) || subtotalWithMarkups * ((quoteSettings.vatRate || 20) / 100))
+        : 0;
+      const total = parseFloat(freshQuote?.total) || (subtotalWithMarkups + vatAmount);
+
       // Calculate valid until date
       const validUntilDate = freshQuote?.expiryDate || freshQuote?.expiry_date
         ? new Date(freshQuote.expiryDate || freshQuote.expiry_date)
         : new Date(Date.now() + (freshCompanyProfile?.quote_validity_days || 30) * 24 * 60 * 60 * 1000);
 
+      // Format dates
+      const createdDate = freshQuote?.created_at || freshQuote?.createdAt
+        ? new Date(freshQuote.created_at || freshQuote.createdAt)
+        : new Date();
+
+      console.log('[PDF-MONKEY] Quote items breakdown:', {
+        total: transformedItems.length,
+        labour: labourItems.length,
+        materials: materialItems.length,
+        equipment: equipmentItems.length,
+        manual: manualItems.length,
+        itemsSubtotal,
+        overhead,
+        profit,
+        vatAmount,
+        total
+      });
+
       payload = {
-        quote: {
-          ...transformedQuote,
-          // Formatted dates for template
-          validUntil: validUntilDate.toISOString().split('T')[0],
-          // Signature/acceptance data for PDF
-          signature_url: freshQuote?.signature_url || null,
-          acceptance_status: freshQuote?.acceptance_status || null,
-          acceptance_method: freshQuote?.acceptance_method || null,
-          accepted_at: freshQuote?.accepted_at ? new Date(freshQuote.accepted_at).toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-          }) : null,
-          accepted_by_name: freshQuote?.accepted_by_name || null,
-          accepted_by_email: freshQuote?.accepted_by_email || null,
-        },
+        // Company details
         companyProfile: {
-          ...freshCompanyProfile,
+          company_name: freshCompanyProfile?.company_name || '',
+          company_address: freshCompanyProfile?.company_address || '',
+          company_phone: freshCompanyProfile?.company_phone || '',
+          company_email: freshCompanyProfile?.company_email || '',
+          logo_url: freshCompanyProfile?.logo_url || freshCompanyProfile?.logo_data_url || '',
+          vat_number: freshCompanyProfile?.vat_number || '',
+          company_number: freshCompanyProfile?.company_number || '',
           // Ensure colors have defaults
           primary_color: freshCompanyProfile?.primary_color || '#1e40af',
           secondary_color: freshCompanyProfile?.secondary_color || '#1F2937',
           accent_color: freshCompanyProfile?.accent_color || '#F59E0B',
         },
+        // Quote details
+        quote: {
+          quoteNumber: freshQuote?.quote_number || freshQuote?.quoteNumber || '',
+          createdAt: createdDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+          validUntil: validUntilDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+          status: freshQuote?.status || 'draft',
+          notes: freshQuote?.notes || '',
+          // Signature/acceptance data
+          signature_url: freshQuote?.signature_url || null,
+          acceptance_status: freshQuote?.acceptance_status || null,
+          acceptance_method: freshQuote?.acceptance_method || null,
+          accepted_at: freshQuote?.accepted_at ? new Date(freshQuote.accepted_at).toLocaleDateString('en-GB', {
+            day: '2-digit', month: '2-digit', year: 'numeric'
+          }) : null,
+          accepted_by_name: freshQuote?.accepted_by_name || null,
+          accepted_by_email: freshQuote?.accepted_by_email || null,
+        },
+        // Client details
+        client: {
+          name: clientData.name || '',
+          email: clientData.email || '',
+          phone: clientData.phone || '',
+          address: clientData.address || '',
+          postcode: clientData.postcode || '',
+        },
+        // Job details
+        jobDetails: {
+          title: jobDetails.title || '',
+          description: jobDetails.description || '',
+          location: jobDetails.location || '',
+          estimatedDuration: jobDetails.estimatedDuration || jobDetails.estimated_duration || '',
+          customDuration: jobDetails.customDuration || jobDetails.custom_duration || '',
+          workStartDate: jobDetails.workStartDate || jobDetails.work_start_date || '',
+          specialRequirements: jobDetails.specialRequirements || jobDetails.special_requirements || '',
+          reference: jobDetails.reference || freshQuote?.quote_number || freshQuote?.quoteNumber || '',
+        },
+        // All items (flat list for simple templates)
+        items: transformedItems,
+        // Items grouped by category (for detailed templates)
+        labourItems,
+        materialItems,
+        equipmentItems,
+        manualItems,
+        // Financial totals
+        totals: {
+          subtotal: itemsSubtotal,
+          overhead: overhead,
+          overheadPercentage: quoteSettings.overheadPercentage || 0,
+          profit: profit,
+          profitMargin: quoteSettings.profitMargin || 0,
+          vatAmount: vatAmount,
+          vatRate: quoteSettings.vatRate || 20,
+          total: total,
+          // Formatted currency strings
+          subtotalFormatted: `£${itemsSubtotal.toFixed(2)}`,
+          overheadFormatted: overhead > 0 ? `£${overhead.toFixed(2)}` : null,
+          profitFormatted: profit > 0 ? `£${profit.toFixed(2)}` : null,
+          vatFormatted: vatAmount > 0 ? `£${vatAmount.toFixed(2)}` : null,
+          totalFormatted: `£${total.toFixed(2)}`,
+        },
+        // For backwards compatibility with existing templates
+        subtotal: itemsSubtotal,
+        overhead: overhead,
+        profit: profit,
+        vatAmount: vatAmount,
+        total: total,
         // Branding settings for dynamic styling
         branding: {
           primaryColor: freshCompanyProfile?.primary_color || '#1e40af',
@@ -506,6 +630,7 @@ serve(async (req) => {
           warrantyPeriod: freshCompanyProfile?.warranty_period || '12 months',
           depositPercentage: freshCompanyProfile?.deposit_percentage || 30,
           paymentTerms: freshCompanyProfile?.payment_terms || '7 days',
+          showMaterialsBreakdown: quoteSettings.showMaterialsBreakdown !== false,
         },
         // Build terms list from stored settings (handles JSON format with selected + custom terms)
         terms: buildTermsList(freshCompanyProfile?.quote_terms || null),
@@ -520,18 +645,19 @@ serve(async (req) => {
           qualifications: freshCompanyProfile?.inspector_qualifications || [],
         },
         // VAT settings
-        useVat: freshQuote?.settings?.vatRegistered === true,
-        vatRate: freshQuote?.settings?.vatRate || 20,
+        useVat: quoteSettings.vatRegistered === true,
+        vatRate: quoteSettings.vatRate || 20,
         // Cache busting timestamp
         _cache_bust: Date.now(),
         _generated_at: new Date().toISOString()
       };
-      console.log('[PDF-MONKEY] Using quote format with all jobDetails fields:', {
-        hasTitle: !!transformedQuote.jobDetails.title,
-        hasDescription: !!transformedQuote.jobDetails.description,
-        hasLocation: !!transformedQuote.jobDetails.location,
-        hasEstimatedDuration: !!transformedQuote.jobDetails.estimatedDuration,
-        hasWorkStartDate: !!transformedQuote.jobDetails.workStartDate
+      console.log('[PDF-MONKEY] Quote payload prepared:', {
+        hasLogo: !!payload.companyProfile.logo_url,
+        hasClient: !!payload.client.name,
+        hasJobTitle: !!payload.jobDetails.title,
+        itemsCount: payload.items.length,
+        total: payload.totals.total,
+        termsCount: payload.terms.length
       });
     }
 

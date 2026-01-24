@@ -26,7 +26,10 @@ const handleChunkError = (event: ErrorEvent | PromiseRejectionEvent) => {
   if (errorString.includes('dynamically imported module') ||
       errorString.includes('failed to fetch') ||
       errorString.includes('loading chunk') ||
-      errorString.includes('loading css chunk')) {
+      errorString.includes('loading css chunk') ||
+      errorString.includes('failed to load module script') ||
+      errorString.includes('mime type') ||
+      errorString.includes('text/html')) {
     console.log('[Elec-Mate] Chunk load failure detected, refreshing...');
     event.preventDefault();
     // Clear caches and reload
@@ -66,5 +69,11 @@ createRoot(rootElement).render(
     <App />
   </ErrorBoundary>
 );
+
+// Hide loading state and error fallback once React has mounted
+const initialLoading = document.getElementById('initial-loading');
+const loadError = document.getElementById('load-error');
+if (initialLoading) initialLoading.style.display = 'none';
+if (loadError) loadError.style.display = 'none';
 
 console.log("[Elec-Mate] Render complete");

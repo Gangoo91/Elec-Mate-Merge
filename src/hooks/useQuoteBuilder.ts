@@ -240,23 +240,47 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
       setQuote(updatedQuote);
 
-      // Fetch latest company profile before generating PDF
-      console.log('PDF Generation - Fetching latest company profile');
-      await refetch();
-      
-      console.log('PDF Generation - Company Profile:', {
-        name: companyProfile?.company_name,
-        email: companyProfile?.company_email,
-        hasLogo: !!companyProfile?.logo_url
+      // Fetch FRESH company profile directly - don't rely on React state which has stale closure
+      console.log('PDF Generation - Fetching fresh company profile from database');
+      const { data: { user } } = await supabase.auth.getUser();
+      let freshCompanyProfile = companyProfile;
+
+      if (user) {
+        const { data: cpData } = await supabase
+          .from('company_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+
+        if (cpData) {
+          freshCompanyProfile = cpData;
+        }
+      }
+
+      console.log('PDF Generation - Fresh Company Profile:', {
+        name: freshCompanyProfile?.company_name,
+        email: freshCompanyProfile?.company_email,
+        hasLogo: !!freshCompanyProfile?.logo_url,
+        logoUrl: freshCompanyProfile?.logo_url?.substring(0, 50) + '...'
       });
 
       // Generate PDF using PDF Monkey
       try {
         logger.api('generate-pdf-monkey', requestId).start({ quoteId: updatedQuote.id });
+
+        console.log('PDF Generation - Sending to edge function:', {
+          quoteId: updatedQuote.id,
+          quoteNumber: updatedQuote.quoteNumber,
+          itemsCount: updatedQuote.items?.length,
+          hasClient: !!updatedQuote.client?.name,
+          hasJobDetails: !!updatedQuote.jobDetails?.title,
+          total: updatedQuote.total
+        });
+
         const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
           body: {
             quote: updatedQuote,
-            companyProfile
+            companyProfile: freshCompanyProfile
           }
         });
 

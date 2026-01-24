@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, FileText, Check, Plus, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronRight, FileText, Plus, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,14 +14,18 @@ interface QuoteSettingsCardProps {
   isLoading: boolean;
 }
 
-// Default T&Cs grouped by category
+// Default T&Cs grouped by category - comprehensive list
 const DEFAULT_TERMS_GROUPED = {
   payment: {
     label: 'Payment Terms',
     terms: [
       { id: 'payment_30', label: 'Payment due within 30 days of invoice date' },
+      { id: 'payment_14', label: 'Payment due within 14 days of invoice date' },
+      { id: 'payment_on_completion', label: 'Payment due upon completion of works' },
       { id: 'deposit_required', label: 'A deposit of the specified percentage is required before work commences' },
       { id: 'additional_charges', label: 'Additional work not included in this quote will be charged at our standard hourly rate' },
+      { id: 'late_payment', label: 'Late payments may incur interest charges as per the Late Payment of Commercial Debts Act' },
+      { id: 'payment_methods', label: 'We accept bank transfer, card payments, and cash' },
     ],
   },
   warranty: {
@@ -29,6 +33,8 @@ const DEFAULT_TERMS_GROUPED = {
     terms: [
       { id: 'warranty_workmanship', label: 'All workmanship is guaranteed for the warranty period specified' },
       { id: 'warranty_materials', label: 'Materials are covered by manufacturer warranties where applicable' },
+      { id: 'warranty_callback', label: 'Free callback within warranty period for any defects in our workmanship' },
+      { id: 'warranty_exclusions', label: 'Warranty excludes damage caused by misuse, third-party interference, or acts of nature' },
     ],
   },
   compliance: {
@@ -37,6 +43,8 @@ const DEFAULT_TERMS_GROUPED = {
       { id: 'bs7671_compliance', label: 'All electrical work complies with BS 7671 (18th Edition) Wiring Regulations' },
       { id: 'part_p_notification', label: 'Building control notification (Part P) included where required' },
       { id: 'testing_cert', label: 'Electrical installation certificate or minor works certificate provided on completion' },
+      { id: 'competent_person', label: 'All work carried out by qualified electricians registered with a competent person scheme' },
+      { id: 'insurance', label: 'Fully insured for public liability and professional indemnity' },
     ],
   },
   site: {
@@ -46,6 +54,8 @@ const DEFAULT_TERMS_GROUPED = {
       { id: 'power_isolation', label: 'Power may need to be isolated during installation - advance notice will be given' },
       { id: 'site_safety', label: 'Work area will be left safe and clean at the end of each working day' },
       { id: 'asbestos_disclaimer', label: 'This quote excludes work involving asbestos - if discovered, work will stop pending survey' },
+      { id: 'parking', label: 'Suitable parking should be available close to the property' },
+      { id: 'working_hours', label: 'Standard working hours are 8am-5pm Monday to Friday unless otherwise agreed' },
     ],
   },
   general: {
@@ -54,6 +64,9 @@ const DEFAULT_TERMS_GROUPED = {
       { id: 'price_validity', label: 'This quotation is valid for the number of days specified from the date of issue' },
       { id: 'cancellation', label: 'Cancellation within 48 hours of scheduled work may incur charges' },
       { id: 'unforeseen_works', label: 'Unforeseen works discovered during installation will be quoted separately' },
+      { id: 'price_subject', label: 'Prices are subject to change if scope of work differs from description' },
+      { id: 'materials_ownership', label: 'All materials remain our property until paid for in full' },
+      { id: 'variations', label: 'Any variations to the agreed scope must be confirmed in writing' },
     ],
   },
 };
@@ -193,36 +206,36 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
       {isExpanded && (
         <div className="p-5 space-y-6">
           {/* Quote Settings */}
-          <div className="grid grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label className="text-white/70 text-sm">Validity (Days)</Label>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+            <div className="space-y-1.5">
+              <Label className="text-white/70 text-xs sm:text-sm">Quote Valid (Days)</Label>
               <Input
                 type="number"
                 min="1"
                 max="365"
                 value={quoteValidityDays}
                 onChange={(e) => setQuoteValidityDays(parseInt(e.target.value) || 30)}
-                className="bg-white/5 border-white/10 text-white h-11"
+                className="bg-white/5 border-white/10 text-white h-11 text-base touch-manipulation"
               />
             </div>
-            <div className="space-y-2">
-              <Label className="text-white/70 text-sm">Deposit (%)</Label>
+            <div className="space-y-1.5">
+              <Label className="text-white/70 text-xs sm:text-sm">Deposit (%)</Label>
               <Input
                 type="number"
                 min="0"
                 max="100"
                 value={depositPercentage}
                 onChange={(e) => setDepositPercentage(parseInt(e.target.value) || 0)}
-                className="bg-white/5 border-white/10 text-white h-11"
+                className="bg-white/5 border-white/10 text-white h-11 text-base touch-manipulation"
               />
             </div>
-            <div className="space-y-2">
-              <Label className="text-white/70 text-sm">Warranty</Label>
+            <div className="space-y-1.5 col-span-2 sm:col-span-1">
+              <Label className="text-white/70 text-xs sm:text-sm">Warranty Period</Label>
               <Input
                 value={warrantyPeriod}
                 onChange={(e) => setWarrantyPeriod(e.target.value)}
                 placeholder="12 months"
-                className="bg-white/5 border-white/10 text-white h-11"
+                className="bg-white/5 border-white/10 text-white h-11 text-base touch-manipulation"
               />
             </div>
           </div>
@@ -251,26 +264,35 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                   }}
                 >
                   <CollapsibleTrigger className="w-full">
-                    <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors touch-manipulation">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-white">{group.label}</span>
-                        <span className="text-xs text-white/40">({selectedInGroup}/{groupTermIds.length})</span>
+                    <div className="flex items-center justify-between p-3 sm:p-3 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-colors touch-manipulation min-h-[48px]">
+                      <div className="flex items-center gap-2.5">
+                        <div className={cn(
+                          "w-2 h-2 rounded-full",
+                          selectedInGroup > 0 ? "bg-elec-yellow" : "bg-white/20"
+                        )} />
+                        <span className="text-[14px] sm:text-sm font-medium text-white text-left">{group.label}</span>
+                        <span className={cn(
+                          "text-xs px-1.5 py-0.5 rounded-full",
+                          selectedInGroup > 0 ? "bg-elec-yellow/20 text-elec-yellow" : "bg-white/10 text-white/40"
+                        )}>
+                          {selectedInGroup}/{groupTermIds.length}
+                        </span>
                       </div>
                       {isGroupExpanded ? (
-                        <ChevronUp className="h-4 w-4 text-white/30" />
+                        <ChevronUp className="h-5 w-5 text-white/40" />
                       ) : (
-                        <ChevronDown className="h-4 w-4 text-white/30" />
+                        <ChevronDown className="h-5 w-5 text-white/40" />
                       )}
                     </div>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
-                    <div className="pl-3 pt-2 space-y-1">
+                    <div className="pl-2 sm:pl-3 pt-2 space-y-0.5">
                       {group.terms.map((term) => {
                         const isSelected = selectedTerms.includes(term.id);
                         return (
                           <label
                             key={term.id}
-                            className="flex items-start gap-3 p-2 rounded-lg hover:bg-white/5 cursor-pointer touch-manipulation"
+                            className="flex items-start gap-3 p-2.5 sm:p-2 rounded-lg hover:bg-white/5 active:bg-white/10 cursor-pointer touch-manipulation min-h-[44px]"
                           >
                             <Checkbox
                               checked={isSelected}
@@ -281,9 +303,9 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                                     : prev.filter(id => id !== term.id)
                                 );
                               }}
-                              className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                              className="mt-0.5 h-5 w-5 shrink-0 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                             />
-                            <span className="text-sm text-white/80 leading-relaxed">{term.label}</span>
+                            <span className="text-[14px] sm:text-sm text-white/80 leading-relaxed text-left flex-1">{term.label}</span>
                           </label>
                         );
                       })}
@@ -294,47 +316,19 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
             })}
 
             {/* Custom Terms */}
-            <div className="pt-3 border-t border-white/10">
-              <Label className="text-white/70 text-sm mb-2 block">Custom Terms</Label>
+            <div className="pt-4 border-t border-white/10">
+              <div className="flex items-center justify-between mb-3">
+                <Label className="text-white font-medium text-sm">Your Custom Terms</Label>
+                <span className="text-xs text-white/40">{customTerms.length} added</span>
+              </div>
 
-              {customTerms.length > 0 && (
-                <div className="space-y-1 mb-3">
-                  {customTerms.map((term) => {
-                    const isSelected = selectedTerms.includes(term.id);
-                    return (
-                      <div key={term.id} className="flex items-start gap-3 p-2 rounded-lg bg-white/5">
-                        <Checkbox
-                          checked={isSelected}
-                          onCheckedChange={(checked) => {
-                            setSelectedTerms(prev =>
-                              checked ? [...prev, term.id] : prev.filter(id => id !== term.id)
-                            );
-                          }}
-                          className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                        />
-                        <span className="flex-1 text-sm text-white/80">{term.label}</span>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setCustomTerms(prev => prev.filter(t => t.id !== term.id));
-                            setSelectedTerms(prev => prev.filter(id => id !== term.id));
-                          }}
-                          className="p-1 rounded hover:bg-red-500/20 text-white/40 hover:text-red-400 transition-colors"
-                        >
-                          <X className="h-4 w-4" />
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-
-              <div className="flex gap-2">
+              {/* Add custom term input - prominent position */}
+              <div className="flex gap-2 mb-4">
                 <Input
                   value={newCustomTerm}
                   onChange={(e) => setNewCustomTerm(e.target.value)}
-                  placeholder="Add your own term..."
-                  className="flex-1 bg-white/5 border-white/10 text-white h-10 text-sm"
+                  placeholder="Type your own term and tap +"
+                  className="flex-1 bg-white/5 border-white/10 text-white h-11 text-[14px] sm:text-sm touch-manipulation"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();
@@ -348,30 +342,68 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                   size="icon"
                   disabled={!newCustomTerm.trim()}
                   onClick={addCustomTerm}
-                  className="h-10 w-10 bg-elec-yellow/10 border-elec-yellow/30 hover:bg-elec-yellow/20 text-elec-yellow"
+                  className="h-11 w-11 bg-elec-yellow/10 border-elec-yellow/30 hover:bg-elec-yellow/20 active:bg-elec-yellow/30 text-elec-yellow touch-manipulation shrink-0"
                 >
-                  <Plus className="h-4 w-4" />
+                  <Plus className="h-5 w-5" />
                 </Button>
               </div>
+
+              {customTerms.length > 0 && (
+                <div className="space-y-1 bg-white/[0.02] rounded-lg p-2">
+                  {customTerms.map((term) => {
+                    const isSelected = selectedTerms.includes(term.id);
+                    return (
+                      <div key={term.id} className="flex items-start gap-3 p-2.5 sm:p-2 rounded-lg bg-white/5 min-h-[44px]">
+                        <Checkbox
+                          checked={isSelected}
+                          onCheckedChange={(checked) => {
+                            setSelectedTerms(prev =>
+                              checked ? [...prev, term.id] : prev.filter(id => id !== term.id)
+                            );
+                          }}
+                          className="mt-0.5 h-5 w-5 shrink-0 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                        />
+                        <span className="flex-1 text-[14px] sm:text-sm text-white/80 text-left leading-relaxed">{term.label}</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCustomTerms(prev => prev.filter(t => t.id !== term.id));
+                            setSelectedTerms(prev => prev.filter(id => id !== term.id));
+                          }}
+                          className="p-2 -m-1 rounded-lg hover:bg-red-500/20 active:bg-red-500/30 text-white/40 hover:text-red-400 transition-colors touch-manipulation"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {customTerms.length === 0 && (
+                <p className="text-xs text-white/40 text-center py-2">
+                  Add your own custom terms above
+                </p>
+              )}
             </div>
 
             {/* Quick Actions */}
-            <div className="flex flex-wrap gap-2 pt-2">
+            <div className="flex gap-2 pt-3">
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => setSelectedTerms(ALL_DEFAULT_TERM_IDS)}
-                className="text-xs border-white/10 hover:bg-white/10 text-white/70"
+                className="flex-1 h-10 text-xs sm:text-sm border-white/10 hover:bg-white/10 active:bg-white/20 text-white/70 touch-manipulation"
               >
-                Select All
+                Select All Defaults
               </Button>
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={() => setSelectedTerms([])}
-                className="text-xs border-white/10 hover:bg-white/10 text-white/70"
+                className="flex-1 h-10 text-xs sm:text-sm border-white/10 hover:bg-white/10 active:bg-white/20 text-white/70 touch-manipulation"
               >
                 Clear All
               </Button>
@@ -382,7 +414,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
           <Button
             onClick={handleSave}
             disabled={isSaving || isLoading}
-            className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+            className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/80 text-black font-semibold touch-manipulation"
           >
             {isSaving ? 'Saving...' : 'Save Quote Settings'}
           </Button>
