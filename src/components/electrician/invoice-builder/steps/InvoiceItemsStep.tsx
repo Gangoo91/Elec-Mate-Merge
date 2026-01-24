@@ -2,12 +2,15 @@ import { useState, useMemo } from 'react';
 import { InvoiceItem } from '@/types/invoice';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Plus, Trash2, Calculator, Wrench, Package, Zap, Clock, FileText, Copy, Search, ChevronDown, ChevronUp, Check, User, HardHat, Hammer, Lightbulb } from 'lucide-react';
+import { Plus, Trash2, Calculator, Wrench, Package, Zap, Clock, FileText, Copy, Search, ChevronDown, ChevronUp, Check, User, HardHat, Hammer, Lightbulb, Camera, Scan } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { JobTemplates } from '@/components/electrician/quote-builder/JobTemplates';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
+import { InvoiceScannerSheet } from '../InvoiceScannerSheet';
+import { InvoiceScanResults } from '../InvoiceScanResults';
 
 import { JobTemplate } from '@/types/quote';
 
@@ -27,7 +30,7 @@ interface InvoiceItemsStepProps {
   onRemoveItem: (itemId: string) => void;
 }
 
-type AddMethod = 'quick' | 'manual' | 'templates';
+type AddMethod = 'quick' | 'manual' | 'templates' | 'scan';
 type Category = 'labour' | 'materials' | 'equipment';
 
 // Worker type icons
@@ -56,6 +59,11 @@ export const InvoiceItemsStep = ({
   const [categorySheetOpen, setCategorySheetOpen] = useState(false);
   const [equipmentSheetOpen, setEquipmentSheetOpen] = useState(false);
   const [equipmentCategorySheetOpen, setEquipmentCategorySheetOpen] = useState(false);
+
+  // Invoice Scanner State
+  const [scannerSheetOpen, setScannerSheetOpen] = useState(false);
+  const [scanResultsOpen, setScanResultsOpen] = useState(false);
+  const scanner = useInvoiceScanner();
 
   // Get user's hourly rate from their company profile (Business Settings)
   const { companyProfile } = useCompanyProfile();
@@ -197,6 +205,38 @@ export const InvoiceItemsStep = ({
       unitPrice: prev.hourlyRate
     }));
     setHoursSheetOpen(false);
+  };
+
+  // Scanner handlers
+  const handleScanCapture = async (imageData: string, file: File) => {
+    setScannerSheetOpen(false);
+    const result = await scanner.handleCapture(imageData, file);
+    if (result.success && result.items.length > 0) {
+      setScanResultsOpen(true);
+    }
+  };
+
+  const handleScanUpload = async (file: File) => {
+    setScannerSheetOpen(false);
+    const result = await scanner.handleUpload(file);
+    if (result.success && result.items.length > 0) {
+      setScanResultsOpen(true);
+    }
+  };
+
+  const handleConfirmScannedItems = () => {
+    const items = scanner.getSelectedItems();
+    items.forEach(item => {
+      onAddItem(item);
+    });
+
+    toast({
+      title: 'Items Added',
+      description: `${items.length} item${items.length === 1 ? '' : 's'} added from scanned invoice`,
+    });
+
+    setScanResultsOpen(false);
+    scanner.reset();
   };
 
   const handleAddItem = () => {
@@ -370,11 +410,12 @@ export const InvoiceItemsStep = ({
       )}
 
       {/* Add Method Tabs */}
-      <div className="flex rounded-xl bg-white/[0.03] border border-white/[0.06] p-1">
+      <div className="flex rounded-xl bg-white/[0.03] border border-white/[0.06] p-1 gap-1">
         {[
           { id: 'quick' as AddMethod, label: 'Quick', icon: Clock },
           { id: 'manual' as AddMethod, label: 'Manual', icon: Plus },
-          { id: 'templates' as AddMethod, label: 'Templates', icon: FileText },
+          { id: 'templates' as AddMethod, label: 'Jobs', icon: FileText },
+          { id: 'scan' as AddMethod, label: 'Scan', icon: Camera },
         ].map((method) => {
           const Icon = method.icon;
           const isActive = activeAddMethod === method.id;
@@ -383,11 +424,11 @@ export const InvoiceItemsStep = ({
               key={method.id}
               onClick={() => setActiveAddMethod(method.id)}
               className={cn(
-                'flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-[13px] font-medium transition-all touch-manipulation',
+                'flex-1 flex flex-col items-center justify-center py-2 rounded-lg text-[11px] font-medium transition-all touch-manipulation min-w-0',
                 isActive ? 'bg-elec-yellow text-black' : 'text-white/70'
               )}
             >
-              <Icon className="h-4 w-4" />
+              <Icon className="h-5 w-5 mb-0.5" />
               {method.label}
             </button>
           );
@@ -694,6 +735,48 @@ export const InvoiceItemsStep = ({
         <JobTemplates onSelectTemplate={handleTemplateSelect} />
       )}
 
+      {/* Scan Invoice */}
+      {activeAddMethod === 'scan' && (
+        <div className="space-y-3">
+          {/* Info Card */}
+          <div className="p-4 rounded-xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+                <Scan className="h-5 w-5 text-cyan-400" />
+              </div>
+              <div>
+                <p className="text-[14px] font-medium text-white">Scan Supplier Invoice</p>
+                <p className="text-[12px] text-white/60">Take a photo or upload an invoice to auto-import materials</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <Button
+            onClick={() => setScannerSheetOpen(true)}
+            className="w-full h-14 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
+          >
+            <Camera className="h-5 w-5 mr-2" />
+            Scan Invoice
+          </Button>
+
+          {/* Tips */}
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+            <p className="text-[11px] text-white/40 uppercase tracking-wide mb-3">Supported Suppliers</p>
+            <div className="flex flex-wrap gap-2">
+              {['Screwfix', 'Toolstation', 'CEF', 'Edmundson', 'Rexel', 'Others'].map((supplier) => (
+                <span
+                  key={supplier}
+                  className="px-2.5 py-1 rounded-lg bg-white/[0.05] text-[12px] text-white/60"
+                >
+                  {supplier}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Additional Items */}
       {additionalItems.length > 0 && (
         <div>
@@ -961,6 +1044,29 @@ export const InvoiceItemsStep = ({
           </div>
         </SheetContent>
       </Sheet>
+
+      {/* Invoice Scanner Sheet */}
+      <InvoiceScannerSheet
+        open={scannerSheetOpen}
+        onOpenChange={setScannerSheetOpen}
+        onCapture={handleScanCapture}
+        onUpload={handleScanUpload}
+        isProcessing={scanner.state === 'processing' || scanner.state === 'matching' || scanner.state === 'uploading'}
+        progress={scanner.progress}
+      />
+
+      {/* Invoice Scan Results Sheet */}
+      <InvoiceScanResults
+        open={scanResultsOpen}
+        onOpenChange={setScanResultsOpen}
+        result={scanner.result}
+        onToggleItem={scanner.toggleItemSelection}
+        onSelectMatch={scanner.selectMatch}
+        onUpdateItem={scanner.updateItem}
+        onSelectAll={scanner.selectAll}
+        onDeselectAll={scanner.deselectAll}
+        onConfirm={handleConfirmScannedItems}
+      />
     </div>
   );
 };
