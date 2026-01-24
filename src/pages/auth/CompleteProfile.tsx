@@ -31,8 +31,8 @@ const CompleteProfile = () => {
   const [error, setError] = useState<string | null>(null);
 
   const roleOptions = [
-    { value: 'apprentice', label: 'Apprentice', icon: GraduationCap, description: 'Learning the trade' },
     { value: 'electrician', label: 'Electrician', icon: Zap, description: 'Qualified professional' },
+    { value: 'apprentice', label: 'Apprentice', icon: GraduationCap, description: 'Learning the trade' },
   ];
 
   const handleSubmit = async () => {

@@ -170,8 +170,8 @@ const SignUp = () => {
   // Note: 'employer' role requires a paid subscription and is not available at free signup
   // Employers must subscribe through the employer pricing page to get access
   const roleOptions = [
-    { value: 'apprentice', label: 'Apprentice', icon: GraduationCap },
     { value: 'electrician', label: 'Electrician', icon: Zap },
+    { value: 'apprentice', label: 'Apprentice', icon: GraduationCap },
   ];
 
   const allPasswordRequirementsMet = PASSWORD_REQUIREMENTS.every(req => req.test(password));
