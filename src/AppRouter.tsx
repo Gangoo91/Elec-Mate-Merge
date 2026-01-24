@@ -17,6 +17,7 @@ const ForgotPassword = lazy(() => import("@/pages/auth/ForgotPassword"));
 const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
 const ConfirmEmail = lazy(() => import("@/pages/auth/ConfirmEmail"));
 const CheckEmail = lazy(() => import("@/pages/auth/CheckEmail"));
+const CompleteProfile = lazy(() => import("@/pages/auth/CompleteProfile"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const Profile = lazy(() => import("@/pages/Profile"));
 const Settings = lazy(() => import("@/pages/Settings"));
@@ -112,6 +113,7 @@ const AppRouter = () => {
       <Route path="/auth/reset-password" element={<LazyRoute><ResetPassword /></LazyRoute>} />
       <Route path="/auth/confirm-email" element={<LazyRoute><ConfirmEmail /></LazyRoute>} />
       <Route path="/auth/check-email" element={<LazyRoute><CheckEmail /></LazyRoute>} />
+      <Route path="/auth/complete-profile" element={<LazyRoute><CompleteProfile /></LazyRoute>} />
       <Route path="/privacy" element={<LazyRoute><PrivacyPolicy /></LazyRoute>} />
       <Route path="/terms" element={<LazyRoute><TermsOfService /></LazyRoute>} />
       <Route path="/quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />

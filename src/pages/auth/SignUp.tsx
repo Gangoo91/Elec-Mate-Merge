@@ -139,7 +139,6 @@ const SignUp = () => {
   });
   const [generatedElecId, setGeneratedElecId] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [submitPhase, setSubmitPhase] = useState<'idle' | 'creating' | 'sending-email'>('idle');
 
   const { signUp } = useAuth();
   const navigate = useNavigate();
@@ -217,7 +216,6 @@ const SignUp = () => {
       return;
     }
     setIsSubmitting(true);
-    setSubmitPhase('creating');
     setError(null);
 
     try {
@@ -228,18 +226,24 @@ const SignUp = () => {
         return;
       }
 
-      // Store onboarding data for later sync
-      localStorage.setItem('elec-mate-onboarding', JSON.stringify({
-        ...profile,
-        consent: { ...consent, timestamp: new Date().toISOString() },
-        completedAt: new Date().toISOString()
-      }));
+      // IMMEDIATELY save role to database - don't rely on email confirmation flow
+      if (data?.user?.id) {
+        try {
+          await supabase.from('profiles').update({
+            role: profile.role,
+            ecs_card_type: profile.ecsCardType || null,
+            elec_id_enabled: profile.createElecId || false,
+            onboarding_completed: true,
+            updated_at: new Date().toISOString(),
+          }).eq('id', data.user.id);
+          console.log('Profile role saved immediately during signup');
+        } catch (profileError) {
+          console.error('Error saving profile during signup:', profileError);
+          // Continue anyway - backup will be in localStorage
+        }
+      }
 
-      // Store email and name for the check-email page
-      localStorage.setItem('elec-mate-pending-email', email);
-      localStorage.setItem('elec-mate-pending-name', fullName);
-
-      // Store consent (GDPR compliance) - non-blocking, consent is also stored in localStorage
+      // Store consent (GDPR compliance) - non-blocking
       const consentResult = await storeConsent({
         email,
         full_name: fullName,
@@ -255,13 +259,22 @@ const SignUp = () => {
         console.warn('Consent DB storage failed (non-critical):', consentResult.error);
       }
 
-      // Store Elec-ID preference for later (after email confirmation)
+      // Generate Elec-ID immediately if user opted for it
       if (profile.createElecId && data?.user?.id) {
-        localStorage.setItem('elec-mate-pending-elecid', JSON.stringify({
-          createElecId: true,
-          ecsCardType: profile.ecsCardType,
-          userId: data.user.id
-        }));
+        try {
+          const { data: elecIdResult } = await supabase.functions.invoke('generate-elec-id', {
+            body: {
+              user_id: data.user.id,
+              ecs_card_type: profile.ecsCardType || null
+            }
+          });
+          if (elecIdResult?.elec_id_number) {
+            setGeneratedElecId(elecIdResult.elec_id_number);
+            console.log('Elec-ID generated:', elecIdResult.elec_id_number);
+          }
+        } catch (elecIdError) {
+          console.error('Error generating Elec-ID:', elecIdError);
+        }
       }
 
       // Handle early access invite claim (non-blocking)
@@ -271,31 +284,29 @@ const SignUp = () => {
             body: { action: 'claim', token: earlyAccessToken },
           });
           console.log('Early access invite claimed');
-          // Store that this is an early access signup for trial activation
           localStorage.setItem('elec-mate-early-access-claimed', 'true');
         } catch (claimErr) {
           console.warn('Early access claim failed (non-critical):', claimErr);
         }
       }
 
-      // Send branded confirmation email via Resend
-      setSubmitPhase('sending-email');
-      try {
-        await supabase.functions.invoke('send-confirmation-email', {
-          body: { email, fullName },
-        });
-        console.log('Confirmation email sent');
-      } catch (emailErr) {
-        console.warn('Confirmation email failed (non-critical):', emailErr);
-      }
+      // Send welcome email (non-blocking)
+      supabase.functions.invoke('send-welcome-email', {
+        body: {
+          userId: data?.user?.id,
+          email: email,
+          fullName: fullName,
+        },
+      }).catch((emailErr) => {
+        console.warn('Welcome email failed (non-critical):', emailErr);
+      });
 
-      // Redirect to check-email page instead of dashboard
-      navigate('/auth/check-email');
+      // Go straight to dashboard - no email confirmation needed
+      navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || 'An error occurred');
     } finally {
       setIsSubmitting(false);
-      setSubmitPhase('idle');
     }
   };
 
@@ -798,11 +809,7 @@ const SignUp = () => {
                   className="w-full h-14 rounded-2xl text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-lg shadow-elec-yellow/25 disabled:opacity-50"
                 >
                   {isSubmitting ? (
-                    submitPhase === 'sending-email' ? (
-                      <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Sending confirmation email...</>
-                    ) : (
-                      <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Creating Account...</>
-                    )
+                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Creating Account...</>
                   ) : (
                     <>Create Account <ArrowRight className="ml-2 h-5 w-5" /></>
                   )}

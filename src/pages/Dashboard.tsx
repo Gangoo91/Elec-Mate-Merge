@@ -7,6 +7,7 @@
  */
 
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { DashboardContainer } from '@/components/dashboard/DashboardContainer';
 import { PremiumHero } from '@/components/dashboard/PremiumHero';
@@ -34,8 +35,16 @@ const sectionVariants = {
 };
 
 const Dashboard = () => {
-  const { profile, isLoading } = useAuth();
+  const { user, profile, isLoading } = useAuth();
+  const navigate = useNavigate();
   const [showWelcome, setShowWelcome] = useState(false);
+
+  // Safety net: redirect users with NULL role to complete their profile
+  useEffect(() => {
+    if (!isLoading && user && profile && !profile.role) {
+      navigate('/auth/complete-profile');
+    }
+  }, [profile, isLoading, user, navigate]);
 
   // Private page - don't index
   useSEO({
