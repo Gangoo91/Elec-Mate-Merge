@@ -8,6 +8,7 @@ import { toast } from '@/hooks/use-toast';
 export const useQuoteStorage = () => {
   const [savedQuotes, setSavedQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
   // Convert database row to Quote object
   const convertDbRowToQuote = useCallback((row: any): Quote => ({
@@ -97,6 +98,7 @@ export const useQuoteStorage = () => {
           });
         }) || [];
         setSavedQuotes(quotes);
+        setLastUpdated(new Date());
         console.log('Quotes loaded from Supabase:', quotes.length);
       } catch (error) {
         console.error('Error loading quotes:', error);
@@ -408,6 +410,7 @@ export const useQuoteStorage = () => {
         });
       }) || [];
       setSavedQuotes(quotes);
+      setLastUpdated(new Date());
       console.log('Quotes refreshed:', quotes.length);
     } catch (error) {
       console.error('Error refreshing quotes:', error);
@@ -619,5 +622,6 @@ export const useQuoteStorage = () => {
     getQuoteStats,
     loading,
     refreshQuotes,
+    lastUpdated,
   };
 };

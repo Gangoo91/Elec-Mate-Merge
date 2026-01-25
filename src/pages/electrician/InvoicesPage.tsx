@@ -22,7 +22,7 @@ import { QuoteInvoiceAnalytics } from "@/components/electrician/analytics";
 import StripeConnectBanner from "@/components/electrician/StripeConnectBanner";
 
 const InvoicesPage = () => {
-  const { invoices, isLoading, fetchInvoices, deleteInvoice } = useInvoiceStorage();
+  const { invoices, isLoading, fetchInvoices, deleteInvoice, lastUpdated } = useInvoiceStorage();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const highlightId = searchParams.get('highlight');
@@ -575,6 +575,9 @@ const InvoicesPage = () => {
               quotes={[]}
               invoices={invoices}
               formatCurrency={formatCurrency}
+              lastUpdated={lastUpdated}
+              onRefresh={fetchInvoices}
+              isLoading={isLoading}
             />
           )}
 

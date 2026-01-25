@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -7,7 +8,17 @@ import { Clock, AlertTriangle, Sparkles, ChevronRight, Zap } from 'lucide-react'
 import { cn } from '@/lib/utils';
 
 const TrialBanner = () => {
-  const { isTrialActive, trialEndsAt, isSubscribed, isDevelopmentMode } = useAuth();
+  const { isTrialActive, trialEndsAt, isSubscribed, isDevelopmentMode, profile } = useAuth();
+
+  // Small delay to prevent flash during state transitions (e.g., scroll-triggered re-renders)
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShouldRender(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Calculate days remaining in trial
   const getDaysRemaining = () => {
@@ -19,8 +30,8 @@ const TrialBanner = () => {
     return Math.max(0, diffDays);
   };
 
-  // If user is subscribed or in dev mode, don't show trial banner
-  if (isSubscribed || isDevelopmentMode) {
+  // Don't show for subscribed users, dev mode, free access users (founders), or during initial render delay
+  if (!shouldRender || isSubscribed || isDevelopmentMode || profile?.free_access_granted) {
     return null;
   }
 

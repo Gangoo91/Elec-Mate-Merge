@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Trash2, Wrench, Package, Zap, FileText, Copy, TrendingUp, Search, ChevronRight, ChevronDown, Clock, PoundSterling, Hash } from "lucide-react";
+import { Plus, Trash2, Wrench, Package, Zap, FileText, Copy, TrendingUp, Search, ChevronRight, ChevronDown, Clock, PoundSterling, Hash, Scan } from "lucide-react";
 import { QuoteItem, JobTemplate } from "@/types/quote";
 import { JobTemplates } from "../JobTemplates";
 import { cn } from "@/lib/utils";
@@ -18,6 +18,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { useDebounce } from "@/hooks/useDebounce";
 import { toast } from "@/hooks/use-toast";
 import { useCompanyProfile } from "@/hooks/useCompanyProfile";
+import { useInvoiceScanner } from "@/hooks/useInvoiceScanner";
+import { InvoiceScannerSheet } from "@/components/electrician/invoice-builder/InvoiceScannerSheet";
+import { InvoiceScanResults } from "@/components/electrician/invoice-builder/InvoiceScanResults";
 
 interface EnhancedQuoteItemsStepProps {
   items: QuoteItem[];
@@ -94,11 +97,54 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
   const [showTemplates, setShowTemplates] = useState(false);
   const debouncedSearch = useDebounce(materialSearch, 500);
 
+  // Invoice Scanner State
+  const [scannerSheetOpen, setScannerSheetOpen] = useState(false);
+  const [scanResultsOpen, setScanResultsOpen] = useState(false);
+  const scanner = useInvoiceScanner();
+
   const handleTemplateSelect = (template: JobTemplate) => {
     template.items.forEach(item => {
       onAdd(item);
     });
     setShowTemplates(false);
+  };
+
+  // Scanner handlers
+  const handleScanCapture = async (imageData: string, file: File) => {
+    setScannerSheetOpen(false);
+    const result = await scanner.handleCapture(imageData, file);
+    if (result.success && result.items.length > 0) {
+      setScanResultsOpen(true);
+    }
+  };
+
+  const handleScanUpload = async (files: File[]) => {
+    setScannerSheetOpen(false);
+    const result = await scanner.handleUpload(files);
+    if (result.success && result.items.length > 0) {
+      setScanResultsOpen(true);
+    }
+  };
+
+  const handleConfirmScannedItems = () => {
+    const items = scanner.getSelectedItems();
+    items.forEach(item => {
+      const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(item.unitPrice) : item.unitPrice;
+      onAdd({
+        ...item,
+        unitPrice: adjustedPrice,
+        notes: `Scanned from supplier invoice`
+      });
+    });
+
+    toast({
+      title: 'Items Added',
+      description: `${items.length} material${items.length === 1 ? '' : 's'} added from scanned invoice`,
+    });
+
+    setScanResultsOpen(false);
+    setScannerSheetOpen(false);
+    scanner.reset();
   };
 
   const handleCategoryChange = (category: string) => {
@@ -389,6 +435,24 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
         {/* Materials Fields */}
         {newItem.category === "materials" && (
           <div className="divide-y divide-white/[0.06]">
+            {/* Scan Invoice Button */}
+            <button
+              type="button"
+              onClick={() => setScannerSheetOpen(true)}
+              className="w-full flex items-center justify-between p-3.5 touch-manipulation active:bg-white/[0.03] transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0">
+                  <Scan className="h-5 w-5 text-white" />
+                </div>
+                <div className="text-left">
+                  <p className="text-[14px] font-medium text-white">Scan Supplier Invoice</p>
+                  <p className="text-[12px] text-white/50">Upload multiple screenshots at once</p>
+                </div>
+              </div>
+              <ChevronRight className="h-5 w-5 text-white/30" />
+            </button>
+
             {/* Markup Quick Select - matching invoice flow style */}
             {setPriceAdjustment && (
               <div className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
@@ -737,6 +801,29 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
           </div>
         </div>
       )}
+
+      {/* Invoice Scanner Sheet */}
+      <InvoiceScannerSheet
+        open={scannerSheetOpen}
+        onOpenChange={setScannerSheetOpen}
+        onCapture={handleScanCapture}
+        onUpload={handleScanUpload}
+        isProcessing={scanner.state === 'processing' || scanner.state === 'matching' || scanner.state === 'uploading'}
+        progress={scanner.progress}
+      />
+
+      {/* Invoice Scan Results Sheet */}
+      <InvoiceScanResults
+        open={scanResultsOpen}
+        onOpenChange={setScanResultsOpen}
+        result={scanner.result}
+        onToggleItem={scanner.toggleItemSelection}
+        onSelectMatch={scanner.selectMatch}
+        onUpdateItem={scanner.updateItem}
+        onSelectAll={scanner.selectAll}
+        onDeselectAll={scanner.deselectAll}
+        onConfirm={handleConfirmScannedItems}
+      />
     </div>
   );
 };

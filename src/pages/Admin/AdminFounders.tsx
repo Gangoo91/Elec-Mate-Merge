@@ -38,6 +38,10 @@ import {
   RotateCw,
   Loader2,
   Users,
+  MailCheck,
+  Eye,
+  MousePointerClick,
+  XCircle,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
@@ -52,6 +56,13 @@ interface FounderInvite {
   claimed_at: string | null;
   expires_at: string;
   created_at: string;
+  // Email tracking fields
+  delivered_at: string | null;
+  opened_at: string | null;
+  clicked_at: string | null;
+  bounced_at: string | null;
+  bounce_type: string | null;
+  send_count: number | null;
 }
 
 interface Stats {
@@ -60,6 +71,11 @@ interface Stats {
   sent: number;
   claimed: number;
   expired: number;
+  // Email tracking stats
+  delivered: number;
+  opened: number;
+  clicked: number;
+  bounced: number;
 }
 
 export default function AdminFounders() {
@@ -393,6 +409,40 @@ export default function AdminFounders() {
         </Card>
       </div>
 
+      {/* Email Tracking Stats */}
+      {(stats?.sent || 0) > 0 && (
+        <div className="grid grid-cols-4 gap-2">
+          <Card className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border-emerald-500/20">
+            <CardContent className="pt-2 pb-2 text-center">
+              <MailCheck className="h-3 w-3 mx-auto mb-1 text-emerald-400" />
+              <p className="text-lg font-bold text-emerald-400">{stats?.delivered || 0}</p>
+              <p className="text-[9px] text-muted-foreground">Delivered</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-500/20">
+            <CardContent className="pt-2 pb-2 text-center">
+              <Eye className="h-3 w-3 mx-auto mb-1 text-purple-400" />
+              <p className="text-lg font-bold text-purple-400">{stats?.opened || 0}</p>
+              <p className="text-[9px] text-muted-foreground">Opened</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 border-cyan-500/20">
+            <CardContent className="pt-2 pb-2 text-center">
+              <MousePointerClick className="h-3 w-3 mx-auto mb-1 text-cyan-400" />
+              <p className="text-lg font-bold text-cyan-400">{stats?.clicked || 0}</p>
+              <p className="text-[9px] text-muted-foreground">Clicked</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20">
+            <CardContent className="pt-2 pb-2 text-center">
+              <XCircle className="h-3 w-3 mx-auto mb-1 text-red-400" />
+              <p className="text-lg font-bold text-red-400">{stats?.bounced || 0}</p>
+              <p className="text-[9px] text-muted-foreground">Bounced</p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
       {/* Resend to Unclaimed Section */}
       {(stats?.sent || 0) > 0 && (
         <Card className="border-yellow-500/30 bg-gradient-to-br from-yellow-500/10 to-transparent">
@@ -646,6 +696,77 @@ export default function AdminFounders() {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Email Tracking Card */}
+              {selectedInvite?.status !== "pending" && (
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-blue-400" />
+                      Email Tracking
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground flex items-center gap-2">
+                        <MailCheck className="h-3 w-3 text-emerald-400" />
+                        Delivered
+                      </span>
+                      {selectedInvite?.delivered_at ? (
+                        <span className="text-sm text-emerald-400">
+                          ✓ {formatDistanceToNow(new Date(selectedInvite.delivered_at), { addSuffix: true })}
+                        </span>
+                      ) : (
+                        <span className="text-sm text-muted-foreground">—</span>
+                      )}
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground flex items-center gap-2">
+                        <Eye className="h-3 w-3 text-purple-400" />
+                        Opened
+                      </span>
+                      {selectedInvite?.opened_at ? (
+                        <span className="text-sm text-purple-400">
+                          ✓ {formatDistanceToNow(new Date(selectedInvite.opened_at), { addSuffix: true })}
+                        </span>
+                      ) : (
+                        <span className="text-sm text-muted-foreground">—</span>
+                      )}
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground flex items-center gap-2">
+                        <MousePointerClick className="h-3 w-3 text-cyan-400" />
+                        Clicked
+                      </span>
+                      {selectedInvite?.clicked_at ? (
+                        <span className="text-sm text-cyan-400">
+                          ✓ {formatDistanceToNow(new Date(selectedInvite.clicked_at), { addSuffix: true })}
+                        </span>
+                      ) : (
+                        <span className="text-sm text-muted-foreground">—</span>
+                      )}
+                    </div>
+                    {selectedInvite?.bounced_at && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-muted-foreground flex items-center gap-2">
+                          <XCircle className="h-3 w-3 text-red-400" />
+                          Bounced
+                        </span>
+                        <span className="text-sm text-red-400">
+                          ✗ {selectedInvite.bounce_type || "unknown"} - {formatDistanceToNow(new Date(selectedInvite.bounced_at), { addSuffix: true })}
+                        </span>
+                      </div>
+                    )}
+                    {(selectedInvite?.send_count || 0) > 1 && (
+                      <div className="pt-2 border-t border-border/50">
+                        <span className="text-xs text-muted-foreground">
+                          Sent {selectedInvite?.send_count} times
+                        </span>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
 
               {/* Invite Link */}
               <Card>

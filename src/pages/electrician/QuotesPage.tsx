@@ -31,7 +31,8 @@ const QuotesPage = () => {
     updateQuoteStatus,
     sendPaymentReminder,
     refreshQuotes,
-    loading
+    loading,
+    lastUpdated
   } = useQuoteStorage();
 
   const handleDeleteQuote = async (quoteId: string) => {
@@ -326,6 +327,9 @@ const QuotesPage = () => {
           <QuoteInvoiceAnalytics
             quotes={savedQuotes}
             formatCurrency={(value) => `£${value.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+            lastUpdated={lastUpdated}
+            onRefresh={refreshQuotes}
+            isLoading={loading}
           />
         )}
 

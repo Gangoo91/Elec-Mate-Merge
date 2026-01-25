@@ -3,10 +3,10 @@ import { CheckCircle, XCircle, RotateCcw, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface QuizQuestion {
-  id: number;
+  id?: number;
   question: string;
   options: string[];
-  correctAnswer: number;
+  correctAnswer: number | string; // Support both index (number) and text (string) formats
   explanation?: string;
 }
 
@@ -20,6 +20,16 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
+
+  // Helper to get correct answer index (handles both number and string formats)
+  const getCorrectAnswerIndex = (question: QuizQuestion): number => {
+    if (typeof question.correctAnswer === 'number') {
+      return question.correctAnswer;
+    }
+    // If it's a string, find the index in options
+    const index = question.options.findIndex(opt => opt === question.correctAnswer);
+    return index >= 0 ? index : 0;
+  };
 
   const handleAnswerSelect = (answerIndex: number) => {
     const newAnswers = [...selectedAnswers];
@@ -57,7 +67,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
   const getScore = () => {
     let correct = 0;
     selectedAnswers.forEach((answer, index) => {
-      if (answer === questions[index]?.correctAnswer) {
+      if (answer === getCorrectAnswerIndex(questions[index])) {
         correct++;
       }
     });
@@ -70,7 +80,8 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
 
   const currentQ = questions[currentQuestion];
   const isAnswered = selectedAnswers[currentQuestion] !== undefined;
-  const isCorrect = selectedAnswers[currentQuestion] === currentQ?.correctAnswer;
+  const correctIndex = currentQ ? getCorrectAnswerIndex(currentQ) : -1;
+  const isCorrect = selectedAnswers[currentQuestion] === correctIndex;
 
   if (quizCompleted) {
     const score = getScore();
@@ -166,11 +177,11 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
               className={`w-full min-h-[52px] p-4 text-left rounded-xl border-2 transition-all duration-200 active:scale-[0.98] touch-manipulation ${
                 selectedAnswers[currentQuestion] === index
                   ? showResult
-                    ? index === currentQ.correctAnswer
+                    ? index === correctIndex
                       ? 'bg-green-500/20 border-green-400/50 text-green-300'
                       : 'bg-red-500/20 border-red-400/50 text-red-300'
                     : 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
-                  : showResult && index === currentQ.correctAnswer
+                  : showResult && index === correctIndex
                   ? 'bg-green-500/20 border-green-400/50 text-green-300'
                   : 'border-white/10 hover:border-elec-yellow/30 active:bg-white/5 text-white'
               }`}
@@ -179,11 +190,11 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
                 <div className={`w-7 h-7 sm:w-6 sm:h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                   selectedAnswers[currentQuestion] === index
                     ? showResult
-                      ? index === currentQ.correctAnswer
+                      ? index === correctIndex
                         ? 'border-green-400 bg-green-400'
                         : 'border-red-400 bg-red-400'
                       : 'border-elec-yellow bg-elec-yellow'
-                    : showResult && index === currentQ.correctAnswer
+                    : showResult && index === correctIndex
                     ? 'border-green-400 bg-green-400'
                     : 'border-white/40 bg-transparent'
                  }`}>
@@ -192,7 +203,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = "Quick Quiz" }) =
                   )}
                   {showResult && (
                     <>
-                      {index === currentQ.correctAnswer ? (
+                      {index === correctIndex ? (
                         <CheckCircle className="h-4 w-4 text-white" />
                       ) : selectedAnswers[currentQuestion] === index ? (
                         <XCircle className="h-4 w-4 text-white" />

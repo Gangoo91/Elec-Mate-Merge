@@ -252,7 +252,7 @@ Deno.serve(async (req) => {
       case "stats": {
         const { data, error } = await supabaseAdmin
           .from("founder_invites")
-          .select("status, sent_at");
+          .select("status, sent_at, delivered_at, opened_at, clicked_at, bounced_at");
         if (error) throw error;
 
         const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
@@ -268,6 +268,11 @@ Deno.serve(async (req) => {
           needsReminder: sentInvites.filter(i => !i.sent_at || new Date(i.sent_at) < thirtyMinutesAgo).length,
           // Recently resent: sent_at within last 30 mins
           recentlyResent: sentInvites.filter(i => i.sent_at && new Date(i.sent_at) >= thirtyMinutesAgo).length,
+          // Email tracking stats
+          delivered: data?.filter(i => i.delivered_at).length || 0,
+          opened: data?.filter(i => i.opened_at).length || 0,
+          clicked: data?.filter(i => i.clicked_at).length || 0,
+          bounced: data?.filter(i => i.bounced_at).length || 0,
         };
         result = { stats };
         break;
@@ -343,7 +348,7 @@ Deno.serve(async (req) => {
         // Send the email
         const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
 
-        const { error: emailError } = await resend.emails.send({
+        const { data: emailData, error: emailError } = await resend.emails.send({
           from: "Elec-Mate <founder@elec-mate.com>",
           to: [invite.email],
           subject: "Your Elec-Mate Founder Subscription is Ready - £3.99/month",
@@ -355,10 +360,16 @@ Deno.serve(async (req) => {
           throw new Error("Failed to send email");
         }
 
-        // Update invite status
+        // Update invite status with resend_email_id for webhook tracking
         await supabaseAdmin
           .from("founder_invites")
-          .update({ status: "sent", sent_at: new Date().toISOString() })
+          .update({
+            status: "sent",
+            sent_at: new Date().toISOString(),
+            resend_email_id: emailData?.id,
+            last_send_attempt_at: new Date().toISOString(),
+            send_count: (invite.send_count || 0) + 1,
+          })
           .eq("id", inviteId);
 
         console.log(`Founder invite sent to ${invite.email} by admin ${user.id}`);
@@ -387,7 +398,7 @@ Deno.serve(async (req) => {
           try {
             const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
 
-            const { error: emailError } = await resend.emails.send({
+            const { data: emailData, error: emailError } = await resend.emails.send({
               from: "Elec-Mate <founder@elec-mate.com>",
               to: [invite.email],
               subject: "Your Elec-Mate Founder Subscription is Ready - £3.99/month",
@@ -401,7 +412,13 @@ Deno.serve(async (req) => {
 
             await supabaseAdmin
               .from("founder_invites")
-              .update({ status: "sent", sent_at: new Date().toISOString() })
+              .update({
+                status: "sent",
+                sent_at: new Date().toISOString(),
+                resend_email_id: emailData?.id,
+                last_send_attempt_at: new Date().toISOString(),
+                send_count: (invite.send_count || 0) + 1,
+              })
               .eq("id", invite.id);
 
             sentCount++;
@@ -468,7 +485,7 @@ Deno.serve(async (req) => {
         // Resend the email
         const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
 
-        const { error: emailError } = await resend.emails.send({
+        const { data: emailData, error: emailError } = await resend.emails.send({
           from: "Elec-Mate <founder@elec-mate.com>",
           to: [invite.email],
           subject: "Reminder: Your Elec-Mate Founder Subscription is Waiting - £3.99/month",
@@ -479,10 +496,15 @@ Deno.serve(async (req) => {
           throw new Error("Failed to resend email");
         }
 
-        // Update sent_at
+        // Update sent_at with resend_email_id for webhook tracking
         await supabaseAdmin
           .from("founder_invites")
-          .update({ sent_at: new Date().toISOString() })
+          .update({
+            sent_at: new Date().toISOString(),
+            resend_email_id: emailData?.id,
+            last_send_attempt_at: new Date().toISOString(),
+            send_count: (invite.send_count || 0) + 1,
+          })
           .eq("id", inviteId);
 
         console.log(`Founder invite resent to ${invite.email} by admin ${user.id}`);
@@ -592,7 +614,7 @@ Deno.serve(async (req) => {
 
             const emailHtml = generateInviteEmailHTML(email, invite.invite_token);
 
-            const { error: emailError } = await resend.emails.send({
+            const { data: emailData, error: emailError } = await resend.emails.send({
               from: "Elec-Mate <founder@elec-mate.com>",
               to: [email],
               subject: subjectLine,
@@ -606,7 +628,13 @@ Deno.serve(async (req) => {
 
             await supabaseAdmin
               .from("founder_invites")
-              .update({ status: "sent", sent_at: new Date().toISOString() })
+              .update({
+                status: "sent",
+                sent_at: new Date().toISOString(),
+                resend_email_id: emailData?.id,
+                last_send_attempt_at: new Date().toISOString(),
+                send_count: (invite.send_count || 0) + 1,
+              })
               .eq("id", invite.id);
 
             sentCount++;
@@ -652,7 +680,7 @@ Deno.serve(async (req) => {
           try {
             const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
 
-            const { error: emailError } = await resend.emails.send({
+            const { data: emailData, error: emailError } = await resend.emails.send({
               from: "Elec-Mate <founder@elec-mate.com>",
               to: [invite.email],
               subject: "⏰ Reminder: Your £3.99/month Founder Rate is Still Waiting!",
@@ -664,10 +692,15 @@ Deno.serve(async (req) => {
               continue;
             }
 
-            // Update sent_at timestamp
+            // Update sent_at timestamp with resend_email_id for webhook tracking
             await supabaseAdmin
               .from("founder_invites")
-              .update({ sent_at: new Date().toISOString() })
+              .update({
+                sent_at: new Date().toISOString(),
+                resend_email_id: emailData?.id,
+                last_send_attempt_at: new Date().toISOString(),
+                send_count: (invite.send_count || 0) + 1,
+              })
               .eq("id", invite.id);
 
             sentCount++;

@@ -337,7 +337,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                     ) : (
                       /* Not connected - show connect prompt */
                       <button
-                        onClick={(e) => { e.stopPropagation(); window.location.href = '/electrician/settings?tab=business'; }}
+                        onClick={(e) => { e.stopPropagation(); window.location.href = '/settings?tab=business'; }}
                         className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 text-[13px] font-medium text-purple-400 touch-manipulation transition-all active:scale-[0.96]"
                       >
                         <RefreshCw className="h-4 w-4" />

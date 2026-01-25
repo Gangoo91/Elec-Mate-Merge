@@ -77,7 +77,7 @@ export const useCompanyProfile = () => {
       const cleanProfileData = {
         ...profileData,
         user_id: user.id,
-        company_name: profileData.company_name || 'Untitled Company',
+        company_name: profileData.company_name || '',
       };
 
       let result;

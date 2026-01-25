@@ -224,9 +224,9 @@ export const InvoiceItemsStep = ({
     }
   };
 
-  const handleScanUpload = async (file: File) => {
+  const handleScanUpload = async (files: File[]) => {
     setScannerSheetOpen(false);
-    const result = await scanner.handleUpload(file);
+    const result = await scanner.handleUpload(files);
     if (result.success && result.items.length > 0) {
       setScanResultsOpen(true);
     }

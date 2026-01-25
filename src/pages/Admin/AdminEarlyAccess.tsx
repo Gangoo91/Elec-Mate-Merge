@@ -36,6 +36,12 @@ import {
   RotateCw,
   Loader2,
   Rocket,
+  Eye,
+  MousePointerClick,
+  UserCheck,
+  XCircle,
+  MailCheck,
+  TrendingUp,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
@@ -44,20 +50,49 @@ import AdminEmptyState from "@/components/admin/AdminEmptyState";
 interface EarlyAccessInvite {
   id: string;
   email: string;
-  invite_token: string;
-  status: "pending" | "sent" | "claimed" | "expired";
+  invite_token?: string;
+  status: "pending" | "sent" | "opened" | "clicked" | "claimed" | "delivered" | "bounced" | "expired";
+  raw_status?: string;
   sent_at: string | null;
+  delivered_at: string | null;
+  opened_at: string | null;
+  clicked_at: string | null;
   claimed_at: string | null;
+  bounced_at: string | null;
+  bounce_type: string | null;
   expires_at: string;
   created_at: string;
+  send_count?: number;
+  user?: {
+    id: string;
+    full_name: string;
+    role: string;
+    signed_up_at: string;
+  } | null;
+  subscription?: {
+    status: string;
+    plan_name: string;
+    trial_end: string;
+  } | null;
 }
 
 interface Stats {
   total: number;
   pending: number;
   sent: number;
+  delivered: number;
+  bounced: number;
+  opened: number;
+  clicked: number;
   claimed: number;
   expired: number;
+  unopened_sent: number;
+  failed_sends: number;
+  rates: {
+    open_rate: string;
+    click_rate: string;
+    signup_rate: string;
+  };
 }
 
 export default function AdminEarlyAccess() {
@@ -66,10 +101,12 @@ export default function AdminEarlyAccess() {
   const [emailInput, setEmailInput] = useState("");
   const [selectedInvite, setSelectedInvite] = useState<EarlyAccessInvite | null>(null);
   const [confirmSendAll, setConfirmSendAll] = useState(false);
+  const [confirmResendUnopened, setConfirmResendUnopened] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [resendProgress, setResendProgress] = useState<{ sent: number; total: number; isRunning: boolean } | null>(null);
 
   // Fetch stats
-  const { data: stats } = useQuery<Stats>({
+  const { data: stats, refetch: refetchStats } = useQuery<Stats>({
     queryKey: ["admin-early-access-stats"],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke("send-early-access-invite", {
@@ -77,16 +114,16 @@ export default function AdminEarlyAccess() {
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-      return data?.stats || { total: 0, pending: 0, sent: 0, claimed: 0, expired: 0 };
+      return data?.stats || { total: 0, pending: 0, sent: 0, claimed: 0, expired: 0, failed_sends: 0 };
     },
   });
 
-  // Fetch invites
+  // Fetch invites with full tracking data
   const { data: invites, isLoading, refetch } = useQuery<EarlyAccessInvite[]>({
     queryKey: ["admin-early-access-invites"],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke("send-early-access-invite", {
-        body: { action: "list" },
+        body: { action: "detailed_list" },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -213,6 +250,132 @@ export default function AdminEarlyAccess() {
     },
   });
 
+  // Retry failed sends - with batch auto-continue
+  const [retryProgress, setRetryProgress] = useState<{ sent: number; total: number; isRunning: boolean } | null>(null);
+
+  const retryFailedMutation = useMutation({
+    mutationFn: async () => {
+      let totalSent = 0;
+      let totalAttempted = 0;
+      let allErrors: string[] = [];
+      let complete = false;
+      let totalFailedCount = 0;
+
+      while (!complete) {
+        const { data, error } = await supabase.functions.invoke("send-early-access-invite", {
+          body: { action: "retry_failed" },
+        });
+
+        if (error) throw error;
+        if (data?.error) throw new Error(data.error);
+
+        totalSent += data.sent || 0;
+        totalAttempted += data.attempted || 0;
+        totalFailedCount = data.total_failed || totalFailedCount;
+        complete = data.complete === true;
+
+        if (data.errors) {
+          allErrors = [...allErrors, ...data.errors];
+        }
+
+        setRetryProgress({
+          sent: totalSent,
+          total: totalFailedCount,
+          isRunning: !complete,
+        });
+
+        if (!complete) {
+          await new Promise((resolve) => setTimeout(resolve, 500));
+        }
+      }
+
+      return {
+        sent: totalSent,
+        attempted: totalAttempted,
+        total_failed: totalFailedCount,
+        errors: allErrors.length > 0 ? allErrors : undefined,
+        complete: true,
+      };
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["admin-early-access-invites"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-early-access-stats"] });
+      setRetryProgress(null);
+      toast({
+        title: "Failed sends retried!",
+        description: `Successfully sent ${data.sent} emails${data.errors?.length ? `, ${data.errors.length} still failed` : ""}`,
+      });
+    },
+    onError: (error: any) => {
+      setRetryProgress(null);
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
+  // Resend all unopened - with batch auto-continue
+  const resendUnopenedMutation = useMutation({
+    mutationFn: async () => {
+      let totalSent = 0;
+      let totalAttempted = 0;
+      let allErrors: string[] = [];
+      let complete = false;
+      let totalUnopenedCount = 0;
+
+      // Keep calling until complete
+      while (!complete) {
+        const { data, error } = await supabase.functions.invoke("send-early-access-invite", {
+          body: { action: "resend_all_unopened" },
+        });
+
+        if (error) throw error;
+        if (data?.error) throw new Error(data.error);
+
+        totalSent += data.sent || 0;
+        totalAttempted += data.attempted || 0;
+        totalUnopenedCount = data.total_unopened || totalUnopenedCount;
+        complete = data.complete === true;
+
+        if (data.errors) {
+          allErrors = [...allErrors, ...data.errors];
+        }
+
+        // Update progress
+        setResendProgress({
+          sent: totalSent,
+          total: totalUnopenedCount,
+          isRunning: !complete,
+        });
+
+        // Small delay between batches to avoid rate limiting
+        if (!complete) {
+          await new Promise((resolve) => setTimeout(resolve, 500));
+        }
+      }
+
+      return {
+        sent: totalSent,
+        attempted: totalAttempted,
+        total_unopened: totalUnopenedCount,
+        errors: allErrors.length > 0 ? allErrors : undefined,
+        complete: true,
+      };
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["admin-early-access-invites"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-early-access-stats"] });
+      setConfirmResendUnopened(false);
+      setResendProgress(null);
+      toast({
+        title: "All reminder emails sent!",
+        description: `Successfully sent ${data.sent} emails${data.errors?.length ? `, ${data.errors.length} failed` : ""}`,
+      });
+    },
+    onError: (error: any) => {
+      setResendProgress(null);
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
   const handleBulkUpload = () => {
     const emails = emailInput
       .split(/[\n,;]+/)
@@ -234,10 +397,14 @@ export default function AdminEarlyAccess() {
   };
 
   const getStatusBadge = (status: string) => {
-    const styles: Record<string, { class: string; icon: any }> = {
+    const styles: Record<string, { class: string; icon: any; label?: string }> = {
       pending: { class: "bg-amber-500/20 text-amber-400", icon: Clock },
       sent: { class: "bg-blue-500/20 text-blue-400", icon: Mail },
-      claimed: { class: "bg-green-500/20 text-green-400", icon: Check },
+      delivered: { class: "bg-sky-500/20 text-sky-400", icon: MailCheck },
+      opened: { class: "bg-purple-500/20 text-purple-400", icon: Eye },
+      clicked: { class: "bg-indigo-500/20 text-indigo-400", icon: MousePointerClick },
+      claimed: { class: "bg-green-500/20 text-green-400", icon: UserCheck, label: "signed up" },
+      bounced: { class: "bg-red-500/20 text-red-400", icon: XCircle },
       expired: { class: "bg-red-500/20 text-red-400", icon: AlertTriangle },
     };
     const style = styles[status] || styles.pending;
@@ -245,7 +412,7 @@ export default function AdminEarlyAccess() {
     return (
       <Badge className={style.class}>
         <Icon className="h-3 w-3 mr-1" />
-        {status}
+        {style.label || status}
       </Badge>
     );
   };
@@ -261,57 +428,125 @@ export default function AdminEarlyAccess() {
           </h2>
           <p className="text-xs text-muted-foreground">Send 7-day free trial invites to email subscribers</p>
         </div>
-        <Button variant="outline" size="icon" className="h-11 w-11 touch-manipulation" onClick={() => refetch()}>
+        <Button variant="outline" size="icon" className="h-11 w-11 touch-manipulation" onClick={() => { refetch(); refetchStats(); }}>
           <RefreshCw className="h-4 w-4" />
         </Button>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+      {/* Stats - Main Funnel */}
+      <div className="grid grid-cols-4 gap-2">
         <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
           <CardContent className="pt-3 pb-3 text-center">
-            <p className="text-xl font-bold">{stats?.total || 0}</p>
-            <p className="text-xs sm:text-[10px] text-muted-foreground">Total</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20">
-          <CardContent className="pt-3 pb-3 text-center">
-            <p className="text-xl font-bold">{stats?.pending || 0}</p>
-            <p className="text-xs sm:text-[10px] text-muted-foreground">Pending</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-gradient-to-br from-sky-500/10 to-sky-600/5 border-sky-500/20">
-          <CardContent className="pt-3 pb-3 text-center">
             <p className="text-xl font-bold">{stats?.sent || 0}</p>
-            <p className="text-xs sm:text-[10px] text-muted-foreground">Sent</p>
+            <p className="text-xs text-muted-foreground">Sent</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-500/20">
+          <CardContent className="pt-3 pb-3 text-center">
+            <p className="text-xl font-bold">{stats?.opened || 0}</p>
+            <p className="text-xs text-muted-foreground">Opened</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 border-indigo-500/20">
+          <CardContent className="pt-3 pb-3 text-center">
+            <p className="text-xl font-bold">{stats?.clicked || 0}</p>
+            <p className="text-xs text-muted-foreground">Clicked</p>
           </CardContent>
         </Card>
         <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
           <CardContent className="pt-3 pb-3 text-center">
             <p className="text-xl font-bold">{stats?.claimed || 0}</p>
-            <p className="text-xs sm:text-[10px] text-muted-foreground">Claimed</p>
+            <p className="text-xs text-muted-foreground">Signed Up</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Conversion Rates */}
+      {stats?.rates && (
+        <Card className="bg-gradient-to-r from-elec-yellow/5 to-amber-500/5 border-elec-yellow/20">
+          <CardContent className="pt-3 pb-3">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-elec-yellow" />
+                <span className="text-sm font-medium">Conversion</span>
+              </div>
+              <div className="flex gap-4 text-sm">
+                <span><span className="text-purple-400 font-semibold">{stats.rates.open_rate}</span> open</span>
+                <span><span className="text-indigo-400 font-semibold">{stats.rates.click_rate}</span> click</span>
+                <span><span className="text-green-400 font-semibold">{stats.rates.signup_rate}</span> signup</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Secondary Stats */}
+      <div className="grid grid-cols-4 gap-2">
+        <Card className="border-amber-500/20">
+          <CardContent className="pt-2 pb-2 text-center">
+            <p className="text-lg font-bold text-amber-400">{stats?.unopened_sent || 0}</p>
+            <p className="text-[10px] text-muted-foreground">Unopened</p>
+          </CardContent>
+        </Card>
+        <Card className="border-orange-500/20">
+          <CardContent className="pt-2 pb-2 text-center">
+            <p className="text-lg font-bold text-orange-400">{stats?.failed_sends || 0}</p>
+            <p className="text-[10px] text-muted-foreground">Failed</p>
+          </CardContent>
+        </Card>
+        <Card className="border-red-500/20">
+          <CardContent className="pt-2 pb-2 text-center">
+            <p className="text-lg font-bold text-red-400">{stats?.bounced || 0}</p>
+            <p className="text-[10px] text-muted-foreground">Bounced</p>
+          </CardContent>
+        </Card>
+        <Card className="border-muted">
+          <CardContent className="pt-2 pb-2 text-center">
+            <p className="text-lg font-bold">{stats?.total || 0}</p>
+            <p className="text-[10px] text-muted-foreground">Total</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Actions */}
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <Button
           className="flex-1 h-11 gap-2 bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600 text-white touch-manipulation"
           onClick={() => setShowUpload(true)}
         >
           <Upload className="h-4 w-4" />
-          Upload Emails
+          Upload
         </Button>
-        <Button
-          variant="outline"
-          className="flex-1 h-11 gap-2 touch-manipulation"
-          onClick={() => setConfirmSendAll(true)}
-          disabled={(stats?.pending || 0) === 0}
-        >
-          <Send className="h-4 w-4" />
-          Send All ({stats?.pending || 0})
-        </Button>
+        {(stats?.pending || 0) > 0 && (
+          <Button
+            variant="outline"
+            className="flex-1 h-11 gap-2 touch-manipulation"
+            onClick={() => setConfirmSendAll(true)}
+          >
+            <Send className="h-4 w-4" />
+            Send ({stats?.pending || 0})
+          </Button>
+        )}
+        {(stats?.failed_sends || 0) > 0 && (
+          <Button
+            variant="outline"
+            className="flex-1 h-11 gap-2 touch-manipulation border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
+            onClick={() => retryFailedMutation.mutate()}
+            disabled={retryFailedMutation.isPending}
+          >
+            {retryFailedMutation.isPending ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                {retryProgress ? `${retryProgress.sent}/${retryProgress.total}` : "Starting..."}
+              </>
+            ) : (
+              <>
+                <RotateCw className="h-4 w-4" />
+                Retry Failed ({stats?.failed_sends || 0})
+              </>
+            )}
+          </Button>
+        )}
       </div>
 
       {/* Invites List */}
@@ -428,63 +663,154 @@ export default function AdminEarlyAccess() {
               <SheetTitle>{selectedInvite?.email}</SheetTitle>
             </SheetHeader>
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {/* Status & Tracking */}
               <Card>
                 <CardContent className="pt-4 pb-4 space-y-3">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Status</span>
                     {selectedInvite && getStatusBadge(selectedInvite.status)}
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Created</span>
-                    <span className="text-sm">
-                      {selectedInvite?.created_at && formatDistanceToNow(new Date(selectedInvite.created_at), { addSuffix: true })}
-                    </span>
-                  </div>
-                  {selectedInvite?.sent_at && (
+                  {selectedInvite?.send_count && selectedInvite.send_count > 1 && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Sent</span>
-                      <span className="text-sm">{formatDistanceToNow(new Date(selectedInvite.sent_at), { addSuffix: true })}</span>
+                      <span className="text-sm text-muted-foreground">Times Sent</span>
+                      <span className="text-sm font-medium">{selectedInvite.send_count}</span>
                     </div>
                   )}
-                  {selectedInvite?.claimed_at && (
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Claimed</span>
-                      <span className="text-sm">{formatDistanceToNow(new Date(selectedInvite.claimed_at), { addSuffix: true })}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Expires</span>
-                    <span className="text-sm">
-                      {selectedInvite?.expires_at && formatDistanceToNow(new Date(selectedInvite.expires_at), { addSuffix: true })}
-                    </span>
-                  </div>
                 </CardContent>
               </Card>
 
-              {/* Invite Link */}
+              {/* Tracking Timeline */}
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm">Invite Link</CardTitle>
+                  <CardTitle className="text-sm flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4 text-elec-yellow" />
+                    Tracking Timeline
+                  </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <code className="text-xs bg-muted px-2 py-1 rounded block truncate mb-2">
-                    {selectedInvite && `${window.location.origin}/auth/signup?ref=early-access&token=${selectedInvite.invite_token}`}
-                  </code>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full h-11 gap-2 touch-manipulation"
-                    onClick={() => selectedInvite && copyInviteLink(selectedInvite.invite_token)}
-                  >
-                    <Copy className="h-4 w-4" /> Copy Link
-                  </Button>
+                <CardContent className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground flex items-center gap-2">
+                      <Mail className="h-3 w-3" /> Sent
+                    </span>
+                    <span className="text-sm">
+                      {selectedInvite?.sent_at
+                        ? formatDistanceToNow(new Date(selectedInvite.sent_at), { addSuffix: true })
+                        : <span className="text-muted-foreground">—</span>}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground flex items-center gap-2">
+                      <MailCheck className="h-3 w-3" /> Delivered
+                    </span>
+                    <span className="text-sm">
+                      {selectedInvite?.delivered_at
+                        ? formatDistanceToNow(new Date(selectedInvite.delivered_at), { addSuffix: true })
+                        : <span className="text-muted-foreground">—</span>}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground flex items-center gap-2">
+                      <Eye className="h-3 w-3" /> Opened
+                    </span>
+                    <span className="text-sm">
+                      {selectedInvite?.opened_at
+                        ? <span className="text-purple-400">{formatDistanceToNow(new Date(selectedInvite.opened_at), { addSuffix: true })}</span>
+                        : <span className="text-muted-foreground">—</span>}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground flex items-center gap-2">
+                      <MousePointerClick className="h-3 w-3" /> Clicked
+                    </span>
+                    <span className="text-sm">
+                      {selectedInvite?.clicked_at
+                        ? <span className="text-indigo-400">{formatDistanceToNow(new Date(selectedInvite.clicked_at), { addSuffix: true })}</span>
+                        : <span className="text-muted-foreground">—</span>}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground flex items-center gap-2">
+                      <UserCheck className="h-3 w-3" /> Signed Up
+                    </span>
+                    <span className="text-sm">
+                      {selectedInvite?.claimed_at
+                        ? <span className="text-green-400">{formatDistanceToNow(new Date(selectedInvite.claimed_at), { addSuffix: true })}</span>
+                        : <span className="text-muted-foreground">—</span>}
+                    </span>
+                  </div>
+                  {selectedInvite?.bounced_at && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-red-400 flex items-center gap-2">
+                        <XCircle className="h-3 w-3" /> Bounced ({selectedInvite.bounce_type})
+                      </span>
+                      <span className="text-sm text-red-400">
+                        {formatDistanceToNow(new Date(selectedInvite.bounced_at), { addSuffix: true })}
+                      </span>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
+
+              {/* User Info (if signed up) */}
+              {selectedInvite?.user && (
+                <Card className="border-green-500/20 bg-green-500/5">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm flex items-center gap-2 text-green-400">
+                      <UserCheck className="h-4 w-4" />
+                      User Info
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Name</span>
+                      <span className="text-sm font-medium">{selectedInvite.user.full_name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Role</span>
+                      <span className="text-sm">{selectedInvite.user.role}</span>
+                    </div>
+                    {selectedInvite.subscription && (
+                      <div className="flex justify-between">
+                        <span className="text-sm text-muted-foreground">Subscription</span>
+                        <Badge className={
+                          selectedInvite.subscription.status === 'active' ? 'bg-green-500/20 text-green-400' :
+                          selectedInvite.subscription.status === 'trialing' ? 'bg-blue-500/20 text-blue-400' :
+                          'bg-muted text-muted-foreground'
+                        }>
+                          {selectedInvite.subscription.status}
+                        </Badge>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Invite Link */}
+              {selectedInvite?.invite_token && (
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm">Invite Link</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <code className="text-xs bg-muted px-2 py-1 rounded block truncate mb-2">
+                      {`${window.location.origin}/auth/signup?ref=early-access&token=${selectedInvite.invite_token}`}
+                    </code>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full h-11 gap-2 touch-manipulation"
+                      onClick={() => selectedInvite.invite_token && copyInviteLink(selectedInvite.invite_token)}
+                    >
+                      <Copy className="h-4 w-4" /> Copy Link
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
             </div>
 
             {/* Actions */}
             <SheetFooter className="p-4 border-t border-border space-y-2">
-              {selectedInvite?.status === "pending" && (
+              {(selectedInvite?.raw_status === "pending" || selectedInvite?.status === "pending") && (
                 <Button
                   className="w-full h-11 gap-2 touch-manipulation"
                   onClick={() => sendInviteMutation.mutate(selectedInvite.id)}
@@ -494,7 +820,7 @@ export default function AdminEarlyAccess() {
                   {sendInviteMutation.isPending ? "Sending..." : "Send Invite Email"}
                 </Button>
               )}
-              {selectedInvite?.status === "sent" && (
+              {selectedInvite?.raw_status === "sent" && !selectedInvite?.claimed_at && (
                 <Button
                   variant="outline"
                   className="w-full h-11 gap-2 touch-manipulation"
@@ -505,7 +831,7 @@ export default function AdminEarlyAccess() {
                   {resendMutation.isPending ? "Sending..." : "Resend Email"}
                 </Button>
               )}
-              {selectedInvite?.status !== "claimed" && (
+              {!selectedInvite?.claimed_at && (
                 <Button
                   variant="outline"
                   className="w-full h-11 gap-2 touch-manipulation text-red-400 hover:bg-red-500/10"
@@ -574,6 +900,76 @@ export default function AdminEarlyAccess() {
                 </>
               ) : (
                 "Delete"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Resend Unopened Confirmation */}
+      <AlertDialog open={confirmResendUnopened} onOpenChange={(open) => {
+        // Don't allow closing while sending
+        if (!resendUnopenedMutation.isPending) {
+          setConfirmResendUnopened(open);
+        }
+      }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {resendProgress?.isRunning ? "Sending Reminder Emails..." : "Resend to Unopened Recipients?"}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {resendProgress?.isRunning ? (
+                <div className="space-y-3">
+                  <p>Sending emails in batches of 50 to avoid timeouts...</p>
+                  <div className="bg-muted rounded-full h-3 overflow-hidden">
+                    <div
+                      className="bg-amber-500 h-full transition-all duration-300"
+                      style={{
+                        width: `${resendProgress.total > 0 ? (resendProgress.sent / resendProgress.total) * 100 : 0}%`,
+                      }}
+                    />
+                  </div>
+                  <p className="text-center font-medium text-amber-400">
+                    {resendProgress.sent} / {resendProgress.total} sent
+                  </p>
+                </div>
+              ) : (
+                <>
+                  This will send reminder emails to {stats?.unopened_sent || 0} people who received the invite but haven't opened it yet.
+                  The subject will be "Reminder: Your Early Access is Waiting!"
+                </>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            {!resendProgress?.isRunning && (
+              <AlertDialogCancel className="h-11 touch-manipulation" disabled={resendUnopenedMutation.isPending}>
+                Cancel
+              </AlertDialogCancel>
+            )}
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-amber-500 hover:bg-amber-600 text-black"
+              onClick={(e) => {
+                if (resendUnopenedMutation.isPending) {
+                  e.preventDefault();
+                  return;
+                }
+                e.preventDefault();
+                resendUnopenedMutation.mutate();
+              }}
+              disabled={resendUnopenedMutation.isPending}
+            >
+              {resendUnopenedMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  {resendProgress ? `Sending batch...` : "Starting..."}
+                </>
+              ) : (
+                <>
+                  <RotateCw className="h-4 w-4 mr-2" />
+                  Resend All
+                </>
               )}
             </AlertDialogAction>
           </AlertDialogFooter>

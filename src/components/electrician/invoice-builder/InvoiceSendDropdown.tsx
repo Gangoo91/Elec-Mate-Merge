@@ -217,7 +217,7 @@ export const InvoiceSendDropdown = ({
                 size="sm"
                 variant="outline"
                 className="border-indigo-500/30 hover:bg-indigo-500/10"
-                onClick={() => window.location.href = '/electrician/settings?tab=billing'}
+                onClick={() => window.location.href = '/settings?tab=billing'}
               >
                 <CreditCard className="h-4 w-4 mr-1" />
                 Set up
@@ -502,7 +502,7 @@ ${companyName}`;
 
   // Connect accounting (redirect to settings business tab)
   const handleConnectAccounting = () => {
-    window.location.href = '/electrician/settings?tab=business';
+    window.location.href = '/settings?tab=business';
   };
 
   const isLoading = isSendingEmail || isSharingWhatsApp || isConnectingStripe || isSyncingAccounting;

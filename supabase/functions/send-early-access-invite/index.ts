@@ -21,8 +21,10 @@ function generateToken(): string {
 
 // Generate early access invite email HTML
 function generateInviteEmailHTML(email: string, inviteToken: string): string {
-  const siteUrl = Deno.env.get("SITE_URL") || "https://elec-mate.com";
-  const signupUrl = `${siteUrl}/auth/signup?ref=early-access&token=${inviteToken}`;
+  const supabaseUrl = Deno.env.get("SUPABASE_URL") || "https://jtwygbeceundfgnkirof.supabase.co";
+  // Use click tracking redirect instead of direct link
+  const signupUrl = `${supabaseUrl}/functions/v1/track-email-click?token=${inviteToken}`;
+  const trackingPixelUrl = `${supabaseUrl}/functions/v1/track-email-open?token=${inviteToken}`;
 
   return `
 <!DOCTYPE html>
@@ -209,6 +211,8 @@ function generateInviteEmailHTML(email: string, inviteToken: string): string {
       </td>
     </tr>
   </table>
+  <!-- Email open tracking pixel -->
+  <img src="${trackingPixelUrl}" width="1" height="1" style="display:none;width:1px;height:1px;border:0;" alt="" />
 </body>
 </html>
   `;
@@ -232,23 +236,27 @@ Deno.serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    // Verify the caller is an admin
+    // Get the authenticated user
     const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
     if (userError || !user) {
       throw new Error("Unauthorized: Could not get user");
     }
 
-    const { data: callerProfile, error: profileError } = await supabaseClient
-      .from("profiles")
-      .select("admin_role, full_name")
-      .eq("id", user.id)
-      .single();
-
-    if (profileError || !callerProfile?.admin_role) {
-      throw new Error("Unauthorized: Admin access required");
-    }
-
     const { action, emails, inviteId, token } = await req.json();
+
+    // The 'claim' action is allowed for any authenticated user (not just admins)
+    // All other actions require admin access
+    if (action !== "claim") {
+      const { data: callerProfile, error: profileError } = await supabaseClient
+        .from("profiles")
+        .select("admin_role, full_name")
+        .eq("id", user.id)
+        .single();
+
+      if (profileError || !callerProfile?.admin_role) {
+        throw new Error("Unauthorized: Admin access required");
+      }
+    }
 
     // Create admin client for operations
     const supabaseAdmin = createClient(
@@ -273,15 +281,54 @@ Deno.serve(async (req) => {
       case "stats": {
         const { data, error } = await supabaseAdmin
           .from("early_access_invites")
-          .select("status");
+          .select("status, opened_at, claimed_at, clicked_at, delivered_at, bounced_at, last_send_attempt_at, resend_email_id, send_count");
         if (error) throw error;
 
+        const total = data?.length || 0;
+        const pending = data?.filter(i => i.status === "pending").length || 0;
+        const sent = data?.filter(i => i.status === "sent").length || 0;
+        const claimed = data?.filter(i => i.status === "claimed").length || 0;
+        const expired = data?.filter(i => i.status === "expired").length || 0;
+        const delivered = data?.filter(i => i.delivered_at !== null).length || 0;
+        const bounced = data?.filter(i => i.bounced_at !== null).length || 0;
+        const opened = data?.filter(i => i.opened_at !== null).length || 0;
+        const clicked = data?.filter(i => i.clicked_at !== null).length || 0;
+        const unopenedSent = data?.filter(i => i.status === "sent" && !i.opened_at && !i.claimed_at).length || 0;
+
+        // Failed sends: attempted but no resend_email_id (email wasn't actually sent)
+        // Using simpler truthy/falsy checks for reliability
+        const failedSends = data?.filter(i =>
+          i.status === "sent" &&
+          !i.opened_at &&
+          !i.claimed_at &&
+          i.last_send_attempt_at && // has been attempted
+          !i.resend_email_id // but no resend ID = email never sent
+        ).length || 0;
+
+        // Calculate conversion rates
+        // Note: Many signups came from early access before we added click tracking
+        // So signup rate is based on sent, not clicked
+        const openRate = sent > 0 ? ((opened / sent) * 100).toFixed(1) : "0";
+        const clickRate = opened > 0 ? ((clicked / opened) * 100).toFixed(1) : "0";
+        const signupRate = sent > 0 ? ((claimed / sent) * 100).toFixed(1) : "0";
+
         const stats = {
-          total: data?.length || 0,
-          pending: data?.filter(i => i.status === "pending").length || 0,
-          sent: data?.filter(i => i.status === "sent").length || 0,
-          claimed: data?.filter(i => i.status === "claimed").length || 0,
-          expired: data?.filter(i => i.status === "expired").length || 0,
+          total,
+          pending,
+          sent,
+          delivered,
+          bounced,
+          opened,
+          clicked,
+          claimed,
+          expired,
+          unopened_sent: unopenedSent,
+          failed_sends: failedSends,
+          rates: {
+            open_rate: `${openRate}%`,
+            click_rate: `${clickRate}%`,
+            signup_rate: `${signupRate}%`,
+          }
         };
         result = { stats };
         break;
@@ -357,7 +404,7 @@ Deno.serve(async (req) => {
         // Send the email
         const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
 
-        const { error: emailError } = await resend.emails.send({
+        const { data: emailData, error: emailError } = await resend.emails.send({
           from: "Elec-Mate <hello@elec-mate.com>",
           replyTo: "info@elec-mate.com",
           to: [invite.email],
@@ -370,14 +417,19 @@ Deno.serve(async (req) => {
           throw new Error("Failed to send email");
         }
 
-        // Update invite status
+        // Update invite status with Resend email ID for webhook tracking
         await supabaseAdmin
           .from("early_access_invites")
-          .update({ status: "sent", sent_at: new Date().toISOString() })
+          .update({
+            status: "sent",
+            sent_at: new Date().toISOString(),
+            resend_email_id: emailData?.id || null,
+            send_count: (invite.send_count || 0) + 1,
+          })
           .eq("id", inviteId);
 
         console.log(`Early access invite sent to ${invite.email} by admin ${user.id}`);
-        result = { success: true, email: invite.email };
+        result = { success: true, email: invite.email, resendId: emailData?.id };
         break;
       }
 
@@ -402,7 +454,7 @@ Deno.serve(async (req) => {
           try {
             const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
 
-            const { error: emailError } = await resend.emails.send({
+            const { data: emailData, error: emailError } = await resend.emails.send({
               from: "Elec-Mate <hello@elec-mate.com>",
               replyTo: "info@elec-mate.com",
               to: [invite.email],
@@ -417,7 +469,12 @@ Deno.serve(async (req) => {
 
             await supabaseAdmin
               .from("early_access_invites")
-              .update({ status: "sent", sent_at: new Date().toISOString() })
+              .update({
+                status: "sent",
+                sent_at: new Date().toISOString(),
+                resend_email_id: emailData?.id || null,
+                send_count: (invite.send_count || 0) + 1,
+              })
               .eq("id", invite.id);
 
             sentCount++;
@@ -521,7 +578,7 @@ Deno.serve(async (req) => {
         // Resend the email
         const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
 
-        const { error: emailError } = await resend.emails.send({
+        const { data: emailData, error: emailError } = await resend.emails.send({
           from: "Elec-Mate <hello@elec-mate.com>",
           replyTo: "info@elec-mate.com",
           to: [invite.email],
@@ -533,14 +590,18 @@ Deno.serve(async (req) => {
           throw new Error("Failed to resend email");
         }
 
-        // Update sent_at
+        // Update sent_at and tracking info
         await supabaseAdmin
           .from("early_access_invites")
-          .update({ sent_at: new Date().toISOString() })
+          .update({
+            sent_at: new Date().toISOString(),
+            resend_email_id: emailData?.id || null,
+            send_count: (invite.send_count || 0) + 1,
+          })
           .eq("id", inviteId);
 
         console.log(`Early access invite resent to ${invite.email} by admin ${user.id}`);
-        result = { success: true, email: invite.email };
+        result = { success: true, email: invite.email, resendId: emailData?.id };
         break;
       }
 
@@ -556,6 +617,337 @@ Deno.serve(async (req) => {
 
         if (error) throw error;
         result = { success: true };
+        break;
+      }
+
+      case "resend_all_unopened": {
+        // Batch size - process this many per request to avoid timeout
+        const BATCH_SIZE = 50;
+
+        // Get count of all unopened invites first
+        const { count: totalUnopenedCount } = await supabaseAdmin
+          .from("early_access_invites")
+          .select("*", { count: "exact", head: true })
+          .eq("status", "sent")
+          .is("opened_at", null)
+          .is("claimed_at", null);
+
+        // Get next batch - invites not attempted in the last hour
+        // This ensures we can retry failed sends and continue where we left off
+        const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+
+        const { data: unopenedInvites, error: unopenedError } = await supabaseAdmin
+          .from("early_access_invites")
+          .select("*")
+          .eq("status", "sent")
+          .is("opened_at", null)
+          .is("claimed_at", null)
+          .or(`last_send_attempt_at.is.null,last_send_attempt_at.lt.${oneHourAgo}`)
+          .order("created_at", { ascending: true })
+          .limit(BATCH_SIZE);
+
+        if (unopenedError) throw unopenedError;
+
+        if (!unopenedInvites || unopenedInvites.length === 0) {
+          result = {
+            sent: 0,
+            remaining: 0,
+            total_unopened: totalUnopenedCount || 0,
+            message: "No more unopened invites to resend",
+            complete: true
+          };
+          break;
+        }
+
+        let sentCount = 0;
+        const errors: string[] = [];
+
+        for (const invite of unopenedInvites) {
+          try {
+            // Mark attempt BEFORE sending (so if we timeout, we know we tried)
+            await supabaseAdmin
+              .from("early_access_invites")
+              .update({ last_send_attempt_at: new Date().toISOString() })
+              .eq("id", invite.id);
+
+            const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
+
+            const { data: emailData, error: emailError } = await resend.emails.send({
+              from: "Elec-Mate <hello@elec-mate.com>",
+              replyTo: "info@elec-mate.com",
+              to: [invite.email],
+              subject: "Reminder: Your Early Access to Elec-Mate is Waiting!",
+              html: emailHtml,
+            });
+
+            if (emailError) {
+              errors.push(`${invite.email}: ${emailError.message}`);
+              continue;
+            }
+
+            // Update with success data
+            await supabaseAdmin
+              .from("early_access_invites")
+              .update({
+                sent_at: new Date().toISOString(),
+                resend_email_id: emailData?.id || null,
+                send_count: (invite.send_count || 0) + 1,
+              })
+              .eq("id", invite.id);
+
+            sentCount++;
+          } catch (err: any) {
+            errors.push(`${invite.email}: ${err.message}`);
+          }
+        }
+
+        // Calculate remaining (not yet attempted in this batch run)
+        const { count: remainingCount } = await supabaseAdmin
+          .from("early_access_invites")
+          .select("*", { count: "exact", head: true })
+          .eq("status", "sent")
+          .is("opened_at", null)
+          .is("claimed_at", null)
+          .or(`last_send_attempt_at.is.null,last_send_attempt_at.lt.${oneHourAgo}`);
+
+        const remaining = remainingCount || 0;
+        const complete = remaining === 0;
+
+        console.log(`Resent ${sentCount}/${unopenedInvites.length} unopened invites by admin ${user.id}. Remaining: ${remaining}`);
+
+        result = {
+          sent: sentCount,
+          attempted: unopenedInvites.length,
+          remaining,
+          total_unopened: totalUnopenedCount || 0,
+          errors: errors.length > 0 ? errors : undefined,
+          complete,
+          message: complete
+            ? `All done! Sent ${sentCount} emails.`
+            : `Sent ${sentCount} emails. ${remaining} remaining - call again to continue.`
+        };
+        break;
+      }
+
+      case "detailed_list": {
+        // Get invites with joined profile data for claimed invites
+        const { data: invites, error: invitesError } = await supabaseAdmin
+          .from("early_access_invites")
+          .select(`
+            id,
+            email,
+            invite_token,
+            status,
+            sent_at,
+            delivered_at,
+            opened_at,
+            clicked_at,
+            claimed_at,
+            bounced_at,
+            bounce_type,
+            expires_at,
+            created_at,
+            user_id,
+            send_count
+          `)
+          .order("created_at", { ascending: false });
+
+        if (invitesError) throw invitesError;
+
+        // Get profile and subscription data for claimed invites
+        const claimedUserIds = invites
+          ?.filter(i => i.user_id)
+          .map(i => i.user_id) || [];
+
+        let profilesMap: Record<string, any> = {};
+        let subscriptionsMap: Record<string, any> = {};
+
+        if (claimedUserIds.length > 0) {
+          const { data: profiles } = await supabaseAdmin
+            .from("profiles")
+            .select("id, full_name, role, created_at")
+            .in("id", claimedUserIds);
+
+          if (profiles) {
+            profilesMap = profiles.reduce((acc, p) => {
+              acc[p.id] = p;
+              return acc;
+            }, {} as Record<string, any>);
+          }
+
+          const { data: subscriptions } = await supabaseAdmin
+            .from("subscriptions")
+            .select("user_id, status, trial_end, plan_name")
+            .in("user_id", claimedUserIds);
+
+          if (subscriptions) {
+            subscriptionsMap = subscriptions.reduce((acc, s) => {
+              acc[s.user_id] = s;
+              return acc;
+            }, {} as Record<string, any>);
+          }
+        }
+
+        // Build detailed list
+        const detailedInvites = invites?.map(invite => {
+          const profile = invite.user_id ? profilesMap[invite.user_id] : null;
+          const subscription = invite.user_id ? subscriptionsMap[invite.user_id] : null;
+
+          // Determine derived status based on funnel progression
+          let derivedStatus = invite.status;
+          if (invite.bounced_at) {
+            derivedStatus = "bounced";
+          } else if (invite.claimed_at) {
+            derivedStatus = "claimed";
+          } else if (invite.clicked_at) {
+            derivedStatus = "clicked";
+          } else if (invite.opened_at) {
+            derivedStatus = "opened";
+          } else if (invite.delivered_at) {
+            derivedStatus = "delivered";
+          }
+
+          return {
+            id: invite.id,
+            email: invite.email,
+            status: derivedStatus,
+            raw_status: invite.status,
+            sent_at: invite.sent_at,
+            delivered_at: invite.delivered_at,
+            opened_at: invite.opened_at,
+            clicked_at: invite.clicked_at,
+            claimed_at: invite.claimed_at,
+            bounced_at: invite.bounced_at,
+            bounce_type: invite.bounce_type,
+            expires_at: invite.expires_at,
+            created_at: invite.created_at,
+            send_count: invite.send_count || 1,
+            user: profile ? {
+              id: invite.user_id,
+              full_name: profile.full_name,
+              role: profile.role,
+              signed_up_at: profile.created_at,
+            } : null,
+            subscription: subscription ? {
+              status: subscription.status,
+              plan_name: subscription.plan_name,
+              trial_end: subscription.trial_end,
+            } : null,
+          };
+        });
+
+        result = { invites: detailedInvites };
+        break;
+      }
+
+      case "retry_failed": {
+        // Retry ONLY the failed sends - people who never actually received the email
+        // Failed = attempted but no resend_email_id (email wasn't actually sent)
+        const BATCH_SIZE = 50;
+
+        // Get count of all failed sends
+        const { count: totalFailedCount } = await supabaseAdmin
+          .from("early_access_invites")
+          .select("*", { count: "exact", head: true })
+          .eq("status", "sent")
+          .is("opened_at", null)
+          .is("claimed_at", null)
+          .not("last_send_attempt_at", "is", null)
+          .or("resend_email_id.is.null,send_count.is.null,send_count.eq.0");
+
+        // Get next batch of failed sends
+        const { data: failedInvites, error: failedError } = await supabaseAdmin
+          .from("early_access_invites")
+          .select("*")
+          .eq("status", "sent")
+          .is("opened_at", null)
+          .is("claimed_at", null)
+          .not("last_send_attempt_at", "is", null)
+          .or("resend_email_id.is.null,send_count.is.null,send_count.eq.0")
+          .order("created_at", { ascending: true })
+          .limit(BATCH_SIZE);
+
+        if (failedError) throw failedError;
+
+        if (!failedInvites || failedInvites.length === 0) {
+          result = {
+            sent: 0,
+            remaining: 0,
+            total_failed: totalFailedCount || 0,
+            message: "No more failed sends to retry",
+            complete: true
+          };
+          break;
+        }
+
+        let sentCount = 0;
+        const errors: string[] = [];
+
+        for (const invite of failedInvites) {
+          try {
+            // Mark attempt
+            await supabaseAdmin
+              .from("early_access_invites")
+              .update({ last_send_attempt_at: new Date().toISOString() })
+              .eq("id", invite.id);
+
+            const emailHtml = generateInviteEmailHTML(invite.email, invite.invite_token);
+
+            const { data: emailData, error: emailError } = await resend.emails.send({
+              from: "Elec-Mate <hello@elec-mate.com>",
+              replyTo: "info@elec-mate.com",
+              to: [invite.email],
+              subject: "Reminder: Your Early Access to Elec-Mate is Waiting!",
+              html: emailHtml,
+            });
+
+            if (emailError) {
+              errors.push(`${invite.email}: ${emailError.message}`);
+              continue;
+            }
+
+            // Update with success
+            await supabaseAdmin
+              .from("early_access_invites")
+              .update({
+                sent_at: new Date().toISOString(),
+                resend_email_id: emailData?.id || null,
+                send_count: (invite.send_count || 0) + 1,
+              })
+              .eq("id", invite.id);
+
+            sentCount++;
+          } catch (err: any) {
+            errors.push(`${invite.email}: ${err.message}`);
+          }
+        }
+
+        // Calculate remaining
+        const { count: remainingCount } = await supabaseAdmin
+          .from("early_access_invites")
+          .select("*", { count: "exact", head: true })
+          .eq("status", "sent")
+          .is("opened_at", null)
+          .is("claimed_at", null)
+          .not("last_send_attempt_at", "is", null)
+          .or("resend_email_id.is.null,send_count.is.null,send_count.eq.0");
+
+        const remaining = remainingCount || 0;
+        const complete = remaining === 0;
+
+        console.log(`Retried ${sentCount}/${failedInvites.length} failed sends by admin ${user.id}. Remaining: ${remaining}`);
+
+        result = {
+          sent: sentCount,
+          attempted: failedInvites.length,
+          remaining,
+          total_failed: totalFailedCount || 0,
+          errors: errors.length > 0 ? errors : undefined,
+          complete,
+          message: complete
+            ? `All done! Sent ${sentCount} emails.`
+            : `Sent ${sentCount} emails. ${remaining} remaining - call again to continue.`
+        };
         break;
       }
 

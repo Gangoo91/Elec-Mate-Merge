@@ -4,7 +4,7 @@ export interface QuizQuestion {
   id: string;
   question: string;
   options: string[];
-  correctAnswer: number;
+  correctAnswer: number | string; // Support both index (number) and text (string) formats
   explanation: string;
   category: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';

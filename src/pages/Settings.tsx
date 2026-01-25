@@ -7,20 +7,16 @@ import useSEO from "@/hooks/useSEO";
 import {
   User,
   IdCard,
-  Bell,
+  Building2,
+  Settings2,
   Shield,
   CreditCard,
-  Palette,
-  HelpCircle,
-  FileText,
   LogOut,
   Crown,
   Zap,
   ChevronLeft,
   ChevronRight,
   ArrowLeft,
-  Mic,
-  Lock,
 } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
@@ -28,32 +24,23 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-// Import all tab components
+// Import tab components
 import AccountTab from "@/components/settings/AccountTab";
 import ElecIdTab from "@/components/settings/ElecIdTab";
-import NotificationsTab from "@/components/settings/NotificationsTab";
-import SecurityTab from "@/components/settings/SecurityTab";
-import BillingTab from "@/components/settings/BillingTab";
-import AppearanceTab from "@/components/settings/AppearanceTab";
-import HelpTab from "@/components/settings/HelpSupportTab";
-import LegalTab from "@/components/settings/LegalTab";
-import VoiceSettingsTab from "@/components/settings/VoiceSettingsTab";
+import BusinessTab from "@/components/settings/BusinessTab";
+import PreferencesTab from "@/components/settings/PreferencesTab";
 import PrivacyTab from "@/components/settings/PrivacyTab";
+import BillingTab from "@/components/settings/BillingTab";
 import SettingsNavGrid from "@/components/settings/SettingsNavGrid";
 
-// Tab configuration
-// Note: Company settings have been moved to the Profile page for a unified business identity experience
-const ALL_TABS = [
-  { id: "elec-id", label: "Elec-ID", icon: IdCard, component: ElecIdTab },
+// New 6-tab configuration (reduced from 10)
+const SETTINGS_TABS = [
   { id: "account", label: "Account", icon: User, component: AccountTab },
-  { id: "notifications", label: "Notifications", icon: Bell, component: NotificationsTab },
-  { id: "security", label: "Security", icon: Shield, component: SecurityTab },
-  { id: "voice", label: "Voice", icon: Mic, component: VoiceSettingsTab },
+  { id: "elec-id", label: "Elec-ID", icon: IdCard, component: ElecIdTab },
+  { id: "business", label: "Business", icon: Building2, component: BusinessTab },
+  { id: "preferences", label: "Preferences", icon: Settings2, component: PreferencesTab },
+  { id: "privacy", label: "Privacy", icon: Shield, component: PrivacyTab },
   { id: "billing", label: "Billing", icon: CreditCard, component: BillingTab },
-  { id: "appearance", label: "Appearance", icon: Palette, component: AppearanceTab },
-  { id: "privacy", label: "Privacy", icon: Lock, component: PrivacyTab },
-  { id: "help", label: "Help", icon: HelpCircle, component: HelpTab },
-  { id: "legal", label: "Legal", icon: FileText, component: LegalTab },
 ];
 
 const SettingsPage = () => {
@@ -92,14 +79,13 @@ const SettingsPage = () => {
     }
   }, [searchParams, setSearchParams, queryClient]);
 
-
   // Get tab from URL - null means show grid on mobile
   const tabParam = searchParams.get("tab");
 
   // Mobile: null = show grid, string = show detail
-  // Desktop: always show tabs (default to elec-id)
-  const selectedTab = isMobile ? tabParam : (tabParam || "elec-id");
-  const activeDesktopTab = tabParam || "elec-id";
+  // Desktop: always show tabs (default to account)
+  const selectedTab = isMobile ? tabParam : (tabParam || "account");
+  const activeDesktopTab = tabParam || "account";
 
   const setSelectedTab = (tab: string | null) => {
     if (tab) {
@@ -115,13 +101,11 @@ const SettingsPage = () => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
 
-  // URL-based state handles mobile/desktop sync automatically
-
-  const activeTabConfig = ALL_TABS.find(
+  const activeTabConfig = SETTINGS_TABS.find(
     (tab) => tab.id === (isMobile ? selectedTab : activeDesktopTab)
   );
-  const TabComponent = activeTabConfig?.component || ElecIdTab;
-  const TabIcon = activeTabConfig?.icon || IdCard;
+  const TabComponent = activeTabConfig?.component || AccountTab;
+  const TabIcon = activeTabConfig?.icon || User;
 
   // Check scroll position for arrow visibility
   const checkScrollArrows = () => {
@@ -178,7 +162,7 @@ const SettingsPage = () => {
   // Mobile View
   if (isMobile) {
     return (
-      <div className="bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95">
+      <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95">
         {/* Back Button */}
         <div className="px-4 pt-4">
           <Button
@@ -202,7 +186,7 @@ const SettingsPage = () => {
               transition={{ type: "spring", stiffness: 400, damping: 35 }}
               className="min-h-screen"
             >
-              {/* Mobile Header - solid bg for Android compatibility */}
+              {/* Mobile Header */}
               <div className="sticky top-0 z-20 bg-elec-dark border-b border-white/[0.06]">
                 <div className="px-4 py-4">
                   <div className="flex items-center justify-between">
@@ -292,7 +276,7 @@ const SettingsPage = () => {
               transition={{ type: "spring", stiffness: 400, damping: 35 }}
               className="min-h-screen"
             >
-              {/* Detail Header - solid bg for Android compatibility */}
+              {/* Detail Header */}
               <div className="sticky top-0 z-20 bg-elec-dark border-b border-white/[0.06]">
                 <div className="px-4 py-4">
                   <div className="flex items-center gap-3">
@@ -314,7 +298,7 @@ const SettingsPage = () => {
                 </div>
               </div>
 
-              {/* Detail Content - no momentum-scroll-y here, parent handles scroll */}
+              {/* Detail Content */}
               <div className="px-4 py-6">
                 <TabComponent />
               </div>
@@ -327,7 +311,7 @@ const SettingsPage = () => {
 
   // Desktop View
   return (
-    <div className="bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 animate-fade-in">
+    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 animate-fade-in">
       {/* Back Button */}
       <div className="px-4 md:px-6 lg:px-8 pt-4 max-w-[1600px] mx-auto">
         <Button
@@ -340,7 +324,7 @@ const SettingsPage = () => {
         </Button>
       </div>
 
-      {/* Desktop Header - solid bg for Android compatibility */}
+      {/* Desktop Header */}
       <div className="border-b border-white/[0.06] bg-elec-dark sticky top-0 z-20">
         <div className="px-4 md:px-6 lg:px-8 py-4 max-w-[1600px] mx-auto">
           <div className="flex items-center justify-between gap-4">
@@ -416,7 +400,7 @@ const SettingsPage = () => {
             onScroll={checkScrollArrows}
             className="flex items-center gap-1 overflow-x-auto scrollbar-hide pb-0 -mb-px momentum-scroll-x"
           >
-            {ALL_TABS.map((tab) => {
+            {SETTINGS_TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeDesktopTab === tab.id;
               return (
@@ -451,7 +435,7 @@ const SettingsPage = () => {
         </div>
       </div>
 
-      {/* Main Content - Full Width */}
+      {/* Main Content */}
       <div className="px-4 md:px-6 lg:px-8 py-6 md:py-8 max-w-[1600px] mx-auto">
         {/* Mobile upgrade banner */}
         {!isSubscribed && (

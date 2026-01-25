@@ -8,6 +8,7 @@ import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generato
 export const useInvoiceStorage = () => {
   const [invoices, setInvoices] = useState<Quote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
   // Convert database row to Quote object with invoice data
   const convertDbRowToQuote = useCallback((row: any): Quote => ({
@@ -92,6 +93,7 @@ export const useInvoiceStorage = () => {
 
       const convertedInvoices = (data || []).map(convertDbRowToQuote);
       setInvoices(convertedInvoices);
+      setLastUpdated(new Date());
     } catch (error) {
       console.error('Error fetching invoices:', error);
       toast({
@@ -452,5 +454,6 @@ export const useInvoiceStorage = () => {
     updateInvoiceStatus,
     fetchInvoices,
     deleteInvoice,
+    lastUpdated,
   };
 };

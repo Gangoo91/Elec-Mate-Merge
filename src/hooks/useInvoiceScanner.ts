@@ -319,13 +319,10 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
   }, [processImage]);
 
   /**
-   * Handle file upload
+   * Process a single file and return its items
    */
-  const handleUpload = useCallback(async (file: File) => {
-    setState('uploading');
-    setProgress('Preparing image...');
-
-    return new Promise<ScanResult>((resolve, reject) => {
+  const processSingleFile = useCallback(async (file: File): Promise<ScannedInvoiceItem[]> => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
       reader.onload = async (e) => {
@@ -335,17 +332,123 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
           return;
         }
 
-        const result = await processImage(base64, file.type || 'image/jpeg');
-        resolve(result);
+        try {
+          const { data, error } = await supabase.functions.invoke<ParseInvoiceResponse>('parse-invoice-photo', {
+            body: {
+              image_base64: base64.replace(/^data:image\/\w+;base64,/, ''),
+              image_type: file.type || 'image/jpeg'
+            }
+          });
+
+          if (error || !data?.success) {
+            console.warn(`Failed to process ${file.name}:`, error || data?.error);
+            resolve([]); // Return empty array on failure, continue with other files
+            return;
+          }
+
+          const items: ScannedInvoiceItem[] = data.items.map((extracted) => {
+            const unitPrice = extracted.unit_price ??
+              (extracted.total_price && extracted.quantity > 0
+                ? Math.round((extracted.total_price / extracted.quantity) * 100) / 100
+                : 0);
+
+            return {
+              id: generateId(),
+              extracted,
+              match: null,
+              alternativeMatches: [],
+              selected: unitPrice > 0,
+              quantity: extracted.quantity,
+              unitPrice
+            };
+          });
+
+          resolve(items);
+        } catch (err) {
+          console.warn(`Error processing ${file.name}:`, err);
+          resolve([]); // Return empty array on failure
+        }
       };
 
       reader.onerror = () => {
-        reject(new Error('Failed to read file'));
+        console.warn(`Failed to read ${file.name}`);
+        resolve([]); // Return empty array on failure
       };
 
       reader.readAsDataURL(file);
     });
-  }, [processImage]);
+  }, []);
+
+  /**
+   * Handle file upload (supports multiple files)
+   */
+  const handleUpload = useCallback(async (files: File | File[]) => {
+    const fileArray = Array.isArray(files) ? files : [files];
+
+    setState('uploading');
+    setProgress(`Processing ${fileArray.length} ${fileArray.length === 1 ? 'image' : 'images'}...`);
+
+    try {
+      const allItems: ScannedInvoiceItem[] = [];
+      let supplierName: string | null = null;
+
+      for (let i = 0; i < fileArray.length; i++) {
+        setProgress(`Processing ${i + 1} of ${fileArray.length}...`);
+
+        const items = await processSingleFile(fileArray[i]);
+        allItems.push(...items);
+
+        // Try to extract supplier name from first successful scan
+        if (!supplierName && items.length > 0) {
+          // Supplier name is set at result level, not item level
+          // We'll update this after all processing
+        }
+      }
+
+      if (allItems.length === 0) {
+        throw new Error('No items could be extracted from the images');
+      }
+
+      const scanResult: ScanResult = {
+        success: true,
+        supplierName: null, // Could aggregate from multiple invoices
+        invoiceNumber: null,
+        invoiceDate: null,
+        items: allItems
+      };
+
+      setState('review');
+      setResult(scanResult);
+      setProgress('');
+
+      return scanResult;
+
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      console.error('Invoice scan error:', err);
+
+      setState('error');
+      setProgress('');
+
+      const errorResult: ScanResult = {
+        success: false,
+        supplierName: null,
+        invoiceNumber: null,
+        invoiceDate: null,
+        items: [],
+        error: errorMessage
+      };
+
+      setResult(errorResult);
+      toast({
+        title: 'Scan Failed',
+        description: errorMessage,
+        variant: 'destructive'
+      });
+
+      return errorResult;
+    }
+  }, [processSingleFile]);
 
   /**
    * Update a scanned item

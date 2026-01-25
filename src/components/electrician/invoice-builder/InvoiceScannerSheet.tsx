@@ -25,7 +25,7 @@ interface InvoiceScannerSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onCapture: (imageData: string, file: File) => void;
-  onUpload: (file: File) => void;
+  onUpload: (files: File[]) => void;
   isProcessing?: boolean;
   progress?: string;
 }
@@ -184,24 +184,24 @@ export function InvoiceScannerSheet({
     onCapture(capturedImage, file);
   }, [capturedImage, onCapture]);
 
-  // Handle file selection
+  // Handle file selection (supports multiple files)
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
 
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-      setError('Please select an image file');
-      return;
+    // Validate all files
+    for (const file of files) {
+      if (!file.type.startsWith('image/')) {
+        setError(`${file.name} is not an image file`);
+        return;
+      }
+      if (file.size > 20 * 1024 * 1024) {
+        setError(`${file.name} exceeds 20MB limit`);
+        return;
+      }
     }
 
-    // Validate file size (20MB max)
-    if (file.size > 20 * 1024 * 1024) {
-      setError('Image must be smaller than 20MB');
-      return;
-    }
-
-    onUpload(file);
+    onUpload(files);
 
     // Reset file input
     if (fileInputRef.current) {
@@ -320,6 +320,7 @@ export function InvoiceScannerSheet({
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
+                multiple
                 onChange={handleFileSelect}
                 className="hidden"
               />

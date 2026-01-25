@@ -19,6 +19,22 @@ export type ProfileType = {
   onboarding_completed?: boolean;
   ecs_card_type?: string;
   elec_id_enabled?: boolean;
+
+  // Apprentice-specific fields
+  apprentice_year?: number;
+  apprentice_level?: string; // 'Level 2', 'Level 3'
+  training_provider?: string;
+  ecs_card_status?: 'not_applied' | 'applied' | 'received';
+  supervisor_name?: string;
+
+  // Electrician-specific fields
+  job_title?: string;
+  specialisation?: 'domestic' | 'commercial' | 'industrial' | 'solar' | 'ev';
+  years_experience?: number;
+
+  // Employer-specific fields
+  business_position?: string;
+  company_size?: '1-5' | '6-20' | '21-50' | '50+';
 };
 
 export type AuthContextType = {
@@ -48,6 +64,19 @@ export type AuthContextType = {
     ecs_card_type?: string;
     elec_id_enabled?: boolean;
     onboarding_completed?: boolean;
+    // Apprentice fields
+    apprentice_year?: number;
+    apprentice_level?: string;
+    training_provider?: string;
+    ecs_card_status?: string;
+    supervisor_name?: string;
+    // Electrician fields
+    job_title?: string;
+    specialisation?: string;
+    years_experience?: number;
+    // Employer fields
+    business_position?: string;
+    company_size?: string;
   }) => Promise<{ error: any }>;
   fetchProfile?: (userId: string) => Promise<ProfileType | null>;
 };

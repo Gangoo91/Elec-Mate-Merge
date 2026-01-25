@@ -30,6 +30,8 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
   const [state, setState] = useState<SubscriptionState>(initialState);
   const hasCheckedRef = useRef(false);
   const profileIdRef = useRef<string | null>(null);
+  // Track previous state to prevent unnecessary re-renders during scroll
+  const previousStateRef = useRef<SubscriptionState | null>(null);
 
   // Handle profile updates - calculate trial status from profile data
   // This runs synchronously and doesn't cause loading states
@@ -45,14 +47,27 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
       // Check both subscribed AND free_access_granted for beta testers
       const isUserSubscribed = profile.subscribed || profile.free_access_granted || false;
 
-      // Single state update for profile data
-      setState(prev => ({
-        ...prev,
-        isTrialActive: isUserSubscribed ? false : (isActive && !isUserSubscribed),
-        trialEndsAt: trialEndDate,
-        isSubscribed: isUserSubscribed,
-        subscriptionTier: profile.subscription_tier || prev.subscriptionTier, // Use profile tier if available
-      }));
+      // Skip update if isSubscribed value hasn't actually changed
+      // This prevents unnecessary re-renders during scroll events
+      if (previousStateRef.current?.isSubscribed === isUserSubscribed) {
+        return;
+      }
+
+      // Use functional setState to get latest state and avoid stale closures
+      setState(prev => {
+        const newState: SubscriptionState = {
+          ...prev,
+          isTrialActive: isUserSubscribed ? false : (isActive && !isUserSubscribed),
+          trialEndsAt: trialEndDate,
+          isSubscribed: isUserSubscribed,
+          subscriptionTier: profile.subscription_tier || prev.subscriptionTier, // Use profile tier if available
+        };
+
+        // Store the new state for future comparison
+        previousStateRef.current = newState;
+
+        return newState;
+      });
     }
     // When profile is null (during refresh/navigation), keep previous state
     // This prevents the "free trial has ended" flash

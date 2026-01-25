@@ -81,7 +81,7 @@ export const EmailStatusBanner = () => {
         <Button 
           variant="outline" 
           size="sm"
-          onClick={() => navigate('/electrician/settings?tab=email')}
+          onClick={() => navigate('/settings?tab=preferences')}
           className="h-8"
         >
           Connect Email

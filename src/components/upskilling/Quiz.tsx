@@ -16,6 +16,16 @@ export const Quiz = ({ questions, title, description }: QuizProps) => {
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(questions.length).fill(-1));
   const [quizCompleted, setQuizCompleted] = useState(false);
 
+  // Helper to get correct answer index (handles both number and string formats)
+  const getCorrectAnswerIndex = (question: QuizQuestionType): number => {
+    if (typeof question.correctAnswer === 'number') {
+      return question.correctAnswer;
+    }
+    // If it's a string, find the index in options
+    const index = question.options.findIndex(opt => opt === question.correctAnswer);
+    return index >= 0 ? index : 0;
+  };
+
   const handleAnswerSelect = (answerIndex: number) => {
     const newAnswers = [...selectedAnswers];
     newAnswers[currentQuestion] = answerIndex;
@@ -44,7 +54,7 @@ export const Quiz = ({ questions, title, description }: QuizProps) => {
 
   const calculateScore = () => {
     return selectedAnswers.reduce((score, answer, index) => {
-      return score + (answer === questions[index].correctAnswer ? 1 : 0);
+      return score + (answer === getCorrectAnswerIndex(questions[index]) ? 1 : 0);
     }, 0);
   };
 
@@ -86,8 +96,9 @@ export const Quiz = ({ questions, title, description }: QuizProps) => {
             <h3 className="text-lg font-semibold text-foreground">Review Your Answers</h3>
             {questions.map((question, index) => {
               const userAnswer = selectedAnswers[index];
-              const isCorrect = userAnswer === question.correctAnswer;
-              
+              const correctIdx = getCorrectAnswerIndex(question);
+              const isCorrect = userAnswer === correctIdx;
+
               return (
                 <div key={index} className="bg-slate-800/50 p-4 rounded-lg space-y-3">
                   <div className="flex items-start gap-3">
@@ -103,7 +114,7 @@ export const Quiz = ({ questions, title, description }: QuizProps) => {
                       </p>
                       {!isCorrect && (
                         <p className="text-gray-300 text-sm mb-2">
-                          <strong>Correct answer:</strong> {question.options[question.correctAnswer]}
+                          <strong>Correct answer:</strong> {question.options[correctIdx]}
                         </p>
                       )}
                       <p className="text-gray-400 text-sm">{question.explanation}</p>
