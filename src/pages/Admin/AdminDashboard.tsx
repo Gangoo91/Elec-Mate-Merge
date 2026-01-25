@@ -135,12 +135,14 @@ export default function AdminDashboard() {
         churned: churnedData.length, // Trial expired, didn't convert
       };
 
-      // MRR only counts PAYING subscribers (exclude free_access_granted)
-      const payingFounders = paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "founder").length;
+      // MRR calculation:
+      // - Founders always pay £3.99 regardless of free_access_granted status
+      // - Other tiers: exclude free_access_granted users (they get free access, not founder pricing)
+      const allFounders = subscribedData.filter(u => u.subscription_tier?.toLowerCase() === "founder").length;
       const mrr = (paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "apprentice").length * 4.99) +
                   (paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "electrician").length * 9.99) +
                   (paidSubscribers.filter(u => u.subscription_tier?.toLowerCase() === "employer").length * 29.99) +
-                  (payingFounders * 3.99);
+                  (allFounders * 3.99);
 
       const usersWithEmails = edgeDataRes.data?.users || [];
 

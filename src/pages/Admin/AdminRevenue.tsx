@@ -71,11 +71,19 @@ export default function AdminRevenue() {
 
       const subscribedProfiles = allProfilesRes.data?.filter(p => p.subscribed) || [];
       // Exclude free_access_granted users from MRR (they pay £0)
+      // EXCEPT founders - they always pay £3.99 regardless of free_access_granted
       const paidProfiles = subscribedProfiles.filter(p => !p.free_access_granted);
-      const mrr = paidProfiles.reduce((total, p) => {
-        const tier = p.subscription_tier || "basic";
-        return total + (tierPricing[tier] || 9.99);
-      }, 0);
+      const founderProfiles = subscribedProfiles.filter(p => p.subscription_tier?.toLowerCase() === "founder");
+
+      // Calculate MRR: paid profiles (non-founders) + all founders
+      const nonFounderMrr = paidProfiles
+        .filter(p => p.subscription_tier?.toLowerCase() !== "founder")
+        .reduce((total, p) => {
+          const tier = p.subscription_tier || "basic";
+          return total + (tierPricing[tier] || 9.99);
+        }, 0);
+      const founderMrr = founderProfiles.length * 3.99;
+      const mrr = nonFounderMrr + founderMrr;
 
       // Calculate ARR
       const arr = mrr * 12;
