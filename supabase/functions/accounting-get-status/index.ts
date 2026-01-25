@@ -57,13 +57,19 @@ serve(async (req: Request) => {
 
       if (token) {
         const isExpired = new Date(token.token_expires_at) < new Date();
+        // Only mark as error if token is expired AND there's no refresh token
+        // If we have a refresh token, the sync will auto-refresh - so still show as connected
+        const hasRefreshToken = !!token.encrypted_refresh_token;
+        const shouldMarkError = isExpired && !hasRefreshToken;
+
         return {
           ...integration,
           tenantId: token.tenant_id,
           tenantName: token.tenant_name,
           tokenExpired: isExpired,
-          status: isExpired ? 'error' : integration.status,
-          error: isExpired ? 'Token expired - please reconnect' : undefined,
+          canAutoRefresh: hasRefreshToken,
+          status: shouldMarkError ? 'error' : integration.status,
+          error: shouldMarkError ? 'Session expired - please reconnect' : undefined,
         };
       }
 

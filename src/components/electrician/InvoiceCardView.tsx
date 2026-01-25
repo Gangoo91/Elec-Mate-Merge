@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Download, Eye, Calendar, Trash2, CheckCircle, AlertCircle, Send, Edit, CreditCard, PoundSterling, Clock, MoreHorizontal, FileText, User, Loader2 } from 'lucide-react';
+import { Download, Eye, Calendar, Trash2, CheckCircle, AlertCircle, Send, Edit, CreditCard, PoundSterling, Clock, MoreHorizontal, FileText, User, Loader2, RefreshCw } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format, isPast, differenceInDays } from 'date-fns';
 import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
@@ -9,6 +9,8 @@ import { PartialPaymentDialog } from '@/components/electrician/invoice-builder/P
 import { SwipeableCard } from '@/components/ui/SwipeableCard';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
+import { ACCOUNTING_PROVIDERS } from '@/types/accounting';
 
 interface InvoiceCardViewProps {
   invoices: Quote[];
@@ -41,6 +43,27 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
 }) => {
   const [partialPaymentInvoice, setPartialPaymentInvoice] = useState<Quote | null>(null);
   const [actionsSheetInvoice, setActionsSheetInvoice] = useState<Quote | null>(null);
+  const [syncingInvoiceId, setSyncingInvoiceId] = useState<string | null>(null);
+
+  // Accounting integration hook
+  const {
+    integrations: accountingIntegrations,
+    hasConnectedProvider: hasAccountingConnected,
+    syncInvoice,
+  } = useAccountingIntegrations();
+
+  // Get the connected accounting provider
+  const connectedProvider = accountingIntegrations.find(i => i.status === 'connected');
+
+  // Handle sync to accounting
+  const handleSyncToAccounting = async (invoiceId: string) => {
+    try {
+      setSyncingInvoiceId(invoiceId);
+      await syncInvoice(invoiceId);
+    } finally {
+      setSyncingInvoiceId(null);
+    }
+  };
 
   const getOverdueInfo = (invoice: Quote) => {
     if (!invoice.invoice_due_date) return null;
@@ -228,6 +251,29 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                       <span>PDF</span>
                     </button>
 
+                    {/* Sync to Accounting - Only show if connected */}
+                    {hasAccountingConnected && connectedProvider && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleSyncToAccounting(invoice.id); }}
+                        disabled={syncingInvoiceId === invoice.id}
+                        className={cn(
+                          "flex items-center justify-center gap-2 h-10 px-3 rounded-xl text-[13px] font-medium touch-manipulation transition-all active:scale-[0.96]",
+                          connectedProvider.provider === 'xero'
+                            ? "bg-[#13B5EA]/15 hover:bg-[#13B5EA]/25 text-[#13B5EA]"
+                            : "bg-[#2CA01C]/15 hover:bg-[#2CA01C]/25 text-[#2CA01C]"
+                        )}
+                      >
+                        {syncingInvoiceId === invoice.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <RefreshCw className="h-4 w-4" />
+                        )}
+                        <span className="hidden sm:inline">
+                          {ACCOUNTING_PROVIDERS[connectedProvider.provider].name}
+                        </span>
+                      </button>
+                    )}
+
                     {/* Send */}
                     <div className="flex-1">
                       <InvoiceSendDropdown
@@ -330,6 +376,40 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                     <p className="text-[12px] text-white/80">Save to device</p>
                   </div>
                 </button>
+
+                {/* Sync to Accounting */}
+                {hasAccountingConnected && connectedProvider && (
+                  <button
+                    onClick={() => { handleSyncToAccounting(actionsSheetInvoice.id); setActionsSheetInvoice(null); }}
+                    disabled={syncingInvoiceId === actionsSheetInvoice.id}
+                    className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
+                  >
+                    <div className={cn(
+                      "w-11 h-11 rounded-xl flex items-center justify-center",
+                      connectedProvider.provider === 'xero' ? "bg-[#13B5EA]/15" : "bg-[#2CA01C]/15"
+                    )}>
+                      {syncingInvoiceId === actionsSheetInvoice.id ? (
+                        <Loader2 className={cn(
+                          "h-5 w-5 animate-spin",
+                          connectedProvider.provider === 'xero' ? "text-[#13B5EA]" : "text-[#2CA01C]"
+                        )} />
+                      ) : (
+                        <RefreshCw className={cn(
+                          "h-5 w-5",
+                          connectedProvider.provider === 'xero' ? "text-[#13B5EA]" : "text-[#2CA01C]"
+                        )} />
+                      )}
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="text-[15px] font-semibold text-white">
+                        Sync to {ACCOUNTING_PROVIDERS[connectedProvider.provider].name}
+                      </p>
+                      <p className="text-[12px] text-white/80">
+                        {connectedProvider.tenantName || 'Send to accounting software'}
+                      </p>
+                    </div>
+                  </button>
+                )}
 
                 {/* Record Partial Payment */}
                 {(actionsSheetInvoice.invoice_status === 'sent' || actionsSheetInvoice.invoice_status === 'overdue') && (
