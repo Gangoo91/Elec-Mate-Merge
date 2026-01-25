@@ -104,18 +104,7 @@ const PublicQuoteView = () => {
       setClientName(convertedQuote.client?.name || "");
       setClientEmail(convertedQuote.client?.email || "");
 
-      // Update view tracking (non-blocking)
-      supabase
-        .from("quote_views")
-        .upsert({
-          quote_id: quoteData.id,
-          public_token: token,
-          is_active: true,
-          expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-          last_viewed_at: new Date().toISOString()
-        }, { onConflict: 'public_token' })
-        .then(() => {})
-        .catch(err => console.warn("View tracking failed:", err));
+      // Note: View tracking removed - anonymous users don't have write access to quote_views
 
     } catch (error) {
       console.error("Error loading quote:", error);
@@ -162,20 +151,17 @@ const PublicQuoteView = () => {
         throw new Error("Quote could not be accepted. It may have expired.");
       }
 
-      // Send notifications via edge function (handles electrician + client emails)
-      try {
-        await supabase.functions.invoke("quote-acceptance-notification", {
+      // Send confirmation email to client (non-blocking)
+      if (clientEmail) {
+        supabase.functions.invoke("quote-acceptance-confirmation", {
           body: {
             quoteId: quote.id,
-            publicToken: quote.public_token,
-            clientName: clientName,
-            clientEmail: clientEmail,
             quoteNumber: quote.quoteNumber,
+            clientEmail: clientEmail,
+            clientName: clientName,
             total: quote.total
           }
-        });
-      } catch (notifyError) {
-        console.warn("Could not send notifications:", notifyError);
+        }).catch(err => console.warn("Could not send confirmation email:", err));
       }
 
       toast({

@@ -72,6 +72,7 @@ export default function AdminFounders() {
   const [confirmSendTrial, setConfirmSendTrial] = useState(false);
   const [confirmSendChurned, setConfirmSendChurned] = useState(false);
   const [confirmResendUnclaimed, setConfirmResendUnclaimed] = useState(false);
+  const [resendResults, setResendResults] = useState<{ sent: number; total: number; errors?: string[] } | null>(null);
 
   // Fetch stats - live updates every 30 seconds
   const { data: stats } = useQuery<Stats>({
@@ -304,10 +305,7 @@ export default function AdminFounders() {
       queryClient.invalidateQueries({ queryKey: ["admin-founder-invites"] });
       queryClient.invalidateQueries({ queryKey: ["admin-founder-stats"] });
       setConfirmResendUnclaimed(false);
-      toast({
-        title: "Reminder emails sent!",
-        description: `Resent to ${data.sent} users who haven't claimed their invite yet`,
-      });
+      setResendResults(data);
     },
     onError: (error: any) => {
       toast({ title: "Error", description: error.message, variant: "destructive" });
@@ -849,6 +847,52 @@ export default function AdminFounders() {
               ) : (
                 "Resend to All"
               )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Resend Results Dialog */}
+      <AlertDialog open={!!resendResults} onOpenChange={() => setResendResults(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              {resendResults?.errors && resendResults.errors.length > 0 ? (
+                <AlertTriangle className="h-5 w-5 text-amber-400" />
+              ) : (
+                <Check className="h-5 w-5 text-green-400" />
+              )}
+              Resend Complete
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
+                <p className="text-2xl font-bold text-green-400">{resendResults?.sent || 0}</p>
+                <p className="text-xs text-muted-foreground">Sent Successfully</p>
+              </div>
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
+                <p className="text-2xl font-bold text-red-400">{resendResults?.errors?.length || 0}</p>
+                <p className="text-xs text-muted-foreground">Failed</p>
+              </div>
+            </div>
+            {resendResults?.errors && resendResults.errors.length > 0 && (
+              <div className="space-y-2">
+                <p className="text-sm font-medium text-red-400">Failed emails:</p>
+                <div className="max-h-32 overflow-y-auto space-y-1 text-xs bg-muted/50 rounded-lg p-2">
+                  {resendResults.errors.map((err, i) => (
+                    <p key={i} className="text-muted-foreground">{err}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+            <p className="text-xs text-muted-foreground text-center">
+              The invite list below now shows updated "Sent" timestamps for all resent emails
+            </p>
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogAction className="h-11 touch-manipulation" onClick={() => setResendResults(null)}>
+              Done
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
