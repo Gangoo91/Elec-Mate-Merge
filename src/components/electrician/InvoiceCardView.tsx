@@ -231,7 +231,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                   </div>
                 </div>
 
-                {/* Action Bar - Only show for non-paid invoices */}
+                {/* Action Bar - For unpaid invoices */}
                 {!isPaid && (
                   <div
                     className="flex items-center gap-2 p-3 border-t border-white/[0.06]"
@@ -250,29 +250,6 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                       )}
                       <span>PDF</span>
                     </button>
-
-                    {/* Sync to Accounting - Only show if connected */}
-                    {hasAccountingConnected && connectedProvider && (
-                      <button
-                        onClick={(e) => { e.stopPropagation(); handleSyncToAccounting(invoice.id); }}
-                        disabled={syncingInvoiceId === invoice.id}
-                        className={cn(
-                          "flex items-center justify-center gap-2 h-10 px-3 rounded-xl text-[13px] font-medium touch-manipulation transition-all active:scale-[0.96]",
-                          connectedProvider.provider === 'xero'
-                            ? "bg-[#13B5EA]/15 hover:bg-[#13B5EA]/25 text-[#13B5EA]"
-                            : "bg-[#2CA01C]/15 hover:bg-[#2CA01C]/25 text-[#2CA01C]"
-                        )}
-                      >
-                        {syncingInvoiceId === invoice.id ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <RefreshCw className="h-4 w-4" />
-                        )}
-                        <span className="hidden sm:inline">
-                          {ACCOUNTING_PROVIDERS[connectedProvider.provider].name}
-                        </span>
-                      </button>
-                    )}
 
                     {/* Send */}
                     <div className="flex-1">
@@ -310,11 +287,54 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                   </div>
                 )}
 
-                {/* Paid Badge Footer */}
+                {/* Action Bar - For PAID invoices (sync to accounting) */}
                 {isPaid && (
-                  <div className="flex items-center justify-center gap-2 py-3 bg-emerald-500/10 border-t border-emerald-500/20">
-                    <CheckCircle className="h-4 w-4 text-emerald-400" />
-                    <span className="text-[13px] font-semibold text-emerald-400">Paid</span>
+                  <div
+                    className="flex items-center gap-2 p-3 border-t border-emerald-500/20 bg-emerald-500/5"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* Paid Status */}
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/15">
+                      <CheckCircle className="h-4 w-4 text-emerald-400" />
+                      <span className="text-[13px] font-semibold text-emerald-400">Paid</span>
+                    </div>
+
+                    <div className="flex-1" />
+
+                    {/* Download PDF */}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onDownloadPDF(invoice); }}
+                      disabled={downloadingPdfId === invoice.id}
+                      className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-white/[0.08] hover:bg-white/[0.12] text-[13px] font-medium text-white touch-manipulation transition-all active:scale-[0.96]"
+                    >
+                      {downloadingPdfId === invoice.id ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Download className="h-4 w-4" />
+                      )}
+                      <span>PDF</span>
+                    </button>
+
+                    {/* Sync to Accounting - Only show if connected */}
+                    {hasAccountingConnected && connectedProvider && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleSyncToAccounting(invoice.id); }}
+                        disabled={syncingInvoiceId === invoice.id}
+                        className={cn(
+                          "flex items-center justify-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold touch-manipulation transition-all active:scale-[0.96]",
+                          connectedProvider.provider === 'xero'
+                            ? "bg-[#13B5EA]/20 hover:bg-[#13B5EA]/30 text-[#13B5EA]"
+                            : "bg-[#2CA01C]/20 hover:bg-[#2CA01C]/30 text-[#2CA01C]"
+                        )}
+                      >
+                        {syncingInvoiceId === invoice.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <RefreshCw className="h-4 w-4" />
+                        )}
+                        <span>{ACCOUNTING_PROVIDERS[connectedProvider.provider].name}</span>
+                      </button>
+                    )}
                   </div>
                 )}
               </button>
@@ -377,8 +397,8 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                   </div>
                 </button>
 
-                {/* Sync to Accounting */}
-                {hasAccountingConnected && connectedProvider && (
+                {/* Sync to Accounting - Only for paid invoices */}
+                {actionsSheetInvoice.invoice_status === 'paid' && hasAccountingConnected && connectedProvider && (
                   <button
                     onClick={() => { handleSyncToAccounting(actionsSheetInvoice.id); setActionsSheetInvoice(null); }}
                     disabled={syncingInvoiceId === actionsSheetInvoice.id}
