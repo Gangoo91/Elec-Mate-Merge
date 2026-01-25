@@ -1,0 +1,4 @@
+# Disable JWT verification for OAuth callback
+# This function is called by Xero/QuickBooks redirect, not by authenticated users
+# Security is handled via the state parameter stored in the database
+verify_jwt = false

@@ -234,12 +234,12 @@ serve(async (req: Request) => {
       tenant: tenantInfo?.tenantName,
     });
 
-    // Redirect to profile page with success
+    // Redirect to settings business tab with success
     return new Response(null, {
       status: 302,
       headers: {
         ...corsHeaders,
-        Location: `${FRONTEND_URL}/electrician/profile?accounting=${provider}&success=true`,
+        Location: `${FRONTEND_URL}/settings?tab=business&accounting=${provider}&success=true`,
       },
     });
   } catch (error) {
@@ -249,7 +249,7 @@ serve(async (req: Request) => {
       status: 302,
       headers: {
         ...corsHeaders,
-        Location: `${FRONTEND_URL}/electrician/profile?accounting_error=${encodeURIComponent((error as Error).message)}`,
+        Location: `${FRONTEND_URL}/settings?tab=business&accounting_error=${encodeURIComponent((error as Error).message)}`,
       },
     });
   }
