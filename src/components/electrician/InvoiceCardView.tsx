@@ -315,8 +315,8 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                       <span>PDF</span>
                     </button>
 
-                    {/* Sync to Accounting - Only show if connected */}
-                    {hasAccountingConnected && connectedProvider && (
+                    {/* Sync to Accounting - Show for connected provider */}
+                    {hasAccountingConnected && connectedProvider ? (
                       <button
                         onClick={(e) => { e.stopPropagation(); handleSyncToAccounting(invoice.id); }}
                         disabled={syncingInvoiceId === invoice.id}
@@ -333,6 +333,15 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                           <RefreshCw className="h-4 w-4" />
                         )}
                         <span>{ACCOUNTING_PROVIDERS[connectedProvider.provider].name}</span>
+                      </button>
+                    ) : (
+                      /* Not connected - show connect prompt */
+                      <button
+                        onClick={(e) => { e.stopPropagation(); window.location.href = '/electrician/settings?tab=business'; }}
+                        className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 text-[13px] font-medium text-purple-400 touch-manipulation transition-all active:scale-[0.96]"
+                      >
+                        <RefreshCw className="h-4 w-4" />
+                        <span>Sync</span>
                       </button>
                     )}
                   </div>
