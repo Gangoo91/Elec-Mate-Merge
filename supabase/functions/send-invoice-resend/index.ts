@@ -648,6 +648,50 @@ const handler = async (req: Request): Promise<Response> => {
       })
       .eq('id', invoiceId);
 
+    // ========================================================================
+    // STEP 14: Auto-sync to accounting software (non-blocking)
+    // ========================================================================
+    let accountingSynced = false;
+    const accountingIntegrations = companyProfile?.accounting_integrations || [];
+    const connectedAccounting = accountingIntegrations.find(
+      (i: any) => i.status === 'connected' && i.autoSyncEnabled !== false
+    );
+
+    if (connectedAccounting) {
+      console.log(`📊 Auto-syncing to ${connectedAccounting.provider}...`);
+      try {
+        const syncResponse = await fetch(
+          `${supabaseUrl}/functions/v1/accounting-sync-invoice`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': authHeader,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              invoiceId,
+              provider: connectedAccounting.provider,
+            }),
+          }
+        );
+
+        if (syncResponse.ok) {
+          const syncData = await syncResponse.json();
+          if (syncData.success) {
+            accountingSynced = true;
+            console.log(`✅ Invoice synced to ${connectedAccounting.provider}: ${syncData.externalInvoiceId}`);
+          } else {
+            console.warn(`⚠️ Accounting sync returned error: ${syncData.error}`);
+          }
+        } else {
+          const errorText = await syncResponse.text();
+          console.warn(`⚠️ Accounting sync failed (${syncResponse.status}): ${errorText}`);
+        }
+      } catch (syncError) {
+        console.warn('⚠️ Accounting sync error (non-fatal):', syncError);
+      }
+    }
+
     const duration = Date.now() - startTime;
     console.log(`✅ Complete in ${duration}ms`);
 
@@ -658,6 +702,8 @@ const handler = async (req: Request): Promise<Response> => {
         emailId: emailData?.id,
         pdfAttached: pdfAttachmentSuccess,
         payNowIncluded: !!stripePaymentUrl,
+        accountingSynced,
+        accountingProvider: accountingSynced ? connectedAccounting?.provider : undefined,
         duration: `${duration}ms`,
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

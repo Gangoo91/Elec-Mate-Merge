@@ -188,13 +188,20 @@ export const InvoiceSendDropdown = ({
         throw new Error(data?.message || 'Unknown error sending invoice');
       }
 
-      // Show success message with payment link status
+      // Show success message with payment link and accounting sync status
       const payNowIncluded = data?.payNowIncluded;
+      const accountingSynced = data?.accountingSynced;
+      const accountingProvider = data?.accountingProvider;
+
+      let description = `Invoice ${invoice.invoice_number} sent to ${cleanTo}`;
+      if (payNowIncluded) description += ' with Pay Now button';
+      if (accountingSynced && accountingProvider) {
+        description += ` • Synced to ${accountingProvider.charAt(0).toUpperCase() + accountingProvider.slice(1)}`;
+      }
+
       toast({
         title: 'Invoice sent',
-        description: payNowIncluded
-          ? `Invoice ${invoice.invoice_number} sent to ${cleanTo} with Pay Now button`
-          : `Invoice ${invoice.invoice_number} sent to ${cleanTo}`,
+        description,
         variant: 'success',
         duration: 4000,
       });
@@ -493,9 +500,9 @@ ${companyName}`;
     }
   };
 
-  // Connect accounting (redirect to profile page)
+  // Connect accounting (redirect to settings business tab)
   const handleConnectAccounting = () => {
-    window.location.href = '/electrician/profile?openAccounting=true';
+    window.location.href = '/electrician/settings?tab=business';
   };
 
   const isLoading = isSendingEmail || isSharingWhatsApp || isConnectingStripe || isSyncingAccounting;

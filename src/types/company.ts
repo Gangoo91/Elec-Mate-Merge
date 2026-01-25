@@ -65,6 +65,13 @@ export interface CompanyProfile {
 
   // Testing instruments for certificates
   testing_instruments?: TestingInstrument[];
+
+  // Quote settings
+  quote_terms?: string;
+  quote_validity_days?: number;
+  warranty_period?: string;
+  deposit_percentage?: number;
+  accent_color?: string;
 }
 
 export interface CompanyBranding {
