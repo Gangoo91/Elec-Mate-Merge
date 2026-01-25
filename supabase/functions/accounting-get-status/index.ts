@@ -45,7 +45,7 @@ serve(async (req: Request) => {
     // Get token expiry info for connected providers
     const { data: tokens } = await supabase
       .from('accounting_oauth_tokens')
-      .select('provider, token_expires_at, tenant_id, tenant_name, updated_at')
+      .select('provider, token_expires_at, tenant_id, tenant_name, updated_at, encrypted_refresh_token')
       .eq('user_id', user.id);
 
     // Build status response

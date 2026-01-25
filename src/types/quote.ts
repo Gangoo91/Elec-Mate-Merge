@@ -130,6 +130,11 @@ export interface Quote {
   linked_certificate_type?: 'EICR' | 'EIC' | 'Minor Works';
   linked_certificate_reference?: string;
   linked_certificate_pdf_url?: string;
+  // External accounting sync fields
+  external_invoice_id?: string;
+  external_invoice_provider?: string;
+  external_invoice_url?: string;
+  external_invoice_synced_at?: Date;
 }
 
 export type QuoteTag = 'awaiting_payment' | 'job_not_complete' | 'on_hold' | 'disputed' | 'work_done';

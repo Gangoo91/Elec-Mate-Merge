@@ -60,6 +60,7 @@ const QuoteBuilderEdit = lazy(() => import("@/pages/electrician/QuoteBuilderEdit
 const SmartQuoteBuilderPage = lazy(() => import("@/pages/electrician/SmartQuoteBuilderPage"));
 const QuotesPage = lazy(() => import("@/pages/electrician/QuotesPage"));
 const InvoicesPage = lazy(() => import("@/pages/electrician/InvoicesPage"));
+const ExpensesPage = lazy(() => import("@/pages/electrician/ExpensesPage"));
 const InvoiceBuilderCreate = lazy(() => import("@/pages/electrician/InvoiceBuilderCreate"));
 const QuoteInvoiceDashboard = lazy(() => import("@/pages/electrician/QuoteInvoiceDashboard"));
 const Calculations = lazy(() => import("@/pages/electrician-tools/Calculations"));
@@ -118,6 +119,7 @@ const ElectricianHubRoutes = () => (
     <Route path="quote-builder/smart" element={<LazyRoute><SmartQuoteBuilderPage /></LazyRoute>} />
     <Route path="quotes" element={<LazyRoute><QuotesPage /></LazyRoute>} />
     <Route path="invoices" element={<LazyRoute><InvoicesPage /></LazyRoute>} />
+    <Route path="expenses" element={<LazyRoute><ExpensesPage /></LazyRoute>} />
     <Route path="invoice-builder/create" element={<LazyRoute><InvoiceBuilderCreate /></LazyRoute>} />
     <Route path="quote-invoice-dashboard" element={<LazyRoute><QuoteInvoiceDashboard /></LazyRoute>} />
     {/* Business Development Routes */}

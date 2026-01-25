@@ -394,6 +394,12 @@ const mainResources: ToolCardProps[] = [
     link: '/electrician/invoices',
   },
   {
+    title: 'Expenses',
+    description: 'Track receipts & mileage',
+    icon: Receipt,
+    link: '/electrician/expenses',
+  },
+  {
     title: 'Site Safety & RAMS',
     description: 'Risk assessments and method statements',
     icon: Shield,

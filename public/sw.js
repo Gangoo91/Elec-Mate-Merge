@@ -322,7 +322,7 @@ function openDB() {
       }
     };
   });
-});
+}
 
 // Listen for messages from the main app
 self.addEventListener('message', (event) => {

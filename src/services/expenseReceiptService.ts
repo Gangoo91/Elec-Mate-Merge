@@ -105,12 +105,16 @@ export async function uploadReceipt(
       };
     }
 
-    // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
-    if (!allowedTypes.includes(file.type)) {
+    // Validate file type - include HEIC/HEIF for iOS devices
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif', 'application/pdf'];
+    // Also check file extension for HEIC as some browsers report empty type
+    const fileExt = file.name.split('.').pop()?.toLowerCase();
+    const isHeic = fileExt === 'heic' || fileExt === 'heif';
+
+    if (!allowedTypes.includes(file.type) && !isHeic) {
       return {
         url: null,
-        error: 'Invalid file type. Supported: JPG, PNG, WebP, PDF',
+        error: 'Invalid file type. Supported: JPG, PNG, WebP, HEIC, PDF',
       };
     }
 
@@ -120,8 +124,7 @@ export async function uploadReceipt(
       fileToUpload = await compressImage(file, TARGET_SIZE / 1024);
     }
 
-    // Generate unique filename
-    const fileExt = file.name.split('.').pop();
+    // Generate unique filename (reuse fileExt from validation)
     const timestamp = Date.now();
     const randomId = Math.random().toString(36).substring(2, 8);
     const fileName = `${expenseId}-${timestamp}-${randomId}.${fileExt}`;

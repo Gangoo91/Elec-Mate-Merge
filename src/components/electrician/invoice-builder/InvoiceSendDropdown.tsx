@@ -494,7 +494,11 @@ ${companyName}`;
   const handleSyncToAccounting = async () => {
     try {
       setIsSyncingAccounting(true);
-      await syncInvoice(invoice.id);
+      const success = await syncInvoice(invoice.id);
+      if (success) {
+        // Trigger refresh to show green tick
+        onSuccess?.();
+      }
     } finally {
       setIsSyncingAccounting(false);
     }
@@ -587,7 +591,22 @@ ${companyName}`;
             <DropdownMenuLabel className="text-[10px] font-semibold text-muted-foreground px-3 py-1 uppercase tracking-wider">
               Accounting Software
             </DropdownMenuLabel>
-            {hasAccountingConnected ? (
+            {/* Already synced - show green tick */}
+            {invoice.external_invoice_id ? (
+              <div className="flex items-center gap-3 px-3 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 my-1">
+                <div className="h-10 w-10 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                  <CheckCircle className="h-5 w-5 text-emerald-400" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-semibold text-sm text-emerald-400">
+                    Synced to {invoice.external_invoice_provider ? ACCOUNTING_PROVIDERS[invoice.external_invoice_provider as keyof typeof ACCOUNTING_PROVIDERS]?.name || invoice.external_invoice_provider : 'Accounting'}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    Invoice is in your accounting software
+                  </span>
+                </div>
+              </div>
+            ) : hasAccountingConnected ? (
               <>
                 {accountingIntegrations
                   .filter(i => i.status === 'connected')

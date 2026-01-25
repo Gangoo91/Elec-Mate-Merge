@@ -1,6 +1,7 @@
 import './App.css';
 import AppRouter from './AppRouter';
 import { Toaster } from "@/components/ui/toaster";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 import { BrowserRouter } from 'react-router-dom';
 import TrainingActivityMonitor from '@/components/apprentice/TrainingActivityMonitor';
@@ -34,6 +35,7 @@ function App() {
                   <TrainingActivityMonitor />
                   <AppRouter />
                   <Toaster />
+                  <SonnerToaster />
                   <PWAUpdatePrompt />
                   <SpeedInsights />
                   <Analytics />

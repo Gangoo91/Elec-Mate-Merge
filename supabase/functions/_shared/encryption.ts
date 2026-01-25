@@ -3,10 +3,12 @@
  * Provides secure encryption/decryption for OAuth tokens
  */
 
-const ENCRYPTION_KEY = Deno.env.get('ENCRYPTION_KEY');
-
-if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length !== 64) {
-  throw new Error('ENCRYPTION_KEY must be a 64-character hex string (32 bytes)');
+function getEncryptionKey(): string {
+  const key = Deno.env.get('ENCRYPTION_KEY');
+  if (!key || key.length !== 64) {
+    throw new Error('ENCRYPTION_KEY must be a 64-character hex string (32 bytes)');
+  }
+  return key;
 }
 
 // Convert hex string to Uint8Array
@@ -32,14 +34,14 @@ function bytesToHex(bytes: Uint8Array): string {
 export async function encryptToken(plaintext: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(plaintext);
-  
+
   // Generate random IV (12 bytes for GCM)
   const iv = crypto.getRandomValues(new Uint8Array(12));
-  
+
   // Import key
   const key = await crypto.subtle.importKey(
     'raw',
-    hexToBytes(ENCRYPTION_KEY!),
+    hexToBytes(getEncryptionKey()),
     { name: 'AES-GCM' },
     false,
     ['encrypt']
@@ -85,7 +87,7 @@ export async function decryptToken(encrypted: string): Promise<string> {
   // Import key
   const key = await crypto.subtle.importKey(
     'raw',
-    hexToBytes(ENCRYPTION_KEY!),
+    hexToBytes(getEncryptionKey()),
     { name: 'AES-GCM' },
     false,
     ['decrypt']

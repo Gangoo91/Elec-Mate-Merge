@@ -98,6 +98,11 @@ const InvoiceViewPage = () => {
         jobDetails: data.job_details as any,
         pdf_url: data.pdf_url,
         pdf_generated_at: data.pdf_generated_at,
+        // External accounting sync fields
+        external_invoice_id: data.external_invoice_id,
+        external_invoice_provider: data.external_invoice_provider,
+        external_invoice_url: data.external_invoice_url,
+        external_invoice_synced_at: data.external_invoice_synced_at ? new Date(data.external_invoice_synced_at) : undefined,
       };
 
       setInvoice(quoteData);

@@ -109,11 +109,34 @@ const PreferencesTab = () => {
           type: 'error'
         });
       } else {
-        addNotification({
-          title: 'Test Sent',
-          message: `Check your device for the notification (sent: ${data?.sent || 0})`,
-          type: 'success'
-        });
+        // Debug: log full response
+        console.log('[Push Test] Response:', data);
+
+        // Determine the appropriate message based on what happened
+        let title = 'Test Sent';
+        let message = '';
+        let notificationType: 'success' | 'error' | 'info' = 'success';
+
+        if (data?.sent > 0) {
+          title = 'Test Sent';
+          message = `Notification sent to ${data.sent} device(s)!`;
+          notificationType = 'success';
+        } else if (data?.foundSubscriptions === false) {
+          title = 'No Subscriptions';
+          message = `No active push subscriptions found. Try toggling push notifications off and on again.`;
+          notificationType = 'info';
+        } else if (data?.errors?.length > 0) {
+          title = 'Send Failed';
+          const firstError = data.errors[0];
+          message = `Found ${data.total} subscription(s) but sending failed: ${firstError.error || 'Unknown error'}`;
+          notificationType = 'error';
+        } else {
+          title = 'Unknown Issue';
+          message = `Response: ${JSON.stringify(data)}`;
+          notificationType = 'info';
+        }
+
+        addNotification({ title, message, type: notificationType });
       }
     } catch (err) {
       addNotification({
@@ -127,23 +150,32 @@ const PreferencesTab = () => {
   };
 
   const handlePushToggle = async () => {
+    console.log('[Push Toggle] Starting...', { isPushSubscribed, isPushSupported, isPushLoading });
     try {
       if (isPushSubscribed) {
-        await unsubscribeFromPush();
-        addNotification({
-          title: 'Push Notifications Disabled',
-          message: "You won't receive notifications when the app is closed",
-          type: 'info'
-        });
+        const success = await unsubscribeFromPush();
+        if (success) {
+          addNotification({
+            title: 'Push Notifications Disabled',
+            message: "You won't receive notifications when the app is closed",
+            type: 'info'
+          });
+        }
       } else {
-        await subscribeToPush();
-        addNotification({
-          title: 'Push Notifications Enabled',
-          message: "You'll now receive notifications even when the app is closed",
-          type: 'success'
-        });
+        console.log('[Push Toggle] Calling subscribeToPush...');
+        const success = await subscribeToPush();
+        console.log('[Push Toggle] subscribeToPush returned:', success);
+        if (success) {
+          addNotification({
+            title: 'Push Notifications Enabled',
+            message: "You'll now receive notifications even when the app is closed",
+            type: 'success'
+          });
+        }
+        // Note: subscribeToPush shows its own error toasts, so no need to show another on failure
       }
-    } catch {
+    } catch (err) {
+      console.error('[Push Toggle] Error:', err);
       addNotification({
         title: 'Error',
         message: 'Failed to update push notification settings',
