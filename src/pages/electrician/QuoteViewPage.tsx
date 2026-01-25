@@ -95,6 +95,9 @@ const QuoteViewPage = () => {
             accepted_at: data.accepted_at ? new Date(data.accepted_at) : undefined,
             accepted_by_name: data.accepted_by_name || undefined,
             accepted_by_email: data.accepted_by_email || undefined,
+            accepted_ip: data.accepted_ip || undefined,
+            accepted_user_agent: data.accepted_user_agent || undefined,
+            signature_url: data.signature_url || undefined,
             invoice_raised: data.invoice_raised || false,
             invoice_number: data.invoice_number || undefined,
           };
@@ -450,17 +453,34 @@ const QuoteViewPage = () => {
       <div className="px-4 py-4 space-y-4">
         {/* Status Banner */}
         {quote.acceptance_status === 'accepted' && (
-          <motion.div variants={itemVariants} className="flex items-center gap-3 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
-              <CheckCircle className="h-5 w-5 text-white" />
+          <motion.div variants={itemVariants} className="rounded-2xl bg-emerald-500/10 border border-emerald-500/20 overflow-hidden">
+            <div className="flex items-center gap-3 p-3.5">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                <CheckCircle className="h-5 w-5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-medium text-emerald-400">Quote Accepted</p>
+                <p className="text-[13px] text-white/50">
+                  {quote.accepted_at && format(new Date(quote.accepted_at), 'dd MMM yyyy')}
+                  {quote.accepted_by_name && ` by ${quote.accepted_by_name}`}
+                </p>
+              </div>
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[15px] font-medium text-emerald-400">Quote Accepted</p>
-              <p className="text-[13px] text-white/50">
-                {quote.accepted_at && format(new Date(quote.accepted_at), 'dd MMM yyyy')}
-                {quote.accepted_by_name && ` by ${quote.accepted_by_name}`}
-              </p>
-            </div>
+            {/* Customer Signature */}
+            {quote.signature_url && (
+              <div className="px-4 pb-4 pt-2 border-t border-emerald-500/20">
+                <p className="text-[11px] font-medium text-white/40 uppercase tracking-wider mb-2">
+                  Customer Signature
+                </p>
+                <div className="bg-white rounded-xl p-3 inline-block">
+                  <img
+                    src={quote.signature_url}
+                    alt={`Signature of ${quote.accepted_by_name || 'Customer'}`}
+                    className="max-h-16 w-auto"
+                  />
+                </div>
+              </div>
+            )}
           </motion.div>
         )}
 

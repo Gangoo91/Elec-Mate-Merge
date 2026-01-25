@@ -252,15 +252,22 @@ Deno.serve(async (req) => {
       case "stats": {
         const { data, error } = await supabaseAdmin
           .from("founder_invites")
-          .select("status");
+          .select("status, sent_at");
         if (error) throw error;
+
+        const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+        const sentInvites = data?.filter(i => i.status === "sent") || [];
 
         const stats = {
           total: data?.length || 0,
           pending: data?.filter(i => i.status === "pending").length || 0,
-          sent: data?.filter(i => i.status === "sent").length || 0,
+          sent: sentInvites.length,
           claimed: data?.filter(i => i.status === "claimed").length || 0,
           expired: data?.filter(i => i.status === "expired").length || 0,
+          // Needs reminder: sent but sent_at is null or older than 30 mins
+          needsReminder: sentInvites.filter(i => !i.sent_at || new Date(i.sent_at) < thirtyMinutesAgo).length,
+          // Recently resent: sent_at within last 30 mins
+          recentlyResent: sentInvites.filter(i => i.sent_at && new Date(i.sent_at) >= thirtyMinutesAgo).length,
         };
         result = { stats };
         break;
@@ -620,20 +627,26 @@ Deno.serve(async (req) => {
 
       case "resend_all_unclaimed": {
         // Get all sent invites that haven't been claimed
+        // Skip any sent in the last 30 minutes (already processed in a recent batch)
+        const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+
         const { data: unclaimedInvites, error: unclaimedError } = await supabaseAdmin
           .from("founder_invites")
           .select("*")
-          .eq("status", "sent");
+          .eq("status", "sent")
+          .or(`sent_at.is.null,sent_at.lt.${thirtyMinutesAgo}`)
+          .order("sent_at", { ascending: true, nullsFirst: true });
 
         if (unclaimedError) throw unclaimedError;
 
         if (!unclaimedInvites || unclaimedInvites.length === 0) {
-          result = { sent: 0, message: "No unclaimed invites to resend" };
+          result = { sent: 0, remaining: 0, message: "All unclaimed invites have been sent recently" };
           break;
         }
 
         let sentCount = 0;
         const errors: string[] = [];
+        const sentEmails: string[] = [];
 
         for (const invite of unclaimedInvites) {
           try {
@@ -658,15 +671,22 @@ Deno.serve(async (req) => {
               .eq("id", invite.id);
 
             sentCount++;
+            sentEmails.push(invite.email);
           } catch (err: any) {
             errors.push(`${invite.email}: ${err.message}`);
           }
         }
 
+        // Calculate remaining (not yet sent in this or recent batches)
+        const remaining = unclaimedInvites.length - sentCount - errors.length;
+
         console.log(`Resent ${sentCount} founder invites to unclaimed users by admin ${user.id}`);
         result = {
           sent: sentCount,
+          failed: errors.length,
+          remaining: remaining > 0 ? remaining : 0,
           total: unclaimedInvites.length,
+          sentEmails,
           errors: errors.length > 0 ? errors : undefined,
         };
         break;

@@ -72,10 +72,10 @@ export default function AdminFounders() {
   const [confirmSendTrial, setConfirmSendTrial] = useState(false);
   const [confirmSendChurned, setConfirmSendChurned] = useState(false);
   const [confirmResendUnclaimed, setConfirmResendUnclaimed] = useState(false);
-  const [resendResults, setResendResults] = useState<{ sent: number; total: number; errors?: string[] } | null>(null);
+  const [resendResults, setResendResults] = useState<{ sent: number; failed: number; remaining: number; total: number; sentEmails?: string[]; errors?: string[] } | null>(null);
 
   // Fetch stats - live updates every 30 seconds
-  const { data: stats } = useQuery<Stats>({
+  const { data: stats } = useQuery<Stats & { needsReminder: number; recentlyResent: number }>({
     queryKey: ["admin-founder-stats"],
     refetchInterval: 30000,
     refetchOnWindowFocus: true,
@@ -86,7 +86,7 @@ export default function AdminFounders() {
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
-      return data?.stats || { total: 0, pending: 0, sent: 0, claimed: 0, expired: 0 };
+      return data?.stats || { total: 0, pending: 0, sent: 0, claimed: 0, expired: 0, needsReminder: 0, recentlyResent: 0 };
     },
   });
 
@@ -403,22 +403,32 @@ export default function AdminFounders() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-center">
-              <p className="text-3xl font-bold text-yellow-400">{stats?.sent || 0}</p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Sent but not yet claimed
-              </p>
-              <Button
-                className="w-full mt-3 h-11 gap-2 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black touch-manipulation"
-                onClick={() => setConfirmResendUnclaimed(true)}
-                disabled={resendUnclaimedMutation.isPending || (stats?.sent || 0) === 0}
-              >
-                <Mail className="h-4 w-4" />
-                Resend Founder Offer to All
-              </Button>
+            <div className="grid grid-cols-2 gap-3">
+              {/* Needs Reminder */}
+              <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-center">
+                <p className="text-2xl font-bold text-yellow-400">{stats?.needsReminder || 0}</p>
+                <p className="text-[10px] text-muted-foreground">Need Reminder</p>
+              </div>
+              {/* Recently Resent */}
+              <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
+                <p className="text-2xl font-bold text-green-400">{stats?.recentlyResent || 0}</p>
+                <p className="text-[10px] text-muted-foreground">Just Resent ✓</p>
+              </div>
             </div>
+            <Button
+              className="w-full h-11 gap-2 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black touch-manipulation"
+              onClick={() => setConfirmResendUnclaimed(true)}
+              disabled={resendUnclaimedMutation.isPending || (stats?.needsReminder || 0) === 0}
+            >
+              <Mail className="h-4 w-4" />
+              {(stats?.needsReminder || 0) > 0
+                ? `Send Reminder to ${stats?.needsReminder} People`
+                : "All Reminders Sent ✓"}
+            </Button>
             <p className="text-[10px] text-muted-foreground text-center">
-              Sends a reminder email with subject "Your £3.99/month Founder Rate is Still Waiting!"
+              {(stats?.needsReminder || 0) > 0
+                ? "Sends reminder email with subject \"Your £3.99/month Founder Rate is Still Waiting!\""
+                : "Everyone has received the reminder email"}
             </p>
           </CardContent>
         </Card>
@@ -854,31 +864,57 @@ export default function AdminFounders() {
 
       {/* Resend Results Dialog */}
       <AlertDialog open={!!resendResults} onOpenChange={() => setResendResults(null)}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-h-[85vh] overflow-hidden flex flex-col">
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
-              {resendResults?.errors && resendResults.errors.length > 0 ? (
+              {resendResults?.remaining && resendResults.remaining > 0 ? (
+                <Clock className="h-5 w-5 text-amber-400" />
+              ) : resendResults?.failed && resendResults.failed > 0 ? (
                 <AlertTriangle className="h-5 w-5 text-amber-400" />
               ) : (
                 <Check className="h-5 w-5 text-green-400" />
               )}
-              Resend Complete
+              {resendResults?.remaining && resendResults.remaining > 0 ? "Batch Complete - More to Send" : "Resend Complete"}
             </AlertDialogTitle>
           </AlertDialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-4 py-4 overflow-y-auto flex-1">
+            <div className="grid grid-cols-3 gap-2">
               <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
                 <p className="text-2xl font-bold text-green-400">{resendResults?.sent || 0}</p>
-                <p className="text-xs text-muted-foreground">Sent Successfully</p>
+                <p className="text-[10px] text-muted-foreground">Sent</p>
               </div>
               <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-center">
-                <p className="text-2xl font-bold text-red-400">{resendResults?.errors?.length || 0}</p>
-                <p className="text-xs text-muted-foreground">Failed</p>
+                <p className="text-2xl font-bold text-red-400">{resendResults?.failed || 0}</p>
+                <p className="text-[10px] text-muted-foreground">Failed</p>
+              </div>
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
+                <p className="text-2xl font-bold text-amber-400">{resendResults?.remaining || 0}</p>
+                <p className="text-[10px] text-muted-foreground">Remaining</p>
               </div>
             </div>
+
+            {resendResults?.remaining && resendResults.remaining > 0 && (
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                <p className="text-sm text-amber-400 text-center">
+                  ⏰ Function timed out. Tap "Send Remaining" to continue.
+                </p>
+              </div>
+            )}
+
+            {resendResults?.sentEmails && resendResults.sentEmails.length > 0 && (
+              <div className="space-y-2">
+                <p className="text-sm font-medium text-green-400">✓ Sent to ({resendResults.sentEmails.length}):</p>
+                <div className="max-h-32 overflow-y-auto space-y-1 text-xs bg-muted/50 rounded-lg p-2">
+                  {resendResults.sentEmails.map((email, i) => (
+                    <p key={i} className="text-muted-foreground">{email}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {resendResults?.errors && resendResults.errors.length > 0 && (
               <div className="space-y-2">
-                <p className="text-sm font-medium text-red-400">Failed emails:</p>
+                <p className="text-sm font-medium text-red-400">✗ Failed ({resendResults.errors.length}):</p>
                 <div className="max-h-32 overflow-y-auto space-y-1 text-xs bg-muted/50 rounded-lg p-2">
                   {resendResults.errors.map((err, i) => (
                     <p key={i} className="text-muted-foreground">{err}</p>
@@ -886,14 +922,28 @@ export default function AdminFounders() {
                 </div>
               </div>
             )}
-            <p className="text-xs text-muted-foreground text-center">
-              The invite list below now shows updated "Sent" timestamps for all resent emails
-            </p>
           </div>
-          <AlertDialogFooter>
-            <AlertDialogAction className="h-11 touch-manipulation" onClick={() => setResendResults(null)}>
-              Done
-            </AlertDialogAction>
+          <AlertDialogFooter className="flex-col sm:flex-row gap-2">
+            {resendResults?.remaining && resendResults.remaining > 0 ? (
+              <>
+                <AlertDialogCancel className="h-11 touch-manipulation">
+                  Close
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  className="h-11 touch-manipulation bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black"
+                  onClick={() => {
+                    setResendResults(null);
+                    resendUnclaimedMutation.mutate();
+                  }}
+                >
+                  Send Remaining ({resendResults.remaining})
+                </AlertDialogAction>
+              </>
+            ) : (
+              <AlertDialogAction className="h-11 touch-manipulation" onClick={() => setResendResults(null)}>
+                Done
+              </AlertDialogAction>
+            )}
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
