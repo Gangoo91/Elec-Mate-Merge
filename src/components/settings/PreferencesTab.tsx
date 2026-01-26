@@ -85,7 +85,6 @@ const PreferencesTab = () => {
   const [autoSaveEnabled, setAutoSaveEnabled] = useState(true);
 
   // AI preferences
-  const [voiceInputEnabled, setVoiceInputEnabled] = useState(false);
   const [aiSuggestionsEnabled, setAiSuggestionsEnabled] = useState(true);
 
   // Send test notification
@@ -432,19 +431,6 @@ const PreferencesTab = () => {
           iconColour="text-pink-400"
           description="Voice and AI features"
         >
-          <SettingsRow
-            icon={Mic}
-            iconBg="bg-rose-500/10"
-            iconColour="text-rose-400"
-            title="Voice Input"
-            description="Use voice to fill in forms and certificates"
-          >
-            <Switch
-              checked={voiceInputEnabled}
-              onCheckedChange={setVoiceInputEnabled}
-            />
-          </SettingsRow>
-
           <SettingsRow
             icon={Settings2}
             iconBg="bg-cyan-500/10"

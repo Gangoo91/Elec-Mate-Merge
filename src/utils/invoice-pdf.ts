@@ -6,26 +6,55 @@ import { Invoice, InvoiceItem } from "@/types/invoice";
 export function generateInvoicePDF(invoice: Invoice, companyProfile?: any): jsPDF {
   const doc = new jsPDF('portrait', 'mm', 'a4');
   const pageWidth = doc.internal.pageSize.width;
+  const margin = 15;
   let yPos = 20;
 
-  // Header - Professional Blue
+  // Determine logo size based on setting
+  const logoSizeSetting = companyProfile?.logo_size || 'medium';
+  const logoSizes = {
+    small: { width: 20, height: 20 },
+    medium: { width: 30, height: 30 },
+    large: { width: 45, height: 45 }
+  };
+  const logoSize = logoSizes[logoSizeSetting as keyof typeof logoSizes] || logoSizes.medium;
+  const hasLogo = companyProfile?.logo_data_url;
+
+  // Header - Professional Blue (adjust height for large logos)
+  const headerHeight = Math.max(45, hasLogo ? logoSize.height + 15 : 45);
   doc.setFillColor(30, 64, 175);
-  doc.rect(0, 0, pageWidth, 45, 'F');
-  
+  doc.rect(0, 0, pageWidth, headerHeight, 'F');
+
+  // Add logo if available (left side of header)
+  if (hasLogo) {
+    try {
+      // Add white background circle/box behind logo for visibility
+      const logoY = (headerHeight - logoSize.height) / 2;
+      doc.setFillColor(255, 255, 255);
+      doc.roundedRect(margin - 2, logoY - 2, logoSize.width + 4, logoSize.height + 4, 3, 3, 'F');
+      doc.addImage(companyProfile.logo_data_url, 'PNG', margin, logoY, logoSize.width, logoSize.height);
+    } catch (error) {
+      console.warn('Could not add logo to invoice PDF:', error);
+    }
+  }
+
+  // Adjust text position based on logo presence
+  const textStartX = hasLogo ? margin + logoSize.width + 15 : pageWidth / 2;
+  const textAlign = hasLogo ? 'left' : 'center';
+
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(22);
   doc.setFont("helvetica", "bold");
   const companyName = companyProfile?.company_name || "Your Company";
-  doc.text(companyName, pageWidth / 2, 15, { align: "center" });
-  
+  doc.text(companyName, textStartX, 15, { align: textAlign as any });
+
   doc.setFontSize(14);
-  doc.text("INVOICE", pageWidth / 2, 25, { align: "center" });
-  
+  doc.text("INVOICE", textStartX, 25, { align: textAlign as any });
+
   doc.setFontSize(9);
   const invoiceDate = invoice.invoice_date ? format(new Date(invoice.invoice_date), "dd MMMM yyyy") : format(new Date(), "dd MMMM yyyy");
-  doc.text(`Invoice Date: ${invoiceDate}`, pageWidth / 2, 35, { align: "center" });
+  doc.text(`Invoice Date: ${invoiceDate}`, textStartX, 35, { align: textAlign as any });
 
-  yPos = 55;
+  yPos = headerHeight + 10;
 
   // Invoice Details - Two Columns
   doc.setTextColor(0, 0, 0);

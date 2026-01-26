@@ -372,19 +372,30 @@ serve(async (req) => {
         sort_code: transformedCompanyProfile.sort_code
       });
 
+      // DEBUG: Log raw client data to diagnose update issues
+      console.log('[PDF-MONKEY] Raw client data sources:', {
+        'freshQuote.client': freshQuote?.client,
+        'freshQuote.client_data': freshQuote?.client_data,
+        hasClient: !!freshQuote?.client,
+        hasClientData: !!freshQuote?.client_data,
+      });
+
+      // Use client_data from database (snake_case) as primary source since that's what's saved
+      const clientData = freshQuote?.client_data || freshQuote?.client || {};
+
       const transformedInvoice = {
         invoiceNumber: freshQuote?.invoice_number || "",
         createdAt: freshQuote?.invoice_date ? new Date(freshQuote.invoice_date).toISOString().split('T')[0] : "",
         dueDate: freshQuote?.invoice_due_date ? new Date(freshQuote.invoice_due_date).toISOString().split('T')[0] : "",
         purchaseOrder: freshQuote?.purchase_order || "",
         client: {
-          name: freshQuote?.client?.name || freshQuote?.client_data?.name || "",
-          contactName: freshQuote?.client?.contactName || freshQuote?.client_data?.contactName || "",
-          address: freshQuote?.client?.address || freshQuote?.client_data?.address ? 
-            `${(freshQuote?.client?.address || freshQuote?.client_data?.address)}${(freshQuote?.client?.postcode || freshQuote?.client_data?.postcode) ? '\n' + (freshQuote?.client?.postcode || freshQuote?.client_data?.postcode) : ''}` : "",
-          postcode: freshQuote?.client?.postcode || freshQuote?.client_data?.postcode || "",
-          email: freshQuote?.client?.email || freshQuote?.client_data?.email || "",
-          phone: freshQuote?.client?.phone || freshQuote?.client_data?.phone || ""
+          name: clientData?.name || "",
+          contactName: clientData?.contactName || "",
+          address: clientData?.address ?
+            `${clientData.address}${clientData?.postcode ? '\n' + clientData.postcode : ''}` : "",
+          postcode: clientData?.postcode || "",
+          email: clientData?.email || "",
+          phone: clientData?.phone || ""
         },
         jobDetails: {
           title: freshQuote?.jobDetails?.title || freshQuote?.job_details?.title || "",
@@ -408,6 +419,7 @@ serve(async (req) => {
         notes: freshQuote?.invoice_notes || ""
       };
       
+      console.log('[PDF-MONKEY] Transformed invoice client:', JSON.stringify(transformedInvoice.client, null, 2));
       console.log('[PDF-MONKEY] Transformed invoice items:', transformedInvoice.items.length, 'items');
       console.log('[PDF-MONKEY] Items detail:', JSON.stringify(transformedInvoice.items, null, 2));
 

@@ -52,19 +52,29 @@ export const generateQuotePDF = (quote: Partial<Quote>, companyProfile?: Company
   
   // Clean Minimal Header Section
   if (companyProfile && companyProfile.company_name) {
-    const headerHeight = 50;
-    
+    // Determine logo size based on setting
+    const logoSizeSetting = (companyProfile as any).logo_size || 'medium';
+    const logoSizes = {
+      small: { width: 20, height: 20 },
+      medium: { width: 30, height: 30 },
+      large: { width: 45, height: 45 }
+    };
+    const logoSize = logoSizes[logoSizeSetting as keyof typeof logoSizes] || logoSizes.medium;
+
+    // Adjust header height based on logo size
+    const headerHeight = Math.max(50, logoSize.height + 15);
+
     // Company logo (left aligned, clean)
     if (companyProfile.logo_data_url) {
       try {
-        doc.addImage(companyProfile.logo_data_url, 'PNG', margin, currentY, 30, 30);
+        doc.addImage(companyProfile.logo_data_url, 'PNG', margin, currentY, logoSize.width, logoSize.height);
       } catch (error) {
         console.warn('Could not add logo to PDF:', error);
       }
     }
-    
-    // Company information (right side, clean layout)
-    const companyInfoX = margin + 40;
+
+    // Company information (right side, clean layout) - adjust based on logo size
+    const companyInfoX = margin + logoSize.width + 10;
     let companyY = currentY + 8;
     
     // Company name (prominent but clean)

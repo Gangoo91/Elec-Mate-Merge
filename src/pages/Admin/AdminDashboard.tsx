@@ -231,82 +231,82 @@ export default function AdminDashboard() {
               {stats?.subscribedUsers || 0} paying
             </Badge>
           </div>
-          {/* Tier Breakdown - Paid tiers */}
-          <div className="grid grid-cols-4 gap-2 mt-4">
+          {/* Tier Breakdown - Paid tiers: 2x2 on mobile, 4 on larger */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mt-4">
             <div
-              className="bg-gradient-to-br from-yellow-500/20 to-amber-600/15 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-yellow-500/30 hover:to-amber-600/25 transition-all active:scale-[0.98] touch-manipulation border border-yellow-500/40"
+              className="bg-gradient-to-br from-yellow-500/20 to-amber-600/15 rounded-xl p-3 sm:p-3 text-center cursor-pointer hover:from-yellow-500/30 hover:to-amber-600/25 transition-all active:scale-[0.98] touch-manipulation border border-yellow-500/40"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/founders"); }}
             >
-              <Crown className="h-4 w-4 text-yellow-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-yellow-400">{stats?.tierCounts?.founder || 0}</p>
-              <p className="text-[10px] text-muted-foreground">Founder</p>
-              <p className="text-[10px] text-yellow-400/70">{pricingTiers.founder.monthly}/mo</p>
+              <Crown className="h-5 w-5 sm:h-4 sm:w-4 text-yellow-400 mx-auto mb-1.5 sm:mb-1" />
+              <p className="text-2xl sm:text-lg font-bold text-yellow-400">{stats?.tierCounts?.founder || 0}</p>
+              <p className="text-xs sm:text-[10px] text-muted-foreground mt-0.5">Founder</p>
+              <p className="text-xs sm:text-[10px] text-yellow-400/70">{pricingTiers.founder.monthly}/mo</p>
             </div>
             <div
-              className="bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-cyan-500/30 hover:to-cyan-600/20 transition-all active:scale-[0.98] touch-manipulation border border-cyan-500/40"
+              className="bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 rounded-xl p-3 sm:p-3 text-center cursor-pointer hover:from-cyan-500/30 hover:to-cyan-600/20 transition-all active:scale-[0.98] touch-manipulation border border-cyan-500/40"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=apprentice"); }}
             >
-              <GraduationCap className="h-4 w-4 text-cyan-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-cyan-400">{stats?.tierCounts?.apprentice || 0}</p>
-              <p className="text-[10px] text-muted-foreground">Apprentice</p>
-              <p className="text-[10px] text-cyan-400/70">{pricingTiers.apprentice.monthly}/mo</p>
+              <GraduationCap className="h-5 w-5 sm:h-4 sm:w-4 text-cyan-400 mx-auto mb-1.5 sm:mb-1" />
+              <p className="text-2xl sm:text-lg font-bold text-cyan-400">{stats?.tierCounts?.apprentice || 0}</p>
+              <p className="text-xs sm:text-[10px] text-muted-foreground mt-0.5">Apprentice</p>
+              <p className="text-xs sm:text-[10px] text-cyan-400/70">{pricingTiers.apprentice.monthly}/mo</p>
             </div>
             <div
-              className="bg-gradient-to-br from-blue-500/20 to-blue-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-blue-500/30 hover:to-blue-600/20 transition-all active:scale-[0.98] touch-manipulation border border-blue-500/40"
+              className="bg-gradient-to-br from-blue-500/20 to-blue-600/10 rounded-xl p-3 sm:p-3 text-center cursor-pointer hover:from-blue-500/30 hover:to-blue-600/20 transition-all active:scale-[0.98] touch-manipulation border border-blue-500/40"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=electrician"); }}
             >
-              <Zap className="h-4 w-4 text-blue-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-blue-400">{stats?.tierCounts?.electrician || 0}</p>
-              <p className="text-[10px] text-muted-foreground">Electrician</p>
-              <p className="text-[10px] text-blue-400/70">{pricingTiers.electrician.monthly}/mo</p>
+              <Zap className="h-5 w-5 sm:h-4 sm:w-4 text-blue-400 mx-auto mb-1.5 sm:mb-1" />
+              <p className="text-2xl sm:text-lg font-bold text-blue-400">{stats?.tierCounts?.electrician || 0}</p>
+              <p className="text-xs sm:text-[10px] text-muted-foreground mt-0.5">Electrician</p>
+              <p className="text-xs sm:text-[10px] text-blue-400/70">{pricingTiers.electrician.monthly}/mo</p>
             </div>
             <div
-              className="bg-gradient-to-br from-purple-500/20 to-purple-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-purple-500/30 hover:to-purple-600/20 transition-all active:scale-[0.98] touch-manipulation border border-purple-500/40"
+              className="bg-gradient-to-br from-purple-500/20 to-purple-600/10 rounded-xl p-3 sm:p-3 text-center cursor-pointer hover:from-purple-500/30 hover:to-purple-600/20 transition-all active:scale-[0.98] touch-manipulation border border-purple-500/40"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/subscriptions?tier=employer"); }}
             >
-              <Building2 className="h-4 w-4 text-purple-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-purple-400">{stats?.tierCounts?.employer || 0}</p>
-              <p className="text-[10px] text-muted-foreground">Employer</p>
-              <p className="text-[10px] text-purple-400/70">{pricingTiers.employer.monthly}/mo</p>
+              <Building2 className="h-5 w-5 sm:h-4 sm:w-4 text-purple-400 mx-auto mb-1.5 sm:mb-1" />
+              <p className="text-2xl sm:text-lg font-bold text-purple-400">{stats?.tierCounts?.employer || 0}</p>
+              <p className="text-xs sm:text-[10px] text-muted-foreground mt-0.5">Employer</p>
+              <p className="text-xs sm:text-[10px] text-purple-400/70">{pricingTiers.employer.monthly}/mo</p>
             </div>
           </div>
-          {/* Non-paying users */}
-          <div className="grid grid-cols-3 gap-2 mt-2">
+          {/* Non-paying users: stays 3-col but with better spacing */}
+          <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-3">
             <div
-              className="bg-gradient-to-br from-teal-500/15 to-teal-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-teal-500/25 hover:to-teal-600/15 transition-all active:scale-[0.98] touch-manipulation border border-teal-500/30"
+              className="bg-gradient-to-br from-teal-500/15 to-teal-600/10 rounded-xl p-3 text-center cursor-pointer hover:from-teal-500/25 hover:to-teal-600/15 transition-all active:scale-[0.98] touch-manipulation border border-teal-500/30"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/users"); }}
             >
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-1.5 sm:gap-2">
                 <Gift className="h-4 w-4 text-teal-400" />
-                <p className="text-lg font-bold text-teal-400">{stats?.tierCounts?.free || 0}</p>
+                <p className="text-xl sm:text-lg font-bold text-teal-400">{stats?.tierCounts?.free || 0}</p>
               </div>
-              <p className="text-[10px] text-muted-foreground">Beta Testers</p>
+              <p className="text-[11px] sm:text-[10px] text-muted-foreground mt-0.5">Beta Testers</p>
             </div>
             <div
-              className="bg-gradient-to-br from-orange-500/15 to-orange-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-orange-500/25 hover:to-orange-600/15 transition-all active:scale-[0.98] touch-manipulation border border-orange-500/30"
+              className="bg-gradient-to-br from-orange-500/15 to-orange-600/10 rounded-xl p-3 text-center cursor-pointer hover:from-orange-500/25 hover:to-orange-600/15 transition-all active:scale-[0.98] touch-manipulation border border-orange-500/30"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/users"); }}
             >
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-1.5 sm:gap-2">
                 <Clock className="h-4 w-4 text-orange-400" />
-                <p className="text-lg font-bold text-orange-400">{stats?.tierCounts?.trial || 0}</p>
+                <p className="text-xl sm:text-lg font-bold text-orange-400">{stats?.tierCounts?.trial || 0}</p>
               </div>
-              <p className="text-[10px] text-muted-foreground">In 7-Day Trial</p>
+              <p className="text-[11px] sm:text-[10px] text-muted-foreground mt-0.5">In 7-Day Trial</p>
               {/* Trial breakdown by role */}
-              <div className="flex items-center justify-center gap-1 mt-1">
-                <span className="text-[9px] text-blue-400">{stats?.trialByRole?.electrician || 0} elec</span>
-                <span className="text-[9px] text-muted-foreground">•</span>
-                <span className="text-[9px] text-cyan-400">{stats?.trialByRole?.apprentice || 0} appr</span>
+              <div className="flex items-center justify-center gap-1 mt-1.5">
+                <span className="text-[10px] sm:text-[9px] text-blue-400">{stats?.trialByRole?.electrician || 0} elec</span>
+                <span className="text-[10px] sm:text-[9px] text-muted-foreground">•</span>
+                <span className="text-[10px] sm:text-[9px] text-cyan-400">{stats?.trialByRole?.apprentice || 0} appr</span>
               </div>
             </div>
             <div
-              className="bg-gradient-to-br from-red-500/15 to-red-600/10 rounded-xl p-2 sm:p-3 text-center cursor-pointer hover:from-red-500/25 hover:to-red-600/15 transition-all active:scale-[0.98] touch-manipulation border border-red-500/30"
+              className="bg-gradient-to-br from-red-500/15 to-red-600/10 rounded-xl p-3 text-center cursor-pointer hover:from-red-500/25 hover:to-red-600/15 transition-all active:scale-[0.98] touch-manipulation border border-red-500/30"
               onClick={(e) => { e.stopPropagation(); navigate("/admin/users"); }}
             >
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-1.5 sm:gap-2">
                 <UserCheck className="h-4 w-4 text-red-400" />
-                <p className="text-lg font-bold text-red-400">{stats?.tierCounts?.churned || 0}</p>
+                <p className="text-xl sm:text-lg font-bold text-red-400">{stats?.tierCounts?.churned || 0}</p>
               </div>
-              <p className="text-[10px] text-muted-foreground">Churned</p>
+              <p className="text-[11px] sm:text-[10px] text-muted-foreground mt-0.5">Churned</p>
             </div>
           </div>
         </CardContent>

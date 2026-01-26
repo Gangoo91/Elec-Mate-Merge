@@ -2,6 +2,13 @@ import { Clock, ChevronDown, Briefcase, FileText, Calendar, MapPin, AlertTriangl
 import { JobDetails } from "@/types/quote";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface JobDetailsStepProps {
   jobDetails?: JobDetails;
@@ -33,7 +40,6 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
   // Clean input styles
   const inputClassName = "w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow";
   const textareaClassName = "w-full bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow resize-none";
-  const selectClassName = "w-full h-8 bg-transparent text-[16px] font-medium text-white appearance-none cursor-pointer outline-none";
 
   return (
     <div className="space-y-4 text-left">
@@ -120,21 +126,25 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               </div>
               <div className="flex-1 min-w-0 text-left">
                 <label className="text-[12px] text-white/70 block mb-0.5">Estimated Duration</label>
-                <div className="relative">
-                  <select
-                    value={jobDetails?.estimatedDuration || ""}
-                    onChange={(e) => handleChange("estimatedDuration", e.target.value)}
-                    className={selectClassName}
-                  >
-                    <option value="" disabled className="bg-zinc-900">Select duration</option>
+                <Select
+                  value={jobDetails?.estimatedDuration || ""}
+                  onValueChange={(value) => handleChange("estimatedDuration", value)}
+                >
+                  <SelectTrigger className="w-full h-8 bg-transparent border-0 text-[16px] font-medium text-white focus:ring-0 focus:ring-offset-0 px-0 touch-manipulation [&>svg]:text-white/30">
+                    <SelectValue placeholder="Select duration" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[100] bg-zinc-900 border-zinc-700 text-white">
                     {durationOptions.map((opt) => (
-                      <option key={opt.value} value={opt.value} className="bg-zinc-900">
+                      <SelectItem
+                        key={opt.value}
+                        value={opt.value}
+                        className="text-white focus:bg-elec-yellow focus:text-black cursor-pointer touch-manipulation"
+                      >
                         {opt.label}
-                      </option>
+                      </SelectItem>
                     ))}
-                  </select>
-                  <ChevronDown className="absolute right-0 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
-                </div>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           )}

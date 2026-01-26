@@ -43,6 +43,7 @@ import {
   CheckSquare,
   Square,
   Loader2,
+  MessageSquare,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -58,6 +59,7 @@ import { formatDistanceToNow, format } from "date-fns";
 import { toast } from "@/hooks/use-toast";
 import { getInitials, ROLE_COLORS } from "@/utils/adminUtils";
 import { AdminUserCard } from "@/components/admin/cards/AdminUserCard";
+import MessageUserSheet from "@/components/admin/MessageUserSheet";
 
 interface UserProfile {
   id: string;
@@ -131,6 +133,7 @@ export default function AdminUsers() {
   const [timeFilter, setTimeFilter] = useState(() => searchParams.get("filter") || "all");
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [messageSheetOpen, setMessageSheetOpen] = useState(false);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -1094,6 +1097,16 @@ export default function AdminUsers() {
 
             {/* Actions Footer */}
             <SheetFooter className="p-4 border-t border-border space-y-2">
+              {/* Message User Button */}
+              <Button
+                variant="outline"
+                className="w-full h-12 touch-manipulation rounded-xl border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                onClick={() => setMessageSheetOpen(true)}
+              >
+                <MessageSquare className="h-5 w-5 mr-2" />
+                Message User
+              </Button>
+
               {/* Subscription Actions - Grant/Revoke/Stripe-managed */}
               {(selectedUser?.free_access_granted || (selectedUser?.subscribed && !selectedUser?.stripe_customer_id)) ? (
                 // Show Revoke for admin-granted access
@@ -1213,6 +1226,18 @@ export default function AdminUsers() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Message User Sheet */}
+      <MessageUserSheet
+        open={messageSheetOpen}
+        onOpenChange={setMessageSheetOpen}
+        user={selectedUser ? {
+          id: selectedUser.id,
+          full_name: selectedUser.full_name || undefined,
+          email: selectedUser.email || undefined,
+          role: selectedUser.role || undefined,
+        } : null}
+      />
     </div>
   );
 }

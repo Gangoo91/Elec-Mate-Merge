@@ -296,6 +296,7 @@ const BusinessTab = () => {
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [logoSize, setLogoSize] = useState<'small' | 'medium' | 'large'>('medium');
 
   // Testing instruments
   const [instruments, setInstruments] = useState<TestingInstrument[]>([]);
@@ -430,6 +431,7 @@ const BusinessTab = () => {
       setValue('insurance_expiry', companyProfile.insurance_expiry || '');
       setValue('signature_data', companyProfile.signature_data || '');
       setLogoPreview(companyProfile.logo_url || null);
+      setLogoSize((companyProfile as any).logo_size || 'medium');
 
       if (companyProfile.testing_instruments) {
         setInstruments(companyProfile.testing_instruments);
@@ -593,6 +595,7 @@ const BusinessTab = () => {
       insurance_coverage: data.insurance_coverage || null,
       insurance_expiry: data.insurance_expiry || null,
       signature_data: data.signature_data || null,
+      logo_size: logoSize,
       ...logoData,
     };
 
@@ -671,29 +674,63 @@ const BusinessTab = () => {
       >
         <div className="space-y-5">
           {/* Logo Upload */}
-          <div className="flex items-center gap-4">
-            <div className="w-20 h-20 rounded-2xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center overflow-hidden">
-              {logoPreview ? (
-                <img src={logoPreview} alt="Logo" className="w-full h-full object-contain" />
-              ) : (
-                <Building2 className="h-8 w-8 text-white/20" />
-              )}
+          <div className="space-y-4">
+            <div className="flex items-center gap-4">
+              <div className={cn(
+                "rounded-2xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center overflow-hidden transition-all",
+                logoSize === 'small' && "w-16 h-16",
+                logoSize === 'medium' && "w-20 h-20",
+                logoSize === 'large' && "w-28 h-28"
+              )}>
+                {logoPreview ? (
+                  <img src={logoPreview} alt="Logo" className="w-full h-full object-contain" />
+                ) : (
+                  <Building2 className={cn(
+                    "text-white/20",
+                    logoSize === 'small' && "h-6 w-6",
+                    logoSize === 'medium' && "h-8 w-8",
+                    logoSize === 'large' && "h-10 w-10"
+                  )} />
+                )}
+              </div>
+              <div className="flex-1">
+                <Label htmlFor="logo-upload" className="cursor-pointer">
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.06] border border-white/[0.1] hover:bg-white/[0.1] transition-colors touch-manipulation">
+                    <Upload className="h-4 w-4 text-white/50" />
+                    <span className="text-[14px] text-white/70">Upload Logo</span>
+                  </div>
+                </Label>
+                <Input
+                  id="logo-upload"
+                  type="file"
+                  accept="image/*,.heic,.heif"
+                  onChange={handleLogoChange}
+                  className="hidden"
+                />
+                <p className="text-[11px] text-white/40 mt-1.5 px-1">PNG, JPG or HEIC, max 2MB</p>
+              </div>
             </div>
-            <div className="flex-1">
-              <Label htmlFor="logo-upload" className="cursor-pointer">
-                <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.06] border border-white/[0.1] hover:bg-white/[0.1] transition-colors touch-manipulation">
-                  <Upload className="h-4 w-4 text-white/50" />
-                  <span className="text-[14px] text-white/70">Upload Logo</span>
-                </div>
-              </Label>
-              <Input
-                id="logo-upload"
-                type="file"
-                accept="image/*"
-                onChange={handleLogoChange}
-                className="hidden"
-              />
-              <p className="text-[11px] text-white/40 mt-1.5 px-1">PNG or JPG, max 2MB</p>
+
+            {/* Logo Size Options */}
+            <div className="space-y-2">
+              <Label className="text-[11px] text-white/40 font-medium">Logo Size on Documents</Label>
+              <div className="flex gap-2">
+                {(['small', 'medium', 'large'] as const).map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => setLogoSize(size)}
+                    className={cn(
+                      "flex-1 py-2 px-3 rounded-xl text-[13px] font-medium transition-all touch-manipulation capitalize",
+                      logoSize === size
+                        ? "bg-blue-500 text-white"
+                        : "bg-white/[0.04] text-white/60 border border-white/[0.08] hover:bg-white/[0.08]"
+                    )}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 

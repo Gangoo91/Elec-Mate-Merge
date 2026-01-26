@@ -295,6 +295,8 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
       const updatedInvoice = {
         ...prev,
         settings: { ...prev.settings!, ...settings },
+        // Sync due date from settings to top-level invoice_due_date
+        ...(settings.dueDate && { invoice_due_date: settings.dueDate }),
       };
 
       // Recalculate totals with updated settings
@@ -303,7 +305,7 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
       const updatedSettings = updatedInvoice.settings!;
       const overhead = subtotal * ((updatedSettings.overheadPercentage || 0) / 100);
       const profit = (subtotal + overhead) * ((updatedSettings.profitMargin || 0) / 100);
-      const vatAmount = updatedSettings.vatRegistered 
+      const vatAmount = updatedSettings.vatRegistered
         ? (subtotal + overhead + profit) * ((updatedSettings.vatRate || 0) / 100)
         : 0;
       const total = subtotal + overhead + profit + vatAmount;

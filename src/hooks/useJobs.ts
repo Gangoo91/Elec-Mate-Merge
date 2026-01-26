@@ -15,9 +15,10 @@ import {
   Job,
   JobStatus,
 } from '@/services/jobService';
+import { QUERY_PRESETS, QUERY_KEYS } from '@/lib/queryConfig';
 
-// Query keys
-const JOBS_KEY = ['employer-jobs'];
+// Query keys - use centralized keys
+const JOBS_KEY = QUERY_KEYS.JOBS;
 
 export const useJobs = () => {
   const queryClient = useQueryClient();
@@ -43,8 +44,7 @@ export const useJobs = () => {
   return useQuery({
     queryKey: JOBS_KEY,
     queryFn: getJobs,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000,   // 10 minutes
+    ...QUERY_PRESETS.USER_DATA,
   });
 };
 
@@ -52,8 +52,7 @@ export const useActiveJobs = () => {
   return useQuery({
     queryKey: [...JOBS_KEY, 'active'],
     queryFn: getActiveJobs,
-    staleTime: 5 * 60 * 1000,
-    gcTime: 10 * 60 * 1000,
+    ...QUERY_PRESETS.USER_DATA,
   });
 };
 
@@ -62,8 +61,7 @@ export const useJob = (id: string) => {
     queryKey: [...JOBS_KEY, id],
     queryFn: () => getJobById(id),
     enabled: !!id,
-    staleTime: 5 * 60 * 1000,
-    gcTime: 10 * 60 * 1000,
+    ...QUERY_PRESETS.USER_DATA,
   });
 };
 
@@ -71,8 +69,7 @@ export const useJobsWithLocations = () => {
   return useQuery({
     queryKey: [...JOBS_KEY, 'with-locations'],
     queryFn: getJobsWithLocations,
-    staleTime: 5 * 60 * 1000,
-    gcTime: 10 * 60 * 1000,
+    ...QUERY_PRESETS.USER_DATA,
   });
 };
 

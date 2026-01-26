@@ -71,7 +71,7 @@ export default function InvoiceQuoteBuilder() {
         // Check if this is an existing invoice (has invoice_raised = true)
         const isExistingInvoice = data.invoice_raised === true;
 
-        // Transform database row to Quote object
+        // Transform database row to Quote object - include ALL invoice fields
         const quoteData: Quote = {
           id: data.id,
           quoteNumber: data.quote_number,
@@ -95,6 +95,12 @@ export default function InvoiceQuoteBuilder() {
           public_token: data.public_token,
           invoice_raised: data.invoice_raised || false,
           invoice_number: data.invoice_number,
+          // Preserve existing invoice fields when editing
+          invoice_date: data.invoice_date ? new Date(data.invoice_date) : undefined,
+          invoice_due_date: data.invoice_due_date ? new Date(data.invoice_due_date) : undefined,
+          invoice_status: data.invoice_status as Quote['invoice_status'],
+          invoice_notes: data.invoice_notes,
+          work_completion_date: data.work_completion_date ? new Date(data.work_completion_date) : undefined,
         };
 
         setQuote(quoteData);
@@ -178,17 +184,18 @@ export default function InvoiceQuoteBuilder() {
         </div>
         
         {quote && quote.invoice_raised && quote.invoice_number ? (
-          <InvoiceWizard 
-            sourceQuote={quote}
+          <InvoiceWizard
             existingInvoice={{
               ...quote,
               invoice_number: quote.invoice_number,
-              invoice_date: new Date(),
-              invoice_due_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-              invoice_status: 'draft',
+              // Preserve existing invoice dates - don't overwrite with new dates!
+              invoice_date: quote.invoice_date || new Date(),
+              invoice_due_date: quote.invoice_due_date || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+              invoice_status: quote.invoice_status || 'draft',
               invoice_raised: true,
               additional_invoice_items: [],
-              work_completion_date: new Date(),
+              invoice_notes: quote.invoice_notes,
+              work_completion_date: quote.work_completion_date || new Date(),
               originalQuoteId: quote.id,
               items: quote.items.map(item => ({
                 ...item,
@@ -199,13 +206,15 @@ export default function InvoiceQuoteBuilder() {
                 ...quote.settings,
                 overheadPercentage: 0,  // Already baked into item prices
                 profitMargin: 0,        // Already baked into item prices
-                paymentTerms: '30 days',
-                dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+                // Preserve existing payment terms and due date from settings!
+                paymentTerms: quote.settings?.paymentTerms || '30 days',
+                dueDate: quote.invoice_due_date || quote.settings?.dueDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
               } as InvoiceSettings,
             }}
+            onInvoiceGenerated={handleQuoteGenerated}
           />
         ) : quote ? (
-          <InvoiceWizard sourceQuote={quote} />
+          <InvoiceWizard sourceQuote={quote} onInvoiceGenerated={handleQuoteGenerated} />
         ) : null}
       </div>
     </div>

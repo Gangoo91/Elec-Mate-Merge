@@ -509,60 +509,61 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
 
             {/* Tabs for different message types */}
             <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as ChatMode)} className="flex-1 flex flex-col overflow-hidden">
-              <TabsList className={cn("mx-4 mt-2 grid shrink-0", isEmployerContext ? "grid-cols-3" : isCollegeContext ? "grid-cols-2" : "grid-cols-2")}>
-                <TabsTrigger value="job" className="gap-1.5">
+              <TabsList className="mx-4 mt-2 grid grid-cols-3 shrink-0 h-12 p-1 bg-muted/50 rounded-xl">
+                {/* Jobs Tab */}
+                <TabsTrigger value="job" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
                   <Briefcase className="h-4 w-4" />
-                  <span className="hidden sm:inline">Jobs</span>
+                  <span className="text-xs font-medium">Jobs</span>
                   {jobUnread > 0 && (
-                    <Badge variant="secondary" className="h-5 w-5 p-0 text-[10px] justify-center">
+                    <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-bold flex items-center justify-center">
                       {jobUnread}
-                    </Badge>
+                    </span>
                   )}
                 </TabsTrigger>
-                {isEmployerContext && (
-                  <TabsTrigger value="team" className="gap-1.5">
+
+                {/* Mates Tab (for non-college) / Team Tab (for employer) / College Tab */}
+                {isEmployerContext ? (
+                  <TabsTrigger value="team" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
                     <Hash className="h-4 w-4" />
-                    <span className="hidden sm:inline">Team</span>
+                    <span className="text-xs font-medium">Team</span>
                     {teamChatUnread > 0 && (
-                      <Badge variant="secondary" className="h-5 w-5 p-0 text-[10px] justify-center bg-blue-500/20 text-blue-500">
+                      <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-blue-500 text-white text-[10px] font-bold flex items-center justify-center">
                         {teamChatUnread}
-                      </Badge>
+                      </span>
                     )}
                   </TabsTrigger>
-                )}
-                {isCollegeContext && (
-                  <TabsTrigger value="college" className="gap-1.5">
+                ) : isCollegeContext ? (
+                  <TabsTrigger value="college" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
                     <GraduationCap className="h-4 w-4" />
-                    <span className="hidden sm:inline">College</span>
+                    <span className="text-xs font-medium">College</span>
                     {collegeUnread > 0 && (
-                      <Badge variant="secondary" className="h-5 w-5 p-0 text-[10px] justify-center bg-green-500/20 text-green-500">
+                      <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-green-500 text-white text-[10px] font-bold flex items-center justify-center">
                         {collegeUnread}
-                      </Badge>
+                      </span>
                     )}
                   </TabsTrigger>
-                )}
-                {!isCollegeContext && (
-                  <TabsTrigger value="peer" className="gap-1.5">
+                ) : (
+                  <TabsTrigger value="peer" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
                     <Heart className="h-4 w-4" />
-                    <span className="hidden sm:inline">Mates</span>
+                    <span className="text-xs font-medium">Mates</span>
                     {peerUnread > 0 && (
-                      <Badge variant="secondary" className="h-5 w-5 p-0 text-[10px] justify-center bg-pink-500/20 text-pink-500">
+                      <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-pink-500 text-white text-[10px] font-bold flex items-center justify-center">
                         {peerUnread}
-                      </Badge>
+                      </span>
                     )}
                   </TabsTrigger>
                 )}
-                {adminMessages.length > 0 && (
-                  <TabsTrigger value="admin" className="gap-1.5">
-                    <Bell className="h-4 w-4" />
-                    <span className="hidden sm:inline">Updates</span>
-                    {adminUnread > 0 && (
-                      <Badge variant="secondary" className="h-5 w-5 p-0 text-[10px] justify-center bg-yellow-500/20 text-yellow-500">
-                        {adminUnread}
-                      </Badge>
-                    )}
-                  </TabsTrigger>
-                )}
+
+                {/* Updates Tab - Always show */}
+                <TabsTrigger value="admin" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                  <Bell className="h-4 w-4" />
+                  <span className="text-xs font-medium">Updates</span>
+                  {adminUnread > 0 && (
+                    <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-bold flex items-center justify-center">
+                      {adminUnread}
+                    </span>
+                  )}
+                </TabsTrigger>
               </TabsList>
 
               <div className="flex-1 overflow-hidden">
@@ -609,10 +610,20 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                     </TabsContent>
                   )}
 
-                  {/* Admin Messages Tab */}
-                  {adminMessages.length > 0 && (
-                    <TabsContent value="admin" className="m-0">
-                      <div className="divide-y divide-border">
+                  {/* Admin Messages / Updates Tab */}
+                  <TabsContent value="admin" className="m-0 p-4">
+                    {adminMessages.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center py-12 text-center">
+                        <div className="w-16 h-16 rounded-2xl bg-elec-yellow/10 flex items-center justify-center mb-4">
+                          <Bell className="h-8 w-8 text-elec-yellow/50" />
+                        </div>
+                        <h3 className="font-semibold text-foreground mb-1">No updates yet</h3>
+                        <p className="text-sm text-muted-foreground max-w-[200px]">
+                          Important messages from Elec-Mate will appear here
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
                         {adminMessages.map((msg) => {
                           const isUnread = !msg.read_at;
                           return (
@@ -625,28 +636,40 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                                 }
                               }}
                               className={cn(
-                                "w-full flex items-start gap-3 p-4 text-left transition-colors touch-manipulation",
-                                isUnread ? "bg-elec-yellow/5" : "hover:bg-muted/50"
+                                "w-full flex items-start gap-3 p-4 rounded-xl text-left transition-all touch-manipulation",
+                                isUnread
+                                  ? "bg-elec-yellow/10 border border-elec-yellow/20"
+                                  : "bg-muted/30 hover:bg-muted/50 border border-transparent"
                               )}
                             >
-                              <div className="pt-1">
-                                {isUnread ? (
-                                  <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-                                ) : (
-                                  <Check className="h-4 w-4 text-green-400/50" />
-                                )}
+                              {/* Icon */}
+                              <div className={cn(
+                                "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
+                                isUnread ? "bg-elec-yellow/20" : "bg-muted"
+                              )}>
+                                <Bell className={cn(
+                                  "h-5 w-5",
+                                  isUnread ? "text-elec-yellow" : "text-muted-foreground"
+                                )} />
                               </div>
+
+                              {/* Content */}
                               <div className="flex-1 min-w-0">
-                                <p className={cn(
-                                  "text-sm truncate",
-                                  isUnread ? "font-semibold text-foreground" : "text-foreground/80"
-                                )}>
-                                  {msg.subject}
+                                <div className="flex items-start justify-between gap-2">
+                                  <p className={cn(
+                                    "text-sm leading-tight",
+                                    isUnread ? "font-semibold text-foreground" : "text-foreground/80"
+                                  )}>
+                                    {msg.subject}
+                                  </p>
+                                  {isUnread && (
+                                    <span className="w-2 h-2 rounded-full bg-elec-yellow shrink-0 mt-1.5" />
+                                  )}
+                                </div>
+                                <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
+                                  {msg.message}
                                 </p>
-                                <p className="text-xs text-muted-foreground truncate mt-0.5">
-                                  {msg.message.slice(0, 60)}...
-                                </p>
-                                <p className="text-[10px] text-muted-foreground/60 mt-1">
+                                <p className="text-[10px] text-muted-foreground/60 mt-2">
                                   {formatDistanceToNow(new Date(msg.created_at), { addSuffix: true })}
                                 </p>
                               </div>
@@ -654,8 +677,8 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                           );
                         })}
                       </div>
-                    </TabsContent>
-                  )}
+                    )}
+                  </TabsContent>
                 </ScrollArea>
               </div>
             </Tabs>

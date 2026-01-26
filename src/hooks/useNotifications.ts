@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { QUERY_PRESETS, QUERY_KEYS } from '@/lib/queryConfig';
 
 export type NotificationStatus = 'pending' | 'in-progress' | 'submitted' | 'overdue' | 'cancelled';
 
@@ -37,7 +38,7 @@ export const useNotifications = () => {
   const queryClient = useQueryClient();
 
   const { data: notifications, isLoading } = useQuery({
-    queryKey: ['notifications'],
+    queryKey: QUERY_KEYS.NOTIFICATIONS,
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');

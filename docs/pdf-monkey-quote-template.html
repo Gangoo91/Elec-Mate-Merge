@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; color: #1f2937; line-height: 1.5; background: #ffffff; }
+    .page { padding: 40px; max-width: 210mm; margin: 0 auto; }
+
+    /* Header */
+    .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid {{ branding.primaryColor | default: '#1e40af' }}; }
+    .logo-section { max-width: 200px; }
+    .company-info { text-align: right; }
+    .company-name { font-size: 22px; font-weight: 700; color: {{ branding.primaryColor | default: '#1e40af' }}; margin-bottom: 4px; }
+    .company-details { font-size: 11px; color: #6b7280; line-height: 1.6; }
+
+    /* Quote Title Banner */
+    .quote-banner { background: linear-gradient(135deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%); color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+    .quote-title { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+    .quote-number { font-size: 14px; opacity: 0.9; margin-top: 4px; }
+    .quote-dates { text-align: right; font-size: 12px; }
+    .quote-dates strong { color: #ffffff; }
+
+    /* Two Column Layout */
+    .two-col { display: flex; gap: 24px; margin-bottom: 24px; }
+    .col { flex: 1; }
+
+    /* Info Cards */
+    .info-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; height: 100%; }
+    .info-card-header { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .info-card-header::before { content: ''; display: inline-block; width: 8px; height: 8px; background: {{ branding.primaryColor | default: '#1e40af' }}; border-radius: 50%; }
+    .info-label { font-size: 9px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
+    .info-value { font-size: 12px; color: #1f2937; margin-bottom: 8px; font-weight: 500; }
+
+    /* Items Table */
+    .items-section { margin-bottom: 24px; }
+    .section-title { font-size: 14px; font-weight: 600; color: {{ branding.primaryColor | default: '#1e40af' }}; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid {{ branding.primaryColor | default: '#1e40af' }}; }
+    .items-table { width: 100%; border-collapse: collapse; }
+    .items-table th { background: {{ branding.secondaryColor | default: '#1e3a5f' }}; color: white; padding: 12px 16px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .items-table th:last-child { text-align: right; }
+    .items-table td { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-size: 11px; }
+    .items-table td:last-child { text-align: right; font-weight: 600; color: #1f2937; }
+    .items-table tr:nth-child(even) { background: #f8fafc; }
+    .items-table .item-desc { font-weight: 500; color: #1f2937; }
+    .items-table .item-notes { font-size: 10px; color: #6b7280; margin-top: 2px; }
+    .items-table .qty-unit { color: #6b7280; }
+
+    /* Category Headers */
+    .category-header { background: #f1f5f9; padding: 10px 16px; font-weight: 600; color: #475569; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .category-header span { color: {{ branding.primaryColor | default: '#1e40af' }}; }
+
+    /* Totals */
+    .totals-section { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+    .totals-box { width: 320px; }
+    .totals-row { display: flex; justify-content: space-between; padding: 10px 16px; font-size: 12px; border-bottom: 1px solid #e2e8f0; }
+    .totals-row:first-child { border-radius: 8px 8px 0 0; background: #f8fafc; }
+    .totals-row.total { background: linear-gradient(135deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%); color: white; font-size: 16px; font-weight: 700; border-radius: 0 0 8px 8px; padding: 14px 16px; border: none; }
+    .totals-row .amount { font-weight: 600; color: #1f2937; }
+    .totals-row.total .amount { color: #ffffff; }
+
+    /* Footer */
+    .footer { margin-top: 30px; padding-top: 12px; border-top: 1px solid #e2e8f0; text-align: center; }
+    .footer-text { font-size: 9px; color: #9ca3af; }
+    .footer-brand { color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Header with Logo and Company Info -->
+    <div class="header">
+      <div class="logo-section">
+        {% if companyProfile.logo_url != blank %}
+          <img src="{{ companyProfile.logo_url }}"
+               alt="{{ companyProfile.company_name }}"
+               style="max-width: {{ companyProfile.logo_width | default: 120 }}px; max-height: {{ companyProfile.logo_height | default: 120 }}px; object-fit: contain;" />
+        {% else %}
+          <div class="company-name">{{ companyProfile.company_name }}</div>
+        {% endif %}
+      </div>
+      <div class="company-info">
+        {% if companyProfile.logo_url != blank %}<div class="company-name">{{ companyProfile.company_name }}</div>{% endif %}
+        <div class="company-details">
+          {{ companyProfile.company_address }}<br>
+          {% if companyProfile.company_phone != blank %}Tel: {{ companyProfile.company_phone }}<br>{% endif %}
+          {% if companyProfile.company_email != blank %}{{ companyProfile.company_email }}<br>{% endif %}
+          {% if companyProfile.vat_number != blank %}VAT: {{ companyProfile.vat_number }}{% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote Banner -->
+    <div class="quote-banner">
+      <div>
+        <div class="quote-title">QUOTATION</div>
+        <div class="quote-number">Quote #{{ quote.quoteNumber }}</div>
+      </div>
+      <div class="quote-dates">
+        <div>Date: <strong>{{ quote.createdAt }}</strong></div>
+        <div>Valid Until: <strong>{{ quote.validUntil }}</strong></div>
+      </div>
+    </div>
+
+    <!-- Client and Job Details -->
+    <div class="two-col">
+      <div class="col">
+        <div class="info-card">
+          <div class="info-card-header">Client Details</div>
+          <div class="info-label">Name</div>
+          <div class="info-value">{{ client.name }}</div>
+          {% if client.address != blank %}
+          <div class="info-label">Address</div>
+          <div class="info-value">{{ client.address }}{% if client.postcode != blank %}, {{ client.postcode }}{% endif %}</div>
+          {% endif %}
+          {% if client.email != blank %}
+          <div class="info-label">Email</div>
+          <div class="info-value">{{ client.email }}</div>
+          {% endif %}
+          {% if client.phone != blank %}
+          <div class="info-label">Phone</div>
+          <div class="info-value">{{ client.phone }}</div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col">
+        <div class="info-card">
+          <div class="info-card-header">Job Details</div>
+          <div class="info-label">Project</div>
+          <div class="info-value">{{ jobDetails.title }}</div>
+          {% if jobDetails.location != blank %}
+          <div class="info-label">Location</div>
+          <div class="info-value">{{ jobDetails.location }}</div>
+          {% endif %}
+          {% if jobDetails.estimatedDuration != blank %}
+          <div class="info-label">Duration</div>
+          <div class="info-value">{{ jobDetails.estimatedDuration }}</div>
+          {% endif %}
+          {% if jobDetails.description != blank %}
+          <div class="info-label">Description</div>
+          <div class="info-value" style="font-weight: 400; font-size: 11px;">{{ jobDetails.description }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Items Table -->
+    <div class="items-section">
+      <div class="section-title">Quotation Breakdown</div>
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th style="width: 45%;">Description</th>
+            <th style="width: 15%;">Qty</th>
+            <th style="width: 20%;">Unit Price</th>
+            <th style="width: 20%;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if labourItems.size > 0 %}
+          <tr><td colspan="4" class="category-header"><span>●</span> Labour</td></tr>
+          {% for item in labourItems %}
+          <tr>
+            <td>
+              <div class="item-desc">{{ item.description }}</div>
+              {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
+            </td>
+            <td class="qty-unit">{{ item.quantity }} {{ item.unit }}</td>
+            <td>£{{ item.unitPrice | round: 2 }}</td>
+            <td>£{{ item.totalPrice | round: 2 }}</td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+
+          {% if materialItems.size > 0 %}
+          <tr><td colspan="4" class="category-header"><span>●</span> Materials</td></tr>
+          {% for item in materialItems %}
+          <tr>
+            <td>
+              <div class="item-desc">{{ item.description }}</div>
+              {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
+            </td>
+            <td class="qty-unit">{{ item.quantity }} {{ item.unit }}</td>
+            <td>£{{ item.unitPrice | round: 2 }}</td>
+            <td>£{{ item.totalPrice | round: 2 }}</td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+
+          {% if equipmentItems.size > 0 %}
+          <tr><td colspan="4" class="category-header"><span>●</span> Equipment</td></tr>
+          {% for item in equipmentItems %}
+          <tr>
+            <td>
+              <div class="item-desc">{{ item.description }}</div>
+              {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
+            </td>
+            <td class="qty-unit">{{ item.quantity }} {{ item.unit }}</td>
+            <td>£{{ item.unitPrice | round: 2 }}</td>
+            <td>£{{ item.totalPrice | round: 2 }}</td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+
+          {% if manualItems.size > 0 %}
+          <tr><td colspan="4" class="category-header"><span>●</span> Additional Items</td></tr>
+          {% for item in manualItems %}
+          <tr>
+            <td>
+              <div class="item-desc">{{ item.description }}</div>
+              {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
+            </td>
+            <td class="qty-unit">{{ item.quantity }} {{ item.unit }}</td>
+            <td>£{{ item.unitPrice | round: 2 }}</td>
+            <td>£{{ item.totalPrice | round: 2 }}</td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+
+          {% if labourItems.size == 0 and materialItems.size == 0 and equipmentItems.size == 0 and manualItems.size == 0 %}
+          {% for item in items %}
+          <tr>
+            <td>
+              <div class="item-desc">{{ item.description }}</div>
+              {% if item.notes != blank %}<div class="item-notes">{{ item.notes }}</div>{% endif %}
+            </td>
+            <td class="qty-unit">{{ item.quantity }} {{ item.unit }}</td>
+            <td>£{{ item.unitPrice | round: 2 }}</td>
+            <td>£{{ item.totalPrice | round: 2 }}</td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Totals -->
+    <div class="totals-section">
+      <div class="totals-box">
+        <div class="totals-row">
+          <span>Subtotal</span>
+          <span class="amount">£{{ totals.subtotal | round: 2 }}</span>
+        </div>
+        {% if totals.overhead > 0 %}
+        <div class="totals-row">
+          <span>Overhead ({{ totals.overheadPercentage }}%)</span>
+          <span class="amount">£{{ totals.overhead | round: 2 }}</span>
+        </div>
+        {% endif %}
+        {% if totals.profit > 0 %}
+        <div class="totals-row">
+          <span>Profit ({{ totals.profitMargin }}%)</span>
+          <span class="amount">£{{ totals.profit | round: 2 }}</span>
+        </div>
+        {% endif %}
+        {% if useVat %}
+        <div class="totals-row">
+          <span>VAT ({{ vatRate }}%)</span>
+          <span class="amount">£{{ totals.vatAmount | round: 2 }}</span>
+        </div>
+        {% endif %}
+        <div class="totals-row total">
+          <span>Total</span>
+          <span class="amount">£{{ totals.total | round: 2 }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote Terms Bar - Uses editable settings -->
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;" cellpadding="0" cellspacing="0">
+      <tr>
+        <td style="width: 25%; padding: 14px 10px; text-align: center; background: #f8fafc; border: 1px solid #e2e8f0; border-right: none; border-radius: 8px 0 0 8px;">
+          <div style="font-size: 8px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px;">Quote Valid For</div>
+          <div style="font-size: 16px; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 700;">{{ settings.quoteValidityDays | default: 30 }} Days</div>
+        </td>
+        <td style="width: 25%; padding: 14px 10px; text-align: center; background: #f8fafc; border: 1px solid #e2e8f0; border-right: none;">
+          <div style="font-size: 8px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px;">Warranty Period</div>
+          <div style="font-size: 16px; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 700;">{{ settings.warrantyPeriod | default: '12 months' }}</div>
+        </td>
+        <td style="width: 25%; padding: 14px 10px; text-align: center; background: #f8fafc; border: 1px solid #e2e8f0; border-right: none;">
+          <div style="font-size: 8px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px;">Payment Terms</div>
+          <div style="font-size: 16px; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 700;">{{ settings.paymentTerms | default: '14 days' }}</div>
+        </td>
+        <td style="width: 25%; padding: 14px 10px; text-align: center; background: {{ branding.primaryColor | default: '#1e40af' }}; border: 1px solid {{ branding.primaryColor | default: '#1e40af' }}; border-radius: 0 8px 8px 0;">
+          <div style="font-size: 8px; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px;">Deposit Required</div>
+          <div style="font-size: 20px; color: #ffffff; font-weight: 700;">{{ settings.depositPercentage | default: 30 }}%</div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Terms & Conditions - Clean Bullet Point Design -->
+    <div style="margin-bottom: 20px;">
+      <div style="font-size: 13px; font-weight: 600; color: {{ branding.primaryColor | default: '#1e40af' }}; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid {{ branding.primaryColor | default: '#1e40af' }};">Terms &amp; Conditions</div>
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px 24px;">
+        {% if terms.size > 0 %}
+        <ul style="margin: 0; padding: 0; list-style: none; column-count: 2; column-gap: 30px;">
+          {% for term in terms %}
+          <li style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; break-inside: avoid; font-size: 10px; color: #374151; line-height: 1.5;">
+            <span style="color: {{ branding.primaryColor | default: '#1e40af' }}; font-size: 8px; margin-top: 3px;">●</span>
+            <span>{{ term }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <ul style="margin: 0; padding: 0; list-style: none; column-count: 2; column-gap: 30px;">
+          <li style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; break-inside: avoid; font-size: 10px; color: #374151; line-height: 1.5;">
+            <span style="color: {{ branding.primaryColor | default: '#1e40af' }}; font-size: 8px; margin-top: 3px;">●</span>
+            <span>Payment due within 30 days of invoice date</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; break-inside: avoid; font-size: 10px; color: #374151; line-height: 1.5;">
+            <span style="color: {{ branding.primaryColor | default: '#1e40af' }}; font-size: 8px; margin-top: 3px;">●</span>
+            <span>A deposit is required before work commences</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; break-inside: avoid; font-size: 10px; color: #374151; line-height: 1.5;">
+            <span style="color: {{ branding.primaryColor | default: '#1e40af' }}; font-size: 8px; margin-top: 3px;">●</span>
+            <span>All workmanship guaranteed for warranty period</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; break-inside: avoid; font-size: 10px; color: #374151; line-height: 1.5;">
+            <span style="color: {{ branding.primaryColor | default: '#1e40af' }}; font-size: 8px; margin-top: 3px;">●</span>
+            <span>All work complies with BS 7671 (18th Edition)</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; break-inside: avoid; font-size: 10px; color: #374151; line-height: 1.5;">
+            <span style="color: {{ branding.primaryColor | default: '#1e40af' }}; font-size: 8px; margin-top: 3px;">●</span>
+            <span>Electrical certificate provided on completion</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; break-inside: avoid; font-size: 10px; color: #374151; line-height: 1.5;">
+            <span style="color: {{ branding.primaryColor | default: '#1e40af' }}; font-size: 8px; margin-top: 3px;">●</span>
+            <span>Quote valid for the period specified above</span>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Customer Acceptance - SAME PAGE, won't split -->
+    <div style="page-break-inside: avoid;">
+      <div style="border: 2px solid {{ branding.primaryColor | default: '#1e40af' }}; border-radius: 10px; overflow: hidden;">
+        <div style="background: {{ branding.primaryColor | default: '#1e40af' }}; padding: 12px 20px;">
+          <span style="color: #ffffff; font-size: 14px; font-weight: 600;">Customer Acceptance</span>
+        </div>
+        <div style="padding: 18px 20px;">
+          <p style="font-size: 10px; color: #6b7280; margin: 0 0 16px 0; line-height: 1.5; padding: 10px 12px; background: #f1f5f9; border-radius: 4px; border-left: 3px solid {{ branding.primaryColor | default: '#1e40af' }};">
+            By signing below, I confirm that I have read and understood the scope of work, pricing, and terms &amp; conditions. I authorise the contractor to proceed with the work as described.
+          </p>
+
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px;" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="width: 65%; padding-right: 16px; vertical-align: top;">
+                <div style="font-size: 9px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 6px;">Customer Signature</div>
+                <div style="border: 2px solid #e2e8f0; border-radius: 6px; height: 70px; background: #fafafa; text-align: center; line-height: 70px;">
+                  {% if quote.signature_url != blank %}
+                    <img src="{{ quote.signature_url }}" alt="Signature" style="max-height: 60px; max-width: 90%; vertical-align: middle;" />
+                  {% else %}
+                    <span style="color: #9ca3af; font-size: 12px;">Sign here</span>
+                  {% endif %}
+                </div>
+              </td>
+              <td style="width: 35%; vertical-align: top;">
+                <div style="font-size: 9px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 6px;">Date</div>
+                <div style="border: 2px solid #e2e8f0; border-radius: 6px; height: 70px; background: #fafafa; text-align: center; line-height: 70px;">
+                  {% if quote.accepted_at != blank %}
+                    <span style="font-size: 14px; font-weight: 600; color: #374151;">{{ quote.accepted_at }}</span>
+                  {% else %}
+                    <span style="color: #9ca3af; font-size: 12px;">DD / MM / YYYY</span>
+                  {% endif %}
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <table style="width: 100%; border-collapse: collapse;" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="width: 50%; padding-right: 12px; vertical-align: top;">
+                <div style="font-size: 9px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 6px;">Print Name</div>
+                <div style="border-bottom: 2px solid #d1d5db; padding: 8px 2px; min-height: 28px; font-size: 13px; color: #1f2937; font-weight: 500;">{{ quote.accepted_by_name }}</div>
+              </td>
+              <td style="width: 50%; vertical-align: top;">
+                <div style="font-size: 9px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 6px;">Email Address</div>
+                <div style="border-bottom: 2px solid #d1d5db; padding: 8px 2px; min-height: 28px; font-size: 13px; color: #1f2937;">{{ quote.accepted_by_email }}</div>
+              </td>
+            </tr>
+          </table>
+
+          {% if quote.acceptance_status == "accepted" %}
+          <div style="margin-top: 14px; padding: 10px 16px; background: #dcfce7; border: 2px solid #22c55e; border-radius: 6px; text-align: center;">
+            <span style="color: #166534; font-weight: 700; font-size: 12px;">✓ QUOTE ACCEPTED ON {{ quote.accepted_at }}</span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p class="footer-text">Powered by <span class="footer-brand">Elec-Mate Professional Suite</span> · elec-mate.com</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

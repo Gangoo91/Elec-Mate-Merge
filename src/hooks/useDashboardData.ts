@@ -13,6 +13,7 @@ import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { useActiveJobs } from '@/hooks/useJobs';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { QUERY_PRESETS, QUERY_KEYS } from '@/lib/queryConfig';
 import { differenceInDays, isPast } from 'date-fns';
 
 export interface DashboardUserData {
@@ -79,7 +80,7 @@ export function useDashboardData(): DashboardData {
 
   // Fetch electrical certificates (EIC/EICR/Minor Works from reports table)
   const { data: reportsData, isLoading: reportsLoading } = useQuery({
-    queryKey: ['dashboard-reports', user?.id],
+    queryKey: [...QUERY_KEYS.DASHBOARD, 'reports', user?.id],
     queryFn: async () => {
       if (!user?.id) return { total: 0, completed: 0 };
 
@@ -108,7 +109,7 @@ export function useDashboardData(): DashboardData {
       };
     },
     enabled: !!user?.id,
-    staleTime: 30000, // Cache for 30 seconds
+    ...QUERY_PRESETS.REALTIME, // Dashboard data refreshes frequently
   });
 
   // Aggregate loading state

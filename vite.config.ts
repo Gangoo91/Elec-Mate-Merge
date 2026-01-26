@@ -115,7 +115,21 @@ export default defineConfig(({ mode }) => ({
           'vendor-excel': ['xlsx', 'papaparse'],
           'vendor-supabase': ['@supabase/supabase-js'],
           'vendor-query': ['@tanstack/react-query'],
-          'vendor-utils': ['lodash', 'date-fns', 'zod', 'uuid', 'clsx', 'tailwind-merge']
+          'vendor-utils': ['lodash', 'date-fns', 'zod', 'uuid', 'clsx', 'tailwind-merge'],
+          // Additional splits for better code splitting
+          'vendor-ml': ['@huggingface/transformers'],
+          'vendor-analytics': ['posthog-js', '@sentry/react'],
+          'vendor-maps': ['@react-google-maps/api'],
+          'vendor-capacitor': [
+            '@capacitor/core',
+            '@capacitor/camera',
+            '@capacitor/filesystem',
+            '@capacitor/haptics',
+            '@capacitor/keyboard',
+            '@capacitor/share',
+            '@capacitor/browser'
+          ],
+          'vendor-markdown': ['react-markdown', 'rehype-highlight', 'remark-gfm']
         }
       }
     }

@@ -209,6 +209,9 @@ export const useInvoiceStorage = () => {
       } else {
         // UPDATE existing quote
         console.log('📝 Updating existing quote to invoice');
+        console.log('📝 Client data being saved:', JSON.stringify(invoice.client, null, 2));
+        console.log('📝 Due date being saved:', invoice.invoice_due_date?.toISOString());
+        console.log('📝 Settings being saved:', JSON.stringify(invoice.settings, null, 2));
         const { data: updated, error: updateError } = await supabase
           .from('quotes')
           .update({
@@ -221,6 +224,7 @@ export const useInvoiceStorage = () => {
             invoice_notes: invoice.invoice_notes || null,
             work_completion_date: invoice.work_completion_date?.toISOString(),
             items: JSON.parse(JSON.stringify(mergedItems)), // Save merged items
+            client_data: JSON.parse(JSON.stringify(invoice.client)) as any,
             settings: JSON.parse(JSON.stringify(invoice.settings || {})),
             job_details: invoice.jobDetails ? JSON.parse(JSON.stringify(invoice.jobDetails)) : null,
             subtotal: invoice.subtotal,
@@ -240,6 +244,8 @@ export const useInvoiceStorage = () => {
           throw updateError;
         }
         updatedQuote = updated;
+        console.log('📝 Updated quote from DB - client_data:', JSON.stringify(updated.client_data, null, 2));
+        console.log('📝 Updated quote from DB - invoice_due_date:', updated.invoice_due_date);
       }
 
       // 2. Force regenerate PDF with LATEST data on every save (silent background process)

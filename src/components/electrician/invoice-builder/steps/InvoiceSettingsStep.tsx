@@ -97,7 +97,36 @@ export const InvoiceSettingsStep = ({
               <label className="text-[12px] text-white block mb-0.5">Payment Terms</label>
               <Select
                 value={settings?.paymentTerms || '30 days'}
-                onValueChange={(value) => onUpdateSettings({ paymentTerms: value })}
+                onValueChange={(value) => {
+                  // Auto-calculate due date based on payment terms
+                  const today = new Date();
+                  let newDueDate: Date;
+
+                  switch (value) {
+                    case 'Due on receipt':
+                      newDueDate = today;
+                      break;
+                    case '7 days':
+                      newDueDate = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+                      break;
+                    case '14 days':
+                      newDueDate = new Date(today.getTime() + 14 * 24 * 60 * 60 * 1000);
+                      break;
+                    case '30 days':
+                      newDueDate = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+                      break;
+                    case '60 days':
+                      newDueDate = new Date(today.getTime() + 60 * 24 * 60 * 60 * 1000);
+                      break;
+                    case '90 days':
+                      newDueDate = new Date(today.getTime() + 90 * 24 * 60 * 60 * 1000);
+                      break;
+                    default:
+                      newDueDate = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+                  }
+
+                  onUpdateSettings({ paymentTerms: value, dueDate: newDueDate });
+                }}
               >
                 <SelectTrigger className="h-8 border-0 bg-transparent p-0 text-[16px] font-medium text-white focus:ring-0 [&>svg]:text-white/50">
                   <SelectValue />
