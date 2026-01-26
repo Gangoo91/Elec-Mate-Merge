@@ -215,19 +215,21 @@ export const InvoiceItemsStep = ({
     setHoursSheetOpen(false);
   };
 
-  // Scanner handlers
+  // Scanner handlers - keep sheet open during processing
   const handleScanCapture = async (imageData: string, file: File) => {
-    setScannerSheetOpen(false);
+    // Don't close sheet - let user see the processing state
     const result = await scanner.handleCapture(imageData, file);
     if (result.success && result.items.length > 0) {
+      setScannerSheetOpen(false);
       setScanResultsOpen(true);
     }
   };
 
   const handleScanUpload = async (files: File[]) => {
-    setScannerSheetOpen(false);
+    // Don't close sheet - let user see the processing state
     const result = await scanner.handleUpload(files);
     if (result.success && result.items.length > 0) {
+      setScannerSheetOpen(false);
       setScanResultsOpen(true);
     }
   };

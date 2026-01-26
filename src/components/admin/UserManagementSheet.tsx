@@ -32,10 +32,12 @@ import {
   XCircle,
   GraduationCap,
   Building2,
+  MessageSquare,
 } from "lucide-react";
 import { formatDistanceToNow, format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { getInitials, getRoleColor } from "@/utils/adminUtils";
+import MessageUserSheet from "./MessageUserSheet";
 
 interface UserData {
   id: string;
@@ -73,6 +75,7 @@ export default function UserManagementSheet({
   const [expiresOption, setExpiresOption] = useState<string>("never");
   const [customExpiry, setCustomExpiry] = useState<string>("");
   const [reason, setReason] = useState<string>("");
+  const [messageSheetOpen, setMessageSheetOpen] = useState(false);
 
   // Grant free access mutation
   const grantMutation = useMutation({
@@ -221,6 +224,18 @@ export default function UserManagementSheet({
                   </span>
                 </div>
               </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                className="flex-1 h-11 touch-manipulation"
+                onClick={() => setMessageSheetOpen(true)}
+              >
+                <MessageSquare className="h-4 w-4 mr-2" />
+                Message User
+              </Button>
             </div>
 
             {/* Current Subscription Status */}
@@ -410,6 +425,18 @@ export default function UserManagementSheet({
           </SheetFooter>
         </div>
       </SheetContent>
+
+      {/* Message User Sheet */}
+      <MessageUserSheet
+        open={messageSheetOpen}
+        onOpenChange={setMessageSheetOpen}
+        user={user ? {
+          id: user.id,
+          full_name: user.full_name || undefined,
+          email: user.email,
+          role: user.role,
+        } : null}
+      />
     </Sheet>
   );
 }

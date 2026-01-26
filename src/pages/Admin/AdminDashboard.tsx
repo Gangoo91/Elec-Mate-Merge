@@ -515,7 +515,7 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        {/* Online Now - Improved */}
+        {/* Online Now - Mobile Optimized */}
         <Card className="border-green-500/30 bg-gradient-to-br from-green-500/5 to-transparent">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
@@ -591,58 +591,56 @@ export default function AdminDashboard() {
                           )} />
                         </div>
 
-                        {/* User info - aligned */}
+                        {/* User info - mobile optimized with stacked layout */}
                         <div className="flex-1 min-w-0 text-left">
-                          <div className="flex items-center gap-2">
-                            <p className="font-medium text-sm truncate">
-                              {profile?.full_name || "Unknown User"}
-                            </p>
-                            {profile?.role && (
-                              <Badge className={cn("text-[10px] capitalize shrink-0", roleColor.badge)}>
-                                {profile.role}
-                              </Badge>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-2 mt-0.5">
+                          {/* Row 1: Name (full width, no truncation on mobile) */}
+                          <p className="font-medium text-sm text-foreground">
+                            {profile?.full_name || "Unknown User"}
+                          </p>
+
+                          {/* Row 2: Status + Page */}
+                          <div className="flex items-center gap-1.5 mt-1">
                             <span className={cn(
-                              "text-xs",
+                              "text-xs font-medium",
                               isOnline ? "text-green-400" : isAway ? "text-yellow-400" : "text-muted-foreground"
                             )}>
                               {isOnline ? "Active" : isAway ? `Away ${diffMins}m` : `${diffMins}m ago`}
                             </span>
                             {activity.current_page && (
                               <>
-                                <span className="text-muted-foreground/50">•</span>
-                                <span className="text-xs text-muted-foreground truncate max-w-[100px]">
-                                  {activity.current_page}
+                                <span className="text-muted-foreground/30">•</span>
+                                <span className="text-xs text-muted-foreground truncate">
+                                  {activity.current_page.replace(/^\//, '').split('/')[0] || 'Dashboard'}
                                 </span>
                               </>
                             )}
                           </div>
-                        </div>
 
-                        {/* Session time & device */}
-                        <div className="text-right shrink-0">
-                          {activity.session_started_at && (
-                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <Clock className="h-3 w-3" />
-                              <span>{sessionDisplay}</span>
-                            </div>
-                          )}
-                          <div className="flex items-center justify-end gap-1 mt-0.5">
-                            {isMobile ? (
-                              <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-blue-500/30 text-blue-400">
-                                Mobile
-                              </Badge>
-                            ) : (
-                              <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-gray-500/30 text-gray-400">
-                                Desktop
+                          {/* Row 3: Badges (role, session, device) */}
+                          <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                            {profile?.role && (
+                              <Badge className={cn("text-[10px] capitalize h-5 px-1.5", roleColor.badge)}>
+                                {profile.role}
                               </Badge>
                             )}
+                            {activity.session_started_at && (
+                              <Badge variant="outline" className="text-[10px] h-5 px-1.5 border-muted-foreground/30 text-muted-foreground gap-0.5">
+                                <Clock className="h-2.5 w-2.5" />
+                                {sessionDisplay}
+                              </Badge>
+                            )}
+                            <Badge variant="outline" className={cn(
+                              "text-[10px] h-5 px-1.5",
+                              isMobile
+                                ? "border-blue-500/30 text-blue-400"
+                                : "border-gray-500/30 text-gray-400"
+                            )}>
+                              {isMobile ? "Mobile" : "Desktop"}
+                            </Badge>
                           </div>
                         </div>
 
-                        <ChevronRight className="h-4 w-4 text-muted-foreground/50 shrink-0" />
+                        <ChevronRight className="h-4 w-4 text-muted-foreground/30 shrink-0" />
                       </button>
                     );
                   })}

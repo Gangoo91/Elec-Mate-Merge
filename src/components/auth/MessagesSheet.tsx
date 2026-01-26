@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MessageSquare, ArrowLeft, Building2, Briefcase, Heart, Hash, GraduationCap, Send, Loader2, CheckCheck, Trash2 } from "lucide-react";
+import { MessageSquare, ArrowLeft, Building2, Briefcase, Heart, Hash, GraduationCap, Send, Loader2, CheckCheck, Trash2, Bell, Clock, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -19,6 +19,9 @@ import { useMyTeamChannels, useTeamDMConversations, useTeamChatUnread } from "@/
 
 // College chat hooks
 import { useCollegeConversations } from "@/hooks/useCollegeChat";
+
+// Admin messages
+import { useAdminMessages } from "@/hooks/useAdminMessages";
 
 // Employer components
 import { ConversationList } from "@/components/employer/vacancies/ConversationList";
@@ -56,7 +59,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 
 type ActiveConversation = Conversation | ElectricianConversation;
-type ChatMode = 'job' | 'team' | 'college' | 'peer';
+type ChatMode = 'job' | 'team' | 'college' | 'peer' | 'admin';
 
 interface MessagesSheetProps {
   open: boolean;
@@ -309,6 +312,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const [selectedTeamChannel, setSelectedTeamChannel] = useState<TeamChannel | null>(null);
   const [selectedTeamDM, setSelectedTeamDM] = useState<TeamDirectMessage | null>(null);
   const [selectedCollegeConversation, setSelectedCollegeConversation] = useState<CollegeConversation | null>(null);
+  const [selectedAdminMessage, setSelectedAdminMessage] = useState<any>(null);
   const [peerMessages, setPeerMessages] = useState<PeerMessage[]>([]);
   const [isSending, setIsSending] = useState(false);
 
@@ -346,13 +350,16 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   // College chat - only fetch when in college context to avoid 400 errors
   const { data: collegeConversations = [], totalUnread: collegeUnread } = useCollegeConversations(isCollegeContext);
 
+  // Admin messages
+  const { messages: adminMessages, unreadCount: adminUnread, markAsRead: markAdminAsRead, markAllAsRead: markAllAdminAsRead } = useAdminMessages();
+
   // Calculate unreads
   const jobConversations = isEmployerContext ? employerConversations : electricianConversations;
   const jobLoading = isEmployerContext ? employerLoading : electricianLoading;
   const jobUnread = isEmployerContext ? employerUnread : electricianUnread;
   const userType = isEmployerContext ? 'employer' : 'electrician';
   const peerUnread = peerConversations?.reduce((sum, c) => sum + (c.unread_count || 0), 0) || 0;
-  const totalUnread = jobUnread + teamChatUnread + collegeUnread + peerUnread;
+  const totalUnread = jobUnread + teamChatUnread + collegeUnread + peerUnread + adminUnread;
 
   // Messages for selected job conversation
   const { data: messages = [], isLoading: messagesLoading } = useMessages(selectedConversation?.id || '');
@@ -377,6 +384,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
       setSelectedTeamChannel(null);
       setSelectedTeamDM(null);
       setSelectedCollegeConversation(null);
+      setSelectedAdminMessage(null);
       setPeerMessages([]);
     }
     onOpenChange(isOpen);
@@ -389,6 +397,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
     setSelectedTeamChannel(null);
     setSelectedTeamDM(null);
     setSelectedCollegeConversation(null);
+    setSelectedAdminMessage(null);
     setPeerMessages([]);
   };
 
@@ -426,7 +435,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
     }
   };
 
-  const isInChat = selectedConversation || selectedPeerConversation || selectedTeamChannel || selectedTeamDM || selectedCollegeConversation;
+  const isInChat = selectedConversation || selectedPeerConversation || selectedTeamChannel || selectedTeamDM || selectedCollegeConversation || selectedAdminMessage;
   const isInTeamChat = selectedTeamChannel || selectedTeamDM;
   const isInCollegeChat = !!selectedCollegeConversation;
 
@@ -543,6 +552,17 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                     )}
                   </TabsTrigger>
                 )}
+                {adminMessages.length > 0 && (
+                  <TabsTrigger value="admin" className="gap-1.5">
+                    <Bell className="h-4 w-4" />
+                    <span className="hidden sm:inline">Updates</span>
+                    {adminUnread > 0 && (
+                      <Badge variant="secondary" className="h-5 w-5 p-0 text-[10px] justify-center bg-yellow-500/20 text-yellow-500">
+                        {adminUnread}
+                      </Badge>
+                    )}
+                  </TabsTrigger>
+                )}
               </TabsList>
 
               <div className="flex-1 overflow-hidden">
@@ -588,6 +608,54 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                       <PeerConversationList onSelect={setSelectedPeerConversation} />
                     </TabsContent>
                   )}
+
+                  {/* Admin Messages Tab */}
+                  {adminMessages.length > 0 && (
+                    <TabsContent value="admin" className="m-0">
+                      <div className="divide-y divide-border">
+                        {adminMessages.map((msg) => {
+                          const isUnread = !msg.read_at;
+                          return (
+                            <button
+                              key={msg.id}
+                              onClick={() => {
+                                setSelectedAdminMessage(msg);
+                                if (!msg.read_at) {
+                                  markAdminAsRead(msg.id);
+                                }
+                              }}
+                              className={cn(
+                                "w-full flex items-start gap-3 p-4 text-left transition-colors touch-manipulation",
+                                isUnread ? "bg-elec-yellow/5" : "hover:bg-muted/50"
+                              )}
+                            >
+                              <div className="pt-1">
+                                {isUnread ? (
+                                  <div className="w-2 h-2 rounded-full bg-elec-yellow" />
+                                ) : (
+                                  <Check className="h-4 w-4 text-green-400/50" />
+                                )}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className={cn(
+                                  "text-sm truncate",
+                                  isUnread ? "font-semibold text-foreground" : "text-foreground/80"
+                                )}>
+                                  {msg.subject}
+                                </p>
+                                <p className="text-xs text-muted-foreground truncate mt-0.5">
+                                  {msg.message.slice(0, 60)}...
+                                </p>
+                                <p className="text-[10px] text-muted-foreground/60 mt-1">
+                                  {formatDistanceToNow(new Date(msg.created_at), { addSuffix: true })}
+                                </p>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </TabsContent>
+                  )}
                 </ScrollArea>
               </div>
             </Tabs>
@@ -610,6 +678,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                       ? (selectedPeerConversation.seeker?.full_name?.split(' ')[0] || 'Mate')
                       : (selectedPeerConversation.supporter?.display_name || 'Peer Supporter')
                   )}
+                  {selectedAdminMessage && 'Message from Elec-Mate'}
                 </h3>
               </div>
               {/* Peer Chat Actions */}
@@ -675,6 +744,29 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                   currentUserId={user?.id || ''}
                   onBack={handleBack}
                 />
+              )}
+
+              {/* Admin Message View */}
+              {selectedAdminMessage && (
+                <div className="flex flex-col h-full p-4">
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-1">
+                        {selectedAdminMessage.subject}
+                      </h3>
+                      <p className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {formatDistanceToNow(new Date(selectedAdminMessage.created_at), { addSuffix: true })}
+                      </p>
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-muted/50 border border-border">
+                      <p className="text-sm text-foreground/90 whitespace-pre-wrap leading-relaxed">
+                        {selectedAdminMessage.message}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
           </div>
