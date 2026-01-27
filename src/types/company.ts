@@ -72,6 +72,11 @@ export interface CompanyProfile {
   warranty_period?: string;
   deposit_percentage?: number;
   accent_color?: string;
+
+  // Invoice settings
+  invoice_terms?: string;
+  late_payment_interest_rate?: string;
+  preferred_payment_method?: string;
 }
 
 export interface CompanyBranding {

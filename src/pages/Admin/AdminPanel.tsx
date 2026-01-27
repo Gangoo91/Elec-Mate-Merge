@@ -33,6 +33,7 @@ import {
   Camera,
   ArrowLeft,
   Rocket,
+  Inbox,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -41,33 +42,24 @@ const primaryNavItems = [
   { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
   { name: "Users", path: "/admin/users", icon: Users },
   { name: "Revenue", path: "/admin/revenue", icon: DollarSign },
-  { name: "Analytics", path: "/admin/analytics", icon: BarChart3 },
+  { name: "Messages", path: "/admin/user-messages", icon: Inbox },
 ];
 
-// Secondary navigation items - in expandable section
+// Secondary navigation items - in expandable section (More)
 const secondaryNavItems = [
+  { name: "Founders", path: "/admin/founders", icon: Crown },
+  { name: "Early Access", path: "/admin/early-access", icon: Rocket },
   { name: "Elec-IDs", path: "/admin/elec-ids", icon: IdCard },
   { name: "Verification", path: "/admin/verification", icon: CheckSquare },
   { name: "Doc Review", path: "/admin/document-review", icon: FileCheck },
-  { name: "Vacancies", path: "/admin/vacancies", icon: Briefcase },
-  { name: "Pricing", path: "/admin/pricing", icon: PoundSterling },
   { name: "Subscriptions", path: "/admin/subscriptions", icon: CreditCard },
-  { name: "Founders", path: "/admin/founders", icon: Crown },
-  { name: "Early Access", path: "/admin/early-access", icon: Rocket },
-  { name: "Offers", path: "/admin/offers", icon: Gift },
-  { name: "Chats", path: "/admin/conversations", icon: MessageSquare },
 ];
 
-// Admin tools - in expandable section
+// Admin tools - in expandable section (rarely used)
 const adminToolItems = [
   { name: "Announcements", path: "/admin/announcements", icon: Megaphone },
-  { name: "Support", path: "/admin/support", icon: HeadphonesIcon },
-  { name: "Flags", path: "/admin/feature-flags", icon: Flag },
-  { name: "Settings", path: "/admin/settings", icon: Settings },
-  { name: "Audit", path: "/admin/audit", icon: History },
   { name: "Emails", path: "/admin/emails", icon: Mail },
-  { name: "Export", path: "/admin/export", icon: Download },
-  { name: "Training", path: "/admin/training-upload", icon: Camera },
+  { name: "Analytics", path: "/admin/analytics", icon: BarChart3 },
   { name: "System", path: "/admin/system", icon: Activity },
 ];
 

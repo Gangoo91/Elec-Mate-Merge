@@ -177,8 +177,9 @@ const SignUp = () => {
   const allPasswordRequirementsMet = PASSWORD_REQUIREMENTS.every(req => req.test(password));
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const passwordsMatch = password === confirmPassword && confirmPassword.length > 0;
+  const [checkingEmail, setCheckingEmail] = useState(false);
 
-  const handleAccountSubmit = (e: React.FormEvent) => {
+  const handleAccountSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password || !confirmPassword || !fullName) {
       setError('Please fill in all fields');
@@ -192,6 +193,31 @@ const SignUp = () => {
       setError('Passwords do not match');
       return;
     }
+
+    // Check if email already exists
+    setCheckingEmail(true);
+    setError(null);
+    try {
+      const { data: existingUsers, error: checkError } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('email', email.toLowerCase().trim())
+        .maybeSingle();
+
+      if (checkError && checkError.code !== 'PGRST116') {
+        console.warn('Email check error:', checkError);
+        // Continue anyway - signup will catch duplicates
+      } else if (existingUsers) {
+        setError('An account with this email already exists. Please sign in instead.');
+        setCheckingEmail(false);
+        return;
+      }
+    } catch (err) {
+      console.warn('Email check failed:', err);
+      // Continue anyway - signup will catch duplicates
+    }
+    setCheckingEmail(false);
+
     setError(null);
     setStep('profile');
   };
@@ -300,6 +326,13 @@ const SignUp = () => {
       }).catch((emailErr) => {
         console.warn('Welcome email failed (non-critical):', emailErr);
       });
+
+      // Clean up localStorage items used during onboarding
+      localStorage.removeItem('elec-mate-offer-code');
+      localStorage.removeItem('elec-mate-early-access-token');
+      localStorage.removeItem('elec-mate-early-access-claimed');
+      localStorage.removeItem('elec-mate-onboarding-data');
+      localStorage.removeItem('elec-mate-profile-role');
 
       // Go straight to dashboard - no email confirmation needed
       navigate('/dashboard');
@@ -571,13 +604,19 @@ const SignUp = () => {
 
                   <Button
                     type="submit"
+                    disabled={checkingEmail}
                     className={cn(
                       "w-full h-14 rounded-2xl text-[16px] font-semibold",
                       "bg-elec-yellow hover:bg-elec-yellow/90 text-black",
-                      "shadow-lg shadow-elec-yellow/25 transition-all duration-200"
+                      "shadow-lg shadow-elec-yellow/25 transition-all duration-200",
+                      "disabled:opacity-50"
                     )}
                   >
-                    Continue <ArrowRight className="ml-2 h-5 w-5" />
+                    {checkingEmail ? (
+                      <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Checking...</>
+                    ) : (
+                      <>Continue <ArrowRight className="ml-2 h-5 w-5" /></>
+                    )}
                   </Button>
                 </form>
 

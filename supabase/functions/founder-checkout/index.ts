@@ -132,6 +132,42 @@ Deno.serve(async (req) => {
         const existingUser = usersData?.users?.find((u: any) => u.email === invite.email);
         const hasExistingAccount = !!existingUser;
 
+        // Check if user is ALREADY a founder subscriber
+        let isAlreadyFounder = false;
+        if (existingUser) {
+          const { data: profile } = await supabaseAdmin
+            .from("profiles")
+            .select("subscribed, subscription_tier")
+            .eq("id", existingUser.id)
+            .single();
+
+          if (profile?.subscribed && profile?.subscription_tier === 'founder') {
+            isAlreadyFounder = true;
+            logger.info('User is already a founder subscriber', { userId: existingUser.id });
+
+            // Mark invite as claimed if not already
+            if (invite.status !== 'claimed') {
+              await supabaseAdmin
+                .from("founder_invites")
+                .update({
+                  status: "claimed",
+                  claimed_at: new Date().toISOString(),
+                  user_id: existingUser.id
+                })
+                .eq("id", invite.id);
+            }
+          }
+        }
+
+        if (isAlreadyFounder) {
+          result = {
+            valid: false,
+            reason: "Great news! You're already subscribed as a Founder. Sign in to access your account.",
+            isAlreadySubscribed: true,
+          };
+          break;
+        }
+
         result = {
           valid: true,
           email: invite.email,
@@ -156,6 +192,37 @@ Deno.serve(async (req) => {
         if (inviteError || !invite) throw new Error("Invalid invite token");
         if (invite.status === "claimed") throw new Error("This invite has already been used");
         if (invite.expires_at && new Date(invite.expires_at) < new Date()) throw new Error("This invite has expired");
+
+        // Check if user is already a founder subscriber
+        const { data: usersListCheckout } = await supabaseAdmin.auth.admin.listUsers();
+        const existingUserCheckout = usersListCheckout?.users?.find((u: any) => u.email === invite.email);
+
+        if (existingUserCheckout) {
+          const { data: checkoutProfile } = await supabaseAdmin
+            .from("profiles")
+            .select("subscribed, subscription_tier")
+            .eq("id", existingUserCheckout.id)
+            .single();
+
+          if (checkoutProfile?.subscribed && checkoutProfile?.subscription_tier === 'founder') {
+            logger.info('User is already a founder subscriber during checkout', { userId: existingUserCheckout.id });
+            // Mark invite as claimed
+            await supabaseAdmin
+              .from("founder_invites")
+              .update({
+                status: "claimed",
+                claimed_at: new Date().toISOString(),
+                user_id: existingUserCheckout.id
+              })
+              .eq("id", invite.id);
+
+            result = {
+              alreadySubscribed: true,
+              message: "You're already subscribed as a Founder! Please sign in to access your account."
+            };
+            break;
+          }
+        }
 
         logger.info('Invite verified, creating Stripe checkout', { email: invite.email });
 
@@ -223,6 +290,34 @@ Deno.serve(async (req) => {
         if (existingUser) {
           userId = existingUser.id;
           logger.info('Using existing user account', { userId });
+
+          // Check if user is ALREADY a founder subscriber - redirect them to sign in
+          const { data: existingProfile } = await supabaseAdmin
+            .from("profiles")
+            .select("subscribed, subscription_tier")
+            .eq("id", userId)
+            .single();
+
+          if (existingProfile?.subscribed && existingProfile?.subscription_tier === 'founder') {
+            logger.info('User is already a founder subscriber, marking invite as claimed', { userId });
+            // Mark invite as claimed
+            await supabaseAdmin
+              .from("founder_invites")
+              .update({
+                status: "claimed",
+                claimed_at: new Date().toISOString(),
+                user_id: userId
+              })
+              .eq("id", invite.id);
+
+            // Return success with redirect to sign in
+            result = {
+              alreadySubscribed: true,
+              message: "You're already subscribed as a Founder! Please sign in to access your account."
+            };
+            break;
+          }
+
           await supabaseAdmin.from("founder_invites").update({ status: "in_progress", user_id: userId }).eq("id", invite.id);
         } else {
           logger.info('Creating new user account', { email: invite.email });

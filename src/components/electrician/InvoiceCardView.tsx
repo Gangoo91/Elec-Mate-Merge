@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Download, Eye, Calendar, Trash2, CheckCircle, AlertCircle, Send, Edit, CreditCard, PoundSterling, Clock, MoreHorizontal, FileText, User, Loader2, RefreshCw } from 'lucide-react';
+import { Download, Eye, Calendar, Trash2, CheckCircle, AlertCircle, Send, Edit, CreditCard, PoundSterling, Clock, MoreHorizontal, FileText, User, Loader2, RefreshCw, Pencil } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { format, isPast, differenceInDays } from 'date-fns';
 import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
@@ -41,6 +42,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
   formatCurrency,
   stripeRefreshKey = 0,
 }) => {
+  const navigate = useNavigate();
   const [partialPaymentInvoice, setPartialPaymentInvoice] = useState<Quote | null>(null);
   const [actionsSheetInvoice, setActionsSheetInvoice] = useState<Quote | null>(null);
   const [syncingInvoiceId, setSyncingInvoiceId] = useState<string | null>(null);
@@ -378,9 +380,9 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
               </div>
 
               <div className="p-4 pb-10 space-y-2">
-                {/* View/Edit */}
+                {/* View Invoice - Always goes to view page */}
                 <button
-                  onClick={() => { onInvoiceAction(actionsSheetInvoice); setActionsSheetInvoice(null); }}
+                  onClick={() => { navigate(`/electrician/invoices/${actionsSheetInvoice.id}/view`); setActionsSheetInvoice(null); }}
                   className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
                 >
                   <div className="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center">
@@ -388,7 +390,21 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                   </div>
                   <div className="flex-1 text-left">
                     <p className="text-[15px] font-semibold text-white">View Invoice</p>
-                    <p className="text-[12px] text-white/80">View or edit details</p>
+                    <p className="text-[12px] text-white/80">View invoice details</p>
+                  </div>
+                </button>
+
+                {/* Edit Invoice - Always goes to wizard */}
+                <button
+                  onClick={() => { navigate(`/electrician/invoice-quote-builder/${actionsSheetInvoice.id}`); setActionsSheetInvoice(null); }}
+                  className="w-full flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
+                >
+                  <div className="w-11 h-11 rounded-xl bg-amber-500/15 flex items-center justify-center">
+                    <Pencil className="h-5 w-5 text-amber-400" />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <p className="text-[15px] font-semibold text-white">Edit Invoice</p>
+                    <p className="text-[12px] text-white/80">Modify invoice in wizard</p>
                   </div>
                 </button>
 

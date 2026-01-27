@@ -17,7 +17,6 @@ import {
   SheetFooter,
 } from "@/components/ui/sheet";
 import AdminPagination from "@/components/admin/AdminPagination";
-import AdminSearchInput from "@/components/admin/AdminSearchInput";
 import AdminEmptyState from "@/components/admin/AdminEmptyState";
 import {
   Search,
@@ -44,6 +43,11 @@ import {
   Square,
   Loader2,
   MessageSquare,
+  Filter,
+  X,
+  TrendingUp,
+  Activity,
+  Sparkles,
 } from "lucide-react";
 import {
   AlertDialog,
@@ -58,7 +62,6 @@ import {
 import { formatDistanceToNow, format } from "date-fns";
 import { toast } from "@/hooks/use-toast";
 import { getInitials, ROLE_COLORS } from "@/utils/adminUtils";
-import { AdminUserCard } from "@/components/admin/cards/AdminUserCard";
 import MessageUserSheet from "@/components/admin/MessageUserSheet";
 
 interface UserProfile {
@@ -81,7 +84,6 @@ interface UserProfile {
   email?: string | null;
   email_confirmed?: boolean;
   last_sign_in?: string | null;
-  // Elec-ID profile data
   elec_id_profile?: {
     id: string;
     elec_id_number: string | null;
@@ -91,7 +93,6 @@ interface UserProfile {
   } | null;
 }
 
-// Use ROLE_COLORS from adminUtils but map to the local format with border
 const roleColors: Record<string, { bg: string; text: string; border: string }> = Object.fromEntries(
   Object.entries(ROLE_COLORS).map(([role, colors]) => [
     role,
@@ -100,27 +101,17 @@ const roleColors: Record<string, { bg: string; text: string; border: string }> =
 );
 
 const roleFilters = [
-  { value: "all", label: "All" },
-  { value: "electrician", label: "Sparks" },
-  { value: "apprentice", label: "Apprentice" },
-  { value: "employer", label: "Employer" },
-  { value: "college", label: "College" },
+  { value: "all", label: "All", icon: Users },
+  { value: "electrician", label: "Sparks", icon: Zap },
+  { value: "apprentice", label: "Apprentice", icon: User },
+  { value: "employer", label: "Employer", icon: Crown },
 ];
 
-const elecIdFilters = [
-  { value: "all", label: "All IDs" },
-  { value: "has_id", label: "Has Elec-ID" },
-  { value: "verified", label: "Verified" },
-  { value: "pending", label: "Pending" },
-  { value: "no_id", label: "No Elec-ID" },
-];
-
-const timeFilters = [
-  { value: "all", label: "All Time" },
-  { value: "active", label: "Active Today" },
-  { value: "today", label: "Signed Up Today" },
-  { value: "week", label: "This Week" },
-  { value: "month", label: "This Month" },
+const quickFilters = [
+  { value: "all", label: "All Users" },
+  { value: "subscribed", label: "Subscribers" },
+  { value: "online", label: "Online Now" },
+  { value: "recent", label: "New This Week" },
 ];
 
 export default function AdminUsers() {
@@ -129,38 +120,33 @@ export default function AdminUsers() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("all");
-  const [elecIdFilter, setElecIdFilter] = useState("all");
-  const [timeFilter, setTimeFilter] = useState(() => searchParams.get("filter") || "all");
+  const [quickFilter, setQuickFilter] = useState("all");
+  const [showFilters, setShowFilters] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [messageSheetOpen, setMessageSheetOpen] = useState(false);
 
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
 
-  // Bulk selection state
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkActionPending, setBulkActionPending] = useState(false);
 
-  // Sync timeFilter with URL params
   useEffect(() => {
     const urlFilter = searchParams.get("filter");
-    if (urlFilter && timeFilters.some(f => f.value === urlFilter)) {
-      setTimeFilter(urlFilter);
+    if (urlFilter && quickFilters.some(f => f.value === urlFilter)) {
+      setQuickFilter(urlFilter);
     }
   }, [searchParams]);
 
   const isSuperAdmin = profile?.admin_role === "super_admin";
 
-  // Fetch users with emails via edge function - live updates every 30 seconds
   const { data: users, isLoading, refetch, isFetching } = useQuery({
-    queryKey: ["admin-users", search, roleFilter, elecIdFilter, timeFilter],
+    queryKey: ["admin-users", search, roleFilter, quickFilter],
     refetchInterval: 30000,
     refetchOnWindowFocus: true,
     staleTime: 0,
     queryFn: async () => {
-      // Use edge function to get users with emails
       const { data: edgeData, error: edgeError } = await supabase.functions.invoke("admin-get-users");
 
       if (edgeError) {
@@ -170,7 +156,6 @@ export default function AdminUsers() {
 
       let allUsers = edgeData?.users || [];
 
-      // Get presence data first (needed for active filter)
       const { data: presenceData } = await supabase
         .from("user_presence")
         .select("user_id, last_seen")
@@ -180,7 +165,6 @@ export default function AdminUsers() {
         presenceData?.map((p) => [p.user_id, p.last_seen]) || []
       );
 
-      // Get Elec-ID profile data for all users
       const { data: elecIdData } = await supabase
         .from("employer_elec_id_profiles")
         .select("id, employee_id, elec_id_number, is_verified, activated, ecs_card_type")
@@ -196,7 +180,6 @@ export default function AdminUsers() {
         }]) || []
       );
 
-      // Enrich users with presence and Elec-ID data
       allUsers = allUsers.map((user: UserProfile) => ({
         ...user,
         last_seen: presenceMap.get(user.id) || user.last_seen,
@@ -206,7 +189,6 @@ export default function AdminUsers() {
         elec_id_profile: elecIdMap.get(user.id) || null,
       }));
 
-      // Apply search filter
       if (search) {
         const searchLower = search.toLowerCase();
         allUsers = allUsers.filter((u: UserProfile) =>
@@ -216,56 +198,24 @@ export default function AdminUsers() {
         );
       }
 
-      // Apply role filter
       if (roleFilter !== "all") {
         allUsers = allUsers.filter((u: UserProfile) => u.role === roleFilter);
       }
 
-      // Apply Elec-ID filter
-      if (elecIdFilter !== "all") {
-        switch (elecIdFilter) {
-          case "has_id":
-            allUsers = allUsers.filter((u: UserProfile) => u.elec_id_profile);
-            break;
-          case "verified":
-            allUsers = allUsers.filter((u: UserProfile) => u.elec_id_profile?.is_verified);
-            break;
-          case "pending":
-            allUsers = allUsers.filter((u: UserProfile) => u.elec_id_profile && !u.elec_id_profile.is_verified);
-            break;
-          case "no_id":
-            allUsers = allUsers.filter((u: UserProfile) => !u.elec_id_profile);
-            break;
-        }
-      }
-
-      // Apply time filter
-      if (timeFilter !== "all") {
+      if (quickFilter !== "all") {
         const now = new Date();
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-        const dayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
-        switch (timeFilter) {
-          case "active":
-            allUsers = allUsers.filter((u: UserProfile) =>
-              u.last_seen && new Date(u.last_seen) >= dayAgo
-            );
+        switch (quickFilter) {
+          case "subscribed":
+            allUsers = allUsers.filter((u: UserProfile) => u.subscribed);
             break;
-          case "today":
-            allUsers = allUsers.filter((u: UserProfile) =>
-              u.created_at && new Date(u.created_at) >= today
-            );
+          case "online":
+            allUsers = allUsers.filter((u: UserProfile) => u.isOnline);
             break;
-          case "week":
+          case "recent":
             allUsers = allUsers.filter((u: UserProfile) =>
               u.created_at && new Date(u.created_at) >= weekAgo
-            );
-            break;
-          case "month":
-            allUsers = allUsers.filter((u: UserProfile) =>
-              u.created_at && new Date(u.created_at) >= monthAgo
             );
             break;
         }
@@ -275,18 +225,22 @@ export default function AdminUsers() {
     },
   });
 
-  // Get stats
-  const stats = {
+  const allUsersCount = useMemo(() => {
+    return users?.length || 0;
+  }, [users]);
+
+  const stats = useMemo(() => ({
     total: users?.length || 0,
     online: users?.filter((u) => u.isOnline).length || 0,
     subscribed: users?.filter((u) => u.subscribed).length || 0,
     admins: users?.filter((u) => u.admin_role).length || 0,
     elecIds: users?.filter((u) => u.elec_id_profile).length || 0,
-    verifiedIds: users?.filter((u) => u.elec_id_profile?.is_verified).length || 0,
-    pendingIds: users?.filter((u) => u.elec_id_profile && !u.elec_id_profile.is_verified).length || 0,
-  };
+    thisWeek: users?.filter((u) => {
+      const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+      return u.created_at && new Date(u.created_at) >= weekAgo;
+    }).length || 0,
+  }), [users]);
 
-  // Pagination logic
   const totalPages = Math.ceil((users?.length || 0) / itemsPerPage);
   const paginatedUsers = useMemo(() => {
     if (!users) return [];
@@ -294,13 +248,11 @@ export default function AdminUsers() {
     return users.slice(start, start + itemsPerPage);
   }, [users, currentPage, itemsPerPage]);
 
-  // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
-    setSelectedIds(new Set()); // Clear selection on filter change
-  }, [search, roleFilter, elecIdFilter, timeFilter]);
+    setSelectedIds(new Set());
+  }, [search, roleFilter, quickFilter]);
 
-  // Bulk selection functions - memoized for child component stability
   const toggleSelection = useCallback((id: string) => {
     setSelectedIds((prev) => {
       const next = new Set(prev);
@@ -319,9 +271,7 @@ export default function AdminUsers() {
   };
 
   const isAllSelected = paginatedUsers.length > 0 && selectedIds.size === paginatedUsers.length;
-  const isSomeSelected = selectedIds.size > 0 && selectedIds.size < paginatedUsers.length;
 
-  // Bulk grant subscription mutation
   const bulkGrantMutation = useMutation({
     mutationFn: async (userIds: string[]) => {
       setBulkActionPending(true);
@@ -352,7 +302,6 @@ export default function AdminUsers() {
     },
   });
 
-  // Bulk revoke subscription mutation
   const bulkRevokeMutation = useMutation({
     mutationFn: async (userIds: string[]) => {
       setBulkActionPending(true);
@@ -383,7 +332,6 @@ export default function AdminUsers() {
     },
   });
 
-  // Grant admin mutation - uses edge function to bypass RLS
   const grantAdminMutation = useMutation({
     mutationFn: async ({ userId, role }: { userId: string; role: "admin" | null }) => {
       const { data, error } = await supabase.functions.invoke("admin-manage-role", {
@@ -392,7 +340,6 @@ export default function AdminUsers() {
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
 
-      // Log the action
       await supabase.from("admin_audit_logs").insert({
         user_id: profile?.id,
         action: role ? "grant_admin" : "revoke_admin",
@@ -412,7 +359,6 @@ export default function AdminUsers() {
     },
   });
 
-  // Grant free subscription mutation - uses edge function with optimistic updates
   const grantSubscriptionMutation = useMutation({
     mutationFn: async ({ userId, tier }: { userId: string; tier: string }) => {
       const { data, error } = await supabase.functions.invoke("admin-grant-subscription", {
@@ -421,7 +367,6 @@ export default function AdminUsers() {
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
 
-      // Log the action
       await supabase.from("admin_audit_logs").insert({
         user_id: profile?.id,
         action: "grant_subscription",
@@ -432,24 +377,18 @@ export default function AdminUsers() {
 
       return data;
     },
-    // Optimistic update - show change immediately
     onMutate: async ({ userId }) => {
-      // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: ["admin-users"] });
+      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, quickFilter]);
 
-      // Snapshot current value
-      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, elecIdFilter, timeFilter]);
-
-      // Optimistically update the user
       queryClient.setQueryData(
-        ["admin-users", search, roleFilter, elecIdFilter, timeFilter],
+        ["admin-users", search, roleFilter, quickFilter],
         (old: UserProfile[] | undefined) =>
           old?.map((u) =>
             u.id === userId ? { ...u, subscribed: true, free_access_granted: true } : u
           )
       );
 
-      // Also update selectedUser if it matches
       if (selectedUser?.id === userId) {
         setSelectedUser((prev) =>
           prev ? { ...prev, subscribed: true, free_access_granted: true } : null
@@ -461,9 +400,8 @@ export default function AdminUsers() {
       return { previousUsers };
     },
     onError: (error, _variables, context) => {
-      // Rollback on error
       if (context?.previousUsers) {
-        queryClient.setQueryData(["admin-users", search, roleFilter, elecIdFilter, timeFilter], context.previousUsers);
+        queryClient.setQueryData(["admin-users", search, roleFilter, quickFilter], context.previousUsers);
       }
       toast({ title: "Error", description: error.message, variant: "destructive" });
     },
@@ -472,13 +410,11 @@ export default function AdminUsers() {
       toast({ title: "Subscription granted", description: "User now has free access" });
     },
     onSettled: () => {
-      // Always refetch to ensure consistency
       queryClient.invalidateQueries({ queryKey: ["admin-users"] });
       queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
     },
   });
 
-  // Revoke subscription mutation with optimistic updates
   const revokeSubscriptionMutation = useMutation({
     mutationFn: async (userId: string) => {
       const { data, error } = await supabase.functions.invoke("admin-manage-subscription", {
@@ -487,7 +423,6 @@ export default function AdminUsers() {
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
 
-      // Log the action
       await supabase.from("admin_audit_logs").insert({
         user_id: profile?.id,
         action: "revoke_subscription",
@@ -497,24 +432,18 @@ export default function AdminUsers() {
 
       return data;
     },
-    // Optimistic update - show change immediately
     onMutate: async (userId) => {
-      // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: ["admin-users"] });
+      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, quickFilter]);
 
-      // Snapshot current value
-      const previousUsers = queryClient.getQueryData(["admin-users", search, roleFilter, elecIdFilter, timeFilter]);
-
-      // Optimistically update the user
       queryClient.setQueryData(
-        ["admin-users", search, roleFilter, elecIdFilter, timeFilter],
+        ["admin-users", search, roleFilter, quickFilter],
         (old: UserProfile[] | undefined) =>
           old?.map((u) =>
             u.id === userId ? { ...u, subscribed: false, free_access_granted: false } : u
           )
       );
 
-      // Also update selectedUser if it matches
       if (selectedUser?.id === userId) {
         setSelectedUser((prev) =>
           prev ? { ...prev, subscribed: false, free_access_granted: false } : null
@@ -526,9 +455,8 @@ export default function AdminUsers() {
       return { previousUsers };
     },
     onError: (error, _variables, context) => {
-      // Rollback on error
       if (context?.previousUsers) {
-        queryClient.setQueryData(["admin-users", search, roleFilter, elecIdFilter, timeFilter], context.previousUsers);
+        queryClient.setQueryData(["admin-users", search, roleFilter, quickFilter], context.previousUsers);
       }
       toast({ title: "Error", description: error.message, variant: "destructive" });
     },
@@ -537,23 +465,19 @@ export default function AdminUsers() {
       toast({ title: "Access revoked", description: "User subscription removed" });
     },
     onSettled: () => {
-      // Always refetch to ensure consistency
       queryClient.invalidateQueries({ queryKey: ["admin-users"] });
       queryClient.invalidateQueries({ queryKey: ["admin-dashboard-stats"] });
     },
   });
 
-  // Delete user mutation (super admin only)
   const deleteUserMutation = useMutation({
     mutationFn: async (userId: string) => {
-      // Call edge function to delete user (requires admin privileges)
       const { data, error } = await supabase.functions.invoke("admin-delete-user", {
         body: { userId },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
 
-      // Log the action
       await supabase.from("admin_audit_logs").insert({
         user_id: profile?.id,
         action: "delete_user",
@@ -578,242 +502,240 @@ export default function AdminUsers() {
     return roleColors[role || "visitor"] || roleColors.visitor;
   }, []);
 
-  // Memoized callback for user click
   const handleUserClick = useCallback((user: UserProfile) => {
     setSelectedUser(user);
   }, []);
 
+  const activeFiltersCount = (roleFilter !== "all" ? 1 : 0) + (quickFilter !== "all" ? 1 : 0);
+
   return (
-    <div className="space-y-4">
-      {/* Stats Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
-          <CardContent className="pt-3 pb-3">
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-blue-400" />
+    <div className="space-y-4 pb-20">
+      {/* Hero Stats Card - Premium Purple/Violet Gradient */}
+      <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-violet-600 via-purple-600 to-fuchsia-700">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-fuchsia-400/10 rounded-full blur-xl translate-y-1/2 -translate-x-1/2" />
+        <CardContent className="relative pt-6 pb-6">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center shadow-lg shadow-purple-900/20">
+                <Users className="h-7 w-7 text-white" />
+              </div>
               <div>
-                <p className="text-lg font-bold">{stats.total}</p>
-                <p className="text-[10px] text-muted-foreground">Total</p>
+                <p className="text-purple-200 text-sm font-medium">Total Users</p>
+                <p className="text-5xl font-bold text-white tracking-tight">{stats.total}</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
-          <CardContent className="pt-3 pb-3">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <div>
-                <p className="text-lg font-bold">{stats.online}</p>
-                <p className="text-[10px] text-muted-foreground">Online</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20">
-          <CardContent className="pt-3 pb-3">
-            <div className="flex items-center gap-2">
-              <CreditCard className="h-4 w-4 text-amber-400" />
-              <div>
-                <p className="text-lg font-bold">{stats.subscribed}</p>
-                <p className="text-[10px] text-muted-foreground">Subscribed</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 border-cyan-500/20">
-          <CardContent className="pt-3 pb-3">
-            <div className="flex items-center gap-2">
-              <IdCard className="h-4 w-4 text-cyan-400" />
-              <div>
-                <p className="text-lg font-bold">{stats.elecIds}</p>
-                <p className="text-[10px] text-muted-foreground">Elec-IDs</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-12 w-12 rounded-2xl bg-white/10 hover:bg-white/20 text-white touch-manipulation backdrop-blur-sm"
+              onClick={() => refetch()}
+              disabled={isFetching}
+            >
+              <RefreshCw className={`h-5 w-5 ${isFetching ? "animate-spin" : ""}`} />
+            </Button>
+          </div>
 
-      {/* Elec-ID Summary Bar */}
-      {stats.elecIds > 0 && (
-        <Card className="border-cyan-500/30 bg-cyan-500/5">
-          <CardContent className="py-3 px-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <IdCard className="h-5 w-5 text-cyan-400" />
-                  <span className="text-sm font-medium">Elec-ID Status</span>
-                </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <span className="flex items-center gap-1.5">
-                    <ShieldCheck className="h-4 w-4 text-green-400" />
-                    <span className="text-green-400 font-medium">{stats.verifiedIds}</span>
-                    <span className="text-muted-foreground">verified</span>
-                  </span>
-                  <span className="text-muted-foreground">•</span>
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="h-4 w-4 text-amber-400" />
-                    <span className="text-amber-400 font-medium">{stats.pendingIds}</span>
-                    <span className="text-muted-foreground">pending</span>
-                  </span>
-                </div>
+          {/* Mini Stats Row */}
+          <div className="grid grid-cols-4 gap-2">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
+              <div className="flex items-center justify-center gap-1 mb-0.5">
+                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="text-lg font-bold text-white">{stats.online}</span>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10"
-                onClick={() => window.location.href = "/admin/elec-ids"}
-              >
-                View All
-                <ChevronRight className="h-4 w-4 ml-1" />
-              </Button>
+              <p className="text-[9px] text-purple-200 uppercase tracking-wide font-medium">Online</p>
             </div>
-          </CardContent>
-        </Card>
-      )}
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
+              <div className="flex items-center justify-center gap-1 mb-0.5">
+                <Sparkles className="h-3.5 w-3.5 text-amber-300" />
+                <span className="text-lg font-bold text-white">{stats.subscribed}</span>
+              </div>
+              <p className="text-[9px] text-purple-200 uppercase tracking-wide font-medium">Paid</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
+              <div className="flex items-center justify-center gap-1 mb-0.5">
+                <TrendingUp className="h-3.5 w-3.5 text-emerald-300" />
+                <span className="text-lg font-bold text-white">{stats.thisWeek}</span>
+              </div>
+              <p className="text-[9px] text-purple-200 uppercase tracking-wide font-medium">New</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
+              <div className="flex items-center justify-center gap-1 mb-0.5">
+                <IdCard className="h-3.5 w-3.5 text-cyan-300" />
+                <span className="text-lg font-bold text-white">{stats.elecIds}</span>
+              </div>
+              <p className="text-[9px] text-purple-200 uppercase tracking-wide font-medium">IDs</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Search Bar */}
-      <div className="flex gap-2">
-        <AdminSearchInput
-          value={search}
-          onChange={setSearch}
-          placeholder="Search users..."
-          className="flex-1"
-        />
+      {/* Search & Filter Bar */}
+      <div className="flex gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/60" />
+          <Input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search by name or email..."
+            className="h-13 pl-12 pr-4 text-base rounded-2xl bg-card/80 border-border/30 focus:border-purple-500 focus:ring-purple-500/20 focus:ring-2 touch-manipulation placeholder:text-muted-foreground/50"
+          />
+          {search && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 rounded-xl hover:bg-purple-500/10"
+              onClick={() => setSearch("")}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
         <Button
           variant="outline"
           size="icon"
-          className="h-12 w-12 touch-manipulation rounded-xl"
-          onClick={() => refetch()}
-          disabled={isFetching}
+          className={`h-13 w-13 rounded-2xl touch-manipulation relative border-border/30 ${
+            activeFiltersCount > 0 ? "border-purple-500 bg-purple-500/10" : "hover:border-purple-500/30 hover:bg-purple-500/5"
+          }`}
+          onClick={() => setShowFilters(!showFilters)}
         >
-          <RefreshCw className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
+          <Filter className={`h-5 w-5 ${activeFiltersCount > 0 ? "text-purple-400" : ""}`} />
+          {activeFiltersCount > 0 && (
+            <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gradient-to-r from-violet-500 to-purple-600 text-white text-xs flex items-center justify-center font-bold shadow-lg">
+              {activeFiltersCount}
+            </span>
+          )}
         </Button>
       </div>
 
-      {/* Time Filter Pills */}
-      {timeFilter !== "all" && (
-        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-          {timeFilters.map((filter) => (
-            <Button
-              key={filter.value}
-              variant={timeFilter === filter.value ? "default" : "outline"}
-              size="sm"
-              onClick={() => {
-                setTimeFilter(filter.value);
-                if (filter.value === "all") {
+      {/* Quick Filters - Always visible */}
+      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide -mx-1 px-1">
+        {quickFilters.map((filter) => (
+          <Button
+            key={filter.value}
+            variant={quickFilter === filter.value ? "default" : "outline"}
+            size="sm"
+            onClick={() => {
+              setQuickFilter(filter.value);
+              if (filter.value === "all") {
+                searchParams.delete("filter");
+              } else {
+                searchParams.set("filter", filter.value);
+              }
+              setSearchParams(searchParams);
+            }}
+            className={`shrink-0 h-11 px-5 rounded-full touch-manipulation font-semibold transition-all ${
+              quickFilter === filter.value
+                ? "bg-gradient-to-r from-violet-500 to-purple-600 text-white hover:from-violet-600 hover:to-purple-700 shadow-lg shadow-purple-500/30 border-0"
+                : "bg-card border-border/30 hover:bg-muted hover:border-purple-500/30"
+            }`}
+          >
+            {filter.label}
+            {filter.value === "online" && stats.online > 0 && (
+              <span className={`ml-1.5 text-xs ${quickFilter === filter.value ? "text-purple-100" : "text-muted-foreground"}`}>
+                ({stats.online})
+              </span>
+            )}
+          </Button>
+        ))}
+      </div>
+
+      {/* Role Filters - Collapsible */}
+      {showFilters && (
+        <Card className="border-purple-500/20 bg-gradient-to-r from-purple-500/5 to-fuchsia-500/5 backdrop-blur-sm">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <User className="h-4 w-4 text-purple-400" />
+              <span className="text-sm font-semibold text-foreground">Filter by Role</span>
+            </div>
+            <div className="flex gap-2 flex-wrap">
+              {roleFilters.map((filter) => {
+                const Icon = filter.icon;
+                return (
+                  <Button
+                    key={filter.value}
+                    variant={roleFilter === filter.value ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setRoleFilter(filter.value)}
+                    className={`h-11 px-4 rounded-xl touch-manipulation font-medium ${
+                      roleFilter === filter.value
+                        ? "bg-gradient-to-r from-violet-500 to-purple-600 text-white hover:from-violet-600 hover:to-purple-700 border-0 shadow-md"
+                        : "bg-card border-border/30 hover:border-purple-500/30"
+                    }`}
+                  >
+                    <Icon className="h-4 w-4 mr-2" />
+                    {filter.label}
+                  </Button>
+                );
+              })}
+            </div>
+            {activeFiltersCount > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="mt-3 h-9 text-purple-400 hover:text-purple-300 hover:bg-purple-500/10"
+                onClick={() => {
+                  setRoleFilter("all");
+                  setQuickFilter("all");
                   searchParams.delete("filter");
-                } else {
-                  searchParams.set("filter", filter.value);
-                }
-                setSearchParams(searchParams);
-              }}
-              className={`shrink-0 h-9 px-4 rounded-full touch-manipulation ${
-                timeFilter === filter.value
-                  ? "bg-blue-500 text-white hover:bg-blue-600"
-                  : "bg-muted/50"
-              }`}
-            >
-              {filter.label}
-            </Button>
-          ))}
-        </div>
+                  setSearchParams(searchParams);
+                }}
+              >
+                <X className="h-4 w-4 mr-1" />
+                Clear all filters
+              </Button>
+            )}
+          </CardContent>
+        </Card>
       )}
-
-      {/* Role Filter Pills */}
-      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-        {roleFilters.map((filter) => (
-          <Button
-            key={filter.value}
-            variant={roleFilter === filter.value ? "default" : "outline"}
-            size="sm"
-            onClick={() => setRoleFilter(filter.value)}
-            className={`shrink-0 h-9 px-4 rounded-full touch-manipulation ${
-              roleFilter === filter.value
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted/50"
-            }`}
-          >
-            {filter.label}
-          </Button>
-        ))}
-      </div>
-
-      {/* Elec-ID Filter Pills */}
-      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-        <IdCard className="h-4 w-4 text-cyan-400 shrink-0 self-center mr-1" />
-        {elecIdFilters.map((filter) => (
-          <Button
-            key={filter.value}
-            variant={elecIdFilter === filter.value ? "default" : "outline"}
-            size="sm"
-            onClick={() => setElecIdFilter(filter.value)}
-            className={`shrink-0 h-8 px-3 rounded-full touch-manipulation text-xs ${
-              elecIdFilter === filter.value
-                ? filter.value === "verified"
-                  ? "bg-green-500 text-white hover:bg-green-600"
-                  : filter.value === "pending"
-                  ? "bg-amber-500 text-white hover:bg-amber-600"
-                  : "bg-cyan-500 text-white hover:bg-cyan-600"
-                : "bg-muted/50"
-            }`}
-          >
-            {filter.value === "verified" && <ShieldCheck className="h-3 w-3 mr-1" />}
-            {filter.value === "pending" && <Clock className="h-3 w-3 mr-1" />}
-            {filter.label}
-          </Button>
-        ))}
-      </div>
 
       {/* Bulk Action Bar */}
       {selectedIds.size > 0 && (
-        <Card className="sticky top-0 z-10 border-yellow-500/30 bg-yellow-500/10">
+        <Card className="sticky top-0 z-10 border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-fuchsia-500/10 backdrop-blur-md shadow-lg">
           <CardContent className="py-3 px-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Checkbox
                   checked={isAllSelected}
                   onCheckedChange={toggleSelectAll}
-                  className="border-yellow-500/50 data-[state=checked]:bg-yellow-500 data-[state=checked]:border-yellow-500"
+                  className="border-purple-500/50 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
                 />
-                <span className="text-sm font-medium text-yellow-400">
+                <span className="text-sm font-bold text-purple-300">
                   {selectedIds.size} selected
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Button
                   size="sm"
-                  className="h-9 bg-green-600 hover:bg-green-700 touch-manipulation"
+                  className="h-10 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 touch-manipulation rounded-xl font-semibold shadow-md"
                   onClick={() => bulkGrantMutation.mutate([...selectedIds])}
                   disabled={bulkActionPending}
                 >
                   {bulkActionPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    <Gift className="h-4 w-4 mr-1" />
+                    <Gift className="h-4 w-4 mr-1.5" />
                   )}
-                  Grant Access
+                  Grant
                 </Button>
                 <Button
                   size="sm"
                   variant="destructive"
-                  className="h-9 touch-manipulation"
+                  className="h-10 touch-manipulation rounded-xl font-semibold"
                   onClick={() => bulkRevokeMutation.mutate([...selectedIds])}
                   disabled={bulkActionPending}
                 >
-                  {bulkActionPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <XCircle className="h-4 w-4 mr-1" />
-                  )}
+                  <XCircle className="h-4 w-4 mr-1.5" />
                   Revoke
                 </Button>
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-9 touch-manipulation"
+                  className="h-10 w-10 touch-manipulation rounded-xl text-muted-foreground hover:bg-white/10"
                   onClick={() => setSelectedIds(new Set())}
                 >
-                  Cancel
+                  <X className="h-5 w-5" />
                 </Button>
               </div>
             </div>
@@ -821,17 +743,34 @@ export default function AdminUsers() {
         </Card>
       )}
 
+      {/* Results Count */}
+      <div className="flex items-center justify-between px-1">
+        <p className="text-sm text-muted-foreground font-medium">
+          {users?.length === allUsersCount
+            ? `${users?.length || 0} users`
+            : `${users?.length || 0} of ${allUsersCount} users`}
+        </p>
+        {paginatedUsers.length > 0 && (
+          <button
+            onClick={toggleSelectAll}
+            className="text-sm text-purple-400 hover:text-purple-300 font-semibold touch-manipulation"
+          >
+            {isAllSelected ? "Deselect all" : "Select all"}
+          </button>
+        )}
+      </div>
+
       {/* User Cards */}
       {isLoading ? (
-        <div className="space-y-3">
+        <div className="space-y-2">
           {[...Array(5)].map((_, i) => (
-            <Card key={i} className="animate-pulse">
-              <CardContent className="pt-4 pb-4">
+            <Card key={i} className="animate-pulse border-border/50">
+              <CardContent className="py-4">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-2xl bg-muted" />
                   <div className="flex-1 space-y-2">
                     <div className="h-4 bg-muted rounded w-32" />
-                    <div className="h-3 bg-muted rounded w-24" />
+                    <div className="h-3 bg-muted rounded w-48" />
                   </div>
                 </div>
               </CardContent>
@@ -839,8 +778,8 @@ export default function AdminUsers() {
           ))}
         </div>
       ) : users?.length === 0 ? (
-        <Card>
-          <CardContent className="pt-6">
+        <Card className="border-border/50">
+          <CardContent className="py-12">
             <AdminEmptyState
               icon={Users}
               title="No users found"
@@ -850,28 +789,92 @@ export default function AdminUsers() {
         </Card>
       ) : (
         <>
-          {/* Select All Header */}
-          <div className="flex items-center gap-3 px-1 py-2">
-            <Checkbox
-              checked={isAllSelected}
-              onCheckedChange={toggleSelectAll}
-              className="border-muted-foreground/50"
-            />
-            <span className="text-xs text-muted-foreground">
-              {isAllSelected ? "Deselect all" : "Select all on this page"}
-            </span>
-          </div>
-
-          <div className="space-y-2">
+          <div className="space-y-3">
             {paginatedUsers.map((user) => (
-              <AdminUserCard
+              <div
                 key={user.id}
-                user={user}
-                isSelected={selectedIds.has(user.id)}
-                onToggleSelection={toggleSelection}
-                onClick={handleUserClick}
-                roleStyle={getRoleStyle(user.role)}
-              />
+                className={`group relative bg-gradient-to-r from-card to-card/80 rounded-2xl border transition-all duration-200 touch-manipulation cursor-pointer active:scale-[0.98] ${
+                  selectedIds.has(user.id)
+                    ? "border-purple-500/50 bg-purple-500/5 shadow-lg shadow-purple-500/10"
+                    : "border-border/40 hover:border-purple-500/30 hover:shadow-md"
+                }`}
+                onClick={() => handleUserClick(user)}
+              >
+                <div className="p-4">
+                  <div className="flex items-center gap-4">
+                    {/* Selection Checkbox */}
+                    <div
+                      className="shrink-0"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleSelection(user.id);
+                      }}
+                    >
+                      <Checkbox
+                        checked={selectedIds.has(user.id)}
+                        className="h-5 w-5 rounded-md border-2 border-muted-foreground/20 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
+                      />
+                    </div>
+
+                    {/* Avatar */}
+                    <div className="relative shrink-0">
+                      <Avatar className="h-14 w-14 rounded-2xl border-2 border-white/10 shadow-lg">
+                        <AvatarImage src={user.avatar_url || undefined} />
+                        <AvatarFallback className={`rounded-2xl text-base font-bold ${getRoleStyle(user.role).bg} ${getRoleStyle(user.role).text}`}>
+                          {getInitials(user.full_name)}
+                        </AvatarFallback>
+                      </Avatar>
+                      {user.isOnline && (
+                        <div className="absolute -bottom-0.5 -right-0.5 w-4.5 h-4.5 bg-green-500 rounded-full border-[3px] border-card shadow-lg shadow-green-500/50">
+                          <div className="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-75" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* User Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <p className="font-bold text-[15px] truncate text-foreground">{user.full_name || "No name"}</p>
+                        {user.subscribed && (
+                          <div className="shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-sm">
+                            <Sparkles className="h-3 w-3 text-white" />
+                          </div>
+                        )}
+                        {user.admin_role && (
+                          <div className="shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-red-400 to-rose-600 flex items-center justify-center shadow-sm">
+                            <Shield className="h-3 w-3 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground truncate mb-2">{user.email || `@${user.username}`}</p>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Badge
+                          className={`text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full ${getRoleStyle(user.role).bg} ${getRoleStyle(user.role).text} border-0 shadow-sm`}
+                        >
+                          {user.role || "visitor"}
+                        </Badge>
+                        {user.elec_id_profile && (
+                          <Badge
+                            className={`text-[11px] px-2.5 py-0.5 h-6 font-semibold rounded-full border-0 shadow-sm ${
+                              user.elec_id_profile.is_verified
+                                ? "bg-emerald-500/15 text-emerald-400"
+                                : "bg-amber-500/15 text-amber-400"
+                            }`}
+                          >
+                            <IdCard className="h-3 w-3 mr-1" />
+                            {user.elec_id_profile.is_verified ? "Verified" : "Pending"}
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Chevron with hover effect */}
+                    <div className="shrink-0 w-10 h-10 rounded-xl bg-muted/50 group-hover:bg-purple-500/10 flex items-center justify-center transition-colors">
+                      <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-purple-400 transition-colors" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
 
@@ -895,47 +898,52 @@ export default function AdminUsers() {
 
       {/* User Detail Sheet */}
       <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl p-0">
-          <div className="flex flex-col h-full">
+        <SheetContent side="bottom" className="h-[90vh] rounded-t-3xl p-0 border-t border-border/50">
+          <div className="flex flex-col h-full bg-background">
             {/* Drag Handle */}
             <div className="flex justify-center pt-3 pb-2">
-              <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+              <div className="w-12 h-1.5 rounded-full bg-muted-foreground/20" />
             </div>
 
             {/* User Header */}
-            <div className="px-6 pb-6 pt-2 border-b border-border">
+            <div className="px-6 pb-6 pt-2">
               <div className="flex items-center gap-4">
                 <div className="relative">
-                  <Avatar className="h-20 w-20 rounded-3xl border-4 border-muted">
+                  <Avatar className="h-20 w-20 rounded-3xl border-4 border-muted/50">
                     <AvatarImage src={selectedUser?.avatar_url || undefined} />
                     <AvatarFallback className={`rounded-3xl text-2xl font-bold ${getRoleStyle(selectedUser?.role).bg} ${getRoleStyle(selectedUser?.role).text}`}>
                       {getInitials(selectedUser?.full_name || null)}
                     </AvatarFallback>
                   </Avatar>
                   {selectedUser?.isOnline && (
-                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-3 border-background" />
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-4 border-background" />
                   )}
                 </div>
-                <div className="flex-1">
-                  <h2 className="text-xl font-bold">{selectedUser?.full_name || "No name"}</h2>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-xl font-bold truncate">{selectedUser?.full_name || "No name"}</h2>
                   {selectedUser?.email && (
-                    <p className="text-sm text-muted-foreground flex items-center gap-1.5">
-                      <Mail className="h-3.5 w-3.5" />
-                      {selectedUser.email}
+                    <p className="text-sm text-muted-foreground flex items-center gap-1.5 truncate">
+                      <Mail className="h-3.5 w-3.5 shrink-0" />
+                      <span className="truncate">{selectedUser.email}</span>
                       {selectedUser.email_confirmed && (
-                        <UserCheck className="h-3.5 w-3.5 text-green-400" />
+                        <UserCheck className="h-3.5 w-3.5 text-green-400 shrink-0" />
                       )}
                     </p>
                   )}
-                  <p className="text-muted-foreground text-sm">@{selectedUser?.username || "unknown"}</p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <Badge className={`${getRoleStyle(selectedUser?.role).bg} ${getRoleStyle(selectedUser?.role).text}`}>
+                  <div className="flex items-center gap-2 mt-2 flex-wrap">
+                    <Badge className={`${getRoleStyle(selectedUser?.role).bg} ${getRoleStyle(selectedUser?.role).text} border-0`}>
                       {selectedUser?.role || "visitor"}
                     </Badge>
                     {selectedUser?.subscribed && (
-                      <Badge className="bg-amber-500/20 text-amber-400">
-                        <Zap className="h-3 w-3 mr-1" />
+                      <Badge className="bg-amber-500/20 text-amber-400 border-0">
+                        <Sparkles className="h-3 w-3 mr-1" />
                         {selectedUser.subscription_tier || "Subscribed"}
+                      </Badge>
+                    )}
+                    {selectedUser?.admin_role && (
+                      <Badge className="bg-red-500/20 text-red-400 border-0">
+                        <Shield className="h-3 w-3 mr-1" />
+                        {selectedUser.admin_role === "super_admin" ? "Super Admin" : "Admin"}
                       </Badge>
                     )}
                   </div>
@@ -943,36 +951,36 @@ export default function AdminUsers() {
               </div>
             </div>
 
-            {/* User Details */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {/* Status Cards */}
+            {/* User Details - Scrollable */}
+            <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-4">
+              {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-3">
-                <Card className={selectedUser?.isOnline ? "bg-green-500/10 border-green-500/30" : "bg-muted/50"}>
-                  <CardContent className="pt-4 pb-4 text-center">
-                    <div className={`w-3 h-3 rounded-full mx-auto mb-2 ${selectedUser?.isOnline ? "bg-green-500 animate-pulse" : "bg-muted-foreground"}`} />
-                    <p className="text-sm font-medium">{selectedUser?.isOnline ? "Online" : "Offline"}</p>
+                <Card className={`border-0 ${selectedUser?.isOnline ? "bg-green-500/10" : "bg-muted/30"}`}>
+                  <CardContent className="py-4 text-center">
+                    <div className={`w-3 h-3 rounded-full mx-auto mb-2 ${selectedUser?.isOnline ? "bg-green-500 animate-pulse" : "bg-muted-foreground/30"}`} />
+                    <p className="text-sm font-semibold">{selectedUser?.isOnline ? "Online" : "Offline"}</p>
                     {selectedUser?.last_seen && (
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-xs text-muted-foreground mt-0.5">
                         {formatDistanceToNow(new Date(selectedUser.last_seen), { addSuffix: true })}
                       </p>
                     )}
                   </CardContent>
                 </Card>
-                <Card className={selectedUser?.subscribed ? "bg-amber-500/10 border-amber-500/30" : "bg-muted/50"}>
-                  <CardContent className="pt-4 pb-4 text-center">
-                    <CreditCard className={`h-5 w-5 mx-auto mb-2 ${selectedUser?.subscribed ? "text-amber-400" : "text-muted-foreground"}`} />
-                    <p className="text-sm font-medium">{selectedUser?.subscribed ? "Subscribed" : "Free"}</p>
+                <Card className={`border-0 ${selectedUser?.subscribed ? "bg-amber-500/10" : "bg-muted/30"}`}>
+                  <CardContent className="py-4 text-center">
+                    <Sparkles className={`h-5 w-5 mx-auto mb-2 ${selectedUser?.subscribed ? "text-amber-400" : "text-muted-foreground/30"}`} />
+                    <p className="text-sm font-semibold">{selectedUser?.subscribed ? "Subscribed" : "Free"}</p>
                     {selectedUser?.subscription_tier && (
-                      <p className="text-xs text-muted-foreground mt-1 capitalize">{selectedUser.subscription_tier}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5 capitalize">{selectedUser.subscription_tier}</p>
                     )}
                   </CardContent>
                 </Card>
               </div>
 
-              {/* Info Card */}
-              <Card>
+              {/* Account Details */}
+              <Card className="border-0 bg-muted/30">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm flex items-center gap-2">
+                  <CardTitle className="text-sm flex items-center gap-2 font-semibold">
                     <User className="h-4 w-4" />
                     Account Details
                   </CardTitle>
@@ -984,68 +992,55 @@ export default function AdminUsers() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Joined</span>
-                    <span className="text-sm">
+                    <span className="text-sm font-medium">
                       {selectedUser?.created_at && format(new Date(selectedUser.created_at), "dd MMM yyyy")}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Onboarding</span>
-                    <Badge variant="outline" className={selectedUser?.onboarding_completed ? "bg-green-500/10 text-green-400" : ""}>
+                    <Badge variant="secondary" className={`text-xs border-0 ${selectedUser?.onboarding_completed ? "bg-green-500/10 text-green-400" : "bg-muted text-muted-foreground"}`}>
                       {selectedUser?.onboarding_completed ? "Complete" : "Incomplete"}
-                    </Badge>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Elec-ID</span>
-                    <Badge variant="outline" className={selectedUser?.elec_id_enabled ? "bg-cyan-500/10 text-cyan-400" : ""}>
-                      {selectedUser?.elec_id_enabled ? "Enabled" : "Disabled"}
                     </Badge>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Elec-ID Profile Card */}
+              {/* Elec-ID Profile */}
               {selectedUser?.elec_id_profile && (
-                <Card className={selectedUser.elec_id_profile.is_verified ? "border-green-500/30 bg-green-500/5" : "border-amber-500/30 bg-amber-500/5"}>
+                <Card className={`border-0 ${selectedUser.elec_id_profile.is_verified ? "bg-green-500/10" : "bg-amber-500/10"}`}>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
+                    <CardTitle className="text-sm flex items-center gap-2 font-semibold">
                       <IdCard className={`h-4 w-4 ${selectedUser.elec_id_profile.is_verified ? "text-green-400" : "text-amber-400"}`} />
                       Elec-ID Profile
-                      {selectedUser.elec_id_profile.is_verified ? (
-                        <Badge className="text-[10px] px-1.5 py-0 h-4 bg-green-500/20 text-green-400">
-                          <ShieldCheck className="h-2.5 w-2.5 mr-1" />
-                          Verified
-                        </Badge>
-                      ) : (
-                        <Badge className="text-[10px] px-1.5 py-0 h-4 bg-amber-500/20 text-amber-400">
-                          <Clock className="h-2.5 w-2.5 mr-1" />
-                          Pending
-                        </Badge>
-                      )}
+                      <Badge
+                        variant="secondary"
+                        className={`text-[10px] px-1.5 py-0 h-5 ml-auto border-0 ${
+                          selectedUser.elec_id_profile.is_verified
+                            ? "bg-green-500/20 text-green-400"
+                            : "bg-amber-500/20 text-amber-400"
+                        }`}
+                      >
+                        {selectedUser.elec_id_profile.is_verified ? "Verified" : "Pending"}
+                      </Badge>
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2">
                     {selectedUser.elec_id_profile.elec_id_number && (
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">Elec-ID Number</span>
-                        <span className="text-sm font-mono">{selectedUser.elec_id_profile.elec_id_number}</span>
+                        <span className="text-sm font-mono font-medium">{selectedUser.elec_id_profile.elec_id_number}</span>
                       </div>
                     )}
                     {selectedUser.elec_id_profile.ecs_card_type && (
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-muted-foreground">ECS Card</span>
-                        <Badge variant="outline" className="text-xs">{selectedUser.elec_id_profile.ecs_card_type}</Badge>
+                        <Badge variant="secondary" className="text-xs border-0">{selectedUser.elec_id_profile.ecs_card_type}</Badge>
                       </div>
                     )}
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Activated</span>
-                      <Badge variant="outline" className={selectedUser.elec_id_profile.activated ? "bg-green-500/10 text-green-400" : ""}>
-                        {selectedUser.elec_id_profile.activated ? "Yes" : "No"}
-                      </Badge>
-                    </div>
                     <Button
                       variant="outline"
                       size="sm"
-                      className="w-full mt-2 h-9 touch-manipulation text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10"
+                      className="w-full mt-2 h-10 touch-manipulation text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/10 rounded-xl"
                       onClick={() => window.location.href = `/admin/elec-ids`}
                     >
                       <IdCard className="h-4 w-4 mr-2" />
@@ -1054,62 +1049,22 @@ export default function AdminUsers() {
                   </CardContent>
                 </Card>
               )}
-
-              {/* Admin Status Card */}
-              <Card className={selectedUser?.admin_role ? "border-red-500/30 bg-red-500/5" : ""}>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm flex items-center gap-2">
-                    <Shield className={`h-4 w-4 ${selectedUser?.admin_role ? "text-red-400" : ""}`} />
-                    Admin Status
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {selectedUser?.admin_role ? (
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-red-500/20 flex items-center justify-center">
-                        <ShieldCheck className="h-6 w-6 text-red-400" />
-                      </div>
-                      <div>
-                        <p className="font-semibold">
-                          {selectedUser.admin_role === "super_admin" ? "Super Admin" : "Admin"}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          Has administrative privileges
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center">
-                        <User className="h-6 w-6 text-muted-foreground" />
-                      </div>
-                      <div>
-                        <p className="font-semibold">Regular User</p>
-                        <p className="text-sm text-muted-foreground">
-                          No administrative access
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
             </div>
 
             {/* Actions Footer */}
-            <SheetFooter className="p-4 border-t border-border space-y-2">
-              {/* Message User Button */}
+            <div className="p-4 border-t border-border/50 space-y-2 bg-background">
+              {/* Message User */}
               <Button
                 variant="outline"
-                className="w-full h-12 touch-manipulation rounded-xl border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                className="w-full h-12 touch-manipulation rounded-xl border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
                 onClick={() => setMessageSheetOpen(true)}
               >
                 <MessageSquare className="h-5 w-5 mr-2" />
                 Message User
               </Button>
 
-              {/* Subscription Actions - Grant/Revoke/Stripe-managed */}
+              {/* Subscription Actions */}
               {(selectedUser?.free_access_granted || (selectedUser?.subscribed && !selectedUser?.stripe_customer_id)) ? (
-                // Show Revoke for admin-granted access
                 <Button
                   variant="destructive"
                   className="w-full h-12 touch-manipulation rounded-xl"
@@ -1117,18 +1072,15 @@ export default function AdminUsers() {
                   disabled={revokeSubscriptionMutation.isPending}
                 >
                   {revokeSubscriptionMutation.isPending ? (
-                    <>Revoking...</>
+                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
                   ) : (
-                    <>
-                      <XCircle className="h-5 w-5 mr-2" />
-                      Revoke Access
-                    </>
+                    <XCircle className="h-5 w-5 mr-2" />
                   )}
+                  Revoke Access
                 </Button>
               ) : !selectedUser?.subscribed ? (
-                // Show Grant for non-subscribed users
                 <Button
-                  className="w-full h-12 touch-manipulation rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+                  className="w-full h-12 touch-manipulation rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 shadow-lg shadow-emerald-500/20"
                   onClick={() =>
                     selectedUser &&
                     grantSubscriptionMutation.mutate({
@@ -1139,72 +1091,67 @@ export default function AdminUsers() {
                   disabled={grantSubscriptionMutation.isPending}
                 >
                   {grantSubscriptionMutation.isPending ? (
-                    <>Granting...</>
+                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
                   ) : (
-                    <>
-                      <Gift className="h-5 w-5 mr-2" />
-                      Grant Free Access
-                    </>
+                    <Gift className="h-5 w-5 mr-2" />
                   )}
+                  Grant Free Access
                 </Button>
               ) : (
-                // Stripe-managed subscription
                 <p className="w-full text-center text-sm text-muted-foreground py-3">
                   Subscription managed via Stripe
                 </p>
               )}
 
-              {/* Admin toggle - super admin only */}
+              {/* Admin Controls */}
               {isSuperAdmin && selectedUser?.admin_role !== "super_admin" && (
-                <Button
-                  variant="outline"
-                  className={`w-full h-12 touch-manipulation rounded-xl ${
-                    selectedUser?.admin_role
-                      ? "border-red-500/50 text-red-400 hover:bg-red-500/10"
-                      : "border-orange-500/50 text-orange-400 hover:bg-orange-500/10"
-                  }`}
-                  onClick={() =>
-                    selectedUser &&
-                    grantAdminMutation.mutate({
-                      userId: selectedUser.id,
-                      role: selectedUser.admin_role ? null : "admin",
-                    })
-                  }
-                  disabled={grantAdminMutation.isPending}
-                >
-                  {selectedUser?.admin_role ? (
-                    <>
-                      <ShieldOff className="h-5 w-5 mr-2" />
-                      Remove Admin
-                    </>
-                  ) : (
-                    <>
-                      <Shield className="h-5 w-5 mr-2" />
-                      Make Admin
-                    </>
-                  )}
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    className={`flex-1 h-11 touch-manipulation rounded-xl ${
+                      selectedUser?.admin_role
+                        ? "border-red-500/30 text-red-400 hover:bg-red-500/10"
+                        : "border-orange-500/30 text-orange-400 hover:bg-orange-500/10"
+                    }`}
+                    onClick={() =>
+                      selectedUser &&
+                      grantAdminMutation.mutate({
+                        userId: selectedUser.id,
+                        role: selectedUser.admin_role ? null : "admin",
+                      })
+                    }
+                    disabled={grantAdminMutation.isPending}
+                  >
+                    {selectedUser?.admin_role ? (
+                      <>
+                        <ShieldOff className="h-4 w-4 mr-2" />
+                        Remove Admin
+                      </>
+                    ) : (
+                      <>
+                        <Shield className="h-4 w-4 mr-2" />
+                        Make Admin
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-11 w-11 touch-manipulation rounded-xl text-red-400 hover:text-red-500 hover:bg-red-500/10"
+                    onClick={() => setDeleteDialogOpen(true)}
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </Button>
+                </div>
               )}
-
-              {/* Delete user - super admin only, can't delete other super admins */}
-              {isSuperAdmin && selectedUser?.admin_role !== "super_admin" && (
-                <Button
-                  variant="ghost"
-                  className="w-full h-10 touch-manipulation rounded-xl text-red-400 hover:text-red-500 hover:bg-red-500/10"
-                  onClick={() => setDeleteDialogOpen(true)}
-                >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete User
-                </Button>
-              )}
-            </SheetFooter>
+            </div>
           </div>
         </SheetContent>
       </Sheet>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-red-500" />
@@ -1215,9 +1162,9 @@ export default function AdminUsers() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-red-500 hover:bg-red-600"
+              className="bg-red-500 hover:bg-red-600 rounded-xl"
               onClick={() => selectedUser && deleteUserMutation.mutate(selectedUser.id)}
               disabled={deleteUserMutation.isPending}
             >

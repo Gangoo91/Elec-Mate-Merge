@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice Preview</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; color: #1f2937; line-height: 1.5; background: #e5e7eb; }
+    .page { padding: 40px; max-width: 210mm; margin: 20px auto; background: #ffffff; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+
+    /* Header */
+    .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid #1e40af; }
+    .logo-section { display: flex; align-items: center; }
+    .logo-placeholder { width: 120px; height: 120px; background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; text-align: center; line-height: 1.3; }
+    .company-info { text-align: right; }
+    .company-name { font-size: 22px; font-weight: 700; color: #1e40af; margin-bottom: 4px; }
+    .company-details { font-size: 11px; color: #6b7280; line-height: 1.6; }
+
+    /* Invoice Title Banner */
+    .invoice-banner { background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+    .invoice-title { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+    .invoice-number { font-size: 14px; opacity: 0.9; margin-top: 4px; }
+    .invoice-dates { text-align: right; font-size: 12px; }
+    .invoice-dates strong { color: #ffffff; }
+    .invoice-dates .due-date { margin-top: 4px; }
+
+    /* Two Column Layout */
+    .two-col { display: flex; gap: 24px; margin-bottom: 24px; }
+    .col { flex: 1; }
+
+    /* Info Cards */
+    .info-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; height: 100%; }
+    .info-card-header { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #1e40af; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+    .info-card-header::before { content: ''; display: inline-block; width: 8px; height: 8px; background: #1e40af; border-radius: 50%; }
+    .info-label { font-size: 9px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
+    .info-value { font-size: 12px; color: #1f2937; margin-bottom: 8px; font-weight: 500; }
+
+    /* Items Table */
+    .items-section { margin-bottom: 24px; }
+    .section-title { font-size: 14px; font-weight: 600; color: #1e40af; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #1e40af; }
+    .items-table { width: 100%; border-collapse: collapse; }
+    .items-table th { background: #1e3a5f; color: white; padding: 12px 16px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .items-table th:first-child { border-radius: 8px 0 0 0; }
+    .items-table th:last-child { text-align: right; border-radius: 0 8px 0 0; }
+    .items-table td { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-size: 11px; vertical-align: top; }
+    .items-table td:last-child { text-align: right; font-weight: 600; color: #1f2937; }
+    .items-table tr:nth-child(even):not(.category-row) { background: #f8fafc; }
+    .items-table .item-desc { font-weight: 500; color: #1f2937; }
+    .items-table .item-notes { font-size: 10px; color: #6b7280; margin-top: 2px; }
+    .items-table .qty-unit { color: #6b7280; }
+
+    /* Category Headers */
+    .category-row td { background: #f1f5f9 !important; padding: 10px 16px; font-weight: 600; color: #475569; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .category-dot { color: #1e40af; margin-right: 6px; }
+
+    /* Totals */
+    .totals-section { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+    .totals-box { width: 320px; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+    .totals-row { display: flex; justify-content: space-between; padding: 10px 16px; font-size: 12px; border-bottom: 1px solid #e2e8f0; background: #ffffff; }
+    .totals-row:first-child { background: #f8fafc; }
+    .totals-row:last-child { border-bottom: none; }
+    .totals-row.total { background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); color: white; font-size: 16px; font-weight: 700; padding: 14px 16px; }
+    .totals-row .label { color: #374151; }
+    .totals-row .amount { font-weight: 600; color: #1f2937; }
+    .totals-row.total .label, .totals-row.total .amount { color: #ffffff; }
+
+    /* Terms Bar */
+    .terms-bar { display: flex; margin-bottom: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
+    .terms-bar-item { flex: 1; padding: 14px 10px; text-align: center; background: #f8fafc; border-right: 1px solid #e2e8f0; }
+    .terms-bar-item:last-child { border-right: none; background: #1e40af; }
+    .terms-bar-label { font-size: 8px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 4px; }
+    .terms-bar-value { font-size: 16px; color: #1e40af; font-weight: 700; }
+    .terms-bar-item:last-child .terms-bar-label { color: rgba(255,255,255,0.8); }
+    .terms-bar-item:last-child .terms-bar-value { color: #ffffff; font-size: 14px; }
+
+    /* Payment Information */
+    .payment-section { margin-bottom: 20px; }
+    .payment-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px 24px; }
+    .payment-grid { display: flex; gap: 24px; }
+    .payment-col { flex: 1; min-width: 0; }
+    .payment-detail { margin-bottom: 10px; }
+    .payment-detail:last-child { margin-bottom: 0; }
+
+    /* Terms & Conditions */
+    .terms-section { margin-bottom: 20px; }
+    .terms-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px 24px; }
+    .terms-list { margin: 0; padding: 0; list-style: none; column-count: 2; column-gap: 30px; }
+    .terms-list li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; break-inside: avoid; font-size: 10px; color: #374151; line-height: 1.5; }
+    .terms-dot { color: #1e40af; font-size: 8px; margin-top: 3px; flex-shrink: 0; }
+
+    /* Footer */
+    .footer { margin-top: 30px; padding-top: 12px; border-top: 1px solid #e2e8f0; text-align: center; }
+    .footer-text { font-size: 9px; color: #9ca3af; }
+    .footer-brand { color: #1e40af; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Header with Logo and Company Info -->
+    <div class="header">
+      <div class="logo-section">
+        <div class="logo-placeholder">YOUR<br>LOGO<br>HERE</div>
+      </div>
+      <div class="company-info">
+        <div class="company-name">Spark Electrical Services Ltd</div>
+        <div class="company-details">
+          Unit 4, Trade Park<br>
+          Manchester, M12 4PQ<br>
+          Tel: 0161 234 5678<br>
+          info@sparkelectrical.co.uk<br>
+          VAT: GB 123 4567 89
+        </div>
+      </div>
+    </div>
+
+    <!-- Invoice Banner -->
+    <div class="invoice-banner">
+      <div>
+        <div class="invoice-title">INVOICE</div>
+        <div class="invoice-number">Invoice #INV-2024-0047</div>
+        <div style="font-size: 11px; opacity: 0.8; margin-top: 2px;">PO: PO-78234</div>
+      </div>
+      <div class="invoice-dates">
+        <div>Invoice Date: <strong>27 January 2024</strong></div>
+        <div class="due-date">Due Date: <strong>10 February 2024</strong></div>
+        <div style="margin-top: 4px; font-size: 11px; opacity: 0.8;">Ref: Quote #QTE-2024-0089</div>
+      </div>
+    </div>
+
+    <!-- Client and Job Details -->
+    <div class="two-col">
+      <div class="col">
+        <div class="info-card">
+          <div class="info-card-header">Client Details</div>
+          <div class="info-label">Name</div>
+          <div class="info-value">Mr James Richardson</div>
+          <div class="info-label">Address</div>
+          <div class="info-value">45 Victoria Road, Didsbury, M20 2QR</div>
+          <div class="info-label">Email</div>
+          <div class="info-value">james.richardson@email.com</div>
+          <div class="info-label">Phone</div>
+          <div class="info-value">07712 345 678</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="info-card">
+          <div class="info-card-header">Job Details</div>
+          <div class="info-label">Project</div>
+          <div class="info-value">Kitchen Rewire & Consumer Unit Upgrade</div>
+          <div class="info-label">Location</div>
+          <div class="info-value">45 Victoria Road, Didsbury</div>
+          <div class="info-label">Completed</div>
+          <div class="info-value">25 January 2024</div>
+          <div class="info-label">Description</div>
+          <div class="info-value" style="font-weight: 400; font-size: 11px;">Full kitchen rewire including new ring main, lighting circuit, and 18th Edition consumer unit upgrade with RCBO protection.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Items Table -->
+    <div class="items-section">
+      <div class="section-title">Invoice Breakdown</div>
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th style="width: 45%;">Description</th>
+            <th style="width: 15%;">Qty</th>
+            <th style="width: 20%;">Unit Price</th>
+            <th style="width: 20%;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Labour -->
+          <tr class="category-row">
+            <td colspan="4"><span class="category-dot">●</span> Labour</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-desc">Electrician - Kitchen Rewire</div>
+              <div class="item-notes">First fix and second fix wiring</div>
+            </td>
+            <td class="qty-unit">8 hrs</td>
+            <td>£45.00</td>
+            <td>£360.00</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-desc">Consumer Unit Installation</div>
+              <div class="item-notes">Removal of old unit, installation and testing</div>
+            </td>
+            <td class="qty-unit">3 hrs</td>
+            <td>£55.00</td>
+            <td>£165.00</td>
+          </tr>
+
+          <!-- Materials -->
+          <tr class="category-row">
+            <td colspan="4"><span class="category-dot">●</span> Materials</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-desc">Hager 18th Edition Consumer Unit 10-Way</div>
+              <div class="item-notes">Type 2 SPD, 100A main switch</div>
+            </td>
+            <td class="qty-unit">1 unit</td>
+            <td>£185.00</td>
+            <td>£185.00</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-desc">Hager RCBO 32A Type B</div>
+            </td>
+            <td class="qty-unit">4 units</td>
+            <td>£28.50</td>
+            <td>£114.00</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-desc">Twin & Earth Cable 2.5mm² (6242Y)</div>
+            </td>
+            <td class="qty-unit">50 m</td>
+            <td>£1.20</td>
+            <td>£60.00</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-desc">Twin & Earth Cable 1.5mm² (6242Y)</div>
+            </td>
+            <td class="qty-unit">30 m</td>
+            <td>£0.85</td>
+            <td>£25.50</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-desc">Metal Back Boxes 35mm</div>
+            </td>
+            <td class="qty-unit">8 units</td>
+            <td>£2.40</td>
+            <td>£19.20</td>
+          </tr>
+
+          <!-- Equipment -->
+          <tr class="category-row">
+            <td colspan="4"><span class="category-dot">●</span> Equipment</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-desc">Multifunction Tester Hire</div>
+              <div class="item-notes">Megger MFT1741 - testing and certification</div>
+            </td>
+            <td class="qty-unit">1 day</td>
+            <td>£35.00</td>
+            <td>£35.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Totals -->
+    <div class="totals-section">
+      <div class="totals-box">
+        <div class="totals-row">
+          <span class="label">Subtotal</span>
+          <span class="amount">£963.70</span>
+        </div>
+        <div class="totals-row">
+          <span class="label">Deposit Paid</span>
+          <span class="amount" style="color: #16a34a;">-£300.00</span>
+        </div>
+        <div class="totals-row">
+          <span class="label">VAT (20%)</span>
+          <span class="amount">£192.74</span>
+        </div>
+        <div class="totals-row total">
+          <span class="label">Amount Due</span>
+          <span class="amount">£856.44</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invoice Terms Bar -->
+    <div class="terms-bar">
+      <div class="terms-bar-item">
+        <div class="terms-bar-label">Payment Terms</div>
+        <div class="terms-bar-value">14 days</div>
+      </div>
+      <div class="terms-bar-item">
+        <div class="terms-bar-label">Late Payment Interest</div>
+        <div class="terms-bar-value">8% p.a.</div>
+      </div>
+      <div class="terms-bar-item">
+        <div class="terms-bar-label">Preferred Payment</div>
+        <div class="terms-bar-value">Bank Transfer</div>
+      </div>
+      <div class="terms-bar-item">
+        <div class="terms-bar-label">Reference</div>
+        <div class="terms-bar-value">INV-2024-0047</div>
+      </div>
+    </div>
+
+    <!-- Payment Information -->
+    <div class="payment-section">
+      <div class="section-title">Payment Information</div>
+      <div class="payment-box">
+        <div class="payment-grid">
+          <div class="payment-col">
+            <div class="payment-detail">
+              <div class="info-label">Bank Name</div>
+              <div class="info-value">Barclays Bank</div>
+            </div>
+            <div class="payment-detail">
+              <div class="info-label">Account Name</div>
+              <div class="info-value">Spark Electrical Services Ltd</div>
+            </div>
+          </div>
+          <div class="payment-col">
+            <div class="payment-detail">
+              <div class="info-label">Sort Code</div>
+              <div class="info-value">20-45-67</div>
+            </div>
+            <div class="payment-detail">
+              <div class="info-label">Account Number</div>
+              <div class="info-value">12345678</div>
+            </div>
+          </div>
+          <div class="payment-col">
+            <div class="payment-detail">
+              <div class="info-label">Payment Reference</div>
+              <div class="info-value" style="color: #1e40af; font-weight: 600;">INV-2024-0047</div>
+            </div>
+            <div class="payment-detail">
+              <div class="info-label">Also Accepted</div>
+              <div class="info-value" style="font-size: 11px;">Card, PayPal, Cheque</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms & Conditions -->
+    <div class="terms-section">
+      <div class="section-title">Terms &amp; Conditions</div>
+      <div class="terms-box">
+        <ul class="terms-list">
+          <li><span class="terms-dot">●</span><span>Payment is due within the period specified above</span></li>
+          <li><span class="terms-dot">●</span><span>Please use invoice number as payment reference</span></li>
+          <li><span class="terms-dot">●</span><span>Late payment interest may be charged on overdue invoices</span></li>
+          <li><span class="terms-dot">●</span><span>All workmanship guaranteed as per original quotation</span></li>
+          <li><span class="terms-dot">●</span><span>All work complies with BS 7671 (18th Edition)</span></li>
+          <li><span class="terms-dot">●</span><span>Queries to be raised within 7 days of invoice date</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p class="footer-text">Powered by <span class="footer-brand">Elec-Mate Professional Suite</span> · elec-mate.com</p>
+    </div>
+  </div>
+</body>
+</html>

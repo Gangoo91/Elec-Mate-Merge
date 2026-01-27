@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LogOut, User, Settings, MessageSquare, Bell, ChevronRight, Sparkles } from 'lucide-react';
+import { LogOut, MessageSquare, Bell, ChevronRight, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
@@ -191,33 +191,6 @@ const UserProfileDropdown = () => {
             </div>
           </DropdownMenuItem>
 
-          <DropdownMenuSeparator className="bg-border/50 my-1" />
-
-          <DropdownMenuItem
-            onClick={() => navigate('/profile')}
-            className="flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="p-1.5 rounded-lg bg-blue-500/10 text-blue-400 group-hover:bg-blue-500/20 transition-colors">
-                <User className="h-4 w-4" />
-              </div>
-              <span className="font-medium">Profile</span>
-            </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-          </DropdownMenuItem>
-
-          <DropdownMenuItem
-            onClick={() => navigate('/settings')}
-            className="flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer hover:bg-elec-yellow/10 focus:bg-elec-yellow/10 group"
-          >
-            <div className="flex items-center gap-3">
-              <div className="p-1.5 rounded-lg bg-slate-500/10 text-slate-400 group-hover:bg-slate-500/20 transition-colors">
-                <Settings className="h-4 w-4" />
-              </div>
-              <span className="font-medium">Settings</span>
-            </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-          </DropdownMenuItem>
         </div>
 
         <DropdownMenuSeparator className="bg-border/50" />

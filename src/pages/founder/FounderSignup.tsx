@@ -144,6 +144,7 @@ export default function FounderSignup() {
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState<string>("");
   const [hasExistingAccount, setHasExistingAccount] = useState(false);
+  const [isAlreadySubscribed, setIsAlreadySubscribed] = useState(false);
 
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
@@ -183,6 +184,10 @@ export default function FounderSignup() {
         setValid(true);
         setEmail(data.email);
         setHasExistingAccount(data.hasExistingAccount || false);
+      } else if (data?.isAlreadySubscribed) {
+        // User is already a founder subscriber - show friendly message
+        setIsAlreadySubscribed(true);
+        setError(data?.reason || "You're already subscribed as a Founder!");
       } else {
         setError(data?.reason || "Invalid invite");
       }
@@ -210,6 +215,15 @@ export default function FounderSignup() {
       );
 
       if (error) throw error;
+
+      // Handle already subscribed response
+      if (data?.alreadySubscribed) {
+        setIsAlreadySubscribed(true);
+        setValid(false);
+        setError(data.message || "You're already subscribed as a Founder!");
+        setSubmitting(false);
+        return;
+      }
 
       if (data?.url) {
         // Redirect to Stripe checkout
@@ -260,6 +274,15 @@ export default function FounderSignup() {
 
       if (error) throw error;
 
+      // Handle already subscribed response
+      if (data?.alreadySubscribed) {
+        setIsAlreadySubscribed(true);
+        setValid(false);
+        setError(data.message || "You're already subscribed as a Founder!");
+        setSubmitting(false);
+        return;
+      }
+
       if (data?.checkoutUrl) {
         // Redirect to Stripe checkout
         window.location.href = data.checkoutUrl;
@@ -288,7 +311,7 @@ export default function FounderSignup() {
     );
   }
 
-  // Error state
+  // Error state - but show friendly message for already subscribed users
   if (error && !valid) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-black to-black flex items-center justify-center p-4">
@@ -297,19 +320,43 @@ export default function FounderSignup() {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-sm w-full"
         >
-          <div className="p-8 rounded-3xl bg-white/[0.04] border border-red-500/30 text-center">
-            <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
-              <AlertTriangle className="h-8 w-8 text-red-400" />
+          <div className={`p-8 rounded-3xl bg-white/[0.04] border ${isAlreadySubscribed ? 'border-green-500/30' : 'border-red-500/30'} text-center`}>
+            <div className={`w-16 h-16 rounded-full ${isAlreadySubscribed ? 'bg-green-500/10' : 'bg-red-500/10'} flex items-center justify-center mx-auto mb-4`}>
+              {isAlreadySubscribed ? (
+                <CheckCircle2 className="h-8 w-8 text-green-400" />
+              ) : (
+                <AlertTriangle className="h-8 w-8 text-red-400" />
+              )}
             </div>
-            <h1 className="text-xl font-bold text-white mb-2">Invalid Invite</h1>
+            <h1 className="text-xl font-bold text-white mb-2">
+              {isAlreadySubscribed ? "You're Already a Founder!" : "Invalid Invite"}
+            </h1>
             <p className="text-muted-foreground mb-6">{error}</p>
-            <Button
-              variant="outline"
-              className="h-11 touch-manipulation"
-              onClick={() => navigate("/")}
-            >
-              Go to Homepage
-            </Button>
+            {isAlreadySubscribed ? (
+              <div className="space-y-3">
+                <Button
+                  className="w-full h-11 touch-manipulation bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-black font-bold"
+                  onClick={() => navigate("/auth/signin")}
+                >
+                  Sign In to Your Account
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full h-11 touch-manipulation"
+                  onClick={() => navigate("/")}
+                >
+                  Go to Homepage
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant="outline"
+                className="h-11 touch-manipulation"
+                onClick={() => navigate("/")}
+              >
+                Go to Homepage
+              </Button>
+            )}
           </div>
         </motion.div>
       </div>

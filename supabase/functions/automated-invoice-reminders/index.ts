@@ -51,12 +51,16 @@ serve(async (req: Request) => {
     today.setHours(0, 0, 0, 0);
 
     // Find overdue invoices (quotes with invoice_number not null = converted to invoice)
+    // Only include invoices that have been manually sent to the client first (not drafts)
+    // This prevents sending "overdue" reminders before the client has even received the invoice
     const { data: overdueInvoices, error: queryError } = await supabase
       .from('quotes')
-      .select('id, invoice_number, client_data, total, invoice_due_date, invoice_status, user_id, reminder_count, last_reminder_sent_at')
+      .select('id, invoice_number, client_data, total, invoice_due_date, invoice_status, user_id, reminder_count, last_reminder_sent_at, invoice_sent_at')
       .not('invoice_number', 'is', null)
       .not('invoice_status', 'eq', 'paid')
       .not('invoice_status', 'eq', 'cancelled')
+      .not('invoice_status', 'eq', 'draft')
+      .not('invoice_sent_at', 'is', null)  // Must have been sent to client first
       .lt('invoice_due_date', today.toISOString());
 
     if (queryError) {

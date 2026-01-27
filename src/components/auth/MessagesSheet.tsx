@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MessageSquare, ArrowLeft, Building2, Briefcase, Heart, Hash, GraduationCap, Send, Loader2, CheckCheck, Trash2, Bell, Clock, Check } from "lucide-react";
+import { MessageSquare, ArrowLeft, Building2, Briefcase, Heart, Hash, GraduationCap, Send, Loader2, CheckCheck, Trash2, Bell, Clock, Check, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
@@ -47,6 +47,7 @@ import { PeerChatActions } from "@/components/mental-health/peer-support/PeerCha
 
 // Types
 import type { Conversation, ElectricianConversation } from "@/services/conversationService";
+import { deleteConversation } from "@/services/conversationService";
 import type { TeamChannel, TeamDirectMessage } from "@/services/teamChatService";
 import type { CollegeConversation } from "@/services/collegeChatService";
 import { cn } from "@/lib/utils";
@@ -71,10 +72,12 @@ function PeerConversationListItem({
   conversation,
   currentUserId,
   onClick,
+  onDelete,
 }: {
   conversation: PeerConversation;
   currentUserId: string;
   onClick: (conv: PeerConversation) => void;
+  onDelete: (conv: PeerConversation) => void;
 }) {
   const isSupporter = conversation.supporter?.user_id === currentUserId;
   const otherName = isSupporter
@@ -112,7 +115,15 @@ function PeerConversationListItem({
               </Badge>
             </div>
           </div>
-          <MessageSquare className="h-5 w-5 text-pink-500" />
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(conversation);
+            }}
+            className="w-9 h-9 rounded-xl bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 flex items-center justify-center text-red-400 touch-manipulation shrink-0"
+          >
+            <Trash2 className="h-4 w-4" />
+          </button>
         </div>
       </CardContent>
     </Card>
@@ -122,10 +133,22 @@ function PeerConversationListItem({
 // Peer Conversation List
 function PeerConversationList({ onSelect }: { onSelect: (conv: PeerConversation) => void }) {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const { data: conversations, isLoading } = useQuery({
     queryKey: ['peer-conversations'],
     queryFn: () => peerConversationService.getMyConversations(),
   });
+
+  const handleDelete = async (conv: PeerConversation) => {
+    if (!confirm('Delete this conversation? This cannot be undone.')) return;
+    try {
+      await peerMessageService.deleteConversation(conv.id);
+      queryClient.invalidateQueries({ queryKey: ['peer-conversations'] });
+      toast({ title: "Conversation deleted" });
+    } catch (error) {
+      toast({ title: "Failed to delete", variant: "destructive" });
+    }
+  };
 
   if (isLoading) {
     return (
@@ -165,6 +188,7 @@ function PeerConversationList({ onSelect }: { onSelect: (conv: PeerConversation)
           conversation={conv}
           currentUserId={user?.id || ''}
           onClick={onSelect}
+          onDelete={handleDelete}
         />
       ))}
     </div>
@@ -301,6 +325,179 @@ function PeerChatView({
   );
 }
 
+// Admin Chat View Component - Two-way chat with admin
+function AdminChatView({
+  currentUserId,
+  conversationMessages,
+  sendReply,
+  isSending,
+  markAsRead,
+  deleteMessage,
+  isDeleting,
+}: {
+  currentUserId: string;
+  conversationMessages: any[];
+  sendReply: (args: { message: string; subject?: string }) => Promise<any>;
+  isSending: boolean;
+  markAsRead: (id: string) => void;
+  deleteMessage?: (id: string) => void;
+  isDeleting?: boolean;
+}) {
+  const [newMessage, setNewMessage] = useState("");
+  const [messageToDelete, setMessageToDelete] = useState<string | null>(null);
+
+  // Safely filter out any malformed messages
+  const safeMessages = (conversationMessages || []).filter(
+    (msg) => msg && msg.id && msg.created_at && msg.message
+  );
+
+  // Mark unread messages as read on mount
+  useEffect(() => {
+    safeMessages.forEach((msg) => {
+      if (msg.recipient_id === currentUserId && !msg.read_at) {
+        markAsRead(msg.id);
+      }
+    });
+  }, [safeMessages.length, currentUserId, markAsRead]);
+
+  const handleSend = async () => {
+    if (!newMessage.trim() || isSending) return;
+
+    try {
+      await sendReply({ message: newMessage.trim(), subject: "Support Request" });
+      setNewMessage("");
+      toast({
+        title: "Message sent",
+        description: "The admin team will respond soon",
+      });
+    } catch (error) {
+      console.error("Failed to send:", error);
+      toast({
+        title: "Failed to send",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const handleDelete = (msgId: string) => {
+    if (deleteMessage) {
+      deleteMessage(msgId);
+      setMessageToDelete(null);
+      toast({
+        title: "Message deleted",
+      });
+    }
+  };
+
+  return (
+    <div className="flex flex-col h-full">
+      <ScrollArea className="flex-1 p-4">
+        <div className="space-y-3">
+          {safeMessages.length === 0 ? (
+            <div className="text-center py-8">
+              <Shield className="h-12 w-12 text-red-400/30 mx-auto mb-3" />
+              <p className="text-muted-foreground text-sm mb-2">
+                Need help or have feedback?
+              </p>
+              <p className="text-xs text-muted-foreground/70">
+                Send a message to the admin team
+              </p>
+            </div>
+          ) : (
+            safeMessages.map((msg) => {
+              const isFromUser = msg.sender_id === currentUserId;
+              return (
+                <div
+                  key={msg.id}
+                  className={cn("flex group", isFromUser ? "justify-end" : "justify-start")}
+                >
+                  <div className="relative">
+                    <div
+                      className={cn(
+                        "max-w-[85%] rounded-2xl px-4 py-3",
+                        isFromUser
+                          ? "bg-blue-500 text-white rounded-br-md"
+                          : "bg-muted text-foreground rounded-bl-md"
+                      )}
+                    >
+                      {!isFromUser && msg.subject && msg.subject !== "Reply" && msg.subject !== "Support" && msg.subject !== "Support Request" && (
+                        <p className="text-xs font-semibold mb-1 opacity-70">{msg.subject}</p>
+                      )}
+                      <p className="text-sm whitespace-pre-wrap">{msg.message}</p>
+                      <div className={cn(
+                        "flex items-center gap-2 mt-1.5",
+                        isFromUser ? "justify-end" : "justify-start"
+                      )}>
+                        <p
+                          className={cn(
+                            "text-[10px]",
+                            isFromUser ? "text-blue-100" : "text-muted-foreground"
+                          )}
+                        >
+                          {formatDistanceToNow(new Date(msg.created_at), { addSuffix: true })}
+                        </p>
+                      </div>
+                    </div>
+                    {/* Delete button - show on hover/tap */}
+                    {deleteMessage && (
+                      <button
+                        onClick={() => handleDelete(msg.id)}
+                        disabled={isDeleting}
+                        className={cn(
+                          "absolute -top-2 opacity-0 group-hover:opacity-100 transition-opacity",
+                          "w-6 h-6 rounded-full bg-red-500/90 hover:bg-red-500 flex items-center justify-center",
+                          "text-white shadow-md touch-manipulation",
+                          isFromUser ? "-left-2" : "-right-2"
+                        )}
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+      </ScrollArea>
+
+      {/* Message Input */}
+      <div className="p-4 border-t border-border shrink-0">
+        <div className="flex gap-2">
+          <Input
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Message admin..."
+            disabled={isSending}
+            className="flex-1 h-11 touch-manipulation"
+          />
+          <Button
+            onClick={handleSend}
+            disabled={!newMessage.trim() || isSending}
+            size="icon"
+            className="h-11 w-11 bg-red-500 hover:bg-red-600 text-white shrink-0 rounded-xl"
+          >
+            {isSending ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              <Send className="h-5 w-5" />
+            )}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -351,7 +548,18 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const { data: collegeConversations = [], totalUnread: collegeUnread } = useCollegeConversations(isCollegeContext);
 
   // Admin messages
-  const { messages: adminMessages, unreadCount: adminUnread, markAsRead: markAdminAsRead, markAllAsRead: markAllAdminAsRead } = useAdminMessages();
+  const {
+    messages: adminMessages,
+    conversationMessages,
+    unreadCount: adminUnread,
+    markAsRead: markAdminAsRead,
+    markAllAsRead: markAllAdminAsRead,
+    sendReply,
+    isSending: isSendingReply,
+    deleteMessage: deleteAdminMessage,
+    deleteAllMessages: deleteAllAdminMessages,
+    isDeleting: isDeletingAdmin,
+  } = useAdminMessages();
 
   // Calculate unreads
   const jobConversations = isEmployerContext ? employerConversations : electricianConversations;
@@ -365,6 +573,23 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
   const { data: messages = [], isLoading: messagesLoading } = useMessages(selectedConversation?.id || '');
   const sendMessage = useSendMessage();
   const markAllAsRead = useMarkAllAsRead();
+
+  // Handle deleting job conversations
+  const handleDeleteJobConversation = async (conv: Conversation | ElectricianConversation) => {
+    if (!confirm('Delete this conversation? This cannot be undone.')) return;
+    try {
+      const success = await deleteConversation(conv.id);
+      if (success) {
+        queryClient.invalidateQueries({ queryKey: ['conversations'] });
+        queryClient.invalidateQueries({ queryKey: ['electrician-conversations'] });
+        toast({ title: "Conversation deleted" });
+      } else {
+        throw new Error('Delete failed');
+      }
+    } catch (error) {
+      toast({ title: "Failed to delete", variant: "destructive" });
+    }
+  };
 
   // Mark messages as read when conversation is selected
   useEffect(() => {
@@ -554,12 +779,12 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                   </TabsTrigger>
                 )}
 
-                {/* Updates Tab - Always show */}
+                {/* Admin Tab - Always show */}
                 <TabsTrigger value="admin" className="gap-2 rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-sm">
-                  <Bell className="h-4 w-4" />
-                  <span className="text-xs font-medium">Updates</span>
+                  <Shield className="h-4 w-4" />
+                  <span className="text-xs font-medium">Admin</span>
                   {adminUnread > 0 && (
-                    <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-bold flex items-center justify-center">
+                    <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
                       {adminUnread}
                     </span>
                   )}
@@ -574,12 +799,14 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                         conversations={employerConversations}
                         isLoading={employerLoading}
                         onSelect={(conv) => setSelectedConversation(conv)}
+                        onDelete={handleDeleteJobConversation}
                       />
                     ) : (
                       <ElectricianConversationList
                         conversations={electricianConversations}
                         isLoading={electricianLoading}
                         onSelect={(conv) => setSelectedConversation(conv)}
+                        onDelete={handleDeleteJobConversation}
                       />
                     )}
                   </TabsContent>
@@ -610,60 +837,118 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                     </TabsContent>
                   )}
 
-                  {/* Admin Messages / Updates Tab */}
+                  {/* Admin Messages Tab */}
                   <TabsContent value="admin" className="m-0 p-4">
                     {adminMessages.length === 0 ? (
                       <div className="flex flex-col items-center justify-center py-12 text-center">
-                        <div className="w-16 h-16 rounded-2xl bg-elec-yellow/10 flex items-center justify-center mb-4">
-                          <Bell className="h-8 w-8 text-elec-yellow/50" />
+                        <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-4">
+                          <Shield className="h-8 w-8 text-red-400/50" />
                         </div>
-                        <h3 className="font-semibold text-foreground mb-1">No updates yet</h3>
+                        <h3 className="font-semibold text-foreground mb-1">No messages yet</h3>
                         <p className="text-sm text-muted-foreground max-w-[200px]">
-                          Important messages from Elec-Mate will appear here
+                          Contact the admin team for help or support
                         </p>
+                        {/* Start conversation button */}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="mt-4 h-10 touch-manipulation border-red-500/30 text-red-400 hover:bg-red-500/10"
+                          onClick={() => setSelectedAdminMessage({ id: 'new', subject: 'New Message' })}
+                        >
+                          <Send className="h-4 w-4 mr-2" />
+                          Message Admin
+                        </Button>
                       </div>
                     ) : (
-                      <div className="space-y-2">
+                      <div className="space-y-3">
+                        {/* Actions header */}
+                        <div className="flex items-center justify-between pb-2 border-b border-border">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-9 touch-manipulation text-xs"
+                            onClick={() => setSelectedAdminMessage({ id: 'new', subject: 'New Message' })}
+                          >
+                            <Send className="h-3.5 w-3.5 mr-1.5" />
+                            New Message
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-9 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                            onClick={() => {
+                              if (confirm('Delete all messages? This cannot be undone.')) {
+                                deleteAllAdminMessages();
+                                toast({ title: "All messages deleted" });
+                              }
+                            }}
+                            disabled={isDeletingAdmin}
+                          >
+                            <Trash2 className="h-3.5 w-3.5 mr-1.5" />
+                            Clear All
+                          </Button>
+                        </div>
                         {adminMessages.map((msg) => {
-                          const isUnread = !msg.read_at;
+                          const isUnread = msg.recipient_id === user?.id && !msg.read_at;
+                          const isFromUser = msg.sender_id === user?.id;
                           return (
-                            <button
+                            <div
                               key={msg.id}
-                              onClick={() => {
-                                setSelectedAdminMessage(msg);
-                                if (!msg.read_at) {
-                                  markAdminAsRead(msg.id);
-                                }
-                              }}
                               className={cn(
-                                "w-full flex items-start gap-3 p-4 rounded-xl text-left transition-all touch-manipulation",
+                                "relative group flex items-start gap-3 p-4 rounded-xl text-left transition-all",
                                 isUnread
                                   ? "bg-elec-yellow/10 border border-elec-yellow/20"
-                                  : "bg-muted/30 hover:bg-muted/50 border border-transparent"
+                                  : isFromUser
+                                  ? "bg-blue-500/5 border border-blue-500/10"
+                                  : "bg-muted/30 border border-transparent"
                               )}
                             >
+                              {/* Click area for opening chat */}
+                              <button
+                                onClick={() => {
+                                  setSelectedAdminMessage(msg);
+                                  if (!msg.read_at && msg.recipient_id === user?.id) {
+                                    markAdminAsRead(msg.id);
+                                  }
+                                }}
+                                className="absolute inset-0 touch-manipulation"
+                              />
+
                               {/* Icon */}
                               <div className={cn(
-                                "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
-                                isUnread ? "bg-elec-yellow/20" : "bg-muted"
+                                "w-10 h-10 rounded-xl flex items-center justify-center shrink-0 relative z-10",
+                                isFromUser
+                                  ? "bg-blue-500/20"
+                                  : isUnread ? "bg-red-500/20" : "bg-muted"
                               )}>
-                                <Bell className={cn(
-                                  "h-5 w-5",
-                                  isUnread ? "text-elec-yellow" : "text-muted-foreground"
-                                )} />
+                                {isFromUser ? (
+                                  <Send className="h-5 w-5 text-blue-400" />
+                                ) : (
+                                  <Shield className={cn(
+                                    "h-5 w-5",
+                                    isUnread ? "text-red-400" : "text-muted-foreground"
+                                  )} />
+                                )}
                               </div>
 
                               {/* Content */}
-                              <div className="flex-1 min-w-0">
+                              <div className="flex-1 min-w-0 relative z-10 pointer-events-none">
                                 <div className="flex items-start justify-between gap-2">
-                                  <p className={cn(
-                                    "text-sm leading-tight",
-                                    isUnread ? "font-semibold text-foreground" : "text-foreground/80"
-                                  )}>
-                                    {msg.subject}
-                                  </p>
+                                  <div className="flex items-center gap-2">
+                                    <p className={cn(
+                                      "text-sm leading-tight",
+                                      isUnread ? "font-semibold text-foreground" : "text-foreground/80"
+                                    )}>
+                                      {isFromUser ? "You" : "Admin"}
+                                    </p>
+                                    {isFromUser && (
+                                      <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4 bg-blue-500/10 text-blue-400 border-blue-500/20">
+                                        Sent
+                                      </Badge>
+                                    )}
+                                  </div>
                                   {isUnread && (
-                                    <span className="w-2 h-2 rounded-full bg-elec-yellow shrink-0 mt-1.5" />
+                                    <span className="w-2 h-2 rounded-full bg-red-500 shrink-0 mt-1.5" />
                                   )}
                                 </div>
                                 <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
@@ -673,7 +958,19 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                                   {formatDistanceToNow(new Date(msg.created_at), { addSuffix: true })}
                                 </p>
                               </div>
-                            </button>
+
+                              {/* Delete button - always visible on mobile */}
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  deleteAdminMessage(msg.id);
+                                }}
+                                disabled={isDeletingAdmin}
+                                className="relative z-10 w-9 h-9 rounded-xl bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 flex items-center justify-center text-red-400 touch-manipulation shrink-0"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </div>
                           );
                         })}
                       </div>
@@ -701,7 +998,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                       ? (selectedPeerConversation.seeker?.full_name?.split(' ')[0] || 'Mate')
                       : (selectedPeerConversation.supporter?.display_name || 'Peer Supporter')
                   )}
-                  {selectedAdminMessage && 'Message from Elec-Mate'}
+                  {selectedAdminMessage && 'Admin Support'}
                 </h3>
               </div>
               {/* Peer Chat Actions */}
@@ -769,27 +1066,17 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                 />
               )}
 
-              {/* Admin Message View */}
+              {/* Admin Chat View - Two-way conversation */}
               {selectedAdminMessage && (
-                <div className="flex flex-col h-full p-4">
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground mb-1">
-                        {selectedAdminMessage.subject}
-                      </h3>
-                      <p className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {formatDistanceToNow(new Date(selectedAdminMessage.created_at), { addSuffix: true })}
-                      </p>
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-muted/50 border border-border">
-                      <p className="text-sm text-foreground/90 whitespace-pre-wrap leading-relaxed">
-                        {selectedAdminMessage.message}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <AdminChatView
+                  currentUserId={user?.id || ''}
+                  conversationMessages={conversationMessages}
+                  sendReply={sendReply}
+                  isSending={isSendingReply}
+                  markAsRead={markAdminAsRead}
+                  deleteMessage={deleteAdminMessage}
+                  isDeleting={isDeletingAdmin}
+                />
               )}
             </div>
           </div>

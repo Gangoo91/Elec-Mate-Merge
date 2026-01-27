@@ -1,13 +1,14 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { MessageSquare, Clock, Briefcase, Award, Shield } from "lucide-react";
+import { MessageSquare, Clock, Briefcase, Award, Shield, Trash2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import type { Conversation } from "@/services/conversationService";
 
 interface ConversationListItemProps {
   conversation: Conversation;
   onClick: () => void;
+  onDelete?: (conversation: Conversation) => void;
 }
 
 const tierConfig: Record<string, { color: string; bg: string; icon: typeof Shield }> = {
@@ -16,7 +17,7 @@ const tierConfig: Record<string, { color: string; bg: string; icon: typeof Shiel
   premium: { color: 'text-elec-yellow', bg: 'bg-yellow-100 dark:bg-yellow-900/30', icon: Award },
 };
 
-export function ConversationListItem({ conversation, onClick }: ConversationListItemProps) {
+export function ConversationListItem({ conversation, onClick, onDelete }: ConversationListItemProps) {
   const profile = conversation.electrician_profile;
   const employee = profile?.employee;
   const name = employee?.name || 'Unknown';
@@ -115,8 +116,19 @@ export function ConversationListItem({ conversation, onClick }: ConversationList
             </div>
           </div>
 
-          {/* Message icon */}
-          <div className="shrink-0">
+          {/* Actions */}
+          <div className="shrink-0 flex items-center gap-2">
+            {onDelete && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete(conversation);
+                }}
+                className="w-9 h-9 rounded-xl bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 flex items-center justify-center text-red-400 touch-manipulation"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            )}
             <MessageSquare className={`h-5 w-5 ${hasUnread ? 'text-elec-yellow' : 'text-muted-foreground'}`} />
           </div>
         </div>

@@ -8,6 +8,7 @@ interface ElectricianConversationListProps {
   conversations: ElectricianConversation[];
   isLoading: boolean;
   onSelect: (conversation: ElectricianConversation) => void;
+  onDelete?: (conversation: ElectricianConversation) => void;
   onBrowseJobs?: () => void;
   emptyMessage?: string;
 }
@@ -16,6 +17,7 @@ export function ElectricianConversationList({
   conversations,
   isLoading,
   onSelect,
+  onDelete,
   onBrowseJobs,
   emptyMessage = "No messages yet",
 }: ElectricianConversationListProps) {
@@ -63,6 +65,7 @@ export function ElectricianConversationList({
           key={conversation.id}
           conversation={conversation}
           onClick={onSelect}
+          onDelete={onDelete}
         />
       ))}
     </div>

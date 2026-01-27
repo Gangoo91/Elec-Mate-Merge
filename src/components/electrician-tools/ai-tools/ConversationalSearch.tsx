@@ -1,13 +1,14 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, Camera, ImageIcon, X, ArrowLeft } from 'lucide-react';
+import { Brain, Camera, ImageIcon, X, ArrowLeft, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { InspectorMessage } from './InspectorMessage';
 import { useSmoothedStreaming } from '@/hooks/useSmoothedStreaming';
 import { useHaptic } from '@/hooks/useHaptic';
 import { supabase } from '@/integrations/supabase/client';
+import { isImageFile, validateImageSize, compressImageForUpload } from '@/utils/imageUploadUtils';
 import {
   ChatContainer,
   ChatMessagesArea,
@@ -36,6 +37,7 @@ export default function ConversationalSearch() {
   const [isSearching, setIsSearching] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isCompressing, setIsCompressing] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -93,19 +95,45 @@ export default function ConversationalSearch() {
     }
   }, [isStreaming, streaming.displayedText, scrollToBottomIfNeeded]);
 
-  // Image handling
-  const handleImageSelect = useCallback((file: File) => {
-    if (!file.type.startsWith('image/')) {
+  // Image handling - supports large files with compression
+  const handleImageSelect = useCallback(async (file: File) => {
+    // Check for image types including HEIC
+    if (!isImageFile(file)) {
       toast.error('Please select an image');
       return;
     }
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error('Image must be under 10MB');
+
+    // Validate size (allow up to 50MB, will be compressed)
+    const validation = validateImageSize(file);
+    if (!validation.valid) {
+      toast.error(validation.error);
       return;
     }
-    setSelectedImage(file);
-    setImagePreview(URL.createObjectURL(file));
-    haptic.selection();
+
+    // Show compression indicator for large files
+    const needsCompression = file.size > 2 * 1024 * 1024;
+    if (needsCompression) {
+      setIsCompressing(true);
+    }
+
+    try {
+      // Compress image for upload (target ~2MB)
+      const compressed = await compressImageForUpload(file);
+      setSelectedImage(compressed);
+      setImagePreview(URL.createObjectURL(compressed));
+      haptic.selection();
+
+      // Show compression result for large files
+      if (needsCompression) {
+        const savedMB = ((file.size - compressed.size) / 1024 / 1024).toFixed(1);
+        toast.success(`Image optimised (saved ${savedMB}MB)`);
+      }
+    } catch (error) {
+      console.error('Image processing error:', error);
+      toast.error('Failed to process image');
+    } finally {
+      setIsCompressing(false);
+    }
   }, [haptic]);
 
   const clearImage = useCallback(() => {
@@ -422,9 +450,26 @@ export default function ConversationalSearch() {
 
       {/* Input Area */}
       <ChatInputArea>
+        {/* Compression Indicator */}
+        <AnimatePresence>
+          {isCompressing && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="px-4 pb-2"
+            >
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span>Optimising image...</span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Image Preview */}
         <AnimatePresence>
-          {imagePreview && (
+          {imagePreview && !isCompressing && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
@@ -452,25 +497,27 @@ export default function ConversationalSearch() {
         <div className="flex items-center gap-2 px-4 pb-2">
           <button
             onClick={() => cameraInputRef.current?.click()}
-            className="p-2.5 rounded-xl bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors touch-manipulation active:scale-95"
+            disabled={isCompressing}
+            className="p-2.5 rounded-xl bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors touch-manipulation active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Take photo"
           >
             <Camera className="h-5 w-5" />
           </button>
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="p-2.5 rounded-xl bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors touch-manipulation active:scale-95"
+            disabled={isCompressing}
+            className="p-2.5 rounded-xl bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors touch-manipulation active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Upload image"
           >
             <ImageIcon className="h-5 w-5" />
           </button>
         </div>
 
-        {/* Hidden file inputs */}
+        {/* Hidden file inputs - accept HEIC for iPhone */}
         <input
           ref={cameraInputRef}
           type="file"
-          accept="image/*"
+          accept="image/*,.heic,.heif"
           capture="environment"
           onChange={(e) => e.target.files?.[0] && handleImageSelect(e.target.files[0])}
           className="hidden"
@@ -478,7 +525,7 @@ export default function ConversationalSearch() {
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/*,.heic,.heif"
           onChange={(e) => e.target.files?.[0] && handleImageSelect(e.target.files[0])}
           className="hidden"
         />

@@ -19,6 +19,126 @@ function generateToken(): string {
   return token;
 }
 
+// Generate custom campaign email HTML with custom message
+function generateCustomCampaignHTML(email: string, inviteToken: string, customMessage: string): string {
+  const siteUrl = Deno.env.get("SITE_URL") || "https://elec-mate.com";
+  const claimUrl = `${siteUrl}/founder/signup?token=${inviteToken}`;
+
+  // Convert line breaks to HTML paragraphs
+  const messageHtml = customMessage
+    .split('\n')
+    .filter(line => line.trim())
+    .map(line => `<p style="margin: 0 0 16px; font-size: 16px; color: #e2e8f0; line-height: 1.7;">${line}</p>`)
+    .join('');
+
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="supported-color-schemes" content="dark">
+  <title>Last Chance - Founder Offer</title>
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td { font-family: Arial, sans-serif !important; }
+  </style>
+  <![endif]-->
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0f172a; -webkit-font-smoothing: antialiased; -webkit-text-size-adjust: 100%;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0f172a;">
+    <tr>
+      <td style="padding: 24px 12px;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 420px; margin: 0 auto; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; border: 1px solid rgba(239, 68, 68, 0.3);">
+
+          <!-- Header with Urgent Badge -->
+          <tr>
+            <td style="padding: 40px 24px 24px; text-align: center;">
+              <div style="font-size: 56px; line-height: 1; margin-bottom: 16px;">⚡</div>
+              <div style="display: inline-block; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; padding: 8px 20px; border-radius: 24px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;">
+                Last Chance
+              </div>
+              <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px; line-height: 1.3;">
+                We Launch Tomorrow!
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Custom Message -->
+          <tr>
+            <td style="padding: 0 24px 24px;">
+              ${messageHtml}
+            </td>
+          </tr>
+
+          <!-- Price Reminder Card -->
+          <tr>
+            <td style="padding: 0 20px 24px;">
+              <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 20px; padding: 24px; text-align: center;">
+                <p style="margin: 0; font-size: 14px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
+                  Your Founder Price
+                </p>
+                <p style="margin: 8px 0 4px; font-size: 44px; font-weight: 800; color: #fbbf24; line-height: 1;">
+                  £3.99<span style="font-size: 16px; color: #94a3b8;">/mo</span>
+                </p>
+                <p style="margin: 8px 0 0; font-size: 14px; color: #cbd5e1;">
+                  <span style="text-decoration: line-through; color: #64748b;">£9.99</span>
+                  <span style="color: #22c55e; font-weight: 600; margin-left: 8px;">Forever locked</span>
+                </p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- CTA Button -->
+          <tr>
+            <td style="padding: 0 20px 32px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tr>
+                  <td>
+                    <a href="${claimUrl}" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; text-decoration: none; font-size: 18px; font-weight: 700; border-radius: 14px; text-align: center; box-shadow: 0 8px 24px rgba(239, 68, 68, 0.35);">
+                      🔒 Claim Before It's Gone
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Urgency Notice -->
+          <tr>
+            <td style="padding: 0 20px 28px;">
+              <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px; padding: 14px 20px; text-align: center;">
+                <p style="margin: 0; font-size: 14px; color: #ef4444; font-weight: 600;">
+                  ⏰ Price goes up tomorrow - don't miss out!
+                </p>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 20px 24px; text-align: center; background-color: #0f172a; border-top: 1px solid rgba(148, 163, 184, 0.1);">
+              <p style="margin: 0 0 8px; font-size: 14px; color: #cbd5e1;">
+                Questions? Just reply to this email
+              </p>
+              <a href="mailto:founder@elec-mate.com" style="font-size: 15px; color: #fbbf24; text-decoration: none; font-weight: 600;">
+                founder@elec-mate.com
+              </a>
+              <p style="margin: 16px 0 0; font-size: 13px; color: #64748b;">
+                © ${new Date().getFullYear()} Elec-Mate · Made in the UK 🇬🇧
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `;
+}
+
 // Generate founder invite email HTML
 function generateInviteEmailHTML(email: string, inviteToken: string): string {
   const siteUrl = Deno.env.get("SITE_URL") || "https://elec-mate.com";
@@ -227,7 +347,7 @@ Deno.serve(async (req) => {
       throw new Error("Unauthorized: Admin access required");
     }
 
-    const { action, emails, inviteId, cohort, token } = await req.json();
+    const { action, emails, inviteId, cohort, token, subject, message } = await req.json();
 
     // Create admin client for operations
     const supabaseAdmin = createClient(
@@ -718,6 +838,152 @@ Deno.serve(async (req) => {
           sent: sentCount,
           failed: errors.length,
           remaining: remaining > 0 ? remaining : 0,
+          total: unclaimedInvites.length,
+          sentEmails,
+          errors: errors.length > 0 ? errors : undefined,
+        };
+        break;
+      }
+
+      case "test_custom_campaign": {
+        // Send a TEST email to a specific address (for previewing before bulk send)
+        const testEmail = emails?.[0] || "founder@elec-mate.com";
+
+        if (!subject || !message) {
+          throw new Error("Subject and message are required for test campaigns");
+        }
+
+        // Find or create a test invite for this email
+        let { data: testInvite } = await supabaseAdmin
+          .from("founder_invites")
+          .select("*")
+          .eq("email", testEmail)
+          .single();
+
+        if (!testInvite) {
+          // Create a temporary test invite
+          const { data: newInvite, error: createError } = await supabaseAdmin
+            .from("founder_invites")
+            .insert({
+              email: testEmail,
+              invite_token: generateToken(),
+              status: "sent",
+            })
+            .select()
+            .single();
+
+          if (createError) throw createError;
+          testInvite = newInvite;
+        }
+
+        const testEmailHtml = generateCustomCampaignHTML(testEmail, testInvite.invite_token, message);
+
+        const { data: emailData, error: emailError } = await resend.emails.send({
+          from: "Elec-Mate <founder@elec-mate.com>",
+          to: [testEmail],
+          subject: `[TEST] ${subject}`,
+          html: testEmailHtml,
+        });
+
+        if (emailError) {
+          throw new Error(`Failed to send test email: ${emailError.message}`);
+        }
+
+        // Update tracking
+        await supabaseAdmin
+          .from("founder_invites")
+          .update({
+            sent_at: new Date().toISOString(),
+            resend_email_id: emailData?.id,
+            last_send_attempt_at: new Date().toISOString(),
+            send_count: (testInvite.send_count || 0) + 1,
+          })
+          .eq("id", testInvite.id);
+
+        console.log(`Test campaign email sent to ${testEmail} by admin ${user.id}`);
+        result = {
+          success: true,
+          email: testEmail,
+          inviteToken: testInvite.invite_token,
+          message: `Test email sent to ${testEmail}`,
+        };
+        break;
+      }
+
+      case "send_custom_campaign": {
+        // Send a custom email campaign to all unclaimed invites
+        // Uses last_campaign_sent_at to track who already got the campaign
+        if (!subject || !message) {
+          throw new Error("Subject and message are required for custom campaigns");
+        }
+
+        // Get all sent invites that haven't been claimed AND haven't received this campaign yet
+        // We use last_campaign_sent_at to track campaign sends separately from regular sends
+        const { data: unclaimedInvites, error: unclaimedError } = await supabaseAdmin
+          .from("founder_invites")
+          .select("*")
+          .eq("status", "sent")
+          .is("last_campaign_sent_at", null)  // Only people who haven't received a campaign yet
+          .order("created_at", { ascending: true });
+
+        if (unclaimedError) throw unclaimedError;
+
+        if (!unclaimedInvites || unclaimedInvites.length === 0) {
+          result = { sent: 0, total: 0, failed: 0, message: "All unclaimed invites have already received the campaign" };
+          break;
+        }
+
+        let sentCount = 0;
+        const errors: string[] = [];
+        const sentEmails: string[] = [];
+
+        // Process in batches with small delay to avoid rate limits
+        for (let i = 0; i < unclaimedInvites.length; i++) {
+          const invite = unclaimedInvites[i];
+
+          try {
+            const emailHtml = generateCustomCampaignHTML(invite.email, invite.invite_token, message);
+
+            const { data: emailData, error: emailError } = await resend.emails.send({
+              from: "Elec-Mate <founder@elec-mate.com>",
+              to: [invite.email],
+              subject: subject,
+              html: emailHtml,
+            });
+
+            if (emailError) {
+              errors.push(`${invite.email}: ${emailError.message}`);
+              continue;
+            }
+
+            // Update with resend_email_id AND mark campaign as sent
+            await supabaseAdmin
+              .from("founder_invites")
+              .update({
+                sent_at: new Date().toISOString(),
+                resend_email_id: emailData?.id,
+                last_send_attempt_at: new Date().toISOString(),
+                last_campaign_sent_at: new Date().toISOString(),  // Track campaign separately
+                send_count: (invite.send_count || 0) + 1,
+              })
+              .eq("id", invite.id);
+
+            sentCount++;
+            sentEmails.push(invite.email);
+
+            // Small delay every 10 emails to avoid rate limits (Resend free tier: 100/day, 10/second)
+            if (i > 0 && i % 10 === 0) {
+              await new Promise(resolve => setTimeout(resolve, 1100));
+            }
+          } catch (err: any) {
+            errors.push(`${invite.email}: ${err.message}`);
+          }
+        }
+
+        console.log(`Custom campaign sent to ${sentCount} unclaimed invites by admin ${user.id}`);
+        result = {
+          sent: sentCount,
+          failed: errors.length,
           total: unclaimedInvites.length,
           sentEmails,
           errors: errors.length > 0 ? errors : undefined,

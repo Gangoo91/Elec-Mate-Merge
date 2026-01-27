@@ -160,8 +160,8 @@ export default function InvoiceQuoteBuilder() {
             variant="ghost"
             size="sm"
             onClick={() => {
-              if (quote?.invoice_raised && quoteId) {
-                navigate(`/electrician/invoices/${quoteId}/view`);
+              if (quote?.invoice_raised) {
+                navigate('/electrician/invoices');
               } else {
                 navigate('/electrician/quotes');
               }
@@ -169,7 +169,7 @@ export default function InvoiceQuoteBuilder() {
             className="h-10 mb-3 -ml-2 touch-manipulation"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            {quote?.invoice_raised ? 'Back to Invoice' : 'Back to Quotes'}
+            {quote?.invoice_raised ? 'Back to Invoices' : 'Back to Quotes'}
           </Button>
 
           <h1 className="text-2xl md:text-3xl font-bold mb-2">

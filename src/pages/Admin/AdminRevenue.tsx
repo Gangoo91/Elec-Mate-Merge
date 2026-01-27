@@ -1,419 +1,466 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  DollarSign,
+  PoundSterling,
   TrendingUp,
-  TrendingDown,
   Users,
-  CreditCard,
   RefreshCw,
   Calendar,
   ArrowUp,
   ArrowDown,
-  Minus,
-  Percent,
-  Receipt,
+  Crown,
+  Zap,
+  GraduationCap,
+  Building2,
+  AlertTriangle,
+  CheckCircle2,
+  XCircle,
+  Clock,
 } from "lucide-react";
-import { format, subDays, startOfDay, startOfMonth, endOfMonth, subMonths } from "date-fns";
+import { format, subDays, startOfDay } from "date-fns";
+import { useState, useCallback } from "react";
+import { cn } from "@/lib/utils";
+
+// Stripe stats type
+interface StripeStats {
+  stripe: {
+    activeSubscriptions: number;
+    canceledLast30Days: number;
+    tierCounts: {
+      founder: number;
+      apprentice: number;
+      electrician: number;
+      employer: number;
+      unknown: number;
+    };
+    mrr: number;
+    subscriptionsByPrice: Record<string, number>;
+  };
+  supabase: {
+    subscribedUsers: number;
+    tierCounts: {
+      founder: number;
+      apprentice: number;
+      electrician: number;
+      employer: number;
+      free: number;
+    };
+    withStripeId: number;
+    withoutStripeId: number;
+  };
+  discrepancies: {
+    inStripeNotSupabase: number;
+    inSupabaseNotStripe: number;
+  };
+  subscriptions: Array<{
+    subscriptionId: string;
+    customerId: string;
+    customerEmail: string;
+    customerName: string;
+    tier: string;
+    priceAmount: number;
+    monthlyAmount: number;
+    interval: string;
+    created: string;
+  }>;
+  generatedAt: string;
+}
 
 export default function AdminRevenue() {
-  // Fetch revenue data - live updates every 30 seconds
-  const { data: revenue, isLoading, refetch, isFetching } = useQuery({
-    queryKey: ["admin-revenue"],
-    refetchInterval: 30000, // Refresh every 30 seconds
-    refetchOnWindowFocus: true, // Refresh when tab becomes active
-    staleTime: 0, // Always consider data stale for admin dashboard
+  const queryClient = useQueryClient();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Fetch LIVE Stripe stats
+  const { data: stripeStats, isLoading: stripeLoading, isFetching: stripeFetching } = useQuery<StripeStats>({
+    queryKey: ["admin-stripe-live-stats"],
+    refetchInterval: 60000,
+    refetchOnWindowFocus: true,
+    staleTime: 30000,
     queryFn: async () => {
-      const now = new Date();
-      const today = startOfDay(now);
-      const thisMonthStart = startOfMonth(now);
-      const lastMonthStart = startOfMonth(subMonths(now, 1));
-      const lastMonthEnd = endOfMonth(subMonths(now, 1));
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error("Not authenticated");
 
-      // Get subscription data
-      const [
-        totalSubscribedRes,
-        thisMonthSubsRes,
-        lastMonthSubsRes,
-        allProfilesRes,
-      ] = await Promise.all([
-        supabase.from("profiles").select("*", { count: "exact", head: true })
-          .eq("subscribed", true),
-        supabase.from("profiles").select("*", { count: "exact", head: true })
-          .eq("subscribed", true)
-          .gte("subscription_start", thisMonthStart.toISOString()),
-        supabase.from("profiles").select("*", { count: "exact", head: true })
-          .eq("subscribed", true)
-          .gte("subscription_start", lastMonthStart.toISOString())
-          .lte("subscription_start", lastMonthEnd.toISOString()),
-        supabase.from("profiles").select("subscribed, role, subscription_tier, subscription_start, free_access_granted")
-      ]);
-
-      // Calculate MRR based on subscription tiers
-      // UK pricing: Apprentice £4.99/mo, Electrician £9.99/mo, Employer £29.99/mo, Founder £3.99/mo
-      const tierPricing: Record<string, number> = {
-        Apprentice: 4.99,
-        apprentice: 4.99,
-        Electrician: 9.99,
-        electrician: 9.99,
-        Employer: 29.99,
-        employer: 29.99,
-        Founder: 3.99,
-        founder: 3.99,
-        basic: 9.99, // Legacy fallback
-        pro: 9.99,
-        enterprise: 29.99,
-        free: 0,
-      };
-
-      const subscribedProfiles = allProfilesRes.data?.filter(p => p.subscribed) || [];
-      // Exclude free_access_granted users from MRR (they pay £0)
-      // EXCEPT founders - they always pay £3.99 regardless of free_access_granted
-      const paidProfiles = subscribedProfiles.filter(p => !p.free_access_granted);
-      const founderProfiles = subscribedProfiles.filter(p => p.subscription_tier?.toLowerCase() === "founder");
-
-      // Calculate MRR: paid profiles (non-founders) + all founders
-      const nonFounderMrr = paidProfiles
-        .filter(p => p.subscription_tier?.toLowerCase() !== "founder")
-        .reduce((total, p) => {
-          const tier = p.subscription_tier || "basic";
-          return total + (tierPricing[tier] || 9.99);
-        }, 0);
-      const founderMrr = founderProfiles.length * 3.99;
-      const mrr = nonFounderMrr + founderMrr;
-
-      // Calculate ARR
-      const arr = mrr * 12;
-
-      // Get cancellations (profiles with subscribed = false but had subscription_start)
-      // IMPORTANT: Exclude free_access_granted = true users - revoked free access is not churn
-      // Also exclude users where free_access_granted is null (never had free access)
-      // but still had a subscription_start (they paid and cancelled)
-      const { count: cancelledPaidCount } = await supabase
-        .from("profiles")
-        .select("*", { count: "exact", head: true })
-        .eq("subscribed", false)
-        .eq("free_access_granted", false) // Don't count revoked free access as churn
-        .not("subscription_start", "is", null);
-
-      // Also get count of users with revoked free access (for display purposes)
-      const { count: revokedFreeCount } = await supabase
-        .from("profiles")
-        .select("*", { count: "exact", head: true })
-        .eq("subscribed", false)
-        .eq("free_access_granted", false)
-        .not("subscription_start", "is", null);
-
-      // Calculate churn rate based on PAID subscribers only
-      // Total ever paid = currently paid + cancelled paid
-      const paidSubscribers = subscribedProfiles.filter(p => !p.free_access_granted);
-      const totalEverPaid = paidSubscribers.length + (cancelledPaidCount || 0);
-      const churnRate = totalEverPaid > 0
-        ? ((cancelledPaidCount || 0) / totalEverPaid) * 100
-        : 0;
-
-      // Monthly growth
-      const monthGrowth = lastMonthSubsRes.count
-        ? (((thisMonthSubsRes.count || 0) - lastMonthSubsRes.count) / lastMonthSubsRes.count) * 100
-        : 0;
-
-      // Subscription by tier - handle case-insensitive tier names
-      const tierBreakdown: Record<string, number> = { Apprentice: 0, Electrician: 0, Employer: 0, Founder: 0 };
-      subscribedProfiles.forEach(p => {
-        const tier = p.subscription_tier?.toLowerCase() || "electrician";
-        // Map all variants to canonical names
-        if (tier === "basic" || tier === "apprentice") tierBreakdown["Apprentice"]++;
-        else if (tier === "pro" || tier === "electrician") tierBreakdown["Electrician"]++;
-        else if (tier === "enterprise" || tier === "employer") tierBreakdown["Employer"]++;
-        else if (tier === "founder") tierBreakdown["Founder"]++;
+      const { data, error } = await supabase.functions.invoke('admin-stripe-stats', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
       });
 
-      // Role breakdown of subscribers
-      const roleBreakdown: Record<string, number> = {};
-      subscribedProfiles.forEach(p => {
-        const role = p.role || "unknown";
-        roleBreakdown[role] = (roleBreakdown[role] || 0) + 1;
-      });
-
-      // Daily revenue for chart (last 14 days) - batch all queries in parallel
-      const dailyDates = Array.from({ length: 14 }, (_, i) => {
-        const date = subDays(now, 13 - i);
-        const start = startOfDay(date);
-        const end = new Date(start);
-        end.setHours(23, 59, 59, 999);
-        return { date, start, end };
-      });
-
-      const dailyResults = await Promise.all(
-        dailyDates.map(({ start, end }) =>
-          supabase
-            .from("profiles")
-            .select("subscription_tier")
-            .eq("subscribed", true)
-            .gte("subscription_start", start.toISOString())
-            .lte("subscription_start", end.toISOString())
-        )
-      );
-
-      const dailyRevenue = dailyDates.map(({ date }, i) => {
-        const dayProfiles = dailyResults[i].data || [];
-        const dayRevenue = dayProfiles.reduce((total, p) => {
-          const tier = p.subscription_tier || "basic";
-          return total + (tierPricing[tier] || 9.99);
-        }, 0);
-        return {
-          date: format(date, "dd MMM"),
-          amount: dayRevenue,
-          count: dayProfiles.length,
-        };
-      });
-
-      return {
-        mrr,
-        arr,
-        totalSubscribers: totalSubscribedRes.count || 0,
-        thisMonthSubs: thisMonthSubsRes.count || 0,
-        lastMonthSubs: lastMonthSubsRes.count || 0,
-        monthGrowth,
-        churnRate,
-        cancelledCount: cancelledPaidCount || 0,
-        tierBreakdown,
-        roleBreakdown,
-        dailyRevenue,
-        avgRevenuePerUser: subscribedProfiles.length > 0 ? mrr / subscribedProfiles.length : 0,
-      };
+      if (error) throw error;
+      return data as StripeStats;
     },
   });
 
-  const getTrendIcon = (value: number) => {
-    if (value > 0) return <ArrowUp className="h-3 w-3 text-green-400" />;
-    if (value < 0) return <ArrowDown className="h-3 w-3 text-red-400" />;
-    return <Minus className="h-3 w-3 text-gray-400" />;
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+    await queryClient.invalidateQueries({ queryKey: ["admin-stripe-live-stats"] });
+    setTimeout(() => setIsRefreshing(false), 500);
+  }, [queryClient]);
+
+  // Calculate daily revenue from subscriptions (last 14 days)
+  const dailyRevenue = stripeStats?.subscriptions ? (() => {
+    const now = new Date();
+    const days = Array.from({ length: 14 }, (_, i) => {
+      const date = subDays(now, 13 - i);
+      const start = startOfDay(date).getTime();
+      const end = start + 24 * 60 * 60 * 1000;
+
+      const daySubs = stripeStats.subscriptions.filter(sub => {
+        const created = new Date(sub.created).getTime();
+        return created >= start && created < end;
+      });
+
+      const amount = daySubs.reduce((sum, sub) => sum + sub.monthlyAmount, 0);
+
+      return {
+        date: format(date, "dd"),
+        fullDate: format(date, "dd MMM"),
+        amount,
+        count: daySubs.length,
+      };
+    });
+    return days;
+  })() : [];
+
+  const maxDailyRevenue = Math.max(...dailyRevenue.map(d => d.amount), 1);
+  const totalLast14Days = dailyRevenue.reduce((sum, d) => sum + d.amount, 0);
+  const subsLast14Days = dailyRevenue.reduce((sum, d) => sum + d.count, 0);
+
+  // Tier colors and icons
+  const tierConfig = {
+    founder: { color: "yellow", icon: Crown, price: "£3.99" },
+    apprentice: { color: "cyan", icon: GraduationCap, price: "£4.99" },
+    electrician: { color: "blue", icon: Zap, price: "£9.99" },
+    employer: { color: "purple", icon: Building2, price: "£29.99" },
   };
 
-  const maxDailyRevenue = Math.max(...(revenue?.dailyRevenue?.map((d) => d.amount) || [1]));
+  if (stripeLoading) {
+    return (
+      <div className="space-y-4 animate-pulse">
+        <div className="h-12 bg-muted rounded-lg w-48" />
+        <div className="h-40 bg-muted rounded-2xl" />
+        <div className="grid grid-cols-2 gap-3">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="h-32 bg-muted rounded-xl" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  const mrr = stripeStats?.stripe.mrr || 0;
+  const arr = mrr * 12;
+  const totalSubs = stripeStats?.stripe.activeSubscriptions || 0;
+  const arpu = totalSubs > 0 ? mrr / totalSubs : 0;
+  const churned = stripeStats?.stripe.canceledLast30Days || 0;
+  const churnRate = totalSubs > 0 ? (churned / (totalSubs + churned)) * 100 : 0;
+  const hasDiscrepancies = (stripeStats?.discrepancies.inStripeNotSupabase || 0) + (stripeStats?.discrepancies.inSupabaseNotStripe || 0) > 0;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pb-20">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold">Revenue Dashboard</h2>
-          <p className="text-xs text-muted-foreground">Subscription & MRR metrics</p>
+          <h1 className="text-xl font-bold flex items-center gap-2">
+            Revenue
+            {stripeStats && (
+              <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-[10px] gap-1">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                LIVE
+              </Badge>
+            )}
+          </h1>
+          <p className="text-xs text-muted-foreground">
+            {stripeStats
+              ? `From Stripe • ${new Date(stripeStats.generatedAt).toLocaleTimeString()}`
+              : "Loading live data..."
+            }
+          </p>
         </div>
         <Button
           variant="outline"
           size="icon"
           className="h-11 w-11 touch-manipulation"
-          onClick={() => refetch()}
-          disabled={isFetching}
+          onClick={handleRefresh}
+          disabled={stripeFetching || isRefreshing}
         >
-          <RefreshCw className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
+          <RefreshCw className={cn("h-4 w-4", (stripeFetching || isRefreshing) && "animate-spin")} />
         </Button>
       </div>
 
-      {/* Key Revenue Metrics */}
-      <div className="grid grid-cols-2 gap-3">
-        <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
-          <CardContent className="pt-4 pb-4">
-            <div className="flex items-center justify-between mb-2">
-              <DollarSign className="h-5 w-5 text-green-400" />
-              <Badge variant="outline" className="text-[10px]">MRR</Badge>
+      {/* Data Health Alert */}
+      {hasDiscrepancies && (
+        <Card className="border-orange-500/30 bg-orange-500/5">
+          <CardContent className="p-3 flex items-center gap-3">
+            <AlertTriangle className="h-5 w-5 text-orange-400 shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-orange-400">Data Sync Required</p>
+              <p className="text-xs text-muted-foreground">
+                {stripeStats?.discrepancies.inStripeNotSupabase} in Stripe not synced to database
+              </p>
             </div>
-            <p className="text-2xl font-bold">£{(revenue?.mrr || 0).toFixed(2)}</p>
-            <p className="text-xs text-muted-foreground">Monthly Recurring</p>
+            <Button size="sm" variant="outline" className="shrink-0 h-9 touch-manipulation border-orange-500/30 text-orange-400">
+              Sync
+            </Button>
           </CardContent>
         </Card>
+      )}
 
-        <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
-          <CardContent className="pt-4 pb-4">
-            <div className="flex items-center justify-between mb-2">
-              <TrendingUp className="h-5 w-5 text-blue-400" />
-              <Badge variant="outline" className="text-[10px]">ARR</Badge>
-            </div>
-            <p className="text-2xl font-bold">£{(revenue?.arr || 0).toFixed(0)}</p>
-            <p className="text-xs text-muted-foreground">Annual Run Rate</p>
-          </CardContent>
-        </Card>
+      {/* Hero MRR Card */}
+      <Card className="bg-gradient-to-br from-emerald-500/20 via-emerald-600/10 to-green-700/5 border-emerald-500/30 overflow-hidden">
+        <CardContent className="pt-5 pb-5 relative">
+          {/* Background pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-400 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-green-400 rounded-full blur-3xl" />
+          </div>
 
-        <Card className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border-purple-500/20">
-          <CardContent className="pt-4 pb-4">
-            <div className="flex items-center justify-between mb-2">
-              <Users className="h-5 w-5 text-purple-400" />
-              <div className="flex items-center gap-1">
-                {getTrendIcon(revenue?.monthGrowth || 0)}
-                <span className={`text-[10px] ${(revenue?.monthGrowth || 0) >= 0 ? "text-green-400" : "text-red-400"}`}>
-                  {(revenue?.monthGrowth || 0).toFixed(0)}%
-                </span>
+          <div className="relative">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <p className="text-xs text-emerald-400/70 uppercase tracking-wider font-medium mb-1">Monthly Recurring Revenue</p>
+                <p className="text-4xl font-bold text-emerald-400">
+                  £{mrr.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </p>
+              </div>
+              <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center">
+                <PoundSterling className="h-7 w-7 text-emerald-400" />
               </div>
             </div>
-            <p className="text-2xl font-bold">{revenue?.totalSubscribers || 0}</p>
-            <p className="text-xs text-muted-foreground">Subscribers</p>
-          </CardContent>
-        </Card>
 
-        <Card className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20">
-          <CardContent className="pt-4 pb-4">
-            <div className="flex items-center justify-between mb-2">
-              <Receipt className="h-5 w-5 text-amber-400" />
-              <Badge variant="outline" className="text-[10px]">ARPU</Badge>
+            {/* Quick stats row */}
+            <div className="grid grid-cols-3 gap-2 mt-4">
+              <div className="bg-black/20 rounded-xl p-3 text-center">
+                <p className="text-lg font-bold text-white">{totalSubs}</p>
+                <p className="text-[10px] text-emerald-400/70 uppercase">Active Subs</p>
+              </div>
+              <div className="bg-black/20 rounded-xl p-3 text-center">
+                <p className="text-lg font-bold text-white">£{arr.toLocaleString('en-GB', { maximumFractionDigits: 0 })}</p>
+                <p className="text-[10px] text-emerald-400/70 uppercase">ARR</p>
+              </div>
+              <div className="bg-black/20 rounded-xl p-3 text-center">
+                <p className="text-lg font-bold text-white">£{arpu.toFixed(2)}</p>
+                <p className="text-[10px] text-emerald-400/70 uppercase">ARPU</p>
+              </div>
             </div>
-            <p className="text-2xl font-bold">£{(revenue?.avgRevenuePerUser || 0).toFixed(2)}</p>
-            <p className="text-xs text-muted-foreground">Avg Per User</p>
-          </CardContent>
-        </Card>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Tier Breakdown - Large Touch Targets */}
+      <div className="grid grid-cols-2 gap-3">
+        {(['founder', 'apprentice', 'electrician', 'employer'] as const).map((tier) => {
+          const config = tierConfig[tier];
+          const Icon = config.icon;
+          const count = stripeStats?.stripe.tierCounts?.[tier] || 0;
+          const revenue = count * parseFloat(config.price.replace('£', ''));
+
+          const colorClasses = {
+            yellow: "from-yellow-500/20 to-amber-600/10 border-yellow-500/40 text-yellow-400",
+            cyan: "from-cyan-500/20 to-cyan-600/10 border-cyan-500/40 text-cyan-400",
+            blue: "from-blue-500/20 to-blue-600/10 border-blue-500/40 text-blue-400",
+            purple: "from-purple-500/20 to-purple-600/10 border-purple-500/40 text-purple-400",
+          };
+
+          return (
+            <Card
+              key={tier}
+              className={cn(
+                "bg-gradient-to-br border touch-manipulation active:scale-[0.98] transition-transform",
+                colorClasses[config.color as keyof typeof colorClasses]
+              )}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <Icon className="h-6 w-6" />
+                  <Badge variant="outline" className="text-[10px] border-current/30">
+                    {config.price}/mo
+                  </Badge>
+                </div>
+                <p className="text-3xl font-bold">{count}</p>
+                <p className="text-xs text-muted-foreground capitalize mt-1">{tier}s</p>
+                <p className="text-xs opacity-70 mt-2">£{revenue.toFixed(2)}/mo</p>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
-      {/* This Month Stats */}
+      {/* 30-Day Performance */}
       <Card>
-        <CardHeader className="pb-2">
+        <CardHeader className="pb-3">
           <CardTitle className="text-sm flex items-center gap-2">
             <Calendar className="h-4 w-4 text-blue-400" />
-            This Month
+            Last 30 Days
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-3 gap-3">
-            <div className="text-center p-3 rounded-lg bg-green-500/10">
-              <p className="text-xl font-bold text-green-400">+{revenue?.thisMonthSubs || 0}</p>
-              <p className="text-xs text-muted-foreground">New Subs</p>
+            <div className="bg-gradient-to-br from-green-500/15 to-green-600/5 rounded-xl p-4 text-center border border-green-500/20">
+              <div className="flex items-center justify-center gap-1 mb-1">
+                <ArrowUp className="h-4 w-4 text-green-400" />
+                <p className="text-2xl font-bold text-green-400">+{subsLast14Days}</p>
+              </div>
+              <p className="text-[11px] text-muted-foreground">New Subs</p>
             </div>
-            <div className="text-center p-3 rounded-lg bg-red-500/10">
-              <p className="text-xl font-bold text-red-400">{revenue?.cancelledCount || 0}</p>
-              <p className="text-xs text-muted-foreground">Churned</p>
+            <div className="bg-gradient-to-br from-red-500/15 to-red-600/5 rounded-xl p-4 text-center border border-red-500/20">
+              <div className="flex items-center justify-center gap-1 mb-1">
+                <ArrowDown className="h-4 w-4 text-red-400" />
+                <p className="text-2xl font-bold text-red-400">{churned}</p>
+              </div>
+              <p className="text-[11px] text-muted-foreground">Cancelled</p>
             </div>
-            <div className="text-center p-3 rounded-lg bg-amber-500/10">
-              <p className="text-xl font-bold text-amber-400">{(revenue?.churnRate || 0).toFixed(1)}%</p>
-              <p className="text-xs text-muted-foreground">Churn Rate</p>
+            <div className="bg-gradient-to-br from-amber-500/15 to-amber-600/5 rounded-xl p-4 text-center border border-amber-500/20">
+              <p className="text-2xl font-bold text-amber-400">{churnRate.toFixed(1)}%</p>
+              <p className="text-[11px] text-muted-foreground">Churn Rate</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Revenue Chart */}
+      {/* Revenue Chart - 14 Day Bar Chart */}
       <Card>
         <CardHeader className="pb-2">
-          <CardTitle className="text-sm flex items-center gap-2">
-            <TrendingUp className="h-4 w-4 text-green-400" />
-            Daily New Revenue (14 Days)
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-sm flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-emerald-400" />
+              Daily Revenue
+            </CardTitle>
+            <Badge variant="outline" className="text-[10px]">
+              14 days • £{totalLast14Days.toFixed(0)}
+            </Badge>
+          </div>
         </CardHeader>
-        <CardContent className="px-2 sm:px-6">
-          <div className="flex items-end justify-between gap-0.5 sm:gap-1 h-28 sm:h-32 overflow-x-auto scrollbar-hide">
-            {revenue?.dailyRevenue?.map((day, i) => (
-              <div key={i} className="flex-1 min-w-[20px] sm:min-w-[30px] flex flex-col items-center gap-0.5 sm:gap-1">
-                <div
-                  className="w-full bg-gradient-to-t from-green-500/40 to-green-500/10 rounded-t-lg transition-all"
-                  style={{ height: `${Math.max((day.amount / maxDailyRevenue) * 100, 5)}%` }}
-                />
-                <span className="text-[7px] sm:text-[8px] text-muted-foreground whitespace-nowrap">{day.date.split(" ")[0]}</span>
-                <span className="text-[9px] sm:text-[10px] font-medium">£{day.amount.toFixed(0)}</span>
+        <CardContent className="pt-0">
+          <div className="flex items-end justify-between gap-1 h-32">
+            {dailyRevenue.map((day, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                {/* Bar */}
+                <div className="w-full flex flex-col items-center justify-end h-24">
+                  <div
+                    className={cn(
+                      "w-full rounded-t-lg transition-all duration-300",
+                      day.amount > 0
+                        ? "bg-gradient-to-t from-emerald-500 to-emerald-400"
+                        : "bg-muted/30"
+                    )}
+                    style={{
+                      height: `${Math.max((day.amount / maxDailyRevenue) * 100, day.amount > 0 ? 8 : 2)}%`,
+                      minHeight: day.amount > 0 ? '8px' : '2px'
+                    }}
+                  />
+                </div>
+                {/* Day label */}
+                <span className="text-[9px] text-muted-foreground">{day.date}</span>
               </div>
             ))}
           </div>
+
+          {/* Summary row */}
+          <div className="flex items-center justify-between mt-4 pt-3 border-t border-border/50">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span className="text-xs text-muted-foreground">New MRR</span>
+            </div>
+            <span className="text-sm font-medium text-emerald-400">+£{totalLast14Days.toFixed(2)}</span>
+          </div>
         </CardContent>
       </Card>
 
-      {/* Subscription Tiers & Role Breakdown */}
-      <div className="grid md:grid-cols-2 gap-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <CreditCard className="h-4 w-4 text-purple-400" />
-              Subscription Tiers
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {Object.entries(revenue?.tierBreakdown || {}).map(([tier, count]) => {
-              const percentage = revenue?.totalSubscribers ? (count / revenue.totalSubscribers * 100) : 0;
-              const colors: Record<string, string> = {
-                Apprentice: "bg-purple-500",
-                Electrician: "bg-yellow-500",
-                Employer: "bg-blue-500",
-                Founder: "bg-amber-500",
-              };
-              const prices: Record<string, string> = {
-                Apprentice: "£4.99",
-                Electrician: "£9.99",
-                Employer: "£29.99",
-                Founder: "£3.99",
-              };
-              return (
-                <div key={tier} className="space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span className="capitalize flex items-center gap-2">
-                      {tier}
-                      <Badge variant="outline" className="text-[10px]">{prices[tier]}</Badge>
-                    </span>
-                    <span className="text-muted-foreground">{count} ({percentage.toFixed(0)}%)</span>
-                  </div>
-                  <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div
-                      className={`h-full ${colors[tier] || "bg-gray-500"} rounded-full transition-all`}
-                      style={{ width: `${percentage}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Users className="h-4 w-4 text-blue-400" />
-              Subscribers by Role
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {Object.entries(revenue?.roleBreakdown || {}).map(([role, count]) => {
-              const percentage = revenue?.totalSubscribers ? (count / revenue.totalSubscribers * 100) : 0;
-              const colors: Record<string, string> = {
-                apprentice: "bg-purple-500",
-                electrician: "bg-yellow-500",
-                employer: "bg-blue-500",
-                visitor: "bg-gray-500",
-              };
-              return (
-                <div key={role} className="space-y-1">
-                  <div className="flex justify-between text-sm">
-                    <span className="capitalize">{role}</span>
-                    <span className="text-muted-foreground">{count} ({percentage.toFixed(0)}%)</span>
-                  </div>
-                  <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div
-                      className={`h-full ${colors[role] || "bg-gray-500"} rounded-full transition-all`}
-                      style={{ width: `${percentage}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Quick Stats */}
-      <Card className="bg-gradient-to-br from-green-500/5 to-blue-500/5">
-        <CardContent className="pt-4 pb-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-xs text-muted-foreground">Last Month Subs</p>
-              <p className="text-lg font-bold">{revenue?.lastMonthSubs || 0}</p>
+      {/* Data Source Comparison */}
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm flex items-center gap-2">
+            <Clock className="h-4 w-4 text-blue-400" />
+            Data Sources
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {/* Stripe */}
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+              <CheckCircle2 className="h-5 w-5 text-emerald-400" />
             </div>
-            <div>
-              <p className="text-xs text-muted-foreground">Month Growth</p>
-              <p className={`text-lg font-bold ${(revenue?.monthGrowth || 0) >= 0 ? "text-green-400" : "text-red-400"}`}>
-                {(revenue?.monthGrowth || 0) >= 0 ? "+" : ""}{(revenue?.monthGrowth || 0).toFixed(1)}%
+            <div className="flex-1">
+              <p className="text-sm font-medium">Stripe</p>
+              <p className="text-xs text-muted-foreground">Live payment data</p>
+            </div>
+            <div className="text-right">
+              <p className="text-lg font-bold text-emerald-400">{stripeStats?.stripe.activeSubscriptions || 0}</p>
+              <p className="text-[10px] text-muted-foreground">active</p>
+            </div>
+          </div>
+
+          {/* Supabase */}
+          <div className={cn(
+            "flex items-center gap-3 p-3 rounded-xl border",
+            hasDiscrepancies
+              ? "bg-orange-500/5 border-orange-500/20"
+              : "bg-blue-500/5 border-blue-500/20"
+          )}>
+            <div className={cn(
+              "w-10 h-10 rounded-xl flex items-center justify-center",
+              hasDiscrepancies ? "bg-orange-500/20" : "bg-blue-500/20"
+            )}>
+              {hasDiscrepancies ? (
+                <AlertTriangle className="h-5 w-5 text-orange-400" />
+              ) : (
+                <CheckCircle2 className="h-5 w-5 text-blue-400" />
+              )}
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium">Database</p>
+              <p className="text-xs text-muted-foreground">
+                {hasDiscrepancies ? "Needs sync" : "In sync"}
               </p>
+            </div>
+            <div className="text-right">
+              <p className={cn(
+                "text-lg font-bold",
+                hasDiscrepancies ? "text-orange-400" : "text-blue-400"
+              )}>
+                {stripeStats?.supabase.subscribedUsers || 0}
+              </p>
+              <p className="text-[10px] text-muted-foreground">synced</p>
             </div>
           </div>
         </CardContent>
       </Card>
+
+      {/* Price Breakdown */}
+      {stripeStats?.stripe.subscriptionsByPrice && Object.keys(stripeStats.stripe.subscriptionsByPrice).length > 0 && (
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm">Active Prices</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {Object.entries(stripeStats.stripe.subscriptionsByPrice)
+                .sort((a, b) => b[1] - a[1])
+                .map(([price, count]) => {
+                  const percentage = totalSubs > 0 ? (count / totalSubs) * 100 : 0;
+                  return (
+                    <div key={price} className="flex items-center gap-3">
+                      <div className="flex-1">
+                        <div className="flex justify-between text-sm mb-1">
+                          <span className="text-muted-foreground">{price}</span>
+                          <span className="font-medium">{count}</span>
+                        </div>
+                        <div className="h-2 bg-muted rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-emerald-500 to-green-400 rounded-full transition-all"
+                            style={{ width: `${percentage}%` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

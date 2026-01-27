@@ -254,6 +254,9 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
   // Edit mode for corrections
   const [isEditMode, setIsEditMode] = useState(false);
 
+  // Track document IDs that are currently being verified in background
+  const [pendingVerifications, setPendingVerifications] = useState<Set<string>>(new Set());
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragActive, setIsDragActive] = useState(false);
 
@@ -263,6 +266,91 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
       fetchDocuments();
     }
   }, [profile?.id]);
+
+  // Real-time subscription for document status changes
+  useEffect(() => {
+    if (!profile?.id) return;
+
+    // Subscribe to document changes for this user's profile
+    const channel = supabase
+      .channel('elec-id-docs-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'elec_id_documents',
+          filter: `profile_id=eq.${profile.id}`,
+        },
+        (payload) => {
+          console.log('[Elec-ID] Document updated via realtime:', payload);
+          // Refresh documents when any document is updated
+          fetchDocuments();
+          // Remove from pending if verification completed
+          const newDoc = payload.new as Document;
+          if (newDoc.verification_status !== 'pending') {
+            setPendingVerifications(prev => {
+              const next = new Set(prev);
+              next.delete(newDoc.id);
+              return next;
+            });
+          }
+        }
+      )
+      .subscribe((status) => {
+        console.log('[Elec-ID] Realtime subscription status:', status);
+      });
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [profile?.id]);
+
+  // Fallback polling: Check for updates every 5 seconds if we have pending verifications
+  useEffect(() => {
+    if (pendingVerifications.size === 0) return;
+
+    const pollInterval = setInterval(async () => {
+      console.log('[Elec-ID] Polling for verification updates...');
+      // Fetch fresh data from database
+      const { data } = await supabase
+        .from("elec_id_documents")
+        .select("id, verification_status")
+        .in("id", Array.from(pendingVerifications));
+
+      if (data) {
+        // Remove any docs that are no longer pending
+        const stillPending = new Set(
+          data.filter(d => d.verification_status === 'pending').map(d => d.id)
+        );
+        setPendingVerifications(prev => {
+          const next = new Set<string>();
+          prev.forEach(id => {
+            if (stillPending.has(id)) {
+              next.add(id);
+            }
+          });
+          // If we removed any, also refresh the full documents list
+          if (next.size < prev.size) {
+            fetchDocuments();
+          }
+          return next;
+        });
+      }
+    }, 5000);
+
+    // Auto-timeout: Clear stale pending after 90 seconds
+    const timeoutId = setTimeout(() => {
+      console.log('[Elec-ID] Clearing stale pending verifications after timeout');
+      setPendingVerifications(new Set());
+      fetchDocuments();
+    }, 90000);
+
+    return () => {
+      clearInterval(pollInterval);
+      clearTimeout(timeoutId);
+    };
+  }, [pendingVerifications.size]);
 
   const fetchDocuments = async () => {
     if (!profile?.id) return;
@@ -433,6 +521,9 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
         console.error("Failed to create document record:", insertError);
         throw new Error("Failed to save document record");
       }
+
+      // Add to pending verifications for UI feedback (shows processing spinner)
+      setPendingVerifications(prev => new Set(prev).add(docRecord.id));
 
       // Get signed URL for AI verification (1 hour expiry)
       console.log("[Elec-ID] Getting signed URL for document...");
@@ -692,24 +783,70 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
 
   const selectedDocConfig = DOCUMENT_TYPES.find((d) => d.type === selectedDocType);
 
+  // Calculate verification stats
+  const verifiedCount = documents.filter((d) => d.verification_status === "verified").length;
+  const totalDocs = documents.length;
+  const verificationProgress = totalDocs > 0 ? (verifiedCount / Math.max(totalDocs, 3)) * 100 : 0;
+
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-lg font-semibold text-foreground">Document Verification</h3>
-          <p className="text-sm text-foreground/70">
-            Upload and verify your credentials to increase your verification tier
-          </p>
+    <div className="space-y-5 pb-6">
+      {/* Modern Header with Progress Ring */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-elec-yellow/10 via-amber-500/5 to-transparent border border-elec-yellow/20 p-4 sm:p-5">
+        <div className="flex items-center gap-4">
+          {/* Progress Ring */}
+          <div className="relative flex-shrink-0">
+            <svg className="w-16 h-16 -rotate-90" viewBox="0 0 64 64">
+              <circle
+                cx="32"
+                cy="32"
+                r="28"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+                className="text-white/10"
+              />
+              <circle
+                cx="32"
+                cy="32"
+                r="28"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+                strokeDasharray={`${verificationProgress * 1.76} 176`}
+                strokeLinecap="round"
+                className="text-elec-yellow transition-all duration-500"
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-lg font-bold text-elec-yellow">{verifiedCount}</span>
+            </div>
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg font-semibold text-foreground">Document Verification</h3>
+            <p className="text-sm text-foreground/60 mt-0.5">
+              {verifiedCount === 0
+                ? "Upload documents to verify your identity"
+                : verifiedCount === 1
+                ? "1 document verified"
+                : `${verifiedCount} documents verified`}
+            </p>
+            {pendingVerifications.size > 0 && (
+              <div className="flex items-center gap-2 mt-2">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-400 text-xs font-medium">
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                  <span>{pendingVerifications.size} processing</span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-        <Badge variant="outline" className="gap-1">
-          <FileCheck className="h-3 w-3" />
-          {documents.filter((d) => d.verification_status === "verified").length} verified
-        </Badge>
+        {/* Decorative elements */}
+        <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-elec-yellow/5 blur-2xl" />
+        <div className="absolute -right-4 -bottom-4 w-24 h-24 rounded-full bg-amber-500/5 blur-xl" />
       </div>
 
-      {/* Document Types Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Document Types - Mobile-optimised list */}
+      <div className="space-y-3">
         {DOCUMENT_TYPES.map((docType) => {
           const Icon = docType.icon;
           const uploadedDocs = getDocumentsByType(docType.type);
@@ -720,107 +857,179 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
             d.verification_status === "appealed"
           );
           const hasRejected = uploadedDocs.some((d) => d.verification_status === "rejected");
+          // Only show as "processing" if it's in the current session's pendingVerifications set
+          const hasProcessing = uploadedDocs.some((d) => pendingVerifications.has(d.id));
 
           return (
-            <Card
+            <div
               key={docType.type}
               className={cn(
-                "border transition-all hover:border-white/30",
+                "relative rounded-xl border transition-all overflow-hidden",
+                "active:scale-[0.99] touch-manipulation",
                 hasVerified ? "bg-green-500/5 border-green-500/30" :
+                hasProcessing ? "bg-blue-500/5 border-blue-500/30" :
                 hasPending ? "bg-amber-500/5 border-amber-500/30" :
                 hasRejected ? "bg-red-500/5 border-red-500/30" :
-                "bg-white/5 border-white/10"
+                "bg-white/[0.03] border-white/10"
               )}
             >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className={cn("p-2.5 rounded-xl", docType.bgColor)}>
-                    <Icon className={cn("h-5 w-5", docType.color)} />
+              {/* Main card content - tappable area */}
+              <button
+                onClick={() => handleOpenUpload(docType.type)}
+                className="w-full p-4 text-left flex items-center gap-3.5"
+              >
+                {/* Icon with status indicator */}
+                <div className="relative flex-shrink-0">
+                  <div className={cn(
+                    "w-12 h-12 rounded-xl flex items-center justify-center",
+                    hasVerified ? "bg-green-500/20" :
+                    hasProcessing ? "bg-blue-500/20" :
+                    hasPending ? "bg-amber-500/20" :
+                    hasRejected ? "bg-red-500/20" :
+                    docType.bgColor
+                  )}>
+                    <Icon className={cn(
+                      "h-6 w-6",
+                      hasVerified ? "text-green-400" :
+                      hasProcessing ? "text-blue-400" :
+                      hasPending ? "text-amber-400" :
+                      hasRejected ? "text-red-400" :
+                      docType.color
+                    )} />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <h4 className="font-medium text-foreground">{docType.label}</h4>
-                      {docType.required && (
-                        <Badge variant="outline" className="text-[10px] px-1.5 py-0">
-                          Required
-                        </Badge>
+                  {/* Status badge */}
+                  {(hasVerified || hasProcessing || hasPending || hasRejected) && (
+                    <div className={cn(
+                      "absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center",
+                      hasVerified ? "bg-green-500" :
+                      hasProcessing ? "bg-blue-500" :
+                      hasPending ? "bg-amber-500" :
+                      "bg-red-500"
+                    )}>
+                      {hasVerified ? (
+                        <CheckCircle2 className="h-3 w-3 text-white" />
+                      ) : hasProcessing ? (
+                        <Loader2 className="h-3 w-3 text-white animate-spin" />
+                      ) : hasPending ? (
+                        <Clock className="h-3 w-3 text-white" />
+                      ) : (
+                        <AlertCircle className="h-3 w-3 text-white" />
                       )}
                     </div>
-                    <p className="text-xs text-foreground/70 mt-0.5 line-clamp-2">
-                      {docType.description}
-                    </p>
-
-                    {/* Uploaded documents */}
-                    {uploadedDocs.length > 0 && (
-                      <div className="mt-3 space-y-2">
-                        {uploadedDocs.map((doc) => {
-                          const status = VERIFICATION_STATUS[doc.verification_status];
-                          const StatusIcon = status.icon;
-                          const isRejected = doc.verification_status === "rejected";
-
-                          return (
-                            <div
-                              key={doc.id}
-                              className={cn(
-                                "flex items-center gap-2 p-2 rounded-lg text-xs",
-                                status.bgColor
-                              )}
-                            >
-                              <StatusIcon className={cn(
-                                "h-3.5 w-3.5",
-                                status.color,
-                                doc.verification_status === "processing" && "animate-spin"
-                              )} />
-                              <span className="flex-1 truncate text-foreground">
-                                {doc.document_name}
-                              </span>
-                              {doc.verification_confidence && doc.verification_confidence > 0 && (
-                                <span className={cn("text-[10px]", status.color)}>
-                                  {Math.round(doc.verification_confidence * 100)}%
-                                </span>
-                              )}
-                              {isRejected && (
-                                <button
-                                  onClick={() => handleOpenAppeal(doc)}
-                                  className="text-red-400 hover:text-red-300 transition-colors"
-                                  title="Appeal rejection"
-                                >
-                                  <MessageSquare className="h-3 w-3" />
-                                </button>
-                              )}
-                              <button
-                                onClick={() => handleDeleteDocument(doc.id)}
-                                className="text-foreground/70 hover:text-red-400 transition-colors"
-                              >
-                                <X className="h-3 w-3" />
-                              </button>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-
-                    {/* Upload button */}
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="mt-3 w-full h-11 text-sm border-white/20 touch-manipulation active:scale-[0.98]"
-                      onClick={() => handleOpenUpload(docType.type)}
-                    >
-                      <Upload className="h-3 w-3 mr-1.5" />
-                      {uploadedDocs.length > 0 && docType.multiple
-                        ? "Add Another"
-                        : uploadedDocs.length > 0
-                        ? "Replace"
-                        : "Upload"}
-                    </Button>
-                  </div>
+                  )}
                 </div>
-              </CardContent>
-            </Card>
+
+                {/* Text content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-semibold text-foreground text-[15px]">{docType.label}</h4>
+                    {docType.required && (
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-elec-yellow/20 text-elec-yellow font-medium">
+                        Required
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-foreground/50 mt-0.5 line-clamp-1">
+                    {hasVerified
+                      ? `${uploadedDocs.filter(d => d.verification_status === 'verified').length} verified`
+                      : hasProcessing
+                      ? "Verifying..."
+                      : hasPending
+                      ? "Awaiting review"
+                      : hasRejected
+                      ? "Action required"
+                      : docType.description}
+                  </p>
+                </div>
+
+                {/* Arrow indicator */}
+                <ChevronRight className="h-5 w-5 text-foreground/30 flex-shrink-0" />
+              </button>
+
+              {/* Uploaded documents list (expandable) */}
+              {uploadedDocs.length > 0 && (
+                <div className="px-4 pb-4 pt-0 space-y-2 border-t border-white/5">
+                  {uploadedDocs.map((doc) => {
+                    const status = VERIFICATION_STATUS[doc.verification_status];
+                    const StatusIcon = status.icon;
+                    const isRejected = doc.verification_status === "rejected";
+                    // Only show as "processing" if it's in the current session's pendingVerifications
+                    const isProcessing = pendingVerifications.has(doc.id);
+
+                    return (
+                      <div
+                        key={doc.id}
+                        className={cn(
+                          "flex items-center gap-2.5 p-2.5 rounded-lg mt-2",
+                          isProcessing ? "bg-blue-500/10" : "bg-white/[0.03]"
+                        )}
+                      >
+                        {isProcessing ? (
+                          <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                            <Loader2 className="h-4 w-4 text-blue-400 animate-spin" />
+                          </div>
+                        ) : (
+                          <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", status.bgColor)}>
+                            <StatusIcon className={cn("h-4 w-4", status.color)} />
+                          </div>
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-foreground truncate">
+                            {isProcessing ? "Verifying document..." : doc.document_name}
+                          </p>
+                          <p className={cn("text-xs", isProcessing ? "text-blue-400" : status.color)}>
+                            {isProcessing ? "AI is analysing" : status.label}
+                            {!isProcessing && doc.verification_confidence && doc.verification_confidence > 0 && (
+                              <span className="text-foreground/40 ml-1">
+                                • {Math.round(doc.verification_confidence * 100)}% confident
+                              </span>
+                            )}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          {isRejected && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleOpenAppeal(doc);
+                              }}
+                              className="w-9 h-9 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 hover:bg-purple-500/30 transition-colors touch-manipulation"
+                            >
+                              <MessageSquare className="h-4 w-4" />
+                            </button>
+                          )}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteDocument(doc.id);
+                            }}
+                            className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-foreground/40 hover:bg-red-500/20 hover:text-red-400 transition-colors touch-manipulation"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           );
         })}
       </div>
+
+      {/* Quick action button for primary document */}
+      {!documents.some(d => d.document_type === 'ecs_card' && d.verification_status === 'verified') && (
+        <div className="fixed bottom-20 left-4 right-4 sm:relative sm:bottom-auto sm:left-auto sm:right-auto">
+          <Button
+            onClick={() => handleOpenUpload('ecs_card')}
+            className="w-full h-14 text-base font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98]"
+          >
+            <IdCard className="h-5 w-5 mr-2" />
+            Verify Your ECS Card
+          </Button>
+        </div>
+      )}
 
       {/* Upload Dialog */}
       <Dialog open={isUploadDialogOpen} onOpenChange={setIsUploadDialogOpen}>

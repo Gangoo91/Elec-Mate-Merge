@@ -168,17 +168,41 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
     return createEmptyInvoice();
   });
 
-  // Update invoice with company profile when it loads (only for quote conversions)
+  // Update invoice with company profile when it loads
+  // This ensures bank details and payment terms are always populated from company profile
   useEffect(() => {
-    if (sourceQuote && companyProfile && !existingInvoice) {
-      setInvoice(prev => ({
-        ...prev,
-        settings: {
-          ...prev.settings!,
-          paymentTerms: companyProfile.payment_terms || prev.settings!.paymentTerms,
-          bankDetails: companyProfile.bank_details || prev.settings!.bankDetails,
-        },
-      }));
+    if (companyProfile) {
+      setInvoice(prev => {
+        // Only update if bank details aren't already set (don't overwrite user edits)
+        const currentBankDetails = prev.settings?.bankDetails;
+        const hasBankDetails = currentBankDetails?.bankName || currentBankDetails?.accountNumber;
+
+        // Always populate from company profile if not already set
+        if (!hasBankDetails && companyProfile.bank_details) {
+          return {
+            ...prev,
+            settings: {
+              ...prev.settings!,
+              paymentTerms: prev.settings?.paymentTerms || companyProfile.payment_terms || '30 days',
+              bankDetails: companyProfile.bank_details,
+            },
+          };
+        }
+
+        // For quote conversions, also update payment terms if not set
+        if (sourceQuote && !existingInvoice) {
+          return {
+            ...prev,
+            settings: {
+              ...prev.settings!,
+              paymentTerms: companyProfile.payment_terms || prev.settings!.paymentTerms,
+              bankDetails: prev.settings?.bankDetails || companyProfile.bank_details,
+            },
+          };
+        }
+
+        return prev;
+      });
     }
   }, [companyProfile, sourceQuote, existingInvoice]);
 

@@ -154,6 +154,43 @@ const DEFAULT_TERMS_GROUPED = {
 
 const ALL_DEFAULT_TERM_IDS = Object.values(DEFAULT_TERMS_GROUPED).flatMap(group => group.terms.map(t => t.id));
 
+// Default Invoice T&Cs - specific to invoices
+const DEFAULT_INVOICE_TERMS_GROUPED = {
+  payment: {
+    label: 'Payment Terms',
+    terms: [
+      { id: 'inv_payment_due', label: 'Payment is due within the period specified above' },
+      { id: 'inv_use_reference', label: 'Please use invoice number as payment reference' },
+      { id: 'inv_bank_transfer', label: 'Bank transfer is the preferred payment method' },
+    ],
+  },
+  late_payment: {
+    label: 'Late Payment',
+    terms: [
+      { id: 'inv_late_interest', label: 'Late payment interest may be charged on overdue invoices' },
+      { id: 'inv_debt_recovery', label: 'We reserve the right to recover debt collection costs under the Late Payment of Commercial Debts Act' },
+      { id: 'inv_credit_hold', label: 'Future work may be suspended if invoices remain unpaid' },
+    ],
+  },
+  warranty: {
+    label: 'Warranty & Guarantees',
+    terms: [
+      { id: 'inv_workmanship', label: 'All workmanship guaranteed as per original quotation' },
+      { id: 'inv_compliance', label: 'All work complies with BS 7671 (18th Edition)' },
+      { id: 'inv_certificates', label: 'Relevant certificates have been provided separately' },
+    ],
+  },
+  general: {
+    label: 'General',
+    terms: [
+      { id: 'inv_queries', label: 'Queries to be raised within 7 days of invoice date' },
+      { id: 'inv_thank_you', label: 'Thank you for your business' },
+    ],
+  },
+};
+
+const ALL_DEFAULT_INVOICE_TERM_IDS = Object.values(DEFAULT_INVOICE_TERMS_GROUPED).flatMap(group => group.terms.map(t => t.id));
+
 interface CustomTerm {
   id: string;
   label: string;
@@ -174,6 +211,24 @@ function parseQuoteTerms(quoteTermsJson: string | undefined | null): { selected:
     return { selected: ['payment_30', 'warranty_workmanship', 'bs7671_compliance'], custom: [] };
   } catch {
     return { selected: ['payment_30', 'warranty_workmanship', 'bs7671_compliance'], custom: [] };
+  }
+}
+
+function parseInvoiceTerms(invoiceTermsJson: string | undefined | null): { selected: string[]; custom: CustomTerm[] } {
+  if (!invoiceTermsJson) {
+    return {
+      selected: ['inv_payment_due', 'inv_use_reference', 'inv_late_interest', 'inv_workmanship', 'inv_compliance', 'inv_queries'],
+      custom: [],
+    };
+  }
+  try {
+    const parsed = JSON.parse(invoiceTermsJson);
+    if (parsed.selected && Array.isArray(parsed.selected)) {
+      return { selected: parsed.selected, custom: parsed.custom || [] };
+    }
+    return { selected: ['inv_payment_due', 'inv_use_reference', 'inv_late_interest'], custom: [] };
+  } catch {
+    return { selected: ['inv_payment_due', 'inv_use_reference', 'inv_late_interest'], custom: [] };
   }
 }
 
@@ -301,11 +356,19 @@ const BusinessTab = () => {
   // Testing instruments
   const [instruments, setInstruments] = useState<TestingInstrument[]>([]);
 
-  // T&Cs state
+  // T&Cs state (Quotes)
   const [selectedTerms, setSelectedTerms] = useState<string[]>([]);
   const [customTerms, setCustomTerms] = useState<CustomTerm[]>([]);
   const [newCustomTerm, setNewCustomTerm] = useState('');
   const [expandedGroups, setExpandedGroups] = useState<string[]>(['payment', 'compliance']);
+
+  // Invoice T&Cs state
+  const [selectedInvoiceTerms, setSelectedInvoiceTerms] = useState<string[]>([]);
+  const [customInvoiceTerms, setCustomInvoiceTerms] = useState<CustomTerm[]>([]);
+  const [newCustomInvoiceTerm, setNewCustomInvoiceTerm] = useState('');
+  const [expandedInvoiceGroups, setExpandedInvoiceGroups] = useState<string[]>(['payment', 'late_payment']);
+  const [latePaymentInterestRate, setLatePaymentInterestRate] = useState('8% p.a.');
+  const [preferredPaymentMethod, setPreferredPaymentMethod] = useState('Bank Transfer');
 
   // Bank details
   const [bankDetails, setBankDetails] = useState<BankDetails>({
@@ -449,6 +512,13 @@ const BusinessTab = () => {
       const parsedTerms = parseQuoteTerms(companyProfile.quote_terms);
       setSelectedTerms(parsedTerms.selected);
       setCustomTerms(parsedTerms.custom);
+
+      // Invoice settings
+      const parsedInvoiceTerms = parseInvoiceTerms(companyProfile.invoice_terms);
+      setSelectedInvoiceTerms(parsedInvoiceTerms.selected);
+      setCustomInvoiceTerms(parsedInvoiceTerms.custom);
+      setLatePaymentInterestRate(companyProfile.late_payment_interest_rate || '8% p.a.');
+      setPreferredPaymentMethod(companyProfile.preferred_payment_method || 'Bank Transfer');
     }
   }, [companyProfile, setValue]);
 
@@ -561,6 +631,11 @@ const BusinessTab = () => {
       custom: customTerms,
     });
 
+    const invoiceTermsJson = JSON.stringify({
+      selected: selectedInvoiceTerms,
+      custom: customInvoiceTerms,
+    });
+
     // Build the profile data to save
     const profileData = {
       company_name: data.company_name,
@@ -583,6 +658,9 @@ const BusinessTab = () => {
       warranty_period: data.warranty_period || '12 months',
       deposit_percentage: data.deposit_percentage || 30,
       quote_terms: quoteTermsJson,
+      invoice_terms: invoiceTermsJson,
+      late_payment_interest_rate: latePaymentInterestRate,
+      preferred_payment_method: preferredPaymentMethod,
       bank_details: bankDetails,
       testing_instruments: instruments,
       inspector_name: data.inspector_name || null,
@@ -1270,6 +1348,162 @@ const BusinessTab = () => {
                   }
                 }}
                 className="h-10 w-10 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400"
+              >
+                <Plus className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Invoice Settings */}
+      <Section
+        title="Invoice Settings"
+        icon={FileText}
+        iconColor="text-cyan-400"
+        iconBg="bg-cyan-500/15"
+        badge={`${selectedInvoiceTerms.length} T&Cs selected`}
+        badgeColor="text-cyan-400"
+      >
+        <div className="space-y-5">
+          {/* Invoice-specific settings */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-2">
+              <Label className="text-[11px] text-white/40 font-medium">Late Payment Interest</Label>
+              <Input
+                value={latePaymentInterestRate}
+                onChange={(e) => setLatePaymentInterestRate(e.target.value)}
+                placeholder="8% p.a."
+                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[11px] text-white/40 font-medium">Preferred Payment</Label>
+              <Input
+                value={preferredPaymentMethod}
+                onChange={(e) => setPreferredPaymentMethod(e.target.value)}
+                placeholder="Bank Transfer"
+                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
+              />
+            </div>
+          </div>
+
+          {/* Invoice T&Cs Checklist */}
+          <div className="space-y-3">
+            <Label className="text-[13px] text-white/70 font-medium">Invoice Terms & Conditions</Label>
+            {Object.entries(DEFAULT_INVOICE_TERMS_GROUPED).map(([groupKey, group]) => {
+              const groupTermIds = group.terms.map(t => t.id);
+              const selectedInGroup = groupTermIds.filter(id => selectedInvoiceTerms.includes(id)).length;
+              const isExpanded = expandedInvoiceGroups.includes(groupKey);
+
+              return (
+                <Collapsible
+                  key={groupKey}
+                  open={isExpanded}
+                  onOpenChange={(open) => {
+                    setExpandedInvoiceGroups(prev =>
+                      open ? [...prev, groupKey] : prev.filter(g => g !== groupKey)
+                    );
+                  }}
+                >
+                  <CollapsibleTrigger className="w-full">
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] hover:bg-white/[0.06] transition-colors touch-manipulation">
+                      <div className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                        <span className="text-[13px] font-medium text-white">{group.label}</span>
+                        <span className="text-[11px] text-white/40">({selectedInGroup}/{groupTermIds.length})</span>
+                      </div>
+                      <ChevronDown className={cn("h-4 w-4 text-white/30 transition-transform", isExpanded && "rotate-180")} />
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="pl-3 pt-2 space-y-1">
+                      {group.terms.map((term) => {
+                        const isSelected = selectedInvoiceTerms.includes(term.id);
+                        return (
+                          <label
+                            key={term.id}
+                            className="flex items-start gap-3 p-2 rounded-lg hover:bg-white/[0.02] cursor-pointer touch-manipulation"
+                          >
+                            <Checkbox
+                              checked={isSelected}
+                              onCheckedChange={(checked) => {
+                                setSelectedInvoiceTerms(prev =>
+                                  checked ? [...prev, term.id] : prev.filter(id => id !== term.id)
+                                );
+                              }}
+                              className="mt-0.5 border-white/30 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500"
+                            />
+                            <span className="text-[13px] text-white/70 leading-relaxed">{term.label}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              );
+            })}
+
+            {/* Custom Invoice Terms */}
+            {customInvoiceTerms.length > 0 && (
+              <div className="space-y-2 pt-2">
+                {customInvoiceTerms.map((term) => (
+                  <div key={term.id} className="flex items-start gap-3 p-2 rounded-lg bg-white/[0.02]">
+                    <Checkbox
+                      checked={selectedInvoiceTerms.includes(term.id)}
+                      onCheckedChange={(checked) => {
+                        setSelectedInvoiceTerms(prev =>
+                          checked ? [...prev, term.id] : prev.filter(id => id !== term.id)
+                        );
+                      }}
+                      className="mt-0.5 border-white/30 data-[state=checked]:bg-cyan-500"
+                    />
+                    <span className="flex-1 text-[13px] text-white/70">{term.label}</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCustomInvoiceTerms(prev => prev.filter(t => t.id !== term.id));
+                        setSelectedInvoiceTerms(prev => prev.filter(id => id !== term.id));
+                      }}
+                      className="p-1 text-white/30 hover:text-red-400"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="flex gap-2">
+              <Input
+                value={newCustomInvoiceTerm}
+                onChange={(e) => setNewCustomInvoiceTerm(e.target.value)}
+                placeholder="Add custom invoice term..."
+                className="flex-1 h-10 text-[14px] bg-white/[0.04] border-white/[0.06] rounded-xl"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && newCustomInvoiceTerm.trim()) {
+                    e.preventDefault();
+                    const newId = `inv_custom_${Date.now()}`;
+                    setCustomInvoiceTerms(prev => [...prev, { id: newId, label: newCustomInvoiceTerm.trim() }]);
+                    setSelectedInvoiceTerms(prev => [...prev, newId]);
+                    setNewCustomInvoiceTerm('');
+                  }
+                }}
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                disabled={!newCustomInvoiceTerm.trim()}
+                onClick={() => {
+                  if (newCustomInvoiceTerm.trim()) {
+                    const newId = `inv_custom_${Date.now()}`;
+                    setCustomInvoiceTerms(prev => [...prev, { id: newId, label: newCustomInvoiceTerm.trim() }]);
+                    setSelectedInvoiceTerms(prev => [...prev, newId]);
+                    setNewCustomInvoiceTerm('');
+                  }
+                }}
+                className="h-10 w-10 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400"
               >
                 <Plus className="h-4 w-4" />
               </Button>

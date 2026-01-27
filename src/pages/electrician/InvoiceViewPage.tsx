@@ -315,7 +315,7 @@ const InvoiceViewPage = () => {
 
       {/* Sticky Header */}
       <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b">
-        <div className="px-4 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <Button
             variant="ghost"
             size="sm"
@@ -332,229 +332,264 @@ const InvoiceViewPage = () => {
         </div>
       </div>
 
-      {/* Hero Card */}
-      <div className={`mx-4 mt-4 rounded-2xl bg-gradient-to-br ${statusInfo?.gradient} border p-6`}>
-        <div className="text-center space-y-2">
-          <p className="text-sm text-muted-foreground font-medium">
-            {invoice.invoice_status === 'paid' ? 'Amount Paid' : 'Amount Due'}
-          </p>
-          <p className="text-4xl font-bold text-foreground">{formatCurrency(invoice.total)}</p>
-          <p className="text-lg text-muted-foreground">{invoice.invoice_number}</p>
-          {invoice.invoice_status === 'paid' && (
-            <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 mt-2">
-              <CheckCircle className="mr-1 h-3 w-3" />
-              Payment Received
-            </Badge>
-          )}
-          {daysOverdue && daysOverdue > 0 && (
-            <Badge className="bg-red-500/20 text-red-400 border-red-500/30 mt-2">
-              <AlertCircle className="mr-1 h-3 w-3" />
-              {daysOverdue} {daysOverdue === 1 ? 'day' : 'days'} overdue
-            </Badge>
-          )}
-        </div>
-      </div>
-
-      {/* Action Buttons Grid */}
-      <div className="grid grid-cols-2 gap-3 mx-4 mt-4">
-        <Button
-          onClick={handleDownloadPDF}
-          disabled={isDownloading}
-          className="h-14 bg-primary hover:bg-primary/90 rounded-xl touch-manipulation"
-        >
-          {isDownloading ? (
-            <Loader2 className="h-5 w-5 animate-spin" />
-          ) : (
-            <>
-              <Download className="h-5 w-5 mr-2" />
-              Download PDF
-            </>
-          )}
-        </Button>
-
-        {invoice.invoice_status !== 'paid' ? (
-          <InvoiceSendDropdown
-            invoice={invoice}
-            onSuccess={fetchInvoice}
-            className="h-14 rounded-xl"
-          />
-        ) : (
-          <Button
-            variant="outline"
-            className="h-14 rounded-xl bg-emerald-500/10 border-emerald-500/30 text-emerald-400 touch-manipulation"
-            disabled
-          >
-            <CheckCircle className="h-5 w-5 mr-2" />
-            Paid
-          </Button>
-        )}
-
-        {/* Edit - Always Visible */}
-        <Button
-          variant="outline"
-          onClick={() => navigate(`/electrician/invoice-quote-builder/${invoice.id}`)}
-          className="h-14 rounded-xl touch-manipulation"
-        >
-          <Edit className="h-5 w-5 mr-2" />
-          Edit Invoice
-        </Button>
-
-        {/* Mark Paid or Delete */}
-        {invoice.invoice_status !== 'paid' ? (
-          <Button
-            variant="outline"
-            onClick={() => setShowMarkPaidDialog(true)}
-            disabled={isMarkingPaid}
-            className="h-14 rounded-xl text-emerald-400 hover:text-emerald-400 hover:bg-emerald-500/10 border-emerald-500/30 touch-manipulation"
-          >
-            {isMarkingPaid ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
-            ) : (
-              <>
-                <PoundSterling className="h-5 w-5 mr-2" />
-                Mark Paid
-              </>
-            )}
-          </Button>
-        ) : (
-          <Button
-            variant="outline"
-            onClick={() => setShowDeleteDialog(true)}
-            className="h-14 rounded-xl text-destructive hover:text-destructive hover:bg-destructive/10 touch-manipulation"
-          >
-            <Trash2 className="h-5 w-5 mr-2" />
-            Delete
-          </Button>
-        )}
-      </div>
-
-      {/* Invoice Details */}
-      <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-        <h3 className="text-sm font-semibold text-muted-foreground mb-3 flex items-center gap-2">
-          <FileText className="h-4 w-4" />
-          Invoice Details
-        </h3>
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <span className="text-muted-foreground">Invoice Number</span>
-            <p className="font-medium">{invoice.invoice_number}</p>
-          </div>
-          <div>
-            <span className="text-muted-foreground">Status</span>
-            <p className="font-medium capitalize">{invoice.invoice_status || 'Draft'}</p>
-          </div>
-          <div>
-            <span className="text-muted-foreground">Issue Date</span>
-            <p className="font-medium flex items-center gap-1">
-              <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
-              {invoice.invoice_date ? format(invoice.invoice_date, 'dd MMM yyyy') : 'Not set'}
-            </p>
-          </div>
-          <div>
-            <span className="text-muted-foreground">Due Date</span>
-            <p className={`font-medium flex items-center gap-1 ${daysOverdue ? 'text-destructive' : ''}`}>
-              <Clock className="h-3.5 w-3.5" />
-              {invoice.invoice_due_date ? format(invoice.invoice_due_date, 'dd MMM yyyy') : 'Not set'}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Client Details */}
-      <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-        <h3 className="text-sm font-semibold text-muted-foreground mb-3 flex items-center gap-2">
-          <User className="h-4 w-4" />
-          Client Details
-        </h3>
-        <div className="space-y-3">
-          <p className="font-semibold text-lg">{invoice.client?.name || 'No client name'}</p>
-          {invoice.client?.email && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Mail className="h-4 w-4" />
-              <a href={`mailto:${invoice.client.email}`} className="hover:text-primary">
-                {invoice.client.email}
-              </a>
-            </div>
-          )}
-          {invoice.client?.phone && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Phone className="h-4 w-4" />
-              <a href={`tel:${invoice.client.phone}`} className="hover:text-primary">
-                {invoice.client.phone}
-              </a>
-            </div>
-          )}
-          {invoice.client?.address && (
-            <div className="flex items-start gap-2 text-sm text-muted-foreground">
-              <MapPin className="h-4 w-4 mt-0.5" />
-              <span className="whitespace-pre-line">{invoice.client.address}</span>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Line Items */}
-      <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-        <h3 className="text-sm font-semibold text-muted-foreground mb-3">Line Items</h3>
-        <div className="space-y-3">
-          {invoice.items?.map((item: any, index: number) => {
-            // Always calculate from quantity * unitPrice to ensure consistency with PDF
-            const lineTotal = (item.quantity || 0) * (item.unitPrice || 0);
-            return (
-              <div key={index} className="flex justify-between items-start py-2 border-b border-border/50 last:border-0">
-                <div className="flex-1 min-w-0 pr-4">
-                  <p className="font-medium truncate">{item.description || item.name}</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {item.quantity} × {formatCurrency(item.unitPrice || item.price || 0)}
-                  </p>
-                </div>
-                <p className="font-semibold whitespace-nowrap">{formatCurrency(lineTotal)}</p>
+      {/* Main Content Container */}
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Desktop: Two Column Header Layout */}
+        <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {/* Hero Card - Takes 2 cols on desktop */}
+          <div className={`lg:col-span-2 rounded-2xl bg-gradient-to-br ${statusInfo?.gradient} border p-6`}>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground font-medium">
+                  {invoice.invoice_status === 'paid' ? 'Amount Paid' : 'Amount Due'}
+                </p>
+                <p className="text-4xl sm:text-5xl font-bold text-foreground">{formatCurrency(invoice.total)}</p>
+                <p className="text-lg text-muted-foreground">{invoice.invoice_number}</p>
               </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Summary */}
-      <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-        <h3 className="text-sm font-semibold text-muted-foreground mb-3">Summary</h3>
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Subtotal</span>
-            <span>{formatCurrency(invoice.subtotal)}</span>
+              <div className="flex flex-wrap gap-2 sm:flex-col sm:items-end">
+                {invoice.invoice_status === 'paid' && (
+                  <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+                    <CheckCircle className="mr-1 h-3 w-3" />
+                    Payment Received
+                  </Badge>
+                )}
+                {daysOverdue && daysOverdue > 0 && (
+                  <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
+                    <AlertCircle className="mr-1 h-3 w-3" />
+                    {daysOverdue} {daysOverdue === 1 ? 'day' : 'days'} overdue
+                  </Badge>
+                )}
+              </div>
+            </div>
           </div>
-          {(invoice.overhead ?? 0) > 0 && (
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Overhead</span>
-              <span>{formatCurrency(invoice.overhead)}</span>
-            </div>
-          )}
-          {(invoice.profit ?? 0) > 0 && (
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Profit</span>
-              <span>{formatCurrency(invoice.profit)}</span>
-            </div>
-          )}
-          {(invoice.vatAmount ?? 0) > 0 && (
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">VAT</span>
-              <span>{formatCurrency(invoice.vatAmount)}</span>
-            </div>
-          )}
-          <div className="flex justify-between pt-2 border-t font-semibold text-base">
-            <span>Total</span>
-            <span className="text-primary">{formatCurrency(invoice.total)}</span>
+
+          {/* Action Buttons - Stacked on right on desktop */}
+          <div className="flex flex-col gap-2">
+            <Button
+              onClick={handleDownloadPDF}
+              disabled={isDownloading}
+              className="h-12 bg-primary hover:bg-primary/90 rounded-xl touch-manipulation"
+            >
+              {isDownloading ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                <>
+                  <Download className="h-5 w-5 mr-2" />
+                  Download PDF
+                </>
+              )}
+            </Button>
+
+            {invoice.invoice_status !== 'paid' ? (
+              <InvoiceSendDropdown
+                invoice={invoice}
+                onSuccess={fetchInvoice}
+                className="h-12 rounded-xl"
+              />
+            ) : (
+              <Button
+                variant="outline"
+                className="h-12 rounded-xl bg-emerald-500/10 border-emerald-500/30 text-emerald-400 touch-manipulation"
+                disabled
+              >
+                <CheckCircle className="h-5 w-5 mr-2" />
+                Paid
+              </Button>
+            )}
+
+            <Button
+              variant="outline"
+              onClick={() => navigate(`/electrician/invoice-quote-builder/${invoice.id}`)}
+              className="h-12 rounded-xl touch-manipulation"
+            >
+              <Edit className="h-5 w-5 mr-2" />
+              Edit Invoice
+            </Button>
+
+            {invoice.invoice_status !== 'paid' ? (
+              <Button
+                variant="outline"
+                onClick={() => setShowMarkPaidDialog(true)}
+                disabled={isMarkingPaid}
+                className="h-12 rounded-xl text-emerald-400 hover:text-emerald-400 hover:bg-emerald-500/10 border-emerald-500/30 touch-manipulation"
+              >
+                {isMarkingPaid ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : (
+                  <>
+                    <PoundSterling className="h-5 w-5 mr-2" />
+                    Mark Paid
+                  </>
+                )}
+              </Button>
+            ) : (
+              <Button
+                variant="outline"
+                onClick={() => setShowDeleteDialog(true)}
+                className="h-12 rounded-xl text-destructive hover:text-destructive hover:bg-destructive/10 touch-manipulation"
+              >
+                <Trash2 className="h-5 w-5 mr-2" />
+                Delete
+              </Button>
+            )}
           </div>
         </div>
-      </div>
 
-      {/* Notes */}
-      {invoice.notes && (
-        <div className="mx-4 mt-4 p-4 rounded-2xl bg-card border">
-          <h3 className="text-sm font-semibold text-muted-foreground mb-2">Notes</h3>
-          <p className="text-sm whitespace-pre-wrap">{invoice.notes}</p>
+        {/* Desktop: Invoice & Client Details Side by Side */}
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Invoice Details */}
+          <div className="p-5 rounded-2xl bg-card border">
+            <h3 className="text-sm font-semibold text-muted-foreground mb-4 flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              Invoice Details
+            </h3>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="space-y-1">
+                <span className="text-xs text-muted-foreground uppercase tracking-wide">Invoice Number</span>
+                <p className="font-semibold text-base">{invoice.invoice_number}</p>
+              </div>
+              <div className="space-y-1">
+                <span className="text-xs text-muted-foreground uppercase tracking-wide">Status</span>
+                <p className="font-semibold text-base capitalize">{invoice.invoice_status || 'Draft'}</p>
+              </div>
+              <div className="space-y-1">
+                <span className="text-xs text-muted-foreground uppercase tracking-wide">Issue Date</span>
+                <p className="font-medium flex items-center gap-1.5">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                  {invoice.invoice_date ? format(invoice.invoice_date, 'dd MMM yyyy') : 'Not set'}
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="text-xs text-muted-foreground uppercase tracking-wide">Due Date</span>
+                <p className={`font-medium flex items-center gap-1.5 ${daysOverdue ? 'text-destructive' : ''}`}>
+                  <Clock className="h-4 w-4" />
+                  {invoice.invoice_due_date ? format(invoice.invoice_due_date, 'dd MMM yyyy') : 'Not set'}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Client Details */}
+          <div className="p-5 rounded-2xl bg-card border">
+            <h3 className="text-sm font-semibold text-muted-foreground mb-4 flex items-center gap-2">
+              <User className="h-4 w-4" />
+              Client Details
+            </h3>
+            <div className="space-y-3">
+              <p className="font-semibold text-xl">{invoice.client?.name || 'No client name'}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {invoice.client?.email && (
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Mail className="h-4 w-4 flex-shrink-0" />
+                    <a href={`mailto:${invoice.client.email}`} className="hover:text-primary truncate">
+                      {invoice.client.email}
+                    </a>
+                  </div>
+                )}
+                {invoice.client?.phone && (
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Phone className="h-4 w-4 flex-shrink-0" />
+                    <a href={`tel:${invoice.client.phone}`} className="hover:text-primary">
+                      {invoice.client.phone}
+                    </a>
+                  </div>
+                )}
+              </div>
+              {invoice.client?.address && (
+                <div className="flex items-start gap-2 text-sm text-muted-foreground pt-1">
+                  <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  <span className="whitespace-pre-line">{invoice.client.address}</span>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      )}
+
+        {/* Desktop: Line Items & Summary Side by Side */}
+        <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {/* Line Items - Takes 2 cols */}
+          <div className="lg:col-span-2 p-5 rounded-2xl bg-card border">
+            <h3 className="text-sm font-semibold text-muted-foreground mb-4">Line Items</h3>
+            {/* Table header for desktop */}
+            <div className="hidden sm:grid sm:grid-cols-12 gap-4 pb-2 border-b text-xs text-muted-foreground uppercase tracking-wide">
+              <div className="col-span-6">Description</div>
+              <div className="col-span-2 text-right">Qty</div>
+              <div className="col-span-2 text-right">Unit Price</div>
+              <div className="col-span-2 text-right">Total</div>
+            </div>
+            <div className="space-y-0 divide-y divide-border/50">
+              {invoice.items?.map((item: any, index: number) => {
+                const lineTotal = (item.quantity || 0) * (item.unitPrice || 0);
+                return (
+                  <div key={index} className="py-3">
+                    {/* Mobile layout */}
+                    <div className="sm:hidden flex justify-between items-start">
+                      <div className="flex-1 min-w-0 pr-4">
+                        <p className="font-medium">{item.description || item.name}</p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {item.quantity} × {formatCurrency(item.unitPrice || item.price || 0)}
+                        </p>
+                      </div>
+                      <p className="font-semibold whitespace-nowrap">{formatCurrency(lineTotal)}</p>
+                    </div>
+                    {/* Desktop layout */}
+                    <div className="hidden sm:grid sm:grid-cols-12 gap-4 items-center">
+                      <div className="col-span-6">
+                        <p className="font-medium">{item.description || item.name}</p>
+                        {item.notes && <p className="text-xs text-muted-foreground mt-0.5">{item.notes}</p>}
+                      </div>
+                      <div className="col-span-2 text-right text-muted-foreground">{item.quantity}</div>
+                      <div className="col-span-2 text-right text-muted-foreground">{formatCurrency(item.unitPrice || item.price || 0)}</div>
+                      <div className="col-span-2 text-right font-semibold">{formatCurrency(lineTotal)}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Summary */}
+          <div className="p-5 rounded-2xl bg-card border h-fit">
+            <h3 className="text-sm font-semibold text-muted-foreground mb-4">Summary</h3>
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Subtotal</span>
+                <span className="font-medium">{formatCurrency(invoice.subtotal)}</span>
+              </div>
+              {(invoice.overhead ?? 0) > 0 && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Overhead</span>
+                  <span className="font-medium">{formatCurrency(invoice.overhead)}</span>
+                </div>
+              )}
+              {(invoice.profit ?? 0) > 0 && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Profit</span>
+                  <span className="font-medium">{formatCurrency(invoice.profit)}</span>
+                </div>
+              )}
+              {(invoice.vatAmount ?? 0) > 0 && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">VAT ({invoice.settings?.vatRate || 20}%)</span>
+                  <span className="font-medium">{formatCurrency(invoice.vatAmount)}</span>
+                </div>
+              )}
+              <div className="flex justify-between pt-3 border-t font-semibold text-lg">
+                <span>Total</span>
+                <span className="text-primary">{formatCurrency(invoice.total)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Notes */}
+        {invoice.notes && (
+          <div className="mt-4 p-5 rounded-2xl bg-card border">
+            <h3 className="text-sm font-semibold text-muted-foreground mb-2">Notes</h3>
+            <p className="text-sm whitespace-pre-wrap">{invoice.notes}</p>
+          </div>
+        )}
+      </div>
 
       {/* Mark as Paid Dialog */}
       <AlertDialog open={showMarkPaidDialog} onOpenChange={setShowMarkPaidDialog}>

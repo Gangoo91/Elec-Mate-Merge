@@ -268,6 +268,32 @@ export const archiveConversation = async (id: string): Promise<boolean> => {
   return true;
 };
 
+export const deleteConversation = async (id: string): Promise<boolean> => {
+  // First delete all messages in the conversation
+  const { error: msgError } = await supabase
+    .from('employer_messages')
+    .delete()
+    .eq('conversation_id', id);
+
+  if (msgError) {
+    console.error('Error deleting messages:', msgError);
+    return false;
+  }
+
+  // Then delete the conversation itself
+  const { error: convError } = await supabase
+    .from('employer_conversations')
+    .delete()
+    .eq('id', id);
+
+  if (convError) {
+    console.error('Error deleting conversation:', convError);
+    return false;
+  }
+
+  return true;
+};
+
 export const markConversationAsRead = async (
   id: string,
   userType: 'employer' | 'electrician'

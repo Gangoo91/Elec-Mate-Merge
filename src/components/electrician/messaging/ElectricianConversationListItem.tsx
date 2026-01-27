@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { MessageSquare, Clock, Briefcase, MapPin, Building2, Lock } from "lucide-react";
+import { MessageSquare, Clock, Briefcase, MapPin, Building2, Lock, Trash2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import type { ElectricianConversation } from "@/services/conversationService";
 import { cn } from "@/lib/utils";
@@ -9,11 +9,13 @@ import { cn } from "@/lib/utils";
 interface ElectricianConversationListItemProps {
   conversation: ElectricianConversation;
   onClick: (conversation: ElectricianConversation) => void;
+  onDelete?: (conversation: ElectricianConversation) => void;
 }
 
 export function ElectricianConversationListItem({
   conversation,
   onClick,
+  onDelete,
 }: ElectricianConversationListItemProps) {
   const employer = conversation.employer;
   const vacancy = conversation.vacancy;
@@ -134,8 +136,19 @@ export function ElectricianConversationListItem({
             )}
           </div>
 
-          {/* Message icon indicator */}
-          <div className="shrink-0 self-center">
+          {/* Actions */}
+          <div className="shrink-0 self-center flex items-center gap-2">
+            {onDelete && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete(conversation);
+                }}
+                className="w-9 h-9 rounded-xl bg-red-500/10 hover:bg-red-500/20 active:bg-red-500/30 flex items-center justify-center text-red-400 touch-manipulation"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            )}
             <MessageSquare className={cn(
               "h-5 w-5",
               hasUnread ? "text-elec-yellow" : "text-muted-foreground"

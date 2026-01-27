@@ -54,6 +54,7 @@ const AdminConversations = lazy(() => import("@/pages/Admin/AdminConversations")
 const AdminSystem = lazy(() => import("@/pages/Admin/AdminSystem"));
 const AdminAnnouncements = lazy(() => import("@/pages/Admin/AdminAnnouncements"));
 const AdminSupport = lazy(() => import("@/pages/Admin/AdminSupport"));
+const AdminUserMessages = lazy(() => import("@/pages/Admin/AdminUserMessages"));
 const AdminAuditLogs = lazy(() => import("@/pages/Admin/AdminAuditLogs"));
 const AdminFeatureFlags = lazy(() => import("@/pages/Admin/AdminFeatureFlags"));
 const AdminSettings = lazy(() => import("@/pages/Admin/AdminSettings"));
@@ -167,6 +168,7 @@ const AppRouter = () => {
           <Route path="conversations" element={<LazyRoute><AdminConversations /></LazyRoute>} />
           <Route path="announcements" element={<LazyRoute><AdminAnnouncements /></LazyRoute>} />
           <Route path="support" element={<LazyRoute><AdminSupport /></LazyRoute>} />
+          <Route path="user-messages" element={<LazyRoute><AdminUserMessages /></LazyRoute>} />
           <Route path="feature-flags" element={<LazyRoute><AdminFeatureFlags /></LazyRoute>} />
           <Route path="settings" element={<LazyRoute><AdminSettings /></LazyRoute>} />
           <Route path="audit" element={<LazyRoute><AdminAuditLogs /></LazyRoute>} />

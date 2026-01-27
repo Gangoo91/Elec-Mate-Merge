@@ -543,6 +543,30 @@ export const peerMessageService = {
   },
 
   /**
+   * Delete a conversation and all its messages
+   */
+  async deleteConversation(conversationId: string): Promise<void> {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('Not authenticated');
+
+    // Delete all messages first
+    const { error: msgError } = await supabase
+      .from('mental_health_peer_messages')
+      .delete()
+      .eq('conversation_id', conversationId);
+
+    if (msgError) throw msgError;
+
+    // Then delete the conversation
+    const { error: convError } = await supabase
+      .from('mental_health_peer_conversations')
+      .delete()
+      .eq('id', conversationId);
+
+    if (convError) throw convError;
+  },
+
+  /**
    * Subscribe to new messages in a conversation (real-time)
    */
   subscribeToMessages(

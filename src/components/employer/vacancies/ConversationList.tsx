@@ -7,6 +7,7 @@ interface ConversationListProps {
   conversations: Conversation[];
   isLoading: boolean;
   onSelect: (conversation: Conversation) => void;
+  onDelete?: (conversation: Conversation) => void;
   emptyMessage?: string;
 }
 
@@ -14,6 +15,7 @@ export function ConversationList({
   conversations,
   isLoading,
   onSelect,
+  onDelete,
   emptyMessage = "No conversations yet"
 }: ConversationListProps) {
   if (isLoading) {
@@ -47,6 +49,7 @@ export function ConversationList({
           key={conversation.id}
           conversation={conversation}
           onClick={() => onSelect(conversation)}
+          onDelete={onDelete}
         />
       ))}
     </div>

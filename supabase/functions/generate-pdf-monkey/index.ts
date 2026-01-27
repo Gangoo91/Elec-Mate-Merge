@@ -21,6 +21,25 @@ const BRIEFING_TEMPLATES = {
   'general': 'F59624CA-B0A1-4BEC-8CF0-9A7F446C641D' // For now, use same template
 };
 
+// Default Invoice T&Cs - must match frontend BusinessTab.tsx
+const DEFAULT_INVOICE_TERMS_MAP: Record<string, string> = {
+  // Payment Terms
+  'inv_payment_due': 'Payment is due within the period specified above',
+  'inv_use_reference': 'Please use invoice number as payment reference',
+  'inv_bank_transfer': 'Bank transfer is the preferred payment method',
+  // Late Payment
+  'inv_late_interest': 'Late payment interest may be charged on overdue invoices',
+  'inv_debt_recovery': 'We reserve the right to recover debt collection costs under the Late Payment of Commercial Debts Act',
+  'inv_credit_hold': 'Future work may be suspended if invoices remain unpaid',
+  // Warranty & Guarantees
+  'inv_workmanship': 'All workmanship guaranteed as per original quotation',
+  'inv_compliance': 'All work complies with BS 7671 (18th Edition)',
+  'inv_certificates': 'Relevant certificates have been provided separately',
+  // General
+  'inv_queries': 'Queries to be raised within 7 days of invoice date',
+  'inv_thank_you': 'Thank you for your business',
+};
+
 // Default T&Cs options for electrical contractors - must match frontend QuoteSettingsCard.tsx
 const DEFAULT_TERMS_MAP: Record<string, string> = {
   // Payment Terms
@@ -112,6 +131,62 @@ function buildTermsList(quoteTermsJson: string | null): string[] {
   } catch {
     // If parsing fails, treat as legacy plain text
     return quoteTermsJson.split('\n').filter(line => line.trim());
+  }
+}
+
+// Build invoice terms list from stored JSON format
+function buildInvoiceTermsList(invoiceTermsJson: string | null): string[] {
+  if (!invoiceTermsJson) {
+    // Return sensible defaults if no terms configured
+    return [
+      DEFAULT_INVOICE_TERMS_MAP['inv_payment_due'],
+      DEFAULT_INVOICE_TERMS_MAP['inv_use_reference'],
+      DEFAULT_INVOICE_TERMS_MAP['inv_late_interest'],
+      DEFAULT_INVOICE_TERMS_MAP['inv_workmanship'],
+      DEFAULT_INVOICE_TERMS_MAP['inv_compliance'],
+      DEFAULT_INVOICE_TERMS_MAP['inv_queries'],
+    ];
+  }
+
+  try {
+    const parsed = JSON.parse(invoiceTermsJson);
+    const terms: string[] = [];
+
+    // Handle JSON format: { selected: string[], custom: {id: string, label: string}[] }
+    if (parsed.selected && Array.isArray(parsed.selected)) {
+      for (const termId of parsed.selected) {
+        // Check if it's a default term
+        if (DEFAULT_INVOICE_TERMS_MAP[termId]) {
+          terms.push(DEFAULT_INVOICE_TERMS_MAP[termId]);
+        }
+        // Check if it's a custom term
+        else if (termId.startsWith('inv_custom_') && parsed.custom) {
+          const customTerm = parsed.custom.find((t: { id: string; label: string }) => t.id === termId);
+          if (customTerm?.label) {
+            terms.push(customTerm.label);
+          }
+        }
+      }
+      return terms.length > 0 ? terms : [
+        DEFAULT_INVOICE_TERMS_MAP['inv_payment_due'],
+        DEFAULT_INVOICE_TERMS_MAP['inv_use_reference'],
+        DEFAULT_INVOICE_TERMS_MAP['inv_late_interest'],
+      ];
+    }
+
+    // Fallback
+    return [
+      DEFAULT_INVOICE_TERMS_MAP['inv_payment_due'],
+      DEFAULT_INVOICE_TERMS_MAP['inv_late_interest'],
+      DEFAULT_INVOICE_TERMS_MAP['inv_workmanship'],
+    ];
+  } catch {
+    // If parsing fails, return defaults
+    return [
+      DEFAULT_INVOICE_TERMS_MAP['inv_payment_due'],
+      DEFAULT_INVOICE_TERMS_MAP['inv_use_reference'],
+      DEFAULT_INVOICE_TERMS_MAP['inv_late_interest'],
+    ];
   }
 }
 
@@ -468,10 +543,21 @@ serve(async (req) => {
           vatRate: settings.vatRate || 20,
           total: total
         },
-        terms: freshQuote?.settings?.terms || "",
+        // Branding settings for dynamic styling (same as quotes)
+        branding: {
+          primaryColor: freshCompanyProfile?.primary_color || '#1e40af',
+          secondaryColor: freshCompanyProfile?.secondary_color || '#1F2937',
+          accentColor: freshCompanyProfile?.accent_color || '#F59E0B',
+        },
+        // Invoice-specific terms and settings
+        terms: buildInvoiceTermsList(freshCompanyProfile?.invoice_terms || null),
+        invoiceSettings: {
+          latePaymentInterestRate: freshCompanyProfile?.late_payment_interest_rate || '8% p.a.',
+          preferredPaymentMethod: freshCompanyProfile?.preferred_payment_method || 'Bank Transfer',
+        },
         useVat: settings.vatRegistered === true,
         vatRate: settings.vatRate || 20,
-        // STEP 5: Cache busting timestamp
+        // Cache busting timestamp
         _cache_bust: Date.now(),
         _generated_at: new Date().toISOString()
       };

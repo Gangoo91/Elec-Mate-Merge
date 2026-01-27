@@ -355,24 +355,92 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
         </div>
       )}
 
+      {/* Quick Actions - Scanner & Templates */}
+      <div className="grid grid-cols-2 gap-3">
+        {/* Scan Invoice - Primary Action */}
+        <button
+          type="button"
+          onClick={() => setScannerSheetOpen(true)}
+          className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30 touch-manipulation active:scale-[0.98] transition-all"
+        >
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+            <Scan className="h-6 w-6 text-white" />
+          </div>
+          <div className="text-center">
+            <p className="text-[14px] font-semibold text-white">Scan Invoice</p>
+            <p className="text-[11px] text-white/50">Photo or upload</p>
+          </div>
+        </button>
+
+        {/* Job Templates */}
+        <button
+          type="button"
+          onClick={() => setShowTemplates(true)}
+          className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
+        >
+          <div className="w-12 h-12 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
+            <Copy className="h-6 w-6 text-elec-yellow" />
+          </div>
+          <div className="text-center">
+            <p className="text-[14px] font-semibold text-white">Templates</p>
+            <p className="text-[11px] text-white/50">Common jobs</p>
+          </div>
+        </button>
+      </div>
+
+      {/* Markup Quick Select - Always visible */}
+      {setPriceAdjustment && (
+        <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <div className="flex items-center gap-2">
+            <TrendingUp className="h-4 w-4 text-elec-yellow" />
+            <span className="text-[13px] text-white/70">Material Markup</span>
+          </div>
+          <div className="flex gap-1">
+            {[0, 10, 15, 20].map(markup => (
+              <button
+                key={markup}
+                type="button"
+                onClick={() => setPriceAdjustment(markup)}
+                className={cn(
+                  'px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all touch-manipulation active:scale-[0.97]',
+                  priceAdjustment === markup
+                    ? 'bg-elec-yellow text-black'
+                    : 'bg-white/[0.05] text-white/60'
+                )}
+              >
+                {markup}%
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Section Header */}
+      <div className="flex items-center gap-2 pt-2">
+        <div className="h-px flex-1 bg-white/10" />
+        <span className="text-[11px] uppercase tracking-wider text-white/40 font-medium">Add Items</span>
+        <div className="h-px flex-1 bg-white/10" />
+      </div>
+
       {/* Category Pills - iOS-style segmented control */}
-      <div className="flex gap-1.5 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
+      <div className="grid grid-cols-4 gap-2">
         {categories.map((cat) => {
           const Icon = cat.icon;
+          const isActive = newItem.category === cat.id;
           return (
             <button
               key={cat.id}
               type="button"
               onClick={() => handleCategoryChange(cat.id)}
               className={cn(
-                "shrink-0 flex items-center gap-2 px-4 py-3 rounded-xl transition-all touch-manipulation active:scale-[0.98]",
-                newItem.category === cat.id
-                  ? "bg-elec-yellow text-black font-semibold shadow-lg shadow-elec-yellow/20"
-                  : "bg-white/[0.05] text-white/70 border border-white/[0.06]"
+                "flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl transition-all touch-manipulation active:scale-[0.97]",
+                isActive
+                  ? "bg-elec-yellow text-black shadow-lg shadow-elec-yellow/20"
+                  : "bg-white/[0.03] text-white/60 border border-white/[0.06]"
               )}
             >
-              <Icon className="h-4 w-4" />
-              <span className="text-[14px] font-medium">{cat.label}</span>
+              <Icon className={cn("h-5 w-5", isActive ? "text-black" : "text-white/60")} />
+              <span className={cn("text-[12px] font-medium", isActive ? "text-black" : "text-white/60")}>{cat.label}</span>
             </button>
           );
         })}
@@ -382,53 +450,55 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
       <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
         {/* Labour Fields */}
         {newItem.category === "labour" && (
-          <div className="divide-y divide-white/[0.06]">
-            {/* Worker Type */}
-            <div className="flex items-center gap-3 p-3.5">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                <Wrench className="h-5 w-5 text-black" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <label className="text-[12px] text-white/40 block">Worker Type</label>
-                <Select
-                  value={newItem.workerType || ""}
-                  onValueChange={handleWorkerTypeChange}
-                >
-                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white/30">
-                    <SelectValue placeholder="Select worker type" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
-                    {workerTypes.map(w => (
-                      <SelectItem key={w.id} value={w.id} className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer">
-                        {w.name} - £{w.defaultHourlyRate}/hr
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+          <div className="p-4 space-y-4">
+            {/* Worker Type - Visual Pills */}
+            <div>
+              <label className="text-[12px] text-white/50 uppercase tracking-wide mb-2 block">Worker Type</label>
+              <div className="grid grid-cols-2 gap-2">
+                {workerTypes.map(w => {
+                  const isSelected = newItem.workerType === w.id;
+                  return (
+                    <button
+                      key={w.id}
+                      type="button"
+                      onClick={() => handleWorkerTypeChange(w.id)}
+                      className={cn(
+                        "flex items-center justify-between p-3 rounded-xl transition-all touch-manipulation active:scale-[0.98]",
+                        isSelected
+                          ? "bg-elec-yellow text-black"
+                          : "bg-white/[0.03] text-white border border-white/[0.08]"
+                      )}
+                    >
+                      <span className={cn("text-[13px] font-medium", isSelected ? "text-black" : "text-white")}>{w.name}</span>
+                      <span className={cn("text-[12px] font-semibold", isSelected ? "text-black/70" : "text-white/50")}>£{w.defaultHourlyRate}/hr</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
-            {/* Hours */}
-            <div className="flex items-center gap-3 p-3.5">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                <Clock className="h-5 w-5 text-black" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <label className="text-[12px] text-white/40 block">Hours</label>
-                <Select
-                  value={newItem.hours > 0 ? newItem.hours.toString() : ""}
-                  onValueChange={(value) => handleHoursChange(parseFloat(value))}
-                >
-                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white/30">
-                    <SelectValue placeholder="Select hours" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
-                    {hourOptions.map(opt => (
-                      <SelectItem key={opt.value} value={opt.value.toString()} className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer">
-                        {opt.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+
+            {/* Hours - Visual Pills */}
+            <div>
+              <label className="text-[12px] text-white/50 uppercase tracking-wide mb-2 block">Hours</label>
+              <div className="flex flex-wrap gap-2">
+                {hourOptions.map(opt => {
+                  const isSelected = newItem.hours === parseFloat(opt.value);
+                  return (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => handleHoursChange(parseFloat(opt.value))}
+                      className={cn(
+                        "px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]",
+                        isSelected
+                          ? "bg-elec-yellow text-black"
+                          : "bg-white/[0.03] text-white/70 border border-white/[0.08]"
+                      )}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -436,75 +506,25 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
         {/* Materials Fields */}
         {newItem.category === "materials" && (
-          <div className="divide-y divide-white/[0.06]">
-            {/* Scan Invoice Button */}
-            <button
-              type="button"
-              onClick={() => setScannerSheetOpen(true)}
-              className="w-full flex items-center justify-between p-3.5 touch-manipulation active:bg-white/[0.03] transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0">
-                  <Scan className="h-5 w-5 text-white" />
-                </div>
-                <div className="text-left">
-                  <p className="text-[14px] font-medium text-white">Scan Supplier Invoice</p>
-                  <p className="text-[12px] text-white/50">Upload multiple screenshots at once</p>
-                </div>
-              </div>
-              <ChevronRight className="h-5 w-5 text-white/30" />
-            </button>
-
-            {/* Markup Quick Select - matching invoice flow style */}
-            {setPriceAdjustment && (
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="h-5 w-5 text-black" />
-                  </div>
-                  <span className="text-[12px] text-white/60 uppercase tracking-wide">Markup</span>
-                </div>
-                <div className="flex gap-1">
-                  {[0, 10, 15, 20].map(markup => (
-                    <button
-                      key={markup}
-                      onClick={() => setPriceAdjustment(markup)}
-                      className={cn(
-                        'px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all touch-manipulation',
-                        priceAdjustment === markup
-                          ? 'bg-elec-yellow text-black'
-                          : 'bg-white/[0.05] text-white/70'
-                      )}
-                    >
-                      {markup}%
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-            {/* Search */}
-            <div className="flex items-center gap-3 p-3.5">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                <Search className="h-5 w-5 text-black" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <label className="text-[12px] text-white/40 block">Search Materials</label>
-                <Input
-                  placeholder="Search by name or code..."
-                  value={materialSearch}
-                  onChange={(e) => setMaterialSearch(e.target.value)}
-                  className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
-                />
-              </div>
+          <div className="p-4 space-y-3">
+            {/* Search Input - Full Width */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
+              <Input
+                placeholder="Search materials by name or code..."
+                value={materialSearch}
+                onChange={(e) => setMaterialSearch(e.target.value)}
+                className="h-12 pl-11 pr-4 bg-white/[0.03] border-white/[0.08] text-[15px] text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-xl"
+              />
             </div>
 
             {/* Material Results */}
             {materialSearch.length >= 2 && (filteredMaterials.length > 0 || ragResults.length > 0) && (
-              <div className="p-3.5">
+              <div>
                 <p className="text-[12px] text-white/40 mb-2">
-                  {filteredMaterials.length} found {isSearchingRAG && "• Searching..."}
+                  {filteredMaterials.length + ragResults.length} results {isSearchingRAG && "• Searching..."}
                 </p>
-                <div className="max-h-[250px] overflow-y-auto space-y-2 rounded-xl bg-white/[0.02] p-2">
+                <div className="max-h-[300px] overflow-y-auto space-y-2">
                   {filteredMaterials.slice(0, 5).map(material => {
                     const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice;
                     const isSelected = newItem.materialCode === material.id;
