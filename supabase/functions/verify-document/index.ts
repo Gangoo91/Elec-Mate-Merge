@@ -1,6 +1,18 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 
+// Convert ArrayBuffer to base64 using chunked approach (avoids stack overflow on large files)
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  const chunkSize = 0x8000; // 32KB chunks
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, Math.min(i + chunkSize, bytes.length));
+    binary += String.fromCharCode.apply(null, Array.from(chunk));
+  }
+  return btoa(binary);
+}
+
 /**
  * verify-document Edge Function
  *
@@ -206,7 +218,7 @@ serve(async (req) => {
     }
 
     const imageBuffer = await imageResponse.arrayBuffer();
-    const base64Image = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)));
+    const base64Image = arrayBufferToBase64(imageBuffer);
 
     // Determine MIME type from URL or default to jpeg
     const mimeType = fileUrl.toLowerCase().includes('.png') ? 'image/png' :
@@ -260,10 +272,10 @@ Respond with ONLY valid JSON in this exact format:
   "suggestions": ["helpful suggestion 1", "suggestion 2"]
 }`;
 
-    // Call Gemini 3 Flash Vision API for OCR
-    console.log('🤖 Calling Gemini 3 Flash Vision for document analysis...');
+    // Call Gemini Flash Vision API for OCR
+    console.log('🤖 Calling Gemini 2.0 Flash Vision for document analysis...');
     const visionResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
