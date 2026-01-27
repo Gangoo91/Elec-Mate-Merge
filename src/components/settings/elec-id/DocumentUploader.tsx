@@ -276,6 +276,60 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
 
       if (error) throw error;
 
+      // Check for documents stuck in "processing" state for more than 2 minutes
+      // These likely failed during verification and need to be reset
+      const stuckThreshold = 2 * 60 * 1000; // 2 minutes
+      const now = Date.now();
+      const stuckDocs = (data || []).filter((doc) => {
+        if (doc.verification_status !== "processing") return false;
+        const createdAt = new Date(doc.created_at).getTime();
+        return now - createdAt > stuckThreshold;
+      });
+
+      // Reset stuck documents to "pending" status
+      if (stuckDocs.length > 0) {
+        console.log(`Resetting ${stuckDocs.length} stuck document(s) from "processing" to "pending"`);
+        for (const doc of stuckDocs) {
+          await supabase
+            .from("elec_id_documents")
+            .update({
+              verification_status: "pending",
+              rejection_reason: "Verification timed out - please retry or wait for manual review",
+            })
+            .eq("id", doc.id);
+        }
+        // Re-fetch after fixing stuck documents
+        const { data: refreshedData } = await supabase
+          .from("elec_id_documents")
+          .select("*")
+          .eq("profile_id", profile.id)
+          .order("created_at", { ascending: false });
+
+        if (refreshedData) {
+          // Process refreshed data instead
+          const docsWithUrls = await Promise.all(
+            refreshedData.map(async (doc) => {
+              if (doc.file_path || doc.file_url) {
+                const filePath = doc.file_path || doc.file_url;
+                if (filePath.startsWith('http')) {
+                  return doc;
+                }
+                const { data: urlData } = await supabase.storage
+                  .from("elec-id-documents")
+                  .createSignedUrl(filePath, 3600);
+                return {
+                  ...doc,
+                  display_url: urlData?.signedUrl || null
+                };
+              }
+              return doc;
+            })
+          );
+          setDocuments(docsWithUrls || []);
+          return;
+        }
+      }
+
       // Generate signed URLs for documents that have file_path stored
       // file_url/file_path now stores the storage path, not a signed URL
       const docsWithUrls = await Promise.all(
@@ -463,6 +517,20 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
 
       if (verifyError) {
         console.error("Verification error:", verifyError);
+
+        // Update document status from "processing" to "pending" so it doesn't spin forever
+        try {
+          await supabase
+            .from("elec_id_documents")
+            .update({
+              verification_status: "pending",
+              rejection_reason: verifyError.message || "Verification service error - please retry",
+            })
+            .eq("id", docRecord.id);
+        } catch (updateErr) {
+          console.error("Failed to update document status:", updateErr);
+        }
+
         // Show error to user and allow retry
         toast({
           title: "Verification Failed",

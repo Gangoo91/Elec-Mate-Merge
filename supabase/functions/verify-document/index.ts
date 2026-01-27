@@ -181,9 +181,17 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Store request data outside try block so we can access it in error handler
+  let documentId: string | undefined;
+  let profileId: string | undefined;
+
   try {
     const body: VerificationRequest = await req.json();
-    const { fileUrl, documentType, documentName, profileId, documentId, issuingBody, documentNumber, issueDate, expiryDate } = body;
+    const { fileUrl, documentType, documentName, issuingBody, documentNumber, issueDate, expiryDate } = body;
+
+    // Store these for error handling
+    documentId = body.documentId;
+    profileId = body.profileId;
 
     if (!fileUrl || !documentType || !profileId) {
       return new Response(
@@ -425,6 +433,42 @@ Respond with ONLY valid JSON in this exact format:
 
   } catch (error) {
     console.error('Error in verify-document:', error);
+
+    // Try to update the document status to "pending" so it doesn't stay stuck as "processing"
+    if (documentId || profileId) {
+      try {
+        const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+        const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        let updateQuery = supabase
+          .from('elec_id_documents')
+          .update({
+            verification_status: 'pending',
+            rejection_reason: error instanceof Error ? error.message : 'Verification service error',
+            updated_at: new Date().toISOString()
+          });
+
+        if (documentId) {
+          updateQuery = updateQuery.eq('id', documentId);
+        } else if (profileId) {
+          // Update most recent processing document for this profile
+          updateQuery = updateQuery
+            .eq('profile_id', profileId)
+            .eq('verification_status', 'processing');
+        }
+
+        const { error: updateError } = await updateQuery;
+        if (updateError) {
+          console.error('Failed to update document status on error:', updateError);
+        } else {
+          console.log('✅ Document status updated to pending after error');
+        }
+      } catch (updateErr) {
+        console.error('Failed to update document on error:', updateErr);
+      }
+    }
+
     return new Response(
       JSON.stringify({
         status: 'rejected',
