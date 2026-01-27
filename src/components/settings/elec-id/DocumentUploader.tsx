@@ -435,20 +435,24 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
       }
 
       // Get signed URL for AI verification (1 hour expiry)
+      console.log("[Elec-ID] Getting signed URL for document...");
       const { data: urlData, error: urlError } = await supabase.storage
         .from("elec-id-documents")
         .createSignedUrl(fileName, 3600);
 
       if (urlError || !urlData?.signedUrl) {
+        console.error("[Elec-ID] Failed to get signed URL:", urlError);
         throw new Error("Failed to generate document URL for verification");
       }
+      console.log("[Elec-ID] Signed URL obtained, starting background verification...");
 
-      // Call verification Edge Function with documentId for reliable UPDATE
-      const { data: verifyResult, error: verifyError } = await supabase.functions.invoke(
+      // Fire verification in background - don't wait for it
+      // This prevents the spinner from hanging while Gemini processes the image
+      supabase.functions.invoke(
         "verify-document",
         {
           body: {
-            documentId: docRecord.id,  // Pass document ID for UPDATE by ID
+            documentId: docRecord.id,
             fileUrl: urlData.signedUrl,
             documentType: selectedDocType,
             documentName: documentName || uploadFile.name,
@@ -459,67 +463,26 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
             profileId: profile.id,
           },
         }
-      );
-
-      if (verifyError) {
-        console.error("Verification error:", verifyError);
-        // Show error to user and allow retry
-        toast({
-          title: "Verification Failed",
-          description: verifyError.message || "Failed to verify document. Please try again.",
-          variant: "destructive",
-        });
-        // Document was uploaded but verification failed - still refresh list
-        await fetchDocuments();
-        setIsVerifying(false);
-        return;
-      }
-
-      setVerificationResult(verifyResult);
-
-      // Auto-populate fields from extraction
-      if (verifyResult?.extractedData) {
-        if (verifyResult.extractedData.issuingBody && !issuingBody) {
-          setIssuingBody(verifyResult.extractedData.issuingBody);
+      ).then(({ data: verifyResult, error: verifyError }) => {
+        console.log("[Elec-ID] Background verification complete:", { verifyResult, verifyError });
+        if (verifyError) {
+          console.error("[Elec-ID] Background verification error:", verifyError);
         }
-        if ((verifyResult.extractedData.cardNumber || verifyResult.extractedData.certificateNumber) && !documentNumber) {
-          setDocumentNumber(verifyResult.extractedData.cardNumber || verifyResult.extractedData.certificateNumber || "");
-        }
-        if (verifyResult.extractedData.expiryDate && !expiryDate) {
-          setExpiryDate(verifyResult.extractedData.expiryDate);
-        }
-        if (verifyResult.extractedData.issueDate && !issueDate) {
-          setIssueDate(verifyResult.extractedData.issueDate);
-        }
-      }
+        // Refresh documents list to show updated status
+        fetchDocuments();
+      }).catch((err) => {
+        console.error("[Elec-ID] Background verification failed:", err);
+      });
 
-      // Handle result based on status
-      if (verifyResult?.status === "verified") {
-        toast({
-          title: "Document Verified!",
-          description: "Your document has been successfully verified.",
-        });
-        await fetchDocuments();
-        setIsUploadDialogOpen(false);
-      } else if (verifyResult?.status === "needs_review") {
-        toast({
-          title: "Document Under Review",
-          description: "Your document is being reviewed. You'll be notified once complete.",
-        });
-        await fetchDocuments();
-        // Keep dialog open to allow corrections
-      } else if (verifyResult?.status === "rejected") {
-        // Show rejection in dialog with suggestions
-        setIsEditMode(true);
-      } else if (!verifyResult?.status) {
-        // No valid status returned - verification may have failed silently
-        toast({
-          title: "Verification Incomplete",
-          description: "Document uploaded but verification status unknown. Please check back later.",
-          variant: "default",
-        });
-        await fetchDocuments();
-      }
+      // Show success immediately - verification happens in background
+      toast({
+        title: "Document Uploaded",
+        description: "Your document is being verified. This may take a moment.",
+      });
+
+      // Refresh list and close dialog
+      await fetchDocuments();
+      setIsUploadDialogOpen(false);
 
     } catch (error: any) {
       console.error("Upload error:", error);
