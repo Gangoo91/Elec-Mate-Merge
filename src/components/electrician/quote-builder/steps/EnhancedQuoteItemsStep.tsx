@@ -723,7 +723,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
       {items.length > 0 && (
         <div>
           <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider px-1 mb-2">
-            Added Items
+            Added Items ({items.length})
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
             {items.map((item) => {
@@ -731,54 +731,64 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
               const Icon = cat?.icon || FileText;
               const color = cat?.color || 'bg-gray-500';
               return (
-                <div key={item.id} className="p-3.5">
-                  <div className="flex items-start gap-3">
-                    <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0", color)}>
-                      <Icon className="h-5 w-5 text-black" />
+                <div key={item.id} className="p-3">
+                  {/* Top row: Category dot + Description + Total */}
+                  <div className="flex items-start gap-2 mb-2">
+                    <div className={cn(
+                      "w-2 h-2 rounded-full mt-1.5 flex-shrink-0",
+                      item.category === 'labour' ? 'bg-blue-500' :
+                      item.category === 'materials' ? 'bg-green-500' :
+                      item.category === 'equipment' ? 'bg-purple-500' : 'bg-gray-500'
+                    )} />
+                    <p className="flex-1 min-w-0 font-medium text-[14px] text-white leading-tight line-clamp-2">
+                      {item.description}
+                    </p>
+                    <p className="text-[15px] font-bold text-elec-yellow shrink-0 ml-2">
+                      £{item.totalPrice.toFixed(2)}
+                    </p>
+                  </div>
+
+                  {/* Bottom row: Qty × Price | Actions */}
+                  <div className="flex items-center justify-between">
+                    {/* Quantity and Price inputs */}
+                    <div className="flex items-center gap-1.5">
+                      <input
+                        type="number"
+                        inputMode="decimal"
+                        value={item.quantity === 0 ? "" : item.quantity}
+                        onChange={(e) => onUpdate(item.id, { quantity: e.target.value === "" ? 0 : parseFloat(e.target.value) })}
+                        className="w-12 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                      />
+                      <span className="text-[11px] text-white/50 w-8 truncate">{item.unit}</span>
+                      <span className="text-[12px] text-white/30">×</span>
+                      <span className="text-[11px] text-white/50">£</span>
+                      <input
+                        type="number"
+                        inputMode="decimal"
+                        value={item.unitPrice === 0 ? "" : item.unitPrice}
+                        onChange={(e) => onUpdate(item.id, { unitPrice: e.target.value === "" ? 0 : parseFloat(e.target.value) })}
+                        className="w-14 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                      />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-start gap-2">
-                        <p className="font-medium text-[14px] text-white leading-tight">{item.description}</p>
-                        <p className="text-[15px] font-bold text-elec-yellow shrink-0">
-                          £{item.totalPrice.toFixed(2)}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-3 mt-2">
-                        <div className="flex items-center gap-1.5">
-                          <input
-                            type="number"
-                            value={item.quantity === 0 ? "" : item.quantity}
-                            onChange={(e) => onUpdate(item.id, { quantity: e.target.value === "" ? 0 : parseFloat(e.target.value) })}
-                            className="w-14 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white"
-                          />
-                          <span className="text-[12px] text-white/70">{item.unit}</span>
-                        </div>
-                        <span className="text-[12px] text-white/30">×</span>
-                        <div className="flex items-center gap-1">
-                          <span className="text-[12px] text-white/70">£</span>
-                          <input
-                            type="number"
-                            value={item.unitPrice === 0 ? "" : item.unitPrice}
-                            onChange={(e) => onUpdate(item.id, { unitPrice: e.target.value === "" ? 0 : parseFloat(e.target.value) })}
-                            className="w-16 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white"
-                          />
-                        </div>
-                        <div className="flex-1" />
-                        <button
-                          type="button"
-                          onClick={() => duplicateItem(item)}
-                          className="w-8 h-8 rounded-lg bg-white/[0.05] flex items-center justify-center touch-manipulation active:bg-white/[0.1]"
-                        >
-                          <Copy className="h-4 w-4 text-white/70" />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onRemove(item.id)}
-                          className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:bg-red-500/20"
-                        >
-                          <Trash2 className="h-4 w-4 text-red-400" />
-                        </button>
-                      </div>
+
+                    {/* Action buttons - always visible */}
+                    <div className="flex items-center gap-1.5 ml-2">
+                      <button
+                        type="button"
+                        onClick={() => duplicateItem(item)}
+                        className="w-9 h-9 rounded-lg bg-white/[0.05] flex items-center justify-center touch-manipulation active:bg-white/[0.1] active:scale-95 transition-transform"
+                        aria-label="Duplicate item"
+                      >
+                        <Copy className="h-4 w-4 text-white/60" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => onRemove(item.id)}
+                        className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:bg-red-500/20 active:scale-95 transition-transform"
+                        aria-label="Remove item"
+                      >
+                        <Trash2 className="h-4 w-4 text-red-400" />
+                      </button>
                     </div>
                   </div>
                 </div>
