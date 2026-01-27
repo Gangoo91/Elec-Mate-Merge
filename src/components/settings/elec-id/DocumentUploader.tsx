@@ -420,7 +420,7 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
           document_name: documentName || uploadFile.name,
           file_path: fileName,  // Store permanent path, NOT signed URL
           file_url: fileName,   // Store path - generate signed URL when displaying
-          verification_status: "processing",
+          verification_status: "pending",
           issuing_body: issuingBody || null,
           document_number: documentNumber || null,
           issue_date: issueDate || null,
