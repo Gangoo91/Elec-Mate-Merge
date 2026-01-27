@@ -463,6 +463,16 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
 
       if (verifyError) {
         console.error("Verification error:", verifyError);
+        // Show error to user and allow retry
+        toast({
+          title: "Verification Failed",
+          description: verifyError.message || "Failed to verify document. Please try again.",
+          variant: "destructive",
+        });
+        // Document was uploaded but verification failed - still refresh list
+        await fetchDocuments();
+        setIsVerifying(false);
+        return;
       }
 
       setVerificationResult(verifyResult);
@@ -501,6 +511,14 @@ const DocumentUploader = ({ onNavigate }: DocumentUploaderProps) => {
       } else if (verifyResult?.status === "rejected") {
         // Show rejection in dialog with suggestions
         setIsEditMode(true);
+      } else if (!verifyResult?.status) {
+        // No valid status returned - verification may have failed silently
+        toast({
+          title: "Verification Incomplete",
+          description: "Document uploaded but verification status unknown. Please check back later.",
+          variant: "default",
+        });
+        await fetchDocuments();
       }
 
     } catch (error: any) {

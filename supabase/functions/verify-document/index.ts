@@ -25,6 +25,7 @@ interface VerificationRequest {
   issueDate?: string;
   expiryDate?: string;
   profileId: string;
+  documentId?: string;  // Document ID for reliable UPDATE
 }
 
 interface ExtractedData {
@@ -170,7 +171,7 @@ serve(async (req) => {
 
   try {
     const body: VerificationRequest = await req.json();
-    const { fileUrl, documentType, documentName, profileId, issuingBody, documentNumber, issueDate, expiryDate } = body;
+    const { fileUrl, documentType, documentName, profileId, documentId, issuingBody, documentNumber, issueDate, expiryDate } = body;
 
     if (!fileUrl || !documentType || !profileId) {
       return new Response(
@@ -347,7 +348,8 @@ Respond with ONLY valid JSON in this exact format:
     console.log(`✅ Verification complete - Status: ${result.status}, Confidence: ${result.confidence}`);
 
     // Update the document record in the database
-    const { error: updateError } = await supabase
+    // Use documentId if provided (preferred), otherwise fall back to file_path match
+    let updateQuery = supabase
       .from('elec_id_documents')
       .update({
         verification_status: result.status === 'verified' ? 'verified' :
@@ -359,9 +361,19 @@ Respond with ONLY valid JSON in this exact format:
         verification_method: 'ai_vision',
         rejection_reason: result.rejectionReason || null,
         updated_at: new Date().toISOString()
-      })
-      .eq('profile_id', profileId)
-      .eq('file_url', fileUrl);
+      });
+
+    if (documentId) {
+      // Preferred: Update by document ID (reliable)
+      updateQuery = updateQuery.eq('id', documentId);
+      console.log(`📝 Updating document by ID: ${documentId}`);
+    } else {
+      // Fallback: Update by profile_id and profile (legacy)
+      updateQuery = updateQuery.eq('profile_id', profileId);
+      console.log(`📝 Updating document by profile_id: ${profileId}`);
+    }
+
+    const { error: updateError } = await updateQuery;
 
     if (updateError) {
       console.error('Database update error:', updateError);
