@@ -35,16 +35,21 @@ class ErrorBoundary extends Component<Props, State> {
     });
 
     // Check for chunk loading errors - auto-refresh instead of showing error
-    const errorString = error.message?.toLowerCase() || '';
-    if (
+    // Use multiple error representations since some browsers (Edge Mobile, Android WebViews)
+    // wrap lazy import errors in non-standard ways where error.message may be empty/object
+    const errorString = `${error?.message || ''} ${error?.toString() || ''} ${error?.name || ''}`.toLowerCase();
+    const stackString = `${errorInfo?.componentStack || ''} ${error?.stack || ''}`.toLowerCase();
+    const isChunkError =
       errorString.includes('dynamically imported module') ||
       errorString.includes('failed to fetch') ||
       errorString.includes('loading chunk') ||
       errorString.includes('loading css chunk') ||
       errorString.includes('failed to load module script') ||
       errorString.includes('importing a module script failed') ||
-      errorString.includes('mime type')
-    ) {
+      errorString.includes('mime type') ||
+      errorString.includes('text/html') ||
+      (errorString.includes('typeerror') && stackString.includes('lazy'));
+    if (isChunkError) {
       console.log('[ErrorBoundary] Chunk load error, auto-refreshing...');
       if ('caches' in window) {
         caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))))

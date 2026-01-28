@@ -25,7 +25,6 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('[ERROR] ErrorBoundary caught an error:', error, errorInfo);
     this.setState({
       error,
       errorInfo
@@ -33,17 +32,23 @@ class ErrorBoundary extends Component<Props, State> {
 
     // Auto-refresh on chunk loading failures (stale deployment cache)
     const errorString = `${error?.message || ''} ${error?.toString() || ''} ${error?.name || ''}`.toLowerCase();
-    const stackString = (errorInfo?.componentStack || '').toLowerCase();
+    const stackString = `${errorInfo?.componentStack || ''} ${error?.stack || ''}`.toLowerCase();
     const isChunkError = errorString.includes('dynamically imported module') ||
                          errorString.includes('failed to fetch') ||
                          errorString.includes('loading chunk') ||
                          errorString.includes('text/html') ||
                          errorString.includes('loading css chunk') ||
+                         errorString.includes('failed to load module script') ||
+                         errorString.includes('importing a module script failed') ||
+                         errorString.includes('mime type') ||
                          (errorString.includes('typeerror') && stackString.includes('lazy'));
     if (isChunkError) {
       console.log('[ErrorBoundary] Chunk load failure detected, auto-refreshing...');
       this.hardReload();
+      return;
     }
+
+    console.error('[ERROR] ErrorBoundary caught an error:', error, errorInfo);
   }
 
   private hardReload = async () => {
