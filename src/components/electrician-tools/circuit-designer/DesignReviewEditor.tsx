@@ -1505,7 +1505,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const allCompliant = design.circuits.every(c => {
     const zsMax = c.expectedTests?.zs?.maxPermitted ?? c.calculations?.maxZs ?? 999;
     const zsCompliant = c.expectedTests?.zs?.compliant ?? (c.calculations?.zs <= zsMax);
-    return c.calculations.voltageDrop.compliant && zsCompliant;
+    return (c.calculations?.voltageDrop?.compliant ?? true) && zsCompliant;
   });
 
   const handleExportPDF = async () => {
@@ -2458,11 +2458,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 Compliance Checks
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
-                <div className={`p-3 rounded-lg ${currentCircuit.calculations.voltageDrop.compliant ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
+                <div className={`p-3 rounded-lg ${currentCircuit.calculations?.voltageDrop?.compliant ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-sm font-medium">Voltage Drop</span>
-                    {currentCircuit.calculations.voltageDrop.compliant ? 
-                      <CheckCircle2 className="h-4 w-4 text-green-600" /> : 
+                    {currentCircuit.calculations?.voltageDrop?.compliant ?
+                      <CheckCircle2 className="h-4 w-4 text-green-600" /> :
                       <AlertTriangle className="h-4 w-4 text-red-600" />
                     }
                   </div>

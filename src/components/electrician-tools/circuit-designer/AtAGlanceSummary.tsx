@@ -74,7 +74,7 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
       : 'Not specified';
   
   const safeVoltageDrop = circuit
-    ? `${circuit.calculations.voltageDrop.percent.toFixed(2)}% ${circuit.calculations.voltageDrop.compliant ? '✓' : '✗'} (Limit: ${circuit.calculations.voltageDrop.limit}%)`
+    ? `${(circuit.calculations?.voltageDrop?.percent ?? 0).toFixed(2)}% ${circuit.calculations?.voltageDrop?.compliant ? '✓' : '✗'} (Limit: ${circuit.calculations?.voltageDrop?.limit ?? 5}%)`
     : (summary?.voltageDrop || 'N/A');
   
   const safeZs = circuit
@@ -86,9 +86,9 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
       })()
     : (summary?.zs || 'N/A');
   
-  const safeComplianceTick = circuit 
-    ? (circuit.calculations.voltageDrop.compliant && 
-       (circuit.expectedTests?.zs?.compliant ?? (circuit.calculations.zs <= circuit.calculations.maxZs)))
+  const safeComplianceTick = circuit
+    ? ((circuit.calculations?.voltageDrop?.compliant ?? true) &&
+       (circuit.expectedTests?.zs?.compliant ?? ((circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999))))
     : (summary?.complianceTick ?? false);
   
   const safeNotes = summary?.notes || '';
