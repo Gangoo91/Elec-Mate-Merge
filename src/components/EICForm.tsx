@@ -218,6 +218,10 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     customerId: customerIdFromNav,
   });
 
+  // Stable ref for loadFromCloud to avoid re-triggering the cloud load effect
+  const loadFromCloudRef = useRef(loadFromCloud);
+  loadFromCloudRef.current = loadFromCloud;
+
   // ALWAYS save to localStorage before unload - never lose data
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -379,8 +383,8 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         return;
       }
 
-      // Step 2: Load from cloud
-      loadFromCloud(initialReportId).then(cloudData => {
+      // Step 2: Load from cloud (use ref to avoid stale dep loop)
+      loadFromCloudRef.current(initialReportId).then(cloudData => {
         // Step 3: Compare timestamps - use whichever is NEWER
         if (cloudData && typeof cloudData === 'object') {
           const data = cloudData as any;
@@ -424,7 +428,8 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         }
       });
     }
-  }, [initialReportId, authCheckComplete, isAuthenticated, isOnline, loadFromCloud]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialReportId, authCheckComplete, isAuthenticated, isOnline]);
 
   // Observations hook
   const {
@@ -468,10 +473,14 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       console.warn('Certificate number cannot be modified');
       return;
     }
-    
-    // Sanitize string inputs to prevent XSS
-    const sanitizedValue = typeof value === 'string' ? sanitizeTextInput(value) : value;
-    setFormData(prev => ({ ...prev, [field]: sanitizedValue }));
+
+    setFormData(prev => {
+      // Support functional updaters for array fields (prevents stale closure bugs)
+      const resolvedValue = typeof value === 'function' ? value(prev[field]) : value;
+      // Sanitize string inputs to prevent XSS
+      const sanitizedValue = typeof resolvedValue === 'string' ? sanitizeTextInput(resolvedValue) : resolvedValue;
+      return { ...prev, [field]: sanitizedValue };
+    });
   };
 
   const handleTabChange = (value: string) => {

@@ -75,7 +75,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
   }, [profile]);
 
   // Function to check subscription status with Stripe
-  // Includes timeout to prevent hanging on slow mobile networks
+  // Includes timeout and retry logic to handle transient iOS Safari failures
   const checkSubscriptionStatus = useCallback(async () => {
     if (!profile) return;
 
@@ -84,56 +84,86 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
       return;
     }
 
-    try {
-      setState(prev => ({ ...prev, isCheckingStatus: true, lastError: null }));
+    setState(prev => ({ ...prev, isCheckingStatus: true, lastError: null }));
 
-      // 5 second timeout — uses Promise.race so the timeout actually fires
-      // (previous AbortController was never connected to the fetch)
-      const fetchPromise = supabase.functions.invoke('check-subscription', {
-        body: {},
-      });
-      const timeoutPromise = new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error('Subscription check timed out')), 5000)
-      );
-      const { data, error } = await Promise.race([fetchPromise, timeoutPromise]);
+    const MAX_RETRIES = 2;
+    let lastError: string | null = null;
 
-      if (error) {
-        console.error('Error checking subscription:', error);
-        captureEdgeFunctionError(
-          new Error(`Subscription check failed: ${error.message}`),
-          'check-subscription',
-          { userId: profile?.id }
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        if (attempt > 0) {
+          // Brief delay before retry (500ms, then 1000ms)
+          await new Promise(resolve => setTimeout(resolve, attempt * 500));
+          addBreadcrumb('subscription', `Retrying subscription check (attempt ${attempt + 1})`);
+        }
+
+        const fetchPromise = supabase.functions.invoke('check-subscription', {
+          body: {},
+        });
+        const timeoutPromise = new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('Subscription check timed out')), 5000)
         );
-        setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError: error.message }));
+        const { data, error } = await Promise.race([fetchPromise, timeoutPromise]);
+
+        if (error) {
+          lastError = error.message;
+          // Retry on fetch/network errors, not on auth or server logic errors
+          if (attempt < MAX_RETRIES && /failed to send|fetch|network|timed out/i.test(error.message)) {
+            continue;
+          }
+          console.error('Error checking subscription:', error);
+          captureEdgeFunctionError(
+            new Error(`Subscription check failed: ${error.message}`),
+            'check-subscription',
+            { userId: profile?.id, attempt: attempt + 1 }
+          );
+          setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError: error.message }));
+          return;
+        }
+
+        if (data) {
+          setState(prev => ({
+            ...prev,
+            isSubscribed: data.subscribed,
+            subscriptionTier: data.subscription_tier,
+            isTrialActive: data.subscribed ? false : prev.isTrialActive,
+            lastCheckedAt: new Date(),
+            isCheckingStatus: false,
+            hasCompletedInitialCheck: true,
+            lastError: null,
+          }));
+
+          hasCheckedRef.current = true;
+          profileIdRef.current = profile.id;
+        } else {
+          setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true }));
+        }
+        return; // Success — exit retry loop
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        lastError = message;
+        // Retry on network/timeout errors
+        if (attempt < MAX_RETRIES && /failed to send|fetch|network|timed out/i.test(message)) {
+          continue;
+        }
+        console.error('Error in checkSubscriptionStatus:', message);
+        capturePaymentError(
+          error instanceof Error ? error : new Error(message),
+          { userId: profile?.id, context: 'checkSubscriptionStatus', attempt: attempt + 1 }
+        );
+        setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError: message }));
         return;
       }
+    }
 
-      if (data) {
-        // Single batched state update with all Stripe data
-        setState(prev => ({
-          ...prev,
-          isSubscribed: data.subscribed,
-          subscriptionTier: data.subscription_tier,
-          isTrialActive: data.subscribed ? false : prev.isTrialActive,
-          lastCheckedAt: new Date(),
-          isCheckingStatus: false,
-          hasCompletedInitialCheck: true,
-          lastError: null,
-        }));
-
-        hasCheckedRef.current = true;
-        profileIdRef.current = profile.id;
-      } else {
-        setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true }));
-      }
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      console.error('Error in checkSubscriptionStatus:', message);
-      capturePaymentError(
-        error instanceof Error ? error : new Error(message),
-        { userId: profile?.id, context: 'checkSubscriptionStatus' }
+    // All retries exhausted
+    if (lastError) {
+      captureEdgeFunctionError(
+        new Error(`Subscription check failed after ${MAX_RETRIES + 1} attempts: ${lastError}`),
+        'check-subscription',
+        { userId: profile?.id, attempts: MAX_RETRIES + 1 }
       );
-      setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError: message }));
+      setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError }));
     }
   }, [profile]);
 

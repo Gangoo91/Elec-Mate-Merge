@@ -35,10 +35,14 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   console.log('[EIC Inspections] Loaded items:', inspectionItems.length, inspectionItems[0]?.description?.substring(0, 30));
 
   const updateInspectionItem = (id: string, field: keyof EICInspectionItem, value: any) => {
-    const updatedItems = inspectionItems.map(item =>
-      item.id === id ? { ...item, [field]: value } : item
-    );
-    onUpdate('inspectionItems', updatedItems);
+    onUpdate('inspectionItems', (prevItems: EICInspectionItem[]) => {
+      const items = (prevItems && Array.isArray(prevItems) && prevItems.length > 0)
+        ? prevItems
+        : bs7671EICInspectionItems;
+      return items.map(item =>
+        item.id === id ? { ...item, [field]: value } : item
+      );
+    });
   };
 
   useEffect(() => {
