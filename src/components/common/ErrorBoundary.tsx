@@ -39,6 +39,9 @@ class ErrorBoundary extends Component<Props, State> {
     // wrap lazy import errors in non-standard ways where error.message may be empty/object
     const errorString = `${error?.message || ''} ${error?.toString() || ''} ${error?.name || ''}`.toLowerCase();
     const stackString = `${errorInfo?.componentStack || ''} ${error?.stack || ''}`.toLowerCase();
+    // Also detect non-Error objects (plain objects from failed dynamic imports)
+    // React sometimes passes [object Object] when a lazy import promise rejects with a non-Error
+    const isNonErrorObject = !(error instanceof Error) && typeof error === 'object';
     const isChunkError =
       errorString.includes('dynamically imported module') ||
       errorString.includes('failed to fetch') ||
@@ -48,7 +51,8 @@ class ErrorBoundary extends Component<Props, State> {
       errorString.includes('importing a module script failed') ||
       errorString.includes('mime type') ||
       errorString.includes('text/html') ||
-      (errorString.includes('typeerror') && stackString.includes('lazy'));
+      (errorString.includes('typeerror') && stackString.includes('lazy')) ||
+      (isNonErrorObject && stackString.includes('lazy'));
     if (isChunkError) {
       console.log('[ErrorBoundary] Chunk load error, auto-refreshing...');
       if ('caches' in window) {
