@@ -188,7 +188,8 @@ export const useReportSync = ({
     return () => clearInterval(interval);
   }, [formData, reportType, enabled]);
 
-  // === AUTO-SYNC TO CLOUD (every 30 seconds) ===
+  // === AUTO-SYNC TO CLOUD (every 15 seconds) ===
+  // Reduced from 30s to 15s to minimize the window for data loss
   useEffect(() => {
     if (!enabled || !isOnline || !isAuthenticated || !userId) return;
 
@@ -197,7 +198,7 @@ export const useReportSync = ({
       if (status.local === 'saved' && status.cloud !== 'synced' && status.cloud !== 'syncing') {
         await syncToCloud(false);
       }
-    }, 30000); // Every 30 seconds
+    }, 15000); // Every 15 seconds (reduced from 30s)
 
     return () => clearInterval(interval);
   }, [enabled, isOnline, isAuthenticated, userId, status.local, status.cloud]);

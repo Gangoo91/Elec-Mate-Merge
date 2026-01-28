@@ -10,6 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { isNotifiableWork, createNotificationFromCertificate } from '@/utils/notificationHelper';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
+import { draftStorage } from '@/utils/draftStorage';
 import { checkAllResultsCompliance } from '@/utils/autoRegChecker';
 import { getCableSizeForRating, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
@@ -166,6 +167,34 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     loadData();
   }, []); // Empty dependency array - only run once on mount
 
+  // Auto-recover drafts for NEW reports from localStorage
+  // This ensures work isn't lost if the user navigates away and comes back
+  const draftRecoveryAttempted = useRef(false);
+  useEffect(() => {
+    // Only for NEW reports (no initialReportId)
+    if (initialReportId || draftRecoveryAttempted.current) return;
+    draftRecoveryAttempted.current = true;
+
+    const draft = draftStorage.loadDraft('eic', null);
+    if (draft?.data && !formData.clientName) {
+      // Auto-recover if form is empty and draft has meaningful data
+      if (draft.data.clientName || draft.data.installationAddress ||
+          (draft.data.scheduleOfTests && draft.data.scheduleOfTests.length > 0)) {
+        console.log('[EIC] Auto-recovering draft for new report');
+        const certificateNumber = formData.certificateNumber || draft.data.certificateNumber;
+        setFormData(prev => ({
+          ...prev,
+          ...draft.data,
+          certificateNumber,
+        }));
+        toast({
+          title: 'Draft recovered',
+          description: 'Your previous work has been restored.',
+        });
+      }
+    }
+  }, [initialReportId]);
+
   // Generate certificate number on mount if needed - Prevent regeneration
   const certNumberGenerated = React.useRef(false);
   useEffect(() => {
@@ -189,10 +218,22 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     customerId: customerIdFromNav,
   });
 
-  // Warn before closing tab if there are unsynchronised changes
+  // ALWAYS save to localStorage before unload - never lose data
   useEffect(() => {
-    const hasUnsaved = syncState.status === 'syncing' || syncState.queuedChanges > 0;
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      // CRITICAL: Save current form data to localStorage immediately
+      // This is synchronous and fast - ensures data is never lost
+      if (formData && currentReportId) {
+        draftStorage.saveDraft('eic', currentReportId, formData);
+        console.log('[EIC] Saved draft on beforeunload');
+      } else if (formData && (formData.clientName || formData.installationAddress)) {
+        // For new reports, save to 'new' key
+        draftStorage.saveDraft('eic', null, formData);
+        console.log('[EIC] Saved new draft on beforeunload');
+      }
+
+      // Still warn if cloud sync pending
+      const hasUnsaved = syncState.status === 'syncing' || syncState.queuedChanges > 0;
       if (hasUnsaved) {
         e.preventDefault();
         e.returnValue = '';
@@ -200,7 +241,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [syncState.status, syncState.queuedChanges]);
+  }, [formData, currentReportId, syncState.status, syncState.queuedChanges]);
   
   // Pre-fill customer details if navigating from customer page
   useEffect(() => {
@@ -288,10 +329,26 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     }
   }, [designData, hasLoadedDesign, designId, initialReportId, toast, updateDesignStatus]);
 
-  // Load from cloud if initialReportId is provided
+  // Load from cloud if initialReportId is provided - with localStorage priority
   useEffect(() => {
     if (initialReportId && authCheckComplete) {
+      // Step 1: Check localStorage for a draft of this report
+      const localDraft = draftStorage.loadDraft('eic', initialReportId);
+
       if (!isAuthenticated) {
+        // If not authenticated but have local draft, use it
+        if (localDraft?.data) {
+          console.log('[EIC] Using local draft (not authenticated)');
+          const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
+          setFormData({ ...localDraft.data, certificateNumber });
+          setCurrentReportId(initialReportId);
+          toast({
+            title: 'Loaded from local storage',
+            description: 'Sign in to sync with cloud.',
+          });
+          return;
+        }
+
         toast({
           title: 'Cannot load report',
           description: 'Please sign in to load reports.',
@@ -301,6 +358,19 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       }
 
       if (!isOnline) {
+        // If offline but have local draft, use it
+        if (localDraft?.data) {
+          console.log('[EIC] Using local draft (offline)');
+          const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
+          setFormData({ ...localDraft.data, certificateNumber });
+          setCurrentReportId(initialReportId);
+          toast({
+            title: 'Loaded from local storage',
+            description: 'Changes will sync when online.',
+          });
+          return;
+        }
+
         toast({
           title: 'Cannot load report',
           description: 'You are offline.',
@@ -309,13 +379,42 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         return;
       }
 
+      // Step 2: Load from cloud
       loadFromCloud(initialReportId).then(cloudData => {
+        // Step 3: Compare timestamps - use whichever is NEWER
         if (cloudData && typeof cloudData === 'object') {
-          console.log('Loaded EIC from cloud:', cloudData);
           const data = cloudData as any;
-          const certificateNumber = data.certificateNumber || formData.certificateNumber;
-          setFormData({ ...data, certificateNumber });
+          const cloudTime = new Date(data.updated_at || data.last_synced_at || 0).getTime();
+          const localTime = localDraft?.lastModified ? new Date(localDraft.lastModified).getTime() : 0;
+
+          console.log('[EIC] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
+
+          if (localDraft?.data && localTime > cloudTime) {
+            // Local is newer - use local data
+            console.log('[EIC] Using LOCAL draft (newer than cloud)');
+            const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
+            setFormData({ ...localDraft.data, certificateNumber });
+            toast({
+              title: 'Recovered unsaved changes',
+              description: 'Your recent edits have been restored.',
+            });
+          } else {
+            // Cloud is newer or same - use cloud data
+            console.log('[EIC] Using CLOUD data');
+            const certificateNumber = data.certificateNumber || formData.certificateNumber;
+            setFormData({ ...data, certificateNumber });
+          }
           setCurrentReportId(initialReportId);
+        } else if (localDraft?.data) {
+          // Cloud failed but we have local - use local
+          console.log('[EIC] Cloud load failed, using local draft');
+          const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
+          setFormData({ ...localDraft.data, certificateNumber });
+          setCurrentReportId(initialReportId);
+          toast({
+            title: 'Loaded from local storage',
+            description: 'Cloud sync will retry automatically.',
+          });
         } else {
           toast({
             title: 'Report not found',

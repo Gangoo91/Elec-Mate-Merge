@@ -236,4 +236,45 @@ export const draftStorage = {
 
     return drafts.sort((a, b) => b.lastModified.getTime() - a.lastModified.getTime());
   },
+
+  /**
+   * Check if local draft is newer than cloud data
+   * Used to decide whether to use local or cloud data on load
+   */
+  isLocalDraftNewer: (
+    reportType: string,
+    reportId: string | null,
+    cloudUpdatedAt: string | null
+  ): boolean => {
+    try {
+      const key = getDraftKey(reportType, reportId);
+      const stored = localStorage.getItem(key);
+      if (!stored) return false;
+
+      const draft: DraftData = JSON.parse(stored);
+      const localTime = draft.lastModified || 0;
+      const cloudTime = cloudUpdatedAt ? new Date(cloudUpdatedAt).getTime() : 0;
+
+      return localTime > cloudTime;
+    } catch (error) {
+      console.error('[DraftStorage] Failed to compare timestamps:', error);
+      return false;
+    }
+  },
+
+  /**
+   * Get the last modified timestamp of a draft
+   */
+  getDraftTimestamp: (reportType: string, reportId: string | null): number | null => {
+    try {
+      const key = getDraftKey(reportType, reportId);
+      const stored = localStorage.getItem(key);
+      if (!stored) return null;
+
+      const draft: DraftData = JSON.parse(stored);
+      return draft.lastModified || null;
+    } catch (error) {
+      return null;
+    }
+  },
 };

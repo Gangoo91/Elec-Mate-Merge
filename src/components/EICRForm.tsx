@@ -1,5 +1,6 @@
-import React, { Suspense, useState, useCallback } from 'react';
+import React, { Suspense, useState, useCallback, useEffect } from 'react';
 import { EICRFormProvider, useEICRForm } from './eicr/EICRFormProvider';
+import { draftStorage } from '@/utils/draftStorage';
 import EICRFormHeader from './eicr/EICRFormHeader';
 import EICRFormContent from './eicr/EICRFormContent';
 import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
@@ -131,10 +132,22 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     setCurrentTab('testing');
   }, [formData.scheduleOfTests, updateFormData]);
 
-  // Warn before closing tab if there are unsynchronised changes
-  React.useEffect(() => {
-    const hasUnsaved = syncState.status === 'syncing' || syncState.queuedChanges > 0;
+  // ALWAYS save to localStorage before unload - never lose data
+  useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      // CRITICAL: Save current form data to localStorage immediately
+      // This is synchronous and fast - ensures data is never lost
+      if (formData && currentReportId) {
+        draftStorage.saveDraft('eicr', currentReportId, formData);
+        console.log('[EICR] Saved draft on beforeunload');
+      } else if (formData && (formData.clientName || formData.installationAddress)) {
+        // For new reports, save to 'new' key
+        draftStorage.saveDraft('eicr', null, formData);
+        console.log('[EICR] Saved new draft on beforeunload');
+      }
+
+      // Still warn if cloud sync pending
+      const hasUnsaved = syncState.status === 'syncing' || syncState.queuedChanges > 0;
       if (hasUnsaved) {
         e.preventDefault();
         e.returnValue = '';
@@ -142,7 +155,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [syncState.status, syncState.queuedChanges]);
+  }, [formData, currentReportId, syncState.status, syncState.queuedChanges]);
 
 
   if (isLoadingReport) {

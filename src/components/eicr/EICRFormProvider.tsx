@@ -7,6 +7,7 @@ import { useReportId } from '@/hooks/useReportId';
 import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
+import { draftStorage } from '@/utils/draftStorage';
 import OfflineBanner from '@/components/OfflineBanner';
 import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
@@ -272,7 +273,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     return () => subscription.unsubscribe();
   }, []);
 
-  // Load report from cloud on initial mount
+  // Load report from cloud on initial mount - with localStorage priority
   useEffect(() => {
     const loadInitialData = async () => {
       if (!initialReportId) {
@@ -285,10 +286,37 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         return;
       }
 
-      console.log('[EICR] Loading report from cloud:', initialReportId);
+      console.log('[EICR] Loading report:', initialReportId);
       setIsLoadingReport(true);
 
+      // Step 1: Check localStorage for a draft of this report
+      const localDraft = draftStorage.loadDraft('eicr', initialReportId);
+
       if (!isAuthenticated) {
+        // If not authenticated but have local draft, use it
+        if (localDraft?.data) {
+          console.log('[EICR] Using local draft (not authenticated)');
+          const loadedData = localDraft.data;
+          setFormData(prev => ({
+            ...prev,
+            ...loadedData,
+            inspectionItems: loadedData.inspectionItems || [],
+            circuits: loadedData.circuits || [],
+            scheduleOfTests: loadedData.scheduleOfTests || [],
+            defectObservations: loadedData.defectObservations || [],
+            generalObservations: loadedData.generalObservations || [],
+            observations: loadedData.observations || [],
+            certificateNumber: loadedData.certificateNumber || prev.certificateNumber,
+          }));
+          setCurrentReportId(initialReportId);
+          toast({
+            title: 'Loaded from local storage',
+            description: 'Sign in to sync with cloud.',
+          });
+          setIsLoadingReport(false);
+          return;
+        }
+
         toast({
           title: 'Cannot load report',
           description: 'Please sign in to load reports.',
@@ -299,6 +327,30 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       }
 
       if (!isOnline) {
+        // If offline but have local draft, use it
+        if (localDraft?.data) {
+          console.log('[EICR] Using local draft (offline)');
+          const loadedData = localDraft.data;
+          setFormData(prev => ({
+            ...prev,
+            ...loadedData,
+            inspectionItems: loadedData.inspectionItems || [],
+            circuits: loadedData.circuits || [],
+            scheduleOfTests: loadedData.scheduleOfTests || [],
+            defectObservations: loadedData.defectObservations || [],
+            generalObservations: loadedData.generalObservations || [],
+            observations: loadedData.observations || [],
+            certificateNumber: loadedData.certificateNumber || prev.certificateNumber,
+          }));
+          setCurrentReportId(initialReportId);
+          toast({
+            title: 'Loaded from local storage',
+            description: 'Changes will sync when online.',
+          });
+          setIsLoadingReport(false);
+          return;
+        }
+
         toast({
           title: 'Cannot load report',
           description: 'You are offline.',
@@ -308,11 +360,56 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         return;
       }
 
+      // Step 2: Load from cloud
       const cloudData = await loadFromCloud(initialReportId);
-      if (cloudData && typeof cloudData === 'object') {
-        console.log('[EICR] Successfully loaded from cloud');
 
-        const loadedData = cloudData as any;
+      // Step 3: Compare timestamps - use whichever is NEWER
+      if (cloudData && typeof cloudData === 'object') {
+        const loadedCloudData = cloudData as any;
+        const cloudTime = new Date(loadedCloudData.updated_at || loadedCloudData.last_synced_at || 0).getTime();
+        const localTime = localDraft?.lastModified ? new Date(localDraft.lastModified).getTime() : 0;
+
+        console.log('[EICR] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
+
+        if (localDraft?.data && localTime > cloudTime) {
+          // Local is newer - use local data
+          console.log('[EICR] Using LOCAL draft (newer than cloud by', Math.round((localTime - cloudTime) / 1000), 'seconds)');
+          const loadedData = localDraft.data;
+          setFormData(prev => ({
+            ...prev,
+            ...loadedData,
+            inspectionItems: loadedData.inspectionItems || [],
+            circuits: loadedData.circuits || [],
+            scheduleOfTests: loadedData.scheduleOfTests || [],
+            defectObservations: loadedData.defectObservations || [],
+            generalObservations: loadedData.generalObservations || [],
+            observations: loadedData.observations || [],
+            certificateNumber: loadedData.certificateNumber || prev.certificateNumber,
+          }));
+          toast({
+            title: 'Recovered unsaved changes',
+            description: 'Your recent edits have been restored.',
+          });
+        } else {
+          // Cloud is newer or same - use cloud data
+          console.log('[EICR] Using CLOUD data');
+          setFormData(prev => ({
+            ...prev,
+            ...loadedCloudData,
+            inspectionItems: loadedCloudData.inspectionItems || [],
+            circuits: loadedCloudData.circuits || [],
+            scheduleOfTests: loadedCloudData.scheduleOfTests || [],
+            defectObservations: loadedCloudData.defectObservations || [],
+            generalObservations: loadedCloudData.generalObservations || [],
+            observations: loadedCloudData.observations || [],
+            certificateNumber: loadedCloudData.certificateNumber || prev.certificateNumber,
+          }));
+        }
+        setCurrentReportId(initialReportId);
+      } else if (localDraft?.data) {
+        // Cloud failed but we have local - use local
+        console.log('[EICR] Cloud load failed, using local draft');
+        const loadedData = localDraft.data;
         setFormData(prev => ({
           ...prev,
           ...loadedData,
@@ -325,10 +422,14 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
           certificateNumber: loadedData.certificateNumber || prev.certificateNumber,
         }));
         setCurrentReportId(initialReportId);
+        toast({
+          title: 'Loaded from local storage',
+          description: 'Cloud sync will retry automatically.',
+        });
       } else {
         toast({
           title: 'Report not found',
-          description: 'Could not load the requested report from cloud.',
+          description: 'Could not load the requested report.',
           variant: 'destructive',
         });
       }
@@ -346,6 +447,35 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       loadDefaultInspectorProfile();
     }
   }, [isLoadingProfiles, initialReportId]);
+
+  // Auto-recover drafts for NEW reports (no reportId)
+  // This ensures work isn't lost if the user navigates away and comes back
+  const draftRecoveryAttempted = useRef(false);
+  useEffect(() => {
+    // Only for NEW reports, after initial load completes
+    if (initialReportId || isLoadingReport || draftRecoveryAttempted.current) return;
+    draftRecoveryAttempted.current = true;
+
+    const draft = draftStorage.loadDraft('eicr', null);
+    if (draft?.data && !formData.clientName) {
+      // Auto-recover if form is empty and draft has meaningful data
+      if (draft.data.clientName || draft.data.installationAddress ||
+          (draft.data.circuits && draft.data.circuits.length > 0) ||
+          (draft.data.scheduleOfTests && draft.data.scheduleOfTests.length > 0)) {
+        console.log('[EICR] Auto-recovering draft for new report');
+        setFormData(prev => ({
+          ...prev,
+          ...draft.data,
+          // Preserve any existing certificate number
+          certificateNumber: prev.certificateNumber || draft.data.certificateNumber,
+        }));
+        toast({
+          title: 'Draft recovered',
+          description: 'Your previous work has been restored.',
+        });
+      }
+    }
+  }, [initialReportId, isLoadingReport]);
 
   // Pre-fill customer details if navigating from customer page
   useEffect(() => {

@@ -6,6 +6,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
+import { draftStorage } from '@/utils/draftStorage';
 import MinorWorksPdfGenerator from '@/components/pdf/MinorWorksPdfGenerator';
 import { useEICAutoSave } from '@/hooks/useEICAutoSave';
 import { useCloudSync } from '@/hooks/useCloudSync';
@@ -274,6 +275,31 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     }
   }, [formData.supplyPhases]);
 
+  // ALWAYS save to localStorage before unload - never lose data
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      // CRITICAL: Save current form data to localStorage immediately
+      // This is synchronous and fast - ensures data is never lost
+      if (formData && currentReportId) {
+        draftStorage.saveDraft('minor-works', currentReportId, formData);
+        console.log('[MinorWorks] Saved draft on beforeunload');
+      } else if (formData && (formData.clientName || formData.propertyAddress)) {
+        // For new reports, save to 'new' key
+        draftStorage.saveDraft('minor-works', null, formData);
+        console.log('[MinorWorks] Saved new draft on beforeunload');
+      }
+
+      // Still warn if cloud sync pending
+      const hasUnsaved = syncState.status === 'syncing' || syncState.queuedChanges > 0;
+      if (hasUnsaved) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [formData, currentReportId, syncState.status, syncState.queuedChanges]);
+
   // Track when authentication has been checked - wait for actual session check
   useEffect(() => {
     // Only mark as checked after a brief delay to allow auth to resolve
@@ -286,11 +312,25 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     }
   }, [initialReportId]);
 
-  // Load from cloud if initialReportId is provided
+  // Load from cloud if initialReportId is provided - with localStorage priority
   useEffect(() => {
     if (initialReportId && authChecked) {
-      // If still not authenticated after delay, show error
+      // Step 1: Check localStorage for a draft of this report
+      const localDraft = draftStorage.loadDraft('minor-works', initialReportId);
+
       if (!isAuthenticated) {
+        // If not authenticated but have local draft, use it
+        if (localDraft?.data) {
+          console.log('[MinorWorks] Using local draft (not authenticated)');
+          setFormData(localDraft.data);
+          setCurrentReportId(initialReportId);
+          toast({
+            title: 'Loaded from local storage',
+            description: 'Sign in to sync with cloud.',
+          });
+          return;
+        }
+
         toast({
           title: 'Cannot load report',
           description: 'Please sign in to load reports.',
@@ -300,6 +340,18 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       }
 
       if (!isOnline) {
+        // If offline but have local draft, use it
+        if (localDraft?.data) {
+          console.log('[MinorWorks] Using local draft (offline)');
+          setFormData(localDraft.data);
+          setCurrentReportId(initialReportId);
+          toast({
+            title: 'Loaded from local storage',
+            description: 'Changes will sync when online.',
+          });
+          return;
+        }
+
         toast({
           title: 'Cannot load report',
           description: 'You are offline.',
@@ -308,10 +360,39 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         return;
       }
 
+      // Step 2: Load from cloud
       loadFromCloud(initialReportId).then(cloudData => {
-        if (cloudData) {
-          console.log('Loaded Minor Works from cloud:', cloudData);
-          setFormData(cloudData);
+        // Step 3: Compare timestamps - use whichever is NEWER
+        if (cloudData && typeof cloudData === 'object') {
+          const data = cloudData as any;
+          const cloudTime = new Date(data.updated_at || data.last_synced_at || 0).getTime();
+          const localTime = localDraft?.lastModified ? new Date(localDraft.lastModified).getTime() : 0;
+
+          console.log('[MinorWorks] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
+
+          if (localDraft?.data && localTime > cloudTime) {
+            // Local is newer - use local data
+            console.log('[MinorWorks] Using LOCAL draft (newer than cloud)');
+            setFormData(localDraft.data);
+            toast({
+              title: 'Recovered unsaved changes',
+              description: 'Your recent edits have been restored.',
+            });
+          } else {
+            // Cloud is newer or same - use cloud data
+            console.log('[MinorWorks] Using CLOUD data');
+            setFormData(cloudData);
+          }
+          setCurrentReportId(initialReportId);
+        } else if (localDraft?.data) {
+          // Cloud failed but we have local - use local
+          console.log('[MinorWorks] Cloud load failed, using local draft');
+          setFormData(localDraft.data);
+          setCurrentReportId(initialReportId);
+          toast({
+            title: 'Loaded from local storage',
+            description: 'Cloud sync will retry automatically.',
+          });
         } else {
           toast({
             title: 'Report not found',
@@ -339,6 +420,33 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       loadSavedData();
     }
   }, [initialReportId, loadFromIndexedDB]);
+
+  // Auto-recover drafts for NEW reports from localStorage
+  // This ensures work isn't lost if the user navigates away and comes back
+  const draftRecoveryAttempted = React.useRef(false);
+  useEffect(() => {
+    // Only for NEW reports (no initialReportId)
+    if (initialReportId || draftRecoveryAttempted.current) return;
+    draftRecoveryAttempted.current = true;
+
+    const draft = draftStorage.loadDraft('minor-works', null);
+    if (draft?.data && !formData.clientName) {
+      // Auto-recover if form is empty and draft has meaningful data
+      if (draft.data.clientName || draft.data.propertyAddress || draft.data.workDescription) {
+        console.log('[MinorWorks] Auto-recovering draft for new report');
+        setFormData((prev: any) => ({
+          ...prev,
+          ...draft.data,
+          // Preserve any existing certificate number
+          certificateNumber: prev.certificateNumber || draft.data.certificateNumber,
+        }));
+        toast({
+          title: 'Draft recovered',
+          description: 'Your previous work has been restored.',
+        });
+      }
+    }
+  }, [initialReportId]);
 
   // Generate certificate number on mount if needed
   const certNumberGenerated = React.useRef(false);
