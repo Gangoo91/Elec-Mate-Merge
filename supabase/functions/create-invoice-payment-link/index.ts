@@ -1,7 +1,7 @@
 /**
  * Create Invoice Payment Link
  * Generates a Stripe Checkout session for invoice payment
- * 1.1% platform fee goes to ElecMate
+ * 1% platform fee goes to ElecMate
  */
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -13,8 +13,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
-// Platform fee percentage (1.1%)
-const PLATFORM_FEE_PERCENT = 1.1;
+// Platform fee percentage (1%)
+const PLATFORM_FEE_PERCENT = 1;
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {

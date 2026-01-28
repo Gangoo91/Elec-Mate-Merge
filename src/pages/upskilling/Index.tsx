@@ -175,8 +175,8 @@ const Index = () => {
             </p>
           </div>
 
-          {/* Course Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+          {/* Course Grid - optimised for mobile */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4">
             {courses.map((course, index) => (
               <CourseCard
                 key={course.id}

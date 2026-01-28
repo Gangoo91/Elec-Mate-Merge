@@ -5,7 +5,7 @@
  */
 
 const API_KEY = 'sk_a88cf76a8e4f26859699dd0a6c50539ce7e0a31d0a1fe9e5';
-const ELECTRICIAN_AGENT_ID = 'agent_9901ke9rd48cf6jva60jd90sgx1y';
+const ELECTRICIAN_AGENT_ID = 'agent_0601kg22prbze9c9j26y2vmx4fbd';
 const EMPLOYER_AGENT_ID = 'agent_7301kdxbnshce7vv8mtah970y3g1';
 const API_BASE = 'https://api.elevenlabs.io/v1';
 

@@ -2,14 +2,11 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import AdminSearchInput from "@/components/admin/AdminSearchInput";
-import AdminEmptyState from "@/components/admin/AdminEmptyState";
 import {
   Sheet,
   SheetContent,
@@ -22,14 +19,18 @@ import {
   RefreshCw,
   Loader2,
   Inbox,
-  User,
   Clock,
   CheckCheck,
   ArrowLeft,
+  Search,
+  Users,
+  Sparkles,
+  ChevronRight,
 } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, format } from "date-fns";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface AdminMessage {
   id: string;
@@ -56,7 +57,7 @@ interface ConversationPartner {
 }
 
 export default function AdminUserMessages() {
-  const { user, profile } = useAuth();
+  const { user } = useAuth();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
   const [selectedConversation, setSelectedConversation] = useState<ConversationPartner | null>(null);
@@ -224,168 +225,224 @@ export default function AdminUserMessages() {
   const totalUnread = conversations?.reduce((sum, c) => sum + c.unreadCount, 0) || 0;
   const totalConversations = conversations?.length || 0;
 
+  // Get initials helper
+  const getInitials = (name: string | null | undefined) => {
+    if (!name) return "?";
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
   return (
-    <div className="space-y-4">
-      {/* Stats */}
-      <div className="grid grid-cols-2 gap-2 sm:gap-3">
-        <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
-          <CardContent className="p-3 sm:pt-4 sm:pb-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-lg sm:text-xl font-bold">{totalConversations}</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground">Conversations</p>
+    <div className="space-y-4 pb-4">
+      {/* Hero Header */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-5">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-30" />
+        <div className="relative">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-white/20 backdrop-blur-sm">
+                <MessageSquare className="h-6 w-6 text-white" />
               </div>
-              <MessageSquare className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20">
-          <CardContent className="p-3 sm:pt-4 sm:pb-4">
-            <div className="flex items-center justify-between">
               <div>
-                <p className="text-lg sm:text-xl font-bold">{totalUnread}</p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground">Unread</p>
+                <h1 className="text-xl font-bold text-white">User Messages</h1>
+                <p className="text-sm text-white/70">Support inbox</p>
               </div>
-              <Inbox className="h-5 w-5 sm:h-6 sm:w-6 text-red-400" />
             </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Filters */}
-      <Card>
-        <CardContent className="pt-4 pb-4">
-          <div className="flex gap-3">
-            <AdminSearchInput
-              value={search}
-              onChange={setSearch}
-              placeholder="Search messages..."
-              className="flex-1"
-            />
             <Button
-              variant="outline"
+              variant="ghost"
               size="icon"
-              className="h-12 w-12 touch-manipulation"
+              className="h-10 w-10 rounded-xl bg-white/10 hover:bg-white/20 text-white touch-manipulation"
               onClick={() => refetch()}
             >
               <RefreshCw className="h-4 w-4" />
             </Button>
           </div>
-        </CardContent>
-      </Card>
+
+          {/* Stats Row */}
+          <div className="grid grid-cols-2 gap-3 mt-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-white/70" />
+                <span className="text-2xl font-bold text-white">{totalConversations}</span>
+              </div>
+              <p className="text-xs text-white/60 mt-0.5">Conversations</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
+              <div className="flex items-center gap-2">
+                <Inbox className="h-4 w-4 text-white/70" />
+                <span className="text-2xl font-bold text-white">{totalUnread}</span>
+                {totalUnread > 0 && (
+                  <span className="flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-red-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-white/60 mt-0.5">Unread</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      <div className="relative">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search conversations..."
+          className="h-12 pl-11 pr-4 bg-card border-border rounded-xl text-base touch-manipulation"
+        />
+      </div>
 
       {/* Conversations List */}
-      {isLoading ? (
-        <div className="space-y-2">
-          {[...Array(5)].map((_, i) => (
-            <Card key={i} className="animate-pulse">
-              <CardContent className="pt-4 pb-4">
-                <div className="h-16 bg-muted rounded" />
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      ) : filteredConversations?.length === 0 ? (
-        <Card>
-          <CardContent className="pt-6">
-            <AdminEmptyState
-              icon={Inbox}
-              title="No user messages"
-              description="Messages from users will appear here when they contact you via the Updates tab."
-            />
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="space-y-2">
-          {filteredConversations?.map((conv) => (
-            <Card
-              key={conv.partnerId}
-              className={cn(
-                "touch-manipulation active:scale-[0.99] transition-all cursor-pointer",
-                conv.unreadCount > 0 && "border-amber-500/30 bg-amber-500/5"
-              )}
-              onClick={() => handleOpenConversation(conv)}
-            >
-              <CardContent className="pt-4 pb-4">
+      <AnimatePresence mode="wait">
+        {isLoading ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="space-y-3"
+          >
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="bg-card rounded-2xl p-4 animate-pulse">
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-12 w-12 border-2 border-border">
-                    <AvatarImage src={conv.partner?.avatar_url || undefined} />
-                    <AvatarFallback className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 text-blue-400 font-semibold">
-                      {conv.partner?.full_name
-                        ?.split(" ")
-                        .map((n) => n[0])
-                        .join("")
-                        .toUpperCase()
-                        .slice(0, 2) || "?"}
-                    </AvatarFallback>
-                  </Avatar>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="font-semibold text-sm truncate">
-                        {conv.partner?.full_name || "Unknown User"}
-                      </p>
+                  <div className="h-14 w-14 rounded-full bg-muted" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 w-32 bg-muted rounded" />
+                    <div className="h-3 w-48 bg-muted rounded" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        ) : filteredConversations?.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="flex flex-col items-center justify-center py-16 px-4"
+          >
+            <div className="relative mb-6">
+              <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center">
+                <Inbox className="h-12 w-12 text-indigo-400" />
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center shadow-lg">
+                <Sparkles className="h-4 w-4 text-white" />
+              </div>
+            </div>
+            <h3 className="text-lg font-semibold text-foreground mb-1">All caught up!</h3>
+            <p className="text-sm text-muted-foreground text-center max-w-[250px]">
+              No user messages yet. Messages will appear here when users contact support.
+            </p>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="space-y-2"
+          >
+            {filteredConversations?.map((conv, index) => (
+              <motion.div
+                key={conv.partnerId}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <button
+                  onClick={() => handleOpenConversation(conv)}
+                  className={cn(
+                    "w-full text-left bg-card rounded-2xl p-4 touch-manipulation",
+                    "active:scale-[0.98] transition-all duration-150",
+                    "border border-transparent hover:border-border",
+                    conv.unreadCount > 0 && "bg-gradient-to-r from-amber-500/5 to-transparent border-amber-500/20"
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    {/* Avatar with online indicator */}
+                    <div className="relative shrink-0">
+                      <Avatar className="h-14 w-14 border-2 border-border">
+                        <AvatarImage src={conv.partner?.avatar_url || undefined} />
+                        <AvatarFallback className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-semibold text-sm">
+                          {getInitials(conv.partner?.full_name)}
+                        </AvatarFallback>
+                      </Avatar>
                       {conv.unreadCount > 0 && (
-                        <Badge className="bg-amber-500 text-black text-xs">
+                        <span className="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 px-1.5 text-[10px] font-bold text-black shadow-lg">
                           {conv.unreadCount}
-                        </Badge>
+                        </span>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
-                      {conv.lastMessage.message}
-                    </p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <Clock className="h-3 w-3 text-muted-foreground" />
-                      <span className="text-[10px] text-muted-foreground">
-                        {formatDistanceToNow(new Date(conv.lastMessage.created_at), {
-                          addSuffix: true,
-                        })}
-                      </span>
-                    </div>
-                  </div>
 
-                  <MessageSquare className="h-5 w-5 text-muted-foreground shrink-0" />
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <p className={cn(
+                          "font-semibold truncate",
+                          conv.unreadCount > 0 ? "text-foreground" : "text-foreground/90"
+                        )}>
+                          {conv.partner?.full_name || "Unknown User"}
+                        </p>
+                        <span className="text-[11px] text-muted-foreground shrink-0">
+                          {formatDistanceToNow(new Date(conv.lastMessage.created_at), { addSuffix: false })}
+                        </span>
+                      </div>
+                      <p className={cn(
+                        "text-sm mt-0.5 line-clamp-1",
+                        conv.unreadCount > 0 ? "text-foreground/80 font-medium" : "text-muted-foreground"
+                      )}>
+                        {conv.lastMessage.message}
+                      </p>
+                      <div className="flex items-center gap-2 mt-1.5">
+                        <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-5 bg-muted/50 border-0 text-muted-foreground">
+                          {conv.messages.length} messages
+                        </Badge>
+                      </div>
+                    </div>
+
+                    {/* Arrow */}
+                    <ChevronRight className="h-5 w-5 text-muted-foreground/50 shrink-0" />
+                  </div>
+                </button>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Conversation Detail Sheet */}
       <Sheet open={!!selectedConversation} onOpenChange={() => setSelectedConversation(null)}>
-        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0">
-          <div className="flex flex-col h-full">
+        <SheetContent side="bottom" className="h-[92vh] rounded-t-3xl p-0 border-0">
+          <div className="flex flex-col h-full bg-background">
             {/* Drag Handle */}
-            <div className="flex justify-center pt-3 pb-2">
+            <div className="flex justify-center pt-3 pb-1">
               <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
             </div>
 
             {/* Header */}
-            <SheetHeader className="px-4 pb-4 border-b border-border">
+            <SheetHeader className="px-4 py-3 border-b border-border">
               <div className="flex items-center gap-3">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-8 w-8 shrink-0"
+                  className="h-10 w-10 rounded-xl shrink-0 touch-manipulation"
                   onClick={() => setSelectedConversation(null)}
                 >
-                  <ArrowLeft className="h-4 w-4" />
+                  <ArrowLeft className="h-5 w-5" />
                 </Button>
-                <Avatar className="h-10 w-10 border-2 border-border">
+                <Avatar className="h-11 w-11 border-2 border-border">
                   <AvatarImage src={selectedConversation?.partner?.avatar_url || undefined} />
-                  <AvatarFallback className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 text-blue-400 font-semibold text-sm">
-                    {selectedConversation?.partner?.full_name
-                      ?.split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .toUpperCase()
-                      .slice(0, 2) || "?"}
+                  <AvatarFallback className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-semibold text-sm">
+                    {getInitials(selectedConversation?.partner?.full_name)}
                   </AvatarFallback>
                 </Avatar>
-                <div className="min-w-0">
-                  <SheetTitle className="text-left text-base">
+                <div className="flex-1 min-w-0">
+                  <SheetTitle className="text-left text-base font-semibold">
                     {selectedConversation?.partner?.full_name || "Unknown User"}
                   </SheetTitle>
                   <p className="text-xs text-muted-foreground">
@@ -396,41 +453,51 @@ export default function AdminUserMessages() {
             </SheetHeader>
 
             {/* Messages */}
-            <ScrollArea className="flex-1 p-4">
+            <ScrollArea className="flex-1 px-4 py-4">
               <div className="space-y-3">
-                {selectedConversation?.messages.map((msg) => {
+                {selectedConversation?.messages.map((msg, index) => {
                   const isFromUser = msg.sender_id === selectedConversation.partnerId;
+                  const showDate = index === 0 ||
+                    new Date(msg.created_at).toDateString() !==
+                    new Date(selectedConversation.messages[index - 1].created_at).toDateString();
+
                   return (
-                    <div
-                      key={msg.id}
-                      className={cn("flex", isFromUser ? "justify-start" : "justify-end")}
-                    >
-                      <div
-                        className={cn(
-                          "max-w-[85%] rounded-2xl px-4 py-3",
-                          isFromUser
-                            ? "bg-muted text-foreground rounded-bl-md"
-                            : "bg-blue-500 text-white rounded-br-md"
-                        )}
-                      >
-                        <p className="text-sm whitespace-pre-wrap">{msg.message}</p>
+                    <div key={msg.id}>
+                      {showDate && (
+                        <div className="flex justify-center my-4">
+                          <span className="text-[11px] text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
+                            {format(new Date(msg.created_at), "d MMM yyyy")}
+                          </span>
+                        </div>
+                      )}
+                      <div className={cn("flex", isFromUser ? "justify-start" : "justify-end")}>
                         <div
                           className={cn(
-                            "flex items-center gap-2 mt-1.5",
-                            isFromUser ? "justify-start" : "justify-end"
+                            "max-w-[80%] rounded-2xl px-4 py-2.5 shadow-sm",
+                            isFromUser
+                              ? "bg-muted text-foreground rounded-bl-md"
+                              : "bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-br-md"
                           )}
                         >
-                          <p
+                          <p className="text-[15px] leading-relaxed whitespace-pre-wrap">{msg.message}</p>
+                          <div
                             className={cn(
-                              "text-[10px]",
-                              isFromUser ? "text-muted-foreground" : "text-blue-100"
+                              "flex items-center gap-1.5 mt-1",
+                              isFromUser ? "justify-start" : "justify-end"
                             )}
                           >
-                            {formatDistanceToNow(new Date(msg.created_at), { addSuffix: true })}
-                          </p>
-                          {!isFromUser && msg.read_at && (
-                            <CheckCheck className="h-3 w-3 text-blue-100" />
-                          )}
+                            <span
+                              className={cn(
+                                "text-[10px]",
+                                isFromUser ? "text-muted-foreground" : "text-white/70"
+                              )}
+                            >
+                              {format(new Date(msg.created_at), "h:mm a")}
+                            </span>
+                            {!isFromUser && msg.read_at && (
+                              <CheckCheck className="h-3.5 w-3.5 text-white/70" />
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -440,7 +507,7 @@ export default function AdminUserMessages() {
             </ScrollArea>
 
             {/* Reply Input */}
-            <div className="p-4 border-t border-border shrink-0">
+            <div className="p-4 border-t border-border bg-card/50 backdrop-blur-sm">
               <div className="flex gap-2">
                 <Input
                   value={replyMessage}
@@ -448,13 +515,13 @@ export default function AdminUserMessages() {
                   onKeyPress={handleKeyPress}
                   placeholder="Type your reply..."
                   disabled={sendReplyMutation.isPending}
-                  className="flex-1 h-11 touch-manipulation"
+                  className="flex-1 h-12 rounded-xl bg-background border-border text-base touch-manipulation"
                 />
                 <Button
                   onClick={handleSendReply}
                   disabled={!replyMessage.trim() || sendReplyMutation.isPending}
                   size="icon"
-                  className="h-11 w-11 bg-blue-500 hover:bg-blue-600 text-white shrink-0 rounded-xl"
+                  className="h-12 w-12 bg-gradient-to-br from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shrink-0 rounded-xl shadow-lg shadow-indigo-500/25"
                 >
                   {sendReplyMutation.isPending ? (
                     <Loader2 className="h-5 w-5 animate-spin" />

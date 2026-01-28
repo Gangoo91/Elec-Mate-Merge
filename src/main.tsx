@@ -6,25 +6,35 @@ import { Capacitor } from "@capacitor/core";
 import App from "./App.tsx";
 import "./index.css";
 import ErrorBoundary from "./components/common/ErrorBoundary.tsx";
-import { initPostHog } from "./components/analytics/PostHogProvider.tsx";
-import { initSentry, captureError, addBreadcrumb } from "./lib/sentry.ts";
 
 console.log("[Elec-Mate] All imports loaded");
 
-// Initialize error tracking first (catches errors during init)
-initSentry();
+// Defer analytics loading until after app is interactive (saves ~427KB from initial bundle)
+const initAnalyticsDeferred = () => {
+  // Use requestIdleCallback if available, otherwise setTimeout
+  const scheduleInit = window.requestIdleCallback || ((cb: () => void) => setTimeout(cb, 1));
 
-// Global network error detection
-window.addEventListener('offline', () => {
-  addBreadcrumb('Network went offline', 'network', { online: false });
-});
+  scheduleInit(() => {
+    // Dynamically import analytics to defer bundle loading
+    import("./lib/sentry.ts").then(({ initSentry, addBreadcrumb }) => {
+      initSentry();
 
-window.addEventListener('online', () => {
-  addBreadcrumb('Network came back online', 'network', { online: true });
-});
+      // Global network error detection (after Sentry is ready)
+      window.addEventListener('offline', () => {
+        addBreadcrumb('Network went offline', 'network', { online: false });
+      });
+      window.addEventListener('online', () => {
+        addBreadcrumb('Network came back online', 'network', { online: true });
+      });
+    });
 
-// Initialize PostHog analytics early
-initPostHog();
+    import("./components/analytics/PostHogProvider.tsx").then(({ initPostHog }) => {
+      initPostHog();
+    });
+
+    console.log("[Elec-Mate] Analytics initialized (deferred)");
+  });
+};
 
 // Global handler for chunk loading failures (stale deployment cache)
 // This catches errors before they reach React's ErrorBoundary
@@ -84,5 +94,8 @@ const initialLoading = document.getElementById('initial-loading');
 const loadError = document.getElementById('load-error');
 if (initialLoading) initialLoading.style.display = 'none';
 if (loadError) loadError.style.display = 'none';
+
+// Initialize analytics after app is rendered and interactive
+initAnalyticsDeferred();
 
 console.log("[Elec-Mate] Render complete");

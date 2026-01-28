@@ -69,8 +69,34 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const handleVoiceToolCall = useCallback((toolName: string, params: Record<string, unknown>): string => {
     console.log('[Voice] Tool call:', toolName, params);
 
-    // Handle fill_eic tool (the single tool for all EIC actions)
-    if (toolName === 'fill_eic' || toolName === 'fill_eicr') {
+    // Handle stop_session tool
+    if (toolName === 'stop_session') {
+      setTimeout(() => stopVoiceRef.current?.(), 500);
+      return 'Stopping voice session. Goodbye!';
+    }
+
+    // Handle bulk_fill_circuits tool
+    if (toolName === 'bulk_fill_circuits') {
+      const field = params.field as string;
+      const value = params.value as string;
+      const onlyEmpty = params.only_empty as boolean | undefined;
+      const resolvedField = resolveFieldName(field) || field;
+      const resolvedValue = resolveDropdownValue(resolvedField, value);
+
+      setTestResults(prev => prev.map(circuit => {
+        // Skip if only_empty is true and field already has a value
+        if (onlyEmpty && circuit[resolvedField as keyof typeof circuit]) {
+          return circuit;
+        }
+        return { ...circuit, [resolvedField]: resolvedValue };
+      }));
+
+      toast.success(`Set ${resolvedField} to ${resolvedValue} on all circuits`);
+      return `Set ${resolvedField} to ${resolvedValue} on all ${testResults.length} circuits`;
+    }
+
+    // Handle fill_schedule_of_tests / fill_eic / fill_eicr tools (the single tool for all EIC actions)
+    if (toolName === 'fill_schedule_of_tests' || toolName === 'fill_eic' || toolName === 'fill_eicr') {
       const action = params.action as string;
 
       switch (action) {
@@ -115,7 +141,39 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           return 'No circuit selected - add a circuit first';
         }
 
-        case 'next': {
+        case 'update_multiple_fields': {
+          const fields = params.fields as Record<string, string>;
+          const circuitNum = params.circuit_number as number | undefined;
+
+          if (!fields || typeof fields !== 'object') {
+            return 'No fields provided for update';
+          }
+
+          const targetIndex = circuitNum !== undefined
+            ? testResults.findIndex(r => r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`)
+            : selectedCircuitIndex;
+
+          if (targetIndex >= 0 && targetIndex < testResults.length) {
+            setTestResults(prev => {
+              const updated = [...prev];
+              const circuit = { ...updated[targetIndex] };
+              for (const [field, value] of Object.entries(fields)) {
+                const resolvedField = resolveFieldName(field) || field;
+                const resolvedValue = resolveDropdownValue(resolvedField, value);
+                (circuit as Record<string, unknown>)[resolvedField] = resolvedValue;
+              }
+              updated[targetIndex] = circuit;
+              return updated;
+            });
+            const fieldList = Object.keys(fields).join(', ');
+            toast.success(`Updated ${Object.keys(fields).length} fields`);
+            return `Updated fields: ${fieldList} on circuit ${targetIndex + 1}`;
+          }
+          return 'No circuit selected';
+        }
+
+        case 'next':
+        case 'next_circuit': {
           if (selectedCircuitIndex < testResults.length - 1) {
             const newIndex = selectedCircuitIndex + 1;
             setSelectedCircuitIndex(newIndex);
@@ -125,7 +183,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           return 'Already on the last circuit';
         }
 
-        case 'previous': {
+        case 'previous':
+        case 'previous_circuit': {
           if (selectedCircuitIndex > 0) {
             const newIndex = selectedCircuitIndex - 1;
             setSelectedCircuitIndex(newIndex);
@@ -135,7 +194,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           return 'Already on the first circuit';
         }
 
-        case 'select': {
+        case 'select':
+        case 'select_circuit': {
           const num = params.circuit_number as number;
           const idx = testResults.findIndex(r =>
             r.circuitNumber === String(num) || r.circuitDesignation === `C${num}`
@@ -218,7 +278,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           return 'Schedule marked as complete';
         }
 
-        case 'get_missing_tests': {
+        case 'get_missing_tests':
+        case 'get_status': {
           const circuitNum = params.circuit_number as number || selectedCircuitIndex + 1;
           const circuit = testResults.find(r =>
             r.circuitNumber === String(circuitNum) || r.circuitDesignation === `C${circuitNum}`
@@ -258,9 +319,15 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     return `Unknown tool: ${toolName}`;
   }, [testResults, selectedCircuitIndex]);
 
-  const { isConnecting: voiceConnecting, isActive: voiceActive, toggleVoice } = useInlineVoice({
+  // Ref to allow voice tool handler to stop the session
+  const stopVoiceRef = useRef<(() => Promise<void>) | null>(null);
+
+  const { isConnecting: voiceConnecting, isActive: voiceActive, toggleVoice, stopVoice } = useInlineVoice({
     onToolCall: handleVoiceToolCall,
   });
+
+  // Wire up stopVoiceRef for the tool handler
+  stopVoiceRef.current = stopVoice;
 
   // Calculate completion stats for progress indicator
   const { completedCount, progressPercent, pendingCount } = useMemo(() => {

@@ -1,25 +1,26 @@
-import React, { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { FileText, Sparkles, Wand2 } from "lucide-react";
-import SimplifiedCVBuilder from "@/components/cv-builder/SimplifiedCVBuilder";
-import EnhancedCVBuilder from "@/components/cv-builder/EnhancedCVBuilder";
+import { Badge } from "@/components/ui/badge";
+import { FileText, Sparkles, Clock } from "lucide-react";
 
 const CVBuilderBox = () => {
-  const [isWizardOpen, setIsWizardOpen] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-8 bg-elec-card border border-elec-yellow/20 rounded-lg">
+    <div className="w-full max-w-4xl mx-auto p-8 bg-elec-card border border-elec-yellow/20 rounded-lg relative">
+      {/* Coming Soon Badge */}
+      <Badge className="absolute top-4 right-4 px-2 py-1 text-xs bg-amber-500 text-black border-0 flex items-center gap-1">
+        <Clock className="h-3 w-3" />
+        Coming Soon
+      </Badge>
+
       {/* Top icons */}
       <div className="flex justify-between mb-4">
-        <FileText className="h-6 w-6 text-elec-yellow" />
-        <Sparkles className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+        <FileText className="h-6 w-6 text-elec-yellow/50" />
+        <Sparkles className="h-4 w-4 text-elec-yellow/50 flex-shrink-0" />
       </div>
-      
+
       {/* Main title */}
-      <h1 className="text-[1.35rem] font-bold text-foreground text-center mb-[5px]">
+      <h1 className="text-[1.35rem] font-bold text-foreground/70 text-center mb-[5px]">
         AI-Powered CV Builder
       </h1>
       
@@ -58,40 +59,29 @@ const CVBuilderBox = () => {
         </div>
       </div>
       
-      {/* Action buttons */}
+      {/* Action buttons - Disabled until templates ready */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Dialog open={isWizardOpen} onOpenChange={setIsWizardOpen}>
-          <DialogTrigger asChild>
-            <Button 
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 px-8 py-3 min-w-48"
-            >
-              <Sparkles className="h-4 w-4 mr-2" /> 
-              Smart CV Wizard
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="w-[100vw] h-[100vh] max-w-none max-h-none overflow-hidden p-0 m-0 sm:w-[95vw] sm:max-w-4xl sm:h-[90vh] sm:max-h-[90vh] sm:m-6 sm:rounded-lg">
-            <div className="h-full overflow-y-auto">
-              <SimplifiedCVBuilder />
-            </div>
-          </DialogContent>
-        </Dialog>
-        
-        <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-          <Button 
-            variant="outline" 
-            className="border-elec-yellow/20 bg-background text-foreground hover:bg-muted px-8 py-3 min-w-48"
-            onClick={() => setIsEditOpen(true)}
-          >
-            <FileText className="h-4 w-4 mr-2" /> 
-            Edit Existing CV
-          </Button>
-          <DialogContent className="w-[100vw] h-[100vh] max-w-none max-h-none overflow-hidden p-0 m-0 sm:w-[95vw] sm:max-w-4xl sm:h-[90vh] sm:max-h-[90vh] sm:m-6 sm:rounded-lg">
-            <div className="h-full overflow-y-auto">
-              <EnhancedCVBuilder />
-            </div>
-          </DialogContent>
-        </Dialog>
+        <Button
+          disabled
+          className="bg-elec-yellow/50 text-black/50 cursor-not-allowed px-8 py-3 min-w-48"
+        >
+          <Sparkles className="h-4 w-4 mr-2" />
+          Smart CV Wizard
+        </Button>
+
+        <Button
+          disabled
+          variant="outline"
+          className="border-elec-yellow/20 bg-background text-foreground/50 cursor-not-allowed px-8 py-3 min-w-48"
+        >
+          <FileText className="h-4 w-4 mr-2" />
+          Edit Existing CV
+        </Button>
       </div>
+
+      <p className="text-center text-sm text-muted-foreground mt-4">
+        CV templates for electricians coming soon
+      </p>
     </div>
   );
 };

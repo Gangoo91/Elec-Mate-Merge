@@ -11,10 +11,13 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/lib/queryClient';
 import ScrollToTop from '@/components/ScrollToTop';
 import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
-import { SpeedInsights } from '@vercel/speed-insights/react';
-import { Analytics } from '@vercel/analytics/react';
-import PostHogProvider from '@/components/analytics/PostHogProvider';
 import { useNativeApp } from '@/hooks/useNativeApp';
+import { lazy, Suspense } from 'react';
+
+// Lazy load analytics components to defer ~427KB from initial bundle
+const PostHogProvider = lazy(() => import('@/components/analytics/PostHogProvider'));
+const SpeedInsights = lazy(() => import('@vercel/speed-insights/react').then(m => ({ default: m.SpeedInsights })));
+const Analytics = lazy(() => import('@vercel/analytics/react').then(m => ({ default: m.Analytics })));
 
 // Initialize native app features (Capacitor)
 function NativeAppInit({ children }: { children: React.ReactNode }) {
@@ -28,21 +31,28 @@ function App() {
       <ScrollToTop />
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <PostHogProvider>
-            <ThemeProvider defaultTheme="dark" storageKey="elec-ui-theme">
-              <NotificationProvider>
-                <NativeAppInit>
-                  <TrainingActivityMonitor />
-                  <AppRouter />
-                  <Toaster />
-                  <SonnerToaster />
-                  <PWAUpdatePrompt />
+          <ThemeProvider defaultTheme="dark" storageKey="elec-ui-theme">
+            <NotificationProvider>
+              <NativeAppInit>
+                {/* Analytics providers load async - don't block render */}
+                <Suspense fallback={null}>
+                  <PostHogProvider>
+                    <></>
+                  </PostHogProvider>
+                </Suspense>
+                <TrainingActivityMonitor />
+                <AppRouter />
+                <Toaster />
+                <SonnerToaster />
+                <PWAUpdatePrompt />
+                {/* Vercel analytics load after app is interactive */}
+                <Suspense fallback={null}>
                   <SpeedInsights />
                   <Analytics />
-                </NativeAppInit>
-              </NotificationProvider>
-            </ThemeProvider>
-          </PostHogProvider>
+                </Suspense>
+              </NativeAppInit>
+            </NotificationProvider>
+          </ThemeProvider>
         </AuthProvider>
       </QueryClientProvider>
     </BrowserRouter>

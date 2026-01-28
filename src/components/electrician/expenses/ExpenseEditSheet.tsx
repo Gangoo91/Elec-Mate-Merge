@@ -281,8 +281,8 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                   {/* Amount */}
                   <div className="space-y-2">
                     <Label htmlFor="amount">Amount</Label>
-                    <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-lg font-semibold text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-semibold text-muted-foreground">
                         £
                       </span>
                       <Input
@@ -294,7 +294,7 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                         placeholder="0.00"
                         value={formData.amount || ''}
                         onChange={(e) => setFormData(prev => ({ ...prev, amount: parseFloat(e.target.value) || 0 }))}
-                        className="h-14 text-2xl font-semibold pl-8 touch-manipulation"
+                        className="h-14 text-2xl font-semibold touch-manipulation flex-1"
                       />
                     </div>
                   </div>
@@ -392,8 +392,8 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                   {/* VAT Amount */}
                   <div className="space-y-2">
                     <Label htmlFor="vat">VAT Amount (optional)</Label>
-                    <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg font-medium text-muted-foreground">
                         £
                       </span>
                       <Input
@@ -405,7 +405,7 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                         placeholder="0.00"
                         value={formData.vat_amount || ''}
                         onChange={(e) => setFormData(prev => ({ ...prev, vat_amount: parseFloat(e.target.value) || undefined }))}
-                        className="h-11 pl-8 touch-manipulation"
+                        className="h-11 touch-manipulation flex-1"
                       />
                     </div>
                   </div>

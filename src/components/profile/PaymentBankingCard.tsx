@@ -283,25 +283,51 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
             {/* Stripe Connect CTA */}
             {stripeStatus?.status !== 'active' && (
-              <motion.button
-                whileTap={{ scale: 0.98 }}
-                onClick={handleConnectStripe}
-                disabled={connecting}
-                className="w-full flex items-center gap-4 p-4 rounded-xl bg-indigo-500/15 border border-indigo-500/30 active:bg-indigo-500/25 transition-colors touch-manipulation"
-              >
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center">
-                  {connecting ? (
-                    <Loader2 className="h-5 w-5 animate-spin text-indigo-400" />
-                  ) : (
-                    <Zap className="h-5 w-5 text-indigo-400" />
-                  )}
+              <div className="space-y-3">
+                <motion.button
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleConnectStripe}
+                  disabled={connecting}
+                  className="w-full flex items-center gap-4 p-4 rounded-xl bg-indigo-500/15 border border-indigo-500/30 active:bg-indigo-500/25 transition-colors touch-manipulation"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center">
+                    {connecting ? (
+                      <Loader2 className="h-5 w-5 animate-spin text-indigo-400" />
+                    ) : (
+                      <Zap className="h-5 w-5 text-indigo-400" />
+                    )}
+                  </div>
+                  <div className="flex-1 text-left">
+                    <p className="text-[15px] font-medium text-white">Accept Card Payments</p>
+                    <p className="text-[13px] text-white/50">Connect Stripe to take payments on invoices</p>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-white/30" />
+                </motion.button>
+
+                {/* Fee breakdown */}
+                <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
+                  <p className="text-[13px] font-medium text-white/70 mb-3">Payment Processing Fees</p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[13px] text-white/50">Stripe (UK cards)</span>
+                      <span className="text-[13px] text-white/70">1.5% + 20p</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[13px] text-white/50">Elec-Mate</span>
+                      <span className="text-[13px] text-white/70">1%</span>
+                    </div>
+                    <div className="border-t border-white/[0.06] pt-2 mt-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-[13px] font-medium text-white/70">Total</span>
+                        <span className="text-[13px] font-semibold text-white">2.5% + 20p</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-white/40 mt-3">
+                    EU cards: 2.5% + 20p • International: 3.25% + 20p
+                  </p>
                 </div>
-                <div className="flex-1 text-left">
-                  <p className="text-[15px] font-medium text-white">Accept Card Payments</p>
-                  <p className="text-[13px] text-white/50">Connect Stripe to take payments</p>
-                </div>
-                <ChevronRight className="h-5 w-5 text-white/30" />
-              </motion.button>
+              </div>
             )}
 
             <p className="text-[13px] text-white/50">

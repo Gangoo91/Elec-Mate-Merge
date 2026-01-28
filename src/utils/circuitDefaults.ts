@@ -19,24 +19,50 @@ export type CircuitType =
   | 'other';
 
 /**
+ * Default description mappings for circuit types
+ */
+export function getDefaultDescription(circuitType: string): string {
+  const descriptions: Record<string, string> = {
+    'lighting': 'Lighting',
+    'ring': 'Ring Final Sockets',
+    'ring_final': 'Ring Final Sockets',
+    'radial': 'Radial Sockets',
+    'cooker': 'Cooker',
+    'shower': 'Shower',
+    'immersion': 'Immersion Heater',
+    'smoke_alarm': 'Smoke Alarms',
+    'smoke_detectors': 'Smoke Alarms',
+    'ev_charger': 'EV Charger',
+    'boiler': 'Boiler/CH',
+    'socket': 'Sockets',
+    'spur': 'Fused Spur',
+    'other': 'Circuit',
+  };
+  return descriptions[circuitType.toLowerCase()] || 'Circuit';
+}
+
+/**
  * Base defaults shared by all circuit types
+ * BS7671 codes:
+ * - Type of Wiring (Column 3): A = T&E (most domestic)
+ * - Reference Method (Column 4): C = Clipped direct (most common for T&E)
  */
 const baseDefaults: Partial<TestResult> = {
-  // Wiring
-  typeOfWiring: 'Thermoplastic 70°C (ref. Table 4D5)',
-  referenceMethod: 'Reference Method C',
+  // Wiring - using BS7671 codes
+  typeOfWiring: 'A', // A = Thermoplastic insulated/sheathed (T&E)
+  referenceMethod: 'C', // C = Clipped direct (most common)
 
-  // Standards
-  bsStandard: 'BS EN 60898',
+  // Standards - must match Select option values exactly
+  bsStandard: 'MCB (BS EN 60898)',
 
-  // Test defaults
-  insulationTestVoltage: '500',
+  // Test defaults - must match Select option values exactly
+  insulationTestVoltage: '500V',
   insulationResistance: '>200',
   insulationLiveNeutral: '>200',
   insulationLiveEarth: '>200',
   insulationNeutralEarth: '',
-  polarity: 'OK',
-  functionalTesting: 'OK',
+  polarity: 'Correct',        // Select expects: Correct, Incorrect, N/A
+  functionalTesting: '✓',     // Select expects: ✓, ✗, N/A
 
   // Empty defaults
   zs: '', // Auto-calculated
@@ -84,16 +110,16 @@ export function getCircuitDefaults(circuitType: CircuitType | string): Partial<T
         circuitType: 'Ring Final',
         type: 'Ring Final',
         circuitDescription: 'Ring final circuit',
-        liveSize: '2.5',
-        cpcSize: '1.5',
+        liveSize: '2.5mm',
+        cpcSize: '1.5mm',
         cableSize: '2.5/1.5',
         protectiveDeviceType: 'RCBO',
         protectiveDeviceCurve: 'B',
         protectiveDeviceRating: '32',
         protectiveDeviceKaRating: '6',
         protectiveDevice: 'RCBO B32',
-        rcdBsStandard: 'BS EN 61008',
-        rcdType: 'Type A',
+        rcdBsStandard: 'RCBO (BS EN 61009)',
+        rcdType: 'A',
         rcdRating: '30',
         rcdRatingA: '32',
         pointsServed: '',
@@ -105,16 +131,16 @@ export function getCircuitDefaults(circuitType: CircuitType | string): Partial<T
         circuitType: 'Radial',
         type: 'Radial',
         circuitDescription: 'Radial circuit',
-        liveSize: '2.5',
-        cpcSize: '1.5',
+        liveSize: '2.5mm',
+        cpcSize: '1.5mm',
         cableSize: '2.5/1.5',
         protectiveDeviceType: 'RCBO',
         protectiveDeviceCurve: 'B',
         protectiveDeviceRating: '20',
         protectiveDeviceKaRating: '6',
         protectiveDevice: 'RCBO B20',
-        rcdBsStandard: 'BS EN 61008',
-        rcdType: 'Type A',
+        rcdBsStandard: 'RCBO (BS EN 61009)',
+        rcdType: 'A',
         rcdRating: '30',
         rcdRatingA: '20',
         pointsServed: '',
@@ -126,8 +152,8 @@ export function getCircuitDefaults(circuitType: CircuitType | string): Partial<T
         circuitType: 'Lighting',
         type: 'Lighting',
         circuitDescription: 'Lighting circuit',
-        liveSize: '1.5',
-        cpcSize: '1.0',
+        liveSize: '1.5mm',
+        cpcSize: '1.0mm',
         cableSize: '1.5/1.0',
         protectiveDeviceType: 'MCB',
         protectiveDeviceCurve: 'B',
@@ -147,8 +173,8 @@ export function getCircuitDefaults(circuitType: CircuitType | string): Partial<T
         circuitType: 'Cooker',
         type: 'Cooker',
         circuitDescription: 'Cooker circuit',
-        liveSize: '6',
-        cpcSize: '2.5',
+        liveSize: '6.0mm',
+        cpcSize: '2.5mm',
         cableSize: '6/2.5',
         protectiveDeviceType: 'MCB',
         protectiveDeviceCurve: 'B',
@@ -168,16 +194,16 @@ export function getCircuitDefaults(circuitType: CircuitType | string): Partial<T
         circuitType: 'Shower',
         type: 'Shower',
         circuitDescription: 'Shower circuit',
-        liveSize: '10',
-        cpcSize: '4',
+        liveSize: '10mm',
+        cpcSize: '4.0mm',
         cableSize: '10/4',
         protectiveDeviceType: 'RCBO',
         protectiveDeviceCurve: 'B',
         protectiveDeviceRating: '45',
         protectiveDeviceKaRating: '6',
         protectiveDevice: 'RCBO B45',
-        rcdBsStandard: 'BS EN 61008',
-        rcdType: 'Type A',
+        rcdBsStandard: 'RCBO (BS EN 61009)',
+        rcdType: 'A',
         rcdRating: '30',
         rcdRatingA: '45',
         pointsServed: '1',
@@ -189,8 +215,8 @@ export function getCircuitDefaults(circuitType: CircuitType | string): Partial<T
         circuitType: 'Immersion',
         type: 'Immersion',
         circuitDescription: 'Immersion heater',
-        liveSize: '2.5',
-        cpcSize: '1.5',
+        liveSize: '2.5mm',
+        cpcSize: '1.5mm',
         cableSize: '2.5/1.5',
         protectiveDeviceType: 'MCB',
         protectiveDeviceCurve: 'B',
@@ -210,8 +236,8 @@ export function getCircuitDefaults(circuitType: CircuitType | string): Partial<T
         circuitType: 'Smoke Detectors',
         type: 'Smoke Detectors',
         circuitDescription: 'Smoke/fire alarm',
-        liveSize: '1.5',
-        cpcSize: '1.0',
+        liveSize: '1.5mm',
+        cpcSize: '1.0mm',
         cableSize: '1.5/1.0',
         protectiveDeviceType: 'MCB',
         protectiveDeviceCurve: 'B',
@@ -231,8 +257,8 @@ export function getCircuitDefaults(circuitType: CircuitType | string): Partial<T
         circuitType: 'Fused Spur',
         type: 'Fused Spur',
         circuitDescription: 'Fused connection unit',
-        liveSize: '2.5',
-        cpcSize: '1.5',
+        liveSize: '2.5mm',
+        cpcSize: '1.5mm',
         cableSize: '2.5/1.5',
         protectiveDeviceType: 'Fuse',
         protectiveDeviceCurve: '',
@@ -271,6 +297,7 @@ export function getCircuitDefaults(circuitType: CircuitType | string): Partial<T
 
 /**
  * Create a complete TestResult with defaults for the given circuit type
+ * Circuit naming format: "X - Description" (e.g., "1 - Ring Final Sockets")
  */
 export function createCircuitWithDefaults(
   circuitType: CircuitType | string,
@@ -279,11 +306,14 @@ export function createCircuitWithDefaults(
 ): TestResult {
   const defaults = getCircuitDefaults(circuitType);
 
+  // Use provided description, or get default from circuit type
+  const circuitDescription = description || defaults.circuitDescription || getDefaultDescription(circuitType);
+
   return {
     id: crypto.randomUUID(),
     circuitNumber,
-    circuitDesignation: `C${circuitNumber}`,
-    circuitDescription: description || defaults.circuitDescription || '',
+    circuitDesignation: `${circuitNumber} - ${circuitDescription}`,
+    circuitDescription,
     circuitType: defaults.circuitType || 'Other',
     type: defaults.type || 'Other',
     typeOfWiring: defaults.typeOfWiring || '',

@@ -12,7 +12,8 @@ import {
   CheckCircle,
   AlertCircle,
   Camera,
-  Mic
+  Mic,
+  Check
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DistributionBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
@@ -259,108 +260,85 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               </div>
             </div>
 
-            {/* Verification Checkboxes - Button Style */}
+            {/* Verification Buttons - Using onClick (onPointerDown fires twice on touch) */}
             <div className={cn("flex items-center flex-wrap gap-2", isMobile && "gap-1.5")}>
               <button
                 type="button"
                 onClick={() => onUpdateBoard(board.id, 'confirmedCorrectPolarity', !board.confirmedCorrectPolarity)}
                 className={cn(
-                  "h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3",
+                  "h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none",
+                  "transition-colors duration-150 touch-manipulation",
                   board.confirmedCorrectPolarity
-                    ? "bg-green-500/20 border border-green-500/30 text-green-400"
-                    : "bg-card border border-border/50 text-muted-foreground hover:bg-card/80",
-                  isMobile && "h-9 px-2.5"
+                    ? "bg-green-500/20 border-green-500/50 text-green-400"
+                    : "bg-card border-border text-muted-foreground hover:bg-accent"
                 )}
               >
-                <div className={cn(
-                  "w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0",
-                  board.confirmedCorrectPolarity ? "bg-green-500 border-green-500" : "border-muted-foreground"
-                )}>
-                  {board.confirmedCorrectPolarity && (
-                    <svg className="h-3 w-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  )}
-                </div>
-                <span>Correct Polarity</span>
+                <CheckCircle className="h-4 w-4" />
+                <span className="text-sm font-medium">Polarity</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => onUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence)}
                 className={cn(
-                  "h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3",
+                  "h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none",
+                  "transition-colors duration-150 touch-manipulation",
                   board.confirmedPhaseSequence
-                    ? "bg-green-500/20 border border-green-500/30 text-green-400"
-                    : "bg-card border border-border/50 text-muted-foreground hover:bg-card/80",
-                  isMobile && "h-9 px-2.5"
+                    ? "bg-green-500/20 border-green-500/50 text-green-400"
+                    : "bg-card border-border text-muted-foreground hover:bg-accent"
                 )}
               >
-                <div className={cn(
-                  "w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0",
-                  board.confirmedPhaseSequence ? "bg-green-500 border-green-500" : "border-muted-foreground"
-                )}>
-                  {board.confirmedPhaseSequence && (
-                    <svg className="h-3 w-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  )}
-                </div>
-                <span>Phase Sequence</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => !board.spdNA && onUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus)}
-                className={cn(
-                  "h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3",
-                  board.spdOperationalStatus
-                    ? "bg-green-500/20 border border-green-500/30 text-green-400"
-                    : "bg-card border border-border/50 text-muted-foreground hover:bg-card/80",
-                  board.spdNA && "opacity-40 cursor-not-allowed",
-                  isMobile && "h-9 px-2.5"
-                )}
-                disabled={board.spdNA}
-              >
-                <div className={cn(
-                  "w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0",
-                  board.spdOperationalStatus ? "bg-green-500 border-green-500" : "border-muted-foreground"
-                )}>
-                  {board.spdOperationalStatus && (
-                    <svg className="h-3 w-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  )}
-                </div>
-                <span>SPD Operational</span>
+                <CheckCircle className="h-4 w-4" />
+                <span className="text-sm font-medium">Phase Seq</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => {
-                  const newValue = !board.spdNA;
-                  onUpdateBoard(board.id, 'spdNA', newValue);
-                  if (newValue) onUpdateBoard(board.id, 'spdOperationalStatus', false);
+                  if (!board.spdNA) {
+                    onUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus);
+                  }
+                }}
+                disabled={board.spdNA}
+                className={cn(
+                  "h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none",
+                  "transition-colors duration-150 touch-manipulation",
+                  board.spdOperationalStatus
+                    ? "bg-green-500/20 border-green-500/50 text-green-400"
+                    : "bg-card border-border text-muted-foreground hover:bg-accent",
+                  board.spdNA && "opacity-40 cursor-not-allowed"
+                )}
+              >
+                <CheckCircle className="h-4 w-4" />
+                <span className="text-sm font-medium">SPD OK</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const newVal = !board.spdNA;
+                  onUpdateBoard(board.id, 'spdNA', newVal);
+                  if (newVal) {
+                    onUpdateBoard(board.id, 'spdOperationalStatus', false);
+                  }
                 }}
                 className={cn(
-                  "h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3",
+                  "h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none",
+                  "transition-colors duration-150 touch-manipulation",
                   board.spdNA
-                    ? "bg-amber-500/20 border border-amber-500/30 text-amber-400"
-                    : "bg-card border border-border/50 text-muted-foreground hover:bg-card/80",
-                  isMobile && "h-9 px-2.5"
+                    ? "bg-amber-500/20 border-amber-500/50 text-amber-400"
+                    : "bg-card border-border text-muted-foreground hover:bg-accent"
                 )}
               >
                 <div className={cn(
                   "w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0",
-                  board.spdNA ? "bg-amber-500 border-amber-500" : "border-muted-foreground"
+                  board.spdNA
+                    ? "bg-amber-500 border-amber-500"
+                    : "border-muted-foreground"
                 )}>
-                  {board.spdNA && (
-                    <svg className="h-3 w-3 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  )}
+                  {board.spdNA && <Check className="h-3 w-3 text-black" />}
                 </div>
-                <span>SPD N/A</span>
+                <span className="text-sm font-medium">SPD N/A</span>
               </button>
             </div>
 

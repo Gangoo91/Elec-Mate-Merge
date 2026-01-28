@@ -228,14 +228,19 @@ const JobsHeroCard = ({
               </Button>
             )}
             {onUploadCV && (
-              <Button
-                onClick={onUploadCV}
-                variant="outline"
-                size="icon"
-                className="h-11 w-11 border-white/20 text-white hover:text-white hover:bg-white/10 rounded-xl touch-manipulation active:scale-[0.98] flex-shrink-0"
-              >
-                <FileText className="h-4 w-4" />
-              </Button>
+              <div className="relative flex-shrink-0">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  disabled
+                  className="h-11 w-11 border-white/20 text-white/40 rounded-xl cursor-not-allowed"
+                >
+                  <FileText className="h-4 w-4" />
+                </Button>
+                <Badge className="absolute -top-1.5 -right-1.5 px-1 py-0.5 text-[9px] bg-amber-500 text-black border-0 whitespace-nowrap">
+                  Soon
+                </Badge>
+              </div>
             )}
           </div>
         </div>

@@ -375,14 +375,20 @@ const PremiumJobsHub = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsCVSheetOpen(true)}
-              className="h-10 w-10 rounded-xl text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10"
-            >
-              <IdCard className="h-5 w-5" />
-            </Button>
+            <div className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsCVSheetOpen(true)}
+                disabled
+                className="h-10 w-10 rounded-xl text-cyan-400/50 cursor-not-allowed"
+              >
+                <IdCard className="h-5 w-5" />
+              </Button>
+              <Badge className="absolute -top-1 -right-1 px-1 py-0.5 text-[9px] bg-amber-500 text-black border-0 whitespace-nowrap">
+                Soon
+              </Badge>
+            </div>
             <Button
               variant="ghost"
               size="icon"

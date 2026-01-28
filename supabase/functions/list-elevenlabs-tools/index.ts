@@ -6,7 +6,7 @@ const corsHeaders = {
 };
 
 const ELEVENLABS_API_BASE = 'https://api.elevenlabs.io/v1';
-const TESTING_AGENT_ID = 'agent_9901ke9rd48cf6jva60jd90sgx1y';
+const TESTING_AGENT_ID = 'agent_0601kg22prbze9c9j26y2vmx4fbd';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {

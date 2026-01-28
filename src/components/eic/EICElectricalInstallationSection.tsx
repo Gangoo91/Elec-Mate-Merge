@@ -136,13 +136,26 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
             </div>
             <div>
               <Label htmlFor="mainSwitchBsEn" className="font-medium text-sm">BS (EN)</Label>
-              <Input
-                id="mainSwitchBsEn"
-                value={formData.mainSwitchBsEn || ''}
-                onChange={(e) => onUpdate('mainSwitchBsEn', e.target.value)}
-                placeholder="e.g., BS EN 60898"
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-              />
+              <Select value={formData.mainSwitchBsEn || ''} onValueChange={(value) => onUpdate('mainSwitchBsEn', value === '__clear__' ? '' : value)}>
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                  <SelectValue placeholder="Select BS standard" />
+                </SelectTrigger>
+                <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                  <SelectItem value="BS EN 60898-1">BS EN 60898-1 (MCBs)</SelectItem>
+                  <SelectItem value="BS EN 60898-2">BS EN 60898-2 (MCBs AC/DC)</SelectItem>
+                  <SelectItem value="BS EN 60947-2">BS EN 60947-2 (MCCBs)</SelectItem>
+                  <SelectItem value="BS EN 60947-3">BS EN 60947-3 (Switch-disconnectors)</SelectItem>
+                  <SelectItem value="BS EN 61008-1">BS EN 61008-1 (RCCBs)</SelectItem>
+                  <SelectItem value="BS EN 61009-1">BS EN 61009-1 (RCBOs)</SelectItem>
+                  <SelectItem value="BS 88-2">BS 88-2 (HRC Fuses)</SelectItem>
+                  <SelectItem value="BS 88-3">BS 88-3 (HRC Fuses)</SelectItem>
+                  <SelectItem value="BS 1361">BS 1361 (Cartridge Fuses)</SelectItem>
+                  <SelectItem value="BS 1362">BS 1362 (Plug Fuses)</SelectItem>
+                  <SelectItem value="BS 3036">BS 3036 (Semi-enclosed Fuses)</SelectItem>
+                  <SelectItem value="BS 7671">BS 7671 (Wiring Regs)</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <Label htmlFor="mainSwitchPoles" className="font-medium text-sm">No. of Poles</Label>
@@ -168,33 +181,84 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
                 <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
                   <SelectValue placeholder="Select rating" />
                 </SelectTrigger>
-                <SelectContent className="bg-background border-border text-foreground z-50">
+                <SelectContent className="bg-background border-border text-foreground z-50 max-h-[300px]">
                   <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                  {/* BS 3036 Semi-enclosed fuse ratings */}
+                  <SelectItem value="5">5A</SelectItem>
+                  <SelectItem value="15">15A</SelectItem>
+                  {/* MCB/MCCB standard ratings */}
+                  <SelectItem value="6">6A</SelectItem>
+                  <SelectItem value="10">10A</SelectItem>
                   <SelectItem value="16">16A</SelectItem>
                   <SelectItem value="20">20A</SelectItem>
                   <SelectItem value="25">25A</SelectItem>
+                  <SelectItem value="30">30A</SelectItem>
                   <SelectItem value="32">32A</SelectItem>
                   <SelectItem value="40">40A</SelectItem>
+                  <SelectItem value="45">45A</SelectItem>
                   <SelectItem value="50">50A</SelectItem>
+                  <SelectItem value="60">60A</SelectItem>
                   <SelectItem value="63">63A</SelectItem>
                   <SelectItem value="80">80A</SelectItem>
                   <SelectItem value="100">100A</SelectItem>
                   <SelectItem value="125">125A</SelectItem>
                   <SelectItem value="160">160A</SelectItem>
                   <SelectItem value="200">200A</SelectItem>
+                  <SelectItem value="250">250A</SelectItem>
+                  <SelectItem value="315">315A</SelectItem>
+                  <SelectItem value="400">400A</SelectItem>
+                  <SelectItem value="500">500A</SelectItem>
+                  <SelectItem value="630">630A</SelectItem>
+                  <SelectItem value="800">800A</SelectItem>
+                  <SelectItem value="1000">1000A</SelectItem>
+                  <SelectItem value="1250">1250A</SelectItem>
+                  <SelectItem value="1600">1600A</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div>
               <Label htmlFor="mainSwitchFuseRating" className="font-medium text-sm">Fuse/Device Setting (A)</Label>
-              <Input
-                id="mainSwitchFuseRating"
-                type="number"
-                value={formData.mainSwitchFuseRating || ''}
-                onChange={(e) => onUpdate('mainSwitchFuseRating', e.target.value)}
-                placeholder="e.g., 100"
-                className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-              />
+              <Select value={formData.mainSwitchFuseRating || ''} onValueChange={(value) => onUpdate('mainSwitchFuseRating', value === '__clear__' ? '' : value)}>
+                <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                  <SelectValue placeholder="Select setting" />
+                </SelectTrigger>
+                <SelectContent className="bg-background border-border text-foreground z-50 max-h-[300px]">
+                  <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                  {/* BS 1362 plug fuse ratings */}
+                  <SelectItem value="3">3A</SelectItem>
+                  {/* BS 3036 Semi-enclosed fuse ratings */}
+                  <SelectItem value="5">5A</SelectItem>
+                  <SelectItem value="15">15A</SelectItem>
+                  <SelectItem value="20">20A</SelectItem>
+                  <SelectItem value="30">30A</SelectItem>
+                  <SelectItem value="45">45A</SelectItem>
+                  {/* MCB/MCCB/BS 88 standard ratings */}
+                  <SelectItem value="6">6A</SelectItem>
+                  <SelectItem value="10">10A</SelectItem>
+                  <SelectItem value="13">13A</SelectItem>
+                  <SelectItem value="16">16A</SelectItem>
+                  <SelectItem value="25">25A</SelectItem>
+                  <SelectItem value="32">32A</SelectItem>
+                  <SelectItem value="40">40A</SelectItem>
+                  <SelectItem value="50">50A</SelectItem>
+                  <SelectItem value="60">60A</SelectItem>
+                  <SelectItem value="63">63A</SelectItem>
+                  <SelectItem value="80">80A</SelectItem>
+                  <SelectItem value="100">100A</SelectItem>
+                  <SelectItem value="125">125A</SelectItem>
+                  <SelectItem value="160">160A</SelectItem>
+                  <SelectItem value="200">200A</SelectItem>
+                  <SelectItem value="250">250A</SelectItem>
+                  <SelectItem value="315">315A</SelectItem>
+                  <SelectItem value="400">400A</SelectItem>
+                  <SelectItem value="500">500A</SelectItem>
+                  <SelectItem value="630">630A</SelectItem>
+                  <SelectItem value="800">800A</SelectItem>
+                  <SelectItem value="1000">1000A</SelectItem>
+                  <SelectItem value="1250">1250A</SelectItem>
+                  <SelectItem value="1600">1600A</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <Label htmlFor="mainSwitchVoltageRating" className="font-medium text-sm">Voltage Rating (V)</Label>
@@ -218,11 +282,20 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
                 </SelectTrigger>
                 <SelectContent className="bg-background border-border text-foreground z-50">
                   <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
+                  <SelectItem value="1">1kA</SelectItem>
+                  <SelectItem value="1.5">1.5kA</SelectItem>
                   <SelectItem value="3">3kA</SelectItem>
+                  <SelectItem value="4.5">4.5kA</SelectItem>
                   <SelectItem value="6">6kA</SelectItem>
                   <SelectItem value="10">10kA</SelectItem>
+                  <SelectItem value="15">15kA</SelectItem>
                   <SelectItem value="16">16kA</SelectItem>
+                  <SelectItem value="20">20kA</SelectItem>
                   <SelectItem value="25">25kA</SelectItem>
+                  <SelectItem value="35">35kA</SelectItem>
+                  <SelectItem value="50">50kA</SelectItem>
+                  <SelectItem value="70">70kA</SelectItem>
+                  <SelectItem value="100">100kA</SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -6,7 +6,7 @@ import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 import { resolveFieldName } from '@/utils/voiceFieldAliases';
 
 // Default electrician agent for inspection/testing
-const DEFAULT_AGENT_ID = 'agent_9901ke9rd48cf6jva60jd90sgx1y';
+const DEFAULT_AGENT_ID = 'agent_0601kg22prbze9c9j26y2vmx4fbd';
 
 interface UseInlineVoiceOptions {
   agentId?: string;
@@ -98,6 +98,81 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
     },
     // CLIENT TOOLS - Schedule of Tests tools for EICR/EIC certificates
     clientTools: {
+      // ========== SESSION CONTROL ==========
+      stop_session: async () => {
+        console.log('[InlineVoice] stop_session called');
+        return handleToolCall('stop_session', {});
+      },
+
+      // ========== FIELD-SPECIFIC TOOLS (for exact enum values) ==========
+      // Dropdown fields
+      set_wiring_type: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_wiring_type', params),
+      set_reference_method: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_reference_method', params),
+      set_live_size: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_live_size', params),
+      set_cpc_size: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_cpc_size', params),
+      set_bs_standard: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_bs_standard', params),
+      set_device_type: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_device_type', params),
+      set_device_curve: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_device_curve', params),
+      set_device_rating: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_device_rating', params),
+      set_rcd_bs_standard: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_rcd_bs_standard', params),
+      set_rcd_type: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_rcd_type', params),
+      set_rcd_ma_rating: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_rcd_ma_rating', params),
+      set_insulation_voltage: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_insulation_voltage', params),
+      set_insulation_ln: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_insulation_ln', params),
+      set_insulation_le: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_insulation_le', params),
+      set_polarity: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_polarity', params),
+      set_rcd_test_button: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_rcd_test_button', params),
+      set_afdd_test: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_afdd_test', params),
+      set_functional_test: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_functional_test', params),
+      set_phase_type: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_phase_type', params),
+      set_phase_rotation: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_phase_rotation', params),
+
+      // Numeric/text fields
+      set_circuit_number: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_circuit_number', params),
+      set_circuit_description: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_circuit_description', params),
+      set_points_served: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_points_served', params),
+      set_ka_rating: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_ka_rating', params),
+      set_max_zs: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_max_zs', params),
+      set_rcd_amp_rating: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_rcd_amp_rating', params),
+      set_ring_r1: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_ring_r1', params),
+      set_ring_rn: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_ring_rn', params),
+      set_ring_r2: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_ring_r2', params),
+      set_ring_readings: async (params: { circuit_number?: number; r1: string; rn: string; r2: string }) => handleToolCall('set_ring_readings', params),
+      set_r1r2: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_r1r2', params),
+      set_r2: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_r2', params),
+      set_insulation_ne: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_insulation_ne', params),
+      set_zs: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_zs', params),
+      set_rcd_trip_time: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_rcd_trip_time', params),
+      set_rcd_5x_time: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_rcd_5x_time', params),
+      set_pfc: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_pfc', params),
+      set_pfc_ln: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_pfc_ln', params),
+      set_pfc_le: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_pfc_le', params),
+      set_notes: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_notes', params),
+      set_phase_balance_l1: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_phase_balance_l1', params),
+      set_phase_balance_l2: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_phase_balance_l2', params),
+      set_phase_balance_l3: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_phase_balance_l3', params),
+      set_phase_balance: async (params: { circuit_number?: number; l1: string; l2: string; l3: string }) => handleToolCall('set_phase_balance', params),
+      set_line_voltage: async (params: { circuit_number?: number; value: string }) => handleToolCall('set_line_voltage', params),
+
+      // ========== CIRCUIT MANAGEMENT TOOLS ==========
+      add_circuit: async (params: { circuit_type: string; description?: string }) => handleToolCall('add_circuit', params),
+      delete_circuit: async (params: { circuit_number?: number }) => handleToolCall('delete_circuit', params),
+      select_circuit: async (params: { circuit_number: number }) => handleToolCall('select_circuit', params),
+      next_circuit: async () => handleToolCall('next_circuit', {}),
+      previous_circuit: async () => handleToolCall('previous_circuit', {}),
+      get_status: async (params?: { circuit_number?: number }) => handleToolCall('get_status', params || {}),
+      validate_tests: async () => handleToolCall('validate_tests', {}),
+
+      // ========== BULK TOOLS ==========
+      bulk_set_polarity: async (params: { value: string }) => handleToolCall('bulk_set_polarity', params),
+      bulk_set_wiring_type: async (params: { value: string }) => handleToolCall('bulk_set_wiring_type', params),
+      bulk_set_reference_method: async (params: { value: string }) => handleToolCall('bulk_set_reference_method', params),
+      bulk_set_insulation_voltage: async (params: { value: string }) => handleToolCall('bulk_set_insulation_voltage', params),
+      bulk_set_insulation_readings: async (params: { value: string }) => handleToolCall('bulk_set_insulation_readings', params),
+      bulk_set_functional_test: async (params: { value: string }) => handleToolCall('bulk_set_functional_test', params),
+      bulk_set_rcd_test_button: async (params: { value: string }) => handleToolCall('bulk_set_rcd_test_button', params),
+
+      // ========== LEGACY/GENERIC TOOLS ==========
       // PRIMARY TOOL: Fill schedule of tests (EICR/EIC)
       fill_schedule_of_tests: async (params: {
         action: string;
@@ -109,7 +184,6 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         fields?: Record<string, string>;
       }) => {
         console.log('[InlineVoice] fill_schedule_of_tests called:', params);
-        // Resolve field name if update_field action
         if ((params.action === 'update_field' || params.action === 'update_multiple_fields') && params.field) {
           const resolvedField = resolveFieldName(params.field);
           if (resolvedField) {
@@ -141,14 +215,12 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
         description?: string;
       }) => {
         console.log('[InlineVoice] fill_eicr called (legacy):', params);
-        // Resolve field name if update_field action
         if (params.action === 'update_field' && params.field) {
           const resolvedField = resolveFieldName(params.field);
           if (resolvedField) {
             params = { ...params, field: resolvedField };
           }
         }
-        // Route to fill_schedule_of_tests for consistency
         return handleToolCall('fill_schedule_of_tests', params);
       },
 
@@ -167,7 +239,6 @@ export function useInlineVoice(options: UseInlineVoiceOptions = {}) {
             params = { ...params, field: resolvedField };
           }
         }
-        // Route to fill_schedule_of_tests for consistency
         return handleToolCall('fill_schedule_of_tests', params);
       },
 

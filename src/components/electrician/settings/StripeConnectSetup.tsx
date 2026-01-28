@@ -297,9 +297,20 @@ const StripeConnectSetup: React.FC = () => {
           </div>
 
           <div className="mt-4 pt-4 border-t border-white/10">
-            <p className="text-xs text-muted-foreground">
-              <strong>Fees:</strong> ~4% per transaction (2.9% Stripe + 1.1% platform fee). You receive payment within 2-7 business days.
-            </p>
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-muted-foreground">Payment Processing Fees</p>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+                <span className="text-muted-foreground">Stripe (UK cards)</span>
+                <span className="text-foreground">1.5% + 20p</span>
+                <span className="text-muted-foreground">Elec-Mate</span>
+                <span className="text-foreground">1%</span>
+                <span className="text-muted-foreground font-medium">Total</span>
+                <span className="text-foreground font-semibold">2.5% + 20p</span>
+              </div>
+              <p className="text-[10px] text-muted-foreground/70 mt-1">
+                EU cards: 3.5% + 20p • International: 4.25% + 20p • Payouts within 2-7 days
+              </p>
+            </div>
           </div>
         </div>
       </motion.div>

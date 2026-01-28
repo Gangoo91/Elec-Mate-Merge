@@ -42,6 +42,9 @@ import {
   XCircle,
   MailCheck,
   TrendingUp,
+  PartyPopper,
+  Zap,
+  TestTube,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/hooks/use-toast";
@@ -63,6 +66,10 @@ interface EarlyAccessInvite {
   expires_at: string;
   created_at: string;
   send_count?: number;
+  // Launch campaign tracking
+  launch_email_sent_at?: string | null;
+  launch_email_opened_at?: string | null;
+  launch_email_clicked_at?: string | null;
   user?: {
     id: string;
     full_name: string;
@@ -95,6 +102,22 @@ interface Stats {
   };
 }
 
+interface LaunchStats {
+  total_invites: number;
+  already_signed_up: number;
+  bounced: number;
+  eligible_for_launch: number;
+  launch_emails_sent: number;
+  launch_emails_pending: number;
+  launch_emails_opened: number;
+  launch_emails_clicked: number;
+  rates: {
+    signup_rate_early_access: string;
+    launch_open_rate: string;
+    launch_click_rate: string;
+  };
+}
+
 export default function AdminEarlyAccess() {
   const queryClient = useQueryClient();
   const [showUpload, setShowUpload] = useState(false);
@@ -104,6 +127,8 @@ export default function AdminEarlyAccess() {
   const [confirmResendUnopened, setConfirmResendUnopened] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [resendProgress, setResendProgress] = useState<{ sent: number; total: number; isRunning: boolean } | null>(null);
+  const [launchProgress, setLaunchProgress] = useState<{ sent: number; total: number; isRunning: boolean } | null>(null);
+  const [confirmLaunchCampaign, setConfirmLaunchCampaign] = useState(false);
 
   // Fetch stats
   const { data: stats, refetch: refetchStats } = useQuery<Stats>({
@@ -115,6 +140,19 @@ export default function AdminEarlyAccess() {
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
       return data?.stats || { total: 0, pending: 0, sent: 0, claimed: 0, expired: 0, failed_sends: 0 };
+    },
+  });
+
+  // Fetch launch campaign stats
+  const { data: launchStats, refetch: refetchLaunchStats } = useQuery<LaunchStats>({
+    queryKey: ["admin-launch-campaign-stats"],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke("send-early-access-invite", {
+        body: { action: "launch_campaign_stats" },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data?.stats;
     },
   });
 
@@ -376,6 +414,90 @@ export default function AdminEarlyAccess() {
     },
   });
 
+  // Send test launch email
+  const sendTestEmailMutation = useMutation({
+    mutationFn: async (email: string) => {
+      const { data, error } = await supabase.functions.invoke("send-early-access-invite", {
+        body: { action: "send_test_launch_email", testEmail: email },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: (data) => {
+      toast({
+        title: "Test email sent!",
+        description: `Check ${data.email} for the launch email preview`,
+      });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
+  // Launch campaign - with batch auto-continue
+  const launchCampaignMutation = useMutation({
+    mutationFn: async () => {
+      let totalSent = 0;
+      let totalAttempted = 0;
+      let allErrors: string[] = [];
+      let complete = false;
+      let totalEligible = 0;
+
+      while (!complete) {
+        const { data, error } = await supabase.functions.invoke("send-early-access-invite", {
+          body: { action: "send_launch_campaign" },
+        });
+
+        if (error) throw error;
+        if (data?.error) throw new Error(data.error);
+
+        totalSent += data.sent || 0;
+        totalAttempted += data.attempted || 0;
+        totalEligible = data.total_unclaimed || totalEligible;
+        complete = data.complete === true;
+
+        if (data.errors) {
+          allErrors = [...allErrors, ...data.errors];
+        }
+
+        setLaunchProgress({
+          sent: totalSent,
+          total: totalEligible,
+          isRunning: !complete,
+        });
+
+        // Small delay between batches
+        if (!complete) {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+      }
+
+      return {
+        sent: totalSent,
+        attempted: totalAttempted,
+        total: totalEligible,
+        errors: allErrors.length > 0 ? allErrors : undefined,
+        complete: true,
+      };
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["admin-early-access-invites"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-early-access-stats"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-launch-campaign-stats"] });
+      setConfirmLaunchCampaign(false);
+      setLaunchProgress(null);
+      toast({
+        title: "Launch campaign complete!",
+        description: `Successfully sent ${data.sent} launch emails${data.errors?.length ? `, ${data.errors.length} failed` : ""}`,
+      });
+    },
+    onError: (error: any) => {
+      setLaunchProgress(null);
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    },
+  });
+
   const handleBulkUpload = () => {
     const emails = emailInput
       .split(/[\n,;]+/)
@@ -428,7 +550,7 @@ export default function AdminEarlyAccess() {
           </h2>
           <p className="text-xs text-muted-foreground">Send 7-day free trial invites to email subscribers</p>
         </div>
-        <Button variant="outline" size="icon" className="h-11 w-11 touch-manipulation" onClick={() => { refetch(); refetchStats(); }}>
+        <Button variant="outline" size="icon" className="h-11 w-11 touch-manipulation" onClick={() => { refetch(); refetchStats(); refetchLaunchStats(); }}>
           <RefreshCw className="h-4 w-4" />
         </Button>
       </div>
@@ -507,6 +629,89 @@ export default function AdminEarlyAccess() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Launch Campaign Section */}
+      <Card className="bg-gradient-to-br from-green-500/10 via-emerald-500/10 to-teal-500/10 border-green-500/30">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base flex items-center gap-2">
+            <PartyPopper className="h-5 w-5 text-green-400" />
+            Launch Campaign
+            <Badge className="bg-green-500/20 text-green-400 ml-2">NEW</Badge>
+          </CardTitle>
+          <p className="text-xs text-muted-foreground">
+            Send "We've Launched!" emails to {launchStats?.eligible_for_launch || 0} people who haven't signed up yet
+          </p>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Launch Stats */}
+          <div className="grid grid-cols-4 gap-2">
+            <div className="text-center p-2 rounded-lg bg-background/50">
+              <p className="text-lg font-bold text-green-400">{launchStats?.launch_emails_sent || 0}</p>
+              <p className="text-[10px] text-muted-foreground">Sent</p>
+            </div>
+            <div className="text-center p-2 rounded-lg bg-background/50">
+              <p className="text-lg font-bold text-purple-400">{launchStats?.launch_emails_opened || 0}</p>
+              <p className="text-[10px] text-muted-foreground">Opened</p>
+            </div>
+            <div className="text-center p-2 rounded-lg bg-background/50">
+              <p className="text-lg font-bold text-blue-400">{launchStats?.launch_emails_clicked || 0}</p>
+              <p className="text-[10px] text-muted-foreground">Clicked</p>
+            </div>
+            <div className="text-center p-2 rounded-lg bg-background/50">
+              <p className="text-lg font-bold text-amber-400">{launchStats?.launch_emails_pending || 0}</p>
+              <p className="text-[10px] text-muted-foreground">Pending</p>
+            </div>
+          </div>
+
+          {/* Launch Conversion Rates */}
+          {launchStats?.launch_emails_sent && launchStats.launch_emails_sent > 0 && (
+            <div className="flex items-center justify-between gap-4 p-2 rounded-lg bg-background/50">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-green-400" />
+                <span className="text-xs font-medium">Launch Rates</span>
+              </div>
+              <div className="flex gap-4 text-xs">
+                <span><span className="text-purple-400 font-semibold">{launchStats.rates.launch_open_rate}</span> open</span>
+                <span><span className="text-blue-400 font-semibold">{launchStats.rates.launch_click_rate}</span> click</span>
+              </div>
+            </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              className="flex-1 h-11 gap-2 touch-manipulation border-purple-500/30 text-purple-400 hover:bg-purple-500/10"
+              onClick={() => sendTestEmailMutation.mutate("founder@elec-mate.com")}
+              disabled={sendTestEmailMutation.isPending}
+            >
+              {sendTestEmailMutation.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <TestTube className="h-4 w-4" />
+              )}
+              Send Test
+            </Button>
+            <Button
+              className="flex-1 h-11 gap-2 touch-manipulation bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
+              onClick={() => setConfirmLaunchCampaign(true)}
+              disabled={launchCampaignMutation.isPending || (launchStats?.launch_emails_pending || 0) === 0}
+            >
+              {launchCampaignMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  {launchProgress ? `${launchProgress.sent}/${launchProgress.total}` : "Starting..."}
+                </>
+              ) : (
+                <>
+                  <Zap className="h-4 w-4" />
+                  Launch ({launchStats?.launch_emails_pending || 0})
+                </>
+              )}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Actions */}
       <div className="flex flex-wrap gap-2">
@@ -751,6 +956,50 @@ export default function AdminEarlyAccess() {
                 </CardContent>
               </Card>
 
+              {/* Launch Campaign Tracking */}
+              {(selectedInvite?.launch_email_sent_at || !selectedInvite?.claimed_at) && (
+                <Card className="border-green-500/20">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm flex items-center gap-2">
+                      <PartyPopper className="h-4 w-4 text-green-400" />
+                      Launch Campaign
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground flex items-center gap-2">
+                        <Mail className="h-3 w-3" /> Sent
+                      </span>
+                      <span className="text-sm">
+                        {selectedInvite?.launch_email_sent_at
+                          ? <span className="text-green-400">{formatDistanceToNow(new Date(selectedInvite.launch_email_sent_at), { addSuffix: true })}</span>
+                          : <span className="text-muted-foreground">Not sent yet</span>}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground flex items-center gap-2">
+                        <Eye className="h-3 w-3" /> Opened
+                      </span>
+                      <span className="text-sm">
+                        {selectedInvite?.launch_email_opened_at
+                          ? <span className="text-purple-400">{formatDistanceToNow(new Date(selectedInvite.launch_email_opened_at), { addSuffix: true })}</span>
+                          : <span className="text-muted-foreground">—</span>}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground flex items-center gap-2">
+                        <MousePointerClick className="h-3 w-3" /> Clicked
+                      </span>
+                      <span className="text-sm">
+                        {selectedInvite?.launch_email_clicked_at
+                          ? <span className="text-blue-400">{formatDistanceToNow(new Date(selectedInvite.launch_email_clicked_at), { addSuffix: true })}</span>
+                          : <span className="text-muted-foreground">—</span>}
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
               {/* User Info (if signed up) */}
               {selectedInvite?.user && (
                 <Card className="border-green-500/20 bg-green-500/5">
@@ -969,6 +1218,82 @@ export default function AdminEarlyAccess() {
                 <>
                   <RotateCw className="h-4 w-4 mr-2" />
                   Resend All
+                </>
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Launch Campaign Confirmation */}
+      <AlertDialog open={confirmLaunchCampaign} onOpenChange={(open) => {
+        if (!launchCampaignMutation.isPending) {
+          setConfirmLaunchCampaign(open);
+        }
+      }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <PartyPopper className="h-5 w-5 text-green-400" />
+              {launchProgress?.isRunning ? "Sending Launch Emails..." : "Start Launch Campaign?"}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {launchProgress?.isRunning ? (
+                <div className="space-y-3">
+                  <p>Sending emails with rate limiting to avoid issues...</p>
+                  <div className="bg-muted rounded-full h-3 overflow-hidden">
+                    <div
+                      className="bg-green-500 h-full transition-all duration-300"
+                      style={{
+                        width: `${launchProgress.total > 0 ? (launchProgress.sent / launchProgress.total) * 100 : 0}%`,
+                      }}
+                    />
+                  </div>
+                  <p className="text-center font-medium text-green-400">
+                    {launchProgress.sent} / {launchProgress.total} sent
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <p className="mb-3">
+                    This will send <strong className="text-green-400">{launchStats?.launch_emails_pending || 0}</strong> launch emails
+                    to people who signed up for updates but haven't created an account yet.
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    Emails will be sent with rate limiting (~10/minute) to avoid delivery issues.
+                    This may take around {Math.ceil((launchStats?.launch_emails_pending || 0) / 10)} minutes.
+                  </p>
+                </>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            {!launchProgress?.isRunning && (
+              <AlertDialogCancel className="h-11 touch-manipulation" disabled={launchCampaignMutation.isPending}>
+                Cancel
+              </AlertDialogCancel>
+            )}
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-green-500 hover:bg-green-600 text-white"
+              onClick={(e) => {
+                if (launchCampaignMutation.isPending) {
+                  e.preventDefault();
+                  return;
+                }
+                e.preventDefault();
+                launchCampaignMutation.mutate();
+              }}
+              disabled={launchCampaignMutation.isPending}
+            >
+              {launchCampaignMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  {launchProgress ? `Sending batch...` : "Starting..."}
+                </>
+              ) : (
+                <>
+                  <Zap className="h-4 w-4 mr-2" />
+                  Start Campaign
                 </>
               )}
             </AlertDialogAction>

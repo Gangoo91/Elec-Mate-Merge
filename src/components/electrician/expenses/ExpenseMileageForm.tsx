@@ -66,8 +66,8 @@ export function ExpenseMileageForm({ onSave, isSubmitting }: ExpenseMileageFormP
       {/* Miles Input */}
       <div className="space-y-2">
         <Label htmlFor="miles">Distance (miles)</Label>
-        <div className="relative">
-          <Car className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+        <div className="flex items-center gap-2">
+          <Car className="h-5 w-5 text-muted-foreground flex-shrink-0" />
           <Input
             id="miles"
             type="number"
@@ -77,10 +77,10 @@ export function ExpenseMileageForm({ onSave, isSubmitting }: ExpenseMileageFormP
             placeholder="0"
             value={miles}
             onChange={(e) => setMiles(e.target.value ? parseFloat(e.target.value) : '')}
-            className="h-14 text-2xl font-semibold pl-12 touch-manipulation"
+            className="h-14 text-2xl font-semibold touch-manipulation flex-1"
             autoFocus
           />
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+          <span className="text-muted-foreground flex-shrink-0">
             miles
           </span>
         </div>
@@ -89,14 +89,14 @@ export function ExpenseMileageForm({ onSave, isSubmitting }: ExpenseMileageFormP
       {/* From Location */}
       <div className="space-y-2">
         <Label htmlFor="from">From</Label>
-        <div className="relative">
-          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-400" />
+        <div className="flex items-center gap-2">
+          <MapPin className="h-4 w-4 text-green-400 flex-shrink-0" />
           <Input
             id="from"
             placeholder="Starting location"
             value={fromLocation}
             onChange={(e) => setFromLocation(e.target.value)}
-            className="h-11 pl-10 touch-manipulation"
+            className="h-11 touch-manipulation flex-1"
           />
         </div>
       </div>
@@ -104,14 +104,14 @@ export function ExpenseMileageForm({ onSave, isSubmitting }: ExpenseMileageFormP
       {/* To Location */}
       <div className="space-y-2">
         <Label htmlFor="to">To</Label>
-        <div className="relative">
-          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-red-400" />
+        <div className="flex items-center gap-2">
+          <MapPin className="h-4 w-4 text-red-400 flex-shrink-0" />
           <Input
             id="to"
             placeholder="Destination"
             value={toLocation}
             onChange={(e) => setToLocation(e.target.value)}
-            className="h-11 pl-10 touch-manipulation"
+            className="h-11 touch-manipulation flex-1"
           />
         </div>
       </div>
