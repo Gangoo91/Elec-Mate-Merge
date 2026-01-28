@@ -29,9 +29,61 @@ interface Message {
 const SUPABASE_URL = 'https://jtwygbeceundfgnkirof.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8';
 
+// Storage key for conversation persistence
+const STORAGE_KEY = 'elec-ai-conversation';
+const STORAGE_EXPIRY_HOURS = 24; // Clear conversations older than 24 hours
+
+// Load messages from localStorage
+const loadStoredMessages = (): Message[] => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return [];
+
+    const { messages, timestamp } = JSON.parse(stored);
+
+    // Check if conversation has expired
+    const storedTime = new Date(timestamp).getTime();
+    const now = Date.now();
+    const hoursSinceStored = (now - storedTime) / (1000 * 60 * 60);
+
+    if (hoursSinceStored > STORAGE_EXPIRY_HOURS) {
+      localStorage.removeItem(STORAGE_KEY);
+      return [];
+    }
+
+    // Restore Date objects for timestamps
+    return messages.map((m: Message) => ({
+      ...m,
+      timestamp: m.timestamp ? new Date(m.timestamp) : undefined
+    }));
+  } catch (e) {
+    console.warn('Failed to load stored conversation:', e);
+    return [];
+  }
+};
+
+// Save messages to localStorage
+const saveMessages = (messages: Message[]) => {
+  try {
+    if (messages.length === 0) {
+      localStorage.removeItem(STORAGE_KEY);
+      return;
+    }
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      messages,
+      timestamp: new Date().toISOString()
+    }));
+  } catch (e) {
+    console.warn('Failed to save conversation:', e);
+  }
+};
+
 export default function ConversationalSearch() {
   const navigate = useNavigate();
-  const [messages, setMessages] = useState<Message[]>([]);
+  // Initialise messages from localStorage
+  const [messages, setMessages] = useState<Message[]>(() => loadStoredMessages());
+  const [hasRestoredSession, setHasRestoredSession] = useState(false);
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
@@ -59,6 +111,36 @@ export default function ConversationalSearch() {
       inputRef.current?.focus();
     }
   }, []);
+
+  // Show toast when conversation is restored from localStorage
+  useEffect(() => {
+    if (messages.length > 0 && !hasRestoredSession) {
+      setHasRestoredSession(true);
+      // Small delay to ensure component is mounted
+      const timeoutId = setTimeout(() => {
+        toast.success('Previous conversation restored', {
+          description: 'Your chat history has been recovered',
+          duration: 3000
+        });
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, []); // Only run on mount
+
+  // Persist messages to localStorage when they change
+  useEffect(() => {
+    // Only save complete messages (not during streaming)
+    if (!isStreaming && messages.length > 0) {
+      // Small delay to ensure final message content is set
+      const timeoutId = setTimeout(() => {
+        saveMessages(messages);
+      }, 100);
+      return () => clearTimeout(timeoutId);
+    } else if (messages.length === 0) {
+      // Clear storage when conversation is cleared
+      saveMessages([]);
+    }
+  }, [messages, isStreaming]);
 
   const SCROLL_THRESHOLD = 150;
 
