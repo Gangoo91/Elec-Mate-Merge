@@ -473,7 +473,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                 <p className="text-sm text-foreground/70">Update your Elec-ID information</p>
               </div>
               <div className="flex-1 overflow-y-auto px-4 pb-4">
-                <EditFormContent />
+                {EditFormContent()}
               </div>
               <div className="p-4 border-t border-border bg-background/95 backdrop-blur-sm">
                 <div className="flex gap-3">
@@ -504,7 +504,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               <DialogTitle className="text-foreground">Edit Elec-ID Profile</DialogTitle>
             </DialogHeader>
             <div className="pt-4">
-              <EditFormContent />
+              {EditFormContent()}
               <div className="flex gap-3 pt-6">
                 <Button
                   variant="outline"

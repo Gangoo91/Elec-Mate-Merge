@@ -492,10 +492,10 @@ const ElecIdQualifications = () => {
                 <p className="text-sm text-foreground/70">Add a new credential to your profile</p>
               </div>
               <div className="flex-1 overflow-y-auto px-5 pb-4">
-                <FormContent />
+                {FormContent({})}
               </div>
               <div className="p-5 border-t border-white/[0.08] bg-background/95 backdrop-blur-sm">
-                <FormFooter onClose={() => setIsAddSheetOpen(false)} />
+                {FormFooter({ onClose: () => setIsAddSheetOpen(false) })}
               </div>
             </Drawer.Content>
           </Drawer.Portal>
@@ -506,8 +506,8 @@ const ElecIdQualifications = () => {
             <DialogHeader>
               <DialogTitle className="text-foreground">Add Qualification</DialogTitle>
             </DialogHeader>
-            <FormContent />
-            <FormFooter onClose={() => setIsAddSheetOpen(false)} />
+            {FormContent({})}
+            {FormFooter({ onClose: () => setIsAddSheetOpen(false) })}
           </DialogContent>
         </Dialog>
       )}
@@ -526,10 +526,10 @@ const ElecIdQualifications = () => {
                 <p className="text-sm text-foreground/70">Update your credential details</p>
               </div>
               <div className="flex-1 overflow-y-auto px-5 pb-4">
-                <FormContent isEdit />
+                {FormContent({ isEdit: true })}
               </div>
               <div className="p-5 border-t border-white/[0.08] bg-background/95 backdrop-blur-sm">
-                <FormFooter isEdit onClose={() => setIsEditSheetOpen(false)} />
+                {FormFooter({ isEdit: true, onClose: () => setIsEditSheetOpen(false) })}
               </div>
             </Drawer.Content>
           </Drawer.Portal>
@@ -540,8 +540,8 @@ const ElecIdQualifications = () => {
             <DialogHeader>
               <DialogTitle className="text-foreground">Edit Qualification</DialogTitle>
             </DialogHeader>
-            <FormContent isEdit />
-            <FormFooter isEdit onClose={() => setIsEditSheetOpen(false)} />
+            {FormContent({ isEdit: true })}
+            {FormFooter({ isEdit: true, onClose: () => setIsEditSheetOpen(false) })}
           </DialogContent>
         </Dialog>
       )}

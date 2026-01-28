@@ -59,6 +59,9 @@ export const UK_QUALIFICATIONS: Record<string, QualificationCategory> = {
       { value: 'cg_2365_l3', label: 'City & Guilds 2365 Level 3', awarding: 'City & Guilds' },
       { value: 'am2', label: 'AM2 Assessment', awarding: 'JIB/NET' },
       { value: 'eal_diploma', label: 'EAL Level 3 Diploma', awarding: 'EAL' },
+      { value: 'eal_level_2', label: 'EAL Level 2 Diploma in Electrical Installation', awarding: 'EAL' },
+      { value: 'eal_level_2_et', label: 'EAL Level 2 Certificate in Electrotechnical Technology', awarding: 'EAL' },
+      { value: 'eal_level_3_et', label: 'EAL Level 3 Certificate in Electrotechnical Technology', awarding: 'EAL' },
     ]
   },
   testing: {
@@ -70,6 +73,8 @@ export const UK_QUALIFICATIONS: Record<string, QualificationCategory> = {
       { value: '2394', label: '2394 Periodic Inspection & Testing', awarding: 'City & Guilds' },
       { value: '2395', label: '2395 Initial Verification', awarding: 'City & Guilds' },
       { value: 'pat_testing', label: 'PAT Testing Qualification', awarding: 'Various' },
+      { value: 'eal_inspection_testing', label: 'EAL Level 3 Certificate in Inspection, Testing & Certification', awarding: 'EAL' },
+      { value: 'eal_initial_verification', label: 'EAL Level 3 Award in Initial Verification', awarding: 'EAL' },
     ]
   },
   regulations: {
@@ -79,6 +84,7 @@ export const UK_QUALIFICATIONS: Record<string, QualificationCategory> = {
       { value: '18th_edition', label: '18th Edition (BS 7671)', awarding: 'City & Guilds', hasExpiry: true, expiryYears: 5 },
       { value: 'part_p', label: 'Part P Building Regulations', awarding: 'Various' },
       { value: 'cg_2382', label: 'City & Guilds 2382', awarding: 'City & Guilds', hasExpiry: true, expiryYears: 5 },
+      { value: 'eal_18th_edition', label: 'EAL Level 3 Award in Requirements for Electrical Installations (BS 7671)', awarding: 'EAL', hasExpiry: true, expiryYears: 5 },
     ]
   },
   cards: {
@@ -116,6 +122,7 @@ export const UK_QUALIFICATIONS: Record<string, QualificationCategory> = {
       { value: 'solar_pv', label: 'Solar PV Installation', awarding: 'MCS/Various' },
       { value: 'bess', label: 'Battery Storage (BESS)', awarding: 'Various' },
       { value: 'heat_pumps', label: 'Heat Pump Installation', awarding: 'Various' },
+      { value: 'eal_ev_charging', label: 'EAL Level 3 Award in EV Charging Installation', awarding: 'EAL' },
     ]
   },
   fire_security: {
