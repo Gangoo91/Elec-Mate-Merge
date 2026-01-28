@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft,
@@ -8,8 +8,11 @@ import {
   Trash2,
   Image as ImageIcon,
   Loader2,
-  Check
+  Check,
+  AlertCircle,
+  Maximize2
 } from 'lucide-react';
+import { format } from 'date-fns';
 import {
   Sheet,
   SheetContent,
@@ -30,7 +33,7 @@ import {
   DEFAULT_MILEAGE_RATE,
   getCategoryConfig,
 } from '@/types/expense';
-import { uploadReceipt } from '@/services/expenseReceiptService';
+import { uploadReceipt, getSignedReceiptUrl, isValidReceiptUrl } from '@/services/expenseReceiptService';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import {
@@ -109,8 +112,42 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploadingReceipt, setIsUploadingReceipt] = useState(false);
+  const [receiptImageError, setReceiptImageError] = useState(false);
+  const [showReceiptFullscreen, setShowReceiptFullscreen] = useState(false);
+  const [receiptDisplayUrl, setReceiptDisplayUrl] = useState<string | null>(null);
+  const [loadingReceipt, setLoadingReceipt] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+
+  // Load a signed URL for display when receipt_url changes
+  useEffect(() => {
+    setReceiptImageError(false);
+    setReceiptDisplayUrl(null);
+
+    const storedUrl = formData.receipt_url;
+    if (!isValidReceiptUrl(storedUrl)) return;
+
+    // First try the stored URL directly, then fall back to signed URL
+    setLoadingReceipt(true);
+    const img = new window.Image();
+    img.onload = () => {
+      // Public URL works fine
+      setReceiptDisplayUrl(storedUrl);
+      setLoadingReceipt(false);
+    };
+    img.onerror = () => {
+      // Public URL broken — fetch a signed URL
+      getSignedReceiptUrl(storedUrl).then((signedUrl) => {
+        if (signedUrl) {
+          setReceiptDisplayUrl(signedUrl);
+        } else {
+          setReceiptImageError(true);
+        }
+        setLoadingReceipt(false);
+      });
+    };
+    img.src = storedUrl;
+  }, [formData.receipt_url]);
 
   const handleClose = () => {
     onOpenChange(false);
@@ -307,8 +344,13 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                       type="date"
                       value={formData.date || ''}
                       onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-                      className="h-11 touch-manipulation"
+                      className="h-12 touch-manipulation text-base"
                     />
+                    {formData.date && (
+                      <p className="text-sm text-elec-yellow font-medium">
+                        {format(new Date(formData.date), 'EEEE, d MMMM yyyy')}
+                      </p>
+                    )}
                   </div>
 
                   {/* Vendor */}
@@ -340,34 +382,70 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
                     <Label>Receipt / Photo</Label>
                     {formData.receipt_url ? (
                       <div className="relative rounded-xl overflow-hidden border border-white/10 bg-white/[0.03]">
-                        <img
-                          src={formData.receipt_url}
-                          alt="Receipt"
-                          className="w-full h-32 object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                        <div className="absolute bottom-0 left-0 right-0 p-3 flex items-center justify-between">
-                          <div className="flex items-center gap-2 text-white text-sm">
-                            <Check className="h-4 w-4 text-green-400" />
-                            <span>Receipt attached</span>
+                        {loadingReceipt ? (
+                          /* Loading state while resolving URL */
+                          <div className="w-full h-40 flex flex-col items-center justify-center bg-white/[0.02]">
+                            <Loader2 className="h-8 w-8 text-elec-yellow animate-spin mb-2" />
+                            <p className="text-sm text-muted-foreground">Loading receipt...</p>
                           </div>
-                          <div className="flex gap-2">
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => setStep('receipt')}
-                              className="h-8 border-white/20 bg-black/30 hover:bg-black/50 text-white"
-                            >
-                              Change
-                            </Button>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={handleRemoveReceipt}
-                              className="h-8 border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-red-400"
-                            >
-                              Remove
-                            </Button>
+                        ) : receiptImageError || !receiptDisplayUrl ? (
+                          /* Error state - image failed to load */
+                          <div className="w-full h-40 flex flex-col items-center justify-center bg-white/[0.02]">
+                            <AlertCircle className="h-8 w-8 text-amber-400 mb-2" />
+                            <p className="text-sm text-muted-foreground text-center px-4">
+                              Receipt image unavailable
+                            </p>
+                            <p className="text-xs text-muted-foreground/70 mt-1">
+                              The image may have expired or been removed
+                            </p>
+                          </div>
+                        ) : (
+                          /* Receipt image with tap to view full */
+                          <button
+                            onClick={() => setShowReceiptFullscreen(true)}
+                            className="w-full block relative touch-manipulation active:opacity-90 transition-opacity"
+                          >
+                            <img
+                              src={receiptDisplayUrl}
+                              alt="Receipt"
+                              className="w-full h-40 object-cover"
+                              onError={() => setReceiptImageError(true)}
+                            />
+                            <div className="absolute top-2 right-2 p-2 rounded-lg bg-black/50 backdrop-blur-sm">
+                              <Maximize2 className="h-4 w-4 text-white" />
+                            </div>
+                          </button>
+                        )}
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pt-8 pb-3 px-3">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2 text-white text-sm">
+                              <Check className="h-4 w-4 text-green-400" />
+                              <span>Receipt attached</span>
+                            </div>
+                            <div className="flex gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setStep('receipt');
+                                }}
+                                className="h-8 border-white/20 bg-black/30 hover:bg-black/50 text-white"
+                              >
+                                Change
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleRemoveReceipt();
+                                }}
+                                className="h-8 border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-red-400"
+                              >
+                                Remove
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -640,6 +718,45 @@ export function ExpenseEditSheet({ expense, open, onOpenChange, onSave, onDelete
             </div>
           )}
         </div>
+
+        {/* Fullscreen Receipt Viewer */}
+        <AnimatePresence>
+          {showReceiptFullscreen && receiptDisplayUrl && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[60] bg-black/95 flex flex-col"
+              onClick={() => setShowReceiptFullscreen(false)}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 flex-shrink-0">
+                <h3 className="text-white font-medium">Receipt</h3>
+                <button
+                  onClick={() => setShowReceiptFullscreen(false)}
+                  className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center touch-manipulation active:bg-white/20"
+                >
+                  <X className="h-5 w-5 text-white" />
+                </button>
+              </div>
+
+              {/* Image */}
+              <div className="flex-1 flex items-center justify-center p-4 overflow-auto">
+                <img
+                  src={receiptDisplayUrl}
+                  alt="Receipt full view"
+                  className="max-w-full max-h-full object-contain rounded-lg"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </div>
+
+              {/* Footer hint */}
+              <div className="p-4 text-center flex-shrink-0">
+                <p className="text-sm text-white/50">Tap anywhere to close</p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </SheetContent>
     </Sheet>
   );

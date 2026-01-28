@@ -307,8 +307,8 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
         clientName: scheduleData.projectInfo?.clientName || prev.clientName,
         description: scheduleData.projectInfo?.projectName || prev.description,
         supplyVoltage: scheduleData.supply?.voltage?.toString() || '230',
-        phases: scheduleData.supply?.phases === 3 ? '3' : '1',
-        earthingArrangement: scheduleData.supply?.earthingSystem || 'TN-C-S',
+        phases: scheduleData.supply?.phases === 3 ? 'three' : 'single',
+        earthingArrangement: (scheduleData.supply?.earthingSystem || 'TN-C-S').toLowerCase().replace(/-/g, ''),
         scheduleOfTests: transformedCircuits,
         // Store design source reference
         designSourceId: designId,

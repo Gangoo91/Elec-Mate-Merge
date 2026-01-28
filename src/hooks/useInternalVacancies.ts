@@ -99,7 +99,7 @@ export function useInternalVacancies(filters?: VacancyFilters) {
           .from('employer_elec_id_profiles')
           .select('id')
           .eq('employee_id', user.id)
-          .single();
+          .maybeSingle();
 
         if (profile) {
           // Get their applications
@@ -179,7 +179,7 @@ export function useInternalVacancy(id: string | undefined) {
           .from('employer_elec_id_profiles')
           .select('id')
           .eq('employee_id', user.id)
-          .single();
+          .maybeSingle();
 
         if (profile) {
           const { data: application } = await supabase
@@ -249,7 +249,7 @@ export function useApplyToVacancy() {
         .from('employer_elec_id_profiles')
         .select('id, employee:employer_employees(name, email, phone)')
         .eq('employee_id', user.id)
-        .single();
+        .maybeSingle();
 
       if (profileError || !profile) {
         throw new Error('Please complete your Elec-ID profile first');
@@ -307,7 +307,7 @@ export function useMyApplications() {
         .from('employer_elec_id_profiles')
         .select('id')
         .eq('employee_id', user.id)
-        .single();
+        .maybeSingle();
 
       if (!profile) return [];
 
@@ -376,7 +376,7 @@ export function useMyInvitations() {
         .from('employer_elec_id_profiles')
         .select('id')
         .eq('employee_id', user.id)
-        .single();
+        .maybeSingle();
 
       if (!profile) return [];
 

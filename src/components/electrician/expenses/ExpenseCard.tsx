@@ -1,11 +1,12 @@
 import { useState, useRef } from 'react';
-import { motion, PanInfo } from 'framer-motion';
-import { Trash2, Receipt, Calendar, MapPin, ChevronRight } from 'lucide-react';
+import { motion, PanInfo, useAnimation } from 'framer-motion';
+import { Trash2, Receipt, Calendar, MapPin, ChevronRight, Pencil, CheckCircle2, Coins } from 'lucide-react';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
+import { useHaptics } from '@/hooks/useHaptics';
 import { Expense, getCategoryConfig } from '@/types/expense';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { format, formatDistanceToNow } from 'date-fns';
+import { format } from 'date-fns';
 import {
   Fuel,
   Wrench,
@@ -40,6 +41,7 @@ const CATEGORY_ICONS: Record<string, React.ElementType> = {
 interface ExpenseCardProps {
   expense: Expense;
   onDelete: () => void;
+  onEdit?: () => void;
   onClick?: () => void;
   delay?: number;
 }
@@ -47,59 +49,133 @@ interface ExpenseCardProps {
 export function ExpenseCard({
   expense,
   onDelete,
+  onEdit,
   onClick,
   delay = 0,
 }: ExpenseCardProps) {
   const { isMobile, touchSupport } = useMobileEnhanced();
+  const haptics = useHaptics();
+  const controls = useAnimation();
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
   const isTouchEvent = useRef(false);
+  const hasTriggeredHaptic = useRef(false);
 
   // Only enable swipe on touch devices - not desktop mouse
   const enableSwipe = touchSupport || isMobile;
+
+  // Swipe thresholds
+  const DELETE_THRESHOLD = -80;
+  const EDIT_THRESHOLD = 80;
 
   const handleDragStart = (event: MouseEvent | TouchEvent | PointerEvent) => {
     // Track if this drag started from touch
     isTouchEvent.current = 'touches' in event || (event as PointerEvent).pointerType === 'touch';
     if (isTouchEvent.current || enableSwipe) {
       setIsDragging(true);
+      hasTriggeredHaptic.current = false;
+    }
+  };
+
+  const handleDrag = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    if (!isDragging) return;
+
+    const offset = info.offset.x;
+    setSwipeOffset(offset);
+
+    // Determine swipe direction
+    if (offset < -20) {
+      setSwipeDirection('left');
+    } else if (offset > 20) {
+      setSwipeDirection('right');
+    } else {
+      setSwipeDirection(null);
+    }
+
+    // Haptic feedback when crossing thresholds
+    if (!hasTriggeredHaptic.current) {
+      if (offset < DELETE_THRESHOLD) {
+        haptics.warning(); // Warning haptic for delete
+        hasTriggeredHaptic.current = true;
+      } else if (offset > EDIT_THRESHOLD && onEdit) {
+        haptics.tap(); // Light tap for edit
+        hasTriggeredHaptic.current = true;
+      }
     }
   };
 
   const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     setIsDragging(false);
+
     // Only process swipe if it was a touch interaction or on mobile
-    if ((isTouchEvent.current || enableSwipe) && info.offset.x < -80) {
-      onDelete();
-    } else {
-      setSwipeOffset(0);
+    if (isTouchEvent.current || enableSwipe) {
+      if (info.offset.x < DELETE_THRESHOLD) {
+        // Swipe left - delete
+        haptics.impact();
+        onDelete();
+      } else if (info.offset.x > EDIT_THRESHOLD && onEdit) {
+        // Swipe right - edit
+        haptics.success();
+        onEdit();
+      }
     }
+
+    // Reset
+    setSwipeOffset(0);
+    setSwipeDirection(null);
     isTouchEvent.current = false;
+    hasTriggeredHaptic.current = false;
   };
 
   const categoryConfig = getCategoryConfig(expense.category);
   const CategoryIcon = CATEGORY_ICONS[expense.category] || MoreHorizontal;
 
-  // Format date - show relative if within 7 days, otherwise full date
+  // Always show the actual expense date, not relative time
   const expenseDate = new Date(expense.date);
-  const daysDiff = Math.floor((Date.now() - expenseDate.getTime()) / (1000 * 60 * 60 * 24));
-  const dateDisplay = daysDiff <= 7
-    ? formatDistanceToNow(expenseDate, { addSuffix: true })
-    : format(expenseDate, 'dd MMM yyyy');
+  const dateDisplay = format(expenseDate, 'dd MMM yyyy');
+
+  // iOS-native timing curve
+  const iosSpring = {
+    type: 'spring' as const,
+    stiffness: 400,
+    damping: 35,
+    mass: 0.8,
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -100 }}
-      transition={{ delay, duration: 0.2 }}
+      transition={{ delay, duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
       className="relative"
     >
-      {/* Delete action background (revealed on swipe left) */}
-      <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-end px-6 bg-red-500 rounded-xl overflow-hidden">
+      {/* Edit action background (revealed on swipe right) - Left side */}
+      {onEdit && (
+        <div
+          className="absolute inset-y-0 left-0 right-0 flex items-center justify-start px-6 bg-elec-yellow/15 rounded-xl overflow-hidden"
+          style={{
+            opacity: swipeDirection === 'right' ? Math.min(swipeOffset / EDIT_THRESHOLD, 1) : 0,
+          }}
+        >
+          <div className="flex items-center gap-2">
+            <Pencil className="h-5 w-5 text-elec-yellow" />
+            <span className="text-elec-yellow font-medium">Edit</span>
+          </div>
+        </div>
+      )}
+
+      {/* Delete action background (revealed on swipe left) - Right side */}
+      <div
+        className="absolute inset-y-0 left-0 right-0 flex items-center justify-end px-6 bg-red-500/20 rounded-xl overflow-hidden"
+        style={{
+          opacity: swipeDirection === 'left' ? Math.min(Math.abs(swipeOffset) / Math.abs(DELETE_THRESHOLD), 1) : 0,
+        }}
+      >
         <div className="flex items-center gap-2">
-          <Trash2 className="h-5 w-5 text-white" />
-          <span className="text-white font-medium">Delete</span>
+          <Trash2 className="h-5 w-5 text-red-400" />
+          <span className="text-red-400 font-medium">Delete</span>
         </div>
       </div>
 
@@ -111,13 +187,15 @@ export function ExpenseCard({
           "hover:border-white/[0.15] transition-colors",
           onClick && "cursor-pointer active:scale-[0.98]"
         )}
-        animate={{ x: swipeOffset }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        animate={controls}
+        style={{ x: swipeOffset }}
+        transition={iosSpring}
         drag={enableSwipe ? "x" : false}
-        dragConstraints={{ left: -100, right: 0 }}
-        dragElastic={0.05}
+        dragConstraints={{ left: -120, right: onEdit ? 120 : 0 }}
+        dragElastic={0.08}
         dragSnapToOrigin
         onDragStart={handleDragStart}
+        onDrag={handleDrag}
         onDragEnd={handleDragEnd}
         onClick={() => !isDragging && onClick?.()}
       >
@@ -140,6 +218,7 @@ export function ExpenseCard({
 
           {/* Content */}
           <div className="flex-1 min-w-0">
+            {/* Row 1: Vendor/Category + Amount */}
             <div className="flex items-center justify-between gap-2">
               <span className="font-semibold text-foreground truncate">
                 {expense.vendor || categoryConfig.label}
@@ -148,11 +227,15 @@ export function ExpenseCard({
                 £{expense.amount.toFixed(2)}
               </span>
             </div>
-            <div className="flex items-center flex-wrap gap-x-3 gap-y-1 mt-1.5 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <Calendar className="h-3 w-3" />
-                {dateDisplay}
-              </span>
+
+            {/* Row 2: Date - Always visible and prominent */}
+            <div className="flex items-center gap-1.5 mt-1 text-sm text-foreground/70">
+              <Calendar className="h-3.5 w-3.5 text-elec-yellow/70" />
+              <span className="font-medium">{dateDisplay}</span>
+            </div>
+
+            {/* Row 3: Badges */}
+            <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mt-2">
               {expense.receipt_url && (
                 <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-green-500/30 bg-green-500/10 text-green-400">
                   <Receipt className="h-2.5 w-2.5 mr-0.5" />
@@ -160,19 +243,33 @@ export function ExpenseCard({
                 </Badge>
               )}
               {expense.category === 'mileage' && expense.mileage_miles && (
-                <span className="flex items-center gap-1">
-                  <MapPin className="h-3 w-3" />
-                  {expense.mileage_miles} miles
-                </span>
+                <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-white/20 bg-white/5 text-foreground/70">
+                  <MapPin className="h-2.5 w-2.5 mr-0.5" />
+                  {expense.mileage_miles} mi
+                </Badge>
               )}
               {expense.ai_extracted && (
                 <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-blue-500/30 bg-blue-500/10 text-blue-400">
                   AI
                 </Badge>
               )}
+              {expense.tax_deductible && (
+                <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-amber-500/30 bg-amber-500/10 text-amber-400">
+                  <Coins className="h-2.5 w-2.5 mr-0.5" />
+                  Tax
+                </Badge>
+              )}
+              {expense.synced_to_accounting && (
+                <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-green-500/30 bg-green-500/10 text-green-400">
+                  <CheckCircle2 className="h-2.5 w-2.5 mr-0.5" />
+                  Synced
+                </Badge>
+              )}
             </div>
+
+            {/* Row 4: Description (if exists) */}
             {expense.description && (
-              <p className="text-xs text-muted-foreground/80 mt-1.5 truncate">
+              <p className="text-xs text-muted-foreground/70 mt-1.5 truncate">
                 {expense.description}
               </p>
             )}

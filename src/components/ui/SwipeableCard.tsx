@@ -4,8 +4,10 @@ import { cn } from '@/lib/utils';
 interface SwipeAction {
   /** Icon or element to show */
   icon: React.ReactNode;
-  /** Background color class (e.g., 'bg-red-500') */
+  /** Background color class (e.g., 'bg-red-500' or 'bg-red-500/20') */
   bgColor: string;
+  /** Text color class (e.g., 'text-white' or 'text-red-400'). Defaults to 'text-white' */
+  textColor?: string;
   /** Action handler */
   onAction: () => void;
   /** Label for accessibility */
@@ -218,7 +220,7 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
             opacity: Math.min(translateX / threshold, 1),
           }}
         >
-          <div className="flex flex-col items-center gap-1 text-white">
+          <div className={cn("flex flex-col items-center gap-1", rightAction.textColor || 'text-white')}>
             {rightAction.icon}
             <span className="text-xs font-medium">{rightAction.label}</span>
           </div>
@@ -236,7 +238,7 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
             opacity: Math.min(Math.abs(translateX) / threshold, 1),
           }}
         >
-          <div className="flex flex-col items-center gap-1 text-white">
+          <div className={cn("flex flex-col items-center gap-1", leftAction.textColor || 'text-white')}>
             {leftAction.icon}
             <span className="text-xs font-medium">{leftAction.label}</span>
           </div>

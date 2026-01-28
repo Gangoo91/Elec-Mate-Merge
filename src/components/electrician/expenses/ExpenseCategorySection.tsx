@@ -54,6 +54,7 @@ const COLOUR_CLASSES: Record<string, string> = {
 interface ExpenseCategorySectionProps {
   group: ExpenseGroup;
   onDeleteExpense: (expenseId: string) => void;
+  onEditExpense?: (expenseId: string) => void;
   onExpenseClick?: (expenseId: string) => void;
   defaultExpanded?: boolean;
 }
@@ -61,6 +62,7 @@ interface ExpenseCategorySectionProps {
 export function ExpenseCategorySection({
   group,
   onDeleteExpense,
+  onEditExpense,
   onExpenseClick,
   defaultExpanded = true,
 }: ExpenseCategorySectionProps) {
@@ -120,6 +122,7 @@ export function ExpenseCategorySection({
                   key={expense.id}
                   expense={expense}
                   onDelete={() => onDeleteExpense(expense.id)}
+                  onEdit={onEditExpense ? () => onEditExpense(expense.id) : undefined}
                   onClick={onExpenseClick ? () => onExpenseClick(expense.id) : undefined}
                   delay={index * 0.03}
                 />

@@ -33,11 +33,14 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return <Navigate to="/auth/signin" state={{ from: location }} replace />;
   }
 
-  // Show loading indicator while checking initial authentication OR subscription status
-  // This prevents the paywall/trial banner from flashing briefly during pull-to-refresh
-  // We wait until: auth is done AND profile is loaded AND initial check completed
-  // The key fix is also waiting when we have a user but profile hasn't loaded yet
-  if (isLoading || isCheckingStatus || (user && !profile) || (profile && !hasCompletedInitialCheck)) {
+  // Show loading indicator during initial authentication and first subscription check
+  // IMPORTANT: Do NOT include isCheckingStatus in loading condition!
+  // When isCheckingStatus causes loading state, it unmounts all children (Layout, routes),
+  // which loses navigation state and can cause infinite loops on pages like
+  // /electrician/live-pricing (components remount, re-fetch data, trigger more checks).
+  // Instead, wait only for: auth load, profile fetch, and first subscription check completion.
+  // After initial check completes, the app stays stable during any background re-checks.
+  if (isLoading || (user && !profile) || (profile && !hasCompletedInitialCheck)) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black">
         <Loader2 className="h-12 w-12 text-yellow-400 animate-spin" />

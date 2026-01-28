@@ -350,6 +350,7 @@ const ExpensesPage = () => {
                     key={group.category}
                     group={group}
                     onDeleteExpense={(id) => setExpenseToDelete(id)}
+                    onEditExpense={handleExpenseClick}
                     onExpenseClick={handleExpenseClick}
                     defaultExpanded={groupedExpenses.length <= 3}
                   />

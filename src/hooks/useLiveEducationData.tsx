@@ -421,9 +421,34 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
         }
       }
 
-      // If no cache or force refresh, fetch fresh data with timeout
+      // Check for ANY cached data (even expired) to show immediately
+      const { data: expiredCache } = await supabase
+        .from('live_education_cache')
+        .select('*')
+        .eq('category', category)
+        .order('created_at', { ascending: false })
+        .maybeSingle();
+
+      if (expiredCache?.education_data) {
+        // Show expired cache immediately so user sees data fast
+        const cachedArray = expiredCache.education_data as unknown as LiveEducationData[];
+        console.log(`⚡ Showing cached data (${cachedArray.length} programmes) while refreshing...`);
+        setEducationData(cachedArray || []);
+        setAnalytics(expiredCache.analytics_data as unknown as LiveEducationAnalytics || null);
+        setLastUpdated(expiredCache.last_refreshed);
+        setIsFromCache(true);
+        setCacheInfo({
+          nextRefresh: expiredCache.next_refresh_date,
+          cacheVersion: expiredCache.cache_version,
+          refreshStatus: 'refreshing',
+          daysUntilRefresh: 0
+        });
+        setLoading(false);
+      }
+
+      // Try to fetch fresh data in background with longer timeout
       console.log('📡 Fetching fresh education data from Firecrawl...');
-      
+
       const fetchWithTimeout = async (timeoutMs: number) => {
         return Promise.race([
           supabase.functions.invoke('comprehensive-education-scraper', {
@@ -431,7 +456,7 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
               forceRefresh
             }
           }),
-          new Promise((_, reject) => 
+          new Promise((_, reject) =>
             setTimeout(() => reject(new Error('Request timeout')), timeoutMs)
           )
         ]);
@@ -439,7 +464,7 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
 
       let data, functionError;
       try {
-        const result = await fetchWithTimeout(30000) as any; // 30 second timeout for Firecrawl
+        const result = await fetchWithTimeout(60000) as any; // 60 second timeout for Firecrawl
         data = result.data;
         functionError = result.error;
       } catch (timeoutError) {
@@ -449,31 +474,11 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
 
       if (functionError) {
         console.error('❌ Function error:', functionError);
-        
-        // Try to get latest cached data as fallback
-        const { data: fallbackData } = await supabase
-          .from('live_education_cache')
-          .select('*')
-          .eq('category', category)
-          .order('created_at', { ascending: false })
-          .maybeSingle();
 
-        if (fallbackData?.education_data) {
-          const fallbackArray = fallbackData.education_data as unknown as LiveEducationData[];
-          console.log(`🔄 Using fallback cached data (${fallbackArray.length} programmes)`);
-          setEducationData(fallbackArray || []);
-          setAnalytics(fallbackData.analytics_data as unknown as LiveEducationAnalytics || null);
-          setLastUpdated(fallbackData.last_refreshed);
-          setIsFromCache(true);
-          setCacheInfo({
-            nextRefresh: fallbackData.next_refresh_date,
-            cacheVersion: fallbackData.cache_version,
-            refreshStatus: 'expired',
-            daysUntilRefresh: 0
-          });
+        // Already showing cached data above, just log the error
+        if (!expiredCache?.education_data) {
+          setError('Unable to fetch fresh data - showing cached results if available');
         }
-        
-        setError('Unable to fetch fresh data - showing cached results if available');
         setLoading(false);
         return;
       }

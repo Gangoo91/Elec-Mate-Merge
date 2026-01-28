@@ -36,7 +36,9 @@ const SwipeableTabs = ({
   const [isPulling, setIsPulling] = useState(false);
 
   const minSwipeDistance = 50;
-  const activeIndex = tabs.findIndex(tab => tab.id === activeTab);
+  const foundIndex = tabs.findIndex(tab => tab.id === activeTab);
+  // Guard against invalid index - default to 0 if not found
+  const activeIndex = foundIndex >= 0 && foundIndex < children.length ? foundIndex : 0;
 
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
@@ -132,7 +134,7 @@ const SwipeableTabs = ({
         </div>
       )}
 
-      {/* Content Area - Simple show/hide approach */}
+      {/* Content Area - Only render active tab to prevent multiple auth calls */}
       <div
         ref={containerRef}
         className="flex-1 min-h-0 overflow-y-auto"
@@ -140,17 +142,9 @@ const SwipeableTabs = ({
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
-        {children.map((child, index) => (
-          <div
-            key={tabs[index]?.id || index}
-            className={cn(
-              "min-h-full",
-              activeIndex === index ? "block" : "hidden"
-            )}
-          >
-            {child}
-          </div>
-        ))}
+        <div key={tabs[activeIndex]?.id || activeIndex} className="min-h-full">
+          {children[activeIndex]}
+        </div>
       </div>
 
       {/* Bottom Tab Bar - Fixed on mobile */}

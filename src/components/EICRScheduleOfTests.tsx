@@ -1025,19 +1025,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   };
 
   const handleUpdateBoard = (boardId: string, field: keyof DistributionBoard, value: any) => {
-    console.log('[handleUpdateBoard] Called:', { boardId, field, value });
-    console.log('[handleUpdateBoard] Current boards:', distributionBoards.map(b => ({ id: b.id, spdNA: b.spdNA, spdOperationalStatus: b.spdOperationalStatus })));
-
     const updatedBoards = distributionBoards.map(b =>
       b.id === boardId ? { ...b, [field]: value } : b
     );
-
-    console.log('[handleUpdateBoard] Updated boards:', updatedBoards.map(b => ({ id: b.id, spdNA: b.spdNA, spdOperationalStatus: b.spdOperationalStatus })));
     setDistributionBoards(updatedBoards);
 
     // Save to formData
     const formDataUpdate = formatBoardsForFormData(updatedBoards, testResults);
-    console.log('[handleUpdateBoard] formDataUpdate spdNA:', formDataUpdate.spdNA, 'spdOperationalStatus:', formDataUpdate.spdOperationalStatus);
     Object.entries(formDataUpdate).forEach(([key, value]) => {
       onUpdate(key, value);
     });

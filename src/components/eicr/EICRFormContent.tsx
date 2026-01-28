@@ -16,8 +16,7 @@ interface EICRFormContentProps {
   onConfirmStartNew: () => void;
   onConfirmDuplicate?: () => void;
   onOpenBoardScan?: () => void;
-  currentTab?: 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
-  onTabChange?: (tab: string) => void;
+  initialTab?: 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
 }
 
 const EICRFormContent: React.FC<EICRFormContentProps> = ({

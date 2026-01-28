@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Camera, PenLine, ChevronLeft, X, Receipt } from 'lucide-react';
+import { format } from 'date-fns';
 import {
   Sheet,
   SheetContent,
@@ -461,8 +462,13 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                       type="date"
                       value={formData.date || ''}
                       onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-                      className="h-11 touch-manipulation"
+                      className="h-12 touch-manipulation text-base"
                     />
+                    {formData.date && (
+                      <p className="text-sm text-elec-yellow font-medium">
+                        {format(new Date(formData.date), 'EEEE, d MMMM yyyy')}
+                      </p>
+                    )}
                   </div>
 
                   {/* Vendor */}
