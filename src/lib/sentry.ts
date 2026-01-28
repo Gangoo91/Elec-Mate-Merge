@@ -34,36 +34,63 @@ export function initSentry() {
       replaysSessionSampleRate: 0.1, // 10% of sessions
       replaysOnErrorSampleRate: 1.0, // 100% of sessions with errors
 
-      // Filter out noisy errors
+      // Filter out noisy errors - be conservative, let real errors through
       ignoreErrors: [
-        // Browser extensions
+        // Browser extensions - not our code
         /extensions\//i,
         /^chrome-extension:\/\//,
-        // Network errors that aren't actionable
-        "Network request failed",
-        "Failed to fetch",
-        "Load failed",
-        // User cancelled
+        /^moz-extension:\/\//,
+
+        // User-initiated cancellations
         "AbortError",
-        // Expected auth errors - user-facing, not bugs
+        "The user aborted a request",
+
+        // Expected auth errors - user input issues, not bugs
         "User already registered",
         "Invalid login credentials",
         "New password should be different from the old password",
         "Email not confirmed",
         "Invalid email or password",
-        /AuthApiError/,
-        // CDN/deployment transient errors
+        "Password should be at least",
+        "Unable to validate email address",
+
+        // Chunk loading errors (deployment cache) - handled by auto-refresh
+        /dynamically imported module/i,
+        /importing a module script failed/i,
+        /Loading chunk .* failed/i,
+        /Loading CSS chunk .* failed/i,
         /is not a valid JavaScript MIME type/,
         "ChunkLoadError",
-        /Loading chunk .* failed/,
+
+        // Safari-specific noise
+        /cancelled/i,
+
+        // ResizeObserver noise (browser bug, not actionable)
+        "ResizeObserver loop",
       ],
 
-      // Don't send PII
-      beforeSend(event) {
-        // Remove user IP
+      // Process events before sending
+      beforeSend(event, hint) {
+        // Remove user IP for privacy
         if (event.user) {
           delete event.user.ip_address;
         }
+
+        // Add page context
+        event.tags = {
+          ...event.tags,
+          page_url: window.location.pathname,
+          page_search: window.location.search ? 'has_params' : 'no_params',
+        };
+
+        // Filter out AuthApiError if it somehow got through
+        const error = hint?.originalException;
+        if (error && typeof error === 'object' && 'name' in error) {
+          if ((error as Error).name === 'AuthApiError') {
+            return null;
+          }
+        }
+
         return event;
       },
 
@@ -115,6 +142,91 @@ export function addBreadcrumb(message: string, category: string, data?: Record<s
   });
 }
 
-// Export Sentry for custom spans if needed later
-// Usage: Sentry.startSpan({ op: "ui.click", name: "Button Click" }, () => { ... })
+// ============================================
+// USER JOURNEY TRACKING
+// ============================================
+
+// Track key user journeys with transactions
+export function startJourney(name: string, data?: Record<string, unknown>) {
+  return Sentry.startSpan(
+    { op: 'user.journey', name, attributes: data },
+    (span) => span
+  );
+}
+
+// Pre-defined journeys for consistency
+export const journeys = {
+  signup: () => Sentry.startSpan({ op: 'user.journey', name: 'Signup Flow' }, (span) => span),
+  login: () => Sentry.startSpan({ op: 'user.journey', name: 'Login Flow' }, (span) => span),
+  createQuote: () => Sentry.startSpan({ op: 'user.journey', name: 'Create Quote' }, (span) => span),
+  createInvoice: () => Sentry.startSpan({ op: 'user.journey', name: 'Create Invoice' }, (span) => span),
+  payment: () => Sentry.startSpan({ op: 'user.journey', name: 'Payment Flow' }, (span) => span),
+  aiTool: (toolName: string) => Sentry.startSpan({ op: 'user.journey', name: `AI Tool: ${toolName}` }, (span) => span),
+};
+
+// ============================================
+// CRITICAL ERROR TRACKING
+// ============================================
+
+// Track critical errors that should trigger alerts
+export function captureCriticalError(error: Error, context?: Record<string, unknown>) {
+  Sentry.captureException(error, {
+    level: 'fatal',
+    tags: { critical: 'true' },
+    extra: context,
+  });
+}
+
+// Track payment-related errors (highest priority)
+export function capturePaymentError(error: Error, context?: Record<string, unknown>) {
+  Sentry.captureException(error, {
+    level: 'fatal',
+    tags: { category: 'payment', critical: 'true' },
+    extra: context,
+  });
+}
+
+// Track API errors with endpoint context
+export function captureApiError(error: Error, endpoint: string, context?: Record<string, unknown>) {
+  Sentry.captureException(error, {
+    level: 'error',
+    tags: { category: 'api', endpoint },
+    extra: context,
+  });
+}
+
+// Track Edge Function errors
+export function captureEdgeFunctionError(error: Error, functionName: string, context?: Record<string, unknown>) {
+  Sentry.captureException(error, {
+    level: 'error',
+    tags: { category: 'edge_function', function_name: functionName },
+    extra: context,
+  });
+}
+
+// ============================================
+// FEATURE TRACKING
+// ============================================
+
+// Track feature usage for understanding what's important
+export function trackFeatureUsed(featureName: string, data?: Record<string, unknown>) {
+  Sentry.addBreadcrumb({
+    message: `Feature used: ${featureName}`,
+    category: 'feature',
+    data,
+    level: 'info',
+  });
+}
+
+// Track when a user completes a key action
+export function trackMilestone(milestone: string, data?: Record<string, unknown>) {
+  Sentry.addBreadcrumb({
+    message: `Milestone: ${milestone}`,
+    category: 'milestone',
+    data,
+    level: 'info',
+  });
+}
+
+// Export Sentry for advanced usage
 export { Sentry };

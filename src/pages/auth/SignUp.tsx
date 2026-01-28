@@ -27,6 +27,7 @@ import {
 import { storeConsent } from '@/services/consentService';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { journeys, addBreadcrumb } from '@/lib/sentry';
 
 const PASSWORD_REQUIREMENTS = [
   { id: 'length', label: '8+', test: (p: string) => p.length >= 8 },
@@ -219,6 +220,7 @@ const SignUp = () => {
     setCheckingEmail(false);
 
     setError(null);
+    addBreadcrumb('Signup step: account completed', 'signup', { email });
     setStep('profile');
   };
 
@@ -228,11 +230,13 @@ const SignUp = () => {
       return;
     }
     setError(null);
+    addBreadcrumb('Signup step: profile completed', 'signup', { role: profile.role });
     setStep('elec-id');
   };
 
   const handleElecIdSubmit = () => {
     setError(null);
+    addBreadcrumb('Signup step: elec-id completed', 'signup', { createElecId: profile.createElecId });
     setStep('consent');
   };
 
@@ -243,6 +247,7 @@ const SignUp = () => {
     }
     setIsSubmitting(true);
     setError(null);
+    addBreadcrumb('Signup step: consent completed, submitting', 'signup', { marketingOptIn: consent.marketingOptIn });
 
     try {
       const { error, data } = await signUp(email, password, fullName);

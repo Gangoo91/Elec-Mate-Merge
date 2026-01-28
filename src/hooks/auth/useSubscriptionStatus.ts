@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { ProfileType } from './types';
 import { supabase } from '@/integrations/supabase/client';
+import { capturePaymentError, captureEdgeFunctionError, addBreadcrumb } from '@/lib/sentry';
 
 // Combined state to prevent multiple re-renders
 interface SubscriptionState {
@@ -96,6 +97,11 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
 
       if (error) {
         console.error('Error checking subscription:', error);
+        captureEdgeFunctionError(
+          new Error(`Subscription check failed: ${error.message}`),
+          'check-subscription',
+          { userId: profile?.id }
+        );
         setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError: error.message }));
         return;
       }
@@ -121,6 +127,10 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       console.error('Error in checkSubscriptionStatus:', message);
+      capturePaymentError(
+        error instanceof Error ? error : new Error(message),
+        { userId: profile?.id, context: 'checkSubscriptionStatus' }
+      );
       setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true, lastError: message }));
     }
   }, [profile]);

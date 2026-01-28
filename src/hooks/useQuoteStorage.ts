@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { captureError, captureApiError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
 
 // Database storage for quotes (no longer using localStorage)
 
@@ -260,6 +261,11 @@ export const useQuoteStorage = () => {
           details: error.details,
           hint: error.hint
         });
+        captureApiError(
+          new Error(`Quote save failed: ${error.message}`),
+          'quotes/save',
+          { quoteId: quote.id, quoteNumber: quote.quoteNumber, errorCode: error.code }
+        );
         return false;
       }
 
@@ -311,9 +317,16 @@ export const useQuoteStorage = () => {
         isNewQuote: !savedQuotes.some(q => q.id === quote.id)
       });
 
+      // Track successful quote creation/update
+      trackMilestone('Quote Saved', { quoteId: quote.id, total: quote.total });
+
       return true;
     } catch (error) {
       console.error('Quote Storage - Unexpected error:', error);
+      captureError(
+        error instanceof Error ? error : new Error('Quote save unexpected error'),
+        { quoteId: quote.id, context: 'saveQuote' }
+      );
       return false;
     }
   }, [savedQuotes]);
@@ -321,6 +334,8 @@ export const useQuoteStorage = () => {
   // Delete a quote from Supabase
   const deleteQuote = useCallback(async (quoteId: string) => {
     try {
+      addBreadcrumb('Deleting quote', 'quote', { quoteId });
+
       const { error } = await supabase
         .from('quotes')
         .delete()
@@ -328,6 +343,7 @@ export const useQuoteStorage = () => {
 
       if (error) {
         console.error('Error deleting quote:', error);
+        captureApiError(new Error(`Quote delete failed: ${error.message}`), 'quotes/delete', { quoteId });
         return false;
       }
 
@@ -338,6 +354,7 @@ export const useQuoteStorage = () => {
       return true;
     } catch (error) {
       console.error('Error deleting quote:', error);
+      captureError(error instanceof Error ? error : new Error('Quote delete error'), { quoteId });
       return false;
     }
   }, [savedQuotes]);

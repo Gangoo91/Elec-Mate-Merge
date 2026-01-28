@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Loader2, AlertTriangle, Zap, Mail, Lock, ArrowRight, CheckCircle2, ChevronLeft, Sparkles, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { addBreadcrumb } from '@/lib/sentry';
 
 const SignIn = () => {
   const [searchParams] = useSearchParams();
@@ -44,6 +45,7 @@ const SignIn = () => {
 
     setError(null);
     setIsSubmitting(true);
+    addBreadcrumb('Login attempt', 'auth', { email });
 
     try {
       const { error } = await signIn(email, password);

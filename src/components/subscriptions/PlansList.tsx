@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { stripePriceData, PlanDetails } from "@/data/stripePrices";
 import { cn } from "@/lib/utils";
+import { capturePaymentError, trackMilestone, addBreadcrumb } from "@/lib/sentry";
 
 interface PlansListProps {
   billing: 'monthly' | 'yearly';
@@ -37,6 +38,7 @@ const PlansList = ({ billing }: PlansListProps) => {
   const handleSubscribe = async (planId: string, priceId: string) => {
     try {
       setIsLoading(prev => ({ ...prev, [planId]: true }));
+      addBreadcrumb('Checkout started', 'payment', { planId, priceId });
 
       // Check for stored offer code from signup
       const offerCode = localStorage.getItem('elec-mate-offer-code');
@@ -53,6 +55,8 @@ const PlansList = ({ billing }: PlansListProps) => {
           localStorage.removeItem('elec-mate-offer-code');
         }
 
+        trackMilestone('Checkout Session Created', { planId, hasOfferCode: !!offerCode });
+
         toast({
           title: "Redirecting to checkout",
           description: offerCode ? "Your discount will be applied automatically." : "Opening secure Stripe checkout page.",
@@ -67,6 +71,11 @@ const PlansList = ({ billing }: PlansListProps) => {
       }
     } catch (error) {
       console.error('Checkout error:', error);
+      // Payment errors are critical - track with high priority
+      capturePaymentError(
+        error instanceof Error ? error : new Error(String(error)),
+        { planId, priceId, context: 'create-checkout' }
+      );
       toast({
         title: "Checkout Error",
         description: error instanceof Error ? error.message : "Failed to start checkout",

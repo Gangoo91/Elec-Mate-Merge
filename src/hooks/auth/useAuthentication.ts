@@ -2,6 +2,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 import { logger, generateRequestId } from '@/utils/logger';
+import { captureError, identifySentryUser, clearSentryUser, trackMilestone, addBreadcrumb } from '@/lib/sentry';
 
 export function useAuthentication() {
   const { toast } = useToast();
@@ -92,6 +93,12 @@ export function useAuthentication() {
         }
       }
 
+      // Identify user in Sentry for better error tracking
+      if (data?.user) {
+        identifySentryUser({ id: data.user.id, email: data.user.email });
+        trackMilestone('User Logged In', { userId: data.user.id });
+      }
+
       // Success toast
       toast({
         title: 'Login Successful',
@@ -100,6 +107,11 @@ export function useAuthentication() {
 
       return { error: null, user: data?.user };
     } catch (error: any) {
+      // Track unexpected login errors (not auth failures, which are expected)
+      captureError(
+        error instanceof Error ? error : new Error(error.message || 'Login error'),
+        { context: 'signIn', email }
+      );
       toast({
         title: 'Login Error',
         description: error.message || 'An unexpected error occurred',
@@ -137,6 +149,11 @@ export function useAuthentication() {
 
       logger.api('auth/signUp', requestId).success({ email, userId: data?.user?.id });
 
+      // Track signup milestone
+      if (data?.user) {
+        trackMilestone('User Signed Up', { userId: data.user.id, email });
+      }
+
       // Note: Welcome email is now sent after email confirmation
       // The confirmation email is sent from SignUp.tsx via send-confirmation-email edge function
 
@@ -149,6 +166,11 @@ export function useAuthentication() {
       return { error: null, user: data?.user };
     } catch (error: any) {
       logger.api('auth/signUp', requestId).error(error, { email });
+      // Track unexpected signup errors
+      captureError(
+        error instanceof Error ? error : new Error(error.message || 'Signup error'),
+        { context: 'signUp', email }
+      );
       toast({
         title: 'Signup Error',
         description: getFriendlyErrorMessage(error.message || 'An unexpected error occurred'),
@@ -162,6 +184,8 @@ export function useAuthentication() {
     logger.action('Sign out', 'auth');
     logger.info('User signing out');
     await supabase.auth.signOut();
+    // Clear user from Sentry
+    clearSentryUser();
     toast({
       title: 'Logged Out',
       description: 'You have been successfully logged out.',
@@ -233,6 +257,10 @@ export function useAuthentication() {
       return { error: null };
     } catch (error: any) {
       logger.api('auth/updatePassword', requestId).error(error);
+      captureError(
+        error instanceof Error ? error : new Error(error.message || 'Password update error'),
+        { context: 'updatePassword' }
+      );
       toast({
         title: 'Update Error',
         description: error.message || 'An unexpected error occurred',

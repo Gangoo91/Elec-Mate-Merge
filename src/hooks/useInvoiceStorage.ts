@@ -4,6 +4,7 @@ import { Invoice } from '@/types/invoice';
 import { Quote } from '@/types/quote';
 import { toast } from '@/hooks/use-toast';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
+import { captureApiError, captureEdgeFunctionError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
 
 export const useInvoiceStorage = () => {
   const [invoices, setInvoices] = useState<Quote[]>([]);
@@ -96,6 +97,11 @@ export const useInvoiceStorage = () => {
       setLastUpdated(new Date());
     } catch (error) {
       console.error('Error fetching invoices:', error);
+      captureApiError(
+        error instanceof Error ? error : new Error(String(error)),
+        'invoices/fetch',
+        { errorMessage: error instanceof Error ? error.message : String(error) }
+      );
       toast({
         title: 'Error loading invoices',
         description: 'Failed to load invoices. Please try again.',
@@ -319,20 +325,40 @@ export const useInvoiceStorage = () => {
         });
       } catch (pdfError) {
         console.error('PDF generation error:', pdfError);
+        captureEdgeFunctionError(
+          pdfError instanceof Error ? pdfError : new Error(String(pdfError)),
+          'generate-pdf-monkey',
+          { invoiceId: invoice.id, invoiceNumber: finalInvoiceNumber }
+        );
         // Silent - PDF regenerates in background
       }
 
       // 5. Return success without refetching (database trigger handles updated_at)
       setInvoices(prev => prev.map(inv => inv.id === invoice.id ? convertDbRowToQuote(updatedQuote) : inv));
+      trackMilestone('Invoice Saved', {
+        invoiceId: updatedQuote.id,
+        invoiceNumber: finalInvoiceNumber,
+        total: invoice.total,
+        isStandalone: isStandaloneInvoice
+      });
       return true;
     } catch (error: any) {
       console.error('Error saving invoice:', error);
-      
+
       // Check if it's a duplicate key error (PostgreSQL error code 23505)
-      const isDuplicateKeyError = error?.code === '23505' || 
+      const isDuplicateKeyError = error?.code === '23505' ||
                                    error?.message?.includes('duplicate key') ||
                                    error?.message?.includes('invoice_number_key');
-      
+
+      // Track non-duplicate errors (duplicates are expected race conditions)
+      if (!isDuplicateKeyError) {
+        captureApiError(
+          error instanceof Error ? error : new Error(String(error)),
+          'invoices/save',
+          { invoiceId: invoice.id, errorCode: error?.code, errorMessage: error?.message }
+        );
+      }
+
       if (isDuplicateKeyError && retryCount < MAX_RETRIES) {
         console.warn(`⚠️ Duplicate invoice number detected, retrying... (${retryCount + 1}/${MAX_RETRIES})`);
         
@@ -374,6 +400,11 @@ export const useInvoiceStorage = () => {
       return true;
     } catch (error) {
       console.error('Error marking work complete:', error);
+      captureApiError(
+        error instanceof Error ? error : new Error(String(error)),
+        'invoices/mark-complete',
+        { quoteId }
+      );
       toast({
         title: 'Error',
         description: 'Failed to mark work as complete. Please try again.',
@@ -401,6 +432,11 @@ export const useInvoiceStorage = () => {
       return true;
     } catch (error) {
       console.error('Error updating invoice status:', error);
+      captureApiError(
+        error instanceof Error ? error : new Error(String(error)),
+        'invoices/update-status',
+        { invoiceId, newStatus: status }
+      );
       toast({
         title: 'Error',
         description: 'Failed to update invoice status. Please try again.',
@@ -443,6 +479,11 @@ export const useInvoiceStorage = () => {
       return true;
     } catch (error) {
       console.error('Error deleting invoice:', error);
+      captureApiError(
+        error instanceof Error ? error : new Error(String(error)),
+        'invoices/delete',
+        { invoiceId }
+      );
       toast({
         title: 'Error deleting invoice',
         description: 'Failed to delete invoice. Please try again.',
