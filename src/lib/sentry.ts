@@ -58,6 +58,14 @@ export function initSentry() {
         "Invalid email or password",
         "Password should be at least",
         "Unable to validate email address",
+        /AuthWeakPasswordError/i,
+        /weak.*password/i,
+        /password.*weak/i,
+
+        // Network errors - user's connection, not our bug
+        /AuthRetryableFetchError/i,
+        /Load failed.*supabase/i,
+        "Failed to fetch",
 
         // Chunk loading errors (deployment cache) - handled by auto-refresh
         /dynamically imported module/i,
