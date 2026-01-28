@@ -3,6 +3,7 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { RefreshCcw, Home } from 'lucide-react';
 import { logger } from '@/utils/logger';
+import { captureError, addBreadcrumb } from '@/lib/sentry';
 
 interface Props {
   children: ReactNode;
@@ -32,7 +33,41 @@ class ErrorBoundary extends Component<Props, State> {
       error,
       errorInfo
     });
-    
+
+    // Check for chunk loading errors - auto-refresh instead of showing error
+    const errorString = error.message?.toLowerCase() || '';
+    if (
+      errorString.includes('dynamically imported module') ||
+      errorString.includes('failed to fetch') ||
+      errorString.includes('loading chunk') ||
+      errorString.includes('loading css chunk') ||
+      errorString.includes('failed to load module script') ||
+      errorString.includes('importing a module script failed') ||
+      errorString.includes('mime type')
+    ) {
+      console.log('[ErrorBoundary] Chunk load error, auto-refreshing...');
+      if ('caches' in window) {
+        caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))))
+          .finally(() => window.location.reload());
+      } else {
+        window.location.reload();
+      }
+      return; // Don't log to Sentry - deployment artifact, not a bug
+    }
+
+    // Add breadcrumb with component stack for debugging
+    addBreadcrumb('ErrorBoundary caught error', 'error', {
+      url: window.location.href,
+      componentStack: errorInfo.componentStack?.slice(0, 500)
+    });
+
+    // Send ACTUAL error to Sentry (not just "ErrorBoundary caught an error")
+    captureError(error, {
+      componentStack: errorInfo.componentStack,
+      url: window.location.href,
+      errorBoundary: true
+    });
+
     // Enhanced error logging with context
     logger.error('ErrorBoundary caught an error:', {
       error: error.message,
@@ -41,7 +76,7 @@ class ErrorBoundary extends Component<Props, State> {
       url: window.location.href,
       timestamp: new Date().toISOString()
     });
-    
+
     // Specific guidance for stream errors
     if (error.message.includes('stream') || error.message.includes('controller') || error.message.includes('enqueue')) {
       console.error('🚨 Stream error detected - this may be related to parallel agent execution');
