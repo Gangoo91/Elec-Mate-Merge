@@ -456,7 +456,7 @@ const PPESafetyGuide = ({ onBack }: PPESafetyGuideProps) => {
                       )}
                       {key === "industrial" && (
                         <ul className="space-y-1 text-xs text-muted-foreground">
-                          <li>• High voltage work - specialized PPE</li>
+                          <li>• High voltage work - specialised PPE</li>
                           <li>• Arc flash protection may be required</li>
                           <li>• Regular PPE inspections mandatory</li>
                         </ul>

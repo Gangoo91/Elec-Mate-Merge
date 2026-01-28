@@ -428,7 +428,7 @@ function generateCareerOutcomes(course: any): string[] {
   }
   
   if (text.includes('ev')) {
-    return ['EV charging specialist certification', 'Access to growing EV market', 'Future-proof career specialization'];
+    return ['EV charging specialist certification', 'Access to growing EV market', 'Future-proof career specialisation'];
   }
   
   return ['Enhanced technical skills', 'Improved career prospects', 'Professional certification'];

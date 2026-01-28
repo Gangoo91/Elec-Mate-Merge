@@ -65,7 +65,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
     maxTeachingHours: "",
     teachingQual: "",
     assessorQual: "",
-    specializations: [] as string[],
+    specialisations: [] as string[],
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -86,7 +86,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
         role: formData.role,
         department: formData.department,
         status: 'Active',
-        specializations: formData.specializations,
+        specialisations: formData.specialisations,
         qualifications: [],
         avatarInitials,
         employmentType: formData.employmentType,
@@ -108,7 +108,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
         maxTeachingHours: "",
         teachingQual: "",
         assessorQual: "",
-        specializations: [],
+        specialisations: [],
       });
       onOpenChange(false);
     } catch (error) {
@@ -122,12 +122,12 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const toggleSpecialization = (spec: string) => {
+  const toggleSpecialisation = (spec: string) => {
     setFormData(prev => ({
       ...prev,
-      specializations: prev.specializations.includes(spec)
-        ? prev.specializations.filter(s => s !== spec)
-        : [...prev.specializations, spec]
+      specialisations: prev.specialisations.includes(spec)
+        ? prev.specialisations.filter(s => s !== spec)
+        : [...prev.specialisations, spec]
     }));
   };
 
@@ -289,18 +289,18 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
             </div>
           </div>
 
-          {/* Specializations */}
+          {/* Specialisations */}
           <div>
-            <Label>Specializations</Label>
+            <Label>Specialisations</Label>
             <div className="flex flex-wrap gap-2 mt-2">
               {SPECIALIZATIONS.map((spec) => (
                 <Button
                   key={spec}
                   type="button"
-                  variant={formData.specializations.includes(spec) ? "default" : "outline"}
+                  variant={formData.specialisations.includes(spec) ? "default" : "outline"}
                   size="sm"
-                  className={`h-11 touch-manipulation ${formData.specializations.includes(spec) ? "bg-elec-yellow hover:bg-elec-yellow/90 text-black" : ""}`}
-                  onClick={() => toggleSpecialization(spec)}
+                  className={`h-11 touch-manipulation ${formData.specialisations.includes(spec) ? "bg-elec-yellow hover:bg-elec-yellow/90 text-black" : ""}`}
+                  onClick={() => toggleSpecialisation(spec)}
                 >
                   {spec}
                 </Button>

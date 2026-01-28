@@ -450,7 +450,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           onChange={(e) =>
             setEditFormData({ ...editFormData, bio: e.target.value })
           }
-          placeholder="Brief description of your experience and specializations..."
+          placeholder="Brief description of your experience and specialisations..."
           className="bg-white/5 border-white/10 rounded-xl min-h-[100px] resize-none"
         />
       </div>

@@ -1525,7 +1525,7 @@ export const renewableEnergyQuestionBank: StandardMockQuestion[] = [
     question: "What is the primary challenge with offshore wind development?",
     options: ["Lower wind speeds", "High installation costs", "Environmental impact", "Grid connection"],
     correctAnswer: 1,
-    explanation: "Offshore wind installations have significantly higher costs due to marine construction, specialized equipment, and logistics.",
+    explanation: "Offshore wind installations have significantly higher costs due to marine construction, specialised equipment, and logistics.",
     section: "Wind Energy",
     difficulty: "intermediate",
     topic: "Offshore Wind",

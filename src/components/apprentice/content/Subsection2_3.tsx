@@ -125,7 +125,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               <div>
                 <h3 className="font-semibold text-elec-yellow mb-2">Renewable Energy Integration</h3>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>Solar PV system installation requires specialized electrical knowledge</li>
+                  <li>Solar PV system installation requires specialised electrical knowledge</li>
                   <li>Battery storage systems extend renewable energy usage</li>
                   <li>EV charging point installations support green transportation</li>
                   <li>Heat pump systems can reduce carbon footprint of heating</li>
@@ -148,7 +148,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 
                 <div className="mt-3 border-t border-elec-yellow/10 pt-3">
                   <p className="text-sm">
-                    As an electrician, obtaining specialized training and certifications in renewable 
+                    As an electrician, obtaining specialised training and certifications in renewable 
                     technologies can significantly expand your career opportunities while contributing 
                     to environmental sustainability.
                   </p>
@@ -426,7 +426,7 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Achieved 94% recycling rate for electrical waste</li>
                   <li>Reduced van fuel consumption by 30% through route optimization</li>
                   <li>Transitioned to digital documentation, saving 10,000 sheets of paper annually</li>
-                  <li>Specialized in energy-efficient lighting retrofits, saving clients 450,000 kWh collectively</li>
+                  <li>Specialised in energy-efficient lighting retrofits, saving clients 450,000 kWh collectively</li>
                 </ul>
                 <p className="text-sm mt-3">
                   These measures not only reduced environmental impact but also decreased operational costs 

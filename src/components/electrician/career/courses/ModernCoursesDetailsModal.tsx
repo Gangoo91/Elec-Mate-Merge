@@ -15,10 +15,13 @@ import {
   Building,
   Share2,
   ArrowLeft,
-  Zap,
   PoundSterling,
   BookOpen,
-  MessageSquare
+  MessageSquare,
+  Flame,
+  Monitor,
+  AlertTriangle,
+  Info
 } from "lucide-react";
 
 interface ModernCoursesDetailsModalProps {
@@ -32,18 +35,17 @@ const categoryColors: Record<string, { bg: string; text: string }> = {
   "Essential Updates": { bg: "bg-red-500", text: "text-white" },
   "Emerging Technologies": { bg: "bg-green-500", text: "text-white" },
   "Safety & Compliance": { bg: "bg-blue-500", text: "text-white" },
-  "Specialized Systems": { bg: "bg-purple-500", text: "text-white" },
+  "Specialised Systems": { bg: "bg-purple-500", text: "text-white" },
   "Professional Development": { bg: "bg-orange-500", text: "text-white" },
   "Business Skills": { bg: "bg-cyan-500", text: "text-white" },
 };
 
-const demandColors: Record<string, { bg: string; text: string }> = {
-  "High": { bg: "bg-red-500/20", text: "text-red-300" },
-  "Medium": { bg: "bg-amber-500/20", text: "text-amber-300" },
-  "Low": { bg: "bg-green-500/20", text: "text-green-300" },
+const demandConfig: Record<string, { color: string; bg: string; border: string; label: string }> = {
+  "High": { color: "text-red-400", bg: "bg-red-500/10", border: "border-l-red-500", label: "High Demand" },
+  "Medium": { color: "text-amber-400", bg: "bg-amber-500/10", border: "border-l-amber-500", label: "Moderate Demand" },
+  "Low": { color: "text-green-400", bg: "bg-green-500/10", border: "border-l-green-500", label: "Available" },
 };
 
-// Default course images based on category
 const getCourseImage = (course: EnhancedCareerCourse) => {
   if (course.image_url) return course.image_url;
 
@@ -51,7 +53,7 @@ const getCourseImage = (course: EnhancedCareerCourse) => {
     "Essential Updates": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&h=400&fit=crop",
     "Emerging Technologies": "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&h=400&fit=crop",
     "Safety & Compliance": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=400&fit=crop",
-    "Specialized Systems": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop",
+    "Specialised Systems": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop",
     "Professional Development": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=400&fit=crop",
     "Business Skills": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=400&fit=crop",
   };
@@ -63,7 +65,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
   if (!course) return null;
 
   const categoryStyle = categoryColors[course.category] || { bg: "bg-blue-500", text: "text-white" };
-  const demandStyle = demandColors[course.industryDemand] || demandColors.Medium;
+  const demandStyle = demandConfig[course.industryDemand] || demandConfig.Medium;
 
   const handleExternalLink = () => {
     if (course.external_url) {
@@ -79,7 +81,7 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
           text: `Check out this course: ${course.title} by ${course.provider}`,
           url: course.external_url || window.location.href
         });
-      } catch (err) {
+      } catch {
         // User cancelled or error
       }
     }
@@ -130,8 +132,8 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
             </div>
 
             {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto pb-24">
-              {/* Hero Image */}
+            <div className="flex-1 overflow-y-auto pb-28">
+              {/* Hero Image with rating badge */}
               <div className="relative h-48 sm:h-56">
                 <img
                   src={getCourseImage(course)}
@@ -149,10 +151,18 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                     {course.category}
                   </Badge>
                 </div>
+
+                {/* Gold Rating Badge — top-right */}
+                <div className="absolute top-4 right-4">
+                  <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1.5">
+                    <Star className="h-4 w-4 text-elec-yellow fill-elec-yellow" />
+                    <span className="text-sm font-bold text-white">{course.rating.toFixed(1)}</span>
+                  </div>
+                </div>
               </div>
 
               {/* Content */}
-              <div className="p-4 sm:p-6 space-y-6 -mt-4">
+              <div className="p-4 sm:p-6 space-y-5 -mt-4">
                 {/* Title & Provider */}
                 <div>
                   <h2 className="text-xl sm:text-2xl font-bold text-white leading-tight mb-2">
@@ -164,26 +174,77 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                   </div>
                 </div>
 
-                {/* Meta Row */}
-                <div className="flex flex-wrap items-center gap-4 py-3 border-y border-white/10">
-                  <div className="flex items-center gap-1.5">
-                    <Star className="h-4 w-4 text-elec-yellow fill-elec-yellow" />
-                    <span className="font-semibold text-white">{course.rating.toFixed(1)}</span>
+                {/* Quick Stats Grid — 2x2 */}
+                <div className="grid grid-cols-2 gap-2.5">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+                    <Clock className="h-4 w-4 text-blue-400 mx-auto mb-1.5" />
+                    <p className="text-[10px] text-white/50 uppercase tracking-wider">Duration</p>
+                    <p className="text-sm font-semibold text-white mt-0.5">{course.duration}</p>
                   </div>
-                  <div className="w-px h-4 bg-white/20" />
-                  <div className="flex items-center gap-1.5 text-white">
-                    <Clock className="h-4 w-4" />
-                    <span>{course.duration}</span>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+                    <GraduationCap className="h-4 w-4 text-purple-400 mx-auto mb-1.5" />
+                    <p className="text-[10px] text-white/50 uppercase tracking-wider">Level</p>
+                    <p className="text-sm font-semibold text-white mt-0.5">{course.level}</p>
                   </div>
-                  <div className="w-px h-4 bg-white/20" />
-                  <div className="flex items-center gap-1.5 text-white">
-                    <Zap className="h-4 w-4" />
-                    <span>{course.level}</span>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+                    <Monitor className="h-4 w-4 text-green-400 mx-auto mb-1.5" />
+                    <p className="text-[10px] text-white/50 uppercase tracking-wider">Format</p>
+                    <p className="text-sm font-semibold text-white mt-0.5">{course.format || "In-Person"}</p>
                   </div>
-                  <Badge className={`${demandStyle.bg} ${demandStyle.text} border-0 ml-auto`}>
-                    {course.industryDemand} Demand
-                  </Badge>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+                    <PoundSterling className="h-4 w-4 text-elec-yellow mx-auto mb-1.5" />
+                    <p className="text-[10px] text-white/50 uppercase tracking-wider">Price</p>
+                    <p className="text-sm font-semibold text-white mt-0.5">{course.price}</p>
+                  </div>
                 </div>
+
+                {/* Industry Demand Card — full-width, coloured left border */}
+                <div className={`${demandStyle.bg} border-l-4 ${demandStyle.border} rounded-lg p-4`}>
+                  <div className="flex items-center gap-3">
+                    <Flame className={`h-5 w-5 ${demandStyle.color} flex-shrink-0`} />
+                    <div>
+                      <p className={`text-sm font-semibold ${demandStyle.color}`}>{demandStyle.label}</p>
+                      <p className="text-xs text-white/60 mt-0.5">
+                        {course.industryDemand === "High"
+                          ? "This qualification is in strong demand across the UK electrical industry"
+                          : course.industryDemand === "Medium"
+                          ? "Steady demand for this qualification across UK employers"
+                          : "Niche qualification with targeted opportunities"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Salary Impact Card — enhanced with gradient */}
+                {course.salaryImpact && (
+                  <div className="bg-gradient-to-br from-blue-500/15 to-purple-500/15 border border-blue-500/25 rounded-xl p-4">
+                    <div className="flex items-center gap-2.5 mb-2">
+                      <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                        <TrendingUp className="h-4 w-4 text-blue-400" />
+                      </div>
+                      <h4 className="text-sm font-bold text-white">Salary Impact</h4>
+                    </div>
+                    <p className="text-blue-300 font-semibold text-base">{course.salaryImpact}</p>
+                  </div>
+                )}
+
+                {/* Accreditation Badges — enhanced with Award icon */}
+                {course.accreditation && course.accreditation.length > 0 && (
+                  <div>
+                    <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                      <Award className="h-4 w-4 text-elec-yellow" />
+                      Accreditation
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {course.accreditation.map((accred, index) => (
+                        <div key={index} className="flex items-center gap-1.5 bg-blue-500/15 border border-blue-500/25 rounded-lg px-3 py-2">
+                          <Award className="h-3.5 w-3.5 text-blue-400 flex-shrink-0" />
+                          <span className="text-sm text-blue-300 font-medium">{accred}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Description */}
                 <div>
@@ -191,10 +252,10 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                     <BookOpen className="h-4 w-4 text-blue-400" />
                     Description
                   </h3>
-                  <p className="text-white leading-relaxed text-sm">{course.description}</p>
+                  <p className="text-white/80 leading-relaxed text-sm">{course.description}</p>
                 </div>
 
-                {/* Course Outline */}
+                {/* Course Content — numbered list in subtle cards */}
                 {course.courseOutline && course.courseOutline.length > 0 && (
                   <div>
                     <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
@@ -203,26 +264,28 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                     </h3>
                     <div className="space-y-2">
                       {course.courseOutline.map((item, index) => (
-                        <div key={index} className="flex items-start gap-3 text-white">
-                          <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                          <span className="text-sm">{item}</span>
+                        <div key={index} className="flex items-start gap-3 bg-white/5 border border-white/8 rounded-lg p-3">
+                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex items-center justify-center">
+                            {index + 1}
+                          </span>
+                          <span className="text-sm text-white/90 pt-0.5">{item}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 )}
 
-                {/* Prerequisites */}
+                {/* Prerequisites — info card with purple accent */}
                 {course.prerequisites && course.prerequisites.length > 0 && (
-                  <div>
+                  <div className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4">
                     <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                      <GraduationCap className="h-4 w-4 text-purple-400" />
+                      <Info className="h-4 w-4 text-purple-400" />
                       Prerequisites
                     </h3>
                     <div className="space-y-2">
                       {course.prerequisites.map((prereq, index) => (
-                        <div key={index} className="flex items-start gap-3 text-white">
-                          <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2 flex-shrink-0" />
+                        <div key={index} className="flex items-start gap-2.5 text-white/80">
+                          <AlertTriangle className="h-3.5 w-3.5 text-purple-400 mt-0.5 flex-shrink-0" />
                           <span className="text-sm">{prereq}</span>
                         </div>
                       ))}
@@ -230,32 +293,21 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                   </div>
                 )}
 
-                {/* Career Outcomes */}
+                {/* Career Outcomes — green check icons */}
                 {course.careerOutcomes && course.careerOutcomes.length > 0 && (
                   <div>
                     <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
                       <Award className="h-4 w-4 text-elec-yellow" />
                       Career Outcomes
                     </h3>
-                    <div className="space-y-2">
+                    <div className="space-y-2.5">
                       {course.careerOutcomes.map((outcome, index) => (
-                        <div key={index} className="flex items-start gap-3 text-white">
-                          <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0" />
-                          <span className="text-sm">{outcome}</span>
+                        <div key={index} className="flex items-start gap-2.5">
+                          <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm text-white/90">{outcome}</span>
                         </div>
                       ))}
                     </div>
-                  </div>
-                )}
-
-                {/* Salary Impact */}
-                {course.salaryImpact && (
-                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <TrendingUp className="h-4 w-4 text-blue-400" />
-                      <h4 className="text-sm font-semibold text-white">Salary Impact</h4>
-                    </div>
-                    <p className="text-blue-300 font-medium">{course.salaryImpact}</p>
                   </div>
                 )}
 
@@ -268,22 +320,8 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {course.locations.map((location, index) => (
-                        <Badge key={index} variant="outline" className="border-white/20 text-white text-xs">
+                        <Badge key={index} variant="outline" className="border-white/20 text-white text-xs py-1.5 px-3">
                           {location}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Accreditation */}
-                {course.accreditation && course.accreditation.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold text-white mb-3">Accreditation</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {course.accreditation.map((accred, index) => (
-                        <Badge key={index} className="bg-blue-500/20 text-blue-300 border-0 text-xs">
-                          {accred}
                         </Badge>
                       ))}
                     </div>
@@ -313,13 +351,13 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
               </div>
             </div>
 
-            {/* Fixed Bottom CTA */}
+            {/* Fixed Bottom CTA — enhanced */}
             <div className="absolute bottom-0 inset-x-0 p-4 bg-elec-gray/95 backdrop-blur-lg border-t border-white/10 safe-area-inset-bottom">
               <div className="flex items-center gap-3">
                 <div className="flex-shrink-0">
-                  <div className="text-[10px] text-white/60 mb-0.5">Price</div>
-                  <div className="text-base font-bold text-white flex items-center gap-0.5">
-                    <PoundSterling className="h-3.5 w-3.5" />
+                  <div className="text-[10px] text-white/50 mb-0.5">Price</div>
+                  <div className="text-lg font-bold text-white flex items-center gap-0.5">
+                    <PoundSterling className="h-4 w-4" />
                     {course.price.replace(/[£$]/g, '')}
                   </div>
                 </div>
@@ -328,16 +366,16 @@ const ModernCoursesDetailsModal = ({ course, open, onOpenChange, onEnquire }: Mo
                     <Button
                       onClick={() => onEnquire(course)}
                       variant="outline"
-                      className="flex-1 h-11 bg-white/5 border-white/20 text-white hover:text-white hover:bg-white/10 font-medium gap-2 touch-manipulation"
+                      className="flex-1 h-12 bg-white/5 border-white/20 text-white hover:text-white hover:bg-white/10 font-medium gap-2 touch-manipulation"
                     >
                       <MessageSquare className="h-4 w-4" />
-                      <span className="hidden sm:inline">Enquire</span>
+                      <span>Enquire</span>
                     </Button>
                   )}
                   <Button
                     onClick={handleExternalLink}
                     disabled={!course.external_url}
-                    className="flex-1 h-11 bg-blue-500 text-white hover:bg-blue-600 font-medium gap-2 touch-manipulation"
+                    className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold gap-2 touch-manipulation"
                   >
                     <span>Visit</span>
                     <ExternalLink className="h-4 w-4" />

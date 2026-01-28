@@ -330,12 +330,12 @@ export const methodTemplates: MethodTemplate[] = [
       }
     ]
   },
-  // Specialized Installation Work
+  // Specialised Installation Work
   {
     id: 'ev-charging-installation',
     name: 'EV Charging Point Installation',
     description: 'Installation of electric vehicle charging point',
-    category: 'Specialized',
+    category: 'Specialised',
     workType: 'EV Installation',
     estimatedDuration: '4-6 hours',
     difficultyLevel: 'advanced',

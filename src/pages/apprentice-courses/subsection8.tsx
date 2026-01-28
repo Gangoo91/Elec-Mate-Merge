@@ -151,7 +151,7 @@ const Section2_4 = () => {
         "Be done by the standby person entering the space"
       ],
       correctAnswer: 1,
-      explanation: "Confined space rescue requires specialized training and equipment. Untrained rescuers often become additional casualties. Have emergency services contact details and site access arrangements ready."
+      explanation: "Confined space rescue requires specialised training and equipment. Untrained rescuers often become additional casualties. Have emergency services contact details and site access arrangements ready."
     }
   ];
 
@@ -223,7 +223,7 @@ const Section2_4 = () => {
                 <li>Falls and atmospheric hazards are leading causes of construction fatalities.</li>
                 <li>Work at Height Regulations 2005: avoid, prevent, protect hierarchy.</li>
                 <li>Confined Spaces Regulations 1997 require atmospheric testing and standby personnel.</li>
-                <li>Electrical work creates additional risks requiring specialized procedures and equipment.</li>
+                <li>Electrical work creates additional risks requiring specialised procedures and equipment.</li>
               </ul>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">

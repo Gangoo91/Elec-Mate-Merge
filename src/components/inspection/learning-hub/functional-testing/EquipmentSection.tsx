@@ -99,7 +99,7 @@ const EquipmentSection = () => {
             </div>
           </div>
 
-          {/* Specialized Equipment */}
+          {/* Specialised Equipment */}
           <div className="space-y-4">
             <h4 className="font-semibold text-foreground flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-purple-400" />
@@ -211,7 +211,7 @@ const EquipmentSection = () => {
               </p>
               <ul className="space-y-1 text-xs">
                 <li>• Most tests use built-in mechanisms (RCD test buttons)</li>
-                <li>• Minimal specialized equipment required</li>
+                <li>• Minimal specialised equipment required</li>
                 <li>• Quick to perform with proper preparation</li>
                 <li>• Prevents costly equipment failures</li>
                 <li>• Reduces liability and insurance risks</li>

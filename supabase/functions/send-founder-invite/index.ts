@@ -60,7 +60,7 @@ function generateCustomCampaignHTML(email: string, inviteToken: string, customMe
                 Last Chance
               </div>
               <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px; line-height: 1.3;">
-                We Launch Tomorrow!
+                We Launch Tonight!
               </h1>
             </td>
           </tr>
@@ -110,7 +110,7 @@ function generateCustomCampaignHTML(email: string, inviteToken: string, customMe
             <td style="padding: 0 20px 28px;">
               <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px; padding: 14px 20px; text-align: center;">
                 <p style="margin: 0; font-size: 14px; color: #ef4444; font-weight: 600;">
-                  ⏰ Price goes up tomorrow - don't miss out!
+                  ⏰ Offer closes at 18:30 tonight — this is your last chance!
                 </p>
               </div>
             </td>
@@ -782,6 +782,7 @@ Deno.serve(async (req) => {
           .from("founder_invites")
           .select("*")
           .eq("status", "sent")
+          .is("bounced_at", null)  // Skip bounced emails
           .or(`sent_at.is.null,sent_at.lt.${thirtyMinutesAgo}`)
           .order("sent_at", { ascending: true, nullsFirst: true });
 
@@ -825,6 +826,12 @@ Deno.serve(async (req) => {
 
             sentCount++;
             sentEmails.push(invite.email);
+
+            // Pace emails to stay within Resend rate limits
+            await new Promise(resolve => setTimeout(resolve, 500));
+            if (sentCount > 0 && sentCount % 8 === 0) {
+              await new Promise(resolve => setTimeout(resolve, 2000));
+            }
           } catch (err: any) {
             errors.push(`${invite.email}: ${err.message}`);
           }
@@ -919,11 +926,13 @@ Deno.serve(async (req) => {
 
         // Get all sent invites that haven't been claimed AND haven't received this campaign yet
         // We use last_campaign_sent_at to track campaign sends separately from regular sends
+        // Exclude bounced emails to avoid wasting sends and hurting sender reputation
         const { data: unclaimedInvites, error: unclaimedError } = await supabaseAdmin
           .from("founder_invites")
           .select("*")
           .eq("status", "sent")
           .is("last_campaign_sent_at", null)  // Only people who haven't received a campaign yet
+          .is("bounced_at", null)             // Skip bounced emails
           .order("created_at", { ascending: true });
 
         if (unclaimedError) throw unclaimedError;
@@ -971,9 +980,11 @@ Deno.serve(async (req) => {
             sentCount++;
             sentEmails.push(invite.email);
 
-            // Small delay every 10 emails to avoid rate limits (Resend free tier: 100/day, 10/second)
-            if (i > 0 && i % 10 === 0) {
-              await new Promise(resolve => setTimeout(resolve, 1100));
+            // Pace emails to stay well within Resend rate limits (10/second)
+            // 500ms between each email + extra 2s pause every 8 emails
+            await new Promise(resolve => setTimeout(resolve, 500));
+            if (i > 0 && i % 8 === 0) {
+              await new Promise(resolve => setTimeout(resolve, 2000));
             }
           } catch (err: any) {
             errors.push(`${invite.email}: ${err.message}`);

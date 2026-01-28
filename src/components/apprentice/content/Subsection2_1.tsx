@@ -237,7 +237,7 @@ const Subsection2_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <h4 className="font-medium mb-2">Additional Electrical-Specific Items</h4>
                 <ul className="space-y-1 text-sm text-white">
                   <li>• Insulating rescue hook</li>
-                  <li>• Specialized burn treatment kit</li>
+                  <li>• Specialised burn treatment kit</li>
                   <li>• AED (Automated External Defibrillator)</li>
                   <li>• Emergency contact information</li>
                   <li>• Incident reporting forms</li>

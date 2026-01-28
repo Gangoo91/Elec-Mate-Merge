@@ -335,7 +335,7 @@ const EnvironmentalSettings: React.FC<EnvironmentalSettingsProps> = ({
                   • ATEX/IECEx certified equipment only<br/>
                   • Intrinsically safe circuits where applicable<br/>
                   • Explosion-proof enclosures<br/>
-                  • Specialized cable glands and terminations
+                  • Specialised cable glands and terminations
                 </p>
               </div>
             )}

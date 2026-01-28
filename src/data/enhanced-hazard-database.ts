@@ -2027,7 +2027,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       engineering: ["Quality thermal camera with ≥320×240 resolution", "Temperature range appropriate for electrical work (-20°C to +650°C)", "Calibration annually"]
     },
     bs7671References: ["BS 7671 - Inspection and testing guidance"],
-    category: "specialized-equipment",
+    category: "specialised-equipment",
     workType: ["testing", "inspection", "maintenance"],
     environment: ["all-environments"]
   },
@@ -2043,7 +2043,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       engineering: ["Purchase quality test equipment (Megger, Fluke, Metrel)", "Proving unit for voltage indicator verification", "Test lead storage to prevent damage"]
     },
     bs7671References: ["GS38 - Electrical test equipment", "Part 6 - Inspection and testing"],
-    category: "specialized-equipment",
+    category: "specialised-equipment",
     workType: ["testing", "inspection"],
     environment: ["all-environments"]
   },
@@ -2059,7 +2059,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       engineering: ["True RMS clamp meter for distorted waveforms", "Annual calibration", "Appropriate current range (typically 0-1000A)"]
     },
     bs7671References: ["BS 7671 - Testing and verification"],
-    category: "specialized-equipment",
+    category: "specialised-equipment",
     workType: ["testing", "fault-finding"],
     environment: ["all-environments"]
   },
@@ -2075,7 +2075,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       engineering: ["Phase rotation indicator at main distribution", "Motor protection relays with phase monitoring"]
     },
     bs7671References: ["Part 6 - Verification", "552 - Rotating machines"],
-    category: "specialized-equipment",
+    category: "specialised-equipment",
     workType: ["commissioning", "testing"],
     environment: ["industrial", "commercial"]
   },
@@ -2091,7 +2091,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       engineering: ["Quality PAT tester (Megger, Seaward, Kewtech)", "Test adapter collection", "Barcode scanner for asset tracking"]
     },
     bs7671References: ["IET Code of Practice for PAT", "Electricity at Work Regulations 1989"],
-    category: "specialized-equipment",
+    category: "specialised-equipment",
     workType: ["testing", "inspection"],
     environment: ["all-environments"]
   },
@@ -2107,7 +2107,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       engineering: ["Earth resistance tester (Megger DET series, Fluke 1623)", "Test spikes and leads", "Annual calibration"]
     },
     bs7671References: ["542.2 - Earth electrodes", "Part 6 - Testing of earthing arrangements"],
-    category: "specialized-equipment",
+    category: "specialised-equipment",
     workType: ["testing", "commissioning"],
     environment: ["all-environments"]
   },
@@ -2123,7 +2123,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       engineering: ["Variable voltage insulation tester", "Test lead polarity awareness"]
     },
     bs7671References: ["643.3 - Insulation resistance testing", "Table 61 - Minimum insulation resistance values"],
-    category: "specialized-equipment",
+    category: "specialised-equipment",
     workType: ["testing"],
     environment: ["all-environments"]
   },
@@ -2139,7 +2139,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       engineering: ["CAT4+ or Genny4 equipment", "Ground penetrating radar for complex sites", "Multiple detection methods"]
     },
     bs7671References: ["HSG47 - Avoiding danger from underground services"],
-    category: "specialized-equipment",
+    category: "specialised-equipment",
     workType: ["excavation", "installation"],
     environment: ["outdoor", "construction-site"]
   },
@@ -2155,7 +2155,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       engineering: ["LED or LCD voltage indicators with self-test function", "Fused and insulated test leads to GS38", "Proving unit for verification"]
     },
     bs7671References: ["GS38 - Electrical test equipment", "Electricity at Work Regulations 1989 - Regulation 12 (Dead working)"],
-    category: "specialized-equipment",
+    category: "specialised-equipment",
     workType: ["isolation", "testing"],
     environment: ["all-environments"]
   },
@@ -2171,7 +2171,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       engineering: ["Quality proving unit (Fluke, Megger, Martindale)", "Battery status indicator", "Self-test function"]
     },
     bs7671References: ["GS38 - Electrical test equipment"],
-    category: "specialized-equipment",
+    category: "specialised-equipment",
     workType: ["isolation", "testing"],
     environment: ["all-environments"]
   }
@@ -2379,10 +2379,10 @@ export const hazardDatabase = [
     hazards: enhancedRiskDatabase.filter(h => h.category === "project-management")
   },
   {
-    category: "Specialized Equipment",
+    category: "Specialised Equipment",
     icon: "🔧",
     color: "bg-teal-500/20 text-teal-400 border-teal-500/30",
-    hazards: enhancedRiskDatabase.filter(h => h.category === "specialized-equipment")
+    hazards: enhancedRiskDatabase.filter(h => h.category === "specialised-equipment")
   },
   {
     category: "Renewable Energy",

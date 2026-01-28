@@ -132,7 +132,7 @@ export const ReadinessPractical = () => {
                     <div>
                       <h5 className="text-foreground text-sm font-medium">Scenario A: Critical Equipment Cannot Be Disconnected</h5>
                       <p className="text-foreground text-sm">Life support equipment in care home cannot be switched off for testing.</p>
-                      <p className="text-yellow-400 text-sm"><strong>Action:</strong> Arrange planned maintenance window or use specialized testing methods.</p>
+                      <p className="text-yellow-400 text-sm"><strong>Action:</strong> Arrange planned maintenance window or use specialised testing methods.</p>
                     </div>
                     <div>
                       <h5 className="text-foreground text-sm font-medium">Scenario B: Isolation Device Faulty</h5>

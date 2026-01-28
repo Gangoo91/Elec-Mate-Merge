@@ -99,7 +99,7 @@ const BS7671Module8Section1Summary = () => {
             <div>
               <h6 className="text-yellow-400 font-medium mb-2">Advanced Development:</h6>
               <ul className="text-sm space-y-1">
-                <li>• Explore specialized installation methods</li>
+                <li>• Explore specialised installation methods</li>
                 <li>• Study harmonics and power quality considerations</li>
                 <li>• Investigate renewable energy integration requirements</li>
                 <li>• Consider professional development courses</li>

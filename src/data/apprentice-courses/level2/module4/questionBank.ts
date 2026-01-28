@@ -2599,12 +2599,12 @@ export const module4QuestionBank: QuestionBank[] = [
     question: "When bending large diameter conduit, what additional equipment might be required?",
     options: [
       "Nothing special",
-      "Hydraulic benders or specialized forming equipment",
+      "Hydraulic benders or specialised forming equipment",
       "Only manual tools",
       "Only measuring tools"
     ],
     correctAnswer: 1,
-    explanation: "Large diameter conduit requires hydraulic benders or specialized forming equipment to achieve proper bends without damage.",
+    explanation: "Large diameter conduit requires hydraulic benders or specialised forming equipment to achieve proper bends without damage.",
     section: "4.3.3",
     difficulty: "advanced",
     topic: "Large Diameter Bending"

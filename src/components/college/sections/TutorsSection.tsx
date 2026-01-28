@@ -140,14 +140,14 @@ export function TutorsSection() {
                   </div>
 
                   <div className="flex flex-wrap gap-1 mt-2">
-                    {tutor.specializations.slice(0, 3).map((spec, i) => (
+                    {tutor.specialisations.slice(0, 3).map((spec, i) => (
                       <Badge key={i} variant="secondary" className="text-xs">
                         {spec}
                       </Badge>
                     ))}
-                    {tutor.specializations.length > 3 && (
+                    {tutor.specialisations.length > 3 && (
                       <Badge variant="secondary" className="text-xs">
-                        +{tutor.specializations.length - 3}
+                        +{tutor.specialisations.length - 3}
                       </Badge>
                     )}
                   </div>

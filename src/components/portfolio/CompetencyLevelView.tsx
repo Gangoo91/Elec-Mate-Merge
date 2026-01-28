@@ -26,7 +26,7 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
     {
       level: 'intermediate' as const,
       name: 'Intermediate',
-      description: 'Advanced skills and specialized knowledge',
+      description: 'Advanced skills and specialised knowledge',
       icon: GraduationCap,
       color: 'blue',
       bgColor: 'bg-blue-50'

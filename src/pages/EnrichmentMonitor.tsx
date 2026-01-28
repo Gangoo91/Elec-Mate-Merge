@@ -195,7 +195,7 @@ export default function EnrichmentMonitor() {
               disabled={starting}
               variant="outline"
             >
-              Phase 2: Specialized (Test, Maint, PM)
+              Phase 2: Specialised (Test, Maint, PM)
             </Button>
             <Button
               onClick={continueEnrichment}

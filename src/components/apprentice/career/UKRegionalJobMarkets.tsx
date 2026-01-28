@@ -143,7 +143,7 @@ const UKRegionalJobMarkets = () => {
                         <span className="text-white ml-1">
                           {region.job_availability === "High" ? "High job security, diverse opportunities" :
                            region.job_availability === "Good" ? "Steady work, good prospects" :
-                           "Specialized roles, competitive market"}
+                           "Specialised roles, competitive market"}
                         </span>
                       </div>
                       <div className="text-xs">

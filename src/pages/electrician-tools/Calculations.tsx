@@ -190,7 +190,7 @@ const Calculations = () => {
       case "selectivity":
         return <SelectivityCalculator />;
       
-      // Specialized Applications
+      // Specialised Applications
       case "data-centre":
         return <DataCentreCalculator />;
       case "generator-sizing":

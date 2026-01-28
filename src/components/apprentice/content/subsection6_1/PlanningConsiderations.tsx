@@ -90,7 +90,7 @@ const PlanningConsiderations = () => {
                       <ul className="list-disc list-inside text-sm space-y-2 pl-2">
                         <li>Determine appropriate staffing levels for the work</li>
                         <li>Verify qualifications and competencies required</li>
-                        <li>Plan for specialized skills needed (e.g. testing)</li>
+                        <li>Plan for specialised skills needed (e.g. testing)</li>
                         <li>Consider task rotation to prevent fatigue</li>
                         <li>Schedule breaks and refreshment arrangements</li>
                         <li>Establish clear roles and responsibilities</li>
@@ -106,7 +106,7 @@ const PlanningConsiderations = () => {
                         <li>List all required tools and testing equipment</li>
                         <li>Ensure tools are calibrated and in good condition</li>
                         <li>Plan for material delivery and storage logistics</li>
-                        <li>Arrange specialized equipment if needed</li>
+                        <li>Arrange specialised equipment if needed</li>
                         <li>Include contingency materials for unexpected issues</li>
                         <li>Allocate time for testing and commissioning</li>
                       </ul>

@@ -75,7 +75,7 @@ const EnhancedCareerPathways = () => {
         ],
         "8": [
           "Complete standard electrical qualification",
-          "Choose specialization area",
+          "Choose specialisation area",
           "Complete specialist training courses",
           "Gain manufacturer certifications",
           "Build portfolio of specialist projects"
@@ -89,7 +89,7 @@ const EnhancedCareerPathways = () => {
         ],
         "11": [
           "Achieve advanced electrical qualification",
-          "Complete specialized commissioning training",
+          "Complete specialised commissioning training",
           "Develop system testing skills",
           "Master troubleshooting techniques",
           "Build documentation expertise"

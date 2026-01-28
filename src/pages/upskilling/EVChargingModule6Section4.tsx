@@ -182,7 +182,7 @@ const EVChargingModule6Section4 = () => {
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">EV-RCD</p>
                 <ul className="text-xs text-white space-y-1">
-                  <li>• Specialized EV applications</li>
+                  <li>• Specialised EV applications</li>
                   <li>• Built-in DC 6mA detection</li>
                   <li>• Communication capability</li>
                   <li>• Self-testing functions</li>

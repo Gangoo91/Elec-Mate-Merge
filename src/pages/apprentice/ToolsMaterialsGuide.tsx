@@ -291,7 +291,7 @@ const ToolsMaterialsGuide = () => {
                 <li>• Multifunction tester</li>
                 <li>• Advanced hand tools</li>
                 <li>• Power tools</li>
-                <li>• Specialized equipment</li>
+                <li>• Specialised equipment</li>
               </ul>
             </div>
 
@@ -304,7 +304,7 @@ const ToolsMaterialsGuide = () => {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-white/70">Focus:</span>
-                  <span className="text-elec-yellow">Specialization</span>
+                  <span className="text-elec-yellow">Specialisation</span>
                 </div>
               </div>
               <ul className="space-y-1 text-xs text-white/70">

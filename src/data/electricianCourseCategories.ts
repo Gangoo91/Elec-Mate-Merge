@@ -5,7 +5,7 @@ export const electricianCategories = [
   "Safety & Compliance", 
   "Essential Updates",
   "Emerging Technologies",
-  "Specialized Systems", 
+  "Specialised Systems", 
   "Professional Development",
   "Business Skills"
 ];
@@ -23,7 +23,7 @@ export const electricianCourseKeywords = {
     "ev charging", "electric vehicle", "solar pv", "renewable energy",
     "smart home", "iot", "battery storage", "energy efficiency"
   ],
-  "Specialized Systems": [
+  "Specialised Systems": [
     "bms", "building management", "fire alarm", "security systems",
     "hvac", "data centre", "high voltage", "switching"
   ],

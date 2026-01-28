@@ -235,7 +235,7 @@ export const cultureModules: CultureModule[] = [
           wrongApproach: "Nodding and saying 'yes' despite confusion, then doing the task incorrectly"
         },
         {
-          situation: "You're unfamiliar with a specialized tool or fitting",
+          situation: "You're unfamiliar with a specialised tool or fitting",
           rightApproach: "\"I haven't worked with this model before. Could you show me the correct way to use it, or point me to the manual?\"",
           wrongApproach: "Attempting to use it without guidance, risking damage or safety issues"
         },

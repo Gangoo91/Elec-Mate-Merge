@@ -52,7 +52,7 @@ const TrainingScheduleOptimiser = () => {
       businessSpecificTips = [
         "Focus on customer interaction skills early",
         "Emphasize neat installation practices",
-        "Include consumer unit and domestic wiring specialization",
+        "Include consumer unit and domestic wiring specialisation",
         "Schedule evening/weekend training options"
       ];
     } else if (businessType === "commercial") {

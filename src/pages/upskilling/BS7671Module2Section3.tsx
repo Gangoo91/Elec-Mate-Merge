@@ -239,7 +239,7 @@ const BS7671Module2Section3 = () => {
           </h2>
           <div className="text-white space-y-4 leading-relaxed">
             <p>
-              PEI addresses the growing need to protect sensitive electronic equipment from electromagnetic interference (EMI) in modern smart installations. It's a specialized form of equipotential bonding designed for signal integrity rather than basic electrical safety.
+              PEI addresses the growing need to protect sensitive electronic equipment from electromagnetic interference (EMI) in modern smart installations. It's a specialised form of equipotential bonding designed for signal integrity rather than basic electrical safety.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 my-6">

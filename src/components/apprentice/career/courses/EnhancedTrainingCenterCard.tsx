@@ -61,7 +61,7 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Courses & Specializations */}
+          {/* Courses & Specialisations */}
           <div className="space-y-4">
             <div className="p-4 rounded-xl bg-white/5 border border-white/10">
               <h4 className="text-sm font-medium mb-3 text-elec-yellow flex items-center gap-2">
@@ -90,10 +90,10 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
                 <div className="p-1.5 rounded bg-blue-500/20">
                   <Target className="h-3.5 w-3.5" />
                 </div>
-                Specializations
+                Specialisations
               </h4>
               <div className="flex flex-wrap gap-2">
-                {center.specializations.map((spec, idx) => (
+                {center.specialisations.map((spec, idx) => (
                   <Badge key={idx} variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30">
                     {spec}
                   </Badge>

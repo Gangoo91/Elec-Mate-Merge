@@ -71,7 +71,7 @@ const AIGuideModal = ({ isOpen, onClose, guideType, guideTitle }: AIGuideModalPr
           forceRefresh,
           userProfile: {
             experience: 'professional',
-            specialization: 'general_electrical',
+            specialisation: 'general_electrical',
             business_type: 'mobile_electrician'
           }
         }

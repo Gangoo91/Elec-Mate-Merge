@@ -40,7 +40,7 @@ export interface EducationProvider {
   studentSatisfaction: number;
   employmentRate: number;
   courses: string[];
-  specializations: string[];
+  specialisations: string[];
   facilities: string[];
   accreditations: string[];
   supportServices: string[];
@@ -306,7 +306,7 @@ export const educationProviders: EducationProvider[] = [
     studentSatisfaction: 85,
     employmentRate: 92,
     courses: ["BEng Electrical Engineering", "HNC Electrical Engineering", "MSc Renewable Energy"],
-    specializations: ["Power Systems", "Renewable Energy", "Building Services"],
+    specialisations: ["Power Systems", "Renewable Energy", "Building Services"],
     facilities: ["Modern laboratories", "Industry partnerships", "Research centres", "CAD suites"],
     accreditations: ["IET Accredited", "Engineering Council", "QAA Approved"],
     supportServices: ["Career guidance", "Industry placements", "Academic support", "Financial advice"],
@@ -324,7 +324,7 @@ export const educationProviders: EducationProvider[] = [
     studentSatisfaction: 88,
     employmentRate: 95,
     courses: ["MEng Electrical Engineering", "BEng Electronic Engineering", "MSc Power Systems"],
-    specializations: ["Power Engineering", "Electronics", "Communications"],
+    specialisations: ["Power Engineering", "Electronics", "Communications"],
     facilities: ["State-of-the-art labs", "Research facilities", "Industry links", "Innovation hub"],
     accreditations: ["Russell Group", "IET Accredited", "Engineering Council"],
     supportServices: ["Graduate employment service", "Research opportunities", "Industry mentoring"],
@@ -342,7 +342,7 @@ export const educationProviders: EducationProvider[] = [
     studentSatisfaction: 87,
     employmentRate: 89,
     courses: ["HNC Electrical Engineering", "HND Electrical Engineering", "Foundation Degree"],
-    specializations: ["Electrical Installation", "Industrial Systems", "Renewable Energy"],
+    specialisations: ["Electrical Installation", "Industrial Systems", "Renewable Energy"],
     facilities: ["Industry-standard workshops", "Employer partnerships", "Modern classrooms"],
     accreditations: ["City & Guilds", "Pearson Approved", "EAL Centre"],
     supportServices: ["Work placement support", "Employer links", "Flexible study options"],

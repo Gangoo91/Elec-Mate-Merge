@@ -34,7 +34,7 @@ const SectionDisplay = ({
   console.log("SectionDisplay - Is electrical theory:", isElectricalTheory);
   console.log("SectionDisplay - Section data:", sectionData);
   
-  // For electrical theory sections, use specialized components
+  // For electrical theory sections, use specialised components
   if (isElectricalTheory) {
     return (
       <ElectricalTheorySection 

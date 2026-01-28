@@ -960,7 +960,7 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     typicalApplications: ["VRLA batteries", "Lithium-ion", "Battery monitoring"]
   },
 
-  // Specialized Industrial
+  // Specialised Industrial
   "induction-furnace": {
     name: "Induction Furnace",
     totalLoad: 500000,
@@ -1296,7 +1296,7 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     recommendedInstallationMethod: "conduit",
     recommendedCableType: "mineral",
     recommendedProtectiveDevice: "mcb",
-    description: "Specialized surgical lighting",
+    description: "Specialised surgical lighting",
     typicalApplications: ["Operating lights", "Examination lights", "Emergency lighting", "UV sterilization"]
   },
 
@@ -1480,7 +1480,7 @@ export function getAvailableTemplatesForInstallationType(installationType: strin
         "compressed-air", "waste-treatment", "material-handling", "control-room-power",
         // Furnace Types
         "furnace", "induction-furnace", "arc-furnace", "blast-furnace", "heat-treatment-furnace",
-        // Specialized Equipment
+        // Specialised Equipment
         "electroplating", "conveyor-belt", "ventilation-fan", "crushing-equipment",
         // Infrastructure
         "building-management", "cctv-systems", "telecommunications", "waste-management",

@@ -138,7 +138,7 @@ const JIBGradingScheme = () => {
         "Solar PV design and installation with battery storage"
       ],
       duration: "Career level with ongoing development",
-      specializations: ["EV Charging", "Solar PV", "Industrial Automation", "Data Centres", "Fire & Security"]
+      specialisations: ["EV Charging", "Solar PV", "Industrial Automation", "Data Centres", "Fire & Security"]
     },
     {
       grade: "Approved Electrician (JIB)",
@@ -646,7 +646,7 @@ const JIBGradingScheme = () => {
                           <Badge key={t} variant="outline" className="border-green-400/30 text-green-400">{t}</Badge>
                         ))}
                       </div>
-                      <p className="text-xs text-white">High-demand specializations requiring additional certifications and manufacturer approvals.</p>
+                      <p className="text-xs text-white">High-demand specialisations requiring additional certifications and manufacturer approvals.</p>
                     </div>
                   </div>
                   <div className="rounded border border-elec-yellow/20 bg-white/5 p-3">

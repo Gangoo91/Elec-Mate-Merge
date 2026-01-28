@@ -9,7 +9,7 @@ import { fireAlarmRoutes } from "./upskilling/fireAlarmRoutes";
 import { industrialDataRoutes } from "./upskilling/industrialDataRoutes";
 import { inspectionTestingRoutes } from "./upskilling/inspectionTestingRoutes";
 import { patTestingRoutes } from "./upskilling/patTestingRoutes";
-import { specializedCoursesRoutes } from "./upskilling/specializedCoursesRoutes";
+import { specialisedCoursesRoutes } from "./upskilling/specialisedCoursesRoutes";
 
 // Lazy load the index page
 const UpskillingIndex = lazy(() => import("@/pages/upskilling/Index"));
@@ -73,8 +73,8 @@ export default function UpskillingRoutes() {
         {/* PAT Testing Routes */}
         {patTestingRoutes}
 
-        {/* Specialized Courses Routes */}
-        {specializedCoursesRoutes}
+        {/* Specialised Courses Routes */}
+        {specialisedCoursesRoutes}
       </Routes>
     </Suspense>
   );

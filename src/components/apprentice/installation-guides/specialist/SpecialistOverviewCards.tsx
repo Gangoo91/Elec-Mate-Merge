@@ -73,7 +73,7 @@ const SpecialistOverviewCards = () => {
 
   const careerOpportunities = [
     {
-      specialization: "Solar PV Installer",
+      specialisation: "Solar PV Installer",
       demand: 95,
       avgSalary: "£32,000 - £45,000",
       growth: "Very High",
@@ -81,7 +81,7 @@ const SpecialistOverviewCards = () => {
       description: "Design, install, and maintain solar photovoltaic systems for domestic and commercial properties"
     },
     {
-      specialization: "EV Charger Installer",
+      specialisation: "EV Charger Installer",
       demand: 90,
       avgSalary: "£30,000 - £42,000",
       growth: "Very High",
@@ -89,7 +89,7 @@ const SpecialistOverviewCards = () => {
       description: "Install electric vehicle charging points in homes, workplaces, and public locations"
     },
     {
-      specialization: "Battery Storage Specialist",
+      specialisation: "Battery Storage Specialist",
       demand: 85,
       avgSalary: "£35,000 - £50,000",
       growth: "High",
@@ -97,7 +97,7 @@ const SpecialistOverviewCards = () => {
       description: "Design and install battery energy storage systems alongside solar PV installations"
     },
     {
-      specialization: "Swimming Pool & Spa Electrician",
+      specialisation: "Swimming Pool & Spa Electrician",
       demand: 60,
       avgSalary: "£28,000 - £38,000",
       growth: "Moderate",
@@ -105,7 +105,7 @@ const SpecialistOverviewCards = () => {
       description: "Install and maintain electrical systems for pools, spas, and leisure facilities"
     },
     {
-      specialization: "Heat Pump Installer",
+      specialisation: "Heat Pump Installer",
       demand: 88,
       avgSalary: "£32,000 - £48,000",
       growth: "Very High",
@@ -113,7 +113,7 @@ const SpecialistOverviewCards = () => {
       description: "Install air source and ground source heat pumps for domestic and commercial heating"
     },
     {
-      specialization: "Smart Home Specialist",
+      specialisation: "Smart Home Specialist",
       demand: 75,
       avgSalary: "£30,000 - £45,000",
       growth: "High",
@@ -215,7 +215,7 @@ const SpecialistOverviewCards = () => {
     },
     {
       step: 3,
-      title: "Choose Specialization",
+      title: "Choose Specialisation",
       description: "Select area of interest: Solar PV, EV, Heat Pumps, etc.",
       duration: "Research and planning"
     },
@@ -341,7 +341,7 @@ const SpecialistOverviewCards = () => {
               <div key={idx} className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
                   <div>
-                    <h4 className="font-medium text-white text-lg">{career.specialization}</h4>
+                    <h4 className="font-medium text-white text-lg">{career.specialisation}</h4>
                     <p className="text-sm text-white/80 mt-1">{career.description}</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -452,7 +452,7 @@ const SpecialistOverviewCards = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6 text-cyan-400" />
-            <CardTitle className="text-cyan-300">Your Path to Specialization</CardTitle>
+            <CardTitle className="text-cyan-300">Your Path to Specialisation</CardTitle>
           </div>
         </CardHeader>
         <CardContent>

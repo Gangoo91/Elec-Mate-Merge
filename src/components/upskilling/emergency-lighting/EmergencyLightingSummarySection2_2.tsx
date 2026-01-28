@@ -62,7 +62,7 @@ export const EmergencyLightingSummarySection2_2 = () => {
           <p className="text-elec-yellow font-medium mb-2">Next Steps:</p>
           <p className="text-gray-300 text-sm">
             Continue to Section 3 to explore High-Risk Task Area Lighting requirements 
-            and specialized emergency lighting applications.
+            and specialised emergency lighting applications.
           </p>
         </div>
       </CardContent>

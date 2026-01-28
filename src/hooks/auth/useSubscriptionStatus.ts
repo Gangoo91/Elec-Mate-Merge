@@ -87,13 +87,15 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
     try {
       setState(prev => ({ ...prev, isCheckingStatus: true, lastError: null }));
 
-      // Add 5 second timeout for mobile performance
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
-
-      const { data, error } = await supabase.functions.invoke('check-subscription', {
+      // 5 second timeout — uses Promise.race so the timeout actually fires
+      // (previous AbortController was never connected to the fetch)
+      const fetchPromise = supabase.functions.invoke('check-subscription', {
         body: {},
-      }).finally(() => clearTimeout(timeoutId));
+      });
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Subscription check timed out')), 5000)
+      );
+      const { data, error } = await Promise.race([fetchPromise, timeoutPromise]);
 
       if (error) {
         console.error('Error checking subscription:', error);

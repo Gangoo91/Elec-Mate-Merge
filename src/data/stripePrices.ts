@@ -20,12 +20,12 @@ export interface PlanDetails {
 export const stripePrices = {
   monthly: {
     "apprentice": "price_1SmUef2RKw5t5RAmRIMTWTqU",  // £4.99 Apprentice Monthly
-    "electrician": "price_1RhteS2RKw5t5RAmzRbaTE8U", // £9.99 Electrician Monthly
+    "electrician": "price_1SqJVr2RKw5t5RAmaiTGelLN",  // £9.99 Electrician Monthly (Elec-Mate Mobile App)
     "employer": "price_1SlyAT2RKw5t5RAmUmTRGimH",    // £29.99 Employer Monthly
   },
   yearly: {
     "apprentice": "price_1SmUfK2RKw5t5RAml6bj1I77",  // £49.99 Apprentice Yearly
-    "electrician": "price_1RhtiS2RKw5t5RAmha0s6PJA", // £99.99 Electrician Yearly
+    "electrician": "price_1SqJVs2RKw5t5RAmVeD2QVsb",  // £99.99 Electrician Yearly (Elec-Mate Mobile App Yearly)
     "employer": "price_1SlyB82RKw5t5RAmN447YJUW",    // £299.99 Employer Yearly
   }
 };

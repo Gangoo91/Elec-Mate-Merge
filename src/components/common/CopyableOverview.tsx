@@ -85,7 +85,7 @@ const CopyableOverview = () => {
 
 ### AI Systems Enhancement
 - Improve AI response quality and context awareness
-- Add more specialized electrical AI tools
+- Add more specialised electrical AI tools
 - Integrate AI with course content for personalized learning
 - Develop an AI-driven exam preparation system
 - Create installation guide AI for step-by-step assistance

@@ -19,7 +19,7 @@ const CareerProgressionPaths = () => {
             </div>
             <div>
               <h4 className="text-amber-400 font-medium">Electrician → Specialist → Commissioning Technician → Commissioning Engineer</h4>
-              <p className="text-xs mt-1">Focusing on developing expertise in specialized systems and commissioning increasingly complex installations.</p>
+              <p className="text-xs mt-1">Focusing on developing expertise in specialised systems and commissioning increasingly complex installations.</p>
             </div>
             <div>
               <h4 className="text-amber-400 font-medium">Electrician → HNC/HND/Degree → Electrical Designer → Project Engineer</h4>

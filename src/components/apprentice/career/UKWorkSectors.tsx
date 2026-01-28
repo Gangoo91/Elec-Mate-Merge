@@ -98,7 +98,7 @@ const UKWorkSectors = () => {
                              sector.name.includes("Data") ? "High-tech, precision work environment" :
                              sector.name.includes("Rail") ? "Infrastructure projects, strict safety standards" :
                              sector.name.includes("Emergency") ? "Critical response, high responsibility" :
-                             "Specialized technical expertise required"}
+                             "Specialised technical expertise required"}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
@@ -178,7 +178,7 @@ const UKWorkSectors = () => {
                   </ul>
                 </div>
                 <div>
-                  <h4 className="font-medium mb-3 text-orange-400">Specialization Tips:</h4>
+                  <h4 className="font-medium mb-3 text-orange-400">Specialisation Tips:</h4>
                   <ul className="space-y-2 text-xs text-white">
                     <li className="flex items-center gap-2">
                       <div className="w-2 h-2 rounded-full bg-orange-400" />

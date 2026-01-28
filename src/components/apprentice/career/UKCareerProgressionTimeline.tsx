@@ -90,7 +90,7 @@ const UKCareerProgressionTimeline = () => {
                           </div>
                           <div className="mt-3 pt-2 border-t border-elec-yellow/10">
                             <p className="text-xs text-white">
-                              *Rates vary by experience and specialization
+                              *Rates vary by experience and specialisation
                             </p>
                           </div>
                         </CardContent>
@@ -314,7 +314,7 @@ const UKCareerProgressionTimeline = () => {
                   <h4 className="font-medium mb-2">Salary Factors:</h4>
                   <ul className="space-y-1 text-xs text-white">
                     <li>• Location significantly affects rates</li>
-                    <li>• Specializations command premium rates</li>
+                    <li>• Specialisations command premium rates</li>
                     <li>• Contractor rates typically 20-40% higher</li>
                     <li>• Industry sector impacts earning potential</li>
                   </ul>

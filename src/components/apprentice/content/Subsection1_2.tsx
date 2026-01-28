@@ -131,7 +131,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <div className="bg-white/10 rounded-md p-4 border border-elec-yellow/20 mt-4">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Electrician-Specific Responsibilities:</h3>
             <p className="mb-3">
-              Qualified electricians have additional responsibilities due to their specialized knowledge and role:
+              Qualified electricians have additional responsibilities due to their specialised knowledge and role:
             </p>
             <ul className="list-disc pl-5 space-y-2">
               <li>Verify isolation before beginning work on electrical systems</li>
@@ -325,7 +325,7 @@ const Subsection1_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               <h3 className="text-lg font-semibold text-elec-yellow mb-2">Regular Training</h3>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Initial safety induction for all staff</li>
-                <li>Specialized training for electrical workers</li>
+                <li>Specialised training for electrical workers</li>
                 <li>Refresher training at appropriate intervals</li>
                 <li>Updates on regulatory changes</li>
                 <li>Training on new equipment and technologies</li>

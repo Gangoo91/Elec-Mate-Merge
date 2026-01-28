@@ -30,7 +30,7 @@ export const mockExams = [
   {
     id: "level3-inspection",
     title: "Level 3 - Inspection & Testing",
-    description: "Specialized practice test focusing on inspection, testing and commissioning procedures.",
+    description: "Specialised practice test focusing on inspection, testing and commissioning procedures.",
     duration: 60,
     questionCount: 40,
     level: "Level 3",

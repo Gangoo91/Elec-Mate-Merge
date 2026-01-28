@@ -30,7 +30,7 @@ const InstallationBestPracticesFAQ = () => {
               <ul className="list-disc list-inside space-y-1 text-sm">
                 <li><strong>Arc persistence:</strong> DC arcs do not self-extinguish and can sustain indefinitely</li>
                 <li><strong>Higher energy content:</strong> Continuous energy release without natural interruption</li>
-                <li><strong>Difficult to interrupt:</strong> Requires specialized DC-rated switching equipment</li>
+                <li><strong>Difficult to interrupt:</strong> Requires specialised DC-rated switching equipment</li>
                 <li><strong>Fire risk:</strong> Sustained arcs can reach temperatures over 20,000°C</li>
               </ul>
             </AccordionContent>

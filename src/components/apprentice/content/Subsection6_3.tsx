@@ -219,7 +219,7 @@ const Subsection6_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 {[
                   {
                     title: "Cable Drums",
-                    content: "Use cable drum jacks or spindles rather than manually lifting. Roll drums rather than carry where possible. Large drums should always be handled by mechanical means such as forklifts or specialized cable handling equipment."
+                    content: "Use cable drum jacks or spindles rather than manually lifting. Roll drums rather than carry where possible. Large drums should always be handled by mechanical means such as forklifts or specialised cable handling equipment."
                   },
                   {
                     title: "Distribution Boards",

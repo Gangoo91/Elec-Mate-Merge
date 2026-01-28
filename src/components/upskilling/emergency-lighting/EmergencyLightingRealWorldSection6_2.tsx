@@ -173,7 +173,7 @@ export const EmergencyLightingRealWorldSection6_2 = () => {
             <p className="text-sm leading-relaxed">
               This case also demonstrates the importance of understanding building-specific requirements: care homes, hospitals, 
               hotels, HMOs, and similar sleeping accommodation require 3-hour duration and often enhanced coverage compared to 
-              commercial premises. Generic "office" lighting specifications are dangerous when applied to specialized occupancies. 
+              commercial premises. Generic "office" lighting specifications are dangerous when applied to specialised occupancies. 
               The electrician in this case faced no direct legal consequences but suffered significant reputational damage and lost 
               the client relationship — highlighting the importance of professional due diligence even when not legally obligated.
             </p>

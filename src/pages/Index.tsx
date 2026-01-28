@@ -282,7 +282,7 @@ const Index = () => {
             viewport={{ once: true }}
             className="text-center mb-8"
           >
-            <h2 className="text-[24px] font-bold text-white mb-2">Four Specialized Hubs</h2>
+            <h2 className="text-[24px] font-bold text-white mb-2">Four Specialised Hubs</h2>
             <p className="text-ios-body text-white/50">Everything you need in one place</p>
           </motion.div>
 

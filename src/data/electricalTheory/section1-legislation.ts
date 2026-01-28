@@ -54,7 +54,7 @@ export const legislationSection: SectionData = {
         content: "Utilizing documents such as the IET On-Site Guide and the Electrician's Guide to Good Electrical Practice to apply regulations effectively in practical scenarios.",
         keyPoints: [
           "IET On-Site Guide and its practical applications",
-          "Guidance Notes and their specialized content",
+          "Guidance Notes and their specialised content",
           "Industry best practice publications"
         ]
       },

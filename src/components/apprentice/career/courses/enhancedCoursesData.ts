@@ -38,7 +38,7 @@ export interface EnhancedTrainingCenter {
   contact: string;
   website: string;
   courses: string[];
-  specializations: string[];
+  specialisations: string[];
   facilities: string[];
   accreditations: string[];
   supportServices: string[];
@@ -64,7 +64,7 @@ export const courseCategories = [
   "Safety & Compliance", 
   "Essential Updates",
   "Emerging Technologies",
-  "Specialized Systems", 
+  "Specialised Systems", 
   "Professional Development",
   "Business Skills"
 ];
@@ -163,7 +163,7 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
       "EV charging specialist certification",
       "Access to growing EV market",
       "Increased earning potential",
-      "Future-proof career specialization"
+      "Future-proof career specialisation"
     ],
     accreditation: ["City & Guilds 2919-05", "ECA Approved", "OLEV Grant eligible"],
     employerSupport: true,
@@ -227,7 +227,7 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     nextDates: ["8 June 2025", "10 August 2025", "12 October 2025", "7 December 2025"],
     rating: 4.8,
     locations: ["London", "Manchester", "Birmingham", "Glasgow"],
-    category: "Specialized Systems",
+    category: "Specialised Systems",
     industryDemand: "High",
     futureProofing: 4,
     salaryImpact: "£3,000 - £5,000 annual increase",
@@ -444,7 +444,7 @@ export const enhancedCareerCourses: EnhancedCareerCourse[] = [
     nextDates: ["17 June 2025", "29 July 2025", "19 August 2025", "30 September 2025"],
     rating: 4.9,
     locations: ["London", "Manchester", "Edinburgh"],
-    category: "Specialized Systems",
+    category: "Specialised Systems",
     industryDemand: "High",
     futureProofing: 4,
     salaryImpact: "£8,000 - £15,000 annual increase",
@@ -917,7 +917,7 @@ export const enhancedTrainingCenters: EnhancedTrainingCenter[] = [
     contact: "0333 015 6626",
     website: "www.niceic.com/training",
     courses: ["18th Edition Wiring Regulations", "Inspection & Testing", "EV Charging Installation"],
-    specializations: ["Electrical Safety", "Code Compliance", "Professional Development"],
+    specialisations: ["Electrical Safety", "Code Compliance", "Professional Development"],
     facilities: ["Modern classrooms", "Practical workshops", "Online learning portal", "Assessment centres"],
     accreditations: ["City & Guilds Approved", "EAL Centre", "NICEIC Approved Contractor"],
     supportServices: ["Career guidance", "Job placement assistance", "Employer partnerships", "Flexible payment plans"],
@@ -935,7 +935,7 @@ export const enhancedTrainingCenters: EnhancedTrainingCenter[] = [
     contact: "020 7313 4800",
     website: "www.eca.co.uk/training",
     courses: ["EV Charging Installation", "Smart Building Systems", "Energy Efficiency"],
-    specializations: ["Emerging Technologies", "Renewable Energy", "Commercial Systems"],
+    specialisations: ["Emerging Technologies", "Renewable Energy", "Commercial Systems"],
     facilities: ["Technology labs", "VR training systems", "Industry partnerships", "Research facilities"],
     accreditations: ["ECA Approved", "CIBSE Partnership", "Low Carbon Skills"],
     supportServices: ["Technical support", "Industry networking", "CPD tracking", "Equipment financing"],
@@ -953,7 +953,7 @@ export const enhancedTrainingCenters: EnhancedTrainingCenter[] = [
     contact: "0844 543 0000",
     website: "www.cityandguilds.com",
     courses: ["Inspection & Testing", "Fire Alarm Systems", "Industrial Systems"],
-    specializations: ["Qualifications", "Assessment", "Quality Assurance"],
+    specialisations: ["Qualifications", "Assessment", "Quality Assurance"],
     facilities: ["Assessment centres", "Digital learning", "Industry simulators", "Mobile training units"],
     accreditations: ["Ofqual Regulated", "SQA Approved", "International Recognition"],
     supportServices: ["Qualification support", "Employer services", "International programmes", "Skills analysis"],

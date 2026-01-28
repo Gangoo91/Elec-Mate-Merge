@@ -11,7 +11,7 @@ export interface CollegeStaff {
   phone: string | null;
   role: StaffRole;
   department: string | null;
-  specializations: string[] | null;
+  specialisations: string[] | null;
   teaching_qual: string | null;
   assessor_qual: string | null;
   iqa_qual: string | null;

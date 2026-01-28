@@ -28,7 +28,7 @@ export interface CollegeStaff {
   role: StaffRole;
   department: string;
   status: StaffStatus;
-  specializations: string[];
+  specialisations: string[];
   qualifications: Array<{ name: string; issuer: string; date: string }>;
   photoUrl?: string;
   avatarInitials: string;
@@ -334,7 +334,7 @@ export const mockStaff: CollegeStaff[] = [
     role: "tutor",
     department: "Electrical Installation",
     status: "Active",
-    specializations: ["18th Edition", "Solar PV", "Testing & Inspection", "EV Charging"],
+    specialisations: ["18th Edition", "Solar PV", "Testing & Inspection", "EV Charging"],
     qualifications: [
       { name: "PGCE", issuer: "University of Manchester", date: "2015-07-01" },
       { name: "City & Guilds 2391", issuer: "City & Guilds", date: "2018-03-15" },
@@ -359,7 +359,7 @@ export const mockStaff: CollegeStaff[] = [
     role: "tutor",
     department: "Electrical Installation",
     status: "Active",
-    specializations: ["Domestic Installation", "Commercial Wiring", "Fire Alarm Systems"],
+    specialisations: ["Domestic Installation", "Commercial Wiring", "Fire Alarm Systems"],
     qualifications: [
       { name: "Cert Ed", issuer: "City University", date: "2017-07-01" },
       { name: "City & Guilds 2365", issuer: "City & Guilds", date: "2010-06-15" }
@@ -382,7 +382,7 @@ export const mockStaff: CollegeStaff[] = [
     role: "assessor",
     department: "Electrical Installation",
     status: "Active",
-    specializations: ["Testing & Inspection", "Portable Appliance Testing"],
+    specialisations: ["Testing & Inspection", "Portable Appliance Testing"],
     qualifications: [
       { name: "Level 3 CAVA", issuer: "City & Guilds", date: "2019-09-01" },
       { name: "City & Guilds 2391", issuer: "City & Guilds", date: "2017-04-10" }
@@ -403,7 +403,7 @@ export const mockStaff: CollegeStaff[] = [
     role: "head_of_department",
     department: "Electrical Installation",
     status: "Active",
-    specializations: ["Curriculum Development", "Quality Assurance", "EPA"],
+    specialisations: ["Curriculum Development", "Quality Assurance", "EPA"],
     qualifications: [
       { name: "MA Education", issuer: "Open University", date: "2014-07-01" },
       { name: "Level 4 TAQA", issuer: "City & Guilds", date: "2016-03-15" }
@@ -426,7 +426,7 @@ export const mockStaff: CollegeStaff[] = [
     role: "admin",
     department: "Administration",
     status: "Active",
-    specializations: ["Student Records", "Funding Claims", "ESFA"],
+    specialisations: ["Student Records", "Funding Claims", "ESFA"],
     qualifications: [
       { name: "AAT Level 3", issuer: "AAT", date: "2018-06-01" }
     ],
@@ -444,7 +444,7 @@ export const mockStaff: CollegeStaff[] = [
     role: "support",
     department: "Learning Support",
     status: "Active",
-    specializations: ["SEND Support", "Dyslexia", "Numeracy Support"],
+    specialisations: ["SEND Support", "Dyslexia", "Numeracy Support"],
     qualifications: [
       { name: "Level 3 Learning Support", issuer: "CACHE", date: "2020-03-01" }
     ],

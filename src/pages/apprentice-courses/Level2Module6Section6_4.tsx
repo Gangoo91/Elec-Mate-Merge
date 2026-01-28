@@ -258,7 +258,7 @@ const Level2Module6Section6_4 = () => {
                         Information gathering is crucial before starting physical investigation. This includes reviewing installation records, understanding the construction sequence, identifying environmental factors, and noting any recent changes or maintenance work. Often, the history of the installation provides vital clues about the likely location and nature of problems.
                       </p>
                       <p className="text-xs sm:text-sm text-foreground">
-                        Systematic testing techniques help isolate faults efficiently. This might involve dividing circuits into sections, testing individual components, or using specialized techniques like step-voltage testing for insulation problems. The key is to narrow down the fault location progressively rather than testing randomly throughout the installation.
+                        Systematic testing techniques help isolate faults efficiently. This might involve dividing circuits into sections, testing individual components, or using specialised techniques like step-voltage testing for insulation problems. The key is to narrow down the fault location progressively rather than testing randomly throughout the installation.
                       </p>
                       <p className="text-xs sm:text-sm text-foreground">
                         Visual inspection often reveals information that testing alone cannot provide. Look for obvious damage, poor workmanship, environmental contamination, or signs of overheating. Sometimes the visual evidence points directly to the problem area, saving considerable testing time and ensuring that all related issues are identified and addressed.

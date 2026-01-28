@@ -117,7 +117,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
               </CardContent>
             </Card>
 
-            {/* Specializations & Courses */}
+            {/* Specialisations & Courses */}
             <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-blue-500/20 overflow-hidden relative">
               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
               <CardHeader className="pb-3 relative">
@@ -125,14 +125,14 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                   <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30">
                     <Building className="h-4 w-4 text-blue-400" />
                   </div>
-                  Specializations
+                  Specialisations
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 relative">
                 <div>
                   <h5 className="text-sm font-medium mb-3 text-white/80">Areas of Expertise:</h5>
                   <div className="flex flex-wrap gap-2">
-                    {center.specializations.map((spec, idx) => (
+                    {center.specialisations.map((spec, idx) => (
                       <Badge key={idx} variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30">
                         {spec}
                       </Badge>

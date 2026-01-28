@@ -90,7 +90,7 @@ const careerOverviewItems: ContentItem[] = [
           icon: Star,
           content: [
             "Advanced qualifications (2391, 2399, 2919)",
-            "Sector specialization",
+            "Sector specialisation",
             "Team leadership experience",
             "Project management skills",
           ],
@@ -116,7 +116,7 @@ const careerOverviewItems: ContentItem[] = [
   {
     id: "career-pathways",
     title: "Popular Career Pathways",
-    description: "Explore the most in-demand specializations",
+    description: "Explore the most in-demand specialisations",
     badge: "Hot",
     icon: Rocket,
     color: "yellow",
@@ -150,7 +150,7 @@ const careerOverviewItems: ContentItem[] = [
       ],
       tips: [
         "Combine traditional skills with emerging technologies",
-        "Consider geographic demand when choosing specialization",
+        "Consider geographic demand when choosing specialisation",
         "Build a portfolio demonstrating specialist competence",
       ],
     },
@@ -309,7 +309,7 @@ const careerOverviewItems: ContentItem[] = [
           content: [
             "Year 1: Establish reputation, build customer base",
             "Year 2-3: Hire first employee, increase capacity",
-            "Year 3-5: Expand services, consider specialization",
+            "Year 3-5: Expand services, consider specialisation",
             "Year 5+: Multiple teams, management focus",
           ],
         },
@@ -1818,7 +1818,7 @@ const careerTimelineItems: ContentItem[] = [
       tips: [
         "Focus on AM2 preparation",
         "Gain testing and inspection experience",
-        "Start considering specialization areas",
+        "Start considering specialisation areas",
       ],
     },
   },
@@ -2296,7 +2296,7 @@ const regionalMarketsItems: ContentItem[] = [
       { label: "Jobs", value: "250k+" },
     ],
     content: {
-      overview: "The UK electrical job market varies significantly by region, with differences in pay, demand, and specializations.",
+      overview: "The UK electrical job market varies significantly by region, with differences in pay, demand, and specialisations.",
       sections: [
         {
           title: "High Pay Regions",

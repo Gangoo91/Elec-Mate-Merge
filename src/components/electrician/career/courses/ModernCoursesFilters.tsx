@@ -35,7 +35,7 @@ const categoryColors: Record<string, { bg: string; activeBg: string; text: strin
   "Essential Updates": { bg: "bg-red-500/20", activeBg: "bg-red-500", text: "text-red-300" },
   "Emerging Technologies": { bg: "bg-green-500/20", activeBg: "bg-green-500", text: "text-green-300" },
   "Safety & Compliance": { bg: "bg-blue-500/20", activeBg: "bg-blue-500", text: "text-blue-300" },
-  "Specialized Systems": { bg: "bg-purple-500/20", activeBg: "bg-purple-500", text: "text-purple-300" },
+  "Specialised Systems": { bg: "bg-purple-500/20", activeBg: "bg-purple-500", text: "text-purple-300" },
   "Professional Development": { bg: "bg-orange-500/20", activeBg: "bg-orange-500", text: "text-orange-300" },
   "Business Skills": { bg: "bg-cyan-500/20", activeBg: "bg-cyan-500", text: "text-cyan-300" },
 };

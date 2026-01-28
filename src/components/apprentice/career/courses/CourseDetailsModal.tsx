@@ -115,7 +115,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
       case "Essential Qualifications": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
       case "Emerging Technologies": return "bg-green-500/20 text-green-400 border-green-500/30";
       case "Safety & Compliance": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-      case "Specialized Skills": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
+      case "Specialised Skills": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
       case "Business & Management": return "bg-indigo-500/20 text-indigo-400 border-indigo-500/30";
       default: return "bg-white/10 text-white border-white/20";
     }

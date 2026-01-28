@@ -249,7 +249,7 @@ const EnergyEfficiencyModule6Section3 = React.lazy(() => import('@/pages/upskill
 const EnergyEfficiencyModule6Section4 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule6Section4'));
 const EnergyEfficiencyModule6Section5 = React.lazy(() => import('@/pages/upskilling/EnergyEfficiencyModule6Section5'));
 
-export const specializedCoursesRoutes = (
+export const specialisedCoursesRoutes = (
   <>
   <Route path="instrumentation-course" element={<InstrumentationCourse />} />,
   <Route path="instrumentation-module-1" element={<InstrumentationModule1 />} />,

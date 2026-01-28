@@ -2557,7 +2557,7 @@ export const module2QuestionBank: QuestionBank[] = [
       "Mobile phones"
     ],
     correctAnswer: 1,
-    explanation: "Superconductors are used in MRI machines, particle accelerators, and some specialized power applications.",
+    explanation: "Superconductors are used in MRI machines, particle accelerators, and some specialised power applications.",
     section: "2.5.5",
     difficulty: "advanced",
     topic: "Superconductor Applications"

@@ -67,7 +67,7 @@ const HigherLearning = () => {
           <p className="mb-3 sm:mb-4 text-sm sm:text-base text-white/70 leading-relaxed">
             Higher learning qualifications provide opportunities to advance your electrical career
             through formal academic and vocational routes. These qualifications can open doors to
-            senior technical roles, management positions, and specialized engineering fields.
+            senior technical roles, management positions, and specialised engineering fields.
           </p>
           <p className="text-sm sm:text-base text-white/70 leading-relaxed">
             Each pathway offers a structured curriculum designed to build on your existing skills

@@ -31,7 +31,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
         return { badge: "bg-green-500/20 text-green-400 border-green-500/30", border: "border-green-500/20 hover:border-green-500/40", glow: "bg-green-500/5" };
       case "Safety & Compliance":
         return { badge: "bg-orange-500/20 text-orange-400 border-orange-500/30", border: "border-orange-500/20 hover:border-orange-500/40", glow: "bg-orange-500/5" };
-      case "Specialized Skills":
+      case "Specialised Skills":
         return { badge: "bg-purple-500/20 text-purple-400 border-purple-500/30", border: "border-purple-500/20 hover:border-purple-500/40", glow: "bg-purple-500/5" };
       case "Business & Management":
         return { badge: "bg-indigo-500/20 text-indigo-400 border-indigo-500/30", border: "border-indigo-500/20 hover:border-indigo-500/40", glow: "bg-indigo-500/5" };

@@ -111,7 +111,7 @@ const SuppliersAndCostsTab = () => {
         "Bulk purchase discounts",
         "Shared delivery costs",
         "Group negotiation power",
-        "Split specialized tools"
+        "Split specialised tools"
       ]
     },
     {
