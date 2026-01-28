@@ -7,12 +7,21 @@ import App from "./App.tsx";
 import "./index.css";
 import ErrorBoundary from "./components/common/ErrorBoundary.tsx";
 import { initPostHog } from "./components/analytics/PostHogProvider.tsx";
-import { initSentry } from "./lib/sentry.ts";
+import { initSentry, captureError, addBreadcrumb } from "./lib/sentry.ts";
 
 console.log("[Elec-Mate] All imports loaded");
 
 // Initialize error tracking first (catches errors during init)
 initSentry();
+
+// Global network error detection
+window.addEventListener('offline', () => {
+  addBreadcrumb('Network went offline', 'network', { online: false });
+});
+
+window.addEventListener('online', () => {
+  addBreadcrumb('Network came back online', 'network', { online: true });
+});
 
 // Initialize PostHog analytics early
 initPostHog();

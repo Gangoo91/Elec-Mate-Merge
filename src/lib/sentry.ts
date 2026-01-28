@@ -10,9 +10,14 @@ export function initSentry() {
       return;
     }
 
+    // Generate release version from build time or use env variable
+    const release = import.meta.env.VITE_SENTRY_RELEASE ||
+      `elec-mate@${new Date().toISOString().split('T')[0]}`;
+
     Sentry.init({
       dsn,
       environment: import.meta.env.PROD ? "production" : "development",
+      release,
 
       // Only send errors from your domains
       allowUrls: [
@@ -226,6 +231,22 @@ export function trackMilestone(milestone: string, data?: Record<string, unknown>
     data,
     level: 'info',
   });
+}
+
+// ============================================
+// PERFORMANCE MONITORING
+// ============================================
+
+// Track slow operations
+export function trackSlowOperation(operationName: string, durationMs: number, context?: Record<string, unknown>) {
+  if (durationMs > 5000) { // Log operations over 5 seconds
+    Sentry.addBreadcrumb({
+      message: `Slow operation: ${operationName} (${durationMs}ms)`,
+      category: 'performance',
+      level: 'warning',
+      data: { durationMs, ...context },
+    });
+  }
 }
 
 // Export Sentry for advanced usage
