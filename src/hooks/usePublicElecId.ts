@@ -8,6 +8,20 @@ import type {
   ElecIdQualification,
 } from "@/services/elecIdService";
 
+// Document type for public viewing
+export interface PublicDocument {
+  id: string;
+  profile_id: string;
+  document_type: string;
+  document_name: string;
+  file_url: string | null;
+  verification_status: string | null;
+  document_number: string | null;
+  issue_date: string | null;
+  expiry_date: string | null;
+  issuing_body: string | null;
+}
+
 // Types for public profile viewing
 export interface PublicElecIdData {
   profile: ElecIdProfile;
@@ -15,6 +29,7 @@ export interface PublicElecIdData {
   ownerName: string;
   companyName: string | null;
   expiresAt: string | null;
+  documents: PublicDocument[];
 }
 
 export interface ShareLinkData {
@@ -63,8 +78,8 @@ export function usePublicElecIdByToken(token: string | undefined) {
         .eq("id", shareLink.id)
         .then(() => {});
 
-      // Get the profile
-      const profile = await fetchProfileById(shareLink.profile_id, shareLink.sections);
+      // Get the profile and documents
+      const { profile, documents } = await fetchProfileById(shareLink.profile_id, shareLink.sections);
       if (!profile) return null;
 
       return {
@@ -73,6 +88,7 @@ export function usePublicElecIdByToken(token: string | undefined) {
         ownerName: profile.employee?.name || "Unknown",
         companyName: null,
         expiresAt: shareLink.expires_at,
+        documents,
       };
     },
     enabled: !!token,
@@ -115,7 +131,7 @@ export function usePublicElecIdByNumber(elecIdNumber: string | undefined) {
         .then(() => {});
 
       // Get all related data for verification view (all sections)
-      const fullProfile = await fetchProfileById(profile.id, ["basics", "qualifications", "experience", "skills", "training"]);
+      const { profile: fullProfile, documents } = await fetchProfileById(profile.id, ["basics", "qualifications", "experience", "skills", "training"]);
       if (!fullProfile) return null;
 
       return {
@@ -124,6 +140,7 @@ export function usePublicElecIdByNumber(elecIdNumber: string | undefined) {
         ownerName: profile.employee?.name || "Unknown",
         companyName: null,
         expiresAt: null,
+        documents,
       };
     },
     enabled: !!elecIdNumber,
@@ -136,7 +153,7 @@ export function usePublicElecIdByNumber(elecIdNumber: string | undefined) {
 async function fetchProfileById(
   profileId: string,
   sections: string[]
-): Promise<ElecIdProfile | null> {
+): Promise<{ profile: ElecIdProfile | null; documents: PublicDocument[] }> {
   const { data: profile, error: profileError } = await supabase
     .from("employer_elec_id_profiles")
     .select(`
@@ -146,12 +163,13 @@ async function fetchProfileById(
     .eq("id", profileId)
     .maybeSingle();
 
-  if (profileError || !profile) return null;
+  if (profileError || !profile) return { profile: null, documents: [] };
 
   let skills: ElecIdSkill[] = [];
   let workHistory: ElecIdWorkHistory[] = [];
   let training: ElecIdTraining[] = [];
   let qualifications: ElecIdQualification[] = [];
+  let documents: PublicDocument[] = [];
 
   // Only fetch sections that are allowed
   const promises: Promise<void>[] = [];
@@ -207,13 +225,31 @@ async function fetchProfileById(
     );
   }
 
+  // Fetch verified documents for qualifications, training, and ECS card
+  if (sections.includes("qualifications") || sections.includes("training") || sections.includes("basics")) {
+    promises.push(
+      supabase
+        .from("elec_id_documents")
+        .select("id, profile_id, document_type, document_name, file_url, verification_status, document_number, issue_date, expiry_date, issuing_body")
+        .eq("profile_id", profileId)
+        .eq("verification_status", "verified")
+        .in("document_type", ["qualification", "ecs_card", "training", "certificate"])
+        .then(({ data }) => {
+          documents = (data || []) as PublicDocument[];
+        })
+    );
+  }
+
   await Promise.all(promises);
 
   return {
-    ...profile,
-    skills,
-    work_history: workHistory,
-    training,
-    qualifications,
-  } as ElecIdProfile;
+    profile: {
+      ...profile,
+      skills,
+      work_history: workHistory,
+      training,
+      qualifications,
+    } as ElecIdProfile,
+    documents,
+  };
 }
