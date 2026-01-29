@@ -724,9 +724,9 @@ serve(async (req) => {
         },
         // Business settings
         settings: {
-          quoteValidityDays: freshCompanyProfile?.quote_validity_days || 30,
+          quoteValidityDays: freshCompanyProfile?.quote_validity_days ?? 30,
           warrantyPeriod: freshCompanyProfile?.warranty_period || '12 months',
-          depositPercentage: freshCompanyProfile?.deposit_percentage || 30,
+          depositPercentage: freshCompanyProfile?.deposit_percentage ?? 30,
           paymentTerms: freshCompanyProfile?.payment_terms || '7 days',
           showMaterialsBreakdown: quoteSettings.showMaterialsBreakdown !== false,
         },
