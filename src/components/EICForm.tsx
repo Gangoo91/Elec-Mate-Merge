@@ -429,10 +429,11 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       }
 
       // Step 2: Load from cloud (use ref to avoid stale dep loop)
-      loadFromCloudRef.current(initialReportId).then(cloudData => {
+      loadFromCloudRef.current(initialReportId).then(cloudResult => {
         // Step 3: Compare timestamps - use whichever is NEWER
-        if (cloudData && typeof cloudData === 'object') {
-          const data = cloudData as any;
+        // cloudResult is now { data, databaseId } format
+        if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
+          const data = cloudResult.data as any;
           const cloudTime = new Date(data.updated_at || data.last_synced_at || 0).getTime();
           const localTime = localDraft?.lastModified ? new Date(localDraft.lastModified).getTime() : 0;
 
