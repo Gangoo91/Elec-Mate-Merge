@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { FileText, ArrowRight, Clock, ChevronRight, MapPin, Plus } from 'lucide-react';
+import { FileText, ArrowRight, Clock, ChevronRight, MapPin, Plus, CloudOff, AlertCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { reportCloud, CloudReport } from '@/utils/reportCloud';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { cn } from '@/lib/utils';
+import { listAllBackups } from '@/utils/dataIntegrity';
 
 interface RecentCertificatesCardProps {
   onNavigate: (section: string, reportId?: string, reportType?: string) => void;
@@ -30,11 +31,26 @@ const cardVariants = {
   }
 };
 
+// Type for local backups
+interface LocalBackup {
+  reportType: string;
+  reportId: string;
+  savedAt: string;
+  fieldCount: number;
+}
+
 const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => {
   const [user, setUser] = useState<any>(null);
+  const [localBackups, setLocalBackups] = useState<LocalBackup[]>([]);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
+  }, []);
+
+  // Check for local backups on mount
+  useEffect(() => {
+    const backups = listAllBackups();
+    setLocalBackups(backups);
   }, []);
 
   const { data: reportsData, isLoading } = useQuery({
@@ -49,6 +65,35 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
   });
 
   const reports = reportsData?.reports ?? [];
+
+  // Create a map of report IDs that have local backups
+  const backupMap = useMemo(() => {
+    const map = new Map<string, LocalBackup>();
+    localBackups.forEach(backup => {
+      map.set(backup.reportId, backup);
+    });
+    return map;
+  }, [localBackups]);
+
+  // Check if a report has a local backup that's newer than cloud
+  const hasNewerLocalBackup = (report: CloudReport): LocalBackup | null => {
+    const backup = backupMap.get(report.report_id);
+    if (!backup) return null;
+
+    const cloudTime = new Date(report.updated_at).getTime();
+    const localTime = new Date(backup.savedAt).getTime();
+
+    // If local backup is newer, return it
+    if (localTime > cloudTime) {
+      return backup;
+    }
+    return null;
+  };
+
+  // Count reports with unsynced local changes
+  const unsyncedCount = useMemo(() => {
+    return reports.filter(r => hasNewerLocalBackup(r) !== null).length;
+  }, [reports, backupMap]);
 
   const getStatusLabel = (status: string) => {
     switch (status) {
@@ -145,6 +190,16 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
 
   return (
     <div className="bg-card border border-elec-yellow/20 rounded-xl overflow-hidden">
+      {/* Unsynced Changes Banner */}
+      {unsyncedCount > 0 && (
+        <div className="px-3 py-2 bg-amber-500/10 border-b border-amber-500/20 flex items-center gap-2">
+          <CloudOff className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
+          <span className="text-[11px] text-amber-400">
+            {unsyncedCount} certificate{unsyncedCount > 1 ? 's have' : ' has'} unsynced local changes
+          </span>
+        </div>
+      )}
+
       {/* Header */}
       <div className="p-3 border-b border-elec-yellow/10">
         <div className="flex items-center justify-between">
@@ -171,58 +226,89 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
         animate="show"
       >
         <AnimatePresence>
-          {reports.map((report) => (
-            <motion.button
-              key={report.report_id}
-              variants={cardVariants}
-              layout
-              className={cn(
-                'w-full rounded-lg border border-elec-yellow/10 bg-elec-yellow/5',
-                'cursor-pointer transition-all touch-manipulation',
-                'active:scale-[0.98] hover:border-elec-yellow/30',
-                'p-2.5 text-left'
-              )}
-              onClick={() => handleOpenCertificate(report)}
-            >
-              <div className="flex items-center gap-2.5">
-                {/* Type Badge */}
-                <div className="w-9 h-9 rounded-lg bg-elec-yellow/15 flex items-center justify-center flex-shrink-0">
-                  <span className="text-[10px] font-bold text-elec-yellow">{getTypeLabel(report.report_type)}</span>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 min-w-0">
-                  {/* Name and Status */}
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-xs font-medium text-white truncate">
-                      {report.client_name || 'Untitled'}
-                    </span>
+          {reports.map((report) => {
+            const localBackup = hasNewerLocalBackup(report);
+            return (
+              <motion.button
+                key={report.report_id}
+                variants={cardVariants}
+                layout
+                className={cn(
+                  'w-full rounded-lg border bg-elec-yellow/5',
+                  'cursor-pointer transition-all touch-manipulation',
+                  'active:scale-[0.98]',
+                  'p-2.5 text-left',
+                  localBackup
+                    ? 'border-amber-500/30 hover:border-amber-500/50'
+                    : 'border-elec-yellow/10 hover:border-elec-yellow/30'
+                )}
+                onClick={() => handleOpenCertificate(report)}
+              >
+                <div className="flex items-center gap-2.5">
+                  {/* Type Badge */}
+                  <div className={cn(
+                    'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 relative',
+                    localBackup ? 'bg-amber-500/15' : 'bg-elec-yellow/15'
+                  )}>
                     <span className={cn(
-                      'text-[9px] font-medium px-1.5 py-0.5 rounded-full flex-shrink-0',
-                      getStatusStyle(report.status)
+                      'text-[10px] font-bold',
+                      localBackup ? 'text-amber-400' : 'text-elec-yellow'
                     )}>
-                      {getStatusLabel(report.status)}
+                      {getTypeLabel(report.report_type)}
                     </span>
+                    {/* Local backup indicator dot */}
+                    {localBackup && (
+                      <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-amber-500 rounded-full border border-card" />
+                    )}
                   </div>
 
-                  {/* Address & Time */}
-                  <div className="flex items-center gap-2 text-[10px] text-white/40">
-                    <span className="flex items-center gap-1 truncate">
-                      <MapPin className="w-2.5 h-2.5 flex-shrink-0" />
-                      <span className="truncate">{report.installation_address || 'No address'}</span>
-                    </span>
-                    <span className="flex items-center gap-1 flex-shrink-0">
-                      <Clock className="w-2.5 h-2.5" />
-                      {formatTimeAgo(report.updated_at)}
-                    </span>
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    {/* Name and Status */}
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="text-xs font-medium text-white truncate">
+                        {report.client_name || 'Untitled'}
+                      </span>
+                      {localBackup ? (
+                        <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full flex-shrink-0 bg-amber-500/15 text-amber-400 flex items-center gap-1">
+                          <AlertCircle className="w-2.5 h-2.5" />
+                          Unsynced
+                        </span>
+                      ) : (
+                        <span className={cn(
+                          'text-[9px] font-medium px-1.5 py-0.5 rounded-full flex-shrink-0',
+                          getStatusStyle(report.status)
+                        )}>
+                          {getStatusLabel(report.status)}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Address & Time */}
+                    <div className="flex items-center gap-2 text-[10px] text-white/40">
+                      <span className="flex items-center gap-1 truncate">
+                        <MapPin className="w-2.5 h-2.5 flex-shrink-0" />
+                        <span className="truncate">{report.installation_address || 'No address'}</span>
+                      </span>
+                      <span className="flex items-center gap-1 flex-shrink-0">
+                        <Clock className="w-2.5 h-2.5" />
+                        {localBackup
+                          ? `Local: ${formatTimeAgo(localBackup.savedAt)}`
+                          : formatTimeAgo(report.updated_at)
+                        }
+                      </span>
+                    </div>
                   </div>
+
+                  {/* Chevron */}
+                  <ChevronRight className={cn(
+                    'w-4 h-4 flex-shrink-0',
+                    localBackup ? 'text-amber-400/50' : 'text-elec-yellow/30'
+                  )} />
                 </div>
-
-                {/* Chevron */}
-                <ChevronRight className="w-4 h-4 text-elec-yellow/30 flex-shrink-0" />
-              </div>
-            </motion.button>
-          ))}
+              </motion.button>
+            );
+          })}
         </AnimatePresence>
       </motion.div>
     </div>
