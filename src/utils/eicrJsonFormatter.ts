@@ -193,12 +193,13 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     if (!Array.isArray(boards) || boards.length <= 1) return [];
 
     // Skip the first board (main board) and return the rest
+    // Use field names from DistributionBoard type: name, reference, location, make, type, totalWays, zdb, ipf
     return boards.slice(1).map((board: any) => ({
-      designation: board.designation || board.boardDesignation || '',
-      location: board.location || board.boardLocation || '',
-      manufacturer: board.manufacturer || board.boardManufacturer || '',
-      board_type: board.boardType || board.cuType || '',
-      ways: board.ways || board.numberOfWays || '',
+      designation: board.name || board.reference || board.designation || '',
+      location: board.location || '',
+      manufacturer: board.make || board.manufacturer || '',
+      board_type: board.type || board.boardType || '',
+      ways: board.totalWays?.toString() || board.ways || '',
       zdb: board.zdb || '',
       ipf: board.ipf || ''
     }));
@@ -434,27 +435,36 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       service_entry: get('serviceEntry')
     },
     
-    main_protective_device: {
-      device_type: get('mainProtectiveDeviceCustom') || get('mainProtectiveDevice'),
-      main_switch_rating: get('mainSwitchRating'),
-      main_switch_location: get('cuLocation'),
-      breaking_capacity: get('breakingCapacity')
-    },
-    
+    main_protective_device: (() => {
+      // Get main board for location fallback
+      const mainBoard = formData.distributionBoards?.[0];
+      return {
+        device_type: get('mainProtectiveDeviceCustom') || get('mainProtectiveDevice'),
+        main_switch_rating: get('mainSwitchRating'),
+        main_switch_location: get('cuLocation') || mainBoard?.location || '',
+        breaking_capacity: get('breakingCapacity')
+      };
+    })(),
+
     rcd_details: {
       rcd_main_switch: get('rcdMainSwitch'),
       rcd_rating: get('rcdRating'),
       rcd_type: get('rcdType')
     },
-    
-    distribution_board: {
-      board_designation: get('boardDesignation', 'Main DB'),
-      board_size: get('boardSize'),
-      board_type: get('cuType'),
-      board_location: get('cuLocation'),
-      board_manufacturer: get('cuManufacturer'),
-      board_ways: get('cuNumberOfWays')
-    },
+
+    distribution_board: (() => {
+      // Read from distributionBoards array if available, fall back to legacy flat fields
+      const mainBoard = formData.distributionBoards?.[0];
+      const boardSize = mainBoard?.totalWays ? `${mainBoard.totalWays}-way` : get('boardSize');
+      return {
+        board_designation: mainBoard?.name || mainBoard?.reference || get('boardDesignation', 'Main DB'),
+        board_size: boardSize,
+        board_type: mainBoard?.type || get('cuType'),
+        board_location: mainBoard?.location || get('cuLocation'),
+        board_manufacturer: mainBoard?.make || get('cuManufacturer'),
+        board_ways: mainBoard?.totalWays?.toString() || get('cuNumberOfWays') || ''
+      };
+    })(),
     
     cables: {
       intake_cable_size: get('intakeCableSize'),
@@ -463,35 +473,50 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       tails_length: get('tailsLength')
     },
     
-    earthing_bonding: {
-      earth_electrode_type: get('earthElectrodeType'),
-      earth_electrode_resistance: get('earthElectrodeResistance'),
-      main_earthing_conductor_type: get('mainEarthingConductorType'),
-      main_earthing_conductor_size: get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize'),
-      main_earthing_conductor: (() => {
-        const size = get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize');
-        const type = get('mainEarthingConductorType');
-        if (size && type) return `${size}mm² ${type}`;
-        if (size) return `${size}mm²`;
-        return '';
-      })(),
-      main_bonding_conductor_type: get('mainBondingConductorType'),
-      main_bonding_conductor: (() => {
-        const size = get('mainBondingSizeCustom') || get('mainBondingSize');
-        const type = get('mainBondingConductorType');
-        if (size && type) return `${size}mm² ${type}`;
-        if (size) return `${size}mm²`;
-        return '';
-      })(),
-      main_bonding_size: get('mainBondingSizeCustom') || get('mainBondingSize'),
-      main_bonding_size_custom: get('mainBondingSizeCustom'),
-      main_bonding_locations: get('mainBondingLocations'),
-      bonding_compliance: get('bondingCompliance'),
-      supplementary_bonding: get('supplementaryBonding'),
-      supplementary_bonding_size: get('supplementaryBondingSizeCustom') || get('supplementaryBondingSize'),
-      supplementary_bonding_size_custom: get('supplementaryBondingSizeCustom'),
-      equipotential_bonding: get('equipotentialBonding')
-    },
+    earthing_bonding: (() => {
+      // Parse mainBondingLocations string to derive boolean values for PDF
+      // Form stores "Water, Gas, Oil" etc. as comma-separated string
+      const bondingStr = (formData.mainBondingLocations || '').toLowerCase();
+
+      return {
+        earth_electrode_type: get('earthElectrodeType'),
+        earth_electrode_location: get('earthElectrodeLocation'),
+        earth_electrode_resistance: get('earthElectrodeResistance'),
+        main_earthing_conductor_type: get('mainEarthingConductorType'),
+        main_earthing_conductor_size: get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize'),
+        main_earthing_conductor: (() => {
+          const size = get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize');
+          const type = get('mainEarthingConductorType');
+          if (size && type) return `${size}mm² ${type}`;
+          if (size) return `${size}mm²`;
+          return '';
+        })(),
+        main_bonding_conductor_type: get('mainBondingConductorType'),
+        main_bonding_conductor: (() => {
+          const size = get('mainBondingSizeCustom') || get('mainBondingSize');
+          const type = get('mainBondingConductorType');
+          if (size && type) return `${size}mm² ${type}`;
+          if (size) return `${size}mm²`;
+          return '';
+        })(),
+        main_bonding_size: get('mainBondingSizeCustom') || get('mainBondingSize'),
+        main_bonding_size_custom: get('mainBondingSizeCustom'),
+        main_bonding_locations: get('mainBondingLocations'),
+        // Bonding connections - parse from mainBondingLocations string
+        bonding_water: bondingStr.includes('water'),
+        bonding_gas: bondingStr.includes('gas'),
+        bonding_oil: bondingStr.includes('oil'),
+        bonding_structural_steel: bondingStr.includes('steel') || bondingStr.includes('structural'),
+        bonding_lightning_protection: bondingStr.includes('lightning'),
+        bonding_other: bondingStr.includes('telecom') || bondingStr.includes('other'),
+        bonding_other_specify: get('bondingOtherSpecify'),
+        bonding_compliance: get('bondingCompliance'),
+        supplementary_bonding: get('supplementaryBonding'),
+        supplementary_bonding_size: get('supplementaryBondingSizeCustom') || get('supplementaryBondingSize'),
+        supplementary_bonding_size_custom: get('supplementaryBondingSizeCustom'),
+        equipotential_bonding: get('equipotentialBonding')
+      };
+    })(),
     
     inspection_checklist: formatInspectionItems(),
 
@@ -520,22 +545,35 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       test_notes: get('testNotes')
     },
     
-    distribution_board_verification: {
-      db_reference: get('dbReference'),
-      zdb: get('zdb'),
-      ipf: get('ipf'),
-      confirmed_correct_polarity: getBool('confirmedCorrectPolarity'),
-      confirmed_phase_sequence: getBool('confirmedPhaseSequence'),
-      spd_operational_status: getBool('spdOperationalStatus'),
-      spd_na: getBool('spdNA')
-    },
+    distribution_board_verification: (() => {
+      // Read from distributionBoards array if available, fall back to legacy flat fields
+      const mainBoard = formData.distributionBoards?.[0];
+      return {
+        db_reference: mainBoard?.reference || mainBoard?.name || get('dbReference') || 'Main DB',
+        zdb: mainBoard?.zdb || get('zdb') || '',
+        ipf: mainBoard?.ipf || get('ipf') || '',
+        confirmed_correct_polarity: mainBoard?.confirmedCorrectPolarity ?? getBool('confirmedCorrectPolarity'),
+        confirmed_phase_sequence: mainBoard?.confirmedPhaseSequence ?? getBool('confirmedPhaseSequence'),
+        spd_operational_status: mainBoard?.spdOperationalStatus ?? getBool('spdOperationalStatus'),
+        spd_na: mainBoard?.spdNA ?? getBool('spdNA'),
+        // SPD Type checkboxes
+        spd_t1: mainBoard?.spdT1 ?? false,
+        spd_t2: mainBoard?.spdT2 ?? false,
+        spd_t3: mainBoard?.spdT3 ?? false
+      };
+    })(),
     
     designer: {
       name: get('designerName'),
       qualifications: get('designerQualifications'),
-      company: get('designerCompany'),
+      company: get('companyName') || get('designerCompany'),
+      address: get('companyAddress') || get('designerAddress'),
+      postcode: get('companyPostcode') || get('designerPostcode'),
+      phone: get('companyPhone') || get('designerPhone'),
       date: get('designerDate'),
-      signature: get('designerSignature')
+      signature: get('designerSignature'),
+      departures: get('designerDepartures'),
+      permitted_exceptions: get('permittedExceptions')
     },
     
     constructor: {
@@ -602,7 +640,212 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       insurance_coverage: get('insuranceCoverage'),
       insurance_expiry: get('insuranceExpiry')
     },
-    
-    observations: await formatDefects()
+
+    observations: await formatDefects(),
+
+    // ============================================
+    // TOP-LEVEL COPIES FOR PDF TEMPLATE COMPATIBILITY
+    // Multiple naming conventions to match template
+    // ============================================
+
+    // Earth electrode - various naming conventions
+    earth_electrode_type: get('earthElectrodeType'),
+    earth_electrode_location: get('earthElectrodeLocation'),
+    earth_electrode_resistance: get('earthElectrodeResistance'),
+    earthElectrodeType: get('earthElectrodeType'),
+    earthElectrodeLocation: get('earthElectrodeLocation'),
+    earthElectrodeResistance: get('earthElectrodeResistance'),
+
+    // Departures - various naming conventions
+    departures: get('designerDepartures'),
+    designer_departures: get('designerDepartures'),
+    designerDepartures: get('designerDepartures'),
+    details_of_departures: get('designerDepartures'),
+
+    // Permitted exceptions - various naming conventions
+    permitted_exceptions: get('permittedExceptions'),
+    permittedExceptions: get('permittedExceptions'),
+    details_of_permitted_exceptions: get('permittedExceptions'),
+    exceptions: get('permittedExceptions'),
+
+    // Main switch location - various naming conventions
+    main_switch_location: get('cuLocation') || get('mainSwitchLocation'),
+    mainSwitchLocation: get('cuLocation') || get('mainSwitchLocation'),
+
+    // ============================================
+    // COMPREHENSIVE TOP-LEVEL FIELD COPIES
+    // Ensures all form fields accessible at root level
+    // ============================================
+
+    // Supply Authority
+    dno_name: get('dnoName'),
+    dnoName: get('dnoName'),
+    mpan: get('mpan'),
+    cutout_location: get('cutoutLocation'),
+    cutoutLocation: get('cutoutLocation'),
+
+    // Supply Details
+    phases: get('phases'),
+    supply_voltage: get('supplyVoltageCustom') || get('supplyVoltage'),
+    supplyVoltage: get('supplyVoltageCustom') || get('supplyVoltage'),
+    supply_frequency: get('supplyFrequency', '50'),
+    supply_pme: get('supplyPME'),
+    supplyPME: get('supplyPME'),
+    earthing_arrangement: get('earthingArrangement'),
+    earthingArrangement: get('earthingArrangement'),
+
+    // Main Protective Device (flat - camelCase only to avoid duplicate with nested object)
+    mainProtectiveDevice: get('mainProtectiveDeviceCustom') || get('mainProtectiveDevice'),
+    main_protective_device_type: get('mainProtectiveDeviceCustom') || get('mainProtectiveDevice'),
+    rcd_main_switch: get('rcdMainSwitch'),
+    rcdMainSwitch: get('rcdMainSwitch'),
+    rcd_rating: get('rcdRating'),
+    rcdRating: get('rcdRating'),
+
+    // Client Details
+    client_name: get('clientName'),
+    clientName: get('clientName'),
+    client_address: get('clientAddress'),
+    clientAddress: get('clientAddress'),
+    client_phone: get('clientPhone'),
+    clientPhone: get('clientPhone'),
+    client_email: get('clientEmail'),
+    clientEmail: get('clientEmail'),
+    installation_address: get('installationAddress'),
+    installationAddress: get('installationAddress'),
+
+    // Installation Details
+    installation_type: get('installationType'),
+    installationType: get('installationType'),
+    description: get('description'),
+    estimated_age: get('estimatedAge'),
+    estimatedAge: get('estimatedAge'),
+    age_unit: get('ageUnit'),
+    ageUnit: get('ageUnit'),
+    last_inspection_type: get('lastInspectionType'),
+    date_of_last_inspection: get('dateOfLastInspection'),
+    evidence_of_alterations: get('evidenceOfAlterations'),
+    alterations_details: get('alterationsDetails'),
+
+    // Inspection Details
+    inspection_date: get('inspectionDate'),
+    inspectionDate: get('inspectionDate'),
+    next_inspection_date: get('nextInspectionDate'),
+    nextInspectionDate: get('nextInspectionDate'),
+    inspection_interval: get('inspectionInterval'),
+    inspectionInterval: get('inspectionInterval'),
+    purpose_of_inspection: get('purposeOfInspection'),
+    purposeOfInspection: get('purposeOfInspection'),
+    other_purpose: get('otherPurpose'),
+    extent_of_inspection: get('extentOfInspection'),
+    extentOfInspection: get('extentOfInspection'),
+    limitations_of_inspection: get('limitationsOfInspection'),
+    limitationsOfInspection: get('limitationsOfInspection'),
+
+    // Distribution Board (flat)
+    db_location: formData.distributionBoards?.[0]?.location || get('cuLocation'),
+    db_manufacturer: formData.distributionBoards?.[0]?.make || get('cuManufacturer'),
+    db_type: formData.distributionBoards?.[0]?.type || get('cuType'),
+    db_ways: formData.distributionBoards?.[0]?.totalWays?.toString() || '',
+    db_reference: formData.distributionBoards?.[0]?.reference || formData.distributionBoards?.[0]?.name || 'Main DB',
+    db_zdb: formData.distributionBoards?.[0]?.zdb || '',
+    db_ipf: formData.distributionBoards?.[0]?.ipf || '',
+
+    // Cables (flat)
+    intake_cable_size: get('intakeCableSize'),
+    intakeCableSize: get('intakeCableSize'),
+    intake_cable_type: get('intakeCableType'),
+    intakeCableType: get('intakeCableType'),
+    tails_size: get('tailsSize'),
+    tailsSize: get('tailsSize'),
+    tails_length: get('tailsLength'),
+    tailsLength: get('tailsLength'),
+
+    // Earthing & Bonding (flat)
+    main_earthing_conductor_type: get('mainEarthingConductorType'),
+    mainEarthingConductorType: get('mainEarthingConductorType'),
+    main_earthing_conductor_size: get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize'),
+    mainEarthingConductorSize: get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize'),
+    main_bonding_conductor_type: get('mainBondingConductorType'),
+    mainBondingConductorType: get('mainBondingConductorType'),
+    main_bonding_size: get('mainBondingSizeCustom') || get('mainBondingSize'),
+    mainBondingSize: get('mainBondingSizeCustom') || get('mainBondingSize'),
+    main_bonding_locations: get('mainBondingLocations'),
+    mainBondingLocations: get('mainBondingLocations'),
+    bonding_compliance: get('bondingCompliance'),
+    bondingCompliance: get('bondingCompliance'),
+    supplementary_bonding_size: get('supplementaryBondingSizeCustom') || get('supplementaryBondingSize'),
+    supplementaryBondingSize: get('supplementaryBondingSizeCustom') || get('supplementaryBondingSize'),
+    equipotential_bonding: get('equipotentialBonding'),
+    equipotentialBonding: get('equipotentialBonding'),
+
+    // Overall Assessment & Summary
+    overall_assessment: get('overallAssessment'),
+    overallAssessment: get('overallAssessment'),
+    satisfactory_for_continued_use: getBool('satisfactoryForContinuedUse'),
+    satisfactoryForContinuedUse: getBool('satisfactoryForContinuedUse'),
+    additional_comments: get('additionalComments'),
+    additionalComments: get('additionalComments'),
+
+    // Inspected By (flat)
+    inspected_by_name: get('inspectedByName'),
+    inspectedByName: get('inspectedByName'),
+    inspected_by_signature: get('inspectedBySignature'),
+    inspectedBySignature: get('inspectedBySignature'),
+    inspected_by_for_on_behalf_of: get('inspectedByForOnBehalfOf'),
+    inspected_by_position: get('inspectedByPosition'),
+    inspected_by_address: get('inspectedByAddress'),
+    inspected_by_cp_scheme: get('inspectedByCpScheme'),
+
+    // Report Authorised By (flat)
+    report_authorised_by_name: get('reportAuthorisedByName'),
+    report_authorised_by_date: get('reportAuthorisedByDate'),
+    report_authorised_by_signature: get('reportAuthorisedBySignature'),
+    report_authorised_by_for_on_behalf_of: get('reportAuthorisedByForOnBehalfOf'),
+    report_authorised_by_position: get('reportAuthorisedByPosition'),
+    report_authorised_by_address: get('reportAuthorisedByAddress'),
+    report_authorised_by_membership_no: get('reportAuthorisedByMembershipNo'),
+
+    // Inspector Details (flat)
+    inspector_name: get('inspectorName'),
+    inspectorName: get('inspectorName'),
+    inspector_qualifications: get('inspectorQualifications'),
+    inspectorQualifications: get('inspectorQualifications'),
+    inspector_signature: get('inspectorSignature'),
+    inspectorSignature: get('inspectorSignature'),
+    registration_scheme: get('registrationScheme'),
+    registrationScheme: get('registrationScheme'),
+    registration_number: get('registrationNumber'),
+    registrationNumber: get('registrationNumber'),
+    registration_expiry: get('registrationExpiry'),
+    registrationExpiry: get('registrationExpiry'),
+
+    // Insurance (flat)
+    insurance_provider: get('insuranceProvider'),
+    insuranceProvider: get('insuranceProvider'),
+    insurance_policy_number: get('insurancePolicyNumber'),
+    insurancePolicyNumber: get('insurancePolicyNumber'),
+    insurance_coverage: get('insuranceCoverage'),
+    insuranceCoverage: get('insuranceCoverage'),
+    insurance_expiry: get('insuranceExpiry'),
+    insuranceExpiry: get('insuranceExpiry'),
+
+    // Company Details (flat)
+    company_name: get('companyName'),
+    companyName: get('companyName'),
+    company_address: get('companyAddress'),
+    companyAddress: get('companyAddress'),
+    company_phone: get('companyPhone'),
+    companyPhone: get('companyPhone'),
+    company_email: get('companyEmail'),
+    companyEmail: get('companyEmail'),
+    company_logo: get('companyLogo'),
+    companyLogo: get('companyLogo'),
+    company_website: get('companyWebsite'),
+    companyWebsite: get('companyWebsite'),
+    company_tagline: get('companyTagline'),
+    companyTagline: get('companyTagline'),
+    company_accent_color: get('companyAccentColor'),
+    companyAccentColor: get('companyAccentColor')
   };
 };

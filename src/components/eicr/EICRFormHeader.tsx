@@ -94,27 +94,50 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
     );
   }
 
-  // Desktop layout - clean header only
+  // Format certificate number for display (truncate old ugly format)
+  const formatCertNumber = (certNumber: string | null) => {
+    if (!certNumber) return null;
+    // If it's the new clean format (EICR-2026-0001), show as-is
+    if (/^(EICR|EIC|MW)-\d{4}-\d{4,6}$/.test(certNumber)) {
+      return certNumber;
+    }
+    // If it's the fallback format with 6 chars (EICR-2026-A1B2C3), show as-is
+    if (/^(EICR|EIC|MW)-\d{4}-[A-Z0-9]{6}$/.test(certNumber)) {
+      return certNumber;
+    }
+    // For old ugly timestamps, just show shortened version
+    const parts = certNumber.split('-');
+    if (parts.length >= 2) {
+      return `${parts[0]}-${parts[1]?.substring(0, 4) || ''}...`;
+    }
+    return certNumber.substring(0, 15) + '...';
+  };
+
+  // Desktop layout - clean professional header
   return (
-    <div className="flex items-center gap-3 mb-4">
+    <div className="flex items-center gap-4 mb-4 pb-4 border-b border-border/30">
       <Button
         variant="ghost"
         onClick={handleBack}
         size="sm"
-        className="gap-1.5 -ml-2"
+        className="gap-1.5 -ml-2 text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" />
         Back
       </Button>
 
-      <div className="flex items-center gap-2 flex-1">
-        <Zap className="h-5 w-5 text-elec-yellow" />
-        <h1 className="text-lg font-semibold">EICR - Condition Report</h1>
-        {currentReportId && (
-          <span className="text-xs text-muted-foreground font-mono bg-muted/50 px-2 py-0.5 rounded">
-            {currentReportId}
-          </span>
-        )}
+      <div className="flex items-center gap-3 flex-1">
+        <div className="flex items-center justify-center h-9 w-9 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+          <Zap className="h-4 w-4 text-elec-yellow" />
+        </div>
+        <div className="flex flex-col">
+          <h1 className="text-base font-semibold leading-tight">EICR - Condition Report</h1>
+          {currentReportId && (
+            <span className="text-xs text-muted-foreground font-mono">
+              {formatCertNumber(currentReportId)}
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="flex items-center gap-2">
@@ -128,7 +151,7 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
           onClick={() => { haptics.tap(); onStartNew(); }}
           variant="outline"
           size="sm"
-          className="border-border/50"
+          className="border-border/40 hover:border-border/60"
         >
           <Plus className="h-4 w-4 mr-1.5" />
           New
@@ -136,9 +159,8 @@ const EICRFormHeader: React.FC<EICRFormHeaderProps> = ({
         <Button
           onClick={handleSave}
           disabled={isSaving || syncStatus === 'syncing'}
-          variant="outline"
           size="sm"
-          className="border-border/50"
+          className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
         >
           <Save className="h-4 w-4 mr-1.5" />
           Save

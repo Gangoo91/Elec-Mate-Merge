@@ -58,8 +58,10 @@ const EICRObservationsActions = ({
     try {
       console.log('Generating EICR PDF for email...');
       
-      // Generate a report ID if not provided
-      const reportIdToUse = reportId || `EICR-${Date.now()}`;
+      // Generate a report ID if not provided - use clean format: EICR-YYYY-XXXXXX
+      const year = new Date().getFullYear();
+      const randomId = crypto.randomUUID().replace(/-/g, '').substring(0, 6).toUpperCase();
+      const reportIdToUse = reportId || `EICR-${year}-${randomId}`;
       
       // Format the data properly before sending to edge function
       const formattedData = await formatEICRJson(formData, reportIdToUse);

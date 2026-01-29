@@ -71,7 +71,10 @@ export const createEICRTemplate = (): EICRPDFTemplate => {
     yPos += 15;
     pdf.setFontSize(10);
     pdf.setFont('helvetica', 'normal');
-    const certRef = formData.certificateReference || `EICR-${Date.now().toString().slice(-6)}`;
+    // Use clean format for fallback: EICR-YYYY-XXXXXX
+    const year = new Date().getFullYear();
+    const randomId = crypto.randomUUID().replace(/-/g, '').substring(0, 6).toUpperCase();
+    const certRef = formData.certificateReference || formData.certificateNumber || `EICR-${year}-${randomId}`;
     
     // Certificate info box
     pdf.setDrawColor(200, 200, 200);

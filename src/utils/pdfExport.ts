@@ -466,8 +466,10 @@ export const exportCompleteEICRToPDF = async (
   const margin = 15;
   let yPos = margin;
 
-  // Certificate ID
-  const certificateId = sanitizedFormData.certificateReference || sanitizedFormData.certificateNumber || `EICR-${Date.now().toString().slice(-6)}`;
+  // Certificate ID - use clean format for fallback: EICR-YYYY-XXXXXX
+  const year = new Date().getFullYear();
+  const randomId = crypto.randomUUID().replace(/-/g, '').substring(0, 6).toUpperCase();
+  const certificateId = sanitizedFormData.certificateReference || sanitizedFormData.certificateNumber || `EICR-${year}-${randomId}`;
 
   // ==================== PAGE 1: HEADER & CLIENT DETAILS ====================
 
