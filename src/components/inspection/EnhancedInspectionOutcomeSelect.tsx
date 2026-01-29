@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, X, AlertTriangle, AlertCircle, Circle, FileText, Info } from 'lucide-react';
+import { Check, X, AlertTriangle, AlertCircle, Circle, FileText, Info, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface InspectionItem {
@@ -8,7 +8,7 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'FI' | 'not-applicable' | 'not-verified' | 'limitation' | '';
   notes?: string;
 }
 
@@ -53,6 +53,13 @@ const primaryOutcomes = [
 
 // Secondary outcomes (less common)
 const secondaryOutcomes = [
+  {
+    value: 'FI' as const,
+    label: 'FI',
+    icon: Search,
+    activeClass: 'bg-blue-400 text-white border-blue-400',
+    inactiveClass: 'bg-blue-400/10 border-blue-400/30 text-blue-300 hover:bg-blue-400/20'
+  },
   {
     value: 'not-applicable' as const,
     label: 'N/A',

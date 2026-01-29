@@ -154,6 +154,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
       <TableRow
         data-circuit-id={result.id}
         className={`${getRowBgColor()} border-b border-border/30 transition-colors`}
+        style={{ contentVisibility: 'auto', containIntrinsicSize: '0 36px' }}
       >
         {/* Circuit Number - Always visible */}
         <TableCell className="sticky left-0 z-30 p-0 h-8 align-middle w-20 min-w-[80px] max-w-[80px]" style={{ backgroundColor: 'inherit' }}>
@@ -266,4 +267,20 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   );
 };
 
-export default React.memo(EnhancedTestResultDesktopTableRow);
+// Custom comparator: Set objects need deep comparison to avoid busting memo on every render
+const arePropsEqual = (prev: EnhancedTestResultDesktopTableRowProps, next: EnhancedTestResultDesktopTableRowProps) => {
+  if (prev.result !== next.result) return false;
+  if (prev.onUpdate !== next.onUpdate) return false;
+  if (prev.onRemove !== next.onRemove) return false;
+  if (prev.onBulkUpdate !== next.onBulkUpdate) return false;
+  if (prev.showRegulationStatus !== next.showRegulationStatus) return false;
+  if (prev.rowNumber !== next.rowNumber) return false;
+  // Deep compare Sets: same size and same entries
+  if (prev.collapsedGroups.size !== next.collapsedGroups.size) return false;
+  for (const key of prev.collapsedGroups) {
+    if (!next.collapsedGroups.has(key)) return false;
+  }
+  return true;
+};
+
+export default React.memo(EnhancedTestResultDesktopTableRow, arePropsEqual);

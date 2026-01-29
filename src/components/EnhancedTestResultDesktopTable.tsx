@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Table, TableBody } from '@/components/ui/table';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+// Native scroll used instead of Radix ScrollArea for performance with many rows
 import { TestResult } from '@/types/testResult';
 import { Zap, BookOpen, Camera, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -253,7 +253,14 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
           </div>
         ) : (
         <div className="bg-background rounded-lg shadow-md border border-border/80 overflow-hidden">
-          <ScrollArea className="w-full h-[calc(100vh-140px)] enhanced-table-scroll" style={{ overscrollBehaviorX: 'contain' }}>
+          <div
+            className="w-full overflow-auto enhanced-table-scroll"
+            style={{
+              maxHeight: 'calc(100vh - 140px)',
+              overscrollBehavior: 'contain',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
             <div className="min-w-max enhanced-table-scroll">
               <Table useWrapper={false} className="text-sm border-separate border-spacing-0 w-full">
                   <EnhancedTestResultDesktopTableHeader
@@ -288,9 +295,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
               </TableBody>
             </Table>
           </div>
-          <ScrollBar orientation="horizontal" className="h-3 sticky bottom-0 z-40 bg-background border-t border-border shadow-[0_-2px_8px_rgba(0,0,0,0.1)]" />
-          <ScrollBar orientation="vertical" className="w-3 z-40 opacity-100" />
-        </ScrollArea>
+          </div>
           </div>
         )}
       </div>

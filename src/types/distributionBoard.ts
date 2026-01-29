@@ -73,6 +73,12 @@ export interface DistributionBoard {
   type?: BoardType;                  // Board enclosure type
   totalWays?: number;                // Board size (from BOARD_SIZES)
 
+  // Schedule page headers (BS 7671 model form)
+  suppliedFrom?: string;             // "Main DB", "Sub-DB1" - which board feeds this one
+  incomingDeviceBsEn?: string;       // BS EN standard of incoming protective device
+  incomingDeviceType?: string;       // Type of incoming protective device (MCB, MCCB, etc.)
+  incomingDeviceRating?: string;     // Rating (A) of incoming protective device
+
   // Timestamps
   createdAt?: Date;
   updatedAt?: Date;

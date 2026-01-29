@@ -119,13 +119,20 @@ export const CircuitList: React.FC<CircuitListProps> = ({
     <>
       <div className={cn('space-y-1.5', className)}>
         {circuits.map((circuit) => (
-          <CircuitCard
+          <div
             key={circuit.id}
-            circuit={circuit}
-            onEdit={handleEdit}
-            onDelete={onRemove}
-            enableSwipe={true}
-          />
+            style={{
+              contentVisibility: 'auto',
+              containIntrinsicSize: '0 180px',
+            }}
+          >
+            <CircuitCard
+              circuit={circuit}
+              onEdit={handleEdit}
+              onDelete={onRemove}
+              enableSwipe={true}
+            />
+          </div>
         ))}
       </div>
 

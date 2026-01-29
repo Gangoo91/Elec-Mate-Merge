@@ -172,6 +172,53 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
         </div>
       )}
 
+      {/* Means of Earthing Section */}
+      <div>
+        <SectionTitle icon={Zap} title="Means of Earthing" color="yellow" isMobile={isMobile} />
+        <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                haptics.tap();
+                onUpdate('meansOfEarthingDistributor', formData.meansOfEarthingDistributor === 'true' ? 'false' : 'true');
+              }}
+              className={cn(
+                "flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation",
+                formData.meansOfEarthingDistributor === 'true'
+                  ? "border-elec-yellow bg-elec-yellow/10"
+                  : "border-border/30 bg-card/30"
+              )}
+            >
+              <Checkbox
+                checked={formData.meansOfEarthingDistributor === 'true'}
+                className="h-5 w-5 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+              />
+              <span className="font-medium text-sm">Distributor's facility</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                haptics.tap();
+                onUpdate('meansOfEarthingElectrode', formData.meansOfEarthingElectrode === 'true' ? 'false' : 'true');
+              }}
+              className={cn(
+                "flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation",
+                formData.meansOfEarthingElectrode === 'true'
+                  ? "border-elec-yellow bg-elec-yellow/10"
+                  : "border-border/30 bg-card/30"
+              )}
+            >
+              <Checkbox
+                checked={formData.meansOfEarthingElectrode === 'true'}
+                className="h-5 w-5 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+              />
+              <span className="font-medium text-sm">Installation earth electrode</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Main Earthing Conductor Section */}
       <div>
         <SectionTitle icon={Cable} title="Main Earthing Conductor" color="green" isMobile={isMobile} />
@@ -229,6 +276,26 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
               />
             </FormField>
           )}
+
+          <button
+            type="button"
+            onClick={() => {
+              haptics.tap();
+              onUpdate('earthingConductorContinuityVerified', formData.earthingConductorContinuityVerified === 'true' ? 'false' : 'true');
+            }}
+            className={cn(
+              "w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation",
+              formData.earthingConductorContinuityVerified === 'true'
+                ? "border-green-500 bg-green-500/10"
+                : "border-border/30 bg-card/30"
+            )}
+          >
+            <Checkbox
+              checked={formData.earthingConductorContinuityVerified === 'true'}
+              className="h-5 w-5 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+            />
+            <span className="font-medium text-sm">Connection/continuity verified</span>
+          </button>
         </div>
       </div>
 
@@ -315,6 +382,26 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
               ))}
             </div>
           </FormField>
+
+          <button
+            type="button"
+            onClick={() => {
+              haptics.tap();
+              onUpdate('bondingConductorContinuityVerified', formData.bondingConductorContinuityVerified === 'true' ? 'false' : 'true');
+            }}
+            className={cn(
+              "w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation",
+              formData.bondingConductorContinuityVerified === 'true'
+                ? "border-green-500 bg-green-500/10"
+                : "border-border/30 bg-card/30"
+            )}
+          >
+            <Checkbox
+              checked={formData.bondingConductorContinuityVerified === 'true'}
+              className="h-5 w-5 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+            />
+            <span className="font-medium text-sm">Connection/continuity verified</span>
+          </button>
 
           <FormField label="Bonding Locations" hint="Select all services with main protective bonding">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 
 interface SwipeAction {
@@ -33,7 +33,7 @@ interface SwipeableCardProps {
 /**
  * SwipeableCard - Touch-optimized card with swipe actions
  * Reveals action buttons on swipe left/right
- * Best-in-class mobile UX pattern
+ * Uses direct DOM manipulation for scroll-friendly performance (no React re-renders during drag)
  */
 export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   children,
@@ -44,37 +44,74 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
   className = '',
   disabled = false,
 }) => {
-  const [translateX, setTranslateX] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [hasStartedDrag, setHasStartedDrag] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const leftRevealRef = useRef<HTMLDivElement>(null);
+  const rightRevealRef = useRef<HTMLDivElement>(null);
   const startXRef = useRef(0);
   const startYRef = useRef(0);
-  const currentXRef = useRef(0);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const currentTranslateRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const hasStartedDragRef = useRef(false);
   const isScrollingRef = useRef(false);
+
+  const applyTransform = useCallback((translateX: number) => {
+    if (cardRef.current) {
+      cardRef.current.style.transform = `translateX(${translateX}px)`;
+    }
+    if (leftRevealRef.current) {
+      leftRevealRef.current.style.opacity = String(Math.min(Math.abs(translateX) / threshold, 1));
+    }
+    if (rightRevealRef.current) {
+      rightRevealRef.current.style.opacity = String(Math.min(translateX / threshold, 1));
+    }
+    currentTranslateRef.current = translateX;
+  }, [threshold]);
+
+  const resetTransform = useCallback((animated = true) => {
+    if (cardRef.current) {
+      if (animated) {
+        cardRef.current.style.transition = 'transform 200ms ease-out';
+        requestAnimationFrame(() => {
+          applyTransform(0);
+          // Remove transition after animation
+          setTimeout(() => {
+            if (cardRef.current) {
+              cardRef.current.style.transition = '';
+            }
+          }, 200);
+        });
+      } else {
+        cardRef.current.style.transition = '';
+        applyTransform(0);
+      }
+    }
+  }, [applyTransform]);
 
   const handleTouchStart = useCallback(
     (e: React.TouchEvent) => {
       if (disabled) return;
       startXRef.current = e.touches[0].clientX;
       startYRef.current = e.touches[0].clientY;
-      currentXRef.current = e.touches[0].clientX;
-      setIsDragging(true);
-      setHasStartedDrag(false);
+      isDraggingRef.current = true;
+      hasStartedDragRef.current = false;
       isScrollingRef.current = false;
+      // Remove any transition during active drag
+      if (cardRef.current) {
+        cardRef.current.style.transition = '';
+      }
     },
     [disabled]
   );
 
   const handleTouchMove = useCallback(
     (e: React.TouchEvent) => {
-      if (!isDragging || disabled) return;
-      currentXRef.current = e.touches[0].clientX;
-      const diffX = currentXRef.current - startXRef.current;
+      if (!isDraggingRef.current || disabled) return;
+      const currentX = e.touches[0].clientX;
+      const diffX = currentX - startXRef.current;
       const diffY = e.touches[0].clientY - startYRef.current;
 
       // If we haven't determined scroll direction yet, check it
-      if (!hasStartedDrag && !isScrollingRef.current) {
+      if (!hasStartedDragRef.current && !isScrollingRef.current) {
         // If vertical movement is greater, this is a scroll - ignore horizontal
         if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
           isScrollingRef.current = true;
@@ -84,7 +121,7 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
         if (Math.abs(diffX) < dragStartThreshold) {
           return;
         }
-        setHasStartedDrag(true);
+        hasStartedDragRef.current = true;
       }
 
       // If scrolling vertically, don't handle swipe
@@ -107,118 +144,62 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
       if (newTranslateX < 0 && !leftAction) newTranslateX = 0;
       if (newTranslateX > 0 && !rightAction) newTranslateX = 0;
 
-      setTranslateX(newTranslateX);
+      // Direct DOM update - no React state, no re-render
+      applyTransform(newTranslateX);
     },
-    [isDragging, disabled, leftAction, rightAction, hasStartedDrag, dragStartThreshold]
+    [disabled, leftAction, rightAction, dragStartThreshold, applyTransform]
   );
 
   const handleTouchEnd = useCallback(() => {
-    if (!isDragging) return;
-    setIsDragging(false);
-    setHasStartedDrag(false);
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+    hasStartedDragRef.current = false;
     isScrollingRef.current = false;
 
+    const translateX = currentTranslateRef.current;
     const swipeDistance = Math.abs(translateX);
 
     // If swiped past threshold, trigger action
     if (swipeDistance >= threshold) {
       if (translateX < 0 && leftAction) {
-        // Swiped left - trigger left action
-        setTranslateX(-120); // Snap to reveal
-        setTimeout(() => {
-          leftAction.onAction();
-          setTranslateX(0);
-        }, 200);
-      } else if (translateX > 0 && rightAction) {
-        // Swiped right - trigger right action
-        setTranslateX(120);
-        setTimeout(() => {
-          rightAction.onAction();
-          setTranslateX(0);
-        }, 200);
-      }
-    } else {
-      // Snap back
-      setTranslateX(0);
-    }
-  }, [isDragging, translateX, threshold, leftAction, rightAction]);
-
-  // Also handle mouse events for desktop testing
-  const handleMouseDown = useCallback(
-    (e: React.MouseEvent) => {
-      if (disabled) return;
-      startXRef.current = e.clientX;
-      currentXRef.current = e.clientX;
-      setIsDragging(true);
-
-      const handleMouseMove = (e: MouseEvent) => {
-        currentXRef.current = e.clientX;
-        const diff = currentXRef.current - startXRef.current;
-
-        const maxSwipe = 120;
-        let newTranslateX = diff;
-
-        if (Math.abs(diff) > maxSwipe) {
-          const overflow = Math.abs(diff) - maxSwipe;
-          const resistance = 0.3;
-          newTranslateX = diff > 0
-            ? maxSwipe + overflow * resistance
-            : -(maxSwipe + overflow * resistance);
+        // Snap to reveal then trigger
+        if (cardRef.current) {
+          cardRef.current.style.transition = 'transform 200ms ease-out';
         }
-
-        if (newTranslateX < 0 && !leftAction) newTranslateX = 0;
-        if (newTranslateX > 0 && !rightAction) newTranslateX = 0;
-
-        setTranslateX(newTranslateX);
-      };
-
-      const handleMouseUp = () => {
-        setIsDragging(false);
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
-      };
-
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-    },
-    [disabled, leftAction, rightAction]
-  );
-
-  // Reset on mouse up
-  const handleMouseUp = useCallback(() => {
-    const swipeDistance = Math.abs(translateX);
-
-    if (swipeDistance >= threshold) {
-      if (translateX < 0 && leftAction) {
-        setTranslateX(-120);
+        applyTransform(-120);
         setTimeout(() => {
           leftAction.onAction();
-          setTranslateX(0);
+          resetTransform(true);
         }, 200);
+        return;
       } else if (translateX > 0 && rightAction) {
-        setTranslateX(120);
+        if (cardRef.current) {
+          cardRef.current.style.transition = 'transform 200ms ease-out';
+        }
+        applyTransform(120);
         setTimeout(() => {
           rightAction.onAction();
-          setTranslateX(0);
+          resetTransform(true);
         }, 200);
+        return;
       }
-    } else {
-      setTranslateX(0);
     }
-  }, [translateX, threshold, leftAction, rightAction]);
+
+    // Snap back
+    resetTransform(true);
+  }, [threshold, leftAction, rightAction, applyTransform, resetTransform]);
 
   return (
     <div className={cn('relative overflow-hidden rounded-lg', className)}>
       {/* Left action reveal (swipe right) */}
       {rightAction && (
         <div
+          ref={rightRevealRef}
           className={cn(
             'absolute inset-y-0 left-0 flex items-center justify-start px-4 w-24',
             rightAction.bgColor
           )}
-          style={{
-            opacity: Math.min(translateX / threshold, 1),
-          }}
+          style={{ opacity: 0 }}
         >
           <div className={cn("flex flex-col items-center gap-1", rightAction.textColor || 'text-white')}>
             {rightAction.icon}
@@ -230,13 +211,12 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
       {/* Right action reveal (swipe left) */}
       {leftAction && (
         <div
+          ref={leftRevealRef}
           className={cn(
             'absolute inset-y-0 right-0 flex items-center justify-end px-4 w-24',
             leftAction.bgColor
           )}
-          style={{
-            opacity: Math.min(Math.abs(translateX) / threshold, 1),
-          }}
+          style={{ opacity: 0 }}
         >
           <div className={cn("flex flex-col items-center gap-1", leftAction.textColor || 'text-white')}>
             {leftAction.icon}
@@ -248,19 +228,11 @@ export const SwipeableCard: React.FC<SwipeableCardProps> = ({
       {/* Main card content */}
       <div
         ref={cardRef}
-        className={cn(
-          'relative bg-card touch-pan-y',
-          isDragging ? 'cursor-grabbing' : 'cursor-grab',
-          !isDragging && 'transition-transform duration-200 ease-out'
-        )}
-        style={{
-          transform: `translateX(${translateX}px)`,
-        }}
+        className="relative bg-card touch-pan-y"
+        style={{ willChange: 'transform' }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
       >
         {children}
       </div>

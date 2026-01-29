@@ -139,6 +139,73 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
 
             {showEarthElectrodeResistance && <Separator className="my-6" />}
 
+            {/* Main Earthing Conductor */}
+            <div className="space-y-4">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
+                Main Earthing Conductor
+              </h3>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="mainEarthingConductorType">
+                      Conductor Type
+                    </Label>
+                    <Select
+                      value={formData.mainEarthingConductorType || ''}
+                      onValueChange={(value) => onUpdate('mainEarthingConductorType', value)}
+                    >
+                      <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                        <SelectValue placeholder="Select type" />
+                      </SelectTrigger>
+                      <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
+                        <SelectItem value="copper">Copper</SelectItem>
+                        <SelectItem value="aluminium">Aluminium</SelectItem>
+                        <SelectItem value="steel">Steel</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="mainEarthingConductorSize">
+                      Conductor Size
+                    </Label>
+                    <Select
+                      value={formData.mainEarthingConductorSize || ''}
+                      onValueChange={(value) => onUpdate('mainEarthingConductorSize', value)}
+                    >
+                      <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                        <SelectValue placeholder="Select size" />
+                      </SelectTrigger>
+                      <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
+                        <SelectItem value="6mm">6mm²</SelectItem>
+                        <SelectItem value="10mm">10mm²</SelectItem>
+                        <SelectItem value="16mm">16mm²</SelectItem>
+                        <SelectItem value="25mm">25mm²</SelectItem>
+                        <SelectItem value="custom">Other/Custom</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                {formData.mainEarthingConductorSize === 'custom' && (
+                  <div className="space-y-2">
+                    <Label htmlFor="mainEarthingConductorSizeCustom">
+                      Custom Earthing Conductor Size
+                    </Label>
+                    <Input
+                      id="mainEarthingConductorSizeCustom"
+                      value={formData.mainEarthingConductorSizeCustom || ''}
+                      onChange={(e) => onUpdate('mainEarthingConductorSizeCustom', e.target.value)}
+                      placeholder="e.g., 35mm²"
+                      className="h-11 text-base touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <Separator className="my-6" />
+
             {/* Main Protective Bonding */}
             <div className="space-y-4">
               <h3 className="text-base sm:text-lg font-semibold text-foreground border-b border-border pb-2 flex items-center gap-2">
@@ -146,6 +213,26 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                 Main Protective Bonding
               </h3>
               <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="mainBondingConductorType">
+                    Bonding Conductor Type
+                  </Label>
+                  <Select
+                    value={formData.mainBondingConductorType || ''}
+                    onValueChange={(value) => onUpdate('mainBondingConductorType', value)}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
+                      <SelectItem value="copper">Copper</SelectItem>
+                      <SelectItem value="aluminium">Aluminium</SelectItem>
+                      <SelectItem value="steel">Steel</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="mainBondingSize">
                     Main Bonding Conductor Size *
@@ -303,6 +390,25 @@ const EarthingBondingSection = ({ formData, onUpdate, isOpen = true, onToggle }:
                 Supplementary Bonding
               </h3>
               <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="supplementaryBonding">
+                    Supplementary Bonding Installed
+                  </Label>
+                  <Select
+                    value={formData.supplementaryBonding || ''}
+                    onValueChange={(value) => onUpdate('supplementaryBonding', value)}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation border-gray-300 focus:border-amber-500 focus:ring-amber-500 data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
+                      <SelectItem value="yes">Yes</SelectItem>
+                      <SelectItem value="no">No</SelectItem>
+                      <SelectItem value="not-required">Not Required</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="supplementaryBondingSize">
                     Supplementary Bonding Conductor Size

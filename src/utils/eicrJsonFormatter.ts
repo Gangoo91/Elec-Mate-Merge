@@ -81,6 +81,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         col_na: outcome === "not-applicable" || outcome === "N/A" ? "✓" : "",
         col_c1c2: outcome === "C1" ? "C1" : (outcome === "C2" ? "C2" : ""),
         col_c3: outcome === "C3" ? "✓" : "",
+        col_fi: outcome === "FI" ? "FI" : "",
         col_nv: outcome === "not-verified" || outcome === "N/V" ? "✓" : "",
         col_lim: outcome === "limitation" || outcome === "LIM" ? "✓" : ""
       };
@@ -143,6 +144,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       result[`${prefix}_na`] = outcome === "not-applicable" || outcome === "N/A" ? "N/A" : "";
       result[`${prefix}_c1c2`] = outcome === "C1" ? "C1" : (outcome === "C2" ? "C2" : "");
       result[`${prefix}_c3`] = outcome === "C3" ? "C3" : "";
+      result[`${prefix}_fi`] = outcome === "FI" ? "FI" : "";
       result[`${prefix}_nv`] = outcome === "not-verified" || outcome === "N/V" ? "N/V" : "";
       result[`${prefix}_lim`] = outcome === "limitation" || outcome === "LIM" ? "LIM" : "";
     });
@@ -285,6 +287,114 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     }));
   };
 
+  // Format circuits grouped by distribution board (for multi-board EICR PDFs)
+  const formatBoardsWithSchedules = () => {
+    const boards = formData['distributionBoards'] || [];
+    const testResults = formData['scheduleOfTests'] || [];
+    if (!Array.isArray(boards) || !Array.isArray(testResults)) return [];
+
+    const MAIN_BOARD_ID = 'main-board';
+
+    return boards.map((board: any) => {
+      const boardId = board.id || MAIN_BOARD_ID;
+      // Filter circuits belonging to this board
+      const boardCircuits = testResults.filter(
+        (r: any) => (r.boardId || MAIN_BOARD_ID) === boardId
+      );
+
+      return {
+        // Board metadata
+        db_reference: board.reference || board.name || 'Main DB',
+        db_location: board.location || '',
+        db_manufacturer: board.make || '',
+        db_type: board.type || '',
+        db_ways: board.totalWays?.toString() || '',
+        db_zdb: board.zdb || '',
+        db_ipf: board.ipf || '',
+        // Schedule page headers
+        supplied_from: board.suppliedFrom || '',
+        incoming_device_bs_en: board.incomingDeviceBsEn || '',
+        incoming_device_type: board.incomingDeviceType || '',
+        incoming_device_rating: board.incomingDeviceRating || '',
+        // Board verification
+        polarity_confirmed: board.confirmedCorrectPolarity ?? false,
+        phase_sequence_confirmed: board.confirmedPhaseSequence ?? false,
+        // SPD details per board
+        spd_operational: board.spdOperationalStatus ?? false,
+        spd_na: board.spdNA ?? false,
+        spd_t1: board.spdT1 ?? false,
+        spd_t2: board.spdT2 ?? false,
+        spd_t3: board.spdT3 ?? false,
+        // Main switch for this board
+        main_switch_bs_en: board.mainSwitchBsEn || '',
+        main_switch_type: board.mainSwitchType || '',
+        main_switch_rating: board.mainSwitchRating || '',
+        main_switch_poles: board.mainSwitchPoles || '',
+        // Circuit count
+        circuit_count: boardCircuits.length,
+        // Circuits for this board (same format as flat schedule_of_tests)
+        circuits: boardCircuits.map((result: any) => ({
+          id: result.id || "N/A",
+          circuit_number: result.circuitNumber || "N/A",
+          circuit_description: result.circuitDescription || "N/A",
+          circuit_type: result.circuitType || "N/A",
+          type_of_wiring: result.typeOfWiring || "N/A",
+          reference_method: result.referenceMethod || "N/A",
+          points_served: result.pointsServed || "N/A",
+          live_size: result.liveSize || "N/A",
+          cpc_size: result.cpcSize || "N/A",
+          bs_standard: result.bsStandard || "N/A",
+          protective_device_type: result.protectiveDeviceType || "N/A",
+          protective_device_curve: result.protectiveDeviceCurve || "N/A",
+          protective_device_rating: result.protectiveDeviceRating || "N/A",
+          protective_device_ka_rating: result.protectiveDeviceKaRating || "N/A",
+          max_zs: result.maxZs || "N/A",
+          protective_device_location: result.protectiveDeviceLocation || "N/A",
+          rcd_bs_standard: result.rcdBsStandard || "N/A",
+          rcd_type: result.rcdType || "N/A",
+          rcd_rating: result.rcdRating || "N/A",
+          rcd_rating_a: result.rcdRatingA || "N/A",
+          ring_r1: result.ringR1 || "N/A",
+          ring_rn: result.ringRn || "N/A",
+          ring_r2: result.ringR2 || "N/A",
+          r1r2: result.r1r2 || "N/A",
+          r2: result.r2 || "N/A",
+          ring_continuity_live: result.ringContinuityLive || "N/A",
+          ring_continuity_neutral: result.ringContinuityNeutral || "N/A",
+          insulation_test_voltage: result.insulationTestVoltage || "N/A",
+          insulation_live_neutral: result.insulationLiveNeutral || "N/A",
+          insulation_live_earth: result.insulationLiveEarth || "N/A",
+          insulation_resistance: result.insulationResistance || "N/A",
+          insulation_neutral_earth: result.insulationNeutralEarth || "N/A",
+          polarity: result.polarity || "N/A",
+          zs: result.zs || "N/A",
+          rcd_one_x: result.rcdOneX || "N/A",
+          rcd_test_button: result.rcdTestButton || "N/A",
+          afdd_test: result.afddTest || "N/A",
+          rcd_half_x: result.rcdHalfX || "N/A",
+          rcd_five_x: result.rcdFiveX || "N/A",
+          pfc: result.pfc || "N/A",
+          pfc_live_neutral: result.pfcLiveNeutral || "N/A",
+          pfc_live_earth: result.pfcLiveEarth || "N/A",
+          functional_testing: result.functionalTesting || "N/A",
+          notes: result.notes || "N/A",
+          source_circuit_id: result.sourceCircuitId || "N/A",
+          auto_filled: result.autoFilled || false,
+          phase_type: result.phaseType || "N/A",
+          phase_rotation: result.phaseRotation || "N/A",
+          phase_balance_l1: result.phaseBalanceL1 || "N/A",
+          phase_balance_l2: result.phaseBalanceL2 || "N/A",
+          phase_balance_l3: result.phaseBalanceL3 || "N/A",
+          line_to_line_voltage: result.lineToLineVoltage || "N/A",
+          circuit_designation: result.circuitDesignation || "N/A",
+          type: result.type || "N/A",
+          cable_size: result.cableSize || "N/A",
+          protective_device: result.protectiveDevice || "N/A"
+        }))
+      };
+    });
+  };
+
   // Format defect observations with photo evidence from database
   const formatDefects = async () => {
     const defects = formData['defectObservations'] || [];
@@ -374,6 +484,13 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     return defaultValue;
   };
 
+  // Strip unit suffixes from values (e.g., "25mm" → "25", "10mm²" → "10")
+  // Prevents double-unit display like "25mmmm²" when PDF template appends "mm²"
+  const stripUnit = (value: string): string => {
+    if (!value) return value;
+    return value.replace(/mm²?$/i, '').trim();
+  };
+
   // NESTED, GROUPED structure for improved organization
   // Put flat inspection keys FIRST to avoid truncation issues
   const flatKeys = formatFlatInspection();
@@ -398,8 +515,11 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     installation_details: {
       address: get('installationAddress'),
       same_as_client_address: getBool('sameAsClientAddress'),
+      occupier: get('occupier'),
       installation_type: get('installationType'),
       description: get('description'),
+      premises_type: get('description') === 'other' ? get('otherPremisesDescription') : get('description'),
+      other_premises_description: get('otherPremisesDescription'),
       installation_date: get('installationDate'),
       test_date: get('inspectionDate'),
       construction_date: get('constructionDate'),
@@ -409,12 +529,18 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       date_of_last_inspection: get('dateOfLastInspection'),
       evidence_of_alterations: get('evidenceOfAlterations'),
       alterations_details: get('alterationsDetails'),
+      alterations_age: get('alterationsAge'),
+      installation_records_available: get('installationRecordsAvailable'),
       purpose_of_inspection: get('purposeOfInspection'),
       other_purpose: get('otherPurpose'),
+      agreed_with: get('agreedWith'),
       extent_of_inspection: get('extentOfInspection'),
       limitations_of_inspection: get('limitationsOfInspection'),
+      operational_limitations: get('operationalLimitations'),
+      bs_amendment: get('bsAmendment'),
       next_inspection_date: get('nextInspectionDate'),
-      inspection_interval: get('inspectionInterval')
+      inspection_interval: get('inspectionInterval'),
+      interval_reasons: get('intervalReasons')
     },
     
     standards_compliance: {
@@ -425,6 +551,8 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     supply_characteristics: {
       supply_voltage: get('supplyVoltageCustom') || get('supplyVoltage'),
       supply_frequency: get('supplyFrequency', '50'),
+      supply_ac_dc: get('supplyAcDc', 'ac'),
+      conductor_configuration: get('conductorConfiguration'),
       phases: get('phases'),
       earthing_arrangement: get('earthingArrangement'),
       supply_type: get('supplyType'),
@@ -432,7 +560,11 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       dno_name: get('dnoName'),
       mpan: get('mpan'),
       cutout_location: get('cutoutLocation'),
-      service_entry: get('serviceEntry')
+      service_entry: get('serviceEntry'),
+      external_ze: get('externalZe'),
+      prospective_fault_current: get('prospectiveFaultCurrent'),
+      supply_polarity_confirmed: getBool('supplyPolarityConfirmed'),
+      other_sources_of_supply: get('otherSourcesOfSupply')
     },
     
     main_protective_device: (() => {
@@ -442,6 +574,9 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         device_type: get('mainProtectiveDeviceCustom') || get('mainProtectiveDevice'),
         main_switch_rating: get('mainSwitchRating'),
         main_switch_location: get('cuLocation') || mainBoard?.location || '',
+        main_switch_poles: get('mainSwitchPoles'),
+        main_switch_voltage_rating: get('mainSwitchVoltageRating'),
+        fuse_device_rating: get('fuseDeviceRating'),
         breaking_capacity: get('breakingCapacity')
       };
     })(),
@@ -449,7 +584,9 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     rcd_details: {
       rcd_main_switch: get('rcdMainSwitch'),
       rcd_rating: get('rcdRating'),
-      rcd_type: get('rcdType')
+      rcd_type: get('rcdType'),
+      rcd_time_delay: get('rcdTimeDelay'),
+      rcd_measured_time: get('rcdMeasuredTime')
     },
 
     distribution_board: (() => {
@@ -467,9 +604,9 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     })(),
     
     cables: {
-      intake_cable_size: get('intakeCableSize'),
+      intake_cable_size: stripUnit(get('intakeCableSize')),
       intake_cable_type: get('intakeCableType'),
-      tails_size: get('tailsSize'),
+      tails_size: stripUnit(get('tailsSize')),
       tails_length: get('tailsLength')
     },
     
@@ -479,13 +616,15 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       const bondingStr = (formData.mainBondingLocations || '').toLowerCase();
 
       return {
+        means_of_earthing_distributor: getBool('meansOfEarthingDistributor'),
+        means_of_earthing_electrode: getBool('meansOfEarthingElectrode'),
         earth_electrode_type: get('earthElectrodeType'),
         earth_electrode_location: get('earthElectrodeLocation'),
         earth_electrode_resistance: get('earthElectrodeResistance'),
         main_earthing_conductor_type: get('mainEarthingConductorType'),
         main_earthing_conductor_size: get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize'),
         main_earthing_conductor: (() => {
-          const size = get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize');
+          const size = stripUnit(get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize'));
           const type = get('mainEarthingConductorType');
           if (size && type) return `${size}mm² ${type}`;
           if (size) return `${size}mm²`;
@@ -493,7 +632,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         })(),
         main_bonding_conductor_type: get('mainBondingConductorType'),
         main_bonding_conductor: (() => {
-          const size = get('mainBondingSizeCustom') || get('mainBondingSize');
+          const size = stripUnit(get('mainBondingSizeCustom') || get('mainBondingSize'));
           const type = get('mainBondingConductorType');
           if (size && type) return `${size}mm² ${type}`;
           if (size) return `${size}mm²`;
@@ -511,6 +650,8 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
         bonding_other: bondingStr.includes('telecom') || bondingStr.includes('other'),
         bonding_other_specify: get('bondingOtherSpecify'),
         bonding_compliance: get('bondingCompliance'),
+        earthing_conductor_continuity_verified: getBool('earthingConductorContinuityVerified'),
+        bonding_conductor_continuity_verified: getBool('bondingConductorContinuityVerified'),
         supplementary_bonding: get('supplementaryBonding'),
         supplementary_bonding_size: get('supplementaryBondingSizeCustom') || get('supplementaryBondingSize'),
         supplementary_bonding_size_custom: get('supplementaryBondingSizeCustom'),
@@ -529,7 +670,10 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     additional_boards: formatAdditionalBoards(),
 
     schedule_of_tests: formatCircuits(),
-    
+
+    // Multi-board schedule: each board with its own circuits, SPD, and verification data
+    boards_with_schedules: formatBoardsWithSchedules(),
+
     test_instrument_details: {
       make_model: get('testInstrumentMake') === 'Other' 
         ? get('customTestInstrument') 
@@ -587,7 +731,7 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     inspector: {
       name: get('inspectorName'),
       qualifications: get('inspectorQualifications'),
-      company: get('inspectorCompany'),
+      company: get('companyName') || get('inspectorCompany'),
       date: get('inspectionDate'),
       signature: get('inspectorSignature')
     },
@@ -751,13 +895,13 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     db_zdb: formData.distributionBoards?.[0]?.zdb || '',
     db_ipf: formData.distributionBoards?.[0]?.ipf || '',
 
-    // Cables (flat)
-    intake_cable_size: get('intakeCableSize'),
-    intakeCableSize: get('intakeCableSize'),
+    // Cables (flat) - stripUnit prevents double-mm (e.g., "25mmmm²")
+    intake_cable_size: stripUnit(get('intakeCableSize')),
+    intakeCableSize: stripUnit(get('intakeCableSize')),
     intake_cable_type: get('intakeCableType'),
     intakeCableType: get('intakeCableType'),
-    tails_size: get('tailsSize'),
-    tailsSize: get('tailsSize'),
+    tails_size: stripUnit(get('tailsSize')),
+    tailsSize: stripUnit(get('tailsSize')),
     tails_length: get('tailsLength'),
     tailsLength: get('tailsLength'),
 
@@ -846,6 +990,70 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     company_tagline: get('companyTagline'),
     companyTagline: get('companyTagline'),
     company_accent_color: get('companyAccentColor'),
-    companyAccentColor: get('companyAccentColor')
+    companyAccentColor: get('companyAccentColor'),
+
+    // Test Instrument & Method (flat copies for direct template access)
+    test_method: get('testMethod'),
+    test_voltage: get('testVoltage'),
+    test_notes: get('testNotes'),
+    test_temperature: get('testTemperature'),
+    test_instrument_make: get('testInstrumentMake') === 'Other'
+      ? get('customTestInstrument')
+      : get('testInstrumentMake'),
+    test_instrument_serial: get('testInstrumentSerial'),
+    calibration_date: get('calibrationDate'),
+
+    // Main Switch fields (flat)
+    main_switch_rating: get('mainSwitchRating'),
+    main_switch_poles: get('mainSwitchPoles'),
+    main_switch_voltage_rating: get('mainSwitchVoltageRating'),
+    fuse_device_rating: get('fuseDeviceRating'),
+    breaking_capacity: get('breakingCapacity'),
+    service_entry: get('serviceEntry'),
+
+    // ============================================
+    // NEW BS 7671 MODEL FORM FIELDS (flat copies)
+    // ============================================
+
+    // Section C - Installation Details
+    occupier: get('occupier'),
+    premises_type: get('description') === 'other' ? get('otherPremisesDescription') : get('description'),
+    other_premises_description: get('otherPremisesDescription'),
+    alterations_age: get('alterationsAge'),
+    installation_records_available: get('installationRecordsAvailable'),
+
+    // Section D - Extent & Limitations
+    agreed_with: get('agreedWith'),
+    operational_limitations: get('operationalLimitations'),
+    bs_amendment: get('bsAmendment'),
+    interval_reasons: get('intervalReasons'),
+
+    // Section I - Supply Characteristics
+    supply_ac_dc: get('supplyAcDc', 'ac'),
+    conductor_configuration: get('conductorConfiguration'),
+    external_ze: get('externalZe'),
+    prospective_fault_current: get('prospectiveFaultCurrent'),
+    supply_polarity_confirmed: getBool('supplyPolarityConfirmed'),
+    other_sources_of_supply: get('otherSourcesOfSupply'),
+
+    // Section J - Particulars
+    means_of_earthing_distributor: getBool('meansOfEarthingDistributor'),
+    means_of_earthing_electrode: getBool('meansOfEarthingElectrode'),
+    earthing_conductor_continuity_verified: getBool('earthingConductorContinuityVerified'),
+    bonding_conductor_continuity_verified: getBool('bondingConductorContinuityVerified'),
+
+    // RCD details (flat)
+    rcd_time_delay: get('rcdTimeDelay'),
+    rcd_measured_time: get('rcdMeasuredTime'),
+
+    // Section K - Observations
+    no_remedial_action: getBool('noRemedialAction'),
+
+    // Schedule counts (auto-calculated)
+    inspection_schedule_count: 1,
+    test_schedule_count: (() => {
+      const boards = formData['distributionBoards'] || [];
+      return Array.isArray(boards) && boards.length > 0 ? boards.length : 1;
+    })()
   };
 };

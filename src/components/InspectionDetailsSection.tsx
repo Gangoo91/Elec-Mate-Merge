@@ -255,6 +255,15 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
               </Button>
             </div>
           </FormField>
+
+          <FormField label="Reasons for Recommended Interval" hint="Justify the chosen inspection interval">
+            <Textarea
+              value={formData.intervalReasons || ''}
+              onChange={(e) => onUpdate('intervalReasons', e.target.value)}
+              placeholder="e.g., Age of installation, type of premises, environmental conditions"
+              className="min-h-[80px] text-base touch-manipulation resize-none"
+            />
+          </FormField>
         </div>
       </div>
 
@@ -262,6 +271,15 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
       <div>
         <SectionTitle icon={Telescope} title="Inspection Scope" isMobile={isMobile} />
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
+          <FormField label="Agreed With" hint="Person with whom the extent was agreed">
+            <Input
+              value={formData.agreedWith || ''}
+              onChange={(e) => onUpdate('agreedWith', e.target.value)}
+              placeholder="Name of person"
+              className="h-11 text-base touch-manipulation"
+            />
+          </FormField>
+
           <FormField
             label="Extent of Inspection"
             required
@@ -285,6 +303,33 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
               placeholder="Any areas not inspected or limitations encountered"
               className="min-h-[100px] text-base touch-manipulation resize-none"
             />
+          </FormField>
+
+          <FormField
+            label="Operational Limitations"
+            hint="Any constraints on the operation of the installation during testing"
+          >
+            <Textarea
+              value={formData.operationalLimitations || ''}
+              onChange={(e) => onUpdate('operationalLimitations', e.target.value)}
+              placeholder="e.g., circuits not isolated, equipment in continuous use"
+              className="min-h-[80px] text-base touch-manipulation resize-none"
+            />
+          </FormField>
+
+          <FormField label="BS 7671 Edition" hint="Amendment edition used for this inspection">
+            <Select
+              value={formData.bsAmendment || 'amd2-2022'}
+              onValueChange={(value) => { haptics.tap(); onUpdate('bsAmendment', value); }}
+            >
+              <SelectTrigger className="h-11 touch-manipulation">
+                <SelectValue placeholder="Select edition" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="amd1-2020">Amendment 1 (2020)</SelectItem>
+                <SelectItem value="amd2-2022">Amendment 2 (2022)</SelectItem>
+              </SelectContent>
+            </Select>
           </FormField>
         </div>
       </div>

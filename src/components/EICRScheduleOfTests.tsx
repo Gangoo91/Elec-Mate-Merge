@@ -858,7 +858,34 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   
   // Use mobile optimized view on mobile devices in portrait mode
   const useMobileView = orientation.isMobile && !orientation.isLandscape;
-  
+
+  // Memoize sorted boards to avoid re-sorting on every render
+  const sortedBoards = useMemo(() =>
+    [...distributionBoards].sort((a, b) => a.order - b.order),
+    [distributionBoards]
+  );
+
+  // Memoize board circuit stats to avoid recomputing during scroll
+  const boardStats = useMemo(() => {
+    const stats: Record<string, { circuits: TestResult[]; completedCount: number; progressPercent: number; isComplete: boolean }> = {};
+    sortedBoards.forEach(board => {
+      const circuits = getCircuitsForBoard(testResults, board.id);
+      const completedCount = circuits.filter(r =>
+        r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
+      ).length;
+      const progressPercent = circuits.length > 0
+        ? Math.round((completedCount / circuits.length) * 100)
+        : 0;
+      stats[board.id] = {
+        circuits,
+        completedCount,
+        progressPercent,
+        isComplete: progressPercent === 100,
+      };
+    });
+    return stats;
+  }, [sortedBoards, testResults]);
+
   const toggleMobileView = () => {
     const newView = mobileViewType === 'table' ? 'card' : 'table';
     setMobileViewType(newView);
@@ -1849,17 +1876,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
           {/* Distribution Boards - Edge to Edge */}
           <div className="pb-4">
-            {distributionBoards
-              .sort((a, b) => a.order - b.order)
-              .map(board => {
-                const boardCircuits = getCircuitsForBoard(testResults, board.id);
-                const boardCompletedCount = boardCircuits.filter(r =>
-                  r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
-                ).length;
-                const boardProgressPercent = boardCircuits.length > 0
-                  ? Math.round((boardCompletedCount / boardCircuits.length) * 100)
-                  : 0;
-                const isComplete = boardProgressPercent === 100;
+            {sortedBoards.map(board => {
+                const { circuits: boardCircuits, completedCount: boardCompletedCount, progressPercent: boardProgressPercent, isComplete } = boardStats[board.id] || { circuits: [], completedCount: 0, progressPercent: 0, isComplete: false };
 
                 return (
                   <Collapsible
@@ -2328,10 +2346,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
           {/* Distribution Boards with Circuit Tables */}
           <div className="space-y-4" data-autofill-section>
-            {distributionBoards
-              .sort((a, b) => a.order - b.order)
-              .map(board => {
-                const boardCircuits = getCircuitsForBoard(testResults, board.id);
+            {sortedBoards.map(board => {
+                const stats = boardStats[board.id] || { circuits: [], completedCount: 0 };
+                const boardCircuits = stats.circuits;
                 return (
                   <BoardSection
                     key={board.id}
@@ -2342,9 +2359,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                     onRemoveBoard={handleRemoveBoard}
                     onAddCircuit={() => addCircuitToBoard(board.id)}
                     circuitCount={boardCircuits.length}
-                    completedCount={boardCircuits.filter(r =>
-                      r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
-                    ).length}
+                    completedCount={stats.completedCount}
                     showTools={true}
                     tools={createBoardTools(board.id)}
                   >

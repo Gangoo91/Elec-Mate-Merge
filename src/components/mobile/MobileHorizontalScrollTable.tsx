@@ -176,15 +176,12 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
       {/* Table Container - Full bleed with slight padding */}
       <div
         ref={scrollContainerRef}
-        className="overflow-x-auto overflow-y-visible"
+        className="overflow-x-auto overflow-y-hidden"
         style={{
           WebkitOverflowScrolling: 'touch',
-          scrollBehavior: 'smooth',
           overscrollBehaviorX: 'contain',
-          touchAction: 'pan-x',
-          willChange: 'transform',
+          touchAction: 'pan-x pan-y',
           contain: 'layout',
-          transform: 'translateZ(0)',
         }}
       >
         <Table className="relative border-collapse w-full">

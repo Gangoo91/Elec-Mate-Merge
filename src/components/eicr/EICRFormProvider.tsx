@@ -8,9 +8,15 @@ import { useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { draftStorage } from '@/utils/draftStorage';
+import {
+  validateLoadedData,
+  saveToLocalStorageBackup,
+  logIntegrityEvent
+} from '@/utils/dataIntegrity';
 import OfflineBanner from '@/components/OfflineBanner';
 import { CreateCustomerDialog } from '@/components/CreateCustomerDialog';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
+import { StickyFormSyncBar, type SyncState } from '@/components/ui/SyncStatusIndicator';
 import {
   findCustomerByName,
   createCustomerFromCertificate,
@@ -36,6 +42,9 @@ interface EICRFormContextType {
   isOnline: boolean;
   isAuthenticated: boolean;
   isLoadingReport: boolean;
+  lastSavedTime: Date | null;
+  syncNow: (() => void) | undefined;
+  getSyncIndicatorState: () => SyncState;
 }
 
 const EICRFormContext = createContext<EICRFormContextType | undefined>(undefined);
@@ -69,6 +78,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const [showCustomerDialog, setShowCustomerDialog] = useState(false);
   const [pendingReportId, setPendingReportId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [lastSavedTime, setLastSavedTime] = useState<Date | null>(null);
   const lastSaveErrorToastRef = useRef<number>(0);
   
   // Capture customer data from navigation state
@@ -114,6 +124,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     limitationsOfInspection: '',
     
     // Supply Characteristics - Default to most common UK domestic values
+    dnoName: '',
+    mpan: '',
+    cutoutLocation: '',
     supplyVoltage: '230',
     supplyVoltageCustom: '',
     supplyFrequency: '50',
@@ -125,7 +138,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     mainProtectiveDeviceCustom: '',
     rcdMainSwitch: '',
     rcdRating: '',
-    
+    rcdType: '',
+    mainSwitchRating: '',
+    breakingCapacity: '',
+    serviceEntry: '',
+    supplyType: '',
+
     // Earthing & Bonding
     earthElectrodeResistance: '',
     mainEarthingConductorType: '',
@@ -136,6 +154,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     mainBondingSizeCustom: '',
     mainBondingLocations: '',
     bondingCompliance: '',
+    supplementaryBonding: '',
     supplementaryBondingSize: '',
     supplementaryBondingSizeCustom: '',
     equipotentialBonding: '',
@@ -153,6 +172,23 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     tailsLength: '',
     circuits: [],
     scheduleOfTests: [],
+    distributionBoards: [],
+
+    // Test Instrument Details
+    testInstrumentMake: '',
+    customTestInstrument: '',
+    testInstrumentSerial: '',
+    calibrationDate: '',
+    testTemperature: '',
+    testMethod: '',
+    testVoltage: '',
+    testNotes: '',
+
+    // Standards Compliance
+    designStandard: 'BS7671',
+    partPCompliance: '',
+    bs7671Compliance: false,
+    buildingRegsCompliance: false,
     
     // Overall Assessment
     overallAssessment: '',
@@ -388,6 +424,46 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
 
         console.log('[EICR] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
 
+        // Validate data integrity before using
+        const integrity = validateLoadedData(loadedCloudData, 'eicr');
+
+        if (!integrity.hasData) {
+          // Data loaded but appears empty - this is suspicious
+          logIntegrityEvent('load_empty', {
+            reportType: 'eicr',
+            reportId: initialReportId,
+            fieldCount: integrity.fieldCount,
+            error: integrity.warnings.join('; ')
+          });
+
+          // Try localStorage backup if cloud data is empty
+          if (localDraft?.data) {
+            const localIntegrity = validateLoadedData(localDraft.data, 'eicr');
+            if (localIntegrity.hasData) {
+              console.log('[EICR] Cloud data empty, using local backup');
+              const loadedData = localDraft.data;
+              setFormData(prev => ({
+                ...prev,
+                ...loadedData,
+                inspectionItems: loadedData.inspectionItems || [],
+                circuits: loadedData.circuits || [],
+                scheduleOfTests: loadedData.scheduleOfTests || [],
+                defectObservations: loadedData.defectObservations || [],
+                generalObservations: loadedData.generalObservations || [],
+                observations: loadedData.observations || [],
+                certificateNumber: loadedData.certificateNumber || prev.certificateNumber,
+              }));
+              setCurrentReportId(initialReportId);
+              toast({
+                title: 'Data recovered from local backup',
+                description: 'Cloud data appeared empty. Your local version was restored.',
+              });
+              setIsLoadingReport(false);
+              return;
+            }
+          }
+        }
+
         if (localDraft?.data && localTime > cloudTime) {
           // Local is newer - use local data
           console.log('[EICR] Using LOCAL draft (newer than cloud by', Math.round((localTime - cloudTime) / 1000), 'seconds)');
@@ -403,6 +479,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
             observations: loadedData.observations || [],
             certificateNumber: loadedData.certificateNumber || prev.certificateNumber,
           }));
+          logIntegrityEvent('load_success', {
+            reportType: 'eicr',
+            reportId: initialReportId,
+            fieldCount: Object.keys(loadedData).length,
+            source: 'local'
+          });
           toast({
             title: 'Recovered unsaved changes',
             description: 'Your recent edits have been restored.',
@@ -421,6 +503,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
             observations: loadedCloudData.observations || [],
             certificateNumber: loadedCloudData.certificateNumber || prev.certificateNumber,
           }));
+          logIntegrityEvent('load_success', {
+            reportType: 'eicr',
+            reportId: initialReportId,
+            fieldCount: integrity.fieldCount,
+            source: 'cloud'
+          });
         }
         setCurrentReportId(initialReportId);
       } else if (localDraft?.data) {
@@ -439,11 +527,21 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
           certificateNumber: loadedData.certificateNumber || prev.certificateNumber,
         }));
         setCurrentReportId(initialReportId);
+        logIntegrityEvent('recovery_success', {
+          reportType: 'eicr',
+          reportId: initialReportId,
+          source: 'local'
+        });
         toast({
           title: 'Loaded from local storage',
           description: 'Cloud sync will retry automatically.',
         });
       } else {
+        logIntegrityEvent('recovery_failed', {
+          reportType: 'eicr',
+          reportId: initialReportId,
+          error: 'No data found in cloud or local'
+        });
         toast({
           title: 'Report not found',
           description: 'Could not load the requested report.',
@@ -547,23 +645,37 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     // Mark as completed if inspector has signed off
     const updatedData = {
       ...formData,
-      status: formData.satisfactoryForContinuedUse && formData.inspectorSignature ? 'completed' : 
+      status: formData.satisfactoryForContinuedUse && formData.inspectorSignature ? 'completed' :
               (formData.clientName || formData.inspectionDate) ? 'in-progress' : 'draft'
     };
-    
+
     setFormData(updatedData);
-    
+
+    // CRITICAL: Always save to localStorage backup BEFORE cloud sync
+    // This ensures data is never lost even if cloud fails
+    const reportIdForBackup = currentReportId || effectiveReportId;
+    if (reportIdForBackup && updatedData.clientName) {
+      saveToLocalStorageBackup('eicr', reportIdForBackup, updatedData);
+      logIntegrityEvent('backup_saved', {
+        reportType: 'eicr',
+        reportId: reportIdForBackup,
+        fieldCount: Object.keys(updatedData).filter(k => !k.startsWith('_')).length
+      });
+    }
+
     const result = await syncToCloud(true);
     
     if (result.success) {
+      setLastSavedTime(new Date());
+
       if (result.reportId) {
         setCurrentReportId(result.reportId);
-        
+
         // Link to customer if navigated from customer page
         if (customerIdFromNav && result.reportId) {
           await linkCustomerToReport(result.reportId, customerIdFromNav);
         }
-        
+
         // Check if we should prompt to create customer
         if (userId && formData.clientName && !customerIdFromNav) {
           const existingCustomer = await findCustomerByName(userId, formData.clientName);
@@ -670,6 +782,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       inspectionInterval: '',
       extentOfInspection: '',
       limitationsOfInspection: '',
+      dnoName: '',
+      mpan: '',
+      cutoutLocation: '',
       supplyVoltage: '',
       supplyVoltageCustom: '',
       supplyFrequency: '50',
@@ -681,11 +796,21 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       mainProtectiveDeviceCustom: '',
       rcdMainSwitch: '',
       rcdRating: '',
+      rcdType: '',
+      mainSwitchRating: '',
+      breakingCapacity: '',
+      serviceEntry: '',
+      supplyType: '',
       earthElectrodeResistance: '',
+      mainEarthingConductorType: '',
+      mainEarthingConductorSize: '',
+      mainEarthingConductorSizeCustom: '',
+      mainBondingConductorType: '',
       mainBondingSize: '',
       mainBondingSizeCustom: '',
       mainBondingLocations: '',
       bondingCompliance: '',
+      supplementaryBonding: '',
       supplementaryBondingSize: '',
       supplementaryBondingSizeCustom: '',
       equipotentialBonding: '',
@@ -699,6 +824,19 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       tailsLength: '',
       circuits: [],
       scheduleOfTests: [],
+      distributionBoards: [],
+      testInstrumentMake: '',
+      customTestInstrument: '',
+      testInstrumentSerial: '',
+      calibrationDate: '',
+      testTemperature: '',
+      testMethod: '',
+      testVoltage: '',
+      testNotes: '',
+      designStandard: 'BS7671',
+      partPCompliance: '',
+      bs7671Compliance: false,
+      buildingRegsCompliance: false,
       overallAssessment: '',
       satisfactoryForContinuedUse: '',
       additionalComments: '',
@@ -798,6 +936,16 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     setHasUnsavedChanges(false);
   };
 
+  // Convert sync status to SyncState for the indicator
+  const getSyncIndicatorState = (): SyncState => {
+    if (!isOnline) return 'offline';
+    if (syncState.status === 'error') return 'error';
+    if (syncState.status === 'syncing') return 'syncing';
+    if (syncState.status === 'synced') return 'synced';
+    if (hasUnsavedChanges) return 'unsaved';
+    return 'synced';
+  };
+
   const contextValue: EICRFormContextType = {
     formData,
     updateFormData,
@@ -816,6 +964,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     isOnline,
     isAuthenticated,
     isLoadingReport,
+    lastSavedTime,
+    syncNow,
+    getSyncIndicatorState,
   };
 
   return (
@@ -826,6 +977,14 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         clientName={formData.clientName || ''}
         installationAddress={formData.installationAddress || formData.clientAddress || ''}
       >
+        {/* Prominent sync status bar - always visible */}
+        <StickyFormSyncBar
+          state={getSyncIndicatorState()}
+          lastSaved={lastSavedTime}
+          isOnline={isOnline}
+          onRetry={syncNow}
+          certificateNumber={formData.certificateNumber}
+        />
         {syncState.queuedChanges > 0 && (
           <OfflineBanner
             queuedChanges={syncState.queuedChanges}

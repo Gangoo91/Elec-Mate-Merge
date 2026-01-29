@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CheckCircle, XCircle, AlertTriangle, AlertCircle, Info, FileText, Circle } from 'lucide-react';
+import { CheckCircle, XCircle, AlertTriangle, AlertCircle, Info, FileText, Circle, Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface InspectionItem {
@@ -9,7 +9,7 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'FI' | 'not-applicable' | 'not-verified' | 'limitation' | '';
   notes?: string;
 }
 
@@ -59,6 +59,14 @@ const outcomeOptions: OutcomeOption[] = [
     description: 'Does not comply with current standards',
     icon: <AlertTriangle className="h-5 w-5" />,
     color: 'text-bs7671-caution',
+    priority: 'warning'
+  },
+  {
+    value: 'FI',
+    label: 'FI - Further Investigation',
+    description: 'Requires further investigation without delay',
+    icon: <Search className="h-5 w-5" />,
+    color: 'text-blue-400',
     priority: 'warning'
   },
   {

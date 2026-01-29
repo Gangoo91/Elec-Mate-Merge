@@ -94,7 +94,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
   const selectTriggerClassName = "h-11 text-sm px-2 border border-input bg-background focus:ring-2 focus:ring-primary touch-manipulation";
 
   return (
-    <TableRow className={cn("hover:bg-muted/50 border-b border-border", getBorderColor())}>
+    <TableRow className={cn("hover:bg-muted/50 border-b border-border", getBorderColor())} style={{ contentVisibility: 'auto', containIntrinsicSize: '0 48px' }}>
       {/* Circuit Details Group */}
       <TableCell className="sticky left-0 z-10 border-r-[3px] border-primary/40 p-0.5 font-bold text-center whitespace-nowrap bg-elec-gray-light w-[72px] min-w-[72px] max-w-[72px]">
         <Input

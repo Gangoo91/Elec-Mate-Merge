@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CheckCircle, XCircle, AlertTriangle, AlertCircle, Info, FileText } from 'lucide-react';
+import { CheckCircle, XCircle, AlertTriangle, AlertCircle, Info, FileText, Search } from 'lucide-react';
 
 interface InspectionItem {
   id: string;
@@ -8,7 +8,7 @@ interface InspectionItem {
   item: string;
   clause: string;
   inspected: boolean;
-  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'not-applicable' | 'not-verified' | 'limitation' | '';
+  outcome: 'satisfactory' | 'C1' | 'C2' | 'C3' | 'FI' | 'not-applicable' | 'not-verified' | 'limitation' | '';
   notes?: string;
 }
 
@@ -25,6 +25,7 @@ const InspectionOutcomeSelect = ({ itemId, currentOutcome, onOutcomeChange }: In
       case 'C1': return <XCircle className="h-4 w-4 text-red-500" />;
       case 'C2': return <AlertCircle className="h-4 w-4 text-orange-500" />;
       case 'C3': return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
+      case 'FI': return <Search className="h-4 w-4 text-blue-400" />;
       case 'limitation': return <Info className="h-4 w-4 text-purple-500" />;
       case 'not-verified': return <FileText className="h-4 w-4 text-blue-500" />;
       default: return <div className="h-4 w-4 bg-gray-300 rounded-full" />;
@@ -37,6 +38,7 @@ const InspectionOutcomeSelect = ({ itemId, currentOutcome, onOutcomeChange }: In
       case 'C1': return 'C1 - Danger Present';
       case 'C2': return 'C2 - Potentially Dangerous';
       case 'C3': return 'C3 - Improvement Recommended';
+      case 'FI': return 'FI - Further Investigation';
       case 'not-applicable': return 'N/A';
       case 'not-verified': return 'N/V - Not Verified';
       case 'limitation': return 'LIM - Limitation';
@@ -106,6 +108,12 @@ const InspectionOutcomeSelect = ({ itemId, currentOutcome, onOutcomeChange }: In
           <div className="flex items-center gap-3">
             <AlertTriangle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
             <span>C3 - Improvement Recommended</span>
+          </div>
+        </SelectItem>
+        <SelectItem value="FI" className="min-h-[48px] px-4 py-3 cursor-pointer focus:bg-muted">
+          <div className="flex items-center gap-3">
+            <Search className="h-5 w-5 text-blue-400 flex-shrink-0" />
+            <span>FI - Further Investigation</span>
           </div>
         </SelectItem>
         <SelectItem value="not-applicable" className="min-h-[48px] px-4 py-3 cursor-pointer focus:bg-muted">

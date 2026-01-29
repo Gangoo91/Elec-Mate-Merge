@@ -199,6 +199,50 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
             className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
           />
         </div>
+
+        {/* Supplied From */}
+        <div className="space-y-1.5">
+          <Label className="text-xs font-medium text-white/60">
+            Supplied From <span className="text-white/40">(optional)</span>
+          </Label>
+          <Input
+            value={board.suppliedFrom || ''}
+            onChange={(e) => onUpdate('suppliedFrom', e.target.value)}
+            placeholder={isMainBoard ? "e.g. DNO Supply" : "e.g. Main CU"}
+            className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+          />
+        </div>
+
+        {/* Incoming Protective Device */}
+        <div className="grid grid-cols-3 gap-3">
+          <div className="space-y-1.5">
+            <Label className="text-xs font-medium text-white/60">Incoming BS EN</Label>
+            <Input
+              value={board.incomingDeviceBsEn || ''}
+              onChange={(e) => onUpdate('incomingDeviceBsEn', e.target.value)}
+              placeholder="e.g. 60898"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="text-xs font-medium text-white/60">Device Type</Label>
+            <Input
+              value={board.incomingDeviceType || ''}
+              onChange={(e) => onUpdate('incomingDeviceType', e.target.value)}
+              placeholder="e.g. MCB"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="text-xs font-medium text-white/60">Rating (A)</Label>
+            <Input
+              value={board.incomingDeviceRating || ''}
+              onChange={(e) => onUpdate('incomingDeviceRating', e.target.value)}
+              placeholder="e.g. 63"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+            />
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

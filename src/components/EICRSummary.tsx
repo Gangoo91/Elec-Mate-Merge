@@ -1065,6 +1065,30 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                 </div>
               </div>
 
+              {/* No Remedial Action Required */}
+              <button
+                type="button"
+                onClick={() => {
+                  haptics.tap();
+                  onUpdate('noRemedialAction', !formData.noRemedialAction);
+                }}
+                className={cn(
+                  "w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation",
+                  formData.noRemedialAction
+                    ? "border-green-500 bg-green-500/10"
+                    : "border-border/30 bg-card/30"
+                )}
+              >
+                <Checkbox
+                  checked={formData.noRemedialAction || false}
+                  className="h-5 w-5 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
+                />
+                <div className="text-left">
+                  <span className="font-medium">No remedial action required</span>
+                  <p className="text-xs text-muted-foreground mt-0.5">Tick if no defects or observations were recorded</p>
+                </div>
+              </button>
+
               {/* Additional Comments */}
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-foreground/80">Additional Comments</Label>

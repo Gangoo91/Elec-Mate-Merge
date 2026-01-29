@@ -7,6 +7,11 @@ import { AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { sanitizeTextInput } from '@/utils/inputSanitization';
 import { draftStorage } from '@/utils/draftStorage';
+import {
+  validateLoadedData,
+  saveToLocalStorageBackup,
+  logIntegrityEvent
+} from '@/utils/dataIntegrity';
 import MinorWorksPdfGenerator from '@/components/pdf/MinorWorksPdfGenerator';
 import { useEICAutoSave } from '@/hooks/useEICAutoSave';
 import { useCloudSync } from '@/hooks/useCloudSync';
@@ -18,6 +23,7 @@ import { useMinorWorksTabs } from '@/hooks/useMinorWorksTabs';
 import { applyMinorWorksDevFill, clearMinorWorksForm } from '@/utils/minorWorksDevFill';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import { getZsLimitFromDeviceString } from '@/data/zsLimits';
+import { StickyFormSyncBar, type SyncState } from '@/components/ui/SyncStatusIndicator';
 
 // New tab-based components
 import MWFormHeader from '@/components/minor-works/MWFormHeader';
@@ -178,6 +184,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   });
 
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
+  const [lastSavedTime, setLastSavedTime] = useState<Date | null>(null);
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -390,10 +397,44 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
 
           console.log('[MinorWorks] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
 
+          // Validate data integrity before using
+          const integrity = validateLoadedData(data, 'minor-works');
+
+          if (!integrity.hasData) {
+            // Data loaded but appears empty - this is suspicious
+            logIntegrityEvent('load_empty', {
+              reportType: 'minor-works',
+              reportId: initialReportId,
+              fieldCount: integrity.fieldCount,
+              error: integrity.warnings.join('; ')
+            });
+
+            // Try localStorage backup if cloud data is empty
+            if (localDraft?.data) {
+              const localIntegrity = validateLoadedData(localDraft.data, 'minor-works');
+              if (localIntegrity.hasData) {
+                console.log('[MinorWorks] Cloud data empty, using local backup');
+                setFormData(localDraft.data);
+                setCurrentReportId(initialReportId);
+                toast({
+                  title: 'Data recovered from local backup',
+                  description: 'Cloud data appeared empty. Your local version was restored.',
+                });
+                return;
+              }
+            }
+          }
+
           if (localDraft?.data && localTime > cloudTime) {
             // Local is newer - use local data
             console.log('[MinorWorks] Using LOCAL draft (newer than cloud)');
             setFormData(localDraft.data);
+            logIntegrityEvent('load_success', {
+              reportType: 'minor-works',
+              reportId: initialReportId,
+              fieldCount: Object.keys(localDraft.data).length,
+              source: 'local'
+            });
             toast({
               title: 'Recovered unsaved changes',
               description: 'Your recent edits have been restored.',
@@ -402,6 +443,12 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
             // Cloud is newer or same - use cloud data
             console.log('[MinorWorks] Using CLOUD data');
             setFormData(data);
+            logIntegrityEvent('load_success', {
+              reportType: 'minor-works',
+              reportId: initialReportId,
+              fieldCount: integrity.fieldCount,
+              source: 'cloud'
+            });
           }
           setCurrentReportId(initialReportId);
         } else if (localDraft?.data) {
@@ -409,11 +456,21 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
           console.log('[MinorWorks] Cloud load failed, using local draft');
           setFormData(localDraft.data);
           setCurrentReportId(initialReportId);
+          logIntegrityEvent('recovery_success', {
+            reportType: 'minor-works',
+            reportId: initialReportId,
+            source: 'local'
+          });
           toast({
             title: 'Loaded from local storage',
             description: 'Cloud sync will retry automatically.',
           });
         } else {
+          logIntegrityEvent('recovery_failed', {
+            reportType: 'minor-works',
+            reportId: initialReportId,
+            error: 'No data found in cloud or local'
+          });
           toast({
             title: 'Report not found',
             description: 'Could not load the requested report.',
@@ -489,9 +546,23 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
 
   const handleSaveDraft = async () => {
     await autoSaveManualSave();
+
+    // CRITICAL: Always save to localStorage backup BEFORE cloud sync
+    // This ensures data is never lost even if cloud fails
+    const reportIdForBackup = currentReportId || formData.certificateNumber;
+    if (reportIdForBackup && formData.clientName) {
+      saveToLocalStorageBackup('minor-works', reportIdForBackup, formData);
+      logIntegrityEvent('backup_saved', {
+        reportType: 'minor-works',
+        reportId: reportIdForBackup,
+        fieldCount: Object.keys(formData).filter((k: string) => !k.startsWith('_')).length
+      });
+    }
+
     const result = await syncToCloud(true);
     if (result && typeof result === 'object' && 'reportId' in result && result.reportId) {
       setCurrentReportId(result.reportId as string);
+      setLastSavedTime(new Date());
 
       if (customerIdFromNav && result.reportId) {
         const { linkCustomerToReport } = await import('@/utils/customerHelper');
@@ -757,6 +828,16 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
     }
   };
 
+  // Convert sync status to SyncState for the indicator
+  const getSyncIndicatorState = (): SyncState => {
+    if (!isOnline) return 'offline';
+    if (syncState.status === 'error') return 'error';
+    if (syncState.status === 'syncing') return 'syncing';
+    if (syncState.status === 'synced') return 'synced';
+    if (hasUnsavedChanges) return 'unsaved';
+    return 'synced';
+  };
+
   // Render current tab content
   const renderTabContent = () => {
     const tabAnimation = {
@@ -831,6 +912,15 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
       installationAddress={formData.installationAddress || formData.clientAddress || ''}
     >
       <div className="min-h-screen bg-background prevent-shortcuts">
+        {/* Prominent sync status bar - always visible */}
+        <StickyFormSyncBar
+          state={getSyncIndicatorState()}
+          lastSaved={lastSavedTime}
+          isOnline={isOnline}
+          onRetry={syncNow}
+          certificateNumber={formData.certificateNumber}
+        />
+
         {/* Header */}
         <MWFormHeader
           onBack={onBack}

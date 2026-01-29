@@ -167,6 +167,15 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
               className="min-h-[100px] text-base touch-manipulation resize-none"
             />
           </FormField>
+
+          <FormField label="Occupier" >
+            <Input
+              value={formData.occupier || ''}
+              onChange={(e) => onUpdate('occupier', e.target.value)}
+              placeholder="Name of occupier (if different from client)"
+              className="h-11 text-base touch-manipulation"
+            />
+          </FormField>
         </div>
       </div>
 
@@ -223,8 +232,17 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                   <SelectItem value="domestic">Domestic</SelectItem>
                   <SelectItem value="commercial">Commercial</SelectItem>
                   <SelectItem value="industrial">Industrial</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
+              {formData.description === 'other' && (
+                <Input
+                  value={formData.otherPremisesDescription || ''}
+                  onChange={(e) => onUpdate('otherPremisesDescription', e.target.value)}
+                  placeholder="Specify premises type"
+                  className="mt-2 h-11 text-base touch-manipulation"
+                />
+              )}
             </FormField>
 
             <FormField label="Installation Type">
@@ -320,10 +338,11 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
           </FormField>
 
           <FormField label="Evidence of Alterations">
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               {[
                 { value: 'no', label: 'No' },
                 { value: 'yes', label: 'Yes' },
+                { value: 'not-apparent', label: 'Not Apparent' },
               ].map((option) => (
                 <button
                   key={option.value}
@@ -334,13 +353,17 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                     if (formData.evidenceOfAlterations === option.value) {
                       onUpdate('evidenceOfAlterations', '');
                       onUpdate('alterationsDetails', '');
+                      onUpdate('alterationsAge', '');
                     } else {
                       onUpdate('evidenceOfAlterations', option.value);
-                      if (option.value === 'no') onUpdate('alterationsDetails', '');
+                      if (option.value !== 'yes') {
+                        onUpdate('alterationsDetails', '');
+                        onUpdate('alterationsAge', '');
+                      }
                     }
                   }}
                   className={cn(
-                    "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                    "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
                     formData.evidenceOfAlterations === option.value
                       ? "bg-elec-yellow text-black"
                       : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
@@ -351,13 +374,52 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
               ))}
             </div>
             {formData.evidenceOfAlterations === 'yes' && (
-              <Textarea
-                value={formData.alterationsDetails || ''}
-                onChange={(e) => onUpdate('alterationsDetails', e.target.value)}
-                placeholder="Describe the alterations observed..."
-                className="mt-3 min-h-[80px] text-base touch-manipulation resize-none"
-              />
+              <>
+                <Textarea
+                  value={formData.alterationsDetails || ''}
+                  onChange={(e) => onUpdate('alterationsDetails', e.target.value)}
+                  placeholder="Describe the alterations observed..."
+                  className="mt-3 min-h-[80px] text-base touch-manipulation resize-none"
+                />
+                <FormField label="Estimated Age of Alterations (years)">
+                  <Input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={formData.alterationsAge || ''}
+                    onChange={(e) => onUpdate('alterationsAge', e.target.value)}
+                    placeholder="e.g., 5"
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </FormField>
+              </>
             )}
+          </FormField>
+
+          <FormField label="Installation Records Available (Reg 651.1)">
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { value: 'yes', label: 'Yes' },
+                { value: 'no', label: 'No' },
+              ].map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => {
+                    haptics.tap();
+                    onUpdate('installationRecordsAvailable', formData.installationRecordsAvailable === option.value ? '' : option.value);
+                  }}
+                  className={cn(
+                    "h-11 rounded-lg font-medium transition-all touch-manipulation",
+                    formData.installationRecordsAvailable === option.value
+                      ? "bg-elec-yellow text-black"
+                      : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
+                  )}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
           </FormField>
         </div>
       </div>

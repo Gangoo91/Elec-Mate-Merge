@@ -14,11 +14,17 @@ import { draftStorage } from '@/utils/draftStorage';
 import { checkAllResultsCompliance } from '@/utils/autoRegChecker';
 import { getCableSizeForRating, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
+import {
+  validateLoadedData,
+  saveToLocalStorageBackup,
+  logIntegrityEvent
+} from '@/utils/dataIntegrity';
 import { CertificatePhotoProvider } from '@/contexts/CertificatePhotoContext';
 import EICFormHeader from './eic/EICFormHeader';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
 import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
+import { StickyFormSyncBar, type SyncState } from '@/components/ui/SyncStatusIndicator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -132,6 +138,7 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
   const [showBoardScan, setShowBoardScan] = useState(false);
   const [hasLoadedDesign, setHasLoadedDesign] = useState(false);
+  const [lastSavedTime, setLastSavedTime] = useState<Date | null>(null);
 
   // Fetch design data if designId is provided (from Circuit Designer)
   const { data: designData, isLoading: isLoadingDesign } = useDesignedCircuit(designId || '');
@@ -439,11 +446,46 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
 
           console.log('[EIC] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
 
+          // Validate data integrity before using
+          const integrity = validateLoadedData(data, 'eic');
+
+          if (!integrity.hasData) {
+            // Data loaded but appears empty - this is suspicious
+            logIntegrityEvent('load_empty', {
+              reportType: 'eic',
+              reportId: initialReportId,
+              fieldCount: integrity.fieldCount,
+              error: integrity.warnings.join('; ')
+            });
+
+            // Try localStorage backup if cloud data is empty
+            if (localDraft?.data) {
+              const localIntegrity = validateLoadedData(localDraft.data, 'eic');
+              if (localIntegrity.hasData) {
+                console.log('[EIC] Cloud data empty, using local backup');
+                const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
+                setFormData({ ...localDraft.data, certificateNumber });
+                setCurrentReportId(initialReportId);
+                toast({
+                  title: 'Data recovered from local backup',
+                  description: 'Cloud data appeared empty. Your local version was restored.',
+                });
+                return;
+              }
+            }
+          }
+
           if (localDraft?.data && localTime > cloudTime) {
             // Local is newer - use local data
             console.log('[EIC] Using LOCAL draft (newer than cloud)');
             const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
             setFormData({ ...localDraft.data, certificateNumber });
+            logIntegrityEvent('load_success', {
+              reportType: 'eic',
+              reportId: initialReportId,
+              fieldCount: Object.keys(localDraft.data).length,
+              source: 'local'
+            });
             toast({
               title: 'Recovered unsaved changes',
               description: 'Your recent edits have been restored.',
@@ -453,6 +495,12 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
             console.log('[EIC] Using CLOUD data');
             const certificateNumber = data.certificateNumber || formData.certificateNumber;
             setFormData({ ...data, certificateNumber });
+            logIntegrityEvent('load_success', {
+              reportType: 'eic',
+              reportId: initialReportId,
+              fieldCount: integrity.fieldCount,
+              source: 'cloud'
+            });
           }
           setCurrentReportId(initialReportId);
         } else if (localDraft?.data) {
@@ -461,11 +509,21 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
           const certificateNumber = localDraft.data.certificateNumber || formData.certificateNumber;
           setFormData({ ...localDraft.data, certificateNumber });
           setCurrentReportId(initialReportId);
+          logIntegrityEvent('recovery_success', {
+            reportType: 'eic',
+            reportId: initialReportId,
+            source: 'local'
+          });
           toast({
             title: 'Loaded from local storage',
             description: 'Cloud sync will retry automatically.',
           });
         } else {
+          logIntegrityEvent('recovery_failed', {
+            reportType: 'eic',
+            reportId: initialReportId,
+            error: 'No data found in cloud or local'
+          });
           toast({
             title: 'Report not found',
             description: 'Could not load the requested report.',
@@ -882,10 +940,22 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
 
   const handleSaveDraft = async () => {
     await manualSave();
-    
+
+    // CRITICAL: Always save to localStorage backup BEFORE cloud sync
+    // This ensures data is never lost even if cloud fails
+    const reportIdForBackup = currentReportId || effectiveReportId;
+    if (reportIdForBackup && formData.clientName) {
+      saveToLocalStorageBackup('eic', reportIdForBackup, formData);
+      logIntegrityEvent('backup_saved', {
+        reportType: 'eic',
+        reportId: reportIdForBackup,
+        fieldCount: Object.keys(formData).filter(k => !k.startsWith('_')).length
+      });
+    }
+
     // Sync to cloud
     const result = await syncToCloud(true);
-    
+
     // Check if save was successful
     if (!result || !result.success) {
       // Toast already shown by useCloudSync if form is too empty
@@ -903,22 +973,25 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       }
       return;
     }
-    
+
+    // Update last saved time on successful save
+    setLastSavedTime(new Date());
+
     if (result.reportId) {
       setCurrentReportId(result.reportId as string);
-      
+
       // Link to customer if navigated from customer page
       if (customerIdFromNav && result.reportId) {
         const { linkCustomerToReport } = await import('@/utils/customerHelper');
         await linkCustomerToReport(result.reportId as string, customerIdFromNav);
       }
-      
+
       toast({
         title: 'EIC Saved',
         description: 'Your certificate has been saved successfully.',
       });
     }
-    
+
     // Invalidate queries to refresh dashboard
     queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
     queryClient.invalidateQueries({ queryKey: ['my-reports'] });
@@ -1002,6 +1075,16 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
     completedSections.add(3);
   }
 
+  // Convert sync status to SyncState for the indicator
+  const getSyncIndicatorState = (): SyncState => {
+    if (!isOnline) return 'offline';
+    if (syncState.status === 'error') return 'error';
+    if (syncState.status === 'syncing') return 'syncing';
+    if (syncState.status === 'synced') return 'synced';
+    if (hasUnsavedChanges) return 'unsaved';
+    return 'synced';
+  };
+
   // If board scan is open, render full-screen scanner overlay
   if (showBoardScan) {
     return (
@@ -1038,6 +1121,15 @@ const EICForm = ({ onBack, initialReportId, designId }: { onBack: () => void; in
       installationAddress={formData.installationAddress || formData.clientAddress || ''}
     >
       <>
+        {/* Prominent sync status bar - always visible */}
+        <StickyFormSyncBar
+          state={getSyncIndicatorState()}
+          lastSaved={lastSavedTime}
+          isOnline={isOnline}
+          onRetry={syncNow}
+          certificateNumber={formData.certificateNumber}
+        />
+
         <div className="p-2 sm:p-4 space-y-3 sm:space-y-6">
           {/* Design Source Banner */}
           {(formData as any).designSourceId && (

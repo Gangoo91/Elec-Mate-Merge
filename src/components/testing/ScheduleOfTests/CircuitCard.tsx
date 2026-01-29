@@ -141,11 +141,11 @@ const CircuitCardInner = ({
     <Card
       className={cn(
         'border border-border/50 bg-card overflow-hidden rounded-2xl',
-        'active:scale-[0.98] transition-transform duration-150',
         'shadow-sm',
         status.level === 'error' && 'border-red-500/30 bg-red-500/5',
         className
       )}
+      style={{ contain: 'layout style paint' }}
       onClick={handleEdit}
     >
       {/* Header Section */}

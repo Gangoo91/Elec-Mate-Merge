@@ -182,8 +182,9 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
             placeholder="e.g., Consumer unit, Kitchen socket"
             value={defect.item}
             onChange={async (e) => {
+              const value = e.target.value;
               const { sanitizeTextInput } = await import('@/utils/inputSanitization');
-              onUpdate(defect.id, 'item', sanitizeTextInput(e.target.value));
+              onUpdate(defect.id, 'item', sanitizeTextInput(value));
             }}
             className="h-10 text-sm bg-white/5 border-white/10 focus:border-elec-yellow/50
                        placeholder:text-white/30"
@@ -205,8 +206,9 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
             }
             value={defect.description}
             onChange={async (e) => {
+              const value = e.target.value;
               const { sanitizeTextInput } = await import('@/utils/inputSanitization');
-              onUpdate(defect.id, 'description', sanitizeTextInput(e.target.value));
+              onUpdate(defect.id, 'description', sanitizeTextInput(value));
             }}
             rows={3}
             className="text-sm bg-white/5 border-white/10 focus:border-elec-yellow/50
@@ -227,8 +229,9 @@ const DefectObservationCard = ({ defect, reportId, index, onUpdate, onRemove, ce
               }
               value={defect.recommendation}
               onChange={async (e) => {
+                const value = e.target.value;
                 const { sanitizeTextInput } = await import('@/utils/inputSanitization');
-                onUpdate(defect.id, 'recommendation', sanitizeTextInput(e.target.value));
+                onUpdate(defect.id, 'recommendation', sanitizeTextInput(value));
               }}
               rows={2}
               className="text-sm bg-white/5 border-white/10 focus:border-elec-yellow/50
