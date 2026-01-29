@@ -99,14 +99,64 @@ const INSTRUMENT_TYPES = [
 ];
 
 const AVAILABLE_QUALIFICATIONS = [
+  // Core Qualifications
   '18th Edition BS7671',
+  'City & Guilds 2365 Level 2',
+  'City & Guilds 2365 Level 3',
+  'City & Guilds 2330 Level 2',
+  'City & Guilds 2330 Level 3',
+  'NVQ Level 3 Electrical Installation',
+  'AM2 Assessment',
+  // Inspection & Testing
   'City & Guilds 2391-52',
   'City & Guilds 2391-51',
+  'City & Guilds 2394/2395',
+  'EAL Level 3 Inspection & Testing',
+  'EAL Level 3 Initial Verification',
+  'EAL Level 3 Periodic Inspection',
+  // PAT Testing
+  'City & Guilds 2377 PAT Testing',
+  'PAT Testing Certified',
+  // Scheme Memberships
   'NICEIC Approved',
+  'NICEIC Domestic Installer',
   'NAPIT Registered',
+  'ELECSA Registered',
   'ECA Member',
+  'SELECT Member',
   'JIB Approved',
+  'JIB Graded Electrician',
+  // Specialist
   'CompEx Certified',
+  'EV Charging Installation',
+  'Solar PV Installation',
+  'Battery Storage Installation',
+  'Fire Alarm (BS 5839)',
+  'Emergency Lighting (BS 5266)',
+  'Data & Fibre Installation',
+];
+
+const INSURANCE_PROVIDERS = [
+  'Zurich',
+  'Hiscox',
+  'AXA',
+  'Aviva',
+  'Allianz',
+  'Markel',
+  'NFU Mutual',
+  'QBE',
+  'Tradesman Saver',
+  'Simply Business',
+  'PolicyBee',
+  'Kingsbridge',
+  'Other',
+];
+
+const INSURANCE_COVERAGE_OPTIONS = [
+  '£1,000,000',
+  '£2,000,000',
+  '£5,000,000',
+  '£10,000,000',
 ];
 
 const DEFAULT_TERMS_GROUPED = {
@@ -1666,16 +1716,32 @@ const BusinessTab = () => {
               Insurance Details
             </Label>
             <div className="grid grid-cols-2 gap-3">
-              <Input
-                {...register('insurance_provider')}
-                placeholder="Provider"
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl"
-              />
-              <Input
-                {...register('insurance_coverage')}
-                placeholder="£2,000,000"
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl"
-              />
+              <Select
+                value={watch('insurance_provider') || ''}
+                onValueChange={(value) => setValue('insurance_provider', value)}
+              >
+                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl">
+                  <SelectValue placeholder="Provider" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-white/[0.1]">
+                  {INSURANCE_PROVIDERS.map((provider) => (
+                    <SelectItem key={provider} value={provider}>{provider}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={watch('insurance_coverage') || ''}
+                onValueChange={(value) => setValue('insurance_coverage', value)}
+              >
+                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl">
+                  <SelectValue placeholder="Coverage" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-white/[0.1]">
+                  {INSURANCE_COVERAGE_OPTIONS.map((coverage) => (
+                    <SelectItem key={coverage} value={coverage}>{coverage}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <Input
                 {...register('insurance_policy_number')}
                 placeholder="Policy number"
