@@ -109,7 +109,7 @@ export function usePublicElecIdByNumber(elecIdNumber: string | undefined) {
         .from("employer_elec_id_profiles")
         .select(`
           *,
-          employee:employer_employees(id, name, role, photo_url, email, phone)
+          employee:employer_employees(id, name, role, photo_url, email, phone, user_id)
         `)
         .eq("elec_id_number", elecIdNumber)
         .maybeSingle();
@@ -154,16 +154,37 @@ async function fetchProfileById(
   profileId: string,
   sections: string[]
 ): Promise<{ profile: ElecIdProfile | null; documents: PublicDocument[] }> {
+  // Fetch profile with employee data
   const { data: profile, error: profileError } = await supabase
     .from("employer_elec_id_profiles")
     .select(`
       *,
-      employee:employer_employees(id, name, role, photo_url, email, phone)
+      employee:employer_employees(id, name, role, photo_url, email, phone, user_id)
     `)
     .eq("id", profileId)
     .maybeSingle();
 
   if (profileError || !profile) return { profile: null, documents: [] };
+
+  // If we have a user_id, also fetch from profiles table for better name/photo
+  let userProfile: { full_name: string | null; avatar_url: string | null } | null = null;
+  if (profile.employee?.user_id) {
+    const { data: profileData } = await supabase
+      .from("profiles")
+      .select("full_name, avatar_url")
+      .eq("id", profile.employee.user_id)
+      .maybeSingle();
+    userProfile = profileData;
+  }
+
+  // Merge user profile data with employee data - prefer profiles table data
+  if (profile.employee && userProfile) {
+    profile.employee = {
+      ...profile.employee,
+      name: userProfile.full_name || profile.employee.name,
+      photo_url: userProfile.avatar_url || profile.employee.photo_url,
+    };
+  }
 
   let skills: ElecIdSkill[] = [];
   let workHistory: ElecIdWorkHistory[] = [];
