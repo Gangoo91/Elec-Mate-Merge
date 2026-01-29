@@ -571,7 +571,8 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
       // Get main board for location fallback
       const mainBoard = formData.distributionBoards?.[0];
       return {
-        device_type: get('mainProtectiveDeviceCustom') || get('mainProtectiveDevice'),
+        bs_en: mainBoard?.mainSwitchBsEn || '',
+        device_type: get('mainProtectiveDevice'),
         main_switch_rating: get('mainSwitchRating'),
         main_switch_location: get('cuLocation') || mainBoard?.location || '',
         main_switch_poles: get('mainSwitchPoles'),
@@ -839,8 +840,8 @@ export const formatEICRJson = async (formData: any, reportId: string) => {
     earthingArrangement: get('earthingArrangement'),
 
     // Main Protective Device (flat - camelCase only to avoid duplicate with nested object)
-    mainProtectiveDevice: get('mainProtectiveDeviceCustom') || get('mainProtectiveDevice'),
-    main_protective_device_type: get('mainProtectiveDeviceCustom') || get('mainProtectiveDevice'),
+    mainProtectiveDevice: get('mainProtectiveDevice'),
+    main_protective_device_type: get('mainProtectiveDevice'),
     rcd_main_switch: get('rcdMainSwitch'),
     rcdMainSwitch: get('rcdMainSwitch'),
     rcd_rating: get('rcdRating'),

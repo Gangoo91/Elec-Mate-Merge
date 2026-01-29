@@ -319,7 +319,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
 
           <FormField label="BS 7671 Edition" hint="Amendment edition used for this inspection">
             <Select
-              value={formData.bsAmendment || 'amd2-2022'}
+              value={formData.bsAmendment || 'amd3-2024'}
               onValueChange={(value) => { haptics.tap(); onUpdate('bsAmendment', value); }}
             >
               <SelectTrigger className="h-11 touch-manipulation">
@@ -328,6 +328,7 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
               <SelectContent>
                 <SelectItem value="amd1-2020">Amendment 1 (2020)</SelectItem>
                 <SelectItem value="amd2-2022">Amendment 2 (2022)</SelectItem>
+                <SelectItem value="amd3-2024">Amendment 3 (2024)</SelectItem>
               </SelectContent>
             </Select>
           </FormField>
