@@ -102,9 +102,9 @@ const AccountingConnectorsCard: React.FC = () => {
   // Get first connected integration for preview
   const connectedIntegration = integrations.find(i => i.status === 'connected');
 
-  // Available providers to show - only Xero is implemented for now
-  const implementedProviders: AccountingProvider[] = ['xero'];
-  const comingSoonProviders: AccountingProvider[] = ['quickbooks', 'sage', 'freshbooks'];
+  // Available providers to show - Xero and Sage are implemented
+  const implementedProviders: AccountingProvider[] = ['xero', 'sage'];
+  const comingSoonProviders: AccountingProvider[] = ['quickbooks', 'freshbooks'];
 
   const handleConnect = async (provider: AccountingProvider) => {
     await connectProvider(provider);
