@@ -79,7 +79,7 @@ export const UK_QUALIFICATIONS: Record<string, QualificationCategory> = {
     ]
   },
   testing: {
-    label: 'Testing & Inspection',
+    label: 'Inspection & Testing',
     icon: 'ClipboardCheck',
     items: [
       // City & Guilds
@@ -317,7 +317,7 @@ export const UK_ELECTRICAL_SKILLS = {
     ]
   },
   testing: {
-    label: 'Testing & Inspection',
+    label: 'Inspection & Testing',
     icon: 'clipboard-check',
     color: 'blue',
     skills: [

@@ -482,7 +482,7 @@ const BusinessTab = () => {
       setValue('worker_rates', companyProfile.worker_rates || DEFAULT_WORKER_RATES);
       setValue('quote_validity_days', companyProfile.quote_validity_days || 30);
       setValue('warranty_period', companyProfile.warranty_period || '12 months');
-      setValue('deposit_percentage', companyProfile.deposit_percentage || 30);
+      setValue('deposit_percentage', companyProfile.deposit_percentage ?? 30);
       setValue('inspector_name', companyProfile.inspector_name || '');
       setValue('inspector_qualifications', companyProfile.inspector_qualifications || []);
       setValue('registration_scheme', companyProfile.registration_scheme || '');
@@ -661,7 +661,7 @@ const BusinessTab = () => {
       worker_rates: data.worker_rates || DEFAULT_WORKER_RATES,
       quote_validity_days: data.quote_validity_days || 30,
       warranty_period: data.warranty_period || '12 months',
-      deposit_percentage: data.deposit_percentage || 30,
+      deposit_percentage: data.deposit_percentage ?? 30,
       quote_terms: quoteTermsJson,
       invoice_terms: invoiceTermsJson,
       late_payment_interest_rate: latePaymentInterestRate,
@@ -1022,12 +1022,12 @@ const BusinessTab = () => {
             Connect your accounting software to automatically sync invoices
           </p>
 
-          {/* Xero - Primary Integration */}
-          {(['xero', 'quickbooks'] as AccountingProvider[]).map((providerId) => {
+          {/* Accounting Integrations */}
+          {(['xero', 'sage', 'quickbooks'] as AccountingProvider[]).map((providerId) => {
             const provider = ACCOUNTING_PROVIDERS[providerId];
             const integration = getIntegration(providerId);
             const isConnected = isProviderConnected(providerId);
-            const isImplemented = providerId === 'xero'; // Only Xero is fully implemented
+            const isImplemented = providerId === 'xero' || providerId === 'sage'; // Xero and Sage are implemented
 
             return (
               <div
@@ -1046,6 +1046,10 @@ const BusinessTab = () => {
                     {providerId === 'xero' ? (
                       <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
                         <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 16.894l-3.188-3.188 3.188-3.188a.75.75 0 10-1.06-1.06L12 12.645 9.166 9.81a.75.75 0 10-1.06 1.06l3.188 3.188-3.188 3.188a.75.75 0 101.06 1.06L12 14.118l2.834 2.836a.75.75 0 101.06-1.06z" />
+                      </svg>
+                    ) : providerId === 'sage' ? (
+                      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-6h2v6zm0-8h-2V7h2v2z" />
                       </svg>
                     ) : (
                       <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
@@ -1156,11 +1160,21 @@ const BusinessTab = () => {
             </div>
             <div className="space-y-2">
               <Label className="text-[13px] text-white/50 font-medium">Payment Terms</Label>
-              <Input
-                {...register('payment_terms')}
-                placeholder="30 days"
-                className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-emerald-500/50 focus:ring-0"
-              />
+              <Select
+                value={watch('payment_terms') || '30 days'}
+                onValueChange={(value) => setValue('payment_terms', value)}
+              >
+                <SelectTrigger className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-emerald-500/50 focus:ring-0">
+                  <SelectValue placeholder="Select payment terms" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-white/[0.1]">
+                  <SelectItem value="On receipt">Paid on receipt</SelectItem>
+                  <SelectItem value="7 days">7 days</SelectItem>
+                  <SelectItem value="14 days">14 days</SelectItem>
+                  <SelectItem value="30 days">30 days</SelectItem>
+                  <SelectItem value="60 days">60 days</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
@@ -1220,12 +1234,24 @@ const BusinessTab = () => {
             </div>
             <div className="space-y-2">
               <Label className="text-[11px] text-white/40 font-medium">Deposit %</Label>
-              <Input
-                type="number"
-                {...register('deposit_percentage', { valueAsNumber: true })}
-                placeholder="30"
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-amber-500/50 focus:ring-0"
-              />
+              <Select
+                value={String(watch('deposit_percentage') ?? 30)}
+                onValueChange={(value) => setValue('deposit_percentage', parseInt(value, 10))}
+              >
+                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-amber-500/50 focus:ring-0">
+                  <SelectValue placeholder="Select deposit" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-white/[0.1]">
+                  <SelectItem value="0">No deposit</SelectItem>
+                  <SelectItem value="10">10%</SelectItem>
+                  <SelectItem value="20">20%</SelectItem>
+                  <SelectItem value="25">25%</SelectItem>
+                  <SelectItem value="30">30%</SelectItem>
+                  <SelectItem value="40">40%</SelectItem>
+                  <SelectItem value="50">50%</SelectItem>
+                  <SelectItem value="100">Full payment</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-2">
               <Label className="text-[11px] text-white/40 font-medium">Warranty</Label>

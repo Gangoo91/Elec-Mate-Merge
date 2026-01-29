@@ -352,206 +352,126 @@ const ElecIdQualifications = () => {
 
   // Form content - shared between sheet and dialog
   const FormContent = ({ isEdit = false }: { isEdit?: boolean }) => (
-    <div className="space-y-5">
-      {/* Category Selection - Enhanced UI */}
-      <div className="space-y-3">
-        <Label className="text-foreground text-sm font-medium flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-          Category
-        </Label>
-        {isEdit ? (
-          <div className="h-12 bg-white/[0.06] border border-white/[0.1] rounded-xl px-4 flex items-center">
-            <span className="text-foreground/70">{UK_QUALIFICATIONS[selectedCategory]?.label || selectedCategory}</span>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+    <div className="space-y-4">
+      {/* Category Selection - Compact horizontal pills */}
+      {!isEdit && (
+        <div className="space-y-2">
+          <Label className="text-xs text-foreground/70">Category</Label>
+          <div className="flex flex-wrap gap-1.5">
             {Object.entries(UK_QUALIFICATIONS).map(([key, cat]) => {
-              const IconComponent = getCategoryIcon(key);
               const colors = getCategoryColor(key);
               const isSelected = selectedCategory === key;
+              const shortLabel = cat.label
+                .replace('Core Qualifications', 'Core')
+                .replace('Testing & Inspection', 'Testing')
+                .replace('Health & Safety', 'H&S')
+                .replace('Data & Communications', 'Data')
+                .replace('Fire & Security', 'Fire')
+                .replace('Industrial & Controls', 'Industrial')
+                .replace('Renewable Energy', 'Renewable')
+                .replace('Industry Cards', 'Cards')
+                .replace('Regulations', 'Regs');
               return (
                 <button
                   key={key}
                   type="button"
                   onClick={() => {
                     setSelectedCategory(key);
-                    setSelectedQual(""); // Reset qualification when category changes
+                    setSelectedQual("");
                   }}
                   className={cn(
-                    "flex flex-col items-center gap-2 p-3 rounded-xl border transition-all touch-manipulation active:scale-[0.97]",
+                    "px-3 py-1.5 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.97]",
                     isSelected
-                      ? `${colors.bg} ${colors.border} border-2`
-                      : "bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08]"
+                      ? `${colors.bg} ${colors.text} ${colors.border} border`
+                      : "bg-white/[0.06] text-foreground/70 hover:bg-white/[0.1]"
                   )}
                 >
-                  <div className={cn(
-                    "w-10 h-10 rounded-xl flex items-center justify-center",
-                    isSelected ? colors.bg : "bg-white/[0.06]"
-                  )}>
-                    <IconComponent className={cn("h-5 w-5", isSelected ? colors.text : "text-foreground/60")} />
-                  </div>
-                  <span className={cn(
-                    "text-xs font-medium text-center leading-tight",
-                    isSelected ? "text-foreground" : "text-foreground/70"
-                  )}>
-                    {cat.label.replace('Health & Safety', 'H&S').replace('Data & Communications', 'Data/Comms').replace('Fire & Security', 'Fire/Security').replace('Industrial & Controls', 'Industrial')}
-                  </span>
+                  {shortLabel}
                 </button>
               );
             })}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
-      {/* Qualification Selection - Enhanced scrollable list */}
+      {/* Edit mode - show locked category */}
+      {isEdit && (
+        <div className="space-y-1.5">
+          <Label className="text-xs text-foreground/70">Category</Label>
+          <div className="h-10 bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 flex items-center text-sm text-foreground/60">
+            {UK_QUALIFICATIONS[selectedCategory]?.label || selectedCategory}
+          </div>
+        </div>
+      )}
+
+      {/* Qualification Selection */}
       {selectedCategory && (
-        <div className="space-y-3">
-          <Label className="text-foreground text-sm font-medium flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-            Qualification
-            <Badge variant="secondary" className="ml-auto text-[10px] bg-white/10">
-              {getCategoryQualifications(selectedCategory).length} options
-            </Badge>
-          </Label>
+        <div className="space-y-1.5">
+          <Label className="text-xs text-foreground/70">Qualification</Label>
           {isEdit ? (
-            <div className="h-12 bg-white/[0.06] border border-white/[0.1] rounded-xl px-4 flex items-center">
-              <span className="text-foreground/70">{getQualificationLabel(selectedQual)}</span>
+            <div className="h-10 bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 flex items-center text-sm text-foreground/60">
+              {getQualificationLabel(selectedQual)}
             </div>
           ) : (
-            <div
-              className="max-h-[200px] overflow-y-auto rounded-xl border border-white/[0.1] bg-white/[0.02] overscroll-contain"
-              style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
-            >
-              <div className="divide-y divide-white/[0.06]">
-                {getCategoryQualifications(selectedCategory).map((qual) => {
-                  const isSelected = selectedQual === qual.value;
-                  const colors = getCategoryColor(selectedCategory);
-                  return (
-                    <button
-                      key={qual.value}
-                      type="button"
-                      onClick={() => setSelectedQual(qual.value)}
-                      className={cn(
-                        "w-full flex items-center gap-3 p-3.5 text-left transition-all touch-manipulation",
-                        isSelected
-                          ? `${colors.bg}`
-                          : "hover:bg-white/[0.04] active:bg-white/[0.08]"
-                      )}
-                    >
-                      <div className={cn(
-                        "w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all",
-                        isSelected
-                          ? `${colors.border} ${colors.bg}`
-                          : "border-white/20"
-                      )}>
-                        {isSelected && (
-                          <div className={cn("w-2.5 h-2.5 rounded-full", colors.text.replace('text-', 'bg-'))} />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <span className={cn(
-                          "text-sm font-medium block truncate",
-                          isSelected ? "text-foreground" : "text-foreground/80"
-                        )}>
-                          {qual.label}
-                        </span>
-                        <span className="text-xs text-foreground/50">
-                          {qual.awarding}
-                          {qual.hasExpiry && ` • Expires every ${qual.expiryYears}y`}
-                        </span>
-                      </div>
-                      {isSelected && (
-                        <CheckCircle2 className={cn("h-5 w-5 flex-shrink-0", colors.text)} />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            <Select value={selectedQual} onValueChange={setSelectedQual}>
+              <SelectTrigger className="h-10 bg-white/[0.06] border-white/[0.1] rounded-lg touch-manipulation text-sm">
+                <SelectValue placeholder="Select qualification..." />
+              </SelectTrigger>
+              <SelectContent className="bg-elec-dark border-white/[0.1] max-h-[280px]">
+                {getCategoryQualifications(selectedCategory).map((qual) => (
+                  <SelectItem key={qual.value} value={qual.value} className="py-2.5 text-sm">
+                    <div>
+                      <span className="font-medium">{qual.label}</span>
+                      <span className="text-foreground/50 ml-2 text-xs">{qual.awarding}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+          {selectedQualInfo?.hasExpiry && !isEdit && (
+            <p className="text-[11px] text-amber-400 flex items-center gap-1 mt-1">
+              <Clock className="h-3 w-3" />
+              Renews every {selectedQualInfo.expiryYears}yr
+            </p>
           )}
         </div>
       )}
 
-      {/* Awarding Body */}
+      {/* Certificate Details - Compact grid */}
       {(selectedQualInfo || isEdit) && (
-        <div className="space-y-2">
-          <Label className="text-foreground text-sm font-medium flex items-center gap-2">
-            <Building2 className="h-3.5 w-3.5 text-foreground/60" />
-            Awarding Body
-          </Label>
-          <Input
-            value={formData.awardingBody || (selectedQualInfo?.awarding || "")}
-            onChange={(e) =>
-              setFormData({ ...formData, awardingBody: e.target.value })
-            }
-            className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base"
-            placeholder="e.g., City & Guilds"
-          />
-        </div>
-      )}
-
-      {/* Date Fields in Row */}
-      <div className="grid grid-cols-2 gap-3">
-        {/* Date Achieved */}
-        <div className="space-y-2">
-          <Label className="text-foreground text-sm font-medium flex items-center gap-2">
-            <Calendar className="h-3.5 w-3.5 text-foreground/60" />
-            Date Achieved
-          </Label>
-          <Input
-            type="date"
-            value={formData.dateAchieved}
-            onChange={(e) =>
-              setFormData({ ...formData, dateAchieved: e.target.value })
-            }
-            className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base"
-          />
-        </div>
-
-        {/* Expiry Date */}
-        {(selectedQualInfo?.hasExpiry || formData.expiryDate || isEdit) && (
-          <div className="space-y-2">
-            <Label className="text-foreground text-sm font-medium flex items-center gap-2">
-              <Clock className="h-3.5 w-3.5 text-foreground/60" />
-              Expiry Date
-            </Label>
+        <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/[0.06]">
+          <div className="space-y-1.5">
+            <Label className="text-xs text-foreground/70">Date Achieved</Label>
             <Input
               type="date"
-              value={formData.expiryDate}
-              onChange={(e) =>
-                setFormData({ ...formData, expiryDate: e.target.value })
-              }
-              className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base"
+              value={formData.dateAchieved}
+              onChange={(e) => setFormData({ ...formData, dateAchieved: e.target.value })}
+              className="h-10 bg-white/[0.06] border-white/[0.1] rounded-lg touch-manipulation text-sm"
             />
           </div>
-        )}
-      </div>
-
-      {/* Expiry Info Badge */}
-      {selectedQualInfo?.hasExpiry && selectedQualInfo?.expiryYears && (
-        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
-          <AlertCircle className="h-4 w-4 text-amber-400 flex-shrink-0" />
-          <span className="text-xs text-amber-400">
-            This qualification requires renewal every {selectedQualInfo.expiryYears} year{selectedQualInfo.expiryYears > 1 ? 's' : ''}
-          </span>
+          {(selectedQualInfo?.hasExpiry || formData.expiryDate || isEdit) && (
+            <div className="space-y-1.5">
+              <Label className="text-xs text-foreground/70">Expiry Date</Label>
+              <Input
+                type="date"
+                value={formData.expiryDate}
+                onChange={(e) => setFormData({ ...formData, expiryDate: e.target.value })}
+                className="h-10 bg-white/[0.06] border-white/[0.1] rounded-lg touch-manipulation text-sm"
+              />
+            </div>
+          )}
+          <div className="space-y-1.5 col-span-2">
+            <Label className="text-xs text-foreground/70">Certificate No. <span className="text-foreground/40">(optional)</span></Label>
+            <Input
+              value={formData.certificateNumber}
+              onChange={(e) => setFormData({ ...formData, certificateNumber: e.target.value })}
+              placeholder="e.g., CG-2382-123456"
+              className="h-10 bg-white/[0.06] border-white/[0.1] rounded-lg touch-manipulation text-sm"
+            />
+          </div>
         </div>
       )}
-
-      {/* Certificate Number */}
-      <div className="space-y-2">
-        <Label className="text-foreground text-sm font-medium">
-          Certificate Number
-          <span className="text-foreground/50 ml-2 font-normal text-xs">(optional)</span>
-        </Label>
-        <Input
-          value={formData.certificateNumber}
-          onChange={(e) =>
-            setFormData({ ...formData, certificateNumber: e.target.value })
-          }
-          placeholder="e.g., CG-2382-123456"
-          className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base"
-        />
-      </div>
     </div>
   );
 
