@@ -292,16 +292,29 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({ f
               </div>
               <div className="space-y-2">
                 <Label htmlFor="earthingConductorCsa" className="text-xs text-white/60">csa (mm²)</Label>
-                <Input
-                  id="earthingConductorCsa"
-                  type="number"
-                  step="0.5"
+                <Select
                   value={formData.earthingConductorCsa || ''}
-                  onChange={(e) => onUpdate('earthingConductorCsa', e.target.value)}
-                  placeholder="e.g., 16"
-                  className="h-11 text-base touch-manipulation bg-background border-border focus:border-purple-500 focus:ring-purple-500"
-                  style={{ fontSize: '16px' }}
-                />
+                  onValueChange={(value) => onUpdate('earthingConductorCsa', value)}
+                >
+                  <SelectTrigger className="bg-background border-border focus:border-purple-500 focus:ring-purple-500 h-11">
+                    <SelectValue placeholder="Select size" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectItem value="6">6mm²</SelectItem>
+                    <SelectItem value="10">10mm²</SelectItem>
+                    <SelectItem value="16">16mm²</SelectItem>
+                    <SelectItem value="25">25mm²</SelectItem>
+                    <SelectItem value="35">35mm²</SelectItem>
+                    <SelectItem value="50">50mm²</SelectItem>
+                    <SelectItem value="70">70mm²</SelectItem>
+                    <SelectItem value="95">95mm²</SelectItem>
+                    <SelectItem value="120">120mm²</SelectItem>
+                    <SelectItem value="150">150mm²</SelectItem>
+                    <SelectItem value="185">185mm²</SelectItem>
+                    <SelectItem value="240">240mm²</SelectItem>
+                    <SelectItem value="300">300mm²</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="flex items-end">
                 <div className="flex items-center gap-2 p-2 rounded-lg bg-green-500/10 border border-green-500/30 w-full h-11">

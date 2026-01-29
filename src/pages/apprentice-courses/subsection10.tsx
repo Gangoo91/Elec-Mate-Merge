@@ -626,9 +626,9 @@ const Section3_1 = () => {
               Back to Section 3
             </Link>
           </Button>
-          
+
           <Button asChild>
-            <Link to="../subsection11">
+            <Link to="3-2">
               Next: The Five Steps of Risk Assessment
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

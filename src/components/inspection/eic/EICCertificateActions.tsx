@@ -124,7 +124,11 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   const hasRequiredDeclarations = formData.designerName && formData.designerSignature && 
                                  formData.constructorName && formData.constructorSignature && 
                                  formData.inspectorName && formData.inspectorSignature;
-  const hasCompletedInspections = formData.inspections && Object.keys(formData.inspections).length > 0;
+  // Check for completed inspections - either via inspections object (legacy) or inspectionItems array (current)
+  const hasCompletedInspections =
+    (formData.inspections && Object.keys(formData.inspections).length > 0) ||
+    (formData.inspectionItems && Array.isArray(formData.inspectionItems) &&
+     formData.inspectionItems.some((item: any) => item.outcome === 'satisfactory' || item.outcome === 'not-applicable' || item.outcome === 'limitation'));
   const hasTestResults = formData.scheduleOfTests && formData.scheduleOfTests.length > 0;
 
   const canGenerateCertificate = hasRequiredInstallationDetails && hasRequiredDeclarations;
@@ -399,7 +403,37 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
   const generateTestJSON = async (reportId: string) => {
     // Always include all keys with empty values as defaults
+
+    // Build FLAT inspection keys at ROOT level dynamically from form data
+    const flatInspectionKeys: Record<string, string> = {};
+    const inspectionItems = formData.inspectionItems || Object.values(formData.inspections || {});
+
+    // Create flat keys for all 14 EIC inspection items
+    for (let i = 1; i <= 14; i++) {
+      const item = inspectionItems.find((it: any) =>
+        it?.itemNumber === String(i) ||
+        it?.itemNumber === i ||
+        it?.id === `eic_${i}` ||
+        it?.id === String(i)
+      );
+      const outcome = item?.outcome || '';
+
+      // Convert outcome to display value for PDF
+      if (outcome === 'satisfactory' || outcome === 'acceptable' || outcome === 'Acceptable') {
+        flatInspectionKeys[`insp_${i}`] = 'Acceptable';
+      } else if (outcome === 'na' || outcome === 'not-applicable' || outcome === 'N/A') {
+        flatInspectionKeys[`insp_${i}`] = 'N/A';
+      } else if (outcome === 'limitation' || outcome === 'LIM') {
+        flatInspectionKeys[`insp_${i}`] = 'LIM';
+      } else {
+        flatInspectionKeys[`insp_${i}`] = '';
+      }
+    }
+
     const json: any = {
+      // SPREAD flat inspection keys at ROOT level
+      ...flatInspectionKeys,
+
       metadata: {
         certificate_number: formData.certificateNumber || ''
       },
@@ -446,6 +480,42 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         board_type: formData.boardType || '',
         board_location: formData.boardLocation || ''
       },
+      // Sub-board support - array of distribution boards (for multi-board installations)
+      distribution_boards: (formData.distributionBoards || []).map((board: any, index: number) => ({
+        db_reference: board.dbReference || board.reference || `DB${index + 1}`,
+        location: board.location || '',
+        board_type: board.boardType || board.type || '',
+        board_make: board.make || board.boardMake || '',
+        board_model: board.model || board.boardModel || '',
+        total_ways: board.totalWays || board.ways || '',
+        used_ways: board.usedWays || '',
+        spare_ways: board.spareWays || '',
+        zdb: board.zdb || '',
+        ipf: board.ipf || '',
+        // Main switch for this board
+        main_switch_bs_en: board.mainSwitchBsEn || '',
+        main_switch_type: board.mainSwitchType || '',
+        main_switch_rating: board.mainSwitchRating || '',
+        main_switch_poles: board.mainSwitchPoles || '',
+        // RCD for this board (if applicable)
+        rcd_type: board.rcdType || '',
+        rcd_rating: board.rcdRating || '',
+        rcd_measured_time: board.rcdMeasuredTime || '',
+        // SPD for this board (IET form T1/T2/T3/N/A checkboxes)
+        spd_fitted: board.spdFitted ?? false,
+        spd_operational: board.spdOperationalStatus ?? board.spdOperational ?? false,
+        spd_t1: board.spdT1 ?? false,
+        spd_t2: board.spdT2 ?? false,
+        spd_t3: board.spdT3 ?? false,
+        spd_na: board.spdNA ?? false,
+        // Verification
+        polarity_confirmed: board.confirmedCorrectPolarity ?? board.polarityConfirmed ?? false,
+        phase_sequence_confirmed: board.confirmedPhaseSequence ?? board.phaseSequenceConfirmed ?? false,
+        // Supply to this board (from main or another DB)
+        supply_from: board.supplyFrom || 'Main',
+        supply_cable_size: board.supplyCableSize || '',
+        supply_cable_type: board.supplyCableType || ''
+      })),
       cables: {
         intake_cable_size: formData.intakeCableSize || '',
         intake_cable_type: formData.intakeCableType || '',
@@ -535,13 +605,16 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         test_notes: formData.testNotes || ''
       },
       distribution_board_verification: {
-        db_reference: formData.dbReference || '',
-        zdb: formData.zdb || '',
-        ipf: formData.ipf || '',
-        confirmed_correct_polarity: formData.confirmedCorrectPolarity ?? false,
-        confirmed_phase_sequence: formData.confirmedPhaseSequence ?? false,
-        spd_operational_status: formData.spdOperationalStatus ?? false,
-        spd_na: formData.spdNA ?? false
+        db_reference: formData.dbReference || formData.distributionBoards?.[0]?.dbReference || '',
+        zdb: formData.zdb || formData.distributionBoards?.[0]?.zdb || '',
+        ipf: formData.ipf || formData.distributionBoards?.[0]?.ipf || '',
+        confirmed_correct_polarity: formData.confirmedCorrectPolarity ?? formData.distributionBoards?.[0]?.polarityConfirmed ?? false,
+        confirmed_phase_sequence: formData.confirmedPhaseSequence ?? formData.distributionBoards?.[0]?.phaseSequenceConfirmed ?? false,
+        spd_operational_status: formData.spdOperationalStatus ?? formData.distributionBoards?.[0]?.spdOperational ?? false,
+        spd_t1: formData.spdT1 ?? formData.distributionBoards?.[0]?.spdT1 ?? false,
+        spd_t2: formData.spdT2 ?? formData.distributionBoards?.[0]?.spdT2 ?? false,
+        spd_t3: formData.spdT3 ?? formData.distributionBoards?.[0]?.spdT3 ?? false,
+        spd_na: formData.spdNA ?? formData.distributionBoards?.[0]?.spdNA ?? false
       },
       designer: {
         name: formData.designerName || '',
@@ -618,7 +691,12 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       });
       
       return {
-        ...obs,
+        id: obs.id || '',
+        description: obs.description || '',
+        defect_code: obs.defectCode || obs.defect_code || '',  // Accept both camelCase and snake_case, output snake_case
+        recommendation: obs.recommendation || '',
+        item: obs.item || '',
+        rectified: obs.rectified ?? false,
         photo_evidence: photoUrls,
         photo_count: photoUrls.length
       };

@@ -224,15 +224,15 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         total: finalQuote.total
       });
 
-      // Update quote status and expiry
+      // Update quote with expiry - keep as draft until explicitly sent
       const updatedQuote = {
         ...finalQuote,
-        status: 'sent' as const,
+        status: 'draft' as const,
         expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
         updatedAt: new Date(),
       };
 
-      console.log('Quote Generation - Quote updated with sent status', {
+      console.log('Quote Generation - Quote updated with draft status', {
         id: updatedQuote.id,
         status: updatedQuote.status,
         expiryDate: updatedQuote.expiryDate
@@ -320,7 +320,14 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
           description: `Quote ${updatedQuote.quoteNumber} has been generated, downloaded, and saved to recent quotes.`,
           variant: "success"
         });
-        onQuoteGenerated?.(); // Trigger refresh of quotes list
+
+        // If callback provided (e.g., for navigation), call it and return early
+        // This prevents state updates on a component that's about to unmount
+        if (onQuoteGenerated) {
+          logger.api('quotes/generate', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
+          onQuoteGenerated();
+          return;
+        }
       } else {
         logger.warn('Quote save failed', { quoteId: updatedQuote.id, quoteNumber: updatedQuote.quoteNumber });
         toast({
@@ -330,6 +337,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         });
       }
 
+      // Only update step and scroll if we're staying on this page (no callback)
       // Move to review step if not already there
       if (currentStep < 2) {
         setCurrentStep(2);
@@ -354,7 +362,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     } finally {
       setIsGenerating(false);
     }
-  }, [quote, currentStep, isGenerating]);
+  }, [quote, currentStep, isGenerating, onQuoteGenerated, saveQuote, companyProfile, calculateTotals]);
 
   const resetQuote = useCallback(async () => {
     try {

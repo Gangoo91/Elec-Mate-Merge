@@ -30,6 +30,12 @@ import {
   ChevronRight,
   Loader2,
   X,
+  User,
+  FileText,
+  Zap,
+  Award,
+  TrendingUp,
+  Edit3,
 } from "lucide-react";
 import { UK_JOB_TITLES, getJobTitleLabel } from "@/data/uk-electrician-constants";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
@@ -130,7 +136,7 @@ const ElecIdExperience = () => {
           id: w.id,
           employerName: w.employer_name,
           jobTitle: w.job_title,
-          location: undefined,
+          location: w.location || undefined,
           startDate: w.start_date,
           endDate: w.end_date || undefined,
           isCurrent: w.is_current,
@@ -170,6 +176,7 @@ const ElecIdExperience = () => {
         profile_id: profile.id,
         employer_name: formData.employerName,
         job_title: formData.jobTitle,
+        location: formData.location || null,
         start_date: formData.startDate,
         end_date: isCurrent ? null : formData.endDate || null,
         is_current: isCurrent,
@@ -221,6 +228,7 @@ const ElecIdExperience = () => {
       await updateElecIdWorkHistory(editingExp.id, {
         employer_name: formData.employerName,
         job_title: formData.jobTitle,
+        location: formData.location || null,
         start_date: formData.startDate,
         end_date: isCurrent ? null : formData.endDate || null,
         is_current: isCurrent,
@@ -358,113 +366,215 @@ const ElecIdExperience = () => {
 
   // Form content - reusable for both mobile and desktop
   const FormContent = ({ isEdit = false }: { isEdit?: boolean }) => (
-    <div className="space-y-5">
-      {/* Employer Name */}
-      <div className="space-y-2">
-        <Label className="text-sm font-medium text-foreground">Employer Name</Label>
-        <Input
-          value={formData.employerName}
-          onChange={(e) => setFormData({ ...formData, employerName: e.target.value })}
-          placeholder="e.g., Spark Electrical Ltd"
-          className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base"
-        />
+    <div className="space-y-6">
+      {/* Company Details Section */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+          <Building2 className="h-4 w-4 text-elec-yellow" />
+          <span>Company Details</span>
+        </div>
+
+        {/* Employer Name */}
+        <div className="relative">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
+            <Building2 className="h-5 w-5 text-foreground/40" />
+          </div>
+          <Input
+            value={formData.employerName}
+            onChange={(e) => setFormData({ ...formData, employerName: e.target.value })}
+            placeholder="Company name"
+            className="h-14 pl-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base placeholder:text-foreground/40"
+          />
+        </div>
+
+        {/* Location */}
+        <div className="relative">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
+            <MapPin className="h-5 w-5 text-foreground/40" />
+          </div>
+          <Input
+            value={formData.location}
+            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+            placeholder="Location (e.g., London, Remote)"
+            className="h-14 pl-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base placeholder:text-foreground/40"
+          />
+        </div>
       </div>
 
-      {/* Job Title */}
-      <div className="space-y-2">
-        <Label className="text-sm font-medium text-foreground">Job Title</Label>
-        <Select
-          value={formData.jobTitle}
-          onValueChange={(value) => setFormData({ ...formData, jobTitle: value })}
-        >
-          <SelectTrigger className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation">
-            <SelectValue placeholder="Select job title" />
-          </SelectTrigger>
-          <SelectContent className="bg-background border-white/[0.1] max-h-60 z-[200]">
-            {Object.entries(jobTitlesByCategory).map(([category, titles]) => (
-              <React.Fragment key={category}>
-                <div className="px-3 py-2 text-xs font-semibold text-elec-yellow uppercase tracking-wide">
-                  {category}
+      {/* Role Section */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+          <Briefcase className="h-4 w-4 text-blue-400" />
+          <span>Your Role</span>
+        </div>
+
+        {/* Job Title - Visual Grid Selection */}
+        <div className="space-y-3">
+          <Label className="text-sm text-foreground/70">Select your job title</Label>
+          <div className="max-h-[200px] overflow-y-auto rounded-xl border border-white/[0.08] bg-white/[0.02]">
+            {Object.entries(jobTitlesByCategory).map(([category, titles], catIndex) => (
+              <div key={category}>
+                {catIndex > 0 && <div className="h-px bg-white/[0.06]" />}
+                <div className="sticky top-0 z-10 px-4 py-2 bg-white/[0.04] backdrop-blur-sm border-b border-white/[0.06]">
+                  <span className="text-xs font-semibold text-elec-yellow uppercase tracking-wide">
+                    {category}
+                  </span>
                 </div>
-                {titles.map((title) => (
-                  <SelectItem
-                    key={title.value}
-                    value={title.value}
-                    className="py-3 touch-manipulation"
-                  >
-                    {title.label}
-                  </SelectItem>
-                ))}
-              </React.Fragment>
+                <div className="p-2">
+                  {titles.map((title) => (
+                    <button
+                      key={title.value}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, jobTitle: title.value })}
+                      className={cn(
+                        "w-full flex items-center gap-3 p-3 rounded-lg transition-all touch-manipulation",
+                        formData.jobTitle === title.value
+                          ? "bg-blue-500/20 border border-blue-500/40"
+                          : "hover:bg-white/[0.04] active:bg-white/[0.08]"
+                      )}
+                    >
+                      <div className={cn(
+                        "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all",
+                        formData.jobTitle === title.value
+                          ? "border-blue-400 bg-blue-400"
+                          : "border-white/30"
+                      )}>
+                        {formData.jobTitle === title.value && (
+                          <CheckCircle2 className="h-3 w-3 text-white" />
+                        )}
+                      </div>
+                      <span className={cn(
+                        "text-sm",
+                        formData.jobTitle === title.value
+                          ? "text-foreground font-medium"
+                          : "text-foreground/80"
+                      )}>
+                        {title.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Location */}
-      <div className="space-y-2">
-        <Label className="text-sm font-medium text-foreground">
-          Location <span className="text-foreground/70 font-normal">(optional)</span>
-        </Label>
-        <Input
-          value={formData.location}
-          onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-          placeholder="e.g., London"
-          className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base"
-        />
-      </div>
-
-      {/* Date Range */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-2">
-          <Label className="text-sm font-medium text-foreground">Start Date</Label>
-          <Input
-            type="date"
-            value={formData.startDate}
-            onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-            className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label className="text-sm font-medium text-foreground">End Date</Label>
-          <Input
-            type="date"
-            value={formData.endDate}
-            onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-            disabled={isCurrent}
-            className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation disabled:opacity-40"
-          />
+          </div>
         </div>
       </div>
 
-      {/* Current Position */}
-      <button
-        type="button"
-        onClick={() => setIsCurrent(!isCurrent)}
-        className="w-full flex items-center gap-3 p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.08] transition-colors"
-      >
-        <Checkbox
-          id="current"
-          checked={isCurrent}
-          onCheckedChange={(checked) => setIsCurrent(checked as boolean)}
-          className="h-5 w-5 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
-        />
-        <Label htmlFor="current" className="text-foreground cursor-pointer flex-1 text-left">
-          I currently work here
-        </Label>
-      </button>
+      {/* Duration Section */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+          <Calendar className="h-4 w-4 text-emerald-400" />
+          <span>Employment Period</span>
+        </div>
 
-      {/* Description */}
-      <div className="space-y-2">
-        <Label className="text-sm font-medium text-foreground">
-          Description <span className="text-foreground/70 font-normal">(optional)</span>
-        </Label>
+        {/* Current Position Toggle - Prominent */}
+        <button
+          type="button"
+          onClick={() => setIsCurrent(!isCurrent)}
+          className={cn(
+            "w-full flex items-center gap-4 p-4 rounded-xl border transition-all touch-manipulation",
+            isCurrent
+              ? "bg-emerald-500/10 border-emerald-500/30"
+              : "bg-white/[0.03] border-white/[0.06] active:bg-white/[0.08]"
+          )}
+        >
+          <div className={cn(
+            "w-12 h-12 rounded-xl flex items-center justify-center transition-all",
+            isCurrent
+              ? "bg-emerald-500/20"
+              : "bg-white/[0.06]"
+          )}>
+            <Zap className={cn(
+              "h-6 w-6 transition-colors",
+              isCurrent ? "text-emerald-400" : "text-foreground/50"
+            )} />
+          </div>
+          <div className="flex-1 text-left">
+            <p className={cn(
+              "font-medium transition-colors",
+              isCurrent ? "text-emerald-400" : "text-foreground"
+            )}>
+              Current Position
+            </p>
+            <p className="text-xs text-foreground/60">
+              {isCurrent ? "You're still working here" : "Toggle if this is your current role"}
+            </p>
+          </div>
+          <div className={cn(
+            "w-12 h-7 rounded-full p-1 transition-all",
+            isCurrent ? "bg-emerald-500" : "bg-white/[0.15]"
+          )}>
+            <div className={cn(
+              "w-5 h-5 rounded-full bg-white shadow-md transition-transform",
+              isCurrent ? "translate-x-5" : "translate-x-0"
+            )} />
+          </div>
+        </button>
+
+        {/* Date Range */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-2">
+            <Label className="text-xs text-foreground/70 flex items-center gap-1">
+              <TrendingUp className="h-3 w-3" />
+              Started
+            </Label>
+            <Input
+              type="date"
+              value={formData.startDate}
+              onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+              className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-sm"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label className={cn(
+              "text-xs flex items-center gap-1",
+              isCurrent ? "text-foreground/30" : "text-foreground/70"
+            )}>
+              <Calendar className="h-3 w-3" />
+              {isCurrent ? "Present" : "Ended"}
+            </Label>
+            <Input
+              type="date"
+              value={formData.endDate}
+              onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+              disabled={isCurrent}
+              className={cn(
+                "h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-sm",
+                isCurrent && "opacity-40 cursor-not-allowed"
+              )}
+            />
+          </div>
+        </div>
+
+        {/* Duration Preview */}
+        {formData.startDate && (
+          <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+            <Clock className="h-4 w-4 text-elec-yellow" />
+            <span className="text-sm text-foreground/70">
+              Duration: <span className="text-elec-yellow font-semibold">
+                {calculateDuration(formData.startDate, isCurrent ? undefined : formData.endDate)}
+              </span>
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Description Section */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 text-sm font-medium text-foreground/70">
+          <FileText className="h-4 w-4 text-purple-400" />
+          <span>Description</span>
+          <span className="text-xs text-foreground/40">(optional)</span>
+        </div>
         <Textarea
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          placeholder="Describe your responsibilities and achievements..."
-          className="bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base min-h-[100px] resize-none"
+          placeholder="Describe your key responsibilities, projects, and achievements..."
+          className="bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation text-base min-h-[120px] resize-none placeholder:text-foreground/40"
         />
+        <p className="text-xs text-foreground/50">
+          Tip: Mention specific projects, certifications earned, or skills developed
+        </p>
       </div>
     </div>
   );
@@ -682,115 +792,151 @@ const ElecIdExperience = () => {
                 {/* Timeline dot */}
                 <div
                   className={cn(
-                    "absolute left-[-14px] w-4 h-4 rounded-full border-2 transition-all z-10",
+                    "absolute left-[-14px] w-5 h-5 rounded-full border-2 transition-all z-10 flex items-center justify-center",
                     exp.isCurrent
                       ? "bg-elec-yellow border-elec-yellow shadow-lg shadow-elec-yellow/40"
                       : "bg-background border-white/30"
                   )}
-                  style={{ top: "1.5rem" }}
-                />
+                  style={{ top: "1.75rem" }}
+                >
+                  {exp.isCurrent && (
+                    <div className="w-2 h-2 rounded-full bg-elec-dark" />
+                  )}
+                </div>
 
-                {/* Card - tappable on mobile */}
-                <button
-                  onClick={() => openEditSheet(exp)}
+                {/* Enhanced Card */}
+                <div
                   className={cn(
-                    "w-full text-left ml-2 p-4 rounded-2xl border transition-all touch-manipulation",
+                    "ml-3 rounded-2xl border overflow-hidden transition-all",
                     exp.isCurrent
                       ? "bg-gradient-to-br from-elec-yellow/10 to-amber-600/5 border-elec-yellow/20 shadow-lg shadow-elec-yellow/10"
-                      : "bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06] active:bg-white/[0.08] active:scale-[0.99]"
+                      : "bg-white/[0.03] border-white/[0.08]"
                   )}
                 >
-                  <div className="flex items-start gap-3">
-                    {/* Company icon */}
-                    <div className={cn(
-                      "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
-                      exp.isCurrent
-                        ? "bg-elec-yellow/20"
-                        : "bg-white/[0.06]"
-                    )}>
-                      <Building2 className={cn(
-                        "w-6 h-6",
-                        exp.isCurrent ? "text-elec-yellow" : "text-foreground/70"
-                      )} />
+                  {/* Current Position Banner */}
+                  {exp.isCurrent && (
+                    <div className="px-4 py-2 bg-elec-yellow/20 border-b border-elec-yellow/30 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Zap className="h-4 w-4 text-elec-yellow" />
+                        <span className="text-xs font-semibold text-elec-yellow">Current Position</span>
+                      </div>
+                      <Badge className="bg-elec-yellow/30 text-elec-yellow border-elec-yellow/40 text-xs">
+                        Active
+                      </Badge>
                     </div>
+                  )}
 
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="min-w-0">
-                          <h4 className="font-semibold text-foreground truncate">
-                            {getJobTitleLabel(exp.jobTitle)}
-                          </h4>
-                          <p className="text-sm text-foreground/70 truncate">
-                            {exp.employerName}
-                          </p>
-                        </div>
-                        <ChevronRight className="w-5 h-5 text-foreground/70 flex-shrink-0 mt-0.5" />
-                      </div>
+                  {/* Verified Banner */}
+                  {exp.verifiedByEmployer && !exp.isCurrent && (
+                    <div className="px-4 py-2 bg-emerald-500/10 border-b border-emerald-500/20 flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                      <span className="text-xs font-semibold text-emerald-400">Verified by Employer</span>
+                    </div>
+                  )}
 
-                      {/* Badges */}
-                      <div className="flex items-center gap-2 flex-wrap mt-2">
-                        {exp.isCurrent && (
-                          <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
-                            Current
-                          </Badge>
-                        )}
-                        {exp.verifiedByEmployer && (
-                          <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                            <CheckCircle2 className="h-3 w-3 mr-1" />
-                            Verified
-                          </Badge>
-                        )}
-                      </div>
-
-                      {/* Meta info */}
-                      <div className="flex items-center gap-3 mt-2 text-xs text-foreground/70">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-3.5 w-3.5" />
-                          {formatDateRange(exp.startDate, exp.endDate, exp.isCurrent)}
-                        </span>
-                        <span className={cn(
-                          "flex items-center gap-1 font-medium",
+                  {/* Main Content - Tappable */}
+                  <button
+                    onClick={() => openEditSheet(exp)}
+                    className="w-full text-left p-4 touch-manipulation hover:bg-white/[0.02] active:bg-white/[0.05] transition-colors"
+                  >
+                    <div className="flex gap-4">
+                      {/* Large Duration Badge */}
+                      <div className={cn(
+                        "flex-shrink-0 w-16 h-16 rounded-xl flex flex-col items-center justify-center",
+                        exp.isCurrent
+                          ? "bg-elec-yellow/20 border border-elec-yellow/30"
+                          : "bg-white/[0.06] border border-white/[0.08]"
+                      )}>
+                        <Clock className={cn(
+                          "h-5 w-5 mb-0.5",
                           exp.isCurrent ? "text-elec-yellow" : "text-foreground/60"
+                        )} />
+                        <span className={cn(
+                          "text-sm font-bold",
+                          exp.isCurrent ? "text-elec-yellow" : "text-foreground"
                         )}>
-                          <Clock className="h-3.5 w-3.5" />
                           {calculateDuration(exp.startDate, exp.isCurrent ? undefined : exp.endDate)}
                         </span>
                       </div>
 
-                      {/* Location */}
-                      {exp.location && (
-                        <p className="text-xs text-foreground/70 mt-1 flex items-center gap-1">
-                          <MapPin className="h-3 w-3" />
-                          {exp.location}
-                        </p>
-                      )}
+                      {/* Job Details */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0">
+                            <h4 className="font-semibold text-foreground text-base">
+                              {getJobTitleLabel(exp.jobTitle)}
+                            </h4>
+                            <p className="text-sm text-foreground/70 mt-0.5 flex items-center gap-1.5">
+                              <Building2 className="h-3.5 w-3.5 flex-shrink-0" />
+                              {exp.employerName}
+                            </p>
+                          </div>
+                          <Edit3 className="w-4 h-4 text-foreground/40 flex-shrink-0 mt-1" />
+                        </div>
 
-                      {/* Description preview */}
-                      {exp.description && (
-                        <p className="text-sm text-foreground/60 mt-2 line-clamp-2">
-                          {exp.description}
-                        </p>
-                      )}
+                        {/* Info Grid */}
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-3 text-xs">
+                          <div className="flex items-center gap-1.5 text-foreground/60">
+                            <Calendar className="h-3.5 w-3.5 text-foreground/40" />
+                            <span>{formatDateRange(exp.startDate, exp.endDate, exp.isCurrent)}</span>
+                          </div>
+                          {exp.location && (
+                            <div className="flex items-center gap-1.5 text-foreground/60">
+                              <MapPin className="h-3.5 w-3.5 text-foreground/40" />
+                              <span>{exp.location}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Description */}
+                        {exp.description && (
+                          <p className="text-sm text-foreground/50 mt-3 line-clamp-2 leading-relaxed">
+                            {exp.description}
+                          </p>
+                        )}
+
+                        {/* Status Badges */}
+                        <div className="flex items-center gap-2 flex-wrap mt-3">
+                          {exp.verifiedByEmployer && (
+                            <Badge variant="outline" className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30 text-xs">
+                              <Award className="h-3 w-3 mr-1" />
+                              Verified
+                            </Badge>
+                          )}
+                          {!exp.verifiedByEmployer && (
+                            <Badge variant="outline" className="bg-white/[0.03] text-foreground/50 border-white/[0.1] text-xs">
+                              <User className="h-3 w-3 mr-1" />
+                              Self-Reported
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  </button>
 
-                  {/* Delete button - positioned bottom right */}
-                  <div className="flex justify-end mt-3 pt-3 border-t border-white/[0.04]">
+                  {/* Action Footer */}
+                  <div className="flex items-center justify-between px-4 py-3 border-t border-white/[0.06] bg-white/[0.02]">
+                    <button
+                      onClick={() => openEditSheet(exp)}
+                      className="flex items-center gap-1.5 text-xs text-foreground/60 hover:text-foreground transition-colors touch-manipulation"
+                    >
+                      <Edit3 className="h-3.5 w-3.5" />
+                      Edit Details
+                    </button>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-9 px-3 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg touch-manipulation"
+                      className="h-8 px-3 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg touch-manipulation text-xs"
                       onClick={(e) => {
                         e.stopPropagation();
                         setDeleteConfirm({ open: true, id: exp.id });
                       }}
                     >
-                      <Trash2 className="h-4 w-4 mr-1.5" />
+                      <Trash2 className="h-3.5 w-3.5 mr-1" />
                       Delete
                     </Button>
                   </div>
-                </button>
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>
@@ -800,22 +946,41 @@ const ElecIdExperience = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="py-12 text-center"
+          className="py-8"
         >
-          <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center">
-            <Briefcase className="h-10 w-10 text-foreground/70/50" />
+          <div className="rounded-2xl border border-dashed border-white/[0.15] bg-gradient-to-br from-white/[0.02] to-transparent p-8 text-center">
+            <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-600/10 flex items-center justify-center">
+              <Briefcase className="h-10 w-10 text-elec-yellow" />
+            </div>
+            <h4 className="text-xl font-semibold text-foreground mb-2">Build Your Career Timeline</h4>
+            <p className="text-foreground/60 max-w-sm mx-auto mb-6 leading-relaxed">
+              Add your work experience to create a professional timeline that employers can verify.
+            </p>
+
+            {/* Features */}
+            <div className="grid grid-cols-3 gap-3 mb-6 text-center">
+              <div className="p-3 rounded-xl bg-white/[0.03]">
+                <CheckCircle2 className="h-5 w-5 text-emerald-400 mx-auto mb-1.5" />
+                <p className="text-xs text-foreground/60">Employer Verified</p>
+              </div>
+              <div className="p-3 rounded-xl bg-white/[0.03]">
+                <Clock className="h-5 w-5 text-blue-400 mx-auto mb-1.5" />
+                <p className="text-xs text-foreground/60">Track Duration</p>
+              </div>
+              <div className="p-3 rounded-xl bg-white/[0.03]">
+                <TrendingUp className="h-5 w-5 text-purple-400 mx-auto mb-1.5" />
+                <p className="text-xs text-foreground/60">Show Progress</p>
+              </div>
+            </div>
+
+            <Button
+              onClick={() => setIsAddSheetOpen(true)}
+              className="h-12 px-6 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.97]"
+            >
+              <Plus className="h-5 w-5 mr-2" />
+              Add Your First Position
+            </Button>
           </div>
-          <h4 className="text-lg font-medium text-foreground mb-2">No work history yet</h4>
-          <p className="text-foreground/70 max-w-xs mx-auto mb-6">
-            Add your work experience to build your professional timeline.
-          </p>
-          <Button
-            onClick={() => setIsAddSheetOpen(true)}
-            className="h-12 px-6 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.97]"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Add Your First Position
-          </Button>
         </motion.div>
       )}
     </div>

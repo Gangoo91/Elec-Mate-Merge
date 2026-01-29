@@ -12,11 +12,13 @@ interface CloudSyncOptions {
   data: any;
   enabled: boolean;
   customerId?: string;
+  onReportCreated?: (reportId: string) => void;  // Called when auto-sync creates a new report
 }
 
 interface SyncState {
   status: 'synced' | 'syncing' | 'queued' | 'error';
   lastSyncTime?: number;
+  lastLocalSave?: number;
   errorMessage?: string;
   queuedChanges: number;
 }
@@ -31,6 +33,7 @@ export const useCloudSync = ({
   data,
   enabled,
   customerId,
+  onReportCreated,
 }: CloudSyncOptions) => {
   const {
     status,
@@ -43,21 +46,27 @@ export const useCloudSync = ({
     draftPreview,
     recoverDraft,
     discardDraft,
+    syncNow,
+    onTabChange,
   } = useReportSync({
     reportId,
     reportType,
     formData: data,
     enabled,
     customerId,
+    onReportCreated,
   });
 
   // Map new status to old syncState format
+  // 'unsaved' is mapped to 'queued' for backwards compatibility
   const syncState: SyncState = {
     status: status.cloud === 'synced' ? 'synced' :
             status.cloud === 'syncing' ? 'syncing' :
+            status.cloud === 'unsaved' ? 'queued' :  // Map unsaved to queued for old consumers
             status.cloud === 'queued' || status.cloud === 'offline' ? 'queued' :
             'error',
     lastSyncTime: status.lastCloudSync?.getTime(),
+    lastLocalSave: status.lastLocalSave?.getTime(),  // Expose local save time
     errorMessage: status.errorMessage,
     queuedChanges: status.queuedChanges,
   };
@@ -71,8 +80,8 @@ export const useCloudSync = ({
     return await saveNow();
   };
 
-  // Wrapper for the old loadFromCloud API
-  const loadFromCloud = async (cloudReportId: string): Promise<any | null> => {
+  // Wrapper for the old loadFromCloud API - now returns { data, databaseId }
+  const loadFromCloud = async (cloudReportId: string): Promise<{ data: any; databaseId: string | null } | null> => {
     return await loadReport(cloudReportId);
   };
 
@@ -95,5 +104,8 @@ export const useCloudSync = ({
     draftPreview,
     recoverDraft,
     discardDraft,
+    // Immediate sync functions
+    syncNow,
+    onTabChange,
   };
 };

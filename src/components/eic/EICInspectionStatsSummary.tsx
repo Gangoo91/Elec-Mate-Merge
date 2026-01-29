@@ -13,7 +13,7 @@ interface EICInspectionItem {
   id: string;
   itemNumber: string;
   description: string;
-  outcome: '' | 'satisfactory' | 'not-applicable';
+  outcome: '' | 'satisfactory' | 'not-applicable' | 'limitation';
   notes?: string;
 }
 
@@ -26,6 +26,7 @@ const EICInspectionStatsSummary: React.FC<EICInspectionStatsSummaryProps> = ({ i
   const completed = inspectionItems.filter(item => item.outcome !== '').length;
   const satisfactory = inspectionItems.filter(item => item.outcome === 'satisfactory').length;
   const notApplicable = inspectionItems.filter(item => item.outcome === 'not-applicable').length;
+  const limitation = inspectionItems.filter(item => item.outcome === 'limitation').length;
   const progressPercent = totalItems > 0 ? (completed / totalItems) * 100 : 0;
 
   return (
@@ -72,6 +73,20 @@ const EICInspectionStatsSummary: React.FC<EICInspectionStatsSummaryProps> = ({ i
           <span className="text-neutral-400 font-medium">{notApplicable}</span>
           <span className="text-foreground/50">N/A</span>
         </div>
+
+        {limitation > 0 && (
+          <>
+            <div className="w-px h-4 bg-white/10" />
+
+            <div className="flex items-center gap-1.5">
+              <div className="w-4 h-4 rounded-full bg-amber-500/20 flex items-center justify-center">
+                <span className="text-[8px] text-amber-400 font-bold">L</span>
+              </div>
+              <span className="text-amber-400 font-medium">{limitation}</span>
+              <span className="text-foreground/50">LIM</span>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

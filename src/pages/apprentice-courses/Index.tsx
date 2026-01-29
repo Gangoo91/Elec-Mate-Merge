@@ -2,18 +2,14 @@ import { ArrowLeft, Zap, CheckCircle, Shield, Award, GraduationCap, BookOpen } f
 import { CourseCard } from "@/components/apprentice-courses/CourseCard";
 import { Link } from "react-router-dom";
 
+// Available courses first, then coming soon
 const courses = [
+  // Available courses
   {
     title: "Level 2 Electrical Installation",
     description: "Foundation electrical installation skills and safety",
     icon: Zap,
     href: "level2",
-  },
-  {
-    title: "AM 2 Preparation and Guidance",
-    description: "Assessment preparation and practical guidance",
-    icon: Award,
-    href: "am2",
   },
   {
     title: "Level 3 Electrical Installation",
@@ -22,17 +18,23 @@ const courses = [
     href: "level3",
   },
   {
+    title: "AM 2 Preparation and Guidance",
+    description: "Assessment preparation and practical guidance",
+    icon: Award,
+    href: "am2",
+  },
+  {
+    title: "HNC Electrical Engineering",
+    description: "Higher National Certificate in Electrical and Electronic Engineering for Building Services",
+    icon: GraduationCap,
+    href: "hnc",
+  },
+  // Coming soon
+  {
     title: "MOET",
     description: "Maintenance Operations Engineering Technician training",
     icon: Shield,
     href: "moet",
-    comingSoon: true,
-  },
-  {
-    title: "HNC Electrical Engineering",
-    description: "Higher National Certificate in Electrical and Electronic Engineering",
-    icon: GraduationCap,
-    href: "hnc",
     comingSoon: true,
   },
   {

@@ -6,11 +6,21 @@ import EICInspectionStatsSummary from './EICInspectionStatsSummary';
 interface EICScheduleOfInspectionsProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  onAutoCreateObservation?: (inspectionItem: {
+    id: string;
+    item: string;
+    itemNumber?: string;
+    notes?: string;
+    defectCode?: 'limitation';
+  }) => string;
+  onNavigateToObservations?: () => void;
 }
 
 const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   formData,
-  onUpdate
+  onUpdate,
+  onAutoCreateObservation,
+  onNavigateToObservations
 }) => {
   const getInspectionItems = (): EICInspectionItem[] => {
     if (formData.inspectionItems && Array.isArray(formData.inspectionItems) && formData.inspectionItems.length > 0) {
@@ -44,6 +54,8 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
       <EICInspectionChecklistCard
         inspectionItems={inspectionItems}
         onUpdateItem={updateInspectionItem}
+        onAutoCreateObservation={onAutoCreateObservation}
+        onNavigateToObservations={onNavigateToObservations}
       />
     </div>
   );

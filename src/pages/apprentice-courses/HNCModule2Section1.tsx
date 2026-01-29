@@ -1,4 +1,4 @@
-import { ArrowLeft, Zap, FileX, Calculator, Link2, Home, Shield, User } from "lucide-react";
+import { ArrowLeft, Thermometer, Flame, Sun, Calculator, Link2, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
@@ -6,59 +6,52 @@ import useSEO from "@/hooks/useSEO";
 
 const HNCModule2Section1 = () => {
   useSEO(
-    "Heat Transfer Principles - HNC Module 2",
-    "Conduction, convection, radiation, thermal properties and comfort conditions"
+    "Heat Transfer Principles - HNC Module 2 Section 1 | Building Services Engineering",
+    "Master heat transfer fundamentals: conduction, convection, radiation, U-values, thermal bridging and heat loss calculations for building services applications."
   );
 
   const subsections = [
     {
-      number: "Subsection 1",
-      title: "Modes of heat transfer: conduction, convection, radiation",
-      description: "Understanding the three fundamental methods of heat transfer",
-      icon: Zap,
-      href: "../h-n-c-module2-section1-1-1"
+      number: "1.1",
+      title: "Conduction",
+      description: "Fourier's Law, thermal conductivity, material properties, composite walls",
+      icon: Thermometer,
+      href: "../h-n-c-module2-section1-1"
     },
     {
-      number: "Subsection 2", 
-      title: "Thermal conductivity and resistivity of materials",
-      description: "Material thermal properties and selection criteria",
-      icon: FileX,
-      href: "../h-n-c-module2-section1-1-2"
+      number: "1.2",
+      title: "Convection",
+      description: "Natural and forced convection, heat transfer coefficients, surface conditions",
+      icon: Flame,
+      href: "../h-n-c-module2-section1-2"
     },
     {
-      number: "Subsection 3",
-      title: "U-values and thermal transmittance calculations", 
-      description: "Heat loss calculations through building elements",
+      number: "1.3",
+      title: "Radiation",
+      description: "Stefan-Boltzmann law, emissivity, radiative exchange, surface temperatures",
+      icon: Sun,
+      href: "../h-n-c-module2-section1-3"
+    },
+    {
+      number: "1.4",
+      title: "U-Values and Thermal Resistance",
+      description: "Calculation methods, R-values, Part L requirements",
       icon: Calculator,
-      href: "../h-n-c-module2-section1-1-3"
+      href: "../h-n-c-module2-section1-4"
     },
     {
-      number: "Subsection 4",
-      title: "Thermal bridging in buildings",
-      description: "Cold bridges and their impact on building performance",
+      number: "1.5",
+      title: "Thermal Bridging",
+      description: "Linear and point bridges, psi values, condensation risk",
       icon: Link2,
-      href: "../h-n-c-module2-section1-1-4"
+      href: "../h-n-c-module2-section1-5"
     },
     {
-      number: "Subsection 5",
-      title: "Heat gains and losses in building envelopes",
-      description: "Building fabric heat transfer analysis",
+      number: "1.6",
+      title: "Heat Loss Calculations",
+      description: "Fabric losses, ventilation losses, building heat load",
       icon: Home,
-      href: "../h-n-c-module2-section1-1-5"
-    },
-    {
-      number: "Subsection 6",
-      title: "Insulation materials and methods",
-      description: "Insulation types, installation and performance",
-      icon: Shield,
-      href: "../h-n-c-module2-section1-1-6"
-    },
-    {
-      number: "Subsection 7",
-      title: "Comfort conditions (temperature, humidity, air movement, clothing/activity)",
-      description: "Human thermal comfort factors and standards",
-      icon: User,
-      href: "../h-n-c-module2-section1-1-7"
+      href: "../h-n-c-module2-section1-6"
     }
   ];
 
@@ -78,20 +71,20 @@ const HNCModule2Section1 = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            2.1 Heat Transfer Principles
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
-            Conduction, convection, radiation, thermal properties and comfort conditions in building services.
-          </p>
-        </div>
+        <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Section 1: Heat Transfer Principles
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          Understand the fundamental mechanisms of heat transfer and their application to building fabric performance
+        </p>
+        <p className="text-base text-muted-foreground mb-12">
+          This section covers the three modes of heat transfer - conduction, convection and radiation - and their practical application in calculating U-values, identifying thermal bridges, and determining building heat loads to CIBSE and Part L standards.
+        </p>
 
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {subsections.map((subsection) => (
             <ModuleCard
-              key={index}
+              key={subsection.number}
               number={subsection.number}
               title={subsection.title}
               description={subsection.description}

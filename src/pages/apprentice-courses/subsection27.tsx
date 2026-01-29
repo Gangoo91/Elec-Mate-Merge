@@ -556,13 +556,13 @@ const Section6_5 = () => {
         {/* Navigation */}
         <div className="flex justify-between items-center">
           <Button variant="outline" asChild>
-            <Link to="../subsection26">
+            <Link to="6-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Accident Reporting
             </Link>
           </Button>
           <Button variant="outline" asChild>
-            <Link to="../subsection28">
+            <Link to="6-6">
               Next: Emergency Procedures
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

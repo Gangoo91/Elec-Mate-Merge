@@ -7,18 +7,42 @@ import { Textarea } from '@/components/ui/textarea';
 interface EICInspectionChecklistCardProps {
   inspectionItems: EICInspectionItem[];
   onUpdateItem: (id: string, field: keyof EICInspectionItem, value: any) => void;
+  onAutoCreateObservation?: (inspectionItem: {
+    id: string;
+    item: string;
+    itemNumber?: string;
+    notes?: string;
+    defectCode?: 'limitation';
+  }) => string;
+  onNavigateToObservations?: () => void;
 }
 const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
   inspectionItems,
-  onUpdateItem
+  onUpdateItem,
+  onAutoCreateObservation,
+  onNavigateToObservations
 }) => {
-  const handleOutcomeChange = (id: string, outcome: 'satisfactory' | 'not-applicable') => {
+  const handleOutcomeChange = (id: string, outcome: 'satisfactory' | 'not-applicable' | 'limitation') => {
     const currentItem = inspectionItems.find(item => item.id === id);
     if (currentItem?.outcome === outcome) {
       // Toggle off if clicking the same button
       onUpdateItem(id, 'outcome', '');
     } else {
       onUpdateItem(id, 'outcome', outcome);
+      // Auto-create observation when LIM is selected
+      if (outcome === 'limitation' && currentItem && onAutoCreateObservation) {
+        onAutoCreateObservation({
+          id: currentItem.id,
+          item: currentItem.description,
+          itemNumber: currentItem.itemNumber,
+          notes: currentItem.notes,
+          defectCode: 'limitation'
+        });
+        // Navigate to observations section
+        if (onNavigateToObservations) {
+          setTimeout(() => onNavigateToObservations(), 300);
+        }
+      }
     }
   };
   return <Card className="border border-border bg-card overflow-hidden">
@@ -56,6 +80,9 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
                 </Button>
                 <Button variant={item.outcome === 'not-applicable' ? 'default' : 'outline'} size="default" onClick={() => handleOutcomeChange(item.id, 'not-applicable')} className={`h-10 touch-manipulation ${item.outcome === 'not-applicable' ? 'bg-accent hover:bg-muted text-foreground border-border' : 'border-border text-foreground hover:bg-card'}`}>
                   N/A
+                </Button>
+                <Button variant={item.outcome === 'limitation' ? 'default' : 'outline'} size="default" onClick={() => handleOutcomeChange(item.id, 'limitation')} className={`h-10 touch-manipulation ${item.outcome === 'limitation' ? 'bg-amber-500 hover:bg-amber-600 text-black border-amber-500' : 'border-border text-foreground hover:bg-card'}`}>
+                  LIM
                 </Button>
               </div>
 

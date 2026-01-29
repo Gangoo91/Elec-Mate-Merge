@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Zap, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CertificateTypeGrid from './dashboard/CertificateTypeGrid';
+import RecoverUnsavedWork from './dashboard/RecoverUnsavedWork';
 import RecentCertificatesCard from './dashboard/RecentCertificatesCard';
 import { PendingNotificationsCard } from './dashboard/PendingNotificationsCard';
 import { ExpiringCertificatesCard } from './dashboard/ExpiringCertificatesCard';
@@ -74,6 +75,9 @@ const Dashboard = ({ onNavigate }: { onNavigate: (section: string, reportId?: st
         )}>
           {/* Certificate Type Grid */}
           <CertificateTypeGrid onNavigate={handleNavigate} />
+
+          {/* Recover Unsaved Work - Shows auto-drafts that weren't manually saved */}
+          <RecoverUnsavedWork onNavigate={handleNavigate} />
 
           {/* Designed Circuits */}
           <DesignedCircuitsCard onNavigate={handleNavigate} />

@@ -1,4 +1,4 @@
-import { ArrowLeft, Building, BarChart3, Calculator, Zap, Link2, FileText, Monitor } from "lucide-react";
+import { ArrowLeft, Calculator, BarChart3, Cpu, Monitor, Settings, FileCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
@@ -6,59 +6,52 @@ import useSEO from "@/hooks/useSEO";
 
 const HNCModule2Section6 = () => {
   useSEO(
-    "Applied Building Services Science - HNC Module 2",
-    "Load estimation, energy analysis and modelling tools"
+    "Applied Building Services Science - HNC Module 2 Section 6 | Building Services Engineering",
+    "Master applied building science: load estimation, energy analysis, building simulation, design software, system integration and compliance verification."
   );
 
   const subsections = [
     {
-      number: "Subsection 1",
-      title: "Building fabric performance analysis",
-      description: "Evaluating building envelope thermal performance",
-      icon: Building,
-      href: "../h-n-c-module2-section6-6-1"
-    },
-    {
-      number: "Subsection 2", 
-      title: "Energy balances in building systems",
-      description: "Energy flow analysis and conservation principles",
-      icon: BarChart3,
-      href: "../h-n-c-module2-section6-6-2"
-    },
-    {
-      number: "Subsection 3",
-      title: "HVAC load estimation methods", 
-      description: "Heating and cooling load calculation procedures",
+      number: "6.1",
+      title: "Load Estimation Methods",
+      description: "CIBSE methods, cooling loads, heating loads, diversity",
       icon: Calculator,
-      href: "../h-n-c-module2-section6-6-3"
+      href: "../h-n-c-module2-section6-1"
     },
     {
-      number: "Subsection 4",
-      title: "Impact of environmental factors on electrical load profiles",
-      description: "Environmental effects on electrical system demands",
-      icon: Zap,
-      href: "../h-n-c-module2-section6-6-4"
+      number: "6.2",
+      title: "Energy Analysis",
+      description: "Energy balances, benchmarking, TM54, operational energy",
+      icon: BarChart3,
+      href: "../h-n-c-module2-section6-2"
     },
     {
-      number: "Subsection 5",
-      title: "Integration of science principles into BS7671 design calcs",
-      description: "Applying building science to electrical installation design",
-      icon: Link2,
-      href: "../h-n-c-module2-section6-6-5"
+      number: "6.3",
+      title: "Building Simulation",
+      description: "Dynamic simulation, software tools, validation, limitations",
+      icon: Cpu,
+      href: "../h-n-c-module2-section6-3"
     },
     {
-      number: "Subsection 6",
-      title: "Case studies: applying science to real building projects",
-      description: "Practical applications and real-world examples",
-      icon: FileText,
-      href: "../h-n-c-module2-section6-6-6"
-    },
-    {
-      number: "Subsection 7",
-      title: "Using modelling tools (IESVE, TAS, DesignBuilder)",
-      description: "Building performance simulation software applications",
+      number: "6.4",
+      title: "Design Tools and Software",
+      description: "IES, TAS, EnergyPlus, compliance tools",
       icon: Monitor,
-      href: "../h-n-c-module2-section6-6-7"
+      href: "../h-n-c-module2-section6-4"
+    },
+    {
+      number: "6.5",
+      title: "System Integration",
+      description: "Multi-service coordination, optimisation, commissioning",
+      icon: Settings,
+      href: "../h-n-c-module2-section6-5"
+    },
+    {
+      number: "6.6",
+      title: "Compliance and Verification",
+      description: "Part L, BREEAM, NABERS, post-occupancy evaluation",
+      icon: FileCheck,
+      href: "../h-n-c-module2-section6-6"
     }
   ];
 
@@ -78,20 +71,20 @@ const HNCModule2Section6 = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            2.6 Applied Building Services Science
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
-            Load estimation, energy analysis and modelling tools for building services applications.
-          </p>
-        </div>
+        <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Section 6: Applied Building Services Science
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          Apply scientific principles using industry-standard tools and methods to design and verify building services performance
+        </p>
+        <p className="text-base text-muted-foreground mb-12">
+          This section covers practical application of building services science using CIBSE load estimation methods, dynamic simulation software, energy analysis techniques, and compliance verification against Part L, BREEAM and other standards.
+        </p>
 
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {subsections.map((subsection) => (
             <ModuleCard
-              key={index}
+              key={subsection.number}
               number={subsection.number}
               title={subsection.title}
               description={subsection.description}

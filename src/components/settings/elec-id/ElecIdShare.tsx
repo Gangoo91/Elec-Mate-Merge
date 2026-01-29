@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -10,6 +10,7 @@ import { useElecIdProfile } from "@/hooks/useElecIdProfile";
 import { Drawer } from "vaul";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Select,
   SelectContent,
@@ -47,6 +48,7 @@ interface ShareLink {
   sections: string[];
   createdAt: string;
   viewCount: number;
+  shareToken: string;
 }
 
 // Skeleton loading component
@@ -85,6 +87,8 @@ const ElecIdShare = () => {
     id: null,
   });
   const [isDeletingLink, setIsDeletingLink] = useState(false);
+  const [shareLinks, setShareLinks] = useState<ShareLink[]>([]);
+  const [isLoadingLinks, setIsLoadingLinks] = useState(true);
   const qrRef = useRef<HTMLDivElement>(null);
 
   // Get actual Elec-ID number from profile
@@ -101,25 +105,44 @@ const ElecIdShare = () => {
       : "N/A",
   };
 
-  // Mock share links - will be from database
-  const shareLinks: ShareLink[] = [
-    {
-      id: "1",
-      url: "https://elec-mate.com/share/abc123",
-      expiresAt: "2026-02-15",
-      sections: ["basics", "qualifications", "experience"],
-      createdAt: "2026-01-01",
-      viewCount: 12,
-    },
-    {
-      id: "2",
-      url: "https://elec-mate.com/share/def456",
-      expiresAt: null,
-      sections: ["basics", "qualifications"],
-      createdAt: "2025-12-15",
-      viewCount: 5,
-    },
-  ];
+  // Fetch share links from database
+  const fetchShareLinks = useCallback(async () => {
+    if (!profile?.id) {
+      setIsLoadingLinks(false);
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('employer_elec_id_share_links')
+        .select('*')
+        .eq('profile_id', profile.id)
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      const mappedLinks: ShareLink[] = (data || []).map((link: any) => ({
+        id: link.id,
+        url: link.url,
+        expiresAt: link.expires_at,
+        sections: link.sections || ['basics'],
+        createdAt: link.created_at,
+        viewCount: link.view_count || 0,
+        shareToken: link.share_token,
+      }));
+
+      setShareLinks(mappedLinks);
+    } catch (error) {
+      console.error('Error fetching share links:', error);
+    } finally {
+      setIsLoadingLinks(false);
+    }
+  }, [profile?.id]);
+
+  useEffect(() => {
+    fetchShareLinks();
+  }, [fetchShareLinks]);
 
   const sectionOptions = [
     { id: "basics", label: "Basic Info", icon: User },
@@ -145,15 +168,83 @@ const ElecIdShare = () => {
   };
 
   const handleCreateLink = async () => {
+    if (!profile?.id) {
+      addNotification({
+        title: "Error",
+        message: "Profile not found. Please try again.",
+        type: "error",
+      });
+      return;
+    }
+
     setIsCreatingLink(true);
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    setIsCreatingLink(false);
-    addNotification({
-      title: "Link Created",
-      message: "Your shareable link has been created",
-      type: "success",
-    });
-    setIsCreateLinkOpen(false);
+    try {
+      // Generate unique share token
+      const shareToken = crypto.randomUUID().replace(/-/g, '').substring(0, 12);
+      const url = `https://elec-mate.com/share/${shareToken}`;
+
+      // Calculate expiry date based on selection
+      let expiresAt: string | null = null;
+      const now = new Date();
+      switch (selectedExpiry) {
+        case '24h':
+          expiresAt = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString();
+          break;
+        case '7d':
+          expiresAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();
+          break;
+        case '30d':
+          expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString();
+          break;
+        case 'never':
+          expiresAt = null;
+          break;
+      }
+
+      const { data, error } = await supabase
+        .from('employer_elec_id_share_links')
+        .insert({
+          profile_id: profile.id,
+          share_token: shareToken,
+          url: url,
+          expires_at: expiresAt,
+          sections: selectedSections,
+          is_active: true,
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Add the new link to state
+      const newLink: ShareLink = {
+        id: data.id,
+        url: data.url,
+        expiresAt: data.expires_at,
+        sections: data.sections,
+        createdAt: data.created_at,
+        viewCount: 0,
+        shareToken: data.share_token,
+      };
+
+      setShareLinks(prev => [newLink, ...prev]);
+
+      addNotification({
+        title: "Link Created",
+        message: "Your shareable link has been created",
+        type: "success",
+      });
+      setIsCreateLinkOpen(false);
+    } catch (error: any) {
+      console.error('Error creating share link:', error);
+      addNotification({
+        title: "Error",
+        message: error.message || "Failed to create link. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsCreatingLink(false);
+    }
   };
 
   const handleDownloadQr = async () => {
@@ -232,14 +323,34 @@ const ElecIdShare = () => {
   const handleDeleteLink = async () => {
     if (!deleteConfirm.id) return;
     setIsDeletingLink(true);
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    setIsDeletingLink(false);
-    setDeleteConfirm({ open: false, id: null });
-    addNotification({
-      title: "Link Deleted",
-      message: "Share link has been removed",
-      type: "info",
-    });
+    try {
+      // Soft delete by setting is_active to false
+      const { error } = await supabase
+        .from('employer_elec_id_share_links')
+        .update({ is_active: false, updated_at: new Date().toISOString() })
+        .eq('id', deleteConfirm.id);
+
+      if (error) throw error;
+
+      // Remove from local state
+      setShareLinks(prev => prev.filter(link => link.id !== deleteConfirm.id));
+
+      addNotification({
+        title: "Link Deleted",
+        message: "Share link has been removed",
+        type: "info",
+      });
+    } catch (error: any) {
+      console.error('Error deleting share link:', error);
+      addNotification({
+        title: "Error",
+        message: error.message || "Failed to delete link. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsDeletingLink(false);
+      setDeleteConfirm({ open: false, id: null });
+    }
   };
 
   const toggleSection = (sectionId: string) => {
@@ -528,7 +639,14 @@ const ElecIdShare = () => {
         </div>
 
         <AnimatePresence mode="popLayout">
-          {shareLinks.length > 0 ? (
+          {isLoadingLinks ? (
+            // Loading skeletons
+            <div className="space-y-3">
+              {[1, 2].map((i) => (
+                <Skeleton key={i} className="h-24 rounded-2xl bg-white/[0.06]" />
+              ))}
+            </div>
+          ) : shareLinks.length > 0 ? (
             shareLinks.map((link, index) => (
               <motion.div
                 key={link.id}

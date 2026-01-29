@@ -17,8 +17,8 @@ import { useHaptics } from '@/hooks/useHaptics';
 
 interface CircuitCardProps {
   circuit: TestResult;
-  onEdit: () => void;
-  onDelete: () => void;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
   onAddPhoto?: () => void;
   onQuickEdit?: (field: string) => void;
   compact?: boolean;
@@ -29,8 +29,9 @@ interface CircuitCardProps {
 /**
  * Best-in-class mobile circuit card
  * Visual excellence with tappable value tiles
+ * Memoized to prevent re-renders during scroll
  */
-export const CircuitCard: React.FC<CircuitCardProps> = ({
+const CircuitCardInner = ({
   circuit,
   onEdit,
   onDelete,
@@ -39,19 +40,19 @@ export const CircuitCard: React.FC<CircuitCardProps> = ({
   compact = false,
   enableSwipe = true,
   className = '',
-}) => {
+}: CircuitCardProps) => {
   const haptics = useHaptics();
 
-  // Haptic feedback handlers
+  // Haptic feedback handlers - pass circuit id to callbacks
   const handleEdit = useCallback(() => {
     haptics.tap();
-    onEdit();
-  }, [haptics, onEdit]);
+    onEdit(circuit.id);
+  }, [haptics, onEdit, circuit.id]);
 
   const handleDelete = useCallback(() => {
     haptics.impact();
-    onDelete();
-  }, [haptics, onDelete]);
+    onDelete(circuit.id);
+  }, [haptics, onDelete, circuit.id]);
   // Calculate circuit status and validation
   const { status, hasRcd, rcdOk, validations } = useMemo(() => {
     const hasZs = circuit.zs && circuit.maxZs;
@@ -140,8 +141,8 @@ export const CircuitCard: React.FC<CircuitCardProps> = ({
     <Card
       className={cn(
         'border border-border/50 bg-card overflow-hidden rounded-2xl',
-        'active:scale-[0.98] transition-all duration-150',
-        'shadow-sm hover:shadow-md',
+        'active:scale-[0.98] transition-transform duration-150',
+        'shadow-sm',
         status.level === 'error' && 'border-red-500/30 bg-red-500/5',
         className
       )}
@@ -325,6 +326,10 @@ export const CircuitCard: React.FC<CircuitCardProps> = ({
   );
 };
 
+// Memoized export to prevent re-renders during scroll
+export const CircuitCard = React.memo(CircuitCardInner);
+CircuitCard.displayName = 'CircuitCard';
+
 /**
  * Tappable Value Tile Component
  * Shows test value with validation coloring
@@ -394,10 +399,10 @@ const ValueTile: React.FC<ValueTileProps> = ({
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center rounded-xl border transition-all duration-150',
+        'flex flex-col items-center justify-center rounded-xl border transition-transform duration-150',
         compact ? 'py-1.5 px-1' : 'py-2 px-2',
         tileColors[statusValidation],
-        onTap && 'cursor-pointer active:scale-95 hover:opacity-80'
+        onTap && 'cursor-pointer active:scale-95'
       )}
       onClick={(e) => {
         if (onTap) {
@@ -445,13 +450,14 @@ const ValueTile: React.FC<ValueTileProps> = ({
 
 /**
  * Compact circuit card for dense lists
+ * Memoized to prevent re-renders during scroll
  */
-export const CircuitCardCompact: React.FC<CircuitCardProps> = ({
+const CircuitCardCompactInner = ({
   circuit,
   onEdit,
   onDelete,
   className = '',
-}) => {
+}: CircuitCardProps) => {
   const hasIssue = useMemo(() => {
     if (circuit.zs && circuit.maxZs) {
       return parseFloat(circuit.zs) > parseFloat(circuit.maxZs);
@@ -463,7 +469,7 @@ export const CircuitCardCompact: React.FC<CircuitCardProps> = ({
     <div
       className={cn(
         'flex items-center gap-3 p-3 rounded-xl border border-border bg-card',
-        'active:scale-[0.98] transition-all duration-150',
+        'active:scale-[0.98] transition-transform duration-150',
         hasIssue && 'border-red-500/50 bg-red-500/5',
         className
       )}
@@ -500,5 +506,9 @@ export const CircuitCardCompact: React.FC<CircuitCardProps> = ({
     </div>
   );
 };
+
+// Memoized export
+export const CircuitCardCompact = React.memo(CircuitCardCompactInner);
+CircuitCardCompact.displayName = 'CircuitCardCompact';
 
 export default CircuitCard;

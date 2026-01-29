@@ -299,20 +299,6 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                   Fill from Business Settings
                 </Button>
 
-                {/* Copy from Inspector - Secondary action */}
-                {formData.inspectorName && (
-                  <Button
-                    onClick={copyFromInspector}
-                    className={cn(
-                      "h-12 touch-manipulation bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-200 font-medium rounded-xl active:scale-[0.98] transition-transform",
-                      isMobile ? "w-full" : "flex-1"
-                    )}
-                    variant="outline"
-                  >
-                    <User className="h-5 w-5 mr-2" />
-                    Copy from Inspector
-                  </Button>
-                )}
               </div>
 
               {/* Signatory Details Card */}

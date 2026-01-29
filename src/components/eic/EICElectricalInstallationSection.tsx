@@ -450,7 +450,13 @@ const EICElectricalInstallationSection = ({ formData, onUpdate, isOpen, onToggle
                   <SelectItem value="__clear__"><span className="text-muted-foreground">Clear selection</span></SelectItem>
                   <SelectItem value="pvc">PVC</SelectItem>
                   <SelectItem value="xlpe">XLPE</SelectItem>
+                  <SelectItem value="swa">SWA (Steel Wire Armoured)</SelectItem>
+                  <SelectItem value="pvc-swa">PVC/SWA</SelectItem>
+                  <SelectItem value="xlpe-swa">XLPE/SWA</SelectItem>
+                  <SelectItem value="concentric">Concentric</SelectItem>
                   <SelectItem value="paper">Paper Insulated</SelectItem>
+                  <SelectItem value="pilc">PILC (Paper Insulated Lead Covered)</SelectItem>
+                  <SelectItem value="micc">MICC (Mineral Insulated)</SelectItem>
                   <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>

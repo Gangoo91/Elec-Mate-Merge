@@ -114,6 +114,39 @@ Deno.serve(async (req: Request) => {
     console.log('[generate-eic-pdf] insp_3 =', formData.insp_3);
     console.log('[generate-eic-pdf] insp_14 =', formData.insp_14);
 
+    // Debug earth electrode fields
+    console.log('[generate-eic-pdf] earth_electrode_type =', formData.earth_electrode_type);
+    console.log('[generate-eic-pdf] earth_electrode_location =', formData.earth_electrode_location);
+    console.log('[generate-eic-pdf] earth_electrode_resistance =', formData.earth_electrode_resistance);
+    console.log('[generate-eic-pdf] earthing_bonding =', JSON.stringify(formData.earthing_bonding, null, 2));
+
+    // Debug departures fields
+    console.log('[generate-eic-pdf] designer_departures =', formData.designer_departures);
+    console.log('[generate-eic-pdf] permitted_exceptions =', formData.permitted_exceptions);
+    console.log('[generate-eic-pdf] designer.departures =', formData.designer?.departures);
+    console.log('[generate-eic-pdf] designer.permitted_exceptions =', formData.designer?.permitted_exceptions);
+
+    // Debug SPD fields
+    console.log('[generate-eic-pdf] distribution_board_verification =', JSON.stringify(formData.distribution_board_verification, null, 2));
+    console.log('[generate-eic-pdf] distribution_boards count =', formData.distribution_boards?.length);
+    if (formData.distribution_boards?.[0]) {
+      console.log('[generate-eic-pdf] First board SPD fields:', {
+        spd_t1: formData.distribution_boards[0].spd_t1,
+        spd_t2: formData.distribution_boards[0].spd_t2,
+        spd_t3: formData.distribution_boards[0].spd_t3,
+        spd_na: formData.distribution_boards[0].spd_na
+      });
+    }
+
+    // Full payload for debugging (careful - can be large)
+    console.log('[generate-eic-pdf] FULL PAYLOAD:', JSON.stringify(formData, null, 2));
+
+    // Debug nested objects specifically (these are the ones having issues)
+    console.log('[generate-eic-pdf] NESTED OBJECTS:');
+    console.log('  earthing_bonding:', JSON.stringify(formData.earthing_bonding, null, 2));
+    console.log('  designer:', JSON.stringify(formData.designer, null, 2));
+    console.log('  main_protective_device:', JSON.stringify(formData.main_protective_device, null, 2));
+
     // Create the document
     const document = await createPDFMonkeyDocument(formData, templateId);
     console.log('Document created with ID:', document.id);

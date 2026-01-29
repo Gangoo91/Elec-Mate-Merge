@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -10,6 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Drawer } from "vaul";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Dialog,
   DialogContent,
@@ -111,6 +112,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
   const [isEditSheetOpen, setIsEditSheetOpen] = useState(false);
   const [isOptOutDialogOpen, setIsOptOutDialogOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Local state synced with profile
   const [availableForHire, setAvailableForHire] = useState(true);
@@ -167,19 +171,133 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     setIsSaving(false);
   };
 
-  // Use profile data or fallbacks
+  // Handle photo upload
+  const handlePhotoClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !profile?.id) return;
+
+    // Validate file type and size
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+      toast({
+        title: "Invalid file type",
+        description: "Please upload a JPG, PNG, or WebP image",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: "File too large",
+        description: "Please upload an image smaller than 5MB",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsUploadingPhoto(true);
+    try {
+      // Create unique filename
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${profile.id}/avatar-${Date.now()}.${fileExt}`;
+
+      // Upload to Supabase storage
+      const { data, error: uploadError } = await supabase.storage
+        .from('elec-id-photos')
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: true,
+        });
+
+      if (uploadError) {
+        // If bucket doesn't exist, try avatars bucket as fallback
+        const { data: fallbackData, error: fallbackError } = await supabase.storage
+          .from('avatars')
+          .upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: true,
+          });
+
+        if (fallbackError) throw fallbackError;
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('avatars')
+          .getPublicUrl(fallbackData.path);
+
+        setPhotoUrl(publicUrl);
+
+        // Update user profile with new avatar URL
+        await supabase.from('profiles').update({ avatar_url: publicUrl }).eq('id', profile.id);
+      } else {
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('elec-id-photos')
+          .getPublicUrl(data.path);
+
+        setPhotoUrl(publicUrl);
+
+        // Update user profile with new avatar URL
+        await supabase.from('profiles').update({ avatar_url: publicUrl }).eq('id', profile.id);
+      }
+
+      toast({
+        title: "Photo uploaded",
+        description: "Your profile photo has been updated",
+      });
+    } catch (error: any) {
+      console.error('Error uploading photo:', error);
+      toast({
+        title: "Upload failed",
+        description: error.message || "Failed to upload photo. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploadingPhoto(false);
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
+  // Get job title label from value
+  const getJobTitleLabelFromValue = (value: string | null | undefined): string => {
+    if (!value) return "Not Set";
+    const title = UK_JOB_TITLES.find(t => t.value === value);
+    return title?.label || value || "Electrician";
+  };
+
+  // Use actual profile data (no fallbacks) for completeness calculation
+  const actualJobTitle = (elecIdProfile as any)?.job_title || null;
+  const actualEcsCardType = elecIdProfile?.ecs_card_type || null;
+  const actualEcsCardExpiry = elecIdProfile?.ecs_expiry_date || null;
+  const actualBio = elecIdProfile?.bio || null;
+
+  // Display data with fallbacks for UI rendering
   const elecIdData = {
     elecIdNumber: elecIdProfile?.elec_id_number || "EM-XXXXXX",
-    jobTitle: "approved",
-    jobTitleLabel: "Approved Electrician",
-    ecsCardType: elecIdProfile?.ecs_card_type || "gold",
-    ecsCardExpiry: elecIdProfile?.ecs_expiry_date || "2026-12-15",
+    jobTitle: actualJobTitle || "approved", // Fallback for display only
+    jobTitleLabel: getJobTitleLabelFromValue(actualJobTitle || "approved"), // Fallback for display only
+    ecsCardType: actualEcsCardType || "gold", // Fallback for display only
+    ecsCardExpiry: actualEcsCardExpiry || "2026-12-15", // Fallback for display only
     isVerified: elecIdProfile?.is_verified || false,
-    photoUrl: null as string | null,
-    bio: elecIdProfile?.bio || "",
+    photoUrl: photoUrl || profile?.avatar_url || null,
+    bio: actualBio || "",
     rateType: elecIdProfile?.rate_type || "daily",
     rateAmount: elecIdProfile?.rate_amount || null,
   };
+
+  // Sync photoUrl with profile on load
+  useEffect(() => {
+    if (profile?.avatar_url && !photoUrl) {
+      setPhotoUrl(profile.avatar_url);
+    }
+  }, [profile?.avatar_url]);
 
   const [editFormData, setEditFormData] = useState({
     jobTitle: elecIdData.jobTitle,
@@ -253,18 +371,20 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     loadProfileStats();
   }, [loadProfileStats]);
 
+  // Use actual values (without fallbacks) for completeness calculation
   const completeness = calculateProfileCompleteness({
-    jobTitle: elecIdData.jobTitleLabel,
-    bio: elecIdData.bio || profile?.bio,
+    jobTitle: actualJobTitle || undefined, // Use actual value, not display fallback
+    bio: actualBio || profile?.bio || undefined, // Use actual value
     qualificationsCount: profileStats.qualificationsCount,
     experienceCount: profileStats.experienceCount,
     skillsCount: profileStats.skillsCount,
-    ecsCardType: elecIdData.ecsCardType,
-    ecsCardExpiry: elecIdData.ecsCardExpiry,
+    ecsCardType: actualEcsCardType || undefined, // Use actual value
+    ecsCardExpiry: actualEcsCardExpiry || undefined, // Use actual value
   });
 
+  // Use display values for UI rendering
   const ecsCard = getECSCardType(elecIdData.ecsCardType);
-  const expiryStatus = getExpiryStatus(elecIdData.ecsCardExpiry);
+  const expiryStatus = actualEcsCardExpiry ? getExpiryStatus(actualEcsCardExpiry) : { status: 'valid' as const, label: 'Not Set', color: 'gray' };
 
   const userName = profile?.full_name || profile?.username || "Electrician";
   const userInitials = userName
@@ -290,12 +410,13 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     setIsSaving(true);
     try {
       await updateProfile({
+        job_title: editFormData.jobTitle,
         ecs_card_type: editFormData.ecsCardType,
         ecs_expiry_date: editFormData.ecsCardExpiry,
         bio: editFormData.bio,
         rate_type: editFormData.rateType as "hourly" | "daily" | "weekly" | "yearly",
         rate_amount: editFormData.rateAmount ? parseFloat(editFormData.rateAmount) : null,
-      });
+      } as any);
       setIsEditDialogOpen(false);
       setIsEditSheetOpen(false);
       toast({
@@ -563,9 +684,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               <div className="flex gap-3 sm:gap-4">
                 {/* Photo Column */}
                 <div className="relative flex-shrink-0">
-                  {elecIdData.photoUrl ? (
+                  {photoUrl || elecIdData.photoUrl ? (
                     <img
-                      src={elecIdData.photoUrl}
+                      src={photoUrl || elecIdData.photoUrl || ''}
                       alt="Profile"
                       className="w-[72px] h-[90px] sm:w-[100px] sm:h-[120px] rounded-xl sm:rounded-2xl object-cover border-2 border-white/20"
                     />
@@ -575,9 +696,26 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                     </div>
                   )}
 
+                  {/* Hidden file input for photo upload */}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    onChange={handlePhotoUpload}
+                    className="hidden"
+                  />
+
                   {/* Camera overlay */}
-                  <button className="absolute -bottom-1.5 -right-1.5 sm:-bottom-2 sm:-right-2 w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center shadow-lg active:scale-95 transition-transform touch-manipulation border-2 border-[#1a1a2e]">
-                    <Camera className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <button
+                    onClick={handlePhotoClick}
+                    disabled={isUploadingPhoto}
+                    className="absolute -bottom-1.5 -right-1.5 sm:-bottom-2 sm:-right-2 w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center shadow-lg active:scale-95 transition-transform touch-manipulation border-2 border-[#1a1a2e] disabled:opacity-50"
+                  >
+                    {isUploadingPhoto ? (
+                      <div className="h-3 w-3 sm:h-4 sm:w-4 border-2 border-elec-dark border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <Camera className="h-3 w-3 sm:h-4 sm:w-4" />
+                    )}
                   </button>
 
                   {/* Verified badge */}

@@ -201,13 +201,20 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   const { defaults, hasDefaults, applyDefaults, saveDefaults } = useSmartDefaults(userId || undefined);
   const validation = useFormValidation(formData);
 
+  // Callback when auto-sync creates a new report - keeps component state in sync
+  const handleReportCreated = React.useCallback((newReportId: string) => {
+    console.log('[MinorWorks] Auto-sync created report:', newReportId);
+    setCurrentReportId(newReportId);
+  }, []);
+
   // Cloud sync
-  const { loadFromCloud, isAuthenticated, isOnline, syncToCloud, syncState } = useCloudSync({
+  const { loadFromCloud, isAuthenticated, isOnline, syncToCloud, syncState, syncNow, onTabChange } = useCloudSync({
     reportId: currentReportId,
     reportType: 'minor-works',
     data: formData,
     enabled: true,
     customerId: customerIdFromNav,
+    onReportCreated: handleReportCreated,
   });
 
   // Auto-save hook
@@ -276,6 +283,7 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
   }, [formData.supplyPhases]);
 
   // ALWAYS save to localStorage before unload - never lose data
+  // Also attempt cloud sync and warn user if data hasn't synced
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       // CRITICAL: Save current form data to localStorage immediately
@@ -289,11 +297,22 @@ const MinorWorksForm = ({ onBack, initialReportId }: { onBack: () => void; initi
         console.log('[MinorWorks] Saved new draft on beforeunload');
       }
 
-      // Still warn if cloud sync pending
-      const hasUnsaved = syncState.status === 'syncing' || syncState.queuedChanges > 0;
-      if (hasUnsaved) {
+      // Check if we have unsynced changes to the cloud
+      const hasUnsyncedChanges = syncState.status !== 'synced';
+      const hasMeaningfulData = formData.clientName || formData.propertyAddress;
+
+      if (hasUnsyncedChanges && hasMeaningfulData) {
+        // ALWAYS warn the user if data hasn't synced to cloud
         e.preventDefault();
-        e.returnValue = '';
+        e.returnValue = 'Your certificate has NOT been saved to the cloud. If you leave, you may lose your work on other devices.';
+        return;
+      }
+
+      // Legacy check for syncing state
+      const isCurrentlySyncing = syncState.status === 'syncing' || syncState.queuedChanges > 0;
+      if (isCurrentlySyncing) {
+        e.preventDefault();
+        e.returnValue = 'Your certificate is still saving. Are you sure you want to leave?';
       }
     };
     window.addEventListener('beforeunload', handleBeforeUnload);

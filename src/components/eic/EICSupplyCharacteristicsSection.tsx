@@ -16,8 +16,104 @@ interface EICSupplyCharacteristicsSectionProps {
   onToggle: () => void;
 }
 
+// Smart device configuration - BS standard determines available types and ratings
+const DEVICE_CONFIG: Record<string, { types: { value: string; label: string }[]; ratings: string[] }> = {
+  'BS EN 60898': {
+    types: [
+      { value: 'B', label: 'Type B' },
+      { value: 'C', label: 'Type C' },
+      { value: 'D', label: 'Type D' },
+    ],
+    ratings: ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100', '125'],
+  },
+  'BS EN 61009': {
+    types: [
+      { value: 'A', label: 'Type A (RCBO)' },
+      { value: 'AC', label: 'Type AC (RCBO)' },
+      { value: 'B', label: 'Type B (RCBO)' },
+    ],
+    ratings: ['6', '10', '16', '20', '25', '32', '40', '50', '63'],
+  },
+  'BS EN 60947-2': {
+    types: [
+      { value: 'B', label: 'Type B' },
+      { value: 'C', label: 'Type C' },
+      { value: 'D', label: 'Type D' },
+    ],
+    ratings: ['16', '20', '25', '32', '40', '50', '63', '80', '100', '125', '160', '200', '250', '315', '400', '500', '630', '800', '1000', '1250'],
+  },
+  'BS 88-2': {
+    types: [
+      { value: 'gG', label: 'gG (General Purpose)' },
+      { value: 'gM', label: 'gM (Motor)' },
+      { value: 'aM', label: 'aM (Motor Starter)' },
+    ],
+    ratings: ['2', '4', '6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100', '125', '160', '200', '250', '315', '400', '500', '630', '800', '1000', '1250'],
+  },
+  'BS 88-3': {
+    types: [
+      { value: 'gG', label: 'gG (General Purpose)' },
+    ],
+    ratings: ['5', '15', '20', '30', '45', '60', '80', '100'],
+  },
+  'BS 1361': {
+    types: [
+      { value: 'I', label: 'Type I (House Service)' },
+      { value: 'II', label: 'Type II (Consumer Unit)' },
+    ],
+    ratings: ['5', '15', '20', '30', '45', '60', '80', '100'],
+  },
+  'BS 3036': {
+    types: [
+      { value: 'S1A', label: 'S1A (Rewirable)' },
+      { value: 'S2A', label: 'S2A (Rewirable)' },
+    ],
+    ratings: ['5', '15', '20', '30', '45', '60', '100'],
+  },
+  'other': {
+    types: [
+      { value: 'B', label: 'Type B' },
+      { value: 'C', label: 'Type C' },
+      { value: 'D', label: 'Type D' },
+      { value: 'gG', label: 'gG Fuse' },
+      { value: 'aM', label: 'aM Fuse' },
+      { value: 'other', label: 'Other' },
+    ],
+    ratings: ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100', '125', '160', '200', '250', '315', '400', '500', '630'],
+  },
+};
+
 const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionProps> = ({ formData, onUpdate, isOpen, onToggle }) => {
   const isMobile = useIsMobile();
+
+  // Get available types based on selected BS standard
+  const getAvailableTypes = () => {
+    const bsStandard = formData.supplyDeviceBsEn || '';
+    return DEVICE_CONFIG[bsStandard]?.types || DEVICE_CONFIG['other'].types;
+  };
+
+  // Get available ratings based on selected BS standard
+  const getAvailableRatings = () => {
+    const bsStandard = formData.supplyDeviceBsEn || '';
+    return DEVICE_CONFIG[bsStandard]?.ratings || DEVICE_CONFIG['other'].ratings;
+  };
+
+  // Handle BS standard change - reset type and rating if they're no longer valid
+  const handleBsStandardChange = (value: string) => {
+    onUpdate('supplyDeviceBsEn', value);
+
+    const config = DEVICE_CONFIG[value] || DEVICE_CONFIG['other'];
+
+    // Reset type if current value is not in the new options
+    if (formData.supplyDeviceType && !config.types.some(t => t.value === formData.supplyDeviceType)) {
+      onUpdate('supplyDeviceType', '');
+    }
+
+    // Reset rating if current value is not in the new options
+    if (formData.supplyDeviceRating && !config.ratings.includes(formData.supplyDeviceRating)) {
+      onUpdate('supplyDeviceRating', '');
+    }
+  };
 
   const handlePhasesChange = (value: string) => {
     onUpdate('phases', value);
@@ -297,13 +393,24 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="supplyDeviceBsEn" className="text-sm">BS (EN)</Label>
-                  <Input
-                    id="supplyDeviceBsEn"
+                  <Select
                     value={formData.supplyDeviceBsEn || ''}
-                    onChange={(e) => onUpdate('supplyDeviceBsEn', e.target.value)}
-                    placeholder="e.g., BS EN 60898"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500"
-                  />
+                    onValueChange={handleBsStandardChange}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-orange-500 focus:ring-orange-500 data-[state=open]:border-orange-500 data-[state=open]:ring-2">
+                      <SelectValue placeholder="Select BS standard" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                      <SelectItem value="BS EN 60898">BS EN 60898 (MCB)</SelectItem>
+                      <SelectItem value="BS EN 61009">BS EN 61009 (RCBO)</SelectItem>
+                      <SelectItem value="BS EN 60947-2">BS EN 60947-2 (MCCB)</SelectItem>
+                      <SelectItem value="BS 88-2">BS 88-2 (HRC Fuse)</SelectItem>
+                      <SelectItem value="BS 88-3">BS 88-3 (Fuse)</SelectItem>
+                      <SelectItem value="BS 1361">BS 1361 (Fuse)</SelectItem>
+                      <SelectItem value="BS 3036">BS 3036 (Rewirable Fuse)</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="supplyDeviceType" className="text-sm">Type</Label>
@@ -315,24 +422,27 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="B">Type B</SelectItem>
-                      <SelectItem value="C">Type C</SelectItem>
-                      <SelectItem value="D">Type D</SelectItem>
-                      <SelectItem value="gG">gG Fuse</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
+                      {getAvailableTypes().map((type) => (
+                        <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="supplyDeviceRating" className="text-sm">Rated Current (A)</Label>
-                  <Input
-                    id="supplyDeviceRating"
-                    type="number"
+                  <Select
                     value={formData.supplyDeviceRating || ''}
-                    onChange={(e) => onUpdate('supplyDeviceRating', e.target.value)}
-                    placeholder="e.g., 100"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500"
-                  />
+                    onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-orange-500 focus:ring-orange-500 data-[state=open]:border-orange-500 data-[state=open]:ring-2">
+                      <SelectValue placeholder="Select rating" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] bg-background border-border text-foreground max-h-[300px]">
+                      {getAvailableRatings().map((rating) => (
+                        <SelectItem key={rating} value={rating}>{rating}A</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>

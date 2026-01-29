@@ -235,7 +235,7 @@ const InstallationVerificationResults = ({
       <div className="space-y-2">
         <AnimatePresence mode="popLayout">
           {filteredChecks.map((check, idx) => {
-            const status = statusConfig[check.status];
+            const status = statusConfig[check.status as keyof typeof statusConfig] || statusConfig.requires_testing;
             const Icon = status.icon;
             const isExpanded = expandedChecks[idx];
 

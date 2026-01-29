@@ -62,6 +62,11 @@ export interface DistributionBoard {
   spdOperationalStatus: boolean;
   spdNA: boolean;
 
+  // SPD Type Details (IET Form - tick boxes for T1, T2, T3)
+  spdT1: boolean;                    // Type 1 SPD installed
+  spdT2: boolean;                    // Type 2 SPD installed
+  spdT3: boolean;                    // Type 3 SPD installed
+
   // Board details (for wizard collection)
   make?: string;                     // Manufacturer (from BOARD_MANUFACTURERS)
   model?: string;                    // Model number/name
@@ -94,6 +99,9 @@ export const createDefaultBoard = (
   confirmedPhaseSequence: false,
   spdOperationalStatus: false,
   spdNA: false,
+  spdT1: false,
+  spdT2: false,
+  spdT3: false,
   createdAt: new Date(),
   updatedAt: new Date(),
 });

@@ -32,6 +32,7 @@ const PublicQuote = lazy(() => import("@/pages/PublicQuote"));
 const PublicSignature = lazy(() => import("@/pages/PublicSignature"));
 const BriefingSignOff = lazy(() => import("@/pages/BriefingSignOff"));
 const ClientPortalView = lazy(() => import("@/pages/public/ClientPortalView"));
+const PublicElecIdView = lazy(() => import("@/pages/public/PublicElecIdView"));
 const LaTeXPDFGeneratorPage = lazy(() => import("@/pages/LaTeXPDFGeneratorPage"));
 const InvoiceQuoteBuilder = lazy(() => import("@/pages/electrician/InvoiceQuoteBuilder"));
 const InvoiceViewPage = lazy(() => import("@/pages/electrician/InvoiceViewPage"));
@@ -122,6 +123,8 @@ const AppRouter = () => {
       <Route path="/sign/:token" element={<LazyRoute><PublicSignature /></LazyRoute>} />
       <Route path="/briefing-signoff/:briefingId" element={<LazyRoute><BriefingSignOff /></LazyRoute>} />
       <Route path="/portal/:token" element={<LazyRoute><ClientPortalView /></LazyRoute>} />
+      <Route path="/verify/:elecIdNumber" element={<LazyRoute><PublicElecIdView /></LazyRoute>} />
+      <Route path="/share/:token" element={<LazyRoute><PublicElecIdView /></LazyRoute>} />
       <Route path="/pdf-generator" element={<LazyRoute><LaTeXPDFGeneratorPage /></LazyRoute>} />
       <Route path="/founder/claim" element={<LazyRoute><FounderClaim /></LazyRoute>} />
       <Route path="/founder/signup" element={<LazyRoute><FounderSignup /></LazyRoute>} />

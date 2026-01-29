@@ -1,4 +1,4 @@
-import { ArrowLeft, Sun, Lightbulb, Calculator, Volume2, Building, User, FileText } from "lucide-react";
+import { ArrowLeft, Eye, Calculator, Lightbulb, Volume2, VolumeX, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
@@ -6,59 +6,52 @@ import useSEO from "@/hooks/useSEO";
 
 const HNCModule2Section4 = () => {
   useSEO(
-    "Lighting and Acoustics Fundamentals - HNC Module 2",
-    "Illumination, sound transmission and building performance standards"
+    "Lighting and Acoustics - HNC Module 2 Section 4 | Building Services Engineering",
+    "Master lighting and acoustics: visual perception, illumination calculations, lamp types, sound fundamentals, noise control and building acoustics compliance."
   );
 
   const subsections = [
     {
-      number: "Subsection 1",
-      title: "Natural vs artificial lighting in buildings",
-      description: "Daylight and artificial lighting integration strategies",
-      icon: Sun,
-      href: "../h-n-c-module2-section4-4-1"
+      number: "4.1",
+      title: "Light and Vision",
+      description: "EM spectrum, visual perception, colour temperature, CRI",
+      icon: Eye,
+      href: "../h-n-c-module2-section4-1"
     },
     {
-      number: "Subsection 2", 
-      title: "Luminous flux, luminous intensity, illuminance and luminance",
-      description: "Fundamental lighting quantities and units",
-      icon: Lightbulb,
-      href: "../h-n-c-module2-section4-4-2"
-    },
-    {
-      number: "Subsection 3",
-      title: "Daylighting calculations and daylight factors", 
-      description: "Natural lighting assessment and calculations",
+      number: "4.2",
+      title: "Illumination Calculations",
+      description: "Lumen method, point-by-point, maintained illuminance",
       icon: Calculator,
-      href: "../h-n-c-module2-section4-4-3"
+      href: "../h-n-c-module2-section4-2"
     },
     {
-      number: "Subsection 4",
-      title: "Principles of sound transmission and absorption",
-      description: "Acoustic principles in building design",
+      number: "4.3",
+      title: "Lamp Types and Efficacy",
+      description: "LED, fluorescent, discharge, efficiency comparison",
+      icon: Lightbulb,
+      href: "../h-n-c-module2-section4-3"
+    },
+    {
+      number: "4.4",
+      title: "Sound Fundamentals",
+      description: "Frequency, wavelength, decibels, sound pressure levels",
       icon: Volume2,
-      href: "../h-n-c-module2-section4-4-4"
+      href: "../h-n-c-module2-section4-4"
     },
     {
-      number: "Subsection 5",
-      title: "Acoustic performance of building materials",
-      description: "Sound insulation and absorption properties",
+      number: "4.5",
+      title: "Noise Control Methods",
+      description: "Source, path, receiver, attenuation, barriers",
+      icon: VolumeX,
+      href: "../h-n-c-module2-section4-5"
+    },
+    {
+      number: "4.6",
+      title: "Building Acoustics and Compliance",
+      description: "Reverberation, Part E requirements, noise ratings",
       icon: Building,
-      href: "../h-n-c-module2-section4-4-5"
-    },
-    {
-      number: "Subsection 6",
-      title: "Human comfort in lighting and acoustics",
-      description: "Occupant comfort and performance standards",
-      icon: User,
-      href: "../h-n-c-module2-section4-4-6"
-    },
-    {
-      number: "Subsection 7",
-      title: "Standards and guidelines (CIBSE, BS, EN codes)",
-      description: "Industry standards and compliance requirements",
-      icon: FileText,
-      href: "../h-n-c-module2-section4-4-7"
+      href: "../h-n-c-module2-section4-6"
     }
   ];
 
@@ -78,20 +71,20 @@ const HNCModule2Section4 = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            2.4 Lighting and Acoustics Fundamentals
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
-            Illumination, sound transmission and building performance standards.
-          </p>
-        </div>
+        <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Section 4: Lighting and Acoustics
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          Apply the principles of lighting design and acoustic engineering to create comfortable building environments
+        </p>
+        <p className="text-base text-muted-foreground mb-12">
+          This section covers the physics of light and sound, calculation methods for illumination levels, lamp selection, noise control strategies, and compliance with Part E and CIBSE guidance - essential for designing comfortable and compliant building services.
+        </p>
 
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {subsections.map((subsection) => (
             <ModuleCard
-              key={index}
+              key={subsection.number}
               number={subsection.number}
               title={subsection.title}
               description={subsection.description}

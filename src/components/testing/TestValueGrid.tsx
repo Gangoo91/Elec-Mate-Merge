@@ -173,7 +173,7 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
                 <button
                   onClick={() => handleTileClick(tile.field)}
                   className={cn(
-                    "w-full p-4 rounded-xl border-2 transition-all duration-200",
+                    "w-full p-4 rounded-xl border-2 transition-transform duration-200",
                     "touch-manipulation active:scale-95",
                     "flex flex-col items-center justify-center min-h-[90px]",
                     getValidationColor(validationStatus)

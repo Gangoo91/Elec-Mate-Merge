@@ -142,23 +142,56 @@ export const useCompanyProfile = () => {
   const uploadLogo = useCallback(async (file: File): Promise<{ url?: string; dataUrl?: string } | null> => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return null;
+      if (!user) {
+        toast({
+          title: "Authentication Required",
+          description: "Please log in to upload a logo.",
+          variant: "destructive"
+        });
+        return null;
+      }
+
+      // Check file size (max 5MB)
+      const maxSize = 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        toast({
+          title: "File Too Large",
+          description: "Logo must be under 5MB. Please compress or resize your image.",
+          variant: "destructive"
+        });
+        return null;
+      }
 
       // Convert to base64 for PDF embedding
-      const dataUrl = await new Promise<string>((resolve) => {
+      const dataUrl = await new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result as string);
+        reader.onerror = () => reject(new Error('Failed to read file'));
         reader.readAsDataURL(file);
       });
 
+      // Determine file extension (handle HEIC)
+      let extension = file.name.split('.').pop()?.toLowerCase() || 'png';
+      if (extension === 'heic' || extension === 'heif') {
+        extension = 'jpg'; // HEIC files get converted by browser
+      }
+
       // Upload to storage
-      const fileName = `${user.id}/logo-${Date.now()}.${file.name.split('.').pop()}`;
+      const fileName = `${user.id}/logo-${Date.now()}.${extension}`;
       const { data, error } = await supabase.storage
         .from('company-branding')
-        .upload(fileName, file);
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: true // Allow overwriting existing logos
+        });
 
       if (error) {
         console.error('Error uploading logo:', error);
+        toast({
+          title: "Upload Failed",
+          description: error.message || "Failed to upload logo. Please try again.",
+          variant: "destructive"
+        });
         return null;
       }
 
@@ -166,9 +199,20 @@ export const useCompanyProfile = () => {
         .from('company-branding')
         .getPublicUrl(data.path);
 
+      toast({
+        title: "Logo Uploaded",
+        description: "Your company logo has been uploaded successfully.",
+        variant: "success"
+      });
+
       return { url: publicUrl, dataUrl };
     } catch (error) {
       console.error('Error uploading logo:', error);
+      toast({
+        title: "Upload Failed",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive"
+      });
       return null;
     }
   }, []);

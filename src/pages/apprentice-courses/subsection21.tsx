@@ -492,14 +492,14 @@ const Section5_4 = () => {
         {/* Navigation */}
         <div className="flex justify-between items-center pt-8 border-t border-border/20">
           <Button variant="outline" asChild>
-            <Link to="../subsection20">
+            <Link to="5-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Subsection 3
+              Previous: Section 5.3
             </Link>
           </Button>
           <Button asChild>
-            <Link to="../subsection22">
-              Next: Subsection 5
+            <Link to="5-5">
+              Next: Section 5.5
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </Button>

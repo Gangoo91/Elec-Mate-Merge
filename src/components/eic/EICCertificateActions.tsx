@@ -55,7 +55,11 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   const hasRequiredDeclarations = formData.designerName && formData.designerSignature && 
                                  formData.constructorName && formData.constructorSignature && 
                                  formData.inspectorName && formData.inspectorSignature;
-  const hasCompletedInspections = formData.inspections && Object.keys(formData.inspections).length > 0;
+  // Check for completed inspections - either via inspections object (legacy) or inspectionItems array (current)
+  const hasCompletedInspections =
+    (formData.inspections && Object.keys(formData.inspections).length > 0) ||
+    (formData.inspectionItems && Array.isArray(formData.inspectionItems) &&
+     formData.inspectionItems.some((item: any) => item.outcome === 'satisfactory' || item.outcome === 'not-applicable' || item.outcome === 'limitation'));
   const hasTestResults = formData.scheduleOfTests && formData.scheduleOfTests.length > 0;
 
   const canGenerateCertificate = hasRequiredInstallationDetails && hasRequiredDeclarations;
@@ -77,10 +81,60 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
     try {
       setExportProgress(10);
-      
+
       // Prepare form data in the format expected by PDF Monkey template
       const pdfData = await generateTestJSON(reportId);
-      
+
+      // Debug logging to verify form data is being mapped correctly
+      console.log('[EIC PDF] Generating with data:', {
+        clientName: pdfData.client_details?.client_name,
+        supplyVoltage: pdfData.supply_characteristics?.supply_voltage,
+        supplyDevice: pdfData.supply_protective_device,
+        scheduleCount: pdfData.schedule_of_tests?.length,
+        inspectionKeys: Object.keys(pdfData).filter(k => k.startsWith('insp_')),
+        // Debug earth electrode (both nested and top-level)
+        earthElectrode: {
+          type: pdfData.earth_electrode_type,
+          location: pdfData.earth_electrode_location,
+          resistance: pdfData.earth_electrode_resistance,
+          nested_type: pdfData.earthing_bonding?.earth_electrode_type,
+          nested_location: pdfData.earthing_bonding?.earth_electrode_location
+        },
+        // Debug departures (both nested and top-level)
+        departures: {
+          designer_nested: pdfData.designer?.departures,
+          designer_root: pdfData.designer_departures,
+          permitted_exceptions_nested: pdfData.designer?.permitted_exceptions,
+          permitted_exceptions_root: pdfData.permitted_exceptions
+        }
+      });
+      console.log('[EIC PDF] Form data for empty fields:', {
+        // Designer departures (should map to designer.departures in PDF)
+        designerDepartures: formData.designerDepartures || '<<EMPTY>>',
+        // Permitted exceptions (should map to designer.permitted_exceptions in PDF)
+        permittedExceptions: formData.permittedExceptions || '<<EMPTY>>',
+        // Earth electrode location (should map to earthing_bonding.earth_electrode_location)
+        earthElectrodeLocation: formData.earthElectrodeLocation || '<<EMPTY>>',
+        // Earth electrode resistance (should map to earthing_bonding.earth_electrode_resistance)
+        earthElectrodeResistance: formData.earthElectrodeResistance || '<<EMPTY>>',
+        // Earth electrode type
+        earthElectrodeType: formData.earthElectrodeType || '<<EMPTY>>'
+      });
+      console.log('[EIC PDF] Nested objects being sent:', {
+        'designer.departures': pdfData.designer?.departures || '<<EMPTY>>',
+        'designer.permitted_exceptions': pdfData.designer?.permitted_exceptions || '<<EMPTY>>',
+        'earthing_bonding.earth_electrode_location': pdfData.earthing_bonding?.earth_electrode_location || '<<EMPTY>>',
+        'earthing_bonding.earth_electrode_resistance': pdfData.earthing_bonding?.earth_electrode_resistance || '<<EMPTY>>'
+      });
+      console.log('[EIC PDF] Bonding checkbox values:', {
+        mainBondingLocations: formData.mainBondingLocations || '<<EMPTY>>',
+        'earthing_bonding.bonding_water': pdfData.earthing_bonding?.bonding_water,
+        'earthing_bonding.bonding_gas': pdfData.earthing_bonding?.bonding_gas,
+        'earthing_bonding.bonding_oil': pdfData.earthing_bonding?.bonding_oil,
+        'earthing_bonding.bonding_structural_steel': pdfData.earthing_bonding?.bonding_structural_steel,
+        'earthing_bonding.bonding_lightning_protection': pdfData.earthing_bonding?.bonding_lightning_protection
+      });
+
       setExportProgress(30);
       setExportStatus('generating');
 
@@ -166,8 +220,9 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
       setExportProgress(90);
 
-      // Download the PDF for the user
-      const response = await fetch(permanentUrl);
+      // Download the PDF for the user - add cache-busting to prevent stale downloads
+      const cacheBustUrl = `${permanentUrl}?t=${Date.now()}`;
+      const response = await fetch(cacheBustUrl, { cache: 'no-store' });
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
 
@@ -315,10 +370,16 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         flatInspectionKeys[`insp_${i}`] = 'Acceptable';
       } else if (outcome === 'na' || outcome === 'not-applicable' || outcome === 'N/A') {
         flatInspectionKeys[`insp_${i}`] = 'N/A';
+      } else if (outcome === 'limitation' || outcome === 'LIM') {
+        flatInspectionKeys[`insp_${i}`] = 'LIM';
       } else {
         flatInspectionKeys[`insp_${i}`] = ''; // Empty if not set
       }
     }
+
+    // Parse mainBondingLocations string to derive boolean values for PDF
+    // Form stores "Water, Gas, Oil" etc. as comma-separated string
+    const bondingStr = (formData.mainBondingLocations || '').toLowerCase();
 
     const json: any = {
       // SPREAD flat inspection keys at ROOT level (like EICR pattern)
@@ -351,23 +412,51 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       supply_characteristics: {
         supply_voltage: formData.supplyVoltage || formData.nominalVoltage || '',
         supply_frequency: formData.supplyFrequency || formData.nominalFrequency || '',
-        phases: formData.phases || '',
+        // Convert phases to PDF template format OR use live_conductor_type if set
+        phases: (() => {
+          // If live_conductor_type is set, use it directly (already in correct format)
+          const liveConductorType = formData.liveCondutorType || formData.liveConductorType || '';
+          if (liveConductorType) {
+            // Map form values to PDF template values
+            const typeMap: Record<string, string> = {
+              'ac-1ph-2w': '1-phase-2-wire',
+              'ac-2ph-3w': '2-phase-3-wire',
+              'ac-3ph-3w': '3-phase-3-wire',
+              'ac-3ph-4w': '3-phase-4-wire'
+            };
+            return typeMap[liveConductorType] || liveConductorType;
+          }
+          // Fallback: convert simple phases to PDF format
+          const phases = formData.phases || '';
+          if (phases === 'single') return '1-phase-2-wire';
+          if (phases === 'three') return '3-phase-4-wire';
+          return phases;
+        })(),
         earthing_arrangement: formData.earthingArrangement || '',
         supply_type: formData.supplyType || '',
         supply_pme: formData.supplyPME || '',
-        // DC supply options
-        dc_supply_type: formData.dcSupplyType || '',
+        // Number and type of live conductors (IET form field) - for PDF checkboxes
+        live_conductor_type: formData.liveCondutorType || formData.liveConductorType || '',
+        // DC supply options - map form values to PDF template values
+        dc_supply_type: (() => {
+          const dcType = formData.dcSupplyType || formData.liveCondutorType || '';
+          if (dcType === 'dc-2w') return '2-wire';
+          if (dcType === 'dc-3w') return '3-wire';
+          return dcType;
+        })(),
         // Fields used by PDF template
         prospective_fault_current: formData.prospectiveFaultCurrent || '',
         external_ze: formData.externalEarthFaultLoopImpedance || formData.externalZe || '',
         supply_polarity_confirmed: formData.supplyPolarityConfirmed ?? false,
-        other_sources_of_supply: formData.otherSourcesOfSupply ?? false
+        other_sources_of_supply: formData.otherSourcesOfSupply ?? false,
+        other_sources_details: formData.otherSourcesDetails || ''
       },
       // Supply Protective Device (DNO fuse details)
+      // Accept BOTH form field names (supplyDevice*) and legacy names (supplyProtectiveDevice*)
       supply_protective_device: {
-        bs_en: formData.supplyProtectiveDeviceBsEn || '',
-        type: formData.supplyProtectiveDeviceType || '',
-        rated_current: formData.supplyProtectiveDeviceRating || ''
+        bs_en: formData.supplyDeviceBsEn || formData.supplyProtectiveDeviceBsEn || '',
+        type: formData.supplyDeviceType || formData.supplyProtectiveDeviceType || '',
+        rated_current: formData.supplyDeviceRating || formData.supplyProtectiveDeviceRating || ''
       },
       main_protective_device: {
         device_type: formData.mainProtectiveDevice || formData.mainProtectiveDeviceType || '',
@@ -394,6 +483,42 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         board_type: formData.boardType || '',
         board_location: formData.boardLocation || ''
       },
+      // Sub-board support - array of distribution boards
+      distribution_boards: (formData.distributionBoards || []).map((board: any, index: number) => ({
+        db_reference: board.dbReference || board.reference || `DB${index + 1}`,
+        location: board.location || '',
+        board_type: board.boardType || board.type || '',
+        board_make: board.make || board.boardMake || '',
+        board_model: board.model || board.boardModel || '',
+        total_ways: board.totalWays || board.ways || '',
+        used_ways: board.usedWays || '',
+        spare_ways: board.spareWays || '',
+        zdb: board.zdb || '',
+        ipf: board.ipf || '',
+        // Main switch for this board
+        main_switch_bs_en: board.mainSwitchBsEn || '',
+        main_switch_type: board.mainSwitchType || '',
+        main_switch_rating: board.mainSwitchRating || '',
+        main_switch_poles: board.mainSwitchPoles || '',
+        // RCD for this board (if applicable)
+        rcd_type: board.rcdType || '',
+        rcd_rating: board.rcdRating || '',
+        rcd_measured_time: board.rcdMeasuredTime || '',
+        // SPD for this board (IET form T1/T2/T3/N/A checkboxes)
+        spd_fitted: board.spdFitted ?? false,
+        spd_operational: board.spdOperationalStatus ?? board.spdOperational ?? false,
+        spd_t1: board.spdT1 ?? false,
+        spd_t2: board.spdT2 ?? false,
+        spd_t3: board.spdT3 ?? false,
+        spd_na: board.spdNA ?? false,
+        // Verification
+        polarity_confirmed: board.confirmedCorrectPolarity ?? board.polarityConfirmed ?? false,
+        phase_sequence_confirmed: board.confirmedPhaseSequence ?? board.phaseSequenceConfirmed ?? false,
+        // Supply to this board (from main or another DB)
+        supply_from: board.supplyFrom || 'Main',
+        supply_cable_size: board.supplyCableSize || '',
+        supply_cable_type: board.supplyCableType || ''
+      })),
       cables: {
         intake_cable_size: formData.intakeCableSize || '',
         intake_cable_type: formData.intakeCableType || '',
@@ -420,13 +545,13 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         // Maximum demand
         maximum_demand: formData.maximumDemand || '',
         maximum_demand_unit: formData.maximumDemandUnit || 'A',
-        // Bonding connections
-        bonding_water: formData.bondingToWater ?? formData.bondingWater ?? false,
-        bonding_gas: formData.bondingToGas ?? formData.bondingGas ?? false,
-        bonding_oil: formData.bondingToOil ?? formData.bondingOil ?? false,
-        bonding_structural_steel: formData.bondingToStructuralSteel ?? formData.bondingStructuralSteel ?? false,
-        bonding_lightning_protection: formData.bondingToLightningProtection ?? formData.bondingLightningProtection ?? false,
-        bonding_other: formData.bondingToOther ?? formData.bondingOther ?? false,
+        // Bonding connections - parse from mainBondingLocations string OR use individual fields
+        bonding_water: bondingStr.includes('water') || formData.bondingToWater || formData.bondingWater || false,
+        bonding_gas: bondingStr.includes('gas') || formData.bondingToGas || formData.bondingGas || false,
+        bonding_oil: bondingStr.includes('oil') || formData.bondingToOil || formData.bondingOil || false,
+        bonding_structural_steel: bondingStr.includes('steel') || bondingStr.includes('structural') || formData.bondingToStructuralSteel || formData.bondingStructuralSteel || false,
+        bonding_lightning_protection: bondingStr.includes('lightning') || formData.bondingToLightningProtection || formData.bondingLightningProtection || false,
+        bonding_other: bondingStr.includes('telecom') || bondingStr.includes('other') || formData.bondingToOther || formData.bondingOther || false,
         bonding_other_specify: formData.bondingOtherSpecify || formData.bondingToOtherSpecify || '',
         // Supplementary bonding
         bonding_compliance: formData.bondingCompliance || '',
@@ -442,58 +567,74 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         outcome: item.outcome || '',
         notes: item.notes || ''
       })) || [],
-      schedule_of_tests: formData.scheduleOfTests?.map((test: any) => ({
-        id: test.id || 'N/A',
-        circuit_number: test.circuitNumber || 'N/A',
-        circuit_description: test.circuitDescription || 'N/A',
-        circuit_type: test.circuitType || 'N/A',
-        reference_method: test.referenceMethod || 'N/A',
-        live_size: test.liveSize || 'N/A',
-        cpc_size: test.cpcSize || 'N/A',
-        protective_device_type: test.protectiveDeviceType || 'N/A',
-        protective_device_curve: test.protectiveDeviceCurve || 'N/A',
-        protective_device_rating: test.protectiveDeviceRating || 'N/A',
-        protective_device_ka_rating: test.protectiveDeviceKaRating || 'N/A',
-        protective_device_location: test.protectiveDeviceLocation || 'N/A',
-        bs_standard: test.bsStandard || 'N/A',
-        r1r2: test.r1r2 || 'N/A',
-        ring_continuity_live: test.ringContinuityLive || 'N/A',
-        ring_continuity_neutral: test.ringContinuityNeutral || 'N/A',
-        ring_r1: test.ringR1 || 'N/A',
-        ring_rn: test.ringRn || 'N/A',
-        ring_r2: test.ringR2 || 'N/A',
-        insulation_test_voltage: test.insulationTestVoltage || 'N/A',
-        insulation_resistance: test.insulationResistance || 'N/A',
-        insulation_live_neutral: test.insulationLiveNeutral || 'N/A',
-        insulation_live_earth: test.insulationLiveEarth || 'N/A',
-        insulation_neutral_earth: test.insulationNeutralEarth || 'N/A',
-        polarity: test.polarity || 'N/A',
-        zs: test.zs || 'N/A',
-        max_zs: test.maxZs || 'N/A',
-        points_served: test.pointsServed || 'N/A',
-        rcd_rating: test.rcdRating || 'N/A',
-        rcd_bs_standard: test.rcdBsStandard || 'N/A',
-        rcd_type: test.rcdType || 'N/A',
-        rcd_rating_a: test.rcdRatingA || 'N/A',
-        rcd_one_x: test.rcdOneX || 'N/A',
-        rcd_half_x: test.rcdHalfX || 'N/A',
-        rcd_five_x: test.rcdFiveX || 'N/A',
-        rcd_test_button: test.rcdTestButton || 'N/A',
-        afdd_test: test.afddTest || 'N/A',
-        pfc: test.pfc || 'N/A',
-        pfc_live_neutral: test.pfcLiveNeutral || 'N/A',
-        pfc_live_earth: test.pfcLiveEarth || 'N/A',
-        functional_testing: test.functionalTesting || 'N/A',
-        notes: test.notes || 'N/A',
-        phase_type: test.phaseType || 'N/A',
-        phase_rotation: test.phaseRotation || 'N/A',
-        phase_balance_l1: test.phaseBalanceL1 || 'N/A',
-        phase_balance_l2: test.phaseBalanceL2 || 'N/A',
-        phase_balance_l3: test.phaseBalanceL3 || 'N/A',
-        line_to_line_voltage: test.lineToLineVoltage || 'N/A',
-        source_circuit_id: test.sourceCircuitId ?? null,
-        auto_filled: test.autoFilled ?? false
-      })) || [],
+      // Build board ID to reference lookup map for circuit mapping
+      schedule_of_tests: (() => {
+        // Create lookup map: boardId -> board reference/name
+        const boardRefMap: Record<string, string> = {};
+        (formData.distributionBoards || []).forEach((board: any) => {
+          boardRefMap[board.id] = board.reference || board.name || board.dbReference || '';
+        });
+
+        return formData.scheduleOfTests?.map((test: any) => ({
+          id: test.id || 'N/A',
+          circuit_number: test.circuitNumber || 'N/A',
+          circuit_description: test.circuitDescription || 'N/A',
+          circuit_type: test.circuitType || 'N/A',
+          // Type of wiring (e.g., T+E, SWA, etc.) - for PDF column
+          type_of_wiring: test.typeOfWiring || test.wiringType || test.cableType || 'N/A',
+          reference_method: test.referenceMethod || 'N/A',
+          live_size: test.liveSize || 'N/A',
+          cpc_size: test.cpcSize || 'N/A',
+          protective_device_type: test.protectiveDeviceType || 'N/A',
+          protective_device_curve: test.protectiveDeviceCurve || 'N/A',
+          protective_device_rating: test.protectiveDeviceRating || 'N/A',
+          protective_device_ka_rating: test.protectiveDeviceKaRating || 'N/A',
+          protective_device_location: test.protectiveDeviceLocation || 'N/A',
+          bs_standard: test.bsStandard || 'N/A',
+          r1r2: test.r1r2 || 'N/A',
+          // Standalone R2 value for PDF template (separate from ring_r2)
+          r2: test.r2 || test.cpcContinuity || 'N/A',
+          ring_continuity_live: test.ringContinuityLive || 'N/A',
+          ring_continuity_neutral: test.ringContinuityNeutral || 'N/A',
+          ring_r1: test.ringR1 || 'N/A',
+          ring_rn: test.ringRn || 'N/A',
+          ring_r2: test.ringR2 || 'N/A',
+          insulation_test_voltage: test.insulationTestVoltage || 'N/A',
+          insulation_resistance: test.insulationResistance || 'N/A',
+          insulation_live_neutral: test.insulationLiveNeutral || 'N/A',
+          insulation_live_earth: test.insulationLiveEarth || 'N/A',
+          insulation_neutral_earth: test.insulationNeutralEarth || 'N/A',
+          polarity: test.polarity || 'N/A',
+          zs: test.zs || 'N/A',
+          max_zs: test.maxZs || 'N/A',
+          points_served: test.pointsServed || 'N/A',
+          rcd_rating: test.rcdRating || 'N/A',
+          rcd_bs_standard: test.rcdBsStandard || 'N/A',
+          rcd_type: test.rcdType || 'N/A',
+          rcd_rating_a: test.rcdRatingA || 'N/A',
+          rcd_one_x: test.rcdOneX || 'N/A',
+          rcd_half_x: test.rcdHalfX || 'N/A',
+          rcd_five_x: test.rcdFiveX || 'N/A',
+          rcd_test_button: test.rcdTestButton || 'N/A',
+          afdd_test: test.afddTest || 'N/A',
+          pfc: test.pfc || 'N/A',
+          pfc_live_neutral: test.pfcLiveNeutral || 'N/A',
+          pfc_live_earth: test.pfcLiveEarth || 'N/A',
+          functional_testing: test.functionalTesting || 'N/A',
+          notes: test.notes || 'N/A',
+          phase_type: test.phaseType || 'N/A',
+          phase_rotation: test.phaseRotation || 'N/A',
+          phase_balance_l1: test.phaseBalanceL1 || 'N/A',
+          phase_balance_l2: test.phaseBalanceL2 || 'N/A',
+          phase_balance_l3: test.phaseBalanceL3 || 'N/A',
+          line_to_line_voltage: test.lineToLineVoltage || 'N/A',
+          // Distribution board reference (for sub-board support)
+          // Look up board reference by boardId, fallback to direct fields
+          db_reference: boardRefMap[test.boardId] || test.dbReference || test.boardReference || '',
+          source_circuit_id: test.sourceCircuitId ?? null,
+          auto_filled: test.autoFilled ?? false
+        })) || [];
+      })(),
       test_instrument_details: {
         make_model: formData.testInstrumentMake || formData.customTestInstrument || '',
         serial_number: formData.testInstrumentSerial || '',
@@ -506,13 +647,17 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         test_notes: formData.testNotes || ''
       },
       distribution_board_verification: {
-        db_reference: formData.dbReference || '',
-        zdb: formData.zdb || '',
-        ipf: formData.ipf || '',
-        confirmed_correct_polarity: formData.confirmedCorrectPolarity ?? false,
-        confirmed_phase_sequence: formData.confirmedPhaseSequence ?? false,
-        spd_operational_status: formData.spdOperationalStatus ?? false,
-        spd_na: formData.spdNA ?? false
+        db_reference: formData.dbReference || formData.distributionBoards?.[0]?.dbReference || formData.distributionBoards?.[0]?.reference || '',
+        zdb: formData.zdb || formData.distributionBoards?.[0]?.zdb || '',
+        ipf: formData.ipf || formData.distributionBoards?.[0]?.ipf || '',
+        confirmed_correct_polarity: formData.confirmedCorrectPolarity ?? formData.distributionBoards?.[0]?.confirmedCorrectPolarity ?? false,
+        confirmed_phase_sequence: formData.confirmedPhaseSequence ?? formData.distributionBoards?.[0]?.confirmedPhaseSequence ?? false,
+        spd_operational_status: formData.spdOperationalStatus ?? formData.distributionBoards?.[0]?.spdOperationalStatus ?? false,
+        spd_na: formData.spdNA ?? formData.distributionBoards?.[0]?.spdNA ?? false,
+        // SPD Type checkboxes (IET form)
+        spd_t1: formData.spdT1 ?? formData.distributionBoards?.[0]?.spdT1 ?? false,
+        spd_t2: formData.spdT2 ?? formData.distributionBoards?.[0]?.spdT2 ?? false,
+        spd_t3: formData.spdT3 ?? formData.distributionBoards?.[0]?.spdT3 ?? false
       },
       designer: {
         name: formData.designerName || '',
@@ -527,6 +672,16 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         departures: formData.designerDepartures || '',
         permitted_exceptions: formData.permittedExceptions || '',
         risk_assessment_attached: formData.riskAssessmentAttached ?? false
+      },
+      // Designer No 2 (optional - for mutual responsibility for design per IET form)
+      designer_2: {
+        name: formData.designer2Name || '',
+        company: formData.designer2Company || '',
+        address: formData.designer2Address || '',
+        postcode: formData.designer2Postcode || '',
+        phone: formData.designer2Phone || '',
+        date: formData.designer2Date || '',
+        signature: formData.designer2Signature || ''
       },
       constructor: {
         name: formData.constructorName || '',
@@ -586,19 +741,77 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         building_regs_compliance: formData.buildingRegsCompliance ?? false,
         competent_person_scheme: formData.competentPersonScheme ?? false
       },
-      observations: await formatObservationsWithPhotos(formData.observations || [], reportId)
+      observations: await formatObservationsWithPhotos(formData.observations || [], reportId),
+
+      // ============================================
+      // TOP-LEVEL COPIES FOR PDF TEMPLATE COMPATIBILITY
+      // Multiple naming conventions to match template
+      // ============================================
+
+      // Earth electrode - various naming conventions
+      earth_electrode_type: formData.earthElectrodeType || '',
+      earth_electrode_location: formData.earthElectrodeLocation || '',
+      earth_electrode_resistance: formData.earthElectrodeResistance || '',
+      earthElectrodeType: formData.earthElectrodeType || '',
+      earthElectrodeLocation: formData.earthElectrodeLocation || '',
+      earthElectrodeResistance: formData.earthElectrodeResistance || '',
+      electrode_type: formData.earthElectrodeType || '',
+      electrode_location: formData.earthElectrodeLocation || '',
+      electrode_resistance: formData.earthElectrodeResistance || '',
+
+      // Departures - various naming conventions
+      departures: formData.designerDepartures || '',
+      designer_departures: formData.designerDepartures || '',
+      designerDepartures: formData.designerDepartures || '',
+      details_of_departures: formData.designerDepartures || '',
+
+      // Permitted exceptions - various naming conventions
+      permitted_exceptions: formData.permittedExceptions || '',
+      permittedExceptions: formData.permittedExceptions || '',
+      details_of_permitted_exceptions: formData.permittedExceptions || '',
+      exceptions: formData.permittedExceptions || '',
+
+      // Constructor/Inspector departures
+      constructor_departures: formData.constructorDepartures || '',
+      inspector_departures: formData.inspectorDepartures || ''
     };
-    
+
     return json;
   };
 
   const formatObservationsWithPhotos = async (observations: any[], reportId: string) => {
-    // Fetch all photos for this report
-    const { data: photos } = await supabase
-      .from('inspection_photos')
-      .select('*')
-      .eq('report_id', reportId)
-      .eq('report_type', 'eic');
+    // The inspection_photos.report_id is UUID, but we have text reportId (e.g., "EIC-2026-1073")
+    // First, look up the report's UUID from the reports table
+    let photos: any[] | null = null;
+
+    try {
+      // Get the report's UUID from the text report_id
+      const { data: report, error: reportError } = await supabase
+        .from('reports')
+        .select('id')
+        .eq('report_id', reportId)
+        .maybeSingle();
+
+      if (reportError) {
+        console.warn('[EIC PDF] Failed to look up report UUID:', reportError.message);
+      } else if (report?.id) {
+        // Now query inspection_photos with the UUID
+        const { data: photoData, error: photosError } = await supabase
+          .from('inspection_photos')
+          .select('*')
+          .eq('report_id', report.id);
+
+        if (photosError) {
+          console.warn('[EIC PDF] inspection_photos query failed:', photosError.message);
+        } else {
+          photos = photoData;
+        }
+      } else {
+        console.log('[EIC PDF] Report not found in database, skipping photos');
+      }
+    } catch (err) {
+      console.warn('[EIC PDF] Error fetching photos:', err);
+    }
 
     // Map observations and attach photos
     return observations.map((obs: any) => {
@@ -614,7 +827,12 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       });
       
       return {
-        ...obs,
+        id: obs.id || '',
+        description: obs.description || '',
+        defect_code: obs.defectCode || obs.defect_code || '',  // Accept both camelCase and snake_case, output snake_case
+        recommendation: obs.recommendation || '',
+        item: obs.item || '',
+        rectified: obs.rectified ?? false,
         photo_evidence: photoUrls,
         photo_count: photoUrls.length
       };

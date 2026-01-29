@@ -343,7 +343,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           return filtered.map((circuit, i) => {
             const newNum = (i + 1).toString();
             const desc = circuit.circuitDescription || circuit.circuitType || 'Circuit';
-            return { ...circuit, circuitNumber: newNum, circuitDesignation: `${newNum} - ${desc}` };
+            return { ...circuit, circuitNumber: newNum, circuitDesignation: `C${newNum}` };
           });
         });
         if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
@@ -1025,6 +1025,20 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       setTestResults([initialResult]);
     }
   }, []);
+
+  // Sync distributionBoards to parent form whenever they change
+  // This ensures PDF export has access to board data
+  const prevBoardsRef = useRef<string>('');
+  useEffect(() => {
+    if (distributionBoards.length > 0) {
+      // Only sync if boards have actually changed (prevent infinite loops)
+      const boardsJson = JSON.stringify(distributionBoards);
+      if (boardsJson !== prevBoardsRef.current) {
+        prevBoardsRef.current = boardsJson;
+        onUpdate('distributionBoards', distributionBoards);
+      }
+    }
+  }, [distributionBoards, onUpdate]);
 
   // Current board for adding circuits (defaults to main)
   const [currentBoardId, setCurrentBoardId] = useState<string>(MAIN_BOARD_ID);
@@ -1957,8 +1971,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                           </div>
                         </div>
 
-                        {/* Quick Checks */}
-                        <div className="grid grid-cols-2 gap-2 relative z-10">
+                        {/* Quick Checks - Row 1: Polarity & Phase Sequence */}
+                        <div className="flex flex-wrap gap-2 relative z-10">
                           <button
                             type="button"
                             onClick={(e) => {
@@ -1975,7 +1989,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                             <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedCorrectPolarity ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
                               {board.confirmedCorrectPolarity && <Check className="h-3 w-3 text-white" />}
                             </div>
-                            <span className="flex-1 text-left pointer-events-none">Polarity</span>
+                            <span className="pointer-events-none">Polarity</span>
                           </button>
                           <button
                             type="button"
@@ -1993,29 +2007,14 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                             <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedPhaseSequence ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
                               {board.confirmedPhaseSequence && <Check className="h-3 w-3 text-white" />}
                             </div>
-                            <span className="flex-1 text-left pointer-events-none">Phase Seq</span>
+                            <span className="pointer-events-none">Phase Seq</span>
                           </button>
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              if (!board.spdNA) {
-                                handleUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus);
-                              }
-                            }}
-                            disabled={board.spdNA}
-                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
-                              board.spdOperationalStatus
-                                ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                                : 'bg-card border border-border/50 text-muted-foreground'
-                            } ${board.spdNA ? 'opacity-40 cursor-not-allowed' : ''}`}
-                          >
-                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdOperationalStatus ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
-                              {board.spdOperationalStatus && <Check className="h-3 w-3 text-white" />}
-                            </div>
-                            <span className="flex-1 text-left pointer-events-none">SPD OK</span>
-                          </button>
+                        </div>
+
+                        {/* SPD Section - Row 2 */}
+                        <div className="flex flex-wrap items-center gap-2 mt-2 relative z-10">
+                          <span className="text-xs text-muted-foreground mr-1">SPD:</span>
+                          {/* SPD N/A */}
                           <button
                             type="button"
                             onClick={(e) => {
@@ -2023,9 +2022,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                               e.stopPropagation();
                               const newValue = !board.spdNA;
                               handleUpdateBoard(board.id, 'spdNA', newValue);
-                              // Clear SPD operational status when marking as N/A
+                              // Clear SPD operational status and types when marking as N/A
                               if (newValue) {
                                 handleUpdateBoard(board.id, 'spdOperationalStatus', false);
+                                handleUpdateBoard(board.id, 'spdT1', false);
+                                handleUpdateBoard(board.id, 'spdT2', false);
+                                handleUpdateBoard(board.id, 'spdT3', false);
                               }
                             }}
                             className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
@@ -2037,10 +2039,63 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                             <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdNA ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground'}`}>
                               {board.spdNA && <Check className="h-3 w-3 text-black" />}
                             </div>
-                            <span className="flex-1 text-left pointer-events-none">SPD N/A</span>
+                            <span className="pointer-events-none">N/A</span>
                           </button>
-                        </div>
 
+                          {/* SPD Type T1, T2, T3 - only show when SPD is applicable */}
+                          {!board.spdNA && (
+                            <>
+                              {(['T1', 'T2', 'T3'] as const).map((type) => {
+                                const fieldName = `spd${type}` as 'spdT1' | 'spdT2' | 'spdT3';
+                                const isChecked = board[fieldName] ?? false;
+                                return (
+                                  <button
+                                    key={type}
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      handleUpdateBoard(board.id, fieldName, !isChecked);
+                                    }}
+                                    className={`h-10 px-3 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 cursor-pointer select-none ${
+                                      isChecked
+                                        ? 'bg-blue-500/20 border border-blue-500/30 text-blue-400'
+                                        : 'bg-card border border-border/50 text-muted-foreground'
+                                    }`}
+                                  >
+                                    <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${isChecked ? 'bg-blue-500 border-blue-500' : 'border-muted-foreground'}`}>
+                                      {isChecked && <Check className="h-3 w-3 text-white" />}
+                                    </div>
+                                    <span className="pointer-events-none">{type}</span>
+                                  </button>
+                                );
+                              })}
+
+                              {/* Divider */}
+                              <div className="h-6 w-px bg-border/50 mx-1" />
+
+                              {/* SPD OK */}
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  handleUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus);
+                                }}
+                                className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
+                                  board.spdOperationalStatus
+                                    ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                                    : 'bg-card border border-border/50 text-muted-foreground'
+                                }`}
+                              >
+                                <div className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdOperationalStatus ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}>
+                                  {board.spdOperationalStatus && <Check className="h-3 w-3 text-white" />}
+                                </div>
+                                <span className="pointer-events-none">SPD OK</span>
+                              </button>
+                            </>
+                          )}
+                        </div>
                       </div>
 
                       {/* Tools Bar - Above Circuit Table */}

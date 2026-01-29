@@ -17,6 +17,8 @@ interface EICRFormContentProps {
   onConfirmDuplicate?: () => void;
   onOpenBoardScan?: () => void;
   initialTab?: 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
+  currentTab?: 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
+  onTabChange?: (tab: string) => void;
 }
 
 const EICRFormContent: React.FC<EICRFormContentProps> = ({
@@ -32,7 +34,9 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
   onConfirmStartNew,
   onConfirmDuplicate,
   onOpenBoardScan,
-  initialTab
+  initialTab,
+  currentTab,
+  onTabChange
 }) => {
   return (
     <div>
@@ -49,6 +53,8 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
         onUpdate={onUpdate}
         onOpenBoardScan={onOpenBoardScan}
         initialTab={initialTab}
+        currentTab={currentTab}
+        onTabChange={onTabChange}
       />
 
       <StartNewEICRDialog

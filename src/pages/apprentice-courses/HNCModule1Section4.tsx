@@ -1,4 +1,4 @@
-import { ArrowLeft, Heart, Shield, AlertTriangle, Users, GraduationCap } from "lucide-react";
+import { ArrowLeft, Shield, GraduationCap, Users, Scale, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
@@ -6,45 +6,45 @@ import useSEO from "@/hooks/useSEO";
 
 const HNCModule1Section4 = () => {
   useSEO(
-    "Professional Responsibilities - HNC Module 1",
-    "Ethical responsibilities of engineers, duty of care, accountability, safety representatives and CPD in health & safety"
+    "Professional Responsibilities - HNC Module 1 Section 4 | Building Services Engineering",
+    "Master professional responsibilities: duty of care, competence frameworks, safety representatives, ethical responsibilities and CPD requirements."
   );
 
   const subsections = [
     {
       number: "4.1",
-      title: "Ethical responsibilities of engineers",
-      description: "Professional ethics and moral obligations in engineering practice",
-      icon: Heart,
-      href: "../h-n-c-module1-section4-4-1"
+      title: "Duty of Care and Accountability",
+      description: "Legal duties, negligence principles, corporate responsibility and personal accountability",
+      icon: Shield,
+      href: "../h-n-c-module1-section4-1"
     },
     {
-      number: "4.2", 
-      title: "Duty of care and accountability",
-      description: "Legal and professional duty of care requirements and personal accountability",
-      icon: Shield,
-      href: "../h-n-c-module1-section4-4-2"
+      number: "4.2",
+      title: "Competence and Training",
+      description: "Competency frameworks, training needs analysis, verification methods and record keeping",
+      icon: GraduationCap,
+      href: "../h-n-c-module1-section4-2"
     },
     {
       number: "4.3",
-      title: "Disciplinary actions for breaches", 
-      description: "Consequences and disciplinary procedures for safety and professional breaches",
-      icon: AlertTriangle,
-      href: "../h-n-c-module1-section4-4-3"
+      title: "Safety Representatives",
+      description: "Roles and responsibilities, legal rights, consultation requirements and safety committees",
+      icon: Users,
+      href: "../h-n-c-module1-section4-3"
     },
     {
       number: "4.4",
-      title: "Safety reps and trade unions",
-      description: "Role of safety representatives and trade union involvement in workplace safety",
-      icon: Users,
-      href: "../h-n-c-module1-section4-4-4"
+      title: "Ethical Responsibilities",
+      description: "Professional ethics, whistleblowing procedures, conflicts of interest and integrity",
+      icon: Scale,
+      href: "../h-n-c-module1-section4-4"
     },
     {
       number: "4.5",
-      title: "CPD in health & safety",
-      description: "Continuing Professional Development requirements and opportunities in health and safety",
-      icon: GraduationCap,
-      href: "../h-n-c-module1-section4-4-5"
+      title: "Continuous Professional Development",
+      description: "Health and safety CPD, professional qualifications, keeping knowledge current",
+      icon: BookOpen,
+      href: "../h-n-c-module1-section4-5"
     }
   ];
 
@@ -64,20 +64,20 @@ const HNCModule1Section4 = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            1.4 Professional Responsibilities
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
-            Ethical responsibilities of engineers, duty of care, accountability, safety representatives and CPD in health & safety.
-          </p>
-        </div>
+        <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Section 4: Professional Responsibilities
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          Understand the professional and ethical responsibilities of building services engineers regarding health and safety
+        </p>
+        <p className="text-base text-muted-foreground mb-12">
+          This section covers the professional obligations that building services engineers must uphold - from legal duties of care and maintaining competence, through to understanding the role of safety representatives, acting ethically, and committing to continuous professional development in health and safety matters.
+        </p>
 
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {subsections.map((subsection) => (
             <ModuleCard
-              key={index}
+              key={subsection.number}
               number={subsection.number}
               title={subsection.title}
               description={subsection.description}

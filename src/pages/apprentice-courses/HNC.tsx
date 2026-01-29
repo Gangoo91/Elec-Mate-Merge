@@ -1,4 +1,4 @@
-import { Shield, Beaker, Zap, Building2, FolderKanban, Leaf, Lightbulb, Wind, GraduationCap, ChevronLeft } from "lucide-react";
+import { Shield, Beaker, Zap, Building2, FolderKanban, Leaf, Lightbulb, Wind, GraduationCap, ChevronLeft, FileText } from "lucide-react";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -7,59 +7,75 @@ import { motion } from "framer-motion";
 const modules = [
   {
     number: "Module 1",
-    title: "Health, Safety and Risk Management in Engineering",
-    description: "Comprehensive health and safety protocols and risk assessment procedures for engineering environments",
+    title: "Health, Safety and Risk Management",
+    description: "Comprehensive H&S protocols, RAMS, CDM regulations and risk assessment for building services engineering",
     icon: Shield,
     href: "../h-n-c-module1",
+    credits: 15,
   },
   {
     number: "Module 2",
     title: "Building Services Science",
-    description: "Scientific principles underlying building services systems and their applications",
+    description: "Heat transfer, fluid mechanics, psychrometrics and environmental physics applied to HVAC, plumbing and fire systems",
     icon: Beaker,
     href: "../h-n-c-module2",
+    credits: 15,
   },
   {
     number: "Module 3",
-    title: "Electrical Principles in Building Services",
-    description: "Core electrical concepts and their practical application in building services engineering",
+    title: "Electrical & Electronic Principles",
+    description: "DC/AC circuit theory, three-phase systems, semiconductors and digital electronics for building services",
     icon: Zap,
     href: "../h-n-c-module3",
+    credits: 15,
   },
   {
     number: "Module 4",
     title: "Design Principles for Building Services",
-    description: "Fundamental design methodologies and considerations for building services systems",
+    description: "Load calculations, system sizing, BS 7671 compliance and specification writing for electrical installations",
     icon: Building2,
     href: "../h-n-c-module4",
+    credits: 15,
   },
   {
     number: "Module 5",
-    title: "Project Management in Building Services",
-    description: "Project planning, execution, and management techniques specific to building services projects",
+    title: "Project Management",
+    description: "Planning, procurement, cost control, quality management and commissioning of building services projects",
     icon: FolderKanban,
     href: "../h-n-c-module5",
+    credits: 15,
   },
   {
     number: "Module 6",
-    title: "Sustainability and Environmental Engineering",
-    description: "Environmental considerations and sustainable practices in building services design and operation",
+    title: "Sustainability & Environmental Engineering",
+    description: "Part L compliance, renewable integration, BREEAM assessment and carbon reduction strategies for sustainable buildings",
     icon: Leaf,
     href: "../h-n-c-module6",
+    credits: 15,
   },
   {
     number: "Module 7",
     title: "Power and Lighting Systems",
-    description: "Design, installation, and maintenance of electrical power distribution and lighting systems",
+    description: "LV distribution design, emergency systems, lighting calculations, controls and energy-efficient solutions for commercial buildings",
     icon: Lightbulb,
     href: "../h-n-c-module7",
+    credits: 15,
   },
   {
     number: "Module 8",
-    title: "Heating, Ventilation and Air Conditioning (HVAC) Systems",
-    description: "HVAC system design, operation, and integration with electrical building services",
+    title: "HVAC Systems",
+    description: "Heating, ventilation and air conditioning system design, motor control, BMS integration and electrical services coordination",
     icon: Wind,
     href: "../h-n-c-module8",
+    credits: 15,
+  },
+  {
+    number: "Module 9",
+    title: "Mock Examinations",
+    description: "Test your knowledge with timed practice exams. 500-question bank covering all modules, 30 questions per exam, 45 minutes",
+    icon: FileText,
+    href: "../h-n-c-module9",
+    credits: 0,
   },
 ];
 
@@ -122,7 +138,7 @@ const HNC = () => {
               </span>
             </h1>
             <p className="text-sm text-white/50 max-w-lg mx-auto">
-              Higher National Certificate in Electrical and Electronic Engineering - comprehensive modules covering building services engineering principles, design, and management
+              Higher National Certificate in Electrical Engineering for Building Services - Core electrical principles combined with specialist building services applications (120 credits)
             </p>
           </motion.div>
         </div>

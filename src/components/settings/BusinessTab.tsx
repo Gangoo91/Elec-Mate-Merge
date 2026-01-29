@@ -623,6 +623,11 @@ const BusinessTab = () => {
           logo_url: uploadResult.url,
           logo_data_url: uploadResult.dataUrl,
         };
+        setLogoFile(null); // Clear the file after successful upload
+      } else {
+        // Upload failed - stop the save process
+        setIsSaving(false);
+        return;
       }
     }
 

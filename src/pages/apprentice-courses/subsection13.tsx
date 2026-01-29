@@ -708,15 +708,15 @@ const Section3_4 = () => {
 
         {/* Navigation */}
         <div className="flex justify-between items-center pt-6 border-t">
-          <Link to="../subsection12">
+          <Link to="3-3">
             <Button variant="outline" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Previous: Method Statements
             </Button>
           </Link>
-          <Link to="../subsection14">
+          <Link to="../section4">
             <Button className="flex items-center gap-2">
-              Next: Permits to Work
+              Next: Section 4
               <ArrowLeft className="h-4 w-4 rotate-180" />
             </Button>
           </Link>

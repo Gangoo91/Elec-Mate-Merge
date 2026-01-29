@@ -615,7 +615,7 @@ const Section2_1_ElectricShock = () => {
             </Link>
           </Button>
           <Button variant="outline" asChild>
-            <Link to="../subsection6">
+            <Link to="2-2">
               Next
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

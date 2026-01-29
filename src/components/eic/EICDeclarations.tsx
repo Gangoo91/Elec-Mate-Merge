@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertTriangle, Shield, FileCheck, User, PenTool, Hammer, Search, Calendar, MapPin, Phone, Building2, FileWarning, ClipboardCheck, ChevronDown, Wrench, UserCheck, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SignatureInput from '@/components/signature/SignatureInput';
-import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -55,13 +55,14 @@ const SubSectionHeader = ({ icon: Icon, title, color }: { icon: any; title: stri
 const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate }) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
-  const { getDefaultProfile } = useInspectorProfiles();
+  const { companyProfile } = useCompanyProfile();
   const { toast } = useToast();
   const [isInitialMount, setIsInitialMount] = useState(true);
   const [openSections, setOpenSections] = useState({
     designer: true,
     constructor: true,
-    inspector: true
+    inspector: true,
+    inspectedBy: true
   });
 
   const toggleSection = (section: keyof typeof openSections) => {
@@ -97,59 +98,57 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
     }
   };
 
-  // Auto-fill from default profile on initial mount
+  // Auto-fill from business settings on initial mount
   useEffect(() => {
-    if (isInitialMount) {
-      const defaultProfile = getDefaultProfile();
+    if (isInitialMount && companyProfile) {
       const areAllFieldsEmpty = !formData.designerName && !formData.constructorName && !formData.inspectorName;
 
-      if (defaultProfile && areAllFieldsEmpty) {
-        loadProfileToSection('designer', defaultProfile);
-        loadProfileToSection('constructor', defaultProfile);
-        loadProfileToSection('inspector', defaultProfile);
+      if (areAllFieldsEmpty) {
+        loadProfileToSection('designer');
+        loadProfileToSection('constructor');
+        loadProfileToSection('inspector');
       }
       setIsInitialMount(false);
     }
-  }, [isInitialMount]);
+  }, [isInitialMount, companyProfile]);
 
-  // Load profile data into a specific declaration section
-  const loadProfileToSection = (section: 'designer' | 'constructor' | 'inspector', profile?: any) => {
-    const selectedProfile = profile || getDefaultProfile();
-    if (!selectedProfile) return;
+  // Load business settings data into a specific declaration section
+  const loadProfileToSection = (section: 'designer' | 'constructor' | 'inspector') => {
+    if (!companyProfile) return;
 
     const today = new Date().toISOString().split('T')[0];
-    const qualifications = Array.isArray(selectedProfile.qualifications)
-      ? selectedProfile.qualifications.join(', ')
-      : '';
+    const qualifications = Array.isArray(companyProfile.inspector_qualifications)
+      ? companyProfile.inspector_qualifications.join(', ')
+      : companyProfile.inspector_qualifications || '';
 
-    onUpdate(`${section}Name`, selectedProfile.name);
+    // Use inspector_name if available, otherwise fall back to company_name
+    onUpdate(`${section}Name`, companyProfile.inspector_name || companyProfile.company_name || '');
     onUpdate(`${section}Qualifications`, qualifications);
-    onUpdate(`${section}Company`, selectedProfile.companyName);
-    onUpdate(`${section}Address`, selectedProfile.companyAddress || '');
-    onUpdate(`${section}Postcode`, selectedProfile.companyAddress?.match(/[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}/i)?.[0] || '');
-    onUpdate(`${section}Phone`, selectedProfile.companyPhone || '');
+    onUpdate(`${section}Company`, companyProfile.company_name || '');
+    onUpdate(`${section}Address`, companyProfile.company_address || '');
+    onUpdate(`${section}Postcode`, companyProfile.company_postcode || '');
+    onUpdate(`${section}Phone`, companyProfile.company_phone || '');
     onUpdate(`${section}Date`, today);
-    if (selectedProfile.signatureData) {
-      onUpdate(`${section}Signature`, selectedProfile.signatureData);
+    if (companyProfile.signature_data) {
+      onUpdate(`${section}Signature`, companyProfile.signature_data);
     }
   };
 
   // Manual fill button handler with haptic feedback
   const handleFillFromProfile = (section: 'designer' | 'constructor' | 'inspector') => {
-    const defaultProfile = getDefaultProfile();
-    if (!defaultProfile) {
+    if (!companyProfile) {
       toast({
-        title: 'No Profile Found',
-        description: 'Please create an inspector profile in Settings first.',
+        title: 'No Business Settings Found',
+        description: 'Please complete your Business Settings first.',
         variant: 'destructive'
       });
       return;
     }
     haptics.tap();
-    loadProfileToSection(section, defaultProfile);
+    loadProfileToSection(section);
     toast({
-      title: 'Profile Applied',
-      description: 'Your inspector profile details have been filled in.'
+      title: 'Business Settings Applied',
+      description: 'Your business details have been filled in.'
     });
   };
 
@@ -174,27 +173,26 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       </div>
 
       {/* Use Saved Profile Button */}
-      {getDefaultProfile() && (
+      {companyProfile && (
         <div className={cn(isMobile && "px-4")}>
           <Button
             onClick={() => {
               haptics.tap();
-              const profile = getDefaultProfile();
-              if (profile) {
-                loadProfileToSection('designer', profile);
-                loadProfileToSection('constructor', profile);
-                loadProfileToSection('inspector', profile);
+              if (companyProfile) {
+                loadProfileToSection('designer');
+                loadProfileToSection('constructor');
+                loadProfileToSection('inspector');
                 toast({
-                  title: "Profile Loaded",
-                  description: "Your saved profile has been applied to all declaration sections.",
+                  title: "Business Settings Loaded",
+                  description: "Your business settings have been applied to all declaration sections.",
                 });
               }
             }}
             className="h-14 w-full touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl active:scale-[0.98] transition-transform"
             size="lg"
           >
-            <User className="h-5 w-5 mr-2" />
-            Load My Saved Details
+            <Building2 className="h-5 w-5 mr-2" />
+            Load from Business Settings
           </Button>
         </div>
       )}
@@ -302,7 +300,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     className="h-9 bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/30 text-blue-300 text-xs font-medium rounded-lg touch-manipulation"
                   >
                     <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                    Fill from Profile
+                    Fill from Business Settings
                   </Button>
                 </div>
                 <div className="space-y-5">
@@ -395,6 +393,92 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                   placeholder="Draw or type designer signature"
                   required={true}
                 />
+              </GlassCard>
+
+              {/* Designer No 2 (Optional - for mutual responsibility) */}
+              <GlassCard color="blue" className="border-dashed">
+                <div className="flex items-center justify-between mb-4">
+                  <SubSectionHeader icon={User} title="Designer No 2 (Optional)" color="blue-400" />
+                  <span className="text-xs text-muted-foreground">For mutual design responsibility</span>
+                </div>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-sm text-white">Name</Label>
+                      <Input
+                        id="designer2Name"
+                        placeholder="Second designer name (if applicable)"
+                        value={formData.designer2Name || ''}
+                        onChange={(e) => onUpdate('designer2Name', e.target.value)}
+                        className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm text-white">Company</Label>
+                      <Input
+                        id="designer2Company"
+                        placeholder="Company name"
+                        value={formData.designer2Company || ''}
+                        onChange={(e) => onUpdate('designer2Company', e.target.value)}
+                        className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm text-white">Address</Label>
+                    <Input
+                      id="designer2Address"
+                      placeholder="Full business address"
+                      value={formData.designer2Address || ''}
+                      onChange={(e) => onUpdate('designer2Address', e.target.value)}
+                      className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                    />
+                  </div>
+                  <div className={cn("grid gap-4", isMobile ? "grid-cols-1" : "grid-cols-3")}>
+                    <div className="space-y-2">
+                      <Label className="text-sm text-white">Postcode</Label>
+                      <Input
+                        id="designer2Postcode"
+                        placeholder="AB1 2CD"
+                        value={formData.designer2Postcode || ''}
+                        onChange={(e) => onUpdate('designer2Postcode', e.target.value)}
+                        className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm text-white">Tel No</Label>
+                      <Input
+                        id="designer2Phone"
+                        type="tel"
+                        placeholder="Phone number"
+                        value={formData.designer2Phone || ''}
+                        onChange={(e) => onUpdate('designer2Phone', e.target.value)}
+                        className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sm text-white">Date</Label>
+                      <Input
+                        id="designer2Date"
+                        type="date"
+                        value={formData.designer2Date || ''}
+                        onChange={(e) => onUpdate('designer2Date', e.target.value)}
+                        className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                      />
+                    </div>
+                  </div>
+                  {formData.designer2Name && (
+                    <div className="pt-2">
+                      <Label className="text-sm text-white mb-2 block">Signature</Label>
+                      <SignatureInput
+                        value={formData.designer2Signature}
+                        onChange={(signature) => onUpdate('designer2Signature', signature)}
+                        placeholder="Second designer signature"
+                        required={false}
+                      />
+                    </div>
+                  )}
+                </div>
               </GlassCard>
             </div>
           </CollapsibleContent>
@@ -508,7 +592,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     className="h-9 bg-green-500/10 hover:bg-green-500/20 border-green-500/30 text-green-300 text-xs font-medium rounded-lg touch-manipulation"
                   >
                     <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                    Fill from Profile
+                    Fill from Business Settings
                   </Button>
                 </div>
                 <div className="space-y-5">
@@ -720,7 +804,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     className="h-9 bg-amber-500/10 hover:bg-amber-500/20 border-amber-500/30 text-amber-300 text-xs font-medium rounded-lg touch-manipulation"
                   >
                     <Sparkles className="h-3.5 w-3.5 mr-1.5" />
-                    Fill from Profile
+                    Fill from Business Settings
                   </Button>
                 </div>
                 <div className="space-y-5">
@@ -865,6 +949,164 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                   onChange={(signature) => onUpdate('inspectorSignature', signature)}
                   placeholder="Draw or type inspector signature"
                   required={true}
+                />
+              </GlassCard>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
+      {/* Inspected By Section (IET Form requirement) */}
+      <div className={cn(isMobile ? "" : "eicr-section-card")}>
+        <Collapsible open={openSections.inspectedBy} onOpenChange={() => toggleSection('inspectedBy')}>
+          {isMobile ? (
+            <CollapsibleTrigger className="w-full">
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
+                  <ClipboardCheck className="h-5 w-5 text-purple-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Inspected By</h3>
+                  <span className="text-xs text-muted-foreground">Certificate signatory details</span>
+                </div>
+                <ChevronDown className={cn(
+                  "h-5 w-5 text-muted-foreground transition-transform shrink-0",
+                  openSections.inspectedBy && "rotate-180"
+                )} />
+              </div>
+            </CollapsibleTrigger>
+          ) : (
+            <CollapsibleTrigger className="w-full">
+              <SectionHeader
+                title="Inspected By"
+                icon={ClipboardCheck}
+                isOpen={openSections.inspectedBy}
+                color="purple-500"
+              />
+            </CollapsibleTrigger>
+          )}
+          <CollapsibleContent>
+            <div className={cn("space-y-5", isMobile ? "px-4 py-4" : "p-4 sm:p-5")}>
+              {/* Same as Inspector Toggle */}
+              <label className="flex items-center gap-3 p-4 rounded-xl bg-purple-500/10 border border-purple-500/30 cursor-pointer touch-manipulation active:scale-[0.99] transition-transform">
+                <Checkbox
+                  id="eicSameAsInspectedBy"
+                  checked={formData.eicSameAsInspectedBy || false}
+                  onCheckedChange={(checked) => {
+                    onUpdate('eicSameAsInspectedBy', checked);
+                    if (checked) {
+                      onUpdate('inspectedByName', formData.inspectorName);
+                      onUpdate('inspectedByPosition', formData.inspectorQualifications);
+                      onUpdate('inspectedBySignature', formData.inspectorSignature);
+                      onUpdate('inspectedByForOnBehalfOf', formData.inspectorCompany);
+                      onUpdate('inspectedByAddress', `${formData.inspectorAddress || ''}${formData.inspectorPostcode ? ', ' + formData.inspectorPostcode : ''}`);
+                    }
+                  }}
+                  className="h-5 w-5 border-purple-500/40 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
+                />
+                <span className="text-sm font-medium text-purple-200">Same as Inspector</span>
+              </label>
+
+              {/* Inspected By Details */}
+              <GlassCard color="purple" className={cn(formData.eicSameAsInspectedBy && 'opacity-50 pointer-events-none')}>
+                <SubSectionHeader icon={User} title="Signatory Details" color="purple-400" />
+                <div className="space-y-5">
+                  {/* Name */}
+                  <div className="space-y-2.5">
+                    <Label className="text-sm text-white">Name</Label>
+                    <Input
+                      id="inspectedByName"
+                      placeholder="Full name"
+                      value={formData.inspectedByName || ''}
+                      onChange={(e) => onUpdate('inspectedByName', e.target.value)}
+                      disabled={formData.eicSameAsInspectedBy}
+                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl"
+                    />
+                  </div>
+
+                  {/* Position Held */}
+                  <div className="space-y-2.5">
+                    <Label className="text-sm text-white">Position Held</Label>
+                    <Input
+                      id="inspectedByPosition"
+                      placeholder="e.g., Qualified Supervisor, Approved Electrician"
+                      value={formData.inspectedByPosition || ''}
+                      onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
+                      disabled={formData.eicSameAsInspectedBy}
+                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl"
+                    />
+                  </div>
+
+                  {/* For and on behalf of (Company) */}
+                  <div className="space-y-2.5">
+                    <Label className="text-sm text-white">For and on behalf of</Label>
+                    <Input
+                      id="inspectedByForOnBehalfOf"
+                      placeholder="Company name"
+                      value={formData.inspectedByForOnBehalfOf || ''}
+                      onChange={(e) => onUpdate('inspectedByForOnBehalfOf', e.target.value)}
+                      disabled={formData.eicSameAsInspectedBy}
+                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl"
+                    />
+                  </div>
+
+                  {/* Address */}
+                  <div className="space-y-2.5">
+                    <Label className="text-sm text-white">Address</Label>
+                    <Textarea
+                      id="inspectedByAddress"
+                      value={formData.inspectedByAddress || ''}
+                      onChange={(e) => onUpdate('inspectedByAddress', e.target.value)}
+                      placeholder="Full business address including postcode"
+                      rows={2}
+                      disabled={formData.eicSameAsInspectedBy}
+                      className="text-base touch-manipulation min-h-[70px] bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl"
+                    />
+                  </div>
+
+                  {/* CP Scheme Reference */}
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-sm text-white">Competent Person Scheme Reference</Label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <Checkbox
+                          id="inspectedByCpSchemeNA"
+                          checked={formData.inspectedByCpSchemeNA || false}
+                          onCheckedChange={(checked) => {
+                            onUpdate('inspectedByCpSchemeNA', checked);
+                            if (checked) {
+                              onUpdate('inspectedByCpScheme', '');
+                            }
+                          }}
+                          disabled={formData.eicSameAsInspectedBy}
+                          className="h-4 w-4 border-purple-500/40 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
+                        />
+                        <span className="text-xs text-purple-300">N/A</span>
+                      </label>
+                    </div>
+                    <Input
+                      id="inspectedByCpScheme"
+                      placeholder="e.g., NICEIC, NAPIT, ELECSA membership number"
+                      value={formData.inspectedByCpScheme || ''}
+                      onChange={(e) => onUpdate('inspectedByCpScheme', e.target.value)}
+                      disabled={formData.eicSameAsInspectedBy || formData.inspectedByCpSchemeNA}
+                      className={cn(
+                        "h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl",
+                        formData.inspectedByCpSchemeNA && "opacity-50"
+                      )}
+                    />
+                  </div>
+                </div>
+              </GlassCard>
+
+              {/* Signature */}
+              <GlassCard color="purple" className={cn(formData.eicSameAsInspectedBy && 'opacity-50 pointer-events-none')}>
+                <SubSectionHeader icon={PenTool} title="Signature" color="purple-400" />
+                <SignatureInput
+                  value={formData.inspectedBySignature}
+                  onChange={(signature) => onUpdate('inspectedBySignature', signature)}
+                  placeholder="Draw or type signature"
+                  required={false}
                 />
               </GlassCard>
             </div>

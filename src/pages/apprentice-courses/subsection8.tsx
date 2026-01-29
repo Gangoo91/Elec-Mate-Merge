@@ -496,14 +496,14 @@ const Section2_4 = () => {
         {/* Navigation */}
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <Button asChild variant="outline" className="flex-1">
-            <Link to="../subsection7" className="flex items-center gap-2">
+            <Link to="2-3" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" />
               Previous: Fire Hazards and Explosive Environments
             </Link>
           </Button>
           <Button asChild className="flex-1">
-            <Link to=".." className="flex items-center gap-2">
-              Back to Section 2 Overview
+            <Link to="2-5" className="flex items-center gap-2">
+              Next: Slip, Trip and Manual Handling
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>

@@ -9,7 +9,7 @@ export interface CloudReport {
   installation_address: string;
   inspector_name?: string;
   inspection_date?: string;
-  status: 'draft' | 'in-progress' | 'completed';
+  status: 'auto-draft' | 'draft' | 'in-progress' | 'completed';
   updated_at: string;
   data: any;
   pdf_url?: string;
@@ -35,48 +35,60 @@ export interface ReportsResponse {
 export const reportCloud = {
   /**
    * Get all reports for a user with pagination
+   * By default, filters out 'auto-draft' reports (auto-saved but never manually saved)
    */
   getUserReports: async (
-    userId: string, 
-    options?: { page?: number; pageSize?: number; limit?: number }
+    userId: string,
+    options?: { page?: number; pageSize?: number; limit?: number; includeAutoDrafts?: boolean }
   ): Promise<ReportsResponse> => {
     try {
       const page = options?.page || 1;
       const pageSize = options?.pageSize || 20;
       const offset = (page - 1) * pageSize;
-      
-      // Get total count
-      const { count, error: countError } = await supabase
+      const includeAutoDrafts = options?.includeAutoDrafts ?? false;
+
+      // Get total count (excluding auto-drafts by default)
+      let countQuery = supabase
         .from('reports')
         .select('*', { count: 'exact', head: true })
         .eq('user_id', userId)
         .is('deleted_at', null);
-      
+
+      if (!includeAutoDrafts) {
+        countQuery = countQuery.neq('status', 'auto-draft');
+      }
+
+      const { count, error: countError } = await countQuery;
+
       if (countError) throw countError;
-      
-      // Get paginated data
+
+      // Get paginated data (excluding auto-drafts by default)
       let query = supabase
         .from('reports')
         .select('*')
         .eq('user_id', userId)
         .is('deleted_at', null)
         .order('updated_at', { ascending: false });
-      
+
+      if (!includeAutoDrafts) {
+        query = query.neq('status', 'auto-draft');
+      }
+
       // Apply pagination or limit
       if (options?.limit) {
         query = query.limit(options.limit);
       } else {
         query = query.range(offset, offset + pageSize - 1);
       }
-      
+
       const { data, error } = await query;
-      
+
       if (error) throw error;
-      
+
       const totalCount = count || 0;
       const reports = (data || []) as CloudReport[];
       const hasMore = offset + reports.length < totalCount;
-      
+
       return { reports, totalCount, hasMore };
     } catch (error) {
       console.error('[reportCloud] Failed to fetch user reports:', error);
@@ -86,11 +98,14 @@ export const reportCloud = {
 
   /**
    * Create a new report
+   * @param isAutoSync - If true, creates with 'auto-draft' status (won't show in Recent Certs until manually saved)
    */
-  createReport: async (userId: string, reportType: 'eicr' | 'eic' | 'minor-works', data: any, customerId?: string): Promise<{ success: boolean; reportId?: string; error?: any }> => {
+  createReport: async (userId: string, reportType: 'eicr' | 'eic' | 'minor-works', data: any, customerId?: string, isAutoSync: boolean = false): Promise<{ success: boolean; reportId?: string; error?: any }> => {
     try {
       // Calculate status based on form data - handles all report types including Minor Works
-      const calculateStatus = (): 'draft' | 'in-progress' | 'completed' => {
+      const calculateStatus = (): 'auto-draft' | 'draft' | 'in-progress' | 'completed' => {
+        // Auto-sync creates 'auto-draft' - won't appear in Recent Certs until manually saved
+        if (isAutoSync) return 'auto-draft';
         // Explicit status takes precedence
         if (data.status === 'completed') return 'completed';
         // Certificate generated means completed
@@ -176,15 +191,29 @@ export const reportCloud = {
 
   /**
    * Update an existing report
+   * @param isAutoSync - If true, keeps 'auto-draft' status; if false (manual save), promotes to proper status
    */
-  updateReport: async (reportId: string, userId: string, data: any, customerId?: string): Promise<{ success: boolean; error?: any }> => {
+  updateReport: async (reportId: string, userId: string, data: any, customerId?: string, isAutoSync: boolean = false): Promise<{ success: boolean; error?: any }> => {
     try {
       // Determine report type from reportId prefix
       const reportType = reportId.toLowerCase().startsWith('minor-works') ? 'minor-works' :
                         reportId.toLowerCase().startsWith('eic-') ? 'eic' : 'eicr';
 
+      // Get current status to check if it's an auto-draft
+      const { data: currentReport } = await supabase
+        .from('reports')
+        .select('status')
+        .eq('report_id', reportId)
+        .eq('user_id', userId)
+        .single();
+
+      const currentStatus = currentReport?.status;
+
       // Calculate status - same logic as createReport
-      const calculateStatus = (): 'draft' | 'in-progress' | 'completed' => {
+      const calculateStatus = (): 'auto-draft' | 'draft' | 'in-progress' | 'completed' => {
+        // If it's an auto-sync AND currently auto-draft, keep it as auto-draft
+        if (isAutoSync && currentStatus === 'auto-draft') return 'auto-draft';
+        // Manual save promotes auto-draft to proper status
         if (data.status === 'completed') return 'completed';
         if (data.certificateGenerated) return 'completed';
         if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
@@ -203,7 +232,9 @@ export const reportCloud = {
       console.log('[reportCloud] Updating report:', {
         reportId,
         reportType,
+        currentStatus,
         calculatedStatus: status,
+        isAutoSync,
       });
 
       const updateData: any = {
@@ -248,11 +279,38 @@ export const reportCloud = {
         .eq('user_id', userId)
         .is('deleted_at', null)
         .maybeSingle();
-      
+
       if (error) throw error;
       return report?.data || null;
     } catch (error) {
       console.error('[reportCloud] Failed to fetch report data:', error);
+      return null;
+    }
+  },
+
+  /**
+   * Get report data along with the database UUID
+   * Returns both the form data and the database ID needed for related queries
+   */
+  getReportDataWithId: async (reportId: string, userId: string): Promise<{ data: any; databaseId: string } | null> => {
+    try {
+      const { data: report, error } = await supabase
+        .from('reports')
+        .select('id, data')
+        .eq('report_id', reportId)
+        .eq('user_id', userId)
+        .is('deleted_at', null)
+        .maybeSingle();
+
+      if (error) throw error;
+      if (!report) return null;
+
+      return {
+        data: report.data || {},
+        databaseId: report.id,
+      };
+    } catch (error) {
+      console.error('[reportCloud] Failed to fetch report data with ID:', error);
       return null;
     }
   },
@@ -416,13 +474,15 @@ export const reportCloud = {
 
   /**
    * Update with version check (optimistic locking)
+   * @param isAutoSync - If true, keeps 'auto-draft' status; if false, promotes to proper status
    */
   updateReportWithVersionCheck: async (
     reportId: string,
     userId: string,
     data: any,
     expectedVersion: number,
-    customerId?: string
+    customerId?: string,
+    isAutoSync: boolean = false
   ): Promise<{ success: boolean; conflict?: VersionConflict; error?: any }> => {
     try {
       // First check for conflicts
@@ -432,12 +492,28 @@ export const reportCloud = {
         return { success: false, conflict };
       }
 
+      // Get current status to check if it's an auto-draft
+      const { data: currentReport } = await supabase
+        .from('reports')
+        .select('status')
+        .eq('report_id', reportId)
+        .eq('user_id', userId)
+        .single();
+
+      const currentStatus = currentReport?.status;
+
+      // Calculate status - keep auto-draft if auto-sync and currently auto-draft
+      const calculateStatus = () => {
+        if (isAutoSync && currentStatus === 'auto-draft') return 'auto-draft';
+        if (data.status === 'completed') return 'completed';
+        if (data.certificateGenerated) return 'completed';
+        if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
+        return (data.clientName || data.inspectionDate || data.workDate) ? 'in-progress' : 'draft';
+      };
+
       // No conflict, proceed with update
       const updateData: any = {
-        status: data.status === 'completed' ? 'completed' :
-                data.certificateGenerated ? 'completed' :
-                data.satisfactoryForContinuedUse && data.inspectorSignature ? 'completed' :
-                (data.clientName || data.inspectionDate || data.workDate) ? 'in-progress' : 'draft',
+        status: calculateStatus(),
         client_name: data.clientName || null,
         installation_address: data.installationAddress || data.propertyAddress || null,
         inspection_date: data.inspectionDate || data.workDate || null,

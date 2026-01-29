@@ -52,6 +52,7 @@ export interface ElecIdWorkHistory {
   profile_id: string;
   employer_name: string;
   job_title: string;
+  location: string | null;
   start_date: string;
   end_date: string | null;
   is_current: boolean;

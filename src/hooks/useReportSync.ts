@@ -2,7 +2,8 @@
 // Local-first, offline-capable, never loses data
 // With concurrent edit detection using optimistic locking
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import debounce from 'lodash/debounce';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { reportCloud, VersionConflict } from '@/utils/reportCloud';
@@ -13,7 +14,7 @@ import { syncQueue, SyncOperation } from '@/utils/syncQueue';
 
 export interface SyncStatus {
   local: 'saved' | 'saving' | 'unsaved';
-  cloud: 'synced' | 'syncing' | 'queued' | 'offline' | 'error' | 'conflict';
+  cloud: 'synced' | 'syncing' | 'unsaved' | 'queued' | 'offline' | 'error' | 'conflict';
   lastLocalSave: Date | null;
   lastCloudSync: Date | null;
   queuedChanges: number;
@@ -27,6 +28,7 @@ interface UseReportSyncOptions {
   enabled?: boolean;
   customerId?: string;
   onConflict?: (conflict: VersionConflict, localData: any) => void;
+  onReportCreated?: (reportId: string) => void;  // Called when auto-sync creates a new report
 }
 
 interface UseReportSyncReturn {
@@ -39,11 +41,13 @@ interface UseReportSyncReturn {
   // Actions
   saveNow: () => Promise<{ success: boolean; reportId: string | null }>;
   saveInitialDraft: () => void;
-  loadReport: (id: string) => Promise<any | null>;
+  loadReport: (id: string) => Promise<{ data: any; databaseId: string | null } | null>;
   recoverDraft: () => any | null;
   discardDraft: () => void;
   forceSave: () => Promise<{ success: boolean; reportId: string | null }>;
   retrySync: () => Promise<void>;
+  syncNow: () => Promise<{ success: boolean; reportId: string | null }>;  // Immediate sync (cancels debounce)
+  onTabChange: () => void;  // Trigger sync on tab change
 
   // Draft recovery
   hasRecoverableDraft: boolean;
@@ -63,13 +67,15 @@ export const useReportSync = ({
   enabled = true,
   customerId,
   onConflict,
+  onReportCreated,
 }: UseReportSyncOptions): UseReportSyncReturn => {
   const { toast } = useToast();
 
   // === STATE ===
+  // CRITICAL: New reports start as 'unsaved' - they haven't synced to cloud yet
   const [status, setStatus] = useState<SyncStatus>({
     local: 'unsaved',
-    cloud: 'synced',
+    cloud: 'unsaved',  // Fixed: was 'synced' which broke auto-sync for new reports
     lastLocalSave: null,
     lastCloudSync: null,
     queuedChanges: 0,
@@ -180,6 +186,8 @@ export const useReportSync = ({
             ...prev,
             local: 'saved',
             lastLocalSave: new Date(),
+            // Mark cloud as 'unsaved' when local data changes (if it was synced)
+            cloud: prev.cloud === 'synced' ? 'unsaved' : prev.cloud,
           }));
         }
       }
@@ -188,17 +196,57 @@ export const useReportSync = ({
     return () => clearInterval(interval);
   }, [formData, reportType, enabled]);
 
-  // === AUTO-SYNC TO CLOUD (every 15 seconds) ===
-  // Reduced from 30s to 15s to minimize the window for data loss
+  // === DEBOUNCED CLOUD SYNC (2 seconds after last change) ===
+  // This is the primary sync mechanism - syncs within 2 seconds of stopping edits
+  // Uses isAutoSync=true to keep 'auto-draft' status until user manually saves
+  const debouncedCloudSync = useMemo(
+    () => debounce(async () => {
+      const hasData =
+        formData.clientName ||
+        formData.installationAddress ||
+        formData.propertyAddress;
+
+      if (isOnline && isAuthenticated && userId && hasData && !isSyncingRef.current) {
+        console.log('[ReportSync] Debounced cloud sync triggered (auto-draft)');
+        await syncToCloud(false, false, true);  // isAutoSync = true
+      }
+    }, 2000),
+    [isOnline, isAuthenticated, userId]
+  );
+
+  // Trigger debounced sync on every formData change
+  useEffect(() => {
+    if (!enabled) return;
+
+    const hasData =
+      formData.clientName ||
+      formData.installationAddress ||
+      formData.propertyAddress;
+
+    if (hasData && isOnline && isAuthenticated && userId) {
+      // Mark cloud as unsaved immediately when data changes
+      if (status.cloud === 'synced') {
+        setStatus(prev => ({ ...prev, cloud: 'unsaved' }));
+      }
+      debouncedCloudSync();
+    }
+
+    return () => debouncedCloudSync.cancel();
+  }, [formData, enabled, debouncedCloudSync, isOnline, isAuthenticated, userId, status.cloud]);
+
+  // === AUTO-SYNC TO CLOUD (every 30 seconds as backup) ===
+  // Backup mechanism - catches anything missed by debounced sync
+  // Uses isAutoSync=true to keep 'auto-draft' status until user manually saves
   useEffect(() => {
     if (!enabled || !isOnline || !isAuthenticated || !userId) return;
 
     const interval = setInterval(async () => {
-      // Only auto-sync if we have local changes that aren't synced
-      if (status.local === 'saved' && status.cloud !== 'synced' && status.cloud !== 'syncing') {
-        await syncToCloud(false);
+      // Fixed: Sync if cloud status is 'unsaved', 'queued', or 'error' (not just !== 'synced')
+      if (status.local === 'saved' && (status.cloud === 'unsaved' || status.cloud === 'queued' || status.cloud === 'error')) {
+        console.log('[ReportSync] Backup auto-sync triggered (auto-draft)');
+        await syncToCloud(false, false, true);  // isAutoSync = true
       }
-    }, 15000); // Every 15 seconds (reduced from 30s)
+    }, 30000); // Every 30 seconds as backup
 
     return () => clearInterval(interval);
   }, [enabled, isOnline, isAuthenticated, userId, status.local, status.cloud]);
@@ -288,7 +336,8 @@ export const useReportSync = ({
   }, [isOnline, userId, updateQueueCount, processQueue]);
 
   // === SYNC TO CLOUD ===
-  const syncToCloud = useCallback(async (showToast: boolean, forceOverwrite: boolean = false): Promise<{ success: boolean; reportId: string | null }> => {
+  // isAutoSync: true for debounced/interval syncs (keeps 'auto-draft' status), false for manual saves (promotes to proper status)
+  const syncToCloud = useCallback(async (showToast: boolean, forceOverwrite: boolean = false, isAutoSync: boolean = false): Promise<{ success: boolean; reportId: string | null }> => {
     if (isSyncingRef.current) {
       return { success: false, reportId: currentReportIdRef.current };
     }
@@ -331,8 +380,8 @@ export const useReportSync = ({
       if (savedReportId) {
         // Update existing report with version check (unless forcing overwrite)
         if (forceOverwrite) {
-          // Force save - skip version check
-          const result = await reportCloud.updateReport(savedReportId, userId, formData, customerId);
+          // Force save - skip version check (always promotes from auto-draft)
+          const result = await reportCloud.updateReport(savedReportId, userId, formData, customerId, false);
           if (!result.success) throw new Error(result.error || 'Update failed');
           // Fetch new version after successful update
           const newVersion = await reportCloud.getEditVersion(savedReportId, userId);
@@ -346,7 +395,8 @@ export const useReportSync = ({
             userId,
             formData,
             expectedVersionRef.current,
-            customerId
+            customerId,
+            isAutoSync  // Pass through auto-sync flag
           );
 
           if (result.conflict) {
@@ -383,10 +433,19 @@ export const useReportSync = ({
         }
       } else {
         // Create new report (no version conflict possible)
-        const result = await reportCloud.createReport(userId, reportType, formData, customerId);
+        // Pass isAutoSync to set 'auto-draft' status for auto-synced reports
+        const result = await reportCloud.createReport(userId, reportType, formData, customerId, isAutoSync);
         if (!result.success || !result.reportId) throw new Error(result.error || 'Create failed');
         savedReportId = result.reportId;
+        // CRITICAL: Update the ref so subsequent syncs update this report instead of creating duplicates
+        currentReportIdRef.current = savedReportId;
         expectedVersionRef.current = 1;
+        console.log('[ReportSync] Created new report:', savedReportId, isAutoSync ? '(auto-draft)' : '(draft)');
+
+        // Notify parent component so it can update its state
+        if (onReportCreated) {
+          onReportCreated(savedReportId);
+        }
       }
 
       // Clear any active conflict
@@ -477,13 +536,13 @@ export const useReportSync = ({
   }, [reportType, formData]);
 
   // === LOAD REPORT ===
-  const loadReport = useCallback(async (loadReportId: string): Promise<any | null> => {
+  const loadReport = useCallback(async (loadReportId: string): Promise<{ data: any; databaseId: string | null } | null> => {
     if (!userId) return null;
 
     try {
-      // Get report data and edit version together
-      const [data, versionInfo] = await Promise.all([
-        reportCloud.getReportData(loadReportId, userId),
+      // Get report data with database ID and edit version together
+      const [reportResult, versionInfo] = await Promise.all([
+        reportCloud.getReportDataWithId(loadReportId, userId),
         reportCloud.getEditVersion(loadReportId, userId),
       ]);
 
@@ -493,7 +552,14 @@ export const useReportSync = ({
         console.log('[ReportSync] Loaded report with version:', versionInfo.version);
       }
 
-      return data;
+      if (!reportResult) {
+        return null;
+      }
+
+      return {
+        data: reportResult.data,
+        databaseId: reportResult.databaseId,
+      };
     } catch (error) {
       toast({
         title: 'Load failed',
@@ -574,6 +640,27 @@ export const useReportSync = ({
     }
   }, [activeConflict, forceSave, toast]);
 
+  // === SYNC NOW (immediate sync, cancels debounce) ===
+  const syncNow = useCallback(async (): Promise<{ success: boolean; reportId: string | null }> => {
+    debouncedCloudSync.cancel();
+    return await syncToCloud(true);
+  }, [syncToCloud, debouncedCloudSync]);
+
+  // === TAB CHANGE HANDLER (triggers immediate sync) ===
+  // Uses isAutoSync=true - tab changes are automatic syncs, not manual saves
+  const onTabChange = useCallback(() => {
+    // Cancel debounce and sync immediately when user changes tabs
+    const hasData =
+      formData.clientName ||
+      formData.installationAddress ||
+      formData.propertyAddress;
+
+    if (hasData && isOnline && isAuthenticated && userId) {
+      debouncedCloudSync.cancel();
+      syncToCloud(false, false, true);  // isAutoSync = true
+    }
+  }, [formData, isOnline, isAuthenticated, userId, debouncedCloudSync, syncToCloud]);
+
   // === RETURN ===
   return {
     status,
@@ -587,6 +674,8 @@ export const useReportSync = ({
     discardDraft,
     forceSave,
     retrySync,
+    syncNow,
+    onTabChange,
     hasRecoverableDraft,
     draftPreview,
     activeConflict,

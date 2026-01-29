@@ -17,16 +17,26 @@ import { useHaptics } from '@/hooks/useHaptics';
 interface EICInspectionChecklistCardProps {
   inspectionItems: EICInspectionItem[];
   onUpdateItem: (id: string, field: keyof EICInspectionItem, value: any) => void;
+  onAutoCreateObservation?: (inspectionItem: {
+    id: string;
+    item: string;
+    itemNumber?: string;
+    notes?: string;
+    defectCode?: 'limitation';
+  }) => string;
+  onNavigateToObservations?: () => void;
 }
 
 const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
   inspectionItems,
-  onUpdateItem
+  onUpdateItem,
+  onAutoCreateObservation,
+  onNavigateToObservations
 }) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
 
-  const handleOutcomeChange = (id: string, outcome: 'satisfactory' | 'not-applicable') => {
+  const handleOutcomeChange = (id: string, outcome: 'satisfactory' | 'not-applicable' | 'limitation') => {
     haptics.tap();
     const currentItem = inspectionItems.find(item => item.id === id);
     if (currentItem?.outcome === outcome) {
@@ -36,6 +46,21 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
       onUpdateItem(id, 'outcome', outcome);
       if (outcome === 'satisfactory') {
         haptics.success();
+      }
+      // Auto-create observation when LIM is selected
+      if (outcome === 'limitation' && currentItem && onAutoCreateObservation) {
+        haptics.impact();
+        onAutoCreateObservation({
+          id: currentItem.id,
+          item: currentItem.description,
+          itemNumber: currentItem.itemNumber,
+          notes: currentItem.notes,
+          defectCode: 'limitation'
+        });
+        // Navigate to observations section
+        if (onNavigateToObservations) {
+          setTimeout(() => onNavigateToObservations(), 300);
+        }
       }
     }
   };
@@ -80,6 +105,7 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
                   "text-xs font-semibold transition-colors duration-200",
                   item.outcome === 'satisfactory' && "bg-green-500/20 text-green-400",
                   item.outcome === 'not-applicable' && "bg-neutral-500/20 text-neutral-400",
+                  item.outcome === 'limitation' && "bg-amber-500/20 text-amber-400",
                   !item.outcome && "bg-amber-500/20 text-amber-400"
                 )}
               >
@@ -134,6 +160,24 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
                       <Minus className="w-4 h-4" />
                     )}
                     N/A
+                  </button>
+
+                  {/* LIM (Limitation) Button */}
+                  <button
+                    onClick={() => handleOutcomeChange(item.id, 'limitation')}
+                    className={cn(
+                      "h-10 px-4 rounded-lg font-medium text-sm transition-all duration-150",
+                      "touch-manipulation active:scale-[0.97]",
+                      "flex items-center justify-center gap-1.5",
+                      item.outcome === 'limitation'
+                        ? "bg-amber-500 text-black"
+                        : "bg-card/50 text-foreground/70 border border-border/30 hover:bg-card"
+                    )}
+                  >
+                    {item.outcome === 'limitation' && (
+                      <Check className="w-4 h-4" />
+                    )}
+                    LIM
                   </button>
                 </div>
 

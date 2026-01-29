@@ -721,13 +721,13 @@ const Section1_2 = () => {
         {/* Navigation */}
         <div className="flex items-center justify-between mt-8">
           <Button variant="outline" asChild>
-            <Link to="../subsection1">
+            <Link to="1-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous
             </Link>
           </Button>
           <Button variant="outline" asChild>
-            <Link to="../subsection3">
+            <Link to="1-3">
               Next
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export type EICRTabValue = 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
 
@@ -36,9 +36,40 @@ const tabConfigs: TabConfig[] = [
   }
 ];
 
-export const useEICRTabs = (formData: any, initialTab?: EICRTabValue) => {
+interface UseEICRTabsOptions {
+  initialTab?: EICRTabValue;
+  controlledTab?: EICRTabValue;
+  onTabChange?: (tab: string) => void;
+}
+
+export const useEICRTabs = (formData: any, initialTabOrOptions?: EICRTabValue | UseEICRTabsOptions) => {
+  // Handle both old signature (initialTab) and new signature (options object)
+  const options: UseEICRTabsOptions = typeof initialTabOrOptions === 'object'
+    ? initialTabOrOptions
+    : { initialTab: initialTabOrOptions };
+
+  const { initialTab, controlledTab, onTabChange } = options;
+
   // Use initialTab if provided, otherwise default to 'details'
-  const [currentTab, setCurrentTab] = useState<EICRTabValue>(initialTab || 'details');
+  const [internalTab, setInternalTab] = useState<EICRTabValue>(initialTab || 'details');
+
+  // Sync internal state with controlled value when it changes
+  useEffect(() => {
+    if (controlledTab && controlledTab !== internalTab) {
+      setInternalTab(controlledTab);
+    }
+  }, [controlledTab]);
+
+  // Use controlled value if provided, otherwise use internal state
+  const currentTab = controlledTab || internalTab;
+
+  // Custom setter that calls both internal setState and external callback
+  const setCurrentTab = (tab: EICRTabValue) => {
+    setInternalTab(tab);
+    if (onTabChange) {
+      onTabChange(tab);
+    }
+  };
 
   const currentTabIndex = tabConfigs.findIndex(tab => tab.id === currentTab);
   const totalTabs = tabConfigs.length;

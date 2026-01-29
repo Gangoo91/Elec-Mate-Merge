@@ -178,6 +178,18 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
               </Select>
             </div>
             <div>
+              <Label htmlFor="earthElectrodeLocation">Earth Electrode Location</Label>
+              <Input
+                id="earthElectrodeLocation"
+                placeholder="e.g., Garden, Front of property"
+                value={formData.earthElectrodeLocation || ''}
+                onChange={(e) => onUpdate('earthElectrodeLocation', e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
               <Label htmlFor="earthElectrodeResistance">Earth Electrode Resistance (Ω)</Label>
               <Input
                 id="earthElectrodeResistance"
@@ -186,9 +198,6 @@ const EICSupplyAndEarthing: React.FC<EICSupplyAndEarthingProps> = ({ formData, o
                 onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
               />
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="mainBondingConductor">Main Bonding Conductor (mm²)</Label>
               <Select

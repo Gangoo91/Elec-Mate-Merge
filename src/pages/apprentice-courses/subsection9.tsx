@@ -712,14 +712,14 @@ const Section2_5: React.FC = () => {
         {/* Navigation */}
         <div className="flex justify-between mt-8">
           <Button variant="outline" asChild>
-            <Link to="../subsection8">
+            <Link to="2-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Section 2.4
             </Link>
           </Button>
           <Button asChild>
-            <Link to="../subsection9">
-              Next: Section 2.6
+            <Link to="../section3">
+              Next: Section 3
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>

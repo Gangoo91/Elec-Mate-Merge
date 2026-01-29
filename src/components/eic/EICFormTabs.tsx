@@ -49,6 +49,7 @@ interface EICFormTabsProps {
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
+  onSyncOnTabChange?: () => void;  // Trigger sync when switching tabs
 }
 
 const EICFormTabs: React.FC<EICFormTabsProps> = ({
@@ -62,11 +63,16 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
   observationsProps,
   onGenerateCertificate,
   onSaveDraft,
-  canGenerateCertificate = true
+  canGenerateCertificate = true,
+  onSyncOnTabChange
 }) => {
   const isMobile = useIsMobile();
 
   const handleTabChange = (tab: EICTabValue) => {
+    // Trigger sync when switching tabs to ensure data is saved
+    if (onSyncOnTabChange) {
+      onSyncOnTabChange();
+    }
     onTabChange(tab);
   };
 
@@ -86,6 +92,8 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
             <EICScheduleOfInspections
               formData={formData}
               onUpdate={onUpdate}
+              onAutoCreateObservation={observationsProps.onAutoCreateObservation}
+              onNavigateToObservations={observationsProps.onNavigateToObservations}
             />
             <EICObservationsSection
               observations={observationsProps.observations}

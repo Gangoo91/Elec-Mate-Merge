@@ -37,7 +37,7 @@ interface EICRInspectionChecklistProps {
 }
 
 const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations }: EICRInspectionChecklistProps) => {
-  const { effectiveReportId } = useEICRForm();
+  const { databaseId, effectiveReportId } = useEICRForm();
   const [expandedSections, setExpandedSections] = React.useState<Record<string, boolean>>({});
   const observationsRef = React.useRef<HTMLDivElement>(null);
 
@@ -205,12 +205,13 @@ const EICRInspectionChecklist = ({ formData, onUpdate, onNavigateToObservations 
     }
 
     // Link all photos from this inspection item to the observation
-    if (effectiveReportId) {
+    // Use databaseId (actual UUID) not the certificate number
+    if (databaseId) {
       try {
         const { error } = await supabase
           .from('inspection_photos')
           .update({ observation_id: observationId })
-          .eq('report_id', effectiveReportId)
+          .eq('report_id', databaseId)
           .eq('item_id', inspectionItem.id)
           .is('observation_id', null); // Only update photos not already linked
 

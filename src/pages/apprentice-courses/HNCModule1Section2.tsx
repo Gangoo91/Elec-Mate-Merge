@@ -1,4 +1,4 @@
-import { ArrowLeft, Search, BarChart3, FileEdit, Shield, Activity, Users } from "lucide-react";
+import { ArrowLeft, Search, BarChart3, Layers, FileText, ClipboardCheck, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
@@ -6,52 +6,52 @@ import useSEO from "@/hooks/useSEO";
 
 const HNCModule1Section2 = () => {
   useSEO(
-    "Risk Assessment and Method Statements (RAMS) - HNC Module 1",
-    "Hazard identification, five steps to risk assessment, writing RAMS for electrical projects and hierarchy of control measures"
+    "Risk Assessment and RAMS - HNC Module 1 Section 2 | Building Services Engineering",
+    "Master risk assessment processes and RAMS documentation: hazard identification, risk matrices, hierarchy of control, method statements and safe systems of work."
   );
 
   const subsections = [
     {
       number: "2.1",
-      title: "Hazard identification",
-      description: "Systematic identification of workplace hazards and potential risks",
+      title: "Hazard Identification Methods",
+      description: "Workplace inspections, task analysis, incident data review and systematic hazard checklists",
       icon: Search,
-      href: "../h-n-c-module1-section2-2-1"
+      href: "../h-n-c-module1-section2-1"
     },
     {
-      number: "2.2", 
-      title: "Five steps to risk assessment",
-      description: "HSE's five-step approach to conducting effective risk assessments",
+      number: "2.2",
+      title: "Risk Assessment Process",
+      description: "Five-step methodology, likelihood and severity ratings, risk matrices and documentation",
       icon: BarChart3,
-      href: "../h-n-c-module1-section2-2-2"
+      href: "../h-n-c-module1-section2-2"
     },
     {
       number: "2.3",
-      title: "Writing RAMS for electrical projects", 
-      description: "Developing Risk Assessments and Method Statements for electrical work",
-      icon: FileEdit,
-      href: "../h-n-c-module1-section2-2-3"
+      title: "Hierarchy of Control",
+      description: "Elimination, substitution, engineering controls, administrative measures and PPE selection",
+      icon: Layers,
+      href: "../h-n-c-module1-section2-3"
     },
     {
       number: "2.4",
-      title: "Hierarchy of control measures",
-      description: "Elimination, substitution, engineering, administrative controls and PPE",
-      icon: Shield,
-      href: "../h-n-c-module1-section2-2-4"
+      title: "Method Statements",
+      description: "Content requirements, format standards, task breakdown structure and control measures",
+      icon: FileText,
+      href: "../h-n-c-module1-section2-4"
     },
     {
       number: "2.5",
-      title: "Dynamic risk assessments on site",
-      description: "Real-time risk assessment and adaptation during work activities",
-      icon: Activity,
-      href: "../h-n-c-module1-section2-2-5"
+      title: "Safe Systems of Work",
+      description: "Development processes, implementation strategies, monitoring requirements and review cycles",
+      icon: ClipboardCheck,
+      href: "../h-n-c-module1-section2-5"
     },
     {
       number: "2.6",
-      title: "Control of subcontractors and visitors",
-      description: "Managing risks associated with external personnel and site visitors",
-      icon: Users,
-      href: "../h-n-c-module1-section2-2-6"
+      title: "Dynamic Risk Assessment",
+      description: "On-site assessment techniques, responding to changing conditions and real-time decision making",
+      icon: RefreshCw,
+      href: "../h-n-c-module1-section2-6"
     }
   ];
 
@@ -71,20 +71,20 @@ const HNCModule1Section2 = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            1.2 Risk Assessment & Method Statements (RAMS)
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
-            Hazard identification, five steps to risk assessment, writing RAMS for electrical projects and hierarchy of control measures.
-          </p>
-        </div>
+        <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Section 2: Risk Assessment and RAMS
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          Develop competence in identifying hazards, assessing risks and producing professional RAMS documentation
+        </p>
+        <p className="text-base text-muted-foreground mb-12">
+          This section covers the systematic approach to risk assessment used throughout the building services industry - from initial hazard identification through to producing comprehensive Risk Assessments and Method Statements (RAMS) that ensure safe working practices on every project.
+        </p>
 
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {subsections.map((subsection) => (
             <ModuleCard
-              key={index}
+              key={subsection.number}
               number={subsection.number}
               title={subsection.title}
               description={subsection.description}

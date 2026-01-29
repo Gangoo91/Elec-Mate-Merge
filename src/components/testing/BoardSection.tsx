@@ -260,7 +260,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               </div>
             </div>
 
-            {/* Verification Buttons - Using onClick (onPointerDown fires twice on touch) */}
+            {/* Verification Buttons - Row 1: Polarity & Phase Sequence */}
             <div className={cn("flex items-center flex-wrap gap-2", isMobile && "gap-1.5")}>
               <button
                 type="button"
@@ -291,35 +291,27 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <CheckCircle className="h-4 w-4" />
                 <span className="text-sm font-medium">Phase Seq</span>
               </button>
+            </div>
 
+            {/* SPD Section - Row 2 */}
+            <div className={cn("flex items-center flex-wrap gap-2 mt-2", isMobile && "gap-1.5")}>
+              <span className="text-xs text-muted-foreground mr-1">SPD:</span>
+
+              {/* SPD N/A */}
               <button
                 type="button"
-                onClick={() => {
-                  if (!board.spdNA) {
-                    onUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus);
-                  }
-                }}
-                disabled={board.spdNA}
-                className={cn(
-                  "h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none",
-                  "transition-colors duration-150 touch-manipulation",
-                  board.spdOperationalStatus
-                    ? "bg-green-500/20 border-green-500/50 text-green-400"
-                    : "bg-card border-border text-muted-foreground hover:bg-accent",
-                  board.spdNA && "opacity-40 cursor-not-allowed"
-                )}
-              >
-                <CheckCircle className="h-4 w-4" />
-                <span className="text-sm font-medium">SPD OK</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('[BoardSection] SPD N/A clicked, current value:', board.spdNA);
                   const newVal = !board.spdNA;
+                  console.log('[BoardSection] Setting spdNA to:', newVal);
                   onUpdateBoard(board.id, 'spdNA', newVal);
                   if (newVal) {
                     onUpdateBoard(board.id, 'spdOperationalStatus', false);
+                    onUpdateBoard(board.id, 'spdT1', false);
+                    onUpdateBoard(board.id, 'spdT2', false);
+                    onUpdateBoard(board.id, 'spdT3', false);
                   }
                 }}
                 className={cn(
@@ -338,8 +330,71 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 )}>
                   {board.spdNA && <Check className="h-3 w-3 text-black" />}
                 </div>
-                <span className="text-sm font-medium">SPD N/A</span>
+                <span className="text-sm font-medium">N/A</span>
               </button>
+
+              {/* SPD Type T1, T2, T3 - only show when SPD is applicable */}
+              {!board.spdNA && (
+                <>
+                  {(['T1', 'T2', 'T3'] as const).map((type) => {
+                    const fieldName = `spd${type}` as 'spdT1' | 'spdT2' | 'spdT3';
+                    const isChecked = board[fieldName] ?? false;
+                    return (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          console.log(`[BoardSection] SPD ${type} clicked, current:`, isChecked);
+                          onUpdateBoard(board.id, fieldName, !isChecked);
+                        }}
+                        className={cn(
+                          "h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none",
+                          "transition-colors duration-150 touch-manipulation",
+                          isChecked
+                            ? "bg-blue-500/20 border-blue-500/50 text-blue-400"
+                            : "bg-card border-border text-muted-foreground hover:bg-accent"
+                        )}
+                      >
+                        <div className={cn(
+                          "w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0",
+                          isChecked
+                            ? "bg-blue-500 border-blue-500"
+                            : "border-muted-foreground"
+                        )}>
+                          {isChecked && <Check className="h-3 w-3 text-white" />}
+                        </div>
+                        <span className="text-sm font-medium">{type}</span>
+                      </button>
+                    );
+                  })}
+
+                  {/* Divider */}
+                  <div className="h-6 w-px bg-border mx-1" />
+
+                  {/* SPD OK */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      console.log('[BoardSection] SPD OK clicked, current:', board.spdOperationalStatus);
+                      onUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus);
+                    }}
+                    className={cn(
+                      "h-10 px-4 rounded-lg border flex items-center gap-2 cursor-pointer select-none",
+                      "transition-colors duration-150 touch-manipulation",
+                      board.spdOperationalStatus
+                        ? "bg-green-500/20 border-green-500/50 text-green-400"
+                        : "bg-card border-border text-muted-foreground hover:bg-accent"
+                    )}
+                  >
+                    <CheckCircle className="h-4 w-4" />
+                    <span className="text-sm font-medium">SPD OK</span>
+                  </button>
+                </>
+              )}
             </div>
 
             {/* Tools Bar - Above Circuit Table (Desktop & Mobile) */}

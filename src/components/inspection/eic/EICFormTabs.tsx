@@ -82,9 +82,11 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
       icon: <Search className="h-4 w-4" />,
       content: (
         <div className="md:max-w-6xl mx-auto space-y-6">
-          <EICScheduleOfInspections 
-            formData={formData} 
+          <EICScheduleOfInspections
+            formData={formData}
             onUpdate={onUpdate}
+            onAutoCreateObservation={observationsProps.onAutoCreateObservation}
+            onNavigateToObservations={observationsProps.onNavigateToObservations}
           />
           <EICObservationsSection
             observations={observationsProps.observations}

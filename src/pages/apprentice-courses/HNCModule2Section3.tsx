@@ -1,4 +1,4 @@
-import { ArrowLeft, Wind, BarChart3, Snowflake, Calculator, Users, Settings } from "lucide-react";
+import { ArrowLeft, Wind, Droplets, BarChart3, Thermometer, Snowflake, Fan } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
@@ -6,52 +6,52 @@ import useSEO from "@/hooks/useSEO";
 
 const HNCModule2Section3 = () => {
   useSEO(
-    "Psychrometrics and Air Properties - HNC Module 2",
-    "Moist air properties, psychrometric charts and HVAC processes"
+    "Psychrometrics and Air Properties - HNC Module 2 Section 3 | Building Services Engineering",
+    "Master psychrometrics: air composition, humidity, psychrometric charts, air conditioning processes and HVAC system applications for building services."
   );
 
   const subsections = [
     {
-      number: "Subsection 1",
-      title: "Properties of moist air (dry bulb, wet bulb, dew point, RH)",
-      description: "Fundamental air properties and measurement",
+      number: "3.1",
+      title: "Air Composition and Properties",
+      description: "Dry air, water vapour, gas laws, density",
       icon: Wind,
-      href: "../h-n-c-module2-section3-3-1"
+      href: "../h-n-c-module2-section3-1"
     },
     {
-      number: "Subsection 2", 
-      title: "Psychrometric charts – interpretation and use",
-      description: "Using psychrometric charts for air conditioning calculations",
+      number: "3.2",
+      title: "Humidity and Moisture Content",
+      description: "Relative humidity, specific humidity, dew point",
+      icon: Droplets,
+      href: "../h-n-c-module2-section3-2"
+    },
+    {
+      number: "3.3",
+      title: "Psychrometric Charts",
+      description: "Chart construction, property relationships, reading charts",
       icon: BarChart3,
-      href: "../h-n-c-module2-section3-3-2"
+      href: "../h-n-c-module2-section3-3"
     },
     {
-      number: "Subsection 3",
-      title: "Heating, cooling, humidification and dehumidification processes", 
-      description: "Air conditioning processes and equipment selection",
+      number: "3.4",
+      title: "Air Conditioning Processes",
+      description: "Heating, cooling, humidification, dehumidification",
+      icon: Thermometer,
+      href: "../h-n-c-module2-section3-4"
+    },
+    {
+      number: "3.5",
+      title: "Cooling and Heating Coils",
+      description: "Sensible and latent loads, coil selection, ADP",
       icon: Snowflake,
-      href: "../h-n-c-module2-section3-3-3"
+      href: "../h-n-c-module2-section3-5"
     },
     {
-      number: "Subsection 4",
-      title: "Air density and specific volume calculations",
-      description: "Air property calculations for system design",
-      icon: Calculator,
-      href: "../h-n-c-module2-section3-3-4"
-    },
-    {
-      number: "Subsection 5",
-      title: "Ventilation requirements for occupancy",
-      description: "Fresh air requirements and indoor air quality standards",
-      icon: Users,
-      href: "../h-n-c-module2-section3-3-5"
-    },
-    {
-      number: "Subsection 6",
-      title: "Applications to air-conditioning and HVAC load calcs",
-      description: "Practical applications in HVAC system design",
-      icon: Settings,
-      href: "../h-n-c-module2-section3-3-6"
+      number: "3.6",
+      title: "HVAC System Applications",
+      description: "AHU processes, mixed air, economiser cycles",
+      icon: Fan,
+      href: "../h-n-c-module2-section3-6"
     }
   ];
 
@@ -71,20 +71,20 @@ const HNCModule2Section3 = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            2.3 Psychrometrics and Air Properties
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
-            Moist air properties, psychrometric charts and HVAC processes in building services.
-          </p>
-        </div>
+        <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Section 3: Psychrometrics and Air Properties
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          Understand the properties of moist air and apply psychrometric analysis to HVAC system design
+        </p>
+        <p className="text-base text-muted-foreground mb-12">
+          This section covers the thermodynamic properties of air-water vapour mixtures, the use of psychrometric charts, and the analysis of air conditioning processes - fundamental knowledge for designing and commissioning HVAC systems.
+        </p>
 
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {subsections.map((subsection) => (
             <ModuleCard
-              key={index}
+              key={subsection.number}
               number={subsection.number}
               title={subsection.title}
               description={subsection.description}

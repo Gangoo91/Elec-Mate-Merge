@@ -176,6 +176,223 @@ const HNCModule3Section6_4 = lazy(() => withTimeout(() => trackImport('HNCModule
 const HNCModule3Section6_5 = lazy(() => withTimeout(() => trackImport('HNCModule3Section6_5', () => import('@/pages/apprentice-courses/HNCModule3Section6_5'))));
 const HNCModule3Section6_6 = lazy(() => withTimeout(() => trackImport('HNCModule3Section6_6', () => import('@/pages/apprentice-courses/HNCModule3Section6_6'))));
 const HNCModule3Section6_7 = lazy(() => withTimeout(() => trackImport('HNCModule3Section6_7', () => import('@/pages/apprentice-courses/HNCModule3Section6_7'))));
+const HNCModule4 = lazy(() => withTimeout(() => trackImport('HNCModule4', () => import('@/pages/apprentice-courses/HNCModule4'))));
+const HNCModule4Section1 = lazy(() => withTimeout(() => trackImport('HNCModule4Section1', () => import('@/pages/apprentice-courses/HNCModule4Section1'))));
+const HNCModule4Section1_1 = lazy(() => withTimeout(() => trackImport('HNCModule4Section1_1', () => import('@/pages/apprentice-courses/HNCModule4Section1_1'))));
+const HNCModule4Section1_2 = lazy(() => withTimeout(() => trackImport('HNCModule4Section1_2', () => import('@/pages/apprentice-courses/HNCModule4Section1_2'))));
+const HNCModule4Section1_3 = lazy(() => withTimeout(() => trackImport('HNCModule4Section1_3', () => import('@/pages/apprentice-courses/HNCModule4Section1_3'))));
+const HNCModule4Section1_4 = lazy(() => withTimeout(() => trackImport('HNCModule4Section1_4', () => import('@/pages/apprentice-courses/HNCModule4Section1_4'))));
+const HNCModule4Section1_5 = lazy(() => withTimeout(() => trackImport('HNCModule4Section1_5', () => import('@/pages/apprentice-courses/HNCModule4Section1_5'))));
+const HNCModule4Section1_6 = lazy(() => withTimeout(() => trackImport('HNCModule4Section1_6', () => import('@/pages/apprentice-courses/HNCModule4Section1_6'))));
+const HNCModule4Section2 = lazy(() => withTimeout(() => trackImport('HNCModule4Section2', () => import('@/pages/apprentice-courses/HNCModule4Section2'))));
+const HNCModule4Section2_1 = lazy(() => withTimeout(() => trackImport('HNCModule4Section2_1', () => import('@/pages/apprentice-courses/HNCModule4Section2_1'))));
+const HNCModule4Section2_2 = lazy(() => withTimeout(() => trackImport('HNCModule4Section2_2', () => import('@/pages/apprentice-courses/HNCModule4Section2_2'))));
+const HNCModule4Section2_3 = lazy(() => withTimeout(() => trackImport('HNCModule4Section2_3', () => import('@/pages/apprentice-courses/HNCModule4Section2_3'))));
+const HNCModule4Section2_4 = lazy(() => withTimeout(() => trackImport('HNCModule4Section2_4', () => import('@/pages/apprentice-courses/HNCModule4Section2_4'))));
+const HNCModule4Section2_5 = lazy(() => withTimeout(() => trackImport('HNCModule4Section2_5', () => import('@/pages/apprentice-courses/HNCModule4Section2_5'))));
+const HNCModule4Section2_6 = lazy(() => withTimeout(() => trackImport('HNCModule4Section2_6', () => import('@/pages/apprentice-courses/HNCModule4Section2_6'))));
+const HNCModule4Section3 = lazy(() => withTimeout(() => trackImport('HNCModule4Section3', () => import('@/pages/apprentice-courses/HNCModule4Section3'))));
+const HNCModule4Section3_1 = lazy(() => withTimeout(() => trackImport('HNCModule4Section3_1', () => import('@/pages/apprentice-courses/HNCModule4Section3_1'))));
+const HNCModule4Section3_2 = lazy(() => withTimeout(() => trackImport('HNCModule4Section3_2', () => import('@/pages/apprentice-courses/HNCModule4Section3_2'))));
+const HNCModule4Section3_3 = lazy(() => withTimeout(() => trackImport('HNCModule4Section3_3', () => import('@/pages/apprentice-courses/HNCModule4Section3_3'))));
+const HNCModule4Section3_4 = lazy(() => withTimeout(() => trackImport('HNCModule4Section3_4', () => import('@/pages/apprentice-courses/HNCModule4Section3_4'))));
+const HNCModule4Section3_5 = lazy(() => withTimeout(() => trackImport('HNCModule4Section3_5', () => import('@/pages/apprentice-courses/HNCModule4Section3_5'))));
+const HNCModule4Section3_6 = lazy(() => withTimeout(() => trackImport('HNCModule4Section3_6', () => import('@/pages/apprentice-courses/HNCModule4Section3_6'))));
+const HNCModule4Section4 = lazy(() => withTimeout(() => trackImport('HNCModule4Section4', () => import('@/pages/apprentice-courses/HNCModule4Section4'))));
+const HNCModule4Section4_1 = lazy(() => withTimeout(() => trackImport('HNCModule4Section4_1', () => import('@/pages/apprentice-courses/HNCModule4Section4_1'))));
+const HNCModule4Section4_2 = lazy(() => withTimeout(() => trackImport('HNCModule4Section4_2', () => import('@/pages/apprentice-courses/HNCModule4Section4_2'))));
+const HNCModule4Section4_3 = lazy(() => withTimeout(() => trackImport('HNCModule4Section4_3', () => import('@/pages/apprentice-courses/HNCModule4Section4_3'))));
+const HNCModule4Section4_4 = lazy(() => withTimeout(() => trackImport('HNCModule4Section4_4', () => import('@/pages/apprentice-courses/HNCModule4Section4_4'))));
+const HNCModule4Section4_5 = lazy(() => withTimeout(() => trackImport('HNCModule4Section4_5', () => import('@/pages/apprentice-courses/HNCModule4Section4_5'))));
+const HNCModule4Section4_6 = lazy(() => withTimeout(() => trackImport('HNCModule4Section4_6', () => import('@/pages/apprentice-courses/HNCModule4Section4_6'))));
+const HNCModule4Section5 = lazy(() => withTimeout(() => trackImport('HNCModule4Section5', () => import('@/pages/apprentice-courses/HNCModule4Section5'))));
+const HNCModule4Section5_1 = lazy(() => withTimeout(() => trackImport('HNCModule4Section5_1', () => import('@/pages/apprentice-courses/HNCModule4Section5_1'))));
+const HNCModule4Section5_2 = lazy(() => withTimeout(() => trackImport('HNCModule4Section5_2', () => import('@/pages/apprentice-courses/HNCModule4Section5_2'))));
+const HNCModule4Section5_3 = lazy(() => withTimeout(() => trackImport('HNCModule4Section5_3', () => import('@/pages/apprentice-courses/HNCModule4Section5_3'))));
+const HNCModule4Section5_4 = lazy(() => withTimeout(() => trackImport('HNCModule4Section5_4', () => import('@/pages/apprentice-courses/HNCModule4Section5_4'))));
+const HNCModule4Section5_5 = lazy(() => withTimeout(() => trackImport('HNCModule4Section5_5', () => import('@/pages/apprentice-courses/HNCModule4Section5_5'))));
+const HNCModule4Section5_6 = lazy(() => withTimeout(() => trackImport('HNCModule4Section5_6', () => import('@/pages/apprentice-courses/HNCModule4Section5_6'))));
+const HNCModule4Section6 = lazy(() => withTimeout(() => trackImport('HNCModule4Section6', () => import('@/pages/apprentice-courses/HNCModule4Section6'))));
+const HNCModule4Section6_1 = lazy(() => withTimeout(() => trackImport('HNCModule4Section6_1', () => import('@/pages/apprentice-courses/HNCModule4Section6_1'))));
+const HNCModule4Section6_2 = lazy(() => withTimeout(() => trackImport('HNCModule4Section6_2', () => import('@/pages/apprentice-courses/HNCModule4Section6_2'))));
+const HNCModule4Section6_3 = lazy(() => withTimeout(() => trackImport('HNCModule4Section6_3', () => import('@/pages/apprentice-courses/HNCModule4Section6_3'))));
+const HNCModule4Section6_4 = lazy(() => withTimeout(() => trackImport('HNCModule4Section6_4', () => import('@/pages/apprentice-courses/HNCModule4Section6_4'))));
+const HNCModule4Section6_5 = lazy(() => withTimeout(() => trackImport('HNCModule4Section6_5', () => import('@/pages/apprentice-courses/HNCModule4Section6_5'))));
+const HNCModule4Section6_6 = lazy(() => withTimeout(() => trackImport('HNCModule4Section6_6', () => import('@/pages/apprentice-courses/HNCModule4Section6_6'))));
+const HNCModule5 = lazy(() => withTimeout(() => trackImport('HNCModule5', () => import('@/pages/apprentice-courses/HNCModule5'))));
+const HNCModule5Section1 = lazy(() => withTimeout(() => trackImport('HNCModule5Section1', () => import('@/pages/apprentice-courses/HNCModule5Section1'))));
+const HNCModule5Section1_1 = lazy(() => withTimeout(() => trackImport('HNCModule5Section1_1', () => import('@/pages/apprentice-courses/HNCModule5Section1_1'))));
+const HNCModule5Section1_2 = lazy(() => withTimeout(() => trackImport('HNCModule5Section1_2', () => import('@/pages/apprentice-courses/HNCModule5Section1_2'))));
+const HNCModule5Section1_3 = lazy(() => withTimeout(() => trackImport('HNCModule5Section1_3', () => import('@/pages/apprentice-courses/HNCModule5Section1_3'))));
+const HNCModule5Section1_4 = lazy(() => withTimeout(() => trackImport('HNCModule5Section1_4', () => import('@/pages/apprentice-courses/HNCModule5Section1_4'))));
+const HNCModule5Section1_5 = lazy(() => withTimeout(() => trackImport('HNCModule5Section1_5', () => import('@/pages/apprentice-courses/HNCModule5Section1_5'))));
+const HNCModule5Section1_6 = lazy(() => withTimeout(() => trackImport('HNCModule5Section1_6', () => import('@/pages/apprentice-courses/HNCModule5Section1_6'))));
+const HNCModule5Section2 = lazy(() => withTimeout(() => trackImport('HNCModule5Section2', () => import('@/pages/apprentice-courses/HNCModule5Section2'))));
+const HNCModule5Section2_1 = lazy(() => withTimeout(() => trackImport('HNCModule5Section2_1', () => import('@/pages/apprentice-courses/HNCModule5Section2_1'))));
+const HNCModule5Section2_2 = lazy(() => withTimeout(() => trackImport('HNCModule5Section2_2', () => import('@/pages/apprentice-courses/HNCModule5Section2_2'))));
+const HNCModule5Section2_3 = lazy(() => withTimeout(() => trackImport('HNCModule5Section2_3', () => import('@/pages/apprentice-courses/HNCModule5Section2_3'))));
+const HNCModule5Section2_4 = lazy(() => withTimeout(() => trackImport('HNCModule5Section2_4', () => import('@/pages/apprentice-courses/HNCModule5Section2_4'))));
+const HNCModule5Section2_5 = lazy(() => withTimeout(() => trackImport('HNCModule5Section2_5', () => import('@/pages/apprentice-courses/HNCModule5Section2_5'))));
+const HNCModule5Section2_6 = lazy(() => withTimeout(() => trackImport('HNCModule5Section2_6', () => import('@/pages/apprentice-courses/HNCModule5Section2_6'))));
+const HNCModule5Section3 = lazy(() => withTimeout(() => trackImport('HNCModule5Section3', () => import('@/pages/apprentice-courses/HNCModule5Section3'))));
+const HNCModule5Section3_1 = lazy(() => withTimeout(() => trackImport('HNCModule5Section3_1', () => import('@/pages/apprentice-courses/HNCModule5Section3_1'))));
+const HNCModule5Section3_2 = lazy(() => withTimeout(() => trackImport('HNCModule5Section3_2', () => import('@/pages/apprentice-courses/HNCModule5Section3_2'))));
+const HNCModule5Section3_3 = lazy(() => withTimeout(() => trackImport('HNCModule5Section3_3', () => import('@/pages/apprentice-courses/HNCModule5Section3_3'))));
+const HNCModule5Section3_4 = lazy(() => withTimeout(() => trackImport('HNCModule5Section3_4', () => import('@/pages/apprentice-courses/HNCModule5Section3_4'))));
+const HNCModule5Section3_5 = lazy(() => withTimeout(() => trackImport('HNCModule5Section3_5', () => import('@/pages/apprentice-courses/HNCModule5Section3_5'))));
+const HNCModule5Section3_6 = lazy(() => withTimeout(() => trackImport('HNCModule5Section3_6', () => import('@/pages/apprentice-courses/HNCModule5Section3_6'))));
+const HNCModule5Section4 = lazy(() => withTimeout(() => trackImport('HNCModule5Section4', () => import('@/pages/apprentice-courses/HNCModule5Section4'))));
+const HNCModule5Section4_1 = lazy(() => withTimeout(() => trackImport('HNCModule5Section4_1', () => import('@/pages/apprentice-courses/HNCModule5Section4_1'))));
+const HNCModule5Section4_2 = lazy(() => withTimeout(() => trackImport('HNCModule5Section4_2', () => import('@/pages/apprentice-courses/HNCModule5Section4_2'))));
+const HNCModule5Section4_3 = lazy(() => withTimeout(() => trackImport('HNCModule5Section4_3', () => import('@/pages/apprentice-courses/HNCModule5Section4_3'))));
+const HNCModule5Section4_4 = lazy(() => withTimeout(() => trackImport('HNCModule5Section4_4', () => import('@/pages/apprentice-courses/HNCModule5Section4_4'))));
+const HNCModule5Section4_5 = lazy(() => withTimeout(() => trackImport('HNCModule5Section4_5', () => import('@/pages/apprentice-courses/HNCModule5Section4_5'))));
+const HNCModule5Section4_6 = lazy(() => withTimeout(() => trackImport('HNCModule5Section4_6', () => import('@/pages/apprentice-courses/HNCModule5Section4_6'))));
+const HNCModule5Section5 = lazy(() => withTimeout(() => trackImport('HNCModule5Section5', () => import('@/pages/apprentice-courses/HNCModule5Section5'))));
+const HNCModule5Section5_1 = lazy(() => withTimeout(() => trackImport('HNCModule5Section5_1', () => import('@/pages/apprentice-courses/HNCModule5Section5_1'))));
+const HNCModule5Section5_2 = lazy(() => withTimeout(() => trackImport('HNCModule5Section5_2', () => import('@/pages/apprentice-courses/HNCModule5Section5_2'))));
+const HNCModule5Section5_3 = lazy(() => withTimeout(() => trackImport('HNCModule5Section5_3', () => import('@/pages/apprentice-courses/HNCModule5Section5_3'))));
+const HNCModule5Section5_4 = lazy(() => withTimeout(() => trackImport('HNCModule5Section5_4', () => import('@/pages/apprentice-courses/HNCModule5Section5_4'))));
+const HNCModule5Section5_5 = lazy(() => withTimeout(() => trackImport('HNCModule5Section5_5', () => import('@/pages/apprentice-courses/HNCModule5Section5_5'))));
+const HNCModule5Section5_6 = lazy(() => withTimeout(() => trackImport('HNCModule5Section5_6', () => import('@/pages/apprentice-courses/HNCModule5Section5_6'))));
+const HNCModule5Section6 = lazy(() => withTimeout(() => trackImport('HNCModule5Section6', () => import('@/pages/apprentice-courses/HNCModule5Section6'))));
+const HNCModule5Section6_1 = lazy(() => withTimeout(() => trackImport('HNCModule5Section6_1', () => import('@/pages/apprentice-courses/HNCModule5Section6_1'))));
+const HNCModule5Section6_2 = lazy(() => withTimeout(() => trackImport('HNCModule5Section6_2', () => import('@/pages/apprentice-courses/HNCModule5Section6_2'))));
+const HNCModule5Section6_3 = lazy(() => withTimeout(() => trackImport('HNCModule5Section6_3', () => import('@/pages/apprentice-courses/HNCModule5Section6_3'))));
+const HNCModule5Section6_4 = lazy(() => withTimeout(() => trackImport('HNCModule5Section6_4', () => import('@/pages/apprentice-courses/HNCModule5Section6_4'))));
+const HNCModule5Section6_5 = lazy(() => withTimeout(() => trackImport('HNCModule5Section6_5', () => import('@/pages/apprentice-courses/HNCModule5Section6_5'))));
+const HNCModule5Section6_6 = lazy(() => withTimeout(() => trackImport('HNCModule5Section6_6', () => import('@/pages/apprentice-courses/HNCModule5Section6_6'))));
+const HNCModule6 = lazy(() => withTimeout(() => trackImport('HNCModule6', () => import('@/pages/apprentice-courses/HNCModule6'))));
+const HNCModule6Section1 = lazy(() => withTimeout(() => trackImport('HNCModule6Section1', () => import('@/pages/apprentice-courses/HNCModule6Section1'))));
+const HNCModule6Section1_1 = lazy(() => withTimeout(() => trackImport('HNCModule6Section1_1', () => import('@/pages/apprentice-courses/HNCModule6Section1_1'))));
+const HNCModule6Section1_2 = lazy(() => withTimeout(() => trackImport('HNCModule6Section1_2', () => import('@/pages/apprentice-courses/HNCModule6Section1_2'))));
+const HNCModule6Section1_3 = lazy(() => withTimeout(() => trackImport('HNCModule6Section1_3', () => import('@/pages/apprentice-courses/HNCModule6Section1_3'))));
+const HNCModule6Section1_4 = lazy(() => withTimeout(() => trackImport('HNCModule6Section1_4', () => import('@/pages/apprentice-courses/HNCModule6Section1_4'))));
+const HNCModule6Section1_5 = lazy(() => withTimeout(() => trackImport('HNCModule6Section1_5', () => import('@/pages/apprentice-courses/HNCModule6Section1_5'))));
+const HNCModule6Section1_6 = lazy(() => withTimeout(() => trackImport('HNCModule6Section1_6', () => import('@/pages/apprentice-courses/HNCModule6Section1_6'))));
+const HNCModule6Section2 = lazy(() => withTimeout(() => trackImport('HNCModule6Section2', () => import('@/pages/apprentice-courses/HNCModule6Section2'))));
+const HNCModule6Section2_1 = lazy(() => withTimeout(() => trackImport('HNCModule6Section2_1', () => import('@/pages/apprentice-courses/HNCModule6Section2_1'))));
+const HNCModule6Section2_2 = lazy(() => withTimeout(() => trackImport('HNCModule6Section2_2', () => import('@/pages/apprentice-courses/HNCModule6Section2_2'))));
+const HNCModule6Section2_3 = lazy(() => withTimeout(() => trackImport('HNCModule6Section2_3', () => import('@/pages/apprentice-courses/HNCModule6Section2_3'))));
+const HNCModule6Section2_4 = lazy(() => withTimeout(() => trackImport('HNCModule6Section2_4', () => import('@/pages/apprentice-courses/HNCModule6Section2_4'))));
+const HNCModule6Section2_5 = lazy(() => withTimeout(() => trackImport('HNCModule6Section2_5', () => import('@/pages/apprentice-courses/HNCModule6Section2_5'))));
+const HNCModule6Section2_6 = lazy(() => withTimeout(() => trackImport('HNCModule6Section2_6', () => import('@/pages/apprentice-courses/HNCModule6Section2_6'))));
+const HNCModule6Section3 = lazy(() => withTimeout(() => trackImport('HNCModule6Section3', () => import('@/pages/apprentice-courses/HNCModule6Section3'))));
+const HNCModule6Section3_1 = lazy(() => withTimeout(() => trackImport('HNCModule6Section3_1', () => import('@/pages/apprentice-courses/HNCModule6Section3_1'))));
+const HNCModule6Section3_2 = lazy(() => withTimeout(() => trackImport('HNCModule6Section3_2', () => import('@/pages/apprentice-courses/HNCModule6Section3_2'))));
+const HNCModule6Section3_3 = lazy(() => withTimeout(() => trackImport('HNCModule6Section3_3', () => import('@/pages/apprentice-courses/HNCModule6Section3_3'))));
+const HNCModule6Section3_4 = lazy(() => withTimeout(() => trackImport('HNCModule6Section3_4', () => import('@/pages/apprentice-courses/HNCModule6Section3_4'))));
+const HNCModule6Section3_5 = lazy(() => withTimeout(() => trackImport('HNCModule6Section3_5', () => import('@/pages/apprentice-courses/HNCModule6Section3_5'))));
+const HNCModule6Section3_6 = lazy(() => withTimeout(() => trackImport('HNCModule6Section3_6', () => import('@/pages/apprentice-courses/HNCModule6Section3_6'))));
+const HNCModule6Section4 = lazy(() => withTimeout(() => trackImport('HNCModule6Section4', () => import('@/pages/apprentice-courses/HNCModule6Section4'))));
+const HNCModule6Section4_1 = lazy(() => withTimeout(() => trackImport('HNCModule6Section4_1', () => import('@/pages/apprentice-courses/HNCModule6Section4_1'))));
+const HNCModule6Section4_2 = lazy(() => withTimeout(() => trackImport('HNCModule6Section4_2', () => import('@/pages/apprentice-courses/HNCModule6Section4_2'))));
+const HNCModule6Section4_3 = lazy(() => withTimeout(() => trackImport('HNCModule6Section4_3', () => import('@/pages/apprentice-courses/HNCModule6Section4_3'))));
+const HNCModule6Section4_4 = lazy(() => withTimeout(() => trackImport('HNCModule6Section4_4', () => import('@/pages/apprentice-courses/HNCModule6Section4_4'))));
+const HNCModule6Section4_5 = lazy(() => withTimeout(() => trackImport('HNCModule6Section4_5', () => import('@/pages/apprentice-courses/HNCModule6Section4_5'))));
+const HNCModule6Section4_6 = lazy(() => withTimeout(() => trackImport('HNCModule6Section4_6', () => import('@/pages/apprentice-courses/HNCModule6Section4_6'))));
+const HNCModule6Section5 = lazy(() => withTimeout(() => trackImport('HNCModule6Section5', () => import('@/pages/apprentice-courses/HNCModule6Section5'))));
+const HNCModule6Section5_1 = lazy(() => withTimeout(() => trackImport('HNCModule6Section5_1', () => import('@/pages/apprentice-courses/HNCModule6Section5_1'))));
+const HNCModule6Section5_2 = lazy(() => withTimeout(() => trackImport('HNCModule6Section5_2', () => import('@/pages/apprentice-courses/HNCModule6Section5_2'))));
+const HNCModule6Section5_3 = lazy(() => withTimeout(() => trackImport('HNCModule6Section5_3', () => import('@/pages/apprentice-courses/HNCModule6Section5_3'))));
+const HNCModule6Section5_4 = lazy(() => withTimeout(() => trackImport('HNCModule6Section5_4', () => import('@/pages/apprentice-courses/HNCModule6Section5_4'))));
+const HNCModule6Section5_5 = lazy(() => withTimeout(() => trackImport('HNCModule6Section5_5', () => import('@/pages/apprentice-courses/HNCModule6Section5_5'))));
+const HNCModule6Section5_6 = lazy(() => withTimeout(() => trackImport('HNCModule6Section5_6', () => import('@/pages/apprentice-courses/HNCModule6Section5_6'))));
+const HNCModule6Section6 = lazy(() => withTimeout(() => trackImport('HNCModule6Section6', () => import('@/pages/apprentice-courses/HNCModule6Section6'))));
+const HNCModule6Section6_1 = lazy(() => withTimeout(() => trackImport('HNCModule6Section6_1', () => import('@/pages/apprentice-courses/HNCModule6Section6_1'))));
+const HNCModule6Section6_2 = lazy(() => withTimeout(() => trackImport('HNCModule6Section6_2', () => import('@/pages/apprentice-courses/HNCModule6Section6_2'))));
+const HNCModule6Section6_3 = lazy(() => withTimeout(() => trackImport('HNCModule6Section6_3', () => import('@/pages/apprentice-courses/HNCModule6Section6_3'))));
+const HNCModule6Section6_4 = lazy(() => withTimeout(() => trackImport('HNCModule6Section6_4', () => import('@/pages/apprentice-courses/HNCModule6Section6_4'))));
+const HNCModule6Section6_5 = lazy(() => withTimeout(() => trackImport('HNCModule6Section6_5', () => import('@/pages/apprentice-courses/HNCModule6Section6_5'))));
+const HNCModule6Section6_6 = lazy(() => withTimeout(() => trackImport('HNCModule6Section6_6', () => import('@/pages/apprentice-courses/HNCModule6Section6_6'))));
+const HNCModule7 = lazy(() => withTimeout(() => trackImport('HNCModule7', () => import('@/pages/apprentice-courses/HNCModule7'))));
+const HNCModule7Section1 = lazy(() => withTimeout(() => trackImport('HNCModule7Section1', () => import('@/pages/apprentice-courses/HNCModule7Section1'))));
+const HNCModule7Section1_1 = lazy(() => withTimeout(() => trackImport('HNCModule7Section1_1', () => import('@/pages/apprentice-courses/HNCModule7Section1_1'))));
+const HNCModule7Section1_2 = lazy(() => withTimeout(() => trackImport('HNCModule7Section1_2', () => import('@/pages/apprentice-courses/HNCModule7Section1_2'))));
+const HNCModule7Section1_3 = lazy(() => withTimeout(() => trackImport('HNCModule7Section1_3', () => import('@/pages/apprentice-courses/HNCModule7Section1_3'))));
+const HNCModule7Section1_4 = lazy(() => withTimeout(() => trackImport('HNCModule7Section1_4', () => import('@/pages/apprentice-courses/HNCModule7Section1_4'))));
+const HNCModule7Section1_5 = lazy(() => withTimeout(() => trackImport('HNCModule7Section1_5', () => import('@/pages/apprentice-courses/HNCModule7Section1_5'))));
+const HNCModule7Section1_6 = lazy(() => withTimeout(() => trackImport('HNCModule7Section1_6', () => import('@/pages/apprentice-courses/HNCModule7Section1_6'))));
+const HNCModule7Section2 = lazy(() => withTimeout(() => trackImport('HNCModule7Section2', () => import('@/pages/apprentice-courses/HNCModule7Section2'))));
+const HNCModule7Section2_1 = lazy(() => withTimeout(() => trackImport('HNCModule7Section2_1', () => import('@/pages/apprentice-courses/HNCModule7Section2_1'))));
+const HNCModule7Section2_2 = lazy(() => withTimeout(() => trackImport('HNCModule7Section2_2', () => import('@/pages/apprentice-courses/HNCModule7Section2_2'))));
+const HNCModule7Section2_3 = lazy(() => withTimeout(() => trackImport('HNCModule7Section2_3', () => import('@/pages/apprentice-courses/HNCModule7Section2_3'))));
+const HNCModule7Section2_4 = lazy(() => withTimeout(() => trackImport('HNCModule7Section2_4', () => import('@/pages/apprentice-courses/HNCModule7Section2_4'))));
+const HNCModule7Section2_5 = lazy(() => withTimeout(() => trackImport('HNCModule7Section2_5', () => import('@/pages/apprentice-courses/HNCModule7Section2_5'))));
+const HNCModule7Section2_6 = lazy(() => withTimeout(() => trackImport('HNCModule7Section2_6', () => import('@/pages/apprentice-courses/HNCModule7Section2_6'))));
+const HNCModule7Section3 = lazy(() => withTimeout(() => trackImport('HNCModule7Section3', () => import('@/pages/apprentice-courses/HNCModule7Section3'))));
+const HNCModule7Section3_1 = lazy(() => withTimeout(() => trackImport('HNCModule7Section3_1', () => import('@/pages/apprentice-courses/HNCModule7Section3_1'))));
+const HNCModule7Section3_2 = lazy(() => withTimeout(() => trackImport('HNCModule7Section3_2', () => import('@/pages/apprentice-courses/HNCModule7Section3_2'))));
+const HNCModule7Section3_3 = lazy(() => withTimeout(() => trackImport('HNCModule7Section3_3', () => import('@/pages/apprentice-courses/HNCModule7Section3_3'))));
+const HNCModule7Section3_4 = lazy(() => withTimeout(() => trackImport('HNCModule7Section3_4', () => import('@/pages/apprentice-courses/HNCModule7Section3_4'))));
+const HNCModule7Section3_5 = lazy(() => withTimeout(() => trackImport('HNCModule7Section3_5', () => import('@/pages/apprentice-courses/HNCModule7Section3_5'))));
+const HNCModule7Section3_6 = lazy(() => withTimeout(() => trackImport('HNCModule7Section3_6', () => import('@/pages/apprentice-courses/HNCModule7Section3_6'))));
+const HNCModule7Section4 = lazy(() => withTimeout(() => trackImport('HNCModule7Section4', () => import('@/pages/apprentice-courses/HNCModule7Section4'))));
+const HNCModule7Section4_1 = lazy(() => withTimeout(() => trackImport('HNCModule7Section4_1', () => import('@/pages/apprentice-courses/HNCModule7Section4_1'))));
+const HNCModule7Section4_2 = lazy(() => withTimeout(() => trackImport('HNCModule7Section4_2', () => import('@/pages/apprentice-courses/HNCModule7Section4_2'))));
+const HNCModule7Section4_3 = lazy(() => withTimeout(() => trackImport('HNCModule7Section4_3', () => import('@/pages/apprentice-courses/HNCModule7Section4_3'))));
+const HNCModule7Section4_4 = lazy(() => withTimeout(() => trackImport('HNCModule7Section4_4', () => import('@/pages/apprentice-courses/HNCModule7Section4_4'))));
+const HNCModule7Section4_5 = lazy(() => withTimeout(() => trackImport('HNCModule7Section4_5', () => import('@/pages/apprentice-courses/HNCModule7Section4_5'))));
+const HNCModule7Section4_6 = lazy(() => withTimeout(() => trackImport('HNCModule7Section4_6', () => import('@/pages/apprentice-courses/HNCModule7Section4_6'))));
+const HNCModule7Section5 = lazy(() => withTimeout(() => trackImport('HNCModule7Section5', () => import('@/pages/apprentice-courses/HNCModule7Section5'))));
+const HNCModule7Section5_1 = lazy(() => withTimeout(() => trackImport('HNCModule7Section5_1', () => import('@/pages/apprentice-courses/HNCModule7Section5_1'))));
+const HNCModule7Section5_2 = lazy(() => withTimeout(() => trackImport('HNCModule7Section5_2', () => import('@/pages/apprentice-courses/HNCModule7Section5_2'))));
+const HNCModule7Section5_3 = lazy(() => withTimeout(() => trackImport('HNCModule7Section5_3', () => import('@/pages/apprentice-courses/HNCModule7Section5_3'))));
+const HNCModule7Section5_4 = lazy(() => withTimeout(() => trackImport('HNCModule7Section5_4', () => import('@/pages/apprentice-courses/HNCModule7Section5_4'))));
+const HNCModule7Section5_5 = lazy(() => withTimeout(() => trackImport('HNCModule7Section5_5', () => import('@/pages/apprentice-courses/HNCModule7Section5_5'))));
+const HNCModule7Section5_6 = lazy(() => withTimeout(() => trackImport('HNCModule7Section5_6', () => import('@/pages/apprentice-courses/HNCModule7Section5_6'))));
+const HNCModule7Section6 = lazy(() => withTimeout(() => trackImport('HNCModule7Section6', () => import('@/pages/apprentice-courses/HNCModule7Section6'))));
+const HNCModule7Section6_1 = lazy(() => withTimeout(() => trackImport('HNCModule7Section6_1', () => import('@/pages/apprentice-courses/HNCModule7Section6_1'))));
+const HNCModule7Section6_2 = lazy(() => withTimeout(() => trackImport('HNCModule7Section6_2', () => import('@/pages/apprentice-courses/HNCModule7Section6_2'))));
+const HNCModule7Section6_3 = lazy(() => withTimeout(() => trackImport('HNCModule7Section6_3', () => import('@/pages/apprentice-courses/HNCModule7Section6_3'))));
+const HNCModule7Section6_4 = lazy(() => withTimeout(() => trackImport('HNCModule7Section6_4', () => import('@/pages/apprentice-courses/HNCModule7Section6_4'))));
+const HNCModule7Section6_5 = lazy(() => withTimeout(() => trackImport('HNCModule7Section6_5', () => import('@/pages/apprentice-courses/HNCModule7Section6_5'))));
+const HNCModule7Section6_6 = lazy(() => withTimeout(() => trackImport('HNCModule7Section6_6', () => import('@/pages/apprentice-courses/HNCModule7Section6_6'))));
+const HNCModule8 = lazy(() => withTimeout(() => trackImport('HNCModule8', () => import('@/pages/apprentice-courses/HNCModule8'))));
+const HNCModule8Section1 = lazy(() => withTimeout(() => trackImport('HNCModule8Section1', () => import('@/pages/apprentice-courses/HNCModule8Section1'))));
+const HNCModule8Section1_1 = lazy(() => withTimeout(() => trackImport('HNCModule8Section1_1', () => import('@/pages/apprentice-courses/HNCModule8Section1_1'))));
+const HNCModule8Section1_2 = lazy(() => withTimeout(() => trackImport('HNCModule8Section1_2', () => import('@/pages/apprentice-courses/HNCModule8Section1_2'))));
+const HNCModule8Section1_3 = lazy(() => withTimeout(() => trackImport('HNCModule8Section1_3', () => import('@/pages/apprentice-courses/HNCModule8Section1_3'))));
+const HNCModule8Section1_4 = lazy(() => withTimeout(() => trackImport('HNCModule8Section1_4', () => import('@/pages/apprentice-courses/HNCModule8Section1_4'))));
+const HNCModule8Section1_5 = lazy(() => withTimeout(() => trackImport('HNCModule8Section1_5', () => import('@/pages/apprentice-courses/HNCModule8Section1_5'))));
+const HNCModule8Section1_6 = lazy(() => withTimeout(() => trackImport('HNCModule8Section1_6', () => import('@/pages/apprentice-courses/HNCModule8Section1_6'))));
+const HNCModule8Section2 = lazy(() => withTimeout(() => trackImport('HNCModule8Section2', () => import('@/pages/apprentice-courses/HNCModule8Section2'))));
+const HNCModule8Section2_1 = lazy(() => withTimeout(() => trackImport('HNCModule8Section2_1', () => import('@/pages/apprentice-courses/HNCModule8Section2_1'))));
+const HNCModule8Section2_2 = lazy(() => withTimeout(() => trackImport('HNCModule8Section2_2', () => import('@/pages/apprentice-courses/HNCModule8Section2_2'))));
+const HNCModule8Section2_3 = lazy(() => withTimeout(() => trackImport('HNCModule8Section2_3', () => import('@/pages/apprentice-courses/HNCModule8Section2_3'))));
+const HNCModule8Section2_4 = lazy(() => withTimeout(() => trackImport('HNCModule8Section2_4', () => import('@/pages/apprentice-courses/HNCModule8Section2_4'))));
+const HNCModule8Section2_5 = lazy(() => withTimeout(() => trackImport('HNCModule8Section2_5', () => import('@/pages/apprentice-courses/HNCModule8Section2_5'))));
+const HNCModule8Section2_6 = lazy(() => withTimeout(() => trackImport('HNCModule8Section2_6', () => import('@/pages/apprentice-courses/HNCModule8Section2_6'))));
+const HNCModule8Section3 = lazy(() => withTimeout(() => trackImport('HNCModule8Section3', () => import('@/pages/apprentice-courses/HNCModule8Section3'))));
+const HNCModule8Section3_1 = lazy(() => withTimeout(() => trackImport('HNCModule8Section3_1', () => import('@/pages/apprentice-courses/HNCModule8Section3_1'))));
+const HNCModule8Section3_2 = lazy(() => withTimeout(() => trackImport('HNCModule8Section3_2', () => import('@/pages/apprentice-courses/HNCModule8Section3_2'))));
+const HNCModule8Section3_3 = lazy(() => withTimeout(() => trackImport('HNCModule8Section3_3', () => import('@/pages/apprentice-courses/HNCModule8Section3_3'))));
+const HNCModule8Section3_4 = lazy(() => withTimeout(() => trackImport('HNCModule8Section3_4', () => import('@/pages/apprentice-courses/HNCModule8Section3_4'))));
+const HNCModule8Section3_5 = lazy(() => withTimeout(() => trackImport('HNCModule8Section3_5', () => import('@/pages/apprentice-courses/HNCModule8Section3_5'))));
+const HNCModule8Section3_6 = lazy(() => withTimeout(() => trackImport('HNCModule8Section3_6', () => import('@/pages/apprentice-courses/HNCModule8Section3_6'))));
+const HNCModule8Section4 = lazy(() => withTimeout(() => trackImport('HNCModule8Section4', () => import('@/pages/apprentice-courses/HNCModule8Section4'))));
+const HNCModule8Section4_1 = lazy(() => withTimeout(() => trackImport('HNCModule8Section4_1', () => import('@/pages/apprentice-courses/HNCModule8Section4_1'))));
+const HNCModule8Section4_2 = lazy(() => withTimeout(() => trackImport('HNCModule8Section4_2', () => import('@/pages/apprentice-courses/HNCModule8Section4_2'))));
+const HNCModule8Section4_3 = lazy(() => withTimeout(() => trackImport('HNCModule8Section4_3', () => import('@/pages/apprentice-courses/HNCModule8Section4_3'))));
+const HNCModule8Section4_4 = lazy(() => withTimeout(() => trackImport('HNCModule8Section4_4', () => import('@/pages/apprentice-courses/HNCModule8Section4_4'))));
+const HNCModule8Section4_5 = lazy(() => withTimeout(() => trackImport('HNCModule8Section4_5', () => import('@/pages/apprentice-courses/HNCModule8Section4_5'))));
+const HNCModule8Section4_6 = lazy(() => withTimeout(() => trackImport('HNCModule8Section4_6', () => import('@/pages/apprentice-courses/HNCModule8Section4_6'))));
+const HNCModule8Section5 = lazy(() => withTimeout(() => trackImport('HNCModule8Section5', () => import('@/pages/apprentice-courses/HNCModule8Section5'))));
+const HNCModule8Section5_1 = lazy(() => withTimeout(() => trackImport('HNCModule8Section5_1', () => import('@/pages/apprentice-courses/HNCModule8Section5_1'))));
+const HNCModule8Section5_2 = lazy(() => withTimeout(() => trackImport('HNCModule8Section5_2', () => import('@/pages/apprentice-courses/HNCModule8Section5_2'))));
+const HNCModule8Section5_3 = lazy(() => withTimeout(() => trackImport('HNCModule8Section5_3', () => import('@/pages/apprentice-courses/HNCModule8Section5_3'))));
+const HNCModule8Section5_4 = lazy(() => withTimeout(() => trackImport('HNCModule8Section5_4', () => import('@/pages/apprentice-courses/HNCModule8Section5_4'))));
+const HNCModule8Section5_5 = lazy(() => withTimeout(() => trackImport('HNCModule8Section5_5', () => import('@/pages/apprentice-courses/HNCModule8Section5_5'))));
+const HNCModule8Section5_6 = lazy(() => withTimeout(() => trackImport('HNCModule8Section5_6', () => import('@/pages/apprentice-courses/HNCModule8Section5_6'))));
+const HNCModule8Section6 = lazy(() => withTimeout(() => trackImport('HNCModule8Section6', () => import('@/pages/apprentice-courses/HNCModule8Section6'))));
+const HNCModule8Section6_1 = lazy(() => withTimeout(() => trackImport('HNCModule8Section6_1', () => import('@/pages/apprentice-courses/HNCModule8Section6_1'))));
+const HNCModule8Section6_2 = lazy(() => withTimeout(() => trackImport('HNCModule8Section6_2', () => import('@/pages/apprentice-courses/HNCModule8Section6_2'))));
+const HNCModule8Section6_3 = lazy(() => withTimeout(() => trackImport('HNCModule8Section6_3', () => import('@/pages/apprentice-courses/HNCModule8Section6_3'))));
+const HNCModule8Section6_4 = lazy(() => withTimeout(() => trackImport('HNCModule8Section6_4', () => import('@/pages/apprentice-courses/HNCModule8Section6_4'))));
+const HNCModule8Section6_5 = lazy(() => withTimeout(() => trackImport('HNCModule8Section6_5', () => import('@/pages/apprentice-courses/HNCModule8Section6_5'))));
+const HNCModule8Section6_6 = lazy(() => withTimeout(() => trackImport('HNCModule8Section6_6', () => import('@/pages/apprentice-courses/HNCModule8Section6_6'))));
+const HNCModule9 = lazy(() => withTimeout(() => trackImport('HNCModule9', () => import('@/pages/apprentice-courses/HNCModule9'))));
+const HNCModule9MockExam = lazy(() => withTimeout(() => trackImport('HNCModule9MockExam', () => import('@/pages/apprentice-courses/HNCModule9MockExam'))));
 const Index = lazy(() => withTimeout(() => trackImport('Index', () => import('@/pages/apprentice-courses/Index'))));
 const Level2 = lazy(() => withTimeout(() => trackImport('Level2', () => import('@/pages/apprentice-courses/Level2'))));
 const Level2Module6Section6_1 = lazy(() => withTimeout(() => trackImport('Level2Module6Section6_1', () => import('@/pages/apprentice-courses/Level2Module6Section6_1'))));
@@ -986,6 +1203,223 @@ export default function ApprenticeCourseRoutes() {
         <Route path="h-n-c-module3-section6-5" element={<HNCModule3Section6_5 />} />
         <Route path="h-n-c-module3-section6-6" element={<HNCModule3Section6_6 />} />
         <Route path="h-n-c-module3-section6-7" element={<HNCModule3Section6_7 />} />
+        <Route path="h-n-c-module4" element={<HNCModule4 />} />
+        <Route path="h-n-c-module4-section1" element={<HNCModule4Section1 />} />
+        <Route path="h-n-c-module4-section1-1" element={<HNCModule4Section1_1 />} />
+        <Route path="h-n-c-module4-section1-2" element={<HNCModule4Section1_2 />} />
+        <Route path="h-n-c-module4-section1-3" element={<HNCModule4Section1_3 />} />
+        <Route path="h-n-c-module4-section1-4" element={<HNCModule4Section1_4 />} />
+        <Route path="h-n-c-module4-section1-5" element={<HNCModule4Section1_5 />} />
+        <Route path="h-n-c-module4-section1-6" element={<HNCModule4Section1_6 />} />
+        <Route path="h-n-c-module4-section2" element={<HNCModule4Section2 />} />
+        <Route path="h-n-c-module4-section2-1" element={<HNCModule4Section2_1 />} />
+        <Route path="h-n-c-module4-section2-2" element={<HNCModule4Section2_2 />} />
+        <Route path="h-n-c-module4-section2-3" element={<HNCModule4Section2_3 />} />
+        <Route path="h-n-c-module4-section2-4" element={<HNCModule4Section2_4 />} />
+        <Route path="h-n-c-module4-section2-5" element={<HNCModule4Section2_5 />} />
+        <Route path="h-n-c-module4-section2-6" element={<HNCModule4Section2_6 />} />
+        <Route path="h-n-c-module4-section3" element={<HNCModule4Section3 />} />
+        <Route path="h-n-c-module4-section3-1" element={<HNCModule4Section3_1 />} />
+        <Route path="h-n-c-module4-section3-2" element={<HNCModule4Section3_2 />} />
+        <Route path="h-n-c-module4-section3-3" element={<HNCModule4Section3_3 />} />
+        <Route path="h-n-c-module4-section3-4" element={<HNCModule4Section3_4 />} />
+        <Route path="h-n-c-module4-section3-5" element={<HNCModule4Section3_5 />} />
+        <Route path="h-n-c-module4-section3-6" element={<HNCModule4Section3_6 />} />
+        <Route path="h-n-c-module4-section4" element={<HNCModule4Section4 />} />
+        <Route path="h-n-c-module4-section4-1" element={<HNCModule4Section4_1 />} />
+        <Route path="h-n-c-module4-section4-2" element={<HNCModule4Section4_2 />} />
+        <Route path="h-n-c-module4-section4-3" element={<HNCModule4Section4_3 />} />
+        <Route path="h-n-c-module4-section4-4" element={<HNCModule4Section4_4 />} />
+        <Route path="h-n-c-module4-section4-5" element={<HNCModule4Section4_5 />} />
+        <Route path="h-n-c-module4-section4-6" element={<HNCModule4Section4_6 />} />
+        <Route path="h-n-c-module4-section5" element={<HNCModule4Section5 />} />
+        <Route path="h-n-c-module4-section5-1" element={<HNCModule4Section5_1 />} />
+        <Route path="h-n-c-module4-section5-2" element={<HNCModule4Section5_2 />} />
+        <Route path="h-n-c-module4-section5-3" element={<HNCModule4Section5_3 />} />
+        <Route path="h-n-c-module4-section5-4" element={<HNCModule4Section5_4 />} />
+        <Route path="h-n-c-module4-section5-5" element={<HNCModule4Section5_5 />} />
+        <Route path="h-n-c-module4-section5-6" element={<HNCModule4Section5_6 />} />
+        <Route path="h-n-c-module4-section6" element={<HNCModule4Section6 />} />
+        <Route path="h-n-c-module4-section6-1" element={<HNCModule4Section6_1 />} />
+        <Route path="h-n-c-module4-section6-2" element={<HNCModule4Section6_2 />} />
+        <Route path="h-n-c-module4-section6-3" element={<HNCModule4Section6_3 />} />
+        <Route path="h-n-c-module4-section6-4" element={<HNCModule4Section6_4 />} />
+        <Route path="h-n-c-module4-section6-5" element={<HNCModule4Section6_5 />} />
+        <Route path="h-n-c-module4-section6-6" element={<HNCModule4Section6_6 />} />
+        <Route path="h-n-c-module5" element={<HNCModule5 />} />
+        <Route path="h-n-c-module5-section1" element={<HNCModule5Section1 />} />
+        <Route path="h-n-c-module5-section1-1" element={<HNCModule5Section1_1 />} />
+        <Route path="h-n-c-module5-section1-2" element={<HNCModule5Section1_2 />} />
+        <Route path="h-n-c-module5-section1-3" element={<HNCModule5Section1_3 />} />
+        <Route path="h-n-c-module5-section1-4" element={<HNCModule5Section1_4 />} />
+        <Route path="h-n-c-module5-section1-5" element={<HNCModule5Section1_5 />} />
+        <Route path="h-n-c-module5-section1-6" element={<HNCModule5Section1_6 />} />
+        <Route path="h-n-c-module5-section2" element={<HNCModule5Section2 />} />
+        <Route path="h-n-c-module5-section2-1" element={<HNCModule5Section2_1 />} />
+        <Route path="h-n-c-module5-section2-2" element={<HNCModule5Section2_2 />} />
+        <Route path="h-n-c-module5-section2-3" element={<HNCModule5Section2_3 />} />
+        <Route path="h-n-c-module5-section2-4" element={<HNCModule5Section2_4 />} />
+        <Route path="h-n-c-module5-section2-5" element={<HNCModule5Section2_5 />} />
+        <Route path="h-n-c-module5-section2-6" element={<HNCModule5Section2_6 />} />
+        <Route path="h-n-c-module5-section3" element={<HNCModule5Section3 />} />
+        <Route path="h-n-c-module5-section3-1" element={<HNCModule5Section3_1 />} />
+        <Route path="h-n-c-module5-section3-2" element={<HNCModule5Section3_2 />} />
+        <Route path="h-n-c-module5-section3-3" element={<HNCModule5Section3_3 />} />
+        <Route path="h-n-c-module5-section3-4" element={<HNCModule5Section3_4 />} />
+        <Route path="h-n-c-module5-section3-5" element={<HNCModule5Section3_5 />} />
+        <Route path="h-n-c-module5-section3-6" element={<HNCModule5Section3_6 />} />
+        <Route path="h-n-c-module5-section4" element={<HNCModule5Section4 />} />
+        <Route path="h-n-c-module5-section4-1" element={<HNCModule5Section4_1 />} />
+        <Route path="h-n-c-module5-section4-2" element={<HNCModule5Section4_2 />} />
+        <Route path="h-n-c-module5-section4-3" element={<HNCModule5Section4_3 />} />
+        <Route path="h-n-c-module5-section4-4" element={<HNCModule5Section4_4 />} />
+        <Route path="h-n-c-module5-section4-5" element={<HNCModule5Section4_5 />} />
+        <Route path="h-n-c-module5-section4-6" element={<HNCModule5Section4_6 />} />
+        <Route path="h-n-c-module5-section5" element={<HNCModule5Section5 />} />
+        <Route path="h-n-c-module5-section5-1" element={<HNCModule5Section5_1 />} />
+        <Route path="h-n-c-module5-section5-2" element={<HNCModule5Section5_2 />} />
+        <Route path="h-n-c-module5-section5-3" element={<HNCModule5Section5_3 />} />
+        <Route path="h-n-c-module5-section5-4" element={<HNCModule5Section5_4 />} />
+        <Route path="h-n-c-module5-section5-5" element={<HNCModule5Section5_5 />} />
+        <Route path="h-n-c-module5-section5-6" element={<HNCModule5Section5_6 />} />
+        <Route path="h-n-c-module5-section6" element={<HNCModule5Section6 />} />
+        <Route path="h-n-c-module5-section6-1" element={<HNCModule5Section6_1 />} />
+        <Route path="h-n-c-module5-section6-2" element={<HNCModule5Section6_2 />} />
+        <Route path="h-n-c-module5-section6-3" element={<HNCModule5Section6_3 />} />
+        <Route path="h-n-c-module5-section6-4" element={<HNCModule5Section6_4 />} />
+        <Route path="h-n-c-module5-section6-5" element={<HNCModule5Section6_5 />} />
+        <Route path="h-n-c-module5-section6-6" element={<HNCModule5Section6_6 />} />
+        <Route path="h-n-c-module6" element={<HNCModule6 />} />
+        <Route path="h-n-c-module6-section1" element={<HNCModule6Section1 />} />
+        <Route path="h-n-c-module6-section1-1" element={<HNCModule6Section1_1 />} />
+        <Route path="h-n-c-module6-section1-2" element={<HNCModule6Section1_2 />} />
+        <Route path="h-n-c-module6-section1-3" element={<HNCModule6Section1_3 />} />
+        <Route path="h-n-c-module6-section1-4" element={<HNCModule6Section1_4 />} />
+        <Route path="h-n-c-module6-section1-5" element={<HNCModule6Section1_5 />} />
+        <Route path="h-n-c-module6-section1-6" element={<HNCModule6Section1_6 />} />
+        <Route path="h-n-c-module6-section2" element={<HNCModule6Section2 />} />
+        <Route path="h-n-c-module6-section2-1" element={<HNCModule6Section2_1 />} />
+        <Route path="h-n-c-module6-section2-2" element={<HNCModule6Section2_2 />} />
+        <Route path="h-n-c-module6-section2-3" element={<HNCModule6Section2_3 />} />
+        <Route path="h-n-c-module6-section2-4" element={<HNCModule6Section2_4 />} />
+        <Route path="h-n-c-module6-section2-5" element={<HNCModule6Section2_5 />} />
+        <Route path="h-n-c-module6-section2-6" element={<HNCModule6Section2_6 />} />
+        <Route path="h-n-c-module6-section3" element={<HNCModule6Section3 />} />
+        <Route path="h-n-c-module6-section3-1" element={<HNCModule6Section3_1 />} />
+        <Route path="h-n-c-module6-section3-2" element={<HNCModule6Section3_2 />} />
+        <Route path="h-n-c-module6-section3-3" element={<HNCModule6Section3_3 />} />
+        <Route path="h-n-c-module6-section3-4" element={<HNCModule6Section3_4 />} />
+        <Route path="h-n-c-module6-section3-5" element={<HNCModule6Section3_5 />} />
+        <Route path="h-n-c-module6-section3-6" element={<HNCModule6Section3_6 />} />
+        <Route path="h-n-c-module6-section4" element={<HNCModule6Section4 />} />
+        <Route path="h-n-c-module6-section4-1" element={<HNCModule6Section4_1 />} />
+        <Route path="h-n-c-module6-section4-2" element={<HNCModule6Section4_2 />} />
+        <Route path="h-n-c-module6-section4-3" element={<HNCModule6Section4_3 />} />
+        <Route path="h-n-c-module6-section4-4" element={<HNCModule6Section4_4 />} />
+        <Route path="h-n-c-module6-section4-5" element={<HNCModule6Section4_5 />} />
+        <Route path="h-n-c-module6-section4-6" element={<HNCModule6Section4_6 />} />
+        <Route path="h-n-c-module6-section5" element={<HNCModule6Section5 />} />
+        <Route path="h-n-c-module6-section5-1" element={<HNCModule6Section5_1 />} />
+        <Route path="h-n-c-module6-section5-2" element={<HNCModule6Section5_2 />} />
+        <Route path="h-n-c-module6-section5-3" element={<HNCModule6Section5_3 />} />
+        <Route path="h-n-c-module6-section5-4" element={<HNCModule6Section5_4 />} />
+        <Route path="h-n-c-module6-section5-5" element={<HNCModule6Section5_5 />} />
+        <Route path="h-n-c-module6-section5-6" element={<HNCModule6Section5_6 />} />
+        <Route path="h-n-c-module6-section6" element={<HNCModule6Section6 />} />
+        <Route path="h-n-c-module6-section6-1" element={<HNCModule6Section6_1 />} />
+        <Route path="h-n-c-module6-section6-2" element={<HNCModule6Section6_2 />} />
+        <Route path="h-n-c-module6-section6-3" element={<HNCModule6Section6_3 />} />
+        <Route path="h-n-c-module6-section6-4" element={<HNCModule6Section6_4 />} />
+        <Route path="h-n-c-module6-section6-5" element={<HNCModule6Section6_5 />} />
+        <Route path="h-n-c-module6-section6-6" element={<HNCModule6Section6_6 />} />
+        <Route path="h-n-c-module7" element={<HNCModule7 />} />
+        <Route path="h-n-c-module7-section1" element={<HNCModule7Section1 />} />
+        <Route path="h-n-c-module7-section1-1" element={<HNCModule7Section1_1 />} />
+        <Route path="h-n-c-module7-section1-2" element={<HNCModule7Section1_2 />} />
+        <Route path="h-n-c-module7-section1-3" element={<HNCModule7Section1_3 />} />
+        <Route path="h-n-c-module7-section1-4" element={<HNCModule7Section1_4 />} />
+        <Route path="h-n-c-module7-section1-5" element={<HNCModule7Section1_5 />} />
+        <Route path="h-n-c-module7-section1-6" element={<HNCModule7Section1_6 />} />
+        <Route path="h-n-c-module7-section2" element={<HNCModule7Section2 />} />
+        <Route path="h-n-c-module7-section2-1" element={<HNCModule7Section2_1 />} />
+        <Route path="h-n-c-module7-section2-2" element={<HNCModule7Section2_2 />} />
+        <Route path="h-n-c-module7-section2-3" element={<HNCModule7Section2_3 />} />
+        <Route path="h-n-c-module7-section2-4" element={<HNCModule7Section2_4 />} />
+        <Route path="h-n-c-module7-section2-5" element={<HNCModule7Section2_5 />} />
+        <Route path="h-n-c-module7-section2-6" element={<HNCModule7Section2_6 />} />
+        <Route path="h-n-c-module7-section3" element={<HNCModule7Section3 />} />
+        <Route path="h-n-c-module7-section3-1" element={<HNCModule7Section3_1 />} />
+        <Route path="h-n-c-module7-section3-2" element={<HNCModule7Section3_2 />} />
+        <Route path="h-n-c-module7-section3-3" element={<HNCModule7Section3_3 />} />
+        <Route path="h-n-c-module7-section3-4" element={<HNCModule7Section3_4 />} />
+        <Route path="h-n-c-module7-section3-5" element={<HNCModule7Section3_5 />} />
+        <Route path="h-n-c-module7-section3-6" element={<HNCModule7Section3_6 />} />
+        <Route path="h-n-c-module7-section4" element={<HNCModule7Section4 />} />
+        <Route path="h-n-c-module7-section4-1" element={<HNCModule7Section4_1 />} />
+        <Route path="h-n-c-module7-section4-2" element={<HNCModule7Section4_2 />} />
+        <Route path="h-n-c-module7-section4-3" element={<HNCModule7Section4_3 />} />
+        <Route path="h-n-c-module7-section4-4" element={<HNCModule7Section4_4 />} />
+        <Route path="h-n-c-module7-section4-5" element={<HNCModule7Section4_5 />} />
+        <Route path="h-n-c-module7-section4-6" element={<HNCModule7Section4_6 />} />
+        <Route path="h-n-c-module7-section5" element={<HNCModule7Section5 />} />
+        <Route path="h-n-c-module7-section5-1" element={<HNCModule7Section5_1 />} />
+        <Route path="h-n-c-module7-section5-2" element={<HNCModule7Section5_2 />} />
+        <Route path="h-n-c-module7-section5-3" element={<HNCModule7Section5_3 />} />
+        <Route path="h-n-c-module7-section5-4" element={<HNCModule7Section5_4 />} />
+        <Route path="h-n-c-module7-section5-5" element={<HNCModule7Section5_5 />} />
+        <Route path="h-n-c-module7-section5-6" element={<HNCModule7Section5_6 />} />
+        <Route path="h-n-c-module7-section6" element={<HNCModule7Section6 />} />
+        <Route path="h-n-c-module7-section6-1" element={<HNCModule7Section6_1 />} />
+        <Route path="h-n-c-module7-section6-2" element={<HNCModule7Section6_2 />} />
+        <Route path="h-n-c-module7-section6-3" element={<HNCModule7Section6_3 />} />
+        <Route path="h-n-c-module7-section6-4" element={<HNCModule7Section6_4 />} />
+        <Route path="h-n-c-module7-section6-5" element={<HNCModule7Section6_5 />} />
+        <Route path="h-n-c-module7-section6-6" element={<HNCModule7Section6_6 />} />
+        <Route path="h-n-c-module8" element={<HNCModule8 />} />
+        <Route path="h-n-c-module8-section1" element={<HNCModule8Section1 />} />
+        <Route path="h-n-c-module8-section1-1" element={<HNCModule8Section1_1 />} />
+        <Route path="h-n-c-module8-section1-2" element={<HNCModule8Section1_2 />} />
+        <Route path="h-n-c-module8-section1-3" element={<HNCModule8Section1_3 />} />
+        <Route path="h-n-c-module8-section1-4" element={<HNCModule8Section1_4 />} />
+        <Route path="h-n-c-module8-section1-5" element={<HNCModule8Section1_5 />} />
+        <Route path="h-n-c-module8-section1-6" element={<HNCModule8Section1_6 />} />
+        <Route path="h-n-c-module8-section2" element={<HNCModule8Section2 />} />
+        <Route path="h-n-c-module8-section2-1" element={<HNCModule8Section2_1 />} />
+        <Route path="h-n-c-module8-section2-2" element={<HNCModule8Section2_2 />} />
+        <Route path="h-n-c-module8-section2-3" element={<HNCModule8Section2_3 />} />
+        <Route path="h-n-c-module8-section2-4" element={<HNCModule8Section2_4 />} />
+        <Route path="h-n-c-module8-section2-5" element={<HNCModule8Section2_5 />} />
+        <Route path="h-n-c-module8-section2-6" element={<HNCModule8Section2_6 />} />
+        <Route path="h-n-c-module8-section3" element={<HNCModule8Section3 />} />
+        <Route path="h-n-c-module8-section3-1" element={<HNCModule8Section3_1 />} />
+        <Route path="h-n-c-module8-section3-2" element={<HNCModule8Section3_2 />} />
+        <Route path="h-n-c-module8-section3-3" element={<HNCModule8Section3_3 />} />
+        <Route path="h-n-c-module8-section3-4" element={<HNCModule8Section3_4 />} />
+        <Route path="h-n-c-module8-section3-5" element={<HNCModule8Section3_5 />} />
+        <Route path="h-n-c-module8-section3-6" element={<HNCModule8Section3_6 />} />
+        <Route path="h-n-c-module8-section4" element={<HNCModule8Section4 />} />
+        <Route path="h-n-c-module8-section4-1" element={<HNCModule8Section4_1 />} />
+        <Route path="h-n-c-module8-section4-2" element={<HNCModule8Section4_2 />} />
+        <Route path="h-n-c-module8-section4-3" element={<HNCModule8Section4_3 />} />
+        <Route path="h-n-c-module8-section4-4" element={<HNCModule8Section4_4 />} />
+        <Route path="h-n-c-module8-section4-5" element={<HNCModule8Section4_5 />} />
+        <Route path="h-n-c-module8-section4-6" element={<HNCModule8Section4_6 />} />
+        <Route path="h-n-c-module8-section5" element={<HNCModule8Section5 />} />
+        <Route path="h-n-c-module8-section5-1" element={<HNCModule8Section5_1 />} />
+        <Route path="h-n-c-module8-section5-2" element={<HNCModule8Section5_2 />} />
+        <Route path="h-n-c-module8-section5-3" element={<HNCModule8Section5_3 />} />
+        <Route path="h-n-c-module8-section5-4" element={<HNCModule8Section5_4 />} />
+        <Route path="h-n-c-module8-section5-5" element={<HNCModule8Section5_5 />} />
+        <Route path="h-n-c-module8-section5-6" element={<HNCModule8Section5_6 />} />
+        <Route path="h-n-c-module8-section6" element={<HNCModule8Section6 />} />
+        <Route path="h-n-c-module8-section6-1" element={<HNCModule8Section6_1 />} />
+        <Route path="h-n-c-module8-section6-2" element={<HNCModule8Section6_2 />} />
+        <Route path="h-n-c-module8-section6-3" element={<HNCModule8Section6_3 />} />
+        <Route path="h-n-c-module8-section6-4" element={<HNCModule8Section6_4 />} />
+        <Route path="h-n-c-module8-section6-5" element={<HNCModule8Section6_5 />} />
+        <Route path="h-n-c-module8-section6-6" element={<HNCModule8Section6_6 />} />
+        <Route path="h-n-c-module9" element={<HNCModule9 />} />
+        <Route path="h-n-c-module9-mock-exam" element={<HNCModule9MockExam />} />
         <Route index element={<Index />} />
         <Route path="level2/*" element={<Level2Routes />} />
         <Route path="level2-module6-section6-1" element={<Level2Module6Section6_1 />} />

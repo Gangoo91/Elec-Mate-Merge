@@ -8,11 +8,21 @@ import { cn } from '@/lib/utils';
 interface EICScheduleOfInspectionsProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  onAutoCreateObservation?: (inspectionItem: {
+    id: string;
+    item: string;
+    itemNumber?: string;
+    notes?: string;
+    defectCode?: 'limitation';
+  }) => string;
+  onNavigateToObservations?: () => void;
 }
 
 const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   formData,
-  onUpdate
+  onUpdate,
+  onAutoCreateObservation,
+  onNavigateToObservations
 }) => {
   const isMobile = useIsMobile();
 
@@ -67,6 +77,8 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
       <EICInspectionChecklistCard
         inspectionItems={inspectionItems}
         onUpdateItem={updateInspectionItem}
+        onAutoCreateObservation={onAutoCreateObservation}
+        onNavigateToObservations={onNavigateToObservations}
       />
     </div>
   );

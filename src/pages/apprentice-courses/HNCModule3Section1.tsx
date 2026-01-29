@@ -6,59 +6,59 @@ import useSEO from "@/hooks/useSEO";
 
 const HNCModule3Section1 = () => {
   useSEO(
-    "DC and AC Circuit Theory - HNC Module 3 Section 1", 
-    "Learn circuit analysis fundamentals including Ohm's Law, Kirchhoff's Laws, Thevenin's and Norton's theorems, and transient response"
+    "DC Circuit Theory - HNC Module 3 Section 1 | Electrical Engineering",
+    "Master DC circuit analysis: Ohm's Law, Kirchhoff's Laws, series/parallel circuits, network theorems. Applied to building services electrical systems."
   );
 
   const subsections = [
     {
-      number: "Subsection 1",
-      title: "Ohm's Law, Kirchhoff's Voltage & Current Laws",
-      description: "Fundamental electrical laws governing voltage, current and resistance relationships in circuits",
+      number: "1.1",
+      title: "Voltage, Current, Resistance and Power",
+      description: "Fundamental electrical quantities, SI units, and power calculations applied to building services loads",
+      icon: Zap,
+      href: "../h-n-c-module3-section1-1"
+    },
+    {
+      number: "1.2",
+      title: "Ohm's Law",
+      description: "V = IR relationships, linear and non-linear resistors, cable sizing and voltage drop calculations",
       icon: Calculator,
-      href: "../h-n-c-module3-section1-1-1"
+      href: "../h-n-c-module3-section1-2"
     },
     {
-      number: "Subsection 2", 
-      title: "Series, parallel and combination circuits",
-      description: "Analysis techniques for different circuit configurations and their electrical characteristics",
+      number: "1.3",
+      title: "Series Circuits",
+      description: "Series resistance, voltage dividers, and applications in emergency lighting and control circuits",
       icon: GitBranch,
-      href: "../h-n-c-module3-section1-1-2"
+      href: "../h-n-c-module3-section1-3"
     },
     {
-      number: "Subsection 3",
-      title: "Thevenin's and Norton's theorems",
-      description: "Circuit simplification techniques using equivalent circuits for complex network analysis",
+      number: "1.4",
+      title: "Parallel Circuits",
+      description: "Parallel resistance, current division, lighting circuits and distribution board analysis",
       icon: Shuffle,
-      href: "../h-n-c-module3-section1-1-3"
+      href: "../h-n-c-module3-section1-4"
     },
     {
-      number: "Subsection 4",
-      title: "Superposition theorem and maximum power transfer",
-      description: "Linear circuit analysis methods and power transfer optimisation principles",
+      number: "1.5",
+      title: "Kirchhoff's Laws",
+      description: "KCL and KVL for complex circuit analysis, distribution boards and fault current paths",
       icon: Target,
-      href: "../h-n-c-module3-section1-1-4"
+      href: "../h-n-c-module3-section1-5"
     },
     {
-      number: "Subsection 5",
-      title: "Transient response in RC, RL and RLC circuits",
-      description: "Time-domain behaviour of reactive circuits during switching and transient conditions",
+      number: "1.6",
+      title: "Network Theorems",
+      description: "Superposition, Thevenin and Norton equivalents for multi-source building power systems",
       icon: Activity,
-      href: "../h-n-c-module3-section1-1-5"
+      href: "../h-n-c-module3-section1-6"
     },
     {
-      number: "Subsection 6",
-      title: "Measurement errors, tolerances and accuracy in circuits",
-      description: "Understanding measurement limitations, instrument accuracy and error sources in electrical testing",
-      icon: Target,
-      href: "../h-n-c-module3-section1-1-6"
-    },
-    {
-      number: "Subsection 7",
-      title: "Applications of circuit theory in building services",
-      description: "Practical application of circuit analysis principles in HVAC, lighting and building electrical systems",
+      number: "1.7",
+      title: "Building Services Applications",
+      description: "Practical DC circuit analysis for emergency systems, BMS controls and standby power",
       icon: Settings,
-      href: "../h-n-c-module3-section1-1-7"
+      href: "../h-n-c-module3-section1-7"
     }
   ];
 
@@ -79,10 +79,13 @@ const HNCModule3Section1 = () => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
         <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-          3.1 DC and AC Circuit Theory
+          Section 1: DC Circuit Theory
         </h1>
-        <p className="text-xl text-muted-foreground mb-12">
-          Master fundamental circuit analysis techniques and electrical laws essential for building services engineering
+        <p className="text-xl text-muted-foreground mb-8">
+          Apply understanding of fundamental electrical quantities to evaluate circuits with constant voltages and currents
+        </p>
+        <p className="text-base text-muted-foreground mb-12">
+          This section covers essential DC circuit analysis techniques used daily in building services engineering - from sizing cables and calculating voltage drops to analysing distribution systems and emergency power supplies.
         </p>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

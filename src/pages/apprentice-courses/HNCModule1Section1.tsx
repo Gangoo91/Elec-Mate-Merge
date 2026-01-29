@@ -1,4 +1,4 @@
-import { ArrowLeft, Scale, Building, FileText, Leaf, Users, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Scale, Zap, HardHat, Beaker, Wrench, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
@@ -6,52 +6,52 @@ import useSEO from "@/hooks/useSEO";
 
 const HNCModule1Section1 = () => {
   useSEO(
-    "Legislation and Standards - HNC Module 1",
-    "HASAWA, EAWR, COSHH, PUWER, LOLER, CDM Regulations, RIDDOR requirements, environmental law and HSE enforcement"
+    "Legislation and Standards - HNC Module 1 Section 1 | Building Services Engineering",
+    "Master UK health and safety legislation for building services: HASAWA 1974, EAWR 1989, CDM 2015, COSHH, PUWER, and environmental regulations."
   );
 
   const subsections = [
     {
       number: "1.1",
-      title: "HASAWA, EAWR, COSHH, PUWER, LOLER",
-      description: "Core health and safety legislation governing workplace safety and equipment use",
+      title: "Health and Safety at Work Act 1974",
+      description: "Duties of employers, employees, self-employed, enforcement and the role of the HSE",
       icon: Scale,
-      href: "../h-n-c-module1-section1-1-1"
+      href: "../h-n-c-module1-section1-1"
     },
     {
-      number: "1.2", 
-      title: "CDM Regulations and roles",
-      description: "Construction Design and Management regulations - Client, Principal Designer, Contractor roles",
-      icon: Building,
-      href: "../h-n-c-module1-section1-1-2"
+      number: "1.2",
+      title: "Electricity at Work Regulations 1989",
+      description: "Duties, competence requirements, safe systems, equipment standards and work activities",
+      icon: Zap,
+      href: "../h-n-c-module1-section1-2"
     },
     {
       number: "1.3",
-      title: "RIDDOR requirements", 
-      description: "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations",
-      icon: FileText,
-      href: "../h-n-c-module1-section1-1-3"
+      title: "CDM Regulations 2015",
+      description: "Duty holders, principal designer, principal contractor responsibilities and F10 notification",
+      icon: HardHat,
+      href: "../h-n-c-module1-section1-3"
     },
     {
       number: "1.4",
-      title: "Environmental and sustainability law",
-      description: "Environmental legislation and sustainability requirements in engineering",
-      icon: Leaf,
-      href: "../h-n-c-module1-section1-1-4"
+      title: "COSHH and Hazardous Substances",
+      description: "Assessment, control measures, monitoring requirements and health surveillance procedures",
+      icon: Beaker,
+      href: "../h-n-c-module1-section1-4"
     },
     {
       number: "1.5",
-      title: "Employer vs employee duties",
-      description: "Understanding legal responsibilities and duties of employers and employees",
-      icon: Users,
-      href: "../h-n-c-module1-section1-1-5"
+      title: "PUWER and Work Equipment",
+      description: "Selection, maintenance, training requirements and inspection regimes for work equipment",
+      icon: Wrench,
+      href: "../h-n-c-module1-section1-5"
     },
     {
       number: "1.6",
-      title: "Role of HSE inspectors and enforcement",
-      description: "HSE powers, inspection procedures and enforcement actions",
-      icon: ShieldCheck,
-      href: "../h-n-c-module1-section1-1-6"
+      title: "Environmental and Building Regulations",
+      description: "Environmental legislation, Part P requirements, building control procedures and compliance",
+      icon: Building,
+      href: "../h-n-c-module1-section1-6"
     }
   ];
 
@@ -71,20 +71,20 @@ const HNCModule1Section1 = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            1.1 Legislation and Standards
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
-            HASAWA, EAWR, COSHH, PUWER, LOLER, CDM Regulations, RIDDOR requirements, environmental law and HSE enforcement.
-          </p>
-        </div>
+        <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Section 1: Legislation and Standards
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          Understand the legal framework governing health, safety and welfare in the building services engineering industry
+        </p>
+        <p className="text-base text-muted-foreground mb-12">
+          This section covers the essential UK legislation that building services engineers must understand and comply with - from the overarching Health and Safety at Work Act to specific regulations governing electrical work, construction projects, hazardous substances, and work equipment.
+        </p>
 
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {subsections.map((subsection) => (
             <ModuleCard
-              key={index}
+              key={subsection.number}
               number={subsection.number}
               title={subsection.title}
               description={subsection.description}

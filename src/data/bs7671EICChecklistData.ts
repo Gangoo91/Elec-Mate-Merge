@@ -8,7 +8,7 @@ export interface EICInspectionItem {
   id: string;
   itemNumber: string;
   description: string;
-  outcome: '' | 'satisfactory' | 'not-applicable';
+  outcome: '' | 'satisfactory' | 'not-applicable' | 'limitation';
   notes?: string;
 }
 

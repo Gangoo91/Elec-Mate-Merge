@@ -10,9 +10,11 @@ interface EICRFormTabsProps {
   onUpdate: (field: string, value: any) => void;
   onOpenBoardScan?: () => void;
   initialTab?: 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
+  currentTab?: 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
+  onTabChange?: (tab: string) => void;
 }
 
-const EICRFormTabs = ({ formData, onUpdate, onOpenBoardScan, initialTab }: EICRFormTabsProps) => {
+const EICRFormTabs = ({ formData, onUpdate, onOpenBoardScan, initialTab, currentTab: controlledTab, onTabChange: onControlledTabChange }: EICRFormTabsProps) => {
   const isMobile = useIsMobile();
   const {
     currentTab,
@@ -29,7 +31,11 @@ const EICRFormTabs = ({ formData, onUpdate, onOpenBoardScan, initialTab }: EICRF
     currentTabHasRequiredFields,
     toggleTabComplete,
     hasRequiredFields
-  } = useEICRTabs(formData, initialTab);
+  } = useEICRTabs(formData, {
+    initialTab,
+    controlledTab,
+    onTabChange: onControlledTabChange
+  });
 
   // Build completion status map
   const completedTabs = useMemo(() => {

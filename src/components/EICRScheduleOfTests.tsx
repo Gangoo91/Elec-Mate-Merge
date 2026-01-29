@@ -349,7 +349,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           return filtered.map((circuit, i) => {
             const newNum = (i + 1).toString();
             const desc = circuit.circuitDescription || circuit.circuitType || 'Circuit';
-            return { ...circuit, circuitNumber: newNum, circuitDesignation: `${newNum} - ${desc}` };
+            return { ...circuit, circuitNumber: newNum, circuitDesignation: `C${newNum}` };
           });
         });
         if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
@@ -577,12 +577,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               // Renumber all remaining circuits, preserving description
               return filtered.map((circuit, i) => {
                 const newNum = (i + 1).toString();
-                // Preserve description: "X - Description" format
-                const desc = circuit.circuitDescription || circuit.circuitType || 'Circuit';
                 return {
                   ...circuit,
                   circuitNumber: newNum,
-                  circuitDesignation: `${newNum} - ${desc}`,
+                  circuitDesignation: `C${newNum}`,
                 };
               });
             });
@@ -630,11 +628,10 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             // Renumber all circuits, preserving description
             return updated.map((circuit, i) => {
               const newNum = (i + 1).toString();
-              const desc = circuit.circuitDescription || circuit.circuitType || 'Circuit';
               return {
                 ...circuit,
                 circuitNumber: newNum,
-                circuitDesignation: `${newNum} - ${desc}`,
+                circuitDesignation: `C${newNum}`,
               };
             });
           });
@@ -1993,7 +1990,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               e.stopPropagation();
                               handleUpdateBoard(board.id, 'confirmedCorrectPolarity', !board.confirmedCorrectPolarity);
                             }}
-                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
+                            className={`h-10 rounded-lg text-sm font-medium transition-transform touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
                               board.confirmedCorrectPolarity
                                 ? 'bg-green-500/20 border border-green-500/30 text-green-400'
                                 : 'bg-card border border-border/50 text-muted-foreground'
@@ -2011,7 +2008,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               e.stopPropagation();
                               handleUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence);
                             }}
-                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
+                            className={`h-10 rounded-lg text-sm font-medium transition-transform touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
                               board.confirmedPhaseSequence
                                 ? 'bg-green-500/20 border border-green-500/30 text-green-400'
                                 : 'bg-card border border-border/50 text-muted-foreground'
@@ -2032,7 +2029,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               }
                             }}
                             disabled={board.spdNA}
-                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
+                            className={`h-10 rounded-lg text-sm font-medium transition-transform touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
                               board.spdOperationalStatus
                                 ? 'bg-green-500/20 border border-green-500/30 text-green-400'
                                 : 'bg-card border border-border/50 text-muted-foreground'
@@ -2055,7 +2052,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                                 handleUpdateBoard(board.id, 'spdOperationalStatus', false);
                               }
                             }}
-                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
+                            className={`h-10 rounded-lg text-sm font-medium transition-transform touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
                               board.spdNA
                                 ? 'bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow'
                                 : 'bg-card border border-border/50 text-muted-foreground'
@@ -2246,7 +2243,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               <div className="flex items-center gap-3">
                 {/* AI Board Scan */}
                 <Button
-                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 text-white transition-all"
+                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 text-white transition-colors"
                   onClick={() => onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true)}
                 >
                   <Camera className="h-5 w-5 mr-2.5 text-elec-yellow" />
@@ -2255,7 +2252,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
                 {/* Voice Assistant */}
                 <Button
-                  className={`h-12 px-5 rounded-xl font-medium transition-all shadow-lg ${
+                  className={`h-12 px-5 rounded-xl font-medium transition-colors shadow-lg ${
                     voiceActive
                       ? 'bg-gradient-to-r from-green-600 to-emerald-600 shadow-green-500/25 border border-green-400/30'
                       : voiceConnecting
@@ -2271,7 +2268,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
                 {/* Quick Add - Opens prompt with circuit type selection */}
                 <Button
-                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-amber-500/10 border border-white/20 hover:border-amber-500/30 text-white transition-all"
+                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-amber-500/10 border border-white/20 hover:border-amber-500/30 text-white transition-colors"
                   onClick={addTestResult}
                 >
                   <Zap className="h-5 w-5 mr-2.5 text-amber-400" />
@@ -2280,7 +2277,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
                 {/* Add Circuit - Simple blank circuit */}
                 <Button
-                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 text-white transition-all"
+                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 text-white transition-colors"
                   onClick={() => addCircuitToBoard(distributionBoards[0]?.id || 'main-cu')}
                 >
                   <Plus className="h-5 w-5 mr-2.5" />
@@ -2293,7 +2290,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 {/* Analytics */}
                 <Button
                   variant="ghost"
-                  className="h-10 px-4 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-all"
+                  className="h-10 px-4 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors"
                   onClick={() => setShowAnalytics(!showAnalytics)}
                 >
                   <BarChart3 className="h-4 w-4 mr-2" />
@@ -2304,7 +2301,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 {testResults.length > 0 && (
                   <Button
                     variant="ghost"
-                    className="h-10 px-4 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all"
+                    className="h-10 px-4 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
                     onClick={removeAllTestResults}
                   >
                     <Trash2 className="h-4 w-4 mr-2" />

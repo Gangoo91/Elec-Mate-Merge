@@ -23,6 +23,7 @@ interface EICRFormContextType {
   updateFormData: (field: string, value: any) => void;
   currentReportId: string | null;
   effectiveReportId: string;
+  databaseId: string | null;  // The actual database UUID for queries
   setCurrentReportId: (id: string | null) => void;
   showStartNewDialog: boolean;
   setShowStartNewDialog: (value: boolean) => void;
@@ -62,6 +63,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const { getDefaultProfile, isLoading: isLoadingProfiles } = useInspectorProfiles();
   const [showStartNewDialog, setShowStartNewDialog] = useState(false);
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
+  const [databaseId, setDatabaseId] = useState<string | null>(null);  // Actual database UUID
   const [isLoadingReport, setIsLoadingReport] = useState(!!initialReportId);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [showCustomerDialog, setShowCustomerDialog] = useState(false);
@@ -208,6 +210,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     };
   });
 
+  // Callback when auto-sync creates a new report - keeps component state in sync
+  const handleReportCreated = React.useCallback((newReportId: string) => {
+    console.log('[EICR] Auto-sync created report:', newReportId);
+    setCurrentReportId(newReportId);
+  }, []);
+
   // Cloud sync integration - primary persistence layer
   const {
     syncState,
@@ -217,12 +225,15 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     isAuthenticated,
     authCheckComplete,
     processOfflineQueue,
+    syncNow,
+    onTabChange,
   } = useCloudSync({
     reportId: currentReportId,
     reportType: 'eicr',
     data: formData,
     enabled: true,
     customerId: customerIdFromNav,
+    onReportCreated: handleReportCreated,
   });
 
   // Helper function to check if form is empty (for auto-filling profile)
@@ -361,13 +372,19 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       }
 
       // Step 2: Load from cloud
-      const cloudData = await loadFromCloud(initialReportId);
+      const cloudResult = await loadFromCloud(initialReportId);
 
       // Step 3: Compare timestamps - use whichever is NEWER
-      if (cloudData && typeof cloudData === 'object') {
-        const loadedCloudData = cloudData as any;
+      if (cloudResult && cloudResult.data && typeof cloudResult.data === 'object') {
+        const loadedCloudData = cloudResult.data as any;
         const cloudTime = new Date(loadedCloudData.updated_at || loadedCloudData.last_synced_at || 0).getTime();
         const localTime = localDraft?.lastModified ? new Date(localDraft.lastModified).getTime() : 0;
+
+        // Store the database UUID for photo queries
+        if (cloudResult.databaseId) {
+          console.log('[EICR] Stored database UUID:', cloudResult.databaseId);
+          setDatabaseId(cloudResult.databaseId);
+        }
 
         console.log('[EICR] Comparing timestamps - Cloud:', cloudTime, 'Local:', localTime);
 
@@ -786,6 +803,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     updateFormData,
     currentReportId,
     effectiveReportId,
+    databaseId,
     setCurrentReportId,
     showStartNewDialog,
     setShowStartNewDialog,

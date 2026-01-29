@@ -1,4 +1,4 @@
-import { ArrowLeft, Droplets, Calculator, BarChart, Settings, Zap, AlertTriangle, Network } from "lucide-react";
+import { ArrowLeft, Droplets, Waves, Gauge, PipetteIcon, Activity, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ModuleCard } from "@/components/apprentice-courses/ModuleCard";
@@ -6,59 +6,52 @@ import useSEO from "@/hooks/useSEO";
 
 const HNCModule2Section2 = () => {
   useSEO(
-    "Fluid Mechanics and Hydraulics - HNC Module 2",
-    "Fluid pressure, flow, pumps, fans and pipe sizing methods"
+    "Fluid Mechanics and Hydraulics - HNC Module 2 Section 2 | Building Services Engineering",
+    "Master fluid mechanics: properties, flow characteristics, Bernoulli's equation, pipe sizing, pump curves and system operating points for building services."
   );
 
   const subsections = [
     {
-      number: "Subsection 1",
-      title: "Principles of fluid pressure and flow",
-      description: "Fundamental fluid mechanics principles and flow behaviour",
+      number: "2.1",
+      title: "Fluid Properties and Pressure",
+      description: "Density, viscosity, pressure types, Pascal's law",
       icon: Droplets,
-      href: "../h-n-c-module2-section2-2-1"
+      href: "../h-n-c-module2-section2-1"
     },
     {
-      number: "Subsection 2", 
-      title: "Bernoulli's equation and applications in services",
-      description: "Energy conservation in fluid flow systems",
-      icon: Calculator,
-      href: "../h-n-c-module2-section2-2-2"
+      number: "2.2",
+      title: "Flow Characteristics",
+      description: "Laminar and turbulent flow, Reynolds number, flow patterns",
+      icon: Waves,
+      href: "../h-n-c-module2-section2-2"
     },
     {
-      number: "Subsection 3",
-      title: "Flow rates and pressure drop calculations", 
-      description: "System pressure losses and flow rate determination",
-      icon: BarChart,
-      href: "../h-n-c-module2-section2-2-3"
+      number: "2.3",
+      title: "Bernoulli's Equation",
+      description: "Energy conservation, pressure-velocity relationship, applications",
+      icon: Gauge,
+      href: "../h-n-c-module2-section2-3"
     },
     {
-      number: "Subsection 4",
-      title: "Pipe sizing methods and fittings allowances",
-      description: "Pipe selection and fitting pressure loss calculations",
-      icon: Settings,
-      href: "../h-n-c-module2-section2-2-4"
+      number: "2.4",
+      title: "Pipe Sizing and Pressure Drop",
+      description: "Darcy-Weisbach equation, friction factors, fitting losses",
+      icon: PipetteIcon,
+      href: "../h-n-c-module2-section2-4"
     },
     {
-      number: "Subsection 5",
-      title: "Pump and fan performance curves",
-      description: "Equipment selection using performance characteristics",
-      icon: Zap,
-      href: "../h-n-c-module2-section2-2-5"
+      number: "2.5",
+      title: "Pump Characteristics",
+      description: "Pump curves, types, efficiency, NPSH requirements",
+      icon: Activity,
+      href: "../h-n-c-module2-section2-5"
     },
     {
-      number: "Subsection 6",
-      title: "Cavitation and efficiency in pumps/fans",
-      description: "Equipment efficiency and cavitation prevention",
-      icon: AlertTriangle,
-      href: "../h-n-c-module2-section2-2-6"
-    },
-    {
-      number: "Subsection 7",
-      title: "Applications in water distribution and duct systems",
-      description: "Practical applications in building services systems",
-      icon: Network,
-      href: "../h-n-c-module2-section2-2-7"
+      number: "2.6",
+      title: "System Curves and Operating Points",
+      description: "System resistance, pump selection, parallel/series operation",
+      icon: TrendingUp,
+      href: "../h-n-c-module2-section2-6"
     }
   ];
 
@@ -78,20 +71,20 @@ const HNCModule2Section2 = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            2.2 Fluid Mechanics and Hydraulics
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
-            Fluid pressure, flow, pumps, fans and pipe sizing methods in building services.
-          </p>
-        </div>
+        <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
+          Section 2: Fluid Mechanics and Hydraulics
+        </h1>
+        <p className="text-xl text-muted-foreground mb-8">
+          Apply fluid mechanics principles to the design and analysis of pipework systems and pump selection
+        </p>
+        <p className="text-base text-muted-foreground mb-12">
+          This section covers the fundamental principles of fluid behaviour, pressure drop calculations using Darcy-Weisbach, and the matching of pump characteristics to system curves - essential skills for designing heating, chilled water and domestic water systems.
+        </p>
 
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {subsections.map((subsection) => (
             <ModuleCard
-              key={index}
+              key={subsection.number}
               number={subsection.number}
               title={subsection.title}
               description={subsection.description}

@@ -312,7 +312,7 @@ export function createCircuitWithDefaults(
   return {
     id: crypto.randomUUID(),
     circuitNumber,
-    circuitDesignation: `${circuitNumber} - ${circuitDescription}`,
+    circuitDesignation: `C${circuitNumber}`,
     circuitDescription,
     circuitType: defaults.circuitType || 'Other',
     type: defaults.type || 'Other',

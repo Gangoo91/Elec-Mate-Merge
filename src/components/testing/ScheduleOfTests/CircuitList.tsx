@@ -43,10 +43,13 @@ export const CircuitList: React.FC<CircuitListProps> = ({
   const [editingCircuit, setEditingCircuit] = useState<TestResult | null>(null);
   const [editedValues, setEditedValues] = useState<Partial<TestResult>>({});
 
-  const handleEdit = useCallback((circuit: TestResult) => {
-    setEditingCircuit(circuit);
-    setEditedValues({});
-  }, []);
+  const handleEdit = useCallback((circuitId: string) => {
+    const circuit = circuits.find(c => c.id === circuitId);
+    if (circuit) {
+      setEditingCircuit(circuit);
+      setEditedValues({});
+    }
+  }, [circuits]);
 
   const handleFieldChange = useCallback((field: keyof TestResult, value: string) => {
     setEditedValues((prev) => ({ ...prev, [field]: value }));
@@ -119,8 +122,8 @@ export const CircuitList: React.FC<CircuitListProps> = ({
           <CircuitCard
             key={circuit.id}
             circuit={circuit}
-            onEdit={() => handleEdit(circuit)}
-            onDelete={() => onRemove(circuit.id)}
+            onEdit={handleEdit}
+            onDelete={onRemove}
             enableSwipe={true}
           />
         ))}
@@ -465,7 +468,7 @@ const QuickValueTile: React.FC<QuickValueTileProps> = ({
     <button
       onClick={handleClick}
       className={cn(
-        'flex flex-col items-center justify-center p-2 rounded-lg border transition-all',
+        'flex flex-col items-center justify-center p-2 rounded-lg border transition-transform',
         'active:scale-95',
         tileColors[validation]
       )}

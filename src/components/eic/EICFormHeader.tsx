@@ -33,7 +33,7 @@ interface EICFormHeaderProps {
   onManualSave?: () => void;
   onStartNew?: () => void;
   formData?: any;
-  syncState?: { status: SyncStatus; lastSyncTime?: number; errorMessage?: string };
+  syncState?: { status: SyncStatus; lastSyncTime?: number; lastLocalSave?: number; errorMessage?: string };
   isOnline?: boolean;
   isAuthenticated?: boolean;
   currentTab?: number;
@@ -41,6 +41,7 @@ interface EICFormHeaderProps {
   progressPercentage?: number;
   completedSections?: Set<number>;
   onOpenBoardScan?: () => void;
+  onSyncNow?: () => void;
 }
 
 const EICFormHeader: React.FC<EICFormHeaderProps> = ({
@@ -53,7 +54,8 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
   isOnline = true,
   isAuthenticated = false,
   progressPercentage = 0,
-  onOpenBoardScan
+  onOpenBoardScan,
+  onSyncNow
 }) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
@@ -112,8 +114,10 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
                 <SyncStatusIndicator
                   status={syncState.status}
                   lastSyncTime={syncState.lastSyncTime}
+                  lastLocalSave={syncState.lastLocalSave}
                   isOnline={isOnline}
                   isAuthenticated={isAuthenticated}
+                  onSyncNow={onSyncNow}
                   className="[&>span]:hidden"
                 />
               </div>
@@ -193,8 +197,10 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
               <SyncStatusIndicator
                 status={syncState.status}
                 lastSyncTime={syncState.lastSyncTime}
+                lastLocalSave={syncState.lastLocalSave}
                 isOnline={isOnline}
                 isAuthenticated={isAuthenticated}
+                onSyncNow={onSyncNow}
               />
             )}
             {onStartNew && (

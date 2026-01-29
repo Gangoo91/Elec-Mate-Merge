@@ -242,7 +242,7 @@ const StatusCard: React.FC<StatusCardProps> = ({
     <button
       onClick={onClick}
       className={cn(
-        'flex flex-col items-center justify-center p-3 rounded-lg border transition-all',
+        'flex flex-col items-center justify-center p-3 rounded-lg border transition-transform',
         'active:scale-95',
         c.bg,
         isActive ? c.activeBorder : c.border

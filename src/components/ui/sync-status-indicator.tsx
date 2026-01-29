@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Cloud, CloudOff, CheckCircle2, AlertCircle, Loader2, WifiOff, HardDrive } from 'lucide-react';
+import { Cloud, CloudOff, CheckCircle2, AlertCircle, Loader2, WifiOff, HardDrive, CloudUpload } from 'lucide-react';
 import { SyncStatus } from '@/hooks/useCloudSync';
 import { cn } from '@/lib/utils';
 
+// Extended status type that includes 'unsaved' from the new sync system
+type ExtendedSyncStatus = SyncStatus | 'unsaved';
+
 interface SyncStatusIndicatorProps {
-  status: SyncStatus;
+  status: ExtendedSyncStatus;
   lastSyncTime?: number;
   lastLocalSave?: number;
   isOnline: boolean;
   isAuthenticated: boolean;
   className?: string;
   showLocalStatus?: boolean;
+  onSyncNow?: () => void;  // Optional callback for manual sync
 }
 
 export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
@@ -21,6 +25,7 @@ export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
   isAuthenticated,
   className,
   showLocalStatus = true,
+  onSyncNow,
 }) => {
   // Force re-render every 10 seconds to update "saved X ago" text
   const [, forceUpdate] = useState(0);
@@ -43,6 +48,9 @@ export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
         return <CheckCircle2 className="h-4 w-4 text-green-600" />;
       case 'syncing':
         return <Loader2 className="h-4 w-4 animate-spin text-blue-600" />;
+      case 'unsaved':
+        // Pulsing amber icon for unsaved state - prominent warning
+        return <CloudUpload className="h-4 w-4 text-amber-500 animate-pulse" />;
       case 'queued':
         return <Cloud className="h-4 w-4 text-amber-600" />;
       case 'error':
@@ -94,6 +102,15 @@ export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
         return 'Synced';
       case 'syncing':
         return 'Saving...';
+      case 'unsaved':
+        // Prominent warning for unsaved state
+        if (lastLocalSave) {
+          const seconds = Math.floor((Date.now() - lastLocalSave) / 1000);
+          if (seconds < 5) return 'Not saved to cloud';
+          if (seconds < 60) return 'Not saved to cloud';
+          return 'Not saved to cloud';
+        }
+        return 'Not saved';
       case 'queued':
         // Even when queued, show local save status
         if (lastLocalSave) {
@@ -137,6 +154,9 @@ export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
         return 'text-green-600';
       case 'syncing':
         return 'text-blue-600';
+      case 'unsaved':
+        // Prominent amber for unsaved - needs attention
+        return 'text-amber-500';
       case 'queued':
         // Show green if saved locally
         return lastLocalSave ? 'text-green-600' : 'text-amber-600';
