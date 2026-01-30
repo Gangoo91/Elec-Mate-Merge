@@ -1,9 +1,9 @@
 /**
  * Accounting Software Integration Types
- * Supports Xero, Sage, QuickBooks, and FreshBooks
+ * Supports Xero and QuickBooks (Sage and FreshBooks coming soon)
  */
 
-export type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks';
+export type AccountingProvider = 'xero' | 'quickbooks' | 'sage' | 'freshbooks';
 
 export type AccountingStatus = 'connected' | 'pending' | 'error' | 'disconnected';
 

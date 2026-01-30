@@ -26,28 +26,22 @@ import {
 } from '@/types/accounting';
 import { formatDistanceToNow } from 'date-fns';
 
-// Provider logos as SVG components
+// Proper brand logos as SVG components
 const XeroLogo = () => (
-  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 16.894l-3.188-3.188 3.188-3.188a.75.75 0 10-1.06-1.06L12 12.645 9.166 9.81a.75.75 0 10-1.06 1.06l3.188 3.188-3.188 3.188a.75.75 0 101.06 1.06L12 14.118l2.834 2.836a.75.75 0 101.06-1.06z" />
+  <svg viewBox="0 0 512 512" className="h-7 w-7" fill="currentColor">
+    <path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm127.3 295.3l-67.9-67.9 67.9-67.9c8.3-8.3 8.3-21.8 0-30.2-8.3-8.3-21.8-8.3-30.2 0L285.2 197l-67.9-67.9c-8.3-8.3-21.8-8.3-30.2 0-8.3 8.3-8.3 21.8 0 30.2l67.9 67.9-67.9 67.9c-8.3 8.3-8.3 21.8 0 30.2 4.2 4.2 9.6 6.2 15.1 6.2s10.9-2.1 15.1-6.2l67.9-67.9 67.9 67.9c4.2 4.2 9.6 6.2 15.1 6.2s10.9-2.1 15.1-6.2c8.3-8.4 8.3-21.9 0-30.2z"/>
   </svg>
 );
 
 const QuickBooksLogo = () => (
-  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 18.75a6.75 6.75 0 110-13.5 6.75 6.75 0 010 13.5zm0-10.5a3.75 3.75 0 100 7.5 3.75 3.75 0 000-7.5z" />
+  <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
+    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM9.5 16.5c-2.485 0-4.5-2.015-4.5-4.5s2.015-4.5 4.5-4.5c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5c-.827 0-1.5.673-1.5 1.5s.673 1.5 1.5 1.5h3c.828 0 1.5-.672 1.5-1.5V9c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5v3c0 2.485-2.015 4.5-4.5 4.5h-3zm5-9c2.485 0 4.5 2.015 4.5 4.5s-2.015 4.5-4.5 4.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5c.827 0 1.5-.673 1.5-1.5s-.673-1.5-1.5-1.5h-3c-.828 0-1.5.672-1.5 1.5v3c0 .828-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5v-3c0-2.485 2.015-4.5 4.5-4.5h3z"/>
   </svg>
 );
 
 const SageLogo = () => (
-  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-  </svg>
-);
-
-const FreshBooksLogo = () => (
-  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H8v-2h4v2zm4-4H8v-2h8v2zm0-4H8V7h8v2z" />
+  <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-5h2v5zm0-7h-2V7h2v2z"/>
   </svg>
 );
 
@@ -59,10 +53,8 @@ const ProviderIcon = ({ provider }: { provider: AccountingProvider }) => {
       return <QuickBooksLogo />;
     case 'sage':
       return <SageLogo />;
-    case 'freshbooks':
-      return <FreshBooksLogo />;
     default:
-      return <Calculator className="h-5 w-5" />;
+      return <Calculator className="h-7 w-7" />;
   }
 };
 
@@ -87,13 +79,11 @@ const AccountingConnectorsCard: React.FC = () => {
     const accountingError = params.get('accounting_error');
 
     if (accountingSuccess) {
-      // Remove params from URL
       const newUrl = window.location.pathname;
       window.history.replaceState({}, '', newUrl);
     }
 
     if (accountingError) {
-      // Remove params from URL
       const newUrl = window.location.pathname;
       window.history.replaceState({}, '', newUrl);
     }
@@ -102,9 +92,10 @@ const AccountingConnectorsCard: React.FC = () => {
   // Get first connected integration for preview
   const connectedIntegration = integrations.find(i => i.status === 'connected');
 
-  // Available providers to show - Xero, Sage, and QuickBooks are implemented
-  const implementedProviders: AccountingProvider[] = ['xero', 'sage', 'quickbooks'];
-  const comingSoonProviders: AccountingProvider[] = ['freshbooks'];
+  // Active providers - Xero and QuickBooks
+  const activeProviders: AccountingProvider[] = ['xero', 'quickbooks'];
+  // Coming soon - Sage only
+  const comingSoonProviders: AccountingProvider[] = ['sage'];
 
   const handleConnect = async (provider: AccountingProvider) => {
     await connectProvider(provider);
@@ -165,7 +156,6 @@ const AccountingConnectorsCard: React.FC = () => {
         </button>
 
         <div className="border-t border-white/[0.06]">
-          {/* Preview of connected integrations */}
           <div className="flex items-center gap-3 px-4 py-3">
             <div className="w-8 h-8 rounded-lg bg-purple-500/15 flex items-center justify-center flex-shrink-0">
               {loading ? (
@@ -183,9 +173,7 @@ const AccountingConnectorsCard: React.FC = () => {
                 Invoice Sync
               </p>
               {loading ? (
-                <div className="flex items-center gap-2">
-                  <span className="text-[15px] text-white/50">Checking...</span>
-                </div>
+                <span className="text-[15px] text-white/50">Checking...</span>
               ) : connectedIntegration ? (
                 <div className="flex items-center gap-2">
                   {getStatusIcon(connectedIntegration)}
@@ -208,7 +196,7 @@ const AccountingConnectorsCard: React.FC = () => {
 
       {/* Edit Sheet */}
       <Sheet open={isEditing} onOpenChange={setIsEditing}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col">
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#0f0f13] flex flex-col">
           <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
@@ -234,13 +222,13 @@ const AccountingConnectorsCard: React.FC = () => {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-4">
-            <p className="text-[13px] text-white/50 mb-2">
-              Connect your accounting software to automatically sync invoices.
+          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-3">
+            <p className="text-[13px] text-white/50 mb-4 text-center">
+              Connect your accounting software to automatically sync invoices
             </p>
 
-            {/* Implemented Providers - Xero */}
-            {implementedProviders.map((providerId) => {
+            {/* Active Providers - Xero & QuickBooks */}
+            {activeProviders.map((providerId) => {
               const provider = ACCOUNTING_PROVIDERS[providerId];
               const integration = getIntegration(providerId);
               const isConnected = isProviderConnected(providerId);
@@ -248,131 +236,148 @@ const AccountingConnectorsCard: React.FC = () => {
               return (
                 <motion.div
                   key={providerId}
-                  className={`flex items-center gap-4 p-4 rounded-xl border transition-colors ${
+                  className={`relative overflow-hidden rounded-2xl border transition-all ${
                     isConnected
-                      ? 'bg-white/[0.04] border-green-500/30'
-                      : 'bg-white/[0.02] border-white/[0.08]'
+                      ? 'bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/30'
+                      : 'bg-gradient-to-br from-white/[0.04] to-white/[0.02] border-white/[0.08] hover:border-white/[0.15]'
                   }`}
                   whileTap={{ scale: 0.98 }}
                 >
-                  {/* Provider Logo */}
-                  <div className={`w-12 h-12 rounded-xl ${provider.bgColor} flex items-center justify-center flex-shrink-0`}>
-                    <span className={provider.logoColor}>
-                      <ProviderIcon provider={providerId} />
-                    </span>
-                  </div>
+                  <div className="flex items-center gap-4 p-4">
+                    {/* Provider Logo */}
+                    <div
+                      className={`w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                        providerId === 'xero'
+                          ? 'bg-[#13B5EA]/20'
+                          : 'bg-[#2CA01C]/20'
+                      }`}
+                    >
+                      <span className={providerId === 'xero' ? 'text-[#13B5EA]' : 'text-[#2CA01C]'}>
+                        <ProviderIcon provider={providerId} />
+                      </span>
+                    </div>
 
-                  {/* Provider Info */}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[15px] font-semibold text-white">{provider.name}</p>
-                    {isConnected ? (
-                      <div className="flex items-center gap-1.5 mt-0.5">
-                        <CheckCircle className="h-3.5 w-3.5 text-green-400" />
-                        <span className="text-[13px] text-green-400">
-                          {integration?.tenantName || 'Connected'}
-                        </span>
+                    {/* Provider Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <p className="text-[16px] font-semibold text-white">{provider.name}</p>
+                        {isConnected && (
+                          <span className="px-2 py-0.5 rounded-full bg-green-500/20 text-[10px] font-semibold text-green-400 uppercase">
+                            Connected
+                          </span>
+                        )}
                       </div>
+                      {isConnected ? (
+                        <div className="flex items-center gap-1.5 mt-1">
+                          <CheckCircle className="h-3.5 w-3.5 text-green-400" />
+                          <span className="text-[13px] text-green-400/80">
+                            {integration?.tenantName || 'Connected'}
+                          </span>
+                        </div>
+                      ) : (
+                        <p className="text-[13px] text-white/40 mt-0.5">{provider.description}</p>
+                      )}
+                      {integration?.lastSyncAt && (
+                        <p className="text-[11px] text-white/30 mt-1">
+                          Last synced {formatDistanceToNow(new Date(integration.lastSyncAt), { addSuffix: true })}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Action Button */}
+                    {isConnected ? (
+                      <button
+                        onClick={() => handleDisconnect(providerId)}
+                        disabled={connecting}
+                        className="h-10 px-4 rounded-xl bg-red-500/10 border border-red-500/20 text-[13px] font-medium text-red-400 active:bg-red-500/20 touch-manipulation disabled:opacity-50 flex items-center gap-2"
+                      >
+                        {connecting ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Link2Off className="h-4 w-4" />
+                        )}
+                        <span className="hidden sm:inline">Disconnect</span>
+                      </button>
                     ) : (
-                      <p className="text-[13px] text-white/50">{provider.description}</p>
-                    )}
-                    {integration?.lastSyncAt && (
-                      <p className="text-[11px] text-white/40 mt-0.5">
-                        Synced {formatDistanceToNow(new Date(integration.lastSyncAt), { addSuffix: true })}
-                      </p>
+                      <button
+                        onClick={() => handleConnect(providerId)}
+                        disabled={connecting}
+                        className={`h-10 px-5 rounded-xl text-[13px] font-semibold touch-manipulation disabled:opacity-50 flex items-center gap-2 transition-all ${
+                          providerId === 'xero'
+                            ? 'bg-[#13B5EA] text-white hover:bg-[#0ea5d9] active:bg-[#0c96c7]'
+                            : 'bg-[#2CA01C] text-white hover:bg-[#259018] active:bg-[#1f7a14]'
+                        }`}
+                      >
+                        {connecting ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <ExternalLink className="h-4 w-4" />
+                        )}
+                        Connect
+                      </button>
                     )}
                   </div>
-
-                  {/* Action Button */}
-                  {isConnected ? (
-                    <button
-                      onClick={() => handleDisconnect(providerId)}
-                      disabled={connecting}
-                      className="h-9 px-3 rounded-lg bg-red-500/15 border border-red-500/30 text-[13px] font-medium text-red-400 active:bg-red-500/25 touch-manipulation disabled:opacity-50 flex items-center gap-1.5"
-                    >
-                      {connecting ? (
-                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      ) : (
-                        <Link2Off className="h-3.5 w-3.5" />
-                      )}
-                      <span className="hidden sm:inline">Disconnect</span>
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleConnect(providerId)}
-                      disabled={connecting}
-                      className="h-9 px-4 rounded-lg bg-blue-500/15 border border-blue-500/30 text-[13px] font-medium text-blue-400 active:bg-blue-500/25 touch-manipulation disabled:opacity-50 flex items-center gap-1.5"
-                    >
-                      {connecting ? (
-                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      ) : (
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      )}
-                      Connect
-                    </button>
-                  )}
                 </motion.div>
               );
             })}
 
-            {/* Coming Soon Providers */}
-            {comingSoonProviders.length > 0 && (
-              <>
-                <p className="text-[11px] font-medium text-white/40 uppercase tracking-wide mt-6 mb-2 px-1">
-                  Coming Soon
-                </p>
-                {comingSoonProviders.map((providerId) => {
-                  const provider = ACCOUNTING_PROVIDERS[providerId];
+            {/* Coming Soon - Sage */}
+            <div className="mt-6">
+              <p className="text-[11px] font-medium text-white/30 uppercase tracking-wider mb-3 px-1">
+                Coming Soon
+              </p>
 
-                  return (
-                    <div
-                      key={providerId}
-                      className="flex items-center gap-4 p-4 rounded-xl border bg-white/[0.01] border-white/[0.04] opacity-60"
-                    >
+              {comingSoonProviders.map((providerId) => {
+                const provider = ACCOUNTING_PROVIDERS[providerId];
+
+                return (
+                  <div
+                    key={providerId}
+                    className="relative overflow-hidden rounded-2xl border bg-white/[0.02] border-white/[0.05]"
+                  >
+                    <div className="flex items-center gap-4 p-4 opacity-50">
                       {/* Provider Logo */}
-                      <div className={`w-12 h-12 rounded-xl ${provider.bgColor} flex items-center justify-center flex-shrink-0 opacity-50`}>
-                        <span className={provider.logoColor}>
+                      <div className="w-14 h-14 rounded-xl bg-[#00D639]/10 flex items-center justify-center flex-shrink-0">
+                        <span className="text-[#00D639]/60">
                           <ProviderIcon provider={providerId} />
                         </span>
                       </div>
 
                       {/* Provider Info */}
                       <div className="flex-1 min-w-0">
-                        <p className="text-[15px] font-semibold text-white/70">{provider.name}</p>
-                        <p className="text-[13px] text-white/40">{provider.description}</p>
+                        <p className="text-[16px] font-semibold text-white/70">{provider.name}</p>
+                        <p className="text-[13px] text-white/30 mt-0.5">{provider.description}</p>
                       </div>
 
                       {/* Coming Soon Badge */}
-                      <span className="px-2.5 py-1 rounded-full bg-white/[0.05] text-[11px] font-medium text-white/40">
+                      <span className="px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-[11px] font-semibold text-white/40 uppercase tracking-wide">
                         Soon
                       </span>
                     </div>
-                  );
-                })}
-              </>
-            )}
+                  </div>
+                );
+              })}
+            </div>
 
-            {/* Help Section */}
-            <div className="mt-6 p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-              <h3 className="text-[13px] font-semibold text-white/70 mb-2">How it works</h3>
-              <ul className="text-[12px] text-white/50 space-y-2">
-                <li className="flex items-start gap-2">
-                  <span className="w-4 h-4 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-[10px] mt-0.5 flex-shrink-0">1</span>
-                  <span>Connect your accounting software with secure OAuth</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-4 h-4 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-[10px] mt-0.5 flex-shrink-0">2</span>
-                  <span>When you send an invoice, tap "Sync to Accounting"</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-4 h-4 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-[10px] mt-0.5 flex-shrink-0">3</span>
-                  <span>Invoice and client appear automatically in your accounting</span>
-                </li>
-              </ul>
+            {/* Info Card */}
+            <div className="mt-6 p-4 rounded-2xl bg-gradient-to-br from-purple-500/10 to-blue-500/5 border border-purple-500/20">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Calculator className="h-4 w-4 text-purple-400" />
+                </div>
+                <div>
+                  <h3 className="text-[14px] font-semibold text-white mb-1">How it works</h3>
+                  <p className="text-[12px] text-white/50 leading-relaxed">
+                    When connected, you can sync invoices directly from the invoice page.
+                    Contacts and line items are created automatically in your accounting software.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Security Note */}
-            <p className="text-[11px] text-white/40 text-center mt-4 pb-8">
-              Elec-Mate uses encrypted OAuth tokens. We never see your accounting login details.
+            <p className="text-[11px] text-white/30 text-center mt-4 pb-8">
+              🔒 Secure OAuth connection • We never see your login details
             </p>
           </div>
         </SheetContent>

@@ -964,14 +964,14 @@ const BusinessTab = () => {
       >
         <div className="space-y-5">
           {/* Stripe Connect */}
-          <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] p-4">
+          <div className="rounded-xl bg-gradient-to-br from-[#635BFF]/10 to-[#635BFF]/5 border border-[#635BFF]/20 p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-500/15 flex items-center justify-center">
-                  <Zap className="h-5 w-5 text-indigo-400" />
+                <div className="w-12 h-12 rounded-xl bg-[#635BFF] flex items-center justify-center overflow-hidden">
+                  <img src="/logos/stripe.svg" alt="Stripe" className="h-6 w-auto brightness-0 invert" />
                 </div>
                 <div>
-                  <p className="text-[14px] font-medium text-white">Card Payments</p>
+                  <p className="text-[14px] font-medium text-white">Stripe Payments</p>
                   {stripeLoading ? (
                     <p className="text-[13px] text-white/50">Checking status...</p>
                   ) : stripeStatus?.status === 'active' ? (
@@ -996,7 +996,7 @@ const BusinessTab = () => {
                   size="sm"
                   onClick={handleOpenStripeDashboard}
                   disabled={connecting}
-                  className="text-[13px] text-indigo-400 hover:text-indigo-300 hover:bg-indigo-500/10"
+                  className="text-[13px] text-[#635BFF] hover:text-[#7A73FF] hover:bg-[#635BFF]/10"
                 >
                   <ExternalLink className="h-4 w-4 mr-1" />
                   Dashboard
@@ -1006,9 +1006,9 @@ const BusinessTab = () => {
                   type="button"
                   onClick={handleConnectStripe}
                   disabled={connecting || stripeLoading}
-                  className="h-9 px-4 text-[13px] bg-indigo-500 hover:bg-indigo-600 text-white"
+                  className="h-10 px-5 text-[13px] bg-[#635BFF] hover:bg-[#7A73FF] text-white rounded-xl"
                 >
-                  {connecting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Connect'}
+                  {connecting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Connect Stripe'}
                 </Button>
               )}
             </div>
@@ -1076,69 +1076,56 @@ const BusinessTab = () => {
         badgeColor={hasConnectedProvider ? 'text-green-400' : 'text-white/40'}
       >
         <div className="space-y-4">
-          <p className="text-[12px] text-white/40">
+          <p className="text-[13px] text-white/50">
             Connect your accounting software to automatically sync invoices
           </p>
 
-          {/* Accounting Integrations */}
-          {(['xero', 'sage', 'quickbooks'] as AccountingProvider[]).map((providerId) => {
+          {/* Active Providers - Xero & QuickBooks */}
+          {(['xero', 'quickbooks'] as AccountingProvider[]).map((providerId) => {
             const provider = ACCOUNTING_PROVIDERS[providerId];
             const integration = getIntegration(providerId);
             const isConnected = isProviderConnected(providerId);
-            const isImplemented = providerId === 'xero' || providerId === 'sage' || providerId === 'quickbooks'; // Xero, Sage, and QuickBooks are implemented
 
             return (
               <div
                 key={providerId}
-                className={`flex items-center gap-4 p-4 rounded-xl border transition-colors ${
+                className={`relative overflow-hidden rounded-2xl border transition-all ${
                   isConnected
-                    ? 'bg-white/[0.04] border-green-500/30'
-                    : isImplemented
-                    ? 'bg-white/[0.02] border-white/[0.08]'
-                    : 'bg-white/[0.01] border-white/[0.04] opacity-60'
+                    ? 'bg-gradient-to-br from-green-500/10 to-emerald-500/5 border-green-500/30'
+                    : 'bg-gradient-to-br from-white/[0.04] to-white/[0.02] border-white/[0.08] hover:border-white/[0.15]'
                 }`}
               >
-                {/* Provider Logo */}
-                <div className={`w-12 h-12 rounded-xl ${provider.bgColor} flex items-center justify-center flex-shrink-0 ${!isImplemented ? 'opacity-50' : ''}`}>
-                  <span className={provider.logoColor}>
-                    {providerId === 'xero' ? (
-                      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
-                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 16.894l-3.188-3.188 3.188-3.188a.75.75 0 10-1.06-1.06L12 12.645 9.166 9.81a.75.75 0 10-1.06 1.06l3.188 3.188-3.188 3.188a.75.75 0 101.06 1.06L12 14.118l2.834 2.836a.75.75 0 101.06-1.06z" />
-                      </svg>
-                    ) : providerId === 'sage' ? (
-                      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-6h2v6zm0-8h-2V7h2v2z" />
-                      </svg>
-                    ) : (
-                      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
-                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 18.75a6.75 6.75 0 110-13.5 6.75 6.75 0 010 13.5zm0-10.5a3.75 3.75 0 100 7.5 3.75 3.75 0 000-7.5z" />
-                      </svg>
-                    )}
-                  </span>
-                </div>
+                <div className="flex items-center gap-4 p-4">
+                  {/* Provider Logo */}
+                  <div className="w-14 h-14 rounded-xl flex-shrink-0 overflow-hidden">
+                    <img
+                      src={providerId === 'xero' ? '/logos/xero.svg' : '/logos/quickbooks.svg'}
+                      alt={provider.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
-                {/* Provider Info */}
-                <div className="flex-1 min-w-0">
-                  <p className={`text-[15px] font-semibold ${isImplemented ? 'text-white' : 'text-white/70'}`}>
-                    {provider.name}
-                  </p>
-                  {isConnected ? (
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                      <CheckCircle className="h-3.5 w-3.5 text-green-400" />
-                      <span className="text-[13px] text-green-400">
-                        {integration?.tenantName || 'Connected'}
-                      </span>
-                    </div>
-                  ) : (
-                    <p className="text-[13px] text-white/50">
-                      {isImplemented ? provider.description : 'Coming soon'}
+                  {/* Provider Info */}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[16px] font-semibold text-white">
+                      {provider.name}
                     </p>
-                  )}
-                </div>
+                    {isConnected ? (
+                      <div className="flex items-center gap-1.5 mt-1">
+                        <CheckCircle className="h-4 w-4 text-green-400" />
+                        <span className="text-[13px] text-green-400 font-medium">
+                          {integration?.tenantName || 'Connected'}
+                        </span>
+                      </div>
+                    ) : (
+                      <p className="text-[13px] text-white/50 mt-0.5">
+                        {provider.description}
+                      </p>
+                    )}
+                  </div>
 
-                {/* Action Button */}
-                {isImplemented ? (
-                  isConnected ? (
+                  {/* Action Button - Brand colored */}
+                  {isConnected ? (
                     <Button
                       type="button"
                       variant="ghost"
@@ -1149,13 +1136,13 @@ const BusinessTab = () => {
                         }
                       }}
                       disabled={accountingConnecting}
-                      className="h-9 px-3 text-[13px] text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                      className="h-10 px-4 text-[13px] text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-xl"
                     >
                       {accountingConnecting ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
                       ) : (
                         <>
-                          <Link2Off className="h-4 w-4 mr-1" />
+                          <Link2Off className="h-4 w-4 mr-1.5" />
                           Disconnect
                         </>
                       )}
@@ -1165,32 +1152,69 @@ const BusinessTab = () => {
                       type="button"
                       onClick={() => connectProvider(providerId)}
                       disabled={accountingConnecting || accountingLoading}
-                      className={`h-9 px-4 text-[13px] ${provider.bgColor} border border-current/30 hover:opacity-90 ${provider.logoColor}`}
+                      className={`h-10 px-5 text-[13px] font-medium rounded-xl transition-all ${
+                        providerId === 'xero'
+                          ? 'bg-[#13B5EA] hover:bg-[#0ea5d9] text-white'
+                          : 'bg-[#2CA01C] hover:bg-[#249017] text-white'
+                      }`}
                     >
                       {accountingConnecting ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
                       ) : (
                         <>
-                          <ExternalLink className="h-4 w-4 mr-1" />
+                          <ExternalLink className="h-4 w-4 mr-1.5" />
                           Connect
                         </>
                       )}
                     </Button>
-                  )
-                ) : (
-                  <span className="px-2.5 py-1 rounded-full bg-white/[0.05] text-[11px] font-medium text-white/40">
-                    Soon
-                  </span>
-                )}
+                  )}
+                </div>
               </div>
             );
           })}
 
-          {/* Help Text */}
-          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04]">
-            <p className="text-[11px] text-white/40">
-              When connected, you can sync invoices to your accounting software directly from the invoice page. Contacts and line items are created automatically.
-            </p>
+          {/* Coming Soon - Sage */}
+          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 opacity-50">
+            <div className="flex items-center gap-4">
+              {/* Sage Logo */}
+              <div className="w-14 h-14 rounded-xl flex-shrink-0 overflow-hidden">
+                <img
+                  src="/logos/sage.svg"
+                  alt="Sage"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Info */}
+              <div className="flex-1 min-w-0">
+                <p className="text-[16px] font-semibold text-white/70">
+                  Sage
+                </p>
+                <p className="text-[13px] text-white/40 mt-0.5">
+                  Enterprise accounting solution
+                </p>
+              </div>
+
+              {/* Coming Soon Badge */}
+              <span className="px-3 py-1.5 rounded-full bg-white/[0.06] text-[12px] font-medium text-white/40">
+                Coming Soon
+              </span>
+            </div>
+          </div>
+
+          {/* How It Works Card */}
+          <div className="p-4 rounded-xl bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                <Calculator className="h-4 w-4 text-purple-400" />
+              </div>
+              <div>
+                <p className="text-[13px] font-medium text-white/80">How it works</p>
+                <p className="text-[12px] text-white/50 mt-1 leading-relaxed">
+                  Once connected, you can sync invoices directly to your accounting software from any invoice page. Contacts and line items are created automatically.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </Section>
