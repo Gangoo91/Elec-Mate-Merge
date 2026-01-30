@@ -156,6 +156,21 @@ export const useAccountingIntegrations = (): UseAccountingIntegrationsReturn => 
     provider?: AccountingProvider
   ): Promise<boolean> => {
     try {
+      // Validate invoice ID before making API call
+      if (!invoiceId || invoiceId === 'undefined' || invoiceId === 'null') {
+        console.error('syncInvoice called with invalid invoiceId:', invoiceId);
+        toast.error('Invalid invoice - please try again');
+        return false;
+      }
+
+      // Validate UUID format
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      if (!uuidRegex.test(invoiceId)) {
+        console.error('syncInvoice called with malformed invoiceId:', invoiceId);
+        toast.error('Invalid invoice ID format');
+        return false;
+      }
+
       const { data: session } = await supabase.auth.getSession();
 
       if (!session.session) {
@@ -171,18 +186,44 @@ export const useAccountingIntegrations = (): UseAccountingIntegrationsReturn => 
         return false;
       }
 
+      console.log('%c=== ACCOUNTING SYNC START ===', 'background: blue; color: white; font-size: 14px;');
+      console.log('Invoice ID:', invoiceId);
+      console.log('Provider:', targetProvider);
+
       const response = await supabase.functions.invoke('accounting-sync-invoice', {
         headers: { Authorization: `Bearer ${session.session.access_token}` },
         body: { invoiceId, provider: targetProvider },
       });
 
-      if (response.error) {
-        throw new Error(response.error.message || 'Failed to sync invoice');
+      // Log full response for debugging - use console.warn for visibility
+      console.log('%c=== SYNC RESPONSE ===', 'background: green; color: white; font-size: 14px;');
+      console.warn('Full response object:', response);
+      console.warn('Response error:', response.error);
+      console.warn('Response data:', response.data);
+
+      // Check for error in response data (we now return 200 with success: false for errors)
+      if (response.data?.success === false || response.data?.error) {
+        console.log('%c=== SYNC ERROR ===', 'background: red; color: white; font-size: 16px;');
+        console.error('Full error response:', JSON.stringify(response.data, null, 2));
+        // Show the main error in toast, and log the detail
+        const mainError = response.data?.error || 'Failed to sync invoice';
+        const detail = response.data?.detail;
+        console.error('%cERROR DETAIL:', 'color: red; font-weight: bold;', detail);
+        // Show truncated detail in toast for visibility
+        const toastMsg = detail ? `${mainError}: ${detail.substring(0, 200)}` : mainError;
+        toast.error(toastMsg, { duration: 10000 }); // Longer duration to read error
+        return false;
       }
 
-      if (response.data?.error) {
-        toast.error(response.data.error);
-        return false;
+      if (response.error) {
+        // Log full error details for debugging
+        console.error('Sync invoice response error:', response.error);
+        console.error('Sync invoice response data:', response.data);
+
+        // Try to get error detail from response data if available
+        const errorDetail = response.data?.detail || response.data?.error || response.error.message || 'Failed to sync invoice';
+        console.error('Error detail extracted:', errorDetail);
+        throw new Error(errorDetail);
       }
 
       toast.success(`Invoice synced to ${getProviderDisplayName(targetProvider)}`);

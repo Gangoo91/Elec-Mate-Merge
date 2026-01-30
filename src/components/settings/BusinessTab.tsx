@@ -358,6 +358,8 @@ interface FormData {
   locale: string;
   payment_terms: string;
   hourly_rate: number;
+  overhead_percentage: number;
+  profit_margin: number;
   worker_rates: WorkerRates;
   quote_validity_days: number;
   warranty_period: string;
@@ -463,6 +465,8 @@ const BusinessTab = () => {
       locale: 'en-GB',
       payment_terms: '30 days',
       hourly_rate: 45,
+      overhead_percentage: 15,
+      profit_margin: 20,
       worker_rates: DEFAULT_WORKER_RATES,
       quote_validity_days: 30,
       warranty_period: '12 months',
@@ -529,6 +533,8 @@ const BusinessTab = () => {
       setValue('locale', companyProfile.locale || 'en-GB');
       setValue('payment_terms', companyProfile.payment_terms || '30 days');
       setValue('hourly_rate', companyProfile.hourly_rate || 45);
+      setValue('overhead_percentage', companyProfile.overhead_percentage ?? 15);
+      setValue('profit_margin', companyProfile.profit_margin ?? 20);
       setValue('worker_rates', companyProfile.worker_rates || DEFAULT_WORKER_RATES);
       setValue('quote_validity_days', companyProfile.quote_validity_days || 30);
       setValue('warranty_period', companyProfile.warranty_period || '12 months');
@@ -708,6 +714,8 @@ const BusinessTab = () => {
       locale: data.locale,
       payment_terms: data.payment_terms,
       hourly_rate: data.hourly_rate,
+      overhead_percentage: data.overhead_percentage ?? 15,
+      profit_margin: data.profit_margin ?? 20,
       worker_rates: data.worker_rates || DEFAULT_WORKER_RATES,
       quote_validity_days: data.quote_validity_days || 30,
       warranty_period: data.warranty_period || '12 months',
@@ -1225,6 +1233,42 @@ const BusinessTab = () => {
                   <SelectItem value="60 days">60 days</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+          </div>
+
+          {/* Overhead & Profit Margins */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label className="text-[13px] text-white/50 font-medium">Overhead (%)</Label>
+              <div className="relative">
+                <Input
+                  type="number"
+                  step="1"
+                  min="0"
+                  max="100"
+                  {...register('overhead_percentage', { valueAsNumber: true })}
+                  placeholder="15"
+                  className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl pr-8 focus:border-emerald-500/50 focus:ring-0"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">%</span>
+              </div>
+              <p className="text-[11px] text-white/40">Applied to cover business running costs</p>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-[13px] text-white/50 font-medium">Profit Margin (%)</Label>
+              <div className="relative">
+                <Input
+                  type="number"
+                  step="1"
+                  min="0"
+                  max="100"
+                  {...register('profit_margin', { valueAsNumber: true })}
+                  placeholder="20"
+                  className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl pr-8 focus:border-emerald-500/50 focus:ring-0"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">%</span>
+              </div>
+              <p className="text-[11px] text-white/40">Your profit on each job</p>
             </div>
           </div>
 

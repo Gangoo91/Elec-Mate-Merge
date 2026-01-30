@@ -15,6 +15,8 @@ export interface InvoiceSettings extends QuoteSettings {
     accountNumber: string;
     sortCode: string;
   };
+  // Customer-facing summary view: shows Labour/Materials totals instead of itemised breakdown
+  showSummaryView?: boolean;
 }
 
 export interface Invoice extends Omit<Quote, 'items' | 'settings'> {

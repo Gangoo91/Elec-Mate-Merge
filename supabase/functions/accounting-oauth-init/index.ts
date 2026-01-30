@@ -76,11 +76,17 @@ serve(async (req: Request) => {
           throw new ValidationError('Sage integration not configured');
         }
 
-        // Sage Accounting OAuth - per developer.sage.com docs
-        // Build URL manually to avoid encoding slash in client_id
-        const encodedRedirectUri = encodeURIComponent(redirectUri);
+        // Sage Accounting OAuth - use URLSearchParams for proper encoding
+        const params = new URLSearchParams({
+          response_type: 'code',
+          client_id: SAGE_CLIENT_ID,
+          redirect_uri: redirectUri,
+          scope: 'full_access',
+          state,
+        });
 
-        authUrl = `https://www.sageone.com/oauth2/auth/central?filter=apiv3.1&response_type=code&client_id=${SAGE_CLIENT_ID}&redirect_uri=${encodedRedirectUri}&scope=full_access&state=${state}`;
+        // Sage Accounting OAuth URL - without filter parameter
+        authUrl = `https://www.sageone.com/oauth2/auth/central?${params}`;
 
         console.log('Sage OAuth URL:', authUrl);
         break;

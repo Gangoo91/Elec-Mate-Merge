@@ -471,17 +471,17 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
       });
     }, 20000);
 
-    // Hard timeout to prevent infinite hangs - 90 seconds max
-    const ANALYSIS_TIMEOUT_MS = 90000;
+    // Hard timeout to prevent infinite hangs - 2 minutes for complex 3-phase boards
+    const ANALYSIS_TIMEOUT_MS = 120000;
 
     try {
       const hints = {
         main_switch_side: 'right'
       };
 
-      // Create a timeout promise that rejects after 90 seconds
+      // Create a timeout promise that rejects after 2 minutes
       const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error('Analysis timed out after 90 seconds. Please try again with better lighting.')), ANALYSIS_TIMEOUT_MS);
+        setTimeout(() => reject(new Error('Analysis timed out. Large boards may need multiple photos - try scanning sections separately.')), ANALYSIS_TIMEOUT_MS);
       });
 
       // Race between the actual call and the timeout

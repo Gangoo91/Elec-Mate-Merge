@@ -139,23 +139,75 @@ export function generateInvoicePDF(invoice: Invoice, companyProfile?: any): jsPD
     ...(invoice.additional_invoice_items || [])
   ];
 
-  const itemsData = allItems.map((item: InvoiceItem) => {
-    const qty = item.actualQuantity !== undefined ? item.actualQuantity : item.quantity;
-    const totalPrice = qty * item.unitPrice;
-    
-    return [
-      item.description,
-      qty.toString(),
-      item.unit || "ea",
-      `£${item.unitPrice.toFixed(2)}`,
-      `£${totalPrice.toFixed(2)}`
-    ];
-  });
+  // Check if summary view is enabled
+  const showSummaryView = invoice.settings?.showSummaryView || false;
 
-  const itemsSubtotal = allItems.reduce((sum, item) => {
-    const qty = item.actualQuantity !== undefined ? item.actualQuantity : item.quantity;
-    return sum + (qty * item.unitPrice);
-  }, 0);
+  let itemsData: string[][];
+  let itemsSubtotal: number;
+
+  if (showSummaryView) {
+    // Summary view: Group by category (Labour, Materials, Equipment, Other)
+    const categoryTotals = allItems.reduce((acc, item) => {
+      const qty = item.actualQuantity !== undefined ? item.actualQuantity : item.quantity;
+      const total = qty * item.unitPrice;
+      const category = item.category || 'manual';
+
+      if (!acc[category]) {
+        acc[category] = 0;
+      }
+      acc[category] += total;
+      return acc;
+    }, {} as Record<string, number>);
+
+    // Format category names for display
+    const categoryLabels: Record<string, string> = {
+      labour: 'Labour',
+      materials: 'Materials',
+      equipment: 'Equipment Hire',
+      manual: 'Other'
+    };
+
+    // Build summary rows (only include categories that have values)
+    itemsData = [];
+    itemsSubtotal = 0;
+
+    // Order: Labour first, then Materials, then Equipment, then Other
+    const categoryOrder = ['labour', 'materials', 'equipment', 'manual'];
+
+    for (const category of categoryOrder) {
+      if (categoryTotals[category] && categoryTotals[category] > 0) {
+        const label = categoryLabels[category] || category;
+        const total = categoryTotals[category];
+        itemsSubtotal += total;
+        itemsData.push([
+          label,
+          '1',
+          'lot',
+          `£${total.toFixed(2)}`,
+          `£${total.toFixed(2)}`
+        ]);
+      }
+    }
+  } else {
+    // Detailed view: Show all individual items
+    itemsData = allItems.map((item: InvoiceItem) => {
+      const qty = item.actualQuantity !== undefined ? item.actualQuantity : item.quantity;
+      const totalPrice = qty * item.unitPrice;
+
+      return [
+        item.description,
+        qty.toString(),
+        item.unit || "ea",
+        `£${item.unitPrice.toFixed(2)}`,
+        `£${totalPrice.toFixed(2)}`
+      ];
+    });
+
+    itemsSubtotal = allItems.reduce((sum, item) => {
+      const qty = item.actualQuantity !== undefined ? item.actualQuantity : item.quantity;
+      return sum + (qty * item.unitPrice);
+    }, 0);
+  }
 
   autoTable(doc, {
     startY: yPos,

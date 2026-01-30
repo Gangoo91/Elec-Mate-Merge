@@ -458,6 +458,54 @@ serve(async (req) => {
       // Use client_data from database (snake_case) as primary source since that's what's saved
       const clientData = freshQuote?.client_data || freshQuote?.client || {};
 
+      // Check if summary view is enabled
+      const showSummaryView = freshQuote?.settings?.showSummaryView || false;
+
+      // Process items - either detailed or summary view
+      let processedItems: Array<{name: string; description: string; quantity: number; unit: string; unitPrice: number}>;
+
+      if (showSummaryView) {
+        // Summary view: Group items by category
+        const categoryTotals: Record<string, number> = {};
+        const categoryLabels: Record<string, string> = {
+          labour: 'Labour',
+          materials: 'Materials',
+          equipment: 'Equipment Hire',
+          manual: 'Other'
+        };
+
+        for (const item of (freshQuote?.items || [])) {
+          const category = item.category || 'manual';
+          const qty = item.actualQuantity !== undefined ? item.actualQuantity : item.quantity;
+          const total = (qty || 0) * (item.unitPrice || 0);
+          if (!categoryTotals[category]) categoryTotals[category] = 0;
+          categoryTotals[category] += total;
+        }
+
+        // Build summary items in order
+        const categoryOrder = ['labour', 'materials', 'equipment', 'manual'];
+        processedItems = categoryOrder
+          .filter(cat => categoryTotals[cat] && categoryTotals[cat] > 0)
+          .map(category => ({
+            name: categoryLabels[category] || category,
+            description: '',
+            quantity: 1,
+            unit: 'lot',
+            unitPrice: categoryTotals[category]
+          }));
+
+        console.log('[PDF-MONKEY] Summary view enabled - grouped items:', processedItems.length);
+      } else {
+        // Detailed view: Show all items individually
+        processedItems = (freshQuote?.items || []).map((item: any) => ({
+          name: item.description || "",
+          description: item.notes || "",
+          quantity: item.quantity || 0,
+          unit: item.unit || "each",
+          unitPrice: item.unitPrice || 0
+        }));
+      }
+
       const transformedInvoice = {
         invoiceNumber: freshQuote?.invoice_number || "",
         createdAt: freshQuote?.invoice_date ? new Date(freshQuote.invoice_date).toISOString().split('T')[0] : "",
@@ -480,18 +528,13 @@ serve(async (req) => {
           customDuration: freshQuote?.jobDetails?.customDuration || freshQuote?.job_details?.customDuration || "",
           workStartDate: freshQuote?.jobDetails?.workStartDate || freshQuote?.job_details?.workStartDate || "",
           specialRequirements: freshQuote?.jobDetails?.specialRequirements || freshQuote?.job_details?.specialRequirements || "",
-          completionDate: freshQuote?.work_completion_date ? 
+          completionDate: freshQuote?.work_completion_date ?
             new Date(freshQuote.work_completion_date).toISOString().split('T')[0] : "",
           reference: freshQuote?.jobDetails?.reference || freshQuote?.job_details?.reference || freshQuote?.quote_number || ""
         },
-        items: (freshQuote?.items || []).map((item: any) => ({
-          name: item.description || "",
-          description: item.notes || "",
-          quantity: item.quantity || 0,  // Use original quoted quantity for billing
-          unit: item.unit || "each",
-          unitPrice: item.unitPrice || 0
-        })),
-        notes: freshQuote?.invoice_notes || ""
+        items: processedItems,
+        notes: freshQuote?.invoice_notes || "",
+        showSummaryView: showSummaryView
       };
       
       console.log('[PDF-MONKEY] Transformed invoice client:', JSON.stringify(transformedInvoice.client, null, 2));

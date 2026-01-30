@@ -346,21 +346,63 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 9: Prepare invoice items safely
     // ========================================================================
     const items = Array.isArray(invoice.items) ? invoice.items : [];
-    const itemsHtml = items.map((item: any, index: number) => {
-      const description = safeGet(item, 'description', 'Item');
-      const quantity = safeGet(item, 'quantity', 0);
-      const unitPrice = safeGet(item, 'unitPrice', 0);
-      const lineTotal = item.total ?? item.totalPrice ?? (quantity * unitPrice);
+    const showSummaryView = settings.showSummaryView || false;
 
-      return `
-        <tr style="background: ${index % 2 === 0 ? '#ffffff' : '#f9fafb'};">
-          <td style="padding: 12px; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${description}</td>
-          <td style="padding: 12px; text-align: center; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${quantity}</td>
-          <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap;">${formatCurrency(unitPrice)}</td>
-          <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap; font-weight: 600;">${formatCurrency(lineTotal)}</td>
-        </tr>
-      `;
-    }).join('');
+    let itemsHtml: string;
+
+    if (showSummaryView) {
+      // Summary view: Group items by category
+      const categoryTotals: Record<string, number> = {};
+      const categoryLabels: Record<string, string> = {
+        labour: 'Labour',
+        materials: 'Materials',
+        equipment: 'Equipment Hire',
+        manual: 'Other'
+      };
+
+      for (const item of items) {
+        const category = (item as any).category || 'manual';
+        const qty = (item as any).actualQuantity ?? safeGet(item, 'quantity', 0);
+        const unitPrice = safeGet(item, 'unitPrice', 0);
+        const total = qty * unitPrice;
+        if (!categoryTotals[category]) categoryTotals[category] = 0;
+        categoryTotals[category] += total;
+      }
+
+      // Build summary rows
+      const categoryOrder = ['labour', 'materials', 'equipment', 'manual'];
+      itemsHtml = categoryOrder
+        .filter(cat => categoryTotals[cat] && categoryTotals[cat] > 0)
+        .map((category, index) => {
+          const label = categoryLabels[category] || category;
+          const total = categoryTotals[category];
+          return `
+            <tr style="background: ${index % 2 === 0 ? '#ffffff' : '#f9fafb'};">
+              <td style="padding: 12px; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${label}</td>
+              <td style="padding: 12px; text-align: center; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">1</td>
+              <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap;">${formatCurrency(total)}</td>
+              <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap; font-weight: 600;">${formatCurrency(total)}</td>
+            </tr>
+          `;
+        }).join('');
+    } else {
+      // Detailed view: Show all items individually
+      itemsHtml = items.map((item: any, index: number) => {
+        const description = safeGet(item, 'description', 'Item');
+        const quantity = safeGet(item, 'quantity', 0);
+        const unitPrice = safeGet(item, 'unitPrice', 0);
+        const lineTotal = item.total ?? item.totalPrice ?? (quantity * unitPrice);
+
+        return `
+          <tr style="background: ${index % 2 === 0 ? '#ffffff' : '#f9fafb'};">
+            <td style="padding: 12px; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${description}</td>
+            <td style="padding: 12px; text-align: center; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb;">${quantity}</td>
+            <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap;">${formatCurrency(unitPrice)}</td>
+            <td style="padding: 12px; text-align: right; font-size: 14px; color: #1f2937; border-bottom: 1px solid #e5e7eb; white-space: nowrap; font-weight: 600;">${formatCurrency(lineTotal)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
 
     // ========================================================================
     // STEP 10: Parse settings safely

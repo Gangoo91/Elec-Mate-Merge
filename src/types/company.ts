@@ -38,6 +38,8 @@ export interface CompanyProfile {
   payment_terms: string;
   bank_details?: any;
   hourly_rate?: number;
+  overhead_percentage?: number;
+  profit_margin?: number;
   created_at: Date;
   updated_at: Date;
 

@@ -16,6 +16,7 @@ import { Quote } from '@/types/quote';
 import { Invoice } from '@/types/invoice';
 import { useInvoiceBuilder } from '@/hooks/useInvoiceBuilder';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 
 import { InvoiceReviewStep } from './steps/InvoiceReviewStep';
 import { InvoiceClientDetailsStep } from './steps/InvoiceClientDetailsStep';
@@ -61,22 +62,29 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
   const [currentStep, setCurrentStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const { companyProfile } = useCompanyProfile();
+
+  // Get default settings from company profile
+  const defaultLabourRate = companyProfile?.hourly_rate || 50;
+  const defaultOverhead = companyProfile?.overhead_percentage ?? 15;
+  const defaultProfitMargin = companyProfile?.profit_margin ?? 20;
+  const defaultPaymentTerms = companyProfile?.payment_terms || '30 days';
 
   // Merge certificate data into existing invoice for proper initialization
   const mergedExistingInvoice = initialCertificateData && !existingInvoice && !sourceQuote
     ? {
         client: initialCertificateData.client,
         jobDetails: initialCertificateData.jobDetails,
-        // Include default settings so useInvoiceBuilder can calculate totals
+        // Include settings from company profile so useInvoiceBuilder can calculate totals
         items: [],
         additional_invoice_items: [],
         settings: {
-          labourRate: 50,
-          overheadPercentage: 0,
-          profitMargin: 0,
+          labourRate: defaultLabourRate,
+          overheadPercentage: defaultOverhead,
+          profitMargin: defaultProfitMargin,
           vatRate: 20,
-          vatRegistered: true,
-          paymentTerms: '30 days',
+          vatRegistered: !!companyProfile?.vat_number,
+          paymentTerms: defaultPaymentTerms,
           dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
         },
         // Include linked certificate data for attachment support

@@ -1,5 +1,5 @@
 import { InvoiceSettings } from '@/types/invoice';
-import { Calendar as CalendarIcon, CreditCard, FileText, Receipt, Building, Hash, SortAsc } from 'lucide-react';
+import { Calendar as CalendarIcon, CreditCard, FileText, Receipt, Building, Hash, SortAsc, LayoutList, LayoutGrid } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -32,6 +32,41 @@ export const InvoiceSettingsStep = ({
 
   return (
     <div className="space-y-5 text-left">
+      {/* Display Mode Section */}
+      <div>
+        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+          Invoice Display
+        </p>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+          {/* Summary View Toggle */}
+          <div className="flex items-center gap-3 p-4">
+            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+              {settings?.showSummaryView ? (
+                <LayoutGrid className="h-5 w-5 text-black" />
+              ) : (
+                <LayoutList className="h-5 w-5 text-black" />
+              )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[14px] font-medium text-white">Summary View</p>
+              <p className="text-[12px] text-white/50">
+                {settings?.showSummaryView
+                  ? "Shows Labour & Materials totals only"
+                  : "Shows itemised breakdown"}
+              </p>
+            </div>
+            <Switch
+              checked={settings?.showSummaryView || false}
+              onCheckedChange={(checked) => onUpdateSettings({ showSummaryView: checked })}
+              className="data-[state=checked]:bg-elec-yellow"
+            />
+          </div>
+        </div>
+        <p className="text-[11px] text-white/40 mt-2 px-1">
+          Summary view is cleaner for customers - full breakdown is still synced to your accounting software
+        </p>
+      </div>
+
       {/* VAT Settings Section */}
       <div>
         <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">

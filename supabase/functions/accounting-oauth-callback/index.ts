@@ -133,8 +133,9 @@ serve(async (req: Request) => {
         }
         break;
 
-      case 'sage':
-        tokenData = await withRetry(
+      case 'sage': {
+        // Sage token response includes resource_owner_id which is REQUIRED for all API calls
+        const sageTokenResponse = await withRetry(
           () => withTimeout(
             exchangeSageCode(code),
             Timeouts.STANDARD,
@@ -142,15 +143,30 @@ serve(async (req: Request) => {
           ),
           RetryPresets.STANDARD
         );
-        tenantInfo = await withRetry(
-          () => withTimeout(
-            getSageBusinessInfo(tokenData.access_token),
-            Timeouts.STANDARD,
-            'Sage business fetch'
-          ),
-          RetryPresets.STANDARD
-        );
+        tokenData = sageTokenResponse;
+
+        // Extract resource_owner_id from token response - this is the "tenant" for Sage
+        const resourceOwnerId = (sageTokenResponse as any).resource_owner_id;
+        console.log('Sage resource_owner_id:', resourceOwnerId);
+
+        if (resourceOwnerId) {
+          // Get business info using the resource_owner_id as X-Site header
+          tenantInfo = await withRetry(
+            () => withTimeout(
+              getSageBusinessInfo(tokenData.access_token, resourceOwnerId),
+              Timeouts.STANDARD,
+              'Sage business fetch'
+            ),
+            RetryPresets.STANDARD
+          );
+          // Ensure we use resource_owner_id as the tenantId
+          tenantInfo.tenantId = resourceOwnerId;
+        } else {
+          console.warn('No resource_owner_id in Sage token response');
+          tenantInfo = { tenantId: '', tenantName: 'Sage Business' };
+        }
         break;
+      }
 
       case 'freshbooks':
         tokenData = await withRetry(
@@ -387,21 +403,25 @@ async function exchangeSageCode(code: string): Promise<TokenResponse> {
   return await response.json();
 }
 
-async function getSageBusinessInfo(accessToken: string): Promise<TenantInfo> {
+async function getSageBusinessInfo(accessToken: string, resourceOwnerId: string): Promise<TenantInfo> {
+  // Sage API requires X-Site header with resource_owner_id for all requests
   const response = await fetch('https://api.accounting.sage.com/v3.1/business', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
+      'X-Site': resourceOwnerId,
       Accept: 'application/json',
     },
   });
 
   if (!response.ok) {
-    return { tenantId: '', tenantName: 'Sage Business' };
+    const errorText = await response.text();
+    console.warn('Sage business info fetch failed:', response.status, errorText);
+    return { tenantId: resourceOwnerId, tenantName: 'Sage Business' };
   }
 
   const data = await response.json();
   return {
-    tenantId: data.$key || '',
+    tenantId: resourceOwnerId, // Always use resource_owner_id as tenantId
     tenantName: data.name || 'Sage Business',
   };
 }

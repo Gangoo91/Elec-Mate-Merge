@@ -282,7 +282,9 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               <div className="w-9 h-9 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
                 <Banknote className="h-4 w-4 text-elec-yellow" />
               </div>
-              <span className="text-[14px] font-medium text-white">Invoice Items ({allItems.length})</span>
+              <span className="text-[14px] font-medium text-white">
+                Invoice Items {invoice.settings?.showSummaryView ? '(Summary)' : `(${allItems.length})`}
+              </span>
             </div>
             {expandedSections.includes('items') ? (
               <ChevronUp className="h-5 w-5 text-white/50" />
@@ -294,26 +296,65 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
           {expandedSections.includes('items') && (
             <div className="border-t border-white/[0.06]">
               <div className="divide-y divide-white/[0.06]">
-                {allItems.map((item, index) => (
-                  <div key={item.id || index} className="p-4 space-y-2">
-                    <div className="flex justify-between items-start gap-3">
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[14px] font-medium text-white">{item.description}</p>
-                        {item.notes && (
-                          <p className="text-[12px] text-white/50 mt-0.5">{item.notes}</p>
-                        )}
+                {invoice.settings?.showSummaryView ? (
+                  // Summary View: Group by category
+                  (() => {
+                    const categoryTotals = allItems.reduce((acc, item) => {
+                      const qty = item.actualQuantity !== undefined ? item.actualQuantity : item.quantity;
+                      const total = qty * item.unitPrice;
+                      const category = item.category || 'manual';
+                      if (!acc[category]) acc[category] = 0;
+                      acc[category] += total;
+                      return acc;
+                    }, {} as Record<string, number>);
+
+                    const categoryLabels: Record<string, string> = {
+                      labour: 'Labour',
+                      materials: 'Materials',
+                      equipment: 'Equipment Hire',
+                      manual: 'Other'
+                    };
+
+                    const categoryOrder = ['labour', 'materials', 'equipment', 'manual'];
+
+                    return categoryOrder
+                      .filter(cat => categoryTotals[cat] && categoryTotals[cat] > 0)
+                      .map((category) => (
+                        <div key={category} className="p-4 space-y-2">
+                          <div className="flex justify-between items-start gap-3">
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[14px] font-medium text-white">{categoryLabels[category]}</p>
+                            </div>
+                            <p className="text-[14px] font-bold text-elec-yellow shrink-0">
+                              {formatCurrency(categoryTotals[category])}
+                            </p>
+                          </div>
+                        </div>
+                      ));
+                  })()
+                ) : (
+                  // Detailed View: Show all items
+                  allItems.map((item, index) => (
+                    <div key={item.id || index} className="p-4 space-y-2">
+                      <div className="flex justify-between items-start gap-3">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[14px] font-medium text-white">{item.description}</p>
+                          {item.notes && (
+                            <p className="text-[12px] text-white/50 mt-0.5">{item.notes}</p>
+                          )}
+                        </div>
+                        <p className="text-[14px] font-bold text-elec-yellow shrink-0">
+                          {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
+                        </p>
                       </div>
-                      <p className="text-[14px] font-bold text-elec-yellow shrink-0">
-                        {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
-                      </p>
+                      <div className="flex items-center gap-4 text-[12px] text-white/50">
+                        <span>{item.quantity} {item.unit}</span>
+                        <span>×</span>
+                        <span>{formatCurrency(item.unitPrice)}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-4 text-[12px] text-white/50">
-                      <span>{item.quantity} {item.unit}</span>
-                      <span>×</span>
-                      <span>{formatCurrency(item.unitPrice)}</span>
-                    </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
 
               {/* Totals Breakdown */}
