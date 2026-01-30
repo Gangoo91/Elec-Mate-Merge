@@ -61,7 +61,7 @@ function generateReminderEmailHTML(firstName: string, daysLeft: number): string 
                 </p>
 
                 <!-- What you'll lose -->
-                <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
                   <p style="margin: 0 0 8px; font-size: 13px; color: #ef4444; font-weight: 600;">What you'll lose access to:</p>
                   <p style="margin: 0; font-size: 14px; color: #a3a3a3; line-height: 1.6;">
                     &#8226; AI Cost Engineer & Quoting<br/>
@@ -69,6 +69,14 @@ function generateReminderEmailHTML(firstName: string, daysLeft: number): string 
                     &#8226; BS7671 AI Assistant<br/>
                     &#8226; RAMS Generator<br/>
                     &#8226; EIC/EICR Certificate Tools
+                  </p>
+                </div>
+
+                <!-- Price increase warning -->
+                <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                  <p style="margin: 0 0 4px; font-size: 13px; color: #fbbf24; font-weight: 600;">⚡ Lock in the current price</p>
+                  <p style="margin: 0; font-size: 14px; color: #a3a3a3; line-height: 1.5;">
+                    Currently <strong style="color: #ffffff;">£9.99/month</strong> — price goes up to <strong style="color: #ffffff;">£14.99/month</strong> when our mobile app launches. Subscribe now to keep the lower rate.
                   </p>
                 </div>
 
@@ -155,10 +163,17 @@ function generateOfferEmailHTML(firstName: string): string {
                 </p>
 
                 <!-- Offer Box -->
-                <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;">
+                <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 20px; margin-bottom: 16px; text-align: center;">
                   <p style="margin: 0 0 4px; font-size: 14px; color: #22c55e; font-weight: 600;">YOUR DISCOUNT</p>
                   <p style="margin: 0; font-size: 32px; color: #ffffff; font-weight: 700;">20% OFF</p>
-                  <p style="margin: 4px 0 0; font-size: 13px; color: #888888;">First month subscription</p>
+                  <p style="margin: 4px 0 0; font-size: 13px; color: #888888;">Pay just £7.99 for your first month</p>
+                </div>
+
+                <!-- Price increase warning -->
+                <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 12px; padding: 14px; margin-bottom: 20px; text-align: center;">
+                  <p style="margin: 0; font-size: 13px; color: #a3a3a3; line-height: 1.5;">
+                    ⚡ <strong style="color: #fbbf24;">Price going up to £14.99/month</strong> when our mobile app launches. Lock in the current £9.99 rate now.
+                  </p>
                 </div>
 
                 <!-- CTA Button -->
