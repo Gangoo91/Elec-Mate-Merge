@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { captureException } from "../_shared/sentry.ts";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -79,6 +80,15 @@ const handler = async (req: Request): Promise<Response> => {
     );
   } catch (error: any) {
     console.error('Error in send-welcome-email function:', error);
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'send-welcome-email',
+      requestUrl: req.url,
+      requestMethod: req.method,
+      extra: { hasResendKey: !!Deno.env.get("RESEND_API_KEY") }
+    });
+
     return new Response(
       JSON.stringify({ error: error.message || 'Failed to send welcome email' }),
       {

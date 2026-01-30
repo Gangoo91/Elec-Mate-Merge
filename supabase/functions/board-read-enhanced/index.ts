@@ -2,6 +2,7 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { captureException } from "../_shared/sentry.ts";
 
 // API keys from environment variables (set in Supabase Dashboard > Edge Functions > Secrets)
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
@@ -1023,6 +1024,18 @@ serve(async (req) => {
   } catch (error) {
     const duration = Date.now() - startTime;
     console.error(`Error after ${duration}ms:`, error);
+
+    // Capture error to Sentry for monitoring
+    await captureException(error, {
+      functionName: 'board-read-enhanced',
+      requestUrl: req.url,
+      requestMethod: req.method,
+      extra: {
+        duration,
+        hasGeminiKey: !!geminiApiKey,
+        hasOpenaiKey: !!openaiApiKey,
+      }
+    });
 
     return new Response(JSON.stringify({
       error: error instanceof Error ? error.message : 'Unknown error',

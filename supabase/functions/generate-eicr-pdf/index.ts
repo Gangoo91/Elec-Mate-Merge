@@ -1,4 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { captureException } from "../_shared/sentry.ts";
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '178C3DA6-99D0-490C-A031-23AD55A1134C';
@@ -156,6 +157,14 @@ Deno.serve(async (req: Request) => {
     );
   } catch (error) {
     console.error('[generate-eicr-pdf] Error:', error);
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'generate-eicr-pdf',
+      requestUrl: req.url,
+      requestMethod: req.method,
+      extra: { hasPdfMonkeyKey: !!PDFMONKEY_API_KEY }
+    });
 
     return new Response(
       JSON.stringify({
