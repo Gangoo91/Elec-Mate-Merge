@@ -1,5 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -258,6 +259,13 @@ Include cable sizing, protection requirements, and testing procedures.`
 
   } catch (error) {
     console.error('Error in visual-analysis-rag-enhanced:', error);
+
+    await captureException(error, {
+      functionName: 'visual-analysis-rag-enhanced',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     return new Response(
       JSON.stringify({
         success: false,

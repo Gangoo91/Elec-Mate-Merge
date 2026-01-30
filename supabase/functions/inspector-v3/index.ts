@@ -11,6 +11,7 @@ import {
   generateEmbeddingWithRetry,
 } from "../_shared/v3-core.ts";
 import { enrichResponse } from '../_shared/response-enricher.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // Inspector response schema (similar to commissioning but focused on inspection)
 const INSPECTOR_RESPONSE_SCHEMA = {
@@ -362,6 +363,11 @@ Include visual inspection, dead tests, live tests, expected results, and certifi
 
   } catch (error) {
     logger.error('Inspector V3 error', { error: error instanceof Error ? error.message : String(error) });
+    await captureException(error, {
+      functionName: 'inspector-v3',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return handleError(error);
   }
 });

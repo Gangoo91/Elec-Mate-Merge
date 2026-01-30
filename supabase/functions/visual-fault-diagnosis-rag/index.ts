@@ -5,6 +5,7 @@ import { withRetry, RetryPresets } from "../_shared/retry.ts";
 import { withTimeout, Timeouts } from "../_shared/timeout.ts";
 import { createLogger, generateRequestId } from "../_shared/logger.ts";
 import { safeAll } from "../_shared/safe-parallel.ts";
+import { captureException } from '../_shared/sentry.ts';
 
 // EICR Fault Classification Decision Tree
 const EICR_DECISION_TREE: Record<string, any> = {
@@ -276,13 +277,19 @@ YOU MUST respond with valid JSON only:
 
   } catch (error) {
     logger.error('Visual fault diagnosis RAG failed', { error });
-    
+
+    await captureException(error, {
+      functionName: 'visual-fault-diagnosis-rag',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     // Return FI (Further Investigation) on error with proper error handling
     if (error instanceof ValidationError || error instanceof ExternalAPIError) {
       return handleError(error);
     }
-    
-    return new Response(JSON.stringify({ 
+
+    return new Response(JSON.stringify({
       error: error instanceof Error ? error.message : 'Fault classification failed',
       fault_code: 'FI',
       confidence: 0.3,

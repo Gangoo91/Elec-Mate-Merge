@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -442,12 +443,17 @@ Provide comprehensive educational guidance following the tool schema structure. 
 
   } catch (error) {
     console.error('❌ Tutor-v3 error:', error);
+    await captureException(error, {
+      functionName: 'tutor-v3',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return new Response(
       JSON.stringify({
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred'
       }),
-      { 
+      {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }

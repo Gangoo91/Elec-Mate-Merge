@@ -1,10 +1,10 @@
 // Deployed: 2025-10-11 21:30 UTC
 import { serve } from '../_shared/deps.ts';
 import {
-  corsHeaders, 
-  createLogger, 
-  generateRequestId, 
-  handleError, 
+  corsHeaders,
+  createLogger,
+  generateRequestId,
+  handleError,
   ValidationError,
   createClient,
   generateEmbeddingWithRetry,
@@ -13,6 +13,7 @@ import {
 } from '../_shared/v3-core.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -909,6 +910,11 @@ Include phases, resources, compliance requirements, and risk management.`;
 
   } catch (error) {
     logger.error('Project Manager V3 error', { error: error instanceof Error ? error.message : String(error) });
+    await captureException(error, {
+      functionName: 'project-mgmt-v3',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return handleError(error);
   }
 });

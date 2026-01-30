@@ -5,6 +5,7 @@
 
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 // Provider credentials from environment
 const XERO_CLIENT_ID = Deno.env.get('XERO_CLIENT_ID');
@@ -147,6 +148,11 @@ serve(async (req: Request) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
+    await captureException(error, {
+      functionName: 'accounting-oauth-init',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return handleError(error);
   }
 });

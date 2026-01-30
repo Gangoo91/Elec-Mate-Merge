@@ -5,6 +5,7 @@
  */
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from "https://esm.sh/stripe@14.21.0?target=deno";
 import { Resend } from "npm:resend@2.0.0";
@@ -453,6 +454,11 @@ serve(async (req) => {
 
   } catch (error: any) {
     console.error('❌ Webhook error:', error);
+    await captureException(error, {
+      functionName: 'stripe-connect-webhook',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

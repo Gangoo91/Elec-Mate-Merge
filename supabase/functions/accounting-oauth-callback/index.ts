@@ -5,6 +5,7 @@
  */
 
 import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 import { handleError, ValidationError, ExternalAPIError } from '../_shared/errors.ts';
 import { encryptToken } from '../_shared/encryption.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
@@ -244,6 +245,11 @@ serve(async (req: Request) => {
     });
   } catch (error) {
     console.error('Accounting OAuth callback error:', error);
+    await captureException(error, {
+      functionName: 'accounting-oauth-callback',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     // Redirect with error
     return new Response(null, {
       status: 302,

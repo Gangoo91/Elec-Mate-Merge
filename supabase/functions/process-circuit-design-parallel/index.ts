@@ -1,4 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -111,7 +112,12 @@ Deno.serve(async (req) => {
 
   } catch (error: any) {
     console.error('❌ Orchestrator error:', error);
-    
+    await captureException(error, {
+      functionName: 'process-circuit-design-parallel',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     // Try to update job with error (jobId already extracted at top of handler)
     if (jobId) {
       try {
@@ -119,7 +125,7 @@ Deno.serve(async (req) => {
           Deno.env.get('SUPABASE_URL')!,
           Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
         );
-        
+
         await supabase
           .from('circuit_design_jobs')
           .update({

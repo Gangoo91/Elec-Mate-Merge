@@ -1,5 +1,6 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { generateCommissioningProcedures } from '../_agents/commissioning-core.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -152,6 +153,11 @@ Deno.serve(async (req) => {
 
   } catch (error: any) {
     console.error('[PROCESS-COMMISSIONING] Fatal error:', error);
+    await captureException(error, {
+      functionName: 'process-commissioning-job',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

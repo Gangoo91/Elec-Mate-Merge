@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from '../_shared/deps.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -842,12 +843,17 @@ Provide comprehensive maintenance instructions following the tool schema structu
 
   } catch (error) {
     console.error('❌ Maintenance-v3 error:', error);
+    await captureException(error, {
+      functionName: 'maintenance-v3',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return new Response(
       JSON.stringify({
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred'
       }),
-      { 
+      {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }

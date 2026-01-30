@@ -2,6 +2,7 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
+import { captureException } from '../_shared/sentry.ts';
 
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 
@@ -1152,11 +1153,17 @@ RESPONSE REQUIREMENTS:
   } catch (error) {
     const duration = Date.now() - startTime;
     console.error(`❌ Error after ${duration}ms:`, error);
-    
+
+    await captureException(error, {
+      functionName: 'visual-analysis',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     const errorResponse = {
       error: error instanceof Error ? error.message : 'Unknown error',
       code: error.name === 'AbortError' ? 'TIMEOUT' : 'ERROR',
-      message: error.name === 'AbortError' 
+      message: error.name === 'AbortError'
         ? 'Analysis timed out. Try fast mode or fewer images.'
         : 'Analysis failed. Please try again.'
     };

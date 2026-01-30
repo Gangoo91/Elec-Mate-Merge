@@ -5,6 +5,7 @@
  */
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 serve(async (req) => {
@@ -123,6 +124,11 @@ serve(async (req) => {
 
   } catch (error: any) {
     console.error('❌ Callback error:', error);
+    await captureException(error, {
+      functionName: 'stripe-connect-oauth-callback',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
 
     // Try to redirect with error, fallback to default URL
     const fallbackUrl = 'https://www.elec-mate.com/electrician/invoices';

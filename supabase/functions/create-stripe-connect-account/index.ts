@@ -4,6 +4,7 @@
  */
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
@@ -334,6 +335,11 @@ serve(async (req) => {
   } catch (error: any) {
     console.error('❌ Unexpected error:', error.message);
     console.error('❌ Stack:', error.stack);
+    await captureException(error, {
+      functionName: 'create-stripe-connect-account',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
 
     return new Response(
       JSON.stringify({

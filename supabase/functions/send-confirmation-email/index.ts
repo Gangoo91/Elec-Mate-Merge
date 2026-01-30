@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
+import { captureException } from '../_shared/sentry.ts';
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -93,6 +94,11 @@ const handler = async (req: Request): Promise<Response> => {
     );
   } catch (error: any) {
     console.error('Error in send-confirmation-email function:', error);
+    await captureException(error, {
+      functionName: 'send-confirmation-email',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return new Response(
       JSON.stringify({ error: error.message || 'Failed to send confirmation email' }),
       {

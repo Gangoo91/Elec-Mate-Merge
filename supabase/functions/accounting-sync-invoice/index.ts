@@ -4,6 +4,7 @@
  */
 
 import { corsHeaders } from '../_shared/cors.ts';
+import { captureException } from '../_shared/sentry.ts';
 import { createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError, ExternalAPIError } from '../_shared/errors.ts';
 import { decryptToken, encryptToken } from '../_shared/encryption.ts';
@@ -259,6 +260,11 @@ Deno.serve(async (req: Request) => {
     );
   } catch (error) {
     console.error('Invoice sync error:', error);
+    await captureException(error, {
+      functionName: 'accounting-sync-invoice',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return handleError(error);
   }
 });

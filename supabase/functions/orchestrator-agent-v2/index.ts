@@ -3,6 +3,7 @@
 // Note: UK English only in user-facing strings. Do not use UK-only words like 'whilst' in code keywords.
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
 import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
 import type { Message, ConversationState, ConversationSummary } from '../_shared/conversation-memory.ts';
@@ -376,6 +377,11 @@ serve(async (req) => {
 
   } catch (error) {
     logger.error('Orchestrator error', { error: getErrorMessage(error) });
+    await captureException(error, {
+      functionName: 'orchestrator-agent-v2',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return handleError(error, logger, corsHeaders);
   }
 });

@@ -1,6 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { generateInstallationMethod } from '../_agents/installation-method-core.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -104,7 +105,12 @@ Deno.serve(async (req) => {
 
     } catch (error: any) {
       console.error('Error generating installation method:', error);
-      
+      await captureException(error, {
+        functionName: 'process-installation-method-job',
+        requestUrl: req.url,
+        requestMethod: req.method
+      });
+
       // Update job with error
       await supabase
         .from('installation_method_jobs')
@@ -120,8 +126,13 @@ Deno.serve(async (req) => {
 
   } catch (error: any) {
     console.error('❌ Error in process-installation-method-job:', error);
+    await captureException(error, {
+      functionName: 'process-installation-method-job',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error.message,
         details: error.stack
       }),

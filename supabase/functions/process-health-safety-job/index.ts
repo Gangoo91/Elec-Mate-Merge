@@ -1,6 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { generateHealthSafety } from '../_agents/health-safety-core.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -127,6 +128,11 @@ Deno.serve(async (req) => {
 
     } catch (error: any) {
       logger.error('Job processing failed', { error: error.message });
+      await captureException(error, {
+        functionName: 'process-health-safety-job',
+        requestUrl: req.url,
+        requestMethod: req.method
+      });
 
       await supabase
         .from('health_safety_jobs')

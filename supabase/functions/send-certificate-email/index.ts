@@ -9,6 +9,7 @@ import { serve, corsHeaders, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError, ExternalAPIError } from '../_shared/errors.ts';
 import { decryptToken } from '../_shared/encryption.ts';
 import { encode as encodeBase64 } from 'https://deno.land/std@0.168.0/encoding/base64.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const DAILY_RATE_LIMIT = 100;
 
@@ -207,6 +208,11 @@ serve(async (req: Request) => {
 
   } catch (error) {
     console.error('❌ Error:', error);
+    await captureException(error, {
+      functionName: 'send-certificate-email',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return handleError(error);
   }
 });

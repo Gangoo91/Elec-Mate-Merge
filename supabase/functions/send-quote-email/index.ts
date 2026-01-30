@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -388,9 +389,15 @@ const handler = async (req: Request): Promise<Response> => {
 
   } catch (error: any) {
     console.error('Error sending quote email:', error);
-    
-    return new Response(JSON.stringify({ 
-      success: false, 
+
+    await captureException(error, {
+      functionName: 'send-quote-email',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
+    return new Response(JSON.stringify({
+      success: false,
       error: error.message || 'Failed to send quote email'
     }), {
       status: 500,

@@ -1,5 +1,6 @@
 // AGENT ROUTER - Self-Contained User-Driven Architecture (No shared deps)
 import { serve } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 // Inline CORS headers
@@ -460,10 +461,15 @@ serve(async (req) => {
 
   } catch (error) {
     logger.error('Router error', { error });
+    await captureException(error, {
+      functionName: 'agent-router',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
     return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error' 
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error'
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
