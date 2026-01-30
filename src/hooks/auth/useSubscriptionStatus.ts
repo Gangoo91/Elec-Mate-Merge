@@ -89,6 +89,17 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
     const MAX_RETRIES = 2;
     let lastError: string | null = null;
 
+    // Ensure we have a valid session before calling the edge function
+    // This prevents the "missing sub claim" error when auth isn't ready
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session?.access_token) {
+      // No valid session - skip the Stripe check but keep trial logic working
+      // Trial status is calculated from profile.created_at, not from this edge function
+      setState(prev => ({ ...prev, isCheckingStatus: false, hasCompletedInitialCheck: true }));
+      return;
+    }
+
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
       try {
         if (attempt > 0) {
