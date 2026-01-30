@@ -1077,7 +1077,7 @@ const BusinessTab = () => {
             const provider = ACCOUNTING_PROVIDERS[providerId];
             const integration = getIntegration(providerId);
             const isConnected = isProviderConnected(providerId);
-            const isImplemented = providerId === 'xero' || providerId === 'sage'; // Xero and Sage are implemented
+            const isImplemented = providerId === 'xero' || providerId === 'sage' || providerId === 'quickbooks'; // Xero, Sage, and QuickBooks are implemented
 
             return (
               <div
