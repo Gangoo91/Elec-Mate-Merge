@@ -186,7 +186,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
               ) : (
                 <div className="mt-2 text-sm text-white leading-relaxed space-y-2 text-left">
                   {(step.description || '')
-                    .split(/(?=\d+\.|[A-Z]{2,}:|•|\n\n)/g)
+                    .split(/(?=(?:^|\n)\d+\.|[A-Z]{2,}:|•|\n\n)/gm)
                     .filter(section => section.trim())
                     .map((section, idx) => (
                       <p key={idx} className="leading-relaxed text-left">{section.trim()}</p>

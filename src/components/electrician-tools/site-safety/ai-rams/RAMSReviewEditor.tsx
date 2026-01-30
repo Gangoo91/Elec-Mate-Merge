@@ -258,6 +258,23 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     }) : prev);
   };
 
+  // Method Statement Summary update handlers
+  const updateTools = (tools: string[]) => {
+    setMethodData(prev => ({ ...prev, toolsRequired: tools }));
+  };
+
+  const updateMaterials = (materials: string[]) => {
+    setMethodData(prev => ({ ...prev, materialsRequired: materials }));
+  };
+
+  const updateTips = (tips: string[]) => {
+    setMethodData(prev => ({ ...prev, practicalTips: tips }));
+  };
+
+  const updateMistakes = (mistakes: string[]) => {
+    setMethodData(prev => ({ ...prev, commonMistakes: mistakes }));
+  };
+
 
   const handleGenerateRAMSPDF = async () => {
     setIsGenerating(true);
@@ -938,7 +955,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   <ScopeOfWorkCard methodData={methodData as MethodStatementData} />
 
                   {/* Tools, Materials, Tips, Mistakes */}
-                  <MethodStatementSummary methodData={methodData as MethodStatementData} />
+                  <MethodStatementSummary
+                    methodData={methodData as MethodStatementData}
+                    editable={true}
+                    onUpdateTools={updateTools}
+                    onUpdateMaterials={updateMaterials}
+                    onUpdateTips={updateTips}
+                    onUpdateMistakes={updateMistakes}
+                  />
 
                   {/* Site Logistics */}
                   <SiteLogisticsCard methodData={methodData as MethodStatementData} />

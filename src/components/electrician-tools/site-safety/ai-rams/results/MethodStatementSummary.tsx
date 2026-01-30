@@ -1,110 +1,245 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useState } from 'react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Badge } from '@/components/ui/badge';
-import { Wrench, Package, Lightbulb, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, Wrench, Package, Lightbulb, AlertTriangle, Pencil, ClipboardList, LucideIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { MethodStatementData } from '@/types/method-statement';
+import { MethodSummaryEditSheet } from './MethodSummaryEditSheet';
+
+type SectionType = 'tools' | 'materials' | 'tips' | 'mistakes';
+
+interface SummarySectionProps {
+  icon: LucideIcon;
+  title: string;
+  count: number;
+  items: string[];
+  defaultOpen?: boolean;
+  accentColor?: string;
+  editable?: boolean;
+  onEdit?: () => void;
+}
+
+const SummarySection: React.FC<SummarySectionProps> = ({
+  icon: Icon,
+  title,
+  count,
+  items,
+  defaultOpen = false,
+  accentColor = 'elec-yellow',
+  editable = false,
+  onEdit
+}) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  if (count === 0) return null;
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <CollapsibleTrigger className="w-full group">
+        <div className="flex items-center justify-between py-3 px-1 touch-manipulation min-h-[44px]">
+          <div className="flex items-center gap-3">
+            <Icon className={cn(
+              "h-5 w-5 shrink-0",
+              accentColor === 'amber-500' ? 'text-amber-500' : 'text-elec-yellow'
+            )} />
+            <span className="text-sm font-semibold text-white">{title}</span>
+            <Badge className="bg-white/10 text-white/70 border-0 text-xs px-2 py-0.5">
+              {count}
+            </Badge>
+          </div>
+          <div className="flex items-center gap-1">
+            {editable && onEdit && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 w-8 p-0 text-white/40 hover:text-elec-yellow hover:bg-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onEdit();
+                }}
+              >
+                <Pencil className="h-4 w-4" />
+              </Button>
+            )}
+            <ChevronDown className={cn(
+              "h-4 w-4 text-white/40 transition-transform duration-200",
+              isOpen && "rotate-180"
+            )} />
+          </div>
+        </div>
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <ul className="space-y-2 pb-4 pl-8">
+          {items.map((item, idx) => (
+            <li key={idx} className="flex items-start gap-2 text-sm text-white">
+              <span className="text-elec-yellow/60 mt-0.5 shrink-0">•</span>
+              <span className="flex-1">{item}</span>
+            </li>
+          ))}
+        </ul>
+        {editable && onEdit && (
+          <div className="pl-8 pb-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onEdit}
+              className="h-9 text-xs border-white/[0.08] text-white/60 hover:text-elec-yellow hover:border-elec-yellow/30"
+            >
+              <Pencil className="h-3.5 w-3.5 mr-1.5" />
+              Edit {title}
+            </Button>
+          </div>
+        )}
+      </CollapsibleContent>
+    </Collapsible>
+  );
+};
 
 interface MethodStatementSummaryProps {
   methodData: MethodStatementData;
+  editable?: boolean;
+  onUpdateTools?: (tools: string[]) => void;
+  onUpdateMaterials?: (materials: string[]) => void;
+  onUpdateTips?: (tips: string[]) => void;
+  onUpdateMistakes?: (mistakes: string[]) => void;
 }
 
-export function MethodStatementSummary({ methodData }: MethodStatementSummaryProps) {
-  const hasTools = methodData.toolsRequired && methodData.toolsRequired.length > 0;
-  const hasMaterials = methodData.materialsRequired && methodData.materialsRequired.length > 0;
-  const hasTips = methodData.practicalTips && methodData.practicalTips.length > 0;
-  const hasMistakes = methodData.commonMistakes && methodData.commonMistakes.length > 0;
+export function MethodStatementSummary({
+  methodData,
+  editable = false,
+  onUpdateTools,
+  onUpdateMaterials,
+  onUpdateTips,
+  onUpdateMistakes
+}: MethodStatementSummaryProps) {
+  const [editingSection, setEditingSection] = useState<SectionType | null>(null);
+
+  const tools = methodData.toolsRequired || [];
+  const materials = methodData.materialsRequired || [];
+  const tips = methodData.practicalTips || [];
+  const mistakes = methodData.commonMistakes || [];
+
+  const hasTools = tools.length > 0;
+  const hasMaterials = materials.length > 0;
+  const hasTips = tips.length > 0;
+  const hasMistakes = mistakes.length > 0;
 
   if (!hasTools && !hasMaterials && !hasTips && !hasMistakes) {
     return null;
   }
 
+  const totalItems = tools.length + materials.length + tips.length + mistakes.length;
+
+  const handleSave = (section: SectionType, items: string[]) => {
+    switch (section) {
+      case 'tools':
+        onUpdateTools?.(items);
+        break;
+      case 'materials':
+        onUpdateMaterials?.(items);
+        break;
+      case 'tips':
+        onUpdateTips?.(items);
+        break;
+      case 'mistakes':
+        onUpdateMistakes?.(items);
+        break;
+    }
+    setEditingSection(null);
+  };
+
+  const getEditingItems = (): string[] => {
+    switch (editingSection) {
+      case 'tools': return tools;
+      case 'materials': return materials;
+      case 'tips': return tips;
+      case 'mistakes': return mistakes;
+      default: return [];
+    }
+  };
+
   return (
-    <div className="space-y-4 mb-4">
-      {/* Tools Required Section */}
-      {hasTools && (
-        <Card className="bg-blue-500/5 border-blue-500/20">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Wrench className="h-4 w-4 text-blue-400" />
-              Tools Required
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2">
-              {methodData.toolsRequired!.map((tool, idx) => (
-                <Badge key={idx} className="bg-blue-500/10 text-blue-400 border-blue-500/30">
-                  {tool}
-                </Badge>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
+    <>
+      <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl overflow-hidden">
+        {/* Card Header */}
+        <div className="px-4 py-3 border-b border-white/[0.08] flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <ClipboardList className="h-4 w-4 text-elec-yellow" />
+            <h3 className="text-sm font-semibold text-white">Job Summary</h3>
+          </div>
+          <Badge className="bg-white/10 text-white/60 border-0 text-[10px]">
+            {totalItems} items
+          </Badge>
+        </div>
 
-      {/* Materials Required Section */}
-      {hasMaterials && (
-        <Card className="bg-green-500/5 border-green-500/20">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Package className="h-4 w-4 text-green-400" />
-              Materials Required
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2">
-              {methodData.materialsRequired!.map((material, idx) => (
-                <Badge key={idx} className="bg-green-500/10 text-green-400 border-green-500/30">
-                  {material}
-                </Badge>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
+        {/* Collapsible Sections */}
+        <div className="px-3 divide-y divide-white/[0.05]">
+          {/* Tools */}
+          {hasTools && (
+            <SummarySection
+              icon={Wrench}
+              title="Tools Required"
+              count={tools.length}
+              items={tools}
+              defaultOpen={true}
+              editable={editable && !!onUpdateTools}
+              onEdit={() => setEditingSection('tools')}
+            />
+          )}
 
-      {/* Practical Tips Section */}
-      {hasTips && (
-        <Card className="bg-amber-500/5 border-amber-500/20">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Lightbulb className="h-4 w-4 text-amber-400" />
-              Practical Tips
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {methodData.practicalTips!.map((tip, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-sm text-elec-light/90">
-                  <span className="text-amber-500 mt-1 font-bold">💡</span>
-                  <span className="flex-1">{tip}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      )}
+          {/* Materials */}
+          {hasMaterials && (
+            <SummarySection
+              icon={Package}
+              title="Materials Required"
+              count={materials.length}
+              items={materials}
+              defaultOpen={false}
+              editable={editable && !!onUpdateMaterials}
+              onEdit={() => setEditingSection('materials')}
+            />
+          )}
 
-      {/* Common Mistakes Section */}
-      {hasMistakes && (
-        <Card className="bg-red-500/5 border-red-500/20">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-red-400" />
-              Common Mistakes to Avoid
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {methodData.commonMistakes!.map((mistake, idx) => (
-                <li key={idx} className="flex items-start gap-2 text-sm text-elec-light/90">
-                  <span className="text-red-500 mt-1 font-bold">⚠️</span>
-                  <span className="flex-1">{mistake}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+          {/* Tips */}
+          {hasTips && (
+            <SummarySection
+              icon={Lightbulb}
+              title="Practical Tips"
+              count={tips.length}
+              items={tips}
+              defaultOpen={false}
+              editable={editable && !!onUpdateTips}
+              onEdit={() => setEditingSection('tips')}
+            />
+          )}
+
+          {/* Common Mistakes */}
+          {hasMistakes && (
+            <SummarySection
+              icon={AlertTriangle}
+              title="Common Mistakes"
+              count={mistakes.length}
+              items={mistakes}
+              defaultOpen={false}
+              accentColor="amber-500"
+              editable={editable && !!onUpdateMistakes}
+              onEdit={() => setEditingSection('mistakes')}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Edit Sheet */}
+      {editingSection && (
+        <MethodSummaryEditSheet
+          sectionType={editingSection}
+          items={getEditingItems()}
+          open={!!editingSection}
+          onOpenChange={(open) => !open && setEditingSection(null)}
+          onSave={(items) => handleSave(editingSection, items)}
+        />
       )}
-    </div>
+    </>
   );
 }

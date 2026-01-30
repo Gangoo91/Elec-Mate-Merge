@@ -3,7 +3,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ShieldCheck, HardHat, Eye, Hand, Footprints, Ear, Zap, Edit3, Save, X, Plus, Trash2 } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ShieldCheck, HardHat, Eye, Hand, Footprints, Ear, Zap, Pencil, Save, X, Plus, Trash2, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { PPEItem } from '@/types/rams';
 import { toast } from '@/hooks/use-toast';
@@ -20,11 +21,11 @@ interface PPEGridViewProps {
 const getPPEIcon = (ppeType: string) => {
   const type = ppeType.toLowerCase();
   if (type.includes('helmet') || type.includes('hat')) return HardHat;
-  if (type.includes('eye') || type.includes('goggles') || type.includes('glasses')) return Eye;
-  if (type.includes('glove')) return Hand;
-  if (type.includes('boot') || type.includes('footwear')) return Footprints;
+  if (type.includes('eye') || type.includes('goggles') || type.includes('glasses') || type.includes('face') || type.includes('shield')) return Eye;
+  if (type.includes('glove') || type.includes('insulating glove')) return Hand;
+  if (type.includes('boot') || type.includes('footwear') || type.includes('shoe')) return Footprints;
   if (type.includes('ear') || type.includes('hearing')) return Ear;
-  if (type.includes('insulated')) return Zap;
+  if (type.includes('insulated') || type.includes('arc')) return Zap;
   return ShieldCheck;
 };
 
@@ -35,6 +36,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
   onUpdate
 }) => {
   const { isMobile } = useMobileEnhanced();
+  const [isOpen, setIsOpen] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [showEditSheet, setShowEditSheet] = useState(false);
   const [editedPPE, setEditedPPE] = useState<PPEItem[]>([]);
@@ -110,17 +112,7 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
   };
 
   if (items.length === 0 && !editable) {
-    return (
-      <div className="py-6 border-t border-white/5">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
-            <ShieldCheck className="h-5 w-5 text-elec-yellow" />
-          </div>
-          <h4 className="font-semibold text-white">Required PPE</h4>
-        </div>
-        <p className="text-sm text-white/50">No PPE requirements specified</p>
-      </div>
-    );
+    return null;
   }
 
   return (
@@ -133,17 +125,15 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
         onSave={handleSheetSave}
       />
 
-      <div className="py-6 border-t border-white/5 animate-fade-in-up">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
-              <ShieldCheck className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <h4 className="font-semibold text-white">Required PPE</h4>
+      <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl overflow-hidden">
+        {/* Card Header */}
+        <div className="px-4 py-3 border-b border-white/[0.08] flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-4 w-4 text-elec-yellow" />
+            <h3 className="text-sm font-semibold text-white">Required PPE</h3>
           </div>
           <div className="flex items-center gap-2">
-            <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
+            <Badge className="bg-white/10 text-white/60 border-0 text-[10px]">
               {isEditing ? editedPPE.length : items.length} items
             </Badge>
             {editable && !isEditing && (
@@ -151,193 +141,172 @@ export const PPEGridView: React.FC<PPEGridViewProps> = ({
                 variant="ghost"
                 size="sm"
                 onClick={handleEditClick}
-                className="h-9 w-9 p-0 rounded-lg hover:bg-white/10 active:bg-white/20 touch-manipulation"
+                className="h-8 w-8 p-0 text-white/40 hover:text-elec-yellow hover:bg-elec-yellow/10"
               >
-                <Edit3 className="h-4 w-4 text-white/60" />
+                <Pencil className="h-4 w-4" />
               </Button>
             )}
           </div>
         </div>
 
-        {/* View Mode */}
-        {!isEditing && (
-          <div className="flex flex-wrap gap-2">
-            {items.map((item) => {
-              const Icon = getPPEIcon(item.ppeType);
-              return (
-                <div
-                  key={item.id}
-                  className={cn(
-                    'inline-flex items-center gap-2 px-3 py-2 rounded-full border transition-all',
-                    item.mandatory
-                      ? 'bg-red-500/10 border-red-500/30 text-red-400'
-                      : 'bg-white/[0.03] border-white/[0.08] text-white/70'
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                  <span className="text-sm font-medium">{item.ppeType}</span>
-                  {item.mandatory && (
-                    <span className="text-xs bg-red-500/20 px-1.5 py-0.5 rounded-full">Required</span>
-                  )}
+        {/* Content */}
+        <div className="px-3">
+          {/* View Mode */}
+          {!isEditing && (
+            <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+              <CollapsibleTrigger className="w-full">
+                <div className="flex items-center justify-between py-3 px-1 touch-manipulation min-h-[44px]">
+                  <span className="text-sm text-white/70">
+                    {isOpen ? 'Hide details' : 'Show all PPE requirements'}
+                  </span>
+                  <ChevronDown className={cn(
+                    "h-4 w-4 text-white/40 transition-transform duration-200",
+                    isOpen && "rotate-180"
+                  )} />
                 </div>
-              );
-            })}
-            {items.length === 0 && editable && (
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <ul className="space-y-2 pb-4">
+                  {items.map((item) => {
+                    const Icon = getPPEIcon(item.ppeType);
+                    return (
+                      <li key={item.id} className="flex items-start gap-3 text-sm text-white/80 py-2 px-2 rounded-lg hover:bg-white/[0.02] transition-colors">
+                        <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center shrink-0 mt-0.5">
+                          <Icon className="h-4 w-4 text-elec-yellow" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className="font-medium text-white">{item.ppeType}</span>
+                          {item.standard && (
+                            <p className="text-xs text-white/50 mt-0.5">{item.standard}</p>
+                          )}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+                {editable && (
+                  <div className="pb-4">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleEditClick}
+                      className="h-9 text-xs border-white/[0.08] text-white/60 hover:text-elec-yellow hover:border-elec-yellow/30"
+                    >
+                      <Pencil className="h-3.5 w-3.5 mr-1.5" />
+                      Edit PPE Requirements
+                    </Button>
+                  </div>
+                )}
+              </CollapsibleContent>
+            </Collapsible>
+          )}
+
+          {/* Edit Mode (Desktop) */}
+          {isEditing && (
+            <div className="space-y-4 py-4">
+              {/* Add Button */}
               <Button
                 variant="outline"
                 size="sm"
-                onClick={handleEditClick}
-                className="h-9 text-xs border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                onClick={handleAddItem}
+                className="w-full sm:w-auto h-10 text-xs border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
               >
                 <Plus className="h-4 w-4 mr-1" />
-                Add PPE Requirements
+                Add PPE Item
               </Button>
-            )}
-          </div>
-        )}
 
-        {/* Edit Mode (Desktop) */}
-        {isEditing && (
-          <div className="space-y-4">
-            {/* Add Button */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleAddItem}
-              className="w-full sm:w-auto h-10 text-xs border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              <Plus className="h-4 w-4 mr-1" />
-              Add PPE Item
-            </Button>
-
-            {/* Editable Items */}
-            <div className="space-y-3">
-              {editedPPE.map((item, index) => {
-                const Icon = getPPEIcon(item.ppeType);
-                return (
-                  <div
-                    key={item.id}
-                    className={cn(
-                      "p-4 rounded-xl border transition-all",
-                      item.mandatory
-                        ? "bg-red-500/5 border-red-500/20"
-                        : "bg-white/[0.03] border-white/[0.08]"
-                    )}
-                  >
-                    {/* Item Header */}
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <div className={cn(
-                          "w-8 h-8 rounded-lg flex items-center justify-center",
-                          item.mandatory ? "bg-red-500/20" : "bg-elec-yellow/10"
-                        )}>
-                          <Icon className={cn("h-4 w-4", item.mandatory ? "text-red-400" : "text-elec-yellow")} />
+              {/* Editable Items */}
+              <div className="space-y-3">
+                {editedPPE.map((item, index) => {
+                  const Icon = getPPEIcon(item.ppeType);
+                  return (
+                    <div
+                      key={item.id}
+                      className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.08]"
+                    >
+                      {/* Item Header */}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
+                            <Icon className="h-4 w-4 text-elec-yellow" />
+                          </div>
+                          <span className="text-xs font-bold text-white/60">PPE #{index + 1}</span>
                         </div>
-                        <span className="text-xs font-bold text-white/60">PPE #{index + 1}</span>
-                        {item.mandatory && (
-                          <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-[10px]">
-                            Required
-                          </Badge>
-                        )}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleRemoveItem(item.id)}
+                          className="h-8 w-8 p-0 text-white/40 hover:text-white hover:bg-white/10"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleRemoveItem(item.id)}
-                        className="h-8 w-8 p-0 text-red-400 hover:text-red-300 hover:bg-red-500/10"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
 
-                    {/* Form Fields */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-white/60">PPE Type</label>
-                        <Input
-                          value={item.ppeType}
-                          onChange={(e) => handleItemChange(item.id, { ppeType: e.target.value })}
-                          placeholder="e.g., Safety Helmet"
-                          className="h-10 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-white/60">Standard</label>
-                        <Input
-                          value={item.standard}
-                          onChange={(e) => handleItemChange(item.id, { standard: e.target.value })}
-                          placeholder="e.g., BS EN 397"
-                          className="h-10 text-sm"
-                        />
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-white/60">Purpose</label>
-                        <Input
-                          value={item.purpose}
-                          onChange={(e) => handleItemChange(item.id, { purpose: e.target.value })}
-                          placeholder="e.g., Head protection"
-                          className="h-10 text-sm"
-                        />
+                      {/* Form Fields */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-medium text-white/60">PPE Type</label>
+                          <Input
+                            value={item.ppeType}
+                            onChange={(e) => handleItemChange(item.id, { ppeType: e.target.value })}
+                            placeholder="e.g., Safety Helmet"
+                            className="h-10 text-sm"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-medium text-white/60">Standard</label>
+                          <Input
+                            value={item.standard}
+                            onChange={(e) => handleItemChange(item.id, { standard: e.target.value })}
+                            placeholder="e.g., BS EN 397"
+                            className="h-10 text-sm"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-medium text-white/60">Purpose</label>
+                          <Input
+                            value={item.purpose}
+                            onChange={(e) => handleItemChange(item.id, { purpose: e.target.value })}
+                            placeholder="e.g., Head protection"
+                            className="h-10 text-sm"
+                          />
+                        </div>
                       </div>
                     </div>
-
-                    {/* Mandatory Toggle */}
-                    <div className="flex items-center gap-3 mt-3 pt-3 border-t border-white/5">
-                      <Checkbox
-                        id={`mandatory-${item.id}`}
-                        checked={item.mandatory}
-                        onCheckedChange={(checked) => handleItemChange(item.id, { mandatory: !!checked })}
-                        className="border-white/40 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                      />
-                      <label
-                        htmlFor={`mandatory-${item.id}`}
-                        className="text-sm text-white/70 cursor-pointer"
-                      >
-                        Mandatory requirement
-                      </label>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Empty State */}
-            {editedPPE.length === 0 && (
-              <div className="text-center py-8 text-white/50 border border-dashed border-white/10 rounded-xl">
-                <ShieldCheck className="h-12 w-12 mx-auto mb-3 opacity-40" />
-                <p className="text-sm">No PPE items yet</p>
-                <p className="text-xs mt-1">Click "Add PPE Item" to add requirements</p>
+                  );
+                })}
               </div>
-            )}
 
-            {/* Save/Cancel Actions */}
-            <div className="flex gap-2 pt-4 border-t border-white/5">
-              <Button
-                variant="outline"
-                className="flex-1"
-                onClick={handleCancel}
-              >
-                <X className="h-4 w-4 mr-2" />
-                Cancel
-              </Button>
-              <Button
-                className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                onClick={handleSave}
-              >
-                <Save className="h-4 w-4 mr-2" />
-                Save Changes
-              </Button>
+              {/* Empty State */}
+              {editedPPE.length === 0 && (
+                <div className="text-center py-8 text-white/50 border border-dashed border-white/10 rounded-xl">
+                  <ShieldCheck className="h-12 w-12 mx-auto mb-3 opacity-40" />
+                  <p className="text-sm">No PPE items yet</p>
+                  <p className="text-xs mt-1">Click "Add PPE Item" to add requirements</p>
+                </div>
+              )}
+
+              {/* Save/Cancel Actions */}
+              <div className="flex gap-2 pt-4 border-t border-white/[0.05]">
+                <Button
+                  variant="outline"
+                  className="flex-1 border-white/[0.08]"
+                  onClick={handleCancel}
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  Cancel
+                </Button>
+                <Button
+                  className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  onClick={handleSave}
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  Save Changes
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
-
-        <style>{`
-          @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          .animate-fade-in-up { animation: fadeInUp 0.3s ease-out forwards; }
-        `}</style>
+          )}
+        </div>
       </div>
     </>
   );

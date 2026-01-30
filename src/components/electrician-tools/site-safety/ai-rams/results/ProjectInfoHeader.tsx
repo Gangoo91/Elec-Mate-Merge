@@ -1,7 +1,5 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { MapPin, Users, Calendar, User, Clock } from 'lucide-react';
+import { MapPin, Users, User, Clock, Building2 } from 'lucide-react';
 import type { MethodStatementData } from '@/types/method-statement';
 
 interface ProjectInfoHeaderProps {
@@ -10,103 +8,76 @@ interface ProjectInfoHeaderProps {
   location?: string;
 }
 
-export const ProjectInfoHeader: React.FC<ProjectInfoHeaderProps> = ({ 
-  methodData, 
+interface InfoItemProps {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}
+
+const InfoItem: React.FC<InfoItemProps> = ({ icon, label, value }) => (
+  <div className="flex items-center gap-3 py-2">
+    <div className="w-9 h-9 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
+      {icon}
+    </div>
+    <div className="flex-1 min-w-0">
+      <p className="text-[10px] uppercase tracking-wider text-white/40 font-medium">{label}</p>
+      <p className="text-sm font-semibold text-white truncate">{value}</p>
+    </div>
+  </div>
+);
+
+export const ProjectInfoHeader: React.FC<ProjectInfoHeaderProps> = ({
+  methodData,
   projectName,
-  location 
+  location
 }) => {
+  const title = methodData.jobTitle || projectName || 'Untitled Project';
+  const locationValue = methodData.location || location;
+
   return (
-    <Card className="bg-gradient-to-br from-elec-yellow/10 via-elec-gray to-elec-gray border-elec-yellow/20 mb-3 sticky top-0 z-10">
-      <CardContent className="p-3">
-        {/* Project Title */}
-        <h2 className="text-base font-bold text-elec-light mb-3 flex items-center gap-2">
-          <span className="w-1 h-6 bg-elec-yellow rounded-full"></span>
-          {methodData.jobTitle || projectName || 'Untitled Project'}
-        </h2>
-
-        {/* Info Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {/* Location */}
-          {(methodData.location || location) && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="w-8 h-8 bg-elec-yellow/20 rounded-lg flex items-center justify-center">
-                <MapPin className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <div>
-                <div className="text-xs text-elec-light/60">Location</div>
-                <div className="font-semibold text-elec-light">{methodData.location || location}</div>
-              </div>
-            </div>
-          )}
-
-          {/* Contractor */}
-          {methodData.contractor && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                <User className="h-4 w-4 text-blue-400" />
-              </div>
-              <div>
-                <div className="text-xs text-elec-light/60">Contractor</div>
-                <div className="font-semibold text-elec-light">{methodData.contractor}</div>
-              </div>
-            </div>
-          )}
-
-          {/* Supervisor */}
-          {methodData.supervisor && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
-                <User className="h-4 w-4 text-green-400" />
-              </div>
-              <div>
-                <div className="text-xs text-elec-light/60">Supervisor</div>
-                <div className="font-semibold text-elec-light">{methodData.supervisor}</div>
-              </div>
-            </div>
-          )}
-
-          {/* Team Size */}
-          {methodData.teamSize && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                <Users className="h-4 w-4 text-purple-400" />
-              </div>
-              <div>
-                <div className="text-xs text-elec-light/60">Team Size</div>
-                <div className="font-semibold text-elec-light">{methodData.teamSize}</div>
-              </div>
-            </div>
-          )}
-
-          {/* Duration */}
-          {(methodData.duration || methodData.totalEstimatedTime) && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center">
-                <Clock className="h-4 w-4 text-amber-400" />
-              </div>
-              <div>
-                <div className="text-xs text-elec-light/60">Duration</div>
-                <div className="font-semibold text-elec-light">
-                  {methodData.totalEstimatedTime || methodData.duration}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Review Date */}
-          {methodData.reviewDate && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
-                <Calendar className="h-4 w-4 text-red-400" />
-              </div>
-              <div>
-                <div className="text-xs text-elec-light/60">Review Date</div>
-                <div className="font-semibold text-elec-light">{methodData.reviewDate}</div>
-              </div>
-            </div>
-          )}
+    <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl overflow-hidden">
+      {/* Header with title */}
+      <div className="px-4 py-3 border-b border-white/[0.08]">
+        <div className="flex items-center gap-3">
+          <div className="w-1 h-8 bg-elec-yellow rounded-full shrink-0" />
+          <h2 className="text-base font-bold text-white leading-tight">{title}</h2>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      {/* Info Grid */}
+      <div className="px-4 py-2 divide-y divide-white/[0.05]">
+        {locationValue && (
+          <InfoItem
+            icon={<MapPin className="h-4 w-4 text-elec-yellow" />}
+            label="Location"
+            value={locationValue}
+          />
+        )}
+
+        {methodData.contractor && (
+          <InfoItem
+            icon={<Building2 className="h-4 w-4 text-elec-yellow" />}
+            label="Contractor"
+            value={methodData.contractor}
+          />
+        )}
+
+        {methodData.supervisor && (
+          <InfoItem
+            icon={<User className="h-4 w-4 text-elec-yellow" />}
+            label="Supervisor"
+            value={methodData.supervisor}
+          />
+        )}
+
+        {(methodData.duration || methodData.totalEstimatedTime) && (
+          <InfoItem
+            icon={<Clock className="h-4 w-4 text-elec-yellow" />}
+            label="Duration"
+            value={methodData.totalEstimatedTime || methodData.duration || ''}
+          />
+        )}
+      </div>
+    </div>
   );
 };
