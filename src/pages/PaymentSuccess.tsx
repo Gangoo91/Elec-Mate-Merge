@@ -191,16 +191,23 @@ const PaymentSuccess = () => {
           </motion.div>
 
           {/* Help text */}
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: showContent ? 1 : 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-center text-[12px] text-white/40 mt-6"
+            className="text-center mt-6 space-y-2"
           >
-            A confirmation email has been sent to your inbox.
-            <br />
-            Need help? <Link to="/support" className="text-white/60 hover:text-white underline">Contact support</Link>
-          </motion.p>
+            <p className="text-[12px] text-white/40">
+              A confirmation email has been sent to your inbox.
+            </p>
+            <p className="text-[12px] text-white/40">
+              Need help? Email{' '}
+              <a href="mailto:info@elec-mate.com" className="text-white/60 hover:text-white underline">
+                info@elec-mate.com
+              </a>
+              {' '}or use the chat icon in the top right corner.
+            </p>
+          </motion.div>
         </div>
       </div>
     </div>
