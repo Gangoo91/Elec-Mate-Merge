@@ -14,20 +14,18 @@ interface TrialReminderRequest {
   type?: "reminder"; // Only reminder type now
 }
 
-// Generate trial ending reminder email
+// Generate trial ending reminder email - matches app design
 function generateReminderEmailHTML(firstName: string, daysLeft: number, isApprentice: boolean): string {
   const subscribeUrl = "https://elec-mate.com/subscribe";
   const logoUrl = "https://elec-mate.com/logo.jpg";
 
   // Pricing based on role
   const currentPrice = isApprentice ? "£4.99" : "£9.99";
-  const futurePrice = isApprentice ? null : "£14.99"; // Only electricians have price increase
+  const futurePrice = isApprentice ? null : "£14.99";
 
-  const urgencyText = daysLeft === 0
-    ? "Your trial ends <strong style='color: #ef4444;'>today</strong>"
-    : daysLeft === 1
-    ? "Your trial ends <strong style='color: #f97316;'>tomorrow</strong>"
-    : `Your trial ends in <strong style='color: #fbbf24;'>${daysLeft} days</strong>`;
+  // Urgency styling
+  const urgencyColor = daysLeft === 0 ? "#ef4444" : daysLeft === 1 ? "#f97316" : "#fbbf24";
+  const urgencyText = daysLeft === 0 ? "Today" : daysLeft === 1 ? "Tomorrow" : `${daysLeft} days`;
 
   return `
 <!DOCTYPE html>
@@ -35,90 +33,133 @@ function generateReminderEmailHTML(firstName: string, daysLeft: number, isAppren
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Elec-Mate Trial is Ending Soon</title>
+  <title>Your Elec-Mate Trial</title>
 </head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0a0a0a; -webkit-font-smoothing: antialiased;">
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0a0a0a;">
   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0a0a0a;">
     <tr>
       <td style="padding: 32px 16px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 480px; margin: 0 auto; background: linear-gradient(180deg, #1a1a1a 0%, #141414 100%); border-radius: 24px; overflow: hidden; border: 1px solid #2a2a2a;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 480px; margin: 0 auto;">
 
-          <!-- Header with Logo -->
+          <!-- Logo -->
           <tr>
-            <td style="padding: 32px 24px 24px; text-align: center;">
-              <img src="${logoUrl}" alt="Elec-Mate" width="70" height="70" style="display: block; margin: 0 auto 20px; border-radius: 14px;" />
-              <h1 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff;">
-                Don't Lose Access
-              </h1>
+            <td style="text-align: center; padding-bottom: 32px;">
+              <img src="${logoUrl}" alt="Elec-Mate" width="64" height="64" style="display: inline-block; border-radius: 16px;" />
             </td>
           </tr>
 
-          <!-- Message -->
+          <!-- Main Card -->
           <tr>
-            <td style="padding: 0 24px 24px;">
-              <div style="background: #1e1e1e; border-radius: 16px; padding: 24px; border: 1px solid #333333;">
-                <p style="margin: 0 0 16px; font-size: 16px; color: #ffffff; line-height: 1.5;">
-                  Hi ${firstName},
-                </p>
-                <p style="margin: 0 0 20px; font-size: 15px; color: #a3a3a3; line-height: 1.6;">
-                  ${urgencyText}. After that, you'll lose access to all the tools that make your job easier.
-                </p>
+            <td>
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #1c1c1c 0%, #141414 100%); border-radius: 20px; border: 1px solid #2a2a2a;">
+                <tr>
+                  <td style="padding: 28px 24px;">
 
-                <!-- What you'll lose -->
-                <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
-                  <p style="margin: 0 0 8px; font-size: 13px; color: #ef4444; font-weight: 600;">What you'll lose access to:</p>
-                  <p style="margin: 0; font-size: 14px; color: #a3a3a3; line-height: 1.6;">
-                    &#8226; AI Cost Engineer & Quoting<br/>
-                    &#8226; Circuit Designer & Cable Calculator<br/>
-                    &#8226; BS7671 AI Assistant<br/>
-                    &#8226; RAMS Generator<br/>
-                    &#8226; EIC/EICR Certificate Tools
-                  </p>
-                </div>
+                    <!-- Urgency Header -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
+                      <tr>
+                        <td>
+                          <p style="margin: 0 0 8px; font-size: 13px; color: ${urgencyColor}; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+                            ⏰ Trial ends ${urgencyText}
+                          </p>
+                          <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: #ffffff; line-height: 1.2;">
+                            ${firstName}, don't lose your access
+                          </h1>
+                        </td>
+                      </tr>
+                    </table>
 
-                ${futurePrice ? `
-                <!-- Price increase warning - electricians only -->
-                <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
-                  <p style="margin: 0 0 4px; font-size: 13px; color: #fbbf24; font-weight: 600;">⚡ Lock in the current price</p>
-                  <p style="margin: 0; font-size: 14px; color: #a3a3a3; line-height: 1.5;">
-                    Currently <strong style="color: #ffffff;">${currentPrice}/month</strong> — price goes up to <strong style="color: #ffffff;">${futurePrice}/month</strong> when our mobile app launches. Subscribe now to keep the lower rate.
-                  </p>
-                </div>
-                ` : `
-                <!-- Apprentice pricing -->
-                <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
-                  <p style="margin: 0; font-size: 14px; color: #a3a3a3; line-height: 1.5;">
-                    Just <strong style="color: #ffffff;">${currentPrice}/month</strong> — special apprentice rate to help you on your journey.
-                  </p>
-                </div>
-                `}
+                    <!-- Features Box -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: rgba(251, 191, 36, 0.08); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 12px; margin-bottom: 24px;">
+                      <tr>
+                        <td style="padding: 20px;">
+                          <p style="margin: 0 0 16px; font-size: 14px; color: #fbbf24; font-weight: 600;">
+                            What you'll lose:
+                          </p>
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr><td style="padding: 6px 0; font-size: 15px; color: #ffffff;">⚡ AI Cost Engineer & Quoting</td></tr>
+                            <tr><td style="padding: 6px 0; font-size: 15px; color: #ffffff;">📐 Circuit Designer & Calculators</td></tr>
+                            <tr><td style="padding: 6px 0; font-size: 15px; color: #ffffff;">📚 BS7671 AI Assistant</td></tr>
+                            <tr><td style="padding: 6px 0; font-size: 15px; color: #ffffff;">🛡️ RAMS & Risk Assessments</td></tr>
+                            <tr><td style="padding: 6px 0; font-size: 15px; color: #ffffff;">📋 EIC/EICR Certificate Tools</td></tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
 
-                <!-- CTA Button -->
-                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                  <tr>
-                    <td>
-                      <a href="${subscribeUrl}" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0a0a0a; text-decoration: none; font-size: 16px; font-weight: 700; border-radius: 12px; text-align: center; box-shadow: 0 4px 16px rgba(251, 191, 36, 0.3);">
-                        Subscribe Now - Keep Access
-                      </a>
-                    </td>
-                  </tr>
-                </table>
+                    ${futurePrice ? `
+                    <!-- Price Lock Banner - Electricians -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%); border-radius: 12px; margin-bottom: 24px;">
+                      <tr>
+                        <td style="padding: 16px 20px;">
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr>
+                              <td style="width: 48px; vertical-align: top;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #fbbf24, #f59e0b); border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">⚡</div>
+                              </td>
+                              <td style="vertical-align: top;">
+                                <p style="margin: 0 0 4px; font-size: 15px; font-weight: 700; color: #ffffff;">
+                                  Lock in ${currentPrice}/month forever
+                                </p>
+                                <p style="margin: 0; font-size: 14px; color: #d4d4d4; line-height: 1.4;">
+                                  Price goes to ${futurePrice}/month when our app launches
+                                </p>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                    ` : `
+                    <!-- Apprentice Rate Banner -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(124, 58, 237, 0.1) 100%); border-radius: 12px; margin-bottom: 24px;">
+                      <tr>
+                        <td style="padding: 16px 20px;">
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr>
+                              <td style="width: 48px; vertical-align: top;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #8b5cf6, #7c3aed); border-radius: 10px; text-align: center; line-height: 40px; font-size: 20px;">🎓</div>
+                              </td>
+                              <td style="vertical-align: top;">
+                                <p style="margin: 0 0 4px; font-size: 15px; font-weight: 700; color: #ffffff;">
+                                  Special apprentice rate: ${currentPrice}/month
+                                </p>
+                                <p style="margin: 0; font-size: 14px; color: #d4d4d4; line-height: 1.4;">
+                                  We're here to support your journey
+                                </p>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                    `}
 
-                <p style="margin: 16px 0 0; font-size: 13px; color: #666666; text-align: center;">
-                  Subscribe now to keep all your tools
-                </p>
-              </div>
+                    <!-- CTA Button -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td>
+                          <a href="${subscribeUrl}" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #000000; text-decoration: none; font-size: 17px; font-weight: 700; border-radius: 12px; text-align: center;">
+                            Keep My Access
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td style="padding: 20px 24px; text-align: center; background-color: #0a0a0a; border-top: 1px solid #222222;">
-              <p style="margin: 0 0 4px; font-size: 12px; color: #666666;">
+            <td style="padding: 24px 0 0; text-align: center;">
+              <p style="margin: 0 0 8px; font-size: 14px; color: #a3a3a3;">
                 Questions? Just reply to this email.
               </p>
-              <p style="margin: 0; font-size: 12px; color: #525252;">
-                Cheers, Andrew at Elec-Mate
+              <p style="margin: 0; font-size: 13px; color: #737373;">
+                — Andrew, Founder
               </p>
             </td>
           </tr>
@@ -139,6 +180,7 @@ Deno.serve(async (req) => {
 
   try {
     const { userId, type } = await req.json() as TrialReminderRequest;
+    console.log("Received request for userId:", userId, "type:", type);
 
     if (!userId) {
       throw new Error("userId is required");
@@ -150,21 +192,35 @@ Deno.serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     // Get user profile including role
+    console.log("Fetching profile...");
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("full_name, username, created_at, role")
       .eq("id", userId)
       .single();
 
-    if (profileError || !profile) {
-      throw new Error("User not found");
+    if (profileError) {
+      console.error("Profile error:", profileError);
+      throw new Error(`User not found: ${profileError.message}`);
     }
 
+    if (!profile) {
+      throw new Error("User profile is null");
+    }
+
+    console.log("Profile found:", profile.full_name, "role:", profile.role);
+
     // Get user email from auth
+    console.log("Fetching auth user...");
     const { data: authUser, error: authError } = await supabase.auth.admin.getUserById(userId);
 
-    if (authError || !authUser?.user?.email) {
-      throw new Error("User email not found");
+    if (authError) {
+      console.error("Auth error:", authError);
+      throw new Error(`Auth error: ${authError.message}`);
+    }
+
+    if (!authUser?.user?.email) {
+      throw new Error("User email not found in auth");
     }
 
     const email = authUser.user.email;
@@ -189,6 +245,7 @@ Deno.serve(async (req) => {
       : `Your Elec-Mate trial ends in ${daysLeft} days`;
 
     // Send email
+    console.log("Sending email via Resend to:", email);
     const { data, error } = await resend.emails.send({
       from: "Andrew at Elec-Mate <founder@elec-mate.com>",
       to: [email],
@@ -198,22 +255,26 @@ Deno.serve(async (req) => {
     });
 
     if (error) {
-      console.error("Resend error:", error);
-      throw error;
+      console.error("Resend error:", JSON.stringify(error));
+      throw new Error(`Resend error: ${error.message || JSON.stringify(error)}`);
     }
 
     console.log("Email sent successfully:", data?.id);
 
-    // Log the email send
-    await supabase.from("admin_email_logs").insert({
-      user_id: userId,
-      email_type: `trial_${type}`,
-      email_id: data?.id,
-      sent_at: new Date().toISOString(),
-    }).catch(() => {
-      // Table might not exist, that's ok
+    // Log the email send (ignore errors - table might not exist)
+    try {
+      const { error: logError } = await supabase.from("admin_email_logs").insert({
+        user_id: userId,
+        email_type: `trial_${type || "reminder"}`,
+        email_id: data?.id,
+        sent_at: new Date().toISOString(),
+      });
+      if (logError) {
+        console.log("Could not log email:", logError.message);
+      }
+    } catch {
       console.log("Could not log email (table may not exist)");
-    });
+    }
 
     return new Response(
       JSON.stringify({ success: true, emailId: data?.id }),
