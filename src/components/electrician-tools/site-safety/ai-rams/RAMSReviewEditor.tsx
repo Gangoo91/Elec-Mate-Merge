@@ -244,11 +244,18 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       estimatedDuration: '15 minutes',
       riskLevel: 'low'
     };
-    
+
     setMethodData(prev => ({
       ...prev,
       steps: [...(prev.steps || []), newStep]
     }));
+  };
+
+  const updatePPE = (ppeDetails: import('@/types/rams').PPEItem[]) => {
+    setRamsData(prev => prev ? ({
+      ...prev,
+      ppeDetails
+    }) : prev);
   };
 
 
@@ -883,9 +890,11 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               </div>
 
               {/* PPE Section */}
-              <PPEGridView 
+              <PPEGridView
                 ppeDetails={ramsData.ppeDetails}
                 requiredPPE={ramsData.requiredPPE}
+                editable={true}
+                onUpdate={updatePPE}
               />
 
               {/* Emergency Procedures */}

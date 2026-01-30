@@ -83,7 +83,7 @@ OUTPUT FORMAT:
   * Final inspection & snagging
   * Documentation & handover
 - Each step: 150-250 words with numbered sub-tasks, specific measurements, torque values
-- 4+ tools per step (exact models/types where possible)
+- 4+ tools per step (generic tool types only - NO brand names, e.g., "Multimeter" not "Fluke Multimeter", "Insulation Resistance Tester" not "Megger")
 - Materials with exact quantities, cable sizes, and BS/EN standards
 - 3+ hazards per step with specific hierarchy of control mitigations
 - 5+ BS 7671-compliant testing procedures with pass/fail criteria and regulation references

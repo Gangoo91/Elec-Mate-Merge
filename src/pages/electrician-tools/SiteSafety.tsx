@@ -70,7 +70,7 @@ const SiteSafety = () => {
   const primaryTools = [
     {
       id: "ai-rams",
-      title: "AI RAMS Generator",
+      title: "RAMS Generator",
       description: "Create comprehensive RAMS documentation from your job description",
       icon: FileText,
       badge: "AI"

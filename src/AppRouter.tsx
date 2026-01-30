@@ -3,28 +3,29 @@ import { lazy } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { LazyRoute } from "@/components/LazyRoute";
+import { lazyWithRetry } from "@/utils/lazyWithRetry";
 
 // Core components that should load immediately (small, critical path)
 import Layout from "@/components/layout/Layout";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
-// Lazy-loaded pages
-const LandingPage = lazy(() => import("@/pages/LandingPage"));
-const Index = lazy(() => import("@/pages/Index"));
-const SignIn = lazy(() => import("@/pages/auth/SignIn"));
-const SignUp = lazy(() => import("@/pages/auth/SignUp"));
-const ForgotPassword = lazy(() => import("@/pages/auth/ForgotPassword"));
-const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
-const ConfirmEmail = lazy(() => import("@/pages/auth/ConfirmEmail"));
-const CheckEmail = lazy(() => import("@/pages/auth/CheckEmail"));
-const CompleteProfile = lazy(() => import("@/pages/auth/CompleteProfile"));
-const Dashboard = lazy(() => import("@/pages/Dashboard"));
-const Profile = lazy(() => import("@/pages/Profile"));
-const Settings = lazy(() => import("@/pages/Settings"));
-const Subscriptions = lazy(() => import("@/pages/Subscriptions"));
-const PaymentSuccess = lazy(() => import("@/pages/PaymentSuccess"));
-const InvoicePaymentSuccess = lazy(() => import("@/pages/InvoicePaymentSuccess"));
-const NotFound = lazy(() => import("@/pages/NotFound"));
+// Critical pages use lazyWithRetry for automatic retry on chunk failures
+const LandingPage = lazyWithRetry(() => import("@/pages/LandingPage"));
+const Index = lazyWithRetry(() => import("@/pages/Index"));
+const SignIn = lazyWithRetry(() => import("@/pages/auth/SignIn"));
+const SignUp = lazyWithRetry(() => import("@/pages/auth/SignUp"));
+const ForgotPassword = lazyWithRetry(() => import("@/pages/auth/ForgotPassword"));
+const ResetPassword = lazyWithRetry(() => import("@/pages/auth/ResetPassword"));
+const ConfirmEmail = lazyWithRetry(() => import("@/pages/auth/ConfirmEmail"));
+const CheckEmail = lazyWithRetry(() => import("@/pages/auth/CheckEmail"));
+const CompleteProfile = lazyWithRetry(() => import("@/pages/auth/CompleteProfile"));
+const Dashboard = lazyWithRetry(() => import("@/pages/Dashboard"));
+const Profile = lazyWithRetry(() => import("@/pages/Profile"));
+const Settings = lazyWithRetry(() => import("@/pages/Settings"));
+const Subscriptions = lazyWithRetry(() => import("@/pages/Subscriptions"));
+const PaymentSuccess = lazyWithRetry(() => import("@/pages/PaymentSuccess"));
+const InvoicePaymentSuccess = lazyWithRetry(() => import("@/pages/InvoicePaymentSuccess"));
+const NotFound = lazyWithRetry(() => import("@/pages/NotFound"));
 const ApprenticeMentalHealth = lazy(() => import("@/pages/apprentice/ApprenticeMentalHealth"));
 const RightsAndPay = lazy(() => import("@/pages/apprentice/RightsAndPay"));
 const NotificationsPage = lazy(() => import("@/pages/NotificationsPage"));
@@ -70,15 +71,15 @@ const AdminDocumentReview = lazy(() => import("@/pages/Admin/AdminDocumentReview
 const AdminFounders = lazy(() => import("@/pages/Admin/AdminFounders"));
 const AdminEarlyAccess = lazy(() => import("@/pages/Admin/AdminEarlyAccess"));
 const TrainingPhotoUpload = lazy(() => import("@/pages/Admin/TrainingPhotoUpload"));
-const FounderClaim = lazy(() => import("@/pages/founder/FounderClaim"));
-const FounderSignup = lazy(() => import("@/pages/founder/FounderSignup"));
-const FounderSuccess = lazy(() => import("@/pages/founder/FounderSuccess"));
+const FounderClaim = lazyWithRetry(() => import("@/pages/founder/FounderClaim"));
+const FounderSignup = lazyWithRetry(() => import("@/pages/founder/FounderSignup"));
+const FounderSuccess = lazyWithRetry(() => import("@/pages/founder/FounderSuccess"));
 const CustomersPage = lazy(() => import("@/pages/CustomersPage"));
 const CustomerDetailPage = lazy(() => import("@/pages/CustomerDetailPage"));
 const CertificateExpiryPage = lazy(() => import("@/pages/CertificateExpiryPage"));
 const EmployerDashboard = lazy(() => import("@/pages/employer/EmployerDashboard"));
 const CollegeDashboard = lazy(() => import("@/pages/college/CollegeDashboard"));
-const ElecIdPage = lazy(() => import("@/pages/ElecIdPage"));
+const ElecIdPage = lazyWithRetry(() => import("@/pages/ElecIdPage"));
 const PrivacyPolicy = lazy(() => import("@/pages/legal/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("@/pages/legal/TermsOfService"));
 const CookiePolicy = lazy(() => import("@/pages/legal/CookiePolicy"));
@@ -87,13 +88,13 @@ const DataProcessingAgreement = lazy(() => import("@/pages/legal/DataProcessingA
 const RegulationSearchPage = lazy(() => import("@/pages/tools/RegulationSearchPage"));
 const QuizPage = lazy(() => import("@/pages/QuizPage"));
 
-// Lazy-loaded route modules
-const ApprenticeRoutes = lazy(() => import("@/routes/ApprenticeRoutes"));
-const ElectricianHubRoutes = lazy(() => import("@/routes/ElectricianHubRoutes"));
-const ElectricianRoutes = lazy(() => import("@/routes/ElectricianRoutes"));
-const InspectionRoutes = lazy(() => import("@/routes/InspectionRoutes"));
-const StudyCentreRoutes = lazy(() => import("@/routes/StudyCentreRoutes"));
-const UpskillingRoutes = lazy(() => import("@/routes/UpskillingRoutes"));
+// Lazy-loaded route modules (with retry for chunk failures)
+const ApprenticeRoutes = lazyWithRetry(() => import("@/routes/ApprenticeRoutes"));
+const ElectricianHubRoutes = lazyWithRetry(() => import("@/routes/ElectricianHubRoutes"));
+const ElectricianRoutes = lazyWithRetry(() => import("@/routes/ElectricianRoutes"));
+const InspectionRoutes = lazyWithRetry(() => import("@/routes/InspectionRoutes"));
+const StudyCentreRoutes = lazyWithRetry(() => import("@/routes/StudyCentreRoutes"));
+const UpskillingRoutes = lazyWithRetry(() => import("@/routes/UpskillingRoutes"));
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();

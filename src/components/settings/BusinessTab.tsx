@@ -1161,10 +1161,14 @@ const BusinessTab = () => {
                       <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
                         <img src="/logos/quickbooks.svg" alt="QuickBooks" className="w-full h-full object-cover" />
                       </div>
-                      {isConnected && (
+                      {isConnected ? (
                         <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-green-500/20">
                           <CheckCircle className="h-3 w-3 text-green-400" />
                           <span className="text-[11px] text-green-400 font-medium">Connected</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-amber-500/20 border border-amber-500/30">
+                          <span className="text-[10px] text-amber-400 font-semibold">£38/mo plan</span>
                         </div>
                       )}
                     </div>
@@ -1172,7 +1176,12 @@ const BusinessTab = () => {
                     {/* Provider name and description */}
                     <h4 className="text-[15px] font-semibold text-white">{provider.name}</h4>
                     <p className="text-[12px] text-white/50 mt-0.5 mb-3">
-                      {isConnected ? integration?.tenantName || 'Company connected' : provider.description}
+                      {isConnected ? integration?.tenantName || 'Company connected' : (
+                        <>
+                          {provider.description}
+                          <span className="block text-amber-400/80 mt-1 font-medium">Requires Business Pro subscription</span>
+                        </>
+                      )}
                     </p>
 
                     {/* Action button */}

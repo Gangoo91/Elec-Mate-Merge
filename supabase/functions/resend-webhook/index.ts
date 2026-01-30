@@ -2,12 +2,25 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { captureException } from '../_shared/sentry.ts';
 
+// CORS headers for webhook requests
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, svix-id, svix-timestamp, svix-signature',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+};
+
 // Webhook handler for Resend events
 // Configure in Resend dashboard: https://resend.com/webhooks
 // Handles events for both early_access_invites and founder_invites
+// NOTE: This function must be deployed with --no-verify-jwt to allow Resend webhooks
 Deno.serve(async (req) => {
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
+  }
+
   if (req.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 });
+    return new Response("Method not allowed", { status: 405, headers: corsHeaders });
   }
 
   try {
@@ -25,7 +38,7 @@ Deno.serve(async (req) => {
     const emailId = data?.email_id;
     if (!emailId) {
       console.log("No email_id in webhook payload");
-      return new Response("OK", { status: 200 });
+      return new Response("OK", { status: 200, headers: corsHeaders });
     }
 
     // Try to find the invite in founder_invites first
@@ -59,7 +72,7 @@ Deno.serve(async (req) => {
 
     if (!invite || !tableName) {
       console.log(`No invite found for email_id ${emailId} in either table`);
-      return new Response("OK", { status: 200 });
+      return new Response("OK", { status: 200, headers: corsHeaders });
     }
 
     // Handle different event types
@@ -120,10 +133,10 @@ Deno.serve(async (req) => {
         console.log(`Unhandled event type: ${type}`);
     }
 
-    return new Response("OK", { status: 200 });
+    return new Response("OK", { status: 200, headers: corsHeaders });
   } catch (error) {
     console.error("Webhook error:", error);
     await captureException(error, { functionName: 'resend-webhook', requestUrl: req.url, requestMethod: req.method });
-    return new Response("Error", { status: 500 });
+    return new Response("Error", { status: 500, headers: corsHeaders });
   }
 });

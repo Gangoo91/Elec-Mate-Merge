@@ -17,7 +17,6 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         className={cn(
           "flex min-h-[80px] w-full rounded-md border border-border bg-black hover:bg-black px-3 py-2 text-base text-foreground ring-offset-background",
           "font-sans font-[450] tracking-[0.005em] leading-[1.5]",
-          "will-change-[contents] transform-gpu backface-visibility-hidden",
           "transition-[background-color,border-color,box-shadow,transform] duration-200 ease-out",
           "placeholder:text-neutral-500 placeholder:transition-colors placeholder:duration-200",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 focus-visible:ring-offset-0",

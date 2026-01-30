@@ -2257,69 +2257,70 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 </div>
               </div>
 
-              {/* Action Buttons - Clean 4-button layout */}
-              <div className="flex items-center gap-3">
-                {/* AI Board Scan */}
+              {/* Action Buttons Grid - matching EIC */}
+              <div className="grid grid-cols-6 gap-3">
                 <Button
-                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 text-white transition-colors"
+                  className="testing-action-primary col-span-2"
                   onClick={() => onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true)}
                 >
-                  <Camera className="h-5 w-5 mr-2.5 text-elec-yellow" />
+                  <Camera className="h-4 w-4 mr-2" />
                   AI Board Scan
                 </Button>
-
-                {/* Voice Assistant */}
-                <Button
-                  className={`h-12 px-5 rounded-xl font-medium transition-colors shadow-lg ${
-                    voiceActive
-                      ? 'bg-gradient-to-r from-green-600 to-emerald-600 shadow-green-500/25 border border-green-400/30'
-                      : voiceConnecting
-                      ? 'bg-gradient-to-r from-amber-600 to-yellow-600 animate-pulse shadow-amber-500/25 border border-amber-400/30'
-                      : 'bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 shadow-purple-500/25 border border-purple-400/30'
-                  } text-white`}
-                  onClick={toggleVoice}
-                  disabled={voiceConnecting}
-                >
-                  <Mic className={`h-5 w-5 mr-2.5 ${voiceActive ? 'animate-pulse' : ''}`} />
-                  {voiceActive ? 'Tap to Stop' : voiceConnecting ? 'Connecting...' : 'Voice Assistant'}
-                </Button>
-
-                {/* Quick Add - Opens prompt with circuit type selection */}
-                <Button
-                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-amber-500/10 border border-white/20 hover:border-amber-500/30 text-white transition-colors"
-                  onClick={addTestResult}
-                >
-                  <Zap className="h-5 w-5 mr-2.5 text-amber-400" />
+                <Button className="testing-action-secondary" onClick={addTestResult}>
+                  <Zap className="h-4 w-4 mr-2" />
                   Quick Add
                 </Button>
-
-                {/* Add Circuit - Simple blank circuit */}
-                <Button
-                  className="h-12 px-5 rounded-xl font-medium bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 text-white transition-colors"
-                  onClick={() => addCircuitToBoard(distributionBoards[0]?.id || 'main-cu')}
-                >
-                  <Plus className="h-5 w-5 mr-2.5" />
+                <Button className="testing-action-secondary" onClick={() => addCircuitToBoard(distributionBoards[0]?.id || 'main-cu')}>
+                  <Plus className="h-4 w-4 mr-2" />
                   Add Circuit
                 </Button>
-
-                {/* Spacer */}
-                <div className="flex-1" />
-
-                {/* Analytics */}
-                <Button
-                  variant="ghost"
-                  className="h-10 px-4 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors"
-                  onClick={() => setShowAnalytics(!showAnalytics)}
-                >
-                  <BarChart3 className="h-4 w-4 mr-2" />
-                  Analytics
+                <Button className="testing-action-secondary" onClick={() => setShowSmartAutoFillDialog(true)}>
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  Smart Fill
                 </Button>
+                <Button className="testing-action-secondary" onClick={() => setShowBulkInfillDialog(true)}>
+                  <ClipboardCheck className="h-4 w-4 mr-2" />
+                  Bulk Infill
+                </Button>
+              </div>
 
-                {/* Clear All */}
+              {/* Secondary Actions Row - matching EIC */}
+              <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
+                <div className="flex gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    onClick={() => setShowRcdPresetsDialog(true)}
+                  >
+                    <Shield className="h-4 w-4 mr-2" />
+                    RCD Presets
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    onClick={() => setShowAnalytics(!showAnalytics)}
+                  >
+                    <BarChart3 className="h-4 w-4 mr-2" />
+                    Analytics
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`h-9 ${voiceActive ? 'text-green-400 bg-green-500/10' : voiceConnecting ? 'text-yellow-400 animate-pulse' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
+                    onClick={toggleVoice}
+                    disabled={voiceConnecting}
+                  >
+                    <Mic className={`h-4 w-4 mr-2 ${voiceActive ? 'animate-pulse' : ''}`} />
+                    {voiceActive ? 'Active' : voiceConnecting ? '...' : 'Voice'}
+                  </Button>
+                </div>
                 {testResults.length > 0 && (
                   <Button
                     variant="ghost"
-                    className="h-10 px-4 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
+                    size="sm"
+                    className="h-9 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                     onClick={removeAllTestResults}
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
@@ -2337,44 +2338,17 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             </div>
           )}
 
-          {/* Board Management Header */}
-          <BoardManagement
-            boards={distributionBoards}
-            onAddBoard={handleAddBoard}
-            totalCircuits={testResults.length}
-          />
-
-          {/* Distribution Boards with Circuit Tables */}
-          <div className="space-y-4" data-autofill-section>
-            {sortedBoards.map(board => {
-                const stats = boardStats[board.id] || { circuits: [], completedCount: 0 };
-                const boardCircuits = stats.circuits;
-                return (
-                  <BoardSection
-                    key={board.id}
-                    board={board}
-                    isExpanded={expandedBoards.has(board.id)}
-                    onToggleExpanded={() => toggleBoardExpanded(board.id)}
-                    onUpdateBoard={handleUpdateBoard}
-                    onRemoveBoard={handleRemoveBoard}
-                    onAddCircuit={() => addCircuitToBoard(board.id)}
-                    circuitCount={boardCircuits.length}
-                    completedCount={stats.completedCount}
-                    showTools={true}
-                    tools={createBoardTools(board.id)}
-                  >
-                    <EnhancedTestResultDesktopTable
-                      testResults={boardCircuits}
-                      onUpdate={updateTestResult}
-                      onRemove={removeTestResult}
-                      allResults={testResults}
-                      onBulkUpdate={handleBulkUpdate}
-                      onAddCircuit={() => addCircuitToBoard(board.id)}
-                      onBulkFieldUpdate={handleBulkFieldUpdate}
-                    />
-                  </BoardSection>
-                );
-              })}
+          {/* Table Container - SINGLE TABLE matching EIC structure */}
+          <div className="testing-table-container" data-autofill-section>
+            <EnhancedTestResultDesktopTable
+              testResults={testResults}
+              onUpdate={updateTestResult}
+              onRemove={removeTestResult}
+              allResults={testResults}
+              onBulkUpdate={handleBulkUpdate}
+              onAddCircuit={addTestResult}
+              onBulkFieldUpdate={handleBulkFieldUpdate}
+            />
           </div>
         </div>
       )}

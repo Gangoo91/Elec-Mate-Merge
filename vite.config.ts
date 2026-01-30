@@ -51,13 +51,16 @@ export default defineConfig(({ mode }) => ({
         navigateFallbackDenylist: [/^\/api/, /^\/auth/],
         runtimeCaching: [
           {
+            // JS files: NetworkFirst ensures fresh chunks after deployments
+            // Falls back to cache only if network fails (offline support)
             urlPattern: /\.js$/,
-            handler: 'StaleWhileRevalidate',
+            handler: 'NetworkFirst',
             options: {
               cacheName: 'js-cache',
+              networkTimeoutSeconds: 5, // Fallback to cache after 5s on slow networks
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 7 * 24 * 60 * 60 // 7 days
+                maxAgeSeconds: 24 * 60 * 60 // 1 day max (reduced from 7 days)
               }
             }
           },

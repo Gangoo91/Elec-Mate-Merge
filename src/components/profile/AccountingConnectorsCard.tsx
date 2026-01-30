@@ -259,11 +259,16 @@ const AccountingConnectorsCard: React.FC = () => {
 
                     {/* Provider Info */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
                         <p className="text-[16px] font-semibold text-white">{provider.name}</p>
                         {isConnected && (
                           <span className="px-2 py-0.5 rounded-full bg-green-500/20 text-[10px] font-semibold text-green-400 uppercase">
                             Connected
+                          </span>
+                        )}
+                        {providerId === 'quickbooks' && !isConnected && (
+                          <span className="px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-[10px] font-semibold text-amber-400">
+                            £38/mo plan
                           </span>
                         )}
                       </div>
@@ -275,7 +280,14 @@ const AccountingConnectorsCard: React.FC = () => {
                           </span>
                         </div>
                       ) : (
-                        <p className="text-[13px] text-white/40 mt-0.5">{provider.description}</p>
+                        <p className="text-[13px] text-white/40 mt-0.5">
+                          {provider.description}
+                          {providerId === 'quickbooks' && (
+                            <span className="block text-amber-400/70 mt-0.5">
+                              Requires Business Pro subscription
+                            </span>
+                          )}
+                        </p>
                       )}
                       {integration?.lastSyncAt && (
                         <p className="text-[11px] text-white/30 mt-1">

@@ -93,8 +93,8 @@ export const SmartTabs = ({
             </div>
             <div className="h-1 bg-muted rounded-full overflow-hidden">
               <div
-                className="h-full bg-elec-yellow transition-all duration-300"
-                style={{ width: `${progressPercent}%` }}
+                className="h-full bg-elec-yellow"
+                style={{ width: `${progressPercent}%`, transition: 'width 300ms ease-out' }}
               />
             </div>
           </div>
@@ -120,8 +120,8 @@ export const SmartTabs = ({
                 ref={isActive ? activeTabRef : null}
                 onClick={() => handleValueChange(tab.value)}
                 className={cn(
-                  "flex items-center gap-1.5 px-3 py-2.5 rounded-lg font-medium transition-all duration-200 touch-manipulation whitespace-nowrap shrink-0",
-                  "active:scale-95",
+                  "flex items-center gap-1.5 px-3 py-2.5 rounded-lg font-medium touch-manipulation whitespace-nowrap shrink-0",
+                  "active:scale-95 transition-[background-color,color,transform] duration-150",
                   isActive
                     ? "bg-elec-yellow text-black shadow-lg shadow-elec-yellow/20"
                     : tabComplete

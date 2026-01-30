@@ -24,7 +24,7 @@ export const PhaseTypeCell: React.FC<PhaseTypeCellProps> = ({ result, onUpdate }
   };
 
   return (
-    <TableCell className="p-0 h-8 align-middle w-16 min-w-[60px] max-w-[60px]" style={{ backgroundColor: 'inherit' }}>
+    <TableCell className="p-0 h-8 align-middle w-16 min-w-[60px] max-w-[60px] bg-card">
       <Select
         value={result.phaseType || '1P'}
         onValueChange={handlePhaseChange}

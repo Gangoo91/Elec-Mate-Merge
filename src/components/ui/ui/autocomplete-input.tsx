@@ -103,7 +103,6 @@ export const AutocompleteInput = React.forwardRef<HTMLInputElement, Autocomplete
             className={cn(
               'flex h-9 w-full rounded-md border-2 border-elec-gray bg-elec-gray hover:bg-elec-gray px-3 py-1 text-sm text-foreground shadow-sm',
               'font-sans font-[450] tracking-[0.005em] leading-[1.5]',
-              'will-change-[contents] transform-gpu backface-visibility-hidden',
               'transition-[background-color,border-color,box-shadow,transform] duration-200 ease-out',
               'file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground',
               'placeholder:text-foreground/70 placeholder:transition-colors placeholder:duration-200',

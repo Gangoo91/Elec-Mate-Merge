@@ -204,27 +204,33 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   }
 
   return (
-    <div className="min-h-screen bg-sidebar">
-      <div className="px-3 sm:px-4 py-3 space-y-3 prevent-shortcuts">
-        <EICRFormHeader
-          onBack={onBack}
-          currentReportId={currentReportId}
-          hasUnsavedChanges={syncState.status === 'syncing' || syncState.queuedChanges > 0}
-          isSaving={syncState.status === 'syncing'}
-          lastSaveTime={syncState.lastSyncTime}
-          onStartNew={handleStartNew}
-          onManualSave={handleManualSave}
-          formData={formData}
-          syncStatus={syncState.status}
-          lastSyncTime={syncState.lastSyncTime}
-          isOnline={isOnline}
-          isAuthenticated={isAuthenticated}
-          currentTab={currentTabIndex}
-          completedSections={completedSections}
-          onOpenBoardScan={() => setShowBoardScan(true)}
-          onTabChange={handleTabChange}
-        />
+    <div className="bg-background">
+      {/* Header - matches EIC structure */}
+      <div className="bg-card border-b border-border sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
+          <EICRFormHeader
+            onBack={onBack}
+            currentReportId={currentReportId}
+            hasUnsavedChanges={syncState.status === 'syncing' || syncState.queuedChanges > 0}
+            isSaving={syncState.status === 'syncing'}
+            lastSaveTime={syncState.lastSyncTime}
+            onStartNew={handleStartNew}
+            onManualSave={handleManualSave}
+            formData={formData}
+            syncStatus={syncState.status}
+            lastSyncTime={syncState.lastSyncTime}
+            isOnline={isOnline}
+            isAuthenticated={isAuthenticated}
+            currentTab={currentTabIndex}
+            completedSections={completedSections}
+            onOpenBoardScan={() => setShowBoardScan(true)}
+            onTabChange={handleTabChange}
+          />
+        </div>
+      </div>
 
+      {/* Main Content - matches EIC structure */}
+      <main className="max-w-6xl mx-auto px-4 py-6 sm:px-6 lg:px-8 pb-20 sm:pb-6">
         <EICRFormContent
           formData={formData}
           onUpdate={updateFormData}
@@ -241,7 +247,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
           currentTab={currentTab}
           onTabChange={handleTabValueChange}
         />
-      </div>
+      </main>
     </div>
   );
 };

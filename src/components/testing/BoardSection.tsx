@@ -478,9 +478,9 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               </div>
             )}
 
-            {/* Circuit Table (passed as children) */}
+            {/* Circuit Table (passed as children) - matches EIC structure */}
             {children && (
-              <div className="pt-2">
+              <div className="testing-table-container mt-2" data-autofill-section>
                 {children}
               </div>
             )}

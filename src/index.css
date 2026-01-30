@@ -2030,30 +2030,28 @@
   /* Testing Page Hero Section */
   .testing-hero {
     @apply relative overflow-hidden rounded-2xl;
-    background: linear-gradient(135deg,
-      hsl(240 5.9% 14% / 0.95) 0%,
-      hsl(240 5.9% 10%) 100%);
+    background: hsl(240 5.9% 12%);
     border: 1px solid hsl(var(--border) / 0.5);
   }
 
   .testing-hero::before {
     content: '';
     @apply absolute inset-0 pointer-events-none;
-    background: radial-gradient(ellipse at top right,
-      hsl(48 100% 50% / 0.08) 0%,
-      transparent 50%);
+    background: linear-gradient(135deg,
+      hsl(48 100% 50% / 0.04) 0%,
+      transparent 40%); /* Simplified gradient, smaller area */
+    pointer-events: none;
   }
 
   /* Stats Card */
   .testing-stat-card {
     @apply flex flex-col items-center justify-center p-3 rounded-xl;
     @apply bg-white/5 border border-white/10;
-    @apply transition-all duration-200;
+    transition: background-color 150ms ease-out, border-color 150ms ease-out;
   }
 
   .testing-stat-card:hover {
     @apply bg-white/10 border-white/20;
-    transform: translateY(-2px);
   }
 
   /* Primary Action Button */
@@ -2061,8 +2059,8 @@
     @apply h-12 px-5 rounded-xl font-semibold;
     @apply bg-elec-yellow text-black;
     @apply hover:bg-elec-yellow/90;
-    @apply active:scale-95 transition-all duration-150;
-    box-shadow: 0 4px 20px hsl(48 100% 50% / 0.2);
+    @apply active:scale-95;
+    transition: background-color 100ms ease-out, transform 100ms ease-out;
   }
 
   /* Secondary Action Button */
@@ -2070,7 +2068,8 @@
     @apply h-11 px-4 rounded-xl font-medium;
     @apply bg-white/5 border border-white/20 text-white;
     @apply hover:bg-white/10 hover:border-white/30;
-    @apply active:scale-95 transition-all duration-150;
+    @apply active:scale-95;
+    transition: background-color 100ms ease-out, border-color 100ms ease-out, transform 100ms ease-out;
   }
 
   /* Segmented Control (iOS style) */
@@ -2080,8 +2079,9 @@
 
   .testing-segment-button {
     @apply flex-1 flex items-center justify-center gap-1.5 h-10 rounded-lg text-sm font-medium;
-    @apply text-white/60 transition-all duration-200;
+    @apply text-white/60;
     @apply active:scale-95 touch-manipulation;
+    transition: background-color 150ms ease-out, color 150ms ease-out, transform 100ms ease-out;
   }
 
   .testing-segment-button[data-active="true"] {
@@ -2094,10 +2094,9 @@
   }
 
   .testing-progress-fill {
-    @apply h-full rounded-full transition-all duration-500;
-    background: linear-gradient(90deg,
-      hsl(48 100% 50%) 0%,
-      hsl(45 100% 60%) 100%);
+    @apply h-full rounded-full;
+    background: hsl(48 100% 50%); /* Solid color for performance */
+    transition: width 300ms ease-out; /* Only animate width, not all properties */
   }
 
   /* Info Section Accordion */
@@ -2110,7 +2109,8 @@
     @apply flex items-center justify-between p-4 w-full;
     @apply text-sm font-semibold text-white/90;
     @apply hover:bg-white/5 cursor-pointer;
-    @apply active:scale-[0.995] transition-all duration-150 touch-manipulation;
+    @apply active:scale-[0.995] touch-manipulation;
+    transition: background-color 100ms ease-out, transform 100ms ease-out;
   }
 
   /* Table container */
@@ -2157,9 +2157,7 @@
   /* Table Header - Group Row */
   .sot-header-group {
     @apply sticky top-0 z-30;
-    background: linear-gradient(180deg,
-      hsl(240 5.9% 16%) 0%,
-      hsl(240 5.9% 14%) 100%);
+    background: hsl(240 5.9% 15%);
     border-bottom: 2px solid hsl(48 100% 50% / 0.3);
   }
 
@@ -2203,12 +2201,13 @@
   .sot-sticky-col {
     @apply sticky left-0 z-20;
     background: hsl(240 5.9% 13%);
-    box-shadow: 4px 0 8px -4px hsl(0 0% 0% / 0.3);
+    border-right: 1px solid hsl(0 0% 0% / 0.2); /* Simple border instead of box-shadow for performance */
   }
 
   /* Table Body Rows */
   .sot-row {
-    @apply border-b border-white/5 transition-all duration-150;
+    @apply border-b border-white/5;
+    transition: background-color 100ms ease-out;
   }
 
   .sot-row:hover {
@@ -2232,7 +2231,8 @@
   .sot-cell-input {
     @apply h-9 w-full bg-transparent border-0 text-center text-sm text-white;
     @apply focus:bg-white/5 focus:ring-1 focus:ring-elec-yellow/50 focus:outline-none;
-    @apply transition-all duration-150 rounded;
+    @apply rounded;
+    transition: background-color 150ms ease-out;
   }
 
   .sot-cell-input::placeholder {

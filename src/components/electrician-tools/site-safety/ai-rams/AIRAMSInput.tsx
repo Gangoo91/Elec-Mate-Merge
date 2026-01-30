@@ -154,7 +154,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({
           </div>
           <div>
             <h2 className="text-lg font-bold text-white">
-              AI RAMS Generator
+              RAMS Generator
             </h2>
             <p className="text-xs text-white/50">
               Professional documentation

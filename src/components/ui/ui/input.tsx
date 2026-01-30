@@ -19,7 +19,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
         className={cn(
           "flex h-12 w-full px-4 py-3 text-base text-foreground border border-border rounded-lg ring-offset-0 opacity-100 relative isolate",
           "font-sans font-[450] tracking-[0.005em] leading-[1.5] text-left",
-          "will-change-[contents] transform-gpu backface-visibility-hidden backdrop-blur-none",
+          "backdrop-blur-none",
           "transition-[background-color,border-color,box-shadow,transform] duration-200 ease-out",
           "file:border-0 file:bg-transparent file:text-base file:font-medium file:text-foreground",
           "placeholder:text-neutral-500/60 placeholder:transition-colors placeholder:duration-200",

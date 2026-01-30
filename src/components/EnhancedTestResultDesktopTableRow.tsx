@@ -51,32 +51,26 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   // Validate the test result - memoized to prevent expensive recalculation
   const validation = useMemo(() => validateTestResult(result), [result]);
   
-  // Get overall compliance status
-  const getOverallCompliance = (validation: any) => {
+  // Get overall compliance status - memoized helper
+  const getOverallCompliance = (validation: any): 'error' | 'warning' | 'pass' => {
     const hasErrors = Object.values(validation).some((v: any) => v?.type === 'error');
     const hasWarnings = Object.values(validation).some((v: any) => v?.type === 'warning');
-    
+
     if (hasErrors) return 'error';
     if (hasWarnings) return 'warning';
-    return 'success';
+    return 'pass';
   };
 
   // Check regulation compliance - memoized to prevent expensive recalculation
   const regulationCompliance = useMemo(() => checkRegulationCompliance(result), [result]);
-  
-  // Determine row background color based on validation status and regulation compliance
-  const getRowBgColor = () => {
-    const overallCompliance = getOverallCompliance(validation);
 
-    if (overallCompliance === 'error') {
-      return 'bg-red-500/10 hover:bg-red-500/20';
-    }
-    if (overallCompliance === 'warning') {
-      return 'bg-amber-500/10 hover:bg-amber-500/20';
-    }
-    // All rows use the same dark background - no special blue for auto-filled
+  // Memoized row background class - prevents expensive recalculation on every render
+  const rowBgClass = useMemo(() => {
+    const overallCompliance = getOverallCompliance(validation);
+    if (overallCompliance === 'error') return 'bg-red-500/10 hover:bg-red-500/20';
+    if (overallCompliance === 'warning') return 'bg-amber-500/10 hover:bg-amber-500/20';
     return 'bg-card hover:bg-muted/30';
-  };
+  }, [validation]);
 
   // Get regulation status icon
   const getRegulationStatusIcon = () => {
@@ -153,11 +147,10 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
     <>
       <TableRow
         data-circuit-id={result.id}
-        className={`${getRowBgColor()} border-b border-border/30 transition-colors`}
-        style={{ contentVisibility: 'auto', containIntrinsicSize: '0 36px' }}
+        className={`${rowBgClass} border-b border-border/30 transition-colors`}
       >
         {/* Circuit Number - Always visible */}
-        <TableCell className="sticky left-0 z-30 p-0 h-8 align-middle w-20 min-w-[80px] max-w-[80px]" style={{ backgroundColor: 'inherit' }}>
+        <TableCell className="sticky left-0 z-30 p-0 h-8 align-middle w-20 min-w-[80px] max-w-[80px] bg-card">
           <EnhancedValidatedInput
             value={result.circuitDesignation}
             onChange={(value) => onUpdate(result.id, 'circuitDesignation', value)}
@@ -172,7 +165,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         {/* Circuit Details */}
         {!isGroupCollapsed('circuit') && (
           <>
-            <TableCell className="sticky left-[80px] z-30 p-0 h-8 align-middle min-w-[220px] max-w-[220px]" style={{ backgroundColor: 'inherit' }}>
+            <TableCell className="sticky left-[80px] z-30 p-0 h-8 align-middle min-w-[220px] max-w-[220px] bg-card">
               <EnhancedValidatedInput
                 value={result.circuitDescription}
                 onChange={(value) => onUpdate(result.id, 'circuitDescription', value)}
