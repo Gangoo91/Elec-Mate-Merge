@@ -26,7 +26,6 @@ import {
   TrendingUp,
   Calendar,
   Mail,
-  Gift,
   ChevronRight,
   Zap,
   GraduationCap,
@@ -1489,8 +1488,7 @@ export default function AdminTrials() {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <Button
-                    className="w-full gap-2 h-12 touch-manipulation"
-                    variant="outline"
+                    className="w-full gap-2 h-12 touch-manipulation bg-gradient-to-r from-yellow-500 to-amber-500 text-black hover:from-yellow-600 hover:to-amber-600"
                     onClick={() => {
                       if (selectedUser) {
                         sendReminderMutation.mutate({ userId: selectedUser.id, type: "reminder" });
@@ -1500,18 +1498,6 @@ export default function AdminTrials() {
                   >
                     <Mail className="h-4 w-4" />
                     Send Trial Reminder
-                  </Button>
-                  <Button
-                    className="w-full gap-2 h-12 touch-manipulation bg-gradient-to-r from-yellow-500 to-amber-500 text-black hover:from-yellow-600 hover:to-amber-600"
-                    onClick={() => {
-                      if (selectedUser) {
-                        sendReminderMutation.mutate({ userId: selectedUser.id, type: "offer" });
-                      }
-                    }}
-                    disabled={sendReminderMutation.isPending}
-                  >
-                    <Gift className="h-4 w-4" />
-                    Send Special Offer
                   </Button>
                   <Button
                     className="w-full gap-2 h-12 touch-manipulation text-red-400 hover:text-red-300 hover:bg-red-500/10"

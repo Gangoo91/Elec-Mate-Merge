@@ -34,6 +34,7 @@ import {
   ArrowLeft,
   Rocket,
   Inbox,
+  Timer,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -41,6 +42,7 @@ import { Button } from "@/components/ui/button";
 const primaryNavItems = [
   { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
   { name: "Users", path: "/admin/users", icon: Users },
+  { name: "Trials", path: "/admin/trials", icon: Timer },
   { name: "Revenue", path: "/admin/revenue", icon: DollarSign },
   { name: "Messages", path: "/admin/user-messages", icon: Inbox },
 ];
