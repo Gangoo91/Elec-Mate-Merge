@@ -25,6 +25,12 @@ const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 const FRONTEND_URL = Deno.env.get('FRONTEND_URL') || 'https://elec-mate.com';
 
+// QuickBooks environment - defaults to sandbox for safety
+const QUICKBOOKS_ENVIRONMENT = Deno.env.get('QUICKBOOKS_ENVIRONMENT') || 'sandbox';
+const QUICKBOOKS_BASE_URL = QUICKBOOKS_ENVIRONMENT === 'production'
+  ? 'https://quickbooks.api.intuit.com'
+  : 'https://sandbox-quickbooks.api.intuit.com';
+
 type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks';
 
 interface TokenResponse {
@@ -335,7 +341,7 @@ async function exchangeQuickBooksCode(code: string): Promise<TokenResponse> {
 
 async function getQuickBooksCompanyInfo(accessToken: string, realmId: string): Promise<TenantInfo> {
   const response = await fetch(
-    `https://quickbooks.api.intuit.com/v3/company/${realmId}/companyinfo/${realmId}`,
+    `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/companyinfo/${realmId}`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,

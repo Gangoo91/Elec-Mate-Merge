@@ -24,6 +24,12 @@ const SAGE_CLIENT_SECRET = Deno.env.get('SAGE_CLIENT_SECRET');
 const FRESHBOOKS_CLIENT_ID = Deno.env.get('FRESHBOOKS_CLIENT_ID');
 const FRESHBOOKS_CLIENT_SECRET = Deno.env.get('FRESHBOOKS_CLIENT_SECRET');
 
+// QuickBooks environment - defaults to sandbox for safety
+const QUICKBOOKS_ENVIRONMENT = Deno.env.get('QUICKBOOKS_ENVIRONMENT') || 'sandbox';
+const QUICKBOOKS_BASE_URL = QUICKBOOKS_ENVIRONMENT === 'production'
+  ? 'https://quickbooks.api.intuit.com'
+  : 'https://sandbox-quickbooks.api.intuit.com';
+
 type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks';
 
 interface TokenData {
@@ -674,7 +680,7 @@ async function syncToQuickBooks(
   };
 
   const response = await fetch(
-    `https://quickbooks.api.intuit.com/v3/company/${realmId}/invoice`,
+    `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/invoice`,
     {
       method: 'POST',
       headers: {
@@ -716,7 +722,7 @@ async function findOrCreateQBCustomer(
     : `SELECT * FROM Customer WHERE DisplayName = '${client.name.replace(/'/g, "\\'")}'`;
 
   const searchResponse = await fetch(
-    `https://quickbooks.api.intuit.com/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`,
+    `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`,
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -740,7 +746,7 @@ async function findOrCreateQBCustomer(
   };
 
   const createResponse = await fetch(
-    `https://quickbooks.api.intuit.com/v3/company/${realmId}/customer`,
+    `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/customer`,
     {
       method: 'POST',
       headers: {
