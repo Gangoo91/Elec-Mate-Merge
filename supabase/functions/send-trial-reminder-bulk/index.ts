@@ -6,7 +6,7 @@ const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
 };
 
 interface BulkReminderRequest {
@@ -16,7 +16,6 @@ interface BulkReminderRequest {
 
 // Generate trial ending reminder email
 function generateReminderEmailHTML(firstName: string, daysLeft: number): string {
-  const loginUrl = "https://elec-mate.com/auth/signin";
   const subscribeUrl = "https://elec-mate.com/subscribe";
   const logoUrl = "https://elec-mate.com/logo.jpg";
 
@@ -85,7 +84,7 @@ function generateReminderEmailHTML(firstName: string, daysLeft: number): string 
                 </table>
 
                 <p style="margin: 16px 0 0; font-size: 13px; color: #666666; text-align: center;">
-                  or <a href="${loginUrl}" style="color: #fbbf24; text-decoration: none;">continue using your trial</a>
+                  Subscribe now to keep all your tools
                 </p>
               </div>
             </td>
