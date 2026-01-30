@@ -14,6 +14,7 @@ import { generateMethodStatement } from '../_agents/installer-core.ts';
 import { transformHealthSafetyResponse } from './transformers.ts';
 import { checkRAMSCache, storeRAMSCache } from '../_shared/rams-cache.ts';
 import { checkPartialCache, storePartialCache } from '../_shared/rams-partial-cache.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -558,6 +559,14 @@ Deno.serve(async (req) => {
 
   } catch (error: any) {
     console.error('❌ Generation failed:', error);
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'generate-rams',
+      requestUrl: req.url,
+      requestMethod: req.method,
+      extra: { jobId }
+    });
 
     if (jobId) {
       await supabase

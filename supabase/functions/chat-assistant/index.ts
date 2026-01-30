@@ -1,6 +1,7 @@
 
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -395,6 +396,14 @@ Current topic context: ${context || 'general electrical apprenticeship support'}
 
   } catch (error) {
     console.error('Error in chat-assistant function:', error);
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'chat-assistant',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     return new Response(JSON.stringify({
       error: 'I apologise, but I encountered an issue processing your question. Please try again in a moment.',
       details: error instanceof Error ? error.message : 'Unknown error occurred'

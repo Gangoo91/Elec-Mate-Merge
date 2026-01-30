@@ -2,6 +2,7 @@
 // This edge function securely handles API calls to find mental health services by postcode
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.7'
 import { corsHeaders } from '../_shared/cors.ts'
+import { captureException } from '../_shared/sentry.ts'
 
 // Google Places API configuration
 const GOOGLE_PLACES_API_BASE_URL = "https://maps.googleapis.com/maps/api/place";
@@ -73,6 +74,14 @@ Deno.serve(async (req) => {
     }
   } catch (error) {
     console.error("General error in mental-health-services function:", error);
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'mental-health-services',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     return createErrorResponse(error instanceof Error ? error.message : 'Unknown error occurred', 500);
   }
 });

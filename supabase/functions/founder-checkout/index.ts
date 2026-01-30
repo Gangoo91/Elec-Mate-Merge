@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -441,6 +442,7 @@ Deno.serve(async (req) => {
 
   } catch (error: any) {
     logger.error('Request failed', { error: error.message });
+    await captureException(error, { functionName: 'founder-checkout', requestUrl: req.url, requestMethod: req.method });
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json", "x-request-id": requestId },
       status: 400,

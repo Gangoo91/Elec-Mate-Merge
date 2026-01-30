@@ -3,6 +3,7 @@ import { handleError, ValidationError } from '../_shared/errors.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { captureException } from '../_shared/sentry.ts';
 import Stripe from "https://esm.sh/stripe@14.21.0";
 
 serve(async (req) => {
@@ -224,6 +225,7 @@ serve(async (req) => {
       status: 200,
     });
   } catch (error) {
+    await captureException(error, { functionName: 'check-subscription', requestUrl: req.url, requestMethod: req.method });
     return handleError(error);
   }
 });

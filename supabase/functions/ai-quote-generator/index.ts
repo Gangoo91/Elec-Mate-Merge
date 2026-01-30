@@ -1,6 +1,7 @@
 
 import { serve } from '../_shared/deps.ts';
 import { corsHeaders } from "../_shared/cors.ts";
+import { captureException } from '../_shared/sentry.ts';
 
 const openAIApiKey = Deno.env.get('OpenAI API') || Deno.env.get('OPENAI_API_KEY');
 
@@ -225,8 +226,16 @@ Make this quote unique and different from previous quotes with varied pricing an
 
   } catch (error) {
     console.error('Error in ai-quote-generator function:', error);
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'ai-quote-generator',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error instanceof Error ? error.message : 'Unknown error occurred',
         timestamp: new Date().toISOString()
       }),

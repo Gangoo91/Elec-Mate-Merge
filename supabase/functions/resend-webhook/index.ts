@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { captureException } from '../_shared/sentry.ts';
 
 // Webhook handler for Resend events
 // Configure in Resend dashboard: https://resend.com/webhooks
@@ -122,6 +123,7 @@ Deno.serve(async (req) => {
     return new Response("OK", { status: 200 });
   } catch (error) {
     console.error("Webhook error:", error);
+    await captureException(error, { functionName: 'resend-webhook', requestUrl: req.url, requestMethod: req.method });
     return new Response("Error", { status: 500 });
   }
 });

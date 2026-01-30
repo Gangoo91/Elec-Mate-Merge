@@ -10,6 +10,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from "https://esm.sh/stripe@14.21.0?target=deno";
 import { Resend } from "npm:resend@2.0.0";
 import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -524,6 +525,7 @@ serve(async (req) => {
 
   } catch (error: any) {
     logger.error('Webhook error', { error: error.message });
+    await captureException(error, { functionName: 'stripe-subscription-webhook', requestUrl: req.url, requestMethod: req.method });
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json', 'x-request-id': requestId } }

@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -377,15 +378,16 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('[CIRCUIT-PDF] Error:', error);
+    await captureException(error, { functionName: 'generate-circuit-design-pdf', requestUrl: req.url, requestMethod: req.method });
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: false,
         useFallback: true,
         error: error instanceof Error ? error.message : 'Unknown error'
       }),
-      { 
+      {
         status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
     );
   }

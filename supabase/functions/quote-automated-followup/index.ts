@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 import { Resend } from "npm:resend@2.0.0";
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -443,6 +444,7 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     const duration = Date.now() - startTime;
     console.error(`❌ Error after ${duration}ms:`, error);
+    await captureException(error, { functionName: 'quote-automated-followup', requestUrl: req.url, requestMethod: req.method });
 
     return new Response(
       JSON.stringify({

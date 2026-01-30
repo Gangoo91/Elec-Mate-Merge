@@ -1,6 +1,7 @@
 // COMMISSIONING V3 - GN3 Practical Testing Guru
 // Deployed: 2025-11-21 - Updated OpenAI API key configuration
 import { serve } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 import {
   corsHeaders,
   createLogger,
@@ -2346,6 +2347,15 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
 
   } catch (error) {
     logger.error('Commissioning V3 error', { error: error instanceof Error ? error.message : String(error) });
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'commissioning-v3',
+      requestUrl: req.url,
+      requestMethod: req.method,
+      extra: { requestId }
+    });
+
     return handleError(error);
   }
 });

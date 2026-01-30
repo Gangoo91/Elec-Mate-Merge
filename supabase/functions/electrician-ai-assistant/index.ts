@@ -1,6 +1,7 @@
 
 import { serve } from '../_shared/deps.ts';
 import { corsHeaders } from "../_shared/cors.ts";
+import { captureException } from '../_shared/sentry.ts';
 
 // Make sure we're accessing the right environment variable
 const openAIApiKey = Deno.env.get('OpenAI API') || Deno.env.get('OPENAI_API_KEY');
@@ -665,6 +666,14 @@ Always use British English (earth not ground, consumer unit not panel).`;
     );
   } catch (error) {
     console.error('Error in electrician-ai-assistant function:', error);
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'electrician-ai-assistant',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     return new Response(
       JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error occurred' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

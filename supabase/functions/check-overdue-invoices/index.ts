@@ -2,6 +2,7 @@
 // Runs daily via pg_cron to check for overdue invoices and send notifications
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -129,6 +130,7 @@ serve(async (req: Request) => {
 
   } catch (error: any) {
     console.error('Check overdue invoices error:', error);
+    await captureException(error, { functionName: 'check-overdue-invoices', requestUrl: req.url, requestMethod: req.method });
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

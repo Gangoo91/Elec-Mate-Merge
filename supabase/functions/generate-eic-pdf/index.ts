@@ -1,4 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = 'B39538E9-8FF1-4882-BC13-70B1C0D30947';
@@ -171,6 +172,7 @@ Deno.serve(async (req: Request) => {
     );
   } catch (error) {
     console.error('EIC PDF generation error:', error);
+    await captureException(error, { functionName: 'generate-eic-pdf', requestUrl: req.url, requestMethod: req.method });
     return new Response(
       JSON.stringify({
         success: false,

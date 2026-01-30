@@ -1,4 +1,5 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
 const COST_ENGINEER_TEMPLATE_ID = '112482FE-B6A4-4255-BAC6-468CAFB8D8E3';
@@ -181,13 +182,14 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('[COST-PDF] Error:', error);
+    await captureException(error, { functionName: 'generate-cost-engineer-pdf', requestUrl: req.url, requestMethod: req.method });
     return new Response(
-      JSON.stringify({ 
-        error: error instanceof Error ? error.message : 'Internal server error' 
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Internal server error'
       }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
     );
   }

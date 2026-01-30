@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -158,6 +159,7 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('[MINOR-WORKS-PDF] Error:', error.message);
+    await captureException(error, { functionName: 'generate-minor-works-pdf', requestUrl: req.url, requestMethod: req.method });
     return new Response(
       JSON.stringify({ error: error.message }),
       {

@@ -8,6 +8,7 @@ import { serve, corsHeaders } from '../_shared/deps.ts';
 import { createLogger } from '../_shared/logger.ts';
 import { DesignPipeline } from './design-pipeline.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const VERSION = 'v3.1.1-cable-consistency';
 
@@ -406,13 +407,21 @@ serve(async (req) => {
 
   } catch (error) {
     const duration = Date.now() - startTime;
-    
-    logger.error('V3 Pipeline failed', { 
+
+    logger.error('V3 Pipeline failed', {
       error: error.message,
       duration,
       jobId // Use jobId from outer scope (line 32)
     });
-    
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'designer-agent-v3',
+      requestUrl: req.url,
+      requestMethod: req.method,
+      extra: { duration, jobId, requestId }
+    });
+
     // CRITICAL: Mark job as failed in database
     if (jobId) {
       try {

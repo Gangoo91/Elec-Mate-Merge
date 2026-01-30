@@ -10,6 +10,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -215,6 +216,7 @@ serve(async (req: Request) => {
 
   } catch (error: any) {
     console.error('Automated invoice reminders error:', error);
+    await captureException(error, { functionName: 'automated-invoice-reminders', requestUrl: req.url, requestMethod: req.method });
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

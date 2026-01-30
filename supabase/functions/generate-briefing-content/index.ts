@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -609,6 +610,14 @@ ${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - ad
   } catch (error) {
     console.error('[BRIEFING-AI] Error:', error.message);
     console.error('[BRIEFING-AI] Error stack:', error.stack);
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'generate-briefing-content',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

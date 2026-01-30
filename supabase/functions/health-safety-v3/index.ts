@@ -15,6 +15,7 @@ console.log(`🚀 health-safety-v3 ${VERSION} booting at ${BOOT_TIME}`);
 
 import { serve } from '../_shared/minimal-deps.ts';
 import { createClient as createSupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 // Lightweight inline utilities (no v3-core dependency)
 const corsHeaders = {
@@ -1587,8 +1588,16 @@ Include all hazards, risk scores, safety controls, PPE requirements, and emergen
       errorStack: error instanceof Error ? error.stack?.split('\n').slice(0, 3) : undefined,
       timeElapsed: Date.now() - requestStart
     });
-    
+
     logger.error('Health & Safety V3 error', { error: error instanceof Error ? error.message : String(error) });
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'health-safety-v3',
+      requestUrl: req.url,
+      requestMethod: req.method,
+      extra: { timeElapsed: Date.now() - requestStart, requestId }
+    });
     
     const isTimeout = error instanceof Error && error.message.includes('timeout');
     

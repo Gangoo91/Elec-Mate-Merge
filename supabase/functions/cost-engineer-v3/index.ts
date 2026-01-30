@@ -6,6 +6,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { generateCostEstimate } from '../_agents/cost-engineer-core.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -101,8 +102,16 @@ Deno.serve(async (req) => {
 
   } catch (error: any) {
     console.error('❌ Error in cost-engineer-v3:', error);
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'cost-engineer-v3',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: false,
         error: error.message,
         details: error.stack

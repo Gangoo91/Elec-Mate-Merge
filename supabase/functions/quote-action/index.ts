@@ -5,6 +5,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -215,6 +216,14 @@ const handler = async (req: Request): Promise<Response> => {
 
   } catch (error: any) {
     console.error('Quote action error:', error);
+
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'quote-action',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     return errorPage('Something Went Wrong', 'An unexpected error occurred. Please contact us directly to confirm your response.');
   }
 };

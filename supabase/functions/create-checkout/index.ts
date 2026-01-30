@@ -4,6 +4,7 @@ import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import Stripe from "https://esm.sh/stripe@14.21.0";
+import { captureException } from '../_shared/sentry.ts';
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -195,6 +196,13 @@ serve(async (req) => {
       status: 200,
     });
   } catch (error) {
+    // Capture to Sentry
+    await captureException(error, {
+      functionName: 'create-checkout',
+      requestUrl: req.url,
+      requestMethod: req.method
+    });
+
     return handleError(error);
   }
 });
