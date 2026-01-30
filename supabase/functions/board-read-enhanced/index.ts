@@ -496,7 +496,7 @@ async function detectBrand(images: string[]): Promise<string | null> {
           }
         }),
       },
-      25000 // 25 second timeout for brand detection
+      15000 // 15 second timeout for brand detection
     );
 
     if (!response.ok) {
@@ -625,7 +625,7 @@ JSON format:
         }
       }),
     },
-    90000  // 90 second timeout for Gemini 3 with thinking
+    55000  // 55 second timeout for Gemini (fits within edge function platform limit)
   );
 
   if (!response.ok) {

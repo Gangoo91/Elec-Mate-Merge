@@ -470,15 +470,27 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
         id: 'timeout-warning'
       });
     }, 20000);
-    
+
+    // Hard timeout to prevent infinite hangs - 90 seconds max
+    const ANALYSIS_TIMEOUT_MS = 90000;
+
     try {
-      const hints = { 
+      const hints = {
         main_switch_side: 'right'
       };
 
-      const { data, error: invokeError } = await supabase.functions.invoke('board-read-enhanced', {
-        body: { images: capturedImages.map(img => img.url), hints }
+      // Create a timeout promise that rejects after 90 seconds
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error('Analysis timed out after 90 seconds. Please try again with better lighting.')), ANALYSIS_TIMEOUT_MS);
       });
+
+      // Race between the actual call and the timeout
+      const { data, error: invokeError } = await Promise.race([
+        supabase.functions.invoke('board-read-enhanced', {
+          body: { images: capturedImages.map(img => img.url), hints }
+        }),
+        timeoutPromise
+      ]) as { data: any; error: any };
 
       clearTimeout(stage2Timer);
       clearTimeout(stage3Timer);
