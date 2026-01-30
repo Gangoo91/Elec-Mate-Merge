@@ -13,6 +13,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
 import { CookieConsent } from '@/components/CookieConsent';
 import { useNativeApp } from '@/hooks/useNativeApp';
+import { ActivityTracker } from '@/components/ActivityTracker';
 import { lazy, Suspense } from 'react';
 
 // Lazy load analytics components to defer ~427KB from initial bundle
@@ -35,6 +36,8 @@ function App() {
           <ThemeProvider defaultTheme="dark" storageKey="elec-ui-theme">
             <NotificationProvider>
               <NativeAppInit>
+                {/* Activity tracking - logs user events to Supabase */}
+                <ActivityTracker />
                 {/* Analytics providers load async - don't block render */}
                 <Suspense fallback={null}>
                   <PostHogProvider>
