@@ -81,6 +81,9 @@ const CollegeDashboard = lazy(() => import("@/pages/college/CollegeDashboard"));
 const ElecIdPage = lazy(() => import("@/pages/ElecIdPage"));
 const PrivacyPolicy = lazy(() => import("@/pages/legal/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("@/pages/legal/TermsOfService"));
+const CookiePolicy = lazy(() => import("@/pages/legal/CookiePolicy"));
+const AcceptableUse = lazy(() => import("@/pages/legal/AcceptableUse"));
+const DataProcessingAgreement = lazy(() => import("@/pages/legal/DataProcessingAgreement"));
 const RegulationSearchPage = lazy(() => import("@/pages/tools/RegulationSearchPage"));
 const QuizPage = lazy(() => import("@/pages/QuizPage"));
 
@@ -118,6 +121,9 @@ const AppRouter = () => {
       <Route path="/auth/complete-profile" element={<LazyRoute><CompleteProfile /></LazyRoute>} />
       <Route path="/privacy" element={<LazyRoute><PrivacyPolicy /></LazyRoute>} />
       <Route path="/terms" element={<LazyRoute><TermsOfService /></LazyRoute>} />
+      <Route path="/cookies" element={<LazyRoute><CookiePolicy /></LazyRoute>} />
+      <Route path="/acceptable-use" element={<LazyRoute><AcceptableUse /></LazyRoute>} />
+      <Route path="/dpa" element={<LazyRoute><DataProcessingAgreement /></LazyRoute>} />
       <Route path="/quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
       <Route path="/public-quote/:token" element={<LazyRoute><PublicQuote /></LazyRoute>} />
       <Route path="/sign/:token" element={<LazyRoute><PublicSignature /></LazyRoute>} />

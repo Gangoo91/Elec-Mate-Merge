@@ -1,26 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import { Link } from "react-router-dom";
 import {
   Shield,
-  EyeOff,
-  Eye,
   Database,
   Clock,
   CheckCircle,
   Trash2,
-  FileText,
   Lock,
   Download,
-  Globe,
-  Activity,
   Cookie,
   BarChart3,
-  Target,
-  Share2,
   AlertTriangle,
+  Loader2,
+  FileText,
+  ExternalLink,
 } from "lucide-react";
 
 const containerVariants = {
@@ -40,124 +38,102 @@ const itemVariants = {
   }
 };
 
-interface PrivacySetting {
-  key: string;
-  label: string;
-  description: string;
-  icon: React.ElementType;
-  iconBg: string;
-  iconColor: string;
-  enabled: boolean;
-  locked?: boolean;
+const COOKIE_PREFERENCES_KEY = 'elec-mate-cookie-preferences';
+
+interface CookiePreferences {
+  essential: boolean;
+  analytics: boolean;
 }
 
 const PrivacyTab = () => {
   const { addNotification } = useNotifications();
+  const [isExporting, setIsExporting] = useState(false);
+  const [cookiePrefs, setCookiePrefs] = useState<CookiePreferences>({
+    essential: true,
+    analytics: true,
+  });
 
-  const [profileSettings, setProfileSettings] = useState<PrivacySetting[]>([
-    {
-      key: "showOnline",
-      label: "Show Online Status",
-      description: "Let others see when you're online",
-      icon: Globe,
-      iconBg: "bg-green-500/10",
-      iconColor: "text-green-400",
-      enabled: true,
-    },
-    {
-      key: "showActivity",
-      label: "Activity Visibility",
-      description: "Share your learning progress with others",
-      icon: Activity,
-      iconBg: "bg-blue-500/10",
-      iconColor: "text-blue-400",
-      enabled: true,
-    },
-    {
-      key: "showProfile",
-      label: "Public Profile",
-      description: "Make your profile visible to other users",
-      icon: Eye,
-      iconBg: "bg-purple-500/10",
-      iconColor: "text-purple-400",
-      enabled: true,
-    },
-  ]);
-
-  const [dataSettings, setDataSettings] = useState<PrivacySetting[]>([
-    {
-      key: "essentialCookies",
-      label: "Essential Cookies",
-      description: "Required for the app to function properly",
-      icon: Cookie,
-      iconBg: "bg-elec-yellow/10",
-      iconColor: "text-elec-yellow",
-      enabled: true,
-      locked: true,
-    },
-    {
-      key: "analytics",
-      label: "Analytics",
-      description: "Help us improve by collecting usage data",
-      icon: BarChart3,
-      iconBg: "bg-cyan-500/10",
-      iconColor: "text-cyan-400",
-      enabled: true,
-    },
-    {
-      key: "targetedAds",
-      label: "Personalized Ads",
-      description: "Allow personalized advertisements",
-      icon: Target,
-      iconBg: "bg-orange-500/10",
-      iconColor: "text-orange-400",
-      enabled: false,
-    },
-    {
-      key: "dataSelling",
-      label: "Data Sharing",
-      description: "Share data with third-party partners",
-      icon: Share2,
-      iconBg: "bg-red-500/10",
-      iconColor: "text-red-400",
-      enabled: false,
-    },
-  ]);
-
-  const handleToggle = (
-    settings: PrivacySetting[],
-    setSettings: React.Dispatch<React.SetStateAction<PrivacySetting[]>>,
-    key: string
-  ) => {
-    setSettings(prev => {
-      const newSettings = prev.map(s =>
-        s.key === key && !s.locked ? { ...s, enabled: !s.enabled } : s
-      );
-      const setting = newSettings.find(s => s.key === key);
-      if (setting && !setting.locked) {
-        addNotification({
-          title: 'Privacy Setting Updated',
-          message: `${setting.label} ${setting.enabled ? 'enabled' : 'disabled'}`,
-          type: 'success'
-        });
+  // Load saved cookie preferences
+  useEffect(() => {
+    const saved = localStorage.getItem(COOKIE_PREFERENCES_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setCookiePrefs(parsed);
+      } catch {
+        // Invalid JSON, use defaults
       }
-      return newSettings;
+    }
+  }, []);
+
+  const handleCookieToggle = (key: keyof CookiePreferences) => {
+    if (key === 'essential') return; // Can't disable essential cookies
+
+    const newPrefs = { ...cookiePrefs, [key]: !cookiePrefs[key] };
+    setCookiePrefs(newPrefs);
+    localStorage.setItem(COOKIE_PREFERENCES_KEY, JSON.stringify(newPrefs));
+
+    // Dispatch event for analytics providers
+    window.dispatchEvent(new CustomEvent('cookieConsentUpdated', { detail: newPrefs }));
+
+    addNotification({
+      title: 'Cookie Preferences Updated',
+      message: `Analytics cookies ${newPrefs.analytics ? 'enabled' : 'disabled'}`,
+      type: 'success'
     });
   };
 
-  const handleDataDownload = () => {
-    addNotification({
-      title: 'Data Request Submitted',
-      message: 'Your data export will be emailed to you within 24 hours.',
-      type: 'info'
-    });
+  const handleDataDownload = async () => {
+    setIsExporting(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('Not authenticated');
+      }
+
+      const response = await supabase.functions.invoke('user-data-export', {
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
+      });
+
+      if (response.error) {
+        throw new Error(response.error.message || 'Failed to export data');
+      }
+
+      // Create and download the file
+      const blob = new Blob([JSON.stringify(response.data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `elec-mate-data-export-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      addNotification({
+        title: 'Data Exported',
+        message: 'Your data has been downloaded successfully.',
+        type: 'success'
+      });
+    } catch (error) {
+      console.error('Data export error:', error);
+      addNotification({
+        title: 'Export Failed',
+        message: error instanceof Error ? error.message : 'Failed to export your data. Please try again.',
+        type: 'error'
+      });
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   const handleDeleteRequest = () => {
     addNotification({
-      title: 'Delete Request Received',
-      message: 'Please check your email to confirm account deletion.',
-      type: 'warning'
+      title: 'Delete Request',
+      message: 'Please contact support@elec-mate.com to request account deletion.',
+      type: 'info'
     });
   };
 
@@ -172,162 +148,123 @@ const PrivacyTab = () => {
       <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="p-4 md:p-6">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center">
-              <Lock className="h-6 w-6 text-rose-400" />
+            <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
+              <Shield className="h-6 w-6 text-elec-yellow" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-foreground">Privacy Settings</h3>
+              <h3 className="text-lg font-semibold text-foreground">Privacy & Data</h3>
               <p className="text-sm text-muted-foreground">
-                Control your data and what others can see
+                Manage your data and cookie preferences
               </p>
             </div>
           </div>
         </div>
       </motion.div>
 
-      {/* Profile Privacy */}
+      {/* Cookie Preferences */}
       <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-            <Shield className="h-4 w-4 text-elec-yellow" />
-            Profile Privacy
+            <Cookie className="h-4 w-4 text-elec-yellow" />
+            Cookie Preferences
           </h3>
           <p className="text-sm text-muted-foreground mt-1">
-            Control what information is visible to others
+            Control how we use cookies on your device
           </p>
         </div>
         <div className="p-4 md:p-6 space-y-3">
-          {profileSettings.map((setting) => {
-            const Icon = setting.icon;
-            return (
-              <div
-                key={setting.key}
-                className={`flex items-center justify-between gap-4 p-4 rounded-lg border transition-all duration-200 touch-manipulation cursor-pointer active:bg-white/[0.08] ${
-                  setting.enabled
-                    ? 'bg-white/5 border-white/10'
-                    : 'bg-white/[0.02] border-white/5 opacity-60'
-                }`}
-                onClick={() => handleToggle(profileSettings, setProfileSettings, setting.key)}
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                    setting.enabled ? setting.iconBg : 'bg-white/5'
-                  }`}>
-                    <Icon className={`h-5 w-5 ${setting.enabled ? setting.iconColor : 'text-muted-foreground'}`} />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">{setting.label}</p>
-                    <p className="text-xs text-muted-foreground truncate">{setting.description}</p>
-                  </div>
-                </div>
-                <Switch
-                  checked={setting.enabled}
-                  onCheckedChange={() => handleToggle(profileSettings, setProfileSettings, setting.key)}
-                />
+          {/* Essential Cookies */}
+          <div className="flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                <Lock className="h-5 w-5 text-elec-yellow" />
               </div>
-            );
-          })}
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-medium text-foreground">Essential Cookies</p>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-elec-yellow/20 text-elec-yellow font-medium">
+                    Required
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground">Authentication and security</p>
+              </div>
+            </div>
+            <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+          </div>
+
+          {/* Analytics Cookies */}
+          <div
+            className="flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 cursor-pointer touch-manipulation active:bg-white/[0.08]"
+            onClick={() => handleCookieToggle('analytics')}
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                cookiePrefs.analytics ? 'bg-cyan-500/10' : 'bg-white/5'
+              }`}>
+                <BarChart3 className={`h-5 w-5 ${cookiePrefs.analytics ? 'text-cyan-400' : 'text-muted-foreground'}`} />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-foreground">Analytics Cookies</p>
+                <p className="text-xs text-muted-foreground">Help us improve the platform</p>
+              </div>
+            </div>
+            <Switch
+              checked={cookiePrefs.analytics}
+              onCheckedChange={() => handleCookieToggle('analytics')}
+              className="data-[state=checked]:bg-elec-yellow"
+            />
+          </div>
+
+          <Link
+            to="/cookies"
+            className="flex items-center gap-2 text-sm text-elec-yellow hover:underline mt-2 touch-manipulation"
+          >
+            <FileText className="h-4 w-4" />
+            View Cookie Policy
+            <ExternalLink className="h-3 w-3" />
+          </Link>
         </div>
       </motion.div>
 
-      {/* Cookie & Data Preferences */}
+      {/* Your Data Rights */}
       <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
         <div className="px-4 md:px-6 py-4 border-b border-white/10">
           <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
             <Database className="h-4 w-4 text-elec-yellow" />
-            Cookie & Data Preferences
+            Your Data Rights
           </h3>
           <p className="text-sm text-muted-foreground mt-1">
-            Manage how we use your data
-          </p>
-        </div>
-        <div className="p-4 md:p-6 space-y-3">
-          {dataSettings.map((setting) => {
-            const Icon = setting.icon;
-            return (
-              <div
-                key={setting.key}
-                className={`flex items-center justify-between gap-4 p-4 rounded-lg border transition-all duration-200 ${setting.locked ? '' : 'touch-manipulation cursor-pointer active:bg-white/[0.08]'} ${
-                  setting.enabled
-                    ? 'bg-white/5 border-white/10'
-                    : 'bg-white/[0.02] border-white/5 opacity-60'
-                }`}
-                onClick={() => !setting.locked && handleToggle(dataSettings, setDataSettings, setting.key)}
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                    setting.enabled ? setting.iconBg : 'bg-white/5'
-                  }`}>
-                    <Icon className={`h-5 w-5 ${setting.enabled ? setting.iconColor : 'text-muted-foreground'}`} />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-foreground truncate">{setting.label}</p>
-                      {setting.locked && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-elec-yellow/20 text-elec-yellow font-medium">
-                          Required
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-muted-foreground truncate">{setting.description}</p>
-                  </div>
-                </div>
-                {setting.locked ? (
-                  <CheckCircle className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                ) : (
-                  <Switch
-                    checked={setting.enabled}
-                    onCheckedChange={() => handleToggle(dataSettings, setDataSettings, setting.key)}
-                  />
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </motion.div>
-
-      {/* Data & Privacy Actions */}
-      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
-        <div className="px-4 md:px-6 py-4 border-b border-white/10">
-          <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-            <EyeOff className="h-4 w-4 text-elec-yellow" />
-            Your Data
-          </h3>
-          <p className="text-sm text-muted-foreground mt-1">
-            Manage and control your personal data
+            Under UK GDPR, you have the right to access and control your data
           </p>
         </div>
         <div className="p-4 md:p-6 space-y-4">
           {/* Data Retention Notice */}
-          <div className="flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
             <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
               <Clock className="h-5 w-5 text-blue-400" />
             </div>
             <div>
               <p className="text-sm font-medium text-foreground">Data Retention</p>
               <p className="text-xs text-muted-foreground mt-1">
-                We store your personal data for 24 months after your last activity. You can request deletion at any time.
+                We keep your data for as long as your account is active. If you delete your account, we'll remove your data within 30 days.
               </p>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Button
               variant="outline"
               onClick={handleDataDownload}
-              className="flex items-center justify-center gap-2 h-12 touch-manipulation active:scale-[0.98] border-white/10 hover:bg-white/5"
+              disabled={isExporting}
+              className="flex items-center justify-center gap-2 h-12 touch-manipulation active:scale-[0.98] border-white/10 hover:bg-white/5 disabled:opacity-50"
             >
-              <Download className="h-4 w-4 text-elec-yellow" />
-              <span>Download Data</span>
-            </Button>
-
-            <Button
-              variant="outline"
-              className="flex items-center justify-center gap-2 h-12 touch-manipulation active:scale-[0.98] border-white/10 hover:bg-white/5"
-            >
-              <FileText className="h-4 w-4 text-elec-yellow" />
-              <span>Privacy Policy</span>
+              {isExporting ? (
+                <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
+              ) : (
+                <Download className="h-4 w-4 text-elec-yellow" />
+              )}
+              <span>{isExporting ? 'Exporting...' : 'Download My Data'}</span>
             </Button>
 
             <Button
@@ -346,10 +283,54 @@ const PrivacyTab = () => {
             <div>
               <p className="text-sm font-medium text-foreground">Account Deletion</p>
               <p className="text-xs text-muted-foreground mt-1">
-                Deleting your account is permanent and cannot be undone. All your data, certificates, and progress will be permanently removed.
+                Deleting your account is permanent. All your data, certificates, Elec-ID, and study progress will be permanently removed.
               </p>
             </div>
           </div>
+        </div>
+      </motion.div>
+
+      {/* Legal Documents */}
+      <motion.div variants={itemVariants} className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
+        <div className="px-4 md:px-6 py-4 border-b border-white/10">
+          <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+            <FileText className="h-4 w-4 text-elec-yellow" />
+            Legal Documents
+          </h3>
+        </div>
+        <div className="p-4 md:p-6 space-y-2">
+          <Link
+            to="/privacy"
+            className="flex items-center justify-between gap-4 p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors touch-manipulation active:bg-white/[0.08]"
+          >
+            <div className="flex items-center gap-3">
+              <Shield className="h-5 w-5 text-green-400" />
+              <span className="text-sm font-medium text-foreground">Privacy Policy</span>
+            </div>
+            <ExternalLink className="h-4 w-4 text-muted-foreground" />
+          </Link>
+
+          <Link
+            to="/terms"
+            className="flex items-center justify-between gap-4 p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors touch-manipulation active:bg-white/[0.08]"
+          >
+            <div className="flex items-center gap-3">
+              <FileText className="h-5 w-5 text-blue-400" />
+              <span className="text-sm font-medium text-foreground">Terms of Service</span>
+            </div>
+            <ExternalLink className="h-4 w-4 text-muted-foreground" />
+          </Link>
+
+          <Link
+            to="/cookies"
+            className="flex items-center justify-between gap-4 p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors touch-manipulation active:bg-white/[0.08]"
+          >
+            <div className="flex items-center gap-3">
+              <Cookie className="h-5 w-5 text-amber-400" />
+              <span className="text-sm font-medium text-foreground">Cookie Policy</span>
+            </div>
+            <ExternalLink className="h-4 w-4 text-muted-foreground" />
+          </Link>
         </div>
       </motion.div>
     </motion.div>

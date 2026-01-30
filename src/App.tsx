@@ -11,6 +11,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/lib/queryClient';
 import ScrollToTop from '@/components/ScrollToTop';
 import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
+import { CookieConsent } from '@/components/CookieConsent';
 import { useNativeApp } from '@/hooks/useNativeApp';
 import { lazy, Suspense } from 'react';
 
@@ -45,6 +46,7 @@ function App() {
                 <Toaster />
                 <SonnerToaster />
                 <PWAUpdatePrompt />
+                <CookieConsent />
                 {/* Vercel analytics load after app is interactive */}
                 <Suspense fallback={null}>
                   <SpeedInsights />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import {
@@ -14,6 +15,7 @@ import {
   Building2,
   Mail,
   ChevronRight,
+  Download,
 } from "lucide-react";
 
 const containerVariants = {
@@ -42,7 +44,7 @@ const LegalTab = () => {
       iconColor: 'text-blue-400',
       bgColor: 'bg-blue-500/10',
       url: "/terms",
-      lastUpdated: "15 Dec 2025"
+      lastUpdated: "5 Jan 2026"
     },
     {
       title: "Privacy Policy",
@@ -51,7 +53,7 @@ const LegalTab = () => {
       iconColor: 'text-green-400',
       bgColor: 'bg-green-500/10',
       url: "/privacy",
-      lastUpdated: "10 Jan 2026"
+      lastUpdated: "5 Jan 2026"
     },
     {
       title: "Cookie Policy",
@@ -60,7 +62,7 @@ const LegalTab = () => {
       iconColor: 'text-amber-400',
       bgColor: 'bg-amber-500/10',
       url: "/cookies",
-      lastUpdated: "1 Nov 2025"
+      lastUpdated: "30 Jan 2026"
     },
     {
       title: "Acceptable Use Policy",
@@ -69,7 +71,7 @@ const LegalTab = () => {
       iconColor: 'text-purple-400',
       bgColor: 'bg-purple-500/10',
       url: "/acceptable-use",
-      lastUpdated: "20 Oct 2025"
+      lastUpdated: "30 Jan 2026"
     },
     {
       title: "Data Processing Agreement",
@@ -78,7 +80,7 @@ const LegalTab = () => {
       iconColor: 'text-cyan-400',
       bgColor: 'bg-cyan-500/10',
       url: "/dpa",
-      lastUpdated: "5 Dec 2025"
+      lastUpdated: "30 Jan 2026"
     }
   ];
 
@@ -255,15 +257,19 @@ const LegalTab = () => {
             ))}
           </div>
           <div className="mt-4 pt-4 border-t border-white/10">
-            <Button
-              variant="outline"
-              className="h-11 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/5"
-              onClick={() => window.open('/data-request', '_blank')}
-            >
-              <FileText className="h-4 w-4 mr-2" />
-              Submit Data Request
-              <ChevronRight className="h-4 w-4 ml-2" />
-            </Button>
+            <p className="text-sm text-muted-foreground mb-3">
+              To download your data or request deletion, go to Settings &gt; Privacy.
+            </p>
+            <Link to="/settings">
+              <Button
+                variant="outline"
+                className="h-11 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/5"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Go to Privacy Settings
+                <ChevronRight className="h-4 w-4 ml-2" />
+              </Button>
+            </Link>
           </div>
         </div>
       </motion.div>
