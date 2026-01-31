@@ -14,6 +14,7 @@ import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
 import { CookieConsent } from '@/components/CookieConsent';
 import { useNativeApp } from '@/hooks/useNativeApp';
 import { ActivityTracker } from '@/components/ActivityTracker';
+import { InAppBrowserDetector } from '@/components/InAppBrowserDetector';
 import { lazy, Suspense } from 'react';
 
 // Lazy load analytics components to defer ~427KB from initial bundle
@@ -31,6 +32,8 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      {/* Detect Facebook/Instagram in-app browsers and prompt to open in real browser */}
+      <InAppBrowserDetector />
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <ThemeProvider defaultTheme="dark" storageKey="elec-ui-theme">

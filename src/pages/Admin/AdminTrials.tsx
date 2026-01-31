@@ -885,11 +885,11 @@ export default function AdminTrials() {
     },
   });
 
-  // Bulk email mutation
+  // Bulk email mutation - sends in batches of 5 with 10s delay between batches
   const bulkEmailMutation = useMutation({
     mutationFn: async ({ userIds, type }: { userIds: string[]; type: "reminder" | "offer" }) => {
       const { data, error } = await supabase.functions.invoke("send-trial-reminder-bulk", {
-        body: { userIds, type },
+        body: { userIds, type, batchSize: 5, batchDelayMs: 10000 },
       });
       if (error) throw error;
       return data;

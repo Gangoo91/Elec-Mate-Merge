@@ -111,8 +111,9 @@ export default function AdminDashboard() {
         supabase.from("profiles").select("*", { count: "exact", head: true }).gte("created_at", today.toISOString()),
         supabase.from("profiles").select("*", { count: "exact", head: true }).gte("created_at", weekAgo.toISOString()),
         supabase.from("user_presence").select("*", { count: "exact", head: true }).gte("last_seen", dayAgo.toISOString()),
+        // Trial users: not subscribed, no free access, and trial not expired (signed up within last 7 days)
         supabase.from("profiles").select("role, full_name, created_at")
-          .gte("created_at", weekAgo.toISOString())
+          .gte("created_at", weekAgo.toISOString()) // Trial = signed up within 7 days
           .or("subscribed.is.null,subscribed.eq.false")
           .or("free_access_granted.is.null,free_access_granted.eq.false"),
         supabase.functions.invoke("admin-get-users"),

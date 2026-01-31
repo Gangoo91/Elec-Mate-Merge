@@ -12,6 +12,8 @@ const corsHeaders = {
 interface BulkReminderRequest {
   userIds: string[];
   type?: "reminder"; // Only reminder type now
+  batchSize?: number; // How many to send at once (default 5)
+  batchDelayMs?: number; // Delay between batches in ms (default 10000 = 10s)
 }
 
 // Generate trial ending reminder email - matches app design
@@ -179,16 +181,18 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { userIds, type } = await req.json() as BulkReminderRequest;
+    const { userIds, type, batchSize = 5, batchDelayMs = 10000 } = await req.json() as BulkReminderRequest;
 
     if (!userIds || !Array.isArray(userIds) || userIds.length === 0) {
       throw new Error("userIds array is required");
     }
 
-    // Limit to 50 users per batch to avoid timeouts
-    if (userIds.length > 50) {
-      throw new Error("Maximum 50 users per batch");
+    // Limit to 100 users per request to avoid timeouts (will be processed in batches)
+    if (userIds.length > 100) {
+      throw new Error("Maximum 100 users per request");
     }
+
+    console.log(`Starting bulk email: ${userIds.length} users, batch size ${batchSize}, delay ${batchDelayMs}ms`);
 
     // Create Supabase admin client
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
@@ -237,76 +241,94 @@ Deno.serve(async (req) => {
     const results: { userId: string; success: boolean; error?: string; skipped?: boolean; reason?: string }[] = [];
     const now = new Date();
 
-    // Process each user
-    for (const profile of profiles || []) {
-      try {
-        // Get user email from auth
-        const { data: authUser, error: authError } = await supabase.auth.admin.getUserById(profile.id);
+    // Process in batches
+    const profilesList = profiles || [];
+    const totalBatches = Math.ceil(profilesList.length / batchSize);
 
-        if (authError || !authUser?.user?.email) {
-          results.push({ userId: profile.id, success: false, error: "Email not found" });
-          continue;
-        }
+    for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
+      const batchStart = batchIndex * batchSize;
+      const batchEnd = Math.min(batchStart + batchSize, profilesList.length);
+      const batch = profilesList.slice(batchStart, batchEnd);
 
-        const email = authUser.user.email;
-        const firstName = (profile.full_name || "there").split(" ")[0];
+      console.log(`Processing batch ${batchIndex + 1}/${totalBatches} (${batch.length} users)`);
 
-        // Calculate days left in trial
-        const createdAt = new Date(profile.created_at);
-        const trialEnds = new Date(createdAt.getTime() + 7 * 24 * 60 * 60 * 1000);
-        const daysLeft = Math.max(0, Math.ceil((trialEnds.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+      // Process each user in this batch
+      for (const profile of batch) {
+        try {
+          // Get user email from auth
+          const { data: authUser, error: authError } = await supabase.auth.admin.getUserById(profile.id);
 
-        // Generate reminder email with role-based pricing
-        const isApprentice = profile.role === "apprentice";
-        const emailHtml = generateReminderEmailHTML(firstName, daysLeft, isApprentice);
+          if (authError || !authUser?.user?.email) {
+            results.push({ userId: profile.id, success: false, error: "Email not found" });
+            continue;
+          }
 
-        const subject = daysLeft === 0
-          ? "Your Elec-Mate trial ends today"
-          : daysLeft === 1
-          ? "Your Elec-Mate trial ends tomorrow"
-          : `Your Elec-Mate trial ends in ${daysLeft} days`;
+          const email = authUser.user.email;
+          const firstName = (profile.full_name || "there").split(" ")[0];
 
-        // Send email
-        const { data, error } = await resend.emails.send({
-          from: "Andrew at Elec-Mate <founder@elec-mate.com>",
-          to: [email],
-          subject,
-          html: emailHtml,
-          reply_to: "founder@elec-mate.com",
-        });
+          // Calculate days left in trial
+          const createdAt = new Date(profile.created_at);
+          const trialEnds = new Date(createdAt.getTime() + 7 * 24 * 60 * 60 * 1000);
+          const daysLeft = Math.max(0, Math.ceil((trialEnds.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
 
-        if (error) {
-          // Log failed send
+          // Generate reminder email with role-based pricing
+          const isApprentice = profile.role === "apprentice";
+          const emailHtml = generateReminderEmailHTML(firstName, daysLeft, isApprentice);
+
+          const subject = daysLeft === 0
+            ? "Your Elec-Mate trial ends today"
+            : daysLeft === 1
+            ? "Your Elec-Mate trial ends tomorrow"
+            : `Your Elec-Mate trial ends in ${daysLeft} days`;
+
+          // Send email
+          const { data, error } = await resend.emails.send({
+            from: "Andrew at Elec-Mate <founder@elec-mate.com>",
+            to: [email],
+            subject,
+            html: emailHtml,
+            reply_to: "founder@elec-mate.com",
+          });
+
+          if (error) {
+            // Log failed send
+            await supabase.from("trial_email_sends").insert({
+              user_id: profile.id,
+              email_type: emailType,
+              sent_date: today,
+              trial_days_remaining: daysLeft,
+              success: false,
+              error_message: error.message,
+            });
+            results.push({ userId: profile.id, success: false, error: error.message });
+            continue;
+          }
+
+          // Log successful send
           await supabase.from("trial_email_sends").insert({
             user_id: profile.id,
             email_type: emailType,
+            resend_email_id: data?.id,
             sent_date: today,
             trial_days_remaining: daysLeft,
-            success: false,
-            error_message: error.message,
+            success: true,
           });
-          results.push({ userId: profile.id, success: false, error: error.message });
-          continue;
+
+          console.log(`Email sent to ${email}: ${data?.id}`);
+          results.push({ userId: profile.id, success: true });
+
+          // Small delay between individual emails (100ms)
+          await new Promise(resolve => setTimeout(resolve, 100));
+
+        } catch (err: any) {
+          results.push({ userId: profile.id, success: false, error: err.message });
         }
+      }
 
-        // Log successful send
-        await supabase.from("trial_email_sends").insert({
-          user_id: profile.id,
-          email_type: emailType,
-          resend_email_id: data?.id,
-          sent_date: today,
-          trial_days_remaining: daysLeft,
-          success: true,
-        });
-
-        console.log(`Email sent to ${email}: ${data?.id}`);
-        results.push({ userId: profile.id, success: true });
-
-        // Small delay to avoid rate limiting
-        await new Promise(resolve => setTimeout(resolve, 100));
-
-      } catch (err: any) {
-        results.push({ userId: profile.id, success: false, error: err.message });
+      // Delay between batches (except after the last batch)
+      if (batchIndex < totalBatches - 1) {
+        console.log(`Batch ${batchIndex + 1} complete. Waiting ${batchDelayMs / 1000}s before next batch...`);
+        await new Promise(resolve => setTimeout(resolve, batchDelayMs));
       }
     }
 
