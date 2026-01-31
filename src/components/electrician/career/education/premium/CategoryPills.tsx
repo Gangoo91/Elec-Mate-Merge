@@ -79,24 +79,29 @@ const CategoryPills = ({
   const activeRef = useRef<HTMLButtonElement>(null);
 
   // Scroll active category into view
+  // Uses requestAnimationFrame to batch DOM reads and prevent layout thrashing
   useEffect(() => {
     if (activeRef.current && scrollRef.current) {
       const container = scrollRef.current;
       const active = activeRef.current;
-      const containerRect = container.getBoundingClientRect();
-      const activeRect = active.getBoundingClientRect();
 
-      // Check if active is out of view
-      if (
-        activeRect.left < containerRect.left ||
-        activeRect.right > containerRect.right
-      ) {
-        active.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "center",
-        });
-      }
+      // Batch DOM reads in rAF to avoid layout thrashing
+      requestAnimationFrame(() => {
+        const containerRect = container.getBoundingClientRect();
+        const activeRect = active.getBoundingClientRect();
+
+        // Check if active is out of view
+        if (
+          activeRect.left < containerRect.left ||
+          activeRect.right > containerRect.right
+        ) {
+          active.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center",
+          });
+        }
+      });
     }
   }, [selected]);
 

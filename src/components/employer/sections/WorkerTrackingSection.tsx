@@ -32,7 +32,7 @@ import {
   MapPin,
   Radio,
   Users,
-  Map,
+  Map as MapIcon,
   List,
   Navigation,
   Signal,
@@ -48,6 +48,8 @@ import { GoogleMapsProvider } from "@/contexts/GoogleMapsContext";
 import { useWorkerLocations, useCheckInWorker, useCheckOutWorker } from "@/hooks/useWorkerLocations";
 import { useJobs } from "@/hooks/useJobs";
 import { PullToRefresh } from "@/components/ui/pull-to-refresh";
+import { useQuery } from "@tanstack/react-query";
+import { getOfficeLocation } from "@/services/settingsService";
 import { SwipeableRow } from "@/components/ui/swipeable-row";
 import { MobileBottomSheet } from "@/components/mobile/MobileBottomSheet";
 import { toast } from "@/hooks/use-toast";
@@ -70,6 +72,13 @@ export function WorkerTrackingSection() {
   const { data: workerLocations = [], isLoading: locationsLoading, refetch: refetchLocations } = useWorkerLocations();
   const { data: jobsData = [], isLoading: jobsLoading } = useJobs();
   const { data: employees = [], isLoading: employeesLoading } = useEmployees();
+
+  // Fetch office location for the map
+  const { data: officeLocation } = useQuery({
+    queryKey: ['office-location'],
+    queryFn: getOfficeLocation,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+  });
 
   // Auto-refresh every 30 seconds
   useEffect(() => {
@@ -305,7 +314,7 @@ export function WorkerTrackingSection() {
                 className="h-8 w-8 p-0"
                 onClick={() => setViewMode("map")}
               >
-                <Map className="h-4 w-4" />
+                <MapIcon className="h-4 w-4" />
               </Button>
             </div>
           )}
@@ -464,6 +473,7 @@ export function WorkerTrackingSection() {
           <LiveWorkerMap
             workerLocations={workerLocations}
             jobs={jobsData}
+            officeLocation={officeLocation}
             onRefresh={handleRefresh}
             isLoading={locationsLoading || jobsLoading}
             className="h-[60vh]"
@@ -477,6 +487,7 @@ export function WorkerTrackingSection() {
           <LiveWorkerMap
             workerLocations={workerLocations}
             jobs={jobsData}
+            officeLocation={officeLocation}
             onRefresh={handleRefresh}
             isLoading={locationsLoading || jobsLoading}
           />

@@ -7,6 +7,7 @@ interface SidebarNavSectionProps {
   title?: string;
   items: NavItem[];
   userRole: string;
+  userEmail?: string;
   adminRole?: 'super_admin' | 'admin' | null;
   className?: string;
   onItemClick?: () => void;
@@ -16,15 +17,22 @@ const SidebarNavSection = ({
   title,
   items,
   userRole,
+  userEmail,
   adminRole,
   className,
   onItemClick
 }: SidebarNavSectionProps) => {
-  // Filter items based on user role and admin status
+  // Filter items based on user role, admin status, and allowed emails
   const filteredItems = items.filter((item) => {
     // Check if item requires admin access
     if (item.adminOnly && !adminRole) {
       return false;
+    }
+    // Check if item is restricted to specific emails
+    if (item.allowedEmails && item.allowedEmails.length > 0) {
+      if (!userEmail || !item.allowedEmails.includes(userEmail.toLowerCase())) {
+        return false;
+      }
     }
     return item.roles.includes(userRole);
   });

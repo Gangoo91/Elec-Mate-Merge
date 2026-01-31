@@ -33,6 +33,7 @@ interface HubConfig {
   iconColor: string;
   iconBg: string;
   roles: string[]; // Which user roles can see this hub
+  allowedEmails?: string[]; // Only show to specific email addresses
   getStat: (data: ReturnType<typeof useDashboardData>) => {
     label: string;
     value: string;
@@ -84,24 +85,24 @@ const hubsConfig: HubConfig[] = [
           }
         : null,
   },
-  // Employer Hub - Hidden until ready for launch
-  // {
-  //   id: 'employer',
-  //   title: 'Employer Hub',
-  //   subtitle: 'Manage',
-  //   description: 'Employees, jobs, timesheets, and business management.',
-  //   icon: Briefcase,
-  //   path: '/employer',
-  //   accentGradient: 'from-purple-500 via-purple-400 to-pink-400',
-  //   iconColor: 'text-purple-400',
-  //   iconBg: 'bg-purple-500/10 border border-purple-500/20',
-  //   roles: ['electrician', 'employer', 'admin'],
-  //   getStat: (data) => ({
-  //     label: 'Active jobs',
-  //     value: String(data.business.activeJobs),
-  //     icon: Briefcase,
-  //   })
-  // },
+  {
+    id: 'employer',
+    title: 'Employer Hub',
+    subtitle: 'Manage',
+    description: 'Employees, jobs, timesheets, and business management.',
+    icon: Briefcase,
+    path: '/employer',
+    accentGradient: 'from-purple-500 via-purple-400 to-pink-400',
+    iconColor: 'text-purple-400',
+    iconBg: 'bg-purple-500/10 border border-purple-500/20',
+    roles: ['electrician', 'employer', 'admin'],
+    allowedEmails: ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'],
+    getStat: (data) => ({
+      label: 'Active jobs',
+      value: String(data.business.activeJobs),
+      icon: Briefcase,
+    }),
+  },
 ];
 
 const containerVariants = {
@@ -272,14 +273,25 @@ function PremiumHubCard({ hub, data }: { hub: HubConfig; data: ReturnType<typeof
 
 export function PremiumHubGrid() {
   const dashboardData = useDashboardData();
-  const { profile, isLoading } = useAuth();
+  const { profile, user, isLoading } = useAuth();
   const userRole = profile?.role || '';
+  const userEmail = user?.email?.toLowerCase() || '';
 
-  // Filter hubs based on user role
-  // If no role set or still loading, show all hubs so user can explore
-  const filteredHubs = (!userRole || isLoading)
-    ? hubsConfig
-    : hubsConfig.filter(hub => hub.roles.includes(userRole));
+  // Filter hubs based on user role and allowed emails
+  // If no role set or still loading, show all hubs so user can explore (except email-restricted ones)
+  const filteredHubs = hubsConfig.filter(hub => {
+    // Check email restriction first
+    if (hub.allowedEmails && hub.allowedEmails.length > 0) {
+      if (!userEmail || !hub.allowedEmails.includes(userEmail)) {
+        return false;
+      }
+    }
+    // Then check role
+    if (!userRole || isLoading) {
+      return true;
+    }
+    return hub.roles.includes(userRole);
+  });
 
   // Determine grid columns based on number of hubs
   const gridCols = filteredHubs.length === 1

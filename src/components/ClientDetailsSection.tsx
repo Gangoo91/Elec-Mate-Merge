@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,6 +11,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
+import { useMultiFieldSync } from '@/hooks/useFieldSync';
 
 interface ClientDetailsSectionProps {
   formData: any;
@@ -49,35 +50,102 @@ const FormField = ({
   </div>
 );
 
+// Fields managed by this section (for memoization comparison)
+const CLIENT_SECTION_FIELDS = [
+  'clientName',
+  'clientPhone',
+  'clientEmail',
+  'clientAddress',
+  'occupier',
+  'sameAsClientAddress',
+  'installationAddress',
+  'description',
+  'otherPremisesDescription',
+  'installationType',
+  'estimatedAge',
+  'ageUnit',
+  'lastInspectionType',
+  'dateOfLastInspection',
+  'evidenceOfAlterations',
+  'alterationsDetails',
+  'alterationsAge',
+  'installationRecordsAvailable',
+] as const;
+
+type ClientSectionFields = {
+  [K in typeof CLIENT_SECTION_FIELDS[number]]?: string;
+};
+
 /**
  * ClientDetailsSection - Best-in-class mobile form for client & installation details
  * Edge-to-edge design with large touch targets and native app feel
+ *
+ * Performance optimised:
+ * - Uses useMultiFieldSync for debounced state commits (500ms)
+ * - Wrapped with React.memo for selective re-rendering
+ * - Only re-renders when CLIENT_SECTION_FIELDS change
  */
-const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps) => {
+const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionProps) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
   const [clientType, setClientType] = useState<'new' | 'existing'>('new');
 
-  const handleSameAddressToggle = (checked: boolean) => {
-    haptics.tap();
-    if (checked && formData.clientAddress) {
-      onUpdate('installationAddress', formData.clientAddress);
+  // Extract only the fields this section cares about
+  const initialFieldValues = useMemo(() => {
+    const values: ClientSectionFields = {};
+    for (const field of CLIENT_SECTION_FIELDS) {
+      values[field] = formData[field] || '';
     }
-    onUpdate('sameAsClientAddress', checked ? 'true' : 'false');
-  };
+    return values;
+  }, [formData]);
 
-  const handleSelectCustomer = (customer: Customer | null) => {
+  // Batch updates to parent with debounce
+  const handleBatchUpdate = useCallback((updates: Partial<ClientSectionFields>) => {
+    for (const [field, value] of Object.entries(updates)) {
+      onUpdate(field, value);
+    }
+  }, [onUpdate]);
+
+  // Local state with debounced commits - 500ms delay prevents keystroke lag
+  const { values: localValues, setValue, setValues, flush } = useMultiFieldSync(
+    initialFieldValues,
+    handleBatchUpdate,
+    500
+  );
+
+  // Helper to update a single field
+  const handleFieldChange = useCallback((field: keyof ClientSectionFields, value: string) => {
+    setValue(field, value);
+  }, [setValue]);
+
+  const handleSameAddressToggle = useCallback((checked: boolean) => {
+    haptics.tap();
+    const updates: Partial<ClientSectionFields> = {
+      sameAsClientAddress: checked ? 'true' : 'false',
+    };
+    if (checked && localValues.clientAddress) {
+      updates.installationAddress = localValues.clientAddress;
+    }
+    setValues(updates);
+    flush(); // Immediately commit toggle changes
+  }, [haptics, localValues.clientAddress, setValues, flush]);
+
+  const handleSelectCustomer = useCallback((customer: Customer | null) => {
     if (customer) {
       haptics.success();
-      onUpdate('clientName', customer.name || '');
-      onUpdate('clientEmail', customer.email || '');
-      onUpdate('clientPhone', customer.phone || '');
-      onUpdate('clientAddress', customer.address || '');
-      if (formData.sameAsClientAddress === 'true' && customer.address) {
-        onUpdate('installationAddress', customer.address);
+      const updates: Partial<ClientSectionFields> = {
+        clientName: customer.name || '',
+        clientEmail: customer.email || '',
+        clientPhone: customer.phone || '',
+        clientAddress: customer.address || '',
+      };
+      if (localValues.sameAsClientAddress === 'true' && customer.address) {
+        updates.installationAddress = customer.address;
       }
+      setValues(updates);
+      flush(); // Immediately commit customer selection
     }
-  };
+  }, [haptics, localValues.sameAsClientAddress, setValues, flush]);
 
   return (
     <div className={cn("space-y-6", isMobile && "-mx-4")}>
@@ -131,8 +199,8 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
         <div className={cn("space-y-4 py-4", isMobile ? "px-4" : "")}>
           <FormField label="Client Name" required>
             <Input
-              value={formData.clientName || ''}
-              onChange={(e) => onUpdate('clientName', e.target.value)}
+              value={localValues.clientName || ''}
+              onChange={(e) => handleFieldChange('clientName', e.target.value)}
               placeholder="Full name of person ordering work"
               className="h-11 text-base touch-manipulation"
             />
@@ -142,8 +210,8 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
             <FormField label="Phone">
               <Input
                 type="tel"
-                value={formData.clientPhone || ''}
-                onChange={(e) => onUpdate('clientPhone', e.target.value)}
+                value={localValues.clientPhone || ''}
+                onChange={(e) => handleFieldChange('clientPhone', e.target.value)}
                 placeholder="Contact number"
                 className="h-11 text-base touch-manipulation"
               />
@@ -151,8 +219,8 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
             <FormField label="Email">
               <Input
                 type="email"
-                value={formData.clientEmail || ''}
-                onChange={(e) => onUpdate('clientEmail', e.target.value)}
+                value={localValues.clientEmail || ''}
+                onChange={(e) => handleFieldChange('clientEmail', e.target.value)}
                 placeholder="Email address"
                 className="h-11 text-base touch-manipulation"
               />
@@ -161,8 +229,8 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
 
           <FormField label="Client Address" required>
             <Textarea
-              value={formData.clientAddress || ''}
-              onChange={(e) => onUpdate('clientAddress', e.target.value)}
+              value={localValues.clientAddress || ''}
+              onChange={(e) => handleFieldChange('clientAddress', e.target.value)}
               placeholder="Client's full postal address"
               className="min-h-[100px] text-base touch-manipulation resize-none"
             />
@@ -170,8 +238,8 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
 
           <FormField label="Occupier" >
             <Input
-              value={formData.occupier || ''}
-              onChange={(e) => onUpdate('occupier', e.target.value)}
+              value={localValues.occupier || ''}
+              onChange={(e) => handleFieldChange('occupier', e.target.value)}
               placeholder="Name of occupier (if different from client)"
               className="h-11 text-base touch-manipulation"
             />
@@ -186,16 +254,16 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
           {/* Same Address Toggle */}
           <button
             type="button"
-            onClick={() => handleSameAddressToggle(formData.sameAsClientAddress !== 'true')}
+            onClick={() => handleSameAddressToggle(localValues.sameAsClientAddress !== 'true')}
             className={cn(
               "w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation",
-              formData.sameAsClientAddress === 'true'
+              localValues.sameAsClientAddress === 'true'
                 ? "border-elec-yellow bg-elec-yellow/10"
                 : "border-border/30 bg-card/30"
             )}
           >
             <Checkbox
-              checked={formData.sameAsClientAddress === 'true'}
+              checked={localValues.sameAsClientAddress === 'true'}
               className="h-5 w-5 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
             />
             <div className="flex-1 text-left">
@@ -204,15 +272,15 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
             </div>
             <MapPin className={cn(
               "h-5 w-5",
-              formData.sameAsClientAddress === 'true' ? "text-elec-yellow" : "text-muted-foreground"
+              localValues.sameAsClientAddress === 'true' ? "text-elec-yellow" : "text-muted-foreground"
             )} />
           </button>
 
-          {formData.sameAsClientAddress !== 'true' && (
+          {localValues.sameAsClientAddress !== 'true' && (
             <FormField label="Installation Address" required>
               <Textarea
-                value={formData.installationAddress || ''}
-                onChange={(e) => onUpdate('installationAddress', e.target.value)}
+                value={localValues.installationAddress || ''}
+                onChange={(e) => handleFieldChange('installationAddress', e.target.value)}
                 placeholder="Full address of the installation"
                 className="min-h-[100px] text-base touch-manipulation resize-none"
               />
@@ -222,8 +290,8 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <FormField label="Premises Type" required>
               <Select
-                value={formData.description || ''}
-                onValueChange={(value) => { haptics.tap(); onUpdate('description', value); }}
+                value={localValues.description || ''}
+                onValueChange={(value) => { haptics.tap(); handleFieldChange('description', value); flush(); }}
               >
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select type" />
@@ -235,10 +303,10 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                   <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
-              {formData.description === 'other' && (
+              {localValues.description === 'other' && (
                 <Input
-                  value={formData.otherPremisesDescription || ''}
-                  onChange={(e) => onUpdate('otherPremisesDescription', e.target.value)}
+                  value={localValues.otherPremisesDescription || ''}
+                  onChange={(e) => handleFieldChange('otherPremisesDescription', e.target.value)}
                   placeholder="Specify premises type"
                   className="mt-2 h-11 text-base touch-manipulation"
                 />
@@ -247,8 +315,8 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
 
             <FormField label="Installation Type">
               <Select
-                value={formData.installationType || ''}
-                onValueChange={(value) => { haptics.tap(); onUpdate('installationType', value); }}
+                value={localValues.installationType || ''}
+                onValueChange={(value) => { haptics.tap(); handleFieldChange('installationType', value); flush(); }}
               >
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select type" />
@@ -275,14 +343,14 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                 type="number"
                 min="0"
                 max="100"
-                value={formData.estimatedAge || ''}
-                onChange={(e) => onUpdate('estimatedAge', e.target.value)}
+                value={localValues.estimatedAge || ''}
+                onChange={(e) => handleFieldChange('estimatedAge', e.target.value)}
                 placeholder="0"
                 className="flex-1 h-11 text-base touch-manipulation"
               />
               <Select
-                value={formData.ageUnit || 'years'}
-                onValueChange={(value) => onUpdate('ageUnit', value)}
+                value={localValues.ageUnit || 'years'}
+                onValueChange={(value) => { handleFieldChange('ageUnit', value); flush(); }}
               >
                 <SelectTrigger className="w-28 h-11 touch-manipulation">
                   <SelectValue />
@@ -308,17 +376,18 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                   onClick={() => {
                     haptics.tap();
                     // Toggle off if already selected
-                    if (formData.lastInspectionType === option.value) {
-                      onUpdate('lastInspectionType', '');
-                      onUpdate('dateOfLastInspection', '');
+                    if (localValues.lastInspectionType === option.value) {
+                      setValues({ lastInspectionType: '', dateOfLastInspection: '' });
                     } else {
-                      onUpdate('lastInspectionType', option.value);
-                      if (option.value !== 'known') onUpdate('dateOfLastInspection', '');
+                      const updates: Partial<ClientSectionFields> = { lastInspectionType: option.value };
+                      if (option.value !== 'known') updates.dateOfLastInspection = '';
+                      setValues(updates);
                     }
+                    flush(); // Immediately commit toggle changes
                   }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
-                    formData.lastInspectionType === option.value
+                    localValues.lastInspectionType === option.value
                       ? "bg-elec-yellow text-black"
                       : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
                   )}
@@ -327,11 +396,12 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                 </button>
               ))}
             </div>
-            {formData.lastInspectionType === 'known' && (
+            {localValues.lastInspectionType === 'known' && (
               <Input
                 type="date"
-                value={formData.dateOfLastInspection || ''}
-                onChange={(e) => onUpdate('dateOfLastInspection', e.target.value)}
+                value={localValues.dateOfLastInspection || ''}
+                onChange={(e) => handleFieldChange('dateOfLastInspection', e.target.value)}
+                onBlur={flush}
                 className="mt-3 h-11 text-base touch-manipulation"
               />
             )}
@@ -350,21 +420,21 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                   onClick={() => {
                     haptics.tap();
                     // Toggle off if already selected
-                    if (formData.evidenceOfAlterations === option.value) {
-                      onUpdate('evidenceOfAlterations', '');
-                      onUpdate('alterationsDetails', '');
-                      onUpdate('alterationsAge', '');
+                    if (localValues.evidenceOfAlterations === option.value) {
+                      setValues({ evidenceOfAlterations: '', alterationsDetails: '', alterationsAge: '' });
                     } else {
-                      onUpdate('evidenceOfAlterations', option.value);
+                      const updates: Partial<ClientSectionFields> = { evidenceOfAlterations: option.value };
                       if (option.value !== 'yes') {
-                        onUpdate('alterationsDetails', '');
-                        onUpdate('alterationsAge', '');
+                        updates.alterationsDetails = '';
+                        updates.alterationsAge = '';
                       }
+                      setValues(updates);
                     }
+                    flush(); // Immediately commit toggle changes
                   }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation text-sm",
-                    formData.evidenceOfAlterations === option.value
+                    localValues.evidenceOfAlterations === option.value
                       ? "bg-elec-yellow text-black"
                       : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
                   )}
@@ -373,11 +443,11 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                 </button>
               ))}
             </div>
-            {formData.evidenceOfAlterations === 'yes' && (
+            {localValues.evidenceOfAlterations === 'yes' && (
               <>
                 <Textarea
-                  value={formData.alterationsDetails || ''}
-                  onChange={(e) => onUpdate('alterationsDetails', e.target.value)}
+                  value={localValues.alterationsDetails || ''}
+                  onChange={(e) => handleFieldChange('alterationsDetails', e.target.value)}
                   placeholder="Describe the alterations observed..."
                   className="mt-3 min-h-[80px] text-base touch-manipulation resize-none"
                 />
@@ -386,8 +456,8 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                     type="number"
                     min="0"
                     max="100"
-                    value={formData.alterationsAge || ''}
-                    onChange={(e) => onUpdate('alterationsAge', e.target.value)}
+                    value={localValues.alterationsAge || ''}
+                    onChange={(e) => handleFieldChange('alterationsAge', e.target.value)}
                     placeholder="e.g., 5"
                     className="h-11 text-base touch-manipulation"
                   />
@@ -407,11 +477,12 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
                   type="button"
                   onClick={() => {
                     haptics.tap();
-                    onUpdate('installationRecordsAvailable', formData.installationRecordsAvailable === option.value ? '' : option.value);
+                    handleFieldChange('installationRecordsAvailable', localValues.installationRecordsAvailable === option.value ? '' : option.value);
+                    flush(); // Immediately commit toggle changes
                   }}
                   className={cn(
                     "h-11 rounded-lg font-medium transition-all touch-manipulation",
-                    formData.installationRecordsAvailable === option.value
+                    localValues.installationRecordsAvailable === option.value
                       ? "bg-elec-yellow text-black"
                       : "bg-card/50 text-foreground border border-border/30 hover:bg-card"
                   )}
@@ -426,5 +497,19 @@ const ClientDetailsSection = ({ formData, onUpdate }: ClientDetailsSectionProps)
     </div>
   );
 };
+
+// Memoized component - only re-renders when CLIENT_SECTION_FIELDS change
+const ClientDetailsSection = React.memo(ClientDetailsSectionInner, (prevProps, nextProps) => {
+  // Compare only the fields this section cares about
+  for (const field of CLIENT_SECTION_FIELDS) {
+    if (prevProps.formData[field] !== nextProps.formData[field]) {
+      return false; // Re-render needed
+    }
+  }
+  // Also compare onUpdate reference
+  return prevProps.onUpdate === nextProps.onUpdate;
+});
+
+ClientDetailsSection.displayName = 'ClientDetailsSection';
 
 export default ClientDetailsSection;

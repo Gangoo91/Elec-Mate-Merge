@@ -45,6 +45,13 @@ import { SetupIncompleteBanner } from '@/components/onboarding/SetupIncompleteBa
 import { LatestJobsWidget } from '@/components/job-vacancies/LatestJobsWidget';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { WorkerStatusCard } from '@/components/employer/WorkerStatusCard';
+
+// Email whitelist for worker status feature (beta)
+const WORKER_STATUS_ALLOWED_EMAILS = [
+  'founder@elec-mate.com',
+  'andrewgangoo91@gmail.com',
+];
 
 // Animation variants - Smooth, fast entrance
 const containerVariants = {
@@ -487,9 +494,9 @@ const ElectricalHub = () => {
     },
   });
 
-  // Check if onboarding is complete
-  const { data: profile } = useQuery({
-    queryKey: ['onboarding-check'],
+  // Check if onboarding is complete and get user email
+  const { data: profileData } = useQuery({
+    queryKey: ['onboarding-check-with-email'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return null;
@@ -500,9 +507,13 @@ const ElectricalHub = () => {
         .eq('id', user.id)
         .single();
 
-      return data;
+      return { profile: data, email: user.email };
     },
   });
+
+  const profile = profileData?.profile;
+  const userEmail = profileData?.email;
+  const showWorkerStatus = userEmail && WORKER_STATUS_ALLOWED_EMAILS.includes(userEmail);
 
   useEffect(() => {
     // Show wizard if onboarding not complete and not already shown this session
@@ -577,6 +588,18 @@ const ElectricalHub = () => {
                 ))}
               </div>
             </motion.section>
+
+            {/* Company - Worker Status (Beta - email filtered) */}
+            {showWorkerStatus && (
+              <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+                <div className="flex items-center gap-2 px-1">
+                  <div className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+                  <h2 className="text-lg sm:text-xl font-semibold text-white">Company</h2>
+                  <span className="text-xs text-white/50 ml-1">Worker tools</span>
+                </div>
+                <WorkerStatusCard />
+              </motion.section>
+            )}
 
             {/* Company - Employer Integration (Hidden until employer area launches)
             <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">

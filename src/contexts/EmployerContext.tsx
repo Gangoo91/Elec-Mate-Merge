@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react';
 import { 
   employees as initialEmployees, 
   certifications as initialCertifications, 
@@ -854,7 +854,9 @@ export function EmployerProvider({ children }: { children: ReactNode }) {
     ));
   }, []);
 
-  const value: EmployerContextType = {
+  // Memoize context value to prevent unnecessary re-renders of consumers
+  // Only recreates when state values change (functions are stable due to useCallback)
+  const value: EmployerContextType = useMemo(() => ({
     employees,
     certifications,
     timesheets,
@@ -911,7 +913,66 @@ export function EmployerProvider({ children }: { children: ReactNode }) {
     updateBookingStatus,
     calculateJobLabourCost,
     getClockDuration,
-  };
+  }), [
+    // Data dependencies
+    employees,
+    certifications,
+    timesheets,
+    vacancies,
+    applications,
+    clockInState,
+    savedCandidates,
+    labourBank,
+    bookings,
+    jobAssignments,
+    messages,
+    assignedDocuments,
+    selectedEmployeeIds,
+    holidayAllowances,
+    leaveRequests,
+    // Function dependencies (stable due to useCallback)
+    addEmployee,
+    updateEmployee,
+    deleteEmployee,
+    setEmployeeAvailability,
+    addWorkerNote,
+    setEmployeeRating,
+    updateEmergencyContact,
+    updatePayRates,
+    toggleEmployeeSelection,
+    selectAllEmployees,
+    clearEmployeeSelection,
+    bulkAssignToJob,
+    addCertification,
+    updateCertification,
+    clockIn,
+    clockOut,
+    addManualTimeEntry,
+    approveTimesheet,
+    rejectTimesheet,
+    addLeaveRequest,
+    approveLeaveRequest,
+    rejectLeaveRequest,
+    cancelLeaveRequest,
+    getEmployeeAllowance,
+    addVacancy,
+    updateVacancy,
+    closeVacancy,
+    updateApplicationStatus,
+    assignEmployeeToJob,
+    removeEmployeeFromJob,
+    getEmployeeAssignments,
+    sendMessage,
+    assignDocument,
+    completeDocument,
+    toggleSaveCandidate,
+    addToLabourBank,
+    removeFromLabourBank,
+    createBooking,
+    updateBookingStatus,
+    calculateJobLabourCost,
+    getClockDuration,
+  ]);
 
   return (
     <EmployerContext.Provider value={value}>
@@ -927,3 +988,33 @@ export function useEmployer() {
   }
   return context;
 }
+
+/**
+ * Selector hooks for employer context
+ * These allow components to subscribe to specific parts of the employer state
+ * without re-rendering when other parts change.
+ */
+
+/** Get employees list only */
+export const useEmployees = () => useEmployer().employees;
+
+/** Get timesheets list only */
+export const useTimesheets = () => useEmployer().timesheets;
+
+/** Get vacancies list only */
+export const useVacancies = () => useEmployer().vacancies;
+
+/** Get applications list only */
+export const useApplications = () => useEmployer().applications;
+
+/** Get leave requests list only */
+export const useLeaveRequests = () => useEmployer().leaveRequests;
+
+/** Get clock-in state only */
+export const useClockInState = () => useEmployer().clockInState;
+
+/** Get labour bank only */
+export const useLabourBank = () => useEmployer().labourBank;
+
+/** Get job assignments only */
+export const useJobAssignments = () => useEmployer().jobAssignments;

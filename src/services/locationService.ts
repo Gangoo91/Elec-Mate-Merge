@@ -202,10 +202,55 @@ export const estimateTravelTime = (distanceKm: number): number => {
   return Math.round((distanceKm / averageSpeedKmh) * 60);
 };
 
+// Get current user's employee record (for self-service)
+export const getMyEmployeeRecord = async (): Promise<Employee | null> => {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  const { data, error } = await supabase
+    .from('employer_employees')
+    .select('*')
+    .eq('email', user.email)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Error fetching employee record:', error);
+    return null;
+  }
+
+  return data;
+};
+
+// Update own location (for self-service - worker updates their own status)
+export const updateOwnLocation = async (
+  lat: number,
+  lng: number,
+  status: WorkerStatus,
+  jobId?: string,
+  accuracy?: number
+): Promise<WorkerLocation | null> => {
+  // First get the current user's employee record
+  const employee = await getMyEmployeeRecord();
+  if (!employee) {
+    console.error('No employee record found for current user');
+    return null;
+  }
+
+  try {
+    const result = await updateWorkerLocation(employee.id, lat, lng, status, jobId, accuracy);
+    return result;
+  } catch (error) {
+    console.error('Error updating own location:', error);
+    return null;
+  }
+};
+
 // Export as named object for backward compatibility
 export const LocationService = {
   getWorkerLocations,
   getLatestWorkerLocations,
   calculateDistance,
-  estimateTravelTime
+  estimateTravelTime,
+  getMyEmployeeRecord,
+  updateOwnLocation,
 };

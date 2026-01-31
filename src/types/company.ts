@@ -24,6 +24,8 @@ export interface CompanyProfile {
   company_name: string;
   company_address?: string;
   company_postcode?: string;
+  office_lat?: number | null;    // Office location latitude (from Google Places)
+  office_lng?: number | null;    // Office location longitude (from Google Places)
   company_phone?: string;
   company_email?: string;
   company_website?: string;

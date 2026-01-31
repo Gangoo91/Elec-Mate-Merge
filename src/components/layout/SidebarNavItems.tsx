@@ -19,6 +19,7 @@ export type NavItem = {
   icon: JSX.Element;
   roles: string[];
   adminOnly?: boolean; // Requires admin_role to be set
+  allowedEmails?: string[]; // Only show to specific email addresses
 };
 
 export const mainNavItems: NavItem[] = [
@@ -40,13 +41,13 @@ export const mainNavItems: NavItem[] = [
     icon: <Zap className="h-5 w-5" />,
     roles: ["visitor", "apprentice", "electrician", "employer", "admin", "beta_tester"],
   },
-  // Employer Hub - Hidden until ready for launch
-  // {
-  //   name: "Employer Hub",
-  //   path: "/employer",
-  //   icon: <Briefcase className="h-5 w-5" />,
-  //   roles: ["visitor", "apprentice", "electrician", "employer", "admin", "beta_tester"],
-  // },
+  {
+    name: "Employer Hub",
+    path: "/employer",
+    icon: <Briefcase className="h-5 w-5" />,
+    roles: ["visitor", "apprentice", "electrician", "employer", "admin", "beta_tester"],
+    allowedEmails: ["founder@elec-mate.com", "andrewgangoo91@gmail.com"],
+  },
   // College Hub - Hidden until ready for launch
   // {
   //   name: "College Hub",

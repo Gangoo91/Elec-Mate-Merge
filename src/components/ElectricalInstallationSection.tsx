@@ -1,5 +1,5 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -9,6 +9,19 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
 import MultiboardSetup from '@/components/testing/MultiboardSetup';
 import { DistributionBoard, createMainBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
+
+// Fields managed by this section (for memoization comparison)
+const ELECTRICAL_SECTION_FIELDS = [
+  'distributionBoards',
+  'cuLocation',
+  'cuManufacturer',
+  'cuType',
+  'boardSize',
+  'intakeCableSize',
+  'intakeCableType',
+  'tailsSize',
+  'tailsLength',
+] as const;
 
 interface ElectricalInstallationSectionProps {
   formData: any;
@@ -53,8 +66,10 @@ const FormField = ({
 /**
  * ElectricalInstallationSection - Best-in-class mobile form for electrical installation details
  * Edge-to-edge design with large touch targets and native app feel
+ *
+ * Performance optimised with React.memo for selective re-rendering
  */
-const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstallationSectionProps) => {
+const ElectricalInstallationSectionInner = ({ formData, onUpdate }: ElectricalInstallationSectionProps) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
 
@@ -196,5 +211,26 @@ const ElectricalInstallationSection = ({ formData, onUpdate }: ElectricalInstall
     </div>
   );
 };
+
+// Memoized component - only re-renders when ELECTRICAL_SECTION_FIELDS change
+const ElectricalInstallationSection = React.memo(ElectricalInstallationSectionInner, (prevProps, nextProps) => {
+  // Compare only the fields this section cares about
+  for (const field of ELECTRICAL_SECTION_FIELDS) {
+    const prevVal = prevProps.formData[field];
+    const nextVal = nextProps.formData[field];
+
+    // Deep compare for arrays (distributionBoards)
+    if (Array.isArray(prevVal) || Array.isArray(nextVal)) {
+      if (JSON.stringify(prevVal) !== JSON.stringify(nextVal)) {
+        return false; // Re-render needed
+      }
+    } else if (prevVal !== nextVal) {
+      return false; // Re-render needed
+    }
+  }
+  return prevProps.onUpdate === nextProps.onUpdate;
+});
+
+ElectricalInstallationSection.displayName = 'ElectricalInstallationSection';
 
 export default ElectricalInstallationSection;

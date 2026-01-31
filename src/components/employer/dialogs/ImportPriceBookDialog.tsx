@@ -8,7 +8,7 @@ import { Upload, FileSpreadsheet, Check, AlertCircle } from "lucide-react";
 import { useBulkImportPriceBook } from "@/hooks/useFinance";
 import { toast } from "sonner";
 import Papa from 'papaparse';
-import * as XLSX from 'xlsx';
+// XLSX is dynamically imported only when needed to reduce bundle size (~7.2MB)
 
 interface ImportPriceBookDialogProps {
   open: boolean;
@@ -60,8 +60,10 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
       });
     } else if (ext === 'xlsx' || ext === 'xls') {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         try {
+          // Dynamic import XLSX only when needed (saves ~7.2MB from initial bundle)
+          const XLSX = await import('xlsx');
           const data = e.target?.result;
           const workbook = XLSX.read(data, { type: 'array' });
           const sheetName = workbook.SheetNames[0];

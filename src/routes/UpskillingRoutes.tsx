@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-import { lazy, Suspense, useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useLastStudyLocation } from "@/hooks/useLastStudyLocation";
+import { lazyWithRetry } from "@/utils/lazyWithRetry";
 
 // Import sub-route files
 import { bmsRoutes } from "./upskilling/bmsRoutes";
@@ -11,8 +12,8 @@ import { inspectionTestingRoutes } from "./upskilling/inspectionTestingRoutes";
 import { patTestingRoutes } from "./upskilling/patTestingRoutes";
 import { specialisedCoursesRoutes } from "./upskilling/specialisedCoursesRoutes";
 
-// Lazy load the index page
-const UpskillingIndex = lazy(() => import("@/pages/upskilling/Index"));
+// Lazy load with retry for chunk failures
+const UpskillingIndex = lazyWithRetry(() => import("@/pages/upskilling/Index"));
 
 // Loading component
 const LoadingFallback = () => (

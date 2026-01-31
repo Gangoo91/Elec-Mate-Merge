@@ -57,6 +57,8 @@ import SignatureInput from '@/components/signature/SignatureInput';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Link2Off, RefreshCw, Calculator } from 'lucide-react';
+import { PlacesAutocomplete } from '@/components/ui/PlacesAutocomplete';
+import { saveOfficeLocation } from '@/services/settingsService';
 
 // ============================================================================
 // CONSTANTS & CONFIG
@@ -430,6 +432,10 @@ const BusinessTab = () => {
     sortCode: '',
   });
 
+  // Office location (for worker tracking map)
+  const [officeLat, setOfficeLat] = useState<number | null>(null);
+  const [officeLng, setOfficeLng] = useState<number | null>(null);
+
   // Stripe Connect
   const [stripeStatus, setStripeStatus] = useState<StripeConnectStatus | null>(null);
   const [stripeLoading, setStripeLoading] = useState(true);
@@ -521,6 +527,9 @@ const BusinessTab = () => {
       setValue('company_name', companyProfile.company_name || '');
       setValue('company_address', companyProfile.company_address || '');
       setValue('company_postcode', companyProfile.company_postcode || '');
+      // Load office location for worker tracking
+      if (companyProfile.office_lat) setOfficeLat(companyProfile.office_lat);
+      if (companyProfile.office_lng) setOfficeLng(companyProfile.office_lng);
       setValue('company_phone', companyProfile.company_phone || '');
       setValue('company_email', companyProfile.company_email || '');
       setValue('company_website', companyProfile.company_website || '');
@@ -702,6 +711,8 @@ const BusinessTab = () => {
       company_name: data.company_name,
       company_address: data.company_address,
       company_postcode: data.company_postcode,
+      office_lat: officeLat,
+      office_lng: officeLng,
       company_phone: data.company_phone,
       company_email: data.company_email,
       company_website: data.company_website,
@@ -744,6 +755,15 @@ const BusinessTab = () => {
 
     try {
       const success = await saveCompanyProfile(profileData);
+
+      // Also save office location to app_settings for easy access by employer hub
+      if (officeLat !== null && officeLng !== null) {
+        await saveOfficeLocation({
+          lat: officeLat,
+          lng: officeLng,
+          address: data.company_address || null,
+        });
+      }
 
       if (success) {
         addNotification({
@@ -922,15 +942,26 @@ const BusinessTab = () => {
             </div>
           </div>
 
-          {/* Address */}
+          {/* Address with Google Places Autocomplete */}
           <div className="space-y-2">
             <Label className="text-[13px] text-white/50 font-medium">Business Address</Label>
-            <Textarea
-              {...register('company_address')}
-              placeholder="123 Business Street, Business Park"
-              rows={2}
-              className="text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0 resize-none"
+            <PlacesAutocomplete
+              value={watch('company_address') || ''}
+              onChange={(value) => setValue('company_address', value)}
+              onPlaceSelect={(place) => {
+                setValue('company_address', place.address);
+                setOfficeLat(place.lat);
+                setOfficeLng(place.lng);
+              }}
+              placeholder="Start typing your address..."
+              className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
             />
+            {officeLat && officeLng && (
+              <p className="text-[11px] text-green-400 flex items-center gap-1">
+                <MapPin className="h-3 w-3" />
+                Location saved for worker tracking map
+              </p>
+            )}
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">

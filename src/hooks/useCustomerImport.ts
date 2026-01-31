@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import Papa from 'papaparse';
-import * as XLSX from 'xlsx';
+// XLSX is dynamically imported only when needed to reduce bundle size (~7.2MB)
 
 export interface ImportCustomer {
   name: string;
@@ -35,12 +35,14 @@ export const useCustomerImport = () => {
     });
   };
 
-  // Parse Excel file
+  // Parse Excel file (dynamically imports xlsx to reduce bundle size)
   const parseExcel = (file: File): Promise<ImportCustomer[]> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         try {
+          // Dynamic import XLSX only when needed (saves ~7.2MB from initial bundle)
+          const XLSX = await import('xlsx');
           const data = new Uint8Array(e.target?.result as ArrayBuffer);
           const workbook = XLSX.read(data, { type: 'array' });
           const firstSheet = workbook.Sheets[workbook.SheetNames[0]];

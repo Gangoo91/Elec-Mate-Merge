@@ -196,8 +196,9 @@ export const useReportSync = ({
     return () => clearInterval(interval);
   }, [formData, reportType, enabled]);
 
-  // === DEBOUNCED CLOUD SYNC (2 seconds after last change) ===
-  // This is the primary sync mechanism - syncs within 2 seconds of stopping edits
+  // === DEBOUNCED CLOUD SYNC (5 seconds after last change) ===
+  // This is the primary sync mechanism - syncs within 5 seconds of stopping edits
+  // Increased from 2s to 5s to reduce sync request frequency by ~60%
   // Uses isAutoSync=true to keep 'auto-draft' status until user manually saves
   const debouncedCloudSync = useMemo(
     () => debounce(async () => {
@@ -210,7 +211,7 @@ export const useReportSync = ({
         console.log('[ReportSync] Debounced cloud sync triggered (auto-draft)');
         await syncToCloud(false, false, true);  // isAutoSync = true
       }
-    }, 2000),
+    }, 5000),
     [isOnline, isAuthenticated, userId]
   );
 

@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -7,6 +7,27 @@ import { Zap, Info, Link2, Cable, CircuitBoard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
+
+// Fields managed by this section (for memoization comparison)
+const EARTHING_SECTION_FIELDS = [
+  'earthElectrodeType',
+  'earthElectrodeResistance',
+  'meansOfEarthingDistributor',
+  'meansOfEarthingElectrode',
+  'mainEarthingConductorType',
+  'mainEarthingConductorSize',
+  'mainEarthingConductorSizeCustom',
+  'earthingConductorContinuityVerified',
+  'mainBondingConductorType',
+  'mainBondingSize',
+  'mainBondingSizeCustom',
+  'bondingCompliance',
+  'bondingConductorContinuityVerified',
+  'mainBondingLocations',
+  'supplementaryBondingSize',
+  'supplementaryBondingSizeCustom',
+  'equipotentialBonding',
+] as const;
 
 interface EarthingBondingSectionProps {
   formData: any;
@@ -53,8 +74,10 @@ const FormField = ({
 /**
  * EarthingBondingSection - Best-in-class mobile form for earthing & bonding details
  * Edge-to-edge design with large touch targets and native app feel
+ *
+ * Performance optimised with React.memo for selective re-rendering
  */
-const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionProps) => {
+const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSectionProps) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
 
@@ -513,5 +536,18 @@ const EarthingBondingSection = ({ formData, onUpdate }: EarthingBondingSectionPr
     </div>
   );
 };
+
+// Memoized component - only re-renders when EARTHING_SECTION_FIELDS change
+const EarthingBondingSection = React.memo(EarthingBondingSectionInner, (prevProps, nextProps) => {
+  // Compare only the fields this section cares about
+  for (const field of EARTHING_SECTION_FIELDS) {
+    if (prevProps.formData[field] !== nextProps.formData[field]) {
+      return false; // Re-render needed
+    }
+  }
+  return prevProps.onUpdate === nextProps.onUpdate;
+});
+
+EarthingBondingSection.displayName = 'EarthingBondingSection';
 
 export default EarthingBondingSection;

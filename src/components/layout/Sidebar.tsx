@@ -16,7 +16,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ open, setOpen }: SidebarProps) => {
-  const { profile } = useAuth();
+  const { profile, user } = useAuth();
   const location = useLocation();
 
   // Get the user role from the profile, defaulting to "visitor" if not available
@@ -98,6 +98,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
           <SidebarNavSection
             items={mainNavItems}
             userRole={userRole}
+            userEmail={user?.email}
             adminRole={adminRole}
             onItemClick={() => setOpen(false)}
           />

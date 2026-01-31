@@ -203,6 +203,33 @@
 
 /* Update the color definitions in the theme */
 @layer utilities {
+  /* CSS Containment for performance-critical components
+   * Helps browsers optimize layout/paint by isolating these elements
+   */
+  .circuit-card,
+  .inspection-item,
+  .certificate-section,
+  .form-section {
+    contain: layout style paint;
+  }
+
+  /* Content visibility optimization for long lists
+   * Browser can skip rendering off-screen items
+   */
+  .content-visibility-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 180px;
+  }
+
+  /* Will-change hint for animated elements */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
   .bg-section-item {
     @apply bg-[#1a1a1a];
   }

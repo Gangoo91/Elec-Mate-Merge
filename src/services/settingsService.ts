@@ -219,3 +219,59 @@ export async function clearSetting(key: string): Promise<boolean> {
 
   return true;
 }
+
+// Office Location Settings
+export interface OfficeLocation {
+  lat: number | null;
+  lng: number | null;
+  address: string | null;
+}
+
+export async function getOfficeLocation(): Promise<OfficeLocation> {
+  const keys = ['office_lat', 'office_lng', 'office_address'];
+
+  const { data, error } = await supabase
+    .from('app_settings')
+    .select('key, value')
+    .in('key', keys);
+
+  if (error) {
+    console.error('Error fetching office location:', error);
+  }
+
+  const location: OfficeLocation = {
+    lat: null,
+    lng: null,
+    address: null,
+  };
+
+  data?.forEach(row => {
+    if (row.key === 'office_lat' && row.value) {
+      location.lat = parseFloat(row.value);
+    } else if (row.key === 'office_lng' && row.value) {
+      location.lng = parseFloat(row.value);
+    } else if (row.key === 'office_address' && row.value) {
+      location.address = row.value;
+    }
+  });
+
+  return location;
+}
+
+export async function saveOfficeLocation(location: OfficeLocation): Promise<boolean> {
+  try {
+    if (location.lat !== null) {
+      await setSetting('office_lat', location.lat.toString());
+    }
+    if (location.lng !== null) {
+      await setSetting('office_lng', location.lng.toString());
+    }
+    if (location.address !== null) {
+      await setSetting('office_address', location.address);
+    }
+    return true;
+  } catch (error) {
+    console.error('Error saving office location:', error);
+    return false;
+  }
+}

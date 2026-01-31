@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,6 +10,23 @@ import { Calendar, Calculator, ClipboardList, CalendarCheck, Telescope } from 'l
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
+import { useMultiFieldSync } from '@/hooks/useFieldSync';
+
+// Fields managed by this section (for memoization comparison)
+const INSPECTION_SECTION_FIELDS = [
+  'purposeOfInspection',
+  'otherPurpose',
+  'inspectionDate',
+  'nextInspectionDate',
+  'inspectionInterval',
+  'intervalReasons',
+  'agreedWith',
+  'extentOfInspection',
+  'limitationsOfInspection',
+  'operationalLimitations',
+  'bsAmendment',
+  'description', // Referenced for recommended interval
+] as const;
 
 interface InspectionDetailsSectionProps {
   formData: any;
@@ -54,8 +71,10 @@ const FormField = ({
 /**
  * InspectionDetailsSection - Best-in-class mobile form for inspection purpose and dates
  * Edge-to-edge design with large touch targets and native app feel
+ *
+ * Performance optimised with React.memo and useMultiFieldSync
  */
-const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSectionProps) => {
+const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetailsSectionProps) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
   const { toast } = useToast();
@@ -337,5 +356,18 @@ const InspectionDetailsSection = ({ formData, onUpdate }: InspectionDetailsSecti
     </div>
   );
 };
+
+// Memoized component - only re-renders when INSPECTION_SECTION_FIELDS change
+const InspectionDetailsSection = React.memo(InspectionDetailsSectionInner, (prevProps, nextProps) => {
+  // Compare only the fields this section cares about
+  for (const field of INSPECTION_SECTION_FIELDS) {
+    if (prevProps.formData[field] !== nextProps.formData[field]) {
+      return false; // Re-render needed
+    }
+  }
+  return prevProps.onUpdate === nextProps.onUpdate;
+});
+
+InspectionDetailsSection.displayName = 'InspectionDetailsSection';
 
 export default InspectionDetailsSection;

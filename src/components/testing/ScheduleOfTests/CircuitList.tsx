@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useEffect, useRef, CSSProperties } from 'react';
+import { List } from 'react-window';
 import { useHaptics } from '@/hooks/useHaptics';
 import { TestResult } from '@/types/testResult';
 import { CircuitCard } from './CircuitCard';
@@ -16,6 +17,13 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { Save, Trash2, ChevronLeft, ChevronRight, Zap, TestTube, Shield, MessageSquare, CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
+
+// Virtualization threshold - use virtualization when circuit count exceeds this
+const VIRTUALIZATION_THRESHOLD = 10;
+// Fixed height for circuit cards
+const CARD_HEIGHT = 186; // Includes padding
+// List container height
+const LIST_HEIGHT = 600;
 
 interface CircuitListProps {
   circuits: TestResult[];
@@ -99,6 +107,21 @@ export const CircuitList: React.FC<CircuitListProps> = ({
     }
   }, [editingCircuit, circuits, editedValues, onBulkUpdate]);
 
+  // Memoized circuit card renderer for virtualization
+  const VirtualizedRow = useCallback(({ index, style }: { index: number; style: CSSProperties }) => {
+    const circuit = circuits[index];
+    return (
+      <div style={{ ...style, paddingBottom: 6 }}>
+        <CircuitCard
+          circuit={circuit}
+          onEdit={handleEdit}
+          onDelete={onRemove}
+          enableSwipe={true}
+        />
+      </div>
+    );
+  }, [circuits, handleEdit, onRemove]);
+
   if (circuits.length === 0) {
     return (
       <div className={cn('flex flex-col items-center justify-center py-12 text-center', className)}>
@@ -115,26 +138,42 @@ export const CircuitList: React.FC<CircuitListProps> = ({
     );
   }
 
+  // Use virtualization for large lists (10+ circuits)
+  const useVirtualization = circuits.length > VIRTUALIZATION_THRESHOLD;
+
   return (
     <>
-      <div className={cn('space-y-1.5', className)}>
-        {circuits.map((circuit) => (
-          <div
-            key={circuit.id}
-            style={{
-              contentVisibility: 'auto',
-              containIntrinsicSize: '0 180px',
-            }}
-          >
-            <CircuitCard
-              circuit={circuit}
-              onEdit={handleEdit}
-              onDelete={onRemove}
-              enableSwipe={true}
-            />
-          </div>
-        ))}
-      </div>
+      {useVirtualization ? (
+        <List
+          height={LIST_HEIGHT}
+          itemCount={circuits.length}
+          itemSize={CARD_HEIGHT}
+          width="100%"
+          overscanCount={2}
+          className={className}
+        >
+          {VirtualizedRow}
+        </List>
+      ) : (
+        <div className={cn('space-y-1.5', className)}>
+          {circuits.map((circuit) => (
+            <div
+              key={circuit.id}
+              style={{
+                contentVisibility: 'auto',
+                containIntrinsicSize: '0 180px',
+              }}
+            >
+              <CircuitCard
+                circuit={circuit}
+                onEdit={handleEdit}
+                onDelete={onRemove}
+                enableSwipe={true}
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Edit Sheet */}
       <MobileBottomSheet

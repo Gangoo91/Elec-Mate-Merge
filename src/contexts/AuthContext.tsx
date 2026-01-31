@@ -1,5 +1,5 @@
 
-import { createContext, useContext, ReactNode, useEffect, useRef } from 'react';
+import { createContext, useContext, ReactNode, useEffect, useRef, useMemo } from 'react';
 import { useAuthSession } from '@/hooks/auth/useAuthSession';
 import { useSubscriptionStatus } from '@/hooks/auth/useSubscriptionStatus';
 import { useDevelopmentMode } from '@/hooks/auth/useDevelopmentMode';
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { signIn, signUp, signOut, resetPassword, updatePassword, resendConfirmationEmail, updateProfile } = useAuthentication();
 
 
-  const value: AuthContextType = {
+  const value: AuthContextType = useMemo(() => ({
     session,
     user,
     profile,
@@ -87,7 +87,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     resendConfirmationEmail,
     updateProfile,
     fetchProfile,
-  };
+  }), [
+    session,
+    user,
+    profile,
+    isLoading,
+    isTrialActive,
+    trialEndsAt,
+    isSubscribed,
+    subscriptionTier,
+    isCheckingStatus,
+    hasCompletedInitialCheck,
+    lastError,
+    lastCheckedAt,
+    checkSubscriptionStatus,
+    isDevelopmentMode,
+    toggleDevelopmentMode,
+    signIn,
+    signUp,
+    signOut,
+    resetPassword,
+    updatePassword,
+    resendConfirmationEmail,
+    updateProfile,
+    fetchProfile,
+  ]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
@@ -99,3 +123,37 @@ export const useAuth = () => {
   }
   return context;
 };
+
+/**
+ * Selector hooks for auth context
+ * These allow components to subscribe to specific parts of the auth state
+ * without re-rendering when other parts change.
+ *
+ * Usage:
+ *   const user = useAuthUser(); // Only re-renders when user changes
+ *   const isSubscribed = useIsSubscribed(); // Only re-renders when subscription status changes
+ */
+
+/** Get the current user object */
+export const useAuthUser = () => useAuth().user;
+
+/** Get the current user's profile */
+export const useAuthProfile = () => useAuth().profile;
+
+/** Get the current session */
+export const useSession = () => useAuth().session;
+
+/** Get subscription status */
+export const useIsSubscribed = () => useAuth().isSubscribed;
+
+/** Get subscription tier */
+export const useSubscriptionTier = () => useAuth().subscriptionTier;
+
+/** Get trial status */
+export const useIsTrialActive = () => useAuth().isTrialActive;
+
+/** Get loading state */
+export const useAuthLoading = () => useAuth().isLoading;
+
+/** Get development mode status */
+export const useIsDevelopmentMode = () => useAuth().isDevelopmentMode;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import Papa from 'papaparse';
-import * as XLSX from 'xlsx';
+// XLSX is dynamically imported only when needed to reduce bundle size (~7.2MB)
 
 interface CertificateImportRow {
   certificate_number: string;
@@ -40,17 +40,19 @@ export const useCertificateImport = () => {
     } else if (fileExtension === 'xlsx' || fileExtension === 'xls') {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
           try {
+            // Dynamic import XLSX only when needed (saves ~7.2MB from initial bundle)
+            const XLSX = await import('xlsx');
             const data = new Uint8Array(e.target?.result as ArrayBuffer);
             const workbook = XLSX.read(data, { type: 'array' });
             const sheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet, { 
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, {
               raw: false,
               defval: ''
             });
-            
+
             // Transform headers to match expected format
             const transformedData = jsonData.map((row: any) => {
               const transformed: any = {};
@@ -60,7 +62,7 @@ export const useCertificateImport = () => {
               });
               return transformed;
             });
-            
+
             resolve(transformedData as CertificateImportRow[]);
           } catch (error) {
             reject(error);

@@ -7,6 +7,8 @@ import {
   checkOutWorker,
   getWorkerLocationsByJob,
   subscribeToLocationUpdates,
+  updateOwnLocation,
+  getMyEmployeeRecord,
   WorkerStatus,
 } from '@/services/locationService';
 
@@ -88,11 +90,45 @@ export const useCheckInWorker = () => {
 
 export const useCheckOutWorker = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: checkOutWorker,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['worker-locations'] });
+    },
+  });
+};
+
+// Hook to get the current user's employee record
+export const useMyEmployeeRecord = () => {
+  return useQuery({
+    queryKey: ['my-employee-record'],
+    queryFn: getMyEmployeeRecord,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+  });
+};
+
+// Hook for workers to update their own location (self-service)
+export const useUpdateOwnLocation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      lat,
+      lng,
+      status,
+      jobId,
+      accuracy,
+    }: {
+      lat: number;
+      lng: number;
+      status: WorkerStatus;
+      jobId?: string;
+      accuracy?: number;
+    }) => updateOwnLocation(lat, lng, status, jobId, accuracy),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['worker-locations'] });
+      queryClient.invalidateQueries({ queryKey: ['my-employee-record'] });
     },
   });
 };

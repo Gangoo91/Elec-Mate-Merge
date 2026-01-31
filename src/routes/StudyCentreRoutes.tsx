@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
+import { lazyWithRetry } from "@/utils/lazyWithRetry";
 
-// Lazy load the main index page
-const StudyCentreIndex = lazy(() => import("@/pages/study-centre/StudyCentreIndex"));
+// Lazy load with retry for chunk failures
+const StudyCentreIndex = lazyWithRetry(() => import("@/pages/study-centre/StudyCentreIndex"));
 
-// Import nested route components
-const ApprenticeCourseRoutes = lazy(() => import("@/routes/ApprenticeCourseRoutes"));
-const UpskillingRoutes = lazy(() => import("@/routes/UpskillingRoutes"));
+// Import nested route components with retry
+const ApprenticeCourseRoutes = lazyWithRetry(() => import("@/routes/ApprenticeCourseRoutes"));
+const UpskillingRoutes = lazyWithRetry(() => import("@/routes/UpskillingRoutes"));
 
 // Loading component
 const LoadingFallback = () => (

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -9,6 +9,37 @@ import { AlertCircle, Info, Zap, Building2, Plug, Shield, Globe } from 'lucide-r
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
+
+// Fields managed by this section (for memoization comparison)
+const SUPPLY_SECTION_FIELDS = [
+  'dnoName',
+  'mpan',
+  'cutoutLocation',
+  'serviceEntry',
+  'phases',
+  'supplyAcDc',
+  'conductorConfiguration',
+  'supplyVoltage',
+  'supplyFrequency',
+  'supplyPME',
+  'externalZe',
+  'prospectiveFaultCurrent',
+  'supplyPolarityConfirmed',
+  'otherSourcesOfSupply',
+  'mainProtectiveDevice',
+  'mainProtectiveDeviceCustom',
+  'mainSwitchRating',
+  'breakingCapacity',
+  'mainSwitchPoles',
+  'fuseDeviceRating',
+  'mainSwitchVoltageRating',
+  'earthingArrangement',
+  'earthElectrodeType',
+  'rcdMainSwitch',
+  'rcdRating',
+  'rcdTimeDelay',
+  'rcdMeasuredTime',
+] as const;
 
 interface SupplyCharacteristicsSectionProps {
   formData: any;
@@ -53,8 +84,10 @@ const FormField = ({
 /**
  * SupplyCharacteristicsSection - Best-in-class mobile form for supply & earthing details
  * Edge-to-edge design with large touch targets and native app feel
+ *
+ * Performance optimised with React.memo for selective re-rendering
  */
-const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacteristicsSectionProps) => {
+const SupplyCharacteristicsSectionInner = ({ formData, onUpdate }: SupplyCharacteristicsSectionProps) => {
   const isMobile = useIsMobile();
   const haptics = useHaptics();
 
@@ -802,5 +835,18 @@ const SupplyCharacteristicsSection = ({ formData, onUpdate }: SupplyCharacterist
     </div>
   );
 };
+
+// Memoized component - only re-renders when SUPPLY_SECTION_FIELDS change
+const SupplyCharacteristicsSection = React.memo(SupplyCharacteristicsSectionInner, (prevProps, nextProps) => {
+  // Compare only the fields this section cares about
+  for (const field of SUPPLY_SECTION_FIELDS) {
+    if (prevProps.formData[field] !== nextProps.formData[field]) {
+      return false; // Re-render needed
+    }
+  }
+  return prevProps.onUpdate === nextProps.onUpdate;
+});
+
+SupplyCharacteristicsSection.displayName = 'SupplyCharacteristicsSection';
 
 export default SupplyCharacteristicsSection;

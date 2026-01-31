@@ -18,14 +18,17 @@ interface GoogleMapsContextType {
 
 const GoogleMapsContext = createContext<GoogleMapsContextType | null>(null);
 
+// Libraries to load - includes Places for autocomplete
+const GOOGLE_MAPS_LIBRARIES: ('places' | 'geometry' | 'drawing' | 'visualization')[] = ['places'];
+
 // Inner component that loads Google Maps only when we have a valid API key
-function GoogleMapsLoader({ 
-  apiKey, 
-  children, 
-  setApiKey, 
-  clearApiKey 
-}: { 
-  apiKey: string; 
+function GoogleMapsLoader({
+  apiKey,
+  children,
+  setApiKey,
+  clearApiKey
+}: {
+  apiKey: string;
   children: ReactNode;
   setApiKey: (key: string) => Promise<void>;
   clearApiKey: () => Promise<void>;
@@ -33,6 +36,7 @@ function GoogleMapsLoader({
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: apiKey,
     id: 'google-map-script',
+    libraries: GOOGLE_MAPS_LIBRARIES,
   });
 
   return (

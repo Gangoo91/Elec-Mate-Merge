@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useMemo, useCallback } from 'react';
 import { EICRFault } from '@/types/eicr';
 
 export interface EICRData {
@@ -66,13 +66,13 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
     auto_populate: false
   });
 
-  const updateEICR = (data: Partial<EICRData>) => {
+  const updateEICR = useCallback((data: Partial<EICRData>) => {
     setEICR(prev => ({ ...prev, ...data }));
-  };
+  }, []);
 
-  const populateFromTestResult = (stepId: string, result: TestResult) => {
+  const populateFromTestResult = useCallback((stepId: string, result: TestResult) => {
     console.log('Populating EICR from test result:', { stepId, result });
-    
+
     setEICR(prev => ({
       ...prev,
       testResults: [
@@ -80,9 +80,9 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
         result
       ]
     }));
-  };
+  }, []);
 
-  const initializeEICR = (installationDetails: any, inspectorDetails: any) => {
+  const initializeEICR = useCallback((installationDetails: any, inspectorDetails: any) => {
     setEICR({
       installationDetails,
       inspectorDetails,
@@ -90,9 +90,9 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
       testResults: [],
       observations: []
     });
-  };
+  }, []);
 
-  const resetEICR = () => {
+  const resetEICR = useCallback(() => {
     setEICR({
       circuits: [],
       testResults: [],
@@ -102,47 +102,47 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
       eicr_report: {},
       auto_populate: false
     });
-  };
+  }, []);
 
-  const generateEICRReport = () => {
+  const generateEICRReport = useCallback(() => {
     return {
       ...eicr,
       generatedAt: new Date(),
       session: eicrSession
     };
-  };
+  }, [eicr, eicrSession]);
 
-  const setAutoPopulate = (value: boolean) => {
+  const setAutoPopulate = useCallback((value: boolean) => {
     setEICRSession(prev => ({
       ...prev,
       auto_populate: value
     }));
-  };
+  }, []);
 
-  const addFault = (fault: EICRFault) => {
+  const addFault = useCallback((fault: EICRFault) => {
     setEICR(prev => ({
       ...prev,
       observations: [...(prev.observations || []), fault]
     }));
-  };
+  }, []);
 
-  const updateFault = (id: string, faultUpdate: Partial<EICRFault>) => {
+  const updateFault = useCallback((id: string, faultUpdate: Partial<EICRFault>) => {
     setEICR(prev => ({
       ...prev,
-      observations: (prev.observations || []).map(fault => 
+      observations: (prev.observations || []).map(fault =>
         fault.id === id ? { ...fault, ...faultUpdate } : fault
       )
     }));
-  };
+  }, []);
 
-  const removeFault = (id: string) => {
+  const removeFault = useCallback((id: string) => {
     setEICR(prev => ({
       ...prev,
       observations: (prev.observations || []).filter(fault => fault.id !== id)
     }));
-  };
+  }, []);
 
-  const value = {
+  const value = useMemo(() => ({
     eicr,
     eicrSession,
     updateEICR,
@@ -154,11 +154,68 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
     addFault,
     updateFault,
     removeFault
-  };
+  }), [
+    eicr,
+    eicrSession,
+    updateEICR,
+    populateFromTestResult,
+    initializeEICR,
+    resetEICR,
+    generateEICRReport,
+    setAutoPopulate,
+    addFault,
+    updateFault,
+    removeFault
+  ]);
 
   return (
     <EICRContext.Provider value={value}>
       {children}
     </EICRContext.Provider>
   );
+};
+
+/**
+ * Selector hooks for EICR context
+ * These allow components to subscribe to specific parts of the EICR state
+ * without re-rendering when other parts change.
+ */
+
+/** Get EICR data (installation details, inspector details, circuits, test results, observations) */
+export const useEICRData = () => useEICR().eicr;
+
+/** Get EICR circuits array */
+export const useEICRCircuits = () => useEICR().eicr.circuits;
+
+/** Get EICR test results array */
+export const useEICRTestResults = () => useEICR().eicr.testResults;
+
+/** Get EICR observations/faults array */
+export const useEICRObservations = () => useEICR().eicr.observations;
+
+/** Get EICR installation details */
+export const useEICRInstallationDetails = () => useEICR().eicr.installationDetails;
+
+/** Get EICR inspector details */
+export const useEICRInspectorDetails = () => useEICR().eicr.inspectorDetails;
+
+/** Get EICR session state */
+export const useEICRSession = () => useEICR().eicrSession;
+
+/** Get auto-populate setting */
+export const useEICRAutoPopulate = () => useEICR().eicrSession.auto_populate;
+
+/** Get EICR update functions only (for components that only need to write) */
+export const useEICRActions = () => {
+  const context = useEICR();
+  return {
+    updateEICR: context.updateEICR,
+    populateFromTestResult: context.populateFromTestResult,
+    initializeEICR: context.initializeEICR,
+    resetEICR: context.resetEICR,
+    setAutoPopulate: context.setAutoPopulate,
+    addFault: context.addFault,
+    updateFault: context.updateFault,
+    removeFault: context.removeFault,
+  };
 };
